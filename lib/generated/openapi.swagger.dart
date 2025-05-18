@@ -15,7 +15,6 @@ import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;
 import 'openapi.enums.swagger.dart' as enums;
 export 'openapi.enums.swagger.dart';
-export 'openapi.models.swagger.dart';
 
 part 'openapi.swagger.chopper.dart';
 
@@ -1049,10 +1048,15 @@ abstract class Openapi extends ChopperService {
   });
 
   ///Get Account Types
-  Future<chopper.Response<List<AccountType>>> usersAccountTypesGet() {
+  Future<chopper.Response<List<enums.AccountType>>> usersAccountTypesGet() {
     generatedMapping.putIfAbsent(
-      AccountType,
-      () => AccountType.fromJsonFactory,
+      enums.AccountType,
+      () =>
+          (json) =>
+              enums.AccountType.values.firstWhereOrNull(
+                (e) => e.value == json,
+              ) ??
+              enums.AccountType.swaggerGeneratedUnknown,
     );
 
     return _usersAccountTypesGet();
@@ -1060,7 +1064,7 @@ abstract class Openapi extends ChopperService {
 
   ///Get Account Types
   @Get(path: '/users/account-types')
-  Future<chopper.Response<List<AccountType>>> _usersAccountTypesGet();
+  Future<chopper.Response<List<enums.AccountType>>> _usersAccountTypesGet();
 
   ///Read Current User
   Future<chopper.Response<CoreUser>> usersMeGet() {
@@ -2533,7 +2537,7 @@ abstract class Openapi extends ChopperService {
   Future<chopper.Response<List<FlappyBirdScoreInDB>>> _flappybirdScoresGet();
 
   ///Create Flappybird Score
-  Future<chopper.Response<FlappyBirdScoreBase>> flappybirdScoresPost({
+  Future<chopper.Response<FlappyBirdScoreInDB>> flappybirdScoresPost({
     required FlappyBirdScoreBase? body,
   }) {
     generatedMapping.putIfAbsent(

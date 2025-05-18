@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:myecl/amap/adapters/product.dart';
 import 'package:myecl/amap/providers/product_list_provider.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 
 class MockProductListRepository extends Mock implements Openapi {}

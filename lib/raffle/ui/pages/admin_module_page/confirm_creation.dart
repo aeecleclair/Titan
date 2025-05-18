@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/raffle/providers/raffle_list_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';

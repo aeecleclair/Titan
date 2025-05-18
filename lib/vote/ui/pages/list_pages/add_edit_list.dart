@@ -19,8 +19,6 @@ import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:myecl/vote/adapters/list.dart';
 import 'package:myecl/vote/providers/display_results.dart';
-import 'package:myecl/vote/providers/list_logo_provider.dart';
-import 'package:myecl/vote/providers/list_logos_provider.dart';
 import 'package:myecl/vote/providers/list_members.dart';
 import 'package:myecl/vote/providers/list_list_provider.dart';
 import 'package:myecl/vote/providers/list_provider.dart';

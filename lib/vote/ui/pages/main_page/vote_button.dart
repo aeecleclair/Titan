@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/vote/providers/selected_list_provider.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
 import 'package:myecl/tools/functions.dart';

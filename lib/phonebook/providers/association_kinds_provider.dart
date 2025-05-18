@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/single_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';
@@ -13,7 +14,7 @@ class AssociationKindsNotifier extends SingleNotifierAPI<KindsReturn> {
   }
 
   Future<AsyncValue<KindsReturn>> loadAssociationKinds() async {
-    // Issue with the accent 
+    // Issue with the accent
     return await load(associationRepository.phonebookAssociationsKindsGet);
   }
 }

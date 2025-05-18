@@ -1,6 +1,5 @@
-import 'package:myecl/generated/openapi.swagger.dart';
-import 'package:myecl/vote/adapters/member.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
+import 'package:myecl/vote/adapters/member.dart';
 
 extension $ListReturn on ListReturn {
   ListBase toListBase() {

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/vote/providers/list_logo_provider.dart';
-import 'package:myecl/vote/providers/list_logos_provider.dart';
 import 'package:myecl/vote/providers/list_provider.dart';
 import 'package:myecl/vote/ui/components/member_card.dart';
 import 'package:myecl/vote/ui/pages/admin_page/list_card.dart';

@@ -15,7 +15,7 @@ import 'package:myecl/advert/providers/advertiser_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/ui/components/advertiser_bar.dart';
-import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';

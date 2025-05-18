@@ -12,7 +12,7 @@ import 'package:myecl/advert/ui/components/advertiser_bar.dart';
 import 'package:myecl/advert/ui/pages/admin_page/admin_advert_card.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/router.dart';
-import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
@@ -47,7 +47,9 @@ class AdvertAdminPage extends HookConsumerWidget {
             );
             final sortedUserAdvertiserAdverts = userAdvertiserAdvert
                 .toList()
-                .sortedBy((element) => element.date == null ? DateTime.fromMicrosecondsSinceEpoch(0) : DateTime.parse(element.date!))
+                .sortedBy((element) => element.date == null
+                    ? DateTime.fromMicrosecondsSinceEpoch(0)
+                    : DateTime.parse(element.date!),)
                 .reversed;
             final filteredSortedUserAdvertiserAdverts =
                 sortedUserAdvertiserAdverts

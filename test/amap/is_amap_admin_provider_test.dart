@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
-import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 

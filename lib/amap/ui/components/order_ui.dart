@@ -6,7 +6,6 @@ import 'package:myecl/amap/providers/user_order_list_provider.dart';
 import 'package:myecl/amap/providers/order_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
-import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';

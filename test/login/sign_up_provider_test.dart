@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:myecl/login/providers/sign_up_provider.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 
 class MockSignUpRepository extends Mock implements Openapi {}

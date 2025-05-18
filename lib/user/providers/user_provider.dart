@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/user/adapters/users.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/providers/single_notifier_api.dart';
 import 'package:myecl/tools/repository/repository.dart';

@@ -1,4 +1,3 @@
-import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/generated/openapi.models.swagger.dart';
 
 extension $AdvertReturnComplete on AdvertReturnComplete {

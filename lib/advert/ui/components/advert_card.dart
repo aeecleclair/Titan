@@ -8,7 +8,7 @@ import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
-import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/widgets/text_with_hyper_link.dart';
 

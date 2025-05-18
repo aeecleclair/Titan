@@ -10,7 +10,7 @@ class LogInterceptor implements Interceptor {
 
   @override
   FutureOr<Response<BodyType>> intercept<BodyType>(
-      Chain<BodyType> chain) async {
+      Chain<BodyType> chain,) async {
     final request = chain.request;
     final response = await chain.proceed(request);
     if (response.statusCode >= 400) {

@@ -7,7 +7,7 @@ import 'package:myecl/advert/providers/advertiser_list_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/ui/pages/form_page/advertiser_card.dart';
-import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';

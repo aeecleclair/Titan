@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/ph/providers/file_picker_result_provider.dart';
 import 'package:myecl/ph/providers/ph_provider.dart';
 import 'package:myecl/ph/providers/ph_send_pdf_provider.dart';

@@ -3,7 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/components/advert_card.dart';
-import 'package:myecl/generated/openapi.swagger.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 

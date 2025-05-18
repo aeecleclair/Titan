@@ -4,6 +4,7 @@ import 'package:myecl/amap/providers/delivery_id_provider.dart';
 import 'package:myecl/amap/providers/delivery_list_provider.dart';
 import 'package:myecl/amap/tools/constants.dart';
 import 'package:myecl/amap/ui/pages/main_page/delivery_ui.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';

@@ -2,6 +2,7 @@ import 'package:myecl/amap/providers/delivery_provider.dart';
 import 'package:myecl/amap/providers/available_deliveries.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/amap/ui/amap.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/tools/builders/enums_cleaner.dart';

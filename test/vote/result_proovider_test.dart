@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:myecl/tools/builders/empty_models.dart';
 import 'package:myecl/vote/providers/result_provider.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:chopper/chopper.dart' as chopper;
 import 'package:http/http.dart' as http;

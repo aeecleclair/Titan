@@ -191,7 +191,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                             .format(
                             advert.date == null
                                 ? DateTime.fromMicrosecondsSinceEpoch(0)
-                                : DateTime.parse(advert.date!)),
+                                : DateTime.parse(advert.date!),),
                         style: const TextStyle(fontSize: 16),
                         textAlign: TextAlign.center,
                       ),

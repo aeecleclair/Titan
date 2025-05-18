@@ -10,6 +10,7 @@ import 'package:myecl/event/providers/selected_days_provider.dart';
 import 'package:myecl/event/providers/user_event_list_provider.dart';
 import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/tools/functions.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/builders/enums_cleaner.dart';
 import 'package:myecl/tools/functions.dart';

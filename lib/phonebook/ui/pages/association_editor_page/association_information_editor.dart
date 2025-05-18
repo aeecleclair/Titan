@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/group_list_provider.dart';
 import 'package:myecl/admin/providers/is_admin_provider.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/phonebook/providers/association_kind_provider.dart';
 import 'package:myecl/phonebook/providers/association_list_provider.dart';

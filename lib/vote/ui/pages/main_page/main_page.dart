@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -8,8 +9,6 @@ import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/vote/providers/can_vote_provider.dart';
 import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
 import 'package:myecl/vote/providers/list_list_provider.dart';
-import 'package:myecl/vote/providers/list_logo_provider.dart';
-import 'package:myecl/vote/providers/list_logos_provider.dart';
 import 'package:myecl/vote/providers/sections_list_provider.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';

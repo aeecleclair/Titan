@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/generated/openapi.models.swagger.dart';
 import 'package:myecl/generated/openapi.swagger.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
@@ -11,7 +12,6 @@ import 'package:myecl/vote/providers/selected_list_provider.dart';
 import 'package:myecl/vote/providers/status_provider.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/components/list_logo.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ListCard extends HookConsumerWidget {
@@ -169,11 +169,11 @@ class ListCard extends HookConsumerWidget {
                     children: [
                       // list.type != ListType.blank
                       //     ? ListLogo(list)
-                      //     : 
-                          const HeroIcon(
-                              HeroIcons.cubeTransparent,
-                              size: 40,
-                            ),
+                      //     :
+                      const HeroIcon(
+                        HeroIcons.cubeTransparent,
+                        size: 40,
+                      ),
                       const SizedBox(width: 10),
                       Expanded(
                         child: Column(
