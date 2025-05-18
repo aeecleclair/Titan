@@ -39,11 +39,7 @@ class StoreSellerCard extends ConsumerWidget {
                       color: Color.fromARGB(255, 255, 255, 255),
                       size: 25,
                     )
-                  : const HeroIcon(
-                      HeroIcons.arrowPath,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                      size: 25,
-                    ),
+                  : null,
             ),
             const SizedBox(
               width: 15,
