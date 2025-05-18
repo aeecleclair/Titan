@@ -139,9 +139,21 @@ class AccountCard extends HookConsumerWidget {
                       },
                     );
                   } else {
-                    displayToastWithContext(
-                      TypeMsg.error,
-                      "Votre appareil a été révoqué",
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return DeviceDialogBox(
+                          title: 'Appareil révoqué',
+                          descriptions:
+                              'Votre appareil a été révoqué. \nPour le réactiver, veuillez vous rendre sur la page des appareils.',
+                          buttonText: 'Accéder à la page',
+                          onClick: () {
+                            QR.to(
+                              PaymentRouter.root + PaymentRouter.devices,
+                            );
+                          },
+                        );
+                      },
                     );
                   }
                 },
@@ -168,7 +180,7 @@ class AccountCard extends HookConsumerWidget {
         MainCardButton(
           colors: buttonGradient,
           icon: HeroIcons.creditCard,
-          title: "Alimenter",
+          title: "Recharger",
           onPressed: () async {
             showFundModal();
           },
