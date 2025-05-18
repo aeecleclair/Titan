@@ -41,7 +41,7 @@ class RightPanel extends HookConsumerWidget {
         description: 'Commande de fruit et légumes',
       ),
       ScreenShot(
-        path: 'assets/web/Ciné.webp',
+        path: 'assets/web/Cine.webp',
         title: 'Club Cinéma',
         description: 'Les projections à venir',
       ),
