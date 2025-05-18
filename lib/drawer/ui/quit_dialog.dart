@@ -7,7 +7,7 @@ import 'package:myecl/drawer/tools/constants.dart';
 import 'package:myecl/service/providers/firebase_token_expiration_provider.dart';
 import 'package:myecl/service/providers/messages_provider.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 
 class QuitDialog extends HookConsumerWidget {
   const QuitDialog({super.key});

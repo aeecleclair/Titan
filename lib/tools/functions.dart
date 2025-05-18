@@ -12,9 +12,13 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 enum TypeMsg { msg, error }
 
-void displayToast(BuildContext context, TypeMsg type, String text) {
+void displayToast(
+  BuildContext context,
+  TypeMsg type,
+  String text, {
+  int? duration,
+}) {
   LinearGradient linearGradient;
-  int duration;
   HeroIcons icon;
 
   switch (type) {
@@ -25,7 +29,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
         end: Alignment.bottomRight,
       );
       icon = HeroIcons.check;
-      duration = 1500;
+      duration = duration ?? 1500;
       break;
     case TypeMsg.error:
       linearGradient = const LinearGradient(
@@ -34,7 +38,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
         end: Alignment.bottomRight,
       );
       icon = HeroIcons.exclamationTriangle;
-      duration = 3000;
+      duration = duration ?? 3000;
       break;
   }
 

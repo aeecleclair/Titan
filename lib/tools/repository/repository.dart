@@ -149,7 +149,7 @@ abstract class Repository {
     } catch (e) {
       if (kIsWeb) {
         logger.error(
-          "GET ${ext + suffix}\nError while fetching response",
+          "GET ${ext + id + suffix}\nError while fetching response",
         );
         return <String, dynamic>{};
       }
@@ -173,7 +173,18 @@ abstract class Repository {
       headers: headers,
       body: jsonEncode(t),
     );
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
+      try {
+        String toDecode = response.body;
+        toDecode = utf8.decode(response.body.runes.toList());
+        return jsonDecode(toDecode);
+      } catch (e) {
+        logger.error(
+          "POST ${ext + suffix}\nError while decoding response",
+        );
+        throw AppException(ErrorType.invalidData, e.toString());
+      }
+    } else if (response.statusCode == 201) {
       try {
         String toDecode = response.body;
         toDecode = utf8.decode(response.body.runes.toList());
@@ -198,6 +209,14 @@ abstract class Repository {
       } else {
         throw AppException(ErrorType.notFound, decoded["detail"]);
       }
+    } else if (response.statusCode == 409) {
+      logger.error(
+        "POST ${ext + suffix}\n${response.statusCode} ${response.body}",
+      );
+      String toDecode = response.body;
+      toDecode = utf8.decode(response.body.runes.toList());
+      final decoded = jsonDecode(toDecode);
+      throw AppException(ErrorType.conflict, decoded["detail"]);
     } else {
       logger.error(
         "POST ${ext + suffix}\n${response.statusCode} ${response.body}",

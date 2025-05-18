@@ -11,11 +11,13 @@ import 'package:collection/collection.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/loan/router.dart';
+import 'package:myecl/paiement/router.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/ph/router.dart';
 import 'package:myecl/purchases/router.dart';
 import 'package:myecl/raffle/router.dart';
 import 'package:myecl/recommendation/router.dart';
+import 'package:myecl/seed-library/router.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,19 +37,21 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   final eq = const DeepCollectionEquality.unordered();
   List<Module> allModules = [
     HomeRouter.module,
-    CentralisationRouter.module,
-    PhRouter.module,
-    CinemaRouter.module,
+    AdvertRouter.module,
     AmapRouter.module,
     BookingRouter.module,
-    LoanRouter.module,
-    PhonebookRouter.module,
-    PurchasesRouter.module,
-    RecommendationRouter.module,
-    AdvertRouter.module,
+    CentralisationRouter.module,
+    CinemaRouter.module,
     EventRouter.module,
-    VoteRouter.module,
+    LoanRouter.module,
+    PaymentRouter.module,
+    PhonebookRouter.module,
+    PhRouter.module,
+    PurchasesRouter.module,
     RaffleRouter.module,
+    RecommendationRouter.module,
+    VoteRouter.module,
+    SeedLibraryRouter.module,
   ];
   ModulesNotifier() : super([]);
 
