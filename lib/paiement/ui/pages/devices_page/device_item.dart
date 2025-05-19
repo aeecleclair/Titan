@@ -34,12 +34,18 @@ class DeviceItem extends ConsumerWidget {
                   const SizedBox(
                     width: 20,
                   ),
-                  Text(
-                    device.name,
-                    style: const TextStyle(
-                      color: Color(0xff204550),
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Text(
+                        device.name,
+                        style: const TextStyle(
+                          color: Color(0xff204550),
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -54,7 +60,6 @@ class DeviceItem extends ConsumerWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  Spacer(),
                   getStatusTag(device.status),
                   if (device.status != WalletDeviceStatus.revoked) ...[
                     const SizedBox(
