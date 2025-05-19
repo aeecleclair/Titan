@@ -32,7 +32,7 @@ class ConfirmFundButton extends ConsumerWidget {
       data: (wallet) => wallet.balance / 100,
     );
 
-    final redirectUrl = "titan.alpha://payment";
+    final redirectUrl = "${getTitanURLScheme()}://payment";
     final sanitizedFundAmount = fundAmount.replaceAll(",", ".");
     final amountToAdd = double.tryParse(sanitizedFundAmount) ?? 0;
     final enabled = fundAmount.isNotEmpty &&

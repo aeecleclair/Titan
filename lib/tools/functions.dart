@@ -470,17 +470,21 @@ String getTitanHost() {
   return host;
 }
 
-String getTitanPackageName() {
+String getTitanURLScheme() {
   switch (getAppFlavor()) {
     case "dev":
-      return "fr.myecl.titan.dev";
+      return "titan.dev";
     case "alpha":
-      return "fr.myecl.titan.alpha";
+      return "titan.alpha";
     case "prod":
-      return "fr.myecl.titan";
+      return "titan";
     default:
       throw StateError("Invalid app flavor");
   }
+}
+
+String getTitanPackageName() {
+  return "fr.myecl.${getTitanURLScheme()}";
 }
 
 String getTitanLogo() {
