@@ -33,10 +33,10 @@ class ConfirmFundButton extends ConsumerWidget {
     );
 
     final redirectUrl = "titan.alpha://payment";
-    final amountToAdd = double.tryParse(fundAmount.replaceAll(",", ".")) ?? 0;
-
+    final sanitizedFundAmount = fundAmount.replaceAll(",", ".");
+    final amountToAdd = double.tryParse(sanitizedFundAmount) ?? 0;
     final enabled = fundAmount.isNotEmpty &&
-        double.parse(fundAmount.replaceAll(',', '.')) >= 1 &&
+        amountToAdd >= 1 &&
         amountToAdd + currentAmount <= maxBalanceAmount;
 
     void displayToastWithContext(TypeMsg type, String message) {
@@ -48,7 +48,7 @@ class ConfirmFundButton extends ConsumerWidget {
         Uri.parse(url),
         mode: LaunchMode.externalApplication,
       )) {
-        throw Exception('Could not launch google');
+        throw Exception('Could not launch Google');
       }
     }
 
@@ -100,8 +100,22 @@ class ConfirmFundButton extends ConsumerWidget {
 
     return WaitingButton(
       onTap: () async {
-        if (!enabled) {
+        if (fundAmount.isEmpty) {
           displayToastWithContext(TypeMsg.error, "Veuillez entrer un montant");
+          return;
+        }
+        if (amountToAdd < 1) {
+          displayToastWithContext(
+            TypeMsg.error,
+            "Veuillez entrer un montant supérieur à 1€",
+          );
+          return;
+        }
+        if (currentAmount + amountToAdd > maxBalanceAmount) {
+          displayToastWithContext(
+            TypeMsg.error,
+            "Votre solde ne peut pas dépasser $maxBalanceAmount €",
+          );
           return;
         }
 
