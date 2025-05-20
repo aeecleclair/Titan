@@ -132,7 +132,7 @@ class TransactionCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    "Le ${DateFormat("dd MMM yyyy à HH:mm").format(transaction.creation)}",
+                    "Le ${DateFormat("EEE dd MMMM yyyy à HH:mm", "fr_FR").format(transaction.creation)}",
                     style: const TextStyle(
                       color: Color(0xff204550),
                       fontSize: 12,

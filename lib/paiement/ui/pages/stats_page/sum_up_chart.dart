@@ -73,13 +73,13 @@ class SumUpChart extends HookConsumerWidget {
             0,
             (previousValue, element) => previousValue + element.total,
           );
-          total += totalAmount;
+          total += 0; //totalAmount;
           mappedHistory['Transfer'] = transfer;
           keys.add('Transfer');
           chartPart.add(
             PieChartSectionData(
               color: colors[2][0],
-              value: sqrt(totalAmount / 100),
+              value: 0, //totalAmount / 100,
               title: '',
               radius:
                   60 + (keys.indexOf('Transfer') == selected.value ? 15 : 0),
@@ -113,7 +113,7 @@ class SumUpChart extends HookConsumerWidget {
           chartPart.add(
             PieChartSectionData(
               color: colors[index % 2][0],
-              value: sqrt((totalAmount / 100).abs()),
+              value: (totalAmount / 100).abs(),
               title: '',
               radius: 60 + (keys.indexOf(wallet) == selected.value ? 15 : 0),
               badgePositionPercentageOffset: 0.6,
@@ -177,7 +177,7 @@ class SumUpChart extends HookConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
-                              "Total",
+                              "Dépenses", //"Total",
                               style:
                                   TextStyle(fontSize: 18, color: Colors.grey),
                             ),
