@@ -5,6 +5,7 @@ import 'package:myecl/auth/providers/is_connected_provider.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/others/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
+import 'package:myecl/tools/repository/repository.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class NoInternetPage extends HookConsumerWidget {
@@ -29,9 +30,9 @@ class NoInternetPage extends HookConsumerWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Center(
+              Center(
                 child: Text(
-                  OthersTextConstants.unableToConnectToServer,
+                  "${OthersTextConstants.unableToConnectToServer} ${Repository.host}",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20),
                 ),
