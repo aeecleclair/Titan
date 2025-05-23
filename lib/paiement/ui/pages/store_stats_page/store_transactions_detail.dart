@@ -28,13 +28,14 @@ class StoreTransactionsDetail extends ConsumerWidget {
       child: Column(
         children: history
             .map(
-              (e) => TransactionCard(
-                transaction: e,
+              (t) => TransactionCard(
+                transaction: t,
                 onTap: () => {
                   if (selectedStore.canCancel &&
-                      e.status == TransactionStatus.confirmed)
+                      t.status == TransactionStatus.confirmed &&
+                      t.type != HistoryType.refund_debited)
                     {
-                      showCancelModal(e),
+                      showCancelModal(t),
                     },
                 },
                 storeView: true,
