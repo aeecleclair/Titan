@@ -39,8 +39,8 @@ class AddEditStructurePage extends HookConsumerWidget {
     final allAssociationMembershipList =
         ref.watch(allAssociationMembershipListProvider);
     final currentMembership = useState<AssociationMembership>(
-      (isEdit && structure.associationMembership != null)
-          ? structure.associationMembership!
+      (isEdit)
+          ? structure.associationMembership
           : AssociationMembership.empty(),
     );
     void displayToastWithContext(TypeMsg type, String msg) {

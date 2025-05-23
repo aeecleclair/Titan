@@ -35,7 +35,7 @@ class AssociationMembership {
 
   AssociationMembership.empty() {
     id = '';
-    name = 'Nom';
+    name = "Pas d'adhésion";
     managerGroupId = '';
   }
 
