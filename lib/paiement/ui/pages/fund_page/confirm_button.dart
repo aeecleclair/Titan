@@ -35,9 +35,9 @@ class ConfirmFundButton extends ConsumerWidget {
     final redirectUrl = "titan.alpha://payment";
     final amountToAdd = double.tryParse(fundAmount.replaceAll(",", ".")) ?? 0;
 
-    final enabled = fundAmount.isNotEmpty &&
-        double.parse(fundAmount.replaceAll(',', '.')) >= 1 &&
-        amountToAdd + currentAmount <= maxBalanceAmount;
+    final minValidFundAmount = fundAmount.isNotEmpty &&
+        double.parse(fundAmount.replaceAll(',', '.')) >= 1;
+    final maxValidFundAmount = amountToAdd + currentAmount <= maxBalanceAmount;
 
     void displayToastWithContext(TypeMsg type, String message) {
       displayToast(context, type, message);
@@ -100,8 +100,16 @@ class ConfirmFundButton extends ConsumerWidget {
 
     return WaitingButton(
       onTap: () async {
-        if (!enabled) {
-          displayToastWithContext(TypeMsg.error, "Veuillez entrer un montant");
+        if (!minValidFundAmount) {
+          displayToastWithContext(
+              TypeMsg.error, "Veuillez entrer un montant supérieur à 1€");
+          return;
+        }
+        if (!maxValidFundAmount) {
+          displayToastWithContext(
+            TypeMsg.error,
+            "Le montant maximum de votre portefeuille est de ${maxBalanceAmount.toStringAsFixed(2)}€",
+          );
           return;
         }
 
@@ -135,7 +143,7 @@ class ConfirmFundButton extends ConsumerWidget {
         width: double.infinity,
         margin: const EdgeInsets.symmetric(horizontal: 30),
         decoration: BoxDecoration(
-          color: enabled
+          color: (minValidFundAmount && maxValidFundAmount)
               ? Colors.white
               : Colors.grey.shade200.withValues(alpha: 0.8),
           boxShadow: [
@@ -166,7 +174,7 @@ class ConfirmFundButton extends ConsumerWidget {
           Text(
             "Payer avec HelloAsso",
             style: TextStyle(
-              color: enabled
+              color: (minValidFundAmount && maxValidFundAmount)
                   ? const Color(0xff2e2f5e)
                   : const Color(0xff2e2f5e).withValues(alpha: 0.5),
               fontSize: 20,
