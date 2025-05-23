@@ -43,8 +43,7 @@ class ScanPage extends HookConsumerWidget {
     return Stack(
       children: [
         const Scanner(),
-        if (store.structure.associationMembership != null &&
-            store.structure.associationMembership!.id != '')
+        if (store.structure.associationMembership.id != '')
           Positioned(
             top: 10,
             left: 20,
@@ -78,7 +77,7 @@ class ScanPage extends HookConsumerWidget {
                         Text(
                           bypass
                               ? "Pas d'adhésion obligatoire"
-                              : "Limité à ${store.structure.associationMembership!.name}",
+                              : "Limité à ${store.structure.associationMembership.name}",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
