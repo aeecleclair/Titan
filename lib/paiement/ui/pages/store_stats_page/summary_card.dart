@@ -17,12 +17,22 @@ class SummaryCard extends StatelessWidget {
       switch (transaction.type) {
         case HistoryType.given:
           total -= transaction.total;
+          numberTransactions++;
           break;
+        case HistoryType.refundDebited:
+          total -= transaction.total;
+          break;
+
         case HistoryType.received:
           total += transaction.total;
           numberTransactions++;
           break;
-        default:
+        case HistoryType.refundCredited:
+          total += transaction.total;
+          break;
+
+        case HistoryType.transfer:
+          total += transaction.total;
           break;
       }
     }

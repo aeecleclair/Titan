@@ -27,10 +27,10 @@ class TransactionCard extends StatelessWidget {
       case HistoryType.received:
         icon = HeroIcons.arrowDownRight;
         break;
-      case HistoryType.refund_credited:
+      case HistoryType.refundCredited:
         icon = HeroIcons.arrowUturnLeft;
         break;
-      case HistoryType.refund_debited:
+      case HistoryType.refundDebited:
         icon = HeroIcons.arrowUturnRight;
         break;
       case HistoryType.transfer:
@@ -63,7 +63,7 @@ class TransactionCard extends StatelessWidget {
             CircleAvatar(
               radius: 27,
               backgroundColor: (transaction.type == HistoryType.given ||
-                      transaction.type == HistoryType.refund_debited)
+                      transaction.type == HistoryType.refundDebited)
                   ? const Color(0xfffe807f)
                   : const Color(0xff017f80),
               child: HeroIcon(
@@ -86,7 +86,7 @@ class TransactionCard extends StatelessWidget {
                         child: AutoSizeText(
                           storeView
                               ? transaction.otherWalletName
-                              : "${transaction.type == HistoryType.refund_credited || transaction.type == HistoryType.refund_debited ? "Remboursement - " : ""}${transaction.otherWalletName}",
+                              : "${transaction.type == HistoryType.refundCredited || transaction.type == HistoryType.refundDebited ? "Remboursement - " : ""}${transaction.otherWalletName}",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
