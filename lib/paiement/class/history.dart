@@ -1,6 +1,6 @@
 import 'package:myecl/tools/functions.dart';
 
-enum HistoryType { transfer, received, given, refund_credited, refund_debited }
+enum HistoryType { transfer, received, given, refundCredited, refundDebited }
 
 enum TransactionStatus { confirmed, canceled, refunded, pending }
 
