@@ -486,3 +486,30 @@ String getTitanPackageName() {
 String getTitanLogo() {
   return "assets/images/logo_${getAppFlavor()}.png";
 }
+
+/// Replaces path parameters in the given path with the provided IDs.
+///
+/// This function replaces each segment in the path that starts with a colon (`:`)
+/// with the corresponding value from the `ids` list. The number of IDs must match
+/// the number of parameters in the path.
+///
+/// Rules:
+/// - A path parameter is a substring starting with `:` and ending at the next `/` or the end of the string.
+/// - IDs must not contain `/` or `:` characters.
+/// - Replacements are applied in the order of appearance.
+///
+/// Examples:
+/// - Path: `/advert/:advertId`, IDs: `["123"]` → `/advert/123`
+/// - Path: `/advert/:advertId/:posterId`, IDs: `["123", "456"]` → `/advert/123/456`
+/// - Path: `""` → `""`
+String buildPath(String path, List<String>? ids) {
+  if (path.isEmpty || ids == null || ids.isEmpty) {
+    return path;
+  }
+
+  var newPath = path;
+  for (var i = 0; i < ids.length; i++) {
+    newPath = newPath.replaceFirst(RegExp(":[^/]+"), ids[i]);
+  }
+  return newPath;
+}
