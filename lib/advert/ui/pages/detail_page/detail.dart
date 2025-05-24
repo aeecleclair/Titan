@@ -1,11 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/providers/advert_poster_provider.dart';
 import 'package:myecl/advert/providers/advert_posters_provider.dart';
-import 'package:myecl/advert/providers/advert_provider.dart';
 import 'package:myecl/advert/ui/components/tag_chip.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
@@ -18,12 +19,26 @@ class AdvertDetailPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final advert = ref.watch(advertProvider);
+    final advertId = QR.params['advertId'].toString();
+    final advertList = ref.watch(advertListProvider);
+    final advertPostersNotifier = ref.read(advertPostersProvider.notifier);
+    final logoNotifier = ref.read(advertPosterProvider.notifier);
+
+    final advert = advertList.whenOrNull(
+      data: (adverts) => adverts.firstWhereOrNull((a) => a.id == advertId),
+    );
+
+    if (advertList.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (advert == null) {
+      return const Center(child: Text('Advert not found'));
+    }
+
     final posters = ref.watch(
       advertPostersProvider.select((advertPosters) => advertPosters[advert.id]),
     );
-    final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
-    final logoNotifier = ref.watch(advertPosterProvider.notifier);
     final filteredTagList =
         advert.tags.where((element) => element != "").toList();
     final inTagChipsList = [advert.announcer.name] + filteredTagList;
@@ -45,7 +60,7 @@ class AdvertDetailPage extends HookConsumerWidget {
           child: AutoLoaderChild(
             group: posters,
             notifier: advertPostersNotifier,
-            mapKey: advert,
+            mapKey: advert.id,
             loader: (ref) => logoNotifier.getAdvertPoster(advert.id),
             dataBuilder: (context, value) => Image(
               image: value.first.image,
