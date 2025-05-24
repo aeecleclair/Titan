@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/advert/providers/advert_poster_provider.dart';
 import 'package:myecl/advert/providers/advert_posters_provider.dart';
-import 'package:myecl/advert/providers/advert_provider.dart';
+import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/ui/components/tag_chip.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
@@ -18,12 +18,29 @@ class AdvertDetailPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final advert = ref.watch(advertProvider);
+    final advertId = QR.params['advertId'].toString();
+    final asyncAdvert = ref.watch(singleAdvertProvider(advertId));
+
+    final advertPostersNotifier = ref.read(advertPostersProvider.notifier);
+    final logoNotifier = ref.read(advertPosterProvider.notifier);
+
+    if (asyncAdvert.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (asyncAdvert.hasError) {
+      return Center(child: Text('Error: ${asyncAdvert.error}'));
+    }
+
+    final advert = asyncAdvert.value;
+
+    if (advert == null) {
+      return const Center(child: Text('Advert not found'));
+    }
+
     final posters = ref.watch(
       advertPostersProvider.select((advertPosters) => advertPosters[advert.id]),
     );
-    final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
-    final logoNotifier = ref.watch(advertPosterProvider.notifier);
     final filteredTagList = advert.tags
         .where((element) => element != "")
         .toList();
@@ -46,7 +63,7 @@ class AdvertDetailPage extends HookConsumerWidget {
           child: AutoLoaderChild(
             group: posters,
             notifier: advertPostersNotifier,
-            mapKey: advert,
+            mapKey: advert.id,
             loader: (ref) => logoNotifier.getAdvertPoster(advert.id),
             dataBuilder: (context, value) =>
                 Image(image: value.first.image, fit: BoxFit.fill),

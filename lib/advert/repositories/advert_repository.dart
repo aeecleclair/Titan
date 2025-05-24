@@ -1,4 +1,6 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/class/advert.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class AdvertRepository extends Repository {
@@ -28,3 +30,8 @@ class AdvertRepository extends Repository {
     return await delete("adverts/$id");
   }
 }
+
+final advertRepository = Provider<AdvertRepository>((ref) {
+  final token = ref.watch(tokenProvider);
+  return AdvertRepository()..setToken(token);
+});
