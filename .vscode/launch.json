@@ -5,29 +5,52 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Titan Web Chrome",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "args": [
+        "-d",
+        "chrome",
+        "--dart-define=flavor=dev"
+      ]
+    },
+    {
       "name": "Titan dev",
       "request": "launch",
       "type": "dart",
-      "args": ["--flavor", "dev"]
+      "args": [
+        "--flavor",
+        "dev"
+      ]
     },
     {
       "name": "Titan dev (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile",
-      "args": ["--flavor", "dev"]
+      "args": [
+        "--flavor",
+        "dev"
+      ]
     },
     {
       "name": "Titan alpha",
       "request": "launch",
       "type": "dart",
-      "args": ["--flavor", "alpha"]
+      "args": [
+        "--flavor",
+        "alpha"
+      ]
     },
     {
       "name": "Titan prod",
       "request": "launch",
       "type": "dart",
-      "args": ["--flavor", "prod"]
+      "args": [
+        "--flavor",
+        "prod"
+      ]
     }
   ]
 }
