@@ -139,3 +139,14 @@ TransferType transferTypeFromString(String type) {
       return TransferType.helloAsso;
   }
 }
+
+int statusOrder(WalletDeviceStatus status) {
+  switch (status) {
+    case WalletDeviceStatus.active:
+      return 0;
+    case WalletDeviceStatus.inactive:
+      return 1;
+    case WalletDeviceStatus.revoked:
+      return 2;
+  }
+}
