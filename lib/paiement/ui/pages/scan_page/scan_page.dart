@@ -114,22 +114,39 @@ class ScanPage extends HookConsumerWidget {
                                 horizontal: 50,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade200.withValues(
-                                  alpha: 0.8,
+                                color: ongoingTransaction.when(
+                                  data: (_) =>
+                                      Colors.green.withValues(alpha: 0.8),
+                                  loading: () => Colors.grey.shade200
+                                      .withValues(alpha: 0.8),
+                                  error: (error, stack) =>
+                                      Colors.red.withValues(alpha: 0.8),
                                 ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Column(
                                 children: [
-                                  const Text(
+                                  Text(
                                     "Montant",
-                                    style: TextStyle(fontSize: 13),
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: ongoingTransaction.when(
+                                        data: (_) => Colors.white,
+                                        loading: () => Colors.black,
+                                        error: (error, stack) => Colors.white,
+                                      ),
+                                    ),
                                   ),
                                   Text(
                                     '${formatter.format(barcode.tot / 100)} €',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
+                                      color: ongoingTransaction.when(
+                                        data: (_) => Colors.white,
+                                        loading: () => Colors.black,
+                                        error: (error, stack) => Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ],
