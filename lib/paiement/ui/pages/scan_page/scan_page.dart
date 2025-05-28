@@ -183,33 +183,6 @@ class ScanPage extends HookConsumerWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Row(
                         children: [
-                          Expanded(
-                            child: GestureDetector(
-                              child: Container(
-                                width: double.infinity,
-                                height: 50,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white.withValues(alpha: 0.8),
-                                ),
-                                child: const Text(
-                                  'Suivant',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                              onTap: () {
-                                barcodeNotifier.clearBarcode();
-                                ongoingTransactionNotifier
-                                    .clearOngoingTransaction();
-                              },
-                            ),
-                          ),
-                          const SizedBox(width: 20),
                           CancelButton(
                             onCancel: (bool isInTime) async {
                               if (isInTime) {
@@ -265,6 +238,33 @@ class ScanPage extends HookConsumerWidget {
                                 );
                               }
                             },
+                          ),
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: GestureDetector(
+                              child: Container(
+                                width: double.infinity,
+                                height: 50,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white.withValues(alpha: 0.8),
+                                ),
+                                child: const Text(
+                                  'Suivant',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                barcodeNotifier.clearBarcode();
+                                ongoingTransactionNotifier
+                                    .clearOngoingTransaction();
+                              },
+                            ),
                           ),
                         ],
                       ),

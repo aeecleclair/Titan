@@ -78,7 +78,7 @@ class VoteBars extends HookConsumerWidget {
             gridData: const FlGridData(show: false),
             barTouchData: BarTouchData(
               touchTooltipData: BarTouchTooltipData(
-                tooltipRoundedRadius: 20,
+                tooltipBorderRadius: BorderRadius.circular(20),
                 tooltipPadding: const EdgeInsets.only(
                   left: 10,
                   right: 10,
