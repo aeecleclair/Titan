@@ -77,6 +77,7 @@ class SearchResult extends HookConsumerWidget {
                             final value = await sellerStoreNotifier
                                 .createStoreSeller(seller);
                             if (value) {
+                              queryController.clear();
                               usersNotifier.clear();
                               displayToastWithContext(
                                 TypeMsg.msg,
