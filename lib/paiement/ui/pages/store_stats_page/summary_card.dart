@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/paiement/class/history.dart';
 
@@ -53,11 +52,6 @@ class SummaryCard extends StatelessWidget {
           const CircleAvatar(
             radius: 27,
             backgroundColor: Color(0xff017f80),
-            child: HeroIcon(
-              HeroIcons.arrowDownRight,
-              color: Colors.white,
-              size: 25,
-            ),
           ),
           const SizedBox(width: 15),
           Expanded(
