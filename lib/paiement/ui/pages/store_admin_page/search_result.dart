@@ -41,6 +41,7 @@ class SearchResult extends HookConsumerWidget {
         children: user
             .map(
               (simpleUser) => GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 30,
@@ -49,6 +50,16 @@ class SearchResult extends HookConsumerWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Text(
+                        simpleUser.getName(),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: simpleUser.id == newAdmin.id
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
                       WaitingButton(
                         onTap: () async {
                           await tokenExpireWrapper(ref, () async {
@@ -80,32 +91,18 @@ class SearchResult extends HookConsumerWidget {
                           });
                           onChoose();
                         },
-                        waitingColor: const Color(0xff017f80),
+                        waitingColor: Colors.black,
                         builder: (child) => child,
-                        child: Container(
+                        child: SizedBox(
                           width: 35,
                           height: 35,
-                          decoration: BoxDecoration(
-                            color: const Color(0xff017f80),
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
                           child: Center(
                             child: const HeroIcon(
                               HeroIcons.plus,
-                              color: Colors.white,
+                              color: Colors.black,
                               size: 18,
                             ),
                           ),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        simpleUser.getName(),
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: simpleUser.id == newAdmin.id
-                              ? FontWeight.bold
-                              : FontWeight.normal,
                         ),
                       ),
                     ],

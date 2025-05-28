@@ -20,6 +20,7 @@ class SearchResult extends HookConsumerWidget {
         children: user
             .map(
               (simpleUser) => GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
