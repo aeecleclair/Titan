@@ -132,9 +132,15 @@ class StoreAdminPage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              SearchResult(
+              AsyncChild(
+                value: storeSellers,
+                builder: (context, storeSellers) => SearchResult(
+                sellers: storeSellers
+                    .map((seller) => seller.user.id)
+                    .toList(),
                 queryController: queryController,
                 onChoose: () => isSearching.value = false,
+                ),
               ),
             ],
           ],

@@ -9,13 +9,16 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myecl/user/class/simple_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
   final TextEditingController queryController;
   final void Function() onChoose;
+  final List<String> sellers;
   const SearchResult({
     super.key,
+    required this.sellers,
     required this.queryController,
     required this.onChoose,
   });
@@ -27,9 +30,8 @@ class SearchResult extends HookConsumerWidget {
     final usersNotifier = ref.watch(userList.notifier);
     final newAdmin = ref.watch(newAdminProvider);
     final newAdminNotifier = ref.watch(newAdminProvider.notifier);
-    final sellerStoreNotifier = ref.watch(
-      sellerStoreProvider(store.id).notifier,
-    );
+    final sellerStoreNotifier =
+        ref.watch(sellerStoreProvider(store.id).notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -37,82 +39,85 @@ class SearchResult extends HookConsumerWidget {
 
     return AsyncChild(
       value: users,
-      builder: (context, user) => Column(
-        children: user
-            .map(
-              (simpleUser) => GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 5,
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        simpleUser.getName(),
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: simpleUser.id == newAdmin.id
-                              ? FontWeight.bold
-                              : FontWeight.normal,
+      builder: (context, user) {
+        final List<SimpleUser> filteredUsers = user
+            .where((simpleUser) => !sellers.contains(simpleUser.id))
+            .toList();
+        return Column(
+          children: filteredUsers
+              .map(
+                (simpleUser) => GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          simpleUser.getName(),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: simpleUser.id == newAdmin.id
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 10),
-                      WaitingButton(
-                        onTap: () async {
-                          await tokenExpireWrapper(ref, () async {
-                            newAdminNotifier.updateNewAdmin(simpleUser);
-                            queryController.text = simpleUser.getName();
-                            Seller seller = Seller(
-                              storeId: store.id,
-                              userId: simpleUser.id,
-                              user: simpleUser,
-                              canBank: true,
-                              canSeeHistory: true,
-                              canCancel: true,
-                              canManageSellers: true,
-                            );
-                            final value = await sellerStoreNotifier
-                                .createStoreSeller(seller);
-                            if (value) {
-                              queryController.clear();
-                              usersNotifier.clear();
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                "Vendeur ajouté",
+                        const SizedBox(width: 10),
+                        WaitingButton(
+                          onTap: () async {
+                            await tokenExpireWrapper(ref, () async {
+                              newAdminNotifier.updateNewAdmin(simpleUser);
+                              queryController.text = simpleUser.getName();
+                              Seller seller = Seller(
+                                storeId: store.id,
+                                userId: simpleUser.id,
+                                user: simpleUser,
+                                canBank: true,
+                                canSeeHistory: true,
+                                canCancel: true,
+                                canManageSellers: true,
                               );
-                            } else {
-                              displayToastWithContext(
-                                TypeMsg.error,
-                                "Erreur lors de l'ajout",
-                              );
-                            }
-                          });
-                          onChoose();
-                        },
-                        waitingColor: Colors.black,
-                        builder: (child) => child,
-                        child: SizedBox(
-                          width: 35,
-                          height: 35,
-                          child: Center(
-                            child: const HeroIcon(
-                              HeroIcons.plus,
-                              color: Colors.black,
-                              size: 18,
+                              final value = await sellerStoreNotifier
+                                  .createStoreSeller(seller);
+                              if (value) {
+                                queryController.clear();
+                                usersNotifier.clear();
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  "Vendeur ajouté",
+                                );
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  "Erreur lors de l'ajout",
+                                );
+                              }
+                            });
+                            onChoose();
+                          },
+                          waitingColor: Colors.black,
+                          builder: (child) => child,
+                          child: SizedBox(
+                            width: 35,
+                            height: 35,
+                            child: Center(
+                              child: const HeroIcon(
+                                HeroIcons.plus,
+                                color: Colors.black,
+                                size: 18,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            )
-            .toList(),
-      ),
+              )
+              .toList(),
+        );
+      },
     );
   }
 }
