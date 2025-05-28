@@ -13,6 +13,7 @@ import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 
 class StoreAdminPage extends HookConsumerWidget {
   const StoreAdminPage({super.key});
@@ -21,12 +22,14 @@ class StoreAdminPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(selectedStoreProvider);
     final storeSellers = ref.watch(sellerStoreProvider(store.id));
-    final storeSellersNotifier = ref.read(
-      sellerStoreProvider(store.id).notifier,
-    );
+    final storeSellersNotifier =
+        ref.read(sellerStoreProvider(store.id).notifier);
     final usersNotifier = ref.watch(userList.notifier);
     final queryController = useTextEditingController();
     final isSearching = useState(false);
+
+    final me = ref.watch(userProvider);
+
     return PaymentTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -82,11 +85,19 @@ class StoreAdminPage extends HookConsumerWidget {
               AsyncChild(
                 value: storeSellers,
                 builder: (context, storeSellers) {
+                  final mySellers = storeSellers
+                      .where((seller) => seller.user.id == me.id)
+                      .first;
                   return Column(
                     children: [
-                      ...storeSellers.map((storeSeller) {
-                        return SellerRightCard(storeSeller: storeSeller);
-                      }),
+                      ...storeSellers.map(
+                        (storeSeller) {
+                          return SellerRightCard(
+                            me: mySellers,
+                            storeSeller: storeSeller,
+                          );
+                        },
+                      ),
                     ],
                   );
                 },
@@ -103,9 +114,8 @@ class StoreAdminPage extends HookConsumerWidget {
                         onChanged: (value) {
                           tokenExpireWrapper(ref, () async {
                             if (queryController.text.isNotEmpty) {
-                              await usersNotifier.filterUsers(
-                                queryController.text,
-                              );
+                              await usersNotifier
+                                  .filterUsers(queryController.text);
                             } else {
                               usersNotifier.clear();
                             }
@@ -135,11 +145,10 @@ class StoreAdminPage extends HookConsumerWidget {
               AsyncChild(
                 value: storeSellers,
                 builder: (context, storeSellers) => SearchResult(
-                sellers: storeSellers
-                    .map((seller) => seller.user.id)
-                    .toList(),
-                queryController: queryController,
-                onChoose: () => isSearching.value = false,
+                  sellers:
+                      storeSellers.map((seller) => seller.user.id).toList(),
+                  queryController: queryController,
+                  onChoose: () => isSearching.value = false,
                 ),
               ),
             ],

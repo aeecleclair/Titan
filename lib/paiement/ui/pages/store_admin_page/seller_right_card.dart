@@ -11,8 +11,9 @@ import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 
 class SellerRightCard extends ConsumerWidget {
+  final Seller me;
   final Seller storeSeller;
-  const SellerRightCard({super.key, required this.storeSeller});
+  const SellerRightCard({super.key, required this.me, required this.storeSeller});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,6 +27,8 @@ class SellerRightCard extends ConsumerWidget {
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
+
+    final amIAdmin = me.userId == store.structure.managerUser.id;
 
     final isStructureAdmin =
         storeSeller.userId == store.structure.managerUser.id;
@@ -95,8 +98,8 @@ class SellerRightCard extends ConsumerWidget {
             context: context,
             backgroundColor: Colors.transparent,
             scrollControlDisabledMaxHeightRatio:
-                ((isStructureAdmin ? 80 : 100) + 45 * icons.length) /
-                MediaQuery.of(context).size.height,
+                ((amIAdmin ? 80 : 100) + 45 * icons.length) /
+                    MediaQuery.of(context).size.height,
             builder: (context) {
               return ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -137,8 +140,8 @@ class SellerRightCard extends ConsumerWidget {
                                   ),
                                 ),
                                 const Spacer(),
-                                if (storeSeller.canManageSellers &&
-                                    !isStructureAdmin)
+                                if (me.canManageSellers &&
+                                    !amIAdmin)
                                   GestureDetector(
                                     onTap: () async {
                                       tokenExpireWrapper(ref, () async {
@@ -188,7 +191,7 @@ class SellerRightCard extends ConsumerWidget {
                               ],
                             ),
                           ),
-                      if (storeSeller.canManageSellers && !isStructureAdmin)
+                      if (me.canManageSellers && !amIAdmin)
                         GestureDetector(
                           onTap: () async {
                             await showDialog(
