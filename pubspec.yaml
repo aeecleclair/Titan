@@ -30,6 +30,7 @@ dependencies:
   flutter_appauth: ^9.0.0
   flutter_dotenv: ^5.0.2
   flutter_hooks: ^0.21.2
+  flutter_lints: ^6.0.0
   flutter_local_notifications: ^19.1.0
   flutter_localizations:
     sdk: flutter
@@ -75,7 +76,6 @@ dev_dependencies:
   dependency_validator: ^5.0.2
   dotenv: ^4.0.1
   flutter_launcher_icons: ^0.14.3
-  flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.3
