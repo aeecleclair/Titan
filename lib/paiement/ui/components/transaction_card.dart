@@ -120,7 +120,7 @@ class TransactionCard extends StatelessWidget {
                   ),
                   if (transaction.refund != null)
                     Text(
-                      "Remboursé le  ${DateFormat("EEE dd MMMM yyyy à HH:mm", "fr_FR").format(transaction.refund!.creation)} de ${formatter.format(transaction.refund!.total / 100)} €",
+                      "Remboursé le ${DateFormat("EEE dd MMMM yyyy à HH:mm", "fr_FR").format(transaction.refund!.creation)} de ${formatter.format(transaction.refund!.total / 100)} €",
                       style: const TextStyle(
                         color: Color.fromARGB(255, 16, 46, 55),
                         fontSize: 9,
