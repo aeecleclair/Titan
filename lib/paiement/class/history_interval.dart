@@ -10,7 +10,7 @@ class HistoryInterval {
   }
 
   bool contains(DateTime date) {
-    return date.isAfter(start) && date.isBefore(end);
+    return !date.isBefore(start) && !date.isAfter(end); 
   }
 
   HistoryInterval.currentMonth()
