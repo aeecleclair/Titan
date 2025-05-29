@@ -46,7 +46,7 @@ class History {
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'type': type.toString().split('.').last,
+        'type': historyTypeToString(type),
         'other_wallet_name': otherWalletName,
         'total': total,
         'creation': processDateToAPI(creation),
