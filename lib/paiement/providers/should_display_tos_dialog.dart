@@ -5,7 +5,7 @@ class ShouldDisplayTosDialog extends StateNotifier<bool> {
   final bool defaultValue;
   ShouldDisplayTosDialog(this.defaultValue) : super(defaultValue);
 
-  void update(s) {
+  void update(bool s) {
     state = s;
   }
 }
