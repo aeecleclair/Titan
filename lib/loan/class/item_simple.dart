@@ -1,8 +1,5 @@
 class ItemSimple {
-  ItemSimple({
-    required this.id,
-    required this.name,
-  });
+  ItemSimple({required this.id, required this.name});
   late final String id;
   late final String name;
 
@@ -19,10 +16,7 @@ class ItemSimple {
   }
 
   ItemSimple copyWith({String? id, String? name}) {
-    return ItemSimple(
-      id: id ?? this.id,
-      name: name ?? this.name,
-    );
+    return ItemSimple(id: id ?? this.id, name: name ?? this.name);
   }
 
   ItemSimple.empty() {

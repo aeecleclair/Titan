@@ -27,29 +27,21 @@ class StoreStatsPage extends ConsumerWidget {
         child: AsyncChild(
           value: selectedHistory,
           builder: (context, history) {
-            final sortedByDate = history
-                .where(
-                  (element) =>
-                      selectedInterval.contains(element.creation)
-                )
-                .toList()
-              ..sort((a, b) => a.creation.compareTo(b.creation));
+            final sortedByDate =
+                history
+                    .where(
+                      (element) => selectedInterval.contains(element.creation),
+                    )
+                    .toList()
+                  ..sort((a, b) => a.creation.compareTo(b.creation));
             return Column(
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 const IntervalSelector(),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 SummaryCard(history: sortedByDate),
-                const SizedBox(
-                  height: 20,
-                ),
-                StoreTransactionsDetail(
-                  history: sortedByDate,
-                ),
+                const SizedBox(height: 20),
+                StoreTransactionsDetail(history: sortedByDate),
               ],
             );
           },

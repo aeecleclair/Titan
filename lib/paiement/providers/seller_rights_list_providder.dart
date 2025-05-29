@@ -16,5 +16,5 @@ class SellerRightsListNotifier extends StateNotifier<List<bool>> {
 
 final sellerRightsListProvider =
     StateNotifierProvider<SellerRightsListNotifier, List<bool>>((ref) {
-  return SellerRightsListNotifier();
-});
+      return SellerRightsListNotifier();
+    });

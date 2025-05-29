@@ -30,16 +30,16 @@ class ScanPage extends HookConsumerWidget {
     final formatter = NumberFormat("#,##0.00", "fr_FR");
     final transactionNotifier = ref.watch(transactionProvider.notifier);
     final ongoingTransaction = ref.watch(ongoingTransactionProvider);
-    final ongoingTransactionNotifier =
-        ref.watch(ongoingTransactionProvider.notifier);
+    final ongoingTransactionNotifier = ref.watch(
+      ongoingTransactionProvider.notifier,
+    );
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
-    final opacity = useAnimationController(
-      duration: const Duration(seconds: 1),
-    )..repeat(reverse: true);
+    final opacity = useAnimationController(duration: const Duration(seconds: 1))
+      ..repeat(reverse: true);
     return Stack(
       children: [
         const Scanner(),
@@ -197,9 +197,7 @@ class ScanPage extends HookConsumerWidget {
               ),
             ),
             // Qr code scanning zone
-            SizedBox(
-              height: MediaQuery.of(context).size.width * 0.8,
-            ),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.8),
             Expanded(
               child: Column(
                 children: [
@@ -234,8 +232,8 @@ class ScanPage extends HookConsumerWidget {
                                           final value =
                                               await transactionNotifier
                                                   .cancelTransaction(
-                                            transaction.id,
-                                          );
+                                                    transaction.id,
+                                                  );
                                           value.when(
                                             data: (value) {
                                               if (value) {

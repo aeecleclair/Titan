@@ -85,11 +85,10 @@ class SellerRightDialog extends StatelessWidget {
                             },
                             waitingColor: Colors.black,
                             builder: (child) => Container(
-                              width: MediaQuery.of(context).size.width -
+                              width:
+                                  MediaQuery.of(context).size.width -
                                   4 * Consts.padding,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 16,
-                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.grey.shade300,
@@ -97,10 +96,7 @@ class SellerRightDialog extends StatelessWidget {
                                   BoxShadow(
                                     color: Colors.grey.withValues(alpha: 0.3),
                                     blurRadius: 2.0,
-                                    offset: const Offset(
-                                      1.0,
-                                      2.0,
-                                    ),
+                                    offset: const Offset(1.0, 2.0),
                                   ),
                                 ],
                               ),
@@ -109,9 +105,7 @@ class SellerRightDialog extends StatelessWidget {
                             child: const Center(
                               child: Text(
                                 "Ajouter",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
@@ -129,10 +123,7 @@ class SellerRightDialog extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: const LinearGradient(
-                        colors: [
-                          Consts.gradient1,
-                          Consts.gradient2,
-                        ],
+                        colors: [Consts.gradient1, Consts.gradient2],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),

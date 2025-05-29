@@ -10,8 +10,9 @@ class RightCheckBox extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sellerRightsList = ref.watch(sellerRightsListProvider);
-    final sellerRightsListNotifier =
-        ref.watch(sellerRightsListProvider.notifier);
+    final sellerRightsListNotifier = ref.watch(
+      sellerRightsListProvider.notifier,
+    );
     return CheckboxListTile(
       title: Text(title),
       value: sellerRightsList[index],

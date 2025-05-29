@@ -14,5 +14,5 @@ class LastTimeScannedNotifier extends StateNotifier<DateTime?> {
 
 final lastTimeScannedProvider =
     StateNotifierProvider<LastTimeScannedNotifier, DateTime?>((ref) {
-  return LastTimeScannedNotifier();
-});
+      return LastTimeScannedNotifier();
+    });

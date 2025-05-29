@@ -22,8 +22,9 @@ class StoreAdminPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(selectedStoreProvider);
     final storeSellers = ref.watch(sellerStoreProvider(store.id));
-    final storeSellersNotifier =
-        ref.read(sellerStoreProvider(store.id).notifier);
+    final storeSellersNotifier = ref.read(
+      sellerStoreProvider(store.id).notifier,
+    );
     final usersNotifier = ref.watch(userList.notifier);
     final queryController = useTextEditingController();
     final isSearching = useState(false);
@@ -95,14 +96,12 @@ class StoreAdminPage extends HookConsumerWidget {
                   }
                   return Column(
                     children: [
-                      ...storeSellers.map(
-                        (storeSeller) {
-                          return SellerRightCard(
-                            me: mySellers,
-                            storeSeller: storeSeller,
-                          );
-                        },
-                      ),
+                      ...storeSellers.map((storeSeller) {
+                        return SellerRightCard(
+                          me: mySellers,
+                          storeSeller: storeSeller,
+                        );
+                      }),
                     ],
                   );
                 },
@@ -119,8 +118,9 @@ class StoreAdminPage extends HookConsumerWidget {
                         onChanged: (value) {
                           tokenExpireWrapper(ref, () async {
                             if (queryController.text.isNotEmpty) {
-                              await usersNotifier
-                                  .filterUsers(queryController.text);
+                              await usersNotifier.filterUsers(
+                                queryController.text,
+                              );
                             } else {
                               usersNotifier.clear();
                             }
@@ -150,8 +150,9 @@ class StoreAdminPage extends HookConsumerWidget {
               AsyncChild(
                 value: storeSellers,
                 builder: (context, storeSellers) => SearchResult(
-                  sellers:
-                      storeSellers.map((seller) => seller.user.id).toList(),
+                  sellers: storeSellers
+                      .map((seller) => seller.user.id)
+                      .toList(),
                   queryController: queryController,
                   onChoose: () => isSearching.value = false,
                 ),

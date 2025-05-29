@@ -11,8 +11,9 @@ class IntervalSelector extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final now = DateTime.now();
     final selectedInterval = ref.watch(selectedIntervalProvider);
-    final selectedIntervalNotifier =
-        ref.read(selectedIntervalProvider.notifier);
+    final selectedIntervalNotifier = ref.read(
+      selectedIntervalProvider.notifier,
+    );
 
     Future<DateTime?> getDate(DateTime initialDate) async {
       return await showDatePicker(
@@ -51,20 +52,22 @@ class IntervalSelector extends ConsumerWidget {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(
-                width: 5,
-              ),
+              SizedBox(width: 5),
               GestureDetector(
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                    vertical: 5,
+                  ),
                   decoration: BoxDecoration(
                     color: Color(0xff017f80).withAlpha(50),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    DateFormat("dd MMMM yyyy", "fr_FR")
-                        .format(selectedInterval.start),
+                    DateFormat(
+                      "dd MMMM yyyy",
+                      "fr_FR",
+                    ).format(selectedInterval.start),
                     style: TextStyle(
                       color: const Color(0xff204550),
                       fontWeight: FontWeight.bold,
@@ -79,9 +82,7 @@ class IntervalSelector extends ConsumerWidget {
                   }
                 },
               ),
-              SizedBox(
-                width: 5,
-              ),
+              SizedBox(width: 5),
               Text(
                 "au",
                 style: TextStyle(
@@ -90,20 +91,22 @@ class IntervalSelector extends ConsumerWidget {
                   fontSize: 18,
                 ),
               ),
-              SizedBox(
-                width: 5,
-              ),
+              SizedBox(width: 5),
               GestureDetector(
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                    vertical: 5,
+                  ),
                   decoration: BoxDecoration(
                     color: Color(0xff017f80).withAlpha(50),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    DateFormat("dd MMMM yyyy", "fr_FR")
-                        .format(selectedInterval.end),
+                    DateFormat(
+                      "dd MMMM yyyy",
+                      "fr_FR",
+                    ).format(selectedInterval.end),
                     style: TextStyle(
                       color: const Color(0xff204550),
                       fontWeight: FontWeight.bold,
@@ -121,8 +124,10 @@ class IntervalSelector extends ConsumerWidget {
               Spacer(),
               GestureDetector(
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                    vertical: 5,
+                  ),
                   decoration: BoxDecoration(
                     color: Color(0xff017f80).withAlpha(50),
                     borderRadius: BorderRadius.circular(10),

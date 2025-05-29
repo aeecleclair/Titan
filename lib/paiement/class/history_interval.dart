@@ -13,7 +13,15 @@ class HistoryInterval {
     return date.isAfter(start) && date.isBefore(end);
   }
 
-  HistoryInterval.currentMonth() 
-      : start = DateTime(DateTime.now().year, DateTime.now().month - 1, DateTime.now().day),
-        end = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  HistoryInterval.currentMonth()
+    : start = DateTime(
+        DateTime.now().year,
+        DateTime.now().month - 1,
+        DateTime.now().day,
+      ),
+      end = DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+      );
 }

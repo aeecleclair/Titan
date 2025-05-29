@@ -19,5 +19,5 @@ class SelectedIntervalNotifier extends StateNotifier<HistoryInterval> {
 
 final selectedIntervalProvider =
     StateNotifierProvider<SelectedIntervalNotifier, HistoryInterval>((ref) {
-  return SelectedIntervalNotifier();
-});
+      return SelectedIntervalNotifier();
+    });

@@ -33,10 +33,12 @@ class SearchResult extends HookConsumerWidget {
     final usersNotifier = ref.watch(userList.notifier);
     final newAdmin = ref.watch(newAdminProvider);
     final newAdminNotifier = ref.watch(newAdminProvider.notifier);
-    final sellerStoreNotifier =
-        ref.watch(sellerStoreProvider(store.id).notifier);
-    final sellerRightsListNotifier =
-        ref.watch(sellerRightsListProvider.notifier);
+    final sellerStoreNotifier = ref.watch(
+      sellerStoreProvider(store.id).notifier,
+    );
+    final sellerRightsListNotifier = ref.watch(
+      sellerRightsListProvider.notifier,
+    );
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -54,22 +56,13 @@ class SearchResult extends HookConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    RightCheckBox(
-                      title: "Peut gérer la banque",
-                      index: 0,
-                    ),
-                    RightCheckBox(
-                      title: "Peut voir l'historique",
-                      index: 1,
-                    ),
+                    RightCheckBox(title: "Peut gérer la banque", index: 0),
+                    RightCheckBox(title: "Peut voir l'historique", index: 1),
                     RightCheckBox(
                       title: "Peut annuler des transactions",
                       index: 2,
                     ),
-                    RightCheckBox(
-                      title: "Peut gérer les vendeurs",
-                      index: 3,
-                    ),
+                    RightCheckBox(title: "Peut gérer les vendeurs", index: 3),
                   ],
                 ),
                 onYes: () async {
@@ -85,16 +78,14 @@ class SearchResult extends HookConsumerWidget {
                       canCancel: sellerRightsList[2],
                       canManageSellers: sellerRightsList[3],
                     );
-                    final value =
-                        await sellerStoreNotifier.createStoreSeller(seller);
+                    final value = await sellerStoreNotifier.createStoreSeller(
+                      seller,
+                    );
                     if (value) {
                       queryController.clear();
                       usersNotifier.clear();
                       sellerRightsListNotifier.clearRights();
-                      displayToastWithContext(
-                        TypeMsg.msg,
-                        "Vendeur ajouté",
-                      );
+                      displayToastWithContext(TypeMsg.msg, "Vendeur ajouté");
                       Navigator.of(context).pop();
                     } else {
                       displayToastWithContext(
@@ -124,8 +115,10 @@ class SearchResult extends HookConsumerWidget {
                 (simpleUser) => GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 30,
+                      vertical: 5,
+                    ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [

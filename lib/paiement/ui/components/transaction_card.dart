@@ -49,19 +49,14 @@ class TransactionCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 27,
-              backgroundColor: (transaction.type == HistoryType.given ||
+              backgroundColor:
+                  (transaction.type == HistoryType.given ||
                       transaction.type == HistoryType.refundDebited)
                   ? const Color(0xfffe807f)
                   : const Color(0xff017f80),
-              child: HeroIcon(
-                icon,
-                color: Colors.white,
-                size: 25,
-              ),
+              child: HeroIcon(icon, color: Colors.white, size: 25),
             ),
-            const SizedBox(
-              width: 15,
-            ),
+            const SizedBox(width: 15),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -83,9 +78,7 @@ class TransactionCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      const SizedBox(width: 10),
                       if (transaction.status == TransactionStatus.canceled)
                         Container(
                           padding: const EdgeInsets.symmetric(
@@ -93,8 +86,12 @@ class TransactionCard extends StatelessWidget {
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 204, 70, 25)
-                                .withValues(alpha: 0.2),
+                            color: const Color.fromARGB(
+                              255,
+                              204,
+                              70,
+                              25,
+                            ).withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: Text(
@@ -108,9 +105,7 @@ class TransactionCard extends StatelessWidget {
                         ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  const SizedBox(height: 5),
                   Text(
                     "Le ${DateFormat("EEE dd MMMM yyyy à HH:mm", "fr_FR").format(transaction.creation)}",
                     style: const TextStyle(
@@ -129,9 +124,7 @@ class TransactionCard extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(
-              width: 10,
-            ),
+            const SizedBox(width: 10),
             Text(
               "${transaction.type == HistoryType.given ? " -" : " +"} ${formatter.format(transaction.total / 100)} €",
               style: TextStyle(
@@ -140,9 +133,9 @@ class TransactionCard extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 decoration:
                     (transaction.status == TransactionStatus.confirmed ||
-                            transaction.status == TransactionStatus.refunded)
-                        ? TextDecoration.none
-                        : TextDecoration.lineThrough,
+                        transaction.status == TransactionStatus.refunded)
+                    ? TextDecoration.none
+                    : TextDecoration.lineThrough,
                 decorationColor: const Color(0xff204550).withValues(alpha: 0.8),
                 decorationThickness: 2.85,
               ),

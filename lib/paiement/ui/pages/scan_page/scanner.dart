@@ -64,8 +64,9 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
     final store = ref.read(selectedStoreProvider);
     final scanNotifier = ref.read(scanProvider.notifier);
-    final ongoingTransactionNotifier =
-        ref.read(ongoingTransactionProvider.notifier);
+    final ongoingTransactionNotifier = ref.read(
+      ongoingTransactionProvider.notifier,
+    );
     unawaited(controller.stop());
     if (mounted && barcodes.barcodes.isNotEmpty && barcode == null) {
       final data = barcodeNotifier.updateBarcode(
@@ -74,49 +75,34 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
       if (!bypass) {
         final canScan = await scanNotifier.canScan(store.id, data);
         if (!canScan) {
-          showWithoutMembershipDialog(
-            () async {
-              final value =
-                  await scanNotifier.scan(store.id, data, bypass: true);
-              if (value == null) {
-                displayToastWithContext(
-                  TypeMsg.error,
-                  "QR Code déjà utilisé",
-                );
-                barcodeNotifier.clearBarcode();
-                return;
-              }
-              ongoingTransactionNotifier.updateOngoingTransaction(value);
-            },
-          );
+          showWithoutMembershipDialog(() async {
+            final value = await scanNotifier.scan(store.id, data, bypass: true);
+            if (value == null) {
+              displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
+              barcodeNotifier.clearBarcode();
+              return;
+            }
+            ongoingTransactionNotifier.updateOngoingTransaction(value);
+          });
           unawaited(controller.start());
-          Future.delayed(
-            const Duration(seconds: 2),
-            () {
-              ongoingTransactionNotifier.clearOngoingTransaction();
-            },
-          );
+          Future.delayed(const Duration(seconds: 2), () {
+            ongoingTransactionNotifier.clearOngoingTransaction();
+          });
           return;
         }
       }
       final value = await scanNotifier.scan(store.id, data);
       if (value == null) {
-        displayToastWithContext(
-          TypeMsg.error,
-          "QR Code déjà utilisé",
-        );
+        displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
         barcodeNotifier.clearBarcode();
         return;
       } else {
         ongoingTransactionNotifier.updateOngoingTransaction(value);
       }
       unawaited(controller.start());
-      Future.delayed(
-        const Duration(seconds: 2),
-        () {
-          ongoingTransactionNotifier.clearOngoingTransaction();
-        },
-      );
+      Future.delayed(const Duration(seconds: 2), () {
+        ongoingTransactionNotifier.clearOngoingTransaction();
+      });
     }
   }
 
@@ -166,9 +152,10 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
               decoration: ShapeDecoration(
                 shape: QrScannerOverlayShape(
                   borderColor: ongoingTransaction.when(
-                      data: (_) => Colors.green,
-                      error: (_, __) => Colors.red,
-                      loading: () => Colors.white),
+                    data: (_) => Colors.green,
+                    error: (_, __) => Colors.red,
+                    loading: () => Colors.white,
+                  ),
                   borderRadius: 10,
                   borderLength: 40,
                   borderWidth: 7,
