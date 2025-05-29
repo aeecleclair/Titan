@@ -58,20 +58,23 @@ class NotificationPage extends HookConsumerWidget {
                                 width: 60,
                                 curveIn: Curves.easeInBack,
                                 curveOut: Curves.easeOutBack,
-                                animationDuration:
-                                    const Duration(milliseconds: 500),
+                                animationDuration: const Duration(
+                                  milliseconds: 500,
+                                ),
                                 switchDecoration: (value, _) => BoxDecoration(
                                   color: value
-                                      ? ColorConstants.gradient1
-                                          .withValues(alpha: 0.3)
+                                      ? ColorConstants.gradient1.withValues(
+                                          alpha: 0.3,
+                                        )
                                       : Colors.grey.shade200,
                                   borderRadius: BorderRadius.circular(30),
                                   shape: BoxShape.rectangle,
                                   boxShadow: [
                                     BoxShadow(
                                       color: value
-                                          ? ColorConstants.gradient1
-                                              .withValues(alpha: 0.2)
+                                          ? ColorConstants.gradient1.withValues(
+                                              alpha: 0.2,
+                                            )
                                           : Colors.grey.withValues(alpha: 0.2),
                                       spreadRadius: 1,
                                       blurRadius: 3,
@@ -90,10 +93,12 @@ class NotificationPage extends HookConsumerWidget {
                                   boxShadow: [
                                     BoxShadow(
                                       color: value
-                                          ? ColorConstants.gradient1
-                                              .withValues(alpha: 0.2)
-                                          : Colors.grey.shade200
-                                              .withValues(alpha: 0.2),
+                                          ? ColorConstants.gradient1.withValues(
+                                              alpha: 0.2,
+                                            )
+                                          : Colors.grey.shade200.withValues(
+                                              alpha: 0.2,
+                                            ),
                                       spreadRadius: 5,
                                       blurRadius: 7,
                                       offset: const Offset(

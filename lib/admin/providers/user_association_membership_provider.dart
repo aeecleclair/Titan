@@ -4,7 +4,7 @@ import 'package:myecl/admin/class/user_association_membership.dart';
 class UserAssociationMembershipNotifier
     extends StateNotifier<UserAssociationMembership> {
   UserAssociationMembershipNotifier()
-      : super(UserAssociationMembership.empty());
+    : super(UserAssociationMembership.empty());
 
   void setUserAssociationMembership(
     UserAssociationMembership userUserAssociationMembership,
@@ -13,7 +13,8 @@ class UserAssociationMembershipNotifier
   }
 }
 
-final userAssociationMembershipProvider = StateNotifierProvider<
-    UserAssociationMembershipNotifier, UserAssociationMembership>(
-  (ref) => UserAssociationMembershipNotifier(),
-);
+final userAssociationMembershipProvider =
+    StateNotifierProvider<
+      UserAssociationMembershipNotifier,
+      UserAssociationMembership
+    >((ref) => UserAssociationMembershipNotifier());

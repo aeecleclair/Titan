@@ -55,9 +55,7 @@ class AddEditPrizePage extends HookConsumerWidget {
                       color: RaffleColorConstants.gradient1,
                     ),
                     const SizedBox(height: 35),
-                    const SectionTitle(
-                      text: RaffleTextConstants.quantity,
-                    ),
+                    const SectionTitle(text: RaffleTextConstants.quantity),
                     const SizedBox(height: 5),
                     TextEntry(
                       label: RaffleTextConstants.quantity,
@@ -73,9 +71,7 @@ class AddEditPrizePage extends HookConsumerWidget {
                       controller: name,
                     ),
                     const SizedBox(height: 50),
-                    const SectionTitle(
-                      text: RaffleTextConstants.description,
-                    ),
+                    const SectionTitle(text: RaffleTextConstants.description),
                     const SizedBox(height: 5),
                     TextEntry(
                       label: RaffleTextConstants.description,
@@ -94,8 +90,9 @@ class AddEditPrizePage extends HookConsumerWidget {
                               raffleId: isEdit ? prize.raffleId : raffle.id,
                               quantity: int.parse(quantity.text),
                             );
-                            final prizeNotifier =
-                                ref.watch(prizeListProvider.notifier);
+                            final prizeNotifier = ref.watch(
+                              prizeListProvider.notifier,
+                            );
                             final value = isEdit
                                 ? await prizeNotifier.updatePrize(newPrize)
                                 : await prizeNotifier.addPrize(newPrize);

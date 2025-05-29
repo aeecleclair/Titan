@@ -22,8 +22,9 @@ class PasswordStrength extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentStrength =
-        useState(SettingsTextConstants.passwordStrengthVeryWeak);
+    final currentStrength = useState(
+      SettingsTextConstants.passwordStrengthVeryWeak,
+    );
     final useColor = textColor == Colors.black;
     return ValueListenableBuilder(
       valueListenable: newPassword,

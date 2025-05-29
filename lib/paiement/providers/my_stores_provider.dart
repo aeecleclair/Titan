@@ -6,7 +6,7 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 class MyStoresNotifier extends ListNotifier<UserStore> {
   final UsersMeRepository usersMeRepository;
   MyStoresNotifier({required this.usersMeRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<UserStore>>> getMyStores() async {
     return await loadList(usersMeRepository.getMyStores);
@@ -15,6 +15,7 @@ class MyStoresNotifier extends ListNotifier<UserStore> {
 
 final myStoresProvider =
     StateNotifierProvider<MyStoresNotifier, AsyncValue<List<UserStore>>>((ref) {
-  final myStoresRepository = ref.watch(usersMeRepositoryProvider);
-  return MyStoresNotifier(usersMeRepository: myStoresRepository)..getMyStores();
-});
+      final myStoresRepository = ref.watch(usersMeRepositoryProvider);
+      return MyStoresNotifier(usersMeRepository: myStoresRepository)
+        ..getMyStores();
+    });

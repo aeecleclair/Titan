@@ -43,68 +43,60 @@ class AmapRouter {
   AmapRouter(this.ref);
 
   QRoute route() => QRoute(
-        name: "amap",
-        path: AmapRouter.root,
-        builder: () => main_page.AmapMainPage(),
+    name: "amap",
+    path: AmapRouter.root,
+    builder: () => main_page.AmapMainPage(),
+    middleware: [
+      AuthenticatedMiddleware(ref),
+      DeferredLoadingMiddleware(main_page.loadLibrary),
+    ],
+    children: [
+      QRoute(
+        path: admin,
+        builder: () => admin_page.AdminPage(),
         middleware: [
-          AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary),
+          AdminMiddleware(ref, isAmapAdminProvider),
+          DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [
           QRoute(
-            path: admin,
-            builder: () => admin_page.AdminPage(),
+            path: addEditDelivery,
+            builder: () => add_edit_delivery_cmd_page.AddEditDeliveryPage(),
             middleware: [
-              AdminMiddleware(ref, isAmapAdminProvider),
-              DeferredLoadingMiddleware(admin_page.loadLibrary),
-            ],
-            children: [
-              QRoute(
-                path: addEditDelivery,
-                builder: () => add_edit_delivery_cmd_page.AddEditDeliveryPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(
-                    add_edit_delivery_cmd_page.loadLibrary,
-                  ),
-                ],
-              ),
-              QRoute(
-                path: addEditProduct,
-                builder: () => add_edit_product.AddEditProduct(),
-                middleware: [
-                  DeferredLoadingMiddleware(add_edit_product.loadLibrary),
-                ],
-              ),
-              QRoute(
-                path: detailDelivery,
-                builder: () => detail_delivery_page.DetailDeliveryPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(
-                    detail_delivery_page.loadLibrary,
-                  ),
-                ],
-              ),
+              DeferredLoadingMiddleware(add_edit_delivery_cmd_page.loadLibrary),
             ],
           ),
           QRoute(
-            path: listProduct,
-            builder: () => list_products_page.ListProductPage(),
+            path: addEditProduct,
+            builder: () => add_edit_product.AddEditProduct(),
             middleware: [
-              DeferredLoadingMiddleware(list_products_page.loadLibrary),
+              DeferredLoadingMiddleware(add_edit_product.loadLibrary),
             ],
           ),
           QRoute(
-            path: detailOrder,
-            builder: () => detail_page.DetailPage(),
-            middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
-          ),
-          QRoute(
-            path: presentation,
-            builder: () => presentation_page.PresentationPage(),
+            path: detailDelivery,
+            builder: () => detail_delivery_page.DetailDeliveryPage(),
             middleware: [
-              DeferredLoadingMiddleware(presentation_page.loadLibrary),
+              DeferredLoadingMiddleware(detail_delivery_page.loadLibrary),
             ],
           ),
         ],
-      );
+      ),
+      QRoute(
+        path: listProduct,
+        builder: () => list_products_page.ListProductPage(),
+        middleware: [DeferredLoadingMiddleware(list_products_page.loadLibrary)],
+      ),
+      QRoute(
+        path: detailOrder,
+        builder: () => detail_page.DetailPage(),
+        middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
+      ),
+      QRoute(
+        path: presentation,
+        builder: () => presentation_page.PresentationPage(),
+        middleware: [DeferredLoadingMiddleware(presentation_page.loadLibrary)],
+      ),
+    ],
+  );
 }

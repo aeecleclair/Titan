@@ -11,18 +11,21 @@ class AdminLoanListNotifier extends MapNotifier<Loaner, Loan> {
   AdminLoanListNotifier() : super();
 }
 
-final adminLoanListProvider = StateNotifierProvider<AdminLoanListNotifier,
-    Map<Loaner, AsyncValue<List<Loan>>?>>((ref) {
-  AdminLoanListNotifier adminLoanListNotifier = AdminLoanListNotifier();
-  tokenExpireWrapperAuth(ref, () async {
-    final loaners = ref.watch(loanerList);
-    final loaner = ref.watch(loanerProvider);
-    final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
-    adminLoanListNotifier.loadTList(loaners);
-    if (loaner.id == Loaner.empty().id) return adminLoanListNotifier;
-    loanListNotifier.loadLoan(loaner.id).then((value) {
-      adminLoanListNotifier.setTData(loaner, value);
+final adminLoanListProvider =
+    StateNotifierProvider<
+      AdminLoanListNotifier,
+      Map<Loaner, AsyncValue<List<Loan>>?>
+    >((ref) {
+      AdminLoanListNotifier adminLoanListNotifier = AdminLoanListNotifier();
+      tokenExpireWrapperAuth(ref, () async {
+        final loaners = ref.watch(loanerList);
+        final loaner = ref.watch(loanerProvider);
+        final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
+        adminLoanListNotifier.loadTList(loaners);
+        if (loaner.id == Loaner.empty().id) return adminLoanListNotifier;
+        loanListNotifier.loadLoan(loaner.id).then((value) {
+          adminLoanListNotifier.setTData(loaner, value);
+        });
+      });
+      return adminLoanListNotifier;
     });
-  });
-  return adminLoanListNotifier;
-});

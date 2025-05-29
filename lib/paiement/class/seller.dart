@@ -69,13 +69,13 @@ class Seller {
   }
 
   Seller.empty()
-      : this(
-          userId: '',
-          user: SimpleUser.empty(),
-          storeId: '',
-          canBank: false,
-          canSeeHistory: false,
-          canCancel: false,
-          canManageSellers: false,
-        );
+    : this(
+        userId: '',
+        user: SimpleUser.empty(),
+        storeId: '',
+        canBank: false,
+        canSeeHistory: false,
+        canCancel: false,
+        canManageSellers: false,
+      );
 }

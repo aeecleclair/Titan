@@ -35,13 +35,12 @@ class Ticket {
     SimpleUser? user,
     Prize? lot,
     String? id,
-  }) =>
-      Ticket(
-        packTicket: packTicket ?? this.packTicket,
-        user: user ?? this.user,
-        prize: lot,
-        id: id ?? this.id,
-      );
+  }) => Ticket(
+    packTicket: packTicket ?? this.packTicket,
+    user: user ?? this.user,
+    prize: lot,
+    id: id ?? this.id,
+  );
 
   Ticket.empty() {
     packTicket = PackTicket.empty();

@@ -29,8 +29,9 @@ class SectionContenderItems extends HookConsumerWidget {
     final membersNotifier = ref.read(contenderMembersProvider.notifier);
     final section = ref.watch(sectionProvider);
     final contenderListNotifier = ref.read(contenderListProvider.notifier);
-    final sectionContenderListNotifier =
-        ref.read(sectionContenderProvider.notifier);
+    final sectionContenderListNotifier = ref.read(
+      sectionContenderProvider.notifier,
+    );
     final contenderNotifier = ref.read(contenderProvider.notifier);
 
     final asyncStatus = ref.watch(statusProvider);
@@ -93,18 +94,16 @@ class SectionContenderItems extends HookConsumerWidget {
                   descriptions: VoteTextConstants.deletePretendanceDesc,
                   onYes: () {
                     tokenExpireWrapper(ref, () async {
-                      final value =
-                          await contenderListNotifier.deleteContender(e);
+                      final value = await contenderListNotifier.deleteContender(
+                        e,
+                      );
                       if (value) {
                         displayVoteToastWithContext(
                           TypeMsg.msg,
                           VoteTextConstants.pretendanceDeleted,
                         );
                         contenderListNotifier.copy().then((value) {
-                          sectionContenderListNotifier.setTData(
-                            section,
-                            value,
-                          );
+                          sectionContenderListNotifier.setTData(section, value);
                         });
                       } else {
                         displayVoteToastWithContext(

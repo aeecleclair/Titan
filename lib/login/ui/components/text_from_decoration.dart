@@ -14,12 +14,14 @@ InputDecoration signInRegisterInputDecoration({
     ),
     hintText: hintText,
     focusedBorder: UnderlineInputBorder(
-      borderSide:
-          BorderSide(color: isSignIn ? Colors.grey.shade600 : Colors.white),
+      borderSide: BorderSide(
+        color: isSignIn ? Colors.grey.shade600 : Colors.white,
+      ),
     ),
     enabledBorder: UnderlineInputBorder(
-      borderSide:
-          BorderSide(color: isSignIn ? Colors.grey.shade600 : Colors.white),
+      borderSide: BorderSide(
+        color: isSignIn ? Colors.grey.shade600 : Colors.white,
+      ),
     ),
     errorBorder: const UnderlineInputBorder(
       borderSide: BorderSide(color: ColorConstants.gradient2),
@@ -27,8 +29,9 @@ InputDecoration signInRegisterInputDecoration({
     focusedErrorBorder: const UnderlineInputBorder(
       borderSide: BorderSide(width: 2.0, color: ColorConstants.gradient2),
     ),
-    errorStyle:
-        TextStyle(color: isSignIn ? ColorConstants.gradient2 : Colors.white),
+    errorStyle: TextStyle(
+      color: isSignIn ? ColorConstants.gradient2 : Colors.white,
+    ),
     suffixIcon: notifier == null
         ? null
         : IconButton(

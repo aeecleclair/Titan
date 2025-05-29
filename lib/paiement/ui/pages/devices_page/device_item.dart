@@ -31,9 +31,7 @@ class DeviceItem extends ConsumerWidget {
               height: isActual ? 80 : 70,
               child: Row(
                 children: [
-                  const SizedBox(
-                    width: 20,
-                  ),
+                  const SizedBox(width: 20),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -56,15 +54,11 @@ class DeviceItem extends ConsumerWidget {
                         ),
                     ],
                   ),
-                  const SizedBox(
-                    width: 10,
-                  ),
+                  const SizedBox(width: 10),
                   Spacer(),
                   getStatusTag(device.status),
                   if (device.status != WalletDeviceStatus.revoked) ...[
-                    const SizedBox(
-                      width: 20,
-                    ),
+                    const SizedBox(width: 20),
                     GestureDetector(
                       onTap: onRevoke,
                       child: const HeroIcon(
@@ -74,9 +68,7 @@ class DeviceItem extends ConsumerWidget {
                       ),
                     ),
                   ],
-                  const SizedBox(
-                    width: 20,
-                  ),
+                  const SizedBox(width: 20),
                 ],
               ),
             ),

@@ -33,12 +33,12 @@ class LogTab extends HookConsumerWidget {
                 showDialog(
                   context: context,
                   builder: ((context) => CustomDialogBox(
-                        title: SettingsTextConstants.deleting,
-                        descriptions: SettingsTextConstants.deleteLogs,
-                        onYes: (() async {
-                          logsNotifier.deleteLogs();
-                        }),
-                      )),
+                    title: SettingsTextConstants.deleting,
+                    descriptions: SettingsTextConstants.deleteLogs,
+                    onYes: (() async {
+                      logsNotifier.deleteLogs();
+                    }),
+                  )),
                 );
               },
               child: Container(
@@ -59,11 +59,7 @@ class LogTab extends HookConsumerWidget {
                 ),
                 child: const Row(
                   children: [
-                    HeroIcon(
-                      HeroIcons.trash,
-                      color: Colors.white,
-                      size: 20,
-                    ),
+                    HeroIcon(HeroIcons.trash, color: Colors.white, size: 20),
                   ],
                 ),
               ),
@@ -73,9 +69,8 @@ class LogTab extends HookConsumerWidget {
         const SizedBox(height: 20),
         AsyncChild(
           value: logs,
-          builder: (context, data) => Column(
-            children: data.map((e) => LogCard(log: e)).toList(),
-          ),
+          builder: (context, data) =>
+              Column(children: data.map((e) => LogCard(log: e)).toList()),
         ),
         const SizedBox(height: 20),
       ],

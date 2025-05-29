@@ -26,13 +26,15 @@ class CinemaMainPage extends HookConsumerWidget {
     final sessionList = ref.watch(sessionListProvider);
     final sessionListNotifier = ref.read(sessionListProvider.notifier);
     final sessionNotifier = ref.watch(sessionProvider.notifier);
-    final sessionPosterMapNotifier =
-        ref.watch(sessionPosterMapProvider.notifier);
+    final sessionPosterMapNotifier = ref.watch(
+      sessionPosterMapProvider.notifier,
+    );
     final initialPageNotifier = ref.watch(mainPageIndexProvider.notifier);
     final initialPage = ref.watch(mainPageIndexProvider);
     int currentPage = initialPage;
-    final pageController =
-        ref.watch(sessionListPageControllerProvider(initialPage));
+    final pageController = ref.watch(
+      sessionListPageControllerProvider(initialPage),
+    );
     final scrollNotifier = ref.watch(scrollProvider.notifier);
     final isAdmin = ref.watch(isCinemaAdminProvider);
     final isWebFormat = ref.watch(isWebFormatProvider);

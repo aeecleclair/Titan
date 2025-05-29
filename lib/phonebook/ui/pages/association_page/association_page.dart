@@ -24,12 +24,15 @@ class AssociationPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final association = ref.watch(associationProvider);
     final associationMemberList = ref.watch(associationMemberListProvider);
-    final associationMemberSortedList =
-        ref.watch(associationMemberSortedListProvider);
-    final associationMemberListNotifier =
-        ref.watch(associationMemberListProvider.notifier);
-    final associationPictureNotifier =
-        ref.watch(associationPictureProvider.notifier);
+    final associationMemberSortedList = ref.watch(
+      associationMemberSortedListProvider,
+    );
+    final associationMemberListNotifier = ref.watch(
+      associationMemberListProvider.notifier,
+    );
+    final associationPictureNotifier = ref.watch(
+      associationPictureProvider.notifier,
+    );
     final isPresident = ref.watch(isAssociationPresidentProvider);
     final kindNotifier = ref.watch(associationKindProvider.notifier);
 
@@ -40,8 +43,9 @@ class AssociationPage extends HookConsumerWidget {
             association.id,
             association.mandateYear.toString(),
           );
-          await associationPictureNotifier
-              .getAssociationPicture(association.id);
+          await associationPictureNotifier.getAssociationPicture(
+            association.id,
+          );
         },
         child: Align(
           alignment: Alignment.topCenter,
@@ -69,29 +73,27 @@ class AssociationPage extends HookConsumerWidget {
                     "${PhonebookTextConstants.activeMandate} ${association.mandateYear}",
                     style: const TextStyle(fontSize: 15, color: Colors.black),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   AsyncChild(
                     value: associationMemberList,
                     builder: (context, associationMembers) =>
                         associationMembers.isEmpty
-                            ? const Text(PhonebookTextConstants.noMember)
-                            : Column(
-                                children: associationMemberSortedList
-                                    .map(
-                                      (member) => kIsWeb
-                                          ? WebMemberCard(
-                                              member: member,
-                                              association: association,
-                                            )
-                                          : MemberCard(
-                                              member: member,
-                                              association: association,
-                                            ),
-                                    )
-                                    .toList(),
-                              ),
+                        ? const Text(PhonebookTextConstants.noMember)
+                        : Column(
+                            children: associationMemberSortedList
+                                .map(
+                                  (member) => kIsWeb
+                                      ? WebMemberCard(
+                                          member: member,
+                                          association: association,
+                                        )
+                                      : MemberCard(
+                                          member: member,
+                                          association: association,
+                                        ),
+                                )
+                                .toList(),
+                          ),
                   ),
                 ],
               ),
@@ -125,8 +127,12 @@ class AssociationPage extends HookConsumerWidget {
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color.fromARGB(255, 27, 27, 27)
-                                .withValues(alpha: 0.3),
+                            color: const Color.fromARGB(
+                              255,
+                              27,
+                              27,
+                              27,
+                            ).withValues(alpha: 0.3),
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(
@@ -136,8 +142,10 @@ class AssociationPage extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                      child:
-                          const HeroIcon(HeroIcons.pencil, color: Colors.white),
+                      child: const HeroIcon(
+                        HeroIcons.pencil,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),

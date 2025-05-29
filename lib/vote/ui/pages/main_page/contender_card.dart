@@ -35,28 +35,32 @@ class ContenderCard extends HookConsumerWidget {
     final contenderNotifier = ref.read(contenderProvider.notifier);
     final sections = ref.watch(sectionsProvider);
     final selectedContender = ref.watch(selectedContenderProvider);
-    final selectedContenderNotifier =
-        ref.read(selectedContenderProvider.notifier);
+    final selectedContenderNotifier = ref.read(
+      selectedContenderProvider.notifier,
+    );
     final status = ref.watch(statusProvider);
-    final s =
-        status.maybeWhen(data: (value) => value, orElse: () => Status.closed);
+    final s = status.maybeWhen(
+      data: (value) => value,
+      orElse: () => Status.closed,
+    );
     return Stack(
       children: [
         if (s == Status.published)
           SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(1, 0),
-              end: const Offset(0, 0),
-            ).animate(
-              CurvedAnimation(
-                parent: animation,
-                curve: Interval(
-                  0.08 + 0.05 * index,
-                  0.28 + 0.05 * index,
-                  curve: Curves.easeOut,
+            position:
+                Tween<Offset>(
+                  begin: const Offset(1, 0),
+                  end: const Offset(0, 0),
+                ).animate(
+                  CurvedAnimation(
+                    parent: animation,
+                    curve: Interval(
+                      0.08 + 0.05 * index,
+                      0.28 + 0.05 * index,
+                      curve: Curves.easeOut,
+                    ),
+                  ),
                 ),
-              ),
-            ),
             child: SizedBox(
               height: 175,
               child: Row(
@@ -87,7 +91,8 @@ class ContenderCard extends HookConsumerWidget {
                         padding: const EdgeInsets.all(10.0),
                         margin: const EdgeInsets.only(bottom: 15),
                         height: 70,
-                        width: (MediaQuery.of(context).size.width - 92) *
+                        width:
+                            (MediaQuery.of(context).size.width - 92) *
                             votesPercent,
                         decoration: BoxDecoration(
                           color: Colors.black,
@@ -97,8 +102,9 @@ class ContenderCard extends HookConsumerWidget {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color:
-                                  Colors.grey.shade500.withValues(alpha: 0.5),
+                              color: Colors.grey.shade500.withValues(
+                                alpha: 0.5,
+                              ),
                               spreadRadius: 5,
                               blurRadius: 10,
                               offset: const Offset(3, 3),
@@ -126,19 +132,20 @@ class ContenderCard extends HookConsumerWidget {
             ),
           ),
         SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(1, 0),
-            end: const Offset(0, 0),
-          ).animate(
-            CurvedAnimation(
-              parent: animation,
-              curve: Interval(
-                0.05 + 0.05 * index,
-                0.25 + 0.05 * index,
-                curve: Curves.easeOut,
+          position:
+              Tween<Offset>(
+                begin: const Offset(1, 0),
+                end: const Offset(0, 0),
+              ).animate(
+                CurvedAnimation(
+                  parent: animation,
+                  curve: Interval(
+                    0.05 + 0.05 * index,
+                    0.25 + 0.05 * index,
+                    curve: Curves.easeOut,
+                  ),
+                ),
               ),
-            ),
-          ),
           child: Container(
             padding: const EdgeInsets.all(10.0),
             margin: const EdgeInsets.only(bottom: 15, left: 10),
@@ -169,10 +176,7 @@ class ContenderCard extends HookConsumerWidget {
                     children: [
                       contender.listType != ListType.blank
                           ? ContenderLogo(contender)
-                          : const HeroIcon(
-                              HeroIcons.cubeTransparent,
-                              size: 40,
-                            ),
+                          : const HeroIcon(HeroIcons.cubeTransparent, size: 40),
                       const SizedBox(width: 10),
                       Expanded(
                         child: Column(
@@ -239,8 +243,9 @@ class ContenderCard extends HookConsumerWidget {
                                 onTap: () {
                                   sections.maybeWhen(
                                     data: (data) {
-                                      selectedContenderNotifier
-                                          .changeSelection(contender);
+                                      selectedContenderNotifier.changeSelection(
+                                        contender,
+                                      );
                                     },
                                     orElse: () {},
                                   );

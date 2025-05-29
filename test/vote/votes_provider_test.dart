@@ -23,8 +23,9 @@ void main() {
 
     test('addVote returns true when successful', () async {
       final votes = Votes.empty();
-      when(() => mockVotesRepository.addVote(votes))
-          .thenAnswer((_) async => votes);
+      when(
+        () => mockVotesRepository.addVote(votes),
+      ).thenAnswer((_) async => votes);
 
       final result = await votesProvider.addVote(votes);
 
@@ -40,8 +41,9 @@ void main() {
     });
 
     test('removeVote deletes all votes', () async {
-      when(() => mockVotesRepository.removeVote())
-          .thenAnswer((_) async => true);
+      when(
+        () => mockVotesRepository.removeVote(),
+      ).thenAnswer((_) async => true);
       votesProvider.state = const AsyncValue<List<Votes>>.data([]);
       final result = await votesProvider.removeVote();
 

@@ -20,8 +20,9 @@ class MemberResults extends HookConsumerWidget {
     final group = ref.watch(groupProvider);
     final groupNotifier = ref.watch(groupProvider.notifier);
     final users = ref.watch(userList);
-    final simpleGroupGroupsNotifier =
-        ref.watch(simpleGroupsGroupsProvider.notifier);
+    final simpleGroupGroupsNotifier = ref.watch(
+      simpleGroupsGroupsProvider.notifier,
+    );
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -53,9 +54,9 @@ class MemberResults extends HookConsumerWidget {
                                 members: group.value!.members + [e],
                               );
                               await tokenExpireWrapper(ref, () async {
-                                groupNotifier
-                                    .addMember(newGroup, e)
-                                    .then((value) {
+                                groupNotifier.addMember(newGroup, e).then((
+                                  value,
+                                ) {
                                   if (value) {
                                     simpleGroupGroupsNotifier.setTData(
                                       newGroup.id,

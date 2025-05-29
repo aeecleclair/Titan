@@ -23,8 +23,9 @@ class EditablePlantDetail extends HookConsumerWidget {
     final species = ref.watch(syncSpeciesListProvider);
     final plantNotifier = ref.watch(plantProvider.notifier);
     final myPlantsNotifier = ref.watch(myPlantListProvider.notifier);
-    final name =
-        TextEditingController(text: plant.nickname ?? plant.plantReference);
+    final name = TextEditingController(
+      text: plant.nickname ?? plant.plantReference,
+    );
     final notes = TextEditingController(text: plant.currentNote ?? '');
     final plantationDate = TextEditingController(
       text: plant.plantingDate != null ? processDate(plant.plantingDate!) : '',
@@ -52,57 +53,41 @@ class EditablePlantDetail extends HookConsumerWidget {
           children: [
             Text(
               SeedLibraryTextConstants.plantDetail,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            TextEntry(
-              controller: name,
-              label: SeedLibraryTextConstants.name,
-            ),
+            TextEntry(controller: name, label: SeedLibraryTextConstants.name),
             const SizedBox(height: 20),
             if (plant.nickname != null) ...[
               Text(
                 '${SeedLibraryTextConstants.reference} ${plant.plantReference}',
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
+                style: const TextStyle(fontSize: 16),
               ),
             ],
             Text(
               '${SeedLibraryTextConstants.species} ${plantSpecies.name}',
-              style: const TextStyle(
-                fontSize: 16,
-              ),
+              style: const TextStyle(fontSize: 16),
             ),
             Text(
               '${SeedLibraryTextConstants.type} ${plantSpecies.type.name}',
-              style: const TextStyle(
-                fontSize: 16,
-              ),
+              style: const TextStyle(fontSize: 16),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   SeedLibraryTextConstants.difficulty,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
+                  style: const TextStyle(fontSize: 16),
                 ),
                 const SizedBox(width: 10),
-                ...List.generate(
-                  plantSpecies.difficulty,
-                  (index) {
-                    return Icon(
-                      Icons.star,
-                      color: function
-                          .getColorFromDifficulty(plantSpecies.difficulty),
-                      size: 15,
-                    );
-                  },
-                ),
+                ...List.generate(plantSpecies.difficulty, (index) {
+                  return Icon(
+                    Icons.star,
+                    color: function.getColorFromDifficulty(
+                      plantSpecies.difficulty,
+                    ),
+                    size: 15,
+                  );
+                }),
               ],
             ),
             if (plantSpecies.card != null && plantSpecies.card != "") ...[
@@ -128,37 +113,27 @@ class EditablePlantDetail extends HookConsumerWidget {
             const SizedBox(height: 20),
             Text(
               '${SeedLibraryTextConstants.propagationMethod} ${plant.propagationMethod.name}',
-              style: const TextStyle(
-                fontSize: 16,
-              ),
+              style: const TextStyle(fontSize: 16),
             ),
             Text(
               '${SeedLibraryTextConstants.seedQuantity} ${plant.nbSeedsEnvelope}',
-              style: const TextStyle(
-                fontSize: 16,
-              ),
+              style: const TextStyle(fontSize: 16),
             ),
             Text(
               '${SeedLibraryTextConstants.borrowingDate} ${processDate(plant.borrowingDate!)}',
-              style: const TextStyle(
-                fontSize: 16,
-              ),
+              style: const TextStyle(fontSize: 16),
             ),
             SizedBox(height: 10),
             if (plant.plantingDate == null) ...[
               WaitingButton(
                 onTap: () {
                   plantNotifier.updatePlant(
-                    plant.copyWith(
-                      plantingDate: DateTime.now(),
-                    ),
+                    plant.copyWith(plantingDate: DateTime.now()),
                   );
                   plantationDate.text = processDate(DateTime.now());
                   myPlantsNotifier.updatePlantInList(
                     plant
-                        .copyWith(
-                          plantingDate: DateTime.now(),
-                        )
+                        .copyWith(plantingDate: DateTime.now())
                         .toPlantSimple(),
                   );
                   return Future.value();
@@ -281,8 +256,9 @@ class EditablePlantDetail extends HookConsumerWidget {
                   myPlantsNotifier.updatePlantInList(
                     plant
                         .copyWith(
-                          nickname:
-                              name.text != plant.nickname ? name.text : null,
+                          nickname: name.text != plant.nickname
+                              ? name.text
+                              : null,
                           currentNote: notes.text,
                         )
                         .toPlantSimple(),

@@ -20,9 +20,7 @@ class SmallSpeciesCard extends StatelessWidget {
       child: Card(
         color: selected ? Colors.green[300] : null,
         margin: const EdgeInsets.all(10),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
           child: Column(

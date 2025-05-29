@@ -60,8 +60,8 @@ class PdfPicker extends HookConsumerWidget {
           text: isEdit
               ? PhTextConstants.editPdfFile
               : (result != null)
-                  ? result.files.single.name
-                  : PhTextConstants.addPdfFile,
+              ? result.files.single.name
+              : PhTextConstants.addPdfFile,
         ),
       ),
     );

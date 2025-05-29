@@ -14,10 +14,12 @@ void main() {
     late TheMovieDBGenreNotifier notifier;
     test('loadMovie returns AsyncValue with movie data', () async {
       theMovieDBRepository = MockTheMovieDBRepository();
-      when(() => theMovieDBRepository.getMovie(any()))
-          .thenAnswer((_) async => TheMovieDBMovie.empty());
-      notifier =
-          TheMovieDBGenreNotifier(theMoviesDBRepository: theMovieDBRepository);
+      when(
+        () => theMovieDBRepository.getMovie(any()),
+      ).thenAnswer((_) async => TheMovieDBMovie.empty());
+      notifier = TheMovieDBGenreNotifier(
+        theMoviesDBRepository: theMovieDBRepository,
+      );
       const movieId = '123';
       final result = await notifier.loadMovie(movieId);
 
@@ -31,18 +33,21 @@ void main() {
       );
     });
 
-    test('loadMovie returns AsyncValue with error when movie not found',
-        () async {
-      theMovieDBRepository = MockTheMovieDBRepository();
-      when(() => theMovieDBRepository.getMovie(any())).thenThrow(
-        (_) async => AppException(ErrorType.notFound, 'Not found'),
-      );
-      notifier =
-          TheMovieDBGenreNotifier(theMoviesDBRepository: theMovieDBRepository);
-      const movieId = 'invalid_id';
-      final result = await notifier.loadMovie(movieId);
+    test(
+      'loadMovie returns AsyncValue with error when movie not found',
+      () async {
+        theMovieDBRepository = MockTheMovieDBRepository();
+        when(
+          () => theMovieDBRepository.getMovie(any()),
+        ).thenThrow((_) async => AppException(ErrorType.notFound, 'Not found'));
+        notifier = TheMovieDBGenreNotifier(
+          theMoviesDBRepository: theMovieDBRepository,
+        );
+        const movieId = 'invalid_id';
+        final result = await notifier.loadMovie(movieId);
 
-      expect(result, isA<AsyncError>());
-    });
+        expect(result, isA<AsyncError>());
+      },
+    );
   });
 }

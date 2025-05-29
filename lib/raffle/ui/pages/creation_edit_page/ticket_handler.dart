@@ -41,18 +41,13 @@ class TicketHandler extends HookConsumerWidget {
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
           child: Row(
             children: [
-              const SizedBox(
-                width: 15,
-                height: 125,
-              ),
+              const SizedBox(width: 15, height: 125),
               if (raffle.raffleStatusType == RaffleStatusType.creation)
                 GestureDetector(
                   onTap: () {
@@ -79,8 +74,9 @@ class TicketHandler extends HookConsumerWidget {
                       color: RaffleColorConstants.ticketBack,
                       boxShadow: [
                         BoxShadow(
-                          color: RaffleColorConstants.ticketBack
-                              .withValues(alpha: 0.3),
+                          color: RaffleColorConstants.ticketBack.withValues(
+                            alpha: 0.3,
+                          ),
                           blurRadius: 8,
                           offset: const Offset(2, 3),
                         ),
@@ -111,7 +107,8 @@ class TicketHandler extends HookConsumerWidget {
                                     RaffleRouter.addEditPackTicket,
                               );
                             },
-                            showButton: raffle.raffleStatusType ==
+                            showButton:
+                                raffle.raffleStatusType ==
                                 RaffleStatusType.creation,
                             onDelete: () async {
                               await showDialog(
@@ -151,9 +148,7 @@ class TicketHandler extends HookConsumerWidget {
                   color: RaffleColorConstants.gradient2,
                 ),
               ),
-              const SizedBox(
-                width: 5,
-              ),
+              const SizedBox(width: 5),
             ],
           ),
         ),

@@ -37,8 +37,9 @@ class BookingMainPage extends HookConsumerWidget {
     final isManager = ref.watch(isManagerProvider);
     final isAdmin = ref.watch(isAdminProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
-    final confirmedBookingsNotifier =
-        ref.watch(confirmedBookingListProvider.notifier);
+    final confirmedBookingsNotifier = ref.watch(
+      confirmedBookingListProvider.notifier,
+    );
     final bookings = ref.watch(userBookingListProvider);
     final bookingNotifier = ref.watch(bookingProvider.notifier);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
@@ -49,8 +50,10 @@ class BookingMainPage extends HookConsumerWidget {
 
     void handleBooking(Booking booking) {
       bookingNotifier.setBooking(booking);
-      final recurrentDays =
-          SfCalendar.parseRRule(booking.recurrenceRule, booking.start).weekDays;
+      final recurrentDays = SfCalendar.parseRRule(
+        booking.recurrenceRule,
+        booking.start,
+      ).weekDays;
       selectedDaysNotifier.setSelectedDays(recurrentDays);
       QR.to(BookingRouter.root + BookingRouter.addEdit);
     }
@@ -108,9 +111,7 @@ class BookingMainPage extends HookConsumerWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 AsyncChild(
                   value: bookings,
                   builder: (context, data) {
@@ -153,8 +154,8 @@ class BookingMainPage extends HookConsumerWidget {
                                 descriptions: BookingTextConstants
                                     .deleteBookingConfirmation,
                                 onYes: () async {
-                                  final value =
-                                      await bookingsNotifier.deleteBooking(e);
+                                  final value = await bookingsNotifier
+                                      .deleteBooking(e);
                                   if (value) {
                                     ref
                                         .read(

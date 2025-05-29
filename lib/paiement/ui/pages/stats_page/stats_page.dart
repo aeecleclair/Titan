@@ -23,17 +23,11 @@ class StatsPage extends HookConsumerWidget {
             height: constraints.maxHeight,
             child: Column(
               children: [
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
                 MonthBar(),
-                SizedBox(
-                  height: 80,
-                ),
+                SizedBox(height: 80),
                 SumUpChart(),
-                SizedBox(
-                  height: 50,
-                ),
+                SizedBox(height: 50),
                 TransactionsDetail(),
               ],
             ),

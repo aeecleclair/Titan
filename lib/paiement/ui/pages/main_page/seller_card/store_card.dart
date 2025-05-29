@@ -19,8 +19,9 @@ class StoreCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(selectedStoreProvider);
-    final ongoingTransactionNotifier =
-        ref.read(ongoingTransactionProvider.notifier);
+    final ongoingTransactionNotifier = ref.read(
+      ongoingTransactionProvider.notifier,
+    );
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
     final selectedMonthNotifier = ref.watch(selectedMonthProvider.notifier);
     final buttonGradient = [
@@ -82,10 +83,7 @@ class StoreCard extends HookConsumerWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 50,
-          ),
+          style: const TextStyle(color: Colors.white, fontSize: 50),
         ),
       ),
     );

@@ -25,10 +25,12 @@ class SessionCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scroll = ref.watch(scrollProvider);
-    final sessionPoster = ref
-        .watch(sessionPosterMapProvider.select((value) => value[session.id]));
-    final sessionPosterMapNotifier =
-        ref.watch(sessionPosterMapProvider.notifier);
+    final sessionPoster = ref.watch(
+      sessionPosterMapProvider.select((value) => value[session.id]),
+    );
+    final sessionPosterMapNotifier = ref.watch(
+      sessionPosterMapProvider.notifier,
+    );
     final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
     final isWebFormat = ref.watch(isWebFormatProvider);
     final cinemaTopics = ref.watch(cinemaTopicsProvider);
@@ -151,26 +153,20 @@ class SessionCard extends HookConsumerWidget {
                                     Text(
                                       formatDate(session.start),
                                       textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                      ),
+                                      style: const TextStyle(fontSize: 16),
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
                                       formatDuration(session.duration),
                                       textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                      ),
+                                      style: const TextStyle(fontSize: 16),
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
                                       session.overview ??
                                           CinemaTextConstants.noOverview,
                                       textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                      ),
+                                      style: const TextStyle(fontSize: 16),
                                     ),
                                   ],
                                 ),
@@ -188,12 +184,10 @@ class SessionCard extends HookConsumerWidget {
                                   image: data.first.image,
                                   fit: BoxFit.cover,
                                 ),
-                                border: (selected &&
+                                border:
+                                    (selected &&
                                         session.start.isAfter(DateTime.now()))
-                                    ? Border.all(
-                                        color: Colors.black,
-                                        width: 3,
-                                      )
+                                    ? Border.all(color: Colors.black, width: 3)
                                     : null,
                               ),
                             ),
@@ -224,9 +218,8 @@ class SessionCard extends HookConsumerWidget {
                           ],
                         );
                 },
-                errorBuilder: (error, stack) => const Center(
-                  child: HeroIcon(HeroIcons.exclamationCircle),
-                ),
+                errorBuilder: (error, stack) =>
+                    const Center(child: HeroIcon(HeroIcons.exclamationCircle)),
               ),
             ),
             const SizedBox(height: 15),
@@ -245,10 +238,7 @@ class SessionCard extends HookConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const HeroIcon(
-                        HeroIcons.calendar,
-                        size: 20,
-                      ),
+                      const HeroIcon(HeroIcons.calendar, size: 20),
                       const SizedBox(width: 7),
                       Text(
                         formatDate(session.start),
@@ -260,10 +250,7 @@ class SessionCard extends HookConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const HeroIcon(
-                        HeroIcons.clock,
-                        size: 20,
-                      ),
+                      const HeroIcon(HeroIcons.clock, size: 20),
                       const SizedBox(width: 7),
                       Text(
                         formatDuration(session.duration),

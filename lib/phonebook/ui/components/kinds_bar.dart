@@ -14,21 +14,18 @@ class KindsBar extends HookConsumerWidget {
     final kind = ref.watch(associationKindProvider);
     final kindNotifier = ref.watch(associationKindProvider.notifier);
     final associationKinds = ref.watch(associationKindsProvider);
-    useEffect(
-      () {
-        Future(() {
-          if (kind != "") {
-            Scrollable.ensureVisible(
-              dataKey.currentContext!,
-              duration: const Duration(milliseconds: 500),
-              alignment: 0.5,
-            );
-          }
-        });
-        return;
-      },
-      [dataKey],
-    );
+    useEffect(() {
+      Future(() {
+        if (kind != "") {
+          Scrollable.ensureVisible(
+            dataKey.currentContext!,
+            duration: const Duration(milliseconds: 500),
+            alignment: 0.5,
+          );
+        }
+      });
+      return;
+    }, [dataKey]);
     return AsyncChild(
       value: associationKinds,
       builder: (context, kinds) => SizedBox(

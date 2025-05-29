@@ -17,10 +17,7 @@ class GroupButton extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            gradient1,
-            gradient2,
-          ],
+          colors: [gradient1, gradient2],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),

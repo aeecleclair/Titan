@@ -14,8 +14,8 @@ class UserAssociationMembership extends UserAssociationMembershipBase {
 
   @override
   UserAssociationMembership.fromJson(super.json)
-      : user = SimpleUser.fromJson(json['user']),
-        super.fromJson();
+    : user = SimpleUser.fromJson(json['user']),
+      super.fromJson();
 
   @override
   Map<String, dynamic> toJson() {
@@ -24,9 +24,7 @@ class UserAssociationMembership extends UserAssociationMembershipBase {
     return userAssociationMembership;
   }
 
-  UserAssociationMembership.empty()
-      : user = SimpleUser.empty(),
-        super.empty();
+  UserAssociationMembership.empty() : user = SimpleUser.empty(), super.empty();
 
   UserAssociationMembership copyWith({
     String? id,

@@ -34,10 +34,10 @@ class AdvertPosterNotifier extends SingleNotifier<Image> {
 
 final advertPosterProvider =
     StateNotifierProvider<AdvertPosterNotifier, AsyncValue<Image>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
-  return AdvertPosterNotifier(
-    token: token,
-    advertPostersNotifier: advertPostersNotifier,
-  );
-});
+      final token = ref.watch(tokenProvider);
+      final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
+      return AdvertPosterNotifier(
+        token: token,
+        advertPostersNotifier: advertPostersNotifier,
+      );
+    });

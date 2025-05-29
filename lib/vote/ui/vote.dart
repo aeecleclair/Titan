@@ -12,10 +12,7 @@ class VoteTemplate extends StatelessWidget {
     return SafeArea(
       child: Column(
         children: [
-          const TopBar(
-            title: VoteTextConstants.vote,
-            root: VoteRouter.root,
-          ),
+          const TopBar(title: VoteTextConstants.vote, root: VoteRouter.root),
           Expanded(child: child),
         ],
       ),

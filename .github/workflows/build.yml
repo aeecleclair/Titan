@@ -18,13 +18,13 @@ jobs:
     strategy:
       matrix:
         include:
-          - target: 'apk --debug --flavor=dev'
-            name: 'APK'
+          - target: "apk --debug --flavor=dev"
+            name: "APK"
             path: build/app/outputs/flutter-apk/app-dev-debug.apk
-          - target: 'web --dart-define=flavor=dev'
-            name: 'Web'
+          - target: "web --dart-define=flavor=dev"
+            name: "Web"
             path: build/web/
-    
+
     steps:
       - name: Determine ref
         id: get-ref
@@ -33,38 +33,38 @@ jobs:
           github_ref=${{ github.sha }}
           ref=${input_ref:-$github_ref}
           echo ref=$ref >> $GITHUB_OUTPUT
-      
+
       - name: Checkout 🛎️
         uses: actions/checkout@v4
         with:
           ref: ${{ steps.get-ref.outputs.ref }}
-      
+
       - name: Setup Java
         if: matrix.name == 'APK'
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17.x'
-          cache: 'gradle'
-      
+          distribution: "temurin"
+          java-version: "23.x"
+          cache: "gradle"
+
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          channel: "stable"
           flutter-version-file: pubspec.yaml
           cache: true
-      
+
       - name: Cleanup 🧹
         run: flutter clean
-      
+
       - name: Get Packages
         run: flutter pub get
-      
+
       - name: Configure Dev env
         run: echo DEV_HOST=$DEV_HOST >> .env
         env:
           DEV_HOST: ${{ vars.DEV_HOST }}
-      
+
       - name: Add Firebase configuration for Dev
         run: |
           echo $GOOGLE_SERVICES_DEV_JSON_BASE64 | base64 -d > android/app/src/dev/google-services.json
@@ -73,7 +73,7 @@ jobs:
 
       - name: Build Dev 🔧
         run: flutter build ${{ matrix.target }}
-      
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:

@@ -52,14 +52,11 @@ class UserRepository extends Repository {
     String mail,
   ) async {
     try {
-      return (await create(
-        {
-          "old_password": oldPassword,
-          "new_password": newPassword,
-          "email": mail,
-        },
-        suffix: "change-password",
-      ))["success"];
+      return (await create({
+        "old_password": oldPassword,
+        "new_password": newPassword,
+        "email": mail,
+      }, suffix: "change-password"))["success"];
     } catch (e) {
       return false;
     }

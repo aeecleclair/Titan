@@ -37,8 +37,9 @@ class AdminPage extends ConsumerWidget {
             AsyncChild(
               value: storeList,
               builder: (context, stores) {
-                final storeFromStructures =
-                    stores.where((store) => store.structure.id == structure.id);
+                final storeFromStructures = stores.where(
+                  (store) => store.structure.id == structure.id,
+                );
                 return Column(
                   children: storeFromStructures
                       .map((store) => AdminStoreCard(store: store))

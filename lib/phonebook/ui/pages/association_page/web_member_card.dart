@@ -29,8 +29,9 @@ class WebMemberCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final memberNotifier = ref.watch(completeMemberProvider.notifier);
 
-    final memberPictures =
-        ref.watch(memberPicturesProvider.select((value) => value[member]));
+    final memberPictures = ref.watch(
+      memberPicturesProvider.select((value) => value[member]),
+    );
     final memberPicturesNotifier = ref.watch(memberPicturesProvider.notifier);
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
 
@@ -93,9 +94,7 @@ class WebMemberCard extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -112,9 +111,7 @@ class WebMemberCard extends HookConsumerWidget {
                                     fontSize: 20,
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
+                                const SizedBox(width: 10),
                                 SelectableText(
                                   "(${member.member.name} ${member.member.firstname})",
                                   style: const TextStyle(
@@ -133,9 +130,7 @@ class WebMemberCard extends HookConsumerWidget {
                                 fontSize: 20,
                               ),
                             ),
-                          const SizedBox(
-                            height: 5,
-                          ),
+                          const SizedBox(height: 5),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
@@ -146,8 +141,8 @@ class WebMemberCard extends HookConsumerWidget {
                                   value: member.member.promotion == 0
                                       ? PhonebookTextConstants.promoNotGiven
                                       : member.member.promotion < 100
-                                          ? "20${member.member.promotion}"
-                                          : member.member.promotion.toString(),
+                                      ? "20${member.member.promotion}"
+                                      : member.member.promotion.toString(),
                                 ),
                                 CardField(
                                   label: PhonebookTextConstants.email,
@@ -200,9 +195,7 @@ class WebMemberCard extends HookConsumerWidget {
                                 fontSize: 20,
                               ),
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
+                            const SizedBox(width: 10),
                             SelectableText(
                               "(${member.member.name} ${member.member.firstname})",
                               style: const TextStyle(
@@ -221,16 +214,14 @@ class WebMemberCard extends HookConsumerWidget {
                             fontSize: 20,
                           ),
                         ),
-                      const SizedBox(
-                        height: 5,
-                      ),
+                      const SizedBox(height: 5),
                       CardField(
                         label: PhonebookTextConstants.promotion,
                         value: member.member.promotion == 0
                             ? PhonebookTextConstants.promoNotGiven
                             : member.member.promotion < 100
-                                ? "20${member.member.promotion}"
-                                : member.member.promotion.toString(),
+                            ? "20${member.member.promotion}"
+                            : member.member.promotion.toString(),
                       ),
                       if (constraints.maxWidth > 500)
                         SingleChildScrollView(

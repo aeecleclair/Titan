@@ -54,44 +54,37 @@ class PlantDetailPage extends HookConsumerWidget {
                   children: [
                     Text(
                       '${SeedLibraryTextConstants.reference} ${plantComplete.plantReference}',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
                     const SizedBox(height: 10),
                     Text(
                       '${SeedLibraryTextConstants.species} ${plantSpecies.name}',
-                      style: const TextStyle(
-                        fontSize: 15,
-                      ),
+                      style: const TextStyle(fontSize: 15),
                     ),
                     Text(
                       '${SeedLibraryTextConstants.type} ${plantSpecies.type.name}',
-                      style: const TextStyle(
-                        fontSize: 15,
-                      ),
+                      style: const TextStyle(fontSize: 15),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           SeedLibraryTextConstants.difficulty,
-                          style: const TextStyle(
-                            fontSize: 16,
-                          ),
+                          style: const TextStyle(fontSize: 16),
                         ),
                         const SizedBox(width: 10),
-                        ...List.generate(
-                          plantSpecies.difficulty,
-                          (index) {
-                            return Icon(
-                              Icons.star,
-                              color: function.getColorFromDifficulty(
-                                plantSpecies.difficulty,
-                              ),
-                              size: 15,
-                            );
-                          },
-                        ),
+                        ...List.generate(plantSpecies.difficulty, (index) {
+                          return Icon(
+                            Icons.star,
+                            color: function.getColorFromDifficulty(
+                              plantSpecies.difficulty,
+                            ),
+                            size: 15,
+                          );
+                        }),
                       ],
                     ),
                     if (plantSpecies.startSeason != null &&
@@ -163,8 +156,9 @@ class PlantDetailPage extends HookConsumerWidget {
                       ),
                       onTap: () async {
                         await tokenExpireWrapper(ref, () async {
-                          final value =
-                              await plantNotifier.borrowIdPlant(plantComplete);
+                          final value = await plantNotifier.borrowIdPlant(
+                            plantComplete,
+                          );
                           if (value) {
                             displayToastWithContext(
                               TypeMsg.msg,
@@ -177,8 +171,9 @@ class PlantDetailPage extends HookConsumerWidget {
                             );
                           }
                           plantsNotifier.deletePlantFromList(plantComplete.id);
-                          myPlantsNotifier
-                              .addPlantToList(plantComplete.toPlantSimple());
+                          myPlantsNotifier.addPlantToList(
+                            plantComplete.toPlantSimple(),
+                          );
                           QR.back();
                         });
                       },

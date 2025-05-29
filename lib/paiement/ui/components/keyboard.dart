@@ -101,10 +101,7 @@ class NumericKeyboard extends StatelessWidget {
         alignment: Alignment.center,
         width: 50,
         height: 50,
-        child: Text(
-          value,
-          style: TextStyle(fontSize: 26, color: textColor),
-        ),
+        child: Text(value, style: TextStyle(fontSize: 26, color: textColor)),
       ),
     );
   }

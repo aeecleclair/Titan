@@ -30,29 +30,27 @@ class RecommendationRouter {
   RecommendationRouter(this.ref);
 
   QRoute route() => QRoute(
-        name: "recommendation",
-        path: RecommendationRouter.root,
-        builder: () => main_page.RecommendationMainPage(),
+    name: "recommendation",
+    path: RecommendationRouter.root,
+    builder: () => main_page.RecommendationMainPage(),
+    middleware: [
+      AuthenticatedMiddleware(ref),
+      DeferredLoadingMiddleware(main_page.loadLibrary),
+    ],
+    children: [
+      QRoute(
+        path: information,
+        builder: () => information_page.InformationRecommendationPage(),
+        middleware: [DeferredLoadingMiddleware(information_page.loadLibrary)],
+      ),
+      QRoute(
+        path: addEdit,
+        builder: () => add_edit_page.AddEditRecommendationPage(),
         middleware: [
-          AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary),
+          AdminMiddleware(ref, isRecommendationAdminProvider),
+          DeferredLoadingMiddleware(add_edit_page.loadLibrary),
         ],
-        children: [
-          QRoute(
-            path: information,
-            builder: () => information_page.InformationRecommendationPage(),
-            middleware: [
-              DeferredLoadingMiddleware(information_page.loadLibrary),
-            ],
-          ),
-          QRoute(
-            path: addEdit,
-            builder: () => add_edit_page.AddEditRecommendationPage(),
-            middleware: [
-              AdminMiddleware(ref, isRecommendationAdminProvider),
-              DeferredLoadingMiddleware(add_edit_page.loadLibrary),
-            ],
-          ),
-        ],
-      );
+      ),
+    ],
+  );
 }

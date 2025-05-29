@@ -9,9 +9,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'dart:math' as math;
 
 class FlappyBirdItemChip extends HookConsumerWidget {
-  const FlappyBirdItemChip({
-    super.key,
-  });
+  const FlappyBirdItemChip({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

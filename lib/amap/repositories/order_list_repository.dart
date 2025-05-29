@@ -28,8 +28,9 @@ class OrderListRepository extends Repository {
 
   Future<List<Order>> getDeliveryOrderList(String deliveryId) async {
     return List<Order>.from(
-      (await getList(suffix: "deliveries/$deliveryId/orders"))
-          .map((x) => Order.fromJson(x)),
+      (await getList(
+        suffix: "deliveries/$deliveryId/orders",
+      )).map((x) => Order.fromJson(x)),
     );
   }
 }

@@ -24,8 +24,9 @@ class ContenderLogoRepository extends LogoRepository {
   }
 }
 
-final contenderLogoRepositoryProvider =
-    Provider<ContenderLogoRepository>((ref) {
+final contenderLogoRepositoryProvider = Provider<ContenderLogoRepository>((
+  ref,
+) {
   final token = ref.watch(tokenProvider);
   return ContenderLogoRepository()..setToken(token);
 });

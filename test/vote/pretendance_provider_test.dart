@@ -9,10 +9,7 @@ void main() {
       final container = ProviderContainer();
       final notifier = container.read(contenderProvider.notifier);
 
-      final contender = Contender.empty().copyWith(
-        id: '123',
-        name: 'John Doe',
-      );
+      final contender = Contender.empty().copyWith(id: '123', name: 'John Doe');
 
       notifier.setId(contender);
 

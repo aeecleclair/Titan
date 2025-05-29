@@ -56,23 +56,23 @@ class AddEditEventPage extends HookConsumerWidget {
     final start = useTextEditingController(
       text: isEdit
           ? recurrent.value
-              ? allDay.value
-                  ? ""
-                  : processDateOnlyHour(event.start)
-              : allDay.value
-                  ? processDate(event.start)
-                  : processDateWithHour(event.start)
+                ? allDay.value
+                      ? ""
+                      : processDateOnlyHour(event.start)
+                : allDay.value
+                ? processDate(event.start)
+                : processDateWithHour(event.start)
           : "",
     );
     final end = useTextEditingController(
       text: isEdit
           ? recurrent.value
-              ? allDay.value
-                  ? ""
-                  : processDateOnlyHour(event.end)
-              : allDay.value
-                  ? processDate(event.end)
-                  : processDateWithHour(event.end)
+                ? allDay.value
+                      ? ""
+                      : processDateOnlyHour(event.end)
+                : allDay.value
+                ? processDate(event.end)
+                : processDateWithHour(event.end)
           : "",
     );
     final interval = useTextEditingController(
@@ -201,26 +201,25 @@ class AddEditEventPage extends HookConsumerWidget {
                                                       e,
                                                       style: TextStyle(
                                                         color: Colors
-                                                            .grey.shade700,
+                                                            .grey
+                                                            .shade700,
                                                         fontSize: 16,
                                                       ),
                                                     ),
                                                     Checkbox(
                                                       checkColor: Colors.white,
                                                       activeColor: Colors.black,
-                                                      value: selectedDays[
-                                                          EventTextConstants
+                                                      value:
+                                                          selectedDays[EventTextConstants
                                                               .dayList
                                                               .indexOf(e)],
                                                       onChanged: (value) {
                                                         selectedDaysNotifier
                                                             .toggle(
-                                                          EventTextConstants
-                                                              .dayList
-                                                              .indexOf(
-                                                            e,
-                                                          ),
-                                                        );
+                                                              EventTextConstants
+                                                                  .dayList
+                                                                  .indexOf(e),
+                                                            );
                                                       },
                                                     ),
                                                   ],
@@ -258,10 +257,8 @@ class AddEditEventPage extends HookConsumerWidget {
                                             ),
                                             const SizedBox(height: 30),
                                             DateEntry(
-                                              onTap: () => getOnlyHourDate(
-                                                context,
-                                                end,
-                                              ),
+                                              onTap: () =>
+                                                  getOnlyHourDate(context, end),
                                               controller: end,
                                               label: EventTextConstants.endHour,
                                             ),
@@ -343,29 +340,30 @@ class AddEditEventPage extends HookConsumerWidget {
                             value: rooms,
                             builder: (context, rooms) =>
                                 HorizontalListView.builder(
-                              key: eventRoomScrollKey,
-                              height: 40,
-                              items: rooms,
-                              itemBuilder: (context, room, index) {
-                                final selected = room.name == event.location;
-                                return ItemChip(
-                                  onTap: () {
-                                    eventNotifier.setRoom(room.name);
-                                    location.text = room.name;
+                                  key: eventRoomScrollKey,
+                                  height: 40,
+                                  items: rooms,
+                                  itemBuilder: (context, room, index) {
+                                    final selected =
+                                        room.name == event.location;
+                                    return ItemChip(
+                                      onTap: () {
+                                        eventNotifier.setRoom(room.name);
+                                        location.text = room.name;
+                                      },
+                                      selected: selected,
+                                      child: Text(
+                                        room.name,
+                                        style: TextStyle(
+                                          color: selected
+                                              ? Colors.white
+                                              : Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    );
                                   },
-                                  selected: selected,
-                                  child: Text(
-                                    room.name,
-                                    style: TextStyle(
-                                      color: selected
-                                          ? Colors.white
-                                          : Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
+                                ),
                           ),
                         )
                       : Padding(
@@ -439,32 +437,27 @@ class AddEditEventPage extends HookConsumerWidget {
                                     recurrence.recurrenceRange =
                                         RecurrenceRange.endDate;
                                     recurrence.endDate = DateTime.parse(
-                                      processDateBack(
-                                        recurrenceEndDate.text,
-                                      ),
+                                      processDateBack(recurrenceEndDate.text),
                                     );
                                     recurrence.weekDays = WeekDays.values
                                         .where(
-                                          (element) => selectedDays[(WeekDays
-                                                      .values
-                                                      .indexOf(element) -
-                                                  1) %
-                                              7],
+                                          (element) =>
+                                              selectedDays[(WeekDays.values
+                                                          .indexOf(element) -
+                                                      1) %
+                                                  7],
                                         )
                                         .toList();
-                                    recurrence.interval =
-                                        int.parse(interval.text);
+                                    recurrence.interval = int.parse(
+                                      interval.text,
+                                    );
                                     recurrenceRule = SfCalendar.generateRRule(
                                       recurrence,
                                       DateTime.parse(
-                                        processDateBackWithHour(
-                                          startString,
-                                        ),
+                                        processDateBackWithHour(startString),
                                       ),
                                       DateTime.parse(
-                                        processDateBackWithHour(
-                                          endString,
-                                        ),
+                                        processDateBackWithHour(endString),
                                       ),
                                     );
                                   }
@@ -488,10 +481,12 @@ class AddEditEventPage extends HookConsumerWidget {
                                     decision: Decision.pending,
                                   );
                                   final value = isEdit
-                                      ? await eventListNotifier
-                                          .updateEvent(newEvent)
-                                      : await eventListNotifier
-                                          .addEvent(newEvent);
+                                      ? await eventListNotifier.updateEvent(
+                                          newEvent,
+                                        )
+                                      : await eventListNotifier.addEvent(
+                                          newEvent,
+                                        );
                                   if (value) {
                                     QR.back();
                                     if (isEdit) {

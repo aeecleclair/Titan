@@ -59,11 +59,9 @@ class UserOrderListNotifier extends ListNotifier<Order> {
       data: (orders) async {
         orders[indexOrder] = orders[indexOrder].copyWith(
           products: orders[indexOrder].products
-            ..replaceRange(
-              orders[indexOrder].products.indexOf(product),
-              1,
-              [product.copyWith(quantity: newQuantity)],
-            ),
+            ..replaceRange(orders[indexOrder].products.indexOf(product), 1, [
+              product.copyWith(quantity: newQuantity),
+            ]),
         );
         state = AsyncValue.data(orders);
       },
@@ -82,8 +80,9 @@ class UserOrderListNotifier extends ListNotifier<Order> {
   void toggleExpanded(int indexOrder) async {
     state.when(
       data: (orders) async {
-        orders[indexOrder] =
-            orders[indexOrder].copyWith(expanded: !orders[indexOrder].expanded);
+        orders[indexOrder] = orders[indexOrder].copyWith(
+          expanded: !orders[indexOrder].expanded,
+        );
         state = AsyncValue.data(orders);
       },
       error: (error, stackTrace) {
@@ -167,19 +166,20 @@ class UserOrderListNotifier extends ListNotifier<Order> {
 }
 
 final userOrderListProvider =
-    StateNotifierProvider<UserOrderListNotifier, AsyncValue<List<Order>>>(
-        (ref) {
-  final amapUserRepository = ref.watch(amapUserRepositoryProvider);
-  final orderListRepository = ref.watch(orderListRepositoryProvider);
-  UserOrderListNotifier userOrderListNotifier = UserOrderListNotifier(
-    userRepository: amapUserRepository,
-    orderListRepository: orderListRepository,
-  );
-  tokenExpireWrapperAuth(ref, () async {
-    final userId = ref.watch(idProvider);
-    userId.whenData(
-      (value) async => await userOrderListNotifier.loadOrderList(value),
-    );
-  });
-  return userOrderListNotifier;
-});
+    StateNotifierProvider<UserOrderListNotifier, AsyncValue<List<Order>>>((
+      ref,
+    ) {
+      final amapUserRepository = ref.watch(amapUserRepositoryProvider);
+      final orderListRepository = ref.watch(orderListRepositoryProvider);
+      UserOrderListNotifier userOrderListNotifier = UserOrderListNotifier(
+        userRepository: amapUserRepository,
+        orderListRepository: orderListRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        final userId = ref.watch(idProvider);
+        userId.whenData(
+          (value) async => await userOrderListNotifier.loadOrderList(value),
+        );
+      });
+      return userOrderListNotifier;
+    });

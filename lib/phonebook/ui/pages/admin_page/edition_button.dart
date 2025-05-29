@@ -19,8 +19,9 @@ class EditionButton extends HookConsumerWidget {
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color:
-              !deactivated ? Colors.grey.shade200 : ColorConstants.deactivated1,
+          color: !deactivated
+              ? Colors.grey.shade200
+              : ColorConstants.deactivated1,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(

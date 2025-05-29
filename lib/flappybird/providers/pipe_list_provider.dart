@@ -3,11 +3,11 @@ import 'package:myecl/flappybird/class/pipe.dart';
 
 class PipeListNotifier extends StateNotifier<List<Pipe>> {
   PipeListNotifier()
-      : super([
-          Pipe.random(position: 1),
-          Pipe.random(position: 2.2),
-          Pipe.random(position: 3.4),
-        ]);
+    : super([
+        Pipe.random(position: 1),
+        Pipe.random(position: 2.2),
+        Pipe.random(position: 3.4),
+      ]);
 
   List<Pipe> update() {
     return state = state.map((e) {
@@ -59,7 +59,8 @@ class PipeListNotifier extends StateNotifier<List<Pipe>> {
   }
 }
 
-final pipeListProvider =
-    StateNotifierProvider<PipeListNotifier, List<Pipe>>((ref) {
+final pipeListProvider = StateNotifierProvider<PipeListNotifier, List<Pipe>>((
+  ref,
+) {
   return PipeListNotifier();
 });

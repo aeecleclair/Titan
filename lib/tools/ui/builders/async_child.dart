@@ -25,13 +25,14 @@ class AsyncChild<T> extends StatelessWidget {
     final nonNullOrElseBuilder = orElseBuilder ?? (context, child) => child;
     final nonNullLoadingBuilder =
         loadingBuilder ?? (context) => Loader(color: loaderColor);
-    final nonNullErrorBuilder = errorBuilder ??
+    final nonNullErrorBuilder =
+        errorBuilder ??
         (error, stack) => Center(
-              child: Text(
-                "${TextConstants.error}:$error",
-                style: TextStyle(color: loaderColor),
-              ),
-            );
+          child: Text(
+            "${TextConstants.error}:$error",
+            style: TextStyle(color: loaderColor),
+          ),
+        );
     return value.when(
       data: (value) => builder(context, value),
       loading: () =>

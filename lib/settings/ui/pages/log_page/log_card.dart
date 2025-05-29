@@ -14,15 +14,15 @@ class LogCard extends StatelessWidget {
     List<Color> colors = log.level == LogLevel.debug
         ? [const Color(0xff00c3ff), const Color(0xff0077ff)]
         : log.level == LogLevel.info
-            ? [const Color(0xff549227), const Color(0xFF3E721A)]
-            : log.level == LogLevel.warning
-                ? [const Color(0xfffc9a01), const Color(0xffee8300)]
-                : log.level == LogLevel.error
-                    ? [const Color(0xffc72c41), const Color(0xff801336)]
-                    : [
-                        const Color.fromARGB(255, 198, 190, 21),
-                        const Color.fromARGB(255, 187, 178, 14),
-                      ];
+        ? [const Color(0xff549227), const Color(0xFF3E721A)]
+        : log.level == LogLevel.warning
+        ? [const Color(0xfffc9a01), const Color(0xffee8300)]
+        : log.level == LogLevel.error
+        ? [const Color(0xffc72c41), const Color(0xff801336)]
+        : [
+            const Color.fromARGB(255, 198, 190, 21),
+            const Color.fromARGB(255, 187, 178, 14),
+          ];
 
     Color color = colors[0];
 
@@ -69,20 +69,14 @@ class LogCard extends StatelessWidget {
                     SettingsTextConstants.copied,
                   );
                 },
-                child: const HeroIcon(
-                  HeroIcons.clipboard,
-                  color: Colors.white,
-                ),
+                child: const HeroIcon(HeroIcons.clipboard, color: Colors.white),
               ),
             ],
           ),
           const SizedBox(height: 10),
           Text(
             log.message,
-            style: const TextStyle(
-              fontSize: 12,
-              color: Colors.white,
-            ),
+            style: const TextStyle(fontSize: 12, color: Colors.white),
           ),
         ],
       ),

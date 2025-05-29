@@ -9,7 +9,7 @@ class EventEventListProvider extends ListNotifier<Event> {
   final EventRepository eventRepository;
   String userId = "";
   EventEventListProvider({required this.eventRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
   void setId(String id) {
     userId = id;
   }
@@ -42,16 +42,17 @@ class EventEventListProvider extends ListNotifier<Event> {
 }
 
 final eventEventListProvider =
-    StateNotifierProvider<EventEventListProvider, AsyncValue<List<Event>>>(
-        (ref) {
-  final eventRepository = ref.watch(eventRepositoryProvider);
-  final userId = ref.watch(idProvider);
-  final provider = EventEventListProvider(eventRepository: eventRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    userId.whenData((value) async {
-      provider.setId(value);
-      await provider.loadConfirmedEvent();
+    StateNotifierProvider<EventEventListProvider, AsyncValue<List<Event>>>((
+      ref,
+    ) {
+      final eventRepository = ref.watch(eventRepositoryProvider);
+      final userId = ref.watch(idProvider);
+      final provider = EventEventListProvider(eventRepository: eventRepository);
+      tokenExpireWrapperAuth(ref, () async {
+        userId.whenData((value) async {
+          provider.setId(value);
+          await provider.loadConfirmedEvent();
+        });
+      });
+      return provider;
     });
-  });
-  return provider;
-});

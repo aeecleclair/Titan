@@ -7,10 +7,7 @@ InputDecoration changePassInputDecoration({
 }) {
   return InputDecoration(
     contentPadding: const EdgeInsets.symmetric(vertical: 18.0),
-    hintStyle: TextStyle(
-      fontSize: 18,
-      color: Colors.grey.shade400,
-    ),
+    hintStyle: TextStyle(fontSize: 18, color: Colors.grey.shade400),
     hintText: hintText,
     focusedBorder: const UnderlineInputBorder(
       borderSide: BorderSide(color: ColorConstants.gradient1),

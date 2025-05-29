@@ -23,8 +23,9 @@ class LoanTemplate extends HookConsumerWidget {
             onBack: () {
               if (QR.currentPath ==
                   LoanRouter.root + LoanRouter.admin + LoanRouter.addEditLoan) {
-                final loanersItemsNotifier =
-                    ref.watch(loanersItemsProvider.notifier);
+                final loanersItemsNotifier = ref.watch(
+                  loanersItemsProvider.notifier,
+                );
                 final loaner = ref.watch(loanerProvider);
                 final itemList = ref.watch(itemListProvider);
                 loanersItemsNotifier.setTData(loaner, itemList);

@@ -24,16 +24,9 @@ class NoModulePage extends HookConsumerWidget {
         padding: EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           children: [
-            Spacer(
-              flex: 2,
-            ),
-            HeroIcon(
-              HeroIcons.cubeTransparent,
-              size: 100,
-            ),
-            SizedBox(
-              height: 50,
-            ),
+            Spacer(flex: 2),
+            HeroIcon(HeroIcons.cubeTransparent, size: 100),
+            SizedBox(height: 50),
             Center(
               child: Text(
                 OthersTextConstants.noModule,
@@ -41,12 +34,8 @@ class NoModulePage extends HookConsumerWidget {
                 style: TextStyle(fontSize: 20),
               ),
             ),
-            Spacer(
-              flex: 3,
-            ),
-            SizedBox(
-              height: 20,
-            ),
+            Spacer(flex: 3),
+            SizedBox(height: 20),
           ],
         ),
       ),

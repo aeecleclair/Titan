@@ -16,5 +16,6 @@ class PhPdf extends FamilyAsyncNotifier<Uint8List, String> {
   }
 }
 
-final phPdfProvider =
-    AsyncNotifierProvider.family<PhPdf, Uint8List, String>(PhPdf.new);
+final phPdfProvider = AsyncNotifierProvider.family<PhPdf, Uint8List, String>(
+  PhPdf.new,
+);

@@ -14,8 +14,9 @@ class AnnouncerRepository extends Repository {
 
   Future<List<Announcer>> getMyAnnouncer() async {
     return List<Announcer>.from(
-      (await getList(suffix: "me/advertisers"))
-          .map((x) => Announcer.fromJson(x)),
+      (await getList(
+        suffix: "me/advertisers",
+      )).map((x) => Announcer.fromJson(x)),
     );
   }
 

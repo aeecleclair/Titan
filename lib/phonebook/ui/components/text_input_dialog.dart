@@ -38,12 +38,7 @@ class TextInputDialog extends HookConsumerWidget {
             const SizedBox(height: 25),
             Text(text),
             const SizedBox(height: 5),
-            SizedBox(
-              width: 200,
-              child: TextField(
-                controller: controller,
-              ),
-            ),
+            SizedBox(width: 200, child: TextField(controller: controller)),
           ],
         ),
       ),

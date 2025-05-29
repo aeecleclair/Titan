@@ -55,87 +55,79 @@ class SeedLibraryRouter {
   );
 
   QRoute route() => QRoute(
-        name: "SeedLibrary",
-        path: SeedLibraryRouter.root,
-        builder: () => main_page.SeedLibraryMainPage(),
+    name: "SeedLibrary",
+    path: SeedLibraryRouter.root,
+    builder: () => main_page.SeedLibraryMainPage(),
+    middleware: [
+      AuthenticatedMiddleware(ref),
+      DeferredLoadingMiddleware(main_page.loadLibrary),
+    ],
+    children: [
+      QRoute(
+        path: SeedLibraryRouter.information,
+        builder: () => information_page.InformationPage(),
+        middleware: [DeferredLoadingMiddleware(information_page.loadLibrary)],
+        children: [
+          QRoute(
+            path: SeedLibraryRouter.editInformation,
+            builder: () => edit_information_page.EditInformationPage(),
+            middleware: [
+              AdminMiddleware(ref, isSeedLibraryAdminProvider),
+              DeferredLoadingMiddleware(edit_information_page.loadLibrary),
+            ],
+          ),
+        ],
+      ),
+      QRoute(
+        path: species,
+        builder: () => species_page.SpeciesPage(),
         middleware: [
-          AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary),
+          AdminMiddleware(ref, isSeedLibraryAdminProvider),
+          DeferredLoadingMiddleware(species_page.loadLibrary),
         ],
         children: [
           QRoute(
-            path: SeedLibraryRouter.information,
-            builder: () => information_page.InformationPage(),
+            path: addEditSpecies,
+            builder: () => add_edit_species_page.AddEditSpeciesPage(),
             middleware: [
-              DeferredLoadingMiddleware(information_page.loadLibrary),
-            ],
-            children: [
-              QRoute(
-                path: SeedLibraryRouter.editInformation,
-                builder: () => edit_information_page.EditInformationPage(),
-                middleware: [
-                  AdminMiddleware(ref, isSeedLibraryAdminProvider),
-                  DeferredLoadingMiddleware(edit_information_page.loadLibrary),
-                ],
-              ),
-            ],
-          ),
-          QRoute(
-            path: species,
-            builder: () => species_page.SpeciesPage(),
-            middleware: [
-              AdminMiddleware(ref, isSeedLibraryAdminProvider),
-              DeferredLoadingMiddleware(species_page.loadLibrary),
-            ],
-            children: [
-              QRoute(
-                path: addEditSpecies,
-                builder: () => add_edit_species_page.AddEditSpeciesPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(add_edit_species_page.loadLibrary),
-                ],
-              ),
-            ],
-          ),
-          QRoute(
-            path: plants,
-            builder: () => plants_page.PlantsPage(),
-            middleware: [
-              DeferredLoadingMiddleware(plants_page.loadLibrary),
-            ],
-            children: [
-              QRoute(
-                path: plantDetail,
-                builder: () => edit_plant_detail_page.EditPlantDetailPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(edit_plant_detail_page.loadLibrary),
-                ],
-              ),
-            ],
-          ),
-          QRoute(
-            path: stock,
-            builder: () => stocks_page.StockPage(),
-            middleware: [
-              DeferredLoadingMiddleware(stocks_page.loadLibrary),
-            ],
-            children: [
-              QRoute(
-                path: plantDetail,
-                builder: () => plant_detail_page.PlantDetailPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(plant_detail_page.loadLibrary),
-                ],
-              ),
-            ],
-          ),
-          QRoute(
-            path: seedDeposit,
-            builder: () => plant_deposit_page.PlantDepositPage(),
-            middleware: [
-              DeferredLoadingMiddleware(plant_deposit_page.loadLibrary),
+              DeferredLoadingMiddleware(add_edit_species_page.loadLibrary),
             ],
           ),
         ],
-      );
+      ),
+      QRoute(
+        path: plants,
+        builder: () => plants_page.PlantsPage(),
+        middleware: [DeferredLoadingMiddleware(plants_page.loadLibrary)],
+        children: [
+          QRoute(
+            path: plantDetail,
+            builder: () => edit_plant_detail_page.EditPlantDetailPage(),
+            middleware: [
+              DeferredLoadingMiddleware(edit_plant_detail_page.loadLibrary),
+            ],
+          ),
+        ],
+      ),
+      QRoute(
+        path: stock,
+        builder: () => stocks_page.StockPage(),
+        middleware: [DeferredLoadingMiddleware(stocks_page.loadLibrary)],
+        children: [
+          QRoute(
+            path: plantDetail,
+            builder: () => plant_detail_page.PlantDetailPage(),
+            middleware: [
+              DeferredLoadingMiddleware(plant_detail_page.loadLibrary),
+            ],
+          ),
+        ],
+      ),
+      QRoute(
+        path: seedDeposit,
+        builder: () => plant_deposit_page.PlantDepositPage(),
+        middleware: [DeferredLoadingMiddleware(plant_deposit_page.loadLibrary)],
+      ),
+    ],
+  );
 }

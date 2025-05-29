@@ -15,8 +15,9 @@ void main() {
 
     setUp(() {
       userListRepository = MockUserListRepository();
-      userListNotifier =
-          UserListNotifier(userListRepository: userListRepository);
+      userListNotifier = UserListNotifier(
+        userListRepository: userListRepository,
+      );
     });
 
     test('initial state is loading', () {

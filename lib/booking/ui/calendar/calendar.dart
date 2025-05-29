@@ -147,15 +147,11 @@ class Calendar extends HookConsumerWidget {
         );
       },
       error: (Object error, StackTrace? stackTrace) {
-        return Center(
-          child: Text(error.toString()),
-        );
+        return Center(child: Text(error.toString()));
       },
       loading: () {
         return const Center(
-          child: CircularProgressIndicator(
-            color: ColorConstants.background2,
-          ),
+          child: CircularProgressIndicator(color: ColorConstants.background2),
         );
       },
     );

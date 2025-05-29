@@ -12,8 +12,9 @@ void main() {
   group('GroupLogoNotifier', () {
     test('getLogo returns logo image', () async {
       final repository = MockGroupLogoRepository();
-      when(() => repository.getLogo('123', suffix: '/logo'))
-          .thenAnswer((_) async => Uint8List(1));
+      when(
+        () => repository.getLogo('123', suffix: '/logo'),
+      ).thenAnswer((_) async => Uint8List(1));
       final notifier = GroupLogoNotifier(groupLogoRepository: repository);
 
       final image = await notifier.getLogo('123');
@@ -24,8 +25,9 @@ void main() {
 
     test('getLogo returns logo image', () async {
       final repository = MockGroupLogoRepository();
-      when(() => repository.getLogo('123', suffix: '/logo'))
-          .thenAnswer((_) async => Uint8List(0));
+      when(
+        () => repository.getLogo('123', suffix: '/logo'),
+      ).thenAnswer((_) async => Uint8List(0));
       final notifier = GroupLogoNotifier(groupLogoRepository: repository);
 
       final image = await notifier.getLogo('123');
@@ -37,8 +39,9 @@ void main() {
     test('updateLogo returns logo image', () async {
       final repository = MockGroupLogoRepository();
       final Uint8List bytes = Uint8List(1);
-      when(() => repository.addLogo(bytes, '123', suffix: '/logo'))
-          .thenAnswer((_) async => Uint8List(1));
+      when(
+        () => repository.addLogo(bytes, '123', suffix: '/logo'),
+      ).thenAnswer((_) async => Uint8List(1));
       final notifier = GroupLogoNotifier(groupLogoRepository: repository);
 
       final image = await notifier.updateLogo('123', bytes);

@@ -45,9 +45,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -59,9 +57,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 35,
-                  ),
+                  const SizedBox(height: 35),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -73,9 +69,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  const SizedBox(height: 5),
                   TextEntry(
                     label: "Nombre de ticket",
                     isInt: true,
@@ -88,9 +82,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                     controller: packSize,
                     keyboardType: TextInputType.number,
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -102,9 +94,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  const SizedBox(height: 5),
                   TextEntry(
                     label: "Prix",
                     isDouble: true,
@@ -112,9 +102,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                     controller: price,
                     keyboardType: TextInputType.number,
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   WaitingButton(
                     builder: (child) => BlueBtn(child: child),
                     onTap: () async {
@@ -127,17 +115,21 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                             final newPackTicket = packTicket.copyWith(
                               price: double.parse(price.text),
                               packSize: int.parse(packSize.text),
-                              raffleId:
-                                  isEdit ? packTicket.raffleId : raffle.id,
+                              raffleId: isEdit
+                                  ? packTicket.raffleId
+                                  : raffle.id,
                               id: isEdit ? packTicket.id : "",
                             );
-                            final typeTicketNotifier =
-                                ref.watch(packTicketListProvider.notifier);
+                            final typeTicketNotifier = ref.watch(
+                              packTicketListProvider.notifier,
+                            );
                             final value = isEdit
-                                ? await typeTicketNotifier
-                                    .updatePackTicket(newPackTicket)
-                                : await typeTicketNotifier
-                                    .addPackTicket(newPackTicket);
+                                ? await typeTicketNotifier.updatePackTicket(
+                                    newPackTicket,
+                                  )
+                                : await typeTicketNotifier.addPackTicket(
+                                    newPackTicket,
+                                  );
                             if (value) {
                               QR.back();
                               if (isEdit) {
@@ -186,9 +178,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                           : RaffleTextConstants.addTypeTicketSimple,
                     ),
                   ),
-                  const SizedBox(
-                    height: 40,
-                  ),
+                  const SizedBox(height: 40),
                 ],
               ),
             ),

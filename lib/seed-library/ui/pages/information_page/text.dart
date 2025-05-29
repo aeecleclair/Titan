@@ -58,16 +58,17 @@ class InformationPage extends HookConsumerWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                     foreground: Paint()
-                      ..shader = const RadialGradient(
-                        colors: [
-                          SeedLibraryColorConstants.greenGradient1,
-                          SeedLibraryColorConstants.textDark,
-                        ],
-                        center: Alignment.topLeft,
-                        radius: 10,
-                      ).createShader(
-                        const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
-                      ),
+                      ..shader =
+                          const RadialGradient(
+                            colors: [
+                              SeedLibraryColorConstants.greenGradient1,
+                              SeedLibraryColorConstants.textDark,
+                            ],
+                            center: Alignment.topLeft,
+                            radius: 10,
+                          ).createShader(
+                            const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
+                          ),
                   ),
                 ),
                 Text(

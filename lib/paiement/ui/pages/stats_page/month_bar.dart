@@ -16,9 +16,7 @@ class MonthBar extends HookConsumerWidget {
       children: [
         Row(
           children: [
-            const SizedBox(
-              width: 30,
-            ),
+            const SizedBox(width: 30),
             GestureDetector(
               onTap: () {
                 final isPreviousYear = currentMonth.month == 0;
@@ -69,9 +67,7 @@ class MonthBar extends HookConsumerWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              width: 30,
-            ),
+            const SizedBox(width: 30),
           ],
         ),
       ],

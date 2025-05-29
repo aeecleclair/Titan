@@ -2,10 +2,7 @@ class RaffleStats {
   late final int ticketsSold;
   late final double amountRaised;
 
-  RaffleStats({
-    required this.ticketsSold,
-    required this.amountRaised,
-  });
+  RaffleStats({required this.ticketsSold, required this.amountRaised});
 
   RaffleStats.fromJson(Map<String, dynamic> json) {
     ticketsSold = json['tickets_sold'];
@@ -19,14 +16,10 @@ class RaffleStats {
     return data;
   }
 
-  RaffleStats copyWith({
-    int? ticketsSold,
-    double? amountRaised,
-  }) =>
-      RaffleStats(
-        ticketsSold: ticketsSold ?? this.ticketsSold,
-        amountRaised: amountRaised ?? this.amountRaised,
-      );
+  RaffleStats copyWith({int? ticketsSold, double? amountRaised}) => RaffleStats(
+    ticketsSold: ticketsSold ?? this.ticketsSold,
+    amountRaised: amountRaised ?? this.amountRaised,
+  );
 
   RaffleStats.empty() {
     ticketsSold = 0;

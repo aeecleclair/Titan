@@ -9,7 +9,7 @@ class AssociationListNotifier extends ListNotifier<Association> {
   final AssociationRepository associationRepository = AssociationRepository();
   AsyncValue<List<Association>> associationList = const AsyncValue.loading();
   AssociationListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     associationRepository.setToken(token);
   }
 
@@ -45,8 +45,8 @@ class AssociationListNotifier extends ListNotifier<Association> {
     return await update(
       associationRepository.deactivateAssociation,
       (associations, association) => associations
-        ..[associations.indexWhere((g) => g.id == association.id)] =
-            association.copyWith(deactivated: true),
+        ..[associations.indexWhere((g) => g.id == association.id)] = association
+            .copyWith(deactivated: true),
       association,
     );
   }
@@ -62,12 +62,15 @@ class AssociationListNotifier extends ListNotifier<Association> {
   }
 }
 
-final associationListProvider = StateNotifierProvider<AssociationListNotifier,
-    AsyncValue<List<Association>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  AssociationListNotifier notifier = AssociationListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadAssociations();
-  });
-  return notifier;
-});
+final associationListProvider =
+    StateNotifierProvider<
+      AssociationListNotifier,
+      AsyncValue<List<Association>>
+    >((ref) {
+      final token = ref.watch(tokenProvider);
+      AssociationListNotifier notifier = AssociationListNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.loadAssociations();
+      });
+      return notifier;
+    });

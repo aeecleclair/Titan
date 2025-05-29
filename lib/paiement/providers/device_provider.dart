@@ -7,7 +7,7 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 class DeviceListNotifier extends SingleNotifier<WalletDevice> {
   final DevicesRepository devicesRepository;
   DeviceListNotifier({required this.devicesRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<WalletDevice>> getDevice(String deviceId) async {
     return await load(() => devicesRepository.getDevice(deviceId));
@@ -27,6 +27,6 @@ class DeviceListNotifier extends SingleNotifier<WalletDevice> {
 
 final deviceProvider =
     StateNotifierProvider<DeviceListNotifier, AsyncValue<WalletDevice>>((ref) {
-  final deviceListRepository = ref.watch(devicesRepositoryProvider);
-  return DeviceListNotifier(devicesRepository: deviceListRepository);
-});
+      final deviceListRepository = ref.watch(devicesRepositoryProvider);
+      return DeviceListNotifier(devicesRepository: deviceListRepository);
+    });

@@ -21,9 +21,7 @@ class ViewPhPage extends HookConsumerWidget {
         child: PdfView(
           pageSnapping: !kIsWeb,
           scrollDirection: kIsWeb ? Axis.vertical : Axis.horizontal,
-          controller: PdfController(
-            document: PdfDocument.openData(value),
-          ),
+          controller: PdfController(document: PdfDocument.openData(value)),
         ),
       ),
     );

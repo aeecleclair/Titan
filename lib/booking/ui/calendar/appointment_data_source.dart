@@ -46,6 +46,5 @@ class AppointmentDataSource extends CalendarDataSource<Booking> {
   Booking? convertAppointmentToObject(
     Booking customData,
     Appointment appointment,
-  ) =>
-      customData;
+  ) => customData;
 }

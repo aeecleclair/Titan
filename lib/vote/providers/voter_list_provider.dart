@@ -8,7 +8,7 @@ import 'package:myecl/vote/repositories/voter_repository.dart';
 class VoterListNotifier extends ListNotifier<Voter> {
   final VoterRepository _voterRepository = VoterRepository();
   VoterListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     _voterRepository.setToken(token);
   }
 
@@ -32,10 +32,10 @@ class VoterListNotifier extends ListNotifier<Voter> {
 
 final voterListProvider =
     StateNotifierProvider<VoterListNotifier, AsyncValue<List<Voter>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final voterListNotifier = VoterListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await voterListNotifier.loadVoterList();
-  });
-  return voterListNotifier;
-});
+      final token = ref.watch(tokenProvider);
+      final voterListNotifier = VoterListNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        await voterListNotifier.loadVoterList();
+      });
+      return voterListNotifier;
+    });

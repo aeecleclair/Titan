@@ -32,8 +32,9 @@ class PaymentMainPage extends HookConsumerWidget {
     }
 
     final shouldDisplayTosDialog = ref.watch(shouldDisplayTosDialogProvider);
-    final shouldDisplayTosDialogNotifier =
-        ref.read(shouldDisplayTosDialogProvider.notifier);
+    final shouldDisplayTosDialogNotifier = ref.read(
+      shouldDisplayTosDialogProvider.notifier,
+    );
     final tos = ref.watch(tosProvider);
     final tosNotifier = ref.read(tosProvider.notifier);
     final registerNotifier = ref.read(registerProvider.notifier);
@@ -101,9 +102,7 @@ class PaymentMainPage extends HookConsumerWidget {
                   orElse: () {},
                   data: (tos) async {
                     final value = await tosNotifier.signTOS(
-                      tos.copyWith(
-                        acceptedTosVersion: tos.latestTosVersion,
-                      ),
+                      tos.copyWith(acceptedTosVersion: tos.latestTosVersion),
                     );
                     if (value) {
                       await mySellersNotifier.getMyStores();
@@ -128,9 +127,7 @@ class PaymentMainPage extends HookConsumerWidget {
                   },
                   child: Column(
                     children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       AsyncChild(
                         value: mySellers,
                         builder: (context, mySellers) {
@@ -148,9 +145,7 @@ class PaymentMainPage extends HookConsumerWidget {
                             height: 250,
                             width: MediaQuery.of(context).size.width,
                             child: FlipCard(
-                              back: StoreCard(
-                                toggle: toggle,
-                              ),
+                              back: StoreCard(toggle: toggle),
                               front: AccountCard(
                                 toggle: toggle,
                                 resetHandledKeys: resetHandledKeys,

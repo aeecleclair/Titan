@@ -28,9 +28,7 @@ class PersonalPlantCard extends HookConsumerWidget {
       onTap: onClicked,
       child: Card(
         margin: const EdgeInsets.all(10),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Row(
@@ -66,9 +64,7 @@ class PersonalPlantCard extends HookConsumerWidget {
                                 ? SeedLibraryTextConstants.deathDate
                                 : SeedLibraryTextConstants.plantingDate,
                           ),
-                          Text(
-                            processDate(plant.plantingDate!),
-                          ),
+                          Text(processDate(plant.plantingDate!)),
                           ...plantSpecies.timeMaturation != null &&
                                   plant.state != function.State.consumed
                               ? [
@@ -79,7 +75,8 @@ class PersonalPlantCard extends HookConsumerWidget {
                                   Text(
                                     "${(plantSpecies.timeMaturation! - DateTime.now().difference(plant.plantingDate!).inDays).toString()} ${SeedLibraryTextConstants.days}",
                                     style: TextStyle(
-                                      color: plantSpecies.timeMaturation! -
+                                      color:
+                                          plantSpecies.timeMaturation! -
                                                   DateTime.now()
                                                       .difference(
                                                         plant.plantingDate!,

@@ -4,15 +4,11 @@ class FundingUrl {
   FundingUrl({required this.url});
 
   factory FundingUrl.fromJson(Map<String, dynamic> json) {
-    return FundingUrl(
-      url: json['url'],
-    );
+    return FundingUrl(url: json['url']);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'url': url,
-    };
+    return {'url': url};
   }
 
   @override
@@ -20,12 +16,8 @@ class FundingUrl {
     return 'FundingUrl{url: $url}';
   }
 
-  FundingUrl copyWith({
-    String? url,
-  }) {
-    return FundingUrl(
-      url: url ?? this.url,
-    );
+  FundingUrl copyWith({String? url}) {
+    return FundingUrl(url: url ?? this.url);
   }
 
   FundingUrl.empty() : this(url: '');

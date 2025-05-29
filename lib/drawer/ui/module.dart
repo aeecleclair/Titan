@@ -32,9 +32,7 @@ class ModuleUI extends HookConsumerWidget {
           children: [
             Row(
               children: [
-                Container(
-                  width: 25,
-                ),
+                Container(width: 25),
                 Center(
                   child: module.getIcon(
                     module.root == pathForwarding.path
@@ -42,9 +40,7 @@ class ModuleUI extends HookConsumerWidget {
                         : DrawerColorConstants.lightText,
                   ),
                 ),
-                Container(
-                  width: 20,
-                ),
+                Container(width: 20),
                 SizedBox(
                   height: 50,
                   child: Center(
@@ -68,8 +64,9 @@ class ModuleUI extends HookConsumerWidget {
         QR.to(module.root);
         pathForwardingNotifier.forward(module.root);
         if (animation != null) {
-          final controllerNotifier =
-              ref.watch(swipeControllerProvider(animation).notifier);
+          final controllerNotifier = ref.watch(
+            swipeControllerProvider(animation).notifier,
+          );
           controllerNotifier.toggle();
         }
         if (pathForwarding.path != HomeRouter.root) {

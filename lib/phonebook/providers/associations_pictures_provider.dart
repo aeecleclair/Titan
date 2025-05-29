@@ -9,25 +9,32 @@ class AssociationPictureNotifier extends MapNotifier<Association, Image> {
   AssociationPictureNotifier() : super();
 }
 
-final associationPicturesProvider = StateNotifierProvider<
-    AssociationPictureNotifier,
-    Map<Association, AsyncValue<List<Image>>?>>((ref) {
-  AssociationPictureNotifier associationPictureNotifier =
-      AssociationPictureNotifier();
-  tokenExpireWrapperAuth(ref, () async {
-    ref.watch(associationListProvider).maybeWhen(
-      data: (association) {
-        associationPictureNotifier.loadTList(association);
-        for (final l in association) {
-          associationPictureNotifier.setTData(l, const AsyncValue.data([]));
-        }
-        return associationPictureNotifier;
-      },
-      orElse: () {
-        associationPictureNotifier.loadTList([]);
-        return associationPictureNotifier;
-      },
-    );
-  });
-  return associationPictureNotifier;
-});
+final associationPicturesProvider =
+    StateNotifierProvider<
+      AssociationPictureNotifier,
+      Map<Association, AsyncValue<List<Image>>?>
+    >((ref) {
+      AssociationPictureNotifier associationPictureNotifier =
+          AssociationPictureNotifier();
+      tokenExpireWrapperAuth(ref, () async {
+        ref
+            .watch(associationListProvider)
+            .maybeWhen(
+              data: (association) {
+                associationPictureNotifier.loadTList(association);
+                for (final l in association) {
+                  associationPictureNotifier.setTData(
+                    l,
+                    const AsyncValue.data([]),
+                  );
+                }
+                return associationPictureNotifier;
+              },
+              orElse: () {
+                associationPictureNotifier.loadTList([]);
+                return associationPictureNotifier;
+              },
+            );
+      });
+      return associationPictureNotifier;
+    });

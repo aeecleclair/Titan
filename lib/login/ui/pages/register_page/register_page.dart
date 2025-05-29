@@ -93,8 +93,9 @@ class Register extends HookConsumerWidget {
                             if (value == null || value.isEmpty) {
                               return LoginTextConstants.emailEmpty;
                             }
-                            RegExp regExp =
-                                RegExp(LoginTextConstants.emailRegExp);
+                            RegExp regExp = RegExp(
+                              LoginTextConstants.emailRegExp,
+                            );
                             if (!regExp.hasMatch(value)) {
                               return LoginTextConstants.emailInvalid;
                             }
@@ -106,10 +107,9 @@ class Register extends HookConsumerWidget {
                     const SizedBox(height: 30),
                     SignInUpBar(
                       label: LoginTextConstants.create,
-                      isLoading: ref.watch(loadingProvider).maybeWhen(
-                            data: (data) => data,
-                            orElse: () => false,
-                          ),
+                      isLoading: ref
+                          .watch(loadingProvider)
+                          .maybeWhen(data: (data) => data, orElse: () => false),
                       onPressed: () async {
                         if (key.currentState!.validate()) {
                           final value = await signUpNotifier.createUser(

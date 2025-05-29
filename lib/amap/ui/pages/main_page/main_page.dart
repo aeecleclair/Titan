@@ -42,8 +42,9 @@ class AmapMainPage extends HookConsumerWidget {
     final balance = ref.watch(userAmountProvider);
     final showPanel = useState(false);
     final me = ref.watch(userProvider);
-    final deliveryProductListNotifier =
-        ref.watch(deliveryProductListProvider.notifier);
+    final deliveryProductListNotifier = ref.watch(
+      deliveryProductListProvider.notifier,
+    );
     final animation = useAnimationController(
       duration: const Duration(milliseconds: 500),
       initialValue: 0,
@@ -119,13 +120,11 @@ class AmapMainPage extends HookConsumerWidget {
                         QR.to(AmapRouter.root + AmapRouter.detailOrder);
                       },
                       addOrder: () {
-                        balance.whenData(
-                          (s) {
-                            orderNotifier.setOrder(Order.empty());
-                            animation.forward();
-                            showPanel.value = true;
-                          },
-                        );
+                        balance.whenData((s) {
+                          orderNotifier.setOrder(Order.empty());
+                          animation.forward();
+                          showPanel.value = true;
+                        });
                       },
                     ),
                     const SizedBox(height: 20),
@@ -165,8 +164,9 @@ class AmapMainPage extends HookConsumerWidget {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: AMAPColorConstants.textDark
-                              .withValues(alpha: 0.3),
+                          color: AMAPColorConstants.textDark.withValues(
+                            alpha: 0.3,
+                          ),
                           spreadRadius: 5,
                           blurRadius: 10,
                           offset: const Offset(3, 3),
@@ -221,9 +221,7 @@ class AmapMainPage extends HookConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 30),
-                        DeliverySection(
-                          editable: order.id == Order.empty().id,
-                        ),
+                        DeliverySection(editable: order.id == Order.empty().id),
                         const SizedBox(height: 20),
                         WaitingButton(
                           onTap: () async {
@@ -232,9 +230,7 @@ class AmapMainPage extends HookConsumerWidget {
                                 await deliveryProductListNotifier
                                     .loadProductList(delivery.products);
                               });
-                              QR.to(
-                                AmapRouter.root + AmapRouter.listProduct,
-                              );
+                              QR.to(AmapRouter.root + AmapRouter.listProduct);
                             } else {
                               displayToastWithoutContext(
                                 TypeMsg.error,
@@ -243,9 +239,7 @@ class AmapMainPage extends HookConsumerWidget {
                             }
                           },
                           builder: (child) => Container(
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 30,
-                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 30),
                             height: 70,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(25),
@@ -259,8 +253,9 @@ class AmapMainPage extends HookConsumerWidget {
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AMAPColorConstants.textDark
-                                      .withValues(alpha: 0.3),
+                                  color: AMAPColorConstants.textDark.withValues(
+                                    alpha: 0.3,
+                                  ),
                                   spreadRadius: 2,
                                   blurRadius: 10,
                                   offset: const Offset(2, 5),

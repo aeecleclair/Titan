@@ -8,7 +8,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class UserCashNotifier extends SingleNotifier<Cash> {
   final AmapUserRepository amapUserRepository;
   UserCashNotifier({required this.amapUserRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<Cash>> loadCashByUser(String userId) async {
     return await load(() async => amapUserRepository.getCashByUser(userId));
@@ -35,15 +35,17 @@ class UserCashNotifier extends SingleNotifier<Cash> {
 
 final userAmountProvider =
     StateNotifierProvider<UserCashNotifier, AsyncValue<Cash>>((ref) {
-  final AmapUserRepository amapUserRepository =
-      ref.watch(amapUserRepositoryProvider);
-  UserCashNotifier userCashNotifier =
-      UserCashNotifier(amapUserRepository: amapUserRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    final userId = ref.watch(idProvider);
-    userId.whenData(
-      (value) async => await userCashNotifier.loadCashByUser(value),
-    );
-  });
-  return userCashNotifier;
-});
+      final AmapUserRepository amapUserRepository = ref.watch(
+        amapUserRepositoryProvider,
+      );
+      UserCashNotifier userCashNotifier = UserCashNotifier(
+        amapUserRepository: amapUserRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        final userId = ref.watch(idProvider);
+        userId.whenData(
+          (value) async => await userCashNotifier.loadCashByUser(value),
+        );
+      });
+      return userCashNotifier;
+    });

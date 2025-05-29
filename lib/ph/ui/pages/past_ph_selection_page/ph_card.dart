@@ -18,10 +18,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 class PhCard extends HookConsumerWidget {
   final Ph ph;
 
-  const PhCard({
-    super.key,
-    required this.ph,
-  });
+  const PhCard({super.key, required this.ph});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,9 +34,7 @@ class PhCard extends HookConsumerWidget {
     return GestureDetector(
       onTap: () {
         phNotifier.setPh(ph);
-        QR.to(
-          PhRouter.root + PhRouter.past_ph_selection + PhRouter.view_ph,
-        );
+        QR.to(PhRouter.root + PhRouter.past_ph_selection + PhRouter.view_ph);
       },
       child: CardLayout(
         padding: const EdgeInsets.all(0),
@@ -64,10 +59,7 @@ class PhCard extends HookConsumerWidget {
                   try {
                     pdfBytes = await phPdf;
                   } catch (e) {
-                    displayPhToastWithContext(
-                      TypeMsg.error,
-                      e.toString(),
-                    );
+                    displayPhToastWithContext(TypeMsg.error, e.toString());
                     return;
                   }
 

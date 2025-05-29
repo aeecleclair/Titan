@@ -22,10 +22,10 @@ class ScoreListNotifier extends ListNotifier<Score> {
 
 final scoreListProvider =
     StateNotifierProvider<ScoreListNotifier, AsyncValue<List<Score>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final notifier = ScoreListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.getLeaderboard();
-  });
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      final notifier = ScoreListNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.getLeaderboard();
+      });
+      return notifier;
+    });

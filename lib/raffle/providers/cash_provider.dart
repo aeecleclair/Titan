@@ -25,8 +25,8 @@ class CashProvider extends ListNotifier<Cash> {
     return await update(
       _cashRepository.updateCash,
       (cashList, c) => cashList
-        ..[cashList.indexWhere((c) => c.user.id == cash.user.id)] =
-            cash.copyWith(balance: cash.balance + amount),
+        ..[cashList.indexWhere((c) => c.user.id == cash.user.id)] = cash
+            .copyWith(balance: cash.balance + amount),
       cash.copyWith(balance: amount.toDouble()),
     );
   }
@@ -66,13 +66,11 @@ class CashProvider extends ListNotifier<Cash> {
 }
 
 final cashProvider =
-    StateNotifierProvider<CashProvider, AsyncValue<List<Cash>>>(
-  (ref) {
-    final token = ref.watch(tokenProvider);
-    CashProvider cashProvider = CashProvider(token: token);
-    tokenExpireWrapperAuth(ref, () async {
-      await cashProvider.loadCashList();
+    StateNotifierProvider<CashProvider, AsyncValue<List<Cash>>>((ref) {
+      final token = ref.watch(tokenProvider);
+      CashProvider cashProvider = CashProvider(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        await cashProvider.loadCashList();
+      });
+      return cashProvider;
     });
-    return cashProvider;
-  },
-);

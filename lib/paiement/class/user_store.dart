@@ -75,14 +75,14 @@ class UserStore extends Store {
   }
 
   UserStore.empty()
-      : this(
-          id: '',
-          name: '',
-          walletId: '',
-          structure: Structure.empty(),
-          canBank: false,
-          canSeeHistory: false,
-          canCancel: false,
-          canManageSellers: false,
-        );
+    : this(
+        id: '',
+        name: '',
+        walletId: '',
+        structure: Structure.empty(),
+        canBank: false,
+        canSeeHistory: false,
+        canCancel: false,
+        canManageSellers: false,
+      );
 }

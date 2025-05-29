@@ -1,11 +1,7 @@
 import 'package:myecl/tools/functions.dart';
 
 class Ph {
-  Ph({
-    required this.id,
-    required this.date,
-    required this.name,
-  });
+  Ph({required this.id, required this.date, required this.name});
   late final String id;
   late final DateTime date;
   late final String name;

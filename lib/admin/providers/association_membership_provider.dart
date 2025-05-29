@@ -12,5 +12,5 @@ class AssociationMembershipNotifier
 
 final associationMembershipProvider =
     StateNotifierProvider<AssociationMembershipNotifier, AssociationMembership>(
-  (ref) => AssociationMembershipNotifier(),
-);
+      (ref) => AssociationMembershipNotifier(),
+    );

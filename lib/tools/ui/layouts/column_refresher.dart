@@ -30,32 +30,32 @@ class ColumnRefresher extends ConsumerWidget {
   }
 
   Widget buildAndroidList(WidgetRef ref) => RefreshIndicator(
+    onRefresh: () async {
+      tokenExpireWrapper(ref, onRefresh);
+    },
+    child: ListView.builder(
+      itemCount: children.length,
+      itemBuilder: (BuildContext context, int index) => children[index],
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics(),
+      ),
+    ),
+  );
+  Widget buildIOSList(WidgetRef ref) => CustomScrollView(
+    shrinkWrap: true,
+    physics: const BouncingScrollPhysics(),
+    slivers: [
+      CupertinoSliverRefreshControl(
         onRefresh: () async {
           tokenExpireWrapper(ref, onRefresh);
         },
-        child: ListView.builder(
-          itemCount: children.length,
-          itemBuilder: (BuildContext context, int index) => children[index],
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics(),
-          ),
+      ),
+      SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) => children[index],
+          childCount: children.length,
         ),
-      );
-  Widget buildIOSList(WidgetRef ref) => CustomScrollView(
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          CupertinoSliverRefreshControl(
-            onRefresh: () async {
-              tokenExpireWrapper(ref, onRefresh);
-            },
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => children[index],
-              childCount: children.length,
-            ),
-          ),
-        ],
-      );
+      ),
+    ],
+  );
 }

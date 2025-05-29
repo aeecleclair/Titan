@@ -8,14 +8,16 @@ class AdminDeliveryOrderListNotifier extends MapNotifier<String, Order> {
   AdminDeliveryOrderListNotifier() : super();
 }
 
-final adminDeliveryOrderListProvider = StateNotifierProvider<
-    AdminDeliveryOrderListNotifier,
-    Map<String, AsyncValue<List<Order>>?>>((ref) {
-  AdminDeliveryOrderListNotifier orderListNotifier =
-      AdminDeliveryOrderListNotifier();
-  tokenExpireWrapperAuth(ref, () async {
-    final deliveries = ref.watch(deliveryList);
-    orderListNotifier.loadTList(deliveries.map((e) => e.id).toList());
-  });
-  return orderListNotifier;
-});
+final adminDeliveryOrderListProvider =
+    StateNotifierProvider<
+      AdminDeliveryOrderListNotifier,
+      Map<String, AsyncValue<List<Order>>?>
+    >((ref) {
+      AdminDeliveryOrderListNotifier orderListNotifier =
+          AdminDeliveryOrderListNotifier();
+      tokenExpireWrapperAuth(ref, () async {
+        final deliveries = ref.watch(deliveryList);
+        orderListNotifier.loadTList(deliveries.map((e) => e.id).toList());
+      });
+      return orderListNotifier;
+    });

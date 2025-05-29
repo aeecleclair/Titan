@@ -17,8 +17,9 @@ class SellerRightCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(selectedStoreProvider);
-    final sellerStoreNotifier =
-        ref.watch(sellerStoreProvider(store.id).notifier);
+    final sellerStoreNotifier = ref.watch(
+      sellerStoreProvider(store.id).notifier,
+    );
     final rightsIcons = [];
     final rightsLabel = [];
 
@@ -29,27 +30,24 @@ class SellerRightCard extends ConsumerWidget {
     final isStructureAdmin =
         storeSeller.userId == store.structure.managerUser.id;
 
-    final icons = [
-      HeroIcons.viewfinderCircle,
-      HeroIcons.wallet,
-      HeroIcons.xMark,
-      HeroIcons.userGroup,
-    ]
-        .map(
-          (e) => CardButton(
-            size: 35,
-            colors: const [
-              Color.fromARGB(255, 6, 75, 75),
-              Color.fromARGB(255, 0, 29, 29),
-            ],
-            child: HeroIcon(
-              e,
-              color: Colors.white,
-              size: 20,
-            ),
-          ),
-        )
-        .toList();
+    final icons =
+        [
+              HeroIcons.viewfinderCircle,
+              HeroIcons.wallet,
+              HeroIcons.xMark,
+              HeroIcons.userGroup,
+            ]
+            .map(
+              (e) => CardButton(
+                size: 35,
+                colors: const [
+                  Color.fromARGB(255, 6, 75, 75),
+                  Color.fromARGB(255, 0, 29, 29),
+                ],
+                child: HeroIcon(e, color: Colors.white, size: 20),
+              ),
+            )
+            .toList();
     icons.add(
       const CardButton(
         size: 35,
@@ -57,11 +55,7 @@ class SellerRightCard extends ConsumerWidget {
           Color.fromARGB(255, 255, 119, 7),
           Color.fromARGB(255, 186, 84, 1),
         ],
-        child: HeroIcon(
-          HeroIcons.userGroup,
-          color: Colors.white,
-          size: 20,
-        ),
+        child: HeroIcon(HeroIcons.userGroup, color: Colors.white, size: 20),
       ),
     );
 
@@ -83,9 +77,7 @@ class SellerRightCard extends ConsumerWidget {
     for (var i = 0; i < sellerRights.length; i++) {
       if (sellerRights[i]) {
         rightsLabel.add(labels[i]);
-        rightsIcons.add(
-          icons[i],
-        );
+        rightsIcons.add(icons[i]);
       }
     }
 
@@ -104,7 +96,7 @@ class SellerRightCard extends ConsumerWidget {
             backgroundColor: Colors.transparent,
             scrollControlDisabledMaxHeightRatio:
                 ((isStructureAdmin ? 80 : 100) + 45 * icons.length) /
-                    MediaQuery.of(context).size.height,
+                MediaQuery.of(context).size.height,
             builder: (context) {
               return ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -116,9 +108,7 @@ class SellerRightCard extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
                       Expanded(
                         child: Text(
                           "Droits de ${storeSeller.user.nickname ?? ("${storeSeller.user.firstname} ${storeSeller.user.name}")}",
@@ -130,9 +120,7 @@ class SellerRightCard extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       for (var i = 0; i < icons.length; i++)
                         if (i < 4 || isStructureAdmin)
                           Padding(
@@ -140,9 +128,7 @@ class SellerRightCard extends ConsumerWidget {
                             child: Row(
                               children: [
                                 icons[i],
-                                const SizedBox(
-                                  width: 15,
-                                ),
+                                const SizedBox(width: 15),
                                 Text(
                                   labels[i],
                                   style: const TextStyle(
@@ -158,21 +144,21 @@ class SellerRightCard extends ConsumerWidget {
                                       tokenExpireWrapper(ref, () async {
                                         final value = await sellerStoreNotifier
                                             .updateStoreSeller(
-                                          storeSeller.copyWith(
-                                            canBank: i == 0
-                                                ? !sellerRights[0]
-                                                : sellerRights[0],
-                                            canSeeHistory: i == 1
-                                                ? !sellerRights[1]
-                                                : sellerRights[1],
-                                            canCancel: i == 2
-                                                ? !sellerRights[2]
-                                                : sellerRights[2],
-                                            canManageSellers: i == 3
-                                                ? !sellerRights[3]
-                                                : sellerRights[3],
-                                          ),
-                                        );
+                                              storeSeller.copyWith(
+                                                canBank: i == 0
+                                                    ? !sellerRights[0]
+                                                    : sellerRights[0],
+                                                canSeeHistory: i == 1
+                                                    ? !sellerRights[1]
+                                                    : sellerRights[1],
+                                                canCancel: i == 2
+                                                    ? !sellerRights[2]
+                                                    : sellerRights[2],
+                                                canManageSellers: i == 3
+                                                    ? !sellerRights[3]
+                                                    : sellerRights[3],
+                                              ),
+                                            );
                                         if (value) {
                                           displayToastWithContext(
                                             TypeMsg.msg,
@@ -191,8 +177,12 @@ class SellerRightCard extends ConsumerWidget {
                                       sellerRights[i]
                                           ? HeroIcons.xMark
                                           : HeroIcons.check,
-                                      color:
-                                          const Color.fromARGB(255, 0, 29, 29),
+                                      color: const Color.fromARGB(
+                                        255,
+                                        0,
+                                        29,
+                                        29,
+                                      ),
                                     ),
                                   ),
                               ],
@@ -233,10 +223,7 @@ class SellerRightCard extends ConsumerWidget {
                           child: const Padding(
                             padding: EdgeInsets.symmetric(vertical: 10),
                             child: AddEditButtonLayout(
-                              colors: [
-                                Color(0xFF9E131F),
-                                Color(0xFF590512),
-                              ],
+                              colors: [Color(0xFF9E131F), Color(0xFF590512)],
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -245,9 +232,7 @@ class SellerRightCard extends ConsumerWidget {
                                     color: Colors.white,
                                     size: 20,
                                   ),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
+                                  SizedBox(width: 15),
                                   Text(
                                     "Supprimer le vendeur",
                                     style: TextStyle(
@@ -260,9 +245,7 @@ class SellerRightCard extends ConsumerWidget {
                             ),
                           ),
                         ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),

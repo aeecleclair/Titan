@@ -39,8 +39,9 @@ List<Species> filterSpeciesWithFilters(
       .where(
         (species) => searchFilter == ""
             ? true
-            : removeDiacritics(species.name.toLowerCase())
-                .contains(removeDiacritics(searchFilter.toLowerCase())),
+            : removeDiacritics(
+                species.name.toLowerCase(),
+              ).contains(removeDiacritics(searchFilter.toLowerCase())),
       )
       .toList();
   filteredSpecies = filteredSpecies
@@ -48,9 +49,10 @@ List<Species> filterSpeciesWithFilters(
         (species) => seasonsTypeFilter == SeedLibraryTextConstants.all
             ? true
             : species.startSeason == null
-                ? true
-                : getMonthsBySeason(seasonsTypeFilter)
-                    .contains(species.startSeason!.month),
+            ? true
+            : getMonthsBySeason(
+                seasonsTypeFilter,
+              ).contains(species.startSeason!.month),
       )
       .toList();
   filteredSpecies = filteredSpecies
@@ -64,8 +66,8 @@ List<Species> filterSpeciesWithFilters(
       .where(
         (species) =>
             speciesTypeFilter == SpeciesType(name: SeedLibraryTextConstants.all)
-                ? true
-                : species.type == speciesTypeFilter,
+            ? true
+            : species.type == speciesTypeFilter,
       )
       .toList();
   return filteredSpecies;
@@ -95,12 +97,11 @@ final plantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
   return plantsProvider.maybeWhen(
     data: (plants) {
       final filteredPlants = plants
-          .where(
-            (plant) => speciesId.contains(plant.speciesId),
-          )
+          .where((plant) => speciesId.contains(plant.speciesId))
           .toList();
-      filteredPlants
-          .sort((a, b) => a.plantReference.compareTo(b.plantReference));
+      filteredPlants.sort(
+        (a, b) => a.plantReference.compareTo(b.plantReference),
+      );
       return filteredPlants;
     },
     orElse: () => [],
@@ -125,9 +126,7 @@ final myPlantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
   );
   final speciesId = filteredSpecies.map((species) => species.id).toList();
   final filteredPlants = plants
-      .where(
-        (plant) => speciesId.contains(plant.speciesId),
-      )
+      .where((plant) => speciesId.contains(plant.speciesId))
       .toList();
   if (!consummedFilter) {
     filteredPlants.removeWhere((plant) => plant.state == State.consumed);

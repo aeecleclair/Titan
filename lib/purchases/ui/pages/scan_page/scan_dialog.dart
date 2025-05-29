@@ -48,10 +48,7 @@ class ScanDialog extends HookConsumerWidget {
                 const SizedBox(height: 20),
                 const Text(
                   "Ajouter un tag pour les scans",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20),
                 Material(
@@ -150,9 +147,7 @@ class ScanDialog extends HookConsumerWidget {
                             scanner.when(
                               data: (data) {
                                 scannerNotifier.setScanner(
-                                  data.copyWith(
-                                    qrCodeSecret: secret,
-                                  ),
+                                  data.copyWith(qrCodeSecret: secret),
                                 );
                               },
                               error: (error, stack) {
@@ -160,12 +155,9 @@ class ScanDialog extends HookConsumerWidget {
                                   TypeMsg.error,
                                   error.toString(),
                                 );
-                                Future.delayed(
-                                  const Duration(seconds: 2),
-                                  () {
-                                    scannerNotifier.reset();
-                                  },
-                                );
+                                Future.delayed(const Duration(seconds: 2), () {
+                                  scannerNotifier.reset();
+                                });
                               },
                               loading: () {},
                             );
@@ -232,11 +224,11 @@ class ScanDialog extends HookConsumerWidget {
                                     await tokenExpireWrapper(ref, () async {
                                       final value = await ticketListNotifier
                                           .consumeTicket(
-                                        sellerId,
-                                        data,
-                                        ticket.id,
-                                        tag,
-                                      );
+                                            sellerId,
+                                            data,
+                                            ticket.id,
+                                            tag,
+                                          );
                                       if (value) {
                                         displayToastWithContext(
                                           TypeMsg.msg,

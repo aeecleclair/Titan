@@ -27,21 +27,15 @@ class SectionRepository {
               .values
               .toList();
         } catch (e) {
-          logger.error(
-            "GET $host\nError while decoding response",
-          );
+          logger.error("GET $host\nError while decoding response");
           return <Section>[];
         }
       } else {
-        logger.error(
-          "GET $host\n${response.statusCode} ${response.body}",
-        );
+        logger.error("GET $host\n${response.statusCode} ${response.body}");
         return <Section>[];
       }
     } catch (e) {
-      logger.error(
-        "GET $host\nError while fetching response",
-      );
+      logger.error("GET $host\nError while fetching response");
       return <Section>[];
     }
   }

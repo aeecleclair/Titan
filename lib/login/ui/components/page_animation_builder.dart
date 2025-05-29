@@ -17,14 +17,10 @@ class PageAnimationBuilder extends StatelessWidget {
         children: [
           SizedBox.expand(
             child: CustomPaint(
-              painter: BackgroundPainter(
-                animation: animation,
-              ),
+              painter: BackgroundPainter(animation: animation),
             ),
           ),
-          SafeArea(
-            child: Center(child: child),
-          ),
+          SafeArea(child: Center(child: child)),
         ],
       ),
     );

@@ -36,16 +36,17 @@ class PresentationPage extends HookConsumerWidget {
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                         foreground: Paint()
-                          ..shader = const RadialGradient(
-                            colors: [
-                              AMAPColorConstants.greenGradient1,
-                              AMAPColorConstants.textDark,
-                            ],
-                            center: Alignment.topLeft,
-                            radius: 10,
-                          ).createShader(
-                            const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
-                          ),
+                          ..shader =
+                              const RadialGradient(
+                                colors: [
+                                  AMAPColorConstants.greenGradient1,
+                                  AMAPColorConstants.textDark,
+                                ],
+                                center: Alignment.topLeft,
+                                radius: 10,
+                              ).createShader(
+                                const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
+                              ),
                       ),
                     ),
                     information.when(
@@ -74,9 +75,9 @@ class PresentationPage extends HookConsumerWidget {
                       ),
                       error: (Object error, StackTrace stackTrace) =>
                           const TextSpan(
-                        text: AMAPTextConstants.loadingError,
-                        style: TextStyle(color: Colors.red),
-                      ),
+                            text: AMAPTextConstants.loadingError,
+                            style: TextStyle(color: Colors.red),
+                          ),
                       loading: () => const TextSpan(
                         text: AMAPTextConstants.loading,
                         style: TextStyle(color: Colors.red),
@@ -88,16 +89,17 @@ class PresentationPage extends HookConsumerWidget {
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                         foreground: Paint()
-                          ..shader = const RadialGradient(
-                            colors: [
-                              AMAPColorConstants.greenGradient1,
-                              AMAPColorConstants.textDark,
-                            ],
-                            center: Alignment.topLeft,
-                            radius: 10,
-                          ).createShader(
-                            const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
-                          ),
+                          ..shader =
+                              const RadialGradient(
+                                colors: [
+                                  AMAPColorConstants.greenGradient1,
+                                  AMAPColorConstants.textDark,
+                                ],
+                                center: Alignment.topLeft,
+                                radius: 10,
+                              ).createShader(
+                                const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
+                              ),
                       ),
                     ),
                   ],

@@ -27,8 +27,9 @@ class UserTicket extends SimpleUser {
     final users = super.toJson();
     users['promo'] = promo;
     users['floor'] = floor;
-    users['created_on'] =
-        createdOn != null ? processDateToAPI(createdOn!) : null;
+    users['created_on'] = createdOn != null
+        ? processDateToAPI(createdOn!)
+        : null;
     return users;
   }
 

@@ -23,10 +23,7 @@ class CheckBoxEntry extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(
-              color: Colors.grey.shade700,
-              fontSize: 16,
-            ),
+            style: TextStyle(color: Colors.grey.shade700, fontSize: 16),
           ),
           Checkbox(
             checkColor: Colors.white,

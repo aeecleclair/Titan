@@ -30,16 +30,16 @@ class ScanPage extends HookConsumerWidget {
     final formatter = NumberFormat("#,##0.00", "fr_FR");
     final transactionNotifier = ref.watch(transactionProvider.notifier);
     final ongoingTransaction = ref.watch(ongoingTransactionProvider);
-    final ongoingTransactionNotifier =
-        ref.watch(ongoingTransactionProvider.notifier);
+    final ongoingTransactionNotifier = ref.watch(
+      ongoingTransactionProvider.notifier,
+    );
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
-    final opacity = useAnimationController(
-      duration: const Duration(seconds: 1),
-    )..repeat(reverse: true);
+    final opacity = useAnimationController(duration: const Duration(seconds: 1))
+      ..repeat(reverse: true);
     return Stack(
       children: [
         const Scanner(),
@@ -78,10 +78,7 @@ class ScanPage extends HookConsumerWidget {
                           bypass
                               ? "Pas d'adhésion obligatoire"
                               : "Limité à ${store.structure.associationMembership.name}",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),
+                          style: TextStyle(color: Colors.white, fontSize: 15),
                         ),
                       ],
                     ),
@@ -117,17 +114,16 @@ class ScanPage extends HookConsumerWidget {
                                 horizontal: 50,
                               ),
                               decoration: BoxDecoration(
-                                color:
-                                    Colors.grey.shade200.withValues(alpha: 0.8),
+                                color: Colors.grey.shade200.withValues(
+                                  alpha: 0.8,
+                                ),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Column(
                                 children: [
                                   const Text(
                                     "Montant",
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                    ),
+                                    style: TextStyle(fontSize: 13),
                                   ),
                                   Text(
                                     '${formatter.format(barcode.tot / 100)} €',
@@ -167,9 +163,7 @@ class ScanPage extends HookConsumerWidget {
               ),
             ),
             // Qr code scanning zone
-            SizedBox(
-              height: MediaQuery.of(context).size.width * 0.8,
-            ),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.8),
             Expanded(
               child: Column(
                 children: [
@@ -231,8 +225,8 @@ class ScanPage extends HookConsumerWidget {
                                           final value =
                                               await transactionNotifier
                                                   .cancelTransaction(
-                                            transaction.id,
-                                          );
+                                                    transaction.id,
+                                                  );
                                           value.when(
                                             data: (value) {
                                               if (value) {

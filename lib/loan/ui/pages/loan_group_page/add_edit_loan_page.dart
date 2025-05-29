@@ -39,8 +39,9 @@ class AddEditLoanPage extends HookConsumerWidget {
     final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final itemList = ref.watch(itemListProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
-    final queryController =
-        useTextEditingController(text: isEdit ? loan.borrower.getName() : "");
+    final queryController = useTextEditingController(
+      text: isEdit ? loan.borrower.getName() : "",
+    );
     final focus = ref.watch(itemFocusProvider);
     final focusNode = useFocusNode();
     if (focus) {
@@ -84,8 +85,9 @@ class AddEditLoanPage extends HookConsumerWidget {
                       onChanged: (value) {
                         tokenExpireWrapper(ref, () async {
                           if (queryController.text.isNotEmpty) {
-                            await usersNotifier
-                                .filterUsers(queryController.text);
+                            await usersNotifier.filterUsers(
+                              queryController.text,
+                            );
                           } else {
                             usersNotifier.clear();
                           }

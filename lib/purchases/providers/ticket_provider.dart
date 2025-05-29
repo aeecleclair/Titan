@@ -25,7 +25,7 @@ class TicketNotifier extends SingleNotifier<Ticket> {
 
 final ticketProvider =
     StateNotifierProvider<TicketNotifier, AsyncValue<Ticket>>((ref) {
-  final token = ref.watch(tokenProvider);
-  TicketNotifier notifier = TicketNotifier(token: token);
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      TicketNotifier notifier = TicketNotifier(token: token);
+      return notifier;
+    });

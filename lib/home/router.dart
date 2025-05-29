@@ -22,21 +22,19 @@ class HomeRouter {
   HomeRouter(this.ref);
 
   QRoute route() => QRoute(
-        name: "home",
-        path: HomeRouter.root,
-        builder: () => home_page.HomePage(),
-        middleware: [
-          AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(home_page.loadLibrary),
-        ],
-        children: [
-          QRoute(
-            path: detail,
-            builder: () => detail_page.DetailPage(isAdmin: false),
-            middleware: [
-              DeferredLoadingMiddleware(detail_page.loadLibrary),
-            ],
-          ),
-        ],
-      );
+    name: "home",
+    path: HomeRouter.root,
+    builder: () => home_page.HomePage(),
+    middleware: [
+      AuthenticatedMiddleware(ref),
+      DeferredLoadingMiddleware(home_page.loadLibrary),
+    ],
+    children: [
+      QRoute(
+        path: detail,
+        builder: () => detail_page.DetailPage(isAdmin: false),
+        middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
+      ),
+    ],
+  );
 }

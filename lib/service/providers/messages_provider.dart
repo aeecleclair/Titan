@@ -10,7 +10,7 @@ class MessagesProvider extends ListNotifier<Message> {
       NotificationRepository();
   String firebaseToken = "";
   MessagesProvider({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     notificationRepository.setToken(token);
   }
 
@@ -35,9 +35,9 @@ class MessagesProvider extends ListNotifier<Message> {
 
 final messagesProvider =
     StateNotifierProvider<MessagesProvider, AsyncValue<List<Message>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final firebaseToken = ref.watch(firebaseTokenProvider);
-  MessagesProvider notifier = MessagesProvider(token: token);
-  firebaseToken.then((value) => notifier.setFirebaseToken(value));
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      final firebaseToken = ref.watch(firebaseTokenProvider);
+      MessagesProvider notifier = MessagesProvider(token: token);
+      firebaseToken.then((value) => notifier.setFirebaseToken(value));
+      return notifier;
+    });

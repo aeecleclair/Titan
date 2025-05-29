@@ -33,18 +33,19 @@ class FiltersBar extends HookConsumerWidget {
                   onChanged: (String? newValue) {
                     seasonNotifier.setString(newValue!);
                   },
-                  items: <String>[
-                    SeedLibraryTextConstants.all,
-                    SeedLibraryTextConstants.spring,
-                    SeedLibraryTextConstants.summer,
-                    SeedLibraryTextConstants.autumn,
-                    SeedLibraryTextConstants.winter,
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                  items:
+                      <String>[
+                        SeedLibraryTextConstants.all,
+                        SeedLibraryTextConstants.spring,
+                        SeedLibraryTextConstants.summer,
+                        SeedLibraryTextConstants.autumn,
+                        SeedLibraryTextConstants.winter,
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                 ),
               ],
             ),
@@ -77,11 +78,12 @@ class FiltersBar extends HookConsumerWidget {
                   },
                   items: [SpeciesType.empty(), ...speciesTypeList]
                       .map<DropdownMenuItem<SpeciesType>>((SpeciesType value) {
-                    return DropdownMenuItem<SpeciesType>(
-                      value: value,
-                      child: Text(value.name),
-                    );
-                  }).toList(),
+                        return DropdownMenuItem<SpeciesType>(
+                          value: value,
+                          child: Text(value.name),
+                        );
+                      })
+                      .toList(),
                 ),
               ],
             ),

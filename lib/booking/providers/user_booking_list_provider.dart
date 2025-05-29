@@ -7,7 +7,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class UserBookingListProvider extends ListNotifier<Booking> {
   final BookingRepository bookingRepository;
   UserBookingListProvider({required this.bookingRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Booking>>> loadUserBookings() async {
     return await loadList(bookingRepository.getUserBookingList);
@@ -37,13 +37,15 @@ class UserBookingListProvider extends ListNotifier<Booking> {
 }
 
 final userBookingListProvider =
-    StateNotifierProvider<UserBookingListProvider, AsyncValue<List<Booking>>>(
-        (ref) {
-  final bookingRepository = ref.watch(bookingRepositoryProvider);
-  final provider =
-      UserBookingListProvider(bookingRepository: bookingRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadUserBookings();
-  });
-  return provider;
-});
+    StateNotifierProvider<UserBookingListProvider, AsyncValue<List<Booking>>>((
+      ref,
+    ) {
+      final bookingRepository = ref.watch(bookingRepositoryProvider);
+      final provider = UserBookingListProvider(
+        bookingRepository: bookingRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        await provider.loadUserBookings();
+      });
+      return provider;
+    });

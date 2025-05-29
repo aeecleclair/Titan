@@ -93,8 +93,10 @@ class ProductCard extends StatelessWidget {
                         ],
                         child: child,
                       ),
-                      child:
-                          const HeroIcon(HeroIcons.trash, color: Colors.white),
+                      child: const HeroIcon(
+                        HeroIcons.trash,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 )

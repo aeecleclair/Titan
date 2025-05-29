@@ -18,12 +18,12 @@ class Recommendation {
   });
 
   Recommendation.fromJson(Map<String, dynamic> json)
-      : id = json["id"],
-        creation = processDateFromAPI(json["creation"]),
-        title = json["title"],
-        code = json["code"],
-        summary = json["summary"],
-        description = json["description"];
+    : id = json["id"],
+      creation = processDateFromAPI(json["creation"]),
+      title = json["title"],
+      code = json["code"],
+      summary = json["summary"],
+      description = json["description"];
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -46,12 +46,7 @@ class Recommendation {
   }
 
   static Recommendation empty() {
-    return Recommendation(
-      title: "",
-      code: null,
-      summary: "",
-      description: "",
-    );
+    return Recommendation(title: "", code: null, summary: "", description: "");
   }
 
   @override

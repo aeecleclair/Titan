@@ -21,9 +21,7 @@ class StoreList extends ConsumerWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: 25,
-            ),
+            const SizedBox(height: 25),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               alignment: Alignment.centerLeft,
@@ -36,9 +34,7 @@ class StoreList extends ConsumerWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             AsyncChild(
               value: stores,
               builder: (context, stores) {
@@ -53,9 +49,7 @@ class StoreList extends ConsumerWidget {
                 return Column(
                   children: [
                     if (isAdmin) ...[
-                      const StoreDivider(
-                        name: "Administrateur",
-                      ),
+                      const StoreDivider(name: "Administrateur"),
                       const StoreAdminCard(),
                     ],
                     ...sortedByMembership.map((membership, stores) {
@@ -65,13 +59,9 @@ class StoreList extends ConsumerWidget {
                         membership,
                         Column(
                           children: [
-                            StoreDivider(
-                              name: membership,
-                            ),
+                            StoreDivider(name: membership),
                             for (var store in alphabeticallyOrderedStores)
-                              StoreSellerCard(
-                                store: store,
-                              ),
+                              StoreSellerCard(store: store),
                           ],
                         ),
                       );
@@ -80,9 +70,7 @@ class StoreList extends ConsumerWidget {
                 );
               },
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
           ],
         ),
       ),

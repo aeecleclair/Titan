@@ -8,7 +8,7 @@ class ScannedUsersListNotifier extends ListNotifier<SimpleUser> {
   final ScannerRepository scannerRepository = ScannerRepository();
   AsyncValue<List<String>> tagList = const AsyncValue.loading();
   ScannedUsersListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     scannerRepository.setToken(token);
   }
 
@@ -25,9 +25,14 @@ class ScannedUsersListNotifier extends ListNotifier<SimpleUser> {
   }
 }
 
-final scannedUsersListProvider = StateNotifierProvider<ScannedUsersListNotifier,
-    AsyncValue<List<SimpleUser>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  ScannedUsersListNotifier notifier = ScannedUsersListNotifier(token: token);
-  return notifier;
-});
+final scannedUsersListProvider =
+    StateNotifierProvider<
+      ScannedUsersListNotifier,
+      AsyncValue<List<SimpleUser>>
+    >((ref) {
+      final token = ref.watch(tokenProvider);
+      ScannedUsersListNotifier notifier = ScannedUsersListNotifier(
+        token: token,
+      );
+      return notifier;
+    });

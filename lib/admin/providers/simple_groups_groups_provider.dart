@@ -8,15 +8,18 @@ class SimpleGroupsGroupsNotifier extends MapNotifier<String, Group> {
   SimpleGroupsGroupsNotifier();
 }
 
-final simpleGroupsGroupsProvider = StateNotifierProvider<
-    SimpleGroupsGroupsNotifier, Map<String, AsyncValue<List<Group>>?>>((ref) {
-  SimpleGroupsGroupsNotifier simpleGroupsGroupsNotifier =
-      SimpleGroupsGroupsNotifier();
-  tokenExpireWrapperAuth(ref, () async {
-    final simpleGroups = ref.watch(allGroupListProvider);
-    simpleGroups.whenData((value) {
-      simpleGroupsGroupsNotifier.loadTList(value.map((e) => e.id).toList());
+final simpleGroupsGroupsProvider =
+    StateNotifierProvider<
+      SimpleGroupsGroupsNotifier,
+      Map<String, AsyncValue<List<Group>>?>
+    >((ref) {
+      SimpleGroupsGroupsNotifier simpleGroupsGroupsNotifier =
+          SimpleGroupsGroupsNotifier();
+      tokenExpireWrapperAuth(ref, () async {
+        final simpleGroups = ref.watch(allGroupListProvider);
+        simpleGroups.whenData((value) {
+          simpleGroupsGroupsNotifier.loadTList(value.map((e) => e.id).toList());
+        });
+      });
+      return simpleGroupsGroupsNotifier;
     });
-  });
-  return simpleGroupsGroupsNotifier;
-});

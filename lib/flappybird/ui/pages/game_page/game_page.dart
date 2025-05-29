@@ -66,10 +66,7 @@ class GamePage extends HookConsumerWidget {
                       pipeListNotifier.clearPipe();
                       Navigator.pop(context);
                     },
-                    child: const Icon(
-                      Icons.refresh,
-                      color: Colors.brown,
-                    ),
+                    child: const Icon(Icons.refresh, color: Colors.brown),
                   ),
                 ),
               ],

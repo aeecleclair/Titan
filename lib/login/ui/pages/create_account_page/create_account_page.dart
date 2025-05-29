@@ -236,14 +236,10 @@ class CreateAccountPage extends HookConsumerWidget {
                   borderSide: BorderSide(color: ColorConstants.background2),
                 ),
                 focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.white,
-                  ),
+                  borderSide: BorderSide(color: Colors.white),
                 ),
                 errorBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.white,
-                  ),
+                  borderSide: BorderSide(color: Colors.white),
                 ),
                 errorStyle: TextStyle(color: Colors.white),
               ),
@@ -275,8 +271,9 @@ class CreateAccountPage extends HookConsumerWidget {
               password: password.text,
             );
             try {
-              final value =
-                  await signUpNotifier.activateUser(finalCreateAccount);
+              final value = await signUpNotifier.activateUser(
+                finalCreateAccount,
+              );
               if (value) {
                 displayToastWithContext(
                   TypeMsg.msg,
@@ -369,8 +366,9 @@ class CreateAccountPage extends HookConsumerWidget {
                       currentPage.value != (isCodeGiven ? 1 : 0)
                           ? GestureDetector(
                               onTap: (() {
-                                FocusScope.of(context)
-                                    .requestFocus(FocusNode());
+                                FocusScope.of(
+                                  context,
+                                ).requestFocus(FocusNode());
                                 currentPage.value--;
                                 lastIndex.value = currentPage.value;
                                 pageController.previousPage(
@@ -389,11 +387,11 @@ class CreateAccountPage extends HookConsumerWidget {
                           ? GestureDetector(
                               onTap: (() {
                                 if (currentPage.value >= steps.length - 2 ||
-                                    formKeys[lastIndex.value]
-                                        .currentState!
+                                    formKeys[lastIndex.value].currentState!
                                         .validate()) {
-                                  FocusScope.of(context)
-                                      .requestFocus(FocusNode());
+                                  FocusScope.of(
+                                    context,
+                                  ).requestFocus(FocusNode());
                                   pageController.nextPage(
                                     duration: const Duration(milliseconds: 500),
                                     curve: Curves.decelerate,

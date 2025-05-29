@@ -27,10 +27,12 @@ class DetailDeliveryPage extends HookConsumerWidget {
     final deliveryOrders = ref.watch(adminDeliveryOrderListProvider);
     final orders = deliveryOrders[delivery.id];
     final deliveryListNotifier = ref.read(deliveryListProvider.notifier);
-    final deliveryProductListNotifier =
-        ref.watch(deliveryProductListProvider.notifier);
-    final sortedByCategoryDeliveryProducts =
-        ref.watch(sortedByCategoryDeliveryProductsProvider);
+    final deliveryProductListNotifier = ref.watch(
+      deliveryProductListProvider.notifier,
+    );
+    final sortedByCategoryDeliveryProducts = ref.watch(
+      sortedByCategoryDeliveryProductsProvider,
+    );
     final cash = ref.watch(cashListProvider);
     return AmapTemplate(
       child: Refresher(

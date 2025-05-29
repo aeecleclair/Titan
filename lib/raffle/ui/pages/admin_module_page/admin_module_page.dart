@@ -18,11 +18,7 @@ class AdminModulePage extends HookConsumerWidget {
           tombolaLogosNotifier.resetTData();
         },
         child: const Column(
-          children: [
-            AccountHandler(),
-            SizedBox(height: 12),
-            TombolaHandler(),
-          ],
+          children: [AccountHandler(), SizedBox(height: 12), TombolaHandler()],
         ),
       ),
     );

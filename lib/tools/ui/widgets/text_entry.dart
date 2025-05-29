@@ -74,8 +74,9 @@ class TextEntry extends StatelessWidget {
           color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
-        enabledBorder:
-            UnderlineInputBorder(borderSide: BorderSide(color: enabledColor)),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: enabledColor),
+        ),
         errorBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: errorColor, width: 2.0),
         ),

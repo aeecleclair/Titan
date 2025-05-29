@@ -33,25 +33,25 @@ class History {
   });
 
   History.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        type = HistoryType.values.firstWhere(
-          (e) => historyTypeToString(e) == json['type'],
-        ),
-        otherWalletName = json['other_wallet_name'],
-        total = json['total'],
-        creation = processDateFromAPI(json['creation']),
-        status = TransactionStatus.values.firstWhere(
-          (e) => e.toString().split('.').last == json['status'],
-        );
+    : id = json['id'],
+      type = HistoryType.values.firstWhere(
+        (e) => historyTypeToString(e) == json['type'],
+      ),
+      otherWalletName = json['other_wallet_name'],
+      total = json['total'],
+      creation = processDateFromAPI(json['creation']),
+      status = TransactionStatus.values.firstWhere(
+        (e) => e.toString().split('.').last == json['status'],
+      );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'type': historyTypeToString(type),
-        'other_wallet_name': otherWalletName,
-        'total': total,
-        'creation': processDateToAPI(creation),
-        'status': status.toString().split('.').last,
-      };
+    'id': id,
+    'type': historyTypeToString(type),
+    'other_wallet_name': otherWalletName,
+    'total': total,
+    'creation': processDateToAPI(creation),
+    'status': status.toString().split('.').last,
+  };
 
   @override
   String toString() {
@@ -59,10 +59,10 @@ class History {
   }
 
   History.empty()
-      : id = '',
-        type = HistoryType.transfer,
-        otherWalletName = '',
-        total = 0,
-        creation = DateTime.now(),
-        status = TransactionStatus.confirmed;
+    : id = '',
+      type = HistoryType.transfer,
+      otherWalletName = '',
+      total = 0,
+      creation = DateTime.now(),
+      status = TransactionStatus.confirmed;
 }

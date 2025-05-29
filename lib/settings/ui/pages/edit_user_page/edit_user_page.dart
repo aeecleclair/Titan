@@ -36,11 +36,13 @@ class EditUserPage extends HookConsumerWidget {
     final dateController = useTextEditingController(
       text: user.birthday != null ? processDate(user.birthday!) : "",
     );
-    final nickNameController =
-        useTextEditingController(text: user.nickname ?? '');
+    final nickNameController = useTextEditingController(
+      text: user.nickname ?? '',
+    );
     final phoneController = useTextEditingController(text: user.phone ?? '');
-    final floorController =
-        useTextEditingController(text: user.floor.toString());
+    final floorController = useTextEditingController(
+      text: user.floor.toString(),
+    );
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -128,9 +130,7 @@ class EditUserPage extends HookConsumerWidget {
                                   );
                                 }
                               },
-                              child: const PictureButton(
-                                icon: HeroIcons.photo,
-                              ),
+                              child: const PictureButton(icon: HeroIcons.photo),
                             ),
                           ),
                           Positioned(
@@ -171,8 +171,8 @@ class EditUserPage extends HookConsumerWidget {
                             right: 60,
                             child: GestureDetector(
                               onTap: () async {
-                                final value =
-                                    await profilePictureNotifier.cropImage();
+                                final value = await profilePictureNotifier
+                                    .cropImage();
                                 if (value != null) {
                                   if (value) {
                                     displayToastWithContext(
@@ -276,8 +276,9 @@ class EditUserPage extends HookConsumerWidget {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: ColorConstants.gradient2
-                                  .withValues(alpha: 0.5),
+                              color: ColorConstants.gradient2.withValues(
+                                alpha: 0.5,
+                              ),
                               spreadRadius: 1,
                               blurRadius: 7,
                               offset: const Offset(0, 3),

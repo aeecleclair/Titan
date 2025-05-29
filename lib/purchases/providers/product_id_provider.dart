@@ -7,7 +7,7 @@ class ProductIdNotifier extends SingleNotifier<String> {
   final UserInformationRepository productIdRepository =
       UserInformationRepository();
   ProductIdNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     productIdRepository.setToken(token);
   }
 
@@ -18,7 +18,7 @@ class ProductIdNotifier extends SingleNotifier<String> {
 
 final productIdProvider =
     StateNotifierProvider<ProductIdNotifier, AsyncValue<String>>((ref) {
-  final token = ref.watch(tokenProvider);
-  ProductIdNotifier notifier = ProductIdNotifier(token: token);
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      ProductIdNotifier notifier = ProductIdNotifier(token: token);
+      return notifier;
+    });

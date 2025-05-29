@@ -31,37 +31,26 @@ class EventRouter {
   EventRouter(this.ref);
 
   QRoute route() => QRoute(
-        name: "event",
-        path: EventRouter.root,
-        builder: () => main_page.EventMainPage(),
+    name: "event",
+    path: EventRouter.root,
+    builder: () => main_page.EventMainPage(),
+    middleware: [
+      AuthenticatedMiddleware(ref),
+      DeferredLoadingMiddleware(main_page.loadLibrary),
+    ],
+    children: [
+      QRoute(
+        path: admin,
+        builder: () => admin_page.AdminPage(),
         middleware: [
-          AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary),
+          AdminMiddleware(ref, isEventAdminProvider),
+          DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [
           QRoute(
-            path: admin,
-            builder: () => admin_page.AdminPage(),
-            middleware: [
-              AdminMiddleware(ref, isEventAdminProvider),
-              DeferredLoadingMiddleware(admin_page.loadLibrary),
-            ],
-            children: [
-              QRoute(
-                path: detail,
-                builder: () => detail_page.DetailPage(isAdmin: true),
-                middleware: [
-                  DeferredLoadingMiddleware(detail_page.loadLibrary),
-                ],
-              ),
-              QRoute(
-                path: addEdit,
-                builder: () => add_edit_event_page.AddEditEventPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(add_edit_event_page.loadLibrary),
-                ],
-              ),
-            ],
+            path: detail,
+            builder: () => detail_page.DetailPage(isAdmin: true),
+            middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
           ),
           QRoute(
             path: addEdit,
@@ -70,11 +59,20 @@ class EventRouter {
               DeferredLoadingMiddleware(add_edit_event_page.loadLibrary),
             ],
           ),
-          QRoute(
-            path: detail,
-            builder: () => detail_page.DetailPage(isAdmin: false),
-            middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
-          ),
         ],
-      );
+      ),
+      QRoute(
+        path: addEdit,
+        builder: () => add_edit_event_page.AddEditEventPage(),
+        middleware: [
+          DeferredLoadingMiddleware(add_edit_event_page.loadLibrary),
+        ],
+      ),
+      QRoute(
+        path: detail,
+        builder: () => detail_page.DetailPage(isAdmin: false),
+        middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
+      ),
+    ],
+  );
 }

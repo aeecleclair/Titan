@@ -28,8 +28,9 @@ class PhAddEditPhPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ph = ref.watch(phProvider);
     final isEdit = ph.id != Ph.empty().id;
-    final dateController =
-        TextEditingController(text: phFormatDateEntry(ph.date));
+    final dateController = TextEditingController(
+      text: phFormatDateEntry(ph.date),
+    );
     final key = GlobalKey<FormState>();
     final name = useTextEditingController(text: ph.name);
 
@@ -58,9 +59,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                       controller: name,
                       textInputAction: TextInputAction.done,
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     Center(
                       child: Column(
                         children: [
@@ -76,9 +75,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                               );
                             },
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                          const SizedBox(height: 20),
                           PdfPicker(isEdit: isEdit),
                         ],
                       ),
@@ -114,8 +111,9 @@ class PhAddEditPhPage extends HookConsumerWidget {
                                 : await phListNotifier.addPh(newPh);
 
                             if (value) {
-                              SystemChannels.textInput
-                                  .invokeMethod('TextInput.hide');
+                              SystemChannels.textInput.invokeMethod(
+                                'TextInput.hide',
+                              );
                               QR.back();
                               {
                                 if (editPdf) {
@@ -123,8 +121,9 @@ class PhAddEditPhPage extends HookConsumerWidget {
                                     data: (list) {
                                       ref
                                           .read(
-                                            phPdfProvider(list.last.id)
-                                                .notifier,
+                                            phPdfProvider(
+                                              list.last.id,
+                                            ).notifier,
                                           )
                                           .updatePhPdf(
                                             Uint8List.fromList(phSendPdf),
@@ -166,9 +165,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                       ),
                       builder: (child) => AddEditButtonLayout(child: child),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),

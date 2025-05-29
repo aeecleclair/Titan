@@ -41,10 +41,7 @@ class ItemBar extends HookConsumerWidget {
               child: Center(
                 child: Text(
                   LoanTextConstants.noItems,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                 ),
               ),
             );
@@ -74,10 +71,7 @@ class ItemBar extends HookConsumerWidget {
                   var currentValue = selectedItems[data.indexOf(e)];
                   return Column(
                     children: [
-                      CheckItemCard(
-                        item: e,
-                        isSelected: currentValue != 0,
-                      ),
+                      CheckItemCard(item: e, isSelected: currentValue != 0),
                       const SizedBox(height: 10),
                       SizedBox(
                         width: 120,
@@ -104,21 +98,17 @@ class ItemBar extends HookConsumerWidget {
                                       currentValue - 1,
                                     );
                                     Map<Item, int> selectedItemsWithQuantity =
-                                        Map.fromIterables(
-                                      data,
-                                      selectedItems,
-                                    );
+                                        Map.fromIterables(data, selectedItems);
                                     selectedItemsWithQuantity[e] =
                                         currentValue - 1;
-                                    List<Item> selected =
-                                        selectedItemsWithQuantity.keys
-                                            .where(
-                                              (element) =>
-                                                  selectedItemsWithQuantity[
-                                                      element] !=
-                                                  0,
-                                            )
-                                            .toList();
+                                    List<Item>
+                                    selected = selectedItemsWithQuantity.keys
+                                        .where(
+                                          (element) =>
+                                              selectedItemsWithQuantity[element] !=
+                                              0,
+                                        )
+                                        .toList();
                                     if (selected.isNotEmpty) {
                                       endNotifier.setEndFromSelected(
                                         start,
@@ -159,7 +149,8 @@ class ItemBar extends HookConsumerWidget {
                               child: GestureDetector(
                                 child: HeroIcon(
                                   HeroIcons.plus,
-                                  color: currentValue ==
+                                  color:
+                                      currentValue ==
                                           e.totalQuantity - e.loanedQuantity
                                       ? Colors.grey.shade400
                                       : Colors.white,
@@ -172,21 +163,17 @@ class ItemBar extends HookConsumerWidget {
                                       currentValue + 1,
                                     );
                                     Map<Item, int> selectedItemsWithQuantity =
-                                        Map.fromIterables(
-                                      data,
-                                      selectedItems,
-                                    );
+                                        Map.fromIterables(data, selectedItems);
                                     selectedItemsWithQuantity[e] =
                                         currentValue + 1;
-                                    List<Item> selected =
-                                        selectedItemsWithQuantity.keys
-                                            .where(
-                                              (element) =>
-                                                  selectedItemsWithQuantity[
-                                                      element] !=
-                                                  0,
-                                            )
-                                            .toList();
+                                    List<Item>
+                                    selected = selectedItemsWithQuantity.keys
+                                        .where(
+                                          (element) =>
+                                              selectedItemsWithQuantity[element] !=
+                                              0,
+                                        )
+                                        .toList();
                                     if (selected.isNotEmpty) {
                                       endNotifier.setEndFromSelected(
                                         start,

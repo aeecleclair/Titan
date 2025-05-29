@@ -39,12 +39,11 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     AsyncChild(
                       value: modulesProvider,
-                      builder: (context, modules) => modules.isEmpty ||
+                      builder: (context, modules) =>
+                          modules.isEmpty ||
                               groups.isEmpty ||
                               accountTypes.isEmpty
                           ? const Loader()

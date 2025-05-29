@@ -38,13 +38,12 @@ class AdminAdvertCard extends HookConsumerWidget {
                   GestureDetector(
                     onTap: onEdit,
                     child: CardButton(
-                      colors: [
-                        Colors.grey.shade100,
-                        Colors.grey.shade400,
-                      ],
+                      colors: [Colors.grey.shade100, Colors.grey.shade400],
                       shadowColor: Colors.grey.shade300.withValues(alpha: 0.2),
-                      child:
-                          const HeroIcon(HeroIcons.pencil, color: Colors.black),
+                      child: const HeroIcon(
+                        HeroIcons.pencil,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 20),
@@ -55,8 +54,9 @@ class AdminAdvertCard extends HookConsumerWidget {
                         AdvertColorConstants.redGradient1,
                         AdvertColorConstants.redGradient2,
                       ],
-                      shadowColor: AdvertColorConstants.redGradient2
-                          .withValues(alpha: 0.2),
+                      shadowColor: AdvertColorConstants.redGradient2.withValues(
+                        alpha: 0.2,
+                      ),
                       child: child,
                     ),
                     child: const HeroIcon(HeroIcons.trash, color: Colors.white),

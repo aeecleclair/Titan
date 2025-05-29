@@ -11,7 +11,7 @@ class TicketsListNotifier extends ListNotifier<Ticket> {
       RaffleDetailRepository();
   late String raffleId;
   TicketsListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     _raffleDetailRepository.setToken(token);
   }
 
@@ -28,12 +28,12 @@ class TicketsListNotifier extends ListNotifier<Ticket> {
 
 final ticketsListProvider =
     StateNotifierProvider<TicketsListNotifier, AsyncValue<List<Ticket>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final notifier = TicketsListNotifier(token: token);
-  final raffleId = ref.watch(raffleIdProvider);
-  if (raffleId != Raffle.empty().id) {
-    notifier.setId(raffleId);
-    notifier.loadTicketList();
-  }
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      final notifier = TicketsListNotifier(token: token);
+      final raffleId = ref.watch(raffleIdProvider);
+      if (raffleId != Raffle.empty().id) {
+        notifier.setId(raffleId);
+        notifier.loadTicketList();
+      }
+      return notifier;
+    });

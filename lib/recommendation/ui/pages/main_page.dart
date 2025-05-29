@@ -21,8 +21,9 @@ class RecommendationMainPage extends HookConsumerWidget {
     final isRecommendationAdmin = ref.watch(isRecommendationAdminProvider);
     final recommendationNotifier = ref.watch(recommendationProvider.notifier);
     final recommendationList = ref.watch(recommendationListProvider);
-    final recommendationListNotifier =
-        ref.watch(recommendationListProvider.notifier);
+    final recommendationListNotifier = ref.watch(
+      recommendationListProvider.notifier,
+    );
 
     return RecommendationTemplate(
       child: Refresher(
@@ -37,26 +38,19 @@ class RecommendationMainPage extends HookConsumerWidget {
               if (isRecommendationAdmin)
                 GestureDetector(
                   onTap: () {
-                    recommendationNotifier
-                        .setRecommendation(Recommendation.empty());
+                    recommendationNotifier.setRecommendation(
+                      Recommendation.empty(),
+                    );
                     QR.to(
                       RecommendationRouter.root + RecommendationRouter.addEdit,
                     );
                   },
                   child: const RecommendationCardLayout(
-                    child: Center(
-                      child: HeroIcon(
-                        HeroIcons.plus,
-                        size: 50,
-                      ),
-                    ),
+                    child: Center(child: HeroIcon(HeroIcons.plus, size: 50)),
                   ),
                 ),
               ...(data..sort((a, b) => b.creation!.compareTo(a.creation!))).map(
-                (e) => RecommendationCard(
-                  recommendation: e,
-                  isMainPage: true,
-                ),
+                (e) => RecommendationCard(recommendation: e, isMainPage: true),
               ),
               const SizedBox(height: 30),
             ],

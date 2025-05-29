@@ -135,8 +135,9 @@ class DetailPage extends HookConsumerWidget {
                                               color: Colors.grey.shade50,
                                               boxShadow: [
                                                 BoxShadow(
-                                                  color: Colors.grey
-                                                      .withValues(alpha: 0.2),
+                                                  color: Colors.grey.withValues(
+                                                    alpha: 0.2,
+                                                  ),
                                                   blurRadius: 10,
                                                   offset: const Offset(0, 10),
                                                 ),
@@ -148,9 +149,7 @@ class DetailPage extends HookConsumerWidget {
                                             ),
                                           ),
                                         ),
-                                        const Spacer(
-                                          flex: 5,
-                                        ),
+                                        const Spacer(flex: 5),
                                         GestureDetector(
                                           onTap: () async {
                                             if (event.applicant.phone != null) {
@@ -182,8 +181,9 @@ class DetailPage extends HookConsumerWidget {
                                               color: Colors.grey.shade50,
                                               boxShadow: [
                                                 BoxShadow(
-                                                  color: Colors.grey
-                                                      .withValues(alpha: 0.2),
+                                                  color: Colors.grey.withValues(
+                                                    alpha: 0.2,
+                                                  ),
                                                   blurRadius: 10,
                                                   offset: const Offset(0, 10),
                                                 ),
@@ -213,9 +213,7 @@ class DetailPage extends HookConsumerWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Center(
-                child: EventUi(event: event, isDetailPage: true),
-              ),
+              child: Center(child: EventUi(event: event, isDetailPage: true)),
             ),
           ],
         ),

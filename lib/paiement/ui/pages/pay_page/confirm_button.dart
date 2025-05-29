@@ -31,8 +31,10 @@ class ConfirmButton extends ConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final myWalletBalance =
-        myWallet.maybeWhen(orElse: () => 0, data: (wallet) => wallet.balance);
+    final myWalletBalance = myWallet.maybeWhen(
+      orElse: () => 0,
+      data: (wallet) => wallet.balance,
+    );
 
     final amount = payAmount.isNotEmpty
         ? double.parse(payAmount.replaceAll(',', '.'))
@@ -61,18 +63,14 @@ class ConfirmButton extends ConsumerWidget {
                 const SizedBox(height: 30),
                 Row(
                   children: [
-                    const SizedBox(
-                      width: 20,
-                    ),
+                    const SizedBox(width: 20),
                     InfoCard(
                       icons: HeroIcons.currencyEuro,
                       title: "Montant",
                       value:
                           '${formatter.format(double.parse(payAmount.replaceAll(',', '.')))} €',
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    const SizedBox(width: 10),
                     InfoCard(
                       icons: HeroIcons.clock,
                       title: "Valide jusqu'à",
@@ -80,16 +78,11 @@ class ConfirmButton extends ConsumerWidget {
                         DateTime.now().add(const Duration(minutes: 5)),
                       ),
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
+                    const SizedBox(width: 20),
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: QrCode(),
-                ),
+                const Padding(padding: EdgeInsets.all(10.0), child: QrCode()),
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -136,9 +129,7 @@ class ConfirmButton extends ConsumerWidget {
               signInTitle: 'L\'authentification est requise pour payer',
               cancelButton: 'Non merci',
             ),
-            const IOSAuthMessages(
-              cancelButton: 'Non merci',
-            ),
+            const IOSAuthMessages(cancelButton: 'Non merci'),
           ],
         );
         if (!didAuthenticate) {

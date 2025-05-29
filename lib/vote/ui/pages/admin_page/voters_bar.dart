@@ -38,17 +38,9 @@ class VotersBar extends HookConsumerWidget {
                   onTap: () async {
                     if (status == Status.waiting) {
                       if (votersGroupId.contains(e.id)) {
-                        await votersNotifier.deleteVoter(
-                          Voter(
-                            groupId: e.id,
-                          ),
-                        );
+                        await votersNotifier.deleteVoter(Voter(groupId: e.id));
                       } else {
-                        await votersNotifier.addVoter(
-                          Voter(
-                            groupId: e.id,
-                          ),
-                        );
+                        await votersNotifier.addVoter(Voter(groupId: e.id));
                       }
                     }
                   },
@@ -58,12 +50,9 @@ class VotersBar extends HookConsumerWidget {
             ],
           ),
         ),
-        error: (Object error, StackTrace? stackTrace) => Center(
-          child: Text("Error : $error"),
-        ),
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
+        error: (Object error, StackTrace? stackTrace) =>
+            Center(child: Text("Error : $error")),
+        loading: () => const Center(child: CircularProgressIndicator()),
       ),
     );
   }

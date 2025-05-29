@@ -22,8 +22,9 @@ class ProductHandler extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productNotifier = ref.read(productProvider.notifier);
-    final sortedByCategoryProducts =
-        ref.watch(sortedByCategoryProductsProvider);
+    final sortedByCategoryProducts = ref.watch(
+      sortedByCategoryProductsProvider,
+    );
     final products = sortedByCategoryProducts.values
         .toList()
         .expand((element) => element)

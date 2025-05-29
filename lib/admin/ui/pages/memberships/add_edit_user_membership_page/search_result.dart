@@ -11,8 +11,9 @@ class SearchResult extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
     final usersNotifier = ref.watch(userList.notifier);
-    final membershipNotifier =
-        ref.watch(userAssociationMembershipProvider.notifier);
+    final membershipNotifier = ref.watch(
+      userAssociationMembershipProvider.notifier,
+    );
     final membership = ref.watch(userAssociationMembershipProvider);
 
     return users.when(
@@ -41,15 +42,11 @@ class SearchResult extends HookConsumerWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              width: 20,
-                            ),
+                            Container(width: 20),
                             Expanded(
                               child: Text(
                                 user.getName(),
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                ),
+                                style: const TextStyle(fontSize: 13),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),

@@ -35,10 +35,7 @@ class Member extends SimpleUser {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'user_id': super.id,
-      'role': role,
-    };
+    return {'user_id': super.id, 'role': role};
   }
 
   factory Member.fromJson(Map<String, dynamic> map) {

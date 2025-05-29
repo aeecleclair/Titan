@@ -11,5 +11,5 @@ class StructureManagerProvider extends StateNotifier<SimpleUser> {
 
 final structureManagerProvider =
     StateNotifierProvider<StructureManagerProvider, SimpleUser>(
-  (ref) => StructureManagerProvider(),
-);
+      (ref) => StructureManagerProvider(),
+    );

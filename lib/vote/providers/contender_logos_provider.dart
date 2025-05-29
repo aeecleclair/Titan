@@ -6,8 +6,11 @@ class ContenderLogoNotifier extends MapNotifier<String, Image> {
   ContenderLogoNotifier() : super();
 }
 
-final contenderLogosProvider = StateNotifierProvider<ContenderLogoNotifier,
-    Map<String, AsyncValue<List<Image>>?>>((ref) {
-  ContenderLogoNotifier contenderLogoNotifier = ContenderLogoNotifier();
-  return contenderLogoNotifier;
-});
+final contenderLogosProvider =
+    StateNotifierProvider<
+      ContenderLogoNotifier,
+      Map<String, AsyncValue<List<Image>>?>
+    >((ref) {
+      ContenderLogoNotifier contenderLogoNotifier = ContenderLogoNotifier();
+      return contenderLogoNotifier;
+    });

@@ -50,12 +50,12 @@ class StoreListNotifier extends ListNotifier<Store> {
 
 final storeListProvider =
     StateNotifierProvider<StoreListNotifier, AsyncValue<List<Store>>>((ref) {
-  final storeListRepository = ref.watch(storesRepositoryProvider);
-  final structureRepository = ref.watch(structuresRepositoryProvider);
-  final usersMeRepository = ref.watch(usersMeRepositoryProvider);
-  return StoreListNotifier(
-    storesRepository: storeListRepository,
-    structureRepository: structureRepository,
-    usersMeRepository: usersMeRepository,
-  )..getStores();
-});
+      final storeListRepository = ref.watch(storesRepositoryProvider);
+      final structureRepository = ref.watch(structuresRepositoryProvider);
+      final usersMeRepository = ref.watch(usersMeRepositoryProvider);
+      return StoreListNotifier(
+        storesRepository: storeListRepository,
+        structureRepository: structureRepository,
+        usersMeRepository: usersMeRepository,
+      )..getStores();
+    });

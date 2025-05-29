@@ -30,10 +30,12 @@ class ContenderLogoProvider extends SingleNotifier<Image> {
 
 final contenderLogoProvider =
     StateNotifierProvider<ContenderLogoProvider, AsyncValue<Image>>((ref) {
-  final contenderLogoRepository = ref.watch(contenderLogoRepositoryProvider);
-  final contenderLogosNotifier = ref.watch(contenderLogosProvider.notifier);
-  return ContenderLogoProvider(
-    contenderLogoRepository: contenderLogoRepository,
-    contenderLogosNotifier: contenderLogosNotifier,
-  );
-});
+      final contenderLogoRepository = ref.watch(
+        contenderLogoRepositoryProvider,
+      );
+      final contenderLogosNotifier = ref.watch(contenderLogosProvider.notifier);
+      return ContenderLogoProvider(
+        contenderLogoRepository: contenderLogoRepository,
+        contenderLogosNotifier: contenderLogosNotifier,
+      );
+    });

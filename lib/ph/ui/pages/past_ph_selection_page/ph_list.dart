@@ -9,9 +9,7 @@ import 'package:myecl/ph/ui/pages/past_ph_selection_page/ph_card.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 
 class PhList extends HookConsumerWidget {
-  const PhList({
-    super.key,
-  });
+  const PhList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -7,17 +7,14 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class SpeciesListNotifier extends ListNotifier<Species> {
   final SpeciesRepository speciesRepository;
   SpeciesListNotifier({required this.speciesRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Species>>> loadSpecies() async {
     return await loadList(speciesRepository.getSpeciesList);
   }
 
   Future<bool> createSpecies(Species species) async {
-    return await add(
-      speciesRepository.createSpecies,
-      species,
-    );
+    return await add(speciesRepository.createSpecies, species);
   }
 
   Future<bool> updateSpecies(Species species) async {
@@ -41,21 +38,20 @@ class SpeciesListNotifier extends ListNotifier<Species> {
 }
 
 final speciesListProvider =
-    StateNotifierProvider<SpeciesListNotifier, AsyncValue<List<Species>>>(
-        (ref) {
-  final speciesRepository = ref.watch(speciesRepositoryProvider);
-  SpeciesListNotifier provider =
-      SpeciesListNotifier(speciesRepository: speciesRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadSpecies();
-  });
-  return provider;
-});
+    StateNotifierProvider<SpeciesListNotifier, AsyncValue<List<Species>>>((
+      ref,
+    ) {
+      final speciesRepository = ref.watch(speciesRepositoryProvider);
+      SpeciesListNotifier provider = SpeciesListNotifier(
+        speciesRepository: speciesRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        await provider.loadSpecies();
+      });
+      return provider;
+    });
 
 final syncSpeciesListProvider = Provider<List<Species>>((ref) {
   final speciesList = ref.watch(speciesListProvider);
-  return speciesList.maybeWhen(
-    orElse: () => [],
-    data: (species) => species,
-  );
+  return speciesList.maybeWhen(orElse: () => [], data: (species) => species);
 });

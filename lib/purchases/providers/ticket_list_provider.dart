@@ -11,7 +11,7 @@ class TicketListNotifier extends ListNotifier<Ticket> {
       UserInformationRepository();
   final ScannerRepository scannerRepository = ScannerRepository();
   TicketListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     ticketRepository.setToken(token);
     scannerRepository.setToken(token);
   }
@@ -27,18 +27,16 @@ class TicketListNotifier extends ListNotifier<Ticket> {
     String tag,
   ) async {
     return await update(
-      (Ticket fakeTicket) => scannerRepository.consumeTicket(
-        sellerId,
-        ticket,
-        generatorId,
-        tag,
-      ),
+      (Ticket fakeTicket) =>
+          scannerRepository.consumeTicket(sellerId, ticket, generatorId, tag),
       (tickets, ticket) {
         List<String> tags = ticket.tags;
         tags.add(tag);
         return tickets
-          ..[tickets.indexWhere((g) => g.id == ticket.id)] =
-              ticket.copyWith(tags: tags, scanLeft: ticket.scanLeft - 1);
+          ..[tickets.indexWhere((g) => g.id == ticket.id)] = ticket.copyWith(
+            tags: tags,
+            scanLeft: ticket.scanLeft - 1,
+          );
       },
       ticket,
     );
@@ -47,10 +45,10 @@ class TicketListNotifier extends ListNotifier<Ticket> {
 
 final ticketListProvider =
     StateNotifierProvider<TicketListNotifier, AsyncValue<List<Ticket>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  TicketListNotifier notifier = TicketListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadTickets();
-  });
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      TicketListNotifier notifier = TicketListNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.loadTickets();
+      });
+      return notifier;
+    });

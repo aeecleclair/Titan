@@ -28,8 +28,9 @@ class MemberCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final memberNotifier = ref.watch(completeMemberProvider.notifier);
 
-    final memberPictures =
-        ref.watch(memberPicturesProvider.select((value) => value[member]));
+    final memberPictures = ref.watch(
+      memberPicturesProvider.select((value) => value[member]),
+    );
     final memberPicturesNotifier = ref.watch(memberPicturesProvider.notifier);
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
 
@@ -80,8 +81,9 @@ class MemberCard extends HookConsumerWidget {
                       group: memberPictures,
                       notifier: memberPicturesNotifier,
                       mapKey: member,
-                      loader: (ref) => profilePictureNotifier
-                          .getProfilePicture(member.member.id),
+                      loader: (ref) => profilePictureNotifier.getProfilePicture(
+                        member.member.id,
+                      ),
                       loadingBuilder: (context) => const CircleAvatar(
                         radius: 20,
                         child: CircularProgressIndicator(),

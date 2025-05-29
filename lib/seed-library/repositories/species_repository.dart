@@ -17,8 +17,9 @@ class SpeciesRepository extends Repository {
 
   Future<List<SpeciesType>> getSpeciesTypeList() async {
     return List<SpeciesType>.from(
-      (await getOne("types"))["species_type"]
-          .map((x) => SpeciesType.fromString(x)),
+      (await getOne(
+        "types",
+      ))["species_type"].map((x) => SpeciesType.fromString(x)),
     );
   }
 

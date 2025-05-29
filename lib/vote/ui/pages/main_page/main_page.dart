@@ -35,14 +35,17 @@ class VoteMainPage extends HookConsumerWidget {
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final contenders = ref.watch(contenderListProvider);
     final contendersNotifier = ref.watch(contenderListProvider.notifier);
-    final sectionContenderNotifier =
-        ref.watch(sectionContenderProvider.notifier);
+    final sectionContenderNotifier = ref.watch(
+      sectionContenderProvider.notifier,
+    );
     final animation = useAnimationController(
       duration: const Duration(milliseconds: 2400),
     );
     final status = ref.watch(statusProvider);
-    final s =
-        status.maybeWhen(data: (value) => value, orElse: () => Status.closed);
+    final s = status.maybeWhen(
+      data: (value) => value,
+      orElse: () => Status.closed,
+    );
     if (s == Status.open) {
       ref.watch(votedSectionProvider.notifier).getVotedSections();
     }
@@ -102,8 +105,9 @@ class VoteMainPage extends HookConsumerWidget {
               list = contender;
             });
             sectionContenderNotifier.loadTList(value);
-            contenderLogosNotifier
-                .loadTList(list.map((contender) => contender.id).toList());
+            contenderLogosNotifier.loadTList(
+              list.map((contender) => contender.id).toList(),
+            );
             for (final l in value) {
               sectionContenderNotifier.setTData(
                 l,
@@ -113,7 +117,9 @@ class VoteMainPage extends HookConsumerWidget {
               );
             }
             for (final contender in list) {
-              logosNotifier.getLogo(contender.id).then(
+              logosNotifier
+                  .getLogo(contender.id)
+                  .then(
                     (value) => contenderLogosNotifier.setTData(
                       contender.id,
                       AsyncValue.data([value]),
@@ -128,22 +134,21 @@ class VoteMainPage extends HookConsumerWidget {
             padding: const EdgeInsets.only(left: 30.0),
             child: Column(
               children: [
-                SizedBox(
-                  height: isAdmin ? 10 : 15,
-                ),
+                SizedBox(height: isAdmin ? 10 : 15),
                 AsyncChild(
                   value: sections,
                   builder: (context, sectionList) => Column(
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height -
+                        height:
+                            MediaQuery.of(context).size.height -
                             (s == Status.open
                                 ? isAdmin
-                                    ? 215
-                                    : 220
+                                      ? 215
+                                      : 220
                                 : isAdmin
-                                    ? 150
-                                    : 155),
+                                ? 150
+                                : 155),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -160,9 +165,7 @@ class VoteMainPage extends HookConsumerWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        SectionTitle(
-                                          sectionList: sectionList,
-                                        ),
+                                        SectionTitle(sectionList: sectionList),
                                         if (isAdmin)
                                           Container(
                                             margin: const EdgeInsets.only(

@@ -59,15 +59,15 @@ class AddEditBookingPage extends HookConsumerWidget {
     final start = useTextEditingController(
       text: isEdit
           ? recurrent.value
-              ? processDateOnlyHour(booking.start)
-              : processDateWithHour(booking.start)
+                ? processDateOnlyHour(booking.start)
+                : processDateWithHour(booking.start)
           : "",
     );
     final end = useTextEditingController(
       text: isEdit
           ? recurrent.value
-              ? processDateOnlyHour(booking.end)
-              : processDateWithHour(booking.end)
+                ? processDateOnlyHour(booking.end)
+                : processDateWithHour(booking.end)
           : "",
     );
     final motif = useTextEditingController(text: booking.reason);
@@ -127,15 +127,13 @@ class AddEditBookingPage extends HookConsumerWidget {
                       selected: selected,
                       onTap: () {
                         room.value = e;
-                        SchedulerBinding.instance.addPostFrameCallback(
-                          (_) {
-                            Scrollable.ensureVisible(
-                              dataKey.currentContext!,
-                              duration: const Duration(milliseconds: 500),
-                              alignment: 0.5,
-                            );
-                          },
-                        );
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+                          Scrollable.ensureVisible(
+                            dataKey.currentContext!,
+                            duration: const Duration(milliseconds: 500),
+                            alignment: 0.5,
+                          );
+                        });
                       },
                       child: Text(
                         e.name,
@@ -374,94 +372,85 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 return;
                               }
                             }
-                            await tokenExpireWrapper(
-                              ref,
-                              () async {
-                                Booking newBooking = Booking(
-                                  id: isEdit ? booking.id : "",
-                                  reason: motif.text,
-                                  start: DateTime.parse(
-                                    processDateBackWithHour(startString),
-                                  ),
-                                  end: DateTime.parse(
-                                    processDateBackWithHour(endString),
-                                  ),
-                                  creation: DateTime.now(),
-                                  note: note.text.isEmpty ? null : note.text,
-                                  room: room.value,
-                                  key: keyRequired.value,
-                                  decision: booking.decision,
-                                  recurrenceRule: recurrenceRule,
-                                  entity: entity.text,
-                                  applicant: isManagerPage
-                                      ? booking.applicant
-                                      : user.toApplicant(),
-                                  applicantId: isManagerPage
-                                      ? booking.applicantId
-                                      : user.id,
-                                );
-                                final value = isManagerPage
-                                    ? await ref
+                            await tokenExpireWrapper(ref, () async {
+                              Booking newBooking = Booking(
+                                id: isEdit ? booking.id : "",
+                                reason: motif.text,
+                                start: DateTime.parse(
+                                  processDateBackWithHour(startString),
+                                ),
+                                end: DateTime.parse(
+                                  processDateBackWithHour(endString),
+                                ),
+                                creation: DateTime.now(),
+                                note: note.text.isEmpty ? null : note.text,
+                                room: room.value,
+                                key: keyRequired.value,
+                                decision: booking.decision,
+                                recurrenceRule: recurrenceRule,
+                                entity: entity.text,
+                                applicant: isManagerPage
+                                    ? booking.applicant
+                                    : user.toApplicant(),
+                                applicantId: isManagerPage
+                                    ? booking.applicantId
+                                    : user.id,
+                              );
+                              final value = isManagerPage
+                                  ? await ref
                                         .read(
                                           managerBookingListProvider.notifier,
                                         )
                                         .updateBooking(newBooking)
-                                    : isEdit
-                                        ? await ref
-                                            .read(
-                                              userBookingListProvider.notifier,
-                                            )
-                                            .updateBooking(newBooking)
-                                        : await ref
-                                            .read(
-                                              userBookingListProvider.notifier,
-                                            )
-                                            .addBooking(newBooking);
-                                if (value) {
-                                  QR.back();
-                                  ref
-                                      .read(userBookingListProvider.notifier)
-                                      .loadUserBookings();
-                                  ref
-                                      .read(
-                                        confirmedBookingListProvider.notifier,
-                                      )
-                                      .loadConfirmedBooking();
-                                  ref
-                                      .read(managerBookingListProvider.notifier)
-                                      .loadUserManageBookings();
-                                  ref
-                                      .read(
-                                        managerConfirmedBookingListProvider
-                                            .notifier,
-                                      )
-                                      .loadConfirmedBookingForManager();
-                                  if (isEdit) {
-                                    displayToastWithContext(
-                                      TypeMsg.msg,
-                                      BookingTextConstants.editedBooking,
-                                    );
-                                  } else {
-                                    displayToastWithContext(
-                                      TypeMsg.msg,
-                                      BookingTextConstants.addedBooking,
-                                    );
-                                  }
+                                  : isEdit
+                                  ? await ref
+                                        .read(userBookingListProvider.notifier)
+                                        .updateBooking(newBooking)
+                                  : await ref
+                                        .read(userBookingListProvider.notifier)
+                                        .addBooking(newBooking);
+                              if (value) {
+                                QR.back();
+                                ref
+                                    .read(userBookingListProvider.notifier)
+                                    .loadUserBookings();
+                                ref
+                                    .read(confirmedBookingListProvider.notifier)
+                                    .loadConfirmedBooking();
+                                ref
+                                    .read(managerBookingListProvider.notifier)
+                                    .loadUserManageBookings();
+                                ref
+                                    .read(
+                                      managerConfirmedBookingListProvider
+                                          .notifier,
+                                    )
+                                    .loadConfirmedBookingForManager();
+                                if (isEdit) {
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    BookingTextConstants.editedBooking,
+                                  );
                                 } else {
-                                  if (isEdit) {
-                                    displayToastWithContext(
-                                      TypeMsg.error,
-                                      BookingTextConstants.editionError,
-                                    );
-                                  } else {
-                                    displayToastWithContext(
-                                      TypeMsg.error,
-                                      BookingTextConstants.addingError,
-                                    );
-                                  }
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    BookingTextConstants.addedBooking,
+                                  );
                                 }
-                              },
-                            );
+                              } else {
+                                if (isEdit) {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    BookingTextConstants.editionError,
+                                  );
+                                } else {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    BookingTextConstants.addingError,
+                                  );
+                                }
+                              }
+                            });
                           }
                         } else {
                           displayToast(

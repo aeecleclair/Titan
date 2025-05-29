@@ -78,9 +78,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                   RaffleColorConstants.gradient1,
                   RaffleColorConstants.gradient2,
                 ],
-                transform: GradientRotation(
-                  360 * animation.value * pi / 180,
-                ),
+                transform: GradientRotation(360 * animation.value * pi / 180),
                 center: Alignment.topLeft,
                 radius: 1.5,
               ),
@@ -120,27 +118,30 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                   data: (data) {
                                     if (data.isNotEmpty) {
                                       return ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
+                                        borderRadius: BorderRadius.circular(
+                                          20.0,
+                                        ),
                                         child: data.first,
                                       );
                                     } else {
                                       Future.delayed(
-                                          const Duration(milliseconds: 1), () {
-                                        tombolaLogosNotifier.setTData(
-                                          raffle.id,
-                                          const AsyncLoading(),
-                                        );
-                                      });
+                                        const Duration(milliseconds: 1),
+                                        () {
+                                          tombolaLogosNotifier.setTData(
+                                            raffle.id,
+                                            const AsyncLoading(),
+                                          );
+                                        },
+                                      );
                                       tokenExpireWrapper(ref, () async {
                                         tombolaLogoNotifier
                                             .getLogo(raffle.id)
                                             .then((value) {
-                                          tombolaLogosNotifier.setTData(
-                                            raffle.id,
-                                            AsyncData([value]),
-                                          );
-                                        });
+                                              tombolaLogosNotifier.setTData(
+                                                raffle.id,
+                                                AsyncData([value]),
+                                              );
+                                            });
                                       });
                                       return const HeroIcon(
                                         HeroIcons.cubeTransparent,
@@ -149,13 +150,11 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                   },
                                   loading: () =>
                                       const CircularProgressIndicator(),
-                                  error: (
-                                    Object error,
-                                    StackTrace? stackTrace,
-                                  ) =>
-                                      const HeroIcon(
-                                    HeroIcons.cubeTransparent,
-                                  ),
+                                  error:
+                                      (Object error, StackTrace? stackTrace) =>
+                                          const HeroIcon(
+                                            HeroIcons.cubeTransparent,
+                                          ),
                                 );
                               } else {
                                 return const HeroIcon(
@@ -227,8 +226,9 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color:
-                                    Colors.grey.shade300.withValues(alpha: 0.5),
+                                color: Colors.grey.shade300.withValues(
+                                  alpha: 0.5,
+                                ),
                                 blurRadius: 10,
                                 offset: const Offset(2, 3),
                               ),
@@ -273,9 +273,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                           size: 40,
                         ),
                       ),
-                      const Spacer(
-                        flex: 3,
-                      ),
+                      const Spacer(flex: 3),
                       GestureDetector(
                         onTap: () {
                           navigationPop();

@@ -9,8 +9,9 @@ class ScoreRepository extends Repository {
 
   Future<List<Score>> getLeaderboard() async {
     return List<Score>.from(
-      (await getList(suffix: "scores"))
-          .mapIndexed((index, e) => Score.fromJson(e, index: index + 1)),
+      (await getList(
+        suffix: "scores",
+      )).mapIndexed((index, e) => Score.fromJson(e, index: index + 1)),
     );
   }
 

@@ -65,8 +65,9 @@ class LoanMainPage extends HookConsumerWidget {
                         children: [
                           AlignLeftText(
                             '${onGoingLoan.length} ${LoanTextConstants.loan.toLowerCase()}${onGoingLoan.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 30.0),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 30.0,
+                            ),
                             color: Colors.grey,
                           ),
                           const SizedBox(height: 30),
@@ -84,28 +85,28 @@ class LoanMainPage extends HookConsumerWidget {
                         ],
                       )
                     : (returnedLoan.isEmpty)
-                        ? SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.7,
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Center(
-                                    child: Text(
-                                      LoanTextConstants.noLoan,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey.shade300,
-                                      ),
-                                    ),
+                    ? SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Center(
+                                child: Text(
+                                  LoanTextConstants.noLoan,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey.shade300,
                                   ),
                                 ),
-                                const Spacer(),
-                              ],
+                              ),
                             ),
-                          )
-                        : Container(),
+                            const Spacer(),
+                          ],
+                        ),
+                      )
+                    : Container(),
                 if (returnedLoan.isNotEmpty)
                   Column(
                     children: [

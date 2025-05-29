@@ -33,9 +33,7 @@ class AssociationRepository extends Repository {
     return await update(null, association.id, suffix: "/deactivate");
   }
 
-  Future<bool> updateAssociationGroups(
-    Association association,
-  ) async {
+  Future<bool> updateAssociationGroups(Association association) async {
     return await update(
       {"associated_groups": association.associatedGroups},
       association.id,

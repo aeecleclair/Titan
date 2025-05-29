@@ -36,14 +36,13 @@ class Prize {
     String? raffleId,
     String? description,
     int? quantity,
-  }) =>
-      Prize(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        raffleId: raffleId ?? this.raffleId,
-        description: description,
-        quantity: quantity ?? this.quantity,
-      );
+  }) => Prize(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    raffleId: raffleId ?? this.raffleId,
+    description: description,
+    quantity: quantity ?? this.quantity,
+  );
 
   Prize.empty() {
     id = '';

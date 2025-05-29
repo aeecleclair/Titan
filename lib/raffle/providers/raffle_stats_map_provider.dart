@@ -8,14 +8,17 @@ class RaffleStatsMapNotifier extends MapNotifier<String, RaffleStats> {
   RaffleStatsMapNotifier() : super();
 }
 
-final raffleStatsMapProvider = StateNotifierProvider<RaffleStatsMapNotifier,
-    Map<String, AsyncValue<List<RaffleStats>>?>>((ref) {
-  RaffleStatsMapNotifier notifier = RaffleStatsMapNotifier();
-  tokenExpireWrapperAuth(ref, () async {
-    final raffles = ref.watch(raffleListProvider);
-    raffles.whenData((value) {
-      notifier.loadTList(value.map((e) => e.id).toList());
+final raffleStatsMapProvider =
+    StateNotifierProvider<
+      RaffleStatsMapNotifier,
+      Map<String, AsyncValue<List<RaffleStats>>?>
+    >((ref) {
+      RaffleStatsMapNotifier notifier = RaffleStatsMapNotifier();
+      tokenExpireWrapperAuth(ref, () async {
+        final raffles = ref.watch(raffleListProvider);
+        raffles.whenData((value) {
+          notifier.loadTList(value.map((e) => e.id).toList());
+        });
+      });
+      return notifier;
     });
-  });
-  return notifier;
-});

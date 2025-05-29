@@ -20,8 +20,9 @@ class VoteButton extends HookConsumerWidget {
     final section = ref.watch(sectionProvider);
     final votesNotifier = ref.watch(votesProvider.notifier);
     final selectedContender = ref.watch(selectedContenderProvider);
-    final selectedContenderNotifier =
-        ref.watch(selectedContenderProvider.notifier);
+    final selectedContenderNotifier = ref.watch(
+      selectedContenderProvider.notifier,
+    );
     final votedSectionNotifier = ref.watch(votedSectionProvider.notifier);
     final votedSection = ref.watch(votedSectionProvider);
     List<String> alreadyVotedSection = [];
@@ -33,8 +34,10 @@ class VoteButton extends HookConsumerWidget {
     );
 
     final status = ref.watch(statusProvider);
-    final s =
-        status.maybeWhen(data: (value) => value, orElse: () => Status.closed);
+    final s = status.maybeWhen(
+      data: (value) => value,
+      orElse: () => Status.closed,
+    );
 
     void displayVoteToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -55,8 +58,9 @@ class VoteButton extends HookConsumerWidget {
                   descriptions: VoteTextConstants.confirmVote,
                   onYes: () {
                     tokenExpireWrapper(ref, () async {
-                      final result = await votesNotifier
-                          .addVote(Votes(id: selectedContender.id));
+                      final result = await votesNotifier.addVote(
+                        Votes(id: selectedContender.id),
+                      );
                       if (result) {
                         votedSectionNotifier.addVote(section.id);
                         selectedContenderNotifier.clear();
@@ -84,12 +88,10 @@ class VoteButton extends HookConsumerWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: (selectedContender.id == "" && s != Status.open) ||
+              colors:
+                  (selectedContender.id == "" && s != Status.open) ||
                       alreadyVotedSection.contains(section.id)
-                  ? [
-                      Colors.white,
-                      Colors.grey.shade50,
-                    ]
+                  ? [Colors.white, Colors.grey.shade50]
                   : [Colors.grey.shade900, Colors.black],
             ),
             borderRadius: BorderRadius.circular(20),
@@ -107,16 +109,17 @@ class VoteButton extends HookConsumerWidget {
               selectedContender.id != ""
                   ? VoteTextConstants.voteFor + selectedContender.name
                   : alreadyVotedSection.contains(section.id)
-                      ? VoteTextConstants.alreadyVoted
-                      : s == Status.open
-                          ? VoteTextConstants.chooseList
-                          : s == Status.waiting
-                              ? VoteTextConstants.notOpenedVote
-                              : s == Status.closed
-                                  ? VoteTextConstants.closedVote
-                                  : VoteTextConstants.onGoingCount,
+                  ? VoteTextConstants.alreadyVoted
+                  : s == Status.open
+                  ? VoteTextConstants.chooseList
+                  : s == Status.waiting
+                  ? VoteTextConstants.notOpenedVote
+                  : s == Status.closed
+                  ? VoteTextConstants.closedVote
+                  : VoteTextConstants.onGoingCount,
               style: TextStyle(
-                color: (selectedContender.id == "" && s != Status.open) ||
+                color:
+                    (selectedContender.id == "" && s != Status.open) ||
                         alreadyVotedSection.contains(section.id)
                     ? Colors.black
                     : Colors.white,

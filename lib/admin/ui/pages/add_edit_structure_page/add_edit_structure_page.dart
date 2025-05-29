@@ -31,13 +31,15 @@ class AddEditStructurePage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final structure = ref.watch(structureProvider);
     final structureManager = ref.watch(structureManagerProvider);
-    final structureManagerNotifier =
-        ref.watch(structureManagerProvider.notifier);
+    final structureManagerNotifier = ref.watch(
+      structureManagerProvider.notifier,
+    );
     final structureListNotifier = ref.watch(structureListProvider.notifier);
     final isEdit = structure.id != '';
     final name = useTextEditingController(text: isEdit ? structure.name : null);
-    final allAssociationMembershipList =
-        ref.watch(allAssociationMembershipListProvider);
+    final allAssociationMembershipList = ref.watch(
+      allAssociationMembershipListProvider,
+    );
     final currentMembership = useState<AssociationMembership>(
       (isEdit)
           ? structure.associationMembership
@@ -76,7 +78,8 @@ class AddEditStructurePage extends HookConsumerWidget {
                         AssociationMembership.empty(),
                       ],
                       itemBuilder: (context, associationMembership, index) {
-                        final selected = currentMembership.value.id ==
+                        final selected =
+                            currentMembership.value.id ==
                             associationMembership.id;
                         return ItemChip(
                           selected: selected,

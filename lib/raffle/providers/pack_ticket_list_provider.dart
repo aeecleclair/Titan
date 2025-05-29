@@ -14,7 +14,7 @@ class PackTicketsListNotifier extends ListNotifier<PackTicket> {
       RaffleDetailRepository();
   late String raffleId;
   PackTicketsListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     _packTicketsRepository.setToken(token);
     _raffleDetailRepository.setToken(token);
   }
@@ -52,16 +52,19 @@ class PackTicketsListNotifier extends ListNotifier<PackTicket> {
   }
 }
 
-final packTicketListProvider = StateNotifierProvider<PackTicketsListNotifier,
-    AsyncValue<List<PackTicket>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final notifier = PackTicketsListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    final raffleId = ref.watch(raffleIdProvider);
-    if (raffleId != Raffle.empty().id) {
-      notifier.setRaffleId(raffleId);
-      notifier.loadPackTicketList();
-    }
-  });
-  return notifier;
-});
+final packTicketListProvider =
+    StateNotifierProvider<
+      PackTicketsListNotifier,
+      AsyncValue<List<PackTicket>>
+    >((ref) {
+      final token = ref.watch(tokenProvider);
+      final notifier = PackTicketsListNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        final raffleId = ref.watch(raffleIdProvider);
+        if (raffleId != Raffle.empty().id) {
+          notifier.setRaffleId(raffleId);
+          notifier.loadPackTicketList();
+        }
+      });
+      return notifier;
+    });

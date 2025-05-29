@@ -3,8 +3,8 @@ import 'package:myecl/advert/class/announcer.dart';
 
 final announcerProvider =
     StateNotifierProvider<AnnouncerNotifier, List<Announcer>>((ref) {
-  return AnnouncerNotifier();
-});
+      return AnnouncerNotifier();
+    });
 
 class AnnouncerNotifier extends StateNotifier<List<Announcer>> {
   AnnouncerNotifier() : super([]);
@@ -15,11 +15,7 @@ class AnnouncerNotifier extends StateNotifier<List<Announcer>> {
   }
 
   void removeAnnouncer(Announcer i) {
-    state = state
-        .where(
-          (element) => element.id != i.id,
-        )
-        .toList();
+    state = state.where((element) => element.id != i.id).toList();
   }
 
   void clearAnnouncer() {

@@ -7,7 +7,7 @@ import 'package:myecl/user/class/simple_users.dart';
 class GroupNotifier extends SingleNotifier<Group> {
   final GroupRepository groupRepository;
   GroupNotifier({required this.groupRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<Group>> loadGroup(String groupId) async {
     return await load(() async => groupRepository.getGroup(groupId));
@@ -32,8 +32,9 @@ class GroupNotifier extends SingleNotifier<Group> {
   }
 }
 
-final groupProvider =
-    StateNotifierProvider<GroupNotifier, AsyncValue<Group>>((ref) {
+final groupProvider = StateNotifierProvider<GroupNotifier, AsyncValue<Group>>((
+  ref,
+) {
   final groupRepository = ref.watch(groupRepositoryProvider);
   return GroupNotifier(groupRepository: groupRepository);
 });

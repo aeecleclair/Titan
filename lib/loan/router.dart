@@ -34,45 +34,22 @@ class LoanRouter {
   LoanRouter(this.ref);
 
   QRoute route() => QRoute(
-        name: "loan",
-        path: LoanRouter.root,
-        builder: () => main_page.LoanMainPage(),
+    name: "loan",
+    path: LoanRouter.root,
+    builder: () => main_page.LoanMainPage(),
+    middleware: [
+      AuthenticatedMiddleware(ref),
+      DeferredLoadingMiddleware(main_page.loadLibrary),
+    ],
+    children: [
+      QRoute(
+        path: admin,
+        builder: () => admin_page.AdminPage(),
         middleware: [
-          AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary),
+          AdminMiddleware(ref, isLoanAdminProvider),
+          DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [
-          QRoute(
-            path: admin,
-            builder: () => admin_page.AdminPage(),
-            middleware: [
-              AdminMiddleware(ref, isLoanAdminProvider),
-              DeferredLoadingMiddleware(admin_page.loadLibrary),
-            ],
-            children: [
-              QRoute(
-                path: detail,
-                builder: () => detail_loan_page.DetailLoanPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(detail_loan_page.loadLibrary),
-                ],
-              ),
-              QRoute(
-                path: addEditLoan,
-                builder: () => add_edit_loan_page.AddEditLoanPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(add_edit_loan_page.loadLibrary),
-                ],
-              ),
-              QRoute(
-                path: addEditItem,
-                builder: () => add_edit_item_page.AddEditItemPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(add_edit_item_page.loadLibrary),
-                ],
-              ),
-            ],
-          ),
           QRoute(
             path: detail,
             builder: () => detail_loan_page.DetailLoanPage(),
@@ -80,6 +57,27 @@ class LoanRouter {
               DeferredLoadingMiddleware(detail_loan_page.loadLibrary),
             ],
           ),
+          QRoute(
+            path: addEditLoan,
+            builder: () => add_edit_loan_page.AddEditLoanPage(),
+            middleware: [
+              DeferredLoadingMiddleware(add_edit_loan_page.loadLibrary),
+            ],
+          ),
+          QRoute(
+            path: addEditItem,
+            builder: () => add_edit_item_page.AddEditItemPage(),
+            middleware: [
+              DeferredLoadingMiddleware(add_edit_item_page.loadLibrary),
+            ],
+          ),
         ],
-      );
+      ),
+      QRoute(
+        path: detail,
+        builder: () => detail_loan_page.DetailLoanPage(),
+        middleware: [DeferredLoadingMiddleware(detail_loan_page.loadLibrary)],
+      ),
+    ],
+  );
 }

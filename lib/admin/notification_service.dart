@@ -7,16 +7,10 @@ import 'package:tuple/tuple.dart';
 
 final Map<String, Tuple2<String, List<StateNotifierProvider>>> adminProviders =
     {
-  "user": Tuple2(
-    AppRouter.root,
-    [asyncUserProvider],
-  ),
-  "userGroups": Tuple2(
-    AppRouter.root,
-    [allGroupListProvider, asyncUserProvider],
-  ),
-  "groups": Tuple2(
-    AdminRouter.root,
-    [allGroupListProvider],
-  ),
-};
+      "user": Tuple2(AppRouter.root, [asyncUserProvider]),
+      "userGroups": Tuple2(AppRouter.root, [
+        allGroupListProvider,
+        asyncUserProvider,
+      ]),
+      "groups": Tuple2(AdminRouter.root, [allGroupListProvider]),
+    };

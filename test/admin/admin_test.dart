@@ -118,7 +118,7 @@ void main() {
             "firstname": "firstname",
             "nickname": "nickname",
             "account_type": "external",
-          }
+          },
         ],
       });
       expect(group.name, 'name');
@@ -153,7 +153,7 @@ void main() {
             "name": "name",
             "firstname": "firstname",
             "nickname": null,
-          }
+          },
         ],
       });
     });

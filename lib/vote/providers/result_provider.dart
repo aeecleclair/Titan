@@ -7,7 +7,7 @@ import 'package:myecl/vote/repositories/result_repository.dart';
 class ResultNotifier extends ListNotifier<Result> {
   final ResultRepository resultRepository;
   ResultNotifier({required this.resultRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Result>>> loadResult() async {
     return await loadList(resultRepository.getResult);
@@ -16,10 +16,10 @@ class ResultNotifier extends ListNotifier<Result> {
 
 final resultProvider =
     StateNotifierProvider<ResultNotifier, AsyncValue<List<Result>>>((ref) {
-  final resultRepository = ref.watch(resultRepositoryProvider);
-  final resultNotifier = ResultNotifier(resultRepository: resultRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await resultNotifier.loadResult();
-  });
-  return resultNotifier;
-});
+      final resultRepository = ref.watch(resultRepositoryProvider);
+      final resultNotifier = ResultNotifier(resultRepository: resultRepository);
+      tokenExpireWrapperAuth(ref, () async {
+        await resultNotifier.loadResult();
+      });
+      return resultNotifier;
+    });

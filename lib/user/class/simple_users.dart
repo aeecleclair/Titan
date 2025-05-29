@@ -36,11 +36,11 @@ class SimpleUser {
   }
 
   SimpleUser.empty()
-      : name = 'Nom',
-        firstname = 'Prénom',
-        nickname = null,
-        id = '',
-        accountType = AccountType.empty();
+    : name = 'Nom',
+      firstname = 'Prénom',
+      nickname = null,
+      id = '',
+      accountType = AccountType.empty();
 
   String getName() {
     if (nickname == null) {

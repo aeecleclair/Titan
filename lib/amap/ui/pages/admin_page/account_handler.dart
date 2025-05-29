@@ -21,8 +21,9 @@ class AccountHandler extends HookConsumerWidget {
     final usersNotifier = ref.read(userList.notifier);
     final editingController = useTextEditingController();
     final searchingAmapUser = ref.watch(searchingAmapUserProvider);
-    final searchingAmapUserNotifier =
-        ref.read(searchingAmapUserProvider.notifier);
+    final searchingAmapUserNotifier = ref.read(
+      searchingAmapUserProvider.notifier,
+    );
 
     return Column(
       children: [
@@ -61,8 +62,9 @@ class AccountHandler extends HookConsumerWidget {
                   : () async {
                       searchingAmapUserNotifier.setProduct(true);
                       if (editingController.text.isNotEmpty) {
-                        await cashNotifier
-                            .filterCashList(editingController.text);
+                        await cashNotifier.filterCashList(
+                          editingController.text,
+                        );
                       }
                     },
               child: CardLayout(

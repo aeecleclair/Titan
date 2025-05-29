@@ -10,5 +10,5 @@ class AskingRefreshTokenNotifier extends StateNotifier<bool> {
 
 final askingRefreshTokenProvider =
     StateNotifierProvider<AskingRefreshTokenNotifier, bool>((ref) {
-  return AskingRefreshTokenNotifier();
-});
+      return AskingRefreshTokenNotifier();
+    });

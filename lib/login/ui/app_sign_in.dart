@@ -57,19 +57,21 @@ class AppSignIn extends HookConsumerWidget {
                     child: Column(
                       children: [
                         Expanded(
-                          child: Image(
-                            image: AssetImage(getTitanLogo()),
-                          ),
+                          child: Image(image: AssetImage(getTitanLogo())),
                         ),
                         SignInUpBar(
-                          isLoading: ref.watch(loadingProvider).maybeWhen(
+                          isLoading: ref
+                              .watch(loadingProvider)
+                              .maybeWhen(
                                 data: (data) => data,
                                 orElse: () => false,
                               ),
                           label: LoginTextConstants.signIn,
                           onPressed: () async {
                             await authNotifier.getTokenFromRequest();
-                            ref.watch(authTokenProvider).when(
+                            ref
+                                .watch(authTokenProvider)
+                                .when(
                                   data: (token) {
                                     QR.to(pathForwarding.path);
                                   },
@@ -93,9 +95,7 @@ class AppSignIn extends HookConsumerWidget {
                       ],
                     ),
                   ),
-                  const Spacer(
-                    flex: 1,
-                  ),
+                  const Spacer(flex: 1),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

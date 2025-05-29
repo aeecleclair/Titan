@@ -40,9 +40,7 @@ class PhMainPage extends HookConsumerWidget {
               onTap: () {
                 QR.to(PhRouter.root + PhRouter.past_ph_selection);
               },
-              child: const MyButton(
-                text: PhTextConstants.seePreviousJournal,
-              ),
+              child: const MyButton(text: PhTextConstants.seePreviousJournal),
             ),
           ),
           const SizedBox(height: 10),

@@ -10,12 +10,11 @@ class AssociationMembershipUserRepository extends Repository {
   final ext = "memberships/users/";
 
   Future<List<UserAssociationMembership>>
-      getPersonalAssociationMembershipList() async {
+  getPersonalAssociationMembershipList() async {
     return List<UserAssociationMembership>.from(
       (await getList(
         suffix: "me",
-      ))
-          .map((x) => UserAssociationMembership.fromJson(x)),
+      )).map((x) => UserAssociationMembership.fromJson(x)),
     );
   }
 
@@ -23,8 +22,9 @@ class AssociationMembershipUserRepository extends Repository {
     String userId,
   ) async {
     return List<UserAssociationMembership>.from(
-      (await getList(suffix: userId))
-          .map((x) => UserAssociationMembership.fromJson(x)),
+      (await getList(
+        suffix: userId,
+      )).map((x) => UserAssociationMembership.fromJson(x)),
     );
   }
 
@@ -48,12 +48,8 @@ class AssociationMembershipUserRepository extends Repository {
     );
   }
 
-  Future<bool> deleteUserMembership(
-    String userAssociationMembershipId,
-  ) async {
-    return await delete(
-      userAssociationMembershipId,
-    );
+  Future<bool> deleteUserMembership(String userAssociationMembershipId) async {
+    return await delete(userAssociationMembershipId);
   }
 }
 

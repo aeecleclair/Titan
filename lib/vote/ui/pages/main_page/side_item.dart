@@ -45,10 +45,7 @@ class SideItem extends HookConsumerWidget {
                         shape: BoxShape.circle,
                       ),
                     )
-                  : const SizedBox(
-                      width: 8,
-                      height: 8,
-                    ),
+                  : const SizedBox(width: 8, height: 8),
             ],
           ),
         ),

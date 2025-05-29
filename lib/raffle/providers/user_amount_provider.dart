@@ -8,7 +8,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class UserCashNotifier extends SingleNotifier<Cash> {
   final CashRepository _cashRepository = CashRepository();
   UserCashNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     _cashRepository.setToken(token);
   }
 
@@ -37,13 +37,13 @@ class UserCashNotifier extends SingleNotifier<Cash> {
 
 final userAmountProvider =
     StateNotifierProvider<UserCashNotifier, AsyncValue<Cash>>((ref) {
-  final token = ref.watch(tokenProvider);
-  UserCashNotifier userCashNotifier = UserCashNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    final userId = ref.watch(idProvider);
-    userId.whenData(
-      (value) async => await userCashNotifier.loadCashByUser(value),
-    );
-  });
-  return userCashNotifier;
-});
+      final token = ref.watch(tokenProvider);
+      UserCashNotifier userCashNotifier = UserCashNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        final userId = ref.watch(idProvider);
+        userId.whenData(
+          (value) async => await userCashNotifier.loadCashByUser(value),
+        );
+      });
+      return userCashNotifier;
+    });

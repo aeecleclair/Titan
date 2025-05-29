@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final displayTodayProvider =
-    StateNotifierProvider<DisplayTodayNotifier, bool>((ref) {
+final displayTodayProvider = StateNotifierProvider<DisplayTodayNotifier, bool>((
+  ref,
+) {
   return DisplayTodayNotifier();
 });
 

@@ -44,8 +44,9 @@ class AssociationMembershipRepository extends Repository {
           "maximalEndDate=${processDateToAPIWithoutHour(maximalEndDate)}";
     }
     return List<UserAssociationMembership>.from(
-      (await getList(suffix: "$associationMembershipId/members$querries"))
-          .map((x) => UserAssociationMembership.fromJson(x)),
+      (await getList(
+        suffix: "$associationMembershipId/members$querries",
+      )).map((x) => UserAssociationMembership.fromJson(x)),
     );
   }
 

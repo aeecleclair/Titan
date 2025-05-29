@@ -12,8 +12,9 @@ void main() {
   group('categoryListProvider', () {
     test('returns a list of categories when productListProvider is loaded', () {
       final productListRepository = MockProductListRepository();
-      final productListNotifier =
-          ProductListNotifier(productListRepository: productListRepository);
+      final productListNotifier = ProductListNotifier(
+        productListRepository: productListRepository,
+      );
       productListNotifier.state = AsyncValue.data([
         Product.empty().copyWith(
           id: '1',
@@ -47,8 +48,9 @@ void main() {
 
     test('returns an empty list when productListProvider is loading', () {
       final productListRepository = MockProductListRepository();
-      final productListNotifier =
-          ProductListNotifier(productListRepository: productListRepository);
+      final productListNotifier = ProductListNotifier(
+        productListRepository: productListRepository,
+      );
       productListNotifier.state = const AsyncValue.loading();
       final container = ProviderContainer(
         overrides: [
@@ -63,10 +65,13 @@ void main() {
 
     test('returns an empty list when productListProvider has an error', () {
       final productListRepository = MockProductListRepository();
-      final productListNotifier =
-          ProductListNotifier(productListRepository: productListRepository);
-      productListNotifier.state =
-          const AsyncValue.error("test", StackTrace.empty);
+      final productListNotifier = ProductListNotifier(
+        productListRepository: productListRepository,
+      );
+      productListNotifier.state = const AsyncValue.error(
+        "test",
+        StackTrace.empty,
+      );
       final container = ProviderContainer(
         overrides: [
           productListProvider.overrideWith((ref) => productListNotifier),

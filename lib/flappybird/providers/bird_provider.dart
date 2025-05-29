@@ -25,7 +25,8 @@ class BirdNotifier extends StateNotifier<Bird> {
   Bird update() {
     return state = state.copyWith(
       time: state.time + 0.01,
-      birdPosition: state.initialPosition -
+      birdPosition:
+          state.initialPosition -
           state.gravity * state.time * state.time -
           state.velocity * state.time,
       angle: state.angle + 0.01,
@@ -41,9 +42,7 @@ class BirdNotifier extends StateNotifier<Bird> {
   }
 
   void increaseScore() {
-    state = state.copyWith(
-      score: state.score + 1,
-    );
+    state = state.copyWith(score: state.score + 1);
   }
 
   void resetBird() {

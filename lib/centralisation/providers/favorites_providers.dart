@@ -46,9 +46,9 @@ class FavoritesNameNotifier extends StateNotifier<List<String>> {
 
 final favoritesNameProvider =
     StateNotifierProvider<FavoritesNameNotifier, List<String>>((ref) {
-  final favoritesNameNotifier = FavoritesNameNotifier();
-  tokenExpireWrapperAuth(ref, () async {
-    favoritesNameNotifier.loadFavorites();
-  });
-  return favoritesNameNotifier;
-});
+      final favoritesNameNotifier = FavoritesNameNotifier();
+      tokenExpireWrapperAuth(ref, () async {
+        favoritesNameNotifier.loadFavorites();
+      });
+      return favoritesNameNotifier;
+    });

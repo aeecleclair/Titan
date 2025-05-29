@@ -18,8 +18,7 @@ class CinemaTopicRepository extends Repository {
     return List<String>.from(
       (await getList(
         suffix: "topics/${prefix.substring(0, prefix.length - 1)}",
-      ))
-          .map((x) => x.split(prefix)[1]),
+      )).map((x) => x.split(prefix)[1]),
     );
   }
 }

@@ -8,7 +8,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class ManagerListNotifier extends ListNotifier<Manager> {
   final ManagerRepository _repository = ManagerRepository();
   ManagerListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     _repository.setToken(token);
   }
 
@@ -40,12 +40,13 @@ class ManagerListNotifier extends ListNotifier<Manager> {
 }
 
 final managerListProvider =
-    StateNotifierProvider<ManagerListNotifier, AsyncValue<List<Manager>>>(
-        (ref) {
-  final token = ref.watch(tokenProvider);
-  final provider = ManagerListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadManagers();
-  });
-  return provider;
-});
+    StateNotifierProvider<ManagerListNotifier, AsyncValue<List<Manager>>>((
+      ref,
+    ) {
+      final token = ref.watch(tokenProvider);
+      final provider = ManagerListNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        await provider.loadManagers();
+      });
+      return provider;
+    });

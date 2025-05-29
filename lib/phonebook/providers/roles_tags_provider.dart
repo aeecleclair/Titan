@@ -34,12 +34,15 @@ class RolesTagsNotifier extends MapNotifier<String, bool> {
   }
 }
 
-final rolesTagsProvider = StateNotifierProvider<RolesTagsNotifier,
-    Map<String, AsyncValue<List<bool>>?>>((ref) {
-  final token = ref.watch(tokenProvider);
-  RolesTagsNotifier notifier = RolesTagsNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadRolesTags();
-  });
-  return notifier;
-});
+final rolesTagsProvider =
+    StateNotifierProvider<
+      RolesTagsNotifier,
+      Map<String, AsyncValue<List<bool>>?>
+    >((ref) {
+      final token = ref.watch(tokenProvider);
+      RolesTagsNotifier notifier = RolesTagsNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.loadRolesTags();
+      });
+      return notifier;
+    });

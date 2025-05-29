@@ -36,60 +36,58 @@ class RaffleRouter {
   );
   RaffleRouter(this.ref);
   QRoute route() => QRoute(
-        name: "raffle",
-        path: RaffleRouter.root,
-        builder: () => main_page.RaffleMainPage(),
+    name: "raffle",
+    path: RaffleRouter.root,
+    builder: () => main_page.RaffleMainPage(),
+    middleware: [
+      AuthenticatedMiddleware(ref),
+      DeferredLoadingMiddleware(main_page.loadLibrary),
+    ],
+    children: [
+      QRoute(
+        path: admin,
+        builder: () => admin_module_page.AdminModulePage(),
         middleware: [
-          AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary),
+          AdminMiddleware(ref, isRaffleAdminProvider),
+          DeferredLoadingMiddleware(admin_module_page.loadLibrary),
+        ],
+      ),
+      QRoute(
+        path: detail,
+        builder: () => raffle_page.RaffleInfoPage(),
+        middleware: [
+          AdminMiddleware(ref, isRaffleAdminProvider),
+          DeferredLoadingMiddleware(raffle_page.loadLibrary),
         ],
         children: [
           QRoute(
-            path: admin,
-            builder: () => admin_module_page.AdminModulePage(),
+            path: creation,
+            builder: () => creation_edit_page.CreationPage(),
             middleware: [
-              AdminMiddleware(ref, isRaffleAdminProvider),
-              DeferredLoadingMiddleware(admin_module_page.loadLibrary),
-            ],
-          ),
-          QRoute(
-            path: detail,
-            builder: () => raffle_page.RaffleInfoPage(),
-            middleware: [
-              AdminMiddleware(ref, isRaffleAdminProvider),
-              DeferredLoadingMiddleware(raffle_page.loadLibrary),
+              DeferredLoadingMiddleware(creation_edit_page.loadLibrary),
             ],
             children: [
               QRoute(
-                path: creation,
-                builder: () => creation_edit_page.CreationPage(),
+                path: addEditPrize,
+                builder: () => add_edit_prize_page.AddEditPrizePage(),
                 middleware: [
-                  DeferredLoadingMiddleware(creation_edit_page.loadLibrary),
+                  DeferredLoadingMiddleware(add_edit_prize_page.loadLibrary),
                 ],
-                children: [
-                  QRoute(
-                    path: addEditPrize,
-                    builder: () => add_edit_prize_page.AddEditPrizePage(),
-                    middleware: [
-                      DeferredLoadingMiddleware(
-                        add_edit_prize_page.loadLibrary,
-                      ),
-                    ],
-                  ),
-                  QRoute(
-                    path: addEditPackTicket,
-                    builder: () =>
-                        add_edit_pack_ticket_page.AddEditPackTicketPage(),
-                    middleware: [
-                      DeferredLoadingMiddleware(
-                        add_edit_pack_ticket_page.loadLibrary,
-                      ),
-                    ],
+              ),
+              QRoute(
+                path: addEditPackTicket,
+                builder: () =>
+                    add_edit_pack_ticket_page.AddEditPackTicketPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(
+                    add_edit_pack_ticket_page.loadLibrary,
                   ),
                 ],
               ),
             ],
           ),
         ],
-      );
+      ),
+    ],
+  );
 }

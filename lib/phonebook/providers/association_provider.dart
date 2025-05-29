@@ -12,7 +12,8 @@ class AssociationNotifier extends Notifier<Association> {
   }
 }
 
-final associationProvider =
-    NotifierProvider<AssociationNotifier, Association>(() {
-  return AssociationNotifier();
-});
+final associationProvider = NotifierProvider<AssociationNotifier, Association>(
+  () {
+    return AssociationNotifier();
+  },
+);

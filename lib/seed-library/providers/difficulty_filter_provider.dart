@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final difficultyFilterProvider =
-    StateNotifierProvider<FilterNotifier, int>((ref) {
+final difficultyFilterProvider = StateNotifierProvider<FilterNotifier, int>((
+  ref,
+) {
   return FilterNotifier();
 });
 

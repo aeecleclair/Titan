@@ -6,7 +6,7 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 class TOSNotifier extends SingleNotifier<TOS> {
   final TosRepository tosRepository;
   TOSNotifier({required this.tosRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<TOS>> getTOS() async {
     return await load(tosRepository.getTOS);

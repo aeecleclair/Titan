@@ -40,85 +40,82 @@ class BookingRouter {
   BookingRouter(this.ref);
 
   QRoute route() => QRoute(
-        name: "booking",
-        path: BookingRouter.root,
-        builder: () => main_page.BookingMainPage(),
+    name: "booking",
+    path: BookingRouter.root,
+    builder: () => main_page.BookingMainPage(),
+    middleware: [
+      AuthenticatedMiddleware(ref),
+      DeferredLoadingMiddleware(main_page.loadLibrary),
+    ],
+    children: [
+      QRoute(
+        path: admin,
+        builder: () => admin_page.AdminPage(),
         middleware: [
-          AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary),
+          AdminMiddleware(ref, isAdminProvider),
+          DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [
           QRoute(
-            path: admin,
-            builder: () => admin_page.AdminPage(),
+            path: room,
+            builder: () => add_edit_room_page.AddEditRoomPage(),
             middleware: [
               AdminMiddleware(ref, isAdminProvider),
-              DeferredLoadingMiddleware(admin_page.loadLibrary),
-            ],
-            children: [
-              QRoute(
-                path: room,
-                builder: () => add_edit_room_page.AddEditRoomPage(),
-                middleware: [
-                  AdminMiddleware(ref, isAdminProvider),
-                  DeferredLoadingMiddleware(add_edit_room_page.loadLibrary),
-                ],
-              ),
-              QRoute(
-                path: manager,
-                builder: () => add_edit_manager_page.AddEditManagerPage(),
-                middleware: [
-                  AdminMiddleware(ref, isAdminProvider),
-                  DeferredLoadingMiddleware(add_edit_manager_page.loadLibrary),
-                ],
-              ),
+              DeferredLoadingMiddleware(add_edit_room_page.loadLibrary),
             ],
           ),
           QRoute(
             path: manager,
-            builder: () => manager_page.ManagerPage(),
+            builder: () => add_edit_manager_page.AddEditManagerPage(),
+            middleware: [
+              AdminMiddleware(ref, isAdminProvider),
+              DeferredLoadingMiddleware(add_edit_manager_page.loadLibrary),
+            ],
+          ),
+        ],
+      ),
+      QRoute(
+        path: manager,
+        builder: () => manager_page.ManagerPage(),
+        middleware: [
+          AdminMiddleware(ref, isManagerProvider),
+          DeferredLoadingMiddleware(manager_page.loadLibrary),
+        ],
+        children: [
+          QRoute(
+            path: detail,
+            builder: () => detail_booking_page.DetailBookingPage(isAdmin: true),
             middleware: [
               AdminMiddleware(ref, isManagerProvider),
-              DeferredLoadingMiddleware(manager_page.loadLibrary),
-            ],
-            children: [
-              QRoute(
-                path: detail,
-                builder: () =>
-                    detail_booking_page.DetailBookingPage(isAdmin: true),
-                middleware: [
-                  AdminMiddleware(ref, isManagerProvider),
-                  DeferredLoadingMiddleware(detail_booking_page.loadLibrary),
-                ],
-              ),
-              QRoute(
-                path: addEdit,
-                builder: () => add_edit_booking_page.AddEditBookingPage(
-                  isManagerPage: true,
-                ),
-                middleware: [
-                  AdminMiddleware(ref, isManagerProvider),
-                  DeferredLoadingMiddleware(add_edit_booking_page.loadLibrary),
-                ],
-              ),
+              DeferredLoadingMiddleware(detail_booking_page.loadLibrary),
             ],
           ),
           QRoute(
             path: addEdit,
             builder: () =>
-                add_edit_booking_page.AddEditBookingPage(isManagerPage: false),
+                add_edit_booking_page.AddEditBookingPage(isManagerPage: true),
             middleware: [
+              AdminMiddleware(ref, isManagerProvider),
               DeferredLoadingMiddleware(add_edit_booking_page.loadLibrary),
             ],
           ),
-          QRoute(
-            path: detail,
-            builder: () =>
-                detail_booking_page.DetailBookingPage(isAdmin: false),
-            middleware: [
-              DeferredLoadingMiddleware(detail_booking_page.loadLibrary),
-            ],
-          ),
         ],
-      );
+      ),
+      QRoute(
+        path: addEdit,
+        builder: () =>
+            add_edit_booking_page.AddEditBookingPage(isManagerPage: false),
+        middleware: [
+          DeferredLoadingMiddleware(add_edit_booking_page.loadLibrary),
+        ],
+      ),
+      QRoute(
+        path: detail,
+        builder: () => detail_booking_page.DetailBookingPage(isAdmin: false),
+        middleware: [
+          DeferredLoadingMiddleware(detail_booking_page.loadLibrary),
+        ],
+      ),
+    ],
+  );
 }

@@ -11,5 +11,5 @@ class PackTicketNotifier extends StateNotifier<PackTicket> {
 
 final packTicketProvider =
     StateNotifierProvider<PackTicketNotifier, PackTicket>((ref) {
-  return PackTicketNotifier();
-});
+      return PackTicketNotifier();
+    });

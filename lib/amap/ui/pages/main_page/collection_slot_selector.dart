@@ -20,9 +20,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
       child: GestureDetector(
         onTap: () {
           orderNotifier.setOrder(
-            order.copyWith(
-              collectionSlot: collectionSlot,
-            ),
+            order.copyWith(collectionSlot: collectionSlot),
           );
         },
         child: Container(

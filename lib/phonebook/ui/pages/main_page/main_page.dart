@@ -29,8 +29,9 @@ class PhonebookMainPage extends HookConsumerWidget {
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associationList = ref.watch(associationListProvider);
     final associationFilteredList = ref.watch(associationFilteredListProvider);
-    final associationKindsNotifier =
-        ref.watch(associationKindsProvider.notifier);
+    final associationKindsNotifier = ref.watch(
+      associationKindsProvider.notifier,
+    );
     final kindNotifier = ref.watch(associationKindProvider.notifier);
 
     return PhonebookTemplate(
@@ -77,8 +78,9 @@ class PhonebookMainPage extends HookConsumerWidget {
                             ? AssociationCard(
                                 association: association,
                                 onClicked: () {
-                                  associationNotifier
-                                      .setAssociation(association);
+                                  associationNotifier.setAssociation(
+                                    association,
+                                  );
                                   QR.to(
                                     PhonebookRouter.root +
                                         PhonebookRouter.associationDetail,

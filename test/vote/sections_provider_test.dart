@@ -19,8 +19,9 @@ void main() {
 
     test('loadSectionList should return AsyncValue<List<Section>>', () async {
       final sections = [Section.empty().copyWith(id: '1', name: 'Section 1')];
-      when(() => sectionRepository.getSections())
-          .thenAnswer((_) async => sections);
+      when(
+        () => sectionRepository.getSections(),
+      ).thenAnswer((_) async => sections);
 
       final result = await sectionNotifier.loadSectionList();
 
@@ -36,8 +37,9 @@ void main() {
 
     test('addSection should return true', () async {
       final section = Section.empty().copyWith(id: '1', name: 'Section 1');
-      when(() => sectionRepository.createSection(section))
-          .thenAnswer((_) async => section);
+      when(
+        () => sectionRepository.createSection(section),
+      ).thenAnswer((_) async => section);
       sectionNotifier.state = AsyncValue.data([section]);
 
       final result = await sectionNotifier.addSection(section);
@@ -47,8 +49,9 @@ void main() {
 
     test('updateSection should return true', () async {
       final section = Section.empty().copyWith(id: '1', name: 'Section 1');
-      when(() => sectionRepository.updateSection(section))
-          .thenAnswer((_) async => true);
+      when(
+        () => sectionRepository.updateSection(section),
+      ).thenAnswer((_) async => true);
       sectionNotifier.state = AsyncValue.data([section]);
 
       final result = await sectionNotifier.updateSection(section);
@@ -58,8 +61,9 @@ void main() {
 
     test('deleteSection should return true', () async {
       final section = Section.empty().copyWith(id: '1', name: 'Section 1');
-      when(() => sectionRepository.deleteSection(section.id))
-          .thenAnswer((_) async => true);
+      when(
+        () => sectionRepository.deleteSection(section.id),
+      ).thenAnswer((_) async => true);
       sectionNotifier.state = AsyncValue.data([section]);
 
       final result = await sectionNotifier.deleteSection(section);

@@ -17,14 +17,15 @@ import 'package:universal_html/html.dart' as html;
 
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
-        (ref) {
-  OpenIdTokenProvider openIdTokenProvider = OpenIdTokenProvider();
-  final isConnected = ref.watch(isConnectedProvider);
-  if (isConnected) {
-    openIdTokenProvider.getTokenFromStorage();
-  }
-  return openIdTokenProvider;
-});
+      (ref) {
+        OpenIdTokenProvider openIdTokenProvider = OpenIdTokenProvider();
+        final isConnected = ref.watch(isConnectedProvider);
+        if (isConnected) {
+          openIdTokenProvider.getTokenFromStorage();
+        }
+        return openIdTokenProvider;
+      },
+    );
 
 class IsLoggedInProvider extends StateNotifier<bool> {
   IsLoggedInProvider(super.b);
@@ -51,16 +52,15 @@ final isCachingProvider = StateNotifierProvider<IsCachingProvider, bool>((ref) {
   final IsCachingProvider isCachingProvider = IsCachingProvider(false);
 
   final isConnected = ref.watch(isConnectedProvider);
-  CacheManager().readCache("id").then(
-    (value) {
-      isCachingProvider.set(!isConnected && value != "");
-    },
-  );
+  CacheManager().readCache("id").then((value) {
+    isCachingProvider.set(!isConnected && value != "");
+  });
   return isCachingProvider;
 });
 
-final isLoggedInProvider =
-    StateNotifierProvider<IsLoggedInProvider, bool>((ref) {
+final isLoggedInProvider = StateNotifierProvider<IsLoggedInProvider, bool>((
+  ref,
+) {
   final IsLoggedInProvider isLoggedInProvider = IsLoggedInProvider(false);
 
   final isConnected = ref.watch(isConnectedProvider);
@@ -77,7 +77,9 @@ final isLoggedInProvider =
 final loadingProvider = FutureProvider<bool>((ref) {
   final isCaching = ref.watch(isCachingProvider);
   return isCaching ||
-      ref.watch(authTokenProvider).when(
+      ref
+          .watch(authTokenProvider)
+          .when(
             data: (tokens) =>
                 tokens["token"] != "" && ref.watch(isLoggedInProvider),
             error: (e, s) => false,
@@ -87,7 +89,9 @@ final loadingProvider = FutureProvider<bool>((ref) {
 
 final idProvider = FutureProvider<String>((ref) {
   final cacheManager = CacheManager();
-  return ref.watch(authTokenProvider).when(
+  return ref
+      .watch(authTokenProvider)
+      .when(
         data: (tokens) {
           final id = tokens["token"] == ""
               ? ""
@@ -101,10 +105,9 @@ final idProvider = FutureProvider<String>((ref) {
 });
 
 final tokenProvider = Provider((ref) {
-  return ref.watch(authTokenProvider).maybeWhen(
-        data: (tokens) => tokens["token"] as String,
-        orElse: () => "",
-      );
+  return ref
+      .watch(authTokenProvider)
+      .maybeWhen(data: (tokens) => tokens["token"] as String, orElse: () => "");
 });
 
 class OpenIdTokenProvider
@@ -152,8 +155,11 @@ class OpenIdTokenProvider
     state = const AsyncValue.loading();
     try {
       if (kIsWeb) {
-        popupWin = html.window
-            .open(authUrl, "Hyperion", "width=800, height=900, scrollbars=yes");
+        popupWin = html.window.open(
+          authUrl,
+          "Hyperion",
+          "width=800, height=900, scrollbars=yes",
+        );
 
         final completer = Completer();
         void checkWindowClosed() {
@@ -171,10 +177,7 @@ class OpenIdTokenProvider
         completer.future.then((_) {
           state.maybeWhen(
             loading: () {
-              state = AsyncValue.data({
-                tokenKey: "",
-                refreshTokenKey: "",
-              });
+              state = AsyncValue.data({tokenKey: "", refreshTokenKey: ""});
             },
             orElse: () {},
           );
@@ -219,16 +222,16 @@ class OpenIdTokenProvider
           }
         });
       } else {
-        AuthorizationTokenResponse resp =
-            await appAuth.authorizeAndExchangeCode(
-          AuthorizationTokenRequest(
-            clientId,
-            redirectUrl,
-            discoveryUrl: discoveryUrl,
-            scopes: scopes,
-            allowInsecureConnections: kDebugMode,
-          ),
-        );
+        AuthorizationTokenResponse resp = await appAuth
+            .authorizeAndExchangeCode(
+              AuthorizationTokenRequest(
+                clientId,
+                redirectUrl,
+                discoveryUrl: discoveryUrl,
+                scopes: scopes,
+                allowInsecureConnections: kDebugMode,
+              ),
+            );
         await _secureStorage.write(key: tokenName, value: resp.refreshToken);
         state = AsyncValue.data({
           tokenKey: resp.accessToken!,
@@ -289,21 +292,21 @@ class OpenIdTokenProvider
   Future<void> getAuthToken(String authorizationToken) async {
     appAuth
         .token(
-      TokenRequest(
-        clientId,
-        redirectUrl,
-        discoveryUrl: discoveryUrl,
-        scopes: scopes,
-        authorizationCode: authorizationToken,
-        allowInsecureConnections: kDebugMode,
-      ),
-    )
+          TokenRequest(
+            clientId,
+            redirectUrl,
+            discoveryUrl: discoveryUrl,
+            scopes: scopes,
+            authorizationCode: authorizationToken,
+            allowInsecureConnections: kDebugMode,
+          ),
+        )
         .then((resp) {
-      state = AsyncValue.data({
-        tokenKey: resp.accessToken!,
-        refreshTokenKey: resp.refreshToken!,
-      });
-    });
+          state = AsyncValue.data({
+            tokenKey: resp.accessToken!,
+            refreshTokenKey: resp.refreshToken!,
+          });
+        });
   }
 
   Future<bool> refreshToken() async {
@@ -342,10 +345,8 @@ class OpenIdTokenProvider
 
   void storeToken() {
     state.when(
-      data: (tokens) => _secureStorage.write(
-        key: tokenName,
-        value: tokens[refreshTokenKey],
-      ),
+      data: (tokens) =>
+          _secureStorage.write(key: tokenName, value: tokens[refreshTokenKey]),
       error: (e, s) {
         throw e;
       },

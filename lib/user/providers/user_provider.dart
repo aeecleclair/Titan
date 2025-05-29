@@ -9,7 +9,7 @@ import 'package:myecl/user/repositories/user_repository.dart';
 class UserNotifier extends SingleNotifier<User> {
   final UserRepository userRepository;
   UserNotifier({required this.userRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<bool> setUser(User user) async {
     return await add((u) async => u, user);
@@ -52,25 +52,28 @@ class UserNotifier extends SingleNotifier<User> {
   }
 }
 
-final asyncUserProvider =
-    StateNotifierProvider<UserNotifier, AsyncValue<User>>((ref) {
-  final UserRepository userRepository = ref.watch(userRepositoryProvider);
-  UserNotifier userNotifier = UserNotifier(userRepository: userRepository);
-  final token = ref.watch(tokenProvider);
-  tokenExpireWrapperAuth(ref, () async {
-    final isLoggedIn = ref.watch(isLoggedInProvider);
-    final id = ref
-        .watch(idProvider)
-        .maybeWhen(data: (value) => value, orElse: () => "");
-    if (isLoggedIn && id != "" && token != "") {
-      return userNotifier..loadMe();
-    }
-  });
-  return userNotifier;
-});
+final asyncUserProvider = StateNotifierProvider<UserNotifier, AsyncValue<User>>(
+  (ref) {
+    final UserRepository userRepository = ref.watch(userRepositoryProvider);
+    UserNotifier userNotifier = UserNotifier(userRepository: userRepository);
+    final token = ref.watch(tokenProvider);
+    tokenExpireWrapperAuth(ref, () async {
+      final isLoggedIn = ref.watch(isLoggedInProvider);
+      final id = ref
+          .watch(idProvider)
+          .maybeWhen(data: (value) => value, orElse: () => "");
+      if (isLoggedIn && id != "" && token != "") {
+        return userNotifier..loadMe();
+      }
+    });
+    return userNotifier;
+  },
+);
 
 final userProvider = Provider((ref) {
-  return ref.watch(asyncUserProvider).maybeWhen(
+  return ref
+      .watch(asyncUserProvider)
+      .maybeWhen(
         data: (user) => user,
         orElse: () {
           return User.empty();

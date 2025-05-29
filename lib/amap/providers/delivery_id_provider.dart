@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final deliveryIdProvider =
-    StateNotifierProvider<DeliveryIdProvider, String>((ref) {
+final deliveryIdProvider = StateNotifierProvider<DeliveryIdProvider, String>((
+  ref,
+) {
   return DeliveryIdProvider("");
 });
 

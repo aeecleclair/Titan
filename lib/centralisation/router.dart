@@ -21,12 +21,12 @@ class CentralisationRouter {
   CentralisationRouter(this.ref);
 
   QRoute route() => QRoute(
-        name: "centralisation",
-        path: CentralisationRouter.root,
-        builder: () => main_page.CentralisationMainPage(),
-        middleware: [
-          AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary),
-        ],
-      );
+    name: "centralisation",
+    path: CentralisationRouter.root,
+    builder: () => main_page.CentralisationMainPage(),
+    middleware: [
+      AuthenticatedMiddleware(ref),
+      DeferredLoadingMiddleware(main_page.loadLibrary),
+    ],
+  );
 }

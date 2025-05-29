@@ -11,8 +11,9 @@ class ContenderLogo extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final contenderLogos = ref
-        .watch(contenderLogosProvider.select((value) => value[contender.id]));
+    final contenderLogos = ref.watch(
+      contenderLogosProvider.select((value) => value[contender.id]),
+    );
     final contenderLogosNotifier = ref.read(contenderLogosProvider.notifier);
     final logoNotifier = ref.read(contenderLogoProvider.notifier);
     return AutoLoaderChild(
@@ -25,10 +26,7 @@ class ContenderLogo extends HookConsumerWidget {
         height: 40,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          image: DecorationImage(
-            image: logo.first.image,
-            fit: BoxFit.cover,
-          ),
+          image: DecorationImage(image: logo.first.image, fit: BoxFit.cover),
         ),
       ),
     );

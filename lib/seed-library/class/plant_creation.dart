@@ -35,8 +35,9 @@ class PlantCreation {
   factory PlantCreation.fromJson(Map<String, dynamic> json) {
     return PlantCreation(
       speciesId: json['species_id'],
-      propagationMethod:
-          PropagationMethod.values.byName(json['propagation_method']),
+      propagationMethod: PropagationMethod.values.byName(
+        json['propagation_method'],
+      ),
       previousNote: json['previous_note'],
       nbSeedsEnvelope: json['nb_seeds_envelope'],
       ancestorId: json['ancestor_id'],

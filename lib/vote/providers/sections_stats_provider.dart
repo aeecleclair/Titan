@@ -8,14 +8,17 @@ class SectionsStatsNotifier extends MapNotifier<Section, int> {
   SectionsStatsNotifier();
 }
 
-final sectionsStatsProvider = StateNotifierProvider<SectionsStatsNotifier,
-    Map<Section, AsyncValue<List<int>>?>>((ref) {
-  SectionsStatsNotifier sectionsStatsNotifier = SectionsStatsNotifier();
-  tokenExpireWrapperAuth(ref, () async {
-    final sections = ref.watch(sectionsProvider);
-    sections.whenData((value) {
-      sectionsStatsNotifier.loadTList(value);
+final sectionsStatsProvider =
+    StateNotifierProvider<
+      SectionsStatsNotifier,
+      Map<Section, AsyncValue<List<int>>?>
+    >((ref) {
+      SectionsStatsNotifier sectionsStatsNotifier = SectionsStatsNotifier();
+      tokenExpireWrapperAuth(ref, () async {
+        final sections = ref.watch(sectionsProvider);
+        sections.whenData((value) {
+          sectionsStatsNotifier.loadTList(value);
+        });
+      });
+      return sectionsStatsNotifier;
     });
-  });
-  return sectionsStatsNotifier;
-});

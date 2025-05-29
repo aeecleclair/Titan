@@ -5,11 +5,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 
 class TicketCard extends HookConsumerWidget {
-  const TicketCard({
-    super.key,
-    required this.ticket,
-    required this.onClicked,
-  });
+  const TicketCard({super.key, required this.ticket, required this.onClicked});
 
   final Ticket ticket;
   final VoidCallback onClicked;

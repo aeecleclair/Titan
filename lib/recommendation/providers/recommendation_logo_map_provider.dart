@@ -7,10 +7,10 @@ class RecommendationLogoMapNotifier extends MapNotifier<Recommendation, Image> {
   RecommendationLogoMapNotifier() : super();
 }
 
-final recommendationLogoMapProvider = StateNotifierProvider<
-    RecommendationLogoMapNotifier,
-    Map<Recommendation, AsyncValue<List<Image>>?>>(
-  (ref) {
-    return RecommendationLogoMapNotifier();
-  },
-);
+final recommendationLogoMapProvider =
+    StateNotifierProvider<
+      RecommendationLogoMapNotifier,
+      Map<Recommendation, AsyncValue<List<Image>>?>
+    >((ref) {
+      return RecommendationLogoMapNotifier();
+    });

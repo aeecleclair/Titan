@@ -30,8 +30,9 @@ class Structure {
       'name': name,
       'id': id,
       'manager_user_id': managerUser.id,
-      'association_membership_id':
-          associationMembership.id != '' ? associationMembership.id : null,
+      'association_membership_id': associationMembership.id != ''
+          ? associationMembership.id
+          : null,
     };
   }
 
@@ -56,10 +57,10 @@ class Structure {
   }
 
   Structure.empty()
-      : this(
-          name: '',
-          associationMembership: AssociationMembership.empty(),
-          id: '',
-          managerUser: SimpleUser.empty(),
-        );
+    : this(
+        name: '',
+        associationMembership: AssociationMembership.empty(),
+        id: '',
+        managerUser: SimpleUser.empty(),
+      );
 }

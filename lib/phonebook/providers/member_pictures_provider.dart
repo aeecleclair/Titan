@@ -9,20 +9,25 @@ class MemberPicturesNotifier extends MapNotifier<CompleteMember, Image> {
   MemberPicturesNotifier() : super();
 }
 
-final memberPicturesProvider = StateNotifierProvider<MemberPicturesNotifier,
-    Map<CompleteMember, AsyncValue<List<Image>>?>>((ref) {
-  MemberPicturesNotifier memberPicturesNotifier = MemberPicturesNotifier();
-  tokenExpireWrapperAuth(ref, () async {
-    ref.watch(associationMemberListProvider).maybeWhen(
-      data: (member) {
-        memberPicturesNotifier.loadTList(member);
-        return MemberPicturesNotifier;
-      },
-      orElse: () {
-        memberPicturesNotifier.loadTList([]);
-        return memberPicturesNotifier;
-      },
-    );
-  });
-  return memberPicturesNotifier;
-});
+final memberPicturesProvider =
+    StateNotifierProvider<
+      MemberPicturesNotifier,
+      Map<CompleteMember, AsyncValue<List<Image>>?>
+    >((ref) {
+      MemberPicturesNotifier memberPicturesNotifier = MemberPicturesNotifier();
+      tokenExpireWrapperAuth(ref, () async {
+        ref
+            .watch(associationMemberListProvider)
+            .maybeWhen(
+              data: (member) {
+                memberPicturesNotifier.loadTList(member);
+                return MemberPicturesNotifier;
+              },
+              orElse: () {
+                memberPicturesNotifier.loadTList([]);
+                return memberPicturesNotifier;
+              },
+            );
+      });
+      return memberPicturesNotifier;
+    });

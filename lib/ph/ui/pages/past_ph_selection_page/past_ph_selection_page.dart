@@ -10,10 +10,7 @@ class PastPhSelectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const PhTemplate(
-      child: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: PhList(),
-      ),
+      child: Padding(padding: EdgeInsets.all(8.0), child: PhList()),
     );
   }
 }

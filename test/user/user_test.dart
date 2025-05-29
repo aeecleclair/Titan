@@ -246,8 +246,9 @@ void main() {
     test('Should print properly the name', () {
       final simpleUser = SimpleUser.empty();
       expect(simpleUser.getName(), 'Prénom Nom');
-      final simpleUserWithNickName =
-          SimpleUser.empty().copyWith(nickname: 'nickname');
+      final simpleUserWithNickName = SimpleUser.empty().copyWith(
+        nickname: 'nickname',
+      );
       expect(simpleUserWithNickName.getName(), 'nickname (Prénom Nom)');
     });
 
@@ -401,8 +402,9 @@ void main() {
       final mockUser = MockUserRepository();
       final User user = User.empty();
       when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
-      when(() => mockUser.changePassword('old', 'new', user.email))
-          .thenAnswer((_) async => true);
+      when(
+        () => mockUser.changePassword('old', 'new', user.email),
+      ).thenAnswer((_) async => true);
       final UserNotifier userNotifier = UserNotifier(userRepository: mockUser);
       await userNotifier.loadMe();
       expect(await userNotifier.changePassword('old', 'new', user), true);
@@ -412,8 +414,9 @@ void main() {
       final mockUser = MockUserRepository();
       final User user = User.empty();
       when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
-      when(() => mockUser.changePassword('old', 'new', user.email))
-          .thenAnswer((_) async => false);
+      when(
+        () => mockUser.changePassword('old', 'new', user.email),
+      ).thenAnswer((_) async => false);
       final UserNotifier userNotifier = UserNotifier(userRepository: mockUser);
       await userNotifier.loadMe();
       expect(await userNotifier.changePassword('old', 'new', user), false);

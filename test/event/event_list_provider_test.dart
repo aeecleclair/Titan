@@ -39,8 +39,9 @@ void main() {
 
     test('addEvent should return true', () async {
       final event = Event.empty().copyWith(id: '1', name: 'Event 1');
-      when(() => eventRepository.createEvent(event))
-          .thenAnswer((_) async => event);
+      when(
+        () => eventRepository.createEvent(event),
+      ).thenAnswer((_) async => event);
       eventListNotifier.state = AsyncValue.data([event]);
       final result = await eventListNotifier.addEvent(event);
 
@@ -49,8 +50,9 @@ void main() {
 
     test('updateEvent should return true', () async {
       final event = Event.empty().copyWith(id: '1', name: 'Event 1');
-      when(() => eventRepository.updateEvent(event))
-          .thenAnswer((_) async => true);
+      when(
+        () => eventRepository.updateEvent(event),
+      ).thenAnswer((_) async => true);
 
       eventListNotifier.state = AsyncValue.data([event]);
       final result = await eventListNotifier.updateEvent(event);
@@ -60,8 +62,9 @@ void main() {
 
     test('deleteEvent should return true', () async {
       final event = Event.empty().copyWith(id: '1', name: 'Event 1');
-      when(() => eventRepository.deleteEvent(event.id))
-          .thenAnswer((_) async => true);
+      when(
+        () => eventRepository.deleteEvent(event.id),
+      ).thenAnswer((_) async => true);
       eventListNotifier.state = AsyncValue.data([event]);
 
       final result = await eventListNotifier.deleteEvent(event);
@@ -70,10 +73,14 @@ void main() {
     });
 
     test('toggleConfirmed should return true', () async {
-      final event = Event.empty()
-          .copyWith(id: '1', name: 'Event 1', decision: Decision.approved);
-      when(() => eventRepository.confirmEvent(event))
-          .thenAnswer((_) async => true);
+      final event = Event.empty().copyWith(
+        id: '1',
+        name: 'Event 1',
+        decision: Decision.approved,
+      );
+      when(
+        () => eventRepository.confirmEvent(event),
+      ).thenAnswer((_) async => true);
       eventListNotifier.state = AsyncValue.data([event]);
 
       final result = await eventListNotifier.toggleConfirmed(event);

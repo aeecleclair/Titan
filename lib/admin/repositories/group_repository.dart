@@ -36,10 +36,10 @@ class GroupRepository extends Repository {
   }
 
   Future<bool> addMember(Group group, SimpleUser user) async {
-    await create(
-      {"user_id": user.id, "group_id": group.id},
-      suffix: "membership",
-    );
+    await create({
+      "user_id": user.id,
+      "group_id": group.id,
+    }, suffix: "membership");
     return true;
   }
 

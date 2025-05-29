@@ -14,8 +14,9 @@ class MemberResults extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
     final usersNotifier = ref.watch(userList.notifier);
-    final structureManagerNotifier =
-        ref.watch(structureManagerProvider.notifier);
+    final structureManagerNotifier = ref.watch(
+      structureManagerProvider.notifier,
+    );
 
     return AsyncChild(
       value: users,

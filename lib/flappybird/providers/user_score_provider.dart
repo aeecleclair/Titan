@@ -18,10 +18,10 @@ class ScoreListNotifier extends SingleNotifier<Score> {
 
 final userScoreProvider =
     StateNotifierProvider<ScoreListNotifier, AsyncValue<Score>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final notifier = ScoreListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.getLeaderBoardPosition();
-  });
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      final notifier = ScoreListNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.getLeaderBoardPosition();
+      });
+      return notifier;
+    });

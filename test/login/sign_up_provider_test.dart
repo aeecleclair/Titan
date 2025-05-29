@@ -26,8 +26,10 @@ void main() {
         ),
       ).thenAnswer((_) async => true);
 
-      final result =
-          await signUpProvider.createUser('test@test.com', AccountType.student);
+      final result = await signUpProvider.createUser(
+        'test@test.com',
+        AccountType.student,
+      );
 
       expect(result, true);
     });
@@ -40,8 +42,10 @@ void main() {
         ),
       ).thenAnswer((_) async => false);
 
-      final result =
-          await signUpProvider.createUser('test@test.com', AccountType.student);
+      final result = await signUpProvider.createUser(
+        'test@test.com',
+        AccountType.student,
+      );
 
       expect(result, false);
     });
@@ -49,8 +53,9 @@ void main() {
 
   group('recoverUser', () {
     test('returns true when repository returns true', () async {
-      when(() => mockSignUpRepository.recoverUser('test@test.com'))
-          .thenAnswer((_) async => true);
+      when(
+        () => mockSignUpRepository.recoverUser('test@test.com'),
+      ).thenAnswer((_) async => true);
 
       final result = await signUpProvider.recoverUser('test@test.com');
 
@@ -58,8 +63,9 @@ void main() {
     });
 
     test('returns false when repository returns false', () async {
-      when(() => mockSignUpRepository.recoverUser('test@test.com'))
-          .thenAnswer((_) async => false);
+      when(
+        () => mockSignUpRepository.recoverUser('test@test.com'),
+      ).thenAnswer((_) async => false);
 
       final result = await signUpProvider.recoverUser('test@test.com');
 
@@ -69,10 +75,12 @@ void main() {
 
   group('activateUser', () {
     test('returns true when repository returns true', () async {
-      final createAccount =
-          CreateAccount.empty().copyWith(password: 'password');
-      when(() => mockSignUpRepository.activateUser(createAccount))
-          .thenAnswer((_) async => true);
+      final createAccount = CreateAccount.empty().copyWith(
+        password: 'password',
+      );
+      when(
+        () => mockSignUpRepository.activateUser(createAccount),
+      ).thenAnswer((_) async => true);
 
       final result = await signUpProvider.activateUser(createAccount);
 
@@ -80,10 +88,12 @@ void main() {
     });
 
     test('returns false when repository returns false', () async {
-      final createAccount =
-          CreateAccount.empty().copyWith(password: 'password');
-      when(() => mockSignUpRepository.activateUser(createAccount))
-          .thenAnswer((_) async => false);
+      final createAccount = CreateAccount.empty().copyWith(
+        password: 'password',
+      );
+      when(
+        () => mockSignUpRepository.activateUser(createAccount),
+      ).thenAnswer((_) async => false);
 
       final result = await signUpProvider.activateUser(createAccount);
 
@@ -93,10 +103,12 @@ void main() {
 
   group('resetPassword', () {
     test('returns true when repository returns true', () async {
-      final recoverRequest =
-          RecoverRequest.empty().copyWith(newPassword: 'password');
-      when(() => mockSignUpRepository.resetPassword(recoverRequest))
-          .thenAnswer((_) async => true);
+      final recoverRequest = RecoverRequest.empty().copyWith(
+        newPassword: 'password',
+      );
+      when(
+        () => mockSignUpRepository.resetPassword(recoverRequest),
+      ).thenAnswer((_) async => true);
 
       final result = await signUpProvider.resetPassword(recoverRequest);
 
@@ -104,10 +116,12 @@ void main() {
     });
 
     test('returns false when repository returns false', () async {
-      final recoverRequest =
-          RecoverRequest.empty().copyWith(newPassword: 'password');
-      when(() => mockSignUpRepository.resetPassword(recoverRequest))
-          .thenAnswer((_) async => false);
+      final recoverRequest = RecoverRequest.empty().copyWith(
+        newPassword: 'password',
+      );
+      when(
+        () => mockSignUpRepository.resetPassword(recoverRequest),
+      ).thenAnswer((_) async => false);
 
       final result = await signUpProvider.resetPassword(recoverRequest);
 

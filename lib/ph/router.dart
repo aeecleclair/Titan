@@ -33,43 +33,39 @@ class PhRouter {
   );
   PhRouter(this.ref);
   QRoute route() => QRoute(
-        name: "ph",
-        path: PhRouter.root,
-        builder: () => main_page.PhMainPage(),
+    name: "ph",
+    path: PhRouter.root,
+    builder: () => main_page.PhMainPage(),
+    middleware: [DeferredLoadingMiddleware(main_page.loadLibrary)],
+    children: [
+      QRoute(
+        path: past_ph_selection,
+        builder: () => const PastPhSelectionPage(),
+        children: [
+          QRoute(
+            path: view_ph,
+            builder: () => view_ph_page.ViewPhPage(),
+            middleware: [DeferredLoadingMiddleware(view_ph_page.loadLibrary)],
+          ),
+        ],
+      ),
+      QRoute(
+        path: admin,
+        builder: () => admin_page.AdminPage(),
         middleware: [
-          DeferredLoadingMiddleware(main_page.loadLibrary),
+          AdminMiddleware(ref, isPhAdminProvider),
+          DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [
           QRoute(
-            path: past_ph_selection,
-            builder: () => const PastPhSelectionPage(),
-            children: [
-              QRoute(
-                path: view_ph,
-                builder: () => view_ph_page.ViewPhPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(view_ph_page.loadLibrary),
-                ],
-              ),
-            ],
-          ),
-          QRoute(
-            path: admin,
-            builder: () => admin_page.AdminPage(),
+            path: add_ph,
+            builder: () => add_edit_ph_page.PhAddEditPhPage(),
             middleware: [
-              AdminMiddleware(ref, isPhAdminProvider),
-              DeferredLoadingMiddleware(admin_page.loadLibrary),
-            ],
-            children: [
-              QRoute(
-                path: add_ph,
-                builder: () => add_edit_ph_page.PhAddEditPhPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(add_edit_ph_page.loadLibrary),
-                ],
-              ),
+              DeferredLoadingMiddleware(add_edit_ph_page.loadLibrary),
             ],
           ),
         ],
-      );
+      ),
+    ],
+  );
 }

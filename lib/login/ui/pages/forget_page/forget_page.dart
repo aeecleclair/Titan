@@ -96,8 +96,9 @@ class ForgetPassword extends HookConsumerWidget {
                           .watch(loadingProvider)
                           .maybeWhen(data: (data) => data, orElse: () => false),
                       onPressed: () async {
-                        final value =
-                            await signUpNotifier.recoverUser(email.text);
+                        final value = await signUpNotifier.recoverUser(
+                          email.text,
+                        );
                         if (value) {
                           displayToastWithContext(
                             TypeMsg.msg,

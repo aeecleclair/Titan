@@ -11,10 +11,7 @@ class StoreDivider extends StatelessWidget {
       child: Row(
         children: [
           const Expanded(
-            child: Divider(
-              color: Color.fromARGB(255, 0, 29, 29),
-              thickness: 1,
-            ),
+            child: Divider(color: Color.fromARGB(255, 0, 29, 29), thickness: 1),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -30,10 +27,7 @@ class StoreDivider extends StatelessWidget {
             ),
           ),
           const Expanded(
-            child: Divider(
-              color: Color.fromARGB(255, 0, 29, 29),
-              thickness: 1,
-            ),
+            child: Divider(color: Color.fromARGB(255, 0, 29, 29), thickness: 1),
           ),
         ],
       ),

@@ -33,8 +33,9 @@ class AdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sectionContenderListNotifier =
-        ref.watch(sectionContenderProvider.notifier);
+    final sectionContenderListNotifier = ref.watch(
+      sectionContenderProvider.notifier,
+    );
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final contenderList = ref.watch(contenderListProvider);
     final asyncStatus = ref.watch(statusProvider);
@@ -174,12 +175,10 @@ class AdminPage extends HookConsumerWidget {
                                       VoteTextConstants.resetVoteDescription,
                                   onYes: () async {
                                     await tokenExpireWrapper(ref, () async {
-                                      final value =
-                                          await statusNotifier.resetVote();
+                                      final value = await statusNotifier
+                                          .resetVote();
                                       ref
-                                          .watch(
-                                            contenderListProvider.notifier,
-                                          )
+                                          .watch(contenderListProvider.notifier)
                                           .loadContenderList();
                                       if (value) {
                                         showVotesNotifier.toggle(false);
@@ -214,7 +213,8 @@ class AdminPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 20),
               SizedBox(
-                height: MediaQuery.of(context).size.height -
+                height:
+                    MediaQuery.of(context).size.height -
                     500 +
                     (status == Status.waiting ? 0 : 50),
                 child: Column(
@@ -230,17 +230,13 @@ class AdminPage extends HookConsumerWidget {
                               child: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  SizedBox(
-                                    height: 40,
-                                  ),
+                                  SizedBox(height: 40),
                                   HeroIcon(
                                     HeroIcons.eye,
                                     size: 80.0,
                                     color: Colors.black,
                                   ),
-                                  SizedBox(
-                                    height: 40,
-                                  ),
+                                  SizedBox(height: 40),
                                   Text(
                                     VoteTextConstants.showVotes,
                                     style: TextStyle(
@@ -361,8 +357,8 @@ class AdminPage extends HookConsumerWidget {
                                 ),
                                 onTap: () async {
                                   await tokenExpireWrapper(ref, () async {
-                                    final value =
-                                        await statusNotifier.openVote();
+                                    final value = await statusNotifier
+                                        .openVote();
                                     ref
                                         .watch(contenderListProvider.notifier)
                                         .loadContenderList();
@@ -415,35 +411,36 @@ class AdminPage extends HookConsumerWidget {
                                         onTap: () async {
                                           await showDialog(
                                             context: context,
-                                            builder: (context) =>
-                                                CustomDialogBox(
+                                            builder: (context) => CustomDialogBox(
                                               title:
                                                   VoteTextConstants.deleteAll,
                                               descriptions: VoteTextConstants
                                                   .deleteAllDescription,
                                               onYes: () async {
-                                                await tokenExpireWrapper(ref,
-                                                    () async {
-                                                  final value = await ref
-                                                      .watch(
-                                                        contenderListProvider
-                                                            .notifier,
-                                                      )
-                                                      .deleteContenders();
-                                                  if (value) {
-                                                    displayVoteToastWithContext(
-                                                      TypeMsg.msg,
-                                                      VoteTextConstants
-                                                          .deletedAll,
-                                                    );
-                                                  } else {
-                                                    displayVoteToastWithContext(
-                                                      TypeMsg.error,
-                                                      VoteTextConstants
-                                                          .deletingError,
-                                                    );
-                                                  }
-                                                });
+                                                await tokenExpireWrapper(
+                                                  ref,
+                                                  () async {
+                                                    final value = await ref
+                                                        .watch(
+                                                          contenderListProvider
+                                                              .notifier,
+                                                        )
+                                                        .deleteContenders();
+                                                    if (value) {
+                                                      displayVoteToastWithContext(
+                                                        TypeMsg.msg,
+                                                        VoteTextConstants
+                                                            .deletedAll,
+                                                      );
+                                                    } else {
+                                                      displayVoteToastWithContext(
+                                                        TypeMsg.error,
+                                                        VoteTextConstants
+                                                            .deletingError,
+                                                      );
+                                                    }
+                                                  },
+                                                );
                                               },
                                             ),
                                           );
@@ -491,37 +488,38 @@ class AdminPage extends HookConsumerWidget {
                                         onTap: () async {
                                           await showDialog(
                                             context: context,
-                                            builder: (context) =>
-                                                CustomDialogBox(
+                                            builder: (context) => CustomDialogBox(
                                               title:
                                                   VoteTextConstants.deletePipo,
                                               descriptions: VoteTextConstants
                                                   .deletePipoDescription,
                                               onYes: () async {
-                                                await tokenExpireWrapper(ref,
-                                                    () async {
-                                                  final value = await ref
-                                                      .watch(
-                                                        contenderListProvider
-                                                            .notifier,
-                                                      )
-                                                      .deleteContenders(
-                                                        type: ListType.fake,
+                                                await tokenExpireWrapper(
+                                                  ref,
+                                                  () async {
+                                                    final value = await ref
+                                                        .watch(
+                                                          contenderListProvider
+                                                              .notifier,
+                                                        )
+                                                        .deleteContenders(
+                                                          type: ListType.fake,
+                                                        );
+                                                    if (value) {
+                                                      displayVoteToastWithContext(
+                                                        TypeMsg.msg,
+                                                        VoteTextConstants
+                                                            .deletedPipo,
                                                       );
-                                                  if (value) {
-                                                    displayVoteToastWithContext(
-                                                      TypeMsg.msg,
-                                                      VoteTextConstants
-                                                          .deletedPipo,
-                                                    );
-                                                  } else {
-                                                    displayVoteToastWithContext(
-                                                      TypeMsg.error,
-                                                      VoteTextConstants
-                                                          .deletingError,
-                                                    );
-                                                  }
-                                                });
+                                                    } else {
+                                                      displayVoteToastWithContext(
+                                                        TypeMsg.error,
+                                                        VoteTextConstants
+                                                            .deletingError,
+                                                      );
+                                                    }
+                                                  },
+                                                );
                                               },
                                             ),
                                           );

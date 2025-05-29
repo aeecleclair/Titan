@@ -102,13 +102,19 @@ class FlutterPasswordStrengthState extends State<FlutterPasswordStrength>
     super.initState();
 
     //initialize
-    _animationController =
-        AnimationController(duration: widget._duration, vsync: this);
-    _strengthBarAnimation =
-        Tween<double>(begin: _begin, end: _end).animate(_animationController);
+    _animationController = AnimationController(
+      duration: widget._duration,
+      vsync: this,
+    );
+    _strengthBarAnimation = Tween<double>(
+      begin: _begin,
+      end: _end,
+    ).animate(_animationController);
     _strengthBarColors = widget._strengthColors;
-    _strengthBarColor = _strengthBarColors
-            .evaluate(AlwaysStoppedAnimation(_passwordStrength)) ??
+    _strengthBarColor =
+        _strengthBarColors.evaluate(
+          AlwaysStoppedAnimation(_passwordStrength),
+        ) ??
         Colors.transparent;
 
     _backgroundColor = widget.backgroundColor;
@@ -134,10 +140,14 @@ class FlutterPasswordStrengthState extends State<FlutterPasswordStrength>
     _begin = _end;
     _end = _passwordStrength * 100;
 
-    _strengthBarAnimation =
-        Tween<double>(begin: _begin, end: _end).animate(_animationController);
-    _strengthBarColor = _strengthBarColors
-            .evaluate(AlwaysStoppedAnimation(_passwordStrength)) ??
+    _strengthBarAnimation = Tween<double>(
+      begin: _begin,
+      end: _end,
+    ).animate(_animationController);
+    _strengthBarColor =
+        _strengthBarColors.evaluate(
+          AlwaysStoppedAnimation(_passwordStrength),
+        ) ??
         Colors.transparent;
 
     _animationController.forward(from: 0.0);

@@ -163,20 +163,20 @@ class UserCashUi extends HookConsumerWidget {
                                           cash.balance,
                                         )
                                         .then((value) {
-                                      if (value) {
-                                        key.currentState!.reset();
-                                        toggle();
-                                        displayVoteWithContext(
-                                          TypeMsg.msg,
-                                          AMAPTextConstants.updatedAmount,
-                                        );
-                                      } else {
-                                        displayVoteWithContext(
-                                          TypeMsg.error,
-                                          AMAPTextConstants.updatingError,
-                                        );
-                                      }
-                                    });
+                                          if (value) {
+                                            key.currentState!.reset();
+                                            toggle();
+                                            displayVoteWithContext(
+                                              TypeMsg.msg,
+                                              AMAPTextConstants.updatedAmount,
+                                            );
+                                          } else {
+                                            displayVoteWithContext(
+                                              TypeMsg.error,
+                                              AMAPTextConstants.updatingError,
+                                            );
+                                          }
+                                        });
                                   });
                                 }
                               },

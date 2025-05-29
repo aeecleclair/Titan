@@ -23,15 +23,11 @@ class Scanner extends ConsumerStatefulWidget {
 }
 
 class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
-  final controller = MobileScannerController(
-    autoStart: false,
-  );
+  final controller = MobileScannerController(autoStart: false);
 
   StreamSubscription<Object?>? _subscription;
 
-  void showWithoutMembershipDialog(
-    Function() onYes,
-  ) async {
+  void showWithoutMembershipDialog(Function() onYes) async {
     await showDialog(
       context: context,
       builder: (context) {
@@ -59,39 +55,32 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
     final store = ref.read(selectedStoreProvider);
     final scanNotifier = ref.read(scanProvider.notifier);
-    final ongoingTransactionNotifier =
-        ref.read(ongoingTransactionProvider.notifier);
+    final ongoingTransactionNotifier = ref.read(
+      ongoingTransactionProvider.notifier,
+    );
     if (mounted && barcodes.barcodes.isNotEmpty && barcode == null) {
-      final data = barcodeNotifier
-          .updateBarcode(barcodes.barcodes.firstOrNull!.rawValue!);
+      final data = barcodeNotifier.updateBarcode(
+        barcodes.barcodes.firstOrNull!.rawValue!,
+      );
       if (!bypass) {
         final canScan = await scanNotifier.canScan(store.id, data);
         if (!canScan) {
-          showWithoutMembershipDialog(
-            () async {
-              final value =
-                  await scanNotifier.scan(store.id, data, bypass: true);
-              if (value == null) {
-                displayToastWithContext(
-                  TypeMsg.error,
-                  "QR Code déjà utilisé",
-                );
-                barcodeNotifier.clearBarcode();
-                ongoingTransactionNotifier.clearOngoingTransaction();
-                return;
-              }
-              ongoingTransactionNotifier.updateOngoingTransaction(value);
-            },
-          );
+          showWithoutMembershipDialog(() async {
+            final value = await scanNotifier.scan(store.id, data, bypass: true);
+            if (value == null) {
+              displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
+              barcodeNotifier.clearBarcode();
+              ongoingTransactionNotifier.clearOngoingTransaction();
+              return;
+            }
+            ongoingTransactionNotifier.updateOngoingTransaction(value);
+          });
           return;
         }
       }
       final value = await scanNotifier.scan(store.id, data);
       if (value == null) {
-        displayToastWithContext(
-          TypeMsg.error,
-          "QR Code déjà utilisé",
-        );
+        displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
         barcodeNotifier.clearBarcode();
         ongoingTransactionNotifier.clearOngoingTransaction();
         return;

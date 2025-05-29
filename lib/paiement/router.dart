@@ -43,66 +43,54 @@ class PaymentRouter {
   PaymentRouter(this.ref);
 
   QRoute route() => QRoute(
-        name: "paiement",
-        path: PaymentRouter.root,
-        builder: () => main_page.PaymentMainPage(),
+    name: "paiement",
+    path: PaymentRouter.root,
+    builder: () => main_page.PaymentMainPage(),
+    middleware: [
+      AuthenticatedMiddleware(ref),
+      DeferredLoadingMiddleware(main_page.loadLibrary),
+    ],
+    children: [
+      QRoute(
+        path: PaymentRouter.stats,
+        builder: () => stats_page.StatsPage(),
+        middleware: [DeferredLoadingMiddleware(stats_page.loadLibrary)],
+      ),
+      QRoute(
+        path: PaymentRouter.devices,
+        builder: () => devices_page.DevicesPage(),
+        middleware: [DeferredLoadingMiddleware(devices_page.loadLibrary)],
+      ),
+      QRoute(
+        path: PaymentRouter.storeAdmin,
+        builder: () => store_admin_page.StoreAdminPage(),
+        middleware: [DeferredLoadingMiddleware(store_admin_page.loadLibrary)],
+      ),
+      QRoute(
+        path: PaymentRouter.admin,
+        builder: () => admin_page.AdminPage(),
         middleware: [
-          AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary),
+          DeferredLoadingMiddleware(admin_page.loadLibrary),
+          AdminMiddleware(ref, isPaymentAdminProvider),
         ],
         children: [
           QRoute(
-            path: PaymentRouter.stats,
-            builder: () => stats_page.StatsPage(),
-            middleware: [
-              DeferredLoadingMiddleware(stats_page.loadLibrary),
-            ],
-          ),
-          QRoute(
-            path: PaymentRouter.devices,
-            builder: () => devices_page.DevicesPage(),
-            middleware: [
-              DeferredLoadingMiddleware(devices_page.loadLibrary),
-            ],
-          ),
-          QRoute(
-            path: PaymentRouter.storeAdmin,
-            builder: () => store_admin_page.StoreAdminPage(),
-            middleware: [
-              DeferredLoadingMiddleware(store_admin_page.loadLibrary),
-            ],
-          ),
-          QRoute(
-            path: PaymentRouter.admin,
-            builder: () => admin_page.AdminPage(),
-            middleware: [
-              DeferredLoadingMiddleware(admin_page.loadLibrary),
-              AdminMiddleware(ref, isPaymentAdminProvider),
-            ],
-            children: [
-              QRoute(
-                path: PaymentRouter.addEditStore,
-                builder: () => add_edit_page.AddEditStorePage(),
-                middleware: [
-                  DeferredLoadingMiddleware(add_edit_page.loadLibrary),
-                ],
-              ),
-            ],
-          ),
-          QRoute(
-            path: PaymentRouter.storeStats,
-            builder: () => store_stats_page.StoreStatsPage(),
-            middleware: [
-              DeferredLoadingMiddleware(store_stats_page.loadLibrary),
-            ],
-          ),
-          QRoute(
-            path: PaymentRouter.fund,
-            builder: () => fund_page.WebViewExample(),
-            middleware: [
-              DeferredLoadingMiddleware(fund_page.loadLibrary),
-            ],
+            path: PaymentRouter.addEditStore,
+            builder: () => add_edit_page.AddEditStorePage(),
+            middleware: [DeferredLoadingMiddleware(add_edit_page.loadLibrary)],
           ),
         ],
-      );
+      ),
+      QRoute(
+        path: PaymentRouter.storeStats,
+        builder: () => store_stats_page.StoreStatsPage(),
+        middleware: [DeferredLoadingMiddleware(store_stats_page.loadLibrary)],
+      ),
+      QRoute(
+        path: PaymentRouter.fund,
+        builder: () => fund_page.WebViewExample(),
+        middleware: [DeferredLoadingMiddleware(fund_page.loadLibrary)],
+      ),
+    ],
+  );
 }

@@ -41,10 +41,12 @@ class Order {
       json['productsdetail'].map((x) => Product.fromJson(x)),
     );
     expanded = false;
-    productsDetail =
-        List<String>.from(products.map((element) => element.id).toList());
-    productsQuantity =
-        List<int>.from(products.map((element) => element.quantity).toList());
+    productsDetail = List<String>.from(
+      products.map((element) => element.id).toList(),
+    );
+    productsQuantity = List<int>.from(
+      products.map((element) => element.quantity).toList(),
+    );
     collectionSlot = apiStringToCollectionSlot(json['collection_slot']);
     user = SimpleUser.fromJson(json['user']);
     orderingDate = processDateFromAPI(json['ordering_date']);
@@ -85,9 +87,7 @@ class Order {
           ? List<String>.from(products.map((element) => element.id).toList())
           : productsDetail,
       productsQuantity: products != null
-          ? List<int>.from(
-              products.map((element) => element.quantity).toList(),
-            )
+          ? List<int>.from(products.map((element) => element.quantity).toList())
           : productsQuantity,
       deliveryId: deliveryId ?? this.deliveryId,
       products: products ?? this.products,

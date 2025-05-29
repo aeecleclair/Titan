@@ -36,8 +36,9 @@ class AdvertMainPage extends HookConsumerWidget {
           AsyncChild(
             value: advertList,
             builder: (context, advertData) {
-              final sortedAdvertData =
-                  advertData.sortedBy((element) => element.date).reversed;
+              final sortedAdvertData = advertData
+                  .sortedBy((element) => element.date)
+                  .reversed;
               final filteredSortedAdvertData = sortedAdvertData.where(
                 (advert) =>
                     selected
@@ -76,16 +77,12 @@ class AdvertMainPage extends HookConsumerWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   const AnnouncerBar(
                     useUserAnnouncers: false,
                     multipleSelect: true,
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   ...filteredSortedAdvertData.map(
                     (advert) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -102,9 +99,7 @@ class AdvertMainPage extends HookConsumerWidget {
               );
             },
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
         ],
       ),
     );

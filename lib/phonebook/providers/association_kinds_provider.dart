@@ -8,7 +8,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class AssociationKindsNotifier extends SingleNotifier<AssociationKinds> {
   final AssociationRepository associationRepository = AssociationRepository();
   AssociationKindsNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     associationRepository.setToken(token);
   }
 
@@ -21,12 +21,17 @@ class AssociationKindsNotifier extends SingleNotifier<AssociationKinds> {
   }
 }
 
-final associationKindsProvider = StateNotifierProvider<AssociationKindsNotifier,
-    AsyncValue<AssociationKinds>>((ref) {
-  final token = ref.watch(tokenProvider);
-  AssociationKindsNotifier notifier = AssociationKindsNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadAssociationKinds();
-  });
-  return notifier;
-});
+final associationKindsProvider =
+    StateNotifierProvider<
+      AssociationKindsNotifier,
+      AsyncValue<AssociationKinds>
+    >((ref) {
+      final token = ref.watch(tokenProvider);
+      AssociationKindsNotifier notifier = AssociationKindsNotifier(
+        token: token,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.loadAssociationKinds();
+      });
+      return notifier;
+    });

@@ -127,8 +127,10 @@ class OnGoingLoan extends HookConsumerWidget {
                           );
                           await loanNotifier.setLoan(newLoan);
                           tokenExpireWrapper(ref, () async {
-                            final value =
-                                await loanListNotifier.extendLoan(newLoan, i);
+                            final value = await loanListNotifier.extendLoan(
+                              newLoan,
+                              i,
+                            );
                             if (value) {
                               adminLoanListNotifier.setTData(
                                 loaner,
@@ -163,22 +165,19 @@ class OnGoingLoan extends HookConsumerWidget {
                               .toList();
                           final updatedItems = loanersItems[loaner]!
                               .maybeWhen<List<Item>>(
-                            data: (items) => items,
-                            orElse: () => [],
-                          )
-                              .map(
-                            (item) {
-                              if (loanItemsId.contains(item.id)) {
-                                return item.copyWith();
-                              }
-                              return item;
-                            },
-                          ).toList();
+                                data: (items) => items,
+                                orElse: () => [],
+                              )
+                              .map((item) {
+                                if (loanItemsId.contains(item.id)) {
+                                  return item.copyWith();
+                                }
+                                return item;
+                              })
+                              .toList();
                           final value = await loanListNotifier.returnLoan(e);
                           if (value) {
-                            QR.to(
-                              LoanRouter.root + LoanRouter.admin,
-                            );
+                            QR.to(LoanRouter.root + LoanRouter.admin);
                             loanersItemsNotifier.setTData(
                               loaner,
                               AsyncData(updatedItems),
@@ -204,9 +203,7 @@ class OnGoingLoan extends HookConsumerWidget {
                 },
                 onInfo: () {
                   loanNotifier.setLoan(e);
-                  QR.to(
-                    LoanRouter.root + LoanRouter.admin + LoanRouter.detail,
-                  );
+                  QR.to(LoanRouter.root + LoanRouter.admin + LoanRouter.detail);
                 },
               ),
             ),

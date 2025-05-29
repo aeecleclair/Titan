@@ -45,12 +45,15 @@ class AdminPage extends HookConsumerWidget {
           final itemListNotifier = ref.read(itemListProvider.notifier);
           final loanersItemsNotifier = ref.read(loanersItemsProvider.notifier);
           final loanListNotifier = ref.read(loanerLoanListProvider.notifier);
-          final historyLoanListNotifier =
-              ref.read(historyLoanerLoanListProvider.notifier);
-          final adminLoanListNotifier =
-              ref.read(adminLoanListProvider.notifier);
-          final adminHistoryLoanListNotifier =
-              ref.read(adminHistoryLoanListProvider.notifier);
+          final historyLoanListNotifier = ref.read(
+            historyLoanerLoanListProvider.notifier,
+          );
+          final adminLoanListNotifier = ref.read(
+            adminLoanListProvider.notifier,
+          );
+          final adminHistoryLoanListNotifier = ref.read(
+            adminHistoryLoanListProvider.notifier,
+          );
           itemListNotifier.loadItemList(loaner.id);
           loanersItemsNotifier.setTData(loaner, await itemListNotifier.copy());
           loanListNotifier.loadLoan(loaner.id);
@@ -70,10 +73,12 @@ class AdminPage extends HookConsumerWidget {
                 onTap: (key) async {
                   tokenExpireWrapper(ref, () async {
                     loanerIdNotifier.setId(key.id);
-                    final itemListNotifier =
-                        ref.read(itemListProvider.notifier);
-                    final loanersItemsNotifier =
-                        ref.read(loanersItemsProvider.notifier);
+                    final itemListNotifier = ref.read(
+                      itemListProvider.notifier,
+                    );
+                    final loanersItemsNotifier = ref.read(
+                      loanersItemsProvider.notifier,
+                    );
                     final listItems = loanersItems[key];
                     if (listItems == null) {
                       loanersItemsNotifier.autoLoadList(
@@ -92,10 +97,12 @@ class AdminPage extends HookConsumerWidget {
                         }
                       });
                     }
-                    final loanListNotifier =
-                        ref.read(loanerLoanListProvider.notifier);
-                    final adminLoanListNotifier =
-                        ref.read(adminLoanListProvider.notifier);
+                    final loanListNotifier = ref.read(
+                      loanerLoanListProvider.notifier,
+                    );
+                    final adminLoanListNotifier = ref.read(
+                      adminLoanListProvider.notifier,
+                    );
                     final listAdminItems = adminLoanList[key];
                     if (listAdminItems == null) {
                       adminLoanListNotifier.autoLoadList(
@@ -115,10 +122,12 @@ class AdminPage extends HookConsumerWidget {
                       });
                     }
 
-                    final historyLoanListNotifier =
-                        ref.read(historyLoanerLoanListProvider.notifier);
-                    final adminHistoryLoanListNotifier =
-                        ref.read(adminHistoryLoanListProvider.notifier);
+                    final historyLoanListNotifier = ref.read(
+                      historyLoanerLoanListProvider.notifier,
+                    );
+                    final adminHistoryLoanListNotifier = ref.read(
+                      adminHistoryLoanListProvider.notifier,
+                    );
                     final listAdminHistoryItems = adminHistoryLoanList[key];
                     if (listAdminHistoryItems == null) {
                       adminHistoryLoanListNotifier.autoLoadList(
@@ -127,8 +136,9 @@ class AdminPage extends HookConsumerWidget {
                         (key) => historyLoanListNotifier.loadLoan(key.id),
                       );
                     } else {
-                      listAdminHistoryItems
-                          .whenData((adminHistoryLoanList) async {
+                      listAdminHistoryItems.whenData((
+                        adminHistoryLoanList,
+                      ) async {
                         if (adminHistoryLoanList.isEmpty) {
                           adminHistoryLoanListNotifier.autoLoadList(
                             ref,

@@ -15,8 +15,9 @@ class EndNotifier extends StateNotifier<String> {
     state = processDate(
       DateTime.parse(processDateBack(start)).add(
         Duration(
-          days:
-              selected.map((item) => item.suggestedLendingDuration).reduce(min),
+          days: selected
+              .map((item) => item.suggestedLendingDuration)
+              .reduce(min),
         ),
       ),
     );

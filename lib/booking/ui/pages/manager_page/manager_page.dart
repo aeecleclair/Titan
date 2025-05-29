@@ -20,9 +20,7 @@ class ManagerPage extends HookConsumerWidget {
         confirmedBookings = [],
         canceledBookings = [];
     bookings.maybeWhen(
-      data: (
-        bookings,
-      ) {
+      data: (bookings) {
         for (Booking b in bookings) {
           switch (b.decision) {
             case Decision.approved:

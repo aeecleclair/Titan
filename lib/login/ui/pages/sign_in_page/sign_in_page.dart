@@ -58,19 +58,21 @@ class SignIn extends HookConsumerWidget {
                         child: Column(
                           children: [
                             Expanded(
-                              child: Image(
-                                image: AssetImage(getTitanLogo()),
-                              ),
+                              child: Image(image: AssetImage(getTitanLogo())),
                             ),
                             SignInUpBar(
-                              isLoading: ref.watch(loadingProvider).maybeWhen(
+                              isLoading: ref
+                                  .watch(loadingProvider)
+                                  .maybeWhen(
                                     data: (data) => data,
                                     orElse: () => false,
                                   ),
                               label: LoginTextConstants.signIn,
                               onPressed: () async {
                                 await authNotifier.getTokenFromRequest();
-                                ref.watch(authTokenProvider).when(
+                                ref
+                                    .watch(authTokenProvider)
+                                    .when(
                                       data: (token) {
                                         QR.to(pathForwarding.path);
                                       },
@@ -94,9 +96,7 @@ class SignIn extends HookConsumerWidget {
                           ],
                         ),
                       ),
-                      const Spacer(
-                        flex: 1,
-                      ),
+                      const Spacer(flex: 1),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -104,8 +104,12 @@ class SignIn extends HookConsumerWidget {
                             height: 40,
                             alignment: Alignment.centerLeft,
                             child: InkWell(
-                              splashColor:
-                                  const Color.fromRGBO(255, 255, 255, 1),
+                              splashColor: const Color.fromRGBO(
+                                255,
+                                255,
+                                255,
+                                1,
+                              ),
                               onTap: () {
                                 QR.to(LoginRouter.createAccount);
                               },
@@ -124,8 +128,12 @@ class SignIn extends HookConsumerWidget {
                             height: 40,
                             alignment: Alignment.centerLeft,
                             child: InkWell(
-                              splashColor:
-                                  const Color.fromRGBO(255, 255, 255, 1),
+                              splashColor: const Color.fromRGBO(
+                                255,
+                                255,
+                                255,
+                                1,
+                              ),
                               onTap: () {
                                 QR.to(LoginRouter.forgotPassword);
                               },

@@ -77,9 +77,7 @@ class DeviceDialogBox extends StatelessWidget {
                       Text(
                         descriptions,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 16.0,
-                        ),
+                        style: const TextStyle(fontSize: 16.0),
                       ),
                       const SizedBox(height: 30.0),
                       Row(
@@ -92,7 +90,8 @@ class DeviceDialogBox extends StatelessWidget {
                                 Navigator.of(context).pop();
                               },
                               child: Container(
-                                width: MediaQuery.of(context).size.width -
+                                width:
+                                    MediaQuery.of(context).size.width -
                                     4 * Consts.padding,
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 16,
@@ -100,17 +99,15 @@ class DeviceDialogBox extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   gradient: const LinearGradient(
-                                    colors: [
-                                      Colors.black87,
-                                      Colors.black,
-                                    ],
+                                    colors: [Colors.black87, Colors.black],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color:
-                                          Colors.black.withValues(alpha: 0.3),
+                                      color: Colors.black.withValues(
+                                        alpha: 0.3,
+                                      ),
                                       blurRadius: 2.0,
                                       offset: const Offset(1.0, 2.0),
                                     ),
@@ -141,10 +138,7 @@ class DeviceDialogBox extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: const LinearGradient(
-                        colors: [
-                          Consts.redGradient1,
-                          Consts.redGradient2,
-                        ],
+                        colors: [Consts.redGradient1, Consts.redGradient2],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),

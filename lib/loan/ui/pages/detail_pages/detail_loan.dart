@@ -65,9 +65,7 @@ class DetailLoanPage extends HookConsumerWidget {
                               const SizedBox(height: 30),
                               Text(
                                 loan.notes,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                ),
+                                style: const TextStyle(fontSize: 18),
                               ),
                             ],
                           ),
@@ -78,9 +76,8 @@ class DetailLoanPage extends HookConsumerWidget {
                                 child: Wrap(
                                   children: loan.itemsQuantity
                                       .map(
-                                        (itemQty) => ItemCardInLoan(
-                                          itemQty: itemQty,
-                                        ),
+                                        (itemQty) =>
+                                            ItemCardInLoan(itemQty: itemQty),
                                       )
                                       .toList(),
                                 ),
@@ -94,12 +91,7 @@ class DetailLoanPage extends HookConsumerWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Center(
-                child: LoanCard(
-                  loan: loan,
-                  isDetail: true,
-                ),
-              ),
+              child: Center(child: LoanCard(loan: loan, isDetail: true)),
             ),
           ],
         ),

@@ -22,11 +22,13 @@ class HistoryLoan extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final loaner = ref.watch(loanerProvider);
     final loanNotifier = ref.read(loanProvider.notifier);
-    final historyLoanListNotifier =
-        ref.watch(historyLoanerLoanListProvider.notifier);
+    final historyLoanListNotifier = ref.watch(
+      historyLoanerLoanListProvider.notifier,
+    );
     final loanList = ref.watch(historyLoanerLoanListProvider);
-    final adminHistoryLoanListNotifier =
-        ref.watch(adminHistoryLoanListProvider.notifier);
+    final adminHistoryLoanListNotifier = ref.watch(
+      adminHistoryLoanListProvider.notifier,
+    );
     final adminLoanList = ref.watch(adminHistoryLoanListProvider);
     final focus = ref.watch(loanFocusProvider);
     final focusNode = useFocusNode();
@@ -67,9 +69,7 @@ class HistoryLoan extends HookConsumerWidget {
                 loan: loan,
                 onInfo: () {
                   loanNotifier.setLoan(loan);
-                  QR.to(
-                    LoanRouter.root + LoanRouter.admin + LoanRouter.detail,
-                  );
+                  QR.to(LoanRouter.root + LoanRouter.admin + LoanRouter.detail);
                 },
                 isHistory: true,
               ),

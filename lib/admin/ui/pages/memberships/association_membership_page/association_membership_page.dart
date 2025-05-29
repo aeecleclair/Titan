@@ -25,14 +25,18 @@ class AssociationMembershipsPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final associationsMemberships =
-        ref.watch(allAssociationMembershipListProvider);
-    final associationMembershipsNotifier =
-        ref.watch(allAssociationMembershipListProvider.notifier);
-    final associationMembershipNotifier =
-        ref.watch(associationMembershipProvider.notifier);
-    final associationMembershipMembersNotifier =
-        ref.watch(associationMembershipMembersProvider.notifier);
+    final associationsMemberships = ref.watch(
+      allAssociationMembershipListProvider,
+    );
+    final associationMembershipsNotifier = ref.watch(
+      allAssociationMembershipListProvider.notifier,
+    );
+    final associationMembershipNotifier = ref.watch(
+      associationMembershipProvider.notifier,
+    );
+    final associationMembershipMembersNotifier = ref.watch(
+      associationMembershipMembersProvider.notifier,
+    );
     final groups = ref.watch(allGroupList);
 
     final nameController = TextEditingController();
@@ -88,13 +92,15 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                         final value =
                                             await associationMembershipsNotifier
                                                 .createAssociationMembership(
-                                          AssociationMembership.empty()
-                                              .copyWith(
-                                            managerGroupId:
-                                                groupIdController.text,
-                                            name: nameController.text,
-                                          ),
-                                        );
+                                                  AssociationMembership.empty()
+                                                      .copyWith(
+                                                        managerGroupId:
+                                                            groupIdController
+                                                                .text,
+                                                        name:
+                                                            nameController.text,
+                                                      ),
+                                                );
                                         if (value) {
                                           displayToastWithContext(
                                             TypeMsg.msg,
@@ -131,12 +137,12 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                               onEdit: () {
                                 associationMembershipMembersNotifier
                                     .loadAssociationMembershipMembers(
-                                  associationMembership.id,
-                                );
+                                      associationMembership.id,
+                                    );
                                 associationMembershipNotifier
                                     .setAssociationMembership(
-                                  associationMembership,
-                                );
+                                      associationMembership,
+                                    );
                                 QR.to(
                                   AdminRouter.root +
                                       AdminRouter.associationMemberships +
@@ -156,8 +162,8 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                           final value =
                                               await associationMembershipsNotifier
                                                   .deleteAssociationMembership(
-                                            associationMembership,
-                                          );
+                                                    associationMembership,
+                                                  );
                                           if (value) {
                                             displayToastWithContext(
                                               TypeMsg.msg,

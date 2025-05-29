@@ -46,8 +46,9 @@ class CreationPage extends HookConsumerWidget {
     final packTicketListNotifier = ref.read(packTicketListProvider.notifier);
     final prizeListNotifier = ref.read(prizeListProvider.notifier);
     final prizeList = ref.watch(prizeListProvider);
-    final winningTicketListNotifier =
-        ref.watch(winningTicketListProvider.notifier);
+    final winningTicketListNotifier = ref.watch(
+      winningTicketListProvider.notifier,
+    );
 
     final name = useTextEditingController(text: raffle.name);
     final ImagePicker picker = ImagePicker();
@@ -78,9 +79,7 @@ class CreationPage extends HookConsumerWidget {
         },
         child: Column(
           children: [
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             const Padding(
               padding: EdgeInsets.only(top: 10, left: 30, right: 30),
               child: Align(
@@ -215,10 +214,7 @@ class CreationPage extends HookConsumerWidget {
                     raffleList.when(
                       data: (list) async {
                         if (logo.value != null) {
-                          raffleLogoNotifier.updateLogo(
-                            raffle.id,
-                            logo.value!,
-                          );
+                          raffleLogoNotifier.updateLogo(raffle.id, logo.value!);
                           QR.to(RaffleRouter.root + RaffleRouter.detail);
                         }
                       },
@@ -230,15 +226,11 @@ class CreationPage extends HookConsumerWidget {
                 child: const Text(RaffleTextConstants.edit),
               ),
             ),
-            const SizedBox(
-              height: 40,
-            ),
+            const SizedBox(height: 40),
             raffle.raffleStatusType != RaffleStatusType.lock
                 ? const TicketHandler()
                 : const WinningTicketHandler(),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             const PrizeHandler(),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -265,11 +257,13 @@ class CreationPage extends HookConsumerWidget {
                           await showDialog(
                             context: context,
                             builder: (context) => CustomDialogBox(
-                              title: raffle.raffleStatusType ==
+                              title:
+                                  raffle.raffleStatusType ==
                                       RaffleStatusType.creation
                                   ? RaffleTextConstants.openRaffle
                                   : RaffleTextConstants.closeRaffle,
-                              descriptions: raffle.raffleStatusType ==
+                              descriptions:
+                                  raffle.raffleStatusType ==
                                       RaffleStatusType.creation
                                   ? RaffleTextConstants.openRaffleDescription
                                   : RaffleTextConstants.closeRaffleDescription,
@@ -294,8 +288,9 @@ class CreationPage extends HookConsumerWidget {
                                     prizeList.whenData((prizes) {
                                       for (var prize in prizes) {
                                         if (prize.raffleId == raffle.id) {
-                                          winningTicketListNotifier
-                                              .drawPrize(prize);
+                                          winningTicketListNotifier.drawPrize(
+                                            prize,
+                                          );
                                         }
                                       }
                                     });
@@ -381,9 +376,7 @@ class CreationPage extends HookConsumerWidget {
                       ],
                     ),
                   ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
           ],
         ),
       ),

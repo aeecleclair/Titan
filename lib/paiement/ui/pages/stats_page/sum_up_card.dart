@@ -51,9 +51,7 @@ class SumUpCard extends StatelessWidget {
                 fontSize: 13,
               ),
             ),
-            const SizedBox(
-              height: 3,
-            ),
+            const SizedBox(height: 3),
             Text(
               amount,
               style: const TextStyle(

@@ -7,7 +7,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class EventListNotifier extends ListNotifier<Event> {
   final EventRepository eventRepository;
   EventListNotifier({required this.eventRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Event>>> loadEventList() async {
     return await loadList(eventRepository.getAllEvent);
@@ -47,11 +47,12 @@ class EventListNotifier extends ListNotifier<Event> {
 
 final eventListProvider =
     StateNotifierProvider<EventListNotifier, AsyncValue<List<Event>>>((ref) {
-  final eventRepository = ref.watch(eventRepositoryProvider);
-  EventListNotifier notifier =
-      EventListNotifier(eventRepository: eventRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadEventList();
-  });
-  return notifier;
-});
+      final eventRepository = ref.watch(eventRepositoryProvider);
+      EventListNotifier notifier = EventListNotifier(
+        eventRepository: eventRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.loadEventList();
+      });
+      return notifier;
+    });

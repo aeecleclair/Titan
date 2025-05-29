@@ -84,8 +84,12 @@ class AddEditContenderPage extends HookConsumerWidget {
             children: [
               const AlignLeftText(
                 VoteTextConstants.addPretendance,
-                padding:
-                    EdgeInsets.only(top: 40, left: 30, right: 30, bottom: 50),
+                padding: EdgeInsets.only(
+                  top: 40,
+                  left: 30,
+                  right: 30,
+                  bottom: 50,
+                ),
                 color: Colors.grey,
               ),
               Center(
@@ -141,10 +145,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                             ColorConstants.gradient1,
                             ColorConstants.gradient2,
                           ],
-                          child: HeroIcon(
-                            HeroIcons.photo,
-                            color: Colors.white,
-                          ),
+                          child: HeroIcon(HeroIcons.photo, color: Colors.white),
                         ),
                       ),
                     ),
@@ -162,8 +163,9 @@ class AddEditContenderPage extends HookConsumerWidget {
               const SizedBox(height: 50),
               HorizontalListView.builder(
                 height: 40,
-                items:
-                    ListType.values.where((e) => e != ListType.blank).toList(),
+                items: ListType.values
+                    .where((e) => e != ListType.blank)
+                    .toList(),
                 itemBuilder: (context, e, i) => SectionChip(
                   label: capitalize(e.toString().split('.').last),
                   selected: listType.value == e,
@@ -224,8 +226,9 @@ class AddEditContenderPage extends HookConsumerWidget {
                                   showNotifier.setId(true);
                                   tokenExpireWrapper(ref, () async {
                                     if (queryController.text.isNotEmpty) {
-                                      await usersNotifier
-                                          .filterUsers(queryController.text);
+                                      await usersNotifier.filterUsers(
+                                        queryController.text,
+                                      );
                                     } else {
                                       usersNotifier.clear();
                                     }
@@ -254,13 +257,13 @@ class AddEditContenderPage extends HookConsumerWidget {
                                     return;
                                   }
                                   if (addMemberKey.currentState!.validate()) {
-                                    final value =
-                                        await membersNotifier.addMember(
-                                      Member.fromSimpleUser(
-                                        member.value,
-                                        role.text,
-                                      ),
-                                    );
+                                    final value = await membersNotifier
+                                        .addMember(
+                                          Member.fromSimpleUser(
+                                            member.value,
+                                            role.text,
+                                          ),
+                                        );
                                     if (value) {
                                       role.text = '';
                                       member.value = SimpleUser.empty();
@@ -275,16 +278,19 @@ class AddEditContenderPage extends HookConsumerWidget {
                                 },
                                 child: Container(
                                   width: double.infinity,
-                                  padding:
-                                      const EdgeInsets.only(top: 8, bottom: 12),
+                                  padding: const EdgeInsets.only(
+                                    top: 8,
+                                    bottom: 12,
+                                  ),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     color: Colors.black,
                                     borderRadius: BorderRadius.circular(10),
                                     boxShadow: [
                                       BoxShadow(
-                                        color:
-                                            Colors.grey.withValues(alpha: 0.5),
+                                        color: Colors.grey.withValues(
+                                          alpha: 0.5,
+                                        ),
                                         spreadRadius: 5,
                                         blurRadius: 10,
                                         offset: const Offset(
@@ -360,10 +366,12 @@ class AddEditContenderPage extends HookConsumerWidget {
                           program: program.text,
                         );
                         final value = isEdit
-                            ? await contenderListNotifier
-                                .updateContender(newContender)
-                            : await contenderListNotifier
-                                .addContender(newContender);
+                            ? await contenderListNotifier.updateContender(
+                                newContender,
+                              )
+                            : await contenderListNotifier.addContender(
+                                newContender,
+                              );
                         if (value) {
                           QR.back();
                           if (isEdit) {

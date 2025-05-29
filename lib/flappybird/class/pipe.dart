@@ -22,10 +22,7 @@ class Pipe {
   static Pipe random({required double position}) {
     final random = Random();
     final randomHeight = random.nextInt(300).toDouble() + 50;
-    return Pipe(
-      position: position,
-      height: randomHeight,
-    );
+    return Pipe(position: position, height: randomHeight);
   }
 
   @override

@@ -31,10 +31,12 @@ class EditGroupPage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final name = useTextEditingController();
     final description = useTextEditingController();
-    final simpleGroupsGroupsNotifier =
-        ref.watch(simpleGroupsGroupsProvider.notifier);
-    final simpleGroupsGroups =
-        ref.watch(simpleGroupsGroupsProvider.select((value) => value[groupId]));
+    final simpleGroupsGroupsNotifier = ref.watch(
+      simpleGroupsGroupsProvider.notifier,
+    );
+    final simpleGroupsGroups = ref.watch(
+      simpleGroupsGroupsProvider.select((value) => value[groupId]),
+    );
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -49,11 +51,9 @@ class EditGroupPage extends HookConsumerWidget {
             group: simpleGroupsGroups,
             notifier: simpleGroupsGroupsNotifier,
             mapKey: groupId,
-            loader: (groupId) async =>
-                (await groupNotifier.loadGroup(groupId)).maybeWhen(
-              data: (groups) => groups,
-              orElse: () => Group.empty(),
-            ),
+            loader: (groupId) async => (await groupNotifier.loadGroup(
+              groupId,
+            )).maybeWhen(data: (groups) => groups, orElse: () => Group.empty()),
             dataBuilder: (context, groups) {
               final group = groups.first;
               name.text = group.name;
@@ -104,8 +104,9 @@ class EditGroupPage extends HookConsumerWidget {
                                 description: description.text,
                               );
                               groupNotifier.setGroup(newGroup);
-                              final value = await groupListNotifier
-                                  .updateGroup(newGroup.toSimpleGroup());
+                              final value = await groupListNotifier.updateGroup(
+                                newGroup.toSimpleGroup(),
+                              );
                               if (value) {
                                 QR.back();
                                 displayToastWithContext(

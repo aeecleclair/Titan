@@ -28,18 +28,23 @@ class FirebaseTokenExpirationNotifier
   }
 
   void saveDate(String userId, DateTime expiration) async {
-    final newFirebaseTokenExpiration =
-        FirebaseTokenExpiration(userId, expiration);
+    final newFirebaseTokenExpiration = FirebaseTokenExpiration(
+      userId,
+      expiration,
+    );
     final prefs = await SharedPreferences.getInstance();
     prefs.setString(dbDate, json.encode(newFirebaseTokenExpiration.toJson()));
     state = newFirebaseTokenExpiration;
   }
 }
 
-final firebaseTokenExpirationProvider = StateNotifierProvider<
-    FirebaseTokenExpirationNotifier, FirebaseTokenExpiration>((ref) {
-  FirebaseTokenExpirationNotifier firebaseTokenExpirationNotifier =
-      FirebaseTokenExpirationNotifier();
-  firebaseTokenExpirationNotifier.getSavedDate();
-  return firebaseTokenExpirationNotifier;
-});
+final firebaseTokenExpirationProvider =
+    StateNotifierProvider<
+      FirebaseTokenExpirationNotifier,
+      FirebaseTokenExpiration
+    >((ref) {
+      FirebaseTokenExpirationNotifier firebaseTokenExpirationNotifier =
+          FirebaseTokenExpirationNotifier();
+      firebaseTokenExpirationNotifier.getSavedDate();
+      return firebaseTokenExpirationNotifier;
+    });
