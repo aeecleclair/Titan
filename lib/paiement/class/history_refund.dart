@@ -1,3 +1,5 @@
+import 'package:myecl/tools/functions.dart';
+
 class HistoryRefund {
   final int total;
   final DateTime creation;
@@ -9,11 +11,11 @@ class HistoryRefund {
 
   HistoryRefund.fromJson(Map<String, dynamic> json)
       : total = json['total'],
-        creation = DateTime.parse(json['creation']);
+        creation = processDateFromAPI(json['creation']);
 
   Map<String, dynamic> toJson() => {
         'total': total,
-        'creation': creation.toIso8601String(),
+        'creation': processDateToAPI(creation),
       };
 
   @override
