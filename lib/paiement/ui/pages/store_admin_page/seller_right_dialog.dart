@@ -85,7 +85,8 @@ class SellerRightDialog extends StatelessWidget {
                             },
                             waitingColor: Colors.black,
                             builder: (child) => Container(
-                              width: 100,
+                              width: MediaQuery.of(context).size.width -
+                                  4 * Consts.padding,
                               padding: const EdgeInsets.symmetric(
                                 vertical: 16,
                               ),

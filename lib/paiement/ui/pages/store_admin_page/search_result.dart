@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/class/seller.dart';
 import 'package:myecl/paiement/providers/new_admin_provider.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
+import 'package:myecl/paiement/providers/seller_rights_list_providder.dart';
 import 'package:myecl/paiement/providers/store_sellers_list_provider.dart';
+import 'package:myecl/paiement/ui/pages/store_admin_page/right_check_box.dart';
 import 'package:myecl/paiement/ui/pages/store_admin_page/seller_right_dialog.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
@@ -34,11 +35,8 @@ class SearchResult extends HookConsumerWidget {
     final newAdminNotifier = ref.watch(newAdminProvider.notifier);
     final sellerStoreNotifier =
         ref.watch(sellerStoreProvider(store.id).notifier);
-
-    final canBank = useState(true);
-    final canSeeHistory = useState(false);
-    final canCancel = useState(false);
-    final canManageSellers = useState(false);
+    final sellerRightsListNotifier =
+        ref.watch(sellerRightsListProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -48,71 +46,66 @@ class SearchResult extends HookConsumerWidget {
       await showDialog(
         context: context,
         builder: (context) {
-          return SellerRightDialog(
-            title: "Droit du vendeur",
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CheckboxListTile(
-                  title: const Text("Peut gérer la banque"),
-                  value: canBank.value,
-                  onChanged: (value) {
-                    canBank.value = value ?? true;
-                  },
+          return Consumer(
+            builder: (context, ref, _) {
+              final sellerRightsList = ref.watch(sellerRightsListProvider);
+              return SellerRightDialog(
+                title: "Droit du vendeur",
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    RightCheckBox(
+                      title: "Peut gérer la banque",
+                      index: 0,
+                    ),
+                    RightCheckBox(
+                      title: "Peut voir l'historique",
+                      index: 1,
+                    ),
+                    RightCheckBox(
+                      title: "Peut annuler des transactions",
+                      index: 2,
+                    ),
+                    RightCheckBox(
+                      title: "Peut gérer les vendeurs",
+                      index: 3,
+                    ),
+                  ],
                 ),
-                CheckboxListTile(
-                  title: const Text("Peut voir l'historique"),
-                  value: canSeeHistory.value,
-                  onChanged: (value) {
-                    canSeeHistory.value = value ?? false;
-                  },
-                ),
-                CheckboxListTile(
-                  title: const Text("Peut annuler des transactions"),
-                  value: canCancel.value,
-                  onChanged: (value) {
-                    canCancel.value = value ?? false;
-                  },
-                ),
-                CheckboxListTile(
-                  title: const Text("Peut gérer les vendeurs"),
-                  value: canManageSellers.value,
-                  onChanged: (value) {
-                    canManageSellers.value = value ?? false;
-                  },
-                ),
-              ],
-            ),
-            onYes: () async {
-              await tokenExpireWrapper(ref, () async {
-                newAdminNotifier.updateNewAdmin(simpleUser);
-                queryController.text = simpleUser.getName();
-                Seller seller = Seller(
-                  storeId: store.id,
-                  userId: simpleUser.id,
-                  user: simpleUser,
-                  canBank: canBank.value,
-                  canSeeHistory: canSeeHistory.value,
-                  canCancel: canCancel.value,
-                  canManageSellers: canManageSellers.value,
-                );
-                final value =
-                    await sellerStoreNotifier.createStoreSeller(seller);
-                if (value) {
-                  queryController.clear();
-                  usersNotifier.clear();
-                  displayToastWithContext(
-                    TypeMsg.msg,
-                    "Vendeur ajouté",
-                  );
-                } else {
-                  displayToastWithContext(
-                    TypeMsg.error,
-                    "Erreur lors de l'ajout",
-                  );
-                }
-              });
-              onChoose();
+                onYes: () async {
+                  await tokenExpireWrapper(ref, () async {
+                    newAdminNotifier.updateNewAdmin(simpleUser);
+                    queryController.text = simpleUser.getName();
+                    Seller seller = Seller(
+                      storeId: store.id,
+                      userId: simpleUser.id,
+                      user: simpleUser,
+                      canBank: sellerRightsList[0],
+                      canSeeHistory: sellerRightsList[1],
+                      canCancel: sellerRightsList[2],
+                      canManageSellers: sellerRightsList[3],
+                    );
+                    final value =
+                        await sellerStoreNotifier.createStoreSeller(seller);
+                    if (value) {
+                      queryController.clear();
+                      usersNotifier.clear();
+                      sellerRightsListNotifier.clearRights();
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        "Vendeur ajouté",
+                      );
+                      Navigator.of(context).pop();
+                    } else {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        "Erreur lors de l'ajout",
+                      );
+                    }
+                  });
+                  onChoose();
+                },
+              );
             },
           );
         },
@@ -145,7 +138,7 @@ class SearchResult extends HookConsumerWidget {
                                 : FontWeight.normal,
                           ),
                         ),
-                        const SizedBox(width: 10),
+                        const Spacer(),
                         WaitingButton(
                           onTap: () async {
                             await handleUserSelected(simpleUser);
