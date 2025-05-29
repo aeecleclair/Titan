@@ -13,8 +13,11 @@ import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 class SellerRightCard extends ConsumerWidget {
   final Seller me;
   final Seller storeSeller;
-  const SellerRightCard(
-      {super.key, required this.me, required this.storeSeller});
+  const SellerRightCard({
+    super.key,
+    required this.me,
+    required this.storeSeller,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

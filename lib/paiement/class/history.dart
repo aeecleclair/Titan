@@ -1,3 +1,4 @@
+import 'package:myecl/paiement/class/history_refund.dart';
 import 'package:myecl/tools/functions.dart';
 
 enum HistoryType { transfer, received, given, refundCredited, refundDebited }
@@ -22,6 +23,7 @@ class History {
   final int total;
   final DateTime creation;
   final TransactionStatus status;
+  final HistoryRefund? refund;
 
   History({
     required this.id,
@@ -30,39 +32,65 @@ class History {
     required this.total,
     required this.creation,
     required this.status,
+    this.refund,
   });
 
   History.fromJson(Map<String, dynamic> json)
-    : id = json['id'],
-      type = HistoryType.values.firstWhere(
-        (e) => historyTypeToString(e) == json['type'],
-      ),
-      otherWalletName = json['other_wallet_name'],
-      total = json['total'],
-      creation = processDateFromAPI(json['creation']),
-      status = TransactionStatus.values.firstWhere(
-        (e) => e.toString().split('.').last == json['status'],
-      );
+      : id = json['id'],
+        type = HistoryType.values.firstWhere(
+          (e) => historyTypeToString(e) == json['type'],
+        ),
+        otherWalletName = json['other_wallet_name'],
+        total = json['total'],
+        creation = processDateFromAPI(json['creation']),
+        status = TransactionStatus.values.firstWhere(
+          (e) => e.toString().split('.').last == json['status'],
+        ),
+        refund = json['refund'] != null
+            ? HistoryRefund.fromJson(json['refund'])
+            : null;
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'type': historyTypeToString(type),
-    'other_wallet_name': otherWalletName,
-    'total': total,
-    'creation': processDateToAPI(creation),
-    'status': status.toString().split('.').last,
-  };
+        'id': id,
+        'type': historyTypeToString(type),
+        'other_wallet_name': otherWalletName,
+        'total': total,
+        'creation': processDateToAPI(creation),
+        'status': status.toString().split('.').last,
+        'refund': refund?.toJson(),
+      };
 
   @override
   String toString() {
-    return 'History {id: $id, type: $type, otherWalletName: $otherWalletName, total: $total, creation: $creation, status: $status}';
+    return 'History {id: $id, type: $type, otherWalletName: $otherWalletName, total: $total, creation: $creation, status: $status, refund: $refund}';
   }
 
   History.empty()
-    : id = '',
-      type = HistoryType.transfer,
-      otherWalletName = '',
-      total = 0,
-      creation = DateTime.now(),
-      status = TransactionStatus.confirmed;
+      : id = '',
+        type = HistoryType.transfer,
+        otherWalletName = '',
+        total = 0,
+        creation = DateTime.now(),
+        status = TransactionStatus.confirmed,
+        refund = null;
+
+  History copyWith({
+    String? id,
+    HistoryType? type,
+    String? otherWalletName,
+    int? total,
+    DateTime? creation,
+    TransactionStatus? status,
+    HistoryRefund? refund,
+  }) {
+    return History(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      otherWalletName: otherWalletName ?? this.otherWalletName,
+      total: total ?? this.total,
+      creation: creation ?? this.creation,
+      status: status ?? this.status,
+      refund: refund ?? this.refund,
+    );
+  }
 }
