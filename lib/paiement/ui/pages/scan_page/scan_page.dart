@@ -30,74 +30,91 @@ class ScanPage extends HookConsumerWidget {
     final formatter = NumberFormat("#,##0.00", "fr_FR");
     final transactionNotifier = ref.watch(transactionProvider.notifier);
     final ongoingTransaction = ref.watch(ongoingTransactionProvider);
-    final ongoingTransactionNotifier = ref.watch(
-      ongoingTransactionProvider.notifier,
-    );
+    final ongoingTransactionNotifier =
+        ref.watch(ongoingTransactionProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
-    final opacity = useAnimationController(duration: const Duration(seconds: 1))
-      ..repeat(reverse: true);
+    final opacity = useAnimationController(
+      duration: const Duration(seconds: 1),
+    )..repeat(reverse: true);
     return Stack(
       children: [
         const Scanner(),
-        if (store.structure.associationMembership.id != '')
-          Positioned(
-            top: 10,
-            left: 20,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width - 40,
-              child: Row(
-                children: [
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {
-                      bypassNotifier.setBypass(!bypass);
-                    },
-                    child: Row(
-                      children: [
-                        Checkbox(
-                          value: !bypass,
-                          checkColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          side: const BorderSide(
-                            color: Colors.white,
-                            width: 1.5,
-                          ),
-                          activeColor: Colors.white,
-                          onChanged: (value) {
-                            bypassNotifier.setBypass(!bypass);
-                          },
+        store.structure.associationMembership.id != ''
+            ? Positioned(
+                top: 10,
+                left: 20,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width - 40,
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          bypassNotifier.setBypass(!bypass);
+                        },
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              value: !bypass,
+                              checkColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              side: const BorderSide(
+                                color: Colors.white,
+                                width: 1.5,
+                              ),
+                              activeColor: Colors.white,
+                              onChanged: (value) {
+                                bypassNotifier.setBypass(!bypass);
+                              },
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              bypass
+                                  ? "Pas d'adhésion obligatoire"
+                                  : "Limité à ${store.structure.associationMembership.name}",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(width: 5),
-                        Text(
-                          bypass
-                              ? "Pas d'adhésion obligatoire"
-                              : "Limité à ${store.structure.associationMembership.name}",
-                          style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const HeroIcon(
+                          HeroIcons.xMark,
+                          size: 20,
+                          color: Colors.white,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: const HeroIcon(
-                      HeroIcons.xMark,
-                      size: 20,
-                      color: Colors.white,
-                    ),
+                ),
+              )
+            : Positioned(
+                top: 20,
+                right: 20,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const HeroIcon(
+                    HeroIcons.xMark,
+                    size: 20,
+                    color: Colors.white,
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
         Column(
           children: [
             Expanded(
@@ -180,7 +197,9 @@ class ScanPage extends HookConsumerWidget {
               ),
             ),
             // Qr code scanning zone
-            SizedBox(height: MediaQuery.of(context).size.width * 0.8),
+            SizedBox(
+              height: MediaQuery.of(context).size.width * 0.8,
+            ),
             Expanded(
               child: Column(
                 children: [
@@ -215,8 +234,8 @@ class ScanPage extends HookConsumerWidget {
                                           final value =
                                               await transactionNotifier
                                                   .cancelTransaction(
-                                                    transaction.id,
-                                                  );
+                                            transaction.id,
+                                          );
                                           value.when(
                                             data: (value) {
                                               if (value) {
