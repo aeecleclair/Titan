@@ -3,11 +3,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:myecl/paiement/providers/barcode_provider.dart';
 import 'package:myecl/paiement/providers/bypass_provider.dart';
+import 'package:myecl/paiement/providers/last_time_scanned.dart';
 import 'package:myecl/paiement/providers/ongoing_transaction.dart';
 import 'package:myecl/paiement/providers/scan_provider.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
@@ -25,9 +25,6 @@ class Scanner extends StatefulHookConsumerWidget {
 
 class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
   final controller = MobileScannerController(autoStart: false);
-
-  final color = useState<Color>(Colors.white);
-  final lastTimeScanned = useState<DateTime?>(null);
 
   StreamSubscription<Object?>? _subscription;
 
@@ -54,12 +51,14 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
   }
 
   void _handleBarcode(BarcodeCapture barcodes) async {
-    if (lastTimeScanned.value != null &&
-        DateTime.now().difference(lastTimeScanned.value!) <
+    final lastTimeScanned = ref.watch(lastTimeScannedProvider);
+    final lastTimeScannedNotifier = ref.read(lastTimeScannedProvider.notifier);
+    if (lastTimeScanned != null &&
+        DateTime.now().difference(lastTimeScanned) <
             const Duration(seconds: 2)) {
       return;
     }
-    lastTimeScanned.value = DateTime.now();
+    lastTimeScannedNotifier.updateLastTimeScanned(DateTime.now());
     final bypass = ref.watch(bypassProvider);
     final barcode = ref.watch(barcodeProvider);
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
@@ -80,16 +79,12 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
               final value =
                   await scanNotifier.scan(store.id, data, bypass: true);
               if (value == null) {
-                color.value = Colors.red;
                 displayToastWithContext(
                   TypeMsg.error,
                   "QR Code déjà utilisé",
                 );
                 barcodeNotifier.clearBarcode();
-                ongoingTransactionNotifier.clearOngoingTransaction();
                 return;
-              } else {
-                color.value = Colors.green;
               }
               ongoingTransactionNotifier.updateOngoingTransaction(value);
             },
@@ -98,7 +93,7 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
           Future.delayed(
             const Duration(seconds: 2),
             () {
-              color.value = Colors.white;
+              ongoingTransactionNotifier.clearOngoingTransaction();
             },
           );
           return;
@@ -106,24 +101,20 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
       }
       final value = await scanNotifier.scan(store.id, data);
       if (value == null) {
-        color.value = Colors.red;
         displayToastWithContext(
           TypeMsg.error,
           "QR Code déjà utilisé",
         );
         barcodeNotifier.clearBarcode();
-        ongoingTransactionNotifier.clearOngoingTransaction();
-        unawaited(controller.start());
         return;
       } else {
-        color.value = Colors.green;
         ongoingTransactionNotifier.updateOngoingTransaction(value);
-        unawaited(controller.start());
       }
+      unawaited(controller.start());
       Future.delayed(
         const Duration(seconds: 2),
         () {
-          color.value = Colors.white;
+          ongoingTransactionNotifier.clearOngoingTransaction();
         },
       );
     }
@@ -161,6 +152,7 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     var scanArea = MediaQuery.of(context).size.width * 0.8;
+    final ongoingTransaction = ref.watch(ongoingTransactionProvider);
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(40),
@@ -173,7 +165,10 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
             child: Container(
               decoration: ShapeDecoration(
                 shape: QrScannerOverlayShape(
-                  borderColor: color.value,
+                  borderColor: ongoingTransaction.when(
+                      data: (_) => Colors.green,
+                      error: (_, __) => Colors.red,
+                      loading: () => Colors.white),
                   borderRadius: 10,
                   borderLength: 40,
                   borderWidth: 7,
