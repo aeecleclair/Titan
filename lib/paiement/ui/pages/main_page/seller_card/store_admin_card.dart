@@ -22,7 +22,6 @@ class StoreAdminCard extends ConsumerWidget {
           behavior: HitTestBehavior.opaque,
           child: Container(
             height: 70,
-            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
             padding: const EdgeInsets.symmetric(horizontal: 20),
             width: MediaQuery.of(context).size.width,
             child: Row(
