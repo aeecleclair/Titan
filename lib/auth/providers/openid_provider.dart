@@ -216,16 +216,16 @@ class OpenIdTokenProvider
           }
         });
       } else {
-        AuthorizationTokenResponse resp =
-            await appAuth.authorizeAndExchangeCode(
-          AuthorizationTokenRequest(
-            clientId,
-            redirectURLScheme,
-            discoveryUrl: discoveryUrl,
-            scopes: scopes,
-            allowInsecureConnections: kDebugMode,
-          ),
-        );
+        AuthorizationTokenResponse resp = await appAuth
+            .authorizeAndExchangeCode(
+              AuthorizationTokenRequest(
+                clientId,
+                redirectURLScheme,
+                discoveryUrl: discoveryUrl,
+                scopes: scopes,
+                allowInsecureConnections: kDebugMode,
+              ),
+            );
         await _secureStorage.write(key: tokenName, value: resp.refreshToken);
         state = AsyncValue.data({
           tokenKey: resp.accessToken!,
@@ -286,15 +286,15 @@ class OpenIdTokenProvider
   Future<void> getAuthToken(String authorizationToken) async {
     appAuth
         .token(
-      TokenRequest(
-        clientId,
-        redirectURLScheme,
-        discoveryUrl: discoveryUrl,
-        scopes: scopes,
-        authorizationCode: authorizationToken,
-        allowInsecureConnections: kDebugMode,
-      ),
-    )
+          TokenRequest(
+            clientId,
+            redirectURLScheme,
+            discoveryUrl: discoveryUrl,
+            scopes: scopes,
+            authorizationCode: authorizationToken,
+            allowInsecureConnections: kDebugMode,
+          ),
+        )
         .then((resp) {
           state = AsyncValue.data({
             tokenKey: resp.accessToken!,
