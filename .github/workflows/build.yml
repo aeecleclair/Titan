@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - target: "apk --debug --flavor=dev --dart-define=flavor=dev"
+          - target: "apk --debug --flavor=dev"
             name: "APK"
             path: build/app/outputs/flutter-apk/app-dev-debug.apk
           - target: "web --dart-define=flavor=dev"

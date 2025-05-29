@@ -126,11 +126,11 @@ jobs:
 
       - name: Build Alpha 🔧
         if: needs.extract-version.outputs.isAlpha == 'true'
-        run: flutter build ${{ matrix.target }} --flavor=alpha --dart-define=flavor=alpha --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
+        run: flutter build ${{ matrix.target }} --flavor=alpha --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
 
       - name: Build production 🔧
         if: needs.extract-version.outputs.isAlpha == 'false'
-        run: flutter build ${{ matrix.target }} --flavor=prod --dart-define=flavor=prod --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
+        run: flutter build ${{ matrix.target }} --flavor=prod --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
