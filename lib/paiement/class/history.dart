@@ -2,6 +2,17 @@ import 'package:myecl/tools/functions.dart';
 
 enum HistoryType { transfer, received, given, refundCredited, refundDebited }
 
+String historyTypeToString(HistoryType e) {
+  switch (e) {
+    case HistoryType.refundCredited:
+      return "refund_credited";
+    case HistoryType.refundDebited:
+      return "refund_debited";
+    default:
+      return e.toString().split('.').last;
+  }
+}
+
 enum TransactionStatus { confirmed, canceled, refunded, pending }
 
 class History {
@@ -24,7 +35,7 @@ class History {
   History.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         type = HistoryType.values.firstWhere(
-          (e) => e.toString().split('.').last == json['type'],
+          (e) => historyTypeToString(e) == json['type'],
         ),
         otherWalletName = json['other_wallet_name'],
         total = json['total'],
@@ -35,7 +46,7 @@ class History {
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'type': type.toString().split('.').last,
+        'type': historyTypeToString(type),
         'other_wallet_name': otherWalletName,
         'total': total,
         'creation': processDateToAPI(creation),
