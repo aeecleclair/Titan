@@ -34,7 +34,7 @@ abstract class Repository {
       if (response.statusCode == 200) {
         try {
           String toDecode = response.body;
-          toDecode = utf8.decode(response.body.runes.toList());
+          toDecode = utf8.decode(response.bodyBytes);
           if (!kIsWeb) {
             cacheManager.writeCache(ext + suffix, toDecode);
           }
@@ -51,7 +51,7 @@ abstract class Repository {
         );
         try {
           String toDecode = response.body;
-          toDecode = utf8.decode(response.body.runes.toList());
+          toDecode = utf8.decode(response.bodyBytes);
           final decoded = jsonDecode(toDecode);
           if (decoded["detail"] == expiredTokenDetail) {
             throw AppException(ErrorType.tokenExpire, decoded["detail"]);
@@ -106,7 +106,7 @@ abstract class Repository {
       if (response.statusCode == 200) {
         try {
           String toDecode = response.body;
-          toDecode = utf8.decode(response.body.runes.toList());
+          toDecode = utf8.decode(response.bodyBytes);
           if (!kIsWeb) {
             cacheManager.writeCache(ext + id + suffix, toDecode);
           }
@@ -123,7 +123,7 @@ abstract class Repository {
         );
         try {
           String toDecode = response.body;
-          toDecode = utf8.decode(response.body.runes.toList());
+          toDecode = utf8.decode(response.bodyBytes);
           final decoded = jsonDecode(toDecode);
           if (decoded["detail"] == expiredTokenDetail) {
             throw AppException(ErrorType.tokenExpire, decoded["detail"]);
@@ -176,7 +176,7 @@ abstract class Repository {
     if (response.statusCode == 200) {
       try {
         String toDecode = response.body;
-        toDecode = utf8.decode(response.body.runes.toList());
+        toDecode = utf8.decode(response.bodyBytes);
         return jsonDecode(toDecode);
       } catch (e) {
         logger.error(
@@ -187,7 +187,7 @@ abstract class Repository {
     } else if (response.statusCode == 201) {
       try {
         String toDecode = response.body;
-        toDecode = utf8.decode(response.body.runes.toList());
+        toDecode = utf8.decode(response.bodyBytes);
         return jsonDecode(toDecode);
       } catch (e) {
         logger.error(
@@ -202,7 +202,7 @@ abstract class Repository {
         "POST ${ext + suffix}\n${response.statusCode} ${response.body}",
       );
       String toDecode = response.body;
-      toDecode = utf8.decode(response.body.runes.toList());
+      toDecode = utf8.decode(response.bodyBytes);
       final decoded = jsonDecode(toDecode);
       if (decoded["detail"] == expiredTokenDetail) {
         throw AppException(ErrorType.tokenExpire, decoded["detail"]);
@@ -214,7 +214,7 @@ abstract class Repository {
         "POST ${ext + suffix}\n${response.statusCode} ${response.body}",
       );
       String toDecode = response.body;
-      toDecode = utf8.decode(response.body.runes.toList());
+      toDecode = utf8.decode(response.bodyBytes);
       final decoded = jsonDecode(toDecode);
       throw AppException(ErrorType.conflict, decoded["detail"]);
     } else {
@@ -240,7 +240,7 @@ abstract class Repository {
         "PATCH ${ext + tId + suffix}\n${response.statusCode} ${response.body}",
       );
       String toDecode = response.body;
-      toDecode = utf8.decode(response.body.runes.toList());
+      toDecode = utf8.decode(response.bodyBytes);
       final decoded = jsonDecode(toDecode);
       if (decoded["detail"] == expiredTokenDetail) {
         throw AppException(ErrorType.tokenExpire, decoded["detail"]);
@@ -268,7 +268,7 @@ abstract class Repository {
         "DELETE ${ext + tId + suffix}\n${response.statusCode} ${response.body}",
       );
       String toDecode = response.body;
-      toDecode = utf8.decode(response.body.runes.toList());
+      toDecode = utf8.decode(response.bodyBytes);
       final decoded = jsonDecode(toDecode);
       if (decoded["detail"] == expiredTokenDetail) {
         throw AppException(ErrorType.tokenExpire, decoded["detail"]);
