@@ -11,6 +11,7 @@ import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/router.dart';
 import 'package:myecl/advert/ui/components/announcer_bar.dart';
 import 'package:myecl/advert/ui/components/advert_card.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/column_refresher.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
@@ -92,7 +93,12 @@ class AdvertMainPage extends HookConsumerWidget {
                       child: AdvertCard(
                         onTap: () {
                           advertNotifier.setAdvert(advert);
-                          QR.to(AdvertRouter.root + AdvertRouter.detail);
+                          QR.to(
+                            buildPath(
+                              AdvertRouter.root + AdvertRouter.detail,
+                              [advert.id],
+                            ),
+                          );
                         },
                         advert: advert,
                       ),
