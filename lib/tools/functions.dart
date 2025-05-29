@@ -435,7 +435,7 @@ bool isNotStaff(String email) {
 
 String getAppFlavor() {
   if (appFlavor != null) {
-    return appFlavor!;
+    return appFlavor!.toLowerCase();
   }
 
   if (const String.fromEnvironment("flavor") != "") {
