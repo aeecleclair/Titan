@@ -171,6 +171,9 @@ class SellerRightCard extends ConsumerWidget {
                                             "Droits mis à jour",
                                           );
                                           sellerRights[i] = !sellerRights[i];
+                                          if (context.mounted) {
+                                            Navigator.pop(context);
+                                          }
                                         } else {
                                           displayToastWithContext(
                                             TypeMsg.error,
