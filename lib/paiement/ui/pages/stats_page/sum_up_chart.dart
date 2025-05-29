@@ -24,6 +24,7 @@ class SumUpChart extends HookConsumerWidget {
       selectedTransactionsProvider.notifier,
     );
     final formatter = NumberFormat("#,##0.00", "fr_FR");
+    const totalKey = "totalKey";
     final List<List<Color>> colors = [
       [
         const Color.fromARGB(255, 1, 127, 128),
@@ -75,15 +76,15 @@ class SumUpChart extends HookConsumerWidget {
             (previousValue, element) => previousValue + element.total,
           );
           total += totalAmount;
-          mappedHistory['Transfer'] = transfer;
-          keys.add('Transfer');
+          mappedHistory[totalKey] = transfer;
+          keys.add(totalKey);
           chartPart.add(
             PieChartSectionData(
               color: colors[2][0],
               value: sqrt(totalAmount / 100),
               title: '',
               radius:
-                  60 + (keys.indexOf('Transfer') == selected.value ? 15 : 0),
+                  60 + (keys.indexOf(totalKey) == selected.value ? 15 : 0),
               badgePositionPercentageOffset: 0.6,
               badgeWidget: SumUpCard(
                 amount: '${formatter.format(totalAmount / 100)} €',

@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/paiement/providers/my_stores_provider.dart';
+import 'package:myecl/paiement/providers/my_wallet_provider.dart';
 
 class FlipCard extends HookConsumerWidget {
   final Widget front;
@@ -33,10 +35,12 @@ class FlipCard extends HookConsumerWidget {
           // Swipe left
           isFront = false;
           controller.reverse();
+          ref.invalidate(myWalletProvider);
         } else if (details.primaryVelocity! > 0) {
           // Swipe right
           isFront = true;
           controller.forward();
+          ref.invalidate(myStoresProvider);
         }
       },
       child: AnimatedBuilder(
