@@ -85,9 +85,14 @@ class StoreAdminPage extends HookConsumerWidget {
               AsyncChild(
                 value: storeSellers,
                 builder: (context, storeSellers) {
-                  final mySellers = storeSellers
-                      .where((seller) => seller.user.id == me.id)
-                      .first;
+final mySellers = storeSellers
+    .where((seller) => seller.user.id == me.id)
+    .firstOrNull;
+if (mySellers == null) {
+  return const Center(
+    child: Text('You are not a seller in this store'),
+  );
+}
                   return Column(
                     children: [
                       ...storeSellers.map(
