@@ -10,7 +10,7 @@ class TransactionsDetail extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedHistory = ref.watch(selectedTransactionsProvider);
     final sortedByDate = selectedHistory
-      ..sort((a, b) => a.creation.compareTo(b.creation));
+      ..sort((a, b) => b.creation.compareTo(a.creation));
     return Expanded(
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
