@@ -31,9 +31,7 @@ class SearchUser extends HookConsumerWidget {
           ),
           onChanged: (value) async {
             if (value.isNotEmpty) {
-              await usersNotifier.filterUsers(
-                value,
-              );
+              await usersNotifier.filterUsers(value);
             } else {
               usersNotifier.clear();
             }
@@ -44,10 +42,7 @@ class SearchUser extends HookConsumerWidget {
               padding: const EdgeInsets.all(7),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
-                  ],
+                  colors: [ColorConstants.gradient1, ColorConstants.gradient2],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -60,11 +55,7 @@ class SearchUser extends HookConsumerWidget {
                 ],
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
-              child: HeroIcon(
-                HeroIcons.plus,
-                size: 20,
-                color: Colors.white,
-              ),
+              child: HeroIcon(HeroIcons.plus, size: 20, color: Colors.white),
             ),
           ),
         ),

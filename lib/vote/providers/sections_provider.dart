@@ -8,7 +8,7 @@ import 'package:myecl/vote/repositories/section_repository.dart';
 class SectionNotifier extends ListNotifier<Section> {
   final SectionRepository sectionRepository;
   SectionNotifier({required this.sectionRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Section>>> loadSectionList() async {
     return await loadList(sectionRepository.getSections);
@@ -39,14 +39,15 @@ class SectionNotifier extends ListNotifier<Section> {
 
 final sectionsProvider =
     StateNotifierProvider<SectionNotifier, AsyncValue<List<Section>>>((ref) {
-  final sectionRepository = ref.watch(sectionRepositoryProvider);
-  SectionNotifier notifier =
-      SectionNotifier(sectionRepository: sectionRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadSectionList();
-  });
-  return notifier;
-});
+      final sectionRepository = ref.watch(sectionRepositoryProvider);
+      SectionNotifier notifier = SectionNotifier(
+        sectionRepository: sectionRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.loadSectionList();
+      });
+      return notifier;
+    });
 
 final sectionList = Provider<List<Section>>((ref) {
   final sections = ref.watch(sectionsProvider);

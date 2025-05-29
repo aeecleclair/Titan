@@ -32,19 +32,14 @@ class PayPage extends ConsumerWidget {
       child: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xff017f80),
-              Color.fromARGB(255, 9, 103, 103),
-            ],
+            colors: [Color(0xff017f80), Color.fromARGB(255, 9, 103, 103)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
         child: Column(
           children: [
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Text(
               'Paiement',
               style: const TextStyle(
@@ -53,15 +48,10 @@ class PayPage extends ConsumerWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(
-              height: 5,
-            ),
+            const SizedBox(height: 5),
             Text(
               'Solde après paiement : ${formatter.format(currentAmount - amountToSub)} €',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-              ),
+              style: const TextStyle(color: Colors.white, fontSize: 15),
             ),
             Expanded(
               child: Center(

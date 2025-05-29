@@ -5,8 +5,5 @@ import 'package:tuple/tuple.dart';
 
 final Map<String, Tuple2<String, List<StateNotifierProvider>>> cinemaProviders =
     {
-  "session": Tuple2(
-    CinemaRouter.root,
-    [sessionListProvider],
-  ),
-};
+      "session": Tuple2(CinemaRouter.root, [sessionListProvider]),
+    };

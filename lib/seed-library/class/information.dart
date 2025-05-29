@@ -34,10 +34,10 @@ class Information {
   }
 
   Information.empty()
-      : forumUrl = "",
-        facebookUrl = "",
-        contact = "",
-        description = "";
+    : forumUrl = "",
+      facebookUrl = "",
+      contact = "",
+      description = "";
 
   Information copyWith({
     String? forumUrl,

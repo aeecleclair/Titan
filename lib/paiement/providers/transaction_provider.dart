@@ -6,7 +6,7 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 class TransactionNotifier extends SingleNotifier<bool> {
   final TransactionsRepository transactionRepository;
   TransactionNotifier({required this.transactionRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<bool>> refundTransaction(
     String transactionId,
@@ -26,6 +26,6 @@ class TransactionNotifier extends SingleNotifier<bool> {
 
 final transactionProvider =
     StateNotifierProvider<TransactionNotifier, AsyncValue<bool>>((ref) {
-  final transactionRepository = ref.watch(transactionsRepositoryProvider);
-  return TransactionNotifier(transactionRepository: transactionRepository);
-});
+      final transactionRepository = ref.watch(transactionsRepositoryProvider);
+      return TransactionNotifier(transactionRepository: transactionRepository);
+    });

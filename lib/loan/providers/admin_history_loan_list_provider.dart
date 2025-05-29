@@ -11,19 +11,24 @@ class AdminHistoryLoanListNotifier extends MapNotifier<Loaner, Loan> {
   AdminHistoryLoanListNotifier() : super();
 }
 
-final adminHistoryLoanListProvider = StateNotifierProvider<
-    AdminHistoryLoanListNotifier, Map<Loaner, AsyncValue<List<Loan>>?>>((ref) {
-  AdminHistoryLoanListNotifier adminLoanListNotifier =
-      AdminHistoryLoanListNotifier();
-  tokenExpireWrapperAuth(ref, () async {
-    final loaners = ref.watch(loanerList);
-    final loaner = ref.watch(loanerProvider);
-    final loanListNotifier = ref.watch(historyLoanerLoanListProvider.notifier);
-    adminLoanListNotifier.loadTList(loaners);
-    if (loaner.id == Loaner.empty().id) return adminLoanListNotifier;
-    loanListNotifier.loadLoan(loaner.id).then((value) {
-      adminLoanListNotifier.setTData(loaner, value);
+final adminHistoryLoanListProvider =
+    StateNotifierProvider<
+      AdminHistoryLoanListNotifier,
+      Map<Loaner, AsyncValue<List<Loan>>?>
+    >((ref) {
+      AdminHistoryLoanListNotifier adminLoanListNotifier =
+          AdminHistoryLoanListNotifier();
+      tokenExpireWrapperAuth(ref, () async {
+        final loaners = ref.watch(loanerList);
+        final loaner = ref.watch(loanerProvider);
+        final loanListNotifier = ref.watch(
+          historyLoanerLoanListProvider.notifier,
+        );
+        adminLoanListNotifier.loadTList(loaners);
+        if (loaner.id == Loaner.empty().id) return adminLoanListNotifier;
+        loanListNotifier.loadLoan(loaner.id).then((value) {
+          adminLoanListNotifier.setTData(loaner, value);
+        });
+      });
+      return adminLoanListNotifier;
     });
-  });
-  return adminLoanListNotifier;
-});

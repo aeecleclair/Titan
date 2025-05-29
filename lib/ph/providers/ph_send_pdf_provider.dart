@@ -10,7 +10,8 @@ class PhSendPdfNotifier extends StateNotifier<Uint8List> {
   }
 }
 
-final phSendPdfProvider =
-    StateNotifierProvider<PhSendPdfNotifier, Uint8List>((ref) {
+final phSendPdfProvider = StateNotifierProvider<PhSendPdfNotifier, Uint8List>((
+  ref,
+) {
   return PhSendPdfNotifier();
 });

@@ -22,8 +22,9 @@ class AuthenticatedMiddleware extends QMiddleware {
     final titanVersion = ref.watch(titanVersionProvider);
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final modules = ref.read(modulesProvider);
-    final check = versionVerifier
-        .whenData((value) => value.minimalTitanVersion <= titanVersion);
+    final check = versionVerifier.whenData(
+      (value) => value.minimalTitanVersion <= titanVersion,
+    );
     if (!pathForwardingNotifier.state.isLoggedIn &&
         path != LoginRouter.root &&
         path != "/") {

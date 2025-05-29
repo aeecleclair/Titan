@@ -3,9 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class KeyService {
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage(
-    aOptions: AndroidOptions(
-      encryptedSharedPreferences: true,
-    ),
+    aOptions: AndroidOptions(encryptedSharedPreferences: true),
     iOptions: IOSOptions(
       // A service name is required for iOS KeyChain
       accountName: 'fr.titan.myecl',
@@ -44,10 +42,7 @@ class KeyService {
     final publicKey = publicKeyString.codeUnits;
     return SimpleKeyPairData(
       privateKey,
-      publicKey: SimplePublicKey(
-        publicKey,
-        type: KeyPairType.ed25519,
-      ),
+      publicKey: SimplePublicKey(publicKey, type: KeyPairType.ed25519),
       type: KeyPairType.ed25519,
     );
   }
@@ -57,15 +52,9 @@ class KeyService {
   }
 
   Future<bool> clear() async {
-    await _secureStorage.delete(
-      key: 'privateKey',
-    );
-    await _secureStorage.delete(
-      key: 'publicKey',
-    );
-    await _secureStorage.delete(
-      key: 'keyId',
-    );
+    await _secureStorage.delete(key: 'privateKey');
+    await _secureStorage.delete(key: 'publicKey');
+    await _secureStorage.delete(key: 'keyId');
     return true;
   }
 

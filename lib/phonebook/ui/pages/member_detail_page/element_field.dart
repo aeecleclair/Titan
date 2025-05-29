@@ -18,12 +18,7 @@ class ElementField extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 5.0),
       child: Column(
         children: [
-          Center(
-            child: Text(
-              label,
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
+          Center(child: Text(label, style: const TextStyle(fontSize: 16))),
           Center(
             child: SelectableText(
               value,

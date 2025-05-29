@@ -21,8 +21,9 @@ void main() {
     test('returns cash for valid user id', () async {
       final user = SimpleUser.empty().copyWith(id: '123');
       final cash = Cash(balance: 100.0, user: user);
-      when(() => mockRepository.getCashByUser('123'))
-          .thenAnswer((_) async => cash);
+      when(
+        () => mockRepository.getCashByUser('123'),
+      ).thenAnswer((_) async => cash);
 
       final result = await notifier.loadCashByUser(user.id);
 

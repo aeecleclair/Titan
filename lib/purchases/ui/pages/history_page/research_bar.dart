@@ -31,9 +31,7 @@ class ResearchBar extends HookConsumerWidget {
           ),
           label: Text(
             PurchasesTextConstants.research,
-            style: TextStyle(
-              color: PurchasesColorConstants.textDark,
-            ),
+            style: TextStyle(color: PurchasesColorConstants.textDark),
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: ColorConstants.gradient1),

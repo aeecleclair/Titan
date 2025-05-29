@@ -13,8 +13,9 @@ void main() {
           userProvider.overrideWithValue(
             User.empty().copyWith(
               groups: [
-                SimpleGroup.empty()
-                    .copyWith(id: '6c6d7e88-fdb8-4e42-b2b5-3d3cfd12e7d6'),
+                SimpleGroup.empty().copyWith(
+                  id: '6c6d7e88-fdb8-4e42-b2b5-3d3cfd12e7d6',
+                ),
               ],
             ),
           ),
@@ -32,8 +33,9 @@ void main() {
           userProvider.overrideWithValue(
             User.empty().copyWith(
               groups: [
-                SimpleGroup.empty()
-                    .copyWith(id: '12345678-1234-1234-1234-123456789012'),
+                SimpleGroup.empty().copyWith(
+                  id: '12345678-1234-1234-1234-123456789012',
+                ),
               ],
             ),
           ),

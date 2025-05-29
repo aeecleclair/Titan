@@ -10,7 +10,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class HistoryLoanerLoanListNotifier extends ListNotifier<Loan> {
   final LoanRepository loanRepository = LoanRepository();
   HistoryLoanerLoanListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     loanRepository.setToken(token);
   }
 
@@ -81,15 +81,14 @@ class HistoryLoanerLoanListNotifier extends ListNotifier<Loan> {
       (loans) => loans
           .where(
             (loan) =>
-                loan.borrower
-                    .getName()
-                    .toLowerCase()
-                    .contains(query.toLowerCase()) ||
+                loan.borrower.getName().toLowerCase().contains(
+                  query.toLowerCase(),
+                ) ||
                 loan.itemsQuantity
                     .map(
-                      (e) => e.itemSimple.name
-                          .toLowerCase()
-                          .contains(query.toLowerCase()),
+                      (e) => e.itemSimple.name.toLowerCase().contains(
+                        query.toLowerCase(),
+                      ),
                     )
                     .contains(true),
           )
@@ -98,16 +97,19 @@ class HistoryLoanerLoanListNotifier extends ListNotifier<Loan> {
   }
 }
 
-final historyLoanerLoanListProvider = StateNotifierProvider<
-    HistoryLoanerLoanListNotifier, AsyncValue<List<Loan>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  HistoryLoanerLoanListNotifier historyLoanerLoanListNotifier =
-      HistoryLoanerLoanListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    final loanerId = ref.watch(loanerIdProvider);
-    if (loanerId != "") {
-      historyLoanerLoanListNotifier.loadLoan(loanerId);
-    }
-  });
-  return historyLoanerLoanListNotifier;
-});
+final historyLoanerLoanListProvider =
+    StateNotifierProvider<
+      HistoryLoanerLoanListNotifier,
+      AsyncValue<List<Loan>>
+    >((ref) {
+      final token = ref.watch(tokenProvider);
+      HistoryLoanerLoanListNotifier historyLoanerLoanListNotifier =
+          HistoryLoanerLoanListNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        final loanerId = ref.watch(loanerIdProvider);
+        if (loanerId != "") {
+          historyLoanerLoanListNotifier.loadLoan(loanerId);
+        }
+      });
+      return historyLoanerLoanListNotifier;
+    });

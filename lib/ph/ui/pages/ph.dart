@@ -13,10 +13,7 @@ class PhTemplate extends HookConsumerWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const TopBar(
-            title: "PH",
-            root: PhRouter.root,
-          ),
+          const TopBar(title: "PH", root: PhRouter.root),
           Expanded(child: child),
         ],
       ),

@@ -84,8 +84,10 @@ class AddEditSessionPage extends HookConsumerWidget {
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
                     labelText: CinemaTextConstants.importFromTMDB,
-                    labelStyle:
-                        const TextStyle(color: Colors.black, fontSize: 20),
+                    labelStyle: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                    ),
                     suffixIcon: Container(
                       padding: const EdgeInsets.all(10),
                       child: WaitingButton(
@@ -113,10 +115,12 @@ class AddEditSessionPage extends HookConsumerWidget {
                                     posterUrl.text = data.posterUrl;
                                     genre.text = data.genres.join(', ');
                                     tagline.text = data.tagline;
-                                    duration.text =
-                                        parseDurationBack(data.runtime);
-                                    logo.value =
-                                        await getFromUrl(data.posterUrl);
+                                    duration.text = parseDurationBack(
+                                      data.runtime,
+                                    );
+                                    logo.value = await getFromUrl(
+                                      data.posterUrl,
+                                    );
                                   },
                                   loading: () {},
                                   error: (e, s) {
@@ -158,28 +162,28 @@ class AddEditSessionPage extends HookConsumerWidget {
                 const SizedBox(height: 30),
                 (logo.value == null)
                     ? logoFile.value == null
-                        ? Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 50,
-                              horizontal: 30,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: HeroIcon(
-                              HeroIcons.camera,
-                              size: 100,
-                              color: Colors.grey.shade500,
-                            ),
-                          )
-                        : Image(image: logoFile.value!.image, fit: BoxFit.cover)
+                          ? Container(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 50,
+                                horizontal: 30,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: HeroIcon(
+                                HeroIcons.camera,
+                                size: 100,
+                                color: Colors.grey.shade500,
+                              ),
+                            )
+                          : Image(
+                              image: logoFile.value!.image,
+                              fit: BoxFit.cover,
+                            )
                     : Image.memory(logo.value!, fit: BoxFit.cover),
                 const SizedBox(height: 30),
-                TextEntry(
-                  label: CinemaTextConstants.name,
-                  controller: name,
-                ),
+                TextEntry(label: CinemaTextConstants.name, controller: name),
                 const SizedBox(height: 30),
                 TextEntry(
                   label: CinemaTextConstants.posterUrl,
@@ -240,16 +244,18 @@ class AddEditSessionPage extends HookConsumerWidget {
                           duration: parseDuration(duration.text),
                           genre: genre.text.isEmpty ? null : genre.text,
                           id: isEdit ? session.id : '',
-                          overview:
-                              overview.text.isEmpty ? null : overview.text,
+                          overview: overview.text.isEmpty
+                              ? null
+                              : overview.text,
                           start: DateTime.parse(
                             processDateBackWithHour(start.text),
                           ),
                           tagline: tagline.text.isEmpty ? null : tagline.text,
                         );
                         final value = isEdit
-                            ? await sessionListNotifier
-                                .updateSession(newSession)
+                            ? await sessionListNotifier.updateSession(
+                                newSession,
+                              )
                             : await sessionListNotifier.addSession(newSession);
                         if (value) {
                           QR.back();

@@ -161,8 +161,10 @@ class RaffleInfoPage extends HookConsumerWidget {
               },
               orElseBuilder: (context, child) => Container(
                 height: 120,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 30,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

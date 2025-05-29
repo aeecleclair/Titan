@@ -41,9 +41,7 @@ class AddEditManagerPage extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           children: [
-            const SizedBox(
-              height: 50,
-            ),
+            const SizedBox(height: 50),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -61,16 +59,12 @@ class AddEditManagerPage extends HookConsumerWidget {
               key: key,
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   AdminEntry(
                     name: BookingTextConstants.managerName,
                     nameController: name,
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   groupList.when(
                     data: (List<SimpleGroup> data) => AdminScrollChips(
                       isEdit: isEdit,
@@ -102,9 +96,7 @@ class AddEditManagerPage extends HookConsumerWidget {
                       return const Center(child: CircularProgressIndicator());
                     },
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   AdminShrinkButton(
                     onTap: () async {
                       await tokenExpireWrapper(ref, () async {
@@ -114,8 +106,9 @@ class AddEditManagerPage extends HookConsumerWidget {
                           groupId: groupId,
                         );
                         final value = isEdit
-                            ? await managerListNotifier
-                                .updateManager(newManager)
+                            ? await managerListNotifier.updateManager(
+                                newManager,
+                              )
                             : await managerListNotifier.addManager(newManager);
                         if (value) {
                           QR.back();
@@ -146,9 +139,7 @@ class AddEditManagerPage extends HookConsumerWidget {
                         : BookingTextConstants.add,
                   ),
                   if (isEdit) ...[
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     AdminShrinkButton(
                       onTap: () async {
                         await tokenExpireWrapper(ref, () async {

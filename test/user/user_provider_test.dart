@@ -28,8 +28,9 @@ void main() {
   group('loadUser', () {
     test('should return AsyncValue when user is loaded successfully', () async {
       final user = User.empty().copyWith(id: '123');
-      when(() => mockUserRepository.getUser(user.id))
-          .thenAnswer((_) async => user);
+      when(
+        () => mockUserRepository.getUser(user.id),
+      ).thenAnswer((_) async => user);
       final result = await userNotifier.loadUser('123');
       expect(result, AsyncValue.data(user));
     });
@@ -47,8 +48,9 @@ void main() {
   group('updateUser', () {
     test('should return true when user is updated successfully', () async {
       final user = User.empty();
-      when(() => mockUserRepository.updateUser(user))
-          .thenAnswer((_) async => true);
+      when(
+        () => mockUserRepository.updateUser(user),
+      ).thenAnswer((_) async => true);
       userNotifier.state = AsyncValue.data(user);
       final result = await userNotifier.updateUser(user);
       expect(result, true);
@@ -58,8 +60,9 @@ void main() {
   group('updateMe', () {
     test('should return true when user is updated successfully', () async {
       final user = User.empty();
-      when(() => mockUserRepository.updateMe(user))
-          .thenAnswer((_) async => true);
+      when(
+        () => mockUserRepository.updateMe(user),
+      ).thenAnswer((_) async => true);
       userNotifier.state = AsyncValue.data(user);
       final result = await userNotifier.updateMe(user);
       expect(result, true);
@@ -69,20 +72,24 @@ void main() {
   group('changePassword', () {
     test('should return true when password is changed successfully', () async {
       final user = User.empty();
-      when(() => mockUserRepository.changePassword('old', 'new', user.email))
-          .thenAnswer((_) async => true);
+      when(
+        () => mockUserRepository.changePassword('old', 'new', user.email),
+      ).thenAnswer((_) async => true);
       final result = await userNotifier.changePassword('old', 'new', user);
       expect(result, true);
     });
   });
 
   group('deletePersonal', () {
-    test('should return true when personal data is deleted successfully',
-        () async {
-      when(() => mockUserRepository.deletePersonalData())
-          .thenAnswer((_) async => true);
-      final result = await userNotifier.deletePersonal();
-      expect(result, true);
-    });
+    test(
+      'should return true when personal data is deleted successfully',
+      () async {
+        when(
+          () => mockUserRepository.deletePersonalData(),
+        ).thenAnswer((_) async => true);
+        final result = await userNotifier.deletePersonal();
+        expect(result, true);
+      },
+    );
   });
 }

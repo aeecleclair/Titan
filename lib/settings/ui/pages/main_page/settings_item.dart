@@ -23,11 +23,7 @@ class SettingsItem extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(right: 20),
-            child: HeroIcon(
-              icon,
-              size: 30,
-              color: Colors.black,
-            ),
+            child: HeroIcon(icon, size: 30, color: Colors.black),
           ),
           Expanded(child: child),
           Container(

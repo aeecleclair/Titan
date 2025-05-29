@@ -87,11 +87,7 @@ class EventMainPage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              ...eventList.map(
-                (event) => EventUi(
-                  event: event,
-                ),
-              ),
+              ...eventList.map((event) => EventUi(event: event)),
               const SizedBox(height: 80),
             ],
           );

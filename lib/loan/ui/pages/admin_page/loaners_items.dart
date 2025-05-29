@@ -43,9 +43,7 @@ class LoanersItems extends HookConsumerWidget {
 
     final item = loanersItems[loaner];
     if (item == null) {
-      return const Center(
-        child: Text(LoanTextConstants.noItems),
-      );
+      return const Center(child: Text(LoanTextConstants.noItems));
     }
     return AsyncChild(
       value: item,
@@ -102,14 +100,13 @@ class LoanersItems extends HookConsumerWidget {
                         descriptions: LoanTextConstants.deletingItem,
                         onYes: () {
                           tokenExpireWrapper(ref, () async {
-                            final value =
-                                await itemListNotifier.deleteItem(e, loaner.id);
+                            final value = await itemListNotifier.deleteItem(
+                              e,
+                              loaner.id,
+                            );
                             if (value) {
                               itemListNotifier.copy().then((value) {
-                                loanersItemsNotifier.setTData(
-                                  loaner,
-                                  value,
-                                );
+                                loanersItemsNotifier.setTData(loaner, value);
                               });
                               displayToastWithContext(
                                 TypeMsg.msg,

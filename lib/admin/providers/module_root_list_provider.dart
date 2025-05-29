@@ -8,7 +8,7 @@ import 'package:myecl/user/providers/user_provider.dart';
 class ModuleListNotifier extends ListNotifier<String> {
   ModuleVisibilityRepository repository = ModuleVisibilityRepository();
   ModuleListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     repository.setToken(token);
   }
 
@@ -19,14 +19,14 @@ class ModuleListNotifier extends ListNotifier<String> {
 
 final moduleRootListProvider =
     StateNotifierProvider<ModuleListNotifier, AsyncValue<List<String>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final userProvider = ref.watch(asyncUserProvider);
-  ModuleListNotifier notifier = ModuleListNotifier(token: token);
-  userProvider.maybeWhen(
-    data: (data) => tokenExpireWrapperAuth(ref, () async {
-      await notifier.loadMyModuleRoots();
-    }),
-    orElse: () {},
-  );
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      final userProvider = ref.watch(asyncUserProvider);
+      ModuleListNotifier notifier = ModuleListNotifier(token: token);
+      userProvider.maybeWhen(
+        data: (data) => tokenExpireWrapperAuth(ref, () async {
+          await notifier.loadMyModuleRoots();
+        }),
+        orElse: () {},
+      );
+      return notifier;
+    });

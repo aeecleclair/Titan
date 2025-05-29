@@ -6,32 +6,26 @@ import 'package:myecl/loan/providers/loan_provider.dart';
 
 final selectedListProvider =
     StateNotifierProvider<SelectedListProvider, List<int>>((ref) {
-  final itemsList = ref.watch(itemListProvider);
-  final items = [];
-  itemsList.maybeWhen(
-    data: (list) => items.addAll(list),
-    orElse: () {},
-  );
-  return SelectedListProvider(items);
-});
+      final itemsList = ref.watch(itemListProvider);
+      final items = [];
+      itemsList.maybeWhen(data: (list) => items.addAll(list), orElse: () {});
+      return SelectedListProvider(items);
+    });
 
 final editSelectedListProvider =
     StateNotifierProvider<SelectedListProvider, List<int>>((ref) {
-  final loan = ref.watch(loanProvider);
-  final itemsList = ref.watch(itemListProvider);
-  final List<Item> items = [];
-  itemsList.maybeWhen(
-    data: (list) => items.addAll(list),
-    orElse: () {},
-  );
-  SelectedListProvider selectedListProvider = SelectedListProvider(items);
-  selectedListProvider.initWithLoan(items, loan);
-  return selectedListProvider;
-});
+      final loan = ref.watch(loanProvider);
+      final itemsList = ref.watch(itemListProvider);
+      final List<Item> items = [];
+      itemsList.maybeWhen(data: (list) => items.addAll(list), orElse: () {});
+      SelectedListProvider selectedListProvider = SelectedListProvider(items);
+      selectedListProvider.initWithLoan(items, loan);
+      return selectedListProvider;
+    });
 
 class SelectedListProvider extends StateNotifier<List<int>> {
   SelectedListProvider(List<dynamic> p)
-      : super(List.generate(p.length, (index) => 0));
+    : super(List.generate(p.length, (index) => 0));
 
   Future<List<int>> toggle(int i, int quantity) async {
     var copy = state.toList();

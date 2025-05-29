@@ -12,16 +12,17 @@ class VoteCount extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final section = ref.watch(sectionProvider);
     final sectionVoteNotifier = ref.watch(sectionVoteCountProvider.notifier);
-    final stats =
-        ref.watch(sectionsStatsProvider.select((value) => value[section]));
+    final stats = ref.watch(
+      sectionsStatsProvider.select((value) => value[section]),
+    );
     final statsNotifier = ref.read(sectionsStatsProvider.notifier);
     return AutoLoaderChild(
       group: stats,
       notifier: statsNotifier,
       mapKey: section,
-      loader: (section) async =>
-          (await sectionVoteNotifier.loadCount(section.id))
-              .maybeWhen(data: (data) => data, orElse: () => -1),
+      loader: (section) async => (await sectionVoteNotifier.loadCount(
+        section.id,
+      )).maybeWhen(data: (data) => data, orElse: () => -1),
       dataBuilder: (context, data) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50),

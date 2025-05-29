@@ -12,11 +12,11 @@ class ShouldDisplayTosDialog extends StateNotifier<bool> {
 
 final shouldDisplayTosDialogProvider =
     StateNotifierProvider.autoDispose<ShouldDisplayTosDialog, bool>((ref) {
-  final tos = ref.watch(tosProvider);
-  return tos.maybeWhen(
-    orElse: () => ShouldDisplayTosDialog(false),
-    data: (value) => ShouldDisplayTosDialog(
-      value.acceptedTosVersion != value.latestTosVersion,
-    ),
-  );
-});
+      final tos = ref.watch(tosProvider);
+      return tos.maybeWhen(
+        orElse: () => ShouldDisplayTosDialog(false),
+        data: (value) => ShouldDisplayTosDialog(
+          value.acceptedTosVersion != value.latestTosVersion,
+        ),
+      );
+    });

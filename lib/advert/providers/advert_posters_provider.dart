@@ -6,8 +6,11 @@ class AdvertPostersNotifier extends MapNotifier<String, Image> {
   AdvertPostersNotifier() : super();
 }
 
-final advertPostersProvider = StateNotifierProvider<AdvertPostersNotifier,
-    Map<String, AsyncValue<List<Image>>?>>((ref) {
-  AdvertPostersNotifier advertPosterNotifier = AdvertPostersNotifier();
-  return advertPosterNotifier;
-});
+final advertPostersProvider =
+    StateNotifierProvider<
+      AdvertPostersNotifier,
+      Map<String, AsyncValue<List<Image>>?>
+    >((ref) {
+      AdvertPostersNotifier advertPosterNotifier = AdvertPostersNotifier();
+      return advertPosterNotifier;
+    });

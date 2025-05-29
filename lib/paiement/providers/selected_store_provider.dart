@@ -12,15 +12,15 @@ class SelectedStoreNotifier extends StateNotifier<UserStore> {
 
 final selectedStoreProvider =
     StateNotifierProvider<SelectedStoreNotifier, UserStore>((ref) {
-  final myStores = ref.watch(myStoresProvider);
-  final store = myStores.maybeWhen<UserStore>(
-    orElse: () => UserStore.empty(),
-    data: (value) {
-      if (value.isEmpty) {
-        return UserStore.empty();
-      }
-      return value.first;
-    },
-  );
-  return SelectedStoreNotifier(store);
-});
+      final myStores = ref.watch(myStoresProvider);
+      final store = myStores.maybeWhen<UserStore>(
+        orElse: () => UserStore.empty(),
+        data: (value) {
+          if (value.isEmpty) {
+            return UserStore.empty();
+          }
+          return value.first;
+        },
+      );
+      return SelectedStoreNotifier(store);
+    });

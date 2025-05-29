@@ -59,9 +59,7 @@ class SummaryCard extends StatelessWidget {
               size: 25,
             ),
           ),
-          const SizedBox(
-            width: 15,
-          ),
+          const SizedBox(width: 15),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -72,16 +70,11 @@ class SummaryCard extends StatelessWidget {
                     const AutoSizeText(
                       "Total du mois",
                       maxLines: 2,
-                      style: TextStyle(
-                        color: Color(0xff204550),
-                        fontSize: 14,
-                      ),
+                      style: TextStyle(color: Color(0xff204550), fontSize: 14),
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
+                const SizedBox(height: 5),
                 Text(
                   "Moyenne : ${formatter.format(mean / 100)} € / transaction",
                   style: const TextStyle(
@@ -93,9 +86,7 @@ class SummaryCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(
-            width: 10,
-          ),
+          const SizedBox(width: 10),
           Text(
             "${formatter.format(total / 100)} €",
             style: TextStyle(

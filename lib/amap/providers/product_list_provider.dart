@@ -7,7 +7,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class ProductListNotifier extends ListNotifier<Product> {
   final ProductListRepository productListRepository;
   ProductListNotifier({required this.productListRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Product>>> loadProductList() async {
     return await loadList(productListRepository.getProductList);
@@ -37,13 +37,15 @@ class ProductListNotifier extends ListNotifier<Product> {
 }
 
 final productListProvider =
-    StateNotifierProvider<ProductListNotifier, AsyncValue<List<Product>>>(
-        (ref) {
-  final productListRepository = ref.watch(productListRepositoryProvider);
-  ProductListNotifier productListNotifier =
-      ProductListNotifier(productListRepository: productListRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    productListNotifier.loadProductList();
-  });
-  return productListNotifier;
-});
+    StateNotifierProvider<ProductListNotifier, AsyncValue<List<Product>>>((
+      ref,
+    ) {
+      final productListRepository = ref.watch(productListRepositoryProvider);
+      ProductListNotifier productListNotifier = ProductListNotifier(
+        productListRepository: productListRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        productListNotifier.loadProductList();
+      });
+      return productListNotifier;
+    });

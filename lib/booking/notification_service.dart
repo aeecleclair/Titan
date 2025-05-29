@@ -6,13 +6,12 @@ import 'package:myecl/booking/router.dart';
 import 'package:tuple/tuple.dart';
 
 final Map<String, Tuple2<String, List<StateNotifierProvider>>>
-    bookingProviders = {
-  "userBooking": Tuple2(
-    BookingRouter.root,
-    [userBookingListProvider, confirmedBookingListProvider],
-  ),
-  "bookings": Tuple2(
-    BookingRouter.root + BookingRouter.admin,
-    [managerBookingListProvider],
-  ),
+bookingProviders = {
+  "userBooking": Tuple2(BookingRouter.root, [
+    userBookingListProvider,
+    confirmedBookingListProvider,
+  ]),
+  "bookings": Tuple2(BookingRouter.root + BookingRouter.admin, [
+    managerBookingListProvider,
+  ]),
 };

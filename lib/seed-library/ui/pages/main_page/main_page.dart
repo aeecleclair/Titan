@@ -49,7 +49,8 @@ class SeedLibraryMainPage extends HookConsumerWidget {
             crossAxisCount: 2,
             mainAxisSpacing: 20,
             crossAxisSpacing: 20,
-            childAspectRatio: MediaQuery.of(context).size.width <
+            childAspectRatio:
+                MediaQuery.of(context).size.width <
                     MediaQuery.of(context).size.height
                 ? 0.75
                 : 1.5,
@@ -69,9 +70,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
             GestureDetector(
               onTap: () {
                 resetNotifier();
-                QR.to(
-                  SeedLibraryRouter.root + SeedLibraryRouter.plants,
-                );
+                QR.to(SeedLibraryRouter.root + SeedLibraryRouter.plants);
               },
               child: const MenuCardUi(
                 text: SeedLibraryTextConstants.myPlants,

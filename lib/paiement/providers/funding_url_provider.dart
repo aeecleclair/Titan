@@ -7,7 +7,7 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 class FundingUrlNotifier extends SingleNotifier<FundingUrl> {
   final FundingRepository fundingRepository;
   FundingUrlNotifier({required this.fundingRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<FundingUrl>> getFundingUrl(InitInfo info) async {
     return await load(() => fundingRepository.getInitPaymentUrl(info));
@@ -16,6 +16,6 @@ class FundingUrlNotifier extends SingleNotifier<FundingUrl> {
 
 final fundingUrlProvider =
     StateNotifierProvider<FundingUrlNotifier, AsyncValue<FundingUrl>>((ref) {
-  final fundingUrlRepository = ref.watch(fundingRepositoryProvider);
-  return FundingUrlNotifier(fundingRepository: fundingUrlRepository);
-});
+      final fundingUrlRepository = ref.watch(fundingRepositoryProvider);
+      return FundingUrlNotifier(fundingRepository: fundingUrlRepository);
+    });

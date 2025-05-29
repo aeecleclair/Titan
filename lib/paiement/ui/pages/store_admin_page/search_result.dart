@@ -27,8 +27,9 @@ class SearchResult extends HookConsumerWidget {
     final usersNotifier = ref.watch(userList.notifier);
     final newAdmin = ref.watch(newAdminProvider);
     final newAdminNotifier = ref.watch(newAdminProvider.notifier);
-    final sellerStoreNotifier =
-        ref.watch(sellerStoreProvider(store.id).notifier);
+    final sellerStoreNotifier = ref.watch(
+      sellerStoreProvider(store.id).notifier,
+    );
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -41,8 +42,10 @@ class SearchResult extends HookConsumerWidget {
             .map(
               (simpleUser) => GestureDetector(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 5,
+                  ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -84,9 +87,7 @@ class SearchResult extends HookConsumerWidget {
                           height: 35,
                           decoration: BoxDecoration(
                             color: const Color(0xff017f80),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
                           child: Center(
                             child: const HeroIcon(

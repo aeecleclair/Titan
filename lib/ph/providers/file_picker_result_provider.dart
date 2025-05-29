@@ -11,5 +11,5 @@ class FilePickerResultNotifier extends StateNotifier<FilePickerResult?> {
 
 final filePickerResultProvider =
     StateNotifierProvider<FilePickerResultNotifier, FilePickerResult?>((ref) {
-  return FilePickerResultNotifier();
-});
+      return FilePickerResultNotifier();
+    });

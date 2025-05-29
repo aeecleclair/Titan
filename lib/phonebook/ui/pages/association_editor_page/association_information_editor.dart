@@ -19,9 +19,7 @@ import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 
 class AssociationInformationEditor extends HookConsumerWidget {
   final scrollKey = GlobalKey();
-  AssociationInformationEditor({
-    super.key,
-  });
+  AssociationInformationEditor({super.key});
 
   @override
   Widget build(context, ref) {
@@ -81,9 +79,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                       ),
                                       suffixIcon: Container(
                                         padding: const EdgeInsets.all(10),
-                                        child: const HeroIcon(
-                                          HeroIcons.pencil,
-                                        ),
+                                        child: const HeroIcon(HeroIcons.pencil),
                                       ),
                                       enabledBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(
@@ -127,9 +123,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                       ),
                                       suffixIcon: Container(
                                         padding: const EdgeInsets.all(10),
-                                        child: const HeroIcon(
-                                          HeroIcons.pencil,
-                                        ),
+                                        child: const HeroIcon(HeroIcons.pencil),
                                       ),
                                       enabledBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(
@@ -169,12 +163,12 @@ class AssociationInformationEditor extends HookConsumerWidget {
                               await tokenExpireWrapper(ref, () async {
                                 final value = await associationListNotifier
                                     .updateAssociation(
-                                  association.copyWith(
-                                    name: name.text,
-                                    description: description.text,
-                                    kind: kind,
-                                  ),
-                                );
+                                      association.copyWith(
+                                        name: name.text,
+                                        description: description.text,
+                                        kind: kind,
+                                      ),
+                                    );
                                 if (value) {
                                   displayToastWithContext(
                                     TypeMsg.msg,
@@ -270,8 +264,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                     color: Colors.white,
                                     boxShadow: [
                                       BoxShadow(
-                                        color:
-                                            Colors.black.withValues(alpha: 0.1),
+                                        color: Colors.black.withValues(
+                                          alpha: 0.1,
+                                        ),
                                         offset: const Offset(0, 1),
                                         blurRadius: 4,
                                         spreadRadius: 2,
@@ -296,8 +291,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                       StatefulBuilder(
                                         builder: (context, setState) {
                                           return Checkbox(
-                                            value:
-                                                selectedGroups.contains(group),
+                                            value: selectedGroups.contains(
+                                              group,
+                                            ),
                                             onChanged: (value) {
                                               if (value == true) {
                                                 selectedGroups.add(group);
@@ -333,13 +329,14 @@ class AssociationInformationEditor extends HookConsumerWidget {
                   ),
                   onTap: () async {
                     await tokenExpireWrapper(ref, () async {
-                      final value =
-                          await associationListNotifier.updateAssociationGroups(
-                        association.copyWith(
-                          associatedGroups:
-                              selectedGroups.map((e) => e.id).toList(),
-                        ),
-                      );
+                      final value = await associationListNotifier
+                          .updateAssociationGroups(
+                            association.copyWith(
+                              associatedGroups: selectedGroups
+                                  .map((e) => e.id)
+                                  .toList(),
+                            ),
+                          );
                       if (value) {
                         displayToastWithContext(
                           TypeMsg.msg,

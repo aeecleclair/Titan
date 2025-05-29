@@ -353,11 +353,17 @@ getOnlyDayDate(
   DateTime? lastDate,
 }) async {
   final DateTime now = DateTime.now();
-  final DateTime? date =
-      await _getDate(context, now, initialDate, firstDate, lastDate);
+  final DateTime? date = await _getDate(
+    context,
+    now,
+    initialDate,
+    firstDate,
+    lastDate,
+  );
 
-  dateController.text =
-      DateFormat('dd/MM/yyyy').format(date ?? initialDate ?? now);
+  dateController.text = DateFormat(
+    'dd/MM/yyyy',
+  ).format(date ?? initialDate ?? now);
 }
 
 getOnlyDayDateFunction(
@@ -368,8 +374,13 @@ getOnlyDayDateFunction(
   DateTime? lastDate,
 }) async {
   final DateTime now = DateTime.now();
-  final DateTime? date =
-      await _getDate(context, now, initialDate, firstDate, lastDate);
+  final DateTime? date = await _getDate(
+    context,
+    now,
+    initialDate,
+    firstDate,
+    lastDate,
+  );
 
   setDate(DateFormat('dd/MM/yyyy').format(date ?? initialDate ?? now));
 }
@@ -381,8 +392,9 @@ getOnlyHourDate(
   final DateTime now = DateTime.now();
   final TimeOfDay? time = await _getTime(context);
 
-  dateController.text =
-      DateFormat('HH:mm').format(DateTimeField.combine(now, time));
+  dateController.text = DateFormat(
+    'HH:mm',
+  ).format(DateTimeField.combine(now, time));
 }
 
 getFullDate(
@@ -393,29 +405,27 @@ getFullDate(
   DateTime? lastDate,
 }) async {
   final DateTime now = DateTime.now();
-  _getDate(context, now, initialDate, firstDate, lastDate).then(
-    (DateTime? date) {
-      if (date != null && context.mounted) {
-        _getTime(context).then(
-          (TimeOfDay? time) {
-            if (time != null) {
-              dateController.text = DateFormat('dd/MM/yyyy HH:mm')
-                  .format(DateTimeField.combine(date, time));
-            }
-          },
-        );
-      } else {
-        dateController.text =
-            DateFormat('dd/MM/yyyy HH:mm').format(initialDate ?? now);
-      }
-    },
-  );
+  _getDate(context, now, initialDate, firstDate, lastDate).then((
+    DateTime? date,
+  ) {
+    if (date != null && context.mounted) {
+      _getTime(context).then((TimeOfDay? time) {
+        if (time != null) {
+          dateController.text = DateFormat(
+            'dd/MM/yyyy HH:mm',
+          ).format(DateTimeField.combine(date, time));
+        }
+      });
+    } else {
+      dateController.text = DateFormat(
+        'dd/MM/yyyy HH:mm',
+      ).format(initialDate ?? now);
+    }
+  });
 }
 
 int generateIntFromString(String s) {
-  return s.codeUnits.reduce(
-    (value, element) => value + 100 * element,
-  );
+  return s.codeUnits.reduce((value, element) => value + 100 * element);
 }
 
 bool isEmailInValid(String email) {

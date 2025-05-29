@@ -9,8 +9,9 @@ class UserDetailRepository extends Repository {
 
   Future<List<Ticket>> getTicketsListByUserId(String userId) async {
     return List<Ticket>.from(
-      (await getList(suffix: "/$userId/tickets"))
-          .map((x) => Ticket.fromJson(x)),
+      (await getList(
+        suffix: "/$userId/tickets",
+      )).map((x) => Ticket.fromJson(x)),
     );
   }
 

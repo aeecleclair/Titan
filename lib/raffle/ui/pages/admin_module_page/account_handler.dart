@@ -20,8 +20,9 @@ class AccountHandler extends HookConsumerWidget {
     final usersNotifier = ref.watch(userList.notifier);
     final editingController = useTextEditingController();
     final searchingAmapUser = ref.watch(searchingAmapUserProvider);
-    final searchingAmapUserNotifier =
-        ref.watch(searchingAmapUserProvider.notifier);
+    final searchingAmapUserNotifier = ref.watch(
+      searchingAmapUserProvider.notifier,
+    );
     final focus = ref.watch(focusProvider);
     final focusNotifier = ref.watch(focusProvider.notifier);
     final focusNode = useFocusNode();
@@ -67,14 +68,10 @@ class AccountHandler extends HookConsumerWidget {
                 size: 30,
               ),
               enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.transparent,
-                ),
+                borderSide: BorderSide(color: Colors.transparent),
               ),
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: RaffleColorConstants.textDark,
-                ),
+                borderSide: BorderSide(color: RaffleColorConstants.textDark),
               ),
             ),
           ),
@@ -86,9 +83,7 @@ class AccountHandler extends HookConsumerWidget {
             physics: const BouncingScrollPhysics(),
             child: Row(
               children: [
-                const SizedBox(
-                  width: 15,
-                ),
+                const SizedBox(width: 15),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   child: Container(
@@ -105,8 +100,9 @@ class AccountHandler extends HookConsumerWidget {
                       borderRadius: BorderRadius.circular(30),
                       boxShadow: [
                         BoxShadow(
-                          color: RaffleColorConstants.textDark
-                              .withValues(alpha: 0.2),
+                          color: RaffleColorConstants.textDark.withValues(
+                            alpha: 0.2,
+                          ),
                           spreadRadius: 5,
                           blurRadius: 10,
                           offset: const Offset(3, 3),
@@ -121,8 +117,9 @@ class AccountHandler extends HookConsumerWidget {
                                 GestureDetector(
                                   onTap: () {
                                     searchingAmapUserNotifier.setProduct(true);
-                                    FocusScope.of(context)
-                                        .requestFocus(FocusNode());
+                                    FocusScope.of(
+                                      context,
+                                    ).requestFocus(FocusNode());
                                     focusNotifier.setFocus(false);
                                     editingController.clear();
                                   },
@@ -140,8 +137,9 @@ class AccountHandler extends HookConsumerWidget {
                                 AddingUserContainer(
                                   onAdd: () async {
                                     searchingAmapUserNotifier.setProduct(true);
-                                    FocusScope.of(context)
-                                        .requestFocus(FocusNode());
+                                    FocusScope.of(
+                                      context,
+                                    ).requestFocus(FocusNode());
                                     focusNotifier.setFocus(false);
                                     await cashNotifier.filterCashList(
                                       editingController.text,
@@ -171,16 +169,12 @@ class AccountHandler extends HookConsumerWidget {
                   ),
                 ),
                 const CashContainer(),
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
               ],
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
       ],
     );
   }

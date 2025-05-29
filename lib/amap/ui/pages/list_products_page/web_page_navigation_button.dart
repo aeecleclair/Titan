@@ -29,11 +29,7 @@ class WebPageNavigationButton extends StatelessWidget {
       ),
       child: IconButton(
         onPressed: onPressed,
-        icon: HeroIcon(
-          icon,
-          size: 25,
-          color: Colors.white,
-        ),
+        icon: HeroIcon(icon, size: 25, color: Colors.white),
       ),
     );
   }

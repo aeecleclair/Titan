@@ -11,7 +11,7 @@ enum CalendarEventType {
   happyHour,
   direction,
   nightParty,
-  other
+  other,
 }
 
 class Event {

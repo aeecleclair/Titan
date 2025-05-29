@@ -33,9 +33,7 @@ class ModuleCard extends HookConsumerWidget {
       child: TextButton(
         style: ButtonStyle(
           shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           ),
           overlayColor: WidgetStateProperty.all<Color>(
             const Color.fromARGB(37, 0, 0, 0),
@@ -66,10 +64,7 @@ class ModuleCard extends HookConsumerWidget {
                 children: [
                   Text(
                     module.name,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                    ),
+                    style: const TextStyle(fontSize: 18, color: Colors.black),
                   ),
                 ],
               ),

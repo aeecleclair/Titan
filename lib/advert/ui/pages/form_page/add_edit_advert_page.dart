@@ -75,9 +75,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                       label: AdvertTextConstants.title,
                       controller: title,
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     FormField<File>(
                       validator: (e) {
                         if (poster.value == null && !isEdit) {
@@ -118,8 +116,8 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   const BorderRadius.all(
-                                                Radius.circular(5),
-                                              ),
+                                                    Radius.circular(5),
+                                                  ),
                                               image: DecorationImage(
                                                 image: poster.value != null
                                                     ? Image.memory(
@@ -137,8 +135,8 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       const BorderRadius.all(
-                                                    Radius.circular(5),
-                                                  ),
+                                                        Radius.circular(5),
+                                                      ),
                                                   color: Colors.white
                                                       .withValues(alpha: 0.4),
                                                 ),
@@ -214,9 +212,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                       canBeEmpty: true,
                       controller: textTagsController,
                     ),
-                    const SizedBox(
-                      height: 50,
-                    ),
+                    const SizedBox(height: 50),
                     WaitingButton(
                       onTap: () async {
                         if (key.currentState == null) {
@@ -236,8 +232,9 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                               title: title.text,
                             );
                             final value = isEdit
-                                ? await advertListNotifier
-                                    .updateAdvert(newAdvert)
+                                ? await advertListNotifier.updateAdvert(
+                                    newAdvert,
+                                  )
                                 : await advertListNotifier.addAdvert(newAdvert);
                             if (value) {
                               QR.back();

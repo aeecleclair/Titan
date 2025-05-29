@@ -28,10 +28,12 @@ class AddEditItemPage extends HookConsumerWidget {
     final item = ref.watch(itemProvider);
     final isEdit = item.id != Item.empty().id;
     final name = useTextEditingController(text: item.name);
-    final quantity =
-        useTextEditingController(text: item.totalQuantity.toString());
-    final caution =
-        useTextEditingController(text: isEdit ? item.caution.toString() : '');
+    final quantity = useTextEditingController(
+      text: item.totalQuantity.toString(),
+    );
+    final caution = useTextEditingController(
+      text: isEdit ? item.caution.toString() : '',
+    );
     final lendingDuration = useTextEditingController(
       text: isEdit ? item.suggestedLendingDuration.toString() : '',
     );
@@ -60,10 +62,7 @@ class AddEditItemPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 30),
-                    TextEntry(
-                      label: LoanTextConstants.name,
-                      controller: name,
-                    ),
+                    TextEntry(label: LoanTextConstants.name, controller: name),
                     const SizedBox(height: 30),
                     TextEntry(
                       keyboardType: TextInputType.number,
@@ -103,8 +102,9 @@ class AddEditItemPage extends HookConsumerWidget {
                               id: isEdit ? item.id : '',
                               name: name.text,
                               caution: int.parse(caution.text),
-                              suggestedLendingDuration:
-                                  int.parse(lendingDuration.text),
+                              suggestedLendingDuration: int.parse(
+                                lendingDuration.text,
+                              ),
                               loanedQuantity: 1,
                               totalQuantity: int.parse(quantity.text),
                             );

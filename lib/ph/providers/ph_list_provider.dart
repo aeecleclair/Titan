@@ -40,10 +40,10 @@ class PhListNotifier extends ListNotifier<Ph> {
 
 final phListProvider =
     StateNotifierProvider<PhListNotifier, AsyncValue<List<Ph>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final notifier = PhListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadPhList();
-  });
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      final notifier = PhListNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.loadPhList();
+      });
+      return notifier;
+    });

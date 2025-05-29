@@ -10,7 +10,7 @@ class SellerListNotifier extends ListNotifier<Seller> {
       UserInformationRepository();
   AsyncValue<List<Seller>> sellerList = const AsyncValue.loading();
   SellerListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     sellerRepository.setToken(token);
   }
 
@@ -21,10 +21,10 @@ class SellerListNotifier extends ListNotifier<Seller> {
 
 final sellerListProvider =
     StateNotifierProvider<SellerListNotifier, AsyncValue<List<Seller>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  SellerListNotifier notifier = SellerListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadSellers();
-  });
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      SellerListNotifier notifier = SellerListNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.loadSellers();
+      });
+      return notifier;
+    });

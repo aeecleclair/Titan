@@ -23,9 +23,7 @@ class RecommendationLogoRepository extends LogoRepository {
 }
 
 final recommendationLogoRepositoryProvider =
-    Provider<RecommendationLogoRepository>(
-  (ref) {
-    final token = ref.watch(tokenProvider);
-    return RecommendationLogoRepository()..setToken(token);
-  },
-);
+    Provider<RecommendationLogoRepository>((ref) {
+      final token = ref.watch(tokenProvider);
+      return RecommendationLogoRepository()..setToken(token);
+    });

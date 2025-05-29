@@ -12,8 +12,9 @@ class BirdImageNotifier extends StateNotifier<Uint8List> {
 
   Future<void> getBirdImage() async {
     final image = await rootBundle.load("assets/images/bird.png");
-    external_image.Image? img =
-        external_image.decodeImage(image.buffer.asUint8List());
+    external_image.Image? img = external_image.decodeImage(
+      image.buffer.asUint8List(),
+    );
     external_image.Image resized = external_image.copyResize(img!, width: 50);
     state = Uint8List.fromList(external_image.encodePng(resized));
   }
@@ -41,7 +42,6 @@ class BirdImageNotifier extends StateNotifier<Uint8List> {
       if (pixels[i] >= 250 && pixels[i + 1] >= 250 && pixels[i + 2] >= 250) {
         continue;
       }
-
       // Detect the light blue color & switch it with the desired color's RGB value.
       else if (pixels[i] >= 250 &&
           pixels[i + 1] >= 230 &&
@@ -50,7 +50,6 @@ class BirdImageNotifier extends StateNotifier<Uint8List> {
         pixels[i + 1] = (color.shade300.g * 255).round();
         pixels[i + 2] = (color.shade300.b * 255).round();
       }
-
       // Detect the darkish blue shade & switch it with the desired color's RGB value.
       else if (pixels[i] >= 200 && pixels[i + 1] >= 100 && pixels[i + 2] >= 0) {
         pixels[i] = (color.shade300.r * 255).round();
@@ -62,8 +61,9 @@ class BirdImageNotifier extends StateNotifier<Uint8List> {
   }
 }
 
-final birdImageProvider =
-    StateNotifierProvider<BirdImageNotifier, Uint8List>((ref) {
+final birdImageProvider = StateNotifierProvider<BirdImageNotifier, Uint8List>((
+  ref,
+) {
   BirdImageNotifier notifier = BirdImageNotifier();
   notifier.getBirdImage();
   return notifier;

@@ -14,5 +14,5 @@ class AnimationNotifier extends StateNotifier<TopBarCallback> {
 
 final topBarCallBackProvider =
     StateNotifierProvider<AnimationNotifier, TopBarCallback>((ref) {
-  return AnimationNotifier();
-});
+      return AnimationNotifier();
+    });

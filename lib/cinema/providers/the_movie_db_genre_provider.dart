@@ -6,7 +6,7 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 class TheMovieDBGenreNotifier extends SingleNotifier<TheMovieDBMovie> {
   final TheMovieDBRepository theMoviesDBRepository;
   TheMovieDBGenreNotifier({required this.theMoviesDBRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<TheMovieDBMovie>> loadMovie(String id) async {
     return await load(() => theMoviesDBRepository.getMovie(id));
@@ -15,9 +15,11 @@ class TheMovieDBGenreNotifier extends SingleNotifier<TheMovieDBMovie> {
 
 final theMovieDBMovieProvider =
     StateNotifierProvider<TheMovieDBGenreNotifier, AsyncValue<TheMovieDBMovie>>(
-        (ref) {
-  final theMovieDB = ref.watch(theMovieDBRepository);
-  TheMovieDBGenreNotifier notifier =
-      TheMovieDBGenreNotifier(theMoviesDBRepository: theMovieDB);
-  return notifier;
-});
+      (ref) {
+        final theMovieDB = ref.watch(theMovieDBRepository);
+        TheMovieDBGenreNotifier notifier = TheMovieDBGenreNotifier(
+          theMoviesDBRepository: theMovieDB,
+        );
+        return notifier;
+      },
+    );

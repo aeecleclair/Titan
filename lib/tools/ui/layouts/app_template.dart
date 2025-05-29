@@ -14,8 +14,9 @@ class AppTemplate extends HookConsumerWidget {
     final versionVerifier = ref.watch(versionVerifierProvider);
     final titanVersion = ref.watch(titanVersionProvider);
     final isLoggedIn = ref.watch(isLoggedInProvider);
-    final check = versionVerifier
-        .whenData((value) => value.minimalTitanVersion <= titanVersion);
+    final check = versionVerifier.whenData(
+      (value) => value.minimalTitanVersion <= titanVersion,
+    );
 
     return check.maybeWhen(
       data: (value) {

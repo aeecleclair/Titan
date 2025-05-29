@@ -23,16 +23,10 @@ class ResearchBar extends HookConsumerWidget {
       cursorColor: Color(0xFF1D1D1D),
       decoration: const InputDecoration(
         isDense: true,
-        suffixIcon: Icon(
-          Icons.search,
-          color: Color(0xFF1D1D1D),
-          size: 30,
-        ),
+        suffixIcon: Icon(Icons.search, color: Color(0xFF1D1D1D), size: 30),
         label: Text(
           AdminTextConstants.research,
-          style: TextStyle(
-            color: Color(0xFF1D1D1D),
-          ),
+          style: TextStyle(color: Color(0xFF1D1D1D)),
         ),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: ColorConstants.gradient1),

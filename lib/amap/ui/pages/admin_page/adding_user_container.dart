@@ -15,8 +15,9 @@ class AddingUserContainer extends HookConsumerWidget {
     return AsyncChild(
       value: users,
       builder: (context, users) => Row(
-        children:
-            users.map((e) => AddingUserCard(user: e, onAdd: onAdd)).toList(),
+        children: users
+            .map((e) => AddingUserCard(user: e, onAdd: onAdd))
+            .toList(),
       ),
       loaderColor: AMAPColorConstants.greenGradient2,
     );

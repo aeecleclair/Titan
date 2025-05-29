@@ -2,10 +2,7 @@ class RecoverRequest {
   late String resetToken;
   late String newPassword;
 
-  RecoverRequest({
-    required this.resetToken,
-    required this.newPassword,
-  });
+  RecoverRequest({required this.resetToken, required this.newPassword});
 
   RecoverRequest.fromJson(Map<String, dynamic> json) {
     resetToken = json['reset_token'];
@@ -24,10 +21,7 @@ class RecoverRequest {
     newPassword = "";
   }
 
-  RecoverRequest copyWith({
-    String? resetToken,
-    String? newPassword,
-  }) {
+  RecoverRequest copyWith({String? resetToken, String? newPassword}) {
     return RecoverRequest(
       resetToken: resetToken ?? this.resetToken,
       newPassword: newPassword ?? this.newPassword,

@@ -32,54 +32,50 @@ class PhonebookRouter {
   PhonebookRouter(this.ref);
 
   QRoute route() => QRoute(
-        name: "phonebook",
-        path: PhonebookRouter.root,
-        builder: () => const PhonebookMainPage(),
-        middleware: [AuthenticatedMiddleware(ref)],
+    name: "phonebook",
+    path: PhonebookRouter.root,
+    builder: () => const PhonebookMainPage(),
+    middleware: [AuthenticatedMiddleware(ref)],
+    children: [
+      QRoute(
+        path: admin,
+        builder: () => const AdminPage(),
+        middleware: [AdminMiddleware(ref, hasPhonebookAdminAccessProvider)],
         children: [
           QRoute(
-            path: admin,
-            builder: () => const AdminPage(),
-            middleware: [
-              AdminMiddleware(ref, hasPhonebookAdminAccessProvider),
-            ],
+            path: editAssociation,
+            builder: () => AssociationEditorPage(),
             children: [
               QRoute(
-                path: editAssociation,
-                builder: () => AssociationEditorPage(),
-                children: [
-                  QRoute(
-                    path: addEditMember,
-                    builder: () => const MembershipEditorPage(),
-                  ),
-                ],
-              ),
-              QRoute(
-                path: createAssociaiton,
-                builder: () => AssociationCreationPage(),
+                path: addEditMember,
+                builder: () => const MembershipEditorPage(),
               ),
             ],
           ),
           QRoute(
-            path: associationDetail,
-            builder: () => const AssociationPage(),
+            path: createAssociaiton,
+            builder: () => AssociationCreationPage(),
+          ),
+        ],
+      ),
+      QRoute(
+        path: associationDetail,
+        builder: () => const AssociationPage(),
+        children: [
+          QRoute(
+            path: editAssociation,
+            builder: () => AssociationEditorPage(),
+            middleware: [AdminMiddleware(ref, isAssociationPresidentProvider)],
             children: [
               QRoute(
-                path: editAssociation,
-                builder: () => AssociationEditorPage(),
-                middleware: [
-                  AdminMiddleware(ref, isAssociationPresidentProvider),
-                ],
-                children: [
-                  QRoute(
-                    path: addEditMember,
-                    builder: () => const MembershipEditorPage(),
-                  ),
-                ],
+                path: addEditMember,
+                builder: () => const MembershipEditorPage(),
               ),
             ],
           ),
-          QRoute(path: memberDetail, builder: () => const MemberDetailPage()),
         ],
-      );
+      ),
+      QRoute(path: memberDetail, builder: () => const MemberDetailPage()),
+    ],
+  );
 }

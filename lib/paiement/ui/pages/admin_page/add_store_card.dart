@@ -27,8 +27,12 @@ class AddStoreCard extends ConsumerWidget {
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color:
-                  const Color.fromARGB(255, 0, 29, 29).withValues(alpha: 0.2),
+              color: const Color.fromARGB(
+                255,
+                0,
+                29,
+                29,
+              ).withValues(alpha: 0.2),
               spreadRadius: 1,
               blurRadius: 7,
               offset: const Offset(0, 3),

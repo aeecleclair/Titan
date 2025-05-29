@@ -68,10 +68,7 @@ class AdminStoreCard extends ConsumerWidget {
                     Color.fromARGB(255, 6, 75, 75),
                     Color.fromARGB(255, 0, 29, 29),
                   ],
-                  child: HeroIcon(
-                    HeroIcons.pencilSquare,
-                    color: Colors.white,
-                  ),
+                  child: HeroIcon(HeroIcons.pencilSquare, color: Colors.white),
                 ),
               ),
               const SizedBox(width: 10),
@@ -85,8 +82,9 @@ class AdminStoreCard extends ConsumerWidget {
                           "Voulez-vous vraiment supprimer cette association ?",
                       onYes: () {
                         tokenExpireWrapper(ref, () async {
-                          final value =
-                              await storeListNotifier.deleteStore(store);
+                          final value = await storeListNotifier.deleteStore(
+                            store,
+                          );
                           if (value) {
                             displayToastWithContext(
                               TypeMsg.msg,
@@ -104,16 +102,10 @@ class AdminStoreCard extends ConsumerWidget {
                   );
                 },
                 builder: (child) => CardButton(
-                  colors: const [
-                    Color(0xFF9E131F),
-                    Color(0xFF590512),
-                  ],
+                  colors: const [Color(0xFF9E131F), Color(0xFF590512)],
                   child: child,
                 ),
-                child: const HeroIcon(
-                  HeroIcons.trash,
-                  color: Colors.white,
-                ),
+                child: const HeroIcon(HeroIcons.trash, color: Colors.white),
               ),
             ],
           ),

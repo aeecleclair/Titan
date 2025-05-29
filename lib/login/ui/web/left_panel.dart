@@ -83,7 +83,9 @@ class LeftPanel extends HookConsumerWidget {
               WaitingButton(
                 onTap: () async {
                   await authNotifier.getTokenFromRequest();
-                  ref.watch(authTokenProvider).when(
+                  ref
+                      .watch(authTokenProvider)
+                      .when(
                         data: (token) {
                           QR.to(pathForwarding.path);
                         },
@@ -112,8 +114,12 @@ class LeftPanel extends HookConsumerWidget {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color.fromARGB(255, 255, 114, 0)
-                            .withValues(alpha: 0.2),
+                        color: const Color.fromARGB(
+                          255,
+                          255,
+                          114,
+                          0,
+                        ).withValues(alpha: 0.2),
                         spreadRadius: 3,
                         blurRadius: 7,
                         offset: const Offset(0, 3),

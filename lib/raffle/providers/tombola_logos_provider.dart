@@ -6,8 +6,11 @@ class TombolaLogosNotifier extends MapNotifier<String, Image> {
   TombolaLogosNotifier() : super();
 }
 
-final tombolaLogosProvider = StateNotifierProvider<TombolaLogosNotifier,
-    Map<String, AsyncValue<List<Image>>?>>((ref) {
-  TombolaLogosNotifier tombolaLogosNotifier = TombolaLogosNotifier();
-  return tombolaLogosNotifier;
-});
+final tombolaLogosProvider =
+    StateNotifierProvider<
+      TombolaLogosNotifier,
+      Map<String, AsyncValue<List<Image>>?>
+    >((ref) {
+      TombolaLogosNotifier tombolaLogosNotifier = TombolaLogosNotifier();
+      return tombolaLogosNotifier;
+    });

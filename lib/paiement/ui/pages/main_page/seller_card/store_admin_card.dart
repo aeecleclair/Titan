@@ -13,8 +13,9 @@ class StoreAdminCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final myStructures = ref.watch(myStructuresProvider);
-    final selectedStructureNotifier =
-        ref.read(selectedStructureProvider.notifier);
+    final selectedStructureNotifier = ref.read(
+      selectedStructureProvider.notifier,
+    );
     return Column(
       children: myStructures.map((structure) {
         return GestureDetector(
@@ -30,9 +31,7 @@ class StoreAdminCard extends ConsumerWidget {
                   radius: 27,
                   backgroundColor: Color.fromARGB(255, 6, 75, 75),
                 ),
-                SizedBox(
-                  width: 15,
-                ),
+                SizedBox(width: 15),
                 Expanded(
                   child: AutoSizeText(
                     "Gestion des assocations ${structure.name}",
@@ -43,9 +42,7 @@ class StoreAdminCard extends ConsumerWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
+                SizedBox(width: 10),
                 HeroIcon(
                   HeroIcons.arrowRight,
                   color: Color.fromARGB(255, 0, 29, 29),

@@ -22,11 +22,7 @@ class Information {
     return data;
   }
 
-  Information copyWith({
-    String? manager,
-    String? link,
-    String? description,
-  }) {
+  Information copyWith({String? manager, String? link, String? description}) {
     return Information(
       manager: manager ?? this.manager,
       link: link ?? this.link,
@@ -34,11 +30,8 @@ class Information {
     );
   }
 
-  static Information empty() => Information(
-        manager: '',
-        link: '',
-        description: '',
-      );
+  static Information empty() =>
+      Information(manager: '', link: '', description: '');
 
   @override
   String toString() {

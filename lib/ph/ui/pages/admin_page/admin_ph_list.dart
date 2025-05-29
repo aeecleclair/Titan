@@ -11,9 +11,7 @@ import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminPhList extends HookConsumerWidget {
-  const AdminPhList({
-    super.key,
-  });
+  const AdminPhList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,17 +24,16 @@ class AdminPhList extends HookConsumerWidget {
       child: AsyncChild(
         value: phList,
         builder: (context, phList) {
-          final list =
-              phList.where((ph) => selectedYear.contains(ph.date.year));
+          final list = phList.where(
+            (ph) => selectedYear.contains(ph.date.year),
+          );
           return Column(
             children: list
                 .map(
                   (ph) => AdminPhCard(
                     ph: ph,
                     onEdit: () {
-                      QR.to(
-                        PhRouter.root + PhRouter.admin + PhRouter.add_ph,
-                      );
+                      QR.to(PhRouter.root + PhRouter.admin + PhRouter.add_ph);
                       phNotifier.setPh(ph);
                     },
                     onDelete: () async {

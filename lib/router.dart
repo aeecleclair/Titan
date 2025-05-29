@@ -53,30 +53,22 @@ class AppRouter {
       QRoute(
         path: loading,
         builder: () => loading_page.LoadingPage(),
-        middleware: [
-          DeferredLoadingMiddleware(loading_page.loadLibrary),
-        ],
+        middleware: [DeferredLoadingMiddleware(loading_page.loadLibrary)],
       ),
       QRoute(
         path: noInternet,
         builder: () => no_internet_page.NoInternetPage(),
-        middleware: [
-          DeferredLoadingMiddleware(no_internet_page.loadLibrary),
-        ],
+        middleware: [DeferredLoadingMiddleware(no_internet_page.loadLibrary)],
       ),
       QRoute(
         path: update,
         builder: () => update_page.UpdatePage(),
-        middleware: [
-          DeferredLoadingMiddleware(update_page.loadLibrary),
-        ],
+        middleware: [DeferredLoadingMiddleware(update_page.loadLibrary)],
       ),
       QRoute(
         path: noModule,
         builder: () => no_module_page.NoModulePage(),
-        middleware: [
-          DeferredLoadingMiddleware(no_module_page.loadLibrary),
-        ],
+        middleware: [DeferredLoadingMiddleware(no_module_page.loadLibrary)],
       ),
       AdminRouter(ref).route(),
       AdvertRouter(ref).route(),

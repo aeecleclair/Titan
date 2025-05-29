@@ -8,7 +8,7 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 class SellerHistoryNotifier extends ListNotifier<History> {
   final StoresRepository storesRepository;
   SellerHistoryNotifier({required this.storesRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<History>>> getHistory(String storeId) async {
     return await loadList(() => storesRepository.getStoreHistory(storeId));
@@ -16,13 +16,14 @@ class SellerHistoryNotifier extends ListNotifier<History> {
 }
 
 final sellerHistoryProvider =
-    StateNotifierProvider<SellerHistoryNotifier, AsyncValue<List<History>>>(
-        (ref) {
-  final storesRepository = ref.watch(storesRepositoryProvider);
-  final selectedStore = ref.watch(selectedStoreProvider);
-  if (selectedStore.id != Store.empty().id) {
-    return SellerHistoryNotifier(storesRepository: storesRepository)
-      ..getHistory(selectedStore.id);
-  }
-  return SellerHistoryNotifier(storesRepository: storesRepository);
-});
+    StateNotifierProvider<SellerHistoryNotifier, AsyncValue<List<History>>>((
+      ref,
+    ) {
+      final storesRepository = ref.watch(storesRepositoryProvider);
+      final selectedStore = ref.watch(selectedStoreProvider);
+      if (selectedStore.id != Store.empty().id) {
+        return SellerHistoryNotifier(storesRepository: storesRepository)
+          ..getHistory(selectedStore.id);
+      }
+      return SellerHistoryNotifier(storesRepository: storesRepository);
+    });

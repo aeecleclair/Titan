@@ -26,8 +26,9 @@ class PlantsRepository extends Repository {
 
   Future<List<PlantSimple>> getListPlantSimpleAdmin(String userId) async {
     return List<PlantSimple>.from(
-      (await getList(suffix: "users/$userId"))
-          .map((x) => PlantSimple.fromJson(x)),
+      (await getList(
+        suffix: "users/$userId",
+      )).map((x) => PlantSimple.fromJson(x)),
     );
   }
 

@@ -27,8 +27,9 @@ void main() {
     });
 
     test('loadConfirmedEvent loads events from repository', () async {
-      when(() => mockEventRepository.getUserEventList(provider.userId))
-          .thenAnswer((_) async => [event1, event2, event3]);
+      when(
+        () => mockEventRepository.getUserEventList(provider.userId),
+      ).thenAnswer((_) async => [event1, event2, event3]);
 
       final result = await provider.loadConfirmedEvent();
 
@@ -43,8 +44,9 @@ void main() {
     });
 
     test('addEvent adds event to list', () async {
-      when(() => mockEventRepository.createEvent(event1))
-          .thenAnswer((_) async => event1);
+      when(
+        () => mockEventRepository.createEvent(event1),
+      ).thenAnswer((_) async => event1);
       provider.state = AsyncValue.data([event2, event3]);
       final result = await provider.addEvent(event1);
 
@@ -61,10 +63,13 @@ void main() {
 
     test('updateEvent updates event in list', () async {
       provider.state = AsyncValue.data([event1, event2, event3]);
-      final updatedEvent =
-          Event.empty().copyWith(id: '2', name: 'Updated Event 2');
-      when(() => mockEventRepository.updateEvent(updatedEvent))
-          .thenAnswer((_) async => true);
+      final updatedEvent = Event.empty().copyWith(
+        id: '2',
+        name: 'Updated Event 2',
+      );
+      when(
+        () => mockEventRepository.updateEvent(updatedEvent),
+      ).thenAnswer((_) async => true);
 
       final result = await provider.updateEvent(updatedEvent);
 
@@ -81,8 +86,9 @@ void main() {
 
     test('deleteEvent deletes event from list', () async {
       provider.state = AsyncValue.data([event1, event2, event3]);
-      when(() => mockEventRepository.deleteEvent(event2.id))
-          .thenAnswer((_) async => true);
+      when(
+        () => mockEventRepository.deleteEvent(event2.id),
+      ).thenAnswer((_) async => true);
 
       final result = await provider.deleteEvent(event2);
 

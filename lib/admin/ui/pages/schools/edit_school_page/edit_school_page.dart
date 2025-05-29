@@ -84,8 +84,9 @@ class EditSchoolPage extends HookConsumerWidget {
                           emailRegex: emailRegex.text,
                         );
                         schoolNotifier.setSchool(newSchool);
-                        final value =
-                            await schoolListNotifier.updateSchool(newSchool);
+                        final value = await schoolListNotifier.updateSchool(
+                          newSchool,
+                        );
                         if (value) {
                           QR.back();
                           displayToastWithContext(

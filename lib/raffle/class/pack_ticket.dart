@@ -31,13 +31,12 @@ class PackTicket {
     double? price,
     String? id,
     int? packSize,
-  }) =>
-      PackTicket(
-        raffleId: raffleId ?? this.raffleId,
-        price: price ?? this.price,
-        id: id ?? this.id,
-        packSize: packSize ?? this.packSize,
-      );
+  }) => PackTicket(
+    raffleId: raffleId ?? this.raffleId,
+    price: price ?? this.price,
+    id: id ?? this.id,
+    packSize: packSize ?? this.packSize,
+  );
 
   PackTicket.empty() {
     raffleId = "";

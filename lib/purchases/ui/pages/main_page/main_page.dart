@@ -85,8 +85,9 @@ class PurchasesMainPage extends HookConsumerWidget {
                             },
                           ),
                         ),
-                        orElse: () =>
-                            [const Text(PurchasesTextConstants.ticketsError)],
+                        orElse: () => [
+                          const Text(PurchasesTextConstants.ticketsError),
+                        ],
                       ),
                   ],
                 );

@@ -31,5 +31,5 @@ class ContenderMembersProvider extends StateNotifier<List<Member>> {
 
 final contenderMembersProvider =
     StateNotifierProvider<ContenderMembersProvider, List<Member>>((ref) {
-  return ContenderMembersProvider();
-});
+      return ContenderMembersProvider();
+    });

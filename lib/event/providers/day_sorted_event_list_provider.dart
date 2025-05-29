@@ -18,8 +18,10 @@ final daySortedEventListProvider = Provider<Map<DateTime, List<Event>>>((ref) {
           normalizedDates.add(normalizedDate(event.start));
           deltaDays.add(event.end.difference(event.start).inDays);
         } else {
-          for (final date
-              in getDateInRecurrence(event.recurrenceRule, event.start)) {
+          for (final date in getDateInRecurrence(
+            event.recurrenceRule,
+            event.start,
+          )) {
             normalizedDates.add(normalizedDate(date));
             deltaDays.add(event.end.difference(event.start).inDays);
           }
@@ -27,8 +29,8 @@ final daySortedEventListProvider = Provider<Map<DateTime, List<Event>>>((ref) {
         for (int i = 0; i < normalizedDates.length; i++) {
           final DateTime maxDate =
               normalizedNow.compareTo(normalizedDates[i]) <= 0
-                  ? normalizedDates[i]
-                  : normalizedNow;
+              ? normalizedDates[i]
+              : normalizedNow;
           final e = event.copyWith(
             start: mergeDates(normalizedDates[i], event.start),
             end: mergeDates(
@@ -38,8 +40,9 @@ final daySortedEventListProvider = Provider<Map<DateTime, List<Event>>>((ref) {
           );
           if (e.end.isAfter(now)) {
             if (sortedEventList.containsKey(maxDate)) {
-              final index = sortedEventList[maxDate]!
-                  .indexWhere((element) => element.start.isAfter(e.start));
+              final index = sortedEventList[maxDate]!.indexWhere(
+                (element) => element.start.isAfter(e.start),
+              );
               if (index == -1) {
                 sortedEventList[maxDate]!.add(e);
               } else {

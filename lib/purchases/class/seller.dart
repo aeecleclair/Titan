@@ -1,9 +1,5 @@
 class Seller {
-  Seller({
-    required this.id,
-    required this.name,
-    required this.order,
-  });
+  Seller({required this.id, required this.name, required this.order});
 
   late final String id;
   late final String name;
@@ -16,19 +12,11 @@ class Seller {
   }
 
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{
-      'id': id,
-      'name': name,
-      'order': order,
-    };
+    final data = <String, dynamic>{'id': id, 'name': name, 'order': order};
     return data;
   }
 
-  Seller copyWith({
-    String? id,
-    String? name,
-    int? order,
-  }) {
+  Seller copyWith({String? id, String? name, int? order}) {
     return Seller(
       id: id ?? this.id,
       name: name ?? this.name,

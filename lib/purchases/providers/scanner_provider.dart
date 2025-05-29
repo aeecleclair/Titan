@@ -36,7 +36,7 @@ class ScannerNotifier extends SingleNotifier<Ticket> {
 
 final scannerProvider =
     StateNotifierProvider<ScannerNotifier, AsyncValue<Ticket>>((ref) {
-  final token = ref.watch(tokenProvider);
-  ScannerNotifier notifier = ScannerNotifier(token: token);
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      ScannerNotifier notifier = ScannerNotifier(token: token);
+      return notifier;
+    });

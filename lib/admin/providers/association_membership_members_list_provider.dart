@@ -16,7 +16,7 @@ class AssociationMembershipMembersNotifier
   }) : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<UserAssociationMembership>>>
-      loadAssociationMembershipMembers(
+  loadAssociationMembershipMembers(
     String associationMembershipId, {
     DateTime? minimalStartDate,
     DateTime? minimalEndDate,
@@ -26,12 +26,12 @@ class AssociationMembershipMembersNotifier
     return await loadList(
       () async =>
           associationMembershipRepository.getAssociationMembershipMembers(
-        associationMembershipId,
-        minimalStartDate,
-        minimalEndDate,
-        maximalStartDate,
-        maximalEndDate,
-      ),
+            associationMembershipId,
+            minimalStartDate,
+            minimalEndDate,
+            maximalStartDate,
+            maximalEndDate,
+          ),
     );
   }
 
@@ -62,8 +62,9 @@ class AssociationMembershipMembersNotifier
           .updateUserMembership(associationMembership),
       (userAssociationMemberships, membership) => userAssociationMemberships
         ..[userAssociationMemberships.indexWhere(
-          (g) => g.id == membership.id,
-        )] = membership,
+              (g) => g.id == membership.id,
+            )] =
+            membership,
       associationMembership,
     );
   }
@@ -82,15 +83,20 @@ class AssociationMembershipMembersNotifier
   }
 }
 
-final associationMembershipMembersProvider = StateNotifierProvider<
-    AssociationMembershipMembersNotifier,
-    AsyncValue<List<UserAssociationMembership>>>((ref) {
-  final associationMembershipUserRepository =
-      ref.watch(associationMembershipUserRepositoryProvider);
-  final associationMembershipRepository =
-      ref.watch(associationMembershipRepositoryProvider);
-  return AssociationMembershipMembersNotifier(
-    associationMembershipRepository: associationMembershipRepository,
-    associationMembershipUserRepository: associationMembershipUserRepository,
-  );
-});
+final associationMembershipMembersProvider =
+    StateNotifierProvider<
+      AssociationMembershipMembersNotifier,
+      AsyncValue<List<UserAssociationMembership>>
+    >((ref) {
+      final associationMembershipUserRepository = ref.watch(
+        associationMembershipUserRepositoryProvider,
+      );
+      final associationMembershipRepository = ref.watch(
+        associationMembershipRepositoryProvider,
+      );
+      return AssociationMembershipMembersNotifier(
+        associationMembershipRepository: associationMembershipRepository,
+        associationMembershipUserRepository:
+            associationMembershipUserRepository,
+      );
+    });

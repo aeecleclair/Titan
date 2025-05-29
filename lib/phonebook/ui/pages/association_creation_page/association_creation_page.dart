@@ -44,9 +44,7 @@ class AssociationCreationPage extends HookConsumerWidget {
           key: key,
           child: Column(
             children: [
-              const SizedBox(
-                height: 30,
-              ),
+              const SizedBox(height: 30),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
                 child: Align(
@@ -61,19 +59,13 @@ class AssociationCreationPage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 30,
-              ),
+              const SizedBox(height: 30),
               KindsBar(key: scrollKey),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Column(
                   children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 10,
-                      ),
-                    ),
+                    Container(margin: const EdgeInsets.symmetric(vertical: 10)),
                     TextEntry(
                       controller: name,
                       label: AdminTextConstants.name,
@@ -110,15 +102,15 @@ class AssociationCreationPage extends HookConsumerWidget {
                           return;
                         }
                         await tokenExpireWrapper(ref, () async {
-                          final value =
-                              await associationListNotifier.createAssociation(
-                            Association.empty().copyWith(
-                              name: name.text,
-                              description: description.text,
-                              kind: kind,
-                              mandateYear: DateTime.now().year,
-                            ),
-                          );
+                          final value = await associationListNotifier
+                              .createAssociation(
+                                Association.empty().copyWith(
+                                  name: name.text,
+                                  description: description.text,
+                                  kind: kind,
+                                  mandateYear: DateTime.now().year,
+                                ),
+                              );
                           if (value) {
                             displayToastWithContext(
                               TypeMsg.msg,

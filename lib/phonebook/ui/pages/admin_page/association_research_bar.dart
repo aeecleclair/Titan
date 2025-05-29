@@ -30,9 +30,7 @@ class AssociationResearchBar extends HookConsumerWidget {
         ),
         label: Text(
           PhonebookTextConstants.research,
-          style: TextStyle(
-            color: PhonebookColorConstants.textDark,
-          ),
+          style: TextStyle(color: PhonebookColorConstants.textDark),
         ),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: ColorConstants.gradient1),

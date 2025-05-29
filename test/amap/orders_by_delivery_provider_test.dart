@@ -11,16 +11,15 @@ void main() {
   group('Testing OrderByDeliveryListNotifier : loadDeliveryOrderList', () {
     test('Should load delivery order list', () async {
       final mockOrderByDeliveryListRepository = MockOrderListRepository();
-      final orderByDeliveryList = [
-        Order.empty().copyWith(id: "1"),
-      ];
-      when(() => mockOrderByDeliveryListRepository.getDeliveryOrderList(""))
-          .thenAnswer((_) async => orderByDeliveryList);
+      final orderByDeliveryList = [Order.empty().copyWith(id: "1")];
+      when(
+        () => mockOrderByDeliveryListRepository.getDeliveryOrderList(""),
+      ).thenAnswer((_) async => orderByDeliveryList);
       final orderByDeliveryListNotifier = OrderByDeliveryListNotifier(
         orderListRepository: mockOrderByDeliveryListRepository,
       );
-      final deliveryOrderList =
-          await orderByDeliveryListNotifier.loadDeliveryOrderList("");
+      final deliveryOrderList = await orderByDeliveryListNotifier
+          .loadDeliveryOrderList("");
       expect(deliveryOrderList, isA<AsyncData<List<Order>>>());
       expect(
         deliveryOrderList.when(

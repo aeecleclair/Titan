@@ -7,9 +7,7 @@ void main() {
   group('BookingNotifier', () {
     test('setBooking should update state', () {
       final bookingNotifier = BookingNotifier();
-      final booking = Booking.empty().copyWith(
-        id: '123',
-      );
+      final booking = Booking.empty().copyWith(id: '123');
 
       bookingNotifier.setBooking(booking);
 

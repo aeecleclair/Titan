@@ -9,7 +9,7 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 class GroupLogoNotifier extends SingleNotifier<Image> {
   final GroupLogoRepository groupLogoRepository;
   GroupLogoNotifier({required this.groupLogoRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<Image> getLogo(String id) async {
     final bytes = await groupLogoRepository.getLogo(id, suffix: "/logo");
@@ -28,6 +28,6 @@ class GroupLogoNotifier extends SingleNotifier<Image> {
 
 final groupLogoProvider =
     StateNotifierProvider<GroupLogoNotifier, AsyncValue<Image>>((ref) {
-  final groupLogoRepository = GroupLogoRepository();
-  return GroupLogoNotifier(groupLogoRepository: groupLogoRepository);
-});
+      final groupLogoRepository = GroupLogoRepository();
+      return GroupLogoNotifier(groupLogoRepository: groupLogoRepository);
+    });

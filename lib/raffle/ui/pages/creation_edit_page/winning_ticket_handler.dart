@@ -24,18 +24,13 @@ class WinningTicketHandler extends HookConsumerWidget {
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
           child: Row(
             children: [
-              const SizedBox(
-                width: 15,
-                height: 125,
-              ),
+              const SizedBox(width: 15, height: 125),
               winningTicketList.when(
                 data: (data) {
                   if (data.isEmpty) {
@@ -67,9 +62,7 @@ class WinningTicketHandler extends HookConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 5,
-              ),
+              const SizedBox(width: 5),
             ],
           ),
         ),

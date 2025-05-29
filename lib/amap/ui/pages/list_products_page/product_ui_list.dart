@@ -128,10 +128,7 @@ class ProductUiInList extends ConsumerWidget {
                   } else {
                     orderNotifier.setOrder(
                       order.copyWith(
-                        products: [
-                          ...order.products,
-                          p.copyWith(quantity: 1),
-                        ],
+                        products: [...order.products, p.copyWith(quantity: 1)],
                         amount: newAmount,
                       ),
                     );

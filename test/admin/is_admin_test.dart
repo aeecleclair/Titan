@@ -34,9 +34,7 @@ void main() {
         overrides: [
           userProvider.overrideWithValue(
             User.empty().copyWith(
-              groups: [
-                SimpleGroup.empty().copyWith(id: '123', name: 'User'),
-              ],
+              groups: [SimpleGroup.empty().copyWith(id: '123', name: 'User')],
             ),
           ),
         ],

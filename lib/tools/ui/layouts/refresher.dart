@@ -25,40 +25,40 @@ class Refresher extends HookConsumerWidget {
   }
 
   Widget buildAndroidList(WidgetRef ref) => LayoutBuilder(
-        builder: (context, constraints) => RefreshIndicator(
+    builder: (context, constraints) => RefreshIndicator(
+      onRefresh: () async {
+        tokenExpireWrapper(ref, onRefresh);
+      },
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
+        ),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: constraints.maxHeight),
+          child: child,
+        ),
+      ),
+    ),
+  );
+  Widget buildIOSList(WidgetRef ref) => LayoutBuilder(
+    builder: (context, constraints) => CustomScrollView(
+      shrinkWrap: false,
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
+      slivers: [
+        CupertinoSliverRefreshControl(
           onRefresh: () async {
             tokenExpireWrapper(ref, onRefresh);
           },
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics(),
-            ),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: constraints.maxHeight),
-              child: child,
-            ),
+        ),
+        SliverToBoxAdapter(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: child,
           ),
         ),
-      );
-  Widget buildIOSList(WidgetRef ref) => LayoutBuilder(
-        builder: (context, constraints) => CustomScrollView(
-          shrinkWrap: false,
-          physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics(),
-          ),
-          slivers: [
-            CupertinoSliverRefreshControl(
-              onRefresh: () async {
-                tokenExpireWrapper(ref, onRefresh);
-              },
-            ),
-            SliverToBoxAdapter(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: child,
-              ),
-            ),
-          ],
-        ),
-      );
+      ],
+    ),
+  );
 }

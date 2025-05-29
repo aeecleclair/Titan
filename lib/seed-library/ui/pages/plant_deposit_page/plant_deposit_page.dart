@@ -43,8 +43,9 @@ class PlantDepositPage extends HookConsumerWidget {
     final selectedSpecies = ref.watch(speciesProvider);
     final selectedSpeciesNotifier = ref.watch(speciesProvider.notifier);
     final propagationMethod = ref.watch(propagationMethodProvider);
-    final propagationMethodNotifier =
-        ref.watch(propagationMethodProvider.notifier);
+    final propagationMethodNotifier = ref.watch(
+      propagationMethodProvider.notifier,
+    );
 
     final seedQuantity = useTextEditingController();
     final notes = useTextEditingController();
@@ -69,10 +70,7 @@ class PlantDepositPage extends HookConsumerWidget {
             ? const Center(
                 child: Text(
                   SeedLibraryTextConstants.depositNotAvailable,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               )
             : Form(
@@ -87,9 +85,7 @@ class PlantDepositPage extends HookConsumerWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     const Text(
                       SeedLibraryTextConstants.ancestor,
                       style: TextStyle(
@@ -107,11 +103,13 @@ class PlantDepositPage extends HookConsumerWidget {
                               species: species,
                               onClicked: () async {
                                 selectedAncestor.id == e.id
-                                    ? selectedAncestorNotifier
-                                        .setPlant(PlantSimple.empty())
+                                    ? selectedAncestorNotifier.setPlant(
+                                        PlantSimple.empty(),
+                                      )
                                     : selectedAncestorNotifier.setPlant(e);
-                                final plant =
-                                    await plantNotifier.loadPlant(e.id);
+                                final plant = await plantNotifier.loadPlant(
+                                  e.id,
+                                );
                                 plant.whenData(
                                   (value) =>
                                       notes.text = value.currentNote ?? '',
@@ -140,8 +138,9 @@ class PlantDepositPage extends HookConsumerWidget {
                                 species: e,
                                 onClicked: () {
                                   selectedSpecies.id == e.id
-                                      ? selectedSpeciesNotifier
-                                          .setSpecies(Species.empty())
+                                      ? selectedSpeciesNotifier.setSpecies(
+                                          Species.empty(),
+                                        )
                                       : selectedSpeciesNotifier.setSpecies(e);
                                 },
                                 selected: selectedSpecies.id == e.id,
@@ -223,31 +222,33 @@ class PlantDepositPage extends HookConsumerWidget {
                                 return;
                               }
                               await tokenExpireWrapper(ref, () async {
-                                final value =
-                                    await plantListNotifier.createPlant(
-                                  PlantCreation(
-                                    ancestorId: selectedAncestor.id == ''
-                                        ? null
-                                        : selectedAncestor.id,
-                                    speciesId: selectedAncestor.id == ''
-                                        ? selectedSpecies.id
-                                        : selectedAncestor.speciesId,
-                                    propagationMethod: propagationMethod,
-                                    nbSeedsEnvelope: propagationMethod ==
-                                            PropagationMethod.graine
-                                        ? int.parse(seedQuantity.text)
-                                        : 1,
-                                    previousNote: notes.text,
-                                  ),
-                                );
+                                final value = await plantListNotifier
+                                    .createPlant(
+                                      PlantCreation(
+                                        ancestorId: selectedAncestor.id == ''
+                                            ? null
+                                            : selectedAncestor.id,
+                                        speciesId: selectedAncestor.id == ''
+                                            ? selectedSpecies.id
+                                            : selectedAncestor.speciesId,
+                                        propagationMethod: propagationMethod,
+                                        nbSeedsEnvelope:
+                                            propagationMethod ==
+                                                PropagationMethod.graine
+                                            ? int.parse(seedQuantity.text)
+                                            : 1,
+                                        previousNote: notes.text,
+                                      ),
+                                    );
                                 if (value) {
                                   displayToastWithContext(
                                     TypeMsg.msg,
                                     SeedLibraryTextConstants.addedPlant,
                                   );
                                   showDialog(
-                                    context:
-                                        context.mounted ? context : context,
+                                    context: context.mounted
+                                        ? context
+                                        : context,
                                     builder: (context) {
                                       return AlertDialog(
                                         title: Text(
@@ -274,10 +275,12 @@ class PlantDepositPage extends HookConsumerWidget {
                                     SeedLibraryTextConstants.addingError,
                                   );
                                 }
-                                selectedSpeciesNotifier
-                                    .setSpecies(Species.empty());
-                                selectedAncestorNotifier
-                                    .setPlant(PlantSimple.empty());
+                                selectedSpeciesNotifier.setSpecies(
+                                  Species.empty(),
+                                );
+                                selectedAncestorNotifier.setPlant(
+                                  PlantSimple.empty(),
+                                );
                                 seedQuantity.clear();
                                 notes.clear();
                               });

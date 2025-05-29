@@ -34,50 +34,46 @@ class VoteRouter {
   VoteRouter(this.ref);
 
   QRoute route() => QRoute(
-        name: "vote",
-        path: VoteRouter.root,
-        builder: () => main_page.VoteMainPage(),
+    name: "vote",
+    path: VoteRouter.root,
+    builder: () => main_page.VoteMainPage(),
+    middleware: [
+      AuthenticatedMiddleware(ref),
+      DeferredLoadingMiddleware(main_page.loadLibrary),
+    ],
+    children: [
+      QRoute(
+        path: admin,
+        builder: () => admin_page.AdminPage(),
         middleware: [
-          AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary),
+          AdminMiddleware(ref, isVoteAdminProvider),
+          DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [
-          QRoute(
-            path: admin,
-            builder: () => admin_page.AdminPage(),
-            middleware: [
-              AdminMiddleware(ref, isVoteAdminProvider),
-              DeferredLoadingMiddleware(admin_page.loadLibrary),
-            ],
-            children: [
-              QRoute(
-                path: detail,
-                builder: () => detail_page.DetailPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(detail_page.loadLibrary),
-                ],
-              ),
-              QRoute(
-                path: addEditContender,
-                builder: () => add_edit_contender.AddEditContenderPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(add_edit_contender.loadLibrary),
-                ],
-              ),
-              QRoute(
-                path: addSection,
-                builder: () => add_section.AddSectionPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(add_section.loadLibrary),
-                ],
-              ),
-            ],
-          ),
           QRoute(
             path: detail,
             builder: () => detail_page.DetailPage(),
             middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
           ),
+          QRoute(
+            path: addEditContender,
+            builder: () => add_edit_contender.AddEditContenderPage(),
+            middleware: [
+              DeferredLoadingMiddleware(add_edit_contender.loadLibrary),
+            ],
+          ),
+          QRoute(
+            path: addSection,
+            builder: () => add_section.AddSectionPage(),
+            middleware: [DeferredLoadingMiddleware(add_section.loadLibrary)],
+          ),
         ],
-      );
+      ),
+      QRoute(
+        path: detail,
+        builder: () => detail_page.DetailPage(),
+        middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
+      ),
+    ],
+  );
 }

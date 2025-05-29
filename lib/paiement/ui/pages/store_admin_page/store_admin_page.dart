@@ -21,8 +21,9 @@ class StoreAdminPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(selectedStoreProvider);
     final storeSellers = ref.watch(sellerStoreProvider(store.id));
-    final storeSellersNotifier =
-        ref.read(sellerStoreProvider(store.id).notifier);
+    final storeSellersNotifier = ref.read(
+      sellerStoreProvider(store.id).notifier,
+    );
     final usersNotifier = ref.watch(userList.notifier);
     final queryController = useTextEditingController();
     final isSearching = useState(false);
@@ -83,11 +84,9 @@ class StoreAdminPage extends HookConsumerWidget {
                 builder: (context, storeSellers) {
                   return Column(
                     children: [
-                      ...storeSellers.map(
-                        (storeSeller) {
-                          return SellerRightCard(storeSeller: storeSeller);
-                        },
-                      ),
+                      ...storeSellers.map((storeSeller) {
+                        return SellerRightCard(storeSeller: storeSeller);
+                      }),
                     ],
                   );
                 },
@@ -104,8 +103,9 @@ class StoreAdminPage extends HookConsumerWidget {
                         onChanged: (value) {
                           tokenExpireWrapper(ref, () async {
                             if (queryController.text.isNotEmpty) {
-                              await usersNotifier
-                                  .filterUsers(queryController.text);
+                              await usersNotifier.filterUsers(
+                                queryController.text,
+                              );
                             } else {
                               usersNotifier.clear();
                             }

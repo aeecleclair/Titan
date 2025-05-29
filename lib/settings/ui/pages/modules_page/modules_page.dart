@@ -18,10 +18,7 @@ class ModulesPage extends HookConsumerWidget {
           physics: const BouncingScrollPhysics(),
           proxyDecorator: (child, index, animation) {
             return Material(
-              child: FadeTransition(
-                opacity: animation,
-                child: child,
-              ),
+              child: FadeTransition(opacity: animation, child: child),
             );
           },
           onReorder: (int oldIndex, int newIndex) {
@@ -67,10 +64,7 @@ class ModulesPage extends HookConsumerWidget {
                         modulesNotifier.toggleModule(module);
                       },
                     ),
-                    const HeroIcon(
-                      HeroIcons.chevronUpDown,
-                      size: 30,
-                    ),
+                    const HeroIcon(HeroIcons.chevronUpDown, size: 30),
                   ],
                 ),
               ),

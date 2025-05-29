@@ -23,10 +23,12 @@ class AdminSessionCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sessionPoster = ref
-        .watch(sessionPosterMapProvider.select((value) => value[session.id]));
-    final sessionPosterMapNotifier =
-        ref.read(sessionPosterMapProvider.notifier);
+    final sessionPoster = ref.watch(
+      sessionPosterMapProvider.select((value) => value[session.id]),
+    );
+    final sessionPosterMapNotifier = ref.read(
+      sessionPosterMapProvider.notifier,
+    );
     final sessionPosterNotifier = ref.read(sessionPosterProvider.notifier);
     return GestureDetector(
       onTap: onTap,
@@ -59,18 +61,18 @@ class AdminSessionCard extends HookConsumerWidget {
                   mapKey: session.id,
                   loader: (sessionId) =>
                       sessionPosterNotifier.getLogo(sessionId),
-                  dataBuilder: (context, data) => Image(
-                    image: data.first.image,
-                    fit: BoxFit.cover,
-                  ),
+                  dataBuilder: (context, data) =>
+                      Image(image: data.first.image, fit: BoxFit.cover),
                   errorBuilder: (error, stack) => const Center(
                     child: HeroIcon(HeroIcons.exclamationCircle),
                   ),
                 ),
               ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 7,
+                ),
                 height: 95,
                 child: Column(
                   children: [

@@ -13,19 +13,19 @@ class SelectedTransactionsNotifier extends StateNotifier<List<History>> {
 
 final selectedTransactionsProvider =
     StateNotifierProvider<SelectedTransactionsNotifier, List<History>>((ref) {
-  final history = ref.watch(myHistoryProvider);
-  final currentMonth = ref.watch(selectedMonthProvider);
-  return history.maybeWhen(
-    orElse: () => SelectedTransactionsNotifier([]),
-    data: (history) => SelectedTransactionsNotifier(
-      history
-          .where(
-            (element) =>
-                element.status == TransactionStatus.confirmed &&
-                element.creation.year == currentMonth.year &&
-                element.creation.month == currentMonth.month,
-          )
-          .toList(),
-    ),
-  );
-});
+      final history = ref.watch(myHistoryProvider);
+      final currentMonth = ref.watch(selectedMonthProvider);
+      return history.maybeWhen(
+        orElse: () => SelectedTransactionsNotifier([]),
+        data: (history) => SelectedTransactionsNotifier(
+          history
+              .where(
+                (element) =>
+                    element.status == TransactionStatus.confirmed &&
+                    element.creation.year == currentMonth.year &&
+                    element.creation.month == currentMonth.month,
+              )
+              .toList(),
+        ),
+      );
+    });

@@ -23,7 +23,7 @@ class TagListNotifier extends ListNotifier<String> {
 
 final tagListProvider =
     StateNotifierProvider<TagListNotifier, AsyncValue<List<String>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  TagListNotifier notifier = TagListNotifier(token: token);
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      TagListNotifier notifier = TagListNotifier(token: token);
+      return notifier;
+    });

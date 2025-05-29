@@ -3,10 +3,7 @@ import 'package:myecl/phonebook/class/membership.dart';
 import 'member.dart';
 
 class CompleteMember {
-  CompleteMember({
-    required this.member,
-    required this.memberships,
-  });
+  CompleteMember({required this.member, required this.memberships});
 
   late final Member member;
   late final List<Membership> memberships;
@@ -37,10 +34,7 @@ class CompleteMember {
     return data;
   }
 
-  CompleteMember copyWith({
-    Member? member,
-    List<Membership>? membership,
-  }) {
+  CompleteMember copyWith({Member? member, List<Membership>? membership}) {
     return CompleteMember(
       member: member ?? this.member,
       memberships: membership ?? memberships,

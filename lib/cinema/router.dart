@@ -32,13 +32,26 @@ class CinemaRouter {
   CinemaRouter(this.ref);
 
   QRoute route() => QRoute(
-        name: "cinema",
-        path: CinemaRouter.root,
-        builder: () => main_page.CinemaMainPage(),
+    name: "cinema",
+    path: CinemaRouter.root,
+    builder: () => main_page.CinemaMainPage(),
+    middleware: [
+      AuthenticatedMiddleware(ref),
+      NotificationMiddleWare(ref),
+      DeferredLoadingMiddleware(main_page.loadLibrary),
+    ],
+    children: [
+      QRoute(
+        path: detail,
+        builder: () => detail_page.DetailPage(),
+        middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
+      ),
+      QRoute(
+        path: admin,
+        builder: () => admin_page.AdminPage(),
         middleware: [
-          AuthenticatedMiddleware(ref),
-          NotificationMiddleWare(ref),
-          DeferredLoadingMiddleware(main_page.loadLibrary),
+          AdminMiddleware(ref, isCinemaAdminProvider),
+          DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [
           QRoute(
@@ -47,31 +60,14 @@ class CinemaRouter {
             middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
           ),
           QRoute(
-            path: admin,
-            builder: () => admin_page.AdminPage(),
+            path: addEdit,
+            builder: () => add_edit_session_page.AddEditSessionPage(),
             middleware: [
-              AdminMiddleware(ref, isCinemaAdminProvider),
-              DeferredLoadingMiddleware(admin_page.loadLibrary),
-            ],
-            children: [
-              QRoute(
-                path: detail,
-                builder: () => detail_page.DetailPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(detail_page.loadLibrary),
-                ],
-              ),
-              QRoute(
-                path: addEdit,
-                builder: () => add_edit_session_page.AddEditSessionPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(
-                    add_edit_session_page.loadLibrary,
-                  ),
-                ],
-              ),
+              DeferredLoadingMiddleware(add_edit_session_page.loadLibrary),
             ],
           ),
         ],
-      );
+      ),
+    ],
+  );
 }

@@ -15,5 +15,5 @@ class MembersNotifier extends StateNotifier<List<SimpleUser>> {
 
 final membersProvider =
     StateNotifierProvider<MembersNotifier, List<SimpleUser>>(
-  (ref) => MembersNotifier(),
-);
+      (ref) => MembersNotifier(),
+    );

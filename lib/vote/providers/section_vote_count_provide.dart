@@ -5,7 +5,7 @@ import 'package:myecl/vote/repositories/section_vote_count_repository.dart';
 class SectionVoteCountNotifier extends SingleNotifier<int> {
   final SectionVoteCountRepository repository;
   SectionVoteCountNotifier({required this.repository})
-      : super(const AsyncLoading());
+    : super(const AsyncLoading());
 
   Future<AsyncValue<int>> loadCount(String id) async {
     return await load(() => repository.getSectionVoteCount(id));
@@ -14,6 +14,6 @@ class SectionVoteCountNotifier extends SingleNotifier<int> {
 
 final sectionVoteCountProvider =
     StateNotifierProvider<SectionVoteCountNotifier, AsyncValue<int>>((ref) {
-  final repository = ref.watch(sectionVoteCountRepositoryProvider);
-  return SectionVoteCountNotifier(repository: repository);
-});
+      final repository = ref.watch(sectionVoteCountRepositoryProvider);
+      return SectionVoteCountNotifier(repository: repository);
+    });

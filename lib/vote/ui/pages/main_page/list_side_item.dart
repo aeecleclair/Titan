@@ -23,8 +23,9 @@ class ListSideItem extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sectionIdNotifier = ref.watch(sectionIdProvider.notifier);
     final selectedContender = ref.watch(selectedContenderProvider);
-    final selectedContenderNotifier =
-        ref.watch(selectedContenderProvider.notifier);
+    final selectedContenderNotifier = ref.watch(
+      selectedContenderProvider.notifier,
+    );
     final section = ref.watch(sectionProvider);
     List<String> votedSections = [];
     ref.watch(votedSectionProvider).whenData((value) {

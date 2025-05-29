@@ -47,12 +47,8 @@ class CentralisationMainPage extends HookConsumerWidget {
                       scale: 1 + .05 * animation.value,
                       child: widget,
                     ),
-                    header: const SizedBox(
-                      width: 15,
-                    ),
-                    footer: const SizedBox(
-                      width: 15,
-                    ),
+                    header: const SizedBox(width: 15),
+                    footer: const SizedBox(width: 15),
                     onReorder: favoritesNameNotifier.reorderFavorites,
                     children: favorites
                         .map(
@@ -62,8 +58,9 @@ class CentralisationMainPage extends HookConsumerWidget {
                         .toList(),
                   ),
                 ),
-              ...sections
-                  .map<Widget>((section) => SectionList(section: section)),
+              ...sections.map<Widget>(
+                (section) => SectionList(section: section),
+              ),
             ],
           ),
         ),

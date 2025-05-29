@@ -7,18 +7,14 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 class ScanNotifier extends SingleNotifier<Transaction> {
   final StoresRepository storesRepository;
   ScanNotifier({required this.storesRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<Transaction>?> scan(
     String storeId,
     QrCodeData data, {
     bool? bypass,
   }) async {
-    var value = await storesRepository.scan(
-      storeId,
-      data,
-      bypass,
-    );
+    var value = await storesRepository.scan(storeId, data, bypass);
     if (value == null) {
       return null;
     } else {
@@ -27,16 +23,8 @@ class ScanNotifier extends SingleNotifier<Transaction> {
     }
   }
 
-  Future<bool> canScan(
-    String storeId,
-    QrCodeData data, {
-    bool? bypass,
-  }) async {
-    return storesRepository.canScan(
-      storeId,
-      data,
-      bypass,
-    );
+  Future<bool> canScan(String storeId, QrCodeData data, {bool? bypass}) async {
+    return storesRepository.canScan(storeId, data, bypass);
   }
 
   void reset() {
@@ -46,6 +34,6 @@ class ScanNotifier extends SingleNotifier<Transaction> {
 
 final scanProvider =
     StateNotifierProvider<ScanNotifier, AsyncValue<Transaction>>((ref) {
-  final storesRepository = ref.watch(storesRepositoryProvider);
-  return ScanNotifier(storesRepository: storesRepository);
-});
+      final storesRepository = ref.watch(storesRepositoryProvider);
+      return ScanNotifier(storesRepository: storesRepository);
+    });

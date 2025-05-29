@@ -11,7 +11,7 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
   final AssociationMemberRepository associationMemberRepository =
       AssociationMemberRepository();
   AssociationMemberListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     associationMemberRepository.setToken(token);
   }
 
@@ -28,14 +28,12 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
   }
 
   Future<bool> addMember(CompleteMember member, Membership membership) async {
-    return await add(
-      (member) async {
-        member.memberships
-            .add(await associationMemberRepository.addMember(membership));
-        return member;
-      },
-      member,
-    );
+    return await add((member) async {
+      member.memberships.add(
+        await associationMemberRepository.addMember(membership),
+      );
+      return member;
+    }, member);
   }
 
   Future<bool> updateMember(
@@ -118,18 +116,22 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
   }
 }
 
-final associationMemberListProvider = StateNotifierProvider<
-    AssociationMemberListNotifier, AsyncValue<List<CompleteMember>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  AssociationMemberListNotifier provider =
-      AssociationMemberListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    final association = ref.watch(associationProvider);
+final associationMemberListProvider =
+    StateNotifierProvider<
+      AssociationMemberListNotifier,
+      AsyncValue<List<CompleteMember>>
+    >((ref) {
+      final token = ref.watch(tokenProvider);
+      AssociationMemberListNotifier provider = AssociationMemberListNotifier(
+        token: token,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        final association = ref.watch(associationProvider);
 
-    await provider.loadMembers(
-      association.id,
-      association.mandateYear.toString(),
-    );
-  });
-  return provider;
-});
+        await provider.loadMembers(
+          association.id,
+          association.mandateYear.toString(),
+        );
+      });
+      return provider;
+    });

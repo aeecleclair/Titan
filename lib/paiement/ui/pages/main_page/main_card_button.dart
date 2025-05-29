@@ -19,9 +19,7 @@ class MainCardButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         WaitingButton(
           onTap: onPressed,
           builder: (child) => Container(
@@ -46,15 +44,9 @@ class MainCardButton extends StatelessWidget {
             ),
             child: child,
           ),
-          child: HeroIcon(
-            icon,
-            color: Colors.white,
-            size: 30,
-          ),
+          child: HeroIcon(icon, color: Colors.white, size: 30),
         ),
-        const SizedBox(
-          height: 5,
-        ),
+        const SizedBox(height: 5),
         Text(
           title,
           style: TextStyle(

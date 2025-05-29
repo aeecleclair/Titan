@@ -7,7 +7,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class CinemaTopicsProvider extends ListNotifier<String> {
   final CinemaTopicRepository cinemaTopicRepository = CinemaTopicRepository();
   CinemaTopicsProvider({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     cinemaTopicRepository.setToken(token);
   }
 
@@ -45,12 +45,13 @@ class CinemaTopicsProvider extends ListNotifier<String> {
 }
 
 final cinemaTopicsProvider =
-    StateNotifierProvider<CinemaTopicsProvider, AsyncValue<List<String>>>(
-        (ref) {
-  final token = ref.watch(tokenProvider);
-  CinemaTopicsProvider notifier = CinemaTopicsProvider(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    notifier.getTopics();
-  });
-  return notifier;
-});
+    StateNotifierProvider<CinemaTopicsProvider, AsyncValue<List<String>>>((
+      ref,
+    ) {
+      final token = ref.watch(tokenProvider);
+      CinemaTopicsProvider notifier = CinemaTopicsProvider(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        notifier.getTopics();
+      });
+      return notifier;
+    });

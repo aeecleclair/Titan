@@ -30,36 +30,23 @@ class PurchasesRouter {
   PurchasesRouter(this.ref);
 
   QRoute route() => QRoute(
-        name: "purchases",
-        path: PurchasesRouter.root,
-        builder: () => const PurchasesMainPage(),
-        middleware: [AuthenticatedMiddleware(ref)],
-        children: [
-          QRoute(
-            path: scan,
-            builder: () => const ScanPage(),
-            middleware: [
-              AdminMiddleware(ref, isPurchasesAdminProvider),
-            ],
-          ),
-          QRoute(
-            path: history,
-            builder: () => const HistoryPage(),
-            children: [
-              QRoute(
-                path: purchase,
-                builder: () => const PurchasePage(),
-              ),
-            ],
-          ),
-          QRoute(
-            path: ticket,
-            builder: () => const TicketPage(),
-          ),
-          QRoute(
-            path: userList,
-            builder: () => const UserListPage(),
-          ),
-        ],
-      );
+    name: "purchases",
+    path: PurchasesRouter.root,
+    builder: () => const PurchasesMainPage(),
+    middleware: [AuthenticatedMiddleware(ref)],
+    children: [
+      QRoute(
+        path: scan,
+        builder: () => const ScanPage(),
+        middleware: [AdminMiddleware(ref, isPurchasesAdminProvider)],
+      ),
+      QRoute(
+        path: history,
+        builder: () => const HistoryPage(),
+        children: [QRoute(path: purchase, builder: () => const PurchasePage())],
+      ),
+      QRoute(path: ticket, builder: () => const TicketPage()),
+      QRoute(path: userList, builder: () => const UserListPage()),
+    ],
+  );
 }

@@ -30,8 +30,9 @@ class DetailOrderUI extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final orderList = ref.watch(userOrderListProvider);
     final orderListNotifier = ref.watch(userOrderListProvider.notifier);
-    final deliveryOrdersNotifier =
-        ref.watch(adminDeliveryOrderListProvider.notifier);
+    final deliveryOrdersNotifier = ref.watch(
+      adminDeliveryOrderListProvider.notifier,
+    );
     final cashListNotifier = ref.watch(cashListProvider.notifier);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -139,45 +140,45 @@ class DetailOrderUI extends HookConsumerWidget {
                   await showDialog(
                     context: context,
                     builder: ((context) => CustomDialogBox(
-                          title: AMAPTextConstants.delete,
-                          descriptions: AMAPTextConstants.deletingOrder,
-                          onYes: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              final index = orderList.maybeWhen(
-                                data: (data) => data.indexWhere(
-                                  (element) => element.id == order.id,
+                      title: AMAPTextConstants.delete,
+                      descriptions: AMAPTextConstants.deletingOrder,
+                      onYes: () async {
+                        await tokenExpireWrapper(ref, () async {
+                          final index = orderList.maybeWhen(
+                            data: (data) => data.indexWhere(
+                              (element) => element.id == order.id,
+                            ),
+                            orElse: () => -1,
+                          );
+                          await orderListNotifier.deleteOrder(order).then((
+                            value,
+                          ) {
+                            if (value) {
+                              if (index != -1) {
+                                deliveryOrdersNotifier.deleteE(
+                                  deliveryId,
+                                  index,
+                                );
+                              }
+                              cashListNotifier.fakeUpdateCash(
+                                userCash.copyWith(
+                                  balance: userCash.balance + order.amount,
                                 ),
-                                orElse: () => -1,
                               );
-                              await orderListNotifier
-                                  .deleteOrder(order)
-                                  .then((value) {
-                                if (value) {
-                                  if (index != -1) {
-                                    deliveryOrdersNotifier.deleteE(
-                                      deliveryId,
-                                      index,
-                                    );
-                                  }
-                                  cashListNotifier.fakeUpdateCash(
-                                    userCash.copyWith(
-                                      balance: userCash.balance + order.amount,
-                                    ),
-                                  );
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    AMAPTextConstants.deletedOrder,
-                                  );
-                                } else {
-                                  displayToastWithContext(
-                                    TypeMsg.error,
-                                    AMAPTextConstants.deletingError,
-                                  );
-                                }
-                              });
-                            });
-                          },
-                        )),
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                AMAPTextConstants.deletedOrder,
+                              );
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                AMAPTextConstants.deletingError,
+                              );
+                            }
+                          });
+                        });
+                      },
+                    )),
                   );
                 },
                 builder: (child) => CardButton(

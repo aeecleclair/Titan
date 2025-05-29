@@ -49,8 +49,9 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(appRouterProvider);
-    final animationController =
-        useAnimationController(duration: const Duration(seconds: 2));
+    final animationController = useAnimationController(
+      duration: const Duration(seconds: 2),
+    );
     final animationNotifier = ref.read(backgroundAnimationProvider.notifier);
     final navigatorKey = GlobalKey<NavigatorState>();
     final plausible = getPlausible();
@@ -58,34 +59,31 @@ class MyApp extends HookConsumerWidget {
     Future(() => animationNotifier.setController(animationController));
 
     if (!kIsWeb) {
-      useEffect(
-        () {
-          final appLinks = AppLinks();
+      useEffect(() {
+        final appLinks = AppLinks();
 
-          Future<void> initDeepLinks() async {
-            try {
-              appLinks.uriLinkStream.listen((Uri? uri) {
-                if (uri != null) {
-                  final Map<String, String> queryParams = uri.queryParameters;
+        Future<void> initDeepLinks() async {
+          try {
+            appLinks.uriLinkStream.listen((Uri? uri) {
+              if (uri != null) {
+                final Map<String, String> queryParams = uri.queryParameters;
 
-                  final newPath = "/${uri.host}";
-                  pathForwardingNotifier.forward(
-                    newPath,
-                    queryParameters: queryParams,
-                  );
-                  QR.toName(newPath);
-                }
-              });
-            } catch (err) {
-              print("Failed to listen to deep link: $err");
-            }
+                final newPath = "/${uri.host}";
+                pathForwardingNotifier.forward(
+                  newPath,
+                  queryParameters: queryParams,
+                );
+                QR.toName(newPath);
+              }
+            });
+          } catch (err) {
+            print("Failed to listen to deep link: $err");
           }
+        }
 
-          initDeepLinks();
-          return null;
-        },
-        [],
-      );
+        initDeepLinks();
+        return null;
+      }, []);
     }
 
     final popScope = PopScope(
@@ -99,8 +97,9 @@ class MyApp extends HookConsumerWidget {
             if (controller.isCompleted) {
               SystemChannels.platform.invokeMethod('SystemNavigator.pop');
             } else {
-              final controllerNotifier =
-                  ref.watch(swipeControllerProvider(animation).notifier);
+              final controllerNotifier = ref.watch(
+                swipeControllerProvider(animation).notifier,
+              );
               controllerNotifier.toggle();
               topBarCallBack.onMenu?.call();
             }
@@ -148,10 +147,10 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
   // Override behavior methods and getters like dragDevices
   @override
   Set<PointerDeviceKind> get dragDevices => {
-        PointerDeviceKind.touch,
-        PointerDeviceKind.mouse,
-        PointerDeviceKind.trackpad,
-        PointerDeviceKind.stylus,
-        PointerDeviceKind.invertedStylus,
-      };
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.trackpad,
+    PointerDeviceKind.stylus,
+    PointerDeviceKind.invertedStylus,
+  };
 }

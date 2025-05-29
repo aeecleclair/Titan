@@ -8,16 +8,12 @@ import 'package:tuple/tuple.dart';
 
 final Map<String, Tuple2<String, List<StateNotifierProvider>>> eventProviders =
     {
-  "userEvents": Tuple2(
-    EventRouter.root,
-    [eventEventListProvider, confirmedEventListProvider],
-  ),
-  "confirmedEvents": Tuple2(
-    HomeRouter.root,
-    [confirmedEventListProvider],
-  ),
-  "events": Tuple2(
-    EventRouter.root + EventRouter.admin,
-    [eventListProvider],
-  ),
-};
+      "userEvents": Tuple2(EventRouter.root, [
+        eventEventListProvider,
+        confirmedEventListProvider,
+      ]),
+      "confirmedEvents": Tuple2(HomeRouter.root, [confirmedEventListProvider]),
+      "events": Tuple2(EventRouter.root + EventRouter.admin, [
+        eventListProvider,
+      ]),
+    };

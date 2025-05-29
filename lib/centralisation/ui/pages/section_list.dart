@@ -15,14 +15,9 @@ class SectionList extends StatelessWidget {
         children: [
           Text(
             section.name,
-            style: const TextStyle(
-              fontSize: 23,
-              fontWeight: FontWeight.w900,
-            ),
+            style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w900),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: section.moduleList

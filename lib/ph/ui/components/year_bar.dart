@@ -6,9 +6,7 @@ import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 
 class YearBar extends HookConsumerWidget {
-  const YearBar({
-    super.key,
-  });
+  const YearBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

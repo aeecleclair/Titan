@@ -6,16 +6,9 @@ import 'package:myecl/amap/router.dart';
 import 'package:tuple/tuple.dart';
 
 final Map<String, Tuple2<String, List<StateNotifierProvider>>> amapProviders = {
-  "cash": Tuple2(
-    AmapRouter.root,
-    [userAmountProvider],
-  ),
-  "delivery": Tuple2(
-    AmapRouter.root,
-    [deliveryListProvider],
-  ),
-  "orders": Tuple2(
-    AmapRouter.root + AmapRouter.admin,
-    [adminDeliveryOrderListProvider],
-  ),
+  "cash": Tuple2(AmapRouter.root, [userAmountProvider]),
+  "delivery": Tuple2(AmapRouter.root, [deliveryListProvider]),
+  "orders": Tuple2(AmapRouter.root + AmapRouter.admin, [
+    adminDeliveryOrderListProvider,
+  ]),
 };

@@ -28,19 +28,21 @@ class UserAssociationMembershipBase {
     userAssociationMembership['association_membership_id'] =
         associationMembershipId;
     userAssociationMembership['user_id'] = userId;
-    userAssociationMembership['start_date'] =
-        processDateToAPIWithoutHour(startDate);
-    userAssociationMembership['end_date'] =
-        processDateToAPIWithoutHour(endDate);
+    userAssociationMembership['start_date'] = processDateToAPIWithoutHour(
+      startDate,
+    );
+    userAssociationMembership['end_date'] = processDateToAPIWithoutHour(
+      endDate,
+    );
     return userAssociationMembership;
   }
 
   UserAssociationMembershipBase.empty()
-      : id = '',
-        associationMembershipId = '',
-        userId = '',
-        startDate = DateTime(0),
-        endDate = DateTime(0);
+    : id = '',
+      associationMembershipId = '',
+      userId = '',
+      startDate = DateTime(0),
+      endDate = DateTime(0);
 
   @override
   String toString() {

@@ -4,7 +4,7 @@ import 'package:myecl/purchases/class/ticket_generator.dart';
 
 class TicketGeneratorNotifier extends StateNotifier<TicketGenerator> {
   TicketGeneratorNotifier({required String token})
-      : super(TicketGenerator.empty());
+    : super(TicketGenerator.empty());
 
   void setTicketGenerator(TicketGenerator i) {
     state = i;
@@ -13,7 +13,7 @@ class TicketGeneratorNotifier extends StateNotifier<TicketGenerator> {
 
 final ticketGeneratorProvider =
     StateNotifierProvider<TicketGeneratorNotifier, TicketGenerator>((ref) {
-  final token = ref.watch(tokenProvider);
-  TicketGeneratorNotifier notifier = TicketGeneratorNotifier(token: token);
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      TicketGeneratorNotifier notifier = TicketGeneratorNotifier(token: token);
+      return notifier;
+    });

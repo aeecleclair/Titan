@@ -56,16 +56,14 @@ class MemberDetailPage extends HookConsumerWidget {
                     value: memberProvider.member.promotion == 0
                         ? PhonebookTextConstants.promoNotGiven
                         : memberProvider.member.promotion < 100
-                            ? "20${memberProvider.member.promotion}"
-                            : memberProvider.member.promotion.toString(),
+                        ? "20${memberProvider.member.promotion}"
+                        : memberProvider.member.promotion.toString(),
                   ),
                 ],
               ),
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           if (memberProvider.memberships.isNotEmpty)
             Text(
               memberProvider.memberships.length == 1
@@ -73,33 +71,27 @@ class MemberDetailPage extends HookConsumerWidget {
                   : PhonebookTextConstants.associations,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           AsyncChild(
             value: associationList,
             builder: (context, associations) => Column(
               children: [
-                ...memberProvider.memberships.map(
-                  (membership) {
-                    final associationMembership = associations.firstWhere(
-                      (association) =>
-                          association.id == membership.associationId,
-                    );
-                    return MembershipCard(
-                      association: associationMembership,
-                      onClicked: () {
-                        associationNotifier
-                            .setAssociation(associationMembership);
-                        QR.to(
-                          PhonebookRouter.root +
-                              PhonebookRouter.associationDetail,
-                        );
-                      },
-                      membership: membership,
-                    );
-                  },
-                ),
+                ...memberProvider.memberships.map((membership) {
+                  final associationMembership = associations.firstWhere(
+                    (association) => association.id == membership.associationId,
+                  );
+                  return MembershipCard(
+                    association: associationMembership,
+                    onClicked: () {
+                      associationNotifier.setAssociation(associationMembership);
+                      QR.to(
+                        PhonebookRouter.root +
+                            PhonebookRouter.associationDetail,
+                      );
+                    },
+                    membership: membership,
+                  );
+                }),
               ],
             ),
           ),

@@ -54,8 +54,9 @@ class DeliverySection extends HookConsumerWidget {
                         onTap: () {
                           {
                             if (editable && showSelected) {
-                              deliveryIdNotifier
-                                  .setId(availableDeliveries[i].id);
+                              deliveryIdNotifier.setId(
+                                availableDeliveries[i].id,
+                              );
                             }
                           }
                         },

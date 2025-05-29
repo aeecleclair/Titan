@@ -167,9 +167,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     icon: HeroIcons.calendarDays,
                     onTap: () {
                       Clipboard.setData(
-                        ClipboardData(
-                          text: "${Repository.host}calendar/ical",
-                        ),
+                        ClipboardData(text: "${Repository.host}calendar/ical"),
                       ).then((value) {
                         displayToastWithContext(
                           TypeMsg.msg,

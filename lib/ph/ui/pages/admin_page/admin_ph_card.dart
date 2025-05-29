@@ -53,10 +53,7 @@ class AdminPhCard extends StatelessWidget {
             GestureDetector(
               onTap: onEdit,
               child: CardButton(
-                colors: [
-                  Colors.grey.shade100,
-                  Colors.grey.shade400,
-                ],
+                colors: [Colors.grey.shade100, Colors.grey.shade400],
                 shadowColor: Colors.grey.shade300.withValues(alpha: 0.2),
                 child: const HeroIcon(HeroIcons.pencil, color: Colors.black),
               ),
@@ -65,10 +62,7 @@ class AdminPhCard extends StatelessWidget {
             GestureDetector(
               onTap: onDelete,
               child: CardButton(
-                colors: const [
-                  Color(0xFF9E131F),
-                  Color(0xFF590512),
-                ],
+                colors: const [Color(0xFF9E131F), Color(0xFF590512)],
                 shadowColor: const Color(0xFF590512).withValues(alpha: 0.2),
                 child: const HeroIcon(HeroIcons.trash, color: Colors.white),
               ),

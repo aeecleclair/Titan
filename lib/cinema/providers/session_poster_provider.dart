@@ -29,10 +29,12 @@ class SessionPosterProvider extends SingleNotifier<Image> {
 
 final sessionPosterProvider =
     StateNotifierProvider<SessionPosterProvider, AsyncValue<Image>>((ref) {
-  final sessionPoster = ref.watch(sessionPosterRepository);
-  final sessionPosterMapNotifier = ref.watch(sessionPosterMapProvider.notifier);
-  return SessionPosterProvider(
-    repository: sessionPoster,
-    sessionLogoNotifier: sessionPosterMapNotifier,
-  );
-});
+      final sessionPoster = ref.watch(sessionPosterRepository);
+      final sessionPosterMapNotifier = ref.watch(
+        sessionPosterMapProvider.notifier,
+      );
+      return SessionPosterProvider(
+        repository: sessionPoster,
+        sessionLogoNotifier: sessionPosterMapNotifier,
+      );
+    });

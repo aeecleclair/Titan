@@ -16,11 +16,7 @@ class TransactionsDetail extends ConsumerWidget {
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: sortedByDate
-              .map(
-                (e) => TransactionCard(
-                  transaction: e,
-                ),
-              )
+              .map((e) => TransactionCard(transaction: e))
               .toList(),
         ),
       ),

@@ -74,7 +74,8 @@ class TopBar extends HookConsumerWidget {
                 child: AutoSizeText(
                   title,
                   maxLines: 1,
-                  style: textStyle ??
+                  style:
+                      textStyle ??
                       const TextStyle(
                         fontSize: 40,
                         fontWeight: FontWeight.w700,

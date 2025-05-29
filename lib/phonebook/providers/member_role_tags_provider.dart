@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final memberRoleTagsProvider =
     StateNotifierProvider<MemberRoleTagsProvider, List<String>>((ref) {
-  return MemberRoleTagsProvider();
-});
+      return MemberRoleTagsProvider();
+    });
 
 class MemberRoleTagsProvider extends StateNotifier<List<String>> {
   MemberRoleTagsProvider() : super([]);
@@ -11,13 +11,11 @@ class MemberRoleTagsProvider extends StateNotifier<List<String>> {
   void setRoleTagsWithFilter(Map<String, AsyncValue<List<bool>>?> data) {
     List<String> newRoleTags = [];
     data.forEach((key, value) {
-      value?.whenData(
-        (d) {
-          if (d[0]) {
-            newRoleTags.add(key);
-          }
-        },
-      );
+      value?.whenData((d) {
+        if (d[0]) {
+          newRoleTags.add(key);
+        }
+      });
     });
     state = newRoleTags;
   }

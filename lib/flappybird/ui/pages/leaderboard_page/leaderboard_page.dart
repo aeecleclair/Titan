@@ -59,9 +59,7 @@ class LeaderBoardPage extends HookConsumerWidget {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: bestUserScore.when(
-                  data: (score) => LeaderBoardItem(
-                    score: score,
-                  ),
+                  data: (score) => LeaderBoardItem(score: score),
                   error: (e, s) =>
                       Text(e.toString(), style: GoogleFonts.silkscreen()),
                   loading: () =>

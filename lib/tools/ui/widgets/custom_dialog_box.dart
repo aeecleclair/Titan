@@ -78,9 +78,7 @@ class CustomDialogBox extends StatelessWidget {
                       Text(
                         descriptions,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 16.0,
-                        ),
+                        style: const TextStyle(fontSize: 16.0),
                       ),
                       const SizedBox(height: 30.0),
                       Row(
@@ -94,16 +92,11 @@ class CustomDialogBox extends StatelessWidget {
                             },
                             child: Container(
                               width: 100,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 16,
-                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 gradient: const LinearGradient(
-                                  colors: [
-                                    Colors.black87,
-                                    Colors.black,
-                                  ],
+                                  colors: [Colors.black87, Colors.black],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                 ),
@@ -136,9 +129,7 @@ class CustomDialogBox extends StatelessWidget {
                             waitingColor: Colors.black,
                             builder: (child) => Container(
                               width: 100,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 16,
-                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.grey.shade300,
@@ -146,10 +137,7 @@ class CustomDialogBox extends StatelessWidget {
                                   BoxShadow(
                                     color: Colors.grey.withValues(alpha: 0.3),
                                     blurRadius: 2.0,
-                                    offset: const Offset(
-                                      1.0,
-                                      2.0,
-                                    ),
+                                    offset: const Offset(1.0, 2.0),
                                   ),
                                 ],
                               ),
@@ -158,9 +146,7 @@ class CustomDialogBox extends StatelessWidget {
                             child: const Center(
                               child: Text(
                                 "Confirmer",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
@@ -178,10 +164,7 @@ class CustomDialogBox extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: const LinearGradient(
-                        colors: [
-                          Consts.redGradient1,
-                          Consts.redGradient2,
-                        ],
+                        colors: [Consts.redGradient1, Consts.redGradient2],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),

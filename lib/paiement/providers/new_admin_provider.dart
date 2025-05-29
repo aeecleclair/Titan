@@ -9,7 +9,8 @@ class NewAdminNotifier extends StateNotifier<SimpleUser> {
   }
 }
 
-final newAdminProvider =
-    StateNotifierProvider<NewAdminNotifier, SimpleUser>((ref) {
+final newAdminProvider = StateNotifierProvider<NewAdminNotifier, SimpleUser>((
+  ref,
+) {
   return NewAdminNotifier();
 });

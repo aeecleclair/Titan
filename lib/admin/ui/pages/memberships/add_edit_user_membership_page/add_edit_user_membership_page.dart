@@ -20,14 +20,13 @@ import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditUserMembershipPage extends HookConsumerWidget {
-  const AddEditUserMembershipPage({
-    super.key,
-  });
+  const AddEditUserMembershipPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final associationMembershipMembersNotifier =
-        ref.watch(associationMembershipMembersProvider.notifier);
+    final associationMembershipMembersNotifier = ref.watch(
+      associationMembershipMembersProvider.notifier,
+    );
     final queryController = useTextEditingController(text: '');
     final usersNotifier = ref.watch(userList.notifier);
     final membership = ref.watch(userAssociationMembershipProvider);
@@ -61,16 +60,13 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                   label: AdminTextConstants.user,
                   editingController: queryController,
                   onChanged: (value) async {
-                    tokenExpireWrapper(
-                      ref,
-                      () async {
-                        if (value.isNotEmpty) {
-                          await usersNotifier.filterUsers(value);
-                        } else {
-                          usersNotifier.clear();
-                        }
-                      },
-                    );
+                    tokenExpireWrapper(ref, () async {
+                      if (value.isNotEmpty) {
+                        await usersNotifier.filterUsers(value);
+                      } else {
+                        usersNotifier.clear();
+                      }
+                    });
                   },
                 ),
                 SearchResult(queryController: queryController),
@@ -82,9 +78,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               DateEntry(
                 label: AdminTextConstants.startDate,
                 controller: start,
@@ -139,66 +133,66 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                     return;
                   }
 
-                  tokenExpireWrapper(
-                    ref,
-                    () async {
-                      if (DateTime.parse(processDateBack(start.text))
-                          .isAfter(DateTime.parse(processDateBack(end.text)))) {
+                  tokenExpireWrapper(ref, () async {
+                    if (DateTime.parse(
+                      processDateBack(start.text),
+                    ).isAfter(DateTime.parse(processDateBack(end.text)))) {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        AdminTextConstants.dateError,
+                      );
+                      return;
+                    }
+                    if (isEdit) {
+                      final value = await associationMembershipMembersNotifier
+                          .updateMember(
+                            membership.copyWith(
+                              startDate: DateTime.parse(
+                                processDateBack(start.text),
+                              ),
+                              endDate: DateTime.parse(
+                                processDateBack(end.text),
+                              ),
+                            ),
+                          );
+                      if (value) {
+                        displayToastWithContext(
+                          TypeMsg.msg,
+                          AdminTextConstants.updatedMembership,
+                        );
+                        QR.back();
+                      } else {
                         displayToastWithContext(
                           TypeMsg.error,
-                          AdminTextConstants.dateError,
+                          AdminTextConstants.membershipUpdatingError,
                         );
-                        return;
                       }
-                      if (isEdit) {
-                        final value = await associationMembershipMembersNotifier
-                            .updateMember(
-                          membership.copyWith(
-                            startDate:
-                                DateTime.parse(processDateBack(start.text)),
-                            endDate: DateTime.parse(processDateBack(end.text)),
-                          ),
+                    } else {
+                      // Test if the membership already exists with (association_id,member_id,mandate_year)
+                      final membershipAdd = UserAssociationMembershipBase(
+                        id: "",
+                        associationMembershipId:
+                            membership.associationMembershipId,
+                        userId: membership.user.id,
+                        startDate: DateTime.parse(processDateBack(start.text)),
+                        endDate: DateTime.parse(processDateBack(end.text)),
+                      );
+                      final value = await associationMembershipMembersNotifier
+                          .addMember(membershipAdd, membership.user);
+                      if (value) {
+                        displayToastWithContext(
+                          TypeMsg.msg,
+                          AdminTextConstants.addedMember,
                         );
-                        if (value) {
-                          displayToastWithContext(
-                            TypeMsg.msg,
-                            AdminTextConstants.updatedMembership,
-                          );
-                          QR.back();
-                        } else {
-                          displayToastWithContext(
-                            TypeMsg.error,
-                            AdminTextConstants.membershipUpdatingError,
-                          );
-                        }
+                        QR.back();
                       } else {
-                        // Test if the membership already exists with (association_id,member_id,mandate_year)
-                        final membershipAdd = UserAssociationMembershipBase(
-                          id: "",
-                          associationMembershipId:
-                              membership.associationMembershipId,
-                          userId: membership.user.id,
-                          startDate:
-                              DateTime.parse(processDateBack(start.text)),
-                          endDate: DateTime.parse(processDateBack(end.text)),
+                        displayToastWithContext(
+                          TypeMsg.error,
+                          AdminTextConstants.membershipAddingError,
                         );
-                        final value = await associationMembershipMembersNotifier
-                            .addMember(membershipAdd, membership.user);
-                        if (value) {
-                          displayToastWithContext(
-                            TypeMsg.msg,
-                            AdminTextConstants.addedMember,
-                          );
-                          QR.back();
-                        } else {
-                          displayToastWithContext(
-                            TypeMsg.error,
-                            AdminTextConstants.membershipAddingError,
-                          );
-                        }
                       }
-                    },
-                  );
+                    }
+                  });
                 },
               ),
             ],

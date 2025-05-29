@@ -29,9 +29,9 @@ class RecommendationRepository extends Repository {
   }
 }
 
-final recommendationRepositoryProvider = Provider<RecommendationRepository>(
-  (ref) {
-    final token = ref.watch(tokenProvider);
-    return RecommendationRepository()..setToken(token);
-  },
-);
+final recommendationRepositoryProvider = Provider<RecommendationRepository>((
+  ref,
+) {
+  final token = ref.watch(tokenProvider);
+  return RecommendationRepository()..setToken(token);
+});

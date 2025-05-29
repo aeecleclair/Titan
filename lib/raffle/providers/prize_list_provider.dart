@@ -54,14 +54,14 @@ class LotListNotifier extends ListNotifier<Prize> {
 
 final prizeListProvider =
     StateNotifierProvider<LotListNotifier, AsyncValue<List<Prize>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final notifier = LotListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    final raffleId = ref.watch(raffleIdProvider);
-    if (raffleId != Raffle.empty().id) {
-      notifier.setRaffleId(raffleId);
-      notifier.loadPrizeList();
-    }
-  });
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      final notifier = LotListNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        final raffleId = ref.watch(raffleIdProvider);
+        if (raffleId != Raffle.empty().id) {
+          notifier.setRaffleId(raffleId);
+          notifier.loadPrizeList();
+        }
+      });
+      return notifier;
+    });

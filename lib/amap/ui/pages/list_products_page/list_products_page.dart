@@ -12,9 +12,9 @@ class ListProductPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final animation =
-        useAnimationController(duration: const Duration(milliseconds: 200))
-          ..repeat();
+    final animation = useAnimationController(
+      duration: const Duration(milliseconds: 200),
+    )..repeat();
     return AmapTemplate(
       child: SizedBox(
         height: MediaQuery.of(context).size.height,

@@ -33,13 +33,11 @@ class RaffleMainPage extends HookConsumerWidget {
     final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
 
     final rafflesStatus = {};
-    raffleList.whenData(
-      (raffles) {
-        for (var raffle in raffles) {
-          rafflesStatus[raffle.id] = raffle.raffleStatusType;
-        }
-      },
-    );
+    raffleList.whenData((raffles) {
+      for (var raffle in raffles) {
+        rafflesStatus[raffle.id] = raffle.raffleStatusType;
+      }
+    });
 
     return RaffleTemplate(
       child: Refresher(
@@ -88,12 +86,14 @@ class RaffleMainPage extends HookConsumerWidget {
                       final id = ticket.packTicket.raffleId;
                       if (ticketSum.containsKey(id)) {
                         ticketSum[id]!.add(ticket);
-                        ticketPrice[id] = ticketPrice[id]! +
+                        ticketPrice[id] =
+                            ticketPrice[id]! +
                             ticket.packTicket.price /
                                 ticket.packTicket.packSize;
                       } else {
                         ticketSum[id] = [ticket];
-                        ticketPrice[id] = ticket.packTicket.price /
+                        ticketPrice[id] =
+                            ticket.packTicket.price /
                             ticket.packTicket.packSize;
                       }
                     } else {
@@ -197,10 +197,8 @@ class RaffleMainPage extends HookConsumerWidget {
                     ],
                   );
                 },
-                orElseBuilder: (context, child) => SizedBox(
-                  height: 120,
-                  child: child,
-                ),
+                orElseBuilder: (context, child) =>
+                    SizedBox(height: 120, child: child),
               ),
             ),
           ],

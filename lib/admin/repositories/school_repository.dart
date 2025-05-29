@@ -9,9 +9,7 @@ class SchoolRepository extends Repository {
   final ext = "schools/";
 
   Future<List<School>> getSchoolList() async {
-    return List<School>.from(
-      (await getList()).map((x) => School.fromJson(x)),
-    );
+    return List<School>.from((await getList()).map((x) => School.fromJson(x)));
   }
 
   Future<School> getSchool(String schoolId) async {

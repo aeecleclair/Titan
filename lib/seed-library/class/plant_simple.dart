@@ -48,8 +48,9 @@ class PlantSimple {
     return PlantSimple(
       state: getStateByValue(json['state']),
       speciesId: json['species_id'],
-      propagationMethod:
-          getPropagationMethodByValue(json['propagation_method']),
+      propagationMethod: getPropagationMethodByValue(
+        json['propagation_method'],
+      ),
       id: json['id'],
       plantReference: json['reference'],
       borrowerId: json['borrower_id'],
@@ -62,15 +63,15 @@ class PlantSimple {
   }
 
   PlantSimple.empty()
-      : state = State.pending,
-        speciesId = '',
-        propagationMethod = PropagationMethod.graine,
-        id = '',
-        plantReference = '',
-        borrowerId = null,
-        nickname = null,
-        nbSeedsEnvelope = 0,
-        plantingDate = null;
+    : state = State.pending,
+      speciesId = '',
+      propagationMethod = PropagationMethod.graine,
+      id = '',
+      plantReference = '',
+      borrowerId = null,
+      nickname = null,
+      nbSeedsEnvelope = 0,
+      plantingDate = null;
 
   PlantSimple copyWith({
     State? state,

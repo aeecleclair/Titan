@@ -21,10 +21,13 @@ import 'package:myecl/seed-library/router.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final modulesProvider =
-    StateNotifierProvider<ModulesNotifier, List<Module>>((ref) {
-  final myModulesRoot =
-      ref.watch(allMyModuleRootList).map((root) => '/$root').toList();
+final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
+  ref,
+) {
+  final myModulesRoot = ref
+      .watch(allMyModuleRootList)
+      .map((root) => '/$root')
+      .toList();
 
   ModulesNotifier modulesNotifier = ModulesNotifier();
   modulesNotifier.loadModules(myModulesRoot);

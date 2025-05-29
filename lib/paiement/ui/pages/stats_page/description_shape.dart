@@ -15,8 +15,10 @@ class MessageBorder extends ShapeBorder {
 
   @override
   Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
-    rect =
-        Rect.fromPoints(rect.topLeft, rect.bottomRight - const Offset(0, 20));
+    rect = Rect.fromPoints(
+      rect.topLeft,
+      rect.bottomRight - const Offset(0, 20),
+    );
     return Path()
       ..addRRect(RRect.fromRectAndRadius(rect, const Radius.circular(8)))
       ..moveTo(rect.bottomCenter.dx - 15, rect.bottomCenter.dy)

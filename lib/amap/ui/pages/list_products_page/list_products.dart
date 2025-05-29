@@ -21,8 +21,9 @@ class ListProducts extends HookConsumerWidget {
       initialValue: 1,
     );
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
-    final sortedDeliveryProductsList =
-        ref.watch(sortedByCategoryDeliveryProductsProvider);
+    final sortedDeliveryProductsList = ref.watch(
+      sortedByCategoryDeliveryProductsProvider,
+    );
     final scrollNotifier = ref.watch(scrollProvider.notifier);
     final pageController = ref.watch(amapPageControllerProvider);
     final isWebFormat = ref.watch(isWebFormatProvider);
@@ -58,15 +59,16 @@ class ListProducts extends HookConsumerWidget {
                     ),
                   ]
                 : sortedDeliveryProductsList.keys
-                    .map(
-                      (c) => CategoryPage(
-                        index:
-                            sortedDeliveryProductsList.keys.toList().indexOf(c),
-                        hideAnimation: hideAnimation,
-                        category: c,
-                      ),
-                    )
-                    .toList(),
+                      .map(
+                        (c) => CategoryPage(
+                          index: sortedDeliveryProductsList.keys
+                              .toList()
+                              .indexOf(c),
+                          hideAnimation: hideAnimation,
+                          category: c,
+                        ),
+                      )
+                      .toList(),
           ),
         ),
         if (isWebFormat)

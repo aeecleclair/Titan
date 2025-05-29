@@ -75,8 +75,9 @@ class AddEditStorePage extends HookConsumerWidget {
                                 structure: structure,
                               );
                               final value = isEdit
-                                  ? await storeListNotifier
-                                      .updateStore(newStore)
+                                  ? await storeListNotifier.updateStore(
+                                      newStore,
+                                    )
                                   : await storeListNotifier.createStore(
                                       structure,
                                       newStore,

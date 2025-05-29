@@ -20,8 +20,9 @@ void main() {
     final result = Result.empty().copyWith(id: '1');
 
     test('should load result successfully', () async {
-      when(() => mockResultRepository.getResult())
-          .thenAnswer((_) async => [result]);
+      when(
+        () => mockResultRepository.getResult(),
+      ).thenAnswer((_) async => [result]);
 
       final resultState = await resultNotifier.loadResult();
 

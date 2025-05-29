@@ -23,14 +23,8 @@ class DeleteButton extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: !deactivated
-                ? [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
-                  ]
-                : [
-                    ColorConstants.deactivated1,
-                    ColorConstants.deactivated2,
-                  ],
+                ? [ColorConstants.gradient1, ColorConstants.gradient2]
+                : [ColorConstants.deactivated1, ColorConstants.deactivated2],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

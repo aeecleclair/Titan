@@ -22,6 +22,6 @@ class ModuleListNotifier extends StateNotifier<List<Module>> {
 
 final listModuleProvider =
     StateNotifierProvider<ModuleListNotifier, List<Module>>((ref) {
-  final modules = ref.watch(modulesProvider);
-  return ModuleListNotifier(modules);
-});
+      final modules = ref.watch(modulesProvider);
+      return ModuleListNotifier(modules);
+    });

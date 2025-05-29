@@ -28,8 +28,10 @@ class ListContenderCard extends HookConsumerWidget {
     );
 
     final status = ref.watch(statusProvider);
-    final s =
-        status.maybeWhen(data: (value) => value, orElse: () => Status.closed);
+    final s = status.maybeWhen(
+      data: (value) => value,
+      orElse: () => Status.closed,
+    );
 
     Map<String, int> results = {};
     if (s == Status.published) {
@@ -44,23 +46,23 @@ class ListContenderCard extends HookConsumerWidget {
     Map<String, double> votesPercent = {};
 
     double h = 0;
-    sectionsContender[section]!.whenData(
-      (contenderList) {
-        h = contenderList.length *
-                ((s == Status.open || s == Status.published) ? 180 : 140) -
-            MediaQuery.of(context).size.height +
-            (s == Status.open ? 250 : 150);
-        List<int> numberVotes = [];
-        for (var i = 0; i < contenderList.length; i++) {
-          numberVotes.add(results[contenderList[i].id] ?? 0);
-        }
-        totalVotes = numberVotes.reduce((value, element) => value + element);
-        for (var i = 0; i < numberVotes.length; i++) {
-          votesPercent[contenderList[i].id] =
-              totalVotes == 0 ? 0 : numberVotes[i] / totalVotes;
-        }
-      },
-    );
+    sectionsContender[section]!.whenData((contenderList) {
+      h =
+          contenderList.length *
+              ((s == Status.open || s == Status.published) ? 180 : 140) -
+          MediaQuery.of(context).size.height +
+          (s == Status.open ? 250 : 150);
+      List<int> numberVotes = [];
+      for (var i = 0; i < contenderList.length; i++) {
+        numberVotes.add(results[contenderList[i].id] ?? 0);
+      }
+      totalVotes = numberVotes.reduce((value, element) => value + element);
+      for (var i = 0; i < numberVotes.length; i++) {
+        votesPercent[contenderList[i].id] = totalVotes == 0
+            ? 0
+            : numberVotes[i] / totalVotes;
+      }
+    });
 
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
     final votedSection = ref.watch(votedSectionProvider);
@@ -126,15 +128,20 @@ class ListContenderCard extends HookConsumerWidget {
                     );
                   }),
                   child: SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(2, 0),
-                      end: const Offset(0, 0),
-                    ).animate(
-                      CurvedAnimation(
-                        parent: animation,
-                        curve: const Interval(0.2, 0.4, curve: Curves.easeOut),
-                      ),
-                    ),
+                    position:
+                        Tween<Offset>(
+                          begin: const Offset(2, 0),
+                          end: const Offset(0, 0),
+                        ).animate(
+                          CurvedAnimation(
+                            parent: animation,
+                            curve: const Interval(
+                              0.2,
+                              0.4,
+                              curve: Curves.easeOut,
+                            ),
+                          ),
+                        ),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 15,
@@ -151,14 +158,16 @@ class ListContenderCard extends HookConsumerWidget {
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: ColorConstants.background2
-                                .withValues(alpha: 0.4),
+                            color: ColorConstants.background2.withValues(
+                              alpha: 0.4,
+                            ),
                             offset: const Offset(2, 3),
                             blurRadius: 5,
                           ),
                         ],
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(25)),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(25),
+                        ),
                       ),
                       alignment: Alignment.center,
                       child: Row(

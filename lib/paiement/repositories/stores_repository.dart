@@ -28,10 +28,10 @@ class StoresRepository extends Repository {
 
   Future<Transaction?> scan(String id, QrCodeData data, bool? bypass) async {
     try {
-      var response = await create(
-        {...data.toJson(), "bypass_membership": bypass ?? false},
-        suffix: "/$id/scan",
-      );
+      var response = await create({
+        ...data.toJson(),
+        "bypass_membership": bypass ?? false,
+      }, suffix: "/$id/scan");
       return Transaction.fromJson(response);
     } on AppException catch (e) {
       if (e.type == ErrorType.conflict) {
@@ -42,10 +42,10 @@ class StoresRepository extends Repository {
   }
 
   Future<bool> canScan(String id, QrCodeData data, bool? bypass) async {
-    final response = await create(
-      {...data.toJson(), "bypass_membership": bypass ?? false},
-      suffix: "/$id/scan/check",
-    );
+    final response = await create({
+      ...data.toJson(),
+      "bypass_membership": bypass ?? false,
+    }, suffix: "/$id/scan/check");
     return response["success"] == true;
   }
 }

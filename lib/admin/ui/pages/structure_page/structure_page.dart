@@ -28,8 +28,9 @@ class StructurePage extends HookConsumerWidget {
     final structures = ref.watch(structureListProvider);
     final structuresNotifier = ref.watch(structureListProvider.notifier);
     final structureNotifier = ref.watch(structureProvider.notifier);
-    final structureManagerNotifier =
-        ref.watch(structureManagerProvider.notifier);
+    final structureManagerNotifier = ref.watch(
+      structureManagerProvider.notifier,
+    );
     ref.watch(userList);
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -72,8 +73,9 @@ class StructurePage extends HookConsumerWidget {
                           GestureDetector(
                             onTap: () {
                               structureNotifier.setStructure(Structure.empty());
-                              structureManagerNotifier
-                                  .setUser(SimpleUser.empty());
+                              structureManagerNotifier.setUser(
+                                SimpleUser.empty(),
+                              );
                               QR.to(
                                 AdminRouter.root +
                                     AdminRouter.structures +
@@ -97,8 +99,9 @@ class StructurePage extends HookConsumerWidget {
                               group: structure,
                               onEdit: () {
                                 structureNotifier.setStructure(structure);
-                                structureManagerNotifier
-                                    .setUser(structure.managerUser);
+                                structureManagerNotifier.setUser(
+                                  structure.managerUser,
+                                );
                                 QR.to(
                                   AdminRouter.root +
                                       AdminRouter.structures +

@@ -6,7 +6,7 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 class DeviceListNotifier extends ListNotifier<WalletDevice> {
   final DevicesRepository devicesRepository;
   DeviceListNotifier({required this.devicesRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<WalletDevice>>> getDeviceList() async {
     return await loadList(devicesRepository.getDevices);
@@ -23,9 +23,10 @@ class DeviceListNotifier extends ListNotifier<WalletDevice> {
 }
 
 final deviceListProvider =
-    StateNotifierProvider<DeviceListNotifier, AsyncValue<List<WalletDevice>>>(
-        (ref) {
-  final deviceListRepository = ref.watch(devicesRepositoryProvider);
-  return DeviceListNotifier(devicesRepository: deviceListRepository)
-    ..getDeviceList();
-});
+    StateNotifierProvider<DeviceListNotifier, AsyncValue<List<WalletDevice>>>((
+      ref,
+    ) {
+      final deviceListRepository = ref.watch(devicesRepositoryProvider);
+      return DeviceListNotifier(devicesRepository: deviceListRepository)
+        ..getDeviceList();
+    });

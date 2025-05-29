@@ -16,8 +16,9 @@ class LogPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final logsNotifier = ref.watch(logsProvider.notifier);
-    final notificationLogsNotifier =
-        ref.watch(notificationLogsProvider.notifier);
+    final notificationLogsNotifier = ref.watch(
+      notificationLogsProvider.notifier,
+    );
     final logTab = ref.watch(logTabProvider);
     final logTabNotifier = ref.read(logTabProvider.notifier);
 
@@ -40,9 +41,7 @@ class LogPage extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Column(
             children: [
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               HorizontalListView.builder(
                 height: 40,
                 items: LogTabs.values,
@@ -62,9 +61,7 @@ class LogPage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               getTab(logTab),
             ],
           ),

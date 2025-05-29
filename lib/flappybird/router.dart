@@ -22,21 +22,19 @@ class FlappyBirdRouter {
   FlappyBirdRouter(this.ref);
 
   QRoute route() => QRoute(
-        name: "flappybird",
-        path: FlappyBirdRouter.root,
-        builder: () => play_page.GamePage(),
-        middleware: [
-          AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(play_page.loadLibrary),
-        ],
-        children: [
-          QRoute(
-            path: leaderBoard,
-            builder: () => main_page.LeaderBoardPage(),
-            middleware: [
-              DeferredLoadingMiddleware(main_page.loadLibrary),
-            ],
-          ),
-        ],
-      );
+    name: "flappybird",
+    path: FlappyBirdRouter.root,
+    builder: () => play_page.GamePage(),
+    middleware: [
+      AuthenticatedMiddleware(ref),
+      DeferredLoadingMiddleware(play_page.loadLibrary),
+    ],
+    children: [
+      QRoute(
+        path: leaderBoard,
+        builder: () => main_page.LeaderBoardPage(),
+        middleware: [DeferredLoadingMiddleware(main_page.loadLibrary)],
+      ),
+    ],
+  );
 }

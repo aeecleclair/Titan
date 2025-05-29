@@ -20,19 +20,16 @@ class AdminScrollChips<T> extends HookWidget {
   @override
   Widget build(BuildContext context) {
     if (isEdit) {
-      useEffect(
-        () {
-          Future(
-            () => Scrollable.ensureVisible(
-              dataKey.currentContext!,
-              duration: const Duration(milliseconds: 500),
-              alignment: 0.5,
-            ),
-          );
-          return;
-        },
-        [],
-      );
+      useEffect(() {
+        Future(
+          () => Scrollable.ensureVisible(
+            dataKey.currentContext!,
+            duration: const Duration(milliseconds: 500),
+            alignment: 0.5,
+          ),
+        );
+        return;
+      }, []);
     }
     return SingleChildScrollView(
       key: PageStorageKey(pageStorageKeyName),

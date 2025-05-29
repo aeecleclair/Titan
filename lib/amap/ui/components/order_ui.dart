@@ -132,30 +132,29 @@ class OrderUI extends HookConsumerWidget {
                           await showDialog(
                             context: context,
                             builder: ((context) => CustomDialogBox(
-                                  title: AMAPTextConstants.delete,
-                                  descriptions: AMAPTextConstants.deletingOrder,
-                                  onYes: () async {
-                                    await tokenExpireWrapper(ref, () async {
-                                      orderListNotifier
-                                          .deleteOrder(order)
-                                          .then((value) {
-                                        if (value) {
-                                          balanceNotifier
-                                              .updateCash(order.amount);
-                                          displayToastWithContext(
-                                            TypeMsg.msg,
-                                            AMAPTextConstants.deletedOrder,
-                                          );
-                                        } else {
-                                          displayToastWithContext(
-                                            TypeMsg.error,
-                                            AMAPTextConstants.deletingError,
-                                          );
-                                        }
-                                      });
-                                    });
-                                  },
-                                )),
+                              title: AMAPTextConstants.delete,
+                              descriptions: AMAPTextConstants.deletingOrder,
+                              onYes: () async {
+                                await tokenExpireWrapper(ref, () async {
+                                  orderListNotifier.deleteOrder(order).then((
+                                    value,
+                                  ) {
+                                    if (value) {
+                                      balanceNotifier.updateCash(order.amount);
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        AMAPTextConstants.deletedOrder,
+                                      );
+                                    } else {
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        AMAPTextConstants.deletingError,
+                                      );
+                                    }
+                                  });
+                                });
+                              },
+                            )),
                           );
                         },
                         builder: (child) => CardButton(

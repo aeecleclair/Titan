@@ -8,7 +8,8 @@ class ShouldSetupProvider extends StateNotifier<bool> {
   }
 }
 
-final shouldSetupProvider =
-    StateNotifierProvider<ShouldSetupProvider, bool>((ref) {
+final shouldSetupProvider = StateNotifierProvider<ShouldSetupProvider, bool>((
+  ref,
+) {
   return ShouldSetupProvider();
 });

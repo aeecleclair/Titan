@@ -41,10 +41,7 @@ class AssociationMembershipUi extends HookConsumerWidget {
               child: AssociationMembershipButton(
                 gradient1: Colors.grey.shade800,
                 gradient2: Colors.grey.shade900,
-                child: const HeroIcon(
-                  HeroIcons.eye,
-                  color: Colors.white,
-                ),
+                child: const HeroIcon(HeroIcons.eye, color: Colors.white),
               ),
             ),
             const SizedBox(width: 10),
@@ -55,10 +52,7 @@ class AssociationMembershipUi extends HookConsumerWidget {
                 gradient2: ColorConstants.gradient2,
                 child: child,
               ),
-              child: const HeroIcon(
-                HeroIcons.xMark,
-                color: Colors.white,
-              ),
+              child: const HeroIcon(HeroIcons.xMark, color: Colors.white),
             ),
           ],
         ),

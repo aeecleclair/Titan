@@ -34,8 +34,9 @@ void main() {
       final group = Group.empty().copyWith(id: '1', name: 'Test Group');
       final user = SimpleUser.empty().copyWith(id: '2', name: 'Test User');
       groupNotifier.state = AsyncData(group);
-      when(() => groupRepository.addMember(group, user))
-          .thenAnswer((_) async => true);
+      when(
+        () => groupRepository.addMember(group, user),
+      ).thenAnswer((_) async => true);
 
       final result = await groupNotifier.addMember(group, user);
 
@@ -48,8 +49,9 @@ void main() {
       final group = Group.empty().copyWith(id: '1', name: 'Test Group');
       final user = SimpleUser.empty().copyWith(id: '2', name: 'Test User');
       groupNotifier.state = AsyncData(group);
-      when(() => groupRepository.deleteMember(group, user))
-          .thenAnswer((_) async => true);
+      when(
+        () => groupRepository.deleteMember(group, user),
+      ).thenAnswer((_) async => true);
 
       final result = await groupNotifier.deleteMember(group, user);
 

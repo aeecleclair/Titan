@@ -55,9 +55,7 @@ class HistoryPage extends HookConsumerWidget {
 
             if (children.isEmpty) {
               children.add(
-                const Center(
-                  child: Text(PurchasesTextConstants.noPurchases),
-                ),
+                const Center(child: Text(PurchasesTextConstants.noPurchases)),
               );
             }
             return Column(
@@ -88,9 +86,8 @@ class HistoryPage extends HookConsumerWidget {
               ],
             );
           },
-          errorBuilder: (error, stack) => const Center(
-            child: Text(PurchasesTextConstants.purchasesError),
-          ),
+          errorBuilder: (error, stack) =>
+              const Center(child: Text(PurchasesTextConstants.purchasesError)),
         ),
       ),
     );

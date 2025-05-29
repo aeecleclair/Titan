@@ -56,8 +56,9 @@ class TicketWidget extends HookConsumerWidget {
                             offset: const Offset(2, 3),
                           ),
                         ],
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(15)),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(15),
+                        ),
                       ),
                       child: Center(
                         child: Builder(
@@ -69,21 +70,23 @@ class TicketWidget extends HookConsumerWidget {
                                     return tombolaLogos.first;
                                   } else {
                                     Future.delayed(
-                                        const Duration(milliseconds: 1), () {
-                                      tombolaLogosNotifier.setTData(
-                                        raffle.id,
-                                        const AsyncLoading(),
-                                      );
-                                    });
+                                      const Duration(milliseconds: 1),
+                                      () {
+                                        tombolaLogosNotifier.setTData(
+                                          raffle.id,
+                                          const AsyncLoading(),
+                                        );
+                                      },
+                                    );
                                     tokenExpireWrapper(ref, () async {
                                       tombolaLogoNotifier
                                           .getLogo(raffle.id)
                                           .then((value) {
-                                        tombolaLogosNotifier.setTData(
-                                          raffle.id,
-                                          AsyncData([value]),
-                                        );
-                                      });
+                                            tombolaLogosNotifier.setTData(
+                                              raffle.id,
+                                              AsyncData([value]),
+                                            );
+                                          });
                                     });
                                     return const HeroIcon(
                                       HeroIcons.cubeTransparent,

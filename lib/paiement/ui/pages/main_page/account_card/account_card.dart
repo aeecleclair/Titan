@@ -131,9 +131,7 @@ class AccountCard extends HookConsumerWidget {
                               'Votre appareil n\'est pas encore activé. \nPour l\'activer, veuillez vous rendre sur la page des appareils.',
                           buttonText: 'Accéder à la page',
                           onClick: () {
-                            QR.to(
-                              PaymentRouter.root + PaymentRouter.devices,
-                            );
+                            QR.to(PaymentRouter.root + PaymentRouter.devices);
                           },
                         );
                       },
@@ -148,9 +146,7 @@ class AccountCard extends HookConsumerWidget {
                               'Votre appareil a été révoqué. \nPour le réactiver, veuillez vous rendre sur la page des appareils.',
                           buttonText: 'Accéder à la page',
                           onClick: () {
-                            QR.to(
-                              PaymentRouter.root + PaymentRouter.devices,
-                            );
+                            QR.to(PaymentRouter.root + PaymentRouter.devices);
                           },
                         );
                       },
@@ -190,17 +186,11 @@ class AccountCard extends HookConsumerWidget {
         value: myWallet,
         builder: (context, wallet) => Text(
           '${formatter.format(wallet.balance / 100)} €',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 50,
-          ),
+          style: const TextStyle(color: Colors.white, fontSize: 50),
         ),
         errorBuilder: (error, stackTrace) => Text(
           'Erreur lors de la récupération du solde : $error',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 50,
-          ),
+          style: const TextStyle(color: Colors.white, fontSize: 50),
         ),
       ),
     );

@@ -26,10 +26,7 @@ class ResearchBar extends HookConsumerWidget {
             controller: editingController,
             decoration: const InputDecoration(
               isDense: true,
-              suffixIcon: Icon(
-                Icons.search,
-                size: 30,
-              ),
+              suffixIcon: Icon(Icons.search, size: 30),
               label: Text(
                 SeedLibraryTextConstants.research,
                 style: TextStyle(),

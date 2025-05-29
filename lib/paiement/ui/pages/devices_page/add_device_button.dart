@@ -30,9 +30,7 @@ class AddDeviceButton extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      SizedBox(
-                        width: 20,
-                      ),
+                      SizedBox(width: 20),
                       Stack(
                         clipBehavior: Clip.none,
                         children: [
@@ -46,8 +44,9 @@ class AddDeviceButton extends StatelessWidget {
                             top: -3,
                             child: Container(
                               decoration: BoxDecoration(
-                                color:
-                                    Colors.grey.shade200.withValues(alpha: 0.9),
+                                color: Colors.grey.shade200.withValues(
+                                  alpha: 0.9,
+                                ),
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               child: HeroIcon(

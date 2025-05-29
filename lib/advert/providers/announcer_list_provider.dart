@@ -8,7 +8,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class AnnouncerListNotifier extends ListNotifier<Announcer> {
   final AnnouncerRepository _announcerRepository = AnnouncerRepository();
   AnnouncerListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     _announcerRepository.setToken(token);
   }
 
@@ -27,8 +27,9 @@ class AnnouncerListNotifier extends ListNotifier<Announcer> {
   Future<bool> updateAnnouncer(Announcer announcer) async {
     return await update(
       _announcerRepository.updateAnnouncer,
-      (announcers, announcer) => announcers
-        ..[announcers.indexWhere((i) => i.id == announcer.id)] = announcer,
+      (announcers, announcer) =>
+          announcers
+            ..[announcers.indexWhere((i) => i.id == announcer.id)] = announcer,
       announcer,
     );
   }
@@ -44,27 +45,29 @@ class AnnouncerListNotifier extends ListNotifier<Announcer> {
 }
 
 final announcerListProvider =
-    StateNotifierProvider<AnnouncerListNotifier, AsyncValue<List<Announcer>>>(
-  (ref) {
-    final token = ref.watch(tokenProvider);
-    AnnouncerListNotifier announcerListNotifier =
-        AnnouncerListNotifier(token: token);
-    tokenExpireWrapperAuth(ref, () async {
-      await announcerListNotifier.loadAllAnnouncerList();
+    StateNotifierProvider<AnnouncerListNotifier, AsyncValue<List<Announcer>>>((
+      ref,
+    ) {
+      final token = ref.watch(tokenProvider);
+      AnnouncerListNotifier announcerListNotifier = AnnouncerListNotifier(
+        token: token,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        await announcerListNotifier.loadAllAnnouncerList();
+      });
+      return announcerListNotifier;
     });
-    return announcerListNotifier;
-  },
-);
 
 final userAnnouncerListProvider =
-    StateNotifierProvider<AnnouncerListNotifier, AsyncValue<List<Announcer>>>(
-  (ref) {
-    final token = ref.watch(tokenProvider);
-    AnnouncerListNotifier announcerListNotifier =
-        AnnouncerListNotifier(token: token);
-    tokenExpireWrapperAuth(ref, () async {
-      await announcerListNotifier.loadMyAnnouncerList();
+    StateNotifierProvider<AnnouncerListNotifier, AsyncValue<List<Announcer>>>((
+      ref,
+    ) {
+      final token = ref.watch(tokenProvider);
+      AnnouncerListNotifier announcerListNotifier = AnnouncerListNotifier(
+        token: token,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        await announcerListNotifier.loadMyAnnouncerList();
+      });
+      return announcerListNotifier;
     });
-    return announcerListNotifier;
-  },
-);

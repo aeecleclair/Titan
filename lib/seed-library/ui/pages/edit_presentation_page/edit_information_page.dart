@@ -29,13 +29,16 @@ class EditInformationPage extends HookConsumerWidget {
       child: AsyncChild(
         value: information,
         builder: (context, syncInformation) {
-          final description =
-              TextEditingController(text: syncInformation.description);
+          final description = TextEditingController(
+            text: syncInformation.description,
+          );
           final contact = TextEditingController(text: syncInformation.contact);
-          final facebookUrl =
-              TextEditingController(text: syncInformation.facebookUrl);
-          final forumUrl =
-              TextEditingController(text: syncInformation.forumUrl);
+          final facebookUrl = TextEditingController(
+            text: syncInformation.facebookUrl,
+          );
+          final forumUrl = TextEditingController(
+            text: syncInformation.forumUrl,
+          );
           return SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(
               parent: BouncingScrollPhysics(),
@@ -46,9 +49,7 @@ class EditInformationPage extends HookConsumerWidget {
                 key: key,
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -60,9 +61,7 @@ class EditInformationPage extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     TextEntry(
                       controller: description,
                       label: SeedLibraryTextConstants.description,
@@ -101,15 +100,15 @@ class EditInformationPage extends HookConsumerWidget {
                           return;
                         }
                         await tokenExpireWrapper(ref, () async {
-                          final value =
-                              await informationNotifier.updateInformation(
-                            syncInformation.copyWith(
-                              description: description.text,
-                              contact: contact.text,
-                              facebookUrl: facebookUrl.text,
-                              forumUrl: forumUrl.text,
-                            ),
-                          );
+                          final value = await informationNotifier
+                              .updateInformation(
+                                syncInformation.copyWith(
+                                  description: description.text,
+                                  contact: contact.text,
+                                  facebookUrl: facebookUrl.text,
+                                  forumUrl: forumUrl.text,
+                                ),
+                              );
                           if (value) {
                             displayToastWithContext(
                               TypeMsg.msg,

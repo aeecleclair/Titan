@@ -77,24 +77,27 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                 ),
                               ),
                               const Spacer(),
-                              moduleVisibility.allowedAccountTypes
-                                      .contains(accountType)
+                              moduleVisibility.allowedAccountTypes.contains(
+                                    accountType,
+                                  )
                                   ? GestureDetector(
                                       onTap: () async {
                                         final newModuleVisibility =
                                             moduleVisibility.copyWith(
-                                          allowedAccountTypes: moduleVisibility
-                                              .allowedAccountTypes
-                                              .where(
-                                                (type) => type != accountType,
-                                              )
-                                              .toList(),
-                                        );
+                                              allowedAccountTypes:
+                                                  moduleVisibility
+                                                      .allowedAccountTypes
+                                                      .where(
+                                                        (type) =>
+                                                            type != accountType,
+                                                      )
+                                                      .toList(),
+                                            );
                                         await modulesNotifier
                                             .deleteAccountTypeAccessForModule(
-                                          newModuleVisibility,
-                                          accountType.type,
-                                        );
+                                              newModuleVisibility,
+                                              accountType.type,
+                                            );
                                       },
                                       child: const HeroIcon(
                                         HeroIcons.eye,
@@ -105,15 +108,16 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                       onTap: () async {
                                         final newModuleVisibility =
                                             moduleVisibility.copyWith(
-                                          allowedAccountTypes: moduleVisibility
-                                                  .allowedAccountTypes +
-                                              [accountType],
-                                        );
+                                              allowedAccountTypes:
+                                                  moduleVisibility
+                                                      .allowedAccountTypes +
+                                                  [accountType],
+                                            );
                                         await modulesNotifier
                                             .addAccountTypeToModule(
-                                          newModuleVisibility,
-                                          accountType.type,
-                                        );
+                                              newModuleVisibility,
+                                              accountType.type,
+                                            );
                                       },
                                       child: const HeroIcon(
                                         HeroIcons.eyeSlash,
@@ -154,25 +158,26 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                 ),
                               ),
                               const Spacer(),
-                              moduleVisibility.allowedGroupIds
-                                      .contains(group.id)
+                              moduleVisibility.allowedGroupIds.contains(
+                                    group.id,
+                                  )
                                   ? GestureDetector(
                                       onTap: () async {
                                         final newModuleVisibility =
                                             moduleVisibility.copyWith(
-                                          allowedGroupIds:
-                                              moduleVisibility.allowedGroupIds
+                                              allowedGroupIds: moduleVisibility
+                                                  .allowedGroupIds
                                                   .where(
                                                     (groupId) =>
                                                         groupId != group.id,
                                                   )
                                                   .toList(),
-                                        );
+                                            );
                                         await modulesNotifier
                                             .deleteGroupAccessForModule(
-                                          newModuleVisibility,
-                                          group.id,
-                                        );
+                                              newModuleVisibility,
+                                              group.id,
+                                            );
                                       },
                                       child: const HeroIcon(
                                         HeroIcons.eye,
@@ -183,10 +188,11 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                                       onTap: () async {
                                         final newModuleVisibility =
                                             moduleVisibility.copyWith(
-                                          allowedGroupIds:
-                                              moduleVisibility.allowedGroupIds +
+                                              allowedGroupIds:
+                                                  moduleVisibility
+                                                      .allowedGroupIds +
                                                   [group.id],
-                                        );
+                                            );
                                         await modulesNotifier.addGroupToModule(
                                           newModuleVisibility,
                                           group.id,

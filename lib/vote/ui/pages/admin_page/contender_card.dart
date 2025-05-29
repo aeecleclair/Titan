@@ -37,7 +37,8 @@ class ContenderCard extends HookConsumerWidget {
     return CardLayout(
       id: contender.id,
       width: 250,
-      height: (contender.listType != ListType.blank &&
+      height:
+          (contender.listType != ListType.blank &&
               status == Status.waiting &&
               isAdmin)
           ? 180
@@ -66,9 +67,7 @@ class ContenderCard extends HookConsumerWidget {
                       ),
                     ),
                     Text(
-                      capitalize(
-                        contender.listType.toString().split('.').last,
-                      ),
+                      capitalize(contender.listType.toString().split('.').last),
                       style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -119,8 +118,10 @@ class ContenderCard extends HookConsumerWidget {
                   child: CardButton(
                     color: Colors.grey.shade200,
                     shadowColor: Colors.grey.withValues(alpha: 0.2),
-                    child:
-                        const HeroIcon(HeroIcons.pencil, color: Colors.black),
+                    child: const HeroIcon(
+                      HeroIcons.pencil,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 WaitingButton(

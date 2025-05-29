@@ -8,7 +8,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class RaffleListNotifier extends ListNotifier<Raffle> {
   final RaffleRepository raffleRepository = RaffleRepository();
   RaffleListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     raffleRepository.setToken(token);
   }
 
@@ -56,10 +56,10 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
 
 final raffleListProvider =
     StateNotifierProvider<RaffleListNotifier, AsyncValue<List<Raffle>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  RaffleListNotifier notifier = RaffleListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadRaffleList();
-  });
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      RaffleListNotifier notifier = RaffleListNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.loadRaffleList();
+      });
+      return notifier;
+    });

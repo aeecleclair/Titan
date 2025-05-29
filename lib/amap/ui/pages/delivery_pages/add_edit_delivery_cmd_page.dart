@@ -98,28 +98,20 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
+                                          const SizedBox(height: 10),
                                           ...value.map(
                                             (e) => ProductUi(
                                               isModification:
-                                                  selected[products.indexOf(
-                                                e,
-                                              )],
+                                                  selected[products.indexOf(e)],
                                               onclick: () {
                                                 selectedNotifier.toggle(
-                                                  products.indexOf(
-                                                    e,
-                                                  ),
+                                                  products.indexOf(e),
                                                 );
                                               },
                                               product: e,
                                             ),
                                           ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
+                                          const SizedBox(height: 20),
                                         ],
                                       ),
                                     ),
@@ -157,8 +149,9 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                     deliveryListProvider.notifier,
                                   );
                                   final value = isEdit
-                                      ? await deliveryNotifier
-                                          .updateDelivery(del)
+                                      ? await deliveryNotifier.updateDelivery(
+                                          del,
+                                        )
                                       : await deliveryNotifier.addDelivery(del);
                                   if (value) {
                                     QR.back();

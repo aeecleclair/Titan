@@ -24,8 +24,9 @@ void main() {
     test('loadCount returns AsyncValue<int>', () async {
       const id = '123';
       const count = 5;
-      when(() => repository.getSectionVoteCount(id))
-          .thenAnswer((_) async => count);
+      when(
+        () => repository.getSectionVoteCount(id),
+      ).thenAnswer((_) async => count);
 
       final result = await notifier.loadCount(id);
 

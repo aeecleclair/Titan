@@ -17,8 +17,9 @@ class HomePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final confirmedEventListNotifier =
-        ref.watch(confirmedEventListProvider.notifier);
+    final confirmedEventListNotifier = ref.watch(
+      confirmedEventListProvider.notifier,
+    );
     final sortedEventList = ref.watch(sortedEventListProvider);
     DateTime now = DateTime.now();
     final ScrollController scrollController = useScrollController();
@@ -63,11 +64,7 @@ class HomePage extends HookConsumerWidget {
                               .map(
                                 (key, value) => MapEntry(
                                   key,
-                                  DaysEvent(
-                                    day: key,
-                                    now: now,
-                                    events: value,
-                                  ),
+                                  DaysEvent(day: key, now: now, events: value),
                                 ),
                               )
                               .values

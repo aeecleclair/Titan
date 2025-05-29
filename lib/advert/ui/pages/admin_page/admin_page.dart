@@ -26,8 +26,9 @@ class AdvertAdminPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final advertNotifier = ref.watch(advertProvider.notifier);
     final advertList = ref.watch(advertListProvider);
-    final userAnnouncerListNotifier =
-        ref.watch(userAnnouncerListProvider.notifier);
+    final userAnnouncerListNotifier = ref.watch(
+      userAnnouncerListProvider.notifier,
+    );
     final userAnnouncerList = ref.watch(userAnnouncerListProvider);
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
@@ -87,10 +88,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                     ),
                     width: 300,
                     height: 100,
-                    colors: [
-                      Colors.white,
-                      Colors.grey.shade100,
-                    ],
+                    colors: [Colors.white, Colors.grey.shade100],
                     shadowColor: Colors.grey.withValues(alpha: 0.2),
                     child: Center(
                       child: HeroIcon(

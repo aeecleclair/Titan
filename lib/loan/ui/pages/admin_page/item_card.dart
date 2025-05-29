@@ -77,8 +77,10 @@ class ItemCard extends StatelessWidget {
                   child: CardButton(
                     color: Colors.grey.shade200,
                     shadowColor: Colors.grey.withValues(alpha: 0.2),
-                    child:
-                        const HeroIcon(HeroIcons.pencil, color: Colors.black),
+                    child: const HeroIcon(
+                      HeroIcons.pencil,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 WaitingButton(

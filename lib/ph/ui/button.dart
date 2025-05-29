@@ -26,10 +26,7 @@ class MyButton extends StatelessWidget {
                   const Color.fromARGB(255, 115, 3, 3),
                   const Color.fromARGB(255, 231, 84, 31),
                 ]
-              : [
-                  Colors.grey.shade200,
-                  Colors.grey.shade200,
-                ],
+              : [Colors.grey.shade200, Colors.grey.shade200],
           begin: Alignment.bottomRight,
           end: Alignment.topLeft,
         ),

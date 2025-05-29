@@ -16,21 +16,18 @@ class SearchFilters extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final associationMembershipMemberListNotifier =
-        ref.watch(associationMembershipMembersProvider.notifier);
-    final associationMembership = ref.watch(associationMembershipProvider);
-    final startMinimal = useTextEditingController(
-      text: "",
+    final associationMembershipMemberListNotifier = ref.watch(
+      associationMembershipMembersProvider.notifier,
     );
+    final associationMembership = ref.watch(associationMembershipProvider);
+    final startMinimal = useTextEditingController(text: "");
     final startMaximal = useTextEditingController(
       text: processDate(DateTime.now()),
     );
     final endMinimal = useTextEditingController(
       text: processDate(DateTime.now()),
     );
-    final endMaximal = useTextEditingController(
-      text: "",
-    );
+    final endMaximal = useTextEditingController(text: "");
 
     return Column(
       children: [
@@ -103,39 +100,36 @@ class SearchFilters extends HookConsumerWidget {
             ),
           ],
         ),
-        const SizedBox(
-          height: 20,
-        ),
+        const SizedBox(height: 20),
         Row(
           children: [
-            const Spacer(
-              flex: 2,
-            ),
+            const Spacer(flex: 2),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.3,
               child: WaitingButton(
                 onTap: () async {
-                  await tokenExpireWrapper(
-                    ref,
-                    () async {
-                      await associationMembershipMemberListNotifier
-                          .loadAssociationMembershipMembers(
-                        associationMembership.id,
-                        minimalStartDate: startMinimal.text.isNotEmpty
-                            ? DateTime.parse(processDateBack(startMinimal.text))
-                            : null,
-                        minimalEndDate: endMinimal.text.isNotEmpty
-                            ? DateTime.parse(processDateBack(endMinimal.text))
-                            : null,
-                        maximalStartDate: startMaximal.text.isNotEmpty
-                            ? DateTime.parse(processDateBack(startMaximal.text))
-                            : null,
-                        maximalEndDate: endMaximal.text.isNotEmpty
-                            ? DateTime.parse(processDateBack(endMaximal.text))
-                            : null,
-                      );
-                    },
-                  );
+                  await tokenExpireWrapper(ref, () async {
+                    await associationMembershipMemberListNotifier
+                        .loadAssociationMembershipMembers(
+                          associationMembership.id,
+                          minimalStartDate: startMinimal.text.isNotEmpty
+                              ? DateTime.parse(
+                                  processDateBack(startMinimal.text),
+                                )
+                              : null,
+                          minimalEndDate: endMinimal.text.isNotEmpty
+                              ? DateTime.parse(processDateBack(endMinimal.text))
+                              : null,
+                          maximalStartDate: startMaximal.text.isNotEmpty
+                              ? DateTime.parse(
+                                  processDateBack(startMaximal.text),
+                                )
+                              : null,
+                          maximalEndDate: endMaximal.text.isNotEmpty
+                              ? DateTime.parse(processDateBack(endMaximal.text))
+                              : null,
+                        );
+                  });
                 },
                 builder: (child) => AddEditButtonLayout(
                   colors: const [
@@ -164,15 +158,12 @@ class SearchFilters extends HookConsumerWidget {
                   startMinimal.clear();
                   endMaximal.clear();
                   endMinimal.clear();
-                  await tokenExpireWrapper(
-                    ref,
-                    () async {
-                      await associationMembershipMemberListNotifier
-                          .loadAssociationMembershipMembers(
-                        associationMembership.id,
-                      );
-                    },
-                  );
+                  await tokenExpireWrapper(ref, () async {
+                    await associationMembershipMemberListNotifier
+                        .loadAssociationMembershipMembers(
+                          associationMembership.id,
+                        );
+                  });
                 },
                 builder: (child) => AddEditButtonLayout(
                   colors: const [
@@ -192,14 +183,10 @@ class SearchFilters extends HookConsumerWidget {
                 ),
               ),
             ),
-            const Spacer(
-              flex: 2,
-            ),
+            const Spacer(flex: 2),
           ],
         ),
-        SizedBox(
-          height: 10,
-        ),
+        SizedBox(height: 10),
       ],
     );
   }

@@ -10,8 +10,9 @@ class BorrowerNotifier extends StateNotifier<SimpleUser> {
   }
 }
 
-final borrowerProvider =
-    StateNotifierProvider<BorrowerNotifier, SimpleUser>((ref) {
+final borrowerProvider = StateNotifierProvider<BorrowerNotifier, SimpleUser>((
+  ref,
+) {
   final loan = ref.watch(loanProvider);
   return BorrowerNotifier(loan.borrower);
 });

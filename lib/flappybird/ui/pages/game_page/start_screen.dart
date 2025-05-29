@@ -15,10 +15,7 @@ class StartScreen extends HookConsumerWidget {
             child: Text(
               'T A P   T O   P L A Y',
               style: GoogleFonts.silkscreen(
-                textStyle: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
+                textStyle: const TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
           )

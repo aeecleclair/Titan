@@ -103,8 +103,9 @@ class SpeciesPage extends HookConsumerWidget {
                             (species) => SpeciesCard(
                               species: species,
                               onEdit: () {
-                                difficultyNotifier
-                                    .setFilter(species.difficulty);
+                                difficultyNotifier.setFilter(
+                                  species.difficulty,
+                                );
                                 speciesTypeNotifier.setType(species.type);
                                 speciesNotifier.setSpecies(species);
                                 startMonthNotifier.setString(

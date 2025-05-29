@@ -51,20 +51,20 @@ class DevicesPage extends HookConsumerWidget {
                   ..sort((a, b) {
                     if (a.id == snapshot.data) return -1;
                     if (b.id == snapshot.data) return 1;
-                    return statusOrder(a.status)
-                        .compareTo(statusOrder(b.status));
+                    return statusOrder(
+                      a.status,
+                    ).compareTo(statusOrder(b.status));
                   });
 
                 final firstDevice =
                     devices.map((e) => e.id).contains(snapshot.data)
-                        ? devices
-                            .where(
-                              (element) => element.id == snapshot.data,
-                            )
-                            .first
-                        : null;
+                    ? devices
+                          .where((element) => element.id == snapshot.data)
+                          .first
+                    : null;
 
-                final shouldDisplayAddDevice = (snapshot.data == null ||
+                final shouldDisplayAddDevice =
+                    (snapshot.data == null ||
                         firstDevice == null ||
                         firstDevice.status == WalletDeviceStatus.revoked) &&
                     displayAddDevice.value;
@@ -89,8 +89,9 @@ class DevicesPage extends HookConsumerWidget {
                             name: name,
                             ed25519PublicKey: base64PublicKey,
                           );
-                          final value =
-                              await deviceNotifier.registerDevice(body);
+                          final value = await deviceNotifier.registerDevice(
+                            body,
+                          );
                           if (value != null) {
                             await keyService.saveKeyPair(keyPair);
                             await keyService.saveKeyId(value);
@@ -127,23 +128,27 @@ class DevicesPage extends HookConsumerWidget {
                                     "Vous ne pourrez plus utiliser cet appareil pour les paiements",
                                 onYes: () async {
                                   tokenExpireWrapper(ref, () async {
-                                    final value =
-                                        await devicesNotifier.revokeDevice(
-                                      device.copyWith(
-                                        status: WalletDeviceStatus.revoked,
-                                      ),
-                                    );
+                                    final value = await devicesNotifier
+                                        .revokeDevice(
+                                          device.copyWith(
+                                            status: WalletDeviceStatus.revoked,
+                                          ),
+                                        );
                                     if (value) {
                                       displayToastWithContext(
-                                          TypeMsg.msg, "Appareil révoqué");
-                                      final savedId =
-                                          await keyService.getKeyId();
+                                        TypeMsg.msg,
+                                        "Appareil révoqué",
+                                      );
+                                      final savedId = await keyService
+                                          .getKeyId();
                                       if (savedId == device.id) {
                                         await keyService.clear();
                                       }
                                     } else {
-                                      displayToastWithContext(TypeMsg.error,
-                                          "Erreur lors de la révocation de l'appareil");
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        "Erreur lors de la révocation de l'appareil",
+                                      );
                                     }
                                   });
                                 },

@@ -3,8 +3,8 @@ import 'package:myecl/seed-library/class/plant_simple.dart';
 
 final plantSimpleProvider =
     StateNotifierProvider<PlantSimpleNotifier, PlantSimple>((ref) {
-  return PlantSimpleNotifier();
-});
+      return PlantSimpleNotifier();
+    });
 
 class PlantSimpleNotifier extends StateNotifier<PlantSimple> {
   PlantSimpleNotifier() : super(PlantSimple.empty());

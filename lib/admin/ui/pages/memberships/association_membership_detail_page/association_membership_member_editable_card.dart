@@ -13,19 +13,18 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberEditableCard extends HookConsumerWidget {
-  const MemberEditableCard({
-    super.key,
-    required this.associationMembership,
-  });
+  const MemberEditableCard({super.key, required this.associationMembership});
 
   final UserAssociationMembership associationMembership;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final associationMembershipMemberListNotifier =
-        ref.watch(associationMembershipMembersProvider.notifier);
-    final userAssociationMembershipNotifier =
-        ref.watch(userAssociationMembershipProvider.notifier);
+    final associationMembershipMemberListNotifier = ref.watch(
+      associationMembershipMembersProvider.notifier,
+    );
+    final userAssociationMembershipNotifier = ref.watch(
+      userAssociationMembershipProvider.notifier,
+    );
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -47,9 +46,7 @@ class MemberEditableCard extends HookConsumerWidget {
                 AutoSizeText(
                   (associationMembership.user.nickname ??
                       "${associationMembership.user.firstname} ${associationMembership.user.name}"),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                   minFontSize: 10,
                   maxFontSize: 15,
                 ),
@@ -67,12 +64,8 @@ class MemberEditableCard extends HookConsumerWidget {
           Expanded(
             child: Column(
               children: [
-                Text(
-                  associationMembership.startDate.toString().split(" ")[0],
-                ),
-                Text(
-                  associationMembership.endDate.toString().split(" ")[0],
-                ),
+                Text(associationMembership.startDate.toString().split(" ")[0]),
+                Text(associationMembership.endDate.toString().split(" ")[0]),
               ],
             ),
           ),
@@ -95,24 +88,21 @@ class MemberEditableCard extends HookConsumerWidget {
             deactivated: false,
             deletion: true,
             onDelete: () async {
-              await tokenExpireWrapper(
-                ref,
-                () async {
-                  final result = await associationMembershipMemberListNotifier
-                      .deleteMember(associationMembership);
-                  if (result) {
-                    displayToastWithContext(
-                      TypeMsg.msg,
-                      PhonebookTextConstants.deletedMember,
-                    );
-                  } else {
-                    displayToastWithContext(
-                      TypeMsg.error,
-                      PhonebookTextConstants.deletingError,
-                    );
-                  }
-                },
-              );
+              await tokenExpireWrapper(ref, () async {
+                final result = await associationMembershipMemberListNotifier
+                    .deleteMember(associationMembership);
+                if (result) {
+                  displayToastWithContext(
+                    TypeMsg.msg,
+                    PhonebookTextConstants.deletedMember,
+                  );
+                } else {
+                  displayToastWithContext(
+                    TypeMsg.error,
+                    PhonebookTextConstants.deletingError,
+                  );
+                }
+              });
             },
           ),
         ],

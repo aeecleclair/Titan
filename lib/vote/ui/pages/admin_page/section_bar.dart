@@ -24,8 +24,9 @@ class SectionBar extends HookConsumerWidget {
     final section = ref.watch(sectionProvider);
     final sectionIdNotifier = ref.watch(sectionIdProvider.notifier);
     final sectionContender = ref.watch(sectionContenderProvider);
-    final sectionContenderListNotifier =
-        ref.watch(sectionContenderProvider.notifier);
+    final sectionContenderListNotifier = ref.watch(
+      sectionContenderProvider.notifier,
+    );
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final asyncStatus = ref.watch(statusProvider);
     Status status = Status.open;
@@ -44,10 +45,7 @@ class SectionBar extends HookConsumerWidget {
                   VoteRouter.root + VoteRouter.admin + VoteRouter.addSection,
                 );
               },
-              child: const HeroIcon(
-                HeroIcons.plus,
-                color: Colors.black,
-              ),
+              child: const HeroIcon(HeroIcons.plus, color: Colors.black),
             )
           : null,
       itemBuilder: (context, key, i) => SectionChip(

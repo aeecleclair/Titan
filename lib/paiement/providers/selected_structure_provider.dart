@@ -11,5 +11,5 @@ class SelectedStructureNotifier extends StateNotifier<Structure> {
 
 final selectedStructureProvider =
     StateNotifierProvider<SelectedStructureNotifier, Structure>((ref) {
-  return SelectedStructureNotifier();
-});
+      return SelectedStructureNotifier();
+    });

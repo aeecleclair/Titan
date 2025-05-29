@@ -46,29 +46,23 @@ class DaysEvent extends HookConsumerWidget {
               event.end.hour,
               event.end.minute,
             );
-            final textColor =
-                start.compareTo(now) <= 0 ? Colors.white : Colors.black;
+            final textColor = start.compareTo(now) <= 0
+                ? Colors.white
+                : Colors.black;
             return CardLayout(
               id: event.id,
               margin: const EdgeInsets.all(10),
               height: 135,
               width: double.infinity,
               colors: end.compareTo(now) < 0
-                  ? [
-                      Colors.grey.shade700,
-                      Colors.grey.shade800,
-                    ]
+                  ? [Colors.grey.shade700, Colors.grey.shade800]
                   : start.compareTo(now) <= 0
-                      ? [
-                          HomeColorConstants.gradient1,
-                          HomeColorConstants.gradient2,
-                        ]
-                      : [
-                          Colors.white,
-                          Colors.white,
-                        ],
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 12),
+                  ? [HomeColorConstants.gradient1, HomeColorConstants.gradient2]
+                  : [Colors.white, Colors.white],
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15.0,
+                vertical: 12,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

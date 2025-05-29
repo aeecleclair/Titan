@@ -1,7 +1,5 @@
 class AssociationKinds {
-  AssociationKinds({
-    required this.kinds,
-  });
+  AssociationKinds({required this.kinds});
 
   late final List<String> kinds;
 
@@ -10,9 +8,7 @@ class AssociationKinds {
   }
 
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{
-      'kinds': kinds,
-    };
+    final data = <String, dynamic>{'kinds': kinds};
     return data;
   }
 

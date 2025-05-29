@@ -21,13 +21,8 @@ class CardField extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (showLabel) ...[
-              Text(
-                label,
-                style: const TextStyle(fontSize: 16),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
+              Text(label, style: const TextStyle(fontSize: 16)),
+              const SizedBox(width: 5),
             ],
             CopiabledText(
               value,

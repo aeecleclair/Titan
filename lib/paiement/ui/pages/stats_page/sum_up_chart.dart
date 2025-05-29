@@ -20,8 +20,9 @@ class SumUpChart extends HookConsumerWidget {
     final selected = useState(-1);
     final history = ref.watch(myHistoryProvider);
     final currentMonth = ref.watch(selectedMonthProvider);
-    final selectedTransactionsNotifier =
-        ref.read(selectedTransactionsProvider.notifier);
+    final selectedTransactionsNotifier = ref.read(
+      selectedTransactionsProvider.notifier,
+    );
     final formatter = NumberFormat("#,##0.00", "fr_FR");
     final List<List<Color>> colors = [
       [
@@ -99,15 +100,12 @@ class SumUpChart extends HookConsumerWidget {
           final l = transactionPerStore[wallet]!;
           mappedHistory[wallet] = l;
 
-          final totalAmount = l.fold<int>(
-            0,
-            (previousValue, element) {
-              if (element.type == HistoryType.given) {
-                return previousValue - element.total;
-              }
-              return previousValue + element.total;
-            },
-          );
+          final totalAmount = l.fold<int>(0, (previousValue, element) {
+            if (element.type == HistoryType.given) {
+              return previousValue - element.total;
+            }
+            return previousValue + element.total;
+          });
           total += totalAmount;
           keys.add(wallet);
           chartPart.add(
@@ -139,25 +137,28 @@ class SumUpChart extends HookConsumerWidget {
                           borderData: FlBorderData(show: true),
                           pieTouchData: PieTouchData(
                             touchCallback: (flTouchEvent, pieTouchResponse) {
-                              final newValue = pieTouchResponse
-                                      ?.touchedSection?.touchedSectionIndex ??
+                              final newValue =
+                                  pieTouchResponse
+                                      ?.touchedSection
+                                      ?.touchedSectionIndex ??
                                   -1;
                               selected.value = newValue;
                               if (newValue == -1) {
                                 selectedTransactionsNotifier
                                     .updateSelectedTransactions(
-                                  confirmedTransaction.toList(),
-                                );
+                                      confirmedTransaction.toList(),
+                                    );
                               } else {
                                 final key = keys.elementAt(
-                                  pieTouchResponse?.touchedSection
+                                  pieTouchResponse
+                                          ?.touchedSection
                                           ?.touchedSectionIndex ??
                                       0,
                                 );
                                 selectedTransactionsNotifier
                                     .updateSelectedTransactions(
-                                  mappedHistory[key]!,
-                                );
+                                      mappedHistory[key]!,
+                                    );
                               }
                             },
                           ),
@@ -178,12 +179,12 @@ class SumUpChart extends HookConsumerWidget {
                           children: [
                             const Text(
                               "Total",
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.grey),
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.grey,
+                              ),
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
+                            const SizedBox(height: 5),
                             Text(
                               "${total > 0 ? "+" : ""}${formatter.format(total / 100)} €",
                               style: const TextStyle(
@@ -192,9 +193,7 @@ class SumUpChart extends HookConsumerWidget {
                                 color: Color.fromARGB(255, 4, 84, 84),
                               ),
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
+                            const SizedBox(height: 10),
                           ],
                         ),
                       ),

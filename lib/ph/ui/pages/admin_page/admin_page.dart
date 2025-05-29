@@ -35,9 +35,7 @@ class AdminPage extends HookConsumerWidget {
               resultNotifier.setFilePickerResult(null);
               QR.to(PhRouter.root + PhRouter.admin + PhRouter.add_ph);
             },
-            child: const MyButton(
-              text: PhTextConstants.addNewJournal,
-            ),
+            child: const MyButton(text: PhTextConstants.addNewJournal),
           ),
           const SizedBox(height: 20),
         ],

@@ -49,8 +49,9 @@ class PlantComplete extends PlantSimple {
     return PlantComplete(
       state: getStateByValue(json['state']),
       speciesId: json['species_id'],
-      propagationMethod:
-          getPropagationMethodByValue(json['propagation_method']),
+      propagationMethod: getPropagationMethodByValue(
+        json['propagation_method'],
+      ),
       id: json['id'],
       plantReference: json['reference'],
       borrowerId: json['borrower_id'],

@@ -6,7 +6,7 @@ import 'package:myecl/tools/providers/list_notifier.dart';
 class MyHistoryNotifier extends ListNotifier<History> {
   final UsersMeRepository usersMeRepository;
   MyHistoryNotifier({required this.usersMeRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<History>>> getHistory() async {
     return await loadList(usersMeRepository.getMyHistory);
@@ -15,6 +15,7 @@ class MyHistoryNotifier extends ListNotifier<History> {
 
 final myHistoryProvider =
     StateNotifierProvider<MyHistoryNotifier, AsyncValue<List<History>>>((ref) {
-  final historyRepository = ref.watch(usersMeRepositoryProvider);
-  return MyHistoryNotifier(usersMeRepository: historyRepository)..getHistory();
-});
+      final historyRepository = ref.watch(usersMeRepositoryProvider);
+      return MyHistoryNotifier(usersMeRepository: historyRepository)
+        ..getHistory();
+    });

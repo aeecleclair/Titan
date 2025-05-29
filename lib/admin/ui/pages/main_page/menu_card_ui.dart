@@ -26,16 +26,9 @@ class MenuCardUi extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          HeroIcon(
-            icon,
-            color: Colors.grey.shade700,
-            size: 40,
-          ),
+          HeroIcon(icon, color: Colors.grey.shade700, size: 40),
           const SizedBox(width: 10),
-          Text(
-            text,
-            style: const TextStyle(fontSize: 20),
-          ),
+          Text(text, style: const TextStyle(fontSize: 20)),
         ],
       ),
     );

@@ -30,8 +30,9 @@ class SignInUpBar extends StatelessWidget {
       child: Container(
         height: 50,
         width: double.infinity,
-        alignment:
-            color == Colors.white ? Alignment.centerLeft : Alignment.center,
+        alignment: color == Colors.white
+            ? Alignment.centerLeft
+            : Alignment.center,
         child: WaitingButton(
           onTap: onPressed,
           builder: (child) => Row(

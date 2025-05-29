@@ -61,13 +61,13 @@ class Member extends SimpleUser {
   }
 
   Member.fromUser(SimpleUser user)
-      : super(
-          name: user.name,
-          firstname: user.firstname,
-          nickname: user.nickname,
-          id: user.id,
-          accountType: user.accountType,
-        ) {
+    : super(
+        name: user.name,
+        firstname: user.firstname,
+        nickname: user.nickname,
+        id: user.id,
+        accountType: user.accountType,
+      ) {
     email = "";
     phone = "";
     promotion = 0;

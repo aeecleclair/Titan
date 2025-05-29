@@ -57,8 +57,9 @@ class ScanPage extends HookConsumerWidget {
                           onTap: () async {
                             await tokenExpireWrapper(ref, () async {
                               sellerNotifier.setSeller(eachSeller);
-                              await productsNotifier
-                                  .loadProducts(eachSeller.id);
+                              await productsNotifier.loadProducts(
+                                eachSeller.id,
+                              );
                             });
                           },
                           child: Text(
@@ -87,26 +88,30 @@ class ScanPage extends HookConsumerWidget {
                                 );
                               }
                               return Column(
-                                children: scannableProducts.map((product) {
-                                  return product.ticketGenerators.map((ticket) {
-                                    return TicketCard(
-                                      product: product,
-                                      ticket: ticket,
-                                      onClicked: () {
-                                        ticketGeneratorNotifier
-                                            .setTicketGenerator(ticket);
-                                        showDialog<bool>(
-                                          context: context,
-                                          builder: (context) => ScanDialog(
-                                            sellerId: seller.id,
-                                            productId: product.id,
-                                            ticket: ticket,
-                                          ),
+                                children: scannableProducts
+                                    .map((product) {
+                                      return product.ticketGenerators.map((
+                                        ticket,
+                                      ) {
+                                        return TicketCard(
+                                          product: product,
+                                          ticket: ticket,
+                                          onClicked: () {
+                                            ticketGeneratorNotifier
+                                                .setTicketGenerator(ticket);
+                                            showDialog<bool>(
+                                              context: context,
+                                              builder: (context) => ScanDialog(
+                                                sellerId: seller.id,
+                                                productId: product.id,
+                                                ticket: ticket,
+                                              ),
+                                            );
+                                          },
                                         );
-                                      },
-                                    );
-                                  });
-                                }).fold([], (a, b) => a..addAll(b)),
+                                      });
+                                    })
+                                    .fold([], (a, b) => a..addAll(b)),
                               );
                             },
                           ),

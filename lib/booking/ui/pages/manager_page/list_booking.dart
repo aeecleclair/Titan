@@ -33,18 +33,22 @@ class ListBooking extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bookingNotifier = ref.watch(bookingProvider.notifier);
     final bookingListNotifier = ref.watch(managerBookingListProvider.notifier);
-    final confirmedBookingListNotifier =
-        ref.watch(confirmedBookingListProvider.notifier);
-    final managerConfirmedBookingListNotifier =
-        ref.watch(managerConfirmedBookingListProvider.notifier);
+    final confirmedBookingListNotifier = ref.watch(
+      confirmedBookingListProvider.notifier,
+    );
+    final managerConfirmedBookingListNotifier = ref.watch(
+      managerConfirmedBookingListProvider.notifier,
+    );
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
 
     final toggle = useState(!canToggle);
 
     void handleBooking(Booking booking) {
       bookingNotifier.setBooking(booking);
-      final recurrentDays =
-          SfCalendar.parseRRule(booking.recurrenceRule, booking.start).weekDays;
+      final recurrentDays = SfCalendar.parseRRule(
+        booking.recurrenceRule,
+        booking.start,
+      ).weekDays;
       selectedDaysNotifier.setSelectedDays(recurrentDays);
       QR.to(BookingRouter.root + BookingRouter.manager + BookingRouter.addEdit);
     }
@@ -123,22 +127,23 @@ class ListBooking extends HookConsumerWidget {
                               );
                               bookingListNotifier
                                   .toggleConfirmed(
-                                newBooking,
-                                Decision.approved,
-                              )
+                                    newBooking,
+                                    Decision.approved,
+                                  )
                                   .then((value) {
-                                if (value) {
-                                  ref
-                                      .read(
-                                        userBookingListProvider.notifier,
-                                      )
-                                      .loadUserBookings();
-                                  confirmedBookingListNotifier
-                                      .addBooking(newBooking);
-                                  managerConfirmedBookingListNotifier
-                                      .addBooking(newBooking);
-                                }
-                              });
+                                    if (value) {
+                                      ref
+                                          .read(
+                                            userBookingListProvider.notifier,
+                                          )
+                                          .loadUserBookings();
+                                      confirmedBookingListNotifier.addBooking(
+                                        newBooking,
+                                      );
+                                      managerConfirmedBookingListNotifier
+                                          .addBooking(newBooking);
+                                    }
+                                  });
                             });
                           },
                         );
@@ -159,22 +164,22 @@ class ListBooking extends HookConsumerWidget {
                               );
                               bookingListNotifier
                                   .toggleConfirmed(
-                                newBooking,
-                                Decision.declined,
-                              )
+                                    newBooking,
+                                    Decision.declined,
+                                  )
                                   .then((value) {
-                                if (value) {
-                                  ref
-                                      .read(
-                                        userBookingListProvider.notifier,
-                                      )
-                                      .loadUserBookings();
-                                  confirmedBookingListNotifier
-                                      .deleteBooking(newBooking);
-                                  managerConfirmedBookingListNotifier
-                                      .deleteBooking(newBooking);
-                                }
-                              });
+                                    if (value) {
+                                      ref
+                                          .read(
+                                            userBookingListProvider.notifier,
+                                          )
+                                          .loadUserBookings();
+                                      confirmedBookingListNotifier
+                                          .deleteBooking(newBooking);
+                                      managerConfirmedBookingListNotifier
+                                          .deleteBooking(newBooking);
+                                    }
+                                  });
                             });
                           },
                         );

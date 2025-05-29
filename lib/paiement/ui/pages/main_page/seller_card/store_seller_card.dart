@@ -41,9 +41,7 @@ class StoreSellerCard extends ConsumerWidget {
                     )
                   : null,
             ),
-            const SizedBox(
-              width: 15,
-            ),
+            const SizedBox(width: 15),
             Expanded(
               child: AutoSizeText(
                 store.name,

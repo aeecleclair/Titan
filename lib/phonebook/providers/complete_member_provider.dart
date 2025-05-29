@@ -6,14 +6,14 @@ import 'package:myecl/phonebook/repositories/member_repository.dart';
 
 final completeMemberProvider =
     StateNotifierProvider<CompleteMemberProvider, CompleteMember>((ref) {
-  final token = ref.watch(tokenProvider);
-  return CompleteMemberProvider(token: token);
-});
+      final token = ref.watch(tokenProvider);
+      return CompleteMemberProvider(token: token);
+    });
 
 class CompleteMemberProvider extends StateNotifier<CompleteMember> {
   final MemberRepository memberRepository = MemberRepository();
   CompleteMemberProvider({required String token})
-      : super(CompleteMember.empty()) {
+    : super(CompleteMember.empty()) {
     memberRepository.setToken(token);
   }
 

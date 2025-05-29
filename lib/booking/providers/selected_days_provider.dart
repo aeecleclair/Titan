@@ -3,8 +3,8 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 final selectedDaysProvider =
     StateNotifierProvider<SelectedDaysProvider, List<WeekDays>>((ref) {
-  return SelectedDaysProvider();
-});
+      return SelectedDaysProvider();
+    });
 
 class SelectedDaysProvider extends StateNotifier<List<WeekDays>> {
   SelectedDaysProvider() : super(List.empty());

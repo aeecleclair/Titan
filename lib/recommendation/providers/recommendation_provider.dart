@@ -10,8 +10,6 @@ class RecommendationNotifier extends StateNotifier<Recommendation> {
 }
 
 final recommendationProvider =
-    StateNotifierProvider<RecommendationNotifier, Recommendation>(
-  (ref) {
-    return RecommendationNotifier();
-  },
-);
+    StateNotifierProvider<RecommendationNotifier, Recommendation>((ref) {
+      return RecommendationNotifier();
+    });

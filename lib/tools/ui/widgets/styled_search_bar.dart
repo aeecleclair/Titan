@@ -10,7 +10,7 @@ class StyledSearchBar extends HookConsumerWidget {
   final Color color;
   final EdgeInsetsGeometry? padding;
   final void Function(FocusNode focusNode, TextEditingController controller)?
-      onSuffixIconTap;
+  onSuffixIconTap;
   final TextEditingController? editingController;
   const StyledSearchBar({
     super.key,

@@ -27,7 +27,8 @@ class AdminMainPage extends HookConsumerWidget {
             crossAxisCount: 2,
             mainAxisSpacing: 20,
             crossAxisSpacing: 20,
-            childAspectRatio: MediaQuery.of(context).size.width <
+            childAspectRatio:
+                MediaQuery.of(context).size.width <
                     MediaQuery.of(context).size.height
                 ? 0.75
                 : 1.5,
@@ -35,9 +36,7 @@ class AdminMainPage extends HookConsumerWidget {
           children: [
             GestureDetector(
               onTap: () {
-                QR.to(
-                  AdminRouter.root + AdminRouter.editModuleVisibility,
-                );
+                QR.to(AdminRouter.root + AdminRouter.editModuleVisibility);
               },
               child: const MenuCardUi(
                 text: AdminTextConstants.visibilities,

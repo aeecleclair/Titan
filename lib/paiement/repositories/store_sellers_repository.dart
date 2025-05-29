@@ -8,22 +8,17 @@ class SellerStoreRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'myeclpay/stores';
 
-  Future<Seller> createSeller(
-    String storeId,
-    Seller seller,
-  ) async {
+  Future<Seller> createSeller(String storeId, Seller seller) async {
     return Seller.fromJson(
-      await create(
-        seller.toJson(),
-        suffix: "/$storeId/sellers",
-      ),
+      await create(seller.toJson(), suffix: "/$storeId/sellers"),
     );
   }
 
   Future<List<Seller>> getSellers(String storeId) async {
     return List<Seller>.from(
-      (await getList(suffix: "/$storeId/sellers"))
-          .map((e) => Seller.fromJson(e)),
+      (await getList(
+        suffix: "/$storeId/sellers",
+      )).map((e) => Seller.fromJson(e)),
     );
   }
 

@@ -7,8 +7,12 @@ class SimpleGroupLogoNotifier extends MapNotifier<SimpleGroup, Image> {
   SimpleGroupLogoNotifier() : super();
 }
 
-final allGroupLogosProvider = StateNotifierProvider<SimpleGroupLogoNotifier,
-    Map<SimpleGroup, AsyncValue<List<Image>>?>>((ref) {
-  SimpleGroupLogoNotifier simpleGroupLogoNotifier = SimpleGroupLogoNotifier();
-  return simpleGroupLogoNotifier;
-});
+final allGroupLogosProvider =
+    StateNotifierProvider<
+      SimpleGroupLogoNotifier,
+      Map<SimpleGroup, AsyncValue<List<Image>>?>
+    >((ref) {
+      SimpleGroupLogoNotifier simpleGroupLogoNotifier =
+          SimpleGroupLogoNotifier();
+      return simpleGroupLogoNotifier;
+    });

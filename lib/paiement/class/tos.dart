@@ -14,11 +14,11 @@ class TOS {
   });
 
   TOS.fromJson(Map<String, dynamic> json)
-      : acceptedTosVersion = json['accepted_tos_version'],
-        latestTosVersion = json['latest_tos_version'],
-        tosContent = json['tos_content'],
-        maxTransactionTotal = json['max_transaction_total'],
-        maxWalletBalance = json['max_wallet_balance'];
+    : acceptedTosVersion = json['accepted_tos_version'],
+      latestTosVersion = json['latest_tos_version'],
+      tosContent = json['tos_content'],
+      maxTransactionTotal = json['max_transaction_total'],
+      maxWalletBalance = json['max_wallet_balance'];
 
   Map<String, dynamic> toJson() {
     return {
@@ -52,11 +52,11 @@ class TOS {
   }
 
   TOS.empty()
-      : this(
-          acceptedTosVersion: 0,
-          latestTosVersion: 0,
-          tosContent: '',
-          maxTransactionTotal: 0,
-          maxWalletBalance: 0,
-        );
+    : this(
+        acceptedTosVersion: 0,
+        latestTosVersion: 0,
+        tosContent: '',
+        maxTransactionTotal: 0,
+        maxWalletBalance: 0,
+      );
 }

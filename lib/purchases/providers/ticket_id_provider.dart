@@ -7,7 +7,7 @@ class TicketIdNotifier extends SingleNotifier<String> {
   final UserInformationRepository ticketIdRepository =
       UserInformationRepository();
   TicketIdNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     ticketIdRepository.setToken(token);
   }
 
@@ -18,7 +18,7 @@ class TicketIdNotifier extends SingleNotifier<String> {
 
 final ticketIdProvider =
     StateNotifierProvider<TicketIdNotifier, AsyncValue<String>>((ref) {
-  final token = ref.watch(tokenProvider);
-  TicketIdNotifier notifier = TicketIdNotifier(token: token);
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      TicketIdNotifier notifier = TicketIdNotifier(token: token);
+      return notifier;
+    });

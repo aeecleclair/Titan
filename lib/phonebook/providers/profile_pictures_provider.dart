@@ -9,23 +9,28 @@ class ProfilePictureNotifier extends MapNotifier<CompleteMember, Image> {
   ProfilePictureNotifier() : super();
 }
 
-final profilePicturesProvider = StateNotifierProvider<ProfilePictureNotifier,
-    Map<CompleteMember, AsyncValue<List<Image>>?>>((ref) {
-  ProfilePictureNotifier profilePictureNotifier = ProfilePictureNotifier();
-  tokenExpireWrapperAuth(ref, () async {
-    ref.watch(associationMemberListProvider).maybeWhen(
-      data: (profile) {
-        profilePictureNotifier.loadTList(profile);
-        for (final l in profile) {
-          profilePictureNotifier.setTData(l, const AsyncValue.data([]));
-        }
-        return profilePictureNotifier;
-      },
-      orElse: () {
-        profilePictureNotifier.loadTList([]);
-        return profilePictureNotifier;
-      },
-    );
-  });
-  return profilePictureNotifier;
-});
+final profilePicturesProvider =
+    StateNotifierProvider<
+      ProfilePictureNotifier,
+      Map<CompleteMember, AsyncValue<List<Image>>?>
+    >((ref) {
+      ProfilePictureNotifier profilePictureNotifier = ProfilePictureNotifier();
+      tokenExpireWrapperAuth(ref, () async {
+        ref
+            .watch(associationMemberListProvider)
+            .maybeWhen(
+              data: (profile) {
+                profilePictureNotifier.loadTList(profile);
+                for (final l in profile) {
+                  profilePictureNotifier.setTData(l, const AsyncValue.data([]));
+                }
+                return profilePictureNotifier;
+              },
+              orElse: () {
+                profilePictureNotifier.loadTList([]);
+                return profilePictureNotifier;
+              },
+            );
+      });
+      return profilePictureNotifier;
+    });

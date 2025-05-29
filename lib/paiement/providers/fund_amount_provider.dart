@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final fundAmountProvider =
-    StateNotifierProvider<FundAmountProvider, String>((ref) {
+final fundAmountProvider = StateNotifierProvider<FundAmountProvider, String>((
+  ref,
+) {
   return FundAmountProvider();
 });
 

@@ -8,7 +8,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
   ModuleVisibilityRepository repository = ModuleVisibilityRepository();
   ModuleVisibilityListNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     repository.setToken(token);
   }
 
@@ -83,13 +83,17 @@ class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
   }
 }
 
-final moduleVisibilityListProvider = StateNotifierProvider<
-    ModuleVisibilityListNotifier, AsyncValue<List<ModuleVisibility>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  ModuleVisibilityListNotifier notifier =
-      ModuleVisibilityListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadModuleVisibility();
-  });
-  return notifier;
-});
+final moduleVisibilityListProvider =
+    StateNotifierProvider<
+      ModuleVisibilityListNotifier,
+      AsyncValue<List<ModuleVisibility>>
+    >((ref) {
+      final token = ref.watch(tokenProvider);
+      ModuleVisibilityListNotifier notifier = ModuleVisibilityListNotifier(
+        token: token,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.loadModuleVisibility();
+      });
+      return notifier;
+    });

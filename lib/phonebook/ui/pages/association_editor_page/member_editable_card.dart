@@ -35,8 +35,9 @@ class MemberEditableCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
-    final associationMemberListNotifier =
-        ref.watch(associationMemberListProvider.notifier);
+    final associationMemberListNotifier = ref.watch(
+      associationMemberListProvider.notifier,
+    );
     final roleTagsNotifier = ref.watch(rolesTagsProvider.notifier);
     final membershipNotifier = ref.watch(membershipProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
@@ -45,8 +46,9 @@ class MemberEditableCard extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final memberPictures =
-        ref.watch(memberPicturesProvider.select((value) => value[member]));
+    final memberPictures = ref.watch(
+      memberPicturesProvider.select((value) => value[member]),
+    );
     final memberPicturesNotifier = ref.watch(memberPicturesProvider.notifier);
 
     Membership assoMembership = member.memberships.firstWhere(
@@ -108,9 +110,7 @@ class MemberEditableCard extends HookConsumerWidget {
               children: [
                 AutoSizeText(
                   "${(member.member.nickname ?? member.member.firstname)} - ${member.memberships.firstWhere((element) => element.associationId == association.id && element.mandateYear == association.mandateYear).apparentName}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                   minFontSize: 10,
                   maxFontSize: 15,
                 ),

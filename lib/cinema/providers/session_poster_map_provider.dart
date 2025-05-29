@@ -6,8 +6,11 @@ class SessionLogoNotifier extends MapNotifier<String, Image> {
   SessionLogoNotifier() : super();
 }
 
-final sessionPosterMapProvider = StateNotifierProvider<SessionLogoNotifier,
-    Map<String, AsyncValue<List<Image>>?>>((ref) {
-  SessionLogoNotifier sessionLogoNotifier = SessionLogoNotifier();
-  return sessionLogoNotifier;
-});
+final sessionPosterMapProvider =
+    StateNotifierProvider<
+      SessionLogoNotifier,
+      Map<String, AsyncValue<List<Image>>?>
+    >((ref) {
+      SessionLogoNotifier sessionLogoNotifier = SessionLogoNotifier();
+      return sessionLogoNotifier;
+    });

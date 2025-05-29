@@ -22,9 +22,9 @@ class SectionNotifier extends ListNotifier<Section> {
 
 final sectionProvider =
     StateNotifierProvider<SectionNotifier, AsyncValue<List<Section>>>((ref) {
-  SectionNotifier notifier = SectionNotifier();
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.initState();
-  });
-  return notifier;
-});
+      SectionNotifier notifier = SectionNotifier();
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.initState();
+      });
+      return notifier;
+    });

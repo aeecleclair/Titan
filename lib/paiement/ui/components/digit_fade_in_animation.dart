@@ -12,10 +12,7 @@ class DigitFadeInAnimation extends HookWidget {
     );
 
     final fadeAnimation = useAnimation(
-      Tween<double>(
-        begin: 0.0,
-        end: 1.0,
-      ).animate(
+      Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
           parent: animationController,
           curve: Curves.easeOut,
@@ -25,10 +22,7 @@ class DigitFadeInAnimation extends HookWidget {
     );
 
     final slideAnimation = useAnimation(
-      Tween<Offset>(
-        begin: const Offset(0.0, -1),
-        end: Offset.zero,
-      ).animate(
+      Tween<Offset>(begin: const Offset(0.0, -1), end: Offset.zero).animate(
         CurvedAnimation(
           parent: animationController,
           curve: Curves.easeOut,
@@ -37,22 +31,16 @@ class DigitFadeInAnimation extends HookWidget {
       ),
     );
 
-    useEffect(
-      () {
-        animationController.forward();
-        return () {
-          animationController.reverse();
-        };
-      },
-      [],
-    );
+    useEffect(() {
+      animationController.forward();
+      return () {
+        animationController.reverse();
+      };
+    }, []);
 
     return Transform.translate(
       offset: slideAnimation,
-      child: Opacity(
-        opacity: fadeAnimation,
-        child: child,
-      ),
+      child: Opacity(opacity: fadeAnimation, child: child),
     );
   }
 }

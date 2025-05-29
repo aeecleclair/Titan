@@ -81,8 +81,9 @@ class UserCashUi extends HookConsumerWidget {
                         borderRadius: BorderRadius.circular(30),
                         boxShadow: [
                           BoxShadow(
-                            color: RaffleColorConstants.textDark
-                                .withValues(alpha: 0.2),
+                            color: RaffleColorConstants.textDark.withValues(
+                              alpha: 0.2,
+                            ),
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(3, 3),
@@ -171,8 +172,9 @@ class UserCashUi extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(30),
                           boxShadow: [
                             BoxShadow(
-                              color: RaffleColorConstants.textDark
-                                  .withValues(alpha: 0.2),
+                              color: RaffleColorConstants.textDark.withValues(
+                                alpha: 0.2,
+                              ),
                               spreadRadius: 5,
                               blurRadius: 10,
                               offset: const Offset(3, 3),
@@ -219,9 +221,7 @@ class UserCashUi extends HookConsumerWidget {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
+                                const SizedBox(width: 20),
                                 WaitingButton(
                                   builder: (child) => child,
                                   onTap: () async {
@@ -237,20 +237,22 @@ class UserCashUi extends HookConsumerWidget {
                                               int.parse(amount.text),
                                             )
                                             .then((value) {
-                                          if (value) {
-                                            key.currentState!.reset();
-                                            toggle();
-                                            displayVoteWithContext(
-                                              TypeMsg.msg,
-                                              RaffleTextConstants.updatedAmount,
-                                            );
-                                          } else {
-                                            displayVoteWithContext(
-                                              TypeMsg.error,
-                                              RaffleTextConstants.updatingError,
-                                            );
-                                          }
-                                        });
+                                              if (value) {
+                                                key.currentState!.reset();
+                                                toggle();
+                                                displayVoteWithContext(
+                                                  TypeMsg.msg,
+                                                  RaffleTextConstants
+                                                      .updatedAmount,
+                                                );
+                                              } else {
+                                                displayVoteWithContext(
+                                                  TypeMsg.error,
+                                                  RaffleTextConstants
+                                                      .updatingError,
+                                                );
+                                              }
+                                            });
                                       });
                                     }
                                   },

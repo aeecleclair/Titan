@@ -6,9 +6,9 @@ class Manager {
   Manager({required this.name, required this.groupId, required this.id});
 
   Manager.fromJson(Map<String, dynamic> json)
-      : name = json["name"],
-        groupId = json["group_id"],
-        id = json["id"];
+    : name = json["name"],
+      groupId = json["group_id"],
+      id = json["id"];
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

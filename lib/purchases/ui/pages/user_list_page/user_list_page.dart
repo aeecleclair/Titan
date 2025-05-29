@@ -24,8 +24,9 @@ class UserListPage extends HookConsumerWidget {
     final tagList = ref.watch(tagListProvider);
     final tagListNotifier = ref.read(tagListProvider.notifier);
     final scannedUsersList = ref.watch(scannedUsersListProvider);
-    final scannedUsersListNotifier =
-        ref.read(scannedUsersListProvider.notifier);
+    final scannedUsersListNotifier = ref.read(
+      scannedUsersListProvider.notifier,
+    );
     final selectedTag = useState<String?>(null);
     return PurchasesTemplate(
       child: Refresher(
@@ -36,11 +37,7 @@ class UserListPage extends HookConsumerWidget {
               ticketId.maybeWhen(
                 orElse: () {},
                 data: (ticketId) {
-                  tagListNotifier.loadTags(
-                    seller.id,
-                    id,
-                    ticketId,
-                  );
+                  tagListNotifier.loadTags(seller.id, id, ticketId);
                 },
               );
             },
@@ -53,9 +50,7 @@ class UserListPage extends HookConsumerWidget {
               value: tagList,
               builder: (context, tags) {
                 if (tags.isEmpty) {
-                  return const Center(
-                    child: Text("Aucun tag disponible"),
-                  );
+                  return const Center(child: Text("Aucun tag disponible"));
                 }
 
                 return HorizontalListView.builder(
@@ -117,9 +112,7 @@ class UserListPage extends HookConsumerWidget {
                                 vertical: 5,
                                 horizontal: 30,
                               ),
-                              child: Text(
-                                user.getName(),
-                              ),
+                              child: Text(user.getName()),
                             ),
                           )
                           .toList(),

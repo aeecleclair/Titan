@@ -28,19 +28,28 @@ void main() {
   // });
 
   test(
-      'scroll controller provider should create a new notifier for each animation controller',
-      () {
-    final animationController1 = AnimationController(vsync: TestVSync());
-    final animationController2 = AnimationController(vsync: TestVSync());
+    'scroll controller provider should create a new notifier for each animation controller',
+    () {
+      final animationController1 = AnimationController(vsync: TestVSync());
+      final animationController2 = AnimationController(vsync: TestVSync());
 
-    final scrollControllerNotifier1 =
-        scrollControllerProvider(animationController1);
-    final scrollControllerNotifier2 =
-        scrollControllerProvider(animationController2);
+      final scrollControllerNotifier1 = scrollControllerProvider(
+        animationController1,
+      );
+      final scrollControllerNotifier2 = scrollControllerProvider(
+        animationController2,
+      );
 
-    expect(scrollControllerNotifier1, isNot(equals(scrollControllerNotifier2)));
-    expect(scrollControllerNotifier1, isNot(equals(scrollControllerNotifier2)));
-  });
+      expect(
+        scrollControllerNotifier1,
+        isNot(equals(scrollControllerNotifier2)),
+      );
+      expect(
+        scrollControllerNotifier1,
+        isNot(equals(scrollControllerNotifier2)),
+      );
+    },
+  );
 }
 
 class TestVSync implements TickerProvider {

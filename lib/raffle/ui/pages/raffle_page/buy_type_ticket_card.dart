@@ -93,17 +93,19 @@ class BuyPackTicket extends HookConsumerWidget {
                                   child: data.first,
                                 );
                               } else {
-                                Future.delayed(const Duration(milliseconds: 1),
-                                    () {
-                                  tombolaLogosNotifier.setTData(
-                                    raffle.id,
-                                    const AsyncLoading(),
-                                  );
-                                });
+                                Future.delayed(
+                                  const Duration(milliseconds: 1),
+                                  () {
+                                    tombolaLogosNotifier.setTData(
+                                      raffle.id,
+                                      const AsyncLoading(),
+                                    );
+                                  },
+                                );
                                 tokenExpireWrapper(ref, () async {
-                                  tombolaLogoNotifier
-                                      .getLogo(raffle.id)
-                                      .then((value) {
+                                  tombolaLogoNotifier.getLogo(raffle.id).then((
+                                    value,
+                                  ) {
                                     tombolaLogosNotifier.setTData(
                                       raffle.id,
                                       AsyncData([value]),
@@ -169,8 +171,8 @@ class BuyPackTicket extends HookConsumerWidget {
                   raffle.raffleStatusType == RaffleStatusType.open
                       ? RaffleTextConstants.buyThisTicket
                       : raffle.raffleStatusType == RaffleStatusType.lock
-                          ? RaffleTextConstants.lockedRaffle
-                          : RaffleTextConstants.unavailableRaffle,
+                      ? RaffleTextConstants.lockedRaffle
+                      : RaffleTextConstants.unavailableRaffle,
                   style: TextStyle(
                     color: raffle.raffleStatusType != RaffleStatusType.open
                         ? Colors.white

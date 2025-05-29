@@ -17,8 +17,10 @@ void main() {
     });
 
     test('setProduct updates state', () {
-      final product =
-          Product.empty().copyWith(name: 'Test Product', price: 10.0);
+      final product = Product.empty().copyWith(
+        name: 'Test Product',
+        price: 10.0,
+      );
       productNotifier.setProduct(product);
       expect(productNotifier.state, product);
     });
@@ -40,8 +42,10 @@ void main() {
 
     test('setProduct updates product', () {
       final container = ProviderContainer();
-      final product =
-          Product.empty().copyWith(name: 'Test Product', price: 10.0);
+      final product = Product.empty().copyWith(
+        name: 'Test Product',
+        price: 10.0,
+      );
       container.read(productProvider.notifier).setProduct(product);
       expect(container.read(productProvider), product);
     });

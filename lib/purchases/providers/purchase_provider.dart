@@ -13,7 +13,7 @@ class PurchaseNotifier extends SingleNotifier<Purchase> {
 
 final purchaseProvider =
     StateNotifierProvider<PurchaseNotifier, AsyncValue<Purchase>>((ref) {
-  final token = ref.watch(tokenProvider);
-  PurchaseNotifier notifier = PurchaseNotifier(token: token);
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      PurchaseNotifier notifier = PurchaseNotifier(token: token);
+      return notifier;
+    });

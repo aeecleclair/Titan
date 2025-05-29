@@ -60,20 +60,13 @@ class TOSDialogBox extends StatelessWidget {
                     color: titleColor,
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+                const SizedBox(height: 15),
                 Text(
                   descriptions,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: descriptionColor,
-                  ),
+                  style: const TextStyle(fontSize: 14, color: descriptionColor),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(
-                  height: 22,
-                ),
+                const SizedBox(height: 22),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Row(

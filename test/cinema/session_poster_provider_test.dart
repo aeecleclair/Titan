@@ -47,8 +47,9 @@ void main() {
       const id = '123';
       Uint8List bytes = Uint8List(0);
       final image = Image.memory(bytes);
-      when(() => repository.addSessionLogo(bytes, id))
-          .thenAnswer((_) async => image);
+      when(
+        () => repository.addSessionLogo(bytes, id),
+      ).thenAnswer((_) async => image);
 
       final result = await provider.updateLogo(id, bytes);
 

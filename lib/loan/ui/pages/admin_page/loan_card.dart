@@ -42,13 +42,10 @@ class LoanCard extends StatelessWidget {
         height: (isAdmin && !isDetail)
             ? 170
             : isHistory
-                ? 120
-                : 180,
+            ? 120
+            : 180,
         colors: shouldReturn
-            ? [
-                LoanColorConstants.redGradient1,
-                LoanColorConstants.redGradient2,
-              ]
+            ? [LoanColorConstants.redGradient1, LoanColorConstants.redGradient2]
             : [Colors.white, Colors.white],
         shadowColor: shouldReturn
             ? LoanColorConstants.redGradient2.withValues(alpha: 0.25)
@@ -80,8 +77,9 @@ class LoanCard extends StatelessWidget {
                               onTap: onInfo,
                               child: HeroIcon(
                                 HeroIcons.informationCircle,
-                                color:
-                                    shouldReturn ? Colors.white : Colors.black,
+                                color: shouldReturn
+                                    ? Colors.white
+                                    : Colors.black,
                                 size: 25,
                               ),
                             )
@@ -129,8 +127,8 @@ class LoanCard extends StatelessWidget {
                   loan.returned
                       ? LoanTextConstants.returned
                       : shouldReturn
-                          ? LoanTextConstants.toReturn
-                          : LoanTextConstants.onGoing,
+                      ? LoanTextConstants.toReturn
+                      : LoanTextConstants.onGoing,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -142,8 +140,8 @@ class LoanCard extends StatelessWidget {
                 Text(
                   (loan.returned)
                       ? loan.returnedDate != null
-                          ? processDate(loan.returnedDate!)
-                          : LoanTextConstants.noReturnedDate
+                            ? processDate(loan.returnedDate!)
+                            : LoanTextConstants.noReturnedDate
                       : processDate(loan.end),
                   style: TextStyle(
                     fontSize: 13,

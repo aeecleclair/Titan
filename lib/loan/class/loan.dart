@@ -29,20 +29,20 @@ class Loan {
   });
 
   Loan.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        borrower = SimpleUser.fromJson(json['borrower']),
-        loaner = Loaner.fromJson(json['loaner']),
-        notes = json['notes'],
-        start = processDateFromAPIWithoutHour(json['start']),
-        end = processDateFromAPIWithoutHour(json['end']),
-        caution = json['caution'],
-        itemsQuantity = List<ItemQuantity>.from(
-          json['items_qty'].map((x) => ItemQuantity.fromJson(x)),
-        ),
-        returned = json['returned'],
-        returnedDate = json['returned_date'] != null
-            ? DateTime.parse(json['returned_date'])
-            : null;
+    : id = json['id'],
+      borrower = SimpleUser.fromJson(json['borrower']),
+      loaner = Loaner.fromJson(json['loaner']),
+      notes = json['notes'],
+      start = processDateFromAPIWithoutHour(json['start']),
+      end = processDateFromAPIWithoutHour(json['end']),
+      caution = json['caution'],
+      itemsQuantity = List<ItemQuantity>.from(
+        json['items_qty'].map((x) => ItemQuantity.fromJson(x)),
+      ),
+      returned = json['returned'],
+      returnedDate = json['returned_date'] != null
+          ? DateTime.parse(json['returned_date'])
+          : null;
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -87,16 +87,16 @@ class Loan {
   }
 
   Loan.empty()
-      : id = '',
-        borrower = SimpleUser.empty(),
-        loaner = Loaner.empty(),
-        notes = '',
-        start = DateTime.now(),
-        end = DateTime.now(),
-        caution = '',
-        itemsQuantity = [],
-        returned = false,
-        returnedDate = null;
+    : id = '',
+      borrower = SimpleUser.empty(),
+      loaner = Loaner.empty(),
+      notes = '',
+      start = DateTime.now(),
+      end = DateTime.now(),
+      caution = '',
+      itemsQuantity = [],
+      returned = false,
+      returnedDate = null;
 
   @override
   String toString() {

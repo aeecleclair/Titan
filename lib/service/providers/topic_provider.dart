@@ -82,10 +82,10 @@ class TopicsProvider extends ListNotifier<Topic> {
 
 final topicsProvider =
     StateNotifierProvider<TopicsProvider, AsyncValue<List<Topic>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  TopicsProvider notifier = TopicsProvider(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    notifier.getTopics();
-  });
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      TopicsProvider notifier = TopicsProvider(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        notifier.getTopics();
+      });
+      return notifier;
+    });

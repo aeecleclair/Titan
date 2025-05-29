@@ -18,5 +18,5 @@ class SelectedYearListNotifier extends StateNotifier<List<int>> {
 
 final selectedYearListProvider =
     StateNotifierProvider<SelectedYearListNotifier, List<int>>((ref) {
-  return SelectedYearListNotifier();
-});
+      return SelectedYearListNotifier();
+    });

@@ -31,12 +31,15 @@ class DrawerTemplate extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // We are logged in, so we can set up the notification
     final user = ref.watch(userProvider);
-    final animationController =
-        useAnimationController(duration: duration, initialValue: 1);
+    final animationController = useAnimationController(
+      duration: duration,
+      initialValue: 1,
+    );
     final animationNotifier = ref.read(animationProvider.notifier);
     final controller = ref.watch(swipeControllerProvider(animationController));
-    final controllerNotifier =
-        ref.watch(swipeControllerProvider(animationController).notifier);
+    final controllerNotifier = ref.watch(
+      swipeControllerProvider(animationController).notifier,
+    );
     final isWebFormat = ref.watch(isWebFormatProvider);
     final alreadyDisplayed = ref.watch(alreadyDisplayedProvider);
     final displayQuit = ref.watch(displayQuitProvider);

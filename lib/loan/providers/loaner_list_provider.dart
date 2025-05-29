@@ -7,7 +7,7 @@ import 'package:myecl/tools/token_expire_wrapper.dart';
 class LoanerListNotifier extends ListNotifier<Loaner> {
   final LoanerRepository loanerRepository;
   LoanerListNotifier({required this.loanerRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Loaner>>> loadLoanerList() async {
     return await loadList(loanerRepository.getLoanerList);
@@ -37,14 +37,13 @@ class LoanerListNotifier extends ListNotifier<Loaner> {
 }
 
 final loanerListProvider =
-    StateNotifierProvider<LoanerListNotifier, AsyncValue<List<Loaner>>>(
-  (ref) {
-    final loanerRepository = ref.watch(loanerRepositoryProvider);
-    LoanerListNotifier orderListNotifier =
-        LoanerListNotifier(loanerRepository: loanerRepository);
-    tokenExpireWrapperAuth(ref, () async {
-      await orderListNotifier.loadLoanerList();
+    StateNotifierProvider<LoanerListNotifier, AsyncValue<List<Loaner>>>((ref) {
+      final loanerRepository = ref.watch(loanerRepositoryProvider);
+      LoanerListNotifier orderListNotifier = LoanerListNotifier(
+        loanerRepository: loanerRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        await orderListNotifier.loadLoanerList();
+      });
+      return orderListNotifier;
     });
-    return orderListNotifier;
-  },
-);

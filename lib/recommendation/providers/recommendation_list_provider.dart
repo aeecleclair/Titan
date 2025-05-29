@@ -8,7 +8,7 @@ class RecommendationListNotifier extends ListNotifier<Recommendation> {
   final RecommendationRepository recommendationRepository;
 
   RecommendationListNotifier({required this.recommendationRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Recommendation>>> loadRecommendation() async {
     return await loadList(recommendationRepository.getRecommendationList);
@@ -42,19 +42,19 @@ class RecommendationListNotifier extends ListNotifier<Recommendation> {
   }
 }
 
-final recommendationListProvider = StateNotifierProvider<
-    RecommendationListNotifier, AsyncValue<List<Recommendation>>>(
-  (ref) {
-    final recommendatioRepository = ref.watch(recommendationRepositoryProvider);
-    final provider = RecommendationListNotifier(
-      recommendationRepository: recommendatioRepository,
-    );
-    tokenExpireWrapperAuth(
-      ref,
-      () async {
+final recommendationListProvider =
+    StateNotifierProvider<
+      RecommendationListNotifier,
+      AsyncValue<List<Recommendation>>
+    >((ref) {
+      final recommendatioRepository = ref.watch(
+        recommendationRepositoryProvider,
+      );
+      final provider = RecommendationListNotifier(
+        recommendationRepository: recommendatioRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
         await provider.loadRecommendation();
-      },
-    );
-    return provider;
-  },
-);
+      });
+      return provider;
+    });

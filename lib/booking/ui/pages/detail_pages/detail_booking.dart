@@ -48,9 +48,7 @@ class DetailBookingPage extends HookConsumerWidget {
                     ),
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 60,
-                        ),
+                        const SizedBox(height: 60),
                         Container(
                           padding: const EdgeInsets.all(30.0),
                           alignment: Alignment.centerLeft,
@@ -65,9 +63,7 @@ class DetailBookingPage extends HookConsumerWidget {
                                 ),
                               ),
                               if (booking.note != null)
-                                const SizedBox(
-                                  height: 10,
-                                ),
+                                const SizedBox(height: 10),
                               if (booking.note != null)
                                 Text(
                                   booking.note!,
@@ -201,10 +197,7 @@ class DetailBookingPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(
-                child: BookingCard(
-                  booking: booking,
-                  isDetail: true,
-                ),
+                child: BookingCard(booking: booking, isDetail: true),
               ),
             ),
           ],

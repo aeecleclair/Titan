@@ -24,21 +24,23 @@ void main() {
     });
 
     test('Should update with new values', () {
-      final recoverRequest =
-          RecoverRequest(resetToken: 'token', newPassword: 'password');
+      final recoverRequest = RecoverRequest(
+        resetToken: 'token',
+        newPassword: 'password',
+      );
       RecoverRequest newRecoverRequest = recoverRequest.copyWith(
         resetToken: 'newToken',
       );
       expect(newRecoverRequest.resetToken, 'newToken');
-      newRecoverRequest = recoverRequest.copyWith(
-        newPassword: 'newPassword',
-      );
+      newRecoverRequest = recoverRequest.copyWith(newPassword: 'newPassword');
       expect(newRecoverRequest.newPassword, 'newPassword');
     });
 
     test('Should print a recoverRequest', () {
-      final recoverRequest =
-          RecoverRequest(resetToken: 'token', newPassword: 'password');
+      final recoverRequest = RecoverRequest(
+        resetToken: 'token',
+        newPassword: 'password',
+      );
       expect(
         recoverRequest.toString(),
         'RecoverRequest{resetToken: token, newPassword: password}',
@@ -121,9 +123,7 @@ void main() {
         password: 'newPassword',
       );
       expect(newCreateAccount.password, 'newPassword');
-      newCreateAccount = createAccount.copyWith(
-        phone: 'newPhone',
-      );
+      newCreateAccount = createAccount.copyWith(phone: 'newPhone');
       expect(newCreateAccount.phone, 'newPhone');
       newCreateAccount = newCreateAccount.copyWith(
         activationToken: 'newActivationToken',
@@ -133,25 +133,15 @@ void main() {
         birthday: DateTime.parse('2021-02-02'),
       );
       expect(newCreateAccount.birthday, DateTime.parse('2021-02-02'));
-      newCreateAccount = newCreateAccount.copyWith(
-        firstname: 'newFirstname',
-      );
+      newCreateAccount = newCreateAccount.copyWith(firstname: 'newFirstname');
       expect(newCreateAccount.firstname, 'newFirstname');
-      newCreateAccount = newCreateAccount.copyWith(
-        floor: 'newFloor',
-      );
+      newCreateAccount = newCreateAccount.copyWith(floor: 'newFloor');
       expect(newCreateAccount.floor, 'newFloor');
-      newCreateAccount = newCreateAccount.copyWith(
-        name: 'newName',
-      );
+      newCreateAccount = newCreateAccount.copyWith(name: 'newName');
       expect(newCreateAccount.name, 'newName');
-      newCreateAccount = newCreateAccount.copyWith(
-        nickname: 'newNickname',
-      );
+      newCreateAccount = newCreateAccount.copyWith(nickname: 'newNickname');
       expect(newCreateAccount.nickname, 'newNickname');
-      newCreateAccount = newCreateAccount.copyWith(
-        promo: 2,
-      );
+      newCreateAccount = newCreateAccount.copyWith(promo: 2);
       expect(newCreateAccount.promo, 2);
     });
 

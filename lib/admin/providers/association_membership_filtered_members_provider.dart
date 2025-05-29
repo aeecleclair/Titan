@@ -6,19 +6,20 @@ import 'package:diacritic/diacritic.dart';
 
 final associationMembershipFilteredListProvider =
     Provider<List<UserAssociationMembership>>((ref) {
-  final userAssociationMemberships =
-      ref.watch(associationMembershipMembersProvider);
-  final searchFilter = ref.watch(filterProvider);
-  return userAssociationMemberships.maybeWhen(
-    data: (userAssociationMemberships) {
-      return userAssociationMemberships
-          .where(
-            (associationMembership) => removeDiacritics(
-              associationMembership.user.getName().toLowerCase(),
-            ).contains(removeDiacritics(searchFilter.toLowerCase())),
-          )
-          .toList();
-    },
-    orElse: () => [],
-  );
-});
+      final userAssociationMemberships = ref.watch(
+        associationMembershipMembersProvider,
+      );
+      final searchFilter = ref.watch(filterProvider);
+      return userAssociationMemberships.maybeWhen(
+        data: (userAssociationMemberships) {
+          return userAssociationMemberships
+              .where(
+                (associationMembership) => removeDiacritics(
+                  associationMembership.user.getName().toLowerCase(),
+                ).contains(removeDiacritics(searchFilter.toLowerCase())),
+              )
+              .toList();
+        },
+        orElse: () => [],
+      );
+    });

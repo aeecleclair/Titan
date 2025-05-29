@@ -33,13 +33,15 @@ class ListEvent extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final eventNotifier = ref.watch(eventProvider.notifier);
     final eventListNotifier = ref.watch(eventListProvider.notifier);
-    final confirmedEventListNotifier =
-        ref.watch(confirmedEventListProvider.notifier);
+    final confirmedEventListNotifier = ref.watch(
+      confirmedEventListProvider.notifier,
+    );
     final filteredEvents = isHistory
         ? events.where((e) => e.end.isBefore(DateTime.now())).toList()
         : events.where((e) => e.end.isAfter(DateTime.now())).toList();
-    filteredEvents
-        .sort((a, b) => (isHistory ? -1 : 1) * a.start.compareTo(b.start));
+    filteredEvents.sort(
+      (a, b) => (isHistory ? -1 : 1) * a.start.compareTo(b.start),
+    );
 
     final toggle = useState(!canToggle);
     if (filteredEvents.isEmpty) {
@@ -106,15 +108,13 @@ class ListEvent extends HookConsumerWidget {
                           await tokenExpireWrapper(ref, () async {
                             eventListNotifier
                                 .toggleConfirmed(
-                              e.copyWith(
-                                decision: Decision.approved,
-                              ),
-                            )
+                                  e.copyWith(decision: Decision.approved),
+                                )
                                 .then((value) {
-                              if (value) {
-                                confirmedEventListNotifier.addEvent(e);
-                              }
-                            });
+                                  if (value) {
+                                    confirmedEventListNotifier.addEvent(e);
+                                  }
+                                });
                           });
                         },
                       );
@@ -132,15 +132,13 @@ class ListEvent extends HookConsumerWidget {
                           await tokenExpireWrapper(ref, () async {
                             eventListNotifier
                                 .toggleConfirmed(
-                              e.copyWith(
-                                decision: Decision.declined,
-                              ),
-                            )
+                                  e.copyWith(decision: Decision.declined),
+                                )
                                 .then((value) {
-                              if (value) {
-                                confirmedEventListNotifier.deleteEvent(e);
-                              }
-                            });
+                                  if (value) {
+                                    confirmedEventListNotifier.deleteEvent(e);
+                                  }
+                                });
                           });
                         },
                       );
