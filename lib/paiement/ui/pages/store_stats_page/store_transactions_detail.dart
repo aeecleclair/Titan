@@ -23,6 +23,8 @@ class StoreTransactionsDetail extends ConsumerWidget {
       );
     }
 
+    history.sort((a, b) => b.creation.compareTo(a.creation));
+
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
