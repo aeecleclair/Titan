@@ -4,7 +4,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/providers/barcode_provider.dart';
 import 'package:myecl/paiement/providers/ongoing_transaction.dart';
-import 'package:myecl/paiement/providers/selected_month_provider.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
 import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
@@ -23,7 +22,6 @@ class StoreCard extends HookConsumerWidget {
       ongoingTransactionProvider.notifier,
     );
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
-    final selectedMonthNotifier = ref.watch(selectedMonthProvider.notifier);
     final buttonGradient = [
       const Color.fromARGB(255, 6, 75, 75),
       const Color.fromARGB(255, 0, 29, 29),
@@ -71,7 +69,6 @@ class StoreCard extends HookConsumerWidget {
             colors: buttonGradient,
             icon: HeroIcons.wallet,
             onPressed: () async {
-              selectedMonthNotifier.clearSelectedMonth();
               QR.to(PaymentRouter.root + PaymentRouter.storeStats);
             },
             title: 'Historique',
