@@ -11,7 +11,11 @@ class SelectedTransactionsNotifier extends StateNotifier<List<History>> {
 }
 
 final selectedTransactionsProvider =
-    StateNotifierProvider.family<SelectedTransactionsNotifier, List<History>, DateTime>((ref, currentMonth) {
+    StateNotifierProvider.family<
+      SelectedTransactionsNotifier,
+      List<History>,
+      DateTime
+    >((ref, currentMonth) {
       final history = ref.watch(myHistoryProvider);
       return history.maybeWhen(
         orElse: () => SelectedTransactionsNotifier([]),
