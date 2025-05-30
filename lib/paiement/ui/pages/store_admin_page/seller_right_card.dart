@@ -11,8 +11,13 @@ import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 
 class SellerRightCard extends ConsumerWidget {
+  final Seller me;
   final Seller storeSeller;
-  const SellerRightCard({super.key, required this.storeSeller});
+  const SellerRightCard({
+    super.key,
+    required this.me,
+    required this.storeSeller,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,6 +31,8 @@ class SellerRightCard extends ConsumerWidget {
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
+
+    final amIAdmin = me.userId == store.structure.managerUser.id;
 
     final isStructureAdmin =
         storeSeller.userId == store.structure.managerUser.id;
@@ -60,11 +67,11 @@ class SellerRightCard extends ConsumerWidget {
     );
 
     final labels = [
-      "Scanner",
+      "Encaisser",
       "Voir l'historique",
-      "Annuler un paiement",
+      "Annuler les transactions",
       "Gérer les vendeurs",
-      "Administrateur général",
+      "Administrateur de la structure",
     ];
 
     List<bool> sellerRights = [
@@ -95,7 +102,8 @@ class SellerRightCard extends ConsumerWidget {
             context: context,
             backgroundColor: Colors.transparent,
             scrollControlDisabledMaxHeightRatio:
-                ((isStructureAdmin ? 80 : 100) + 45 * icons.length) /
+                (((!amIAdmin || isStructureAdmin) ? 80 : 100) +
+                    45 * icons.length) /
                 MediaQuery.of(context).size.height,
             builder: (context) {
               return ClipRRect(
@@ -137,11 +145,16 @@ class SellerRightCard extends ConsumerWidget {
                                   ),
                                 ),
                                 const Spacer(),
-                                if (storeSeller.canManageSellers &&
-                                    !isStructureAdmin)
-                                  GestureDetector(
-                                    onTap: () async {
-                                      tokenExpireWrapper(ref, () async {
+                                if (me.canManageSellers && !isStructureAdmin)
+                                  Checkbox(
+                                    value: sellerRights[i],
+                                    activeColor: const Color(0xff204550),
+                                    visualDensity: const VisualDensity(
+                                      horizontal: -4,
+                                      vertical: -4,
+                                    ),
+                                    onChanged: (value) async {
+                                      await tokenExpireWrapper(ref, () async {
                                         final value = await sellerStoreNotifier
                                             .updateStoreSeller(
                                               storeSeller.copyWith(
@@ -165,6 +178,9 @@ class SellerRightCard extends ConsumerWidget {
                                             "Droits mis à jour",
                                           );
                                           sellerRights[i] = !sellerRights[i];
+                                          if (context.mounted) {
+                                            Navigator.pop(context);
+                                          }
                                         } else {
                                           displayToastWithContext(
                                             TypeMsg.error,
@@ -173,22 +189,11 @@ class SellerRightCard extends ConsumerWidget {
                                         }
                                       });
                                     },
-                                    child: HeroIcon(
-                                      sellerRights[i]
-                                          ? HeroIcons.xMark
-                                          : HeroIcons.check,
-                                      color: const Color.fromARGB(
-                                        255,
-                                        0,
-                                        29,
-                                        29,
-                                      ),
-                                    ),
                                   ),
                               ],
                             ),
                           ),
-                      if (storeSeller.canManageSellers && !isStructureAdmin)
+                      if (me.canManageSellers && !isStructureAdmin)
                         GestureDetector(
                           onTap: () async {
                             await showDialog(

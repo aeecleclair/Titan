@@ -15,7 +15,7 @@ class ItemSimple {
     return data;
   }
 
-  ItemSimple copyWith({id, name}) {
+  ItemSimple copyWith({String? id, String? name}) {
     return ItemSimple(id: id ?? this.id, name: name ?? this.name);
   }
 

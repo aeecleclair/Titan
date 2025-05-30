@@ -34,7 +34,14 @@ class Recommendation {
     return data;
   }
 
-  Recommendation copyWith({id, creation, title, code, summary, description}) {
+  Recommendation copyWith({
+    String? id,
+    DateTime? creation,
+    String? title,
+    String? code,
+    String? summary,
+    String? description,
+  }) {
     return Recommendation(
       id: id ?? this.id,
       creation: creation ?? this.creation,

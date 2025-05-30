@@ -14,6 +14,9 @@ class SummaryCard extends StatelessWidget {
     int numberTransactions = 0;
 
     for (final transaction in history) {
+      if (transaction.status == TransactionStatus.canceled) {
+        continue; // Only consider successful transactions
+      }
       switch (transaction.type) {
         case HistoryType.given:
           total -= transaction.total;
@@ -54,7 +57,7 @@ class SummaryCard extends StatelessWidget {
             radius: 27,
             backgroundColor: Color(0xff017f80),
             child: HeroIcon(
-              HeroIcons.arrowDownRight,
+              HeroIcons.listBullet,
               color: Colors.white,
               size: 25,
             ),
@@ -68,7 +71,7 @@ class SummaryCard extends StatelessWidget {
                 Row(
                   children: [
                     const AutoSizeText(
-                      "Total du mois",
+                      "Total sur la période",
                       maxLines: 2,
                       style: TextStyle(color: Color(0xff204550), fontSize: 14),
                     ),

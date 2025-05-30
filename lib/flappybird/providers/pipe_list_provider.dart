@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/flappybird/class/bird.dart';
 import 'package:myecl/flappybird/class/pipe.dart';
 
 class PipeListNotifier extends StateNotifier<List<Pipe>> {
@@ -24,7 +25,7 @@ class PipeListNotifier extends StateNotifier<List<Pipe>> {
     }).toList();
   }
 
-  void setIsPassed(i) {
+  void setIsPassed(int i) {
     state = state.map((e) {
       final index = state.indexOf(e);
       if (index == i) {
@@ -34,7 +35,7 @@ class PipeListNotifier extends StateNotifier<List<Pipe>> {
     }).toList();
   }
 
-  bool birdHitPipe(width, height, bird) {
+  bool birdHitPipe(double width, double height, Bird bird) {
     for (int pipeNumber = 0; pipeNumber < state.length; pipeNumber++) {
       if (state[pipeNumber].position - 80 / width <= -0.45 &&
           state[pipeNumber].position + 80 / width >= -0.65) {

@@ -7,23 +7,23 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/paiement/class/history.dart';
 import 'package:myecl/paiement/providers/my_history_provider.dart';
-import 'package:myecl/paiement/providers/selected_month_provider.dart';
 import 'package:myecl/paiement/providers/selected_transactions_provider.dart';
 import 'package:myecl/paiement/ui/pages/stats_page/sum_up_card.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 
 class SumUpChart extends HookConsumerWidget {
-  const SumUpChart({super.key});
+  final DateTime currentMonth;
+  const SumUpChart({super.key, required this.currentMonth});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selected = useState(-1);
     final history = ref.watch(myHistoryProvider);
-    final currentMonth = ref.watch(selectedMonthProvider);
     final selectedTransactionsNotifier = ref.read(
-      selectedTransactionsProvider.notifier,
+      selectedTransactionsProvider(currentMonth).notifier,
     );
     final formatter = NumberFormat("#,##0.00", "fr_FR");
+    const totalKey = "totalKey";
     final List<List<Color>> colors = [
       [
         const Color.fromARGB(255, 1, 127, 128),
@@ -75,15 +75,14 @@ class SumUpChart extends HookConsumerWidget {
             (previousValue, element) => previousValue + element.total,
           );
           total += totalAmount;
-          mappedHistory['Transfer'] = transfer;
-          keys.add('Transfer');
+          mappedHistory[totalKey] = transfer;
+          keys.add(totalKey);
           chartPart.add(
             PieChartSectionData(
               color: colors[2][0],
               value: sqrt(totalAmount / 100),
               title: '',
-              radius:
-                  60 + (keys.indexOf('Transfer') == selected.value ? 15 : 0),
+              radius: 60 + (keys.indexOf(totalKey) == selected.value ? 15 : 0),
               badgePositionPercentageOffset: 0.6,
               badgeWidget: SumUpCard(
                 amount: '${formatter.format(totalAmount / 100)} €',
@@ -126,82 +125,84 @@ class SumUpChart extends HookConsumerWidget {
           );
         }
 
-        return Expanded(
-          child: confirmedTransaction.isNotEmpty
-              ? Stack(
-                  children: [
-                    SizedBox(
-                      height: 300,
-                      child: PieChart(
-                        PieChartData(
-                          borderData: FlBorderData(show: true),
-                          pieTouchData: PieTouchData(
-                            touchCallback: (flTouchEvent, pieTouchResponse) {
-                              final newValue =
-                                  pieTouchResponse
-                                      ?.touchedSection
-                                      ?.touchedSectionIndex ??
-                                  -1;
-                              selected.value = newValue;
-                              if (newValue == -1) {
-                                selectedTransactionsNotifier
-                                    .updateSelectedTransactions(
-                                      confirmedTransaction.toList(),
-                                    );
-                              } else {
-                                final key = keys.elementAt(
-                                  pieTouchResponse
-                                          ?.touchedSection
-                                          ?.touchedSectionIndex ??
-                                      0,
-                                );
-                                selectedTransactionsNotifier
-                                    .updateSelectedTransactions(
-                                      mappedHistory[key]!,
-                                    );
-                              }
-                            },
+        return confirmedTransaction.isNotEmpty
+            ? Stack(
+                children: [
+                  SizedBox(
+                    height: 300,
+                    child: PieChart(
+                      PieChartData(
+                        borderData: FlBorderData(show: true),
+                        pieTouchData: PieTouchData(
+                          touchCallback: (flTouchEvent, pieTouchResponse) {
+                            final newValue =
+                                pieTouchResponse
+                                    ?.touchedSection
+                                    ?.touchedSectionIndex ??
+                                -1;
+                            selected.value = newValue;
+                            if (newValue == -1) {
+                              selectedTransactionsNotifier
+                                  .updateSelectedTransactions(
+                                    confirmedTransaction.toList(),
+                                  );
+                            } else {
+                              final key = keys.elementAt(
+                                pieTouchResponse
+                                        ?.touchedSection
+                                        ?.touchedSectionIndex ??
+                                    0,
+                              );
+                              selectedTransactionsNotifier
+                                  .updateSelectedTransactions(
+                                    mappedHistory[key]!,
+                                  );
+                            }
+                          },
+                        ),
+                        sectionsSpace: 8,
+                        centerSpaceRadius: 90,
+                        sections: chartPart,
+                        startDegreeOffset: 0,
+                      ),
+                      curve: Curves.easeOutCubic,
+                      duration: const Duration(milliseconds: 500),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 300,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Total",
+                            style: TextStyle(fontSize: 18, color: Colors.grey),
                           ),
-                          sectionsSpace: 8,
-                          centerSpaceRadius: 90,
-                          sections: chartPart,
-                          startDegreeOffset: 0,
-                        ),
-                        curve: Curves.easeOutCubic,
-                        duration: const Duration(milliseconds: 500),
+                          const SizedBox(height: 5),
+                          Text(
+                            "${total > 0 ? "+" : ""}${formatter.format(total / 100)} €",
+                            style: const TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 4, 84, 84),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      height: 300,
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "Total",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              "${total > 0 ? "+" : ""}${formatter.format(total / 100)} €",
-                              style: const TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 4, 84, 84),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              : Container(),
-        );
+                  ),
+                ],
+              )
+            : Container(
+                height: 300,
+                alignment: Alignment.center,
+                child: const Text(
+                  "Aucune transaction pour ce mois",
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
+                ),
+              );
       },
     );
   }

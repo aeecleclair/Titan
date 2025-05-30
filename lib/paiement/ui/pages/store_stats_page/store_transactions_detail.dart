@@ -23,6 +23,8 @@ class StoreTransactionsDetail extends ConsumerWidget {
       );
     }
 
+    history.sort((a, b) => b.creation.compareTo(a.creation));
+
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
@@ -32,7 +34,8 @@ class StoreTransactionsDetail extends ConsumerWidget {
                 transaction: e,
                 onTap: () => {
                   if (selectedStore.canCancel &&
-                      e.status == TransactionStatus.confirmed)
+                      e.status == TransactionStatus.confirmed &&
+                      e.type == HistoryType.received)
                     {showCancelModal(e)},
                 },
                 storeView: true,

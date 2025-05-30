@@ -20,8 +20,12 @@ class Ph {
     return data;
   }
 
-  Ph copyWith({id, date, name}) {
-    return Ph(id: id, date: date, name: name);
+  Ph copyWith({String? id, DateTime? date, String? name}) {
+    return Ph(
+      id: id ?? this.id,
+      date: date ?? this.date,
+      name: name ?? this.name,
+    );
   }
 
   Ph.empty() {

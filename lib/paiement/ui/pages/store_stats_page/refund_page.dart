@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:myecl/paiement/class/history.dart';
 import 'package:myecl/paiement/class/refund.dart';
 import 'package:myecl/paiement/providers/refund_amount_provider.dart';
+import 'package:myecl/paiement/providers/selected_store_history.dart';
 import 'package:myecl/paiement/providers/transaction_provider.dart';
 import 'package:myecl/paiement/ui/components/digit_fade_in_animation.dart';
 import 'package:myecl/paiement/ui/components/keyboard.dart';
@@ -145,6 +146,7 @@ class ReFundPage extends ConsumerWidget {
                             TypeMsg.msg,
                             "Transaction effectuée",
                           );
+                          ref.invalidate(sellerHistoryProvider);
                           Navigator.of(context).pop();
                         },
                         loading: () {},

@@ -22,7 +22,7 @@ class Announcer {
     return data;
   }
 
-  Announcer copyWith({name, groupManagerId, id}) {
+  Announcer copyWith({String? name, String? groupManagerId, String? id}) {
     return Announcer(
       name: name ?? this.name,
       groupManagerId: groupManagerId ?? this.groupManagerId,

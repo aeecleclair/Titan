@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:myecl/paiement/providers/barcode_provider.dart';
 import 'package:myecl/paiement/providers/bypass_provider.dart';
+import 'package:myecl/paiement/providers/last_time_scanned.dart';
 import 'package:myecl/paiement/providers/ongoing_transaction.dart';
 import 'package:myecl/paiement/providers/scan_provider.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
@@ -15,7 +16,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 
-class Scanner extends ConsumerStatefulWidget {
+class Scanner extends StatefulHookConsumerWidget {
   const Scanner({super.key});
 
   @override
@@ -50,6 +51,14 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
   }
 
   void _handleBarcode(BarcodeCapture barcodes) async {
+    final lastTimeScanned = ref.watch(lastTimeScannedProvider);
+    final lastTimeScannedNotifier = ref.read(lastTimeScannedProvider.notifier);
+    if (lastTimeScanned != null &&
+        DateTime.now().difference(lastTimeScanned) <
+            const Duration(seconds: 2)) {
+      return;
+    }
+    lastTimeScannedNotifier.updateLastTimeScanned(DateTime.now());
     final bypass = ref.watch(bypassProvider);
     final barcode = ref.watch(barcodeProvider);
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
@@ -58,6 +67,7 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
     final ongoingTransactionNotifier = ref.read(
       ongoingTransactionProvider.notifier,
     );
+    unawaited(controller.stop());
     if (mounted && barcodes.barcodes.isNotEmpty && barcode == null) {
       final data = barcodeNotifier.updateBarcode(
         barcodes.barcodes.firstOrNull!.rawValue!,
@@ -70,10 +80,13 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
             if (value == null) {
               displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
               barcodeNotifier.clearBarcode();
-              ongoingTransactionNotifier.clearOngoingTransaction();
               return;
             }
             ongoingTransactionNotifier.updateOngoingTransaction(value);
+          });
+          unawaited(controller.start());
+          Future.delayed(const Duration(seconds: 2), () {
+            ongoingTransactionNotifier.clearOngoingTransaction();
           });
           return;
         }
@@ -82,11 +95,14 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
       if (value == null) {
         displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
         barcodeNotifier.clearBarcode();
-        ongoingTransactionNotifier.clearOngoingTransaction();
         return;
       } else {
         ongoingTransactionNotifier.updateOngoingTransaction(value);
       }
+      unawaited(controller.start());
+      Future.delayed(const Duration(seconds: 2), () {
+        ongoingTransactionNotifier.clearOngoingTransaction();
+      });
     }
   }
 

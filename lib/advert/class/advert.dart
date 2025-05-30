@@ -38,7 +38,14 @@ class Advert {
     return data;
   }
 
-  Advert copyWith({id, title, content, date, author, announcer, tags}) {
+  Advert copyWith({
+    String? id,
+    String? title,
+    String? content,
+    DateTime? date,
+    Announcer? announcer,
+    List<String>? tags,
+  }) {
     return Advert(
       id: id ?? this.id,
       title: title ?? this.title,

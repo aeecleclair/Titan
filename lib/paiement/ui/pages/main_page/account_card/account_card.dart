@@ -6,10 +6,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/paiement/class/create_device.dart';
 import 'package:myecl/paiement/class/wallet_device.dart';
+import 'package:myecl/paiement/providers/device_list_provider.dart';
 import 'package:myecl/paiement/providers/device_provider.dart';
 import 'package:myecl/paiement/providers/key_service_provider.dart';
 import 'package:myecl/paiement/providers/my_wallet_provider.dart';
-import 'package:myecl/paiement/providers/selected_month_provider.dart';
 import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/tools/platform_info.dart';
 import 'package:myecl/paiement/ui/pages/fund_page/fund_page.dart';
@@ -36,7 +36,6 @@ class AccountCard extends HookConsumerWidget {
     final myWallet = ref.watch(myWalletProvider);
     final keyService = ref.read(keyServiceProvider);
     final deviceNotifier = ref.watch(deviceProvider.notifier);
-    final selectedMonthNotifier = ref.watch(selectedMonthProvider.notifier);
     final buttonGradient = [
       const Color(0xff017f80),
       const Color.fromARGB(255, 4, 84, 84),
@@ -82,6 +81,7 @@ class AccountCard extends HookConsumerWidget {
           icon: HeroIcons.devicePhoneMobile,
           title: "Appareils",
           onPressed: () async {
+            ref.invalidate(deviceListProvider);
             QR.to(PaymentRouter.root + PaymentRouter.devices);
           },
         ),
@@ -169,7 +169,6 @@ class AccountCard extends HookConsumerWidget {
           icon: HeroIcons.chartPie,
           title: "Stats",
           onPressed: () async {
-            selectedMonthNotifier.clearSelectedMonth();
             QR.to(PaymentRouter.root + PaymentRouter.stats);
           },
         ),

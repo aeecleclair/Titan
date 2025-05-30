@@ -17,7 +17,7 @@ class Plausible {
   final String domain;
 
   /// Constructor
-  Plausible(serverUrl, this.domain)
+  Plausible(String serverUrl, this.domain)
     // Remove trailing slash '/'
     : serverUrl = serverUrl.endsWith("/")
           ? serverUrl.substring(0, serverUrl.length - 1)

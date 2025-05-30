@@ -1,5 +1,6 @@
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/association_kinds.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
@@ -46,7 +47,7 @@ List<Association> sortedAssociationByKind(
   return sorted;
 }
 
-Color getColorFromTagList(ref, List<String> tags) {
+Color getColorFromTagList(WidgetRef ref, List<String> tags) {
   final rolesTags = ref.watch(rolesTagsProvider).keys.toList();
   int index = 3;
   for (String tag in tags) {

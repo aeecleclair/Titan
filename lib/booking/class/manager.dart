@@ -18,7 +18,7 @@ class Manager {
     return data;
   }
 
-  Manager copyWith({name, groupId, id}) {
+  Manager copyWith({String? name, String? groupId, String? id}) {
     return Manager(
       name: name ?? this.name,
       groupId: groupId ?? this.groupId,
@@ -33,7 +33,7 @@ class Manager {
     return 'Manager{name: $name, group_id: $groupId, id: $id}';
   }
 
-  isEmpty() {
+  bool isEmpty() {
     return name == '' && groupId == '' && id == '';
   }
 }
