@@ -73,7 +73,6 @@ class PaymentMainPage extends HookConsumerWidget {
         ref.invalidate(myHistoryProvider);
       } else {
         controller.forward();
-        ref.invalidate(myStoresProvider);
       }
     }
 
