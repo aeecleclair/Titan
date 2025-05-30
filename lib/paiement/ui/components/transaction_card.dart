@@ -38,6 +38,10 @@ class TransactionCard extends StatelessWidget {
         break;
     }
 
+    final transactionName = transaction.type != HistoryType.transfer
+        ? transaction.otherWalletName
+        : "Recharge";
+
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
@@ -67,8 +71,8 @@ class TransactionCard extends StatelessWidget {
                       Expanded(
                         child: AutoSizeText(
                           storeView
-                              ? transaction.otherWalletName
-                              : "${transaction.type == HistoryType.refundCredited || transaction.type == HistoryType.refundDebited ? "Remboursement - " : ""}${transaction.otherWalletName}",
+                              ? transactionName
+                              : "${transaction.type == HistoryType.refundCredited || transaction.type == HistoryType.refundDebited ? "Remboursement - " : ""}$transactionName",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
