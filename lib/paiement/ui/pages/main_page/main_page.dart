@@ -69,8 +69,11 @@ class PaymentMainPage extends HookConsumerWidget {
       flipped.value = !flipped.value;
       if (flipped.value) {
         controller.reverse();
+        ref.invalidate(myWalletProvider);
+        ref.invalidate(myHistoryProvider);
       } else {
         controller.forward();
+        ref.invalidate(myStoresProvider);
       }
     }
 

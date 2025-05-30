@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/paiement/providers/my_history_provider.dart';
 import 'package:myecl/paiement/providers/my_stores_provider.dart';
 import 'package:myecl/paiement/providers/my_wallet_provider.dart';
 
@@ -36,6 +37,7 @@ class FlipCard extends HookConsumerWidget {
           isFront = false;
           controller.reverse();
           ref.invalidate(myWalletProvider);
+          ref.invalidate(myHistoryProvider);
         } else if (details.primaryVelocity! > 0) {
           // Swipe right
           isFront = true;
