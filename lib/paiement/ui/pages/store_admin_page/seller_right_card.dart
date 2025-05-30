@@ -67,11 +67,11 @@ class SellerRightCard extends ConsumerWidget {
     );
 
     final labels = [
-      "Scanner",
+      "Encaisser",
       "Voir l'historique",
-      "Annuler un paiement",
+      "Annuler les transactions",
       "Gérer les vendeurs",
-      "Administrateur général",
+      "Administrateur de la structure",
     ];
 
     List<bool> sellerRights = [

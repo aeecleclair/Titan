@@ -56,7 +56,7 @@ class SearchResult extends HookConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    RightCheckBox(title: "Peut gérer la banque", index: 0),
+                    RightCheckBox(title: "Peut encaisser", index: 0),
                     RightCheckBox(title: "Peut voir l'historique", index: 1),
                     RightCheckBox(
                       title: "Peut annuler des transactions",
