@@ -126,7 +126,7 @@ class TransactionCard extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             Text(
-              "${transaction.type == HistoryType.given ? " -" : " +"} ${formatter.format(transaction.total / 100)} €",
+              "${transaction.type == HistoryType.given || transaction.type == HistoryType.refundDebited ? " -" : " +"} ${formatter.format(transaction.total / 100)} €",
               style: TextStyle(
                 color: const Color(0xff204550),
                 fontSize: 18,
