@@ -83,8 +83,7 @@ class SumUpChart extends HookConsumerWidget {
               color: colors[2][0],
               value: sqrt(totalAmount / 100),
               title: '',
-              radius:
-                  60 + (keys.indexOf(totalKey) == selected.value ? 15 : 0),
+              radius: 60 + (keys.indexOf(totalKey) == selected.value ? 15 : 0),
               badgePositionPercentageOffset: 0.6,
               badgeWidget: SumUpCard(
                 amount: '${formatter.format(totalAmount / 100)} €',
