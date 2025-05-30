@@ -30,13 +30,13 @@ class StoreTransactionsDetail extends ConsumerWidget {
       child: Column(
         children: history
             .map(
-              (e) => TransactionCard(
-                transaction: e,
+              (t) => TransactionCard(
+                transaction: t,
                 onTap: () => {
                   if (selectedStore.canCancel &&
-                      e.status == TransactionStatus.confirmed &&
-                      e.type == HistoryType.received)
-                    {showCancelModal(e)},
+                      t.status == TransactionStatus.confirmed &&
+                      t.type == HistoryType.received)
+                    {showCancelModal(t)},
                 },
                 storeView: true,
               ),
