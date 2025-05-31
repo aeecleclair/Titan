@@ -126,7 +126,7 @@ class ConfirmFundButton extends ConsumerWidget {
         final value = await fundingUrlNotifier.getFundingUrl(
           InitInfo(
             amount: (double.parse(fundAmount.replaceAll(',', '.')) * 100)
-                .toInt(),
+                .round(),
             redirectUrl: redirectUrl,
           ),
         );
