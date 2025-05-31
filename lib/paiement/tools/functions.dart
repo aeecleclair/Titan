@@ -88,7 +88,7 @@ Future<String> getQRCodeContent(
   final keyId = await keyService.getKeyId();
   final keyPair = await keyService.getKeyPair();
   final now = DateTime.now();
-  final total = (double.parse(payAmount.replaceAll(',', '.')) * 100) ~/ 1;
+  final total = (double.parse(payAmount.replaceAll(',', '.')) * 100).round();
   final data = jsonEncode(
     QrCodeSignatureData(
       id: id,

@@ -32,7 +32,9 @@ class ConfirmFundButton extends ConsumerWidget {
       data: (wallet) => wallet.balance / 100,
     );
 
-    final redirectUrl = "titan.alpha://payment";
+    final redirectUrl = kIsWeb
+        ? "${getTitanURL()}/static.html" // ?
+        : "${getTitanURLScheme()}://payment";
     final amountToAdd = double.tryParse(fundAmount.replaceAll(",", ".")) ?? 0;
 
     final minValidFundAmount =
@@ -83,12 +85,7 @@ class ConfirmFundButton extends ConsumerWidget {
         final receivedUri = Uri.parse(data);
         final code = receivedUri.queryParameters["code"];
         popupWin.close();
-        if (code == "succeeded") {
-          displayToastWithContext(TypeMsg.msg, "Paiement effectué avec succès");
-          ref.watch(myWalletProvider.notifier).getMyWallet();
-        } else {
-          displayToastWithContext(TypeMsg.error, "Paiement annulé");
-        }
+        Navigator.pop(context, code);
       }
 
       html.window.onMessage.listen((event) {
@@ -118,7 +115,7 @@ class ConfirmFundButton extends ConsumerWidget {
         final value = await fundingUrlNotifier.getFundingUrl(
           InitInfo(
             amount: (double.parse(fundAmount.replaceAll(',', '.')) * 100)
-                .toInt(),
+                .round(),
             redirectUrl: redirectUrl,
           ),
         );
@@ -135,9 +132,6 @@ class ConfirmFundButton extends ConsumerWidget {
             displayToastWithContext(TypeMsg.error, error.toString());
           },
         );
-        if (context.mounted) {
-          Navigator.pop(context);
-        }
       },
       waitingColor: const Color(0xff2e2f5e),
       builder: (Widget child) => Container(

@@ -8,26 +8,54 @@
       "name": "Titan dev",
       "request": "launch",
       "type": "dart",
-      "args": ["--flavor", "dev"]
+      "args": [
+        "--flavor",
+        "dev",
+        "--dart-define",
+        "flavor=dev",
+        "--web-port",
+        "3000"
+      ]
     },
     {
       "name": "Titan dev (profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile",
-      "args": ["--flavor", "dev"]
+      "args": [
+        "--flavor",
+        "dev",
+        "--dart-define",
+        "flavor=dev",
+        "--web-port",
+        "3000"
+      ]
     },
     {
       "name": "Titan alpha",
       "request": "launch",
       "type": "dart",
-      "args": ["--flavor", "alpha"]
+      "args": [
+        "--flavor",
+        "alpha",
+        "--dart-define",
+        "flavor=alpha",
+        "--web-port",
+        "3000"
+      ]
     },
     {
       "name": "Titan prod",
       "request": "launch",
       "type": "dart",
-      "args": ["--flavor", "prod"]
+      "args": [
+        "--flavor",
+        "prod",
+        "--dart-define",
+        "flavor=prod",
+        "--web-port",
+        "3000"
+      ]
     }
   ]
 }

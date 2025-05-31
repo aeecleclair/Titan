@@ -97,20 +97,23 @@ class DevicesPage extends HookConsumerWidget {
                             await keyService.saveKeyId(value);
                             await devicesNotifier.getDeviceList();
                             displayAddDevice.value = false;
-                            await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return DeviceDialogBox(
-                                  title: 'Demande d\'activation de l\'appareil',
-                                  descriptions:
-                                      "La demande d'activation est prise en compte, veuilliez consulter votre boite mail pour finaliser la démarche",
-                                  buttonText: "Ok",
-                                  onClick: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                );
-                              },
-                            );
+                            if (context.mounted) {
+                              await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return DeviceDialogBox(
+                                    title:
+                                        'Demande d\'activation de l\'appareil',
+                                    descriptions:
+                                        "La demande d'activation est prise en compte, veuilliez consulter votre boite mail pour finaliser la démarche",
+                                    buttonText: "Ok",
+                                    onClick: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  );
+                                },
+                              );
+                            }
                           }
                         },
                       ),
