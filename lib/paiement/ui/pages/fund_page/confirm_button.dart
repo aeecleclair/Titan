@@ -85,16 +85,7 @@ class ConfirmFundButton extends ConsumerWidget {
         final receivedUri = Uri.parse(data);
         final code = receivedUri.queryParameters["code"];
         popupWin.close();
-        if (code == "succeeded") {
-          displayToastWithContext(TypeMsg.msg, "Paiement effectué avec succès");
-          await Future.delayed(Duration(seconds: 5));
-          ref.watch(myWalletProvider.notifier).getMyWallet();
-          if (context.mounted) {
-            Navigator.pop(context);
-          }
-        } else {
-          displayToastWithContext(TypeMsg.error, "Paiement annulé");
-        }
+        Navigator.pop(context, code);
       }
 
       html.window.onMessage.listen((event) {

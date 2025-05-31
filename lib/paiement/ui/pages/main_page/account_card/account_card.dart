@@ -56,15 +56,22 @@ class AccountCard extends HookConsumerWidget {
       );
     }
 
-    void showFundModal() {
+    void showFundModal() async {
       resetHandledKeys();
-      showModalBottomSheet(
+      String code = await showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
         scrollControlDisabledMaxHeightRatio:
             (1 - 80 / MediaQuery.of(context).size.height),
         builder: (context) => const FundPage(),
       );
+      if (code == "succeeded") {
+        displayToastWithContext(TypeMsg.msg, "Paiement effectué avec succès");
+        await Future.delayed(Duration(seconds: 5));
+        ref.watch(myWalletProvider.notifier).getMyWallet();
+      } else {
+        displayToastWithContext(TypeMsg.error, "Paiement annulé");
+      }
     }
 
     return MainCardTemplate(
