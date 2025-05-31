@@ -47,7 +47,7 @@ class StoreCard extends HookConsumerWidget {
                 backgroundColor: Colors.transparent,
                 scrollControlDisabledMaxHeightRatio:
                     (1 - 80 / MediaQuery.of(context).size.height),
-                builder: (context) => const ScanPage(),
+                builder: (context) => ScanPage(),
               ).then((_) {
                 ongoingTransactionNotifier.clearOngoingTransaction();
                 barcodeNotifier.clearBarcode();
