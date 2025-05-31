@@ -18,7 +18,9 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 
 class ScanPage extends HookConsumerWidget {
-  const ScanPage({super.key});
+  ScanPage({super.key});
+
+  final GlobalKey<ScannerState> scannerKey = GlobalKey<ScannerState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,7 +44,7 @@ class ScanPage extends HookConsumerWidget {
       ..repeat(reverse: true);
     return Stack(
       children: [
-        const Scanner(),
+        Scanner(key: scannerKey),
         store.structure.associationMembership.id != ''
             ? Positioned(
                 top: 10,
@@ -158,7 +160,7 @@ class ScanPage extends HookConsumerWidget {
                                     '${formatter.format(barcode.tot / 100)} €',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 18,
+                                      fontSize: 25,
                                       color: ongoingTransaction.when(
                                         data: (_) => Colors.white,
                                         loading: () => Colors.black,
@@ -266,6 +268,7 @@ class ScanPage extends HookConsumerWidget {
                                             loading: () {},
                                           );
                                         });
+                                        scannerKey.currentState?.resetScanner();
                                       },
                                     );
                                   },
@@ -294,6 +297,7 @@ class ScanPage extends HookConsumerWidget {
                                 ),
                               ),
                               onTap: () {
+                                scannerKey.currentState?.resetScanner();
                                 barcodeNotifier.clearBarcode();
                                 ongoingTransactionNotifier
                                     .clearOngoingTransaction();
