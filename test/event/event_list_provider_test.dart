@@ -31,7 +31,7 @@ void main() {
         result.when(
           data: (data) => data,
           loading: () => [],
-          error: (_, __) => [],
+          error: (_, _) => [],
         ),
         events,
       );

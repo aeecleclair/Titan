@@ -37,7 +37,7 @@ void main() {
         result.when(
           data: (data) => data,
           loading: () => [],
-          error: (_, __) => [],
+          error: (_, _) => [],
         ),
         [event1, event2, event3],
       );
@@ -55,7 +55,7 @@ void main() {
         provider.state.when(
           data: (data) => data,
           loading: () => [],
-          error: (_, __) => [],
+          error: (_, _) => [],
         ),
         [event2, event3, event1],
       );
@@ -78,7 +78,7 @@ void main() {
         provider.state.when(
           data: (data) => data,
           loading: () => [],
-          error: (_, __) => [],
+          error: (_, _) => [],
         ),
         [event1, updatedEvent, event3],
       );
@@ -97,7 +97,7 @@ void main() {
         provider.state.when(
           data: (data) => data,
           loading: () => [],
-          error: (_, __) => [],
+          error: (_, _) => [],
         ),
         [event1, event3],
       );
