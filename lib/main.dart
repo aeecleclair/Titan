@@ -77,7 +77,11 @@ class MyApp extends HookConsumerWidget {
               }
             });
           } catch (err) {
-            print("Failed to listen to deep link: $err");
+            displayToast(
+              context,
+              TypeMsg.error,
+              "Failed to listen to deep link: $err",
+            );
           }
         }
 

@@ -9,6 +9,7 @@ import 'package:myecl/paiement/class/wallet_device.dart';
 import 'package:myecl/paiement/providers/device_list_provider.dart';
 import 'package:myecl/paiement/providers/device_provider.dart';
 import 'package:myecl/paiement/providers/key_service_provider.dart';
+import 'package:myecl/paiement/providers/my_history_provider.dart';
 import 'package:myecl/paiement/providers/my_wallet_provider.dart';
 import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/tools/platform_info.dart';
@@ -56,15 +57,23 @@ class AccountCard extends HookConsumerWidget {
       );
     }
 
-    void showFundModal() {
+    void showFundModal() async {
       resetHandledKeys();
-      showModalBottomSheet(
+      String code = await showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
         scrollControlDisabledMaxHeightRatio:
             (1 - 80 / MediaQuery.of(context).size.height),
         builder: (context) => const FundPage(),
       );
+      if (code == "succeeded") {
+        displayToastWithContext(TypeMsg.msg, "Paiement effectué avec succès");
+        await Future.delayed(Duration(seconds: 5));
+        ref.watch(myWalletProvider.notifier).getMyWallet();
+        ref.watch(myHistoryProvider.notifier).getHistory();
+      } else {
+        displayToastWithContext(TypeMsg.error, "Paiement annulé");
+      }
     }
 
     return MainCardTemplate(

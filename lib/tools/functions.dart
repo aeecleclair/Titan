@@ -480,17 +480,34 @@ String getTitanHost() {
   return host;
 }
 
-String getTitanPackageName() {
+String getTitanURL() {
   switch (getAppFlavor()) {
     case "dev":
-      return "fr.myecl.titan.dev";
+      return "http://localhost:3000";
     case "alpha":
-      return "fr.myecl.titan.alpha";
+      return "https://titan.dev.eclair.ec-lyon.fr";
     case "prod":
-      return "fr.myecl.titan";
+      return "https://myecl.fr";
     default:
       throw StateError("Invalid app flavor");
   }
+}
+
+String getTitanURLScheme() {
+  switch (getAppFlavor()) {
+    case "dev":
+      return "titan.dev";
+    case "alpha":
+      return "titan.alpha";
+    case "prod":
+      return "titan";
+    default:
+      throw StateError("Invalid app flavor");
+  }
+}
+
+String getTitanPackageName() {
+  return "fr.myecl.${getTitanURLScheme()}";
 }
 
 String getTitanLogo() {

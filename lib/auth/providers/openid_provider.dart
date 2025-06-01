@@ -121,8 +121,8 @@ class OpenIdTokenProvider
   final String clientId = "Titan";
   final String tokenKey = "token";
   final String refreshTokenKey = "refresh_token";
-  final String redirectUrl = "${getTitanPackageName()}://authorized";
-  final String redirectUrlHost = "myecl.fr";
+  final String redirectURLScheme = "${getTitanPackageName()}://authorized";
+  final String redirectURL = "${getTitanURL()}/static.html";
   final String discoveryUrl =
       "${Repository.host}.well-known/openid-configuration";
   final List<String> scopes = ["API"];
@@ -141,16 +141,10 @@ class OpenIdTokenProvider
 
   Future getTokenFromRequest() async {
     html.WindowBase? popupWin;
-
-    final redirectUri = Uri(
-      host: redirectUrlHost,
-      scheme: "https",
-      path: '/static.html',
-    );
     final codeVerifier = generateRandomString(128);
 
     final authUrl =
-        "${Repository.host}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}&redirect_uri=$redirectUri&code_challenge=${hash(codeVerifier)}&code_challenge_method=S256";
+        "${Repository.host}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}&redirect_uri=$redirectURL&code_challenge=${hash(codeVerifier)}&code_challenge_method=S256";
 
     state = const AsyncValue.loading();
     try {
@@ -195,7 +189,7 @@ class OpenIdTokenProvider
               final resp = await openIdRepository.getToken(
                 token,
                 clientId,
-                redirectUri.toString(),
+                redirectURL.toString(),
                 codeVerifier,
                 "authorization_code",
               );
@@ -226,7 +220,7 @@ class OpenIdTokenProvider
             .authorizeAndExchangeCode(
               AuthorizationTokenRequest(
                 clientId,
-                redirectUrl,
+                redirectURLScheme,
                 discoveryUrl: discoveryUrl,
                 scopes: scopes,
                 allowInsecureConnections: kDebugMode,
@@ -267,7 +261,7 @@ class OpenIdTokenProvider
             final resp = await appAuth.token(
               TokenRequest(
                 clientId,
-                redirectUrl,
+                redirectURLScheme,
                 discoveryUrl: discoveryUrl,
                 scopes: scopes,
                 refreshToken: token,
@@ -294,7 +288,7 @@ class OpenIdTokenProvider
         .token(
           TokenRequest(
             clientId,
-            redirectUrl,
+            redirectURLScheme,
             discoveryUrl: discoveryUrl,
             scopes: scopes,
             authorizationCode: authorizationToken,
@@ -316,7 +310,7 @@ class OpenIdTokenProvider
           TokenResponse? resp = await appAuth.token(
             TokenRequest(
               clientId,
-              redirectUrl,
+              redirectURLScheme,
               discoveryUrl: discoveryUrl,
               scopes: scopes,
               refreshToken: token[refreshTokenKey] as String,
