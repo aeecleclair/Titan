@@ -89,27 +89,10 @@ class PayPage extends ConsumerWidget {
             ),
             NumericKeyboard(
               onKeyboardTap: (e) {
-                if (e != "," || !payAmount.contains(",")) {
-                  if (payAmount.contains(",") &&
-                      payAmount.substring(payAmount.indexOf(",")).length < 3) {
-                    payAmountNotifier.setPayAmount(payAmount + e.toString());
-                  } else if (!payAmount.contains(",")) {
-                    if (e == "," && payAmount.isEmpty) {
-                      payAmountNotifier.setPayAmount("0,");
-                    } else {
-                      payAmountNotifier.setPayAmount(payAmount + e.toString());
-                    }
-                  }
-                }
+                payAmountNotifier.addDigit(e);
               },
               rightButtonFn: () {
-                if (payAmount == "0,") {
-                  payAmountNotifier.setPayAmount("");
-                } else if (payAmount.isNotEmpty) {
-                  payAmountNotifier.setPayAmount(
-                    payAmount.substring(0, payAmount.length - 1),
-                  );
-                }
+                payAmountNotifier.backspace();
               },
             ),
             const Expanded(child: Center(child: ConfirmButton())),

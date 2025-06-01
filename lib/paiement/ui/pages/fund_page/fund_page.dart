@@ -96,30 +96,10 @@ class FundPage extends ConsumerWidget {
             ),
             NumericKeyboard(
               onKeyboardTap: (e) {
-                if (e != "," || !fundAmount.contains(",")) {
-                  if (fundAmount.contains(",") &&
-                      fundAmount.substring(fundAmount.indexOf(",")).length <
-                          3) {
-                    fundAmountNotifier.setFundAmount(fundAmount + e.toString());
-                  } else if (!fundAmount.contains(",")) {
-                    if (e == "," && fundAmount.isEmpty) {
-                      fundAmountNotifier.setFundAmount("0,");
-                    } else {
-                      fundAmountNotifier.setFundAmount(
-                        fundAmount + e.toString(),
-                      );
-                    }
-                  }
-                }
+                fundAmountNotifier.addDigit(e);
               },
               rightButtonFn: () {
-                if (fundAmount == "0,") {
-                  fundAmountNotifier.setFundAmount("");
-                } else if (fundAmount.isNotEmpty) {
-                  fundAmountNotifier.setFundAmount(
-                    fundAmount.substring(0, fundAmount.length - 1),
-                  );
-                }
+                fundAmountNotifier.backspace();
               },
             ),
             const Expanded(child: Center(child: ConfirmFundButton())),
