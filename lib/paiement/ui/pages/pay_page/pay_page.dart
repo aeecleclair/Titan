@@ -94,6 +94,9 @@ class PayPage extends ConsumerWidget {
               rightButtonFn: () {
                 payAmountNotifier.backspace();
               },
+              leftButtonFn: () {
+                payAmountNotifier.clear();
+              },
             ),
             const Expanded(child: Center(child: ConfirmButton())),
           ],

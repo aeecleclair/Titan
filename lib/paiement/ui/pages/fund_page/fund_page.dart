@@ -101,6 +101,9 @@ class FundPage extends ConsumerWidget {
               rightButtonFn: () {
                 fundAmountNotifier.backspace();
               },
+              leftButtonFn: () {
+                fundAmountNotifier.clear();
+              },
             ),
             const Expanded(child: Center(child: ConfirmFundButton())),
           ],
