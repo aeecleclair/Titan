@@ -99,7 +99,7 @@ class PaymentMainPage extends HookConsumerWidget {
                   orElse: () => '',
                   data: (tos) => tos.tosContent,
                 ),
-                title: "Nouvelle TOS",
+                title: "Nouvelle Conditions Générales d'Utilisations",
                 onYes: () {
                   tos.maybeWhen(
                     orElse: () {},
