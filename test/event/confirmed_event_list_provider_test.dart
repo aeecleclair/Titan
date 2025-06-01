@@ -34,7 +34,7 @@ void main() {
         result.when(
           data: (data) => data,
           loading: () => [],
-          error: (_, __) => [],
+          error: (_, _) => [],
         ),
         [event1, event2, event3],
       );
@@ -51,7 +51,7 @@ void main() {
         confirmedEventListProvider.state.when(
           data: (data) => data,
           loading: () => [],
-          error: (_, __) => [],
+          error: (_, _) => [],
         ),
         [event1, event2, newEvent],
       );
@@ -71,7 +71,7 @@ void main() {
         confirmedEventListProvider.state.when(
           data: (data) => data,
           loading: () => [],
-          error: (_, __) => [],
+          error: (_, _) => [],
         ),
         [event1, event3],
       );

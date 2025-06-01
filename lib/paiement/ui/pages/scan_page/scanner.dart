@@ -182,7 +182,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
                       scanArea: scanArea,
                       borderColor: ongoingTransaction.when(
                         data: (_) => Colors.green,
-                        error: (_, __) => Colors.red,
+                        error: (_, _) => Colors.red,
                         loading: () => Colors.white,
                       ),
                       borderWidth: 5,

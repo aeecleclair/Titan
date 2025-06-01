@@ -30,7 +30,7 @@ void main() {
         result.when(
           data: (data) => data,
           loading: () => Status.waiting,
-          error: (_, __) => Status.waiting,
+          error: (_, _) => Status.waiting,
         ),
         status,
       );

@@ -30,7 +30,7 @@ void main() {
         resultState.when(
           data: (data) => data,
           loading: () => [],
-          error: (_, __) => [],
+          error: (_, _) => [],
         ),
         [result],
       );
