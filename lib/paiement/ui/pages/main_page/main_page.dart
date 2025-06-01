@@ -93,31 +93,33 @@ class PaymentMainPage extends HookConsumerWidget {
 
     return PaymentTemplate(
       child: shouldDisplayTosDialog
-          ? TOSDialogBox(
-              descriptions: tos.maybeWhen(
-                orElse: () => '',
-                data: (tos) => tos.tosContent,
+          ? SingleChildScrollView(
+              child: TOSDialogBox(
+                descriptions: tos.maybeWhen(
+                  orElse: () => '',
+                  data: (tos) => tos.tosContent,
+                ),
+                title: "Nouvelle TOS",
+                onYes: () {
+                  tos.maybeWhen(
+                    orElse: () {},
+                    data: (tos) async {
+                      final value = await tosNotifier.signTOS(
+                        tos.copyWith(acceptedTosVersion: tos.latestTosVersion),
+                      );
+                      if (value) {
+                        await mySellersNotifier.getMyStores();
+                        await myHistoryNotifier.getHistory();
+                        await myWalletNotifier.getMyWallet();
+                        shouldDisplayTosDialogNotifier.update(false);
+                      }
+                    },
+                  );
+                },
+                onNo: () {
+                  shouldDisplayTosDialogNotifier.update(false);
+                },
               ),
-              title: "Nouvelle TOS",
-              onYes: () {
-                tos.maybeWhen(
-                  orElse: () {},
-                  data: (tos) async {
-                    final value = await tosNotifier.signTOS(
-                      tos.copyWith(acceptedTosVersion: tos.latestTosVersion),
-                    );
-                    if (value) {
-                      await mySellersNotifier.getMyStores();
-                      await myHistoryNotifier.getHistory();
-                      await myWalletNotifier.getMyWallet();
-                      shouldDisplayTosDialogNotifier.update(false);
-                    }
-                  },
-                );
-              },
-              onNo: () {
-                shouldDisplayTosDialogNotifier.update(false);
-              },
             )
           : LayoutBuilder(
               builder: (context, constraints) {

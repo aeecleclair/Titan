@@ -22,18 +22,17 @@ class StoreStatsPage extends ConsumerWidget {
     return PaymentTemplate(
       child: Refresher(
         onRefresh: () async {
-          await selectedHistoryNotifier.getHistory(selectedStore.id);
+          await selectedHistoryNotifier.getHistory(
+            selectedStore.id,
+            selectedInterval.start,
+            selectedInterval.end,
+          );
         },
         child: AsyncChild(
           value: selectedHistory,
           builder: (context, history) {
-            final sortedByDate =
-                history
-                    .where(
-                      (element) => selectedInterval.contains(element.creation),
-                    )
-                    .toList()
-                  ..sort((a, b) => a.creation.compareTo(b.creation));
+            final sortedByDate = history.toList()
+              ..sort((a, b) => a.creation.compareTo(b.creation));
             return Column(
               children: [
                 const SizedBox(height: 20),
