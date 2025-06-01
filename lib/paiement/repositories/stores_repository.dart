@@ -23,21 +23,16 @@ class StoresRepository extends Repository {
 
   Future<List<History>> getStoreHistory(
     String id,
-    DateTime? startDate,
-    DateTime? endDate,
+    DateTime startDate,
+    DateTime endDate,
   ) async {
-    final String url;
-    if (startDate != null && endDate != null) {
-      final queryParams = {
-        'start_date': processDateToAPI(startDate),
-        'end_date': processDateToAPI(endDate),
-      };
+    final queryParams = {
+      'start_date': processDateToAPIWithoutHour(startDate),
+      'end_date': processDateToAPIWithoutHour(endDate),
+    };
 
-      final queryString = Uri(queryParameters: queryParams).query;
-      url = "/$id/history?$queryString";
-    } else {
-      url = "/$id/history";
-    }
+    final queryString = Uri(queryParameters: queryParams).query;
+    final url = "/$id/history?$queryString";
 
     return List<History>.from(
       (await getList(suffix: url)).map((e) => History.fromJson(e)),

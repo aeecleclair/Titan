@@ -13,8 +13,8 @@ class SellerHistoryNotifier extends ListNotifier<History> {
 
   Future<AsyncValue<List<History>>> getHistory(
     String storeId,
-    DateTime? startDate,
-    DateTime? endDate,
+    DateTime startDate,
+    DateTime endDate,
   ) async {
     return await loadList(
       () => storesRepository.getStoreHistory(storeId, startDate, endDate),
