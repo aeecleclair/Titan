@@ -15,18 +15,27 @@ import 'package:myecl/paiement/ui/pages/scan_page/scan_overlay_shape.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class Scanner extends StatefulHookConsumerWidget {
   const Scanner({super.key});
 
   @override
-  ConsumerState<Scanner> createState() => _Scanner();
+  ConsumerState<Scanner> createState() => ScannerState();
 }
 
-class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
+class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
   final controller = MobileScannerController(autoStart: false);
+  String? scannedValue;
 
   StreamSubscription<Object?>? _subscription;
+
+  void resetScanner() {
+    setState(() {
+      scannedValue = null;
+    });
+    controller.start();
+  }
 
   void showWithoutMembershipDialog(Function() onYes) async {
     await showDialog(
@@ -55,7 +64,7 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
     final lastTimeScannedNotifier = ref.read(lastTimeScannedProvider.notifier);
     if (lastTimeScanned != null &&
         DateTime.now().difference(lastTimeScanned) <
-            const Duration(seconds: 2)) {
+            const Duration(seconds: 5)) {
       return;
     }
     lastTimeScannedNotifier.updateLastTimeScanned(DateTime.now());
@@ -67,7 +76,6 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
     final ongoingTransactionNotifier = ref.read(
       ongoingTransactionProvider.notifier,
     );
-    unawaited(controller.stop());
     if (mounted && barcodes.barcodes.isNotEmpty && barcode == null) {
       final data = barcodeNotifier.updateBarcode(
         barcodes.barcodes.firstOrNull!.rawValue!,
@@ -80,13 +88,10 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
             if (value == null) {
               displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
               barcodeNotifier.clearBarcode();
+              ongoingTransactionNotifier.clearOngoingTransaction();
               return;
             }
             ongoingTransactionNotifier.updateOngoingTransaction(value);
-          });
-          unawaited(controller.start());
-          Future.delayed(const Duration(seconds: 2), () {
-            ongoingTransactionNotifier.clearOngoingTransaction();
           });
           return;
         }
@@ -95,14 +100,14 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
       if (value == null) {
         displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
         barcodeNotifier.clearBarcode();
+        ongoingTransactionNotifier.clearOngoingTransaction();
         return;
       } else {
+        setState(() {
+          scannedValue = barcodes.barcodes.firstOrNull?.rawValue;
+        });
         ongoingTransactionNotifier.updateOngoingTransaction(value);
       }
-      unawaited(controller.start());
-      Future.delayed(const Duration(seconds: 2), () {
-        ongoingTransactionNotifier.clearOngoingTransaction();
-      });
     }
   }
 
@@ -144,27 +149,49 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
         topLeft: Radius.circular(40),
         topRight: Radius.circular(40),
       ),
-      child: MobileScanner(
-        controller: controller,
-        overlayBuilder: (context, constraints) {
-          return Center(
-            child: Container(
-              decoration: ShapeDecoration(
-                shape: QrScannerOverlayShape(
-                  borderColor: ongoingTransaction.when(
-                    data: (_) => Colors.green,
-                    error: (_, __) => Colors.red,
-                    loading: () => Colors.white,
+      child: Container(
+        color: Colors.black,
+        child: scannedValue != null
+            ? Stack(
+                alignment: Alignment.center,
+                children: [
+                  QrImageView(
+                    data: scannedValue!,
+                    version: QrVersions.auto,
+                    size: MediaQuery.of(context).size.width * 0.8,
+                    backgroundColor: Colors.white,
                   ),
-                  borderRadius: 10,
-                  borderLength: 40,
-                  borderWidth: 7,
-                  cutOutSize: scanArea,
-                ),
+                  CustomPaint(
+                    size: Size.infinite,
+                    painter: ScannerOverlayPainter(
+                      scanArea: MediaQuery.of(context).size.width * 0.8,
+                      borderColor: Colors.green,
+                      borderRadius: 1,
+                      borderLength: 40,
+                      borderWidth: 7,
+                    ),
+                  ),
+                ],
+              )
+            : MobileScanner(
+                controller: controller,
+                overlayBuilder: (context, constraints) {
+                  return CustomPaint(
+                    size: Size.infinite,
+                    painter: ScannerOverlayPainter(
+                      scanArea: scanArea,
+                      borderColor: ongoingTransaction.when(
+                        data: (_) => Colors.green,
+                        error: (_, __) => Colors.red,
+                        loading: () => Colors.white,
+                      ),
+                      borderWidth: 5,
+                      borderLength: 40,
+                      borderRadius: 10,
+                    ),
+                  );
+                },
               ),
-            ),
-          );
-        },
       ),
     );
   }
