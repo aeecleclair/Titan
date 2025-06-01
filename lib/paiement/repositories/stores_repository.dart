@@ -5,6 +5,7 @@ import 'package:myecl/paiement/class/qr_code_data.dart';
 import 'package:myecl/paiement/class/store.dart';
 import 'package:myecl/paiement/class/transaction.dart';
 import 'package:myecl/tools/exception.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class StoresRepository extends Repository {
@@ -20,9 +21,26 @@ class StoresRepository extends Repository {
     return await delete("/$id");
   }
 
-  Future<List<History>> getStoreHistory(String id) async {
+  Future<List<History>> getStoreHistory(
+    String id,
+    DateTime? startDate,
+    DateTime? endDate,
+  ) async {
+    final String url;
+    if (startDate != null && endDate != null) {
+      final queryParams = {
+        'start_date': processDateToAPI(startDate),
+        'end_date': processDateToAPI(endDate),
+      };
+
+      final queryString = Uri(queryParameters: queryParams).query;
+      url = "/$id/history?$queryString";
+    } else {
+      url = "/$id/history";
+    }
+
     return List<History>.from(
-      (await getList(suffix: "/$id/history")).map((e) => History.fromJson(e)),
+      (await getList(suffix: url)).map((e) => History.fromJson(e)),
     );
   }
 

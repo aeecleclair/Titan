@@ -22,7 +22,11 @@ class StoreStatsPage extends ConsumerWidget {
     return PaymentTemplate(
       child: Refresher(
         onRefresh: () async {
-          await selectedHistoryNotifier.getHistory(selectedStore.id);
+          await selectedHistoryNotifier.getHistory(
+            selectedStore.id,
+            selectedInterval.start,
+            selectedInterval.end,
+          );
         },
         child: AsyncChild(
           value: selectedHistory,
