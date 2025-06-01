@@ -7,6 +7,7 @@ import 'package:myecl/paiement/class/create_device.dart';
 import 'package:myecl/paiement/class/wallet_device.dart';
 import 'package:myecl/paiement/providers/device_list_provider.dart';
 import 'package:myecl/paiement/providers/device_provider.dart';
+import 'package:myecl/paiement/providers/has_accepted_tos_provider.dart';
 import 'package:myecl/paiement/providers/key_service_provider.dart';
 import 'package:myecl/paiement/tools/functions.dart';
 import 'package:myecl/paiement/tools/platform_info.dart';
@@ -31,6 +32,7 @@ class DevicesPage extends HookConsumerWidget {
     final keyService = ref.watch(keyServiceProvider);
     final deviceKey = keyService.getKeyId();
     final displayAddDevice = useState(true);
+    final hasAcceptedToS = ref.watch(hasAcceptedTosProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -80,6 +82,13 @@ class DevicesPage extends HookConsumerWidget {
                     if (shouldDisplayAddDevice)
                       AddDeviceButton(
                         onTap: () async {
+                          if (!hasAcceptedToS) {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              "Veuillez accepter les Conditions Générales d'Utilisation.",
+                            );
+                            return;
+                          }
                           final name = await getPlatformInfo();
                           final keyPair = await keyService.generateKeyPair();
                           final publicKey =
@@ -122,6 +131,13 @@ class DevicesPage extends HookConsumerWidget {
                         device: device,
                         isActual: device.id == snapshot.data,
                         onRevoke: () async {
+                          if (!hasAcceptedToS) {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              "Veuillez accepter les Conditions Générales d'Utilisation.",
+                            );
+                            return;
+                          }
                           await showDialog(
                             context: context,
                             builder: (context) {
