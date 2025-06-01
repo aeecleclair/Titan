@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/paiement/providers/has_accepted_tos_provider.dart';
 import 'package:myecl/paiement/providers/my_wallet_provider.dart';
 import 'package:myecl/paiement/providers/tos_provider.dart';
 import 'package:myecl/paiement/providers/is_payment_admin.dart';
@@ -35,6 +36,7 @@ class PaymentMainPage extends HookConsumerWidget {
     final shouldDisplayTosDialogNotifier = ref.read(
       shouldDisplayTosDialogProvider.notifier,
     );
+    final hasAcceptedToSNotifier = ref.read(hasAcceptedTosProvider.notifier);
     final tos = ref.watch(tosProvider);
     final tosNotifier = ref.read(tosProvider.notifier);
     final registerNotifier = ref.read(registerProvider.notifier);
@@ -112,6 +114,7 @@ class PaymentMainPage extends HookConsumerWidget {
                         await myHistoryNotifier.getHistory();
                         await myWalletNotifier.getMyWallet();
                         shouldDisplayTosDialogNotifier.update(false);
+                        hasAcceptedToSNotifier.update(true);
                       }
                     },
                   );
