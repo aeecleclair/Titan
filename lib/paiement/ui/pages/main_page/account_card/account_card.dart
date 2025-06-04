@@ -8,6 +8,7 @@ import 'package:myecl/paiement/class/create_device.dart';
 import 'package:myecl/paiement/class/wallet_device.dart';
 import 'package:myecl/paiement/providers/device_list_provider.dart';
 import 'package:myecl/paiement/providers/device_provider.dart';
+import 'package:myecl/paiement/providers/has_accepted_tos_provider.dart';
 import 'package:myecl/paiement/providers/key_service_provider.dart';
 import 'package:myecl/paiement/providers/my_history_provider.dart';
 import 'package:myecl/paiement/providers/my_wallet_provider.dart';
@@ -37,6 +38,7 @@ class AccountCard extends HookConsumerWidget {
     final myWallet = ref.watch(myWalletProvider);
     final keyService = ref.read(keyServiceProvider);
     final deviceNotifier = ref.watch(deviceProvider.notifier);
+    final hasAcceptedToS = ref.watch(hasAcceptedTosProvider);
     final buttonGradient = [
       const Color(0xff017f80),
       const Color.fromARGB(255, 4, 84, 84),
@@ -101,6 +103,13 @@ class AccountCard extends HookConsumerWidget {
           title: "Payer",
           onPressed: () async {
             await tokenExpireWrapper(ref, () async {
+              if (!hasAcceptedToS) {
+                displayToastWithContext(
+                  TypeMsg.error,
+                  "Veuillez accepter les Conditions Générales d'Utilisation.",
+                );
+                return;
+              }
               String? keyId = await keyService.getKeyId();
               if (keyId == null) {
                 final name = await getPlatformInfo();
@@ -186,6 +195,13 @@ class AccountCard extends HookConsumerWidget {
           icon: HeroIcons.creditCard,
           title: "Recharger",
           onPressed: () async {
+            if (!hasAcceptedToS) {
+              displayToastWithContext(
+                TypeMsg.error,
+                "Veuillez accepter les Conditions Générales d'Utilisation.",
+              );
+              return;
+            }
             showFundModal();
           },
         ),
