@@ -69,7 +69,15 @@ class NumericKeyboard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              _calcButton(','),
+              GestureDetector(
+                onTap: leftButtonFn,
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 50,
+                  height: 50,
+                  child: HeroIcon(HeroIcons.trash, color: textColor, size: 35),
+                ),
+              ),
               _calcButton('0'),
               GestureDetector(
                 onTap: rightButtonFn,
