@@ -64,19 +64,11 @@ class IntervalSelector extends ConsumerWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(
-            "Du",
-            style: TextStyle(
-              color: const Color(0xff204550),
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
-          ),
-          SizedBox(width: 5),
-          Column(
+          Row(
             children: [
               GestureDetector(
                 child: Container(
@@ -90,7 +82,7 @@ class IntervalSelector extends ConsumerWidget {
                   ),
                   child: Text(
                     DateFormat(
-                      "dd MMMM yyyy",
+                      "dd MMM yyyy",
                       "fr_FR",
                     ).format(selectedInterval.start),
                     style: TextStyle(
@@ -112,7 +104,7 @@ class IntervalSelector extends ConsumerWidget {
                   }
                 },
               ),
-              SizedBox(height: 5),
+              SizedBox(width: 5),
               GestureDetector(
                 child: Container(
                   padding: const EdgeInsets.symmetric(
@@ -124,10 +116,7 @@ class IntervalSelector extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    DateFormat(
-                      "HH:mm",
-                      "fr_FR",
-                    ).format(selectedInterval.start),
+                    DateFormat("HH:mm", "fr_FR").format(selectedInterval.start),
                     style: TextStyle(
                       color: const Color(0xff204550),
                       fontWeight: FontWeight.bold,
@@ -157,16 +146,13 @@ class IntervalSelector extends ConsumerWidget {
             ],
           ),
           SizedBox(width: 5),
-          Text(
-            "au",
-            style: TextStyle(
-              color: const Color(0xff204550),
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
+          HeroIcon(
+            HeroIcons.arrowRight,
+            color: const Color(0xff204550),
+            size: 20,
           ),
           SizedBox(width: 5),
-          Column(
+          Row(
             children: [
               GestureDetector(
                 child: Container(
@@ -180,7 +166,7 @@ class IntervalSelector extends ConsumerWidget {
                   ),
                   child: Text(
                     DateFormat(
-                      "dd MMMM yyyy",
+                      "dd MMM yyyy",
                       "fr_FR",
                     ).format(selectedInterval.end),
                     style: TextStyle(
@@ -202,7 +188,7 @@ class IntervalSelector extends ConsumerWidget {
                   }
                 },
               ),
-              SizedBox(height: 5),
+              SizedBox(width: 5),
               GestureDetector(
                 child: Container(
                   padding: const EdgeInsets.symmetric(
@@ -214,10 +200,7 @@ class IntervalSelector extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    DateFormat(
-                      "HH:mm",
-                      "fr_FR",
-                    ).format(selectedInterval.end),
+                    DateFormat("HH:mm", "fr_FR").format(selectedInterval.end),
                     style: TextStyle(
                       color: const Color(0xff204550),
                       fontWeight: FontWeight.bold,
@@ -245,27 +228,6 @@ class IntervalSelector extends ConsumerWidget {
                 },
               ),
             ],
-          ),
-          Spacer(),
-          GestureDetector(
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 5,
-                vertical: 5,
-              ),
-              decoration: BoxDecoration(
-                color: Color(0xff017f80).withAlpha(50),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: HeroIcon(
-                HeroIcons.arrowPath,
-                color: const Color(0xff204550),
-                size: 20,
-              ),
-            ),
-            onTap: () async {
-              selectedIntervalNotifier.clearSelectedInterval();
-            },
           ),
         ],
       ),
