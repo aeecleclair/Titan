@@ -57,8 +57,8 @@ class MemberDetailPage extends HookConsumerWidget {
                       value: memberProvider.member.promotion == 0
                           ? PhonebookTextConstants.promoNotGiven
                           : memberProvider.member.promotion < 100
-                              ? "20${memberProvider.member.promotion}"
-                              : memberProvider.member.promotion.toString(),
+                          ? "20${memberProvider.member.promotion}"
+                          : memberProvider.member.promotion.toString(),
                     ),
                   ],
                 ),
@@ -70,8 +70,10 @@ class MemberDetailPage extends HookConsumerWidget {
                 memberProvider.memberships.length == 1
                     ? PhonebookTextConstants.association
                     : PhonebookTextConstants.associations,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
             const SizedBox(height: 20),
             AsyncChild(
@@ -87,8 +89,9 @@ class MemberDetailPage extends HookConsumerWidget {
                       return MembershipCard(
                         association: associationMembership,
                         onClicked: () {
-                          associationNotifier
-                              .setAssociation(associationMembership);
+                          associationNotifier.setAssociation(
+                            associationMembership,
+                          );
                           QR.to(
                             PhonebookRouter.root +
                                 PhonebookRouter.associationDetail,
