@@ -78,30 +78,28 @@ class MemberDetailPage extends HookConsumerWidget {
             const SizedBox(height: 20),
             AsyncChild(
               value: associationList,
-              builder: (context, associations) => Expanded(
-                child: Column(
-                  children: [
-                    ...memberProvider.memberships.map((membership) {
-                      final associationMembership = associations.firstWhere(
-                        (association) =>
-                            association.id == membership.associationId,
-                      );
-                      return MembershipCard(
-                        association: associationMembership,
-                        onClicked: () {
-                          associationNotifier.setAssociation(
-                            associationMembership,
-                          );
-                          QR.to(
-                            PhonebookRouter.root +
-                                PhonebookRouter.associationDetail,
-                          );
-                        },
-                        membership: membership,
-                      );
-                    }),
-                  ],
-                ),
+              builder: (context, associations) => Column(
+                children: [
+                  ...memberProvider.memberships.map((membership) {
+                    final associationMembership = associations.firstWhere(
+                      (association) =>
+                          association.id == membership.associationId,
+                    );
+                    return MembershipCard(
+                      association: associationMembership,
+                      onClicked: () {
+                        associationNotifier.setAssociation(
+                          associationMembership,
+                        );
+                        QR.to(
+                          PhonebookRouter.root +
+                              PhonebookRouter.associationDetail,
+                        );
+                      },
+                      membership: membership,
+                    );
+                  }),
+                ],
               ),
             ),
           ],
