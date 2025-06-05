@@ -166,9 +166,6 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
                     painter: ScannerOverlayPainter(
                       scanArea: MediaQuery.of(context).size.width * 0.8,
                       borderColor: Colors.green,
-                      borderRadius: 1,
-                      borderLength: 40,
-                      borderWidth: 7,
                     ),
                   ),
                 ],
@@ -185,9 +182,6 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
                         error: (_, _) => Colors.red,
                         loading: () => Colors.white,
                       ),
-                      borderWidth: 5,
-                      borderLength: 40,
-                      borderRadius: 10,
                     ),
                   );
                 },
