@@ -21,71 +21,74 @@ class MemberDetailPage extends HookConsumerWidget {
     final associationNotifier = ref.watch(associationProvider.notifier);
     final associationList = ref.watch(associationListProvider);
     return PhonebookTemplate(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-            child: CardLayout(
-              margin: EdgeInsets.zero,
-              child: Column(
-                children: [
-                  ElementField(
-                    label: PhonebookTextConstants.name,
-                    value: memberProvider.member.name,
-                  ),
-                  ElementField(
-                    label: PhonebookTextConstants.firstname,
-                    value: memberProvider.member.firstname,
-                  ),
-                  if (memberProvider.member.nickname != null)
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+              child: CardLayout(
+                margin: EdgeInsets.zero,
+                child: Column(
+                  children: [
                     ElementField(
-                      label: PhonebookTextConstants.nickname,
-                      value: memberProvider.member.nickname!,
+                      label: PhonebookTextConstants.name,
+                      value: memberProvider.member.name,
                     ),
-                  ElementField(
-                    label: PhonebookTextConstants.email,
-                    value: memberProvider.member.email,
-                  ),
-                  if (memberProvider.member.phone != null)
                     ElementField(
-                      label: PhonebookTextConstants.phone,
-                      value: memberProvider.member.phone!,
+                      label: PhonebookTextConstants.firstname,
+                      value: memberProvider.member.firstname,
                     ),
-                  ElementField(
-                    label: PhonebookTextConstants.promotion,
-                    value: memberProvider.member.promotion == 0
-                        ? PhonebookTextConstants.promoNotGiven
-                        : memberProvider.member.promotion < 100
-                        ? "20${memberProvider.member.promotion}"
-                        : memberProvider.member.promotion.toString(),
-                  ),
-                ],
+                    if (memberProvider.member.nickname != null)
+                      ElementField(
+                        label: PhonebookTextConstants.nickname,
+                        value: memberProvider.member.nickname!,
+                      ),
+                    ElementField(
+                      label: PhonebookTextConstants.email,
+                      value: memberProvider.member.email,
+                    ),
+                    if (memberProvider.member.phone != null)
+                      ElementField(
+                        label: PhonebookTextConstants.phone,
+                        value: memberProvider.member.phone!,
+                      ),
+                    ElementField(
+                      label: PhonebookTextConstants.promotion,
+                      value: memberProvider.member.promotion == 0
+                          ? PhonebookTextConstants.promoNotGiven
+                          : memberProvider.member.promotion < 100
+                              ? "20${memberProvider.member.promotion}"
+                              : memberProvider.member.promotion.toString(),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 20),
-          if (memberProvider.memberships.isNotEmpty)
-            Text(
-              memberProvider.memberships.length == 1
-                  ? PhonebookTextConstants.association
-                  : PhonebookTextConstants.associations,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            ),
-          const SizedBox(height: 20),
-          AsyncChild(
-            value: associationList,
-            builder: (context, associations) => Expanded(
-              child: SingleChildScrollView(
+            const SizedBox(height: 20),
+            if (memberProvider.memberships.isNotEmpty)
+              Text(
+                memberProvider.memberships.length == 1
+                    ? PhonebookTextConstants.association
+                    : PhonebookTextConstants.associations,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+            const SizedBox(height: 20),
+            AsyncChild(
+              value: associationList,
+              builder: (context, associations) => Expanded(
                 child: Column(
                   children: [
                     ...memberProvider.memberships.map((membership) {
                       final associationMembership = associations.firstWhere(
-                        (association) => association.id == membership.associationId,
+                        (association) =>
+                            association.id == membership.associationId,
                       );
                       return MembershipCard(
                         association: associationMembership,
                         onClicked: () {
-                          associationNotifier.setAssociation(associationMembership);
+                          associationNotifier
+                              .setAssociation(associationMembership);
                           QR.to(
                             PhonebookRouter.root +
                                 PhonebookRouter.associationDetail,
@@ -98,8 +101,8 @@ class MemberDetailPage extends HookConsumerWidget {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
