@@ -113,25 +113,19 @@ class AccountCard extends HookConsumerWidget {
                 }
                 String? keyId = await keyService.getKeyId();
                 if (keyId == null) {
-                  final name = await getPlatformInfo();
-                  final keyPair = await keyService.generateKeyPair();
-                  final publicKey = (await keyPair.extractPublicKey()).bytes;
-                  final base64PublicKey = base64Encode(publicKey);
-                  final body = CreateDevice(
-                    name: name,
-                    ed25519PublicKey: base64PublicKey,
-                  );
-                  final value = await deviceNotifier.registerDevice(body);
-                  if (value != null) {
-                    await keyService.saveKeyPair(keyPair);
-                    await keyService.saveKeyId(value);
-                  }
-                  keyId = value;
-                }
-                if (keyId == null) {
-                  displayToastWithContext(
-                    TypeMsg.error,
-                    "Erreur lors de la création de l'appareil",
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return DeviceDialogBox(
+                        title: 'Appareil non enregistré',
+                        descriptions:
+                            'Votre appareil n\'est pas encore enregistré. \nPour l\'enregistrer, veuillez vous rendre sur la page des appareils.',
+                        buttonText: 'Accéder à la page',
+                        onClick: () {
+                          QR.to(PaymentRouter.root + PaymentRouter.devices);
+                        },
+                      );
+                    },
                   );
                   return;
                 }
