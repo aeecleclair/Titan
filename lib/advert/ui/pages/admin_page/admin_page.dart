@@ -2,10 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/advert/class/advert.dart';
-import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/providers/advert_posters_provider.dart';
-import 'package:myecl/advert/providers/advert_provider.dart';
+import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/providers/announcer_list_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
@@ -18,13 +16,13 @@ import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/layouts/column_refresher.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:myecl/tools/functions.dart';
 
 class AdvertAdminPage extends HookConsumerWidget {
   const AdvertAdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final advertNotifier = ref.watch(advertProvider.notifier);
     final advertList = ref.watch(advertListProvider);
     final userAnnouncerListNotifier = ref.watch(
       userAnnouncerListProvider.notifier,
@@ -72,7 +70,6 @@ class AdvertAdminPage extends HookConsumerWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    advertNotifier.setAdvert(Advert.empty());
                     QR.to(
                       AdvertRouter.root +
                           AdvertRouter.admin +
@@ -102,16 +99,19 @@ class AdvertAdminPage extends HookConsumerWidget {
                 ...filteredSortedUserAnnouncerAdverts.map(
                   (advert) => AdminAdvertCard(
                     onTap: () {
-                      advertNotifier.setAdvert(advert);
-                      QR.to(AdvertRouter.root + AdvertRouter.detail);
+                      QR.to(
+                        buildPath(AdvertRouter.root + AdvertRouter.detail, [
+                          advert.id,
+                        ]),
+                      );
                     },
                     onEdit: () {
+                      QR.params.addAsHidden('advertId', advert.id);
                       QR.to(
                         AdvertRouter.root +
                             AdvertRouter.admin +
                             AdvertRouter.addEditAdvert,
                       );
-                      advertNotifier.setAdvert(advert);
                       selectedAnnouncersNotifier.clearAnnouncer();
                       selectedAnnouncersNotifier.addAnnouncer(advert.announcer);
                     },
