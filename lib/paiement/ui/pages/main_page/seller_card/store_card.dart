@@ -10,6 +10,7 @@ import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_template.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scan_page.dart';
 import 'package:myecl/user/providers/user_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class StoreCard extends HookConsumerWidget {
@@ -44,6 +45,36 @@ class StoreCard extends HookConsumerWidget {
             icon: HeroIcons.viewfinderCircle,
             title: "Scanner",
             onPressed: () async {
+              var status = await Permission.camera.status;
+              if (!status.isGranted) {
+                status = await Permission.camera.request();
+                if (!status.isGranted) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Permission caméra requise'),
+                      content: const Text(
+                        'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. '
+                        'Veuillez accorder cette permission dans les paramètres de votre appareil.',
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text('Annuler'),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            Navigator.of(context).pop();
+                            await openAppSettings();
+                          },
+                          child: const Text('Ouvrir les paramètres'),
+                        ),
+                      ],
+                    ),
+                  );
+                  return;
+                }
+              }
               showModalBottomSheet(
                 context: context,
                 backgroundColor: Colors.transparent,
