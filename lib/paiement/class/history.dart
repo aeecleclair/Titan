@@ -19,7 +19,6 @@ enum TransactionStatus {
   canceled,
   refunded,
   pending,
-  partiallyRefunded,
 }
 
 class History {
