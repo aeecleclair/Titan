@@ -9,6 +9,7 @@ import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_template.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scan_page.dart';
+import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class StoreCard extends HookConsumerWidget {
@@ -17,6 +18,7 @@ class StoreCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final me = ref.watch(userProvider);
     final store = ref.watch(selectedStoreProvider);
     final ongoingTransactionNotifier = ref.read(
       ongoingTransactionProvider.notifier,
@@ -72,6 +74,15 @@ class StoreCard extends HookConsumerWidget {
               QR.to(PaymentRouter.root + PaymentRouter.storeStats);
             },
             title: 'Historique',
+          ),
+        if (store.structure.managerUser.id == me.id)
+          MainCardButton(
+            colors: buttonGradient,
+            icon: HeroIcons.users,
+            onPressed: () async {
+              QR.to(PaymentRouter.root + PaymentRouter.transferStructure);
+            },
+            title: 'Passation',
           ),
       ],
       child: SizedBox.expand(
