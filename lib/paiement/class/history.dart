@@ -14,12 +14,7 @@ String historyTypeToString(HistoryType e) {
   }
 }
 
-enum TransactionStatus {
-  confirmed,
-  canceled,
-  refunded,
-  pending,
-}
+enum TransactionStatus { confirmed, canceled, refunded, pending }
 
 class History {
   final String id;

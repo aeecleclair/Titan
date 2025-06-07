@@ -77,7 +77,7 @@ class ScannerOverlayPainter extends CustomPainter {
       )
       ..lineTo(left + borderLength, bottom);
     canvas.drawPath(bottomLeftCorner, borderPaint);
-    
+
     final bottomRightCorner = Path()
       ..moveTo(right, bottom - borderLength)
       ..lineTo(right, bottom - borderRadius)
