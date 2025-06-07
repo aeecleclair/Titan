@@ -7,6 +7,10 @@ class NewAdminNotifier extends StateNotifier<SimpleUser> {
   void updateNewAdmin(SimpleUser newAdmin) {
     state = newAdmin;
   }
+
+  void resetNewAdmin() {
+    state = SimpleUser.empty();
+  }
 }
 
 final newAdminProvider = StateNotifierProvider<NewAdminNotifier, SimpleUser>((
