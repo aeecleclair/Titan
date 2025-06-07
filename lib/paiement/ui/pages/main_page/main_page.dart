@@ -10,6 +10,7 @@ import 'package:myecl/paiement/providers/my_stores_provider.dart';
 import 'package:myecl/paiement/providers/register_provider.dart';
 import 'package:myecl/paiement/providers/should_display_tos_dialog.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/account_card.dart';
+import 'package:myecl/paiement/ui/pages/main_page/account_card/device_dialog_box.dart';
 import 'package:myecl/paiement/ui/pages/main_page/tos_dialog.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/last_transactions.dart';
 import 'package:myecl/paiement/ui/pages/main_page/flip_card.dart';
@@ -106,10 +107,19 @@ class PaymentMainPage extends HookConsumerWidget {
                   tos.maybeWhen(
                     orElse: () {},
                     data: (tos) async {
-                      final value = await tosNotifier.signTOS(
-                        tos.copyWith(acceptedTosVersion: tos.latestTosVersion),
-                      );
-                      if (value) {
+                      if (context.mounted) {
+                        await showDialog(
+                          useRootNavigator: false,
+                          context: context,
+                          builder: (context) {
+                            return DeviceDialogBox(
+                              title: 'Demande d\'activation de l\'appareil',
+                              descriptions:
+                                  "La demande d'activation est prise en compte, veuilliez consulter votre boite mail pour finaliser la démarche",
+                              buttonText: "Ok",
+                            );
+                          },
+                        );
                         await mySellersNotifier.getMyStores();
                         await myHistoryNotifier.getHistory();
                         await myWalletNotifier.getMyWallet();
