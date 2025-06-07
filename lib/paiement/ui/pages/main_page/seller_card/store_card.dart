@@ -46,27 +46,32 @@ class StoreCard extends HookConsumerWidget {
             icon: HeroIcons.viewfinderCircle,
             title: "Scanner",
             onPressed: () async {
-              var status = await Permission.camera.status;
+              final cameraPermission = Permission.camera;
+              var status = await cameraPermission.status;
               print('Camera permission status: $status');
               if (!status.isGranted) {
-                status = await Permission.camera.request();
+                status = await cameraPermission.request();
                 print('Camera permission requested: $status');
                 if (!status.isGranted) {
-                  showDialog(
+                  await showDialog(
                     context: context,
                     builder: (BuildContext context) => CustomDialogBox(
                       title: 'Permission caméra requise',
-                      descriptions: 
-                        'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. '
-                        'Veuillez accorder cette permission dans les paramètres de votre appareil.',
+                      descriptions:
+                          'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. '
+                          'Veuillez accorder cette permission dans les paramètres de votre appareil.',
                       onYes: () async {
                         Navigator.of(context).pop();
                         await openAppSettings();
                       },
-                      yesText: 'Ouvrir les paramètres',
+                      yesText: 'Paramètres',
                     ),
                   );
-                  return;
+                  status = await Permission.camera.status;
+                  print('Camera permission status after dialog: $status');
+                  if (!status.isGranted) {
+                    return;
+                  }
                 }
               }
               showModalBottomSheet(
