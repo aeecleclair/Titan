@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:myecl/paiement/providers/barcode_provider.dart';
 import 'package:myecl/paiement/providers/ongoing_transaction.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
@@ -46,33 +47,21 @@ class StoreCard extends HookConsumerWidget {
             icon: HeroIcons.viewfinderCircle,
             title: "Scanner",
             onPressed: () async {
-              final cameraPermission = Permission.camera;
-              var status = await cameraPermission.status;
-              print('Camera permission status: $status');
-              if (!status.isGranted) {
-                status = await cameraPermission.request();
-                print('Camera permission requested: $status');
-                if (!status.isGranted) {
-                  await showDialog(
-                    context: context,
-                    builder: (BuildContext context) => CustomDialogBox(
-                      title: 'Permission caméra requise',
-                      descriptions:
-                          'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. '
-                          'Veuillez accorder cette permission dans les paramètres de votre appareil.',
-                      onYes: () async {
-                        Navigator.of(context).pop();
-                        await openAppSettings();
-                      },
-                      yesText: 'Paramètres',
-                    ),
-                  );
-                  status = await Permission.camera.status;
-                  print('Camera permission status after dialog: $status');
-                  if (!status.isGranted) {
-                    return;
-                  }
-                }
+              final controller = MobileScannerController(autoStart: false);
+              if (!controller.value.hasCameraPermission) {
+                showDialog(
+                  context: context,
+                  builder: (context) => CustomDialogBox(
+                    title: 'Permission caméra requise',
+                    descriptions:
+                        'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. Veuillez accorder cette permission dans les paramètres de votre appareil.',
+                    onYes: () async {
+                      Navigator.of(context).pop();
+                      await openAppSettings();
+                    },
+                    yesText: 'Paramètres',
+                  ),
+                );
               }
               showModalBottomSheet(
                 context: context,
