@@ -160,7 +160,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
                     child: QrImageView(
                       data: scannedValue!,
                       version: QrVersions.auto,
-                      size: MediaQuery.of(context).size.width * 0.75,
+                      size: MediaQuery.of(context).size.width * 0.8,
                       backgroundColor: Colors.white,
                     ),
                   ),
