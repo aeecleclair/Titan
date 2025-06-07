@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/paiement/class/create_device.dart';
 import 'package:myecl/paiement/class/wallet_device.dart';
 import 'package:myecl/paiement/providers/device_list_provider.dart';
 import 'package:myecl/paiement/providers/device_provider.dart';
@@ -14,7 +11,6 @@ import 'package:myecl/paiement/providers/key_service_provider.dart';
 import 'package:myecl/paiement/providers/my_history_provider.dart';
 import 'package:myecl/paiement/providers/my_wallet_provider.dart';
 import 'package:myecl/paiement/router.dart';
-import 'package:myecl/paiement/tools/platform_info.dart';
 import 'package:myecl/paiement/ui/pages/fund_page/fund_page.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/device_dialog_box.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';

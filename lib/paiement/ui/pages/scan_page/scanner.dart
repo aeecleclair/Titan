@@ -155,11 +155,14 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
             ? Stack(
                 alignment: Alignment.center,
                 children: [
-                  QrImageView(
-                    data: scannedValue!,
-                    version: QrVersions.auto,
-                    size: MediaQuery.of(context).size.width * 0.8,
-                    backgroundColor: Colors.white,
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(25)),
+                    child: QrImageView(
+                      data: scannedValue!,
+                      version: QrVersions.auto,
+                      size: MediaQuery.of(context).size.width * 0.75,
+                      backgroundColor: Colors.white,
+                    ),
                   ),
                   CustomPaint(
                     size: Size.infinite,
