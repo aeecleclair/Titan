@@ -78,11 +78,11 @@ class ScanPage extends HookConsumerWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              bypass
-                                  ? "Pas d'adhésion obligatoire"
-                                  : "Limité à ${store.structure.associationMembership.name}",
+                              "Limité à ${store.structure.associationMembership.name}",
                               style: TextStyle(
-                                color: Colors.white,
+                                color: bypass
+                                    ? Colors.white.withValues(alpha: 0.5)
+                                    : Colors.white,
                                 fontSize: 15,
                               ),
                             ),
