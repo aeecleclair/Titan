@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/paiement/class/history.dart';
+import 'package:myecl/paiement/tools/functions.dart';
 
 class TransactionCard extends StatelessWidget {
   final History transaction;
@@ -42,6 +43,8 @@ class TransactionCard extends StatelessWidget {
         ? transaction.otherWalletName
         : "Recharge";
 
+    final colors = getTransactionColors(transaction);
+
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
@@ -51,13 +54,17 @@ class TransactionCard extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: Row(
           children: [
-            CircleAvatar(
-              radius: 27,
-              backgroundColor:
-                  (transaction.type == HistoryType.given ||
-                      transaction.type == HistoryType.refundDebited)
-                  ? const Color(0xfffe807f)
-                  : const Color(0xff017f80),
+            Container(
+              width: 54,
+              height: 54,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [colors[0], colors[1]],
+                  center: Alignment.topLeft,
+                  radius: 1,
+                ),
+              ),
               child: HeroIcon(icon, color: Colors.white, size: 25),
             ),
             const SizedBox(width: 15),

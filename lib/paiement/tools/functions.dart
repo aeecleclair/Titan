@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:myecl/paiement/class/history.dart';
 import 'package:myecl/paiement/class/qr_code_data.dart';
 import 'package:myecl/paiement/class/qr_code_signature_data.dart';
 import 'package:myecl/paiement/class/wallet_device.dart';
@@ -148,5 +149,40 @@ int statusOrder(WalletDeviceStatus status) {
       return 1;
     case WalletDeviceStatus.revoked:
       return 2;
+  }
+}
+
+List<Color> getTransactionColors(History transaction) {
+  switch (transaction.type) {
+    case HistoryType.given:
+      return [
+        const Color.fromARGB(255, 1, 127, 128),
+        const Color.fromARGB(255, 0, 102, 103),
+        const Color.fromARGB(255, 0, 44, 45).withValues(alpha: 0.3),
+      ];
+    case HistoryType.refundDebited:
+      return [
+        const Color.fromARGB(255, 4, 84, 84),
+        const Color.fromARGB(255, 0, 68, 68),
+        const Color.fromARGB(255, 0, 29, 29).withValues(alpha: 0.4),
+      ];
+    case HistoryType.refundCredited:
+      return [
+        const Color.fromARGB(255, 4, 84, 84),
+        const Color.fromARGB(255, 0, 68, 68),
+        const Color.fromARGB(255, 0, 29, 29).withValues(alpha: 0.4),
+      ];
+    case HistoryType.transfer:
+      return [
+        const Color.fromARGB(255, 255, 119, 7),
+        const Color.fromARGB(255, 230, 103, 0),
+        const Color.fromARGB(255, 97, 44, 0).withValues(alpha: 0.2),
+      ];
+    case HistoryType.received:
+      return [
+        const Color.fromARGB(255, 1, 127, 128),
+        const Color.fromARGB(255, 0, 102, 103),
+        const Color.fromARGB(255, 0, 44, 45).withValues(alpha: 0.3),
+      ];
   }
 }
