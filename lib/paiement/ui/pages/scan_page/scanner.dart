@@ -15,6 +15,7 @@ import 'package:myecl/paiement/ui/pages/scan_page/scan_overlay_shape.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class Scanner extends StatefulHookConsumerWidget {
@@ -114,9 +115,28 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addObserver(this);
+
     _subscription = controller.barcodes.listen(_handleBarcode);
-    unawaited(controller.start());
+    unawaited(() async {
+      await controller.start();
+      if (!controller.value.hasCameraPermission) {
+        showDialog(
+          context: context,
+          builder: (context) => CustomDialogBox(
+            title: 'Permission caméra requise',
+            descriptions:
+                'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. Veuillez accorder cette permission dans les paramètres de votre appareil.',
+            onYes: () async {
+              Navigator.of(context).pop();
+              await openAppSettings();
+            },
+            yesText: 'Paramètres',
+          ),
+        );
+      }
+    }());
   }
 
   @override

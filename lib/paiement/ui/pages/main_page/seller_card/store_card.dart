@@ -47,22 +47,6 @@ class StoreCard extends HookConsumerWidget {
             icon: HeroIcons.viewfinderCircle,
             title: "Scanner",
             onPressed: () async {
-              final controller = MobileScannerController(autoStart: false);
-              if (!controller.value.hasCameraPermission) {
-                showDialog(
-                  context: context,
-                  builder: (context) => CustomDialogBox(
-                    title: 'Permission caméra requise',
-                    descriptions:
-                        'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. Veuillez accorder cette permission dans les paramètres de votre appareil.',
-                    onYes: () async {
-                      Navigator.of(context).pop();
-                      await openAppSettings();
-                    },
-                    yesText: 'Paramètres',
-                  ),
-                );
-              }
               showModalBottomSheet(
                 context: context,
                 backgroundColor: Colors.transparent,
