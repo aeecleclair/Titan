@@ -20,7 +20,7 @@ class SectionRepository {
       final response = await http.get(Uri.parse(host), headers: headers);
       if (response.statusCode == 200) {
         try {
-          String toDecode = utf8.decode(response.body.runes.toList());
+          String toDecode = utf8.decode(response.bodyBytes);
           final data = jsonDecode(toDecode) as Map<String, dynamic>;
           return data
               .map((key, value) => MapEntry(key, Section.fromJson(key, value)))
