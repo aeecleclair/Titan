@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:myecl/paiement/class/history.dart';
 import 'package:myecl/paiement/providers/selected_transactions_provider.dart';
+import 'package:myecl/paiement/tools/functions.dart';
 import 'package:myecl/paiement/ui/pages/stats_page/sum_up_card.dart';
 
 class TransactionChart extends HookConsumerWidget {
@@ -27,23 +28,6 @@ class TransactionChart extends HookConsumerWidget {
     final Map<String, List<History>> mappedHistory = {};
     final List<String> keys = [];
     final formatter = NumberFormat("#,##0.00", "fr_FR");
-    final List<List<Color>> colors = [
-      [
-        const Color.fromARGB(255, 1, 127, 128),
-        const Color.fromARGB(255, 0, 102, 103),
-        const Color.fromARGB(255, 0, 44, 45).withValues(alpha: 0.3),
-      ],
-      [
-        const Color.fromARGB(255, 4, 84, 84),
-        const Color.fromARGB(255, 0, 68, 68),
-        const Color.fromARGB(255, 0, 29, 29).withValues(alpha: 0.4),
-      ],
-      [
-        const Color.fromARGB(255, 255, 119, 7),
-        const Color.fromARGB(255, 230, 103, 0),
-        const Color.fromARGB(255, 97, 44, 0).withValues(alpha: 0.2),
-      ],
-    ];
 
     for (final (index, wallet) in transactionPerStore.keys.indexed) {
       final l = transactionPerStore[wallet]!;
@@ -54,18 +38,23 @@ class TransactionChart extends HookConsumerWidget {
         (previousValue, element) => previousValue + element.total,
       );
       keys.add(wallet);
+      final baseColors = getTransactionColors(l.first);
+      List<Color> walletColor = baseColors;
+      if (index > 0) {
+        walletColor = generateColorVariations(baseColors, wallet);
+      }
       chartPart.add(
         PieChartSectionData(
-          color: colors[index % 2 + 1][0],
+          color: walletColor[0],
           value: (totalAmount / 100).abs(),
           title: '',
           radius: 40 + (keys.indexOf(wallet) == selected.value ? 10 : 0),
           badgePositionPercentageOffset: 0.6,
           badgeWidget: SumUpCard(
             amount: '${formatter.format(totalAmount / 100)} €',
-            color: colors[index % 2 + 1][0],
-            darkColor: colors[index % 2 + 1][1],
-            shadowColor: colors[index % 2 + 1][2],
+            color: walletColor[0],
+            darkColor: walletColor[1],
+            shadowColor: walletColor[2],
             title: wallet,
           ),
         ),
