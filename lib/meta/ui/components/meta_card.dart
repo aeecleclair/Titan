@@ -8,6 +8,7 @@ import 'package:myecl/advert/providers/advert_poster_provider.dart';
 import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/cinema/tools/functions.dart';
 import 'package:myecl/drawer/providers/is_web_format_provider.dart';
+import 'package:myecl/meta/class/meta.dart';
 import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
 import 'package:myecl/tools/ui/widgets/text_with_hyper_link.dart';
 
@@ -63,7 +64,7 @@ enum MetaCardType { event, advert, shotgun }
 
 class MetaCard extends HookConsumerWidget {
   final VoidCallback onTap;
-  final Advert meta;
+  final Meta meta;
 
   const MetaCard({super.key, required this.onTap, required this.meta});
 
@@ -258,7 +259,7 @@ class MetaCard extends HookConsumerWidget {
                         ],
                       ),
                     ),
-                    if (true)//if (meta.image != null && meta.image.isNotEmpty)
+                    if (true) //if (meta.image != null && meta.image.isNotEmpty)
                       AutoLoaderChild(
                         group: posters,
                         notifier: advertPostersNotifier,

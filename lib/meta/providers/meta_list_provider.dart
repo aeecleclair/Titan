@@ -83,6 +83,6 @@ StateNotifierProvider<MetaListNotifier<T>, AsyncValue<List<T>>>
 }
 
 // Déclaration des providers
-final advertListProvider = createMetaProvider<Advert>(AdvertRepository());
+final advertListProvider = createMetaProvider<Meta>(AdvertRepository());
 //final eventsListProvider = createMetaProvider<Event>(EventRepository());
 //final shotgunListProvider = createMetaProvider<Shotgun>(ShotgunRepository());

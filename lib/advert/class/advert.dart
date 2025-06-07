@@ -2,34 +2,42 @@ import 'package:myecl/advert/class/announcer.dart';
 import 'package:myecl/meta/class/meta.dart';
 import 'package:myecl/tools/functions.dart';
 
-class Advert extends Meta {
+class Advert {
+  final String id;
+  final String title;
+  final String content;
+  final DateTime date;
+  final Announcer announcer;
+  final List<String> tags;
+
   Advert({
-    required super.id,
-    required super.title,
-    required super.content,
-    required super.date,
-    required super.announcer,
-    required super.tags,
+    required this.id,
+    required this.title,
+    required this.content,
+    required this.date,
+    required this.announcer,
+    required this.tags,
   });
 
   Advert.fromJson(Map<String, dynamic> json)
-      : super(
-          id: json["id"],
-          title: json["title"],
-          content: json["content"],
-          date: processDateFromAPI(json["date"]),
-          announcer: Announcer.fromJson(json["advertiser"]),
-          tags: json["tags"].split(', '),
-        );
+      : id = json["id"],
+        title = json["title"],
+        content = json["content"],
+        date = processDateFromAPI(json["date"]),
+        announcer = Announcer.fromJson(json["advertiser"]),
+        tags = json["tags"].split(', ');
 
-  @override
   Map<String, dynamic> toJson() {
-    final data = super.toJson();
-    data["advertiser_id"] = announcer.id;
-    return data;
+    return {
+      "id": id,
+      "title": title,
+      "content": content,
+      "date": date.toIso8601String(),
+      "tags": tags.join(', '),
+      "advertiser_id": announcer.id,
+    };
   }
 
-  @override
   Advert copyWith({
     dynamic id,
     dynamic title,

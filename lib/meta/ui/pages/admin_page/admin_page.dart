@@ -4,10 +4,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/advert/providers/advert_posters_provider.dart';
 import 'package:myecl/advert/providers/advert_provider.dart';
+import 'package:myecl/meta/providers/meta_provider.dart';
 import 'package:myecl/advert/ui/pages/admin_page/admin_advert_card.dart';
+import 'package:myecl/meta/class/meta.dart';
 import 'package:myecl/meta/providers/meta_list_provider.dart';
 import 'package:myecl/meta/router.dart';
 import 'package:myecl/meta/tools/constants.dart';
+import 'package:myecl/meta/ui/pages/admin_page/admin_meta_card.dart';
 import 'package:myecl/meta/ui/pages/meta.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/dialog.dart';
@@ -19,7 +22,7 @@ class MetaAdminPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final advertNotifier = ref.watch(advertProvider.notifier);
+    final advertNotifier = ref.watch(metaProvider.notifier);
     final advertList = ref.watch(advertListProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
@@ -40,11 +43,11 @@ class MetaAdminPage extends HookConsumerWidget {
               child: TabBarView(
                 children: [
                   _buildAdminTab(context, ref, advertNotifier, advertList,
-                      advertListNotifier, advertPostersNotifier, 'event'),
+                      advertListNotifier, advertPostersNotifier, 'advert'),
                   _buildAdminTab(context, ref, advertNotifier, advertList,
-                      advertListNotifier, advertPostersNotifier, 'annonce'),
+                      advertListNotifier, advertPostersNotifier, 'advert'),
                   _buildAdminTab(context, ref, advertNotifier, advertList,
-                      advertListNotifier, advertPostersNotifier, 'shotgun'),
+                      advertListNotifier, advertPostersNotifier, 'advert'),
                 ],
               ),
             ),
@@ -57,8 +60,8 @@ class MetaAdminPage extends HookConsumerWidget {
   Widget _buildAdminTab(
     BuildContext context,
     WidgetRef ref,
-    AdvertNotifier advertNotifier,
-    AsyncValue<List<Advert>> advertList,
+    MetaNotifier metaNotifier,
+    AsyncValue<List<Meta>> advertList,
     MetaListNotifier metaListNotifier,
     dynamic metaPostersNotifier,
     String type,
@@ -67,21 +70,21 @@ class MetaAdminPage extends HookConsumerWidget {
       data: (adverts) {
         final filteredList =
             adverts; //where((advert) => advert.type == type).toList();
-        return PaginatedList<Advert>(
+        return PaginatedList<Meta>(
           items: filteredList,
           onRefresh: () async {
             await metaListNotifier.loadMetas();
             metaPostersNotifier.resetTData();
           },
           loadMore: metaListNotifier.loadMoreMetas,
-          itemBuilder: (context, advert) => AdminAdvertCard(
-            advert: advert,
+          itemBuilder: (context, advert) => AdminMetaCard(
+            meta: advert,
             onTap: () {
-              advertNotifier.setAdvert(advert);
+              metaNotifier.setMeta(advert);
               QR.to(MetaRouter.root + MetaRouter.detail);
             },
             onEdit: () {
-              advertNotifier.setAdvert(advert);
+              metaNotifier.setMeta(advert);
               QR.to(MetaRouter.root +
                   MetaRouter.admin +
                   MetaRouter.addEditAdvert);
