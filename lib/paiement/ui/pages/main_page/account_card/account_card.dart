@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -96,92 +97,92 @@ class AccountCard extends HookConsumerWidget {
             QR.to(PaymentRouter.root + PaymentRouter.devices);
           },
         ),
-        // if (!kIsWeb)
-        MainCardButton(
-          colors: buttonGradient,
-          icon: HeroIcons.qrCode,
-          title: "Payer",
-          onPressed: () async {
-            await tokenExpireWrapper(ref, () async {
-              if (!hasAcceptedToS) {
-                displayToastWithContext(
-                  TypeMsg.error,
-                  "Veuillez accepter les Conditions Générales d'Utilisation.",
-                );
-                return;
-              }
-              String? keyId = await keyService.getKeyId();
-              if (keyId == null) {
-                final name = await getPlatformInfo();
-                final keyPair = await keyService.generateKeyPair();
-                final publicKey = (await keyPair.extractPublicKey()).bytes;
-                final base64PublicKey = base64Encode(publicKey);
-                final body = CreateDevice(
-                  name: name,
-                  ed25519PublicKey: base64PublicKey,
-                );
-                final value = await deviceNotifier.registerDevice(body);
-                if (value != null) {
-                  await keyService.saveKeyPair(keyPair);
-                  await keyService.saveKeyId(value);
-                }
-                keyId = value;
-              }
-              if (keyId == null) {
-                displayToastWithContext(
-                  TypeMsg.error,
-                  "Erreur lors de la création de l'appareil",
-                );
-                return;
-              }
-              final device = await deviceNotifier.getDevice(keyId);
-              device.when(
-                data: (device) async {
-                  if (device.status == WalletDeviceStatus.active) {
-                    showPayModal();
-                  } else if (device.status == WalletDeviceStatus.inactive) {
-                    await showDialog(
-                      context: context,
-                      builder: (context) {
-                        return DeviceDialogBox(
-                          title: 'Appareil non activé',
-                          descriptions:
-                              'Votre appareil n\'est pas encore activé. \nPour l\'activer, veuillez vous rendre sur la page des appareils.',
-                          buttonText: 'Accéder à la page',
-                          onClick: () {
-                            QR.to(PaymentRouter.root + PaymentRouter.devices);
-                          },
-                        );
-                      },
-                    );
-                  } else {
-                    await showDialog(
-                      context: context,
-                      builder: (context) {
-                        return DeviceDialogBox(
-                          title: 'Appareil révoqué',
-                          descriptions:
-                              'Votre appareil a été révoqué. \nPour le réactiver, veuillez vous rendre sur la page des appareils.',
-                          buttonText: 'Accéder à la page',
-                          onClick: () {
-                            QR.to(PaymentRouter.root + PaymentRouter.devices);
-                          },
-                        );
-                      },
-                    );
-                  }
-                },
-                error: (e, s) {
+        if (!kIsWeb)
+          MainCardButton(
+            colors: buttonGradient,
+            icon: HeroIcons.qrCode,
+            title: "Payer",
+            onPressed: () async {
+              await tokenExpireWrapper(ref, () async {
+                if (!hasAcceptedToS) {
                   displayToastWithContext(
                     TypeMsg.error,
-                    "Erreur lors de la récupération de l'appareil",
+                    "Veuillez accepter les Conditions Générales d'Utilisation.",
                   );
-                },
-                loading: () {},
-              );
-            });
-          },
-        ),
+                  return;
+                }
+                String? keyId = await keyService.getKeyId();
+                if (keyId == null) {
+                  final name = await getPlatformInfo();
+                  final keyPair = await keyService.generateKeyPair();
+                  final publicKey = (await keyPair.extractPublicKey()).bytes;
+                  final base64PublicKey = base64Encode(publicKey);
+                  final body = CreateDevice(
+                    name: name,
+                    ed25519PublicKey: base64PublicKey,
+                  );
+                  final value = await deviceNotifier.registerDevice(body);
+                  if (value != null) {
+                    await keyService.saveKeyPair(keyPair);
+                    await keyService.saveKeyId(value);
+                  }
+                  keyId = value;
+                }
+                if (keyId == null) {
+                  displayToastWithContext(
+                    TypeMsg.error,
+                    "Erreur lors de la création de l'appareil",
+                  );
+                  return;
+                }
+                final device = await deviceNotifier.getDevice(keyId);
+                device.when(
+                  data: (device) async {
+                    if (device.status == WalletDeviceStatus.active) {
+                      showPayModal();
+                    } else if (device.status == WalletDeviceStatus.inactive) {
+                      await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return DeviceDialogBox(
+                            title: 'Appareil non activé',
+                            descriptions:
+                                'Votre appareil n\'est pas encore activé. \nPour l\'activer, veuillez vous rendre sur la page des appareils.',
+                            buttonText: 'Accéder à la page',
+                            onClick: () {
+                              QR.to(PaymentRouter.root + PaymentRouter.devices);
+                            },
+                          );
+                        },
+                      );
+                    } else {
+                      await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return DeviceDialogBox(
+                            title: 'Appareil révoqué',
+                            descriptions:
+                                'Votre appareil a été révoqué. \nPour le réactiver, veuillez vous rendre sur la page des appareils.',
+                            buttonText: 'Accéder à la page',
+                            onClick: () {
+                              QR.to(PaymentRouter.root + PaymentRouter.devices);
+                            },
+                          );
+                        },
+                      );
+                    }
+                  },
+                  error: (e, s) {
+                    displayToastWithContext(
+                      TypeMsg.error,
+                      "Erreur lors de la récupération de l'appareil",
+                    );
+                  },
+                  loading: () {},
+                );
+              });
+            },
+          ),
         MainCardButton(
           colors: buttonGradient,
           icon: HeroIcons.chartPie,
