@@ -34,7 +34,6 @@ class GreenHouseMainPage extends HookConsumerWidget {
           ),
           Expanded(
             child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
               child:
                   Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                 SizedBox(
@@ -84,6 +83,13 @@ class GreenHouseMainPage extends HookConsumerWidget {
                   height: maxHeight,
                   width: width,
                   decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.2),
+                        offset: const Offset(0, 5),
+                        blurRadius: 10,
+                      ),
+                    ],
                     borderRadius: BorderRadius.circular(30),
                     color: Colors.greenAccent,
                     border: Border.all(
@@ -97,6 +103,13 @@ class GreenHouseMainPage extends HookConsumerWidget {
                   height: maxHeight,
                   width: width,
                   decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.2),
+                        offset: const Offset(0, 5),
+                        blurRadius: 10,
+                      ),
+                    ],
                     borderRadius: BorderRadius.circular(30),
                     color: Colors.greenAccent,
                     border: Border.all(
@@ -110,6 +123,33 @@ class GreenHouseMainPage extends HookConsumerWidget {
                   height: maxHeight,
                   width: width,
                   decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.2),
+                        offset: const Offset(0, 5),
+                        blurRadius: 10,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.greenAccent,
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 3,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 30),
+                  height: maxHeight,
+                  width: width,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.2),
+                        offset: const Offset(0, 5),
+                        blurRadius: 10,
+                      ),
+                    ],
                     borderRadius: BorderRadius.circular(30),
                     color: Colors.greenAccent,
                     border: Border.all(
