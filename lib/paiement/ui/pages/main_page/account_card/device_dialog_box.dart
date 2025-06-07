@@ -13,13 +13,13 @@ class Consts {
 class DeviceDialogBox extends StatelessWidget {
   final String title, descriptions;
   final String? buttonText;
-  final Function()? onClick;
+  final Function() onClick;
 
   const DeviceDialogBox({
     super.key,
     required this.title,
     required this.descriptions,
-    this.onClick,
+    required this.onClick,
     required this.buttonText,
   });
 
@@ -86,7 +86,7 @@ class DeviceDialogBox extends StatelessWidget {
                           if (buttonText != null)
                             GestureDetector(
                               onTap: () {
-                                onClick?.call();
+                                onClick.call();
                                 Navigator.of(context).pop();
                               },
                               child: Container(

@@ -117,6 +117,7 @@ class PaymentMainPage extends HookConsumerWidget {
                               descriptions:
                                   "La demande d'activation est prise en compte, veuilliez consulter votre boite mail pour finaliser la démarche",
                               buttonText: "Ok",
+                              onClick: () {},
                             );
                           },
                         );
