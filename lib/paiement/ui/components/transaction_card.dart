@@ -116,7 +116,7 @@ class TransactionCard extends StatelessWidget {
                         ),
                     ],
                   ),
-                  const SizedBox(height: 5),
+                  if (transaction.refund == null) const SizedBox(height: 5),
                   Text(
                     "Le ${DateFormat("EEE dd MMMM yyyy à HH:mm", "fr_FR").format(transaction.creation)}",
                     style: const TextStyle(
