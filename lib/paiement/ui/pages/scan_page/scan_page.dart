@@ -16,6 +16,7 @@ import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:myecl/tools/ui/widgets/loader.dart';
 
 class ScanPage extends HookConsumerWidget {
   ScanPage({super.key});
@@ -127,48 +128,90 @@ class ScanPage extends HookConsumerWidget {
                       ? Row(
                           children: [
                             const Spacer(),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 20,
-                                horizontal: 50,
-                              ),
-                              decoration: BoxDecoration(
-                                color: ongoingTransaction.when(
-                                  data: (_) =>
-                                      Colors.green.withValues(alpha: 0.8),
-                                  loading: () => Colors.grey.shade200
-                                      .withValues(alpha: 0.8),
-                                  error: (error, stack) =>
-                                      Colors.red.withValues(alpha: 0.8),
+                            AsyncChild(
+                              value: ongoingTransaction,
+                              builder: (context, transaction) {
+                                return Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 20,
+                                    horizontal: 50,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    gradient: const RadialGradient(
+                                      colors: [
+                                        Color(0xff79a400),
+                                        Color(0xff387200),
+                                      ],
+                                      center: Alignment.topLeft,
+                                      radius: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "Montant",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        // '${formatter.format(barcode.tot / 100)} €',
+                                        'Test €',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 25,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              errorBuilder: (error, stack) {
+                                return Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 20,
+                                    horizontal: 50,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    gradient: const RadialGradient(
+                                      colors: [
+                                        Color(0xffa40000),
+                                        Color(0xff720000),
+                                      ],
+                                      center: Alignment.topLeft,
+                                      radius: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Text(
+                                    jsonDecode(error.toString())['detail'],
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                );
+                              },
+                              loadingBuilder: (context) => Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 20,
+                                  horizontal: 50,
                                 ),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    "Montant",
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      color: ongoingTransaction.when(
-                                        data: (_) => Colors.white,
-                                        loading: () => Colors.black,
-                                        error: (error, stack) => Colors.white,
-                                      ),
-                                    ),
+                                decoration: BoxDecoration(
+                                  gradient: RadialGradient(
+                                    colors: [
+                                      Colors.grey.shade200,
+                                      Colors.grey.shade300,
+                                    ],
+                                    center: Alignment.topLeft,
+                                    radius: 2,
                                   ),
-                                  Text(
-                                    '${formatter.format(barcode.tot / 100)} €',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25,
-                                      color: ongoingTransaction.when(
-                                        data: (_) => Colors.white,
-                                        loading: () => Colors.black,
-                                        error: (error, stack) => Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Loader(),
                               ),
                             ),
                             const Spacer(),

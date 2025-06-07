@@ -18,7 +18,7 @@ class SumUpCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.none,
-      height: 140,
+      height: 136,
       width: 90,
       child: Container(
         height: 50,
@@ -41,7 +41,7 @@ class SumUpCard extends StatelessWidget {
           ],
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               title,
@@ -51,7 +51,7 @@ class SumUpCard extends StatelessWidget {
                 fontSize: 13,
               ),
             ),
-            const SizedBox(height: 3),
+            // const SizedBox(height: 3),
             Text(
               amount,
               style: const TextStyle(

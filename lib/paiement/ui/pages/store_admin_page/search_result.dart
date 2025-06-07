@@ -85,6 +85,7 @@ class SearchResult extends HookConsumerWidget {
                       queryController.clear();
                       usersNotifier.clear();
                       sellerRightsListNotifier.clearRights();
+                      newAdminNotifier.resetNewAdmin();
                       displayToastWithContext(TypeMsg.msg, "Vendeur ajouté");
                       if (context.mounted) {
                         Navigator.of(context).pop();

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -10,7 +12,6 @@ import 'package:myecl/paiement/providers/device_provider.dart';
 import 'package:myecl/paiement/providers/has_accepted_tos_provider.dart';
 import 'package:myecl/paiement/providers/key_service_provider.dart';
 import 'package:myecl/paiement/tools/functions.dart';
-import 'package:myecl/paiement/tools/platform_info.dart';
 import 'package:myecl/paiement/ui/pages/devices_page/add_device_button.dart';
 import 'package:myecl/paiement/ui/pages/devices_page/device_item.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/device_dialog_box.dart';
@@ -36,6 +37,17 @@ class DevicesPage extends HookConsumerWidget {
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
+    }
+
+    Future<String> getDeviceName() async {
+      final deviceInfo = DeviceInfoPlugin();
+      if (Theme.of(context).platform == TargetPlatform.android) {
+        return deviceInfo.androidInfo.then((info) => info.model);
+      } else if (Theme.of(context).platform == TargetPlatform.iOS) {
+        return deviceInfo.iosInfo.then((info) => info.utsname.machine);
+      } else {
+        return Future.value("Unknown Device");
+      }
     }
 
     return PaymentTemplate(
@@ -79,7 +91,7 @@ class DevicesPage extends HookConsumerWidget {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    if (shouldDisplayAddDevice)
+                    if (shouldDisplayAddDevice && !kIsWeb)
                       AddDeviceButton(
                         onTap: () async {
                           if (!hasAcceptedToS) {
@@ -89,7 +101,7 @@ class DevicesPage extends HookConsumerWidget {
                             );
                             return;
                           }
-                          final name = await getPlatformInfo();
+                          final name = await getDeviceName();
                           final keyPair = await keyService.generateKeyPair();
                           final publicKey =
                               (await keyPair.extractPublicKey()).bytes;

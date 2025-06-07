@@ -23,7 +23,8 @@ final selectedTransactionsProvider =
           history
               .where(
                 (element) =>
-                    element.status == TransactionStatus.confirmed &&
+                    (element.status == TransactionStatus.confirmed ||
+                        element.status == TransactionStatus.refunded) &&
                     element.creation.year == currentMonth.year &&
                     element.creation.month == currentMonth.month,
               )
