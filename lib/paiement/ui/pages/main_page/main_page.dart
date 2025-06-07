@@ -113,9 +113,9 @@ class PaymentMainPage extends HookConsumerWidget {
                           context: context,
                           builder: (context) {
                             return DeviceDialogBox(
-                              title: 'Demande d\'activation de l\'appareil',
+                              title: 'Acceptation validée !',
                               descriptions:
-                                  "La demande d'activation est prise en compte, veuilliez consulter votre boite mail pour finaliser la démarche",
+                                  "Merci d'avoir accepté les Conditions Générales d'Utilisation de MyECLPay. Un email de confirmation vous a été envoyé.",
                               buttonText: "Ok",
                               onClick: () {},
                             );
