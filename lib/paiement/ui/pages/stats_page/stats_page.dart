@@ -35,13 +35,13 @@ class StatsPage extends HookConsumerWidget {
                   children: [
                     SizedBox(height: 20),
                     MonthBar(currentMonth: month),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Expanded(
                       child: SingleChildScrollView(
                         physics: const BouncingScrollPhysics(),
                         child: Column(
                           children: [
-                            SizedBox(height: 5),
+                            SizedBox(height: 10),
                             SumUpChart(currentMonth: month),
                             SizedBox(height: 20),
                             TransactionsDetail(currentMonth: month),

@@ -77,7 +77,7 @@ class SumUpChart extends HookConsumerWidget {
             ? Stack(
                 children: [
                   SizedBox(
-                    height: 320,
+                    height: 330,
                     child: Column(
                       children: [
                         Expanded(
