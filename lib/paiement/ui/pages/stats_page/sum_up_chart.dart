@@ -38,8 +38,11 @@ class SumUpChart extends HookConsumerWidget {
         for (final transaction in confirmedTransaction) {
           if (transaction.type == HistoryType.transfer ||
               transaction.type == HistoryType.refundCredited) {
-            creditedTransactionPerStore[transaction.otherWalletName] = [
-              ...?creditedTransactionPerStore[transaction.otherWalletName],
+            final transactionName = transaction.type != HistoryType.transfer
+                ? transaction.otherWalletName
+                : "Recharge";
+            creditedTransactionPerStore[transactionName] = [
+              ...?creditedTransactionPerStore[transactionName],
               transaction,
             ];
           } else {
