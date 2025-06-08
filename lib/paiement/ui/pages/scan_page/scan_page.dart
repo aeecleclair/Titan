@@ -19,7 +19,7 @@ import 'package:myecl/tools/ui/widgets/loader.dart';
 
 class ScanPage extends HookConsumerWidget {
   final GlobalKey<ScannerState>? externalScannerKey;
-  
+
   ScanPage({super.key, this.externalScannerKey});
 
   final GlobalKey<ScannerState> _scannerKey = GlobalKey<ScannerState>();

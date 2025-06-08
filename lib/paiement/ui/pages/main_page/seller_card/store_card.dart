@@ -43,9 +43,10 @@ class StoreCard extends HookConsumerWidget {
           MainCardButton(
             colors: buttonGradient,
             icon: HeroIcons.viewfinderCircle,
-            title: "Scanner",            onPressed: () async {
+            title: "Scanner",
+            onPressed: () async {
               final scannerKey = GlobalKey<ScannerState>();
-                showModalBottomSheet(
+              showModalBottomSheet(
                 context: context,
                 enableDrag: false,
                 backgroundColor: Colors.transparent,
