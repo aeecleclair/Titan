@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:myecl/paiement/class/wallet_device.dart';
 import 'package:myecl/paiement/providers/device_list_provider.dart';
 import 'package:myecl/paiement/providers/device_provider.dart';
+import 'package:myecl/paiement/providers/fund_amount_provider.dart';
 import 'package:myecl/paiement/providers/has_accepted_tos_provider.dart';
 import 'package:myecl/paiement/providers/key_service_provider.dart';
 import 'package:myecl/paiement/providers/my_history_provider.dart';
@@ -36,6 +37,7 @@ class AccountCard extends HookConsumerWidget {
     final myWallet = ref.watch(myWalletProvider);
     final keyService = ref.read(keyServiceProvider);
     final payAmountNotifier = ref.watch(payAmountProvider.notifier);
+    final fundAmountNotifier = ref.watch(fundAmountProvider.notifier);
     final deviceNotifier = ref.watch(deviceProvider.notifier);
     final hasAcceptedToS = ref.watch(hasAcceptedTosProvider);
     final buttonGradient = [
@@ -62,13 +64,15 @@ class AccountCard extends HookConsumerWidget {
 
     void showFundModal() async {
       resetHandledKeys();
-      String code = await showModalBottomSheet(
-        context: context,
-        backgroundColor: Colors.transparent,
-        scrollControlDisabledMaxHeightRatio:
-            (1 - 80 / MediaQuery.of(context).size.height),
-        builder: (context) => const FundPage(),
-      );
+      String code =
+          await showModalBottomSheet(
+            context: context,
+            backgroundColor: Colors.transparent,
+            scrollControlDisabledMaxHeightRatio:
+                (1 - 80 / MediaQuery.of(context).size.height),
+            builder: (context) => const FundPage(),
+          );
+      fundAmountNotifier.setFundAmount("");
       if (code == "succeeded") {
         displayToastWithContext(TypeMsg.msg, "Paiement effectué avec succès");
         await Future.delayed(Duration(seconds: 5));

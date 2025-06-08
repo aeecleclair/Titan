@@ -85,7 +85,6 @@ class ConfirmFundButton extends ConsumerWidget {
       void login(String data) async {
         final receivedUri = Uri.parse(data);
         final code = receivedUri.queryParameters["code"];
-        fundAmountNotifier.setFundAmount("");
         popupWin.close();
         Navigator.pop(context, code);
       }
@@ -123,6 +122,7 @@ class ConfirmFundButton extends ConsumerWidget {
         );
         value.when(
           data: (fundingUrl) {
+            fundAmountNotifier.setFundAmount("");
             if (kIsWeb) {
               helloAssoCallback(fundingUrl.url);
               return;
