@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/paiement/class/init_info.dart';
 import 'package:myecl/paiement/providers/fund_amount_provider.dart';
 import 'package:myecl/paiement/providers/funding_url_provider.dart';
+import 'package:myecl/paiement/providers/my_history_provider.dart';
 import 'package:myecl/paiement/providers/my_wallet_provider.dart';
 import 'package:myecl/paiement/providers/tos_provider.dart';
 import 'package:myecl/tools/functions.dart';
@@ -20,6 +21,8 @@ class ConfirmFundButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final fundAmount = ref.watch(fundAmountProvider);
+    final myWalletNotifier = ref.watch(myWalletProvider.notifier);
+    final myHistoryNotifier = ref.watch(myHistoryProvider.notifier);
     final fundAmountNotifier = ref.watch(fundAmountProvider.notifier);
     final fundingUrlNotifier = ref.watch(fundingUrlProvider.notifier);
     final myWallet = ref.watch(myWalletProvider);
@@ -85,6 +88,13 @@ class ConfirmFundButton extends ConsumerWidget {
       void login(String data) async {
         final receivedUri = Uri.parse(data);
         final code = receivedUri.queryParameters["code"];
+        if (code == "succeeded") {
+          displayToastWithContext(TypeMsg.msg, "Paiement effectué avec succès");
+          myWalletNotifier.getMyWallet();
+          myHistoryNotifier.getHistory();
+        } else {
+          displayToastWithContext(TypeMsg.error, "Paiement annulé");
+        }
         popupWin.close();
         Navigator.pop(context, code);
       }

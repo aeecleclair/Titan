@@ -9,7 +9,6 @@ import 'package:myecl/paiement/providers/device_provider.dart';
 import 'package:myecl/paiement/providers/fund_amount_provider.dart';
 import 'package:myecl/paiement/providers/has_accepted_tos_provider.dart';
 import 'package:myecl/paiement/providers/key_service_provider.dart';
-import 'package:myecl/paiement/providers/my_history_provider.dart';
 import 'package:myecl/paiement/providers/my_wallet_provider.dart';
 import 'package:myecl/paiement/providers/pay_amount_provider.dart';
 import 'package:myecl/paiement/router.dart';
@@ -35,7 +34,6 @@ class AccountCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final myWallet = ref.watch(myWalletProvider);
-    final myWalletNotifier = ref.watch(myWalletProvider.notifier);
     final keyService = ref.read(keyServiceProvider);
     final payAmountNotifier = ref.watch(payAmountProvider.notifier);
     final fundAmountNotifier = ref.watch(fundAmountProvider.notifier);
@@ -65,24 +63,15 @@ class AccountCard extends HookConsumerWidget {
 
     void showFundModal() async {
       resetHandledKeys();
-      final code =
-          await showModalBottomSheet(
-            context: context,
-            backgroundColor: Colors.transparent,
-            scrollControlDisabledMaxHeightRatio:
-                (1 - 80 / MediaQuery.of(context).size.height),
-            builder: (context) => const FundPage(),
-          ).then((code) {
-            fundAmountNotifier.setFundAmount("");
-            return code;
-          });
-      if (code == "succeeded") {
-        displayToastWithContext(TypeMsg.msg, "Paiement effectué avec succès");
-        myWalletNotifier.getMyWallet();
-        ref.watch(myHistoryProvider.notifier).getHistory();
-      } else {
-        displayToastWithContext(TypeMsg.error, "Paiement annulé");
-      }
+      await showModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        scrollControlDisabledMaxHeightRatio:
+            (1 - 80 / MediaQuery.of(context).size.height),
+        builder: (context) => const FundPage(),
+      ).then((code) {
+        fundAmountNotifier.setFundAmount("");
+      });
     }
 
     return MainCardTemplate(
