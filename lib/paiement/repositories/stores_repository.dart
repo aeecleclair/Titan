@@ -4,7 +4,6 @@ import 'package:myecl/paiement/class/history.dart';
 import 'package:myecl/paiement/class/qr_code_data.dart';
 import 'package:myecl/paiement/class/store.dart';
 import 'package:myecl/paiement/class/transaction.dart';
-import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -27,8 +26,8 @@ class StoresRepository extends Repository {
     DateTime endDate,
   ) async {
     final queryParams = {
-      'start_date': processDateToAPIWithoutHour(startDate),
-      'end_date': processDateToAPIWithoutHour(endDate),
+      'start_date': processDateToAPI(startDate),
+      'end_date': processDateToAPI(endDate),
     };
 
     final queryString = Uri(queryParameters: queryParams).query;
@@ -39,19 +38,13 @@ class StoresRepository extends Repository {
     );
   }
 
-  Future<Transaction?> scan(String id, QrCodeData data, bool? bypass) async {
-    try {
-      var response = await create({
+  Future<Transaction> scan(String id, QrCodeData data, bool? bypass) async {
+    return Transaction.fromJson(
+      await create({
         ...data.toJson(),
         "bypass_membership": bypass ?? false,
-      }, suffix: "/$id/scan");
-      return Transaction.fromJson(response);
-    } on AppException catch (e) {
-      if (e.type == ErrorType.conflict) {
-        return null;
-      }
-      rethrow; // Pour relancer l'exception si c’est un autre type
-    }
+      }, suffix: "/$id/scan"),
+    );
   }
 
   Future<bool> canScan(String id, QrCodeData data, bool? bypass) async {

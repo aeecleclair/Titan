@@ -44,7 +44,7 @@ abstract class Repository {
           logger.error("GET ${ext + suffix}\nError while decoding response");
           return [];
         }
-      } else if (response.statusCode == 403) {
+      } else if (response.statusCode >= 400) {
         logger.error(
           "GET ${ext + suffix}\n${response.statusCode} ${response.body}",
         );
@@ -109,7 +109,7 @@ abstract class Repository {
           );
           return <String, dynamic>{};
         }
-      } else if (response.statusCode == 403) {
+      } else if (response.statusCode >= 400) {
         logger.error(
           "GET ${ext + id + suffix}\n${response.statusCode} ${response.body}",
         );
@@ -180,7 +180,7 @@ abstract class Repository {
       }
     } else if (response.statusCode == 204) {
       return true;
-    } else if (response.statusCode == 403) {
+    } else if (response.statusCode >= 400) {
       logger.error(
         "POST ${ext + suffix}\n${response.statusCode} ${response.body}",
       );
@@ -191,13 +191,6 @@ abstract class Repository {
       } else {
         throw AppException(ErrorType.notFound, decoded["detail"]);
       }
-    } else if (response.statusCode == 409) {
-      logger.error(
-        "POST ${ext + suffix}\n${response.statusCode} ${response.body}",
-      );
-      String toDecode = utf8.decode(response.bodyBytes);
-      final decoded = jsonDecode(toDecode);
-      throw AppException(ErrorType.conflict, decoded["detail"]);
     } else {
       logger.error(
         "POST ${ext + suffix}\n${response.statusCode} ${response.body}",
@@ -216,7 +209,7 @@ abstract class Repository {
     );
     if (response.statusCode == 204 || response.statusCode == 200) {
       return true;
-    } else if (response.statusCode == 403) {
+    } else if (response.statusCode >= 400) {
       logger.error(
         "PATCH ${ext + tId + suffix}\n${response.statusCode} ${response.body}",
       );
@@ -243,7 +236,7 @@ abstract class Repository {
     );
     if (response.statusCode == 204) {
       return true;
-    } else if (response.statusCode == 403) {
+    } else if (response.statusCode >= 400) {
       logger.error(
         "DELETE ${ext + tId + suffix}\n${response.statusCode} ${response.body}",
       );

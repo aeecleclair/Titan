@@ -15,6 +15,7 @@ import 'package:myecl/paiement/ui/pages/scan_page/scan_overlay_shape.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class Scanner extends StatefulHookConsumerWidget {
@@ -114,9 +115,28 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addObserver(this);
+
     _subscription = controller.barcodes.listen(_handleBarcode);
-    unawaited(controller.start());
+    unawaited(() async {
+      await controller.start();
+      if (!controller.value.hasCameraPermission) {
+        showDialog(
+          context: context,
+          builder: (context) => CustomDialogBox(
+            title: 'Permission caméra requise',
+            descriptions:
+                'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. Veuillez accorder cette permission dans les paramètres de votre appareil.',
+            onYes: () async {
+              Navigator.of(context).pop();
+              await openAppSettings();
+            },
+            yesText: 'Paramètres',
+          ),
+        );
+      }
+    }());
   }
 
   @override
@@ -155,20 +175,24 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
             ? Stack(
                 alignment: Alignment.center,
                 children: [
-                  QrImageView(
-                    data: scannedValue!,
-                    version: QrVersions.auto,
-                    size: MediaQuery.of(context).size.width * 0.8,
-                    backgroundColor: Colors.white,
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(25)),
+                    child: QrImageView(
+                      data: scannedValue!,
+                      version: QrVersions.auto,
+                      size: MediaQuery.of(context).size.width * 0.8,
+                      backgroundColor: Colors.white,
+                    ),
                   ),
                   CustomPaint(
                     size: Size.infinite,
                     painter: ScannerOverlayPainter(
                       scanArea: MediaQuery.of(context).size.width * 0.8,
-                      borderColor: Colors.green,
-                      borderRadius: 1,
-                      borderLength: 40,
-                      borderWidth: 7,
+                      borderColor: ongoingTransaction.when(
+                        data: (_) => Color(0xff387200),
+                        error: (_, _) => Color(0xff720000),
+                        loading: () => Colors.white,
+                      ),
                     ),
                   ),
                 ],
@@ -181,13 +205,10 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
                     painter: ScannerOverlayPainter(
                       scanArea: scanArea,
                       borderColor: ongoingTransaction.when(
-                        data: (_) => Colors.green,
-                        error: (_, _) => Colors.red,
+                        data: (_) => Color(0xff387200),
+                        error: (_, _) => Color(0xff720000),
                         loading: () => Colors.white,
                       ),
-                      borderWidth: 5,
-                      borderLength: 40,
-                      borderRadius: 10,
                     ),
                   );
                 },

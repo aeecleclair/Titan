@@ -131,6 +131,7 @@ class PaymentMainPage extends HookConsumerWidget {
                     await mySellersNotifier.getMyStores();
                     await myHistoryNotifier.getHistory();
                     await myWalletNotifier.getMyWallet();
+                    await tosNotifier.getTOS();
                   },
                   child: Column(
                     children: [

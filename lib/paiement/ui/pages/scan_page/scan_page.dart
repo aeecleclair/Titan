@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
@@ -12,10 +10,12 @@ import 'package:myecl/paiement/providers/selected_store_provider.dart';
 import 'package:myecl/paiement/providers/transaction_provider.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/cancel_button.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scanner.dart';
+import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:myecl/tools/ui/widgets/loader.dart';
 
 class ScanPage extends HookConsumerWidget {
   ScanPage({super.key});
@@ -77,11 +77,11 @@ class ScanPage extends HookConsumerWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              bypass
-                                  ? "Pas d'adhésion obligatoire"
-                                  : "Limité à ${store.structure.associationMembership.name}",
+                              "Limité à ${store.structure.associationMembership.name}",
                               style: TextStyle(
-                                color: Colors.white,
+                                color: bypass
+                                    ? Colors.white.withValues(alpha: 0.5)
+                                    : Colors.white,
                                 fontSize: 15,
                               ),
                             ),
@@ -127,48 +127,89 @@ class ScanPage extends HookConsumerWidget {
                       ? Row(
                           children: [
                             const Spacer(),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 20,
-                                horizontal: 50,
-                              ),
-                              decoration: BoxDecoration(
-                                color: ongoingTransaction.when(
-                                  data: (_) =>
-                                      Colors.green.withValues(alpha: 0.8),
-                                  loading: () => Colors.grey.shade200
-                                      .withValues(alpha: 0.8),
-                                  error: (error, stack) =>
-                                      Colors.red.withValues(alpha: 0.8),
+                            AsyncChild(
+                              value: ongoingTransaction,
+                              builder: (context, transaction) {
+                                return Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 20,
+                                    horizontal: 50,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    gradient: const RadialGradient(
+                                      colors: [
+                                        Color(0xff79a400),
+                                        Color(0xff387200),
+                                      ],
+                                      center: Alignment.topLeft,
+                                      radius: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "Montant",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${formatter.format(barcode.tot / 100)} €',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 25,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              errorBuilder: (error, stack) {
+                                return Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 20,
+                                    horizontal: 50,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    gradient: const RadialGradient(
+                                      colors: [
+                                        Color(0xffa40000),
+                                        Color(0xff720000),
+                                      ],
+                                      center: Alignment.topLeft,
+                                      radius: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Text(
+                                    (error as AppException).message,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                );
+                              },
+                              loadingBuilder: (context) => Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 20,
+                                  horizontal: 50,
                                 ),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    "Montant",
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      color: ongoingTransaction.when(
-                                        data: (_) => Colors.white,
-                                        loading: () => Colors.black,
-                                        error: (error, stack) => Colors.white,
-                                      ),
-                                    ),
+                                decoration: BoxDecoration(
+                                  gradient: RadialGradient(
+                                    colors: [
+                                      Colors.grey.shade200,
+                                      Colors.grey.shade300,
+                                    ],
+                                    center: Alignment.topLeft,
+                                    radius: 2,
                                   ),
-                                  Text(
-                                    '${formatter.format(barcode.tot / 100)} €',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25,
-                                      color: ongoingTransaction.when(
-                                        data: (_) => Colors.white,
-                                        loading: () => Colors.black,
-                                        error: (error, stack) => Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Loader(),
                               ),
                             ),
                             const Spacer(),
@@ -206,15 +247,33 @@ class ScanPage extends HookConsumerWidget {
                   const Spacer(),
                   AsyncChild(
                     value: ongoingTransaction,
-                    errorBuilder: (error, stack) {
-                      return Text(
-                        jsonDecode(error.toString())['detail'],
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                    errorBuilder: (context, child) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: GestureDetector(
+                        child: Container(
+                          width: double.infinity,
+                          height: 50,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white.withValues(alpha: 0.8),
+                          ),
+                          child: const Text(
+                            'Suivant',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
                         ),
-                      );
-                    },
+                        onTap: () {
+                          scannerKey.currentState?.resetScanner();
+                          barcodeNotifier.clearBarcode();
+                          ongoingTransactionNotifier.clearOngoingTransaction();
+                        },
+                      ),
+                    ),
                     builder: (context, transaction) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Row(

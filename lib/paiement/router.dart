@@ -19,6 +19,8 @@ import 'package:myecl/paiement/ui/pages/stats_page/stats_page.dart'
     deferred as stats_page;
 import 'package:myecl/paiement/ui/pages/store_stats_page/store_stats_page.dart'
     deferred as store_stats_page;
+import 'package:myecl/paiement/ui/pages/transfer_structure_page/transfer_structure_page.dart'
+    deferred as transfer_structure_page;
 import 'package:myecl/tools/middlewares/admin_middleware.dart';
 import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
 import 'package:myecl/tools/middlewares/deferred_middleware.dart';
@@ -32,6 +34,7 @@ class PaymentRouter {
   static const String admin = '/admin';
   static const String fund = '/fund';
   static const String addEditStore = '/addEditStore';
+  static const String transferStructure = '/transferStructure';
   static const String storeAdmin = '/storeAdmin';
   static const String storeStats = '/storeStats';
   static final Module module = Module(
@@ -90,6 +93,13 @@ class PaymentRouter {
         path: PaymentRouter.fund,
         builder: () => fund_page.WebViewExample(),
         middleware: [DeferredLoadingMiddleware(fund_page.loadLibrary)],
+      ),
+      QRoute(
+        path: PaymentRouter.transferStructure,
+        builder: () => transfer_structure_page.TransferStructurePage(),
+        middleware: [
+          DeferredLoadingMiddleware(transfer_structure_page.loadLibrary),
+        ],
       ),
     ],
   );

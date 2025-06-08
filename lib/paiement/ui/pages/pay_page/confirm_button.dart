@@ -22,6 +22,7 @@ class ConfirmButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final keyService = ref.watch(keyServiceProvider);
     final payAmount = ref.watch(payAmountProvider);
+    final payAmountNotifier = ref.watch(payAmountProvider.notifier);
     final myHistoryNotifier = ref.read(myHistoryProvider.notifier);
     final myWallet = ref.watch(myWalletProvider);
     final myWalletNotifier = ref.read(myWalletProvider.notifier);
@@ -110,6 +111,7 @@ class ConfirmButton extends ConsumerWidget {
       ).then((_) async {
         await myHistoryNotifier.getHistory();
         await myWalletNotifier.getMyWallet();
+        payAmountNotifier.setPayAmount("");
       });
     }
 

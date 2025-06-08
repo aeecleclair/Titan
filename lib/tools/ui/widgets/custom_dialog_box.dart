@@ -13,6 +13,7 @@ class Consts {
 
 class CustomDialogBox extends StatelessWidget {
   final String title, descriptions;
+  final String? yesText, noText;
   final Function() onYes;
   final Function()? onNo;
 
@@ -22,6 +23,8 @@ class CustomDialogBox extends StatelessWidget {
     required this.descriptions,
     required this.onYes,
     this.onNo,
+    this.yesText,
+    this.noText,
   });
 
   @override
@@ -108,9 +111,9 @@ class CustomDialogBox extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              child: const Center(
+                              child: Center(
                                 child: Text(
-                                  "Annuler",
+                                  noText ?? "Annuler",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -143,9 +146,9 @@ class CustomDialogBox extends StatelessWidget {
                               ),
                               child: child,
                             ),
-                            child: const Center(
+                            child: Center(
                               child: Text(
-                                "Confirmer",
+                                yesText ?? "Confirmer",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
