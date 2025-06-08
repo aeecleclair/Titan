@@ -247,29 +247,32 @@ class ScanPage extends HookConsumerWidget {
                   const Spacer(),
                   AsyncChild(
                     value: ongoingTransaction,
-                    errorBuilder: (context, child) => GestureDetector(
-                      child: Container(
-                        width: double.infinity,
-                        height: 50,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white.withValues(alpha: 0.8),
-                        ),
-                        child: const Text(
-                          'Suivant',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                    errorBuilder: (context, child) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: GestureDetector(
+                        child: Container(
+                          width: double.infinity,
+                          height: 50,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white.withValues(alpha: 0.8),
+                          ),
+                          child: const Text(
+                            'Suivant',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
+                        onTap: () {
+                          scannerKey.currentState?.resetScanner();
+                          barcodeNotifier.clearBarcode();
+                          ongoingTransactionNotifier.clearOngoingTransaction();
+                        },
                       ),
-                      onTap: () {
-                        scannerKey.currentState?.resetScanner();
-                        barcodeNotifier.clearBarcode();
-                        ongoingTransactionNotifier.clearOngoingTransaction();
-                      },
                     ),
                     builder: (context, transaction) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
