@@ -20,6 +20,7 @@ class ConfirmFundButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final fundAmount = ref.watch(fundAmountProvider);
+    final fundAmountNotifier = ref.watch(fundAmountProvider.notifier);
     final fundingUrlNotifier = ref.watch(fundingUrlProvider.notifier);
     final myWallet = ref.watch(myWalletProvider);
     final tos = ref.watch(tosProvider);
@@ -84,6 +85,7 @@ class ConfirmFundButton extends ConsumerWidget {
       void login(String data) async {
         final receivedUri = Uri.parse(data);
         final code = receivedUri.queryParameters["code"];
+        fundAmountNotifier.setFundAmount("");
         popupWin.close();
         Navigator.pop(context, code);
       }
