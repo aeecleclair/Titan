@@ -251,7 +251,7 @@ class ScanPage extends HookConsumerWidget {
                     value: ongoingTransaction,
                     errorBuilder: (error, stack) {
                       return Text(
-                        jsonDecode(error.toString())['detail'],
+                        (error as AppException).message,
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
