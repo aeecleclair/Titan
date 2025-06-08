@@ -46,6 +46,7 @@ class StoreCard extends HookConsumerWidget {
             onPressed: () async {
               showModalBottomSheet(
                 context: context,
+                enableDrag: false,
                 backgroundColor: Colors.transparent,
                 scrollControlDisabledMaxHeightRatio:
                     (1 - 80 / MediaQuery.of(context).size.height),
