@@ -45,6 +45,11 @@ final isCachingProvider = StateNotifierProvider<IsCachingNotifier, bool>((ref) {
   return isCachingProvider;
 });
 
+final refreshTokenProvider = FutureProvider<bool>((ref) {
+  final authNotifier = ref.watch(authTokenProvider.notifier);
+  return authNotifier.refreshToken();
+});
+
 final isLoggedInProvider = Provider<bool>((ref) {
   final authToken = ref.watch(authTokenProvider);
   final isCaching = ref.watch(isCachingProvider);
