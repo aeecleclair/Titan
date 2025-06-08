@@ -12,6 +12,7 @@ import 'package:myecl/paiement/providers/selected_store_provider.dart';
 import 'package:myecl/paiement/providers/transaction_provider.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/cancel_button.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scanner.dart';
+import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
@@ -186,7 +187,7 @@ class ScanPage extends HookConsumerWidget {
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: Text(
-                                    jsonDecode(error.toString())['detail'],
+                                    (error as AppException).message,
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.white,
