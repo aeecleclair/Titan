@@ -39,15 +39,15 @@ final isCachingProvider = StateNotifierProvider<IsCachingNotifier, bool>((ref) {
   final IsCachingNotifier isCachingProvider = IsCachingNotifier(false);
 
   final isConnected = ref.watch(connectionStatusProvider);
-  CacheManager().readCache(AuthNotifier.userIdName).then((value) {
+  AuthNotifier.cacheManager.readCache(AuthNotifier.userIdName).then((value) {
     isCachingProvider.set(!isConnected && value != "");
   });
   return isCachingProvider;
 });
 
 final refreshTokenProvider = FutureProvider<bool>((ref) {
-  final authNotifier = ref.watch(authTokenProvider.notifier);
-  return authNotifier.refreshToken();
+  final authNotifier = ref.read(authTokenProvider.notifier);
+  return authNotifier.refreshAccessToken();
 });
 
 final isLoggedInProvider = Provider<bool>((ref) {
@@ -231,22 +231,24 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
   /// For mobile applications, it uses the Flutter AppAuth package to refresh the token.
   /// If the token is successfully refreshed, it stores the new token.
   /// If an error occurs, it updates the state with the error.
-  Future<void> refreshAccessToken() async {
+  Future<bool> refreshAccessToken() async {
     state = const AsyncLoading();
     final refreshToken = await _secureStorage.read(key: tokenName);
     if (refreshToken != null) {
       try {
         if (kIsWeb) {
-          _refreshAccessTokenWeb(refreshToken);
+          await _refreshAccessTokenWeb(refreshToken);
         } else {
-          _refreshAccessTokenMobile(refreshToken);
+          await _refreshAccessTokenMobile(refreshToken);
         }
+        return true;
       } catch (e) {
         state = AsyncError(e, StackTrace.empty);
       }
     } else {
       state = const AsyncError("No token found", StackTrace.empty);
     }
+    return false;
   }
 
   // Refreshes access token for web applications.
@@ -278,31 +280,6 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
     _saveAndStoreToken(AuthToken.fromTokenResponse(response));
   }
 
-  /// Refreshes the access token using the refresh token.
-  /// This method checks the current state of the auth token and attempts to
-  /// refresh it if a valid refresh token is available.
-  /// Returns true if the refresh was successful, false otherwise.
-  /// If an error occurs, it updates the state with the error.
-  Future<bool> refreshToken() async {
-    return state.when(
-      data: (authToken) async {
-        if (authToken.refreshToken != "") {
-          await _refreshAccessTokenMobile(authToken.refreshToken);
-          return true;
-        }
-        state = const AsyncError(e, StackTrace.empty);
-        return false;
-      },
-      error: (error, stackTrace) {
-        state = AsyncError(error, stackTrace);
-        return false;
-      },
-      loading: () {
-        return false;
-      },
-    );
-  }
-
   /// Deletes the authentication token from secure storage and cache.
   void signOut() {
     try {
@@ -318,16 +295,7 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
   /// Saves the authentication token in the state and stores it securely.
   void _saveAndStoreToken(AuthToken authToken) {
     state = AsyncData(authToken);
-    state.when(
-      data: (authToken) =>
-          _secureStorage.write(key: tokenName, value: authToken.refreshToken),
-      error: (e, s) {
-        throw e;
-      },
-      loading: () {
-        throw Exception("Token is not loaded");
-      },
-    );
+    _secureStorage.write(key: tokenName, value: authToken.refreshToken);
   }
 
   // --- Helper Methods ---
