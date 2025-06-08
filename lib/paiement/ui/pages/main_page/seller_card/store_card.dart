@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:myecl/paiement/providers/barcode_provider.dart';
 import 'package:myecl/paiement/providers/ongoing_transaction.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
@@ -10,9 +9,7 @@ import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_template.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scan_page.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:myecl/user/providers/user_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class StoreCard extends HookConsumerWidget {
