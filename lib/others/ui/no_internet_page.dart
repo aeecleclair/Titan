@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/is_connected_provider.dart';
+import 'package:myecl/auth/providers/connection_status_provider.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/others/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
@@ -12,8 +12,8 @@ class NoInternetPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isConnected = ref.watch(isConnectedProvider);
-    final isConnectedNotifier = ref.watch(isConnectedProvider.notifier);
+    final isConnected = ref.watch(connectionStatusProvider);
+    final isConnectedNotifier = ref.watch(connectionStatusProvider.notifier);
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(30),

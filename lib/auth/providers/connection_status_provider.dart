@@ -17,10 +17,9 @@ class IsConnectedProvider extends StateNotifier<bool> {
   }
 }
 
-final isConnectedProvider = StateNotifierProvider<IsConnectedProvider, bool>((
-  ref,
-) {
-  final notifier = IsConnectedProvider();
-  notifier.isInternet();
-  return notifier;
-});
+final connectionStatusProvider =
+    StateNotifierProvider<IsConnectedProvider, bool>((ref) {
+      final notifier = IsConnectedProvider();
+      notifier.isInternet();
+      return notifier;
+    });

@@ -21,10 +21,10 @@ Future tokenExpireWrapper(WidgetRef ref, Future<dynamic> Function() f) async {
         if (value) {
           f();
         } else {
-          tokenNotifier.deleteToken();
+          tokenNotifier.signOut();
         }
       } catch (e) {
-        tokenNotifier.deleteToken();
+        tokenNotifier.signOut();
       }
       askingRefreshTokenNotifier.setAskingRefresh(false);
     }
@@ -49,10 +49,10 @@ void tokenExpireWrapperAuth(Ref ref, Future<dynamic> Function() f) async {
         if (value) {
           f();
         } else {
-          tokenNotifier.deleteToken();
+          tokenNotifier.signOut();
         }
       } catch (e) {
-        tokenNotifier.deleteToken();
+        tokenNotifier.signOut();
       }
       askingRefreshTokenNotifier.setAskingRefresh(false);
     }

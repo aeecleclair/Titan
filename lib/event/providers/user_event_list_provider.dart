@@ -46,7 +46,7 @@ final eventEventListProvider =
       ref,
     ) {
       final eventRepository = ref.watch(eventRepositoryProvider);
-      final userId = ref.watch(idProvider);
+      final userId = ref.watch(userIdProvider);
       final provider = EventEventListProvider(eventRepository: eventRepository);
       tokenExpireWrapperAuth(ref, () async {
         userId.whenData((value) async {

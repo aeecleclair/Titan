@@ -1,3 +1,5 @@
+import 'package:flutter_appauth/flutter_appauth.dart';
+
 /// A type-safe class to hold authentication tokens, preferable to a raw Map.
 class AuthToken {
   late final String accessToken;
@@ -8,6 +10,11 @@ class AuthToken {
   AuthToken.fromJson(Map<String, dynamic> json) {
     accessToken = json['access_token'] as String;
     refreshToken = json['refresh_token'] as String;
+  }
+
+  AuthToken.fromTokenResponse(TokenResponse response) {
+    accessToken = response.accessToken ?? '';
+    refreshToken = response.refreshToken ?? '';
   }
 
   Map<String, dynamic> toJson() {

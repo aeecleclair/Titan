@@ -40,7 +40,7 @@ final userAmountProvider =
       final token = ref.watch(tokenProvider);
       UserCashNotifier userCashNotifier = UserCashNotifier(token: token);
       tokenExpireWrapperAuth(ref, () async {
-        final userId = ref.watch(idProvider);
+        final userId = ref.watch(userIdProvider);
         userId.whenData(
           (value) async => await userCashNotifier.loadCashByUser(value),
         );
