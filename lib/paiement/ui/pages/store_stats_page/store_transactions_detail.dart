@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/paiement/class/history.dart';
+import 'package:myecl/paiement/providers/refund_amount_provider.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
 import 'package:myecl/paiement/ui/components/transaction_card.dart';
 import 'package:myecl/paiement/ui/pages/store_stats_page/refund_page.dart';
@@ -12,6 +13,7 @@ class StoreTransactionsDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedStore = ref.watch(selectedStoreProvider);
+    final refundAmountNotifier = ref.watch(refundAmountProvider.notifier);
 
     void showCancelModal(History history) {
       showModalBottomSheet(
@@ -20,7 +22,9 @@ class StoreTransactionsDetail extends ConsumerWidget {
         scrollControlDisabledMaxHeightRatio:
             (1 - 80 / MediaQuery.of(context).size.height),
         builder: (context) => ReFundPage(history: history),
-      );
+      ).then((_) {
+        refundAmountNotifier.setRefundAmount("");
+      });
     }
 
     history.sort((a, b) => b.creation.compareTo(a.creation));
