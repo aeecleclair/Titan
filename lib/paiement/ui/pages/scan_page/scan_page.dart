@@ -18,9 +18,12 @@ import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:myecl/tools/ui/widgets/loader.dart';
 
 class ScanPage extends HookConsumerWidget {
-  ScanPage({super.key});
+  final GlobalKey<ScannerState>? externalScannerKey;
+  
+  ScanPage({super.key, this.externalScannerKey});
 
-  final GlobalKey<ScannerState> scannerKey = GlobalKey<ScannerState>();
+  final GlobalKey<ScannerState> _scannerKey = GlobalKey<ScannerState>();
+  GlobalKey<ScannerState> get scannerKey => externalScannerKey ?? _scannerKey;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

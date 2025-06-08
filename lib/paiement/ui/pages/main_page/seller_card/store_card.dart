@@ -9,6 +9,7 @@ import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_template.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scan_page.dart';
+import 'package:myecl/paiement/ui/pages/scan_page/scanner.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -42,18 +43,19 @@ class StoreCard extends HookConsumerWidget {
           MainCardButton(
             colors: buttonGradient,
             icon: HeroIcons.viewfinderCircle,
-            title: "Scanner",
-            onPressed: () async {
-              showModalBottomSheet(
+            title: "Scanner",            onPressed: () async {
+              final scannerKey = GlobalKey<ScannerState>();
+                showModalBottomSheet(
                 context: context,
                 enableDrag: false,
                 backgroundColor: Colors.transparent,
                 scrollControlDisabledMaxHeightRatio:
                     (1 - 80 / MediaQuery.of(context).size.height),
-                builder: (context) => ScanPage(),
+                builder: (context) => ScanPage(externalScannerKey: scannerKey),
               ).then((_) {
                 ongoingTransactionNotifier.clearOngoingTransaction();
                 barcodeNotifier.clearBarcode();
+                scannerKey.currentState?.disposeScanner();
               });
             },
           ),
