@@ -10,6 +10,7 @@ import 'package:myecl/paiement/providers/has_accepted_tos_provider.dart';
 import 'package:myecl/paiement/providers/key_service_provider.dart';
 import 'package:myecl/paiement/providers/my_history_provider.dart';
 import 'package:myecl/paiement/providers/my_wallet_provider.dart';
+import 'package:myecl/paiement/providers/pay_amount_provider.dart';
 import 'package:myecl/paiement/router.dart';
 import 'package:myecl/paiement/ui/pages/fund_page/fund_page.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/device_dialog_box.dart';
@@ -34,6 +35,7 @@ class AccountCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final myWallet = ref.watch(myWalletProvider);
     final keyService = ref.read(keyServiceProvider);
+    final payAmountNotifier = ref.watch(payAmountProvider.notifier);
     final deviceNotifier = ref.watch(deviceProvider.notifier);
     final hasAcceptedToS = ref.watch(hasAcceptedTosProvider);
     final buttonGradient = [
@@ -53,7 +55,9 @@ class AccountCard extends HookConsumerWidget {
         scrollControlDisabledMaxHeightRatio:
             (1 - 80 / MediaQuery.of(context).size.height),
         builder: (context) => const PayPage(),
-      );
+      ).then((_) {
+        payAmountNotifier.setPayAmount("");
+      });
     }
 
     void showFundModal() async {

@@ -46,7 +46,6 @@ class ConfirmButton extends ConsumerWidget {
     final formatter = NumberFormat("#,##0.00", "fr_FR");
 
     void displayQRModal() {
-      payAmountNotifier.setPayAmount("");
       showModalBottomSheet(
         context: context,
         enableDrag: false,
@@ -112,6 +111,7 @@ class ConfirmButton extends ConsumerWidget {
       ).then((_) async {
         await myHistoryNotifier.getHistory();
         await myWalletNotifier.getMyWallet();
+        payAmountNotifier.setPayAmount("");
       });
     }
 
