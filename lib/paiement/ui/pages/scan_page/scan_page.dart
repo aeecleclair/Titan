@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
@@ -249,15 +247,30 @@ class ScanPage extends HookConsumerWidget {
                   const Spacer(),
                   AsyncChild(
                     value: ongoingTransaction,
-                    errorBuilder: (error, stack) {
-                      return Text(
-                        (error as AppException).message,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                    errorBuilder: (context, child) => GestureDetector(
+                      child: Container(
+                        width: double.infinity,
+                        height: 50,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white.withValues(alpha: 0.8),
                         ),
-                      );
-                    },
+                        child: const Text(
+                          'Suivant',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        scannerKey.currentState?.resetScanner();
+                        barcodeNotifier.clearBarcode();
+                        ongoingTransactionNotifier.clearOngoingTransaction();
+                      },
+                    ),
                     builder: (context, transaction) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Row(
