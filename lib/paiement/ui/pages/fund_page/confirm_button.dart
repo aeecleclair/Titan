@@ -123,6 +123,7 @@ class ConfirmFundButton extends ConsumerWidget {
         value.when(
           data: (fundingUrl) {
             fundAmountNotifier.setFundAmount("");
+            Navigator.pop(context);
             if (kIsWeb) {
               helloAssoCallback(fundingUrl.url);
               return;

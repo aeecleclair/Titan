@@ -83,7 +83,6 @@ class AccountCard extends HookConsumerWidget {
       } else {
         displayToastWithContext(TypeMsg.error, "Paiement annulé");
       }
-      Navigator.pop(context);
     }
 
     return MainCardTemplate(
