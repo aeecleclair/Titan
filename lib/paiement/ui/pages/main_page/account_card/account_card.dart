@@ -35,6 +35,7 @@ class AccountCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final myWallet = ref.watch(myWalletProvider);
+    final myWalletNotifier = ref.watch(myWalletProvider.notifier);
     final keyService = ref.read(keyServiceProvider);
     final payAmountNotifier = ref.watch(payAmountProvider.notifier);
     final fundAmountNotifier = ref.watch(fundAmountProvider.notifier);
@@ -64,23 +65,25 @@ class AccountCard extends HookConsumerWidget {
 
     void showFundModal() async {
       resetHandledKeys();
-      String code =
+      final code =
           await showModalBottomSheet(
             context: context,
             backgroundColor: Colors.transparent,
             scrollControlDisabledMaxHeightRatio:
                 (1 - 80 / MediaQuery.of(context).size.height),
             builder: (context) => const FundPage(),
-          );
-      fundAmountNotifier.setFundAmount("");
+          ).then((code) {
+            fundAmountNotifier.setFundAmount("");
+            return code;
+          });
       if (code == "succeeded") {
         displayToastWithContext(TypeMsg.msg, "Paiement effectué avec succès");
-        await Future.delayed(Duration(seconds: 5));
-        ref.watch(myWalletProvider.notifier).getMyWallet();
+        myWalletNotifier.getMyWallet();
         ref.watch(myHistoryProvider.notifier).getHistory();
       } else {
         displayToastWithContext(TypeMsg.error, "Paiement annulé");
       }
+      Navigator.pop(context);
     }
 
     return MainCardTemplate(
