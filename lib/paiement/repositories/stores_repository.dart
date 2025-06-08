@@ -27,8 +27,8 @@ class StoresRepository extends Repository {
     DateTime endDate,
   ) async {
     final queryParams = {
-      'start_date': processDateToAPIWithoutHour(startDate),
-      'end_date': processDateToAPIWithoutHour(endDate),
+      'start_date': processDateToAPI(startDate),
+      'end_date': processDateToAPI(endDate),
     };
 
     final queryString = Uri(queryParameters: queryParams).query;
