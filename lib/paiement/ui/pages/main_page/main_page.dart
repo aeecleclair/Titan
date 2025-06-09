@@ -107,7 +107,10 @@ class PaymentMainPage extends HookConsumerWidget {
                   tos.maybeWhen(
                     orElse: () {},
                     data: (tos) async {
-                      if (context.mounted) {
+                      final value = await tosNotifier.signTOS(
+                        tos.copyWith(acceptedTosVersion: tos.latestTosVersion),
+                      );
+                      if (value && context.mounted) {
                         await showDialog(
                           useRootNavigator: false,
                           context: context,

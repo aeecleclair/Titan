@@ -15,6 +15,8 @@ final shouldDisplayTosDialogProvider =
       final tos = ref.watch(tosProvider);
       return tos.maybeWhen(
         orElse: () => ShouldDisplayTosDialog(false),
-        data: (value) => ShouldDisplayTosDialog(true),
+        data: (value) => ShouldDisplayTosDialog(
+          value.acceptedTosVersion != value.latestTosVersion,
+        ),
       );
     });
