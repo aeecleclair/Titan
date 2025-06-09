@@ -42,7 +42,7 @@ final userTicketListProvider =
       final token = ref.watch(tokenProvider);
       UserTicketListNotifier notifier = UserTicketListNotifier(token: token);
       tokenExpireWrapperAuth(ref, () async {
-        final userId = ref.watch(idProvider);
+        final userId = ref.watch(userIdProvider);
         userId.whenData((value) async {
           notifier.setId(value);
           await notifier.loadTicketList();

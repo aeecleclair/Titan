@@ -69,7 +69,7 @@ class SignIn extends HookConsumerWidget {
                                   ),
                               label: LoginTextConstants.signIn,
                               onPressed: () async {
-                                await authNotifier.getTokenFromRequest();
+                                await authNotifier.signIn();
                                 ref
                                     .watch(authTokenProvider)
                                     .when(

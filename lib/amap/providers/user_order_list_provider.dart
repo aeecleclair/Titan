@@ -176,7 +176,7 @@ final userOrderListProvider =
         orderListRepository: orderListRepository,
       );
       tokenExpireWrapperAuth(ref, () async {
-        final userId = ref.watch(idProvider);
+        final userId = ref.watch(userIdProvider);
         userId.whenData(
           (value) async => await userOrderListNotifier.loadOrderList(value),
         );

@@ -29,7 +29,7 @@ class QuitDialog extends HookConsumerWidget {
             descriptions: DrawerTextConstants.loginOut,
             title: DrawerTextConstants.logOut,
             onYes: () {
-              auth.deleteToken();
+              auth.signOut();
               if (!kIsWeb) {
                 ref.watch(messagesProvider.notifier).forgetDevice();
                 ref.watch(firebaseTokenExpirationProvider.notifier).reset();

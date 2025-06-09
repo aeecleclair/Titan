@@ -4,7 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/is_admin_provider.dart';
 import 'package:myecl/admin/router.dart';
-import 'package:myecl/auth/providers/is_connected_provider.dart';
+import 'package:myecl/auth/providers/connection_status_provider.dart';
 import 'package:myecl/drawer/providers/animation_provider.dart';
 import 'package:myecl/drawer/providers/swipe_provider.dart';
 import 'package:myecl/drawer/tools/constants.dart';
@@ -29,7 +29,7 @@ class DrawerTopBar extends HookConsumerWidget {
     final profilePicture = ref.watch(profilePictureProvider);
     final hasScrolled = ref.watch(hasScrolledProvider.notifier);
     final isAdmin = ref.watch(isAdminProvider);
-    final isConnected = ref.watch(isConnectedProvider);
+    final isConnected = ref.watch(connectionStatusProvider);
     final animation = ref.watch(animationProvider);
     final dropDownAnimation = useAnimationController(
       duration: const Duration(milliseconds: 250),
