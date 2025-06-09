@@ -19,7 +19,12 @@ import 'package:universal_html/html.dart' as html;
 
 final authTokenProvider =
     StateNotifierProvider<AuthNotifier, AsyncValue<AuthToken>>((ref) {
-      AuthNotifier authNotifier = AuthNotifier();
+      final authNotifier = AuthNotifier(
+        appAuth: FlutterAppAuth(),
+        secureStorage: FlutterSecureStorage(),
+        cacheManager: CacheManager(),
+        openIdRepository: OpenIdRepository(),
+      );
       final isOnline = ref.watch(connectionStatusProvider);
       if (isOnline) {
         authNotifier.refreshAccessToken();
@@ -39,9 +44,13 @@ final isCachingProvider = StateNotifierProvider<IsCachingNotifier, bool>((ref) {
   final IsCachingNotifier isCachingProvider = IsCachingNotifier(false);
 
   final isConnected = ref.watch(connectionStatusProvider);
-  AuthNotifier.cacheManager.readCache(AuthNotifier.userIdName).then((value) {
-    isCachingProvider.set(!isConnected && value != "");
-  });
+  ref
+      .read(authTokenProvider.notifier)
+      .cacheManager
+      .readCache(AuthNotifier.userIdName)
+      .then((value) {
+        isCachingProvider.set(!isConnected && value != "");
+      });
   return isCachingProvider;
 });
 
@@ -78,7 +87,7 @@ final loadingProvider = FutureProvider<bool>((ref) {
 });
 
 final userIdProvider = FutureProvider<String>((ref) {
-  final cacheManager = AuthNotifier.cacheManager;
+  final cacheManager = ref.read(authTokenProvider.notifier).cacheManager;
   return ref
       .watch(authTokenProvider)
       .when(
@@ -107,13 +116,19 @@ final tokenProvider = Provider((ref) {
 /// It uses the Flutter AppAuth package for OAuth 2.0 authorization code flow
 /// with PKCE for mobile applications, and a web-based flow for web applications.
 class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
-  AuthNotifier() : super(const AsyncLoading());
+  final FlutterAppAuth appAuth;
+  final FlutterSecureStorage secureStorage;
+  final CacheManager cacheManager;
+  final OpenIdRepository openIdRepository;
 
-  static const FlutterAppAuth appAuth = FlutterAppAuth();
-  static final CacheManager cacheManager = CacheManager();
-  static const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+  AuthNotifier({
+    required this.appAuth,
+    required this.secureStorage,
+    required this.cacheManager,
+    required this.openIdRepository,
+  }) : super(const AsyncLoading());
+
   static const Base64Codec base64 = Base64Codec.urlSafe();
-  static final OpenIdRepository openIdRepository = OpenIdRepository();
   static const String userIdName = "id";
 
   // --- OIDC Configuration ---
@@ -127,16 +142,25 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
   static List<String> scopes = ["API"];
 
   /// Signs in the user using the appropriate flow based on the platform.
-  Future signIn() async {
+  Future<void> signIn() async {
     state = const AsyncLoading();
     try {
       if (kIsWeb) {
-        _signInWeb();
+        await _signInWeb();
       } else {
-        _signInMobile();
+        await _signInMobile();
       }
-    } catch (e) {
-      state = AsyncError("Error $e", StackTrace.empty);
+    } catch (e, s) {
+      state = AsyncError("Error $e", s);
+    } finally {
+      // Ensure the state is updated to reflect the loading status
+      if (state is AsyncLoading) {
+        // If the sign-in process fails, reset the state to an empty token
+        // to avoid leaving the app in a loading state.
+        // This is important for mobile apps where the user might not be able
+        // to retry the sign-in easily.
+        state = AsyncData(AuthToken.empty());
+      }
     }
   }
 
@@ -233,7 +257,7 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
   /// If an error occurs, it updates the state with the error.
   Future<bool> refreshAccessToken() async {
     state = const AsyncLoading();
-    final refreshToken = await _secureStorage.read(key: tokenName);
+    final refreshToken = await secureStorage.read(key: tokenName);
     if (refreshToken != null) {
       try {
         if (kIsWeb) {
@@ -242,12 +266,13 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
           await _refreshAccessTokenMobile(refreshToken);
         }
         return true;
-      } catch (e) {
-        state = AsyncError(e, StackTrace.empty);
+      } catch (e, s) {
+        state = AsyncError(e, s);
       }
     } else {
       state = const AsyncError("No token found", StackTrace.empty);
     }
+
     return false;
   }
 
@@ -283,7 +308,7 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
   /// Deletes the authentication token from secure storage and cache.
   void signOut() {
     try {
-      _secureStorage.delete(key: tokenName);
+      secureStorage.delete(key: tokenName);
       cacheManager.deleteCache(tokenName);
       cacheManager.deleteCache(userIdName);
       state = AsyncData(AuthToken.empty());
@@ -295,7 +320,7 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
   /// Saves the authentication token in the state and stores it securely.
   void _saveAndStoreToken(AuthToken authToken) {
     state = AsyncData(authToken);
-    _secureStorage.write(key: tokenName, value: authToken.refreshToken);
+    secureStorage.write(key: tokenName, value: authToken.refreshToken);
   }
 
   // --- Helper Methods ---

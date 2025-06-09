@@ -39,4 +39,18 @@ class AuthToken {
   String toString() {
     return 'AuthToken(accessToken: $accessToken, refreshToken: $refreshToken)';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other.runtimeType != runtimeType) return false;
+    final AuthToken otherToken = other as AuthToken;
+    return accessToken == otherToken.accessToken &&
+        refreshToken == otherToken.refreshToken;
+  }
+
+  @override
+  int get hashCode {
+    return accessToken.hashCode ^ refreshToken.hashCode;
+  }
 }
