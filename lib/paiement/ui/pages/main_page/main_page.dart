@@ -118,7 +118,7 @@ class PaymentMainPage extends HookConsumerWidget {
                             return DeviceDialogBox(
                               title: 'Acceptation validée !',
                               descriptions:
-                                  "Merci d'avoir accepté les Conditions Générales d'Utilisation de MyECLPay. Un email de confirmation vous a été envoyé.",
+                                  """Merci d'avoir accepté la dernière version des Conditions Générales d'Utilisation de MyECLPay !\n\n Un email vous a été envoyé pour en attester.\n Vous pourrez y retrouver le contenu des Conditions Générales d'Utilisation.\n\n Vous pouvez fermer cette fenêtre et accéder à MyECLPay !""",
                               buttonText: "Ok",
                               onClick: () {},
                             );
