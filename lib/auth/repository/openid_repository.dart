@@ -41,5 +41,6 @@ class OpenIdRepository extends Repository {
 }
 
 final openIdRepositoryProvider = Provider((ref) {
+  // No need to watch tokenProvider here, as the OpenIdRepository does not require a token.
   return OpenIdRepository(ref);
 });

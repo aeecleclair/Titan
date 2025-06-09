@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/purchases/class/seller.dart';
 import 'package:myecl/purchases/class/ticket.dart';
 import 'package:myecl/tools/repository/repository.dart';
@@ -32,6 +33,9 @@ class UserInformationRepository extends Repository {
   }
 }
 
-final userInformationRepositoryProvider = Provider<UserInformationRepository>(
-  (ref) => UserInformationRepository(ref),
-);
+final userInformationRepositoryProvider = Provider<UserInformationRepository>((
+  ref,
+) {
+  final token = ref.watch(tokenProvider);
+  return UserInformationRepository(ref)..setToken(token);
+});

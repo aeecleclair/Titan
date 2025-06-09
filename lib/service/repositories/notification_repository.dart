@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/service/class/message.dart';
 import 'package:myecl/service/class/topic.dart';
 import 'package:myecl/service/tools/functions.dart';
@@ -56,5 +57,6 @@ class NotificationRepository extends Repository {
 }
 
 final notificationRepositoryProvider = Provider((ref) {
-  return NotificationRepository(ref);
+  final token = ref.watch(tokenProvider);
+  return NotificationRepository(ref)..setToken(token);
 });

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -14,6 +15,7 @@ class MemberRepository extends Repository {
   }
 }
 
-final memberRepositoryProvider = Provider<MemberRepository>(
-  (ref) => MemberRepository(ref),
-);
+final memberRepositoryProvider = Provider<MemberRepository>((ref) {
+  final token = ref.watch(tokenProvider);
+  return MemberRepository(ref)..setToken(token);
+});

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/raffle/class/raffle.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -39,5 +40,6 @@ class RaffleRepository extends Repository {
 }
 
 final raffleRepositoryProvider = Provider<RaffleRepository>((ref) {
-  return RaffleRepository(ref);
+  final token = ref.watch(tokenProvider);
+  return RaffleRepository(ref)..setToken(token);
 });

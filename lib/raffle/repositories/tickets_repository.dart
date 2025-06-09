@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/raffle/class/tickets.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -36,5 +37,6 @@ class TicketRepository extends Repository {
 }
 
 final ticketRepositoryProvider = Provider<TicketRepository>((ref) {
-  return TicketRepository(ref);
+  final token = ref.watch(tokenProvider);
+  return TicketRepository(ref)..setToken(token);
 });

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/raffle/class/cash.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -31,5 +32,6 @@ class CashRepository extends Repository {
 }
 
 final cashRepositoryProvider = Provider<CashRepository>((ref) {
-  return CashRepository(ref);
+  final token = ref.watch(tokenProvider);
+  return CashRepository(ref)..setToken(token);
 });
