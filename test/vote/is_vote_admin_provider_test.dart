@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/user/class/user.dart';
-import 'package:myecl/user/providers/user_provider.dart';
-import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
+import 'package:myemapp/admin/class/simple_group.dart';
+import 'package:myemapp/user/class/user.dart';
+import 'package:myemapp/user/providers/user_provider.dart';
+import 'package:myemapp/vote/providers/is_vote_admin_provider.dart';
 
 void main() {
   group('isVoteAdmin', () {

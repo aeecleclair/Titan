@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/wallet_device.dart';
-import 'package:myecl/paiement/repositories/devices_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myemapp/paiement/class/wallet_device.dart';
+import 'package:myemapp/paiement/repositories/devices_repository.dart';
+import 'package:myemapp/tools/providers/list_notifier.dart';
 
 class DeviceListNotifier extends ListNotifier<WalletDevice> {
   final DevicesRepository devicesRepository;

@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
-import 'package:myecl/phonebook/providers/association_provider.dart';
-import 'package:myecl/phonebook/tools/function.dart';
+import 'package:myemapp/phonebook/class/complete_member.dart';
+import 'package:myemapp/phonebook/providers/association_member_list_provider.dart';
+import 'package:myemapp/phonebook/providers/association_provider.dart';
+import 'package:myemapp/phonebook/tools/function.dart';
 
 final associationMemberSortedListProvider = Provider<List<CompleteMember>>((
   ref,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myemapp/tools/constants.dart';
+import 'package:myemapp/tools/ui/builders/waiting_button.dart';
 
 class DeleteButton extends StatelessWidget {
   final Future Function() onDelete;

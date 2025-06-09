@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/admin/providers/members_provider.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:myemapp/admin/providers/members_provider.dart';
+import 'package:myemapp/user/class/simple_users.dart';
 
 void main() {
   group('MembersNotifier', () {

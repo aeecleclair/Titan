@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/contender_provider.dart';
+import 'package:myemapp/vote/class/contender.dart';
+import 'package:myemapp/vote/providers/contender_provider.dart';
 
 void main() {
   group('ContenderNotifier', () {

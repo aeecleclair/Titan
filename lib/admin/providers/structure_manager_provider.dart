@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:myemapp/user/class/simple_users.dart';
 
 class StructureManagerProvider extends StateNotifier<SimpleUser> {
   StructureManagerProvider() : super(SimpleUser.empty());

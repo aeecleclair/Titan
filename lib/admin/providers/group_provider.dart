@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/group.dart';
-import 'package:myecl/admin/repositories/group_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:myemapp/admin/class/group.dart';
+import 'package:myemapp/admin/repositories/group_repository.dart';
+import 'package:myemapp/tools/providers/single_notifier.dart';
+import 'package:myemapp/user/class/simple_users.dart';
 
 class GroupNotifier extends SingleNotifier<Group> {
   final GroupRepository groupRepository;

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
-import 'package:myecl/vote/providers/section_id_provider.dart';
-import 'package:myecl/vote/providers/sections_contender_provider.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
-import 'package:myecl/vote/router.dart';
-import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/pages/admin_page/section_chip.dart';
+import 'package:myemapp/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myemapp/tools/ui/layouts/item_chip.dart';
+import 'package:myemapp/vote/providers/section_id_provider.dart';
+import 'package:myemapp/vote/providers/sections_contender_provider.dart';
+import 'package:myemapp/vote/providers/sections_provider.dart';
+import 'package:myemapp/vote/providers/status_provider.dart';
+import 'package:myemapp/vote/repositories/status_repository.dart';
+import 'package:myemapp/vote/router.dart';
+import 'package:myemapp/vote/tools/constants.dart';
+import 'package:myemapp/vote/ui/pages/admin_page/section_chip.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SectionBar extends HookConsumerWidget {

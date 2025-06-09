@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/vote/repositories/voted_sections_repository.dart';
+import 'package:myemapp/tools/providers/list_notifier.dart';
+import 'package:myemapp/vote/repositories/voted_sections_repository.dart';
 
 class VotedSectionProvider extends ListNotifier<String> {
   final VotedSectionRepository votesRepository;

@@ -1,5 +1,5 @@
-name: myecl
-description: MyECL est l'application des Centraliens de Lyon, conçue par ÉCLAIR
+name: myemapp
+description: myemapp est une application pour les associations de l'emlyon, conçue par ProximApp
 
 publish_to: "none"
 version: 1.2.7+154

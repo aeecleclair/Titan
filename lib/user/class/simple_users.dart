@@ -1,5 +1,5 @@
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:myemapp/admin/class/account_type.dart';
+import 'package:myemapp/tools/functions.dart';
 
 class SimpleUser {
   SimpleUser({

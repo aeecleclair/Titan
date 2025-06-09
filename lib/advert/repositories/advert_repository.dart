@@ -1,5 +1,5 @@
-import 'package:myecl/advert/class/advert.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:myemapp/advert/class/advert.dart';
+import 'package:myemapp/tools/repository/repository.dart';
 
 class AdvertRepository extends Repository {
   @override

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/home/providers/selected_day.dart';
-import 'package:myecl/home/tools/constants.dart';
+import 'package:myemapp/home/providers/selected_day.dart';
+import 'package:myemapp/home/tools/constants.dart';
 
 class DayCard extends HookConsumerWidget {
   final bool isToday;

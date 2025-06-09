@@ -435,7 +435,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = fr.myecl.titan;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.myemapp.titan;
 				PRODUCT_NAME = MyECL;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -517,7 +517,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = fr.myecl.titan.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.myemapp.titan.dev;
 				PRODUCT_NAME = "MyECL Dev";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -597,7 +597,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = fr.myecl.titan.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.myemapp.titan.dev;
 				PRODUCT_NAME = "MyECL Dev";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -674,7 +674,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = fr.myecl.titan.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.myemapp.titan.dev;
 				PRODUCT_NAME = "MyECL Dev";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -756,7 +756,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = fr.myecl.titan.alpha;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.myemapp.titan.alpha;
 				PRODUCT_NAME = "MyECL Alpha";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -836,7 +836,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = fr.myecl.titan.alpha;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.myemapp.titan.alpha;
 				PRODUCT_NAME = "MyECL Alpha";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -913,7 +913,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = fr.myecl.titan.alpha;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.myemapp.titan.alpha;
 				PRODUCT_NAME = "MyECL Alpha";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1048,7 +1048,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = fr.myecl.titan;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.myemapp.titan;
 				PRODUCT_NAME = MyECL;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1075,7 +1075,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = fr.myecl.titan;
+				PRODUCT_BUNDLE_IDENTIFIER = fr.myemapp.titan;
 				PRODUCT_NAME = MyECL;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

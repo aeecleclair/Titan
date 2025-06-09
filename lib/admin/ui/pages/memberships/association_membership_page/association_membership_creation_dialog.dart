@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:myemapp/admin/class/simple_group.dart';
+import 'package:myemapp/admin/tools/constants.dart';
+import 'package:myemapp/tools/constants.dart';
 
 class MembershipCreationDialogBox extends StatelessWidget {
   static const Color titleColor = ColorConstants.gradient1;

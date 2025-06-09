@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/event/providers/event_provider.dart';
-import 'package:myecl/event/tools/constants.dart';
-import 'package:myecl/event/ui/event.dart';
-import 'package:myecl/event/ui/components/event_ui.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:myemapp/event/providers/event_provider.dart';
+import 'package:myemapp/event/tools/constants.dart';
+import 'package:myemapp/event/ui/event.dart';
+import 'package:myemapp/event/ui/components/event_ui.dart';
+import 'package:myemapp/tools/functions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends HookConsumerWidget {

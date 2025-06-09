@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/admin/providers/group_list_provider.dart';
+import 'package:myemapp/admin/class/simple_group.dart';
+import 'package:myemapp/admin/providers/group_list_provider.dart';
 
 final allGroupList = Provider<List<SimpleGroup>>((ref) {
   return ref

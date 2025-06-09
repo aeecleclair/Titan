@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/association_membership_simple.dart';
-import 'package:myecl/admin/class/user_association_membership.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:myemapp/admin/class/association_membership_simple.dart';
+import 'package:myemapp/admin/class/user_association_membership.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/repository/repository.dart';
 
 class AssociationMembershipRepository extends Repository {
   @override

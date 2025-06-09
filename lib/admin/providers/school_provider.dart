@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/school.dart';
-import 'package:myecl/admin/repositories/school_repository.dart';
+import 'package:myemapp/admin/class/school.dart';
+import 'package:myemapp/admin/repositories/school_repository.dart';
 
 class SchoolNotifier extends StateNotifier<School> {
   final SchoolRepository schoolRepository;

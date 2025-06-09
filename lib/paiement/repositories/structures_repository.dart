@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/paiement/class/store.dart';
-import 'package:myecl/paiement/class/structure.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/paiement/class/store.dart';
+import 'package:myemapp/paiement/class/structure.dart';
+import 'package:myemapp/tools/repository/repository.dart';
 
 class StructuresRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = 'myeclpay/structures';
+  final ext = 'myemapppay/structures';
 
   Future<Structure> createStructure(Structure structure) async {
     return Structure.fromJson(await create(structure.toJson()));

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
+import 'package:myemapp/phonebook/class/association.dart';
 
 class AssociationNotifier extends Notifier<Association> {
   @override

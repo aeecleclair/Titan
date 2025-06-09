@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/vote/providers/show_graph_provider.dart';
+import 'package:myemapp/vote/providers/show_graph_provider.dart';
 
 void main() {
   group('ShowGraphNotifier', () {

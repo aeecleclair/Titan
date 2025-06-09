@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/group_id_provider.dart';
-import 'package:myecl/admin/providers/group_list_provider.dart';
-import 'package:myecl/admin/router.dart';
-import 'package:myecl/admin/ui/admin.dart';
-import 'package:myecl/admin/ui/components/item_card_ui.dart';
-import 'package:myecl/admin/ui/pages/groups/group_page/group_ui.dart';
-import 'package:myecl/loan/providers/loaner_list_provider.dart';
-import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:myemapp/admin/providers/group_id_provider.dart';
+import 'package:myemapp/admin/providers/group_list_provider.dart';
+import 'package:myemapp/admin/router.dart';
+import 'package:myemapp/admin/ui/admin.dart';
+import 'package:myemapp/admin/ui/components/item_card_ui.dart';
+import 'package:myemapp/admin/ui/pages/groups/group_page/group_ui.dart';
+import 'package:myemapp/admin/tools/constants.dart';
+import 'package:myemapp/tools/constants.dart';
+import 'package:myemapp/tools/ui/builders/async_child.dart';
+import 'package:myemapp/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/ui/layouts/refresher.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class GroupsPage extends HookConsumerWidget {
@@ -26,23 +25,15 @@ class GroupsPage extends HookConsumerWidget {
     final groups = ref.watch(allGroupListProvider);
     final groupsNotifier = ref.watch(allGroupListProvider.notifier);
     final groupIdNotifier = ref.watch(groupIdProvider.notifier);
-    final loans = ref.watch(loanerListProvider);
-    final loanListNotifier = ref.watch(loanerListProvider.notifier);
     ref.watch(userList);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
-    final List<String> loanersId = loans.maybeWhen(
-      data: (value) => value.map((e) => e.groupManagerId).toList(),
-      orElse: () => [],
-    );
-
     return AdminTemplate(
       child: Refresher(
         onRefresh: () async {
           await groupsNotifier.loadGroups();
-          await loanListNotifier.loadLoanerList();
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -129,7 +120,6 @@ class GroupsPage extends HookConsumerWidget {
                           ...g.map(
                             (group) => GroupUi(
                               group: group,
-                              isLoaner: loanersId.contains(group.id),
                               onEdit: () {
                                 groupIdNotifier.setId(group.id);
                                 QR.to(

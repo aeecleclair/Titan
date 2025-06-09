@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/history.dart';
-import 'package:myecl/paiement/class/store.dart';
-import 'package:myecl/paiement/providers/selected_interval_provider.dart';
-import 'package:myecl/paiement/providers/selected_store_provider.dart';
-import 'package:myecl/paiement/repositories/stores_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myemapp/paiement/class/history.dart';
+import 'package:myemapp/paiement/class/store.dart';
+import 'package:myemapp/paiement/providers/selected_interval_provider.dart';
+import 'package:myemapp/paiement/providers/selected_store_provider.dart';
+import 'package:myemapp/paiement/repositories/stores_repository.dart';
+import 'package:myemapp/tools/providers/list_notifier.dart';
 
 class SellerHistoryNotifier extends ListNotifier<History> {
   final StoresRepository storesRepository;

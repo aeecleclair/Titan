@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:myemapp/tools/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:myecl/tools/plausible/plausible.dart';
+import 'package:myemapp/tools/plausible/plausible.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 enum TypeMsg { msg, error }
@@ -182,6 +182,10 @@ DateTime processDateFromAPI(String date) {
 
 DateTime processDateFromAPIWithoutHour(String date) {
   return DateTime.parse(date);
+}
+
+String formatDate(DateTime date) {
+  return "${date.day.toString().padLeft(2, "0")}/${date.month.toString().padLeft(2, "0")}/${date.year} - ${date.hour.toString().padLeft(2, "0")}h${date.minute.toString().padLeft(2, "0")}";
 }
 
 String formatDates(DateTime dateStart, DateTime dateEnd, bool allDay) {
@@ -487,7 +491,7 @@ String getTitanURL() {
     case "alpha":
       return "https://titan.dev.eclair.ec-lyon.fr";
     case "prod":
-      return "https://myecl.fr";
+      return "https://myemapp.fr";
     default:
       throw StateError("Invalid app flavor");
   }
@@ -507,7 +511,7 @@ String getTitanURLScheme() {
 }
 
 String getTitanPackageName() {
-  return "fr.myecl.${getTitanURLScheme()}";
+  return "fr.myemapp.${getTitanURLScheme()}";
 }
 
 String getTitanLogo() {

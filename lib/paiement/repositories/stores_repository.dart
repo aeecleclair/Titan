@@ -1,16 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/paiement/class/history.dart';
-import 'package:myecl/paiement/class/qr_code_data.dart';
-import 'package:myecl/paiement/class/store.dart';
-import 'package:myecl/paiement/class/transaction.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/paiement/class/history.dart';
+import 'package:myemapp/paiement/class/qr_code_data.dart';
+import 'package:myemapp/paiement/class/store.dart';
+import 'package:myemapp/paiement/class/transaction.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/repository/repository.dart';
 
 class StoresRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = 'myeclpay/stores';
+  final ext = 'myemapppay/stores';
 
   Future<bool> updateStore(Store store) async {
     return await update(store.toJson(), "/${store.id}");

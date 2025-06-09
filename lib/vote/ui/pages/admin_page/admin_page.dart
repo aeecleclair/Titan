@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/contender_list_provider.dart';
-import 'package:myecl/vote/providers/result_provider.dart';
-import 'package:myecl/vote/providers/sections_contender_provider.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/providers/show_graph_provider.dart';
-import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
-import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/pages/admin_page/admin_button.dart';
-import 'package:myecl/vote/ui/pages/admin_page/section_bar.dart';
-import 'package:myecl/vote/ui/pages/admin_page/section_contender_items.dart';
-import 'package:myecl/vote/ui/pages/admin_page/vote_bars.dart';
-import 'package:myecl/vote/ui/pages/admin_page/vote_count.dart';
-import 'package:myecl/vote/ui/pages/admin_page/voters_bar.dart';
-import 'package:myecl/vote/ui/vote.dart';
+import 'package:myemapp/tools/constants.dart';
+import 'package:myemapp/tools/ui/layouts/card_layout.dart';
+import 'package:myemapp/tools/ui/widgets/align_left_text.dart';
+import 'package:myemapp/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/ui/layouts/refresher.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/tools/ui/builders/waiting_button.dart';
+import 'package:myemapp/user/providers/user_list_provider.dart';
+import 'package:myemapp/vote/class/contender.dart';
+import 'package:myemapp/vote/providers/contender_list_provider.dart';
+import 'package:myemapp/vote/providers/result_provider.dart';
+import 'package:myemapp/vote/providers/sections_contender_provider.dart';
+import 'package:myemapp/vote/providers/sections_provider.dart';
+import 'package:myemapp/vote/providers/show_graph_provider.dart';
+import 'package:myemapp/vote/providers/status_provider.dart';
+import 'package:myemapp/vote/repositories/status_repository.dart';
+import 'package:myemapp/vote/tools/constants.dart';
+import 'package:myemapp/vote/ui/pages/admin_page/admin_button.dart';
+import 'package:myemapp/vote/ui/pages/admin_page/section_bar.dart';
+import 'package:myemapp/vote/ui/pages/admin_page/section_contender_items.dart';
+import 'package:myemapp/vote/ui/pages/admin_page/vote_bars.dart';
+import 'package:myemapp/vote/ui/pages/admin_page/vote_count.dart';
+import 'package:myemapp/vote/ui/pages/admin_page/voters_bar.dart';
+import 'package:myemapp/vote/ui/vote.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
@@ -402,8 +401,8 @@ class AdminPage extends HookConsumerWidget {
                                           ),
                                           margin: const EdgeInsets.all(0),
                                           colors: const [
-                                            AMAPColorConstants.redGradient1,
-                                            AMAPColorConstants.redGradient2,
+                                            // AMAPColorConstants.redGradient1,
+                                            // AMAPColorConstants.redGradient2,
                                           ],
                                           borderColor: Colors.white,
                                           child: child,
@@ -479,8 +478,8 @@ class AdminPage extends HookConsumerWidget {
                                           ),
                                           margin: const EdgeInsets.all(0),
                                           colors: const [
-                                            AMAPColorConstants.redGradient1,
-                                            AMAPColorConstants.redGradient2,
+                                            // AMAPColorConstants.redGradient1,
+                                            // AMAPColorConstants.redGradient2,
                                           ],
                                           borderColor: Colors.white,
                                           child: child,

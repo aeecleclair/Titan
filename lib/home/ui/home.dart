@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
-import 'package:myecl/event/providers/sorted_event_list_provider.dart';
-import 'package:myecl/home/router.dart';
-import 'package:myecl/home/tools/constants.dart';
-import 'package:myecl/home/ui/day_list.dart';
-import 'package:myecl/home/ui/days_event.dart';
-import 'package:myecl/home/ui/month_bar.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/ui/widgets/top_bar.dart';
+import 'package:myemapp/event/providers/confirmed_event_list_provider.dart';
+import 'package:myemapp/event/providers/sorted_event_list_provider.dart';
+import 'package:myemapp/home/router.dart';
+import 'package:myemapp/home/tools/constants.dart';
+import 'package:myemapp/home/ui/day_list.dart';
+import 'package:myemapp/home/ui/days_event.dart';
+import 'package:myemapp/home/ui/month_bar.dart';
+import 'package:myemapp/tools/ui/widgets/align_left_text.dart';
+import 'package:myemapp/tools/ui/layouts/refresher.dart';
+import 'package:myemapp/tools/ui/widgets/top_bar.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({super.key});

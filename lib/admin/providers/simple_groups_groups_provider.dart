@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/group.dart';
-import 'package:myecl/admin/providers/group_list_provider.dart';
-import 'package:myecl/tools/providers/map_provider.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myemapp/admin/class/group.dart';
+import 'package:myemapp/admin/providers/group_list_provider.dart';
+import 'package:myemapp/tools/providers/map_provider.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
 
 class SimpleGroupsGroupsNotifier extends MapNotifier<String, Group> {
   SimpleGroupsGroupsNotifier();

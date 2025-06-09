@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/user/class/simple_users.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
-import 'package:myecl/user/repositories/user_list_repository.dart';
+import 'package:myemapp/admin/class/simple_group.dart';
+import 'package:myemapp/user/class/simple_users.dart';
+import 'package:myemapp/user/providers/user_list_provider.dart';
+import 'package:myemapp/user/repositories/user_list_repository.dart';
 
 class MockUserListRepository extends Mock implements UserListRepository {}
 

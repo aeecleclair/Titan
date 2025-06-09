@@ -2,8 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/paiement/class/user_store.dart';
-import 'package:myecl/paiement/providers/selected_store_provider.dart';
+import 'package:myemapp/paiement/class/user_store.dart';
+import 'package:myemapp/paiement/providers/selected_store_provider.dart';
 
 class StoreSellerCard extends ConsumerWidget {
   final UserStore store;

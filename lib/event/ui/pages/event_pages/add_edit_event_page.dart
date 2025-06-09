@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/room_list_provider.dart';
-import 'package:myecl/event/ui/event.dart';
-import 'package:myecl/event/ui/pages/event_pages/checkbox_entry.dart';
-import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/event_provider.dart';
-import 'package:myecl/event/providers/selected_days_provider.dart';
-import 'package:myecl/event/providers/user_event_list_provider.dart';
-import 'package:myecl/event/tools/constants.dart';
-import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/date_entry.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:myemapp/event/ui/event.dart';
+import 'package:myemapp/event/ui/pages/event_pages/checkbox_entry.dart';
+import 'package:myemapp/event/class/event.dart';
+import 'package:myemapp/event/providers/event_provider.dart';
+import 'package:myemapp/event/providers/selected_days_provider.dart';
+import 'package:myemapp/event/providers/user_event_list_provider.dart';
+import 'package:myemapp/event/tools/constants.dart';
+import 'package:myemapp/event/tools/functions.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myemapp/tools/ui/widgets/align_left_text.dart';
+import 'package:myemapp/tools/ui/widgets/date_entry.dart';
+import 'package:myemapp/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myemapp/tools/ui/layouts/item_chip.dart';
+import 'package:myemapp/tools/ui/builders/waiting_button.dart';
+import 'package:myemapp/tools/ui/widgets/text_entry.dart';
+import 'package:myemapp/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -35,8 +32,6 @@ class AddEditEventPage extends HookConsumerWidget {
     final now = DateTime.now();
     final user = ref.watch(userProvider);
     final event = ref.watch(eventProvider);
-    final eventNotifier = ref.watch(eventProvider.notifier);
-    final rooms = ref.watch(roomListProvider);
     final isEdit = event.id != Event.empty().id;
     final key = GlobalKey<FormState>();
     final eventListNotifier = ref.watch(eventEventListProvider.notifier);
@@ -333,46 +328,14 @@ class AddEditEventPage extends HookConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  isRoom.value
-                      ? SizedBox(
-                          height: 59,
-                          child: AsyncChild(
-                            value: rooms,
-                            builder: (context, rooms) =>
-                                HorizontalListView.builder(
-                                  key: eventRoomScrollKey,
-                                  height: 40,
-                                  items: rooms,
-                                  itemBuilder: (context, room, index) {
-                                    final selected =
-                                        room.name == event.location;
-                                    return ItemChip(
-                                      onTap: () {
-                                        eventNotifier.setRoom(room.name);
-                                        location.text = room.name;
-                                      },
-                                      selected: selected,
-                                      child: Text(
-                                        room.name,
-                                        style: TextStyle(
-                                          color: selected
-                                              ? Colors.white
-                                              : Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                          ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
-                          child: TextEntry(
-                            controller: location,
-                            label: EventTextConstants.location,
-                          ),
-                        ),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: TextEntry(
+                      controller: location,
+                      label: EventTextConstants.location,
+                    ),
+                  ),
                   const SizedBox(height: 30),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),

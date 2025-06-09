@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/repository/logo_repository.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/tools/repository/logo_repository.dart';
 
 class ProfilePictureRepository extends LogoRepository {
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/vote/repositories/section_vote_count_repository.dart';
+import 'package:myemapp/tools/providers/single_notifier.dart';
+import 'package:myemapp/vote/repositories/section_vote_count_repository.dart';
 
 class SectionVoteCountNotifier extends SingleNotifier<int> {
   final SectionVoteCountRepository repository;

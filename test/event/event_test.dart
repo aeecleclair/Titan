@@ -1,11 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/repositories/event_repository.dart';
-import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/applicant.dart';
+import 'package:myemapp/event/class/event.dart';
+import 'package:myemapp/event/repositories/event_repository.dart';
+import 'package:myemapp/event/tools/functions.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/user/class/applicant.dart';
 
 class MockEventRepository extends Mock implements EventRepository {}
 

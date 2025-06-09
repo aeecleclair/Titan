@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
-import 'package:myecl/phonebook/ui/pages/admin_page/edition_button.dart';
+import 'package:myemapp/phonebook/class/association.dart';
+import 'package:myemapp/phonebook/ui/pages/admin_page/delete_button.dart';
+import 'package:myemapp/phonebook/ui/pages/admin_page/edition_button.dart';
 
 class EditableAssociationCard extends HookConsumerWidget {
   final Association association;

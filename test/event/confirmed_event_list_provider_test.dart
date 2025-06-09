@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
-import 'package:myecl/event/repositories/event_repository.dart';
+import 'package:myemapp/event/class/event.dart';
+import 'package:myemapp/event/providers/confirmed_event_list_provider.dart';
+import 'package:myemapp/event/repositories/event_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockEventRepository extends Mock implements EventRepository {}

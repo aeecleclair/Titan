@@ -1,4 +1,8 @@
 class EventTextConstants {
+  static const String decline = "Refuser";
+  static const String declineEvent = "Refuser l'événement ?";
+  static const String confirmEvent = "Confirmer l'événement ?";
+  static const String confirm = "Confirmer";
   static const String add = "Ajouter";
   static const String addEvent = "Ajouter un événement";
   static const String addedEvent = "Événement ajouté";

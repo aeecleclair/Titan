@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/ui/components/item_card_ui.dart';
-import 'package:myecl/admin/ui/pages/structure_page/structure_button.dart';
-import 'package:myecl/paiement/class/structure.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myemapp/admin/ui/components/item_card_ui.dart';
+import 'package:myemapp/admin/ui/pages/structure_page/structure_button.dart';
+import 'package:myemapp/paiement/class/structure.dart';
+import 'package:myemapp/tools/constants.dart';
+import 'package:myemapp/tools/ui/builders/waiting_button.dart';
 
 class StructureUi extends HookConsumerWidget {
   final Structure group;

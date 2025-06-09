@@ -1,4 +1,4 @@
-import 'package:myecl/tools/functions.dart';
+import 'package:myemapp/tools/functions.dart';
 
 class QrCodeData {
   final String id;

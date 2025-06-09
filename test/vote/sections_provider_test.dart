@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/vote/class/section.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/repositories/section_repository.dart';
+import 'package:myemapp/vote/class/section.dart';
+import 'package:myemapp/vote/providers/sections_provider.dart';
+import 'package:myemapp/vote/repositories/section_repository.dart';
 
 class MockSectionRepository extends Mock implements SectionRepository {}
 

@@ -1,8 +1,8 @@
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/tools/functions.dart';
-import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/applicant.dart';
+import 'package:myemapp/event/tools/functions.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/user/class/applicant.dart';
+
+enum Decision { approved, declined, pending }
 
 enum CalendarEventType {
   eventAE,

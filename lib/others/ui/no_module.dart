@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/module_root_list_provider.dart';
-import 'package:myecl/others/tools/constants.dart';
-import 'package:myecl/tools/providers/path_forwarding_provider.dart';
+import 'package:myemapp/admin/providers/module_root_list_provider.dart';
+import 'package:myemapp/others/tools/constants.dart';
+import 'package:myemapp/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class NoModulePage extends HookConsumerWidget {

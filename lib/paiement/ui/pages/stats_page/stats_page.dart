@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/providers/my_history_provider.dart';
-import 'package:myecl/paiement/ui/pages/stats_page/month_bar.dart';
-import 'package:myecl/paiement/ui/pages/stats_page/sum_up_chart.dart';
-import 'package:myecl/paiement/ui/pages/stats_page/transactions_detail.dart';
-import 'package:myecl/paiement/ui/paiement.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myemapp/paiement/providers/my_history_provider.dart';
+import 'package:myemapp/paiement/ui/pages/stats_page/month_bar.dart';
+import 'package:myemapp/paiement/ui/pages/stats_page/sum_up_chart.dart';
+import 'package:myemapp/paiement/ui/pages/stats_page/transactions_detail.dart';
+import 'package:myemapp/paiement/ui/paiement.dart';
+import 'package:myemapp/tools/ui/layouts/refresher.dart';
 
 class StatsPage extends HookConsumerWidget {
   const StatsPage({super.key});

@@ -1,5 +1,5 @@
-import 'package:myecl/admin/class/association_membership_simple.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:myemapp/admin/class/association_membership_simple.dart';
+import 'package:myemapp/user/class/simple_users.dart';
 
 class Structure {
   final String name;

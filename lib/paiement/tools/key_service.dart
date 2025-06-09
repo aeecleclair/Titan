@@ -6,7 +6,7 @@ class KeyService {
     aOptions: AndroidOptions(encryptedSharedPreferences: true),
     iOptions: IOSOptions(
       // A service name is required for iOS KeyChain
-      accountName: 'fr.titan.myecl',
+      accountName: 'fr.titan.myemapp',
     ),
   );
   final algorithm = Ed25519();

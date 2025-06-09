@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/class/seller.dart';
-import 'package:myecl/paiement/providers/new_admin_provider.dart';
-import 'package:myecl/paiement/providers/selected_store_provider.dart';
-import 'package:myecl/paiement/providers/seller_rights_list_providder.dart';
-import 'package:myecl/paiement/providers/store_sellers_list_provider.dart';
-import 'package:myecl/paiement/ui/pages/store_admin_page/right_check_box.dart';
-import 'package:myecl/paiement/ui/pages/store_admin_page/seller_right_dialog.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/user/class/simple_users.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:myemapp/paiement/class/seller.dart';
+import 'package:myemapp/paiement/providers/new_admin_provider.dart';
+import 'package:myemapp/paiement/providers/selected_store_provider.dart';
+import 'package:myemapp/paiement/providers/seller_rights_list_providder.dart';
+import 'package:myemapp/paiement/providers/store_sellers_list_provider.dart';
+import 'package:myemapp/paiement/ui/pages/store_admin_page/right_check_box.dart';
+import 'package:myemapp/paiement/ui/pages/store_admin_page/seller_right_dialog.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/tools/ui/builders/async_child.dart';
+import 'package:myemapp/tools/ui/builders/waiting_button.dart';
+import 'package:myemapp/user/class/simple_users.dart';
+import 'package:myemapp/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
   final TextEditingController queryController;

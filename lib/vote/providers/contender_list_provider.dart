@@ -1,9 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/repositories/contender_repository.dart';
-import 'package:myecl/vote/tools/functions.dart';
+import 'package:myemapp/tools/providers/list_notifier.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/vote/class/contender.dart';
+import 'package:myemapp/vote/repositories/contender_repository.dart';
+import 'package:myemapp/vote/tools/functions.dart';
 
 class ContenderListNotifier extends ListNotifier<Contender> {
   final ContenderRepository contenderRepository;

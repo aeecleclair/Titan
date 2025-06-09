@@ -2,16 +2,16 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/contender_provider.dart';
-import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
-import 'package:myecl/vote/router.dart';
-import 'package:myecl/vote/ui/components/contender_logo.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/ui/layouts/card_button.dart';
+import 'package:myemapp/tools/ui/layouts/card_layout.dart';
+import 'package:myemapp/tools/ui/builders/waiting_button.dart';
+import 'package:myemapp/vote/class/contender.dart';
+import 'package:myemapp/vote/providers/contender_provider.dart';
+import 'package:myemapp/vote/providers/status_provider.dart';
+import 'package:myemapp/vote/repositories/status_repository.dart';
+import 'package:myemapp/vote/router.dart';
+import 'package:myemapp/vote/ui/components/contender_logo.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ContenderCard extends HookConsumerWidget {

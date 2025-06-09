@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
-import 'package:myecl/vote/class/section.dart';
-import 'package:myecl/vote/providers/sections_contender_provider.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/vote.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myemapp/tools/ui/widgets/align_left_text.dart';
+import 'package:myemapp/tools/ui/builders/waiting_button.dart';
+import 'package:myemapp/tools/ui/widgets/text_entry.dart';
+import 'package:myemapp/vote/class/section.dart';
+import 'package:myemapp/vote/providers/sections_contender_provider.dart';
+import 'package:myemapp/vote/providers/sections_provider.dart';
+import 'package:myemapp/vote/tools/constants.dart';
+import 'package:myemapp/vote/ui/vote.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddSectionPage extends HookConsumerWidget {

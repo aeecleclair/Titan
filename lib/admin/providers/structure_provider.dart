@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/class/structure.dart';
+import 'package:myemapp/paiement/class/structure.dart';
 
 class StructureNotifier extends StateNotifier<Structure> {
   StructureNotifier() : super(Structure.empty());

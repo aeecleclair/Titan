@@ -1,15 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/user_association_membership.dart';
-import 'package:myecl/admin/providers/association_membership_members_list_provider.dart';
-import 'package:myecl/admin/providers/user_association_membership_provider.dart';
-import 'package:myecl/admin/router.dart';
-import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
-import 'package:myecl/phonebook/ui/pages/admin_page/edition_button.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myemapp/admin/class/user_association_membership.dart';
+import 'package:myemapp/admin/providers/association_membership_members_list_provider.dart';
+import 'package:myemapp/admin/providers/user_association_membership_provider.dart';
+import 'package:myemapp/admin/router.dart';
+import 'package:myemapp/phonebook/ui/pages/admin_page/delete_button.dart';
+import 'package:myemapp/phonebook/ui/pages/admin_page/edition_button.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/phonebook/tools/constants.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberEditableCard extends HookConsumerWidget {

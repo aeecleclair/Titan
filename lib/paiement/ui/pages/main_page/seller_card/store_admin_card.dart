@@ -2,9 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/providers/my_structures_provider.dart';
-import 'package:myecl/paiement/providers/selected_structure_provider.dart';
-import 'package:myecl/paiement/router.dart';
+import 'package:myemapp/paiement/providers/my_structures_provider.dart';
+import 'package:myemapp/paiement/providers/selected_structure_provider.dart';
+import 'package:myemapp/paiement/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class StoreAdminCard extends ConsumerWidget {

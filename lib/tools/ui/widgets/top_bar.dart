@@ -2,10 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/class/top_bar_callback.dart';
-import 'package:myecl/drawer/providers/animation_provider.dart';
-import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/drawer/providers/top_bar_callback_provider.dart';
+import 'package:myemapp/drawer/class/top_bar_callback.dart';
+import 'package:myemapp/drawer/providers/animation_provider.dart';
+import 'package:myemapp/drawer/providers/swipe_provider.dart';
+import 'package:myemapp/drawer/providers/top_bar_callback_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class TopBar extends HookConsumerWidget {

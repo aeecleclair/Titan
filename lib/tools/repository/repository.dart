@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:myecl/tools/cache/cache_manager.dart';
-import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/logs/logger.dart';
+import 'package:myemapp/tools/cache/cache_manager.dart';
+import 'package:myemapp/tools/exception.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/logs/logger.dart';
 
 abstract class Repository {
   static final String host = getTitanHost();

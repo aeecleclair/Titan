@@ -3,8 +3,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/admin/providers/group_logo_provider.dart';
-import 'package:myecl/admin/repositories/group_logo_repository.dart';
+import 'package:myemapp/admin/providers/group_logo_provider.dart';
+import 'package:myemapp/admin/repositories/group_logo_repository.dart';
 
 class MockGroupLogoRepository extends Mock implements GroupLogoRepository {}
 

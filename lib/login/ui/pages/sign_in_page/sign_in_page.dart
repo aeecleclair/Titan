@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/login/router.dart';
-import 'package:myecl/login/tools/constants.dart';
-import 'package:myecl/login/ui/auth_page.dart';
-import 'package:myecl/login/ui/components/sign_in_up_bar.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/providers/path_forwarding_provider.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/login/router.dart';
+import 'package:myemapp/login/tools/constants.dart';
+import 'package:myemapp/login/ui/auth_page.dart';
+import 'package:myemapp/login/ui/components/sign_in_up_bar.dart';
+import 'package:myemapp/tools/constants.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SignIn extends HookConsumerWidget {

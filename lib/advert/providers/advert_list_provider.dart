@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/advert/class/advert.dart';
-import 'package:myecl/advert/repositories/advert_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/advert/class/advert.dart';
+import 'package:myemapp/advert/repositories/advert_repository.dart';
+import 'package:myemapp/tools/providers/list_notifier.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
 
 class AdvertListNotifier extends ListNotifier<Advert> {
   AdvertRepository repository = AdvertRepository();

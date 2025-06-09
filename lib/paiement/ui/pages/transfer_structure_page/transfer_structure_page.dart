@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/ui/pages/transfer_structure_page/search_result.dart';
-import 'package:myecl/paiement/ui/paiement.dart';
-import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:myemapp/paiement/ui/pages/transfer_structure_page/search_result.dart';
+import 'package:myemapp/paiement/ui/paiement.dart';
+import 'package:myemapp/tools/ui/widgets/styled_search_bar.dart';
+import 'package:myemapp/user/providers/user_list_provider.dart';
 
 class TransferStructurePage extends HookConsumerWidget {
   const TransferStructurePage({super.key});

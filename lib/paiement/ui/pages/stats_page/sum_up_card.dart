@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/paiement/ui/pages/stats_page/description_shape.dart';
+import 'package:myemapp/paiement/ui/pages/stats_page/description_shape.dart';
 
 class SumUpCard extends StatelessWidget {
   final String title;

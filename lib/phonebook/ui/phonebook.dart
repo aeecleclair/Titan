@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/providers/association_kind_provider.dart';
-import 'package:myecl/phonebook/router.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/tools/ui/widgets/top_bar.dart';
+import 'package:myemapp/phonebook/providers/association_kind_provider.dart';
+import 'package:myemapp/phonebook/router.dart';
+import 'package:myemapp/phonebook/tools/constants.dart';
+import 'package:myemapp/tools/ui/widgets/top_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PhonebookTemplate extends HookConsumerWidget {

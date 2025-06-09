@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/all_groups_list_provider.dart';
-import 'package:myecl/admin/providers/association_membership_list_provider.dart';
-import 'package:myecl/admin/providers/association_membership_provider.dart';
-import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myemapp/admin/providers/all_groups_list_provider.dart';
+import 'package:myemapp/admin/providers/association_membership_list_provider.dart';
+import 'package:myemapp/admin/providers/association_membership_provider.dart';
+import 'package:myemapp/admin/tools/constants.dart';
+import 'package:myemapp/tools/constants.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/tools/ui/builders/waiting_button.dart';
+import 'package:myemapp/tools/ui/layouts/add_edit_button_layout.dart';
 
 class AssociationMembershipInformationEditor extends HookConsumerWidget {
   final scrollKey = GlobalKey();

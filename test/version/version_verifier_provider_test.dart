@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/version/class/version.dart';
-import 'package:myecl/version/providers/version_verifier_provider.dart';
-import 'package:myecl/version/repositories/version_repository.dart';
+import 'package:myemapp/version/class/version.dart';
+import 'package:myemapp/version/providers/version_verifier_provider.dart';
+import 'package:myemapp/version/repositories/version_repository.dart';
 
 class MockVersionRepository extends Mock implements VersionRepository {}
 

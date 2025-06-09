@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/event_provider.dart';
+import 'package:myemapp/event/class/event.dart';
+import 'package:myemapp/event/providers/event_provider.dart';
 
 void main() {
   group('EventNotifier', () {

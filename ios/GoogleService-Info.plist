@@ -13,11 +13,11 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>fr.myecl.titan.alpha</string>
+	<string>fr.myemapp.titan.alpha</string>
 	<key>PROJECT_ID</key>
-	<string>myecl-eclair</string>
+	<string>myemapp-eclair</string>
 	<key>STORAGE_BUCKET</key>
-	<string>myecl-eclair.appspot.com</string>
+	<string>myemapp-eclair.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>

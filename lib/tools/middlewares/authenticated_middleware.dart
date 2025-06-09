@@ -1,13 +1,13 @@
 // ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/login/router.dart';
-import 'package:myecl/router.dart';
-import 'package:myecl/settings/providers/module_list_provider.dart';
-import 'package:myecl/tools/providers/path_forwarding_provider.dart';
-import 'package:myecl/version/providers/titan_version_provider.dart';
-import 'package:myecl/version/providers/version_verifier_provider.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/login/router.dart';
+import 'package:myemapp/router.dart';
+import 'package:myemapp/settings/providers/module_list_provider.dart';
+import 'package:myemapp/tools/providers/path_forwarding_provider.dart';
+import 'package:myemapp/version/providers/titan_version_provider.dart';
+import 'package:myemapp/version/providers/version_verifier_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AuthenticatedMiddleware extends QMiddleware {

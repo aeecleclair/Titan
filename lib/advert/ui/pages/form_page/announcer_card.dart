@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/admin/class/simple_group.dart';
+import 'package:myemapp/admin/class/simple_group.dart';
 
 class AnnouncerCard extends StatelessWidget {
   final SimpleGroup e;

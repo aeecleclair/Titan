@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/tos.dart';
-import 'package:myecl/paiement/repositories/tos_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myemapp/paiement/class/tos.dart';
+import 'package:myemapp/paiement/repositories/tos_repository.dart';
+import 'package:myemapp/tools/providers/single_notifier.dart';
 
 class TOSNotifier extends SingleNotifier<TOS> {
   final TosRepository tosRepository;

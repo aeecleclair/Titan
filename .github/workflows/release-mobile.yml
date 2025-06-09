@@ -114,11 +114,11 @@ jobs:
       - name: Create the Keystore
         if: matrix.name == 'AAB'
         run: |
-          echo $KEYSTORE_BASE64 | base64 -d > $RUNNER_TEMP/myecl.keystore
+          echo $KEYSTORE_BASE64 | base64 -d > $RUNNER_TEMP/myemapp.keystore
           echo storePassword=$STORE_PASSWORD >> android/key.properties
           echo keyPassword=$KEY_PASSWORD >> android/key.properties
           echo keyAlias=$KEY_ALIAS >> android/key.properties
-          echo storeFile=$RUNNER_TEMP/myecl.keystore >> android/key.properties
+          echo storeFile=$RUNNER_TEMP/myemapp.keystore >> android/key.properties
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}

@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/funding_url.dart';
-import 'package:myecl/paiement/class/init_info.dart';
-import 'package:myecl/paiement/repositories/funding_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myemapp/paiement/class/funding_url.dart';
+import 'package:myemapp/paiement/class/init_info.dart';
+import 'package:myemapp/paiement/repositories/funding_repository.dart';
+import 'package:myemapp/tools/providers/single_notifier.dart';
 
 class FundingUrlNotifier extends SingleNotifier<FundingUrl> {
   final FundingRepository fundingRepository;

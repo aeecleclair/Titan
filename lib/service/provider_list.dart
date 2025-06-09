@@ -1,21 +1,11 @@
-import 'package:myecl/admin/notification_service.dart';
-import 'package:myecl/advert/notification_service.dart';
-import 'package:myecl/amap/notification_service.dart';
-import 'package:myecl/booking/notification_service.dart';
-import 'package:myecl/event/notification_service.dart';
-import 'package:myecl/loan/notification_service.dart';
-import 'package:myecl/ph/notification_service.dart';
-import 'package:myecl/raffle/notification_service.dart';
-import 'package:myecl/vote/notification_service.dart';
+import 'package:myemapp/admin/notification_service.dart';
+import 'package:myemapp/advert/notification_service.dart';
+import 'package:myemapp/event/notification_service.dart';
+import 'package:myemapp/vote/notification_service.dart';
 
 final providers = {
   "admin": adminProviders,
   "advert": advertProviders,
-  "amap": amapProviders,
-  "booking": bookingProviders,
   "event": eventProviders,
-  "loan": loanProviders,
-  "raffle": raffleProviders,
   "vote": voteProviders,
-  "ph": phProviders,
 };

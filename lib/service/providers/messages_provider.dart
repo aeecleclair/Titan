@@ -1,9 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/service/class/message.dart';
-import 'package:myecl/service/providers/firebase_token_provider.dart';
-import 'package:myecl/service/repositories/notification_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/service/class/message.dart';
+import 'package:myemapp/service/providers/firebase_token_provider.dart';
+import 'package:myemapp/service/repositories/notification_repository.dart';
+import 'package:myemapp/tools/providers/list_notifier.dart';
 
 class MessagesProvider extends ListNotifier<Message> {
   final NotificationRepository notificationRepository =

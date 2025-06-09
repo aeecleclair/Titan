@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/login/providers/animation_provider.dart';
-import 'package:myecl/login/router.dart';
-import 'package:myecl/login/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/providers/path_forwarding_provider.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/login/providers/animation_provider.dart';
+import 'package:myemapp/login/router.dart';
+import 'package:myemapp/login/tools/constants.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/providers/path_forwarding_provider.dart';
+import 'package:myemapp/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LeftPanel extends HookConsumerWidget {

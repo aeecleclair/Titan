@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/admin/repositories/account_type_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myemapp/admin/class/account_type.dart';
+import 'package:myemapp/admin/repositories/account_type_repository.dart';
+import 'package:myemapp/tools/providers/list_notifier.dart';
 
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
 
 class AccountTypesNotifier extends ListNotifier<AccountType> {
   final AccountTypeRepository accountTypeRepository;

@@ -1,6 +1,7 @@
 import 'dart:math';
 
-import 'package:myecl/event/class/event.dart';
+import 'package:myemapp/event/class/event.dart';
+import 'package:myemapp/event/tools/constants.dart';
 
 String calendarEventTypeToString(CalendarEventType type) {
   switch (type) {
@@ -18,6 +19,30 @@ String calendarEventTypeToString(CalendarEventType type) {
       return "Rewass";
     case CalendarEventType.other:
       return "Autre";
+  }
+}
+
+Decision stringToDecision(String s) {
+  switch (s) {
+    case "approved":
+      return Decision.approved;
+    case "declined":
+      return Decision.declined;
+    case "pending":
+      return Decision.pending;
+    default:
+      return Decision.pending;
+  }
+}
+
+String decisionToString(Decision d) {
+  switch (d) {
+    case Decision.approved:
+      return EventTextConstants.confirmed;
+    case Decision.declined:
+      return EventTextConstants.declined;
+    case Decision.pending:
+      return EventTextConstants.pending;
   }
 }
 

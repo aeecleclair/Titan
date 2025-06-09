@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/is_connected_provider.dart';
-import 'package:myecl/home/router.dart';
-import 'package:myecl/others/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:myemapp/auth/providers/is_connected_provider.dart';
+import 'package:myemapp/home/router.dart';
+import 'package:myemapp/others/tools/constants.dart';
+import 'package:myemapp/tools/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class NoInternetPage extends HookConsumerWidget {

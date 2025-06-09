@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/paiement/class/create_device.dart';
-import 'package:myecl/paiement/class/wallet_device.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/paiement/class/create_device.dart';
+import 'package:myemapp/paiement/class/wallet_device.dart';
+import 'package:myemapp/tools/repository/repository.dart';
 
 class DevicesRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = 'myeclpay/users/me/wallet/devices';
+  final ext = 'myemapppay/users/me/wallet/devices';
 
   Future<WalletDevice> registerDevice(CreateDevice body) async {
     return WalletDevice.fromJson(await create(body.toJson()));

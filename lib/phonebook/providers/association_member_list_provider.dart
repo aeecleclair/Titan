@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/membership.dart';
-import 'package:myecl/phonebook/providers/association_provider.dart';
-import 'package:myecl/phonebook/repositories/association_member_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/phonebook/class/complete_member.dart';
+import 'package:myemapp/phonebook/class/membership.dart';
+import 'package:myemapp/phonebook/providers/association_provider.dart';
+import 'package:myemapp/phonebook/repositories/association_member_repository.dart';
+import 'package:myemapp/tools/providers/list_notifier.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
 
 class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
   final AssociationMemberRepository associationMemberRepository =

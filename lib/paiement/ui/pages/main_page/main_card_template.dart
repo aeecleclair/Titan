@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
+import 'package:myemapp/paiement/ui/pages/main_page/main_card_button.dart';
 
 class MainCardTemplate extends StatelessWidget {
   final List<MainCardButton> actionButtons;

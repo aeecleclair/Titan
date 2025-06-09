@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/settings/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/logs/log.dart';
+import 'package:myemapp/settings/tools/constants.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/logs/log.dart';
 
 class LogCard extends StatelessWidget {
   final Log log;

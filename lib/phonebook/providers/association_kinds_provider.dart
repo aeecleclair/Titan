@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/phonebook/class/association_kinds.dart';
-import 'package:myecl/phonebook/repositories/association_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/phonebook/class/association_kinds.dart';
+import 'package:myemapp/phonebook/repositories/association_repository.dart';
+import 'package:myemapp/tools/providers/single_notifier.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
 
 class AssociationKindsNotifier extends SingleNotifier<AssociationKinds> {
   final AssociationRepository associationRepository = AssociationRepository();

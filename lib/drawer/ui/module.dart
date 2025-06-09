@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/drawer/providers/animation_provider.dart';
-import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/drawer/tools/constants.dart';
-import 'package:myecl/home/providers/scrolled_provider.dart';
-import 'package:myecl/home/router.dart';
-import 'package:myecl/tools/providers/path_forwarding_provider.dart';
+import 'package:myemapp/drawer/class/module.dart';
+import 'package:myemapp/drawer/providers/animation_provider.dart';
+import 'package:myemapp/drawer/providers/swipe_provider.dart';
+import 'package:myemapp/drawer/tools/constants.dart';
+import 'package:myemapp/home/providers/scrolled_provider.dart';
+import 'package:myemapp/home/router.dart';
+import 'package:myemapp/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ModuleUI extends HookConsumerWidget {

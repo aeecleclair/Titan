@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/user/class/simple_users.dart';
-import 'package:myecl/vote/class/members.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/class/result.dart';
-import 'package:myecl/vote/class/section.dart';
-import 'package:myecl/vote/class/votes.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
-import 'package:myecl/vote/tools/functions.dart';
+import 'package:myemapp/admin/class/account_type.dart';
+import 'package:myemapp/user/class/simple_users.dart';
+import 'package:myemapp/vote/class/members.dart';
+import 'package:myemapp/vote/class/contender.dart';
+import 'package:myemapp/vote/class/result.dart';
+import 'package:myemapp/vote/class/section.dart';
+import 'package:myemapp/vote/class/votes.dart';
+import 'package:myemapp/vote/repositories/status_repository.dart';
+import 'package:myemapp/vote/tools/functions.dart';
 
 void main() {
   group('Testing Member class', () {

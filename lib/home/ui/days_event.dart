@@ -2,13 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/event_provider.dart';
-import 'package:myecl/home/router.dart';
-import 'package:myecl/home/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myemapp/event/class/event.dart';
+import 'package:myemapp/event/providers/event_provider.dart';
+import 'package:myemapp/home/router.dart';
+import 'package:myemapp/home/tools/constants.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/ui/widgets/align_left_text.dart';
+import 'package:myemapp/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DaysEvent extends HookConsumerWidget {

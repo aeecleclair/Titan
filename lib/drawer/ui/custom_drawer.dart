@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/providers/is_web_format_provider.dart';
-import 'package:myecl/drawer/tools/constants.dart';
-import 'package:myecl/drawer/ui/bottom_bar.dart';
-import 'package:myecl/drawer/ui/fake_page.dart';
-import 'package:myecl/drawer/ui/list_module.dart';
-import 'package:myecl/drawer/ui/drawer_top_bar.dart';
+import 'package:myemapp/drawer/providers/is_web_format_provider.dart';
+import 'package:myemapp/drawer/tools/constants.dart';
+import 'package:myemapp/drawer/ui/bottom_bar.dart';
+import 'package:myemapp/drawer/ui/fake_page.dart';
+import 'package:myemapp/drawer/ui/list_module.dart';
+import 'package:myemapp/drawer/ui/drawer_top_bar.dart';
 
 class CustomDrawer extends HookConsumerWidget {
   const CustomDrawer({super.key});

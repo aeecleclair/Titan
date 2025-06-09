@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:myemapp/tools/exception.dart';
+import 'package:myemapp/tools/functions.dart';
 
 void main() {
   group('Testing AppException class', () {

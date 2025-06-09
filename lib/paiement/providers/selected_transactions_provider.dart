@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/class/history.dart';
-import 'package:myecl/paiement/providers/my_history_provider.dart';
+import 'package:myemapp/paiement/class/history.dart';
+import 'package:myemapp/paiement/providers/my_history_provider.dart';
 
 class SelectedTransactionsNotifier extends StateNotifier<List<History>> {
   SelectedTransactionsNotifier(super.history);

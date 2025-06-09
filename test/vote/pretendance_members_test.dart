@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/vote/class/members.dart';
-import 'package:myecl/vote/providers/contender_members.dart';
+import 'package:myemapp/vote/class/members.dart';
+import 'package:myemapp/vote/providers/contender_members.dart';
 
 void main() {
   group('ContenderMembersProvider', () {

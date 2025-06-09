@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myemapp/tools/exception.dart';
+import 'package:myemapp/tools/providers/single_notifier.dart';
 
 class MockData {}
 

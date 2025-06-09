@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/seller.dart';
-import 'package:myecl/paiement/repositories/store_sellers_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:myemapp/paiement/class/seller.dart';
+import 'package:myemapp/paiement/repositories/store_sellers_repository.dart';
+import 'package:myemapp/tools/providers/list_notifier.dart';
 
 class StoreSellerListNotifier extends ListNotifier<Seller> {
   final SellerStoreRepository sellerStoreRepository;

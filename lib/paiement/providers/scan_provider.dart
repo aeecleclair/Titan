@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/qr_code_data.dart';
-import 'package:myecl/paiement/class/transaction.dart';
-import 'package:myecl/paiement/repositories/stores_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myemapp/paiement/class/qr_code_data.dart';
+import 'package:myemapp/paiement/class/transaction.dart';
+import 'package:myemapp/paiement/repositories/stores_repository.dart';
+import 'package:myemapp/tools/providers/single_notifier.dart';
 
 class ScanNotifier extends SingleNotifier<Transaction> {
   final StoresRepository storesRepository;

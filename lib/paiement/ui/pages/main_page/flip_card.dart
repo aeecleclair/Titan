@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/providers/my_history_provider.dart';
-import 'package:myecl/paiement/providers/my_wallet_provider.dart';
+import 'package:myemapp/paiement/providers/my_history_provider.dart';
+import 'package:myemapp/paiement/providers/my_wallet_provider.dart';
 
 class FlipCard extends HookConsumerWidget {
   final Widget front;

@@ -1,17 +1,17 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/membership.dart';
-import 'package:myecl/phonebook/providers/member_pictures_provider.dart';
-import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
-import 'package:myecl/phonebook/router.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/providers/complete_member_provider.dart';
-import 'package:myecl/phonebook/tools/function.dart';
-import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myemapp/phonebook/class/association.dart';
+import 'package:myemapp/phonebook/class/complete_member.dart';
+import 'package:myemapp/phonebook/class/membership.dart';
+import 'package:myemapp/phonebook/providers/member_pictures_provider.dart';
+import 'package:myemapp/phonebook/providers/profile_picture_provider.dart';
+import 'package:myemapp/phonebook/router.dart';
+import 'package:myemapp/phonebook/tools/constants.dart';
+import 'package:myemapp/phonebook/providers/complete_member_provider.dart';
+import 'package:myemapp/phonebook/tools/function.dart';
+import 'package:myemapp/tools/ui/builders/auto_loader_child.dart';
+import 'package:myemapp/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberCard extends HookConsumerWidget {

@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/paiement/class/funding_url.dart';
-import 'package:myecl/paiement/class/init_info.dart';
-import 'package:myecl/paiement/class/transfert.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/paiement/class/funding_url.dart';
+import 'package:myemapp/paiement/class/init_info.dart';
+import 'package:myemapp/paiement/class/transfert.dart';
+import 'package:myemapp/tools/repository/repository.dart';
 
 class FundingRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = 'myeclpay/transfer/';
+  final ext = 'myemapppay/transfer/';
 
   Future getAdminPaymentUrl(Transfer transfer) async {
     return await create(transfer.toJson(), suffix: "admin");

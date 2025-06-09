@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:myemapp/tools/constants.dart';
+import 'package:myemapp/tools/ui/widgets/align_left_text.dart';
+import 'package:myemapp/tools/ui/widgets/text_entry.dart';
 
 class TextEditing extends StatelessWidget {
   final String label;

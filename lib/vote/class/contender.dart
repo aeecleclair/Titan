@@ -1,6 +1,6 @@
-import 'package:myecl/vote/class/members.dart';
-import 'package:myecl/vote/class/section.dart';
-import 'package:myecl/vote/tools/functions.dart';
+import 'package:myemapp/vote/class/members.dart';
+import 'package:myemapp/vote/class/section.dart';
+import 'package:myemapp/vote/tools/functions.dart';
 
 enum ListType { serious, fake, blank }
 

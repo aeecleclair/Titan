@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/admin/repositories/group_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/class/user.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:myemapp/admin/class/simple_group.dart';
+import 'package:myemapp/admin/repositories/group_repository.dart';
+import 'package:myemapp/tools/providers/list_notifier.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/user/class/user.dart';
+import 'package:myemapp/user/providers/user_provider.dart';
 
 class GroupListNotifier extends ListNotifier<SimpleGroup> {
   final GroupRepository groupRepository;

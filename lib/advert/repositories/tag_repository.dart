@@ -1,5 +1,5 @@
-import 'package:myecl/advert/class/tag.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:myemapp/advert/class/tag.dart';
+import 'package:myemapp/tools/repository/repository.dart';
 
 class TagRepository extends Repository {
   @override

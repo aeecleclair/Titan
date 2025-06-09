@@ -82,7 +82,7 @@ Titan supports [flavors](https://docs.flutter.dev/deployment/flavors), which all
 
 Titan includes 3 flavors: `dev`, `alpha`, `prod`. On VSCode, you can choose which flavor to use when launching the debugger
 
-Each flavor is associated with a specific app package name (`fr.myecl.titan.dev`, `fr.myecl.titan.alpha`, `fr.myecl.titan`) allowing the three app to be installed on the same device. Each flavor use its own Hyperion url defined in the [dotenv](/.env)
+Each flavor is associated with a specific app package name (`fr.myemapp.titan.dev`, `fr.myemapp.titan.alpha`, `fr.myemapp.titan`) allowing the three app to be installed on the same device. Each flavor use its own Hyperion url defined in the [dotenv](/.env)
 
 #### Build with a flavor
 

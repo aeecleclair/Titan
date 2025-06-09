@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/version/class/version.dart';
+import 'package:myemapp/tools/repository/repository.dart';
+import 'package:myemapp/version/class/version.dart';
 
 class VersionRepository extends Repository {
   @override

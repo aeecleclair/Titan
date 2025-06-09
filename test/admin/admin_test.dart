@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/admin/class/group.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/admin/repositories/group_repository.dart';
-import 'package:myecl/user/class/simple_users.dart';
-import 'package:myecl/user/class/user.dart';
+import 'package:myemapp/admin/class/account_type.dart';
+import 'package:myemapp/admin/class/group.dart';
+import 'package:myemapp/admin/class/simple_group.dart';
+import 'package:myemapp/admin/repositories/group_repository.dart';
+import 'package:myemapp/user/class/simple_users.dart';
+import 'package:myemapp/user/class/user.dart';
 
 class MockGroupRepository extends Mock implements GroupRepository {}
 

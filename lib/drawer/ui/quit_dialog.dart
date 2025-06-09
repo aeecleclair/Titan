@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/drawer/providers/display_quit_popup.dart';
-import 'package:myecl/drawer/tools/constants.dart';
-import 'package:myecl/service/providers/firebase_token_expiration_provider.dart';
-import 'package:myecl/service/providers/messages_provider.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/drawer/providers/display_quit_popup.dart';
+import 'package:myemapp/drawer/tools/constants.dart';
+import 'package:myemapp/service/providers/firebase_token_expiration_provider.dart';
+import 'package:myemapp/service/providers/messages_provider.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/ui/widgets/custom_dialog_box.dart';
 
 class QuitDialog extends HookConsumerWidget {
   const QuitDialog({super.key});

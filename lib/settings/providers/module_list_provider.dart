@@ -1,24 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/advert/router.dart';
-import 'package:myecl/admin/providers/all_my_module_roots_list_provider.dart';
-import 'package:myecl/amap/router.dart';
-import 'package:myecl/booking/router.dart';
-import 'package:myecl/centralisation/router.dart';
-import 'package:myecl/cinema/router.dart';
-import 'package:myecl/drawer/class/module.dart';
+import 'package:myemapp/advert/router.dart';
+import 'package:myemapp/admin/providers/all_my_module_roots_list_provider.dart';
+import 'package:myemapp/drawer/class/module.dart';
 import 'package:collection/collection.dart';
-import 'package:myecl/event/router.dart';
-import 'package:myecl/home/router.dart';
-import 'package:myecl/loan/router.dart';
-import 'package:myecl/paiement/router.dart';
-import 'package:myecl/phonebook/router.dart';
-import 'package:myecl/ph/router.dart';
-import 'package:myecl/purchases/router.dart';
-import 'package:myecl/raffle/router.dart';
-import 'package:myecl/recommendation/router.dart';
-import 'package:myecl/seed-library/router.dart';
-import 'package:myecl/vote/router.dart';
+import 'package:myemapp/event/router.dart';
+import 'package:myemapp/home/router.dart';
+import 'package:myemapp/paiement/router.dart';
+import 'package:myemapp/phonebook/router.dart';
+import 'package:myemapp/vote/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
@@ -41,20 +31,10 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   List<Module> allModules = [
     HomeRouter.module,
     AdvertRouter.module,
-    AmapRouter.module,
-    BookingRouter.module,
-    CentralisationRouter.module,
-    CinemaRouter.module,
     EventRouter.module,
-    LoanRouter.module,
     PaymentRouter.module,
     PhonebookRouter.module,
-    PhRouter.module,
-    PurchasesRouter.module,
-    RaffleRouter.module,
-    RecommendationRouter.module,
     VoteRouter.module,
-    SeedLibraryRouter.module,
   ];
   ModulesNotifier() : super([]);
 

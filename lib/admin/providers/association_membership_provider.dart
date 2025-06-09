@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/association_membership_simple.dart';
+import 'package:myemapp/admin/class/association_membership_simple.dart';
 
 class AssociationMembershipNotifier
     extends StateNotifier<AssociationMembership> {

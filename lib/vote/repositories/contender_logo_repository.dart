@@ -2,9 +2,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/repository/logo_repository.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/repository/logo_repository.dart';
 
 class ContenderLogoRepository extends LogoRepository {
   @override

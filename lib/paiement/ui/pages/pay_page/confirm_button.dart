@@ -5,15 +5,15 @@ import 'package:intl/intl.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_darwin/local_auth_darwin.dart';
-import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/paiement/providers/key_service_provider.dart';
-import 'package:myecl/paiement/providers/my_history_provider.dart';
-import 'package:myecl/paiement/providers/my_wallet_provider.dart';
-import 'package:myecl/paiement/providers/pay_amount_provider.dart';
-import 'package:myecl/paiement/ui/pages/pay_page/info_card.dart';
-import 'package:myecl/paiement/ui/pages/pay_page/qr_code.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myemapp/event/tools/functions.dart';
+import 'package:myemapp/paiement/providers/key_service_provider.dart';
+import 'package:myemapp/paiement/providers/my_history_provider.dart';
+import 'package:myemapp/paiement/providers/my_wallet_provider.dart';
+import 'package:myemapp/paiement/providers/pay_amount_provider.dart';
+import 'package:myemapp/paiement/ui/pages/pay_page/info_card.dart';
+import 'package:myemapp/paiement/ui/pages/pay_page/qr_code.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/ui/layouts/add_edit_button_layout.dart';
 
 class ConfirmButton extends ConsumerWidget {
   const ConfirmButton({super.key});

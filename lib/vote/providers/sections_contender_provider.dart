@@ -1,10 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/providers/map_provider.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/class/section.dart';
-import 'package:myecl/vote/providers/contender_list_provider.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
+import 'package:myemapp/tools/providers/map_provider.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/vote/class/contender.dart';
+import 'package:myemapp/vote/class/section.dart';
+import 'package:myemapp/vote/providers/contender_list_provider.dart';
+import 'package:myemapp/vote/providers/sections_provider.dart';
 
 class SectionContender extends MapNotifier<Section, Contender> {
   SectionContender() : super();

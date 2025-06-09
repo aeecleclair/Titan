@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/class/qr_code_data.dart';
+import 'package:myemapp/paiement/class/qr_code_data.dart';
 
 class BarcodeNotifier extends StateNotifier<QrCodeData?> {
   BarcodeNotifier() : super(null);

@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/providers/association_kind_provider.dart';
-import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
-import 'package:myecl/phonebook/providers/association_list_provider.dart';
-import 'package:myecl/phonebook/providers/research_filter_provider.dart';
-import 'package:myecl/phonebook/tools/function.dart';
+import 'package:myemapp/phonebook/class/association.dart';
+import 'package:myemapp/phonebook/providers/association_kind_provider.dart';
+import 'package:myemapp/phonebook/providers/association_kinds_provider.dart';
+import 'package:myemapp/phonebook/providers/association_list_provider.dart';
+import 'package:myemapp/phonebook/providers/research_filter_provider.dart';
+import 'package:myemapp/phonebook/tools/function.dart';
 import 'package:diacritic/diacritic.dart';
 
 final associationFilteredListProvider = Provider<List<Association>>((ref) {

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/version/class/version.dart';
-import 'package:myecl/version/repositories/version_repository.dart';
+import 'package:myemapp/tools/providers/single_notifier.dart';
+import 'package:myemapp/version/class/version.dart';
+import 'package:myemapp/version/repositories/version_repository.dart';
 
 class VersionVerifierNotifier extends SingleNotifier<Version> {
   final VersionRepository versionRepository;

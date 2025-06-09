@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/providers/association_kind_provider.dart';
-import 'package:myecl/phonebook/providers/association_list_provider.dart';
-import 'package:myecl/phonebook/providers/association_provider.dart';
-import 'package:myecl/phonebook/router.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
-import 'package:myecl/phonebook/ui/phonebook.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:myemapp/admin/tools/constants.dart';
+import 'package:myemapp/phonebook/class/association.dart';
+import 'package:myemapp/phonebook/providers/association_kind_provider.dart';
+import 'package:myemapp/phonebook/providers/association_list_provider.dart';
+import 'package:myemapp/phonebook/providers/association_provider.dart';
+import 'package:myemapp/phonebook/router.dart';
+import 'package:myemapp/phonebook/tools/constants.dart';
+import 'package:myemapp/phonebook/ui/components/kinds_bar.dart';
+import 'package:myemapp/phonebook/ui/phonebook.dart';
+import 'package:myemapp/tools/constants.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/tools/ui/builders/waiting_button.dart';
+import 'package:myemapp/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myemapp/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AssociationCreationPage extends HookConsumerWidget {

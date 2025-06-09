@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/vote/providers/contender_logo_provider.dart';
-import 'package:myecl/vote/providers/contender_logos_provider.dart';
-import 'package:myecl/vote/providers/contender_provider.dart';
-import 'package:myecl/vote/ui/components/member_card.dart';
-import 'package:myecl/vote/ui/pages/admin_page/contender_card.dart';
-import 'package:myecl/vote/ui/vote.dart';
+import 'package:myemapp/tools/ui/widgets/align_left_text.dart';
+import 'package:myemapp/tools/ui/builders/async_child.dart';
+import 'package:myemapp/vote/providers/contender_logo_provider.dart';
+import 'package:myemapp/vote/providers/contender_logos_provider.dart';
+import 'package:myemapp/vote/providers/contender_provider.dart';
+import 'package:myemapp/vote/ui/components/member_card.dart';
+import 'package:myemapp/vote/ui/pages/admin_page/contender_card.dart';
+import 'package:myemapp/vote/ui/vote.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({super.key});

@@ -1,4 +1,4 @@
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:myemapp/user/class/simple_users.dart';
 
 class Seller {
   final String userId;

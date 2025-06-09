@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:myemapp/phonebook/tools/constants.dart';
+import 'package:myemapp/tools/functions.dart';
 
 class ElementField extends StatelessWidget {
   final String label;

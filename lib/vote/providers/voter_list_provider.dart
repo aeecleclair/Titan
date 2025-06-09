@@ -1,9 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/vote/class/voter.dart';
-import 'package:myecl/vote/repositories/voter_repository.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/tools/providers/list_notifier.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/vote/class/voter.dart';
+import 'package:myemapp/vote/repositories/voter_repository.dart';
 
 class VoterListNotifier extends ListNotifier<Voter> {
   final VoterRepository _voterRepository = VoterRepository();

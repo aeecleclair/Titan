@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/vote/providers/result_provider.dart';
-import 'package:myecl/vote/providers/scroll_controller_provider.dart';
-import 'package:myecl/vote/providers/sections_contender_provider.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/providers/voted_section_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
-import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/pages/main_page/contender_card.dart';
+import 'package:myemapp/tools/constants.dart';
+import 'package:myemapp/tools/ui/builders/async_child.dart';
+import 'package:myemapp/vote/providers/result_provider.dart';
+import 'package:myemapp/vote/providers/scroll_controller_provider.dart';
+import 'package:myemapp/vote/providers/sections_contender_provider.dart';
+import 'package:myemapp/vote/providers/sections_provider.dart';
+import 'package:myemapp/vote/providers/status_provider.dart';
+import 'package:myemapp/vote/providers/voted_section_provider.dart';
+import 'package:myemapp/vote/repositories/status_repository.dart';
+import 'package:myemapp/vote/tools/constants.dart';
+import 'package:myemapp/vote/ui/pages/main_page/contender_card.dart';
 
 class ListContenderCard extends HookConsumerWidget {
   final AnimationController animation;

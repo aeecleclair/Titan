@@ -1,20 +1,20 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
-import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
-import 'package:myecl/vote/ui/pages/admin_page/admin_page.dart'
+import 'package:myemapp/drawer/class/module.dart';
+import 'package:myemapp/tools/middlewares/admin_middleware.dart';
+import 'package:myemapp/tools/middlewares/authenticated_middleware.dart';
+import 'package:myemapp/tools/middlewares/deferred_middleware.dart';
+import 'package:myemapp/vote/providers/is_vote_admin_provider.dart';
+import 'package:myemapp/vote/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
-import 'package:myecl/vote/ui/pages/detail_page/detail_page.dart'
+import 'package:myemapp/vote/ui/pages/detail_page/detail_page.dart'
     deferred as detail_page;
-import 'package:myecl/vote/ui/pages/main_page/main_page.dart'
+import 'package:myemapp/vote/ui/pages/main_page/main_page.dart'
     deferred as main_page;
-import 'package:myecl/vote/ui/pages/contender_pages/add_edit_contender.dart'
+import 'package:myemapp/vote/ui/pages/contender_pages/add_edit_contender.dart'
     deferred as add_edit_contender;
-import 'package:myecl/vote/ui/pages/section_pages/add_section.dart'
+import 'package:myemapp/vote/ui/pages/section_pages/add_section.dart'
     deferred as add_section;
 import 'package:qlevar_router/qlevar_router.dart';
 

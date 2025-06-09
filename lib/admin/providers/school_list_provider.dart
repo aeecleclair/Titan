@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/school.dart';
-import 'package:myecl/admin/repositories/school_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myemapp/admin/class/school.dart';
+import 'package:myemapp/admin/repositories/school_repository.dart';
+import 'package:myemapp/tools/providers/list_notifier.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
 
 class SchoolListNotifier extends ListNotifier<School> {
   final SchoolRepository schoolRepository;

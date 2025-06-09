@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/vote/class/members.dart';
+import 'package:myemapp/tools/ui/layouts/card_button.dart';
+import 'package:myemapp/tools/ui/layouts/card_layout.dart';
+import 'package:myemapp/vote/class/members.dart';
 
 class MemberCard extends StatelessWidget {
   final Member member;

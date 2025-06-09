@@ -1,8 +1,8 @@
-import 'package:myecl/service/class/message.dart';
-import 'package:myecl/service/class/topic.dart';
-import 'package:myecl/service/tools/functions.dart';
-import 'package:myecl/tools/logs/log.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:myemapp/service/class/message.dart';
+import 'package:myemapp/service/class/topic.dart';
+import 'package:myemapp/service/tools/functions.dart';
+import 'package:myemapp/tools/logs/log.dart';
+import 'package:myemapp/tools/repository/repository.dart';
 
 class NotificationRepository extends Repository {
   @override

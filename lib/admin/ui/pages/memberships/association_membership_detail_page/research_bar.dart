@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/research_filter_provider.dart';
-import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:myemapp/admin/providers/research_filter_provider.dart';
+import 'package:myemapp/admin/tools/constants.dart';
+import 'package:myemapp/tools/constants.dart';
 
 class ResearchBar extends HookConsumerWidget {
   const ResearchBar({super.key});

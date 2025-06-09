@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/router.dart';
-import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/widgets/top_bar.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:myemapp/admin/router.dart';
+import 'package:myemapp/admin/tools/constants.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/tools/ui/widgets/top_bar.dart';
+import 'package:myemapp/user/providers/user_provider.dart';
 
 class AdminTemplate extends HookConsumerWidget {
   final Widget child;

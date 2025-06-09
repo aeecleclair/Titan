@@ -1,4 +1,4 @@
-import 'package:myecl/tools/logs/log.dart';
+import 'package:myemapp/tools/logs/log.dart';
 
 abstract class LoggerOutput {
   /// Initialize the logger output

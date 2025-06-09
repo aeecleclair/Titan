@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/user_association_membership.dart';
-import 'package:myecl/admin/providers/association_membership_members_list_provider.dart';
-import 'package:myecl/admin/providers/research_filter_provider.dart';
+import 'package:myemapp/admin/class/user_association_membership.dart';
+import 'package:myemapp/admin/providers/association_membership_members_list_provider.dart';
+import 'package:myemapp/admin/providers/research_filter_provider.dart';
 import 'package:diacritic/diacritic.dart';
 
 final associationMembershipFilteredListProvider =

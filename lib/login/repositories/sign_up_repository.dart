@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/login/class/account_type.dart';
-import 'package:myecl/login/class/create_account.dart';
-import 'package:myecl/login/class/recover_request.dart';
-import 'package:myecl/login/tools/functions.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/login/class/account_type.dart';
+import 'package:myemapp/login/class/create_account.dart';
+import 'package:myemapp/login/class/recover_request.dart';
+import 'package:myemapp/login/tools/functions.dart';
+import 'package:myemapp/tools/repository/repository.dart';
 
 class SignUpRepository extends Repository {
   @override

@@ -1,5 +1,5 @@
-import 'package:myecl/paiement/class/store.dart';
-import 'package:myecl/user/class/user.dart';
+import 'package:myemapp/paiement/class/store.dart';
+import 'package:myemapp/user/class/user.dart';
 
 enum WalletType { user, store }
 

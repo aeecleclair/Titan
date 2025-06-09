@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:myecl/paiement/class/history.dart';
-import 'package:myecl/paiement/class/qr_code_data.dart';
-import 'package:myecl/paiement/class/qr_code_signature_data.dart';
-import 'package:myecl/paiement/class/wallet_device.dart';
-import 'package:myecl/paiement/tools/key_service.dart';
+import 'package:myemapp/paiement/class/history.dart';
+import 'package:myemapp/paiement/class/qr_code_data.dart';
+import 'package:myemapp/paiement/class/qr_code_signature_data.dart';
+import 'package:myemapp/paiement/class/wallet_device.dart';
+import 'package:myemapp/paiement/tools/key_service.dart';
 
 enum TransferType { helloAsso, check, cash, bankTransfer }
 

@@ -1,5 +1,5 @@
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/phonebook/class/membership.dart';
+import 'package:myemapp/admin/class/account_type.dart';
+import 'package:myemapp/phonebook/class/membership.dart';
 import 'member.dart';
 
 class CompleteMember {

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/class/store.dart' as store_class;
-import 'package:myecl/paiement/class/structure.dart';
-import 'package:myecl/paiement/providers/my_stores_provider.dart';
-import 'package:myecl/paiement/providers/selected_structure_provider.dart';
-import 'package:myecl/paiement/providers/store_provider.dart';
-import 'package:myecl/paiement/providers/stores_list_provider.dart';
-import 'package:myecl/paiement/ui/paiement.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:myemapp/paiement/class/store.dart' as store_class;
+import 'package:myemapp/paiement/class/structure.dart';
+import 'package:myemapp/paiement/providers/my_stores_provider.dart';
+import 'package:myemapp/paiement/providers/selected_structure_provider.dart';
+import 'package:myemapp/paiement/providers/store_provider.dart';
+import 'package:myemapp/paiement/providers/stores_list_provider.dart';
+import 'package:myemapp/paiement/ui/paiement.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/ui/builders/waiting_button.dart';
+import 'package:myemapp/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myemapp/tools/ui/widgets/align_left_text.dart';
+import 'package:myemapp/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditStorePage extends HookConsumerWidget {

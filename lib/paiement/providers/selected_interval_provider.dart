@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/class/history_interval.dart';
+import 'package:myemapp/paiement/class/history_interval.dart';
 
 class SelectedIntervalNotifier extends StateNotifier<HistoryInterval> {
   SelectedIntervalNotifier() : super(HistoryInterval.currentMonth());

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/vote/class/section.dart';
+import 'package:myemapp/vote/class/section.dart';
 
 class SideItem extends HookConsumerWidget {
   final Section section;

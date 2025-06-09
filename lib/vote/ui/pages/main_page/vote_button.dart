@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/vote/class/votes.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/providers/selected_contender_provider.dart';
-import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/providers/voted_section_provider.dart';
-import 'package:myecl/vote/providers/votes_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
-import 'package:myecl/vote/tools/constants.dart';
+import 'package:myemapp/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/vote/class/votes.dart';
+import 'package:myemapp/vote/providers/sections_provider.dart';
+import 'package:myemapp/vote/providers/selected_contender_provider.dart';
+import 'package:myemapp/vote/providers/status_provider.dart';
+import 'package:myemapp/vote/providers/voted_section_provider.dart';
+import 'package:myemapp/vote/providers/votes_provider.dart';
+import 'package:myemapp/vote/repositories/status_repository.dart';
+import 'package:myemapp/vote/tools/constants.dart';
 
 class VoteButton extends HookConsumerWidget {
   const VoteButton({super.key});

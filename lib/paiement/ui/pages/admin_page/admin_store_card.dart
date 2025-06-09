@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/class/store.dart';
-import 'package:myecl/paiement/providers/store_provider.dart';
-import 'package:myecl/paiement/providers/stores_list_provider.dart';
-import 'package:myecl/paiement/router.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:myemapp/paiement/class/store.dart';
+import 'package:myemapp/paiement/providers/store_provider.dart';
+import 'package:myemapp/paiement/providers/stores_list_provider.dart';
+import 'package:myemapp/paiement/router.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/tools/ui/builders/waiting_button.dart';
+import 'package:myemapp/tools/ui/layouts/card_button.dart';
+import 'package:myemapp/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminStoreCard extends ConsumerWidget {

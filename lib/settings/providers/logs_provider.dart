@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/logs/log.dart';
-import 'package:myecl/tools/logs/logger.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:myemapp/tools/logs/log.dart';
+import 'package:myemapp/tools/logs/logger.dart';
+import 'package:myemapp/tools/providers/list_notifier.dart';
+import 'package:myemapp/tools/repository/repository.dart';
 
 class LogsProvider extends ListNotifier<Log> {
   Logger logger = Repository.logger;

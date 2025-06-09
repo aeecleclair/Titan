@@ -3,10 +3,10 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/advert/providers/advert_posters_provider.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/advert/repositories/advert_poster_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:myemapp/advert/providers/advert_posters_provider.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/advert/repositories/advert_poster_repository.dart';
+import 'package:myemapp/tools/providers/single_notifier.dart';
 
 class AdvertPosterNotifier extends SingleNotifier<Image> {
   final advertPosterRepository = AdvertPosterRepository();

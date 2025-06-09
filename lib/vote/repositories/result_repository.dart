@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/vote/class/result.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/tools/repository/repository.dart';
+import 'package:myemapp/vote/class/result.dart';
 
 class ResultRepository extends Repository {
   @override

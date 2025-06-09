@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:myemapp/tools/functions.dart';
 
 class DayDivider extends StatelessWidget {
   final String date;

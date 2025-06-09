@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/vote/class/section.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/tools/constants.dart';
+import 'package:myemapp/tools/ui/widgets/align_left_text.dart';
+import 'package:myemapp/vote/class/section.dart';
+import 'package:myemapp/vote/providers/sections_provider.dart';
+import 'package:myemapp/vote/tools/constants.dart';
 
 class SectionTitle extends HookConsumerWidget {
   final List<Section> sectionList;

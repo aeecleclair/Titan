@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/providers/already_displayed_popup.dart';
-import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/providers/should_notify_provider.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:myemapp/drawer/providers/already_displayed_popup.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/providers/should_notify_provider.dart';
+import 'package:myemapp/tools/ui/builders/waiting_button.dart';
+import 'package:myemapp/user/providers/user_provider.dart';
 
 class Consts {
   Consts._();
@@ -139,9 +138,9 @@ class EmailChangeDialog extends HookConsumerWidget {
                                     ),
                                     validator: (value) {
                                       if (value == null) {
-                                        return LoanTextConstants.noValue;
+                                        // return LoanTextConstants.noValue;
                                       } else if (value.isEmpty) {
-                                        return LoanTextConstants.noValue;
+                                        // return LoanTextConstants.noValue;
                                       } else if (!isStudent(value)) {
                                         return "Adresse mail invalide";
                                       }

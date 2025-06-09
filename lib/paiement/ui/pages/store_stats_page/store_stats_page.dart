@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/providers/selected_interval_provider.dart';
-import 'package:myecl/paiement/providers/selected_store_provider.dart';
-import 'package:myecl/paiement/ui/pages/store_stats_page/interval_selector.dart';
-import 'package:myecl/paiement/ui/pages/store_stats_page/store_transactions_detail.dart';
-import 'package:myecl/paiement/ui/pages/store_stats_page/summary_card.dart';
-import 'package:myecl/paiement/ui/paiement.dart';
-import 'package:myecl/paiement/providers/selected_store_history.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:myemapp/paiement/providers/selected_interval_provider.dart';
+import 'package:myemapp/paiement/providers/selected_store_provider.dart';
+import 'package:myemapp/paiement/ui/pages/store_stats_page/interval_selector.dart';
+import 'package:myemapp/paiement/ui/pages/store_stats_page/store_transactions_detail.dart';
+import 'package:myemapp/paiement/ui/pages/store_stats_page/summary_card.dart';
+import 'package:myemapp/paiement/ui/paiement.dart';
+import 'package:myemapp/paiement/providers/selected_store_history.dart';
+import 'package:myemapp/tools/ui/builders/async_child.dart';
+import 'package:myemapp/tools/ui/layouts/refresher.dart';
 
 class StoreStatsPage extends ConsumerWidget {
   const StoreStatsPage({super.key});

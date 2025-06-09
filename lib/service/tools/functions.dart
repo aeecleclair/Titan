@@ -1,4 +1,4 @@
-import 'package:myecl/service/class/topic.dart';
+import 'package:myemapp/service/class/topic.dart';
 
 Topic stringToTopic(String string) {
   switch (string) {

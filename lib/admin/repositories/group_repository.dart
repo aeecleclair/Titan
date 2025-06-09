@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/group.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:myemapp/admin/class/group.dart';
+import 'package:myemapp/admin/class/simple_group.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/tools/repository/repository.dart';
+import 'package:myemapp/user/class/simple_users.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:myecl/tools/exception.dart';
+import 'package:myemapp/tools/exception.dart';
 
 class GroupRepository extends Repository {
   @override

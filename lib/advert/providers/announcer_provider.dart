@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/advert/class/announcer.dart';
+import 'package:myemapp/advert/class/announcer.dart';
 
 final announcerProvider =
     StateNotifierProvider<AnnouncerNotifier, List<Announcer>>((ref) {

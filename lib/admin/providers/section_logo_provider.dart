@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/tools/providers/map_provider.dart';
+import 'package:myemapp/admin/class/simple_group.dart';
+import 'package:myemapp/tools/providers/map_provider.dart';
 
 class SimpleGroupLogoNotifier extends MapNotifier<SimpleGroup, Image> {
   SimpleGroupLogoNotifier() : super();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:myemapp/phonebook/tools/constants.dart';
 
 class TextInputDialog extends HookConsumerWidget {
   const TextInputDialog({

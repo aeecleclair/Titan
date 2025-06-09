@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/vote/class/votes.dart';
-import 'package:myecl/vote/providers/votes_provider.dart';
-import 'package:myecl/vote/repositories/votes_repository.dart';
+import 'package:myemapp/vote/class/votes.dart';
+import 'package:myemapp/vote/providers/votes_provider.dart';
+import 'package:myemapp/vote/repositories/votes_repository.dart';
 
 class MockVotesRepository extends Mock implements VotesRepository {}
 

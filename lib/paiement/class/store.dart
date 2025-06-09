@@ -1,4 +1,4 @@
-import 'package:myecl/paiement/class/structure.dart';
+import 'package:myemapp/paiement/class/structure.dart';
 
 class Store {
   final String id;

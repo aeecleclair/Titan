@@ -3,15 +3,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/login/class/account_type.dart';
-import 'package:myecl/login/providers/sign_up_provider.dart';
-import 'package:myecl/login/router.dart';
-import 'package:myecl/login/tools/constants.dart';
-import 'package:myecl/login/ui/auth_page.dart';
-import 'package:myecl/login/ui/components/sign_in_up_bar.dart';
-import 'package:myecl/login/ui/components/text_from_decoration.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/login/class/account_type.dart';
+import 'package:myemapp/login/providers/sign_up_provider.dart';
+import 'package:myemapp/login/router.dart';
+import 'package:myemapp/login/tools/constants.dart';
+import 'package:myemapp/login/ui/auth_page.dart';
+import 'package:myemapp/login/ui/components/sign_in_up_bar.dart';
+import 'package:myemapp/login/ui/components/text_from_decoration.dart';
+import 'package:myemapp/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class Register extends HookConsumerWidget {

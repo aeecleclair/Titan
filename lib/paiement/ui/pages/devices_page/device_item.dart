@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/paiement/class/wallet_device.dart';
-import 'package:myecl/paiement/tools/functions.dart';
+import 'package:myemapp/paiement/class/wallet_device.dart';
+import 'package:myemapp/paiement/tools/functions.dart';
 
 class DeviceItem extends ConsumerWidget {
   final WalletDevice device;

@@ -1,5 +1,5 @@
-import 'package:myecl/admin/class/user_association_membership_base.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:myemapp/admin/class/user_association_membership_base.dart';
+import 'package:myemapp/user/class/simple_users.dart';
 
 class UserAssociationMembership extends UserAssociationMembershipBase {
   UserAssociationMembership({

@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/home/providers/number_day_provider.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:myemapp/home/providers/number_day_provider.dart';
+import 'package:myemapp/tools/functions.dart';
 
 final daysProvider = Provider<List<DateTime>>((ref) {
   final numberDay = ref.watch(numberDayProvider);

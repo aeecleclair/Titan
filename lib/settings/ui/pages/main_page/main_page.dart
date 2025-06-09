@@ -4,23 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/flappybird/ui/flappybird_item_chip.dart';
-import 'package:myecl/settings/providers/logs_provider.dart';
-import 'package:myecl/settings/router.dart';
-import 'package:myecl/settings/tools/constants.dart';
-import 'package:myecl/settings/ui/pages/main_page/settings_item.dart';
-import 'package:myecl/settings/ui/settings.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/providers/user_provider.dart';
-import 'package:myecl/user/providers/profile_picture_provider.dart';
-import 'package:myecl/version/providers/titan_version_provider.dart';
+import 'package:myemapp/settings/providers/logs_provider.dart';
+import 'package:myemapp/settings/router.dart';
+import 'package:myemapp/settings/tools/constants.dart';
+import 'package:myemapp/settings/ui/pages/main_page/settings_item.dart';
+import 'package:myemapp/settings/ui/settings.dart';
+import 'package:myemapp/tools/ui/widgets/align_left_text.dart';
+import 'package:myemapp/tools/ui/builders/async_child.dart';
+import 'package:myemapp/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myemapp/tools/ui/layouts/item_chip.dart';
+import 'package:myemapp/tools/ui/layouts/refresher.dart';
+import 'package:myemapp/tools/repository/repository.dart';
+import 'package:myemapp/user/providers/user_provider.dart';
+import 'package:myemapp/user/providers/profile_picture_provider.dart';
+import 'package:myemapp/version/providers/titan_version_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SettingsMainPage extends HookConsumerWidget {
@@ -140,7 +139,6 @@ class SettingsMainPage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              lastChild: const FlappyBirdItemChip(),
             ),
             const SizedBox(height: 30),
             Padding(

@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/advert/providers/advert_poster_provider.dart';
-import 'package:myecl/advert/providers/advert_posters_provider.dart';
-import 'package:myecl/advert/providers/advert_provider.dart';
-import 'package:myecl/advert/ui/components/tag_chip.dart';
-import 'package:myecl/cinema/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/widgets/text_with_hyper_link.dart';
+import 'package:myemapp/advert/providers/advert_poster_provider.dart';
+import 'package:myemapp/advert/providers/advert_posters_provider.dart';
+import 'package:myemapp/advert/providers/advert_provider.dart';
+import 'package:myemapp/advert/ui/components/tag_chip.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/ui/builders/auto_loader_child.dart';
+import 'package:myemapp/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:myemapp/tools/ui/widgets/text_with_hyper_link.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdvertDetailPage extends HookConsumerWidget {

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/event_provider.dart';
-import 'package:myecl/event/providers/is_admin_provider.dart';
-import 'package:myecl/event/providers/user_event_list_provider.dart';
-import 'package:myecl/event/router.dart';
-import 'package:myecl/event/tools/constants.dart';
-import 'package:myecl/event/ui/event.dart';
-import 'package:myecl/event/ui/components/event_ui.dart';
-import 'package:myecl/tools/ui/layouts/column_refresher.dart';
-import 'package:myecl/tools/ui/widgets/admin_button.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:myemapp/event/class/event.dart';
+import 'package:myemapp/event/providers/event_provider.dart';
+import 'package:myemapp/event/providers/is_admin_provider.dart';
+import 'package:myemapp/event/providers/user_event_list_provider.dart';
+import 'package:myemapp/event/router.dart';
+import 'package:myemapp/event/tools/constants.dart';
+import 'package:myemapp/event/ui/event.dart';
+import 'package:myemapp/event/ui/components/event_ui.dart';
+import 'package:myemapp/tools/ui/layouts/column_refresher.dart';
+import 'package:myemapp/tools/ui/widgets/admin_button.dart';
+import 'package:myemapp/tools/ui/builders/async_child.dart';
+import 'package:myemapp/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventMainPage extends HookConsumerWidget {

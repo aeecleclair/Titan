@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/school.dart';
-import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/admin/ui/components/item_card_ui.dart';
-import 'package:myecl/admin/ui/pages/schools/school_page/school_button.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:myemapp/admin/class/school.dart';
+import 'package:myemapp/admin/tools/constants.dart';
+import 'package:myemapp/admin/ui/components/item_card_ui.dart';
+import 'package:myemapp/admin/ui/pages/schools/school_page/school_button.dart';
+import 'package:myemapp/tools/constants.dart';
+import 'package:myemapp/tools/ui/builders/waiting_button.dart';
 
 class SchoolUi extends HookConsumerWidget {
   final School school;

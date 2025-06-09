@@ -1,6 +1,6 @@
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/membership.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:myemapp/phonebook/class/complete_member.dart';
+import 'package:myemapp/phonebook/class/membership.dart';
+import 'package:myemapp/tools/repository/repository.dart';
 
 class AssociationMemberRepository extends Repository {
   @override

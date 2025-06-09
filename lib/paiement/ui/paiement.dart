@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/paiement/router.dart';
-import 'package:myecl/tools/ui/widgets/top_bar.dart';
-import 'package:myecl/paiement/tools/constants.dart';
+import 'package:myemapp/paiement/router.dart';
+import 'package:myemapp/tools/ui/widgets/top_bar.dart';
+import 'package:myemapp/paiement/tools/constants.dart';
 
 class PaymentTemplate extends StatelessWidget {
   final Widget child;

@@ -1,9 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/service/class/topic.dart';
-import 'package:myecl/service/repositories/notification_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:myemapp/auth/providers/openid_provider.dart';
+import 'package:myemapp/service/class/topic.dart';
+import 'package:myemapp/service/repositories/notification_repository.dart';
+import 'package:myemapp/tools/providers/list_notifier.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
 
 class TopicsProvider extends ListNotifier<Topic> {
   final NotificationRepository notificationRepository =

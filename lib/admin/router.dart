@@ -1,36 +1,34 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/providers/is_admin_provider.dart';
-import 'package:myecl/admin/ui/pages/groups/add_group_page/add_group_page.dart'
+import 'package:myemapp/admin/providers/is_admin_provider.dart';
+import 'package:myemapp/admin/ui/pages/groups/add_group_page/add_group_page.dart'
     deferred as add_group_page;
-import 'package:myecl/admin/ui/pages/groups/add_loaner_page/add_loaner_page.dart'
-    deferred as add_loaner_page;
-import 'package:myecl/admin/ui/pages/edit_module_visibility/edit_module_visibility.dart'
+import 'package:myemapp/admin/ui/pages/edit_module_visibility/edit_module_visibility.dart'
     deferred as edit_module_visibility;
-import 'package:myecl/admin/ui/pages/groups/edit_group_page/edit_group_page.dart'
+import 'package:myemapp/admin/ui/pages/groups/edit_group_page/edit_group_page.dart'
     deferred as edit_group_page;
-import 'package:myecl/admin/ui/pages/groups/group_page/group_page.dart'
+import 'package:myemapp/admin/ui/pages/groups/group_page/group_page.dart'
     deferred as group_page;
-import 'package:myecl/admin/ui/pages/memberships/add_edit_user_membership_page/add_edit_user_membership_page.dart'
+import 'package:myemapp/admin/ui/pages/memberships/add_edit_user_membership_page/add_edit_user_membership_page.dart'
     deferred as add_edit_user_membership_page;
-import 'package:myecl/admin/ui/pages/memberships/association_membership_detail_page/association_membership_detail_page.dart'
+import 'package:myemapp/admin/ui/pages/memberships/association_membership_detail_page/association_membership_detail_page.dart'
     deferred as association_membership_detail_page;
-import 'package:myecl/admin/ui/pages/memberships/association_membership_page/association_membership_page.dart'
+import 'package:myemapp/admin/ui/pages/memberships/association_membership_page/association_membership_page.dart'
     deferred as association_membership_page;
-import 'package:myecl/admin/ui/pages/schools/school_page/school_page.dart'
+import 'package:myemapp/admin/ui/pages/schools/school_page/school_page.dart'
     deferred as school_page;
-import 'package:myecl/admin/ui/pages/schools/add_school_page/add_school_page.dart'
+import 'package:myemapp/admin/ui/pages/schools/add_school_page/add_school_page.dart'
     deferred as add_school_page;
-import 'package:myecl/admin/ui/pages/schools/edit_school_page/edit_school_page.dart'
+import 'package:myemapp/admin/ui/pages/schools/edit_school_page/edit_school_page.dart'
     deferred as edit_school_page;
-import 'package:myecl/admin/ui/pages/structure_page/structure_page.dart'
+import 'package:myemapp/admin/ui/pages/structure_page/structure_page.dart'
     deferred as structure_page;
-import 'package:myecl/admin/ui/pages/add_edit_structure_page/add_edit_structure_page.dart'
+import 'package:myemapp/admin/ui/pages/add_edit_structure_page/add_edit_structure_page.dart'
     deferred as add_edit_structure_page;
-import 'package:myecl/admin/ui/pages/main_page/main_page.dart'
+import 'package:myemapp/admin/ui/pages/main_page/main_page.dart'
     deferred as main_page;
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:myemapp/tools/middlewares/admin_middleware.dart';
+import 'package:myemapp/tools/middlewares/authenticated_middleware.dart';
+import 'package:myemapp/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminRouter {
@@ -77,13 +75,6 @@ class AdminRouter {
             builder: () => edit_group_page.EditGroupPage(),
             middleware: [
               DeferredLoadingMiddleware(edit_group_page.loadLibrary),
-            ],
-          ),
-          QRoute(
-            path: addLoaner,
-            builder: () => add_loaner_page.AddLoanerPage(),
-            middleware: [
-              DeferredLoadingMiddleware(add_loaner_page.loadLibrary),
             ],
           ),
         ],

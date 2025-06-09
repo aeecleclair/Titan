@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/member.dart';
-import 'package:myecl/phonebook/providers/complete_member_provider.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:myemapp/phonebook/class/member.dart';
+import 'package:myemapp/phonebook/providers/complete_member_provider.dart';
+import 'package:myemapp/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
   final TextEditingController queryController;

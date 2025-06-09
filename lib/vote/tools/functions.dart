@@ -1,5 +1,5 @@
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
+import 'package:myemapp/vote/class/contender.dart';
+import 'package:myemapp/vote/repositories/status_repository.dart';
 
 ListType stringToListType(String type) {
   switch (type) {

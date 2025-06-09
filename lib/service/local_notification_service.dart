@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:myecl/service/class/message.dart' as message_class;
-import 'package:myecl/service/provider_list.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:myemapp/service/class/message.dart' as message_class;
+import 'package:myemapp/service/provider_list.dart';
+import 'package:myemapp/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:timezone/timezone.dart' as tz;

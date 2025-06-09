@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/settings/tools/constants.dart';
-import 'package:myecl/settings/ui/pages/change_pass/password_strength.dart';
-import 'package:myecl/settings/ui/pages/change_pass/test_entry_style.dart';
-import 'package:myecl/settings/ui/settings.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:myemapp/settings/tools/constants.dart';
+import 'package:myemapp/settings/ui/pages/change_pass/password_strength.dart';
+import 'package:myemapp/settings/ui/pages/change_pass/test_entry_style.dart';
+import 'package:myemapp/settings/ui/settings.dart';
+import 'package:myemapp/tools/constants.dart';
+import 'package:myemapp/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:myemapp/tools/ui/widgets/align_left_text.dart';
+import 'package:myemapp/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/token_expire_wrapper.dart';
+import 'package:myemapp/tools/ui/builders/waiting_button.dart';
+import 'package:myemapp/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ChangePassPage extends HookConsumerWidget {

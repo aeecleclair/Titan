@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/vote/class/result.dart';
-import 'package:myecl/vote/providers/result_provider.dart';
-import 'package:myecl/vote/repositories/result_repository.dart';
+import 'package:myemapp/vote/class/result.dart';
+import 'package:myemapp/vote/providers/result_provider.dart';
+import 'package:myemapp/vote/repositories/result_repository.dart';
 
 class MockResultRepository extends Mock implements ResultRepository {}
 

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/event/ui/event.dart';
-import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/event_list_provider.dart';
-import 'package:myecl/event/tools/constants.dart';
-import 'package:myecl/event/ui/pages/admin_page/list_event.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/ui/widgets/calendar.dart';
+import 'package:myemapp/event/ui/event.dart';
+import 'package:myemapp/event/class/event.dart';
+import 'package:myemapp/event/providers/event_list_provider.dart';
+import 'package:myemapp/event/tools/constants.dart';
+import 'package:myemapp/event/ui/pages/admin_page/list_event.dart';
+import 'package:myemapp/tools/functions.dart';
+import 'package:myemapp/tools/ui/layouts/refresher.dart';
+import 'package:myemapp/tools/ui/widgets/calendar.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AdminPage extends HookConsumerWidget {

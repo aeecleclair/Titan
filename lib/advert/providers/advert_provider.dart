@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/advert/class/advert.dart';
+import 'package:myemapp/advert/class/advert.dart';
 
 class AdvertNotifier extends StateNotifier<Advert> {
   AdvertNotifier() : super(Advert.empty());
