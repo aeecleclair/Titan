@@ -6,7 +6,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
@@ -222,17 +221,15 @@ class AddEditContenderPage extends HookConsumerWidget {
                             children: <Widget>[
                               TextEntry(
                                 label: VoteTextConstants.members,
-                                onChanged: (newQuery) {
+                                onChanged: (newQuery) async {
                                   showNotifier.setId(true);
-                                  tokenExpireWrapper(ref, () async {
-                                    if (queryController.text.isNotEmpty) {
-                                      await usersNotifier.filterUsers(
-                                        queryController.text,
-                                      );
-                                    } else {
-                                      usersNotifier.clear();
-                                    }
-                                  });
+                                  if (queryController.text.isNotEmpty) {
+                                    await usersNotifier.filterUsers(
+                                      queryController.text,
+                                    );
+                                  } else {
+                                    usersNotifier.clear();
+                                  }
                                 },
                                 color: Colors.black,
                                 controller: queryController,
@@ -354,82 +351,80 @@ class AddEditContenderPage extends HookConsumerWidget {
                       return;
                     }
                     if (key.currentState!.validate()) {
-                      await tokenExpireWrapper(ref, () async {
-                        final contenderList = ref.watch(contenderListProvider);
-                        Contender newContender = Contender(
-                          name: name.text,
-                          id: isEdit ? contender.id : '',
-                          description: description.text,
-                          listType: listType.value,
-                          members: members,
-                          section: section.value,
-                          program: program.text,
-                        );
-                        final value = isEdit
-                            ? await contenderListNotifier.updateContender(
-                                newContender,
-                              )
-                            : await contenderListNotifier.addContender(
-                                newContender,
-                              );
-                        if (value) {
-                          QR.back();
-                          if (isEdit) {
-                            displayVoteToastWithContext(
-                              TypeMsg.msg,
-                              VoteTextConstants.editedPretendance,
+                      final contenderList = ref.watch(contenderListProvider);
+                      Contender newContender = Contender(
+                        name: name.text,
+                        id: isEdit ? contender.id : '',
+                        description: description.text,
+                        listType: listType.value,
+                        members: members,
+                        section: section.value,
+                        program: program.text,
+                      );
+                      final value = isEdit
+                          ? await contenderListNotifier.updateContender(
+                              newContender,
+                            )
+                          : await contenderListNotifier.addContender(
+                              newContender,
                             );
-                            contenderList.maybeWhen(
-                              data: (list) {
-                                final logoBytes = logo.value;
-                                if (logoBytes != null) {
-                                  contenderLogosNotifier.autoLoad(
-                                    ref,
-                                    contender.id,
-                                    (contenderId) => logoNotifier.updateLogo(
-                                      contenderId,
-                                      logoBytes,
-                                    ),
-                                  );
-                                }
-                              },
-                              orElse: () {},
-                            );
-                          } else {
-                            displayVoteToastWithContext(
-                              TypeMsg.msg,
-                              VoteTextConstants.addedPretendance,
-                            );
-                            contenderList.maybeWhen(
-                              data: (list) {
-                                final newContender = list.last;
-                                final logoBytes = logo.value;
-                                if (logoBytes != null) {
-                                  contenderLogosNotifier.autoLoad(
-                                    ref,
-                                    newContender.id,
-                                    (contenderId) => logoNotifier.updateLogo(
-                                      contenderId,
-                                      logoBytes,
-                                    ),
-                                  );
-                                }
-                              },
-                              orElse: () {},
-                            );
-                          }
-                          membersNotifier.clearMembers();
-                          sectionsNotifier.setTData(
-                            section.value,
-                            await contenderListNotifier.copy(),
+                      if (value) {
+                        QR.back();
+                        if (isEdit) {
+                          displayVoteToastWithContext(
+                            TypeMsg.msg,
+                            VoteTextConstants.editedPretendance,
+                          );
+                          contenderList.maybeWhen(
+                            data: (list) {
+                              final logoBytes = logo.value;
+                              if (logoBytes != null) {
+                                contenderLogosNotifier.autoLoad(
+                                  ref,
+                                  contender.id,
+                                  (contenderId) => logoNotifier.updateLogo(
+                                    contenderId,
+                                    logoBytes,
+                                  ),
+                                );
+                              }
+                            },
+                            orElse: () {},
                           );
                         } else {
                           displayVoteToastWithContext(
-                            TypeMsg.error,
-                            VoteTextConstants.editingError,
+                            TypeMsg.msg,
+                            VoteTextConstants.addedPretendance,
+                          );
+                          contenderList.maybeWhen(
+                            data: (list) {
+                              final newContender = list.last;
+                              final logoBytes = logo.value;
+                              if (logoBytes != null) {
+                                contenderLogosNotifier.autoLoad(
+                                  ref,
+                                  newContender.id,
+                                  (contenderId) => logoNotifier.updateLogo(
+                                    contenderId,
+                                    logoBytes,
+                                  ),
+                                );
+                              }
+                            },
+                            orElse: () {},
                           );
                         }
-                      });
+                        membersNotifier.clearMembers();
+                        sectionsNotifier.setTData(
+                          section.value,
+                          await contenderListNotifier.copy(),
+                        );
+                      } else {
+                        displayVoteToastWithContext(
+                          TypeMsg.error,
+                          VoteTextConstants.editingError,
+                        );
+                      }
                     } else {
                       displayToast(
                         context,

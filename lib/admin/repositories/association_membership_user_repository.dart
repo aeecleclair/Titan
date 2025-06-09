@@ -9,6 +9,8 @@ class AssociationMembershipUserRepository extends Repository {
   // ignore: overridden_fields
   final ext = "memberships/users/";
 
+  AssociationMembershipUserRepository(super.ref);
+
   Future<List<UserAssociationMembership>>
   getPersonalAssociationMembershipList() async {
     return List<UserAssociationMembership>.from(
@@ -55,5 +57,5 @@ class AssociationMembershipUserRepository extends Repository {
 
 final associationMembershipUserRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return AssociationMembershipUserRepository()..setToken(token);
+  return AssociationMembershipUserRepository(ref)..setToken(token);
 });

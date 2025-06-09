@@ -11,6 +11,8 @@ class RecommendationLogoRepository extends LogoRepository {
   // ignore: overridden_fields
   final ext = "recommendation/recommendations";
 
+  RecommendationLogoRepository(super.ref);
+
   Future<Image> getRecommendationLogo(String id) async {
     final uint8List = await getLogo("", suffix: "/$id/picture");
     return Image.memory(uint8List);
@@ -25,5 +27,5 @@ class RecommendationLogoRepository extends LogoRepository {
 final recommendationLogoRepositoryProvider =
     Provider<RecommendationLogoRepository>((ref) {
       final token = ref.watch(tokenProvider);
-      return RecommendationLogoRepository()..setToken(token);
+      return RecommendationLogoRepository(ref)..setToken(token);
     });

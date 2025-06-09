@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/repositories/group_logo_repository.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
 
@@ -28,6 +29,7 @@ class GroupLogoNotifier extends SingleNotifier<Image> {
 
 final groupLogoProvider =
     StateNotifierProvider<GroupLogoNotifier, AsyncValue<Image>>((ref) {
-      final groupLogoRepository = GroupLogoRepository();
+      final token = ref.watch(tokenProvider);
+      final groupLogoRepository = GroupLogoRepository(ref)..setToken(token);
       return GroupLogoNotifier(groupLogoRepository: groupLogoRepository);
     });

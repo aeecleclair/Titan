@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:myecl/auth/class/auth_request.dart';
 import 'package:myecl/auth/class/auth_token.dart';
@@ -7,6 +8,8 @@ import 'package:myecl/auth/class/auth_token.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class OpenIdRepository extends Repository {
+  OpenIdRepository(super.ref);
+
   Future<AuthToken> getToken(AuthRequest request) async {
     final body = request.toJson();
 
@@ -36,3 +39,8 @@ class OpenIdRepository extends Repository {
     }
   }
 }
+
+final openIdRepositoryProvider = Provider((ref) {
+  // No need to watch tokenProvider here, as the OpenIdRepository does not require a token.
+  return OpenIdRepository(ref);
+});

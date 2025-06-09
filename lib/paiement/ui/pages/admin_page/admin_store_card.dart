@@ -6,7 +6,6 @@ import 'package:myecl/paiement/providers/store_provider.dart';
 import 'package:myecl/paiement/providers/stores_list_provider.dart';
 import 'package:myecl/paiement/router.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
@@ -80,23 +79,21 @@ class AdminStoreCard extends ConsumerWidget {
                       title: "Supprimer l'association",
                       descriptions:
                           "Voulez-vous vraiment supprimer cette association ?",
-                      onYes: () {
-                        tokenExpireWrapper(ref, () async {
-                          final value = await storeListNotifier.deleteStore(
-                            store,
+                      onYes: () async {
+                        final value = await storeListNotifier.deleteStore(
+                          store,
+                        );
+                        if (value) {
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            "Association supprimée",
                           );
-                          if (value) {
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              "Association supprimée",
-                            );
-                          } else {
-                            displayToastWithContext(
-                              TypeMsg.error,
-                              "Impossible de supprimer l'association",
-                            );
-                          }
-                        });
+                        } else {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            "Impossible de supprimer l'association",
+                          );
+                        }
                       },
                     ),
                   );

@@ -3,7 +3,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/vote/providers/section_id_provider.dart';
@@ -53,35 +52,31 @@ class SectionBar extends HookConsumerWidget {
         selected: section.id == key.id,
         isAdmin: status == Status.waiting,
         onTap: () async {
-          tokenExpireWrapper(ref, () async {
-            sectionIdNotifier.setId(key.id);
-          });
+          sectionIdNotifier.setId(key.id);
         },
         onDelete: () async {
-          tokenExpireWrapper(ref, () async {
-            await showDialog(
-              context: context,
-              builder: (context) => CustomDialogBox(
-                title: VoteTextConstants.deleteSection,
-                descriptions: VoteTextConstants.deleteSectionDescription,
-                onYes: () async {
-                  final result = await sectionsNotifier.deleteSection(key);
-                  if (result) {
-                    sectionContenderListNotifier.deleteT(key);
-                    displayVoteToastWithContext(
-                      TypeMsg.msg,
-                      VoteTextConstants.deletedSection,
-                    );
-                  } else {
-                    displayVoteToastWithContext(
-                      TypeMsg.error,
-                      VoteTextConstants.deletingError,
-                    );
-                  }
-                },
-              ),
-            );
-          });
+          await showDialog(
+            context: context,
+            builder: (context) => CustomDialogBox(
+              title: VoteTextConstants.deleteSection,
+              descriptions: VoteTextConstants.deleteSectionDescription,
+              onYes: () async {
+                final result = await sectionsNotifier.deleteSection(key);
+                if (result) {
+                  sectionContenderListNotifier.deleteT(key);
+                  displayVoteToastWithContext(
+                    TypeMsg.msg,
+                    VoteTextConstants.deletedSection,
+                  );
+                } else {
+                  displayVoteToastWithContext(
+                    TypeMsg.error,
+                    VoteTextConstants.deletingError,
+                  );
+                }
+              },
+            ),
+          );
         },
       ),
     );

@@ -13,6 +13,8 @@ class GroupRepository extends Repository {
   // ignore: overridden_fields
   final ext = "groups/";
 
+  GroupRepository(super.ref);
+
   Future<List<SimpleGroup>> getGroupList() async {
     return List<SimpleGroup>.from(
       (await getList()).map((x) => SimpleGroup.fromJson(x)),
@@ -61,5 +63,5 @@ class GroupRepository extends Repository {
 
 final groupRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return GroupRepository()..setToken(token);
+  return GroupRepository(ref)..setToken(token);
 });

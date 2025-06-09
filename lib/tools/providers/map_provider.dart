@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class MapNotifier<T, E> extends StateNotifier<Map<T, AsyncValue<List<E>>?>> {
   MapNotifier() : super(<T, AsyncValue<List<E>>?>{});
@@ -68,12 +67,10 @@ class MapNotifier<T, E> extends StateNotifier<Map<T, AsyncValue<List<E>>?>> {
     Future<E> Function(T t) loader,
   ) async {
     setTData(t, const AsyncLoading());
-    tokenExpireWrapper(ref, () async {
-      loader(t).then((value) {
-        if (mounted) {
-          setTData(t, AsyncData([value]));
-        }
-      });
+    loader(t).then((value) {
+      if (mounted) {
+        setTData(t, AsyncData([value]));
+      }
     });
   }
 
@@ -83,12 +80,10 @@ class MapNotifier<T, E> extends StateNotifier<Map<T, AsyncValue<List<E>>?>> {
     Future<AsyncValue<List<E>>> Function(T t) loader,
   ) async {
     setTData(t, const AsyncLoading());
-    tokenExpireWrapper(ref, () async {
-      loader(t).then((value) {
-        if (mounted) {
-          setTData(t, value);
-        }
-      });
+    loader(t).then((value) {
+      if (mounted) {
+        setTData(t, value);
+      }
     });
   }
 }

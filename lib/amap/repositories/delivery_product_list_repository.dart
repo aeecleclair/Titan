@@ -8,6 +8,8 @@ class DeliveryProductListRepository extends Repository {
   // ignore: overridden_fields
   final ext = "amap/deliveries/";
 
+  DeliveryProductListRepository(super.ref);
+
   Future<Product> createProduct(String deliveryId, Product product) async {
     return Product.fromJson(
       await create(product.toJson(), suffix: "$deliveryId/products"),
@@ -29,5 +31,5 @@ class DeliveryProductListRepository extends Repository {
 
 final deliveryProductListRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return DeliveryProductListRepository()..setToken(token);
+  return DeliveryProductListRepository(ref)..setToken(token);
 });

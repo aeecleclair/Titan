@@ -8,6 +8,8 @@ class AccountTypeRepository extends Repository {
   // ignore: overridden_fields
   final ext = "users/account-types/";
 
+  AccountTypeRepository(super.ref);
+
   Future<List<AccountType>> getAccountTypeList() async {
     return List<AccountType>.from(
       (await getList()).map((x) => AccountType.fromJson(x)),
@@ -17,5 +19,5 @@ class AccountTypeRepository extends Repository {
 
 final accountTypeRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return AccountTypeRepository()..setToken(token);
+  return AccountTypeRepository(ref)..setToken(token);
 });

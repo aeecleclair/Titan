@@ -9,6 +9,8 @@ class PhCoverRepository extends LogoRepository {
   // ignore: overridden_fields
   final ext = "ph/";
 
+  PhCoverRepository(super.ref);
+
   Future<Uint8List> getPhPdfFirstPage(String id) async {
     final uint8List = await getLogo("", suffix: "$id/cover");
     return uint8List;
@@ -17,5 +19,5 @@ class PhCoverRepository extends LogoRepository {
 
 final phCoverRepositoryProvider = Provider<PhCoverRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return PhCoverRepository()..setToken(token);
+  return PhCoverRepository(ref)..setToken(token);
 });

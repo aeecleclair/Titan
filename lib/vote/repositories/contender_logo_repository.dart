@@ -11,6 +11,8 @@ class ContenderLogoRepository extends LogoRepository {
   // ignore: overridden_fields
   final ext = 'campaign/lists/';
 
+  ContenderLogoRepository(super.ref);
+
   Future<Image> getContenderLogo(String id) async {
     final bytes = await getLogo(id, suffix: "/logo");
     if (bytes.isEmpty) {
@@ -28,5 +30,5 @@ final contenderLogoRepositoryProvider = Provider<ContenderLogoRepository>((
   ref,
 ) {
   final token = ref.watch(tokenProvider);
-  return ContenderLogoRepository()..setToken(token);
+  return ContenderLogoRepository(ref)..setToken(token);
 });

@@ -8,6 +8,8 @@ class TosRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'myeclpay/users/me/';
 
+  TosRepository(super.ref);
+
   Future<TOS> getTOS() async {
     return TOS.fromJson(await getOne("tos"));
   }
@@ -19,5 +21,5 @@ class TosRepository extends Repository {
 
 final tosRepositoryProvider = Provider<TosRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return TosRepository()..setToken(token);
+  return TosRepository(ref)..setToken(token);
 });

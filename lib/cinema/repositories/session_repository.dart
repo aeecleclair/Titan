@@ -8,6 +8,8 @@ class SessionRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'cinema/sessions';
 
+  SessionRepository(super.ref);
+
   Future<List<Session>> getAllSessions() async {
     return (await getList()).map((e) => Session.fromJson(e)).toList();
   }
@@ -31,5 +33,5 @@ class SessionRepository extends Repository {
 
 final sessionRepositoryProvider = Provider<SessionRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return SessionRepository()..setToken(token);
+  return SessionRepository(ref)..setToken(token);
 });

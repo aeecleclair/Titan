@@ -8,6 +8,8 @@ class RecommendationRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'recommendation/recommendations';
 
+  RecommendationRepository(super.ref);
+
   Future<List<Recommendation>> getRecommendationList() async {
     return List<Recommendation>.from(
       (await getList()).map((x) => Recommendation.fromJson(x)),
@@ -33,5 +35,5 @@ final recommendationRepositoryProvider = Provider<RecommendationRepository>((
   ref,
 ) {
   final token = ref.watch(tokenProvider);
-  return RecommendationRepository()..setToken(token);
+  return RecommendationRepository(ref)..setToken(token);
 });

@@ -14,7 +14,6 @@ import 'package:myecl/paiement/class/structure.dart';
 import 'package:myecl/paiement/providers/structure_list_provider.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
@@ -137,42 +136,38 @@ class AddEditStructurePage extends HookConsumerWidget {
                       return;
                     }
                     if (key.currentState!.validate()) {
-                      await tokenExpireWrapper(ref, () async {
-                        final value = isEdit
-                            ? await structureListNotifier.updateStructure(
-                                Structure(
-                                  name: name.text,
-                                  associationMembership:
-                                      currentMembership.value,
-                                  managerUser: structureManager,
-                                  id: structure.id,
-                                ),
-                              )
-                            : await structureListNotifier.createStructure(
-                                Structure(
-                                  name: name.text,
-                                  associationMembership:
-                                      currentMembership.value,
-                                  managerUser: structureManager,
-                                  id: '',
-                                ),
-                              );
-                        if (value) {
-                          QR.back();
-                          structureManagerNotifier.setUser(SimpleUser.empty());
-                          displayToastWithContext(
-                            TypeMsg.msg,
-                            isEdit
-                                ? AdminTextConstants.editedStructure
-                                : AdminTextConstants.addedStructure,
-                          );
-                        } else {
-                          displayToastWithContext(
-                            TypeMsg.error,
-                            AdminTextConstants.addingError,
-                          );
-                        }
-                      });
+                      final value = isEdit
+                          ? await structureListNotifier.updateStructure(
+                              Structure(
+                                name: name.text,
+                                associationMembership: currentMembership.value,
+                                managerUser: structureManager,
+                                id: structure.id,
+                              ),
+                            )
+                          : await structureListNotifier.createStructure(
+                              Structure(
+                                name: name.text,
+                                associationMembership: currentMembership.value,
+                                managerUser: structureManager,
+                                id: '',
+                              ),
+                            );
+                      if (value) {
+                        QR.back();
+                        structureManagerNotifier.setUser(SimpleUser.empty());
+                        displayToastWithContext(
+                          TypeMsg.msg,
+                          isEdit
+                              ? AdminTextConstants.editedStructure
+                              : AdminTextConstants.addedStructure,
+                        );
+                      } else {
+                        displayToastWithContext(
+                          TypeMsg.error,
+                          AdminTextConstants.addingError,
+                        );
+                      }
                     }
                   },
                   builder: (child) => AdminButton(child: child),

@@ -19,11 +19,12 @@ import 'package:universal_html/html.dart' as html;
 
 final authTokenProvider =
     StateNotifierProvider<AuthNotifier, AsyncValue<AuthToken>>((ref) {
+      final openIdRepository = ref.watch(openIdRepositoryProvider);
       final authNotifier = AuthNotifier(
         appAuth: FlutterAppAuth(),
         secureStorage: FlutterSecureStorage(),
         cacheManager: CacheManager(),
-        openIdRepository: OpenIdRepository(),
+        openIdRepository: openIdRepository,
       );
       final isOnline = ref.watch(connectionStatusProvider);
       if (isOnline) {

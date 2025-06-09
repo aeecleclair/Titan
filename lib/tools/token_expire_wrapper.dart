@@ -5,11 +5,11 @@ import 'package:myecl/tools/exception.dart';
 /// A wrapper for handling token expiration errors in asynchronous functions.
 /// It attempts to refresh the token and re-execute the function if the token has expired.
 /// This variation is designed for async functions that return a value.
-Future<T?> tokenExpireWrapper<T>(WidgetRef ref, Future<T> Function() f) async {
+Future<T> tokenExpireWrapper<T>(Ref ref, Future<T> Function() f) async {
   try {
     return await f();
   } catch (error, stackTrace) {
-    return _tokenExpireInternal(ref as Ref, f, error, stackTrace);
+    return _tokenExpireInternal(ref, f, error, stackTrace);
   }
 }
 
@@ -24,7 +24,7 @@ void tokenExpireWrapperAuth(Ref ref, Future<dynamic> Function() f) async {
   }
 }
 
-Future<T?> _tokenExpireInternal<T>(
+Future<T> _tokenExpireInternal<T>(
   Ref ref,
   Future<T> Function() f,
   dynamic error,
@@ -38,7 +38,12 @@ Future<T?> _tokenExpireInternal<T>(
   if (error is AppException &&
       error.type == ErrorType.tokenExpire &&
       isLoggedIn) {
-    if (refreshedToken.isLoading) return null;
+    if (refreshedToken.isLoading) {
+      return throw (AppException(
+        ErrorType.tokenRefreshing,
+        "Token is refreshing, please wait.",
+      ));
+    }
     try {
       final hasRefreshed = await refreshTokenFuture;
       if (hasRefreshed) {
@@ -49,9 +54,6 @@ Future<T?> _tokenExpireInternal<T>(
     } catch (e) {
       tokenNotifier.signOut();
     }
-  } else {
-    // Re-throw if it's not a token expiration error
-    Error.throwWithStackTrace(error, stackTrace);
   }
-  return null;
+  Error.throwWithStackTrace(error, stackTrace);
 }

@@ -12,6 +12,8 @@ import 'package:path_provider/path_provider.dart';
 abstract class LogoRepository extends Repository {
   static const String expiredTokenDetail = "Could not validate credentials";
 
+  LogoRepository(super.ref);
+
   Future<Uint8List> getLogo(String id, {String suffix = ""}) async {
     try {
       final response = await http.get(
