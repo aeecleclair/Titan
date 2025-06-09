@@ -8,6 +8,8 @@ class UserListRepository extends Repository {
   // ignore: overridden_fields
   final ext = "users/";
 
+  UserListRepository(super.ref);
+
   Future<List<SimpleUser>> getAllUsers() async {
     return List<SimpleUser>.from(
       (await getList()).map((x) => SimpleUser.fromJson(x)),
@@ -41,5 +43,5 @@ class UserListRepository extends Repository {
 
 final userListRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return UserListRepository()..setToken(token);
+  return UserListRepository(ref)..setToken(token);
 });

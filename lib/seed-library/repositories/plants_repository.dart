@@ -10,6 +10,8 @@ class PlantsRepository extends Repository {
   // ignore: overridden_fields
   final ext = "seed_library/plants/";
 
+  PlantsRepository(super.ref);
+
   Future<List<PlantSimple>> getPlantSimplelist() async {
     return List<PlantSimple>.from(
       (await getList(suffix: "waiting")).map((x) => PlantSimple.fromJson(x)),
@@ -57,5 +59,5 @@ class PlantsRepository extends Repository {
 
 final plantsRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return PlantsRepository()..setToken(token);
+  return PlantsRepository(ref)..setToken(token);
 });

@@ -9,6 +9,8 @@ class StructuresRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'myeclpay/structures';
 
+  StructuresRepository(super.ref);
+
   Future<Structure> createStructure(Structure structure) async {
     return Structure.fromJson(await create(structure.toJson()));
   }
@@ -53,5 +55,5 @@ class StructuresRepository extends Repository {
 
 final structuresRepositoryProvider = Provider<StructuresRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return StructuresRepository()..setToken(token);
+  return StructuresRepository(ref)..setToken(token);
 });

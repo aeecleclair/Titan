@@ -23,7 +23,6 @@ import 'package:myecl/amap/ui/pages/main_page/collection_slot_selector.dart';
 import 'package:myecl/amap/ui/pages/main_page/delivery_section.dart';
 import 'package:myecl/amap/ui/pages/main_page/orders_section.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -226,10 +225,9 @@ class AmapMainPage extends HookConsumerWidget {
                         WaitingButton(
                           onTap: () async {
                             if (availableDeliveriesIds.contains(delivery.id)) {
-                              await tokenExpireWrapper(ref, () async {
-                                await deliveryProductListNotifier
-                                    .loadProductList(delivery.products);
-                              });
+                              await deliveryProductListNotifier.loadProductList(
+                                delivery.products,
+                              );
                               QR.to(AmapRouter.root + AmapRouter.listProduct);
                             } else {
                               displayToastWithoutContext(

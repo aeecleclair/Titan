@@ -7,6 +7,8 @@ class VotedSectionRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'campaign/votes';
 
+  VotedSectionRepository(super.ref);
+
   Future<List<String>> getVotes() async {
     return (await getList()).cast();
   }
@@ -14,5 +16,5 @@ class VotedSectionRepository extends Repository {
 
 final votedSectionRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return VotedSectionRepository()..setToken(token);
+  return VotedSectionRepository(ref)..setToken(token);
 });

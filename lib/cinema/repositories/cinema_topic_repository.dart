@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class CinemaTopicRepository extends Repository {
@@ -5,6 +6,8 @@ class CinemaTopicRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'notification/';
   final prefix = "cinema_";
+
+  CinemaTopicRepository(super.ref);
 
   Future<bool> subscribeSession(String topic) async {
     return await create({}, suffix: "topics/$prefix$topic/subscribe");
@@ -22,3 +25,7 @@ class CinemaTopicRepository extends Repository {
     );
   }
 }
+
+final cinemaTopicRepositoryProvider = Provider((ref) {
+  return CinemaTopicRepository(ref);
+});

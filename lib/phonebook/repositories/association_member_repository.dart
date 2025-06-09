@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/class/membership.dart';
 import 'package:myecl/tools/repository/repository.dart';
@@ -6,6 +7,8 @@ class AssociationMemberRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "phonebook/associations/";
+
+  AssociationMemberRepository(super.ref);
 
   Future<List<CompleteMember>> getAssociationMemberList(
     String associationId,
@@ -36,3 +39,8 @@ class AssociationMemberRepository extends Repository {
     return await delete("memberships/$membershipId");
   }
 }
+
+final associationMemberRepositoryProvider =
+    Provider<AssociationMemberRepository>(
+      (ref) => AssociationMemberRepository(ref),
+    );

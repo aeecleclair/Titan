@@ -28,6 +28,6 @@ class GroupLogoNotifier extends SingleNotifier<Image> {
 
 final groupLogoProvider =
     StateNotifierProvider<GroupLogoNotifier, AsyncValue<Image>>((ref) {
-      final groupLogoRepository = GroupLogoRepository();
+      final groupLogoRepository = GroupLogoRepository(ref);
       return GroupLogoNotifier(groupLogoRepository: groupLogoRepository);
     });

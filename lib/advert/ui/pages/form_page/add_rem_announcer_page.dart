@@ -10,7 +10,6 @@ import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/ui/pages/form_page/announcer_card.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 
@@ -67,35 +66,33 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                     canAdd
                                         .map(
                                           (e) => GestureDetector(
-                                            onTap: () {
+                                            onTap: () async {
                                               Announcer newAnnouncer =
                                                   Announcer(
                                                     groupManagerId: e.id,
                                                     id: '',
                                                     name: e.name,
                                                   );
-                                              tokenExpireWrapper(ref, () async {
-                                                final value =
-                                                    await announcerListNotifier
-                                                        .addAnnouncer(
-                                                          newAnnouncer,
-                                                        );
-                                                if (value) {
-                                                  displayToastWithContext(
-                                                    TypeMsg.msg,
-                                                    AdvertTextConstants
-                                                        .addedAnnouncer,
-                                                  );
-                                                } else {
-                                                  displayToastWithContext(
-                                                    TypeMsg.error,
-                                                    AdvertTextConstants
-                                                        .addingError,
-                                                  );
-                                                }
-                                                announcerListNotifier
-                                                    .loadAllAnnouncerList();
-                                              });
+                                              final value =
+                                                  await announcerListNotifier
+                                                      .addAnnouncer(
+                                                        newAnnouncer,
+                                                      );
+                                              if (value) {
+                                                displayToastWithContext(
+                                                  TypeMsg.msg,
+                                                  AdvertTextConstants
+                                                      .addedAnnouncer,
+                                                );
+                                              } else {
+                                                displayToastWithContext(
+                                                  TypeMsg.error,
+                                                  AdvertTextConstants
+                                                      .addingError,
+                                                );
+                                              }
+                                              announcerListNotifier
+                                                  .loadAllAnnouncerList();
                                             },
                                             child: AnnouncerCard(
                                               e: e,
@@ -117,34 +114,35 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                     descriptions:
                                                         AdvertTextConstants
                                                             .deleteAnnouncer,
-                                                    onYes: () {
-                                                      tokenExpireWrapper(ref, () async {
-                                                        final value = await announcerListNotifier
-                                                            .deleteAnnouncer(
-                                                              announcers
-                                                                  .where(
-                                                                    (element) =>
-                                                                        e.id ==
-                                                                        e.id,
-                                                                  )
-                                                                  .toList()[0],
-                                                            );
-                                                        if (value) {
-                                                          displayToastWithContext(
-                                                            TypeMsg.msg,
-                                                            AdvertTextConstants
-                                                                .removedAnnouncer,
-                                                          );
-                                                        } else {
-                                                          displayToastWithContext(
-                                                            TypeMsg.error,
-                                                            AdvertTextConstants
-                                                                .removingError,
-                                                          );
-                                                        }
-                                                        announcerListNotifier
-                                                            .loadAllAnnouncerList();
-                                                      });
+                                                    onYes: () async {
+                                                      final value =
+                                                          await announcerListNotifier
+                                                              .deleteAnnouncer(
+                                                                announcers
+                                                                    .where(
+                                                                      (
+                                                                        element,
+                                                                      ) =>
+                                                                          e.id ==
+                                                                          e.id,
+                                                                    )
+                                                                    .toList()[0],
+                                                              );
+                                                      if (value) {
+                                                        displayToastWithContext(
+                                                          TypeMsg.msg,
+                                                          AdvertTextConstants
+                                                              .removedAnnouncer,
+                                                        );
+                                                      } else {
+                                                        displayToastWithContext(
+                                                          TypeMsg.error,
+                                                          AdvertTextConstants
+                                                              .removingError,
+                                                        );
+                                                      }
+                                                      announcerListNotifier
+                                                          .loadAllAnnouncerList();
                                                     },
                                                   );
                                                 },

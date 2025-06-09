@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/raffle/class/prize.dart';
 import 'package:myecl/raffle/class/tickets.dart';
 import 'package:myecl/tools/repository/repository.dart';
@@ -6,6 +7,8 @@ class UserDetailRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "tombola/users";
+
+  UserDetailRepository(super.ref);
 
   Future<List<Ticket>> getTicketsListByUserId(String userId) async {
     return List<Ticket>.from(
@@ -21,3 +24,7 @@ class UserDetailRepository extends Repository {
     );
   }
 }
+
+final userDetailRepositoryProvider = Provider<UserDetailRepository>((ref) {
+  return UserDetailRepository(ref);
+});

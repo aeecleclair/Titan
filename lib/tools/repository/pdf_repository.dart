@@ -13,6 +13,8 @@ import 'package:path_provider/path_provider.dart';
 abstract class PdfRepository extends Repository {
   static const String expiredTokenDetail = "Could not validate credentials";
 
+  PdfRepository(super.ref);
+
   Future<Uint8List> getPdf(String id, {String suffix = ""}) async {
     try {
       final response = await http.get(

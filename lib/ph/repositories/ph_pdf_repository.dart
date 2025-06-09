@@ -9,6 +9,8 @@ class PhPdfRepository extends PdfRepository {
   // ignore: overridden_fields
   final ext = "ph/";
 
+  PhPdfRepository(super.ref);
+
   Future<Uint8List> getPhPdf(String id) async {
     final uint8List = await getPdf("", suffix: "$id/pdf");
     return uint8List;
@@ -22,5 +24,5 @@ class PhPdfRepository extends PdfRepository {
 
 final phPdfRepositoryProvider = Provider<PhPdfRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return PhPdfRepository()..setToken(token);
+  return PhPdfRepository(ref)..setToken(token);
 });

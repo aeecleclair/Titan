@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/purchases/class/ticket.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/class/simple_users.dart';
@@ -6,6 +7,8 @@ class ScannerRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "cdr/sellers/";
+
+  ScannerRepository(super.ref);
 
   Future<Ticket> scanTicket(
     String sellerId,
@@ -60,3 +63,7 @@ class ScannerRepository extends Repository {
     );
   }
 }
+
+final scannerRepositoryProvider = Provider<ScannerRepository>(
+  (ref) => ScannerRepository(ref),
+);

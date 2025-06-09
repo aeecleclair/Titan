@@ -1,18 +1,14 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/service/class/message.dart';
 import 'package:myecl/service/providers/firebase_token_provider.dart';
 import 'package:myecl/service/repositories/notification_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 
 class MessagesProvider extends ListNotifier<Message> {
-  final NotificationRepository notificationRepository =
-      NotificationRepository();
+  final NotificationRepository notificationRepository;
   String firebaseToken = "";
-  MessagesProvider({required String token})
-    : super(const AsyncValue.loading()) {
-    notificationRepository.setToken(token);
-  }
+  MessagesProvider(this.notificationRepository)
+    : super(const AsyncValue.loading());
 
   void setFirebaseToken(String token) {
     firebaseToken = token;
@@ -35,9 +31,9 @@ class MessagesProvider extends ListNotifier<Message> {
 
 final messagesProvider =
     StateNotifierProvider<MessagesProvider, AsyncValue<List<Message>>>((ref) {
-      final token = ref.watch(tokenProvider);
       final firebaseToken = ref.watch(firebaseTokenProvider);
-      MessagesProvider notifier = MessagesProvider(token: token);
+      final notificationRepository = ref.watch(notificationRepositoryProvider);
+      MessagesProvider notifier = MessagesProvider(notificationRepository);
       firebaseToken.then((value) => notifier.setFirebaseToken(value));
       return notifier;
     });

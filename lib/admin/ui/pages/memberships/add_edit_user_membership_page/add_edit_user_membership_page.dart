@@ -10,7 +10,6 @@ import 'package:myecl/admin/ui/admin.dart';
 import 'package:myecl/admin/ui/pages/memberships/add_edit_user_membership_page/search_result.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -60,13 +59,11 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                   label: AdminTextConstants.user,
                   editingController: queryController,
                   onChanged: (value) async {
-                    tokenExpireWrapper(ref, () async {
-                      if (value.isNotEmpty) {
-                        await usersNotifier.filterUsers(value);
-                      } else {
-                        usersNotifier.clear();
-                      }
-                    });
+                    if (value.isNotEmpty) {
+                      await usersNotifier.filterUsers(value);
+                    } else {
+                      usersNotifier.clear();
+                    }
                   },
                 ),
                 SearchResult(queryController: queryController),
@@ -133,66 +130,62 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                     return;
                   }
 
-                  tokenExpireWrapper(ref, () async {
-                    if (DateTime.parse(
-                      processDateBack(start.text),
-                    ).isAfter(DateTime.parse(processDateBack(end.text)))) {
+                  if (DateTime.parse(
+                    processDateBack(start.text),
+                  ).isAfter(DateTime.parse(processDateBack(end.text)))) {
+                    displayToastWithContext(
+                      TypeMsg.error,
+                      AdminTextConstants.dateError,
+                    );
+                    return;
+                  }
+                  if (isEdit) {
+                    final value = await associationMembershipMembersNotifier
+                        .updateMember(
+                          membership.copyWith(
+                            startDate: DateTime.parse(
+                              processDateBack(start.text),
+                            ),
+                            endDate: DateTime.parse(processDateBack(end.text)),
+                          ),
+                        );
+                    if (value) {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        AdminTextConstants.updatedMembership,
+                      );
+                      QR.back();
+                    } else {
                       displayToastWithContext(
                         TypeMsg.error,
-                        AdminTextConstants.dateError,
+                        AdminTextConstants.membershipUpdatingError,
                       );
-                      return;
                     }
-                    if (isEdit) {
-                      final value = await associationMembershipMembersNotifier
-                          .updateMember(
-                            membership.copyWith(
-                              startDate: DateTime.parse(
-                                processDateBack(start.text),
-                              ),
-                              endDate: DateTime.parse(
-                                processDateBack(end.text),
-                              ),
-                            ),
-                          );
-                      if (value) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AdminTextConstants.updatedMembership,
-                        );
-                        QR.back();
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AdminTextConstants.membershipUpdatingError,
-                        );
-                      }
+                  } else {
+                    // Test if the membership already exists with (association_id,member_id,mandate_year)
+                    final membershipAdd = UserAssociationMembershipBase(
+                      id: "",
+                      associationMembershipId:
+                          membership.associationMembershipId,
+                      userId: membership.user.id,
+                      startDate: DateTime.parse(processDateBack(start.text)),
+                      endDate: DateTime.parse(processDateBack(end.text)),
+                    );
+                    final value = await associationMembershipMembersNotifier
+                        .addMember(membershipAdd, membership.user);
+                    if (value) {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        AdminTextConstants.addedMember,
+                      );
+                      QR.back();
                     } else {
-                      // Test if the membership already exists with (association_id,member_id,mandate_year)
-                      final membershipAdd = UserAssociationMembershipBase(
-                        id: "",
-                        associationMembershipId:
-                            membership.associationMembershipId,
-                        userId: membership.user.id,
-                        startDate: DateTime.parse(processDateBack(start.text)),
-                        endDate: DateTime.parse(processDateBack(end.text)),
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        AdminTextConstants.membershipAddingError,
                       );
-                      final value = await associationMembershipMembersNotifier
-                          .addMember(membershipAdd, membership.user);
-                      if (value) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AdminTextConstants.addedMember,
-                        );
-                        QR.back();
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AdminTextConstants.membershipAddingError,
-                        );
-                      }
                     }
-                  });
+                  }
                 },
               ),
             ],

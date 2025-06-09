@@ -17,7 +17,6 @@ import 'package:myecl/paiement/ui/pages/devices_page/device_item.dart';
 import 'package:myecl/paiement/ui/pages/main_page/account_card/device_dialog_box.dart';
 import 'package:myecl/paiement/ui/paiement.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
@@ -158,30 +157,27 @@ class DevicesPage extends HookConsumerWidget {
                                 descriptions:
                                     "Vous ne pourrez plus utiliser cet appareil pour les paiements",
                                 onYes: () async {
-                                  tokenExpireWrapper(ref, () async {
-                                    final value = await devicesNotifier
-                                        .revokeDevice(
-                                          device.copyWith(
-                                            status: WalletDeviceStatus.revoked,
-                                          ),
-                                        );
-                                    if (value) {
-                                      displayToastWithContext(
-                                        TypeMsg.msg,
-                                        "Appareil révoqué",
+                                  final value = await devicesNotifier
+                                      .revokeDevice(
+                                        device.copyWith(
+                                          status: WalletDeviceStatus.revoked,
+                                        ),
                                       );
-                                      final savedId = await keyService
-                                          .getKeyId();
-                                      if (savedId == device.id) {
-                                        await keyService.clear();
-                                      }
-                                    } else {
-                                      displayToastWithContext(
-                                        TypeMsg.error,
-                                        "Erreur lors de la révocation de l'appareil",
-                                      );
+                                  if (value) {
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      "Appareil révoqué",
+                                    );
+                                    final savedId = await keyService.getKeyId();
+                                    if (savedId == device.id) {
+                                      await keyService.clear();
                                     }
-                                  });
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      "Erreur lors de la révocation de l'appareil",
+                                    );
+                                  }
                                 },
                               );
                             },

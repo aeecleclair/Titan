@@ -18,7 +18,6 @@ import 'package:myecl/paiement/ui/pages/main_page/main_card_button.dart';
 import 'package:myecl/paiement/ui/pages/main_page/main_card_template.dart';
 import 'package:myecl/paiement/ui/pages/pay_page/pay_page.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -98,78 +97,76 @@ class AccountCard extends HookConsumerWidget {
             icon: HeroIcons.qrCode,
             title: "Payer",
             onPressed: () async {
-              await tokenExpireWrapper(ref, () async {
-                if (!hasAcceptedToS) {
-                  displayToastWithContext(
-                    TypeMsg.error,
-                    "Veuillez accepter les Conditions Générales d'Utilisation.",
-                  );
-                  return;
-                }
-                String? keyId = await keyService.getKeyId();
-                if (keyId == null) {
-                  await showDialog(
-                    context: context,
-                    builder: (context) {
-                      return DeviceDialogBox(
-                        title: 'Appareil non enregistré',
-                        descriptions:
-                            'Votre appareil n\'est pas encore enregistré. \nPour l\'enregistrer, veuillez vous rendre sur la page des appareils.',
-                        buttonText: 'Accéder à la page',
-                        onClick: () {
-                          QR.to(PaymentRouter.root + PaymentRouter.devices);
-                        },
-                      );
-                    },
-                  );
-                  return;
-                }
-                final device = await deviceNotifier.getDevice(keyId);
-                device.when(
-                  data: (device) async {
-                    if (device.status == WalletDeviceStatus.active) {
-                      showPayModal();
-                    } else if (device.status == WalletDeviceStatus.inactive) {
-                      await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return DeviceDialogBox(
-                            title: 'Appareil non activé',
-                            descriptions:
-                                'Votre appareil n\'est pas encore activé. \nPour l\'activer, veuillez vous rendre sur la page des appareils.',
-                            buttonText: 'Accéder à la page',
-                            onClick: () {
-                              QR.to(PaymentRouter.root + PaymentRouter.devices);
-                            },
-                          );
-                        },
-                      );
-                    } else {
-                      await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return DeviceDialogBox(
-                            title: 'Appareil révoqué',
-                            descriptions:
-                                'Votre appareil a été révoqué. \nPour le réactiver, veuillez vous rendre sur la page des appareils.',
-                            buttonText: 'Accéder à la page',
-                            onClick: () {
-                              QR.to(PaymentRouter.root + PaymentRouter.devices);
-                            },
-                          );
-                        },
-                      );
-                    }
-                  },
-                  error: (e, s) {
-                    displayToastWithContext(
-                      TypeMsg.error,
-                      "Erreur lors de la récupération de l'appareil",
+              if (!hasAcceptedToS) {
+                displayToastWithContext(
+                  TypeMsg.error,
+                  "Veuillez accepter les Conditions Générales d'Utilisation.",
+                );
+                return;
+              }
+              String? keyId = await keyService.getKeyId();
+              if (keyId == null) {
+                await showDialog(
+                  context: context,
+                  builder: (context) {
+                    return DeviceDialogBox(
+                      title: 'Appareil non enregistré',
+                      descriptions:
+                          'Votre appareil n\'est pas encore enregistré. \nPour l\'enregistrer, veuillez vous rendre sur la page des appareils.',
+                      buttonText: 'Accéder à la page',
+                      onClick: () {
+                        QR.to(PaymentRouter.root + PaymentRouter.devices);
+                      },
                     );
                   },
-                  loading: () {},
                 );
-              });
+                return;
+              }
+              final device = await deviceNotifier.getDevice(keyId);
+              device.when(
+                data: (device) async {
+                  if (device.status == WalletDeviceStatus.active) {
+                    showPayModal();
+                  } else if (device.status == WalletDeviceStatus.inactive) {
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return DeviceDialogBox(
+                          title: 'Appareil non activé',
+                          descriptions:
+                              'Votre appareil n\'est pas encore activé. \nPour l\'activer, veuillez vous rendre sur la page des appareils.',
+                          buttonText: 'Accéder à la page',
+                          onClick: () {
+                            QR.to(PaymentRouter.root + PaymentRouter.devices);
+                          },
+                        );
+                      },
+                    );
+                  } else {
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return DeviceDialogBox(
+                          title: 'Appareil révoqué',
+                          descriptions:
+                              'Votre appareil a été révoqué. \nPour le réactiver, veuillez vous rendre sur la page des appareils.',
+                          buttonText: 'Accéder à la page',
+                          onClick: () {
+                            QR.to(PaymentRouter.root + PaymentRouter.devices);
+                          },
+                        );
+                      },
+                    );
+                  }
+                },
+                error: (e, s) {
+                  displayToastWithContext(
+                    TypeMsg.error,
+                    "Erreur lors de la récupération de l'appareil",
+                  );
+                },
+                loading: () {},
+              );
             },
           ),
         MainCardButton(

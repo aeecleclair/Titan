@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/raffle/class/tickets.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -5,6 +6,8 @@ class TicketRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "tombola/tickets";
+
+  TicketRepository(super.ref);
 
   Future<Ticket> getTicket(String id) async {
     return Ticket.fromJson(await getOne("/$id"));
@@ -31,3 +34,7 @@ class TicketRepository extends Repository {
     );
   }
 }
+
+final ticketRepositoryProvider = Provider<TicketRepository>((ref) {
+  return TicketRepository(ref);
+});

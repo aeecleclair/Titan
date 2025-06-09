@@ -6,6 +6,7 @@ enum ErrorType {
   unexpectedResponse,
   apiError,
   noDefaultValue,
+  tokenRefreshing,
 }
 
 class AppException implements Exception {

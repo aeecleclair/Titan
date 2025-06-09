@@ -10,6 +10,8 @@ class FundingRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'myeclpay/transfer/';
 
+  FundingRepository(super.ref);
+
   Future getAdminPaymentUrl(Transfer transfer) async {
     return await create(transfer.toJson(), suffix: "admin");
   }
@@ -21,5 +23,5 @@ class FundingRepository extends Repository {
 
 final fundingRepositoryProvider = Provider<FundingRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return FundingRepository()..setToken(token);
+  return FundingRepository(ref)..setToken(token);
 });

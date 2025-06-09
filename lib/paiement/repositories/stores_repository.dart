@@ -12,6 +12,8 @@ class StoresRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'myeclpay/stores';
 
+  StoresRepository(super.ref);
+
   Future<bool> updateStore(Store store) async {
     return await update(store.toJson(), "/${store.id}");
   }
@@ -58,5 +60,5 @@ class StoresRepository extends Repository {
 
 final storesRepositoryProvider = Provider<StoresRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return StoresRepository()..setToken(token);
+  return StoresRepository(ref)..setToken(token);
 });

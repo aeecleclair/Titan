@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/raffle/class/raffle.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -5,6 +6,8 @@ class RaffleRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "tombola/raffles";
+
+  RaffleRepository(super.ref);
 
   Future<List<Raffle>> getRaffleList() async {
     return List<Raffle>.from((await getList()).map((x) => Raffle.fromJson(x)));
@@ -34,3 +37,7 @@ class RaffleRepository extends Repository {
     return await update(raffle.toJson(), "/${raffle.id}", suffix: "/lock");
   }
 }
+
+final raffleRepositoryProvider = Provider<RaffleRepository>((ref) {
+  return RaffleRepository(ref);
+});

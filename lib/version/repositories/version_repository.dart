@@ -7,6 +7,8 @@ class VersionRepository extends Repository {
   // ignore: overridden_fields
   final ext = "information";
 
+  VersionRepository(super.ref);
+
   Future<Version> getVersion() async {
     initLogger();
     return Version.fromJson(await getOne(""));
@@ -14,5 +16,5 @@ class VersionRepository extends Repository {
 }
 
 final versionRepositoryProvider = Provider((ref) {
-  return VersionRepository();
+  return VersionRepository(ref);
 });

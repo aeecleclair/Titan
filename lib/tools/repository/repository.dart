@@ -1,15 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:myecl/tools/cache/cache_manager.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/logs/logger.dart';
+import 'package:myecl/tools/token_expire_wrapper.dart';
 
 enum HttpMethod { get, post, patch, delete, put }
 
 abstract class Repository {
+  final Ref ref;
   static final String host = getTitanHost();
   static const String expiredTokenDetail = "Could not validate credentials";
   final String ext = "";
@@ -19,6 +22,10 @@ abstract class Repository {
   };
   final cacheManager = CacheManager();
   static final Logger logger = Logger();
+
+  Repository(this.ref) {
+    initLogger();
+  }
 
   void initLogger() {
     logger.init();
@@ -168,6 +175,26 @@ abstract class Repository {
     }
   }
 
+  Future<T> _requestWithRefreshToken<T>({
+    required HttpMethod method,
+    required String path,
+    Object? body,
+    T Function(String decodedBody)? parseSuccess,
+    required T Function() onErrorDefault,
+    bool cacheResponse = false,
+  }) async {
+    return await tokenExpireWrapper(ref, () async {
+      return await _request<T>(
+        method: method,
+        path: path,
+        body: body,
+        parseSuccess: parseSuccess,
+        onErrorDefault: onErrorDefault,
+        cacheResponse: cacheResponse,
+      );
+    });
+  }
+
   /// Fetches a list of items from the API.
   ///
   /// The request is made to `ext/suffix`.
@@ -177,7 +204,7 @@ abstract class Repository {
   /// Returns a `Future` that resolves to a `List<T>`. Defaults to an empty list
   /// if no data is available from the network or cache.
   Future<List<T>> getList<T>({String suffix = ""}) async {
-    return _request<List<T>>(
+    return _requestWithRefreshToken<List<T>>(
       method: HttpMethod.get,
       path: ext + suffix,
       onErrorDefault: () => [],
@@ -196,7 +223,7 @@ abstract class Repository {
   /// Throws an [AppException] with `ErrorType.noDefaultValue` if the item
   /// is not found and no default value can be provided.
   Future<T> getOne<T>(String id, {String suffix = ""}) async {
-    return _request<T>(
+    return _requestWithRefreshToken<T>(
       method: HttpMethod.get,
       path: ext + id + suffix,
       onErrorDefault: () => throw AppException(
@@ -217,7 +244,7 @@ abstract class Repository {
   /// Returns a `Future` that resolves to an object of type `T` representing
   /// the created item. Throws an [AppException] on creation failure.
   Future<T> create<T>(dynamic t, {String suffix = ""}) async {
-    return _request<T>(
+    return _requestWithRefreshToken<T>(
       method: HttpMethod.post,
       path: ext + suffix,
       body: jsonEncode(t),
@@ -237,7 +264,7 @@ abstract class Repository {
   /// [suffix]: Optional additional path segment.
   /// Returns a `Future` that resolves to `true` on successful update, `false` otherwise.
   Future<bool> update(dynamic t, String tId, {String suffix = ""}) async {
-    return _request<bool>(
+    return _requestWithRefreshToken<bool>(
       method: HttpMethod.patch,
       path: ext + tId + suffix,
       body: jsonEncode(t),
@@ -257,7 +284,7 @@ abstract class Repository {
   /// [suffix]: Optional additional path segment.
   /// Returns a `Future` that resolves to `true` on successful deletion, `false` otherwise.
   Future<bool> delete(String tId, {String suffix = ""}) async {
-    return _request<bool>(
+    return _requestWithRefreshToken<bool>(
       method: HttpMethod.delete,
       path: ext + tId + suffix,
       parseSuccess: (decodedBody) {

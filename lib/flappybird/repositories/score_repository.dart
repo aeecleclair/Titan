@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/flappybird/class/score.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -6,6 +7,8 @@ class ScoreRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "flappybird/";
+
+  ScoreRepository(super.ref);
 
   Future<List<Score>> getLeaderboard() async {
     return List<Score>.from(
@@ -27,3 +30,7 @@ class ScoreRepository extends Repository {
     return Score.fromJson(response);
   }
 }
+
+final scoreRepositoryProvider = Provider<ScoreRepository>((ref) {
+  return ScoreRepository(ref);
+});
