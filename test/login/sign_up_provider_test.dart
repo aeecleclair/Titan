@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/login/class/account_type.dart';
-import 'package:myecl/login/class/create_account.dart';
-import 'package:myecl/login/class/recover_request.dart';
-import 'package:myecl/login/providers/sign_up_provider.dart';
-import 'package:myecl/login/repositories/sign_up_repository.dart';
+import 'package:titan/login/class/account_type.dart';
+import 'package:titan/login/class/create_account.dart';
+import 'package:titan/login/class/recover_request.dart';
+import 'package:titan/login/providers/sign_up_provider.dart';
+import 'package:titan/login/repositories/sign_up_repository.dart';
 
 class MockSignUpRepository extends Mock implements SignUpRepository {}
 

@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/user_association_membership.dart';
-import 'package:myecl/admin/class/user_association_membership_base.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/admin/class/user_association_membership.dart';
+import 'package:titan/admin/class/user_association_membership_base.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class AssociationMembershipUserRepository extends Repository {
   @override

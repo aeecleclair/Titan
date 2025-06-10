@@ -1,29 +1,29 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/paiement/providers/is_payment_admin.dart';
-import 'package:myecl/paiement/ui/pages/admin_page/admin_page.dart'
+import 'package:titan/drawer/class/module.dart';
+import 'package:titan/paiement/providers/is_payment_admin.dart';
+import 'package:titan/paiement/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
-import 'package:myecl/paiement/ui/pages/fund_page/web_view_modal.dart'
+import 'package:titan/paiement/ui/pages/fund_page/web_view_modal.dart'
     deferred as fund_page;
-import 'package:myecl/paiement/ui/pages/store_pages/add_edit_store.dart'
+import 'package:titan/paiement/ui/pages/store_pages/add_edit_store.dart'
     deferred as add_edit_page;
-import 'package:myecl/paiement/ui/pages/store_admin_page/store_admin_page.dart'
+import 'package:titan/paiement/ui/pages/store_admin_page/store_admin_page.dart'
     deferred as store_admin_page;
-import 'package:myecl/paiement/ui/pages/devices_page/devices_page.dart'
+import 'package:titan/paiement/ui/pages/devices_page/devices_page.dart'
     deferred as devices_page;
-import 'package:myecl/paiement/ui/pages/main_page/main_page.dart'
+import 'package:titan/paiement/ui/pages/main_page/main_page.dart'
     deferred as main_page;
-import 'package:myecl/paiement/ui/pages/stats_page/stats_page.dart'
+import 'package:titan/paiement/ui/pages/stats_page/stats_page.dart'
     deferred as stats_page;
-import 'package:myecl/paiement/ui/pages/store_stats_page/store_stats_page.dart'
+import 'package:titan/paiement/ui/pages/store_stats_page/store_stats_page.dart'
     deferred as store_stats_page;
-import 'package:myecl/paiement/ui/pages/transfer_structure_page/transfer_structure_page.dart'
+import 'package:titan/paiement/ui/pages/transfer_structure_page/transfer_structure_page.dart'
     deferred as transfer_structure_page;
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:titan/tools/middlewares/admin_middleware.dart';
+import 'package:titan/tools/middlewares/authenticated_middleware.dart';
+import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PaymentRouter {

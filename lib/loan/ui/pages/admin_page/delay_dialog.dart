@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/loan/tools/constants.dart';
+import 'package:titan/loan/tools/constants.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class DelayDialog extends StatefulWidget {

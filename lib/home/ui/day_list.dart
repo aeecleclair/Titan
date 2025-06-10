@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/event/providers/day_sorted_event_list_provider.dart';
-import 'package:myecl/event/providers/sorted_event_list_provider.dart';
-import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/home/providers/days_provider.dart';
-import 'package:myecl/home/providers/number_day_provider.dart';
-import 'package:myecl/home/ui/day_card.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/event/providers/day_sorted_event_list_provider.dart';
+import 'package:titan/event/providers/sorted_event_list_provider.dart';
+import 'package:titan/event/tools/functions.dart';
+import 'package:titan/home/providers/days_provider.dart';
+import 'package:titan/home/providers/number_day_provider.dart';
+import 'package:titan/home/ui/day_card.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 
 class DayList extends HookConsumerWidget {
   final ScrollController scrollController, daysEventScrollController;

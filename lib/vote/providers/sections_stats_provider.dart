@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/providers/map_provider.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/vote/class/section.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
+import 'package:titan/tools/providers/map_provider.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/vote/class/section.dart';
+import 'package:titan/vote/providers/sections_provider.dart';
 
 class SectionsStatsNotifier extends MapNotifier<Section, int> {
   SectionsStatsNotifier();

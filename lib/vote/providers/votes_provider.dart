@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/vote/class/votes.dart';
-import 'package:myecl/vote/repositories/votes_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/vote/class/votes.dart';
+import 'package:titan/vote/repositories/votes_repository.dart';
 
 class VotesProvider extends ListNotifier<Votes> {
   final VotesRepository votesRepository;

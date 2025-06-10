@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:titan/loan/class/item.dart';
+import 'package:titan/loan/tools/constants.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
 
 class CheckItemCard extends StatelessWidget {
   final Item item;

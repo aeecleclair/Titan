@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/router.dart';
-import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/admin/ui/admin.dart';
-import 'package:myecl/admin/ui/pages/main_page/menu_card_ui.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:titan/admin/router.dart';
+import 'package:titan/admin/tools/constants.dart';
+import 'package:titan/admin/ui/admin.dart';
+import 'package:titan/admin/ui/pages/main_page/menu_card_ui.dart';
+import 'package:titan/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminMainPage extends HookConsumerWidget {

@@ -1,5 +1,5 @@
-import 'package:myecl/paiement/class/history_refund.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/paiement/class/history_refund.dart';
+import 'package:titan/tools/functions.dart';
 
 enum HistoryType { transfer, received, given, refundCredited, refundDebited }
 

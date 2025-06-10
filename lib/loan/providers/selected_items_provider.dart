@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/loan_provider.dart';
+import 'package:titan/loan/class/item.dart';
+import 'package:titan/loan/class/loan.dart';
+import 'package:titan/loan/providers/item_list_provider.dart';
+import 'package:titan/loan/providers/loan_provider.dart';
 
 final selectedListProvider =
     StateNotifierProvider<SelectedListProvider, List<int>>((ref) {

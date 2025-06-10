@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/class/user.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/tools/repository/repository.dart';
+import 'package:titan/user/class/user.dart';
 
 class UserRepository extends Repository {
   @override

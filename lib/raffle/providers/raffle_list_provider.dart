@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/repositories/raffle_repositories.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/raffle/class/raffle.dart';
+import 'package:titan/raffle/repositories/raffle_repositories.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class RaffleListNotifier extends ListNotifier<Raffle> {
   final RaffleRepository raffleRepository = RaffleRepository();

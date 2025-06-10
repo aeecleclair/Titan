@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/paiement/class/seller.dart';
-import 'package:myecl/paiement/providers/selected_store_provider.dart';
-import 'package:myecl/paiement/providers/store_sellers_list_provider.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/paiement/class/seller.dart';
+import 'package:titan/paiement/providers/selected_store_provider.dart';
+import 'package:titan/paiement/providers/store_sellers_list_provider.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/layouts/card_button.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 
 class SellerRightCard extends ConsumerWidget {
   final Seller me;

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/item_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/providers/loaners_items_provider.dart';
-import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/ui/loan.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:titan/loan/class/item.dart';
+import 'package:titan/loan/providers/item_list_provider.dart';
+import 'package:titan/loan/providers/item_provider.dart';
+import 'package:titan/loan/providers/loaner_provider.dart';
+import 'package:titan/loan/providers/loaners_items_provider.dart';
+import 'package:titan/loan/tools/constants.dart';
+import 'package:titan/loan/ui/loan.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditItemPage extends HookConsumerWidget {

@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/order.dart';
+import 'package:titan/amap/class/order.dart';
 
 class OrderNotifier extends StateNotifier<Order> {
   OrderNotifier() : super(Order.empty());

@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/prize.dart';
-import 'package:myecl/raffle/tools/constants.dart';
+import 'package:titan/raffle/class/prize.dart';
+import 'package:titan/raffle/tools/constants.dart';
 
 class PrizeDialog extends HookConsumerWidget {
   final Prize prize;

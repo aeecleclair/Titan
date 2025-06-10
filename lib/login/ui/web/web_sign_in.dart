@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/login/ui/web/left_panel.dart';
-import 'package:myecl/login/ui/web/right_panel.dart';
+import 'package:titan/login/ui/web/left_panel.dart';
+import 'package:titan/login/ui/web/right_panel.dart';
 
 class WebSignIn extends StatelessWidget {
   const WebSignIn({super.key});

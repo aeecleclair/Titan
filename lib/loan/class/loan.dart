@@ -1,7 +1,7 @@
-import 'package:myecl/loan/class/item_quantity.dart';
-import 'package:myecl/loan/class/loaner.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/loan/class/item_quantity.dart';
+import 'package:titan/loan/class/loaner.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class Loan {
   final String id;

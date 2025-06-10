@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/recommendation/class/recommendation.dart';
-import 'package:myecl/recommendation/providers/is_recommendation_admin_provider.dart';
-import 'package:myecl/recommendation/providers/recommendation_list_provider.dart';
-import 'package:myecl/recommendation/providers/recommendation_provider.dart';
-import 'package:myecl/recommendation/router.dart';
-import 'package:myecl/recommendation/ui/widgets/recommendation_card.dart';
-import 'package:myecl/recommendation/ui/widgets/recommendation_card_layout.dart';
-import 'package:myecl/recommendation/ui/widgets/recommendation_template.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/recommendation/class/recommendation.dart';
+import 'package:titan/recommendation/providers/is_recommendation_admin_provider.dart';
+import 'package:titan/recommendation/providers/recommendation_list_provider.dart';
+import 'package:titan/recommendation/providers/recommendation_provider.dart';
+import 'package:titan/recommendation/router.dart';
+import 'package:titan/recommendation/ui/widgets/recommendation_card.dart';
+import 'package:titan/recommendation/ui/widgets/recommendation_card_layout.dart';
+import 'package:titan/recommendation/ui/widgets/recommendation_template.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RecommendationMainPage extends HookConsumerWidget {

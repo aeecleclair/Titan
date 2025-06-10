@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/cinema/providers/main_page_index_provider.dart';
-import 'package:myecl/cinema/providers/scroll_provider.dart';
-import 'package:myecl/cinema/router.dart';
-import 'package:myecl/cinema/tools/constants.dart';
-import 'package:myecl/tools/ui/widgets/top_bar.dart';
+import 'package:titan/cinema/providers/main_page_index_provider.dart';
+import 'package:titan/cinema/providers/scroll_provider.dart';
+import 'package:titan/cinema/router.dart';
+import 'package:titan/cinema/tools/constants.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 
 class CinemaTemplate extends HookConsumerWidget {
   final Widget child;

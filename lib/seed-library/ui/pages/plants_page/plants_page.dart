@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/seed-library/providers/consumed_filter_provider.dart';
-import 'package:myecl/seed-library/providers/plant_complete_provider.dart';
-import 'package:myecl/seed-library/providers/plants_filtered_list_provider.dart';
-import 'package:myecl/seed-library/providers/plants_list_provider.dart';
-import 'package:myecl/seed-library/router.dart';
-import 'package:myecl/seed-library/tools/constants.dart';
-import 'package:myecl/seed-library/ui/components/filters_bar.dart';
-import 'package:myecl/seed-library/ui/pages/plants_page/personal_plant_card.dart';
-import 'package:myecl/seed-library/ui/components/research_bar.dart';
-import 'package:myecl/seed-library/ui/seed_library.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/seed-library/providers/consumed_filter_provider.dart';
+import 'package:titan/seed-library/providers/plant_complete_provider.dart';
+import 'package:titan/seed-library/providers/plants_filtered_list_provider.dart';
+import 'package:titan/seed-library/providers/plants_list_provider.dart';
+import 'package:titan/seed-library/router.dart';
+import 'package:titan/seed-library/tools/constants.dart';
+import 'package:titan/seed-library/ui/components/filters_bar.dart';
+import 'package:titan/seed-library/ui/pages/plants_page/personal_plant_card.dart';
+import 'package:titan/seed-library/ui/components/research_bar.dart';
+import 'package:titan/seed-library/ui/seed_library.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PlantsPage extends HookConsumerWidget {

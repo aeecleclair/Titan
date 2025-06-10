@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
+import 'package:titan/loan/providers/user_loaner_list_provider.dart';
 
 final isLoanAdminProvider = StateProvider<bool>((ref) {
   final loaners = ref.watch(userLoanerListProvider);

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/flappybird/providers/bird_provider.dart';
-import 'package:myecl/flappybird/providers/current_best_score.dart';
+import 'package:titan/flappybird/providers/bird_provider.dart';
+import 'package:titan/flappybird/providers/current_best_score.dart';
 
 class GameScore extends HookConsumerWidget {
   const GameScore({super.key});

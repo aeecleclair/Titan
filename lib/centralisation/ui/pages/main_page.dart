@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/centralisation/providers/centralisation_section_provider.dart';
-import 'package:myecl/centralisation/providers/favorites_providers.dart';
-import 'package:myecl/centralisation/ui/centralisation.dart';
+import 'package:titan/centralisation/providers/centralisation_section_provider.dart';
+import 'package:titan/centralisation/providers/favorites_providers.dart';
+import 'package:titan/centralisation/ui/centralisation.dart';
 
-import 'package:myecl/centralisation/ui/pages/liked_card.dart';
-import 'package:myecl/centralisation/ui/pages/section_list.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:titan/centralisation/ui/pages/liked_card.dart';
+import 'package:titan/centralisation/ui/pages/section_list.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 
 class CentralisationMainPage extends HookConsumerWidget {
   const CentralisationMainPage({super.key});

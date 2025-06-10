@@ -1,6 +1,6 @@
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
-import 'package:myecl/raffle/tools/functions.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/raffle/class/raffle_status_type.dart';
+import 'package:titan/raffle/tools/functions.dart';
 
 class Raffle {
   Raffle({

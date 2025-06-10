@@ -1,20 +1,20 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/cinema/providers/is_cinema_admin.dart';
-import 'package:myecl/cinema/ui/pages/admin_page/admin_page.dart'
+import 'package:titan/cinema/providers/is_cinema_admin.dart';
+import 'package:titan/cinema/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
-import 'package:myecl/cinema/ui/pages/detail_page/detail_page.dart'
+import 'package:titan/cinema/ui/pages/detail_page/detail_page.dart'
     deferred as detail_page;
-import 'package:myecl/cinema/ui/pages/main_page/main_page.dart'
+import 'package:titan/cinema/ui/pages/main_page/main_page.dart'
     deferred as main_page;
-import 'package:myecl/cinema/ui/pages/session_pages/add_edit_session.dart'
+import 'package:titan/cinema/ui/pages/session_pages/add_edit_session.dart'
     deferred as add_edit_session_page;
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
-import 'package:myecl/tools/middlewares/notification_middleware.dart';
+import 'package:titan/drawer/class/module.dart';
+import 'package:titan/tools/middlewares/admin_middleware.dart';
+import 'package:titan/tools/middlewares/authenticated_middleware.dart';
+import 'package:titan/tools/middlewares/deferred_middleware.dart';
+import 'package:titan/tools/middlewares/notification_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class CinemaRouter {

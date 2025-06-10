@@ -1,4 +1,4 @@
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class CinemaTopicRepository extends Repository {
   @override

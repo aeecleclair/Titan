@@ -1,20 +1,20 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/providers/category_list_provider.dart';
-import 'package:myecl/amap/providers/product_provider.dart';
-import 'package:myecl/amap/providers/product_list_provider.dart';
-import 'package:myecl/amap/providers/selected_category_provider.dart';
-import 'package:myecl/amap/providers/selected_list_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/providers/category_list_provider.dart';
+import 'package:titan/amap/providers/product_provider.dart';
+import 'package:titan/amap/providers/product_list_provider.dart';
+import 'package:titan/amap/providers/selected_category_provider.dart';
+import 'package:titan/amap/providers/selected_list_provider.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/amap/ui/amap.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditProduct extends HookConsumerWidget {

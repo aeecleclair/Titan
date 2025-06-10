@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/repository/logo_repository.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/repository/logo_repository.dart';
 
 class AdvertPosterRepository extends LogoRepository {
   @override

@@ -1,4 +1,4 @@
-import 'package:myecl/admin/class/account_type.dart';
+import 'package:titan/admin/class/account_type.dart';
 
 class ModuleVisibility {
   ModuleVisibility({

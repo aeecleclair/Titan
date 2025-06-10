@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/settings/providers/module_list_provider.dart';
-import 'package:myecl/settings/ui/settings.dart';
+import 'package:titan/settings/providers/module_list_provider.dart';
+import 'package:titan/settings/ui/settings.dart';
 
 class ModulesPage extends HookConsumerWidget {
   const ModulesPage({super.key});

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/seed-library/providers/species_type_list_provider.dart';
-import 'package:myecl/seed-library/providers/species_type_provider.dart';
-import 'package:myecl/seed-library/ui/components/radio_chip.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:titan/seed-library/providers/species_type_list_provider.dart';
+import 'package:titan/seed-library/providers/species_type_provider.dart';
+import 'package:titan/seed-library/ui/components/radio_chip.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 
 class TypesBar extends HookConsumerWidget {
   TypesBar({super.key});

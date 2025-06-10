@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/providers/selected_items_provider.dart';
-import 'package:myecl/loan/tools/functions.dart';
+import 'package:titan/loan/providers/selected_items_provider.dart';
+import 'package:titan/loan/tools/functions.dart';
 
 class NumberSelectedText extends HookConsumerWidget {
   const NumberSelectedText({super.key});

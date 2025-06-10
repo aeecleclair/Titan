@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/class/product.dart';
-import 'package:myecl/purchases/class/ticket_generator.dart';
-import 'package:myecl/purchases/providers/product_id_provider.dart';
-import 'package:myecl/purchases/providers/seller_provider.dart';
-import 'package:myecl/purchases/providers/tag_list_provider.dart';
-import 'package:myecl/purchases/providers/ticket_id_provider.dart';
-import 'package:myecl/purchases/router.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:titan/purchases/class/product.dart';
+import 'package:titan/purchases/class/ticket_generator.dart';
+import 'package:titan/purchases/providers/product_id_provider.dart';
+import 'package:titan/purchases/providers/seller_provider.dart';
+import 'package:titan/purchases/providers/tag_list_provider.dart';
+import 'package:titan/purchases/providers/ticket_id_provider.dart';
+import 'package:titan/purchases/router.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class TicketCard extends HookConsumerWidget {

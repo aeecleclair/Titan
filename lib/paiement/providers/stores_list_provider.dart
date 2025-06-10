@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/store.dart';
-import 'package:myecl/paiement/class/structure.dart';
-import 'package:myecl/paiement/repositories/stores_repository.dart';
-import 'package:myecl/paiement/repositories/structures_repository.dart';
-import 'package:myecl/paiement/repositories/users_me_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:titan/paiement/class/store.dart';
+import 'package:titan/paiement/class/structure.dart';
+import 'package:titan/paiement/repositories/stores_repository.dart';
+import 'package:titan/paiement/repositories/structures_repository.dart';
+import 'package:titan/paiement/repositories/users_me_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
 
 class StoreListNotifier extends ListNotifier<Store> {
   final StoresRepository storesRepository;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/history.dart';
-import 'package:myecl/paiement/providers/my_history_provider.dart';
-import 'package:myecl/paiement/ui/pages/main_page/account_card/day_divider.dart';
-import 'package:myecl/paiement/ui/components/transaction_card.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:titan/paiement/class/history.dart';
+import 'package:titan/paiement/providers/my_history_provider.dart';
+import 'package:titan/paiement/ui/pages/main_page/account_card/day_divider.dart';
+import 'package:titan/paiement/ui/components/transaction_card.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class LastTransactions extends ConsumerWidget {

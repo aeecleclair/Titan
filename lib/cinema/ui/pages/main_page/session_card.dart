@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/cinema/class/session.dart';
-import 'package:myecl/cinema/providers/cinema_topic_provider.dart';
-import 'package:myecl/cinema/providers/scroll_provider.dart';
-import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
-import 'package:myecl/cinema/providers/session_poster_provider.dart';
-import 'package:myecl/cinema/tools/constants.dart';
-import 'package:myecl/cinema/tools/functions.dart';
-import 'package:myecl/drawer/providers/is_web_format_provider.dart';
-import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
+import 'package:titan/cinema/class/session.dart';
+import 'package:titan/cinema/providers/cinema_topic_provider.dart';
+import 'package:titan/cinema/providers/scroll_provider.dart';
+import 'package:titan/cinema/providers/session_poster_map_provider.dart';
+import 'package:titan/cinema/providers/session_poster_provider.dart';
+import 'package:titan/cinema/tools/constants.dart';
+import 'package:titan/cinema/tools/functions.dart';
+import 'package:titan/drawer/providers/is_web_format_provider.dart';
+import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 
 class SessionCard extends HookConsumerWidget {
   final Session session;

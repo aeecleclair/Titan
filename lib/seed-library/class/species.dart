@@ -1,7 +1,7 @@
 import 'dart:core';
 
-import 'package:myecl/seed-library/class/species_type.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/seed-library/class/species_type.dart';
+import 'package:titan/tools/functions.dart';
 
 class Species {
   final String id; // UUID

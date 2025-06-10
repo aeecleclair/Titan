@@ -2,8 +2,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/recommendation/repositories/recommendation_logo_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:titan/recommendation/repositories/recommendation_logo_repository.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
 
 class RecommendationLogoNotifier extends SingleNotifier<Image> {
   final RecommendationLogoRepository recommendationLogoRepository;

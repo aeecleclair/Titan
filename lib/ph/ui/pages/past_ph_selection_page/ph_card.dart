@@ -3,16 +3,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/ph/class/ph.dart';
-import 'package:myecl/ph/providers/ph_cover_provider.dart';
-import 'package:myecl/ph/providers/ph_provider.dart';
-import 'package:myecl/ph/providers/ph_pdf_provider.dart';
-import 'package:myecl/ph/router.dart';
-import 'package:myecl/ph/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:titan/ph/class/ph.dart';
+import 'package:titan/ph/providers/ph_cover_provider.dart';
+import 'package:titan/ph/providers/ph_provider.dart';
+import 'package:titan/ph/providers/ph_pdf_provider.dart';
+import 'package:titan/ph/router.dart';
+import 'package:titan/ph/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/card_button.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PhCard extends HookConsumerWidget {

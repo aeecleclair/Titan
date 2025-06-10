@@ -1,12 +1,12 @@
-import 'package:myecl/admin/notification_service.dart';
-import 'package:myecl/advert/notification_service.dart';
-import 'package:myecl/amap/notification_service.dart';
-import 'package:myecl/booking/notification_service.dart';
-import 'package:myecl/event/notification_service.dart';
-import 'package:myecl/loan/notification_service.dart';
-import 'package:myecl/ph/notification_service.dart';
-import 'package:myecl/raffle/notification_service.dart';
-import 'package:myecl/vote/notification_service.dart';
+import 'package:titan/admin/notification_service.dart';
+import 'package:titan/advert/notification_service.dart';
+import 'package:titan/amap/notification_service.dart';
+import 'package:titan/booking/notification_service.dart';
+import 'package:titan/event/notification_service.dart';
+import 'package:titan/loan/notification_service.dart';
+import 'package:titan/ph/notification_service.dart';
+import 'package:titan/raffle/notification_service.dart';
+import 'package:titan/vote/notification_service.dart';
 
 final providers = {
   "admin": adminProviders,

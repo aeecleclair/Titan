@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/cinema/class/session.dart';
+import 'package:titan/cinema/class/session.dart';
 
 class SessionNotifier extends StateNotifier<Session> {
   SessionNotifier() : super(Session.empty());

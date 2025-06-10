@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/providers/is_admin_provider.dart';
-import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
-import 'package:myecl/phonebook/providers/association_provider.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/phonebook/providers/association_member_list_provider.dart';
+import 'package:titan/phonebook/providers/association_provider.dart';
+import 'package:titan/phonebook/tools/constants.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 final isPhonebookAdminProvider = StateProvider<bool>((ref) {
   final user = ref.watch(userProvider);

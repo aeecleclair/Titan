@@ -1,7 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/auth/providers/is_connected_provider.dart';
+import 'package:titan/auth/providers/is_connected_provider.dart';
 
 void main() {
   group('IsConnectedProvider', () {

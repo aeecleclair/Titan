@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
 
 class DeleteButton extends StatelessWidget {
   final void Function() onDelete;

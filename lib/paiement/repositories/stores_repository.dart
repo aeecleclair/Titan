@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/paiement/class/history.dart';
-import 'package:myecl/paiement/class/qr_code_data.dart';
-import 'package:myecl/paiement/class/store.dart';
-import 'package:myecl/paiement/class/transaction.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/paiement/class/history.dart';
+import 'package:titan/paiement/class/qr_code_data.dart';
+import 'package:titan/paiement/class/store.dart';
+import 'package:titan/paiement/class/transaction.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class StoresRepository extends Repository {
   @override

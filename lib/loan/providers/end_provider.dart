@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/loan/class/item.dart';
+import 'package:titan/tools/functions.dart';
 
 class EndNotifier extends StateNotifier<String> {
   EndNotifier() : super("");

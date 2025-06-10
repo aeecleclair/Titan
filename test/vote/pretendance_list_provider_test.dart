@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/contender_list_provider.dart';
-import 'package:myecl/vote/repositories/contender_repository.dart';
+import 'package:titan/vote/class/contender.dart';
+import 'package:titan/vote/providers/contender_list_provider.dart';
+import 'package:titan/vote/repositories/contender_repository.dart';
 
 class MockContenderRepository extends Mock implements ContenderRepository {}
 

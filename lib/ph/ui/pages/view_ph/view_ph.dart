@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/ph/providers/ph_provider.dart';
-import 'package:myecl/ph/providers/ph_pdf_provider.dart';
-import 'package:myecl/ph/ui/pages/ph.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:titan/ph/providers/ph_provider.dart';
+import 'package:titan/ph/providers/ph_pdf_provider.dart';
+import 'package:titan/ph/ui/pages/ph.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:pdfx/pdfx.dart';
 
 class ViewPhPage extends HookConsumerWidget {

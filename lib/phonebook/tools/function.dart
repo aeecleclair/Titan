@@ -1,11 +1,11 @@
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/association_kinds.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/membership.dart';
-import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
+import 'package:titan/phonebook/class/association.dart';
+import 'package:titan/phonebook/class/association_kinds.dart';
+import 'package:titan/phonebook/class/complete_member.dart';
+import 'package:titan/phonebook/class/membership.dart';
+import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 
 int getPosition(CompleteMember member, String associationId) {
   Membership membership = member.memberships.firstWhere(

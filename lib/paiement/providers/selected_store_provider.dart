@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/class/user_store.dart';
-import 'package:myecl/paiement/providers/my_stores_provider.dart';
+import 'package:titan/paiement/class/user_store.dart';
+import 'package:titan/paiement/providers/my_stores_provider.dart';
 
 class SelectedStoreNotifier extends StateNotifier<UserStore> {
   SelectedStoreNotifier(super.store);

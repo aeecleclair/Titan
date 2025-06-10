@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/amap/providers/user_order_list_provider.dart';
+import 'package:titan/amap/providers/user_order_list_provider.dart';
 
-import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/repositories/amap_user_repository.dart';
-import 'package:myecl/amap/repositories/order_list_repository.dart';
+import 'package:titan/amap/class/order.dart';
+import 'package:titan/amap/repositories/amap_user_repository.dart';
+import 'package:titan/amap/repositories/order_list_repository.dart';
 
 class MockAmapUserRepository extends Mock implements AmapUserRepository {}
 

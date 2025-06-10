@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/class/structure.dart';
+import 'package:titan/paiement/class/structure.dart';
 
 class SelectedStructureNotifier extends StateNotifier<Structure> {
   SelectedStructureNotifier() : super(Structure.empty());

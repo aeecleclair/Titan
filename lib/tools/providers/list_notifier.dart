@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/exception.dart';
+import 'package:titan/tools/exception.dart';
 
 abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
   ListNotifier(AsyncValue state) : super(const AsyncLoading());

@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/delivery.dart';
-import 'package:myecl/amap/repositories/delivery_list_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/amap/class/delivery.dart';
+import 'package:titan/amap/repositories/delivery_list_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class DeliveryListNotifier extends ListNotifier<Delivery> {
   final DeliveryListRepository deliveriesListRepository;

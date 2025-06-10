@@ -1,5 +1,5 @@
-import 'package:myecl/loan/class/item_quantity.dart';
-import 'package:myecl/loan/tools/constants.dart';
+import 'package:titan/loan/class/item_quantity.dart';
+import 'package:titan/loan/tools/constants.dart';
 
 String formatItems(List<ItemQuantity> itemsQty) {
   if (itemsQty.length == 2) {

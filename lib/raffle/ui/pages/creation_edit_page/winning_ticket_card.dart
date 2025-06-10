@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/tickets.dart';
-import 'package:myecl/raffle/tools/constants.dart';
+import 'package:titan/raffle/class/tickets.dart';
+import 'package:titan/raffle/tools/constants.dart';
 
 class WinningTicketUI extends HookConsumerWidget {
   final Ticket ticket;

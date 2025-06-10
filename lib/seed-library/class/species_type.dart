@@ -1,4 +1,4 @@
-import 'package:myecl/seed-library/tools/constants.dart';
+import 'package:titan/seed-library/tools/constants.dart';
 
 class SpeciesType {
   final String name;

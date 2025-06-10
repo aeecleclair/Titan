@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/vote/class/contender.dart';
+import 'package:titan/vote/class/contender.dart';
 
 final contenderProvider = StateNotifierProvider<ContenderNotifier, Contender>((
   ref,
