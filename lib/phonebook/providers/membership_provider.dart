@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/phonebook/class/membership.dart';
+import 'package:titan/phonebook/class/membership.dart';
 
 final membershipProvider =
     StateNotifierProvider<MembershipProvider, Membership>((ref) {

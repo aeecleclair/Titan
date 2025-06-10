@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/admin/providers/is_admin_provider.dart';
-import 'package:myecl/user/class/user.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/user/class/user.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 void main() {
   group('isAdminProvider', () {

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/cinema/providers/main_page_index_provider.dart';
+import 'package:titan/cinema/providers/main_page_index_provider.dart';
 
 class ScrollNotifier extends StateNotifier<double> {
   double startScroll = 0.0;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/drawer/tools/constants.dart';
+import 'package:titan/drawer/tools/constants.dart';
 
 class FakePage extends StatelessWidget {
   const FakePage({super.key});

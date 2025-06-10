@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/seed-library/class/plant_complete.dart';
-import 'package:myecl/seed-library/providers/plant_complete_provider.dart';
-import 'package:myecl/seed-library/providers/plants_list_provider.dart';
-import 'package:myecl/seed-library/providers/species_list_provider.dart';
-import 'package:myecl/seed-library/tools/constants.dart';
-import 'package:myecl/seed-library/tools/functions.dart' as function;
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/ui/widgets/date_entry.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:titan/seed-library/class/plant_complete.dart';
+import 'package:titan/seed-library/providers/plant_complete_provider.dart';
+import 'package:titan/seed-library/providers/plants_list_provider.dart';
+import 'package:titan/seed-library/providers/species_list_provider.dart';
+import 'package:titan/seed-library/tools/constants.dart';
+import 'package:titan/seed-library/tools/functions.dart' as function;
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/ui/widgets/date_entry.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 
 class EditablePlantDetail extends HookConsumerWidget {
   final PlantComplete plant;

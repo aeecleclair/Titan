@@ -1,5 +1,5 @@
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/raffle/class/raffle.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class RaffleRepository extends Repository {
   @override

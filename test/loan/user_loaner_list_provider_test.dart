@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/loan/class/loaner.dart';
-import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
-import 'package:myecl/loan/repositories/loaner_repository.dart';
+import 'package:titan/loan/class/loaner.dart';
+import 'package:titan/loan/providers/user_loaner_list_provider.dart';
+import 'package:titan/loan/repositories/loaner_repository.dart';
 
 class MockLoanerRepository extends Mock implements LoanerRepository {}
 

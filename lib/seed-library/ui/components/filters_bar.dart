@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/seed-library/class/species_type.dart';
-import 'package:myecl/seed-library/providers/difficulty_filter_provider.dart';
-import 'package:myecl/seed-library/providers/species_type_filter_provider.dart';
-import 'package:myecl/seed-library/providers/species_type_list_provider.dart';
-import 'package:myecl/seed-library/providers/string_provider.dart';
-import 'package:myecl/seed-library/tools/constants.dart';
+import 'package:titan/seed-library/class/species_type.dart';
+import 'package:titan/seed-library/providers/difficulty_filter_provider.dart';
+import 'package:titan/seed-library/providers/species_type_filter_provider.dart';
+import 'package:titan/seed-library/providers/species_type_list_provider.dart';
+import 'package:titan/seed-library/providers/string_provider.dart';
+import 'package:titan/seed-library/tools/constants.dart';
 
 class FiltersBar extends HookConsumerWidget {
   const FiltersBar({super.key});

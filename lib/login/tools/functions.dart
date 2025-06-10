@@ -1,4 +1,4 @@
-import 'package:myecl/login/class/account_type.dart';
+import 'package:titan/login/class/account_type.dart';
 
 String accountTypeToID(AccountType type) {
   switch (type) {

@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:myecl/service/class/message.dart';
-import 'package:myecl/tools/logs/file_logger_output.dart';
-import 'package:myecl/tools/logs/log.dart';
-import 'package:myecl/tools/logs/logger_output.dart';
-import 'package:myecl/tools/logs/print_logger_output.dart';
+import 'package:titan/service/class/message.dart';
+import 'package:titan/tools/logs/file_logger_output.dart';
+import 'package:titan/tools/logs/log.dart';
+import 'package:titan/tools/logs/logger_output.dart';
+import 'package:titan/tools/logs/print_logger_output.dart';
 
 class Logger {
   LoggerOutput? loggerOutput;

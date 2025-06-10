@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/ph/providers/ph_list_provider.dart';
-import 'package:myecl/ph/providers/ph_provider.dart';
-import 'package:myecl/ph/providers/selected_year_list_provider.dart';
-import 'package:myecl/ph/router.dart';
-import 'package:myecl/ph/tools/constants.dart';
-import 'package:myecl/ph/ui/pages/admin_page/admin_ph_card.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/ph/providers/ph_list_provider.dart';
+import 'package:titan/ph/providers/ph_provider.dart';
+import 'package:titan/ph/providers/selected_year_list_provider.dart';
+import 'package:titan/ph/router.dart';
+import 'package:titan/ph/tools/constants.dart';
+import 'package:titan/ph/ui/pages/admin_page/admin_ph_card.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminPhList extends HookConsumerWidget {

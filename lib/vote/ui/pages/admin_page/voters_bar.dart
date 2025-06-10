@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/group_list_provider.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/vote/class/voter.dart';
-import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/providers/voter_list_provider.dart';
-import 'package:myecl/vote/providers/voting_group_list_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
-import 'package:myecl/vote/ui/pages/admin_page/voter_chip.dart';
+import 'package:titan/admin/providers/group_list_provider.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/vote/class/voter.dart';
+import 'package:titan/vote/providers/status_provider.dart';
+import 'package:titan/vote/providers/voter_list_provider.dart';
+import 'package:titan/vote/providers/voting_group_list_provider.dart';
+import 'package:titan/vote/repositories/status_repository.dart';
+import 'package:titan/vote/ui/pages/admin_page/voter_chip.dart';
 
 class VotersBar extends HookConsumerWidget {
   const VotersBar({super.key});

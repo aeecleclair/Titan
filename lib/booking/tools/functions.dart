@@ -1,5 +1,5 @@
-import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/booking/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 String decisionToString(Decision d) {

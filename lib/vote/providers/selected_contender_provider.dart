@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
+import 'package:titan/vote/class/contender.dart';
+import 'package:titan/vote/providers/sections_provider.dart';
 
 final selectedContenderProvider =
     StateNotifierProvider<SelectedContenderProvider, Contender>((ref) {

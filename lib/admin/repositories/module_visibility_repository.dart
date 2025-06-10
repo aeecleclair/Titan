@@ -1,5 +1,5 @@
-import 'package:myecl/admin/class/module_visibility.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/admin/class/module_visibility.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class ModuleVisibilityRepository extends Repository {
   @override

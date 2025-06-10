@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/user_store.dart';
-import 'package:myecl/paiement/providers/is_payment_admin.dart';
-import 'package:myecl/paiement/providers/my_stores_provider.dart';
-import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_admin_card.dart';
-import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_divider.dart';
-import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_seller_card.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:titan/paiement/class/user_store.dart';
+import 'package:titan/paiement/providers/is_payment_admin.dart';
+import 'package:titan/paiement/providers/my_stores_provider.dart';
+import 'package:titan/paiement/ui/pages/main_page/seller_card/store_admin_card.dart';
+import 'package:titan/paiement/ui/pages/main_page/seller_card/store_divider.dart';
+import 'package:titan/paiement/ui/pages/main_page/seller_card/store_seller_card.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 
 class StoreList extends ConsumerWidget {
   final double maxHeight;

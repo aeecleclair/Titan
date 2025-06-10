@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/event/providers/selected_days_provider.dart';
+import 'package:titan/event/providers/selected_days_provider.dart';
 
 void main() {
   group('SelectedDaysProvider', () {

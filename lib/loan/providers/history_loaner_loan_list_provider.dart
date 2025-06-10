@@ -1,11 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/loaner_id_provider.dart';
-import 'package:myecl/loan/repositories/loan_repository.dart';
-import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/loan/class/loan.dart';
+import 'package:titan/loan/providers/loaner_id_provider.dart';
+import 'package:titan/loan/repositories/loan_repository.dart';
+import 'package:titan/tools/exception.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class HistoryLoanerLoanListNotifier extends ListNotifier<Loan> {
   final LoanRepository loanRepository = LoanRepository();

@@ -1,6 +1,6 @@
-import 'package:myecl/amap/class/delivery.dart';
-import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/tools/constants.dart';
+import 'package:titan/amap/class/delivery.dart';
+import 'package:titan/amap/class/order.dart';
+import 'package:titan/amap/tools/constants.dart';
 
 // Slots in Titan UI must changed based on language
 String uiCollectionSlotToString(CollectionSlot slot) {

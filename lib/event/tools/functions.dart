@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/event/class/event.dart';
+import 'package:titan/event/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
 
 String decisionToString(Decision d) {
   switch (d) {

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/ph/class/ph.dart';
+import 'package:titan/ph/class/ph.dart';
 
 class PhNotifier extends StateNotifier<Ph> {
   PhNotifier() : super(Ph.empty());

@@ -1,4 +1,4 @@
-import 'package:myecl/centralisation/class/module.dart';
+import 'package:titan/centralisation/class/module.dart';
 
 class Section {
   Section({

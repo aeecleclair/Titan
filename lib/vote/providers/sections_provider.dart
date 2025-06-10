@@ -1,9 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/vote/class/section.dart';
-import 'package:myecl/vote/providers/section_id_provider.dart';
-import 'package:myecl/vote/repositories/section_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/vote/class/section.dart';
+import 'package:titan/vote/providers/section_id_provider.dart';
+import 'package:titan/vote/repositories/section_repository.dart';
 
 class SectionNotifier extends ListNotifier<Section> {
   final SectionRepository sectionRepository;

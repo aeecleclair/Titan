@@ -5,10 +5,10 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/repositories/profile_picture_repository.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/user/repositories/profile_picture_repository.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ProfilePictureNotifier extends SingleNotifier<Uint8List> {

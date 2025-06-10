@@ -1,5 +1,5 @@
-import 'package:myecl/advert/class/announcer.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/advert/class/announcer.dart';
+import 'package:titan/tools/functions.dart';
 
 class Advert {
   late final String id;

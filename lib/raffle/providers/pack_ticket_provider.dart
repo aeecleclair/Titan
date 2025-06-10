@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/raffle/class/pack_ticket.dart';
+import 'package:titan/raffle/class/pack_ticket.dart';
 
 class PackTicketNotifier extends StateNotifier<PackTicket> {
   PackTicketNotifier() : super(PackTicket.empty());

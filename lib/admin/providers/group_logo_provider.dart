@@ -2,9 +2,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/repositories/group_logo_repository.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:titan/admin/repositories/group_logo_repository.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
 
 class GroupLogoNotifier extends SingleNotifier<Image> {
   final GroupLogoRepository groupLogoRepository;

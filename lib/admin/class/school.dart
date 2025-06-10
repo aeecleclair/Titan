@@ -1,4 +1,4 @@
-import 'package:myecl/admin/tools/function.dart';
+import 'package:titan/admin/tools/function.dart';
 
 class School {
   School({required this.name, required this.id, required this.emailRegex});

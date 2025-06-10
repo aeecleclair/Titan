@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/centralisation/router.dart';
-import 'package:myecl/centralisation/tools/constants.dart';
-import 'package:myecl/tools/ui/widgets/top_bar.dart';
+import 'package:titan/centralisation/router.dart';
+import 'package:titan/centralisation/tools/constants.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 
 class CentralisationTemplate extends StatelessWidget {
   final Widget child;

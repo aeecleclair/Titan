@@ -1,5 +1,5 @@
-import 'package:myecl/purchases/class/purchase.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/purchases/class/purchase.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class UserPurchaseRepository extends Repository {
   @override

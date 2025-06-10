@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/recommendation/providers/recommendation_provider.dart';
-import 'package:myecl/recommendation/ui/widgets/recommendation_card.dart';
-import 'package:myecl/recommendation/ui/widgets/recommendation_card_layout.dart';
-import 'package:myecl/recommendation/ui/widgets/recommendation_template.dart';
+import 'package:titan/recommendation/providers/recommendation_provider.dart';
+import 'package:titan/recommendation/ui/widgets/recommendation_card.dart';
+import 'package:titan/recommendation/ui/widgets/recommendation_card_layout.dart';
+import 'package:titan/recommendation/ui/widgets/recommendation_template.dart';
 
 class InformationRecommendationPage extends HookConsumerWidget {
   const InformationRecommendationPage({super.key});

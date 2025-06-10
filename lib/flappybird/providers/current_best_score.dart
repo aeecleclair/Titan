@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/flappybird/providers/user_score_provider.dart';
+import 'package:titan/flappybird/providers/user_score_provider.dart';
 
 class BestScoreNotifier extends StateNotifier<int> {
   BestScoreNotifier(super.i);

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/providers/association_list_provider.dart';
-import 'package:myecl/phonebook/providers/association_provider.dart';
-import 'package:myecl/phonebook/providers/complete_member_provider.dart';
-import 'package:myecl/phonebook/router.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/pages/member_detail_page/element_field.dart';
-import 'package:myecl/phonebook/ui/pages/member_detail_page/membership_card.dart';
-import 'package:myecl/phonebook/ui/phonebook.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:titan/phonebook/providers/association_list_provider.dart';
+import 'package:titan/phonebook/providers/association_provider.dart';
+import 'package:titan/phonebook/providers/complete_member_provider.dart';
+import 'package:titan/phonebook/router.dart';
+import 'package:titan/phonebook/tools/constants.dart';
+import 'package:titan/phonebook/ui/pages/member_detail_page/element_field.dart';
+import 'package:titan/phonebook/ui/pages/member_detail_page/membership_card.dart';
+import 'package:titan/phonebook/ui/phonebook.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberDetailPage extends HookConsumerWidget {

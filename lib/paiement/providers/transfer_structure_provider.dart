@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/structure.dart';
-import 'package:myecl/paiement/repositories/structures_repository.dart';
+import 'package:titan/paiement/class/structure.dart';
+import 'package:titan/paiement/repositories/structures_repository.dart';
 
 class TransferStructureNotifier extends StateNotifier {
   final StructuresRepository structuresRepository;

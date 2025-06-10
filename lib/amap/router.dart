@@ -1,27 +1,27 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
-import 'package:myecl/amap/ui/pages/admin_page/admin_page.dart'
+import 'package:titan/amap/providers/is_amap_admin_provider.dart';
+import 'package:titan/amap/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
-import 'package:myecl/amap/ui/pages/delivery_pages/add_edit_delivery_cmd_page.dart'
+import 'package:titan/amap/ui/pages/delivery_pages/add_edit_delivery_cmd_page.dart'
     deferred as add_edit_delivery_cmd_page;
-import 'package:myecl/amap/ui/pages/detail_delivery_page/detail_page.dart'
+import 'package:titan/amap/ui/pages/detail_delivery_page/detail_page.dart'
     deferred as detail_delivery_page;
-import 'package:myecl/amap/ui/pages/detail_page/detail_page.dart'
+import 'package:titan/amap/ui/pages/detail_page/detail_page.dart'
     deferred as detail_page;
-import 'package:myecl/amap/ui/pages/list_products_page/list_products_page.dart'
+import 'package:titan/amap/ui/pages/list_products_page/list_products_page.dart'
     deferred as list_products_page;
-import 'package:myecl/amap/ui/pages/main_page/main_page.dart'
+import 'package:titan/amap/ui/pages/main_page/main_page.dart'
     deferred as main_page;
-import 'package:myecl/amap/ui/pages/presentation_page/text.dart'
+import 'package:titan/amap/ui/pages/presentation_page/text.dart'
     deferred as presentation_page;
-import 'package:myecl/amap/ui/pages/product_pages/add_edit_product.dart'
+import 'package:titan/amap/ui/pages/product_pages/add_edit_product.dart'
     deferred as add_edit_product;
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:titan/drawer/class/module.dart';
+import 'package:titan/tools/middlewares/admin_middleware.dart';
+import 'package:titan/tools/middlewares/authenticated_middleware.dart';
+import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AmapRouter {

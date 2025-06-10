@@ -1,7 +1,7 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/drawer/class/module.dart';
+import 'package:titan/drawer/class/module.dart';
 
 void main() {
   group('Module', () {

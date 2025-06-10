@@ -1,18 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/drawer/providers/is_web_format_provider.dart';
-import 'package:myecl/login/ui/app_sign_in.dart' deferred as app_sign_in;
-import 'package:myecl/login/ui/pages/create_account_page/create_account_page.dart'
+import 'package:titan/drawer/providers/is_web_format_provider.dart';
+import 'package:titan/login/ui/app_sign_in.dart' deferred as app_sign_in;
+import 'package:titan/login/ui/pages/create_account_page/create_account_page.dart'
     deferred as create_account_page;
-import 'package:myecl/login/ui/pages/forget_page/forget_page.dart'
+import 'package:titan/login/ui/pages/forget_page/forget_page.dart'
     deferred as forget_page;
-import 'package:myecl/login/ui/pages/recover_password/recover_password_page.dart'
+import 'package:titan/login/ui/pages/recover_password/recover_password_page.dart'
     deferred as recover_password_page;
-import 'package:myecl/login/ui/pages/register_page/register_page.dart'
+import 'package:titan/login/ui/pages/register_page/register_page.dart'
     deferred as register_page;
-import 'package:myecl/login/ui/web/web_sign_in.dart' deferred as web_sign_in;
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:titan/login/ui/web/web_sign_in.dart' deferred as web_sign_in;
+import 'package:titan/tools/middlewares/authenticated_middleware.dart';
+import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LoginRouter {

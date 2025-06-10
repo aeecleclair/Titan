@@ -1,8 +1,8 @@
-import 'package:myecl/raffle/class/pack_ticket.dart';
-import 'package:myecl/raffle/class/prize.dart';
-import 'package:myecl/raffle/class/stats.dart';
-import 'package:myecl/raffle/class/tickets.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/raffle/class/pack_ticket.dart';
+import 'package:titan/raffle/class/prize.dart';
+import 'package:titan/raffle/class/stats.dart';
+import 'package:titan/raffle/class/tickets.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class RaffleDetailRepository extends Repository {
   @override

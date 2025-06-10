@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/service/class/room.dart';
-import 'package:myecl/booking/providers/room_provider.dart';
+import 'package:titan/service/class/room.dart';
+import 'package:titan/booking/providers/room_provider.dart';
 
 void main() {
   group('RoomNotifier', () {

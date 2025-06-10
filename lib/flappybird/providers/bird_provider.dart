@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/flappybird/class/bird.dart';
-import 'package:myecl/flappybird/providers/bird_image_provider.dart';
-import 'package:myecl/user/class/simple_users.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:titan/flappybird/class/bird.dart';
+import 'package:titan/flappybird/providers/bird_image_provider.dart';
+import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 class BirdNotifier extends StateNotifier<Bird> {
   BirdNotifier() : super(Bird.empty());

@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/seed-library/class/species_type.dart';
-import 'package:myecl/seed-library/repositories/species_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/seed-library/class/species_type.dart';
+import 'package:titan/seed-library/repositories/species_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class SpeciesListNotifier extends ListNotifier<SpeciesType> {
   final SpeciesRepository speciesRepository;

@@ -1,5 +1,5 @@
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/admin/class/account_type.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class Member extends SimpleUser {
   Member({

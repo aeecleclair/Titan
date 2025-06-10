@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
+import 'package:titan/loan/class/item.dart';
 
 class CautionNotifier extends StateNotifier<TextEditingController> {
   CautionNotifier() : super(TextEditingController());

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/cinema/class/session.dart';
-import 'package:myecl/cinema/providers/session_provider.dart';
+import 'package:titan/cinema/class/session.dart';
+import 'package:titan/cinema/providers/session_provider.dart';
 
 void main() {
   group('CinemaPageProvider', () {

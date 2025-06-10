@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/cinema/class/session.dart';
-import 'package:myecl/cinema/repositories/session_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/cinema/class/session.dart';
+import 'package:titan/cinema/repositories/session_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class SessionListNotifier extends ListNotifier<Session> {
   final SessionRepository sessionRepository;

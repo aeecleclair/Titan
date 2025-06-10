@@ -1,5 +1,5 @@
-import 'package:myecl/raffle/class/cash.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/raffle/class/cash.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class CashRepository extends Repository {
   @override

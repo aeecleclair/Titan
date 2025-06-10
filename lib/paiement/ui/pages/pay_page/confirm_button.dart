@@ -5,15 +5,15 @@ import 'package:intl/intl.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_darwin/local_auth_darwin.dart';
-import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/paiement/providers/key_service_provider.dart';
-import 'package:myecl/paiement/providers/my_history_provider.dart';
-import 'package:myecl/paiement/providers/my_wallet_provider.dart';
-import 'package:myecl/paiement/providers/pay_amount_provider.dart';
-import 'package:myecl/paiement/ui/pages/pay_page/info_card.dart';
-import 'package:myecl/paiement/ui/pages/pay_page/qr_code.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/event/tools/functions.dart';
+import 'package:titan/paiement/providers/key_service_provider.dart';
+import 'package:titan/paiement/providers/my_history_provider.dart';
+import 'package:titan/paiement/providers/my_wallet_provider.dart';
+import 'package:titan/paiement/providers/pay_amount_provider.dart';
+import 'package:titan/paiement/ui/pages/pay_page/info_card.dart';
+import 'package:titan/paiement/ui/pages/pay_page/qr_code.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 
 class ConfirmButton extends ConsumerWidget {
   const ConfirmButton({super.key});

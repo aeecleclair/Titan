@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/loaner.dart';
-import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
+import 'package:titan/loan/class/loaner.dart';
+import 'package:titan/loan/providers/admin_loan_list_provider.dart';
+import 'package:titan/loan/providers/loaner_provider.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/tools/ui/layouts/item_chip.dart';
 
 class LoanersBar extends HookConsumerWidget {
   final Function(Loaner) onTap;

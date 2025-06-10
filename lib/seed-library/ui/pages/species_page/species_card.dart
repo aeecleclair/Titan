@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/seed-library/class/species.dart';
-import 'package:myecl/seed-library/tools/functions.dart' as function;
-import 'package:myecl/seed-library/ui/components/delete_button.dart';
-import 'package:myecl/seed-library/ui/components/edition_button.dart';
+import 'package:titan/seed-library/class/species.dart';
+import 'package:titan/seed-library/tools/functions.dart' as function;
+import 'package:titan/seed-library/ui/components/delete_button.dart';
+import 'package:titan/seed-library/ui/components/edition_button.dart';
 
 class SpeciesCard extends HookConsumerWidget {
   const SpeciesCard({

@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/cinema/providers/cinema_topic_provider.dart';
-import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
-import 'package:myecl/cinema/providers/session_poster_provider.dart';
-import 'package:myecl/cinema/providers/session_provider.dart';
-import 'package:myecl/cinema/tools/constants.dart';
-import 'package:myecl/cinema/tools/functions.dart';
-import 'package:myecl/service/class/message.dart';
-import 'package:myecl/service/local_notification_service.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/cinema/providers/cinema_topic_provider.dart';
+import 'package:titan/cinema/providers/session_poster_map_provider.dart';
+import 'package:titan/cinema/providers/session_poster_provider.dart';
+import 'package:titan/cinema/providers/session_provider.dart';
+import 'package:titan/cinema/tools/constants.dart';
+import 'package:titan/cinema/tools/functions.dart';
+import 'package:titan/service/class/message.dart';
+import 'package:titan/service/local_notification_service.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/builders/auto_loader_child.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DetailPage extends HookConsumerWidget {

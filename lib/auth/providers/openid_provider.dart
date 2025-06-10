@@ -7,11 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
-import 'package:myecl/auth/providers/is_connected_provider.dart';
-import 'package:myecl/auth/repository/openid_repository.dart';
-import 'package:myecl/tools/cache/cache_manager.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/auth/providers/is_connected_provider.dart';
+import 'package:titan/auth/repository/openid_repository.dart';
+import 'package:titan/tools/cache/cache_manager.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/repository/repository.dart';
 import 'dart:convert';
 import 'package:universal_html/html.dart' as html;
 

@@ -1,5 +1,5 @@
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/phonebook/class/complete_member.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class MemberRepository extends Repository {
   @override

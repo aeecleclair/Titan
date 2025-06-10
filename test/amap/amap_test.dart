@@ -1,20 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/amap/class/cash.dart';
-import 'package:myecl/amap/class/delivery.dart';
-import 'package:myecl/amap/class/information.dart';
-import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/repositories/amap_user_repository.dart';
-import 'package:myecl/amap/repositories/cash_repository.dart';
-import 'package:myecl/amap/repositories/delivery_list_repository.dart';
-import 'package:myecl/amap/repositories/delivery_product_list_repository.dart';
-import 'package:myecl/amap/repositories/information_repository.dart';
-import 'package:myecl/amap/repositories/order_list_repository.dart';
-import 'package:myecl/amap/repositories/product_repository.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/amap/class/cash.dart';
+import 'package:titan/amap/class/delivery.dart';
+import 'package:titan/amap/class/information.dart';
+import 'package:titan/amap/class/order.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/repositories/amap_user_repository.dart';
+import 'package:titan/amap/repositories/cash_repository.dart';
+import 'package:titan/amap/repositories/delivery_list_repository.dart';
+import 'package:titan/amap/repositories/delivery_product_list_repository.dart';
+import 'package:titan/amap/repositories/information_repository.dart';
+import 'package:titan/amap/repositories/order_list_repository.dart';
+import 'package:titan/amap/repositories/product_repository.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/amap/tools/functions.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class MockAmapUserRespository extends Mock implements AmapUserRepository {}
 

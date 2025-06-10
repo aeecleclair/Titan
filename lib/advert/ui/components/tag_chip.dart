@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:myecl/advert/tools/functions.dart';
+import 'package:titan/advert/tools/functions.dart';
 
 class TagChip extends StatelessWidget {
   final String tagName;

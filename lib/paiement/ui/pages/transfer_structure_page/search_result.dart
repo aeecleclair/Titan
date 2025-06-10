@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/providers/selected_store_provider.dart';
-import 'package:myecl/paiement/providers/transfer_structure_provider.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/user/class/simple_users.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:titan/paiement/providers/selected_store_provider.dart';
+import 'package:titan/paiement/providers/transfer_structure_provider.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
   const SearchResult({super.key});

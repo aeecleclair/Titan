@@ -1,5 +1,5 @@
-import 'package:myecl/phonebook/class/roles_tags.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/phonebook/class/roles_tags.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class RolesTagsRepository extends Repository {
   @override

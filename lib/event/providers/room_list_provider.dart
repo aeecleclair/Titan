@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/service/class/room.dart';
-import 'package:myecl/service/repositories/rooms_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/service/class/room.dart';
+import 'package:titan/service/repositories/rooms_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class RoomListNotifier extends ListNotifier<Room> {
   final RoomRepository roomRepository;

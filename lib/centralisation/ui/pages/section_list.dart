@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/centralisation/class/section.dart';
-import 'package:myecl/centralisation/ui/pages/module_card.dart';
+import 'package:titan/centralisation/class/section.dart';
+import 'package:titan/centralisation/ui/pages/module_card.dart';
 
 class SectionList extends StatelessWidget {
   final Section section;

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/providers/end_provider.dart';
+import 'package:titan/loan/class/item.dart';
+import 'package:titan/loan/providers/end_provider.dart';
 
 void main() {
   group('EndNotifier', () {

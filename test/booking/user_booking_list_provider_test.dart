@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/repositories/booking_repository.dart';
-import 'package:myecl/booking/providers/user_booking_list_provider.dart';
+import 'package:titan/booking/class/booking.dart';
+import 'package:titan/booking/repositories/booking_repository.dart';
+import 'package:titan/booking/providers/user_booking_list_provider.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockBookingRepository extends Mock implements BookingRepository {}

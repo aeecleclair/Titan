@@ -1,4 +1,4 @@
-import 'package:myecl/purchases/class/ticket_generator.dart';
+import 'package:titan/purchases/class/ticket_generator.dart';
 
 class Product {
   Product({

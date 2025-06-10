@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/service/class/room.dart';
+import 'package:titan/service/class/room.dart';
 
 class RoomNotifier extends StateNotifier<Room> {
   RoomNotifier() : super(Room.empty());

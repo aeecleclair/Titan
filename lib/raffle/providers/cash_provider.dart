@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/raffle/class/cash.dart';
-import 'package:myecl/raffle/repositories/cash_repository.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/raffle/class/cash.dart';
+import 'package:titan/raffle/repositories/cash_repository.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/tools/exception.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class CashProvider extends ListNotifier<Cash> {
   final CashRepository _cashRepository = CashRepository();

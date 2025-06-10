@@ -3,13 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/providers/scroll_controller_provider.dart';
-import 'package:myecl/amap/providers/scroll_provider.dart';
-import 'package:myecl/amap/providers/sorted_delivery_product.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/pages/list_products_page/product_ui_list.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/amap/providers/scroll_controller_provider.dart';
+import 'package:titan/amap/providers/scroll_provider.dart';
+import 'package:titan/amap/providers/sorted_delivery_product.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/amap/ui/pages/list_products_page/product_ui_list.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
 class CategoryPage extends HookConsumerWidget {
   final String category;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
 
 class RecommendationCardLayout extends StatelessWidget {
   final Widget child;

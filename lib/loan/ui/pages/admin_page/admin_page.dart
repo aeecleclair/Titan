@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/providers/admin_history_loan_list_provider.dart';
-import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
-import 'package:myecl/loan/providers/history_loaner_loan_list_provider.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/loaner_id_provider.dart';
-import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/providers/loaners_items_provider.dart';
-import 'package:myecl/loan/ui/loan.dart';
-import 'package:myecl/loan/ui/pages/admin_page/loan_history.dart';
-import 'package:myecl/loan/ui/pages/admin_page/loaners_bar.dart';
-import 'package:myecl/loan/ui/pages/admin_page/loaners_items.dart';
-import 'package:myecl/loan/ui/pages/admin_page/on_going_loan.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/loan/providers/admin_history_loan_list_provider.dart';
+import 'package:titan/loan/providers/admin_loan_list_provider.dart';
+import 'package:titan/loan/providers/history_loaner_loan_list_provider.dart';
+import 'package:titan/loan/providers/item_list_provider.dart';
+import 'package:titan/loan/providers/loaner_id_provider.dart';
+import 'package:titan/loan/providers/loaner_loan_list_provider.dart';
+import 'package:titan/loan/providers/loaner_provider.dart';
+import 'package:titan/loan/providers/loaners_items_provider.dart';
+import 'package:titan/loan/ui/loan.dart';
+import 'package:titan/loan/ui/pages/admin_page/loan_history.dart';
+import 'package:titan/loan/ui/pages/admin_page/loaners_bar.dart';
+import 'package:titan/loan/ui/pages/admin_page/loaners_items.dart';
+import 'package:titan/loan/ui/pages/admin_page/on_going_loan.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});

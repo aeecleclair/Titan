@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/providers/association_kind_provider.dart';
-import 'package:myecl/phonebook/providers/association_list_provider.dart';
-import 'package:myecl/phonebook/providers/association_provider.dart';
-import 'package:myecl/phonebook/router.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
-import 'package:myecl/phonebook/ui/phonebook.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:titan/admin/tools/constants.dart';
+import 'package:titan/phonebook/class/association.dart';
+import 'package:titan/phonebook/providers/association_kind_provider.dart';
+import 'package:titan/phonebook/providers/association_list_provider.dart';
+import 'package:titan/phonebook/providers/association_provider.dart';
+import 'package:titan/phonebook/router.dart';
+import 'package:titan/phonebook/tools/constants.dart';
+import 'package:titan/phonebook/ui/components/kinds_bar.dart';
+import 'package:titan/phonebook/ui/phonebook.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AssociationCreationPage extends HookConsumerWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/loan/providers/user_loaner_list_provider.dart';
+import 'package:titan/loan/providers/user_loaner_list_provider.dart';
 
 final loanerIdProvider = StateNotifierProvider<LoanerIdProvider, String>((ref) {
   final deliveries = ref.watch(loanerList);

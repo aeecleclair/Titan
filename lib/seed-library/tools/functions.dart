@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/seed-library/tools/constants.dart';
+import 'package:titan/seed-library/tools/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void openLink(String url) async {

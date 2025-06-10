@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/amap/router.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/tools/ui/widgets/top_bar.dart';
+import 'package:titan/amap/router.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AmapTemplate extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/class/purchase.dart';
-import 'package:myecl/purchases/tools/constants.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:titan/purchases/class/purchase.dart';
+import 'package:titan/purchases/tools/constants.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
 
 class PurchaseCard extends HookConsumerWidget {
   const PurchaseCard({

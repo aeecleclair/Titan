@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/providers/delivery_product_list_provider.dart';
 
 final sortedByCategoryDeliveryProductsProvider =
     Provider<Map<String, List<Product>>>((ref) {

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/admin/providers/group_list_provider.dart';
-import 'package:myecl/raffle/providers/raffle_list_provider.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/pages/admin_module_page/confirm_creation.dart';
-import 'package:myecl/raffle/ui/pages/admin_module_page/tombola_card.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/admin/providers/group_list_provider.dart';
+import 'package:titan/raffle/providers/raffle_list_provider.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/raffle/ui/pages/admin_module_page/confirm_creation.dart';
+import 'package:titan/raffle/ui/pages/admin_module_page/tombola_card.dart';
 
 class TombolaHandler extends HookConsumerWidget {
   const TombolaHandler({super.key});

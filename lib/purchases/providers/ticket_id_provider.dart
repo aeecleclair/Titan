@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/purchases/repositories/user_information_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/purchases/repositories/user_information_repository.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
 
 class TicketIdNotifier extends SingleNotifier<String> {
   final UserInformationRepository ticketIdRepository =

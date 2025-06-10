@@ -1,6 +1,6 @@
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
 
 enum DeliveryStatus { creation, available, locked, delivered }
 

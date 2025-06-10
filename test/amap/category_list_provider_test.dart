@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/providers/category_list_provider.dart';
-import 'package:myecl/amap/providers/product_list_provider.dart';
-import 'package:myecl/amap/repositories/product_repository.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/providers/category_list_provider.dart';
+import 'package:titan/amap/providers/product_list_provider.dart';
+import 'package:titan/amap/repositories/product_repository.dart';
 
 class MockProductListRepository extends Mock implements ProductListRepository {}
 

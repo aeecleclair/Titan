@@ -1,5 +1,5 @@
-import 'package:myecl/booking/class/manager.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/booking/class/manager.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class ManagerRepository extends Repository {
   @override
