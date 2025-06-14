@@ -1,25 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:myecl/auth/class/auth_request.dart';
+import 'package:myecl/auth/class/auth_token.dart';
 
 import 'package:myecl/tools/repository/repository.dart';
 
 class OpenIdRepository extends Repository {
-  Future<Map<String, String>> getToken(
-    String token,
-    String clientId,
-    String redirectUri,
-    String codeVerifier,
-    String grantType,
-  ) async {
-    var body = {
-      "client_id": clientId,
-      "code": token,
-      "redirect_uri": redirectUri.toString(),
-      "code_verifier": codeVerifier,
-      "grant_type": grantType,
-      "refresh_token": token,
-    };
+  OpenIdRepository(super.ref);
+
+  Future<AuthToken> getToken(AuthRequest request) async {
+    final body = request.toJson();
 
     final Map<String, String> headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -34,9 +26,9 @@ class OpenIdRepository extends Repository {
           )
           .timeout(const Duration(seconds: 5));
       if (response.statusCode == 200) {
-        final token = jsonDecode(response.body)["access_token"];
-        final refreshToken = jsonDecode(response.body)["refresh_token"];
-        return {"token": token, "refresh_token": refreshToken};
+        return AuthToken.fromJson(
+          json.decode(response.body) as Map<String, dynamic>,
+        );
       } else {
         throw Exception('Empty token');
       }
@@ -47,3 +39,8 @@ class OpenIdRepository extends Repository {
     }
   }
 }
+
+final openIdRepositoryProvider = Provider((ref) {
+  // No need to watch tokenProvider here, as the OpenIdRepository does not require a token.
+  return OpenIdRepository(ref);
+});
