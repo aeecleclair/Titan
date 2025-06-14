@@ -20,7 +20,7 @@ import 'package:universal_html/html.dart' as html;
 final authTokenProvider =
     StateNotifierProvider<AuthNotifier, AsyncValue<AuthToken>>((ref) {
       final openIdRepository = ref.watch(openIdRepositoryProvider);
-
+      print("Creating AuthNotifier with openIdRepository: $openIdRepository");
       final authNotifier = AuthNotifier(
         appAuth: FlutterAppAuth(),
         secureStorage: FlutterSecureStorage(),
@@ -123,6 +123,8 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
   static const Base64Codec base64 = Base64Codec.urlSafe();
   static const String userIdName = "id";
 
+  StreamSubscription? _messageSubscription;
+
   // --- OIDC Configuration ---
   static const String tokenName = "my_ecl_auth_token";
   static const String clientId = "Titan";
@@ -208,6 +210,8 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
     completer.future.then((_) {
       state.maybeWhen(
         loading: () {
+          // If the state is still loading, reset it to an empty token
+          // to avoid leaving the app in a loading state.
           state = AsyncData(AuthToken.empty());
         },
         orElse: () {},
@@ -233,6 +237,8 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
             ),
           );
           _saveAndStoreToken(authToken);
+          _messageSubscription?.cancel();
+          _messageSubscription = null;
         } else {
           throw Exception('Wrong credentials');
         }
@@ -243,7 +249,8 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
       }
     }
 
-    html.window.onMessage.listen((event) {
+    _messageSubscription?.cancel();
+    _messageSubscription = html.window.onMessage.listen((event) {
       if (event.data.toString().contains('code=')) {
         login(event.data);
       }
