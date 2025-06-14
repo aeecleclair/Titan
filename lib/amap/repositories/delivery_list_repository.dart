@@ -9,6 +9,8 @@ class DeliveryListRepository extends Repository {
   // ignore: overridden_fields
   final ext = "amap/deliveries";
 
+  DeliveryListRepository(super.ref);
+
   Future<List<Delivery>> getDeliveryList() async {
     return List<Delivery>.from(
       (await getList()).map((x) => Delivery.fromJson(x)),
@@ -61,5 +63,5 @@ class DeliveryListRepository extends Repository {
 
 final deliveryListRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return DeliveryListRepository()..setToken(token);
+  return DeliveryListRepository(ref)..setToken(token);
 });

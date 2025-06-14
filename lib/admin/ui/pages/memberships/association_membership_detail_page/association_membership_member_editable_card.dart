@@ -9,7 +9,6 @@ import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
 import 'package:myecl/phonebook/ui/pages/admin_page/edition_button.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberEditableCard extends HookConsumerWidget {
@@ -88,21 +87,19 @@ class MemberEditableCard extends HookConsumerWidget {
             deactivated: false,
             deletion: true,
             onDelete: () async {
-              await tokenExpireWrapper(ref, () async {
-                final result = await associationMembershipMemberListNotifier
-                    .deleteMember(associationMembership);
-                if (result) {
-                  displayToastWithContext(
-                    TypeMsg.msg,
-                    PhonebookTextConstants.deletedMember,
-                  );
-                } else {
-                  displayToastWithContext(
-                    TypeMsg.error,
-                    PhonebookTextConstants.deletingError,
-                  );
-                }
-              });
+              final result = await associationMembershipMemberListNotifier
+                  .deleteMember(associationMembership);
+              if (result) {
+                displayToastWithContext(
+                  TypeMsg.msg,
+                  PhonebookTextConstants.deletedMember,
+                );
+              } else {
+                displayToastWithContext(
+                  TypeMsg.error,
+                  PhonebookTextConstants.deletingError,
+                );
+              }
             },
           ),
         ],

@@ -8,6 +8,8 @@ class BookingRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'booking/bookings';
 
+  BookingRepository(super.ref);
+
   Future<List<Booking>> getUserBookingList() async {
     return List<Booking>.from(
       (await getList(suffix: "/users/me")).map((x) => Booking.fromJson(x)),
@@ -59,5 +61,5 @@ class BookingRepository extends Repository {
 
 final bookingRepositoryProvider = Provider<BookingRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return BookingRepository()..setToken(token);
+  return BookingRepository(ref)..setToken(token);
 });

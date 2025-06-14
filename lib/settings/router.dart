@@ -12,8 +12,8 @@ import 'package:myecl/settings/ui/pages/modules_page/modules_page.dart'
     deferred as modules_page;
 import 'package:myecl/settings/ui/pages/notification_page/notification_page.dart'
     deferred as notification_page;
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:myecl/routing/middlewares/authenticated_middleware.dart';
+import 'package:myecl/routing/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SettingsRouter {

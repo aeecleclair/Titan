@@ -42,7 +42,7 @@ final userAmountProvider =
         amapUserRepository: amapUserRepository,
       );
       tokenExpireWrapperAuth(ref, () async {
-        final userId = ref.watch(idProvider);
+        final userId = ref.watch(userIdProvider);
         userId.whenData(
           (value) async => await userCashNotifier.loadCashByUser(value),
         );

@@ -8,9 +8,10 @@ import 'package:myecl/login/router.dart';
 import 'package:myecl/login/tools/constants.dart';
 import 'package:myecl/login/ui/auth_page.dart';
 import 'package:myecl/login/ui/components/sign_in_up_bar.dart';
+import 'package:myecl/router.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/providers/path_forwarding_provider.dart';
+import 'package:myecl/routing/providers/auth_redirect_service_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AppSignIn extends HookConsumerWidget {
@@ -18,9 +19,16 @@ class AppSignIn extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authNotifier = ref.watch(authTokenProvider.notifier);
-    final pathForwarding = ref.read(pathForwardingProvider);
+    final authNotifier = ref.read(authTokenProvider.notifier);
     final controller = ref.watch(backgroundAnimationProvider);
+
+    final forwardedFrom =
+        QR.params[forwardedFromKey]?.toString() ?? AppRouter.root;
+    final redirectPath = ref.watch(
+      authRedirectServiceProvider.select(
+        (service) => service.getRedirect(forwardedFrom),
+      ),
+    );
 
     return LoginTemplate(
       callback: (AnimationController controller) {
@@ -60,20 +68,16 @@ class AppSignIn extends HookConsumerWidget {
                           child: Image(image: AssetImage(getTitanLogo())),
                         ),
                         SignInUpBar(
-                          isLoading: ref
-                              .watch(loadingProvider)
-                              .maybeWhen(
-                                data: (data) => data,
-                                orElse: () => false,
-                              ),
+                          isLoading: ref.watch(isAuthLoadingProvider),
+
                           label: LoginTextConstants.signIn,
                           onPressed: () async {
-                            await authNotifier.getTokenFromRequest();
+                            await authNotifier.signIn();
                             ref
                                 .watch(authTokenProvider)
                                 .when(
                                   data: (token) {
-                                    QR.to(pathForwarding.path);
+                                    QR.to(redirectPath ?? AppRouter.root);
                                   },
                                   error: (e, s) {
                                     displayToast(

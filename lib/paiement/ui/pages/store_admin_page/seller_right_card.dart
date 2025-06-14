@@ -5,7 +5,6 @@ import 'package:myecl/paiement/class/seller.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
 import 'package:myecl/paiement/providers/store_sellers_list_provider.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
@@ -154,40 +153,38 @@ class SellerRightCard extends ConsumerWidget {
                                       vertical: -4,
                                     ),
                                     onChanged: (value) async {
-                                      await tokenExpireWrapper(ref, () async {
-                                        final value = await sellerStoreNotifier
-                                            .updateStoreSeller(
-                                              storeSeller.copyWith(
-                                                canBank: i == 0
-                                                    ? !sellerRights[0]
-                                                    : sellerRights[0],
-                                                canSeeHistory: i == 1
-                                                    ? !sellerRights[1]
-                                                    : sellerRights[1],
-                                                canCancel: i == 2
-                                                    ? !sellerRights[2]
-                                                    : sellerRights[2],
-                                                canManageSellers: i == 3
-                                                    ? !sellerRights[3]
-                                                    : sellerRights[3],
-                                              ),
-                                            );
-                                        if (value) {
-                                          displayToastWithContext(
-                                            TypeMsg.msg,
-                                            "Droits mis à jour",
+                                      final value = await sellerStoreNotifier
+                                          .updateStoreSeller(
+                                            storeSeller.copyWith(
+                                              canBank: i == 0
+                                                  ? !sellerRights[0]
+                                                  : sellerRights[0],
+                                              canSeeHistory: i == 1
+                                                  ? !sellerRights[1]
+                                                  : sellerRights[1],
+                                              canCancel: i == 2
+                                                  ? !sellerRights[2]
+                                                  : sellerRights[2],
+                                              canManageSellers: i == 3
+                                                  ? !sellerRights[3]
+                                                  : sellerRights[3],
+                                            ),
                                           );
-                                          sellerRights[i] = !sellerRights[i];
-                                          if (context.mounted) {
-                                            Navigator.pop(context);
-                                          }
-                                        } else {
-                                          displayToastWithContext(
-                                            TypeMsg.error,
-                                            "Impossible de mettre à jour les droits",
-                                          );
+                                      if (value) {
+                                        displayToastWithContext(
+                                          TypeMsg.msg,
+                                          "Droits mis à jour",
+                                        );
+                                        sellerRights[i] = !sellerRights[i];
+                                        if (context.mounted) {
+                                          Navigator.pop(context);
                                         }
-                                      });
+                                      } else {
+                                        displayToastWithContext(
+                                          TypeMsg.error,
+                                          "Impossible de mettre à jour les droits",
+                                        );
+                                      }
                                     },
                                   ),
                               ],
@@ -202,25 +199,23 @@ class SellerRightCard extends ConsumerWidget {
                                 title: "Supprimer l'association",
                                 descriptions:
                                     "Voulez-vous vraiment supprimer ce vendeur ?",
-                                onYes: () {
-                                  tokenExpireWrapper(ref, () async {
-                                    final value = await sellerStoreNotifier
-                                        .deleteStoreSeller(storeSeller);
-                                    if (value) {
-                                      displayToastWithContext(
-                                        TypeMsg.msg,
-                                        "Vendeur supprimé",
-                                      );
-                                      if (context.mounted) {
-                                        Navigator.pop(context);
-                                      }
-                                    } else {
-                                      displayToastWithContext(
-                                        TypeMsg.error,
-                                        "Impossible de supprimer le vendeur",
-                                      );
+                                onYes: () async {
+                                  final value = await sellerStoreNotifier
+                                      .deleteStoreSeller(storeSeller);
+                                  if (value) {
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      "Vendeur supprimé",
+                                    );
+                                    if (context.mounted) {
+                                      Navigator.pop(context);
                                     }
-                                  });
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      "Impossible de supprimer le vendeur",
+                                    );
+                                  }
                                 },
                               ),
                             );

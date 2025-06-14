@@ -7,7 +7,6 @@ import 'package:myecl/paiement/providers/store_sellers_list_provider.dart';
 import 'package:myecl/paiement/ui/pages/store_admin_page/search_result.dart';
 import 'package:myecl/paiement/ui/pages/store_admin_page/seller_right_card.dart';
 import 'package:myecl/paiement/ui/paiement.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_button.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
@@ -115,16 +114,14 @@ class StoreAdminPage extends HookConsumerWidget {
                     Expanded(
                       child: TextEntry(
                         label: "Ajouter un vendeur",
-                        onChanged: (value) {
-                          tokenExpireWrapper(ref, () async {
-                            if (queryController.text.isNotEmpty) {
-                              await usersNotifier.filterUsers(
-                                queryController.text,
-                              );
-                            } else {
-                              usersNotifier.clear();
-                            }
-                          });
+                        onChanged: (value) async {
+                          if (queryController.text.isNotEmpty) {
+                            await usersNotifier.filterUsers(
+                              queryController.text,
+                            );
+                          } else {
+                            usersNotifier.clear();
+                          }
                         },
                         canBeEmpty: false,
                         controller: queryController,

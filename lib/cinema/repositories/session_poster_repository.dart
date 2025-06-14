@@ -12,6 +12,8 @@ class SessionPosterRepository extends LogoRepository {
   // ignore: overridden_fields
   final ext = 'cinema/sessions/';
 
+  SessionPosterRepository(super.ref);
+
   Future<Image> getSessionLogo(String id) async {
     final bytes = await getLogo(id, suffix: "/poster");
     if (bytes.isEmpty) {
@@ -30,5 +32,5 @@ class SessionPosterRepository extends LogoRepository {
 
 final sessionPosterRepository = Provider<SessionPosterRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return SessionPosterRepository()..setToken(token);
+  return SessionPosterRepository(ref)..setToken(token);
 });

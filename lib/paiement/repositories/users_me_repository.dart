@@ -10,6 +10,8 @@ class UsersMeRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'myeclpay/users/me/';
 
+  UsersMeRepository(super.ref);
+
   Future<bool> register() async {
     return await create({}, suffix: 'register');
   }
@@ -33,5 +35,5 @@ class UsersMeRepository extends Repository {
 
 final usersMeRepositoryProvider = Provider<UsersMeRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return UsersMeRepository()..setToken(token);
+  return UsersMeRepository(ref)..setToken(token);
 });

@@ -12,7 +12,6 @@ import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/creation_edit_page/prize_card.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -167,23 +166,20 @@ class PrizeHandler extends HookConsumerWidget {
                                         title: "Supprimer le lot",
                                         descriptions:
                                             "Voulez-vous vraiment supprimer ce lot?",
-                                        onYes: () {
-                                          tokenExpireWrapper(ref, () async {
-                                            final value = await prizesNotifier
-                                                .deletePrize(e);
-                                            if (value) {
-                                              displayToastWithContext(
-                                                TypeMsg.msg,
-                                                RaffleTextConstants.deletePrize,
-                                              );
-                                            } else {
-                                              displayToastWithContext(
-                                                TypeMsg.error,
-                                                RaffleTextConstants
-                                                    .deletingError,
-                                              );
-                                            }
-                                          });
+                                        onYes: () async {
+                                          final value = await prizesNotifier
+                                              .deletePrize(e);
+                                          if (value) {
+                                            displayToastWithContext(
+                                              TypeMsg.msg,
+                                              RaffleTextConstants.deletePrize,
+                                            );
+                                          } else {
+                                            displayToastWithContext(
+                                              TypeMsg.error,
+                                              RaffleTextConstants.deletingError,
+                                            );
+                                          }
                                         },
                                       ),
                                     );
@@ -205,31 +201,29 @@ class PrizeHandler extends HookConsumerWidget {
                                         title: "Tirage",
                                         descriptions:
                                             "Tirer le gagnant de ce lot ?",
-                                        onYes: () {
-                                          tokenExpireWrapper(ref, () async {
-                                            final value =
-                                                await winningTicketListNotifier
-                                                    .drawPrize(e);
-                                            value.when(
-                                              data: (winningTicketList) {
-                                                prizesNotifier
-                                                    .setPrizeQuantityToZero(
-                                                      e.copyWith(quantity: 0),
-                                                    );
-                                                displayWinningsDialog(
-                                                  winningTicketList,
-                                                );
-                                              },
-                                              error: (e, s) {
-                                                displayToastWithContext(
-                                                  TypeMsg.error,
-                                                  RaffleTextConstants
-                                                      .drawingError,
-                                                );
-                                              },
-                                              loading: () {},
-                                            );
-                                          });
+                                        onYes: () async {
+                                          final value =
+                                              await winningTicketListNotifier
+                                                  .drawPrize(e);
+                                          value.when(
+                                            data: (winningTicketList) {
+                                              prizesNotifier
+                                                  .setPrizeQuantityToZero(
+                                                    e.copyWith(quantity: 0),
+                                                  );
+                                              displayWinningsDialog(
+                                                winningTicketList,
+                                              );
+                                            },
+                                            error: (e, s) {
+                                              displayToastWithContext(
+                                                TypeMsg.error,
+                                                RaffleTextConstants
+                                                    .drawingError,
+                                              );
+                                            },
+                                            loading: () {},
+                                          );
                                         },
                                       ),
                                     );

@@ -13,7 +13,6 @@ import 'package:myecl/paiement/providers/scan_provider.dart';
 import 'package:myecl/paiement/providers/selected_store_provider.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scan_overlay_shape.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -47,9 +46,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
           descriptions:
               "Ce produit n'est pas disponnible pour les non-adhérents. Confirmer l'encaissement ?",
           onYes: () async {
-            tokenExpireWrapper(ref, () async {
-              onYes.call();
-            });
+            onYes.call();
           },
         );
       },

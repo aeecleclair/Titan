@@ -8,6 +8,8 @@ class RoomRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'booking/rooms';
 
+  RoomRepository(super.ref);
+
   Future<List<Room>> getRoomList() async {
     return List<Room>.from((await getList()).map((x) => Room.fromJson(x)));
   }
@@ -27,5 +29,5 @@ class RoomRepository extends Repository {
 
 final roomRepositoryProvider = Provider<RoomRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return RoomRepository()..setToken(token);
+  return RoomRepository(ref)..setToken(token);
 });

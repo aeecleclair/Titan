@@ -23,9 +23,9 @@ import 'package:myecl/seed-library/ui/pages/species_page/species_page.dart'
     deferred as species_page;
 import 'package:myecl/seed-library/ui/pages/stock_page/stocks_page.dart'
     deferred as stocks_page;
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:myecl/routing/middlewares/admin_middleware.dart';
+import 'package:myecl/routing/middlewares/authenticated_middleware.dart';
+import 'package:myecl/routing/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SeedLibraryRouter {

@@ -8,6 +8,8 @@ class EventRepository extends Repository {
   // ignore: overridden_fields
   final ext = "calendar/events/";
 
+  EventRepository(super.ref);
+
   Future<List<Event>> getAllEvent() async {
     return List<Event>.from((await getList()).map((x) => Event.fromJson(x)));
   }
@@ -51,5 +53,5 @@ class EventRepository extends Repository {
 
 final eventRepositoryProvider = Provider<EventRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return EventRepository()..setToken(token);
+  return EventRepository(ref)..setToken(token);
 });

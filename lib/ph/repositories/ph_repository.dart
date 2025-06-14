@@ -8,6 +8,8 @@ class PhRepository extends Repository {
   // ignore: overridden_fields
   final ext = "ph/";
 
+  PhRepository(super.ref);
+
   Future<List<Ph>> getAllPh() async {
     return (await getList(suffix: '')).map((e) => Ph.fromJson(e)).toList();
   }
@@ -27,5 +29,5 @@ class PhRepository extends Repository {
 
 final phRepositoryProvider = Provider<PhRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return PhRepository()..setToken(token);
+  return PhRepository(ref)..setToken(token);
 });

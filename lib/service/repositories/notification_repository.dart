@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/service/class/message.dart';
 import 'package:myecl/service/class/topic.dart';
 import 'package:myecl/service/tools/functions.dart';
@@ -8,6 +10,8 @@ class NotificationRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = 'notification/';
+
+  NotificationRepository(super.ref);
 
   Future<List<Message>> getMessages(String firebaseToken) async {
     final messages = List<Message>.from(
@@ -51,3 +55,8 @@ class NotificationRepository extends Repository {
     );
   }
 }
+
+final notificationRepositoryProvider = Provider((ref) {
+  final token = ref.watch(tokenProvider);
+  return NotificationRepository(ref)..setToken(token);
+});

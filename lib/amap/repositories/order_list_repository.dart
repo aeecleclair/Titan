@@ -8,6 +8,8 @@ class OrderListRepository extends Repository {
   // ignore: overridden_fields
   final ext = "amap/";
 
+  OrderListRepository(super.ref);
+
   Future<Order> createOrder(Order order) async {
     return Order.fromJson(await create(order.toJson(), suffix: "orders"));
   }
@@ -37,5 +39,5 @@ class OrderListRepository extends Repository {
 
 final orderListRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return OrderListRepository()..setToken(token);
+  return OrderListRepository(ref)..setToken(token);
 });

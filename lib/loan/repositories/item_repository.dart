@@ -8,6 +8,8 @@ class ItemRepository extends Repository {
   // ignore: overridden_fields
   final ext = "loans/loaners/";
 
+  ItemRepository(super.ref);
+
   Future<List<Item>> getItemList(String loanerId) async {
     return List<Item>.from(
       (await getList(suffix: "$loanerId/items")).map((x) => Item.fromJson(x)),
@@ -31,5 +33,5 @@ class ItemRepository extends Repository {
 
 final itemRepositoryProvider = Provider<ItemRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return ItemRepository()..setToken(token);
+  return ItemRepository(ref)..setToken(token);
 });

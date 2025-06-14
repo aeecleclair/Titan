@@ -14,9 +14,9 @@ class QuitDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authTokenProvider.notifier);
-    final isCachingNotifier = ref.watch(isCachingProvider.notifier);
-    final displayQuitNotifier = ref.watch(displayQuitProvider.notifier);
+    final auth = ref.read(authTokenProvider.notifier);
+    final isCachingNotifier = ref.read(isAuthCachedProvider.notifier);
+    final displayQuitNotifier = ref.read(displayQuitProvider.notifier);
     return GestureDetector(
       onTap: () {
         displayQuitNotifier.setDisplay(false);
@@ -29,7 +29,7 @@ class QuitDialog extends HookConsumerWidget {
             descriptions: DrawerTextConstants.loginOut,
             title: DrawerTextConstants.logOut,
             onYes: () {
-              auth.deleteToken();
+              auth.signOut();
               if (!kIsWeb) {
                 ref.watch(messagesProvider.notifier).forgetDevice();
                 ref.watch(firebaseTokenExpirationProvider.notifier).reset();

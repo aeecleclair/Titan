@@ -10,7 +10,6 @@ import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/event/ui/components/event_ui.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
@@ -105,17 +104,15 @@ class ListEvent extends HookConsumerWidget {
                         title: BookingTextConstants.confirm,
                         descriptions: BookingTextConstants.confirmBooking,
                         onYes: () async {
-                          await tokenExpireWrapper(ref, () async {
-                            eventListNotifier
-                                .toggleConfirmed(
-                                  e.copyWith(decision: Decision.approved),
-                                )
-                                .then((value) {
-                                  if (value) {
-                                    confirmedEventListNotifier.addEvent(e);
-                                  }
-                                });
-                          });
+                          eventListNotifier
+                              .toggleConfirmed(
+                                e.copyWith(decision: Decision.approved),
+                              )
+                              .then((value) {
+                                if (value) {
+                                  confirmedEventListNotifier.addEvent(e);
+                                }
+                              });
                         },
                       );
                     },
@@ -129,17 +126,15 @@ class ListEvent extends HookConsumerWidget {
                         title: BookingTextConstants.decline,
                         descriptions: BookingTextConstants.declineBooking,
                         onYes: () async {
-                          await tokenExpireWrapper(ref, () async {
-                            eventListNotifier
-                                .toggleConfirmed(
-                                  e.copyWith(decision: Decision.declined),
-                                )
-                                .then((value) {
-                                  if (value) {
-                                    confirmedEventListNotifier.deleteEvent(e);
-                                  }
-                                });
-                          });
+                          eventListNotifier
+                              .toggleConfirmed(
+                                e.copyWith(decision: Decision.declined),
+                              )
+                              .then((value) {
+                                if (value) {
+                                  confirmedEventListNotifier.deleteEvent(e);
+                                }
+                              });
                         },
                       );
                     },

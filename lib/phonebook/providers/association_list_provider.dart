@@ -1,17 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/repositories/association_repository.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class AssociationListNotifier extends ListNotifier<Association> {
-  final AssociationRepository associationRepository = AssociationRepository();
+  final AssociationRepository associationRepository;
   AsyncValue<List<Association>> associationList = const AsyncValue.loading();
-  AssociationListNotifier({required String token})
-    : super(const AsyncValue.loading()) {
-    associationRepository.setToken(token);
-  }
+  AssociationListNotifier(this.associationRepository)
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Association>>> loadAssociations() async {
     return await loadList(associationRepository.getAssociationList);
@@ -67,8 +64,10 @@ final associationListProvider =
       AssociationListNotifier,
       AsyncValue<List<Association>>
     >((ref) {
-      final token = ref.watch(tokenProvider);
-      AssociationListNotifier notifier = AssociationListNotifier(token: token);
+      final associationRepository = ref.watch(associationRepositoryProvider);
+      AssociationListNotifier notifier = AssociationListNotifier(
+        associationRepository,
+      );
       tokenExpireWrapperAuth(ref, () async {
         await notifier.loadAssociations();
       });

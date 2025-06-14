@@ -6,9 +6,11 @@ class GroupLogoRepository extends LogoRepository {
   @override
   // ignore: overridden_fields
   final ext = 'campaign/';
+
+  GroupLogoRepository(super.ref);
 }
 
 final groupLogoProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return GroupLogoRepository()..setToken(token);
+  return GroupLogoRepository(ref)..setToken(token);
 });

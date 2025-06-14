@@ -8,6 +8,8 @@ class LoanerRepository extends Repository {
   // ignore: overridden_fields
   final ext = "loans/";
 
+  LoanerRepository(super.ref);
+
   Future<List<Loaner>> getLoanerList() async {
     return List<Loaner>.from(
       (await getList(suffix: "loaners/")).map((x) => Loaner.fromJson(x)),
@@ -41,5 +43,5 @@ class LoanerRepository extends Repository {
 
 final loanerRepositoryProvider = Provider<LoanerRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return LoanerRepository()..setToken(token);
+  return LoanerRepository(ref)..setToken(token);
 });

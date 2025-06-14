@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/booking/class/manager.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -5,6 +7,8 @@ class ManagerRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "booking/managers";
+
+  ManagerRepository(super.ref);
 
   Future<List<Manager>> getManagerList() async {
     return List<Manager>.from(
@@ -30,3 +34,8 @@ class ManagerRepository extends Repository {
     return await delete("/$managerId");
   }
 }
+
+final managerRepositoryProvider = Provider<ManagerRepository>((ref) {
+  final token = ref.watch(tokenProvider);
+  return ManagerRepository(ref)..setToken(token);
+});

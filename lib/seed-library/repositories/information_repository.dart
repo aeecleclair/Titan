@@ -8,6 +8,8 @@ class InformationRepository extends Repository {
   // ignore: overridden_fields
   final ext = "seed_library/information";
 
+  InformationRepository(super.ref);
+
   Future<Information> getInformation() async {
     return Information.fromJson(await getOne(""));
   }
@@ -19,5 +21,5 @@ class InformationRepository extends Repository {
 
 final informationRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return InformationRepository()..setToken(token);
+  return InformationRepository(ref)..setToken(token);
 });

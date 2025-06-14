@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/raffle/class/cash.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -5,6 +7,8 @@ class CashRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "tombola/users/";
+
+  CashRepository(super.ref);
 
   Future<List<Cash>> getCashList() async {
     return List<Cash>.from(
@@ -26,3 +30,8 @@ class CashRepository extends Repository {
     return await update(cash.toJson(), cash.user.id, suffix: "/cash");
   }
 }
+
+final cashRepositoryProvider = Provider<CashRepository>((ref) {
+  final token = ref.watch(tokenProvider);
+  return CashRepository(ref)..setToken(token);
+});

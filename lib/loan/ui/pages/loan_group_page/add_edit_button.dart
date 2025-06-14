@@ -14,7 +14,6 @@ import 'package:myecl/loan/providers/selected_items_provider.dart';
 import 'package:myecl/loan/providers/start_provider.dart';
 import 'package:myecl/loan/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -62,71 +61,69 @@ class AddEditButton extends HookConsumerWidget {
           } else {
             await items.when(
               data: (itemList) async {
-                await tokenExpireWrapper(ref, () async {
-                  List<ItemQuantity> selected = itemList
-                      .where(
-                        (element) =>
-                            selectedItems[itemList.indexOf(element)] != 0,
-                      )
-                      .map(
-                        (e) => ItemQuantity(
-                          itemSimple: e.toItemSimple(),
-                          quantity: selectedItems[itemList.indexOf(e)],
-                        ),
-                      )
-                      .toList();
-                  if (selected.isNotEmpty) {
-                    Loan newLoan = Loan(
-                      loaner: isEdit ? loan.loaner : loaner,
-                      itemsQuantity: selected,
-                      borrower: borrower,
-                      caution: caution.text,
-                      end: DateTime.parse(processDateBack(end)),
-                      id: isEdit ? loan.id : "",
-                      notes: note.text,
-                      start: DateTime.parse(processDateBack(start)),
-                      returned: false,
+                List<ItemQuantity> selected = itemList
+                    .where(
+                      (element) =>
+                          selectedItems[itemList.indexOf(element)] != 0,
+                    )
+                    .map(
+                      (e) => ItemQuantity(
+                        itemSimple: e.toItemSimple(),
+                        quantity: selectedItems[itemList.indexOf(e)],
+                      ),
+                    )
+                    .toList();
+                if (selected.isNotEmpty) {
+                  Loan newLoan = Loan(
+                    loaner: isEdit ? loan.loaner : loaner,
+                    itemsQuantity: selected,
+                    borrower: borrower,
+                    caution: caution.text,
+                    end: DateTime.parse(processDateBack(end)),
+                    id: isEdit ? loan.id : "",
+                    notes: note.text,
+                    start: DateTime.parse(processDateBack(start)),
+                    returned: false,
+                  );
+                  final value = isEdit
+                      ? await loanListNotifier.updateLoan(newLoan)
+                      : await loanListNotifier.addLoan(newLoan);
+                  if (value) {
+                    adminLoanListNotifier.setTData(
+                      isEdit ? loan.loaner : loaner,
+                      await loanListNotifier.copy(),
                     );
-                    final value = isEdit
-                        ? await loanListNotifier.updateLoan(newLoan)
-                        : await loanListNotifier.addLoan(newLoan);
-                    if (value) {
-                      adminLoanListNotifier.setTData(
-                        isEdit ? loan.loaner : loaner,
-                        await loanListNotifier.copy(),
+                    QR.back();
+                    if (isEdit) {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        LoanTextConstants.updatedLoan,
                       );
-                      QR.back();
-                      if (isEdit) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          LoanTextConstants.updatedLoan,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          LoanTextConstants.addedLoan,
-                        );
-                      }
                     } else {
-                      if (isEdit) {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          LoanTextConstants.updatingError,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          LoanTextConstants.addingError,
-                        );
-                      }
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        LoanTextConstants.addedLoan,
+                      );
                     }
                   } else {
-                    displayToastWithContext(
-                      TypeMsg.error,
-                      LoanTextConstants.noItemSelected,
-                    );
+                    if (isEdit) {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        LoanTextConstants.updatingError,
+                      );
+                    } else {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        LoanTextConstants.addingError,
+                      );
+                    }
                   }
-                });
+                } else {
+                  displayToastWithContext(
+                    TypeMsg.error,
+                    LoanTextConstants.noItemSelected,
+                  );
+                }
               },
               error: (error, s) {
                 displayToast(context, TypeMsg.error, error.toString());

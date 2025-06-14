@@ -8,6 +8,8 @@ class ProductListRepository extends Repository {
   // ignore: overridden_fields
   final ext = "amap/products";
 
+  ProductListRepository(super.ref);
+
   Future<List<Product>> getProductList() async {
     return List<Product>.from(
       (await getList()).map((x) => Product.fromJson(x)),
@@ -33,5 +35,5 @@ class ProductListRepository extends Repository {
 
 final productListRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return ProductListRepository()..setToken(token);
+  return ProductListRepository(ref)..setToken(token);
 });

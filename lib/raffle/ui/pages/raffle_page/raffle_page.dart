@@ -19,7 +19,7 @@ class RaffleInfoPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userId = ref.watch(idProvider);
+    final userId = ref.watch(userIdProvider);
     final raffle = ref.watch(raffleProvider);
     final balance = ref.watch(userAmountProvider);
     final balanceNotifier = ref.read(userAmountProvider.notifier);

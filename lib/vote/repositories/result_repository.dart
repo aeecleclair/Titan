@@ -8,6 +8,8 @@ class ResultRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'campaign/results';
 
+  ResultRepository(super.ref);
+
   Future<List<Result>> getResult() async {
     return List<Result>.from((await getList()).map((e) => Result.fromJson(e)));
   }
@@ -15,5 +17,5 @@ class ResultRepository extends Repository {
 
 final resultRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return ResultRepository()..setToken(token);
+  return ResultRepository(ref)..setToken(token);
 });

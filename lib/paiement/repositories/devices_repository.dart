@@ -9,6 +9,8 @@ class DevicesRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'myeclpay/users/me/wallet/devices';
 
+  DevicesRepository(super.ref);
+
   Future<WalletDevice> registerDevice(CreateDevice body) async {
     return WalletDevice.fromJson(await create(body.toJson()));
   }
@@ -30,5 +32,5 @@ class DevicesRepository extends Repository {
 
 final devicesRepositoryProvider = Provider<DevicesRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return DevicesRepository()..setToken(token);
+  return DevicesRepository(ref)..setToken(token);
 });
