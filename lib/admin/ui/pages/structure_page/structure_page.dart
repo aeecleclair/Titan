@@ -15,7 +15,6 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/class/simple_users.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -117,21 +116,19 @@ class StructurePage extends HookConsumerWidget {
                                       descriptions:
                                           AdminTextConstants.deleteGroup,
                                       onYes: () async {
-                                        tokenExpireWrapper(ref, () async {
-                                          final value = await structuresNotifier
-                                              .deleteStructure(structure);
-                                          if (value) {
-                                            displayToastWithContext(
-                                              TypeMsg.msg,
-                                              AdminTextConstants.deletedGroup,
-                                            );
-                                          } else {
-                                            displayToastWithContext(
-                                              TypeMsg.error,
-                                              AdminTextConstants.deletingError,
-                                            );
-                                          }
-                                        });
+                                        final value = await structuresNotifier
+                                            .deleteStructure(structure);
+                                        if (value) {
+                                          displayToastWithContext(
+                                            TypeMsg.msg,
+                                            AdminTextConstants.deletedGroup,
+                                          );
+                                        } else {
+                                          displayToastWithContext(
+                                            TypeMsg.error,
+                                            AdminTextConstants.deletingError,
+                                          );
+                                        }
                                       },
                                     );
                                   },

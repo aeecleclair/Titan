@@ -9,7 +9,6 @@ import 'package:myecl/raffle/class/raffle.dart';
 import 'package:myecl/raffle/class/raffle_status_type.dart';
 import 'package:myecl/raffle/providers/raffle_list_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 
 class ConfirmCreationDialog extends HookConsumerWidget {
@@ -102,18 +101,16 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                         child: child,
                       ),
                       onTap: () async {
-                        await tokenExpireWrapper(ref, () async {
-                          await raffleListNotifier.createRaffle(
-                            Raffle(
-                              name: "Tombola : ${group.name}",
-                              group: group,
-                              id: '',
-                              raffleStatusType: RaffleStatusType.creation,
-                            ),
-                          );
-                          await raffleListNotifier.loadRaffleList();
-                          navigationPop();
-                        });
+                        await raffleListNotifier.createRaffle(
+                          Raffle(
+                            name: "Tombola : ${group.name}",
+                            group: group,
+                            id: '',
+                            raffleStatusType: RaffleStatusType.creation,
+                          ),
+                        );
+                        await raffleListNotifier.loadRaffleList();
+                        navigationPop();
                       },
                       child: const HeroIcon(
                         HeroIcons.check,

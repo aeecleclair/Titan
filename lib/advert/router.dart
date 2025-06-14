@@ -14,9 +14,9 @@ import 'package:myecl/advert/ui/pages/form_page/add_rem_announcer_page.dart'
 import 'package:myecl/advert/ui/pages/main_page/main_page.dart'
     deferred as main_page;
 import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:myecl/routing/middlewares/admin_middleware.dart';
+import 'package:myecl/routing/middlewares/authenticated_middleware.dart';
+import 'package:myecl/routing/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdvertRouter {

@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/vote/class/voter.dart';
 
@@ -5,6 +7,8 @@ class VoterRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "campaign/voters";
+
+  VoterRepository(super.ref);
 
   Future<bool> deleteVoter(String voterId) async {
     return await delete("/$voterId");
@@ -18,3 +22,8 @@ class VoterRepository extends Repository {
     return (await getList()).map((e) => Voter.fromJson(e)).toList();
   }
 }
+
+final voterRepositoryProvider = Provider((ref) {
+  final token = ref.watch(tokenProvider);
+  return VoterRepository(ref)..setToken(token);
+});

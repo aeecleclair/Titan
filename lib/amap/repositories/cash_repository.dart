@@ -8,6 +8,8 @@ class CashRepository extends Repository {
   // ignore: overridden_fields
   final ext = "amap/users/";
 
+  CashRepository(super.ref);
+
   Future<List<Cash>> getCashList() async {
     return List<Cash>.from(
       (await getList(suffix: "cash")).map((x) => Cash.fromJson(x)),
@@ -31,5 +33,5 @@ class CashRepository extends Repository {
 
 final cashRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return CashRepository()..setToken(token);
+  return CashRepository(ref)..setToken(token);
 });

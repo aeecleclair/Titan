@@ -8,6 +8,8 @@ class SchoolRepository extends Repository {
   // ignore: overridden_fields
   final ext = "schools/";
 
+  SchoolRepository(super.ref);
+
   Future<List<School>> getSchoolList() async {
     return List<School>.from((await getList()).map((x) => School.fromJson(x)));
   }
@@ -31,5 +33,5 @@ class SchoolRepository extends Repository {
 
 final schoolRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return SchoolRepository()..setToken(token);
+  return SchoolRepository(ref)..setToken(token);
 });

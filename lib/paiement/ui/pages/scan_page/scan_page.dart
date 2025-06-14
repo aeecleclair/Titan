@@ -12,7 +12,6 @@ import 'package:myecl/paiement/ui/pages/scan_page/cancel_button.dart';
 import 'package:myecl/paiement/ui/pages/scan_page/scanner.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:myecl/tools/ui/widgets/loader.dart';
@@ -289,44 +288,39 @@ class ScanPage extends HookConsumerWidget {
                                       descriptions:
                                           "Voulez-vous vraiment annuler la transaction de ${formatter.format(transaction.total / 100)} € ?",
                                       onYes: () async {
-                                        tokenExpireWrapper(ref, () async {
-                                          final value =
-                                              await transactionNotifier
-                                                  .cancelTransaction(
-                                                    transaction.id,
-                                                  );
-                                          value.when(
-                                            data: (value) {
-                                              if (value) {
-                                                displayToastWithContext(
-                                                  TypeMsg.msg,
-                                                  "Transaction annulée",
-                                                );
-                                                ref
-                                                    .read(
-                                                      ongoingTransactionProvider
-                                                          .notifier,
-                                                    )
-                                                    .clearOngoingTransaction();
-                                              } else {
-                                                displayToastWithContext(
-                                                  TypeMsg.error,
-                                                  "Erreur lors de l'annulation",
-                                                );
-                                              }
-                                              ongoingTransactionNotifier
+                                        final value = await transactionNotifier
+                                            .cancelTransaction(transaction.id);
+                                        value.when(
+                                          data: (value) {
+                                            if (value) {
+                                              displayToastWithContext(
+                                                TypeMsg.msg,
+                                                "Transaction annulée",
+                                              );
+                                              ref
+                                                  .read(
+                                                    ongoingTransactionProvider
+                                                        .notifier,
+                                                  )
                                                   .clearOngoingTransaction();
-                                              barcodeNotifier.clearBarcode();
-                                            },
-                                            error: (error, stack) {
+                                            } else {
                                               displayToastWithContext(
                                                 TypeMsg.error,
-                                                error.toString(),
+                                                "Erreur lors de l'annulation",
                                               );
-                                            },
-                                            loading: () {},
-                                          );
-                                        });
+                                            }
+                                            ongoingTransactionNotifier
+                                                .clearOngoingTransaction();
+                                            barcodeNotifier.clearBarcode();
+                                          },
+                                          error: (error, stack) {
+                                            displayToastWithContext(
+                                              TypeMsg.error,
+                                              error.toString(),
+                                            );
+                                          },
+                                          loading: () {},
+                                        );
                                         scannerKey.currentState?.resetScanner();
                                       },
                                     );

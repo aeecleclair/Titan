@@ -6,7 +6,6 @@ import 'package:myecl/admin/providers/association_membership_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/date_entry.dart';
@@ -108,28 +107,22 @@ class SearchFilters extends HookConsumerWidget {
               width: MediaQuery.of(context).size.width * 0.3,
               child: WaitingButton(
                 onTap: () async {
-                  await tokenExpireWrapper(ref, () async {
-                    await associationMembershipMemberListNotifier
-                        .loadAssociationMembershipMembers(
-                          associationMembership.id,
-                          minimalStartDate: startMinimal.text.isNotEmpty
-                              ? DateTime.parse(
-                                  processDateBack(startMinimal.text),
-                                )
-                              : null,
-                          minimalEndDate: endMinimal.text.isNotEmpty
-                              ? DateTime.parse(processDateBack(endMinimal.text))
-                              : null,
-                          maximalStartDate: startMaximal.text.isNotEmpty
-                              ? DateTime.parse(
-                                  processDateBack(startMaximal.text),
-                                )
-                              : null,
-                          maximalEndDate: endMaximal.text.isNotEmpty
-                              ? DateTime.parse(processDateBack(endMaximal.text))
-                              : null,
-                        );
-                  });
+                  await associationMembershipMemberListNotifier
+                      .loadAssociationMembershipMembers(
+                        associationMembership.id,
+                        minimalStartDate: startMinimal.text.isNotEmpty
+                            ? DateTime.parse(processDateBack(startMinimal.text))
+                            : null,
+                        minimalEndDate: endMinimal.text.isNotEmpty
+                            ? DateTime.parse(processDateBack(endMinimal.text))
+                            : null,
+                        maximalStartDate: startMaximal.text.isNotEmpty
+                            ? DateTime.parse(processDateBack(startMaximal.text))
+                            : null,
+                        maximalEndDate: endMaximal.text.isNotEmpty
+                            ? DateTime.parse(processDateBack(endMaximal.text))
+                            : null,
+                      );
                 },
                 builder: (child) => AddEditButtonLayout(
                   colors: const [
@@ -158,12 +151,10 @@ class SearchFilters extends HookConsumerWidget {
                   startMinimal.clear();
                   endMaximal.clear();
                   endMinimal.clear();
-                  await tokenExpireWrapper(ref, () async {
-                    await associationMembershipMemberListNotifier
-                        .loadAssociationMembershipMembers(
-                          associationMembership.id,
-                        );
-                  });
+                  await associationMembershipMemberListNotifier
+                      .loadAssociationMembershipMembers(
+                        associationMembership.id,
+                      );
                 },
                 builder: (child) => AddEditButtonLayout(
                   colors: const [

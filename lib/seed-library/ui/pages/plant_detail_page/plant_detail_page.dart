@@ -8,7 +8,6 @@ import 'package:myecl/seed-library/tools/functions.dart';
 import 'package:myecl/seed-library/tools/functions.dart' as function;
 import 'package:myecl/seed-library/ui/seed_library.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
@@ -155,27 +154,25 @@ class PlantDetailPage extends HookConsumerWidget {
                         child: child,
                       ),
                       onTap: () async {
-                        await tokenExpireWrapper(ref, () async {
-                          final value = await plantNotifier.borrowIdPlant(
-                            plantComplete,
+                        final value = await plantNotifier.borrowIdPlant(
+                          plantComplete,
+                        );
+                        if (value) {
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            SeedLibraryTextConstants.borrowedPlant,
                           );
-                          if (value) {
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              SeedLibraryTextConstants.borrowedPlant,
-                            );
-                          } else {
-                            displayToastWithContext(
-                              TypeMsg.error,
-                              SeedLibraryTextConstants.addingError,
-                            );
-                          }
-                          plantsNotifier.deletePlantFromList(plantComplete.id);
-                          myPlantsNotifier.addPlantToList(
-                            plantComplete.toPlantSimple(),
+                        } else {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            SeedLibraryTextConstants.addingError,
                           );
-                          QR.back();
-                        });
+                        }
+                        plantsNotifier.deletePlantFromList(plantComplete.id);
+                        myPlantsNotifier.addPlantToList(
+                          plantComplete.toPlantSimple(),
+                        );
+                        QR.back();
                       },
                       child: const Text(
                         SeedLibraryTextConstants.borrowPlant,

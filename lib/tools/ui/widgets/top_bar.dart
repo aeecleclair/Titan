@@ -45,7 +45,7 @@ class TopBar extends HookConsumerWidget {
                 builder: (BuildContext appBarContext) {
                   return IconButton(
                     onPressed: () {
-                      if (QR.currentPath == root) {
+                      if (Uri.parse(QR.currentPath).path == root) {
                         if (animation != null) {
                           final controllerNotifier = ref.watch(
                             swipeControllerProvider(animation).notifier,
@@ -59,7 +59,7 @@ class TopBar extends HookConsumerWidget {
                       }
                     },
                     icon: HeroIcon(
-                      QR.currentPath == root
+                      Uri.parse(QR.currentPath).path == root
                           ? HeroIcons.bars3BottomLeft
                           : HeroIcons.chevronLeft,
                       color: textStyle?.color ?? Colors.black,

@@ -18,7 +18,6 @@ import 'package:myecl/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
 import 'package:myecl/booking/ui/pages/booking_pages/checkbox_entry.dart';
 import 'package:myecl/event/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/layouts/item_chip.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
@@ -372,85 +371,81 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 return;
                               }
                             }
-                            await tokenExpireWrapper(ref, () async {
-                              Booking newBooking = Booking(
-                                id: isEdit ? booking.id : "",
-                                reason: motif.text,
-                                start: DateTime.parse(
-                                  processDateBackWithHour(startString),
-                                ),
-                                end: DateTime.parse(
-                                  processDateBackWithHour(endString),
-                                ),
-                                creation: DateTime.now(),
-                                note: note.text.isEmpty ? null : note.text,
-                                room: room.value,
-                                key: keyRequired.value,
-                                decision: booking.decision,
-                                recurrenceRule: recurrenceRule,
-                                entity: entity.text,
-                                applicant: isManagerPage
-                                    ? booking.applicant
-                                    : user.toApplicant(),
-                                applicantId: isManagerPage
-                                    ? booking.applicantId
-                                    : user.id,
-                              );
-                              final value = isManagerPage
-                                  ? await ref
-                                        .read(
-                                          managerBookingListProvider.notifier,
-                                        )
-                                        .updateBooking(newBooking)
-                                  : isEdit
-                                  ? await ref
-                                        .read(userBookingListProvider.notifier)
-                                        .updateBooking(newBooking)
-                                  : await ref
-                                        .read(userBookingListProvider.notifier)
-                                        .addBooking(newBooking);
-                              if (value) {
-                                QR.back();
-                                ref
-                                    .read(userBookingListProvider.notifier)
-                                    .loadUserBookings();
-                                ref
-                                    .read(confirmedBookingListProvider.notifier)
-                                    .loadConfirmedBooking();
-                                ref
-                                    .read(managerBookingListProvider.notifier)
-                                    .loadUserManageBookings();
-                                ref
-                                    .read(
-                                      managerConfirmedBookingListProvider
-                                          .notifier,
-                                    )
-                                    .loadConfirmedBookingForManager();
-                                if (isEdit) {
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    BookingTextConstants.editedBooking,
-                                  );
-                                } else {
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    BookingTextConstants.addedBooking,
-                                  );
-                                }
+                            Booking newBooking = Booking(
+                              id: isEdit ? booking.id : "",
+                              reason: motif.text,
+                              start: DateTime.parse(
+                                processDateBackWithHour(startString),
+                              ),
+                              end: DateTime.parse(
+                                processDateBackWithHour(endString),
+                              ),
+                              creation: DateTime.now(),
+                              note: note.text.isEmpty ? null : note.text,
+                              room: room.value,
+                              key: keyRequired.value,
+                              decision: booking.decision,
+                              recurrenceRule: recurrenceRule,
+                              entity: entity.text,
+                              applicant: isManagerPage
+                                  ? booking.applicant
+                                  : user.toApplicant(),
+                              applicantId: isManagerPage
+                                  ? booking.applicantId
+                                  : user.id,
+                            );
+                            final value = isManagerPage
+                                ? await ref
+                                      .read(managerBookingListProvider.notifier)
+                                      .updateBooking(newBooking)
+                                : isEdit
+                                ? await ref
+                                      .read(userBookingListProvider.notifier)
+                                      .updateBooking(newBooking)
+                                : await ref
+                                      .read(userBookingListProvider.notifier)
+                                      .addBooking(newBooking);
+                            if (value) {
+                              QR.back();
+                              ref
+                                  .read(userBookingListProvider.notifier)
+                                  .loadUserBookings();
+                              ref
+                                  .read(confirmedBookingListProvider.notifier)
+                                  .loadConfirmedBooking();
+                              ref
+                                  .read(managerBookingListProvider.notifier)
+                                  .loadUserManageBookings();
+                              ref
+                                  .read(
+                                    managerConfirmedBookingListProvider
+                                        .notifier,
+                                  )
+                                  .loadConfirmedBookingForManager();
+                              if (isEdit) {
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  BookingTextConstants.editedBooking,
+                                );
                               } else {
-                                if (isEdit) {
-                                  displayToastWithContext(
-                                    TypeMsg.error,
-                                    BookingTextConstants.editionError,
-                                  );
-                                } else {
-                                  displayToastWithContext(
-                                    TypeMsg.error,
-                                    BookingTextConstants.addingError,
-                                  );
-                                }
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  BookingTextConstants.addedBooking,
+                                );
                               }
-                            });
+                            } else {
+                              if (isEdit) {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  BookingTextConstants.editionError,
+                                );
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  BookingTextConstants.addingError,
+                                );
+                              }
+                            }
                           }
                         } else {
                           displayToast(

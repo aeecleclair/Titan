@@ -60,7 +60,7 @@ final asyncUserProvider = StateNotifierProvider<UserNotifier, AsyncValue<User>>(
     tokenExpireWrapperAuth(ref, () async {
       final isLoggedIn = ref.watch(isLoggedInProvider);
       final id = ref
-          .watch(idProvider)
+          .watch(userIdProvider)
           .maybeWhen(data: (value) => value, orElse: () => "");
       if (isLoggedIn && id != "" && token != "") {
         return userNotifier..loadMe();

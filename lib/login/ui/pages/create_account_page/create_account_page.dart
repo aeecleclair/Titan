@@ -25,7 +25,7 @@ class CreateAccountPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authTokenNotifier = ref.watch(authTokenProvider.notifier);
+    final authTokenNotifier = ref.read(authTokenProvider.notifier);
     final signUpNotifier = ref.watch(signUpProvider.notifier);
     final code = QR.params['code'] ?? '';
     final isCodeGiven = code != '';
@@ -279,7 +279,7 @@ class CreateAccountPage extends HookConsumerWidget {
                   TypeMsg.msg,
                   LoginTextConstants.accountActivated,
                 );
-                authTokenNotifier.deleteToken();
+                authTokenNotifier.signOut();
                 QR.to(LoginRouter.root);
               } else {
                 displayToastWithContext(

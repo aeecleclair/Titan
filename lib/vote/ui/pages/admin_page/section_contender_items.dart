@@ -5,7 +5,6 @@ import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/card_layout.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/providers/contender_list_provider.dart';
@@ -75,15 +74,11 @@ class SectionContenderItems extends HookConsumerWidget {
           contender: e,
           isAdmin: true,
           onEdit: () {
-            tokenExpireWrapper(ref, () async {
-              contenderNotifier.setId(e);
-              membersNotifier.setMembers(e.members);
-              QR.to(
-                VoteRouter.root +
-                    VoteRouter.admin +
-                    VoteRouter.addEditContender,
-              );
-            });
+            contenderNotifier.setId(e);
+            membersNotifier.setMembers(e.members);
+            QR.to(
+              VoteRouter.root + VoteRouter.admin + VoteRouter.addEditContender,
+            );
           },
           onDelete: () async {
             await showDialog(
@@ -92,26 +87,24 @@ class SectionContenderItems extends HookConsumerWidget {
                 return CustomDialogBox(
                   title: VoteTextConstants.deletePretendance,
                   descriptions: VoteTextConstants.deletePretendanceDesc,
-                  onYes: () {
-                    tokenExpireWrapper(ref, () async {
-                      final value = await contenderListNotifier.deleteContender(
-                        e,
+                  onYes: () async {
+                    final value = await contenderListNotifier.deleteContender(
+                      e,
+                    );
+                    if (value) {
+                      displayVoteToastWithContext(
+                        TypeMsg.msg,
+                        VoteTextConstants.pretendanceDeleted,
                       );
-                      if (value) {
-                        displayVoteToastWithContext(
-                          TypeMsg.msg,
-                          VoteTextConstants.pretendanceDeleted,
-                        );
-                        contenderListNotifier.copy().then((value) {
-                          sectionContenderListNotifier.setTData(section, value);
-                        });
-                      } else {
-                        displayVoteToastWithContext(
-                          TypeMsg.error,
-                          VoteTextConstants.pretendanceNotDeleted,
-                        );
-                      }
-                    });
+                      contenderListNotifier.copy().then((value) {
+                        sectionContenderListNotifier.setTData(section, value);
+                      });
+                    } else {
+                      displayVoteToastWithContext(
+                        TypeMsg.error,
+                        VoteTextConstants.pretendanceNotDeleted,
+                      );
+                    }
                   },
                 );
               },

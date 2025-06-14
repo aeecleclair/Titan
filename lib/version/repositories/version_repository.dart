@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/version/class/version.dart';
 
@@ -7,6 +8,8 @@ class VersionRepository extends Repository {
   // ignore: overridden_fields
   final ext = "information";
 
+  VersionRepository(super.ref);
+
   Future<Version> getVersion() async {
     initLogger();
     return Version.fromJson(await getOne(""));
@@ -14,5 +17,6 @@ class VersionRepository extends Repository {
 }
 
 final versionRepositoryProvider = Provider((ref) {
-  return VersionRepository();
+  final token = ref.watch(tokenProvider);
+  return VersionRepository(ref)..setToken(token);
 });

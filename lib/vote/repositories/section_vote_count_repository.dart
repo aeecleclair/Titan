@@ -7,6 +7,8 @@ class SectionVoteCountRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'campaign/stats/';
 
+  SectionVoteCountRepository(super.ref);
+
   Future<int> getSectionVoteCount(String id) async {
     return await getOne(id);
   }
@@ -14,5 +16,5 @@ class SectionVoteCountRepository extends Repository {
 
 final sectionVoteCountRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return SectionVoteCountRepository()..setToken(token);
+  return SectionVoteCountRepository(ref)..setToken(token);
 });

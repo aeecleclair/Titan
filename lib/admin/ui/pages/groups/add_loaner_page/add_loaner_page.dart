@@ -8,7 +8,6 @@ import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/providers/all_loaner_list_provider.dart';
 import 'package:myecl/loan/providers/loaner_list_provider.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -51,29 +50,26 @@ class AddLoanerPage extends HookConsumerWidget {
                                 children: canAdd
                                     .map(
                                       (e) => GestureDetector(
-                                        onTap: () {
+                                        onTap: () async {
                                           Loaner newLoaner = Loaner(
                                             groupManagerId: e.id,
                                             id: '',
                                             name: e.name,
                                           );
-                                          tokenExpireWrapper(ref, () async {
-                                            final value =
-                                                await loanerListNotifier
-                                                    .addLoaner(newLoaner);
-                                            if (value) {
-                                              QR.back();
-                                              displayToastWithContext(
-                                                TypeMsg.msg,
-                                                AdminTextConstants.addedLoaner,
-                                              );
-                                            } else {
-                                              displayToastWithContext(
-                                                TypeMsg.error,
-                                                AdminTextConstants.addingError,
-                                              );
-                                            }
-                                          });
+                                          final value = await loanerListNotifier
+                                              .addLoaner(newLoaner);
+                                          if (value) {
+                                            QR.back();
+                                            displayToastWithContext(
+                                              TypeMsg.msg,
+                                              AdminTextConstants.addedLoaner,
+                                            );
+                                          } else {
+                                            displayToastWithContext(
+                                              TypeMsg.error,
+                                              AdminTextConstants.addingError,
+                                            );
+                                          }
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.symmetric(

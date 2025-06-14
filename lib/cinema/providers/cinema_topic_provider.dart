@@ -1,15 +1,12 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/cinema/repositories/cinema_topic_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class CinemaTopicsProvider extends ListNotifier<String> {
-  final CinemaTopicRepository cinemaTopicRepository = CinemaTopicRepository();
-  CinemaTopicsProvider({required String token})
-    : super(const AsyncValue.loading()) {
-    cinemaTopicRepository.setToken(token);
-  }
+  final CinemaTopicRepository cinemaTopicRepository;
+  CinemaTopicsProvider(this.cinemaTopicRepository)
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<String>>> getTopics() async {
     return await loadList(cinemaTopicRepository.getCinemaTopics);
@@ -48,8 +45,8 @@ final cinemaTopicsProvider =
     StateNotifierProvider<CinemaTopicsProvider, AsyncValue<List<String>>>((
       ref,
     ) {
-      final token = ref.watch(tokenProvider);
-      CinemaTopicsProvider notifier = CinemaTopicsProvider(token: token);
+      final repository = ref.watch(cinemaTopicRepositoryProvider);
+      CinemaTopicsProvider notifier = CinemaTopicsProvider(repository);
       tokenExpireWrapperAuth(ref, () async {
         notifier.getTopics();
       });
