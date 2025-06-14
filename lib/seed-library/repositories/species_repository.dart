@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/seed-library/class/species.dart';
-import 'package:myecl/seed-library/class/species_type.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/seed-library/class/species.dart';
+import 'package:titan/seed-library/class/species_type.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class SpeciesRepository extends Repository {
   @override

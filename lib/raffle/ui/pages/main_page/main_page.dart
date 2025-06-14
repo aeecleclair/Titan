@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
-import 'package:myecl/raffle/class/tickets.dart';
-import 'package:myecl/raffle/providers/is_raffle_admin.dart';
-import 'package:myecl/raffle/providers/raffle_list_provider.dart';
-import 'package:myecl/raffle/providers/tombola_logos_provider.dart';
-import 'package:myecl/raffle/providers/user_tickets_provider.dart';
-import 'package:myecl/raffle/router.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/components/section_title.dart';
-import 'package:myecl/raffle/ui/pages/main_page/raffle_card.dart';
-import 'package:myecl/raffle/ui/pages/main_page/ticket_card.dart';
-import 'package:myecl/raffle/ui/raffle.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/widgets/admin_button.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/raffle/class/raffle.dart';
+import 'package:titan/raffle/class/raffle_status_type.dart';
+import 'package:titan/raffle/class/tickets.dart';
+import 'package:titan/raffle/providers/is_raffle_admin.dart';
+import 'package:titan/raffle/providers/raffle_list_provider.dart';
+import 'package:titan/raffle/providers/tombola_logos_provider.dart';
+import 'package:titan/raffle/providers/user_tickets_provider.dart';
+import 'package:titan/raffle/router.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/raffle/ui/components/section_title.dart';
+import 'package:titan/raffle/ui/pages/main_page/raffle_card.dart';
+import 'package:titan/raffle/ui/pages/main_page/ticket_card.dart';
+import 'package:titan/raffle/ui/raffle.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/tools/ui/widgets/admin_button.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RaffleMainPage extends HookConsumerWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/contender_logo_provider.dart';
-import 'package:myecl/vote/providers/contender_logos_provider.dart';
+import 'package:titan/tools/ui/builders/auto_loader_child.dart';
+import 'package:titan/vote/class/contender.dart';
+import 'package:titan/vote/providers/contender_logo_provider.dart';
+import 'package:titan/vote/providers/contender_logos_provider.dart';
 
 class ContenderLogo extends HookConsumerWidget {
   final Contender contender;

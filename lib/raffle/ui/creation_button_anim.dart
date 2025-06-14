@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/tools/constants.dart';
+import 'package:titan/raffle/tools/constants.dart';
 
 class CustomButton extends HookConsumerWidget {
   const CustomButton({super.key, required this.text});

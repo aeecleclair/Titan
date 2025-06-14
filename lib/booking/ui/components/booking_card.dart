@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:titan/booking/class/booking.dart';
+import 'package:titan/booking/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/layouts/card_button.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class BookingCard extends StatelessWidget {

@@ -2,9 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/providers/order_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/providers/order_provider.dart';
+import 'package:titan/amap/tools/constants.dart';
 
 class ProductUiInList extends ConsumerWidget {
   final Product p;

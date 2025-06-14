@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/providers/product_id_provider.dart';
-import 'package:myecl/purchases/providers/scanned_users_list_provider.dart';
-import 'package:myecl/purchases/providers/seller_provider.dart';
-import 'package:myecl/purchases/providers/tag_list_provider.dart';
-import 'package:myecl/purchases/providers/ticket_id_provider.dart';
-import 'package:myecl/purchases/ui/purchases.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/purchases/providers/product_id_provider.dart';
+import 'package:titan/purchases/providers/scanned_users_list_provider.dart';
+import 'package:titan/purchases/providers/seller_provider.dart';
+import 'package:titan/purchases/providers/tag_list_provider.dart';
+import 'package:titan/purchases/providers/ticket_id_provider.dart';
+import 'package:titan/purchases/ui/purchases.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/tools/ui/layouts/item_chip.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 
 class UserListPage extends HookConsumerWidget {
   const UserListPage({super.key});

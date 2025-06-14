@@ -1,4 +1,4 @@
-import 'package:myecl/raffle/class/raffle_status_type.dart';
+import 'package:titan/raffle/class/raffle_status_type.dart';
 
 RaffleStatusType stringToRaffleStatusType(String raffleStatusType) {
   switch (raffleStatusType) {

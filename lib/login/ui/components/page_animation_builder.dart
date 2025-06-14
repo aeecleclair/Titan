@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/login/ui/components/background_painter.dart';
+import 'package:titan/login/ui/components/background_painter.dart';
 
 class PageAnimationBuilder extends StatelessWidget {
   final Widget child;

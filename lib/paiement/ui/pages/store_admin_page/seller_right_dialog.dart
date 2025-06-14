@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class Consts {
   Consts._();

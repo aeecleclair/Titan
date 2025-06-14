@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/repositories/delivery_product_list_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/repositories/delivery_product_list_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
 
 class DeliveryProductListNotifier extends ListNotifier<Product> {
   final DeliveryProductListRepository productListRepository;

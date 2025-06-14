@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/seed-library/class/species_type.dart';
+import 'package:titan/seed-library/class/species_type.dart';
 
 final speciesTypeProvider =
     StateNotifierProvider<SpeciesTypeNotifier, SpeciesType>((ref) {

@@ -1,6 +1,6 @@
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/association_kinds.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/phonebook/class/association.dart';
+import 'package:titan/phonebook/class/association_kinds.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class AssociationRepository extends Repository {
   @override

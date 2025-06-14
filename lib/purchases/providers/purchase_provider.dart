@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/purchases/class/purchase.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/purchases/class/purchase.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
 
 class PurchaseNotifier extends SingleNotifier<Purchase> {
   PurchaseNotifier({required String token}) : super(const AsyncValue.loading());

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/providers/map_provider.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/loader.dart';
+import 'package:titan/tools/providers/map_provider.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/widgets/loader.dart';
 
 class AutoLoaderChild<MapKey, MapValue> extends ConsumerWidget {
   final AsyncValue<List<MapValue>>? group;

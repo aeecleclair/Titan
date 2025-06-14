@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/cinema/tools/constants.dart';
+import 'package:titan/cinema/tools/constants.dart';
 
 class TmdbButton extends StatelessWidget {
   final Widget child;

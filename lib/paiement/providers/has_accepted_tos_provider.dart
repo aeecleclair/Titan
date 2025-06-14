@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/providers/tos_provider.dart';
+import 'package:titan/paiement/providers/tos_provider.dart';
 
 class HasAcceptedTosNotifier extends StateNotifier<bool> {
   final bool defaultValue;

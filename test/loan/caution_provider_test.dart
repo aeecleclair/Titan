@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/loan/providers/caution_provider.dart';
+import 'package:titan/loan/providers/caution_provider.dart';
 
 void main() {
   group('CautionNotifier', () {

@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/user/class/applicant.dart';
-import 'package:myecl/user/class/simple_users.dart';
-import 'package:myecl/user/class/user.dart';
-import 'package:myecl/user/providers/user_provider.dart';
-import 'package:myecl/user/repositories/user_repository.dart';
+import 'package:titan/admin/class/account_type.dart';
+import 'package:titan/user/class/applicant.dart';
+import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/user/class/user.dart';
+import 'package:titan/user/providers/user_provider.dart';
+import 'package:titan/user/repositories/user_repository.dart';
 
 class MockUserRepository extends Mock implements UserRepository {}
 

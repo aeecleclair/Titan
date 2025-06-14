@@ -1,5 +1,5 @@
-name: myecl
-description: MyECL est l'application des Centraliens de Lyon, conçue par ÉCLAIR
+name: titan
+description: Titan est le frontend d'une application de gestion de la vie associative
 
 publish_to: "none"
 version: 1.2.7+154

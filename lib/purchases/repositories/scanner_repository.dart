@@ -1,6 +1,6 @@
-import 'package:myecl/purchases/class/ticket.dart';
-import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/purchases/class/ticket.dart';
+import 'package:titan/tools/repository/repository.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class ScannerRepository extends Repository {
   @override

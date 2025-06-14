@@ -1,4 +1,4 @@
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
 
 class Ph {
   Ph({required this.id, required this.date, required this.name});

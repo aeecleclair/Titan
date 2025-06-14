@@ -1,4 +1,4 @@
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
 
 class HistoryRefund {
   final int total;

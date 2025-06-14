@@ -1,16 +1,16 @@
 import 'package:either_dart/either.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/purchases/providers/purchases_admin_provider.dart';
-import 'package:myecl/purchases/ui/pages/history_page/history_page.dart';
-import 'package:myecl/purchases/ui/pages/main_page/main_page.dart';
-import 'package:myecl/purchases/ui/pages/purchase_page/purchase_page.dart';
-import 'package:myecl/purchases/ui/pages/scan_page/scan_page.dart';
-import 'package:myecl/purchases/ui/pages/ticket_page/ticket_page.dart';
-import 'package:myecl/purchases/ui/pages/user_list_page/user_list_page.dart';
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
+import 'package:titan/drawer/class/module.dart';
+import 'package:titan/purchases/providers/purchases_admin_provider.dart';
+import 'package:titan/purchases/ui/pages/history_page/history_page.dart';
+import 'package:titan/purchases/ui/pages/main_page/main_page.dart';
+import 'package:titan/purchases/ui/pages/purchase_page/purchase_page.dart';
+import 'package:titan/purchases/ui/pages/scan_page/scan_page.dart';
+import 'package:titan/purchases/ui/pages/ticket_page/ticket_page.dart';
+import 'package:titan/purchases/ui/pages/user_list_page/user_list_page.dart';
+import 'package:titan/tools/middlewares/admin_middleware.dart';
+import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PurchasesRouter {

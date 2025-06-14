@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/amap/providers/scroll_controller_provider.dart';
+import 'package:titan/amap/providers/scroll_controller_provider.dart';
 
 void main() {
   // test('scroll controller notifier should update animation controller', () {

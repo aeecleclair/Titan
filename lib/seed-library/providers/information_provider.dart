@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/seed-library/class/information.dart';
-import 'package:myecl/seed-library/repositories/information_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/seed-library/class/information.dart';
+import 'package:titan/seed-library/repositories/information_repository.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class InformationNotifier extends SingleNotifier<Information> {
   final InformationRepository informationRepository;

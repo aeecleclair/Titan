@@ -1,5 +1,5 @@
-import 'package:myecl/paiement/class/store.dart';
-import 'package:myecl/paiement/class/structure.dart';
+import 'package:titan/paiement/class/store.dart';
+import 'package:titan/paiement/class/structure.dart';
 
 class UserStore extends Store {
   final bool canBank;

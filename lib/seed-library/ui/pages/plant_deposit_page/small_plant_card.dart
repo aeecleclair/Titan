@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/seed-library/class/plant_simple.dart';
-import 'package:myecl/seed-library/class/species.dart';
+import 'package:titan/seed-library/class/plant_simple.dart';
+import 'package:titan/seed-library/class/species.dart';
 
 class SmallPlantCard extends StatelessWidget {
   const SmallPlantCard({

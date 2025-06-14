@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/recommendation/router.dart';
-import 'package:myecl/recommendation/tools/constants.dart';
-import 'package:myecl/tools/ui/widgets/top_bar.dart';
+import 'package:titan/recommendation/router.dart';
+import 'package:titan/recommendation/tools/constants.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 
 class RecommendationTemplate extends StatelessWidget {
   final Widget child;

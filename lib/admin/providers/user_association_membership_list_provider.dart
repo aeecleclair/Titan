@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/user_association_membership.dart';
-import 'package:myecl/admin/repositories/association_membership_user_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/admin/class/user_association_membership.dart';
+import 'package:titan/admin/repositories/association_membership_user_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class UserMembershiplistNotifier
     extends ListNotifier<UserAssociationMembership> {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/providers/order_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/amap/ui/components/order_ui.dart';
-import 'package:myecl/amap/ui/components/product_ui.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/amap/providers/order_provider.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/amap/ui/amap.dart';
+import 'package:titan/amap/ui/components/order_ui.dart';
+import 'package:titan/amap/ui/components/product_ui.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({super.key});

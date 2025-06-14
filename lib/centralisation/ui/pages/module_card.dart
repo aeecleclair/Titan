@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/centralisation/class/module.dart';
-import 'package:myecl/centralisation/providers/favorites_providers.dart';
-import 'package:myecl/centralisation/tools/constants.dart';
-import 'package:myecl/centralisation/tools/functions.dart';
+import 'package:titan/centralisation/class/module.dart';
+import 'package:titan/centralisation/providers/favorites_providers.dart';
+import 'package:titan/centralisation/tools/constants.dart';
+import 'package:titan/centralisation/tools/functions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ModuleCard extends HookConsumerWidget {

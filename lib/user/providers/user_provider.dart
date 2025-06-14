@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/class/user.dart';
-import 'package:myecl/user/repositories/user_repository.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/user/class/user.dart';
+import 'package:titan/user/repositories/user_repository.dart';
 
 class UserNotifier extends SingleNotifier<User> {
   final UserRepository userRepository;

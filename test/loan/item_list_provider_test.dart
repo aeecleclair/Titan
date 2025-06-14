@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/repositories/item_repository.dart';
+import 'package:titan/loan/class/item.dart';
+import 'package:titan/loan/providers/item_list_provider.dart';
+import 'package:titan/loan/repositories/item_repository.dart';
 
 class MockItemRepository extends Mock implements ItemRepository {}
 

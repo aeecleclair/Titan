@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/refund.dart';
-import 'package:myecl/paiement/repositories/transaction_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:titan/paiement/class/refund.dart';
+import 'package:titan/paiement/repositories/transaction_repository.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
 
 class TransactionNotifier extends SingleNotifier<bool> {
   final TransactionsRepository transactionRepository;

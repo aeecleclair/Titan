@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/loan/providers/borrower_provider.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/loan/providers/borrower_provider.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 void main() {
   group('BorrowerNotifier', () {

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/seed-library/class/plant_complete.dart';
-import 'package:myecl/seed-library/repositories/plants_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:titan/seed-library/class/plant_complete.dart';
+import 'package:titan/seed-library/repositories/plants_repository.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
 
 class PlantNotifier extends SingleNotifier<PlantComplete> {
   final PlantsRepository plantsRepository;

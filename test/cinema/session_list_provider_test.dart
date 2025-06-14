@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/cinema/class/session.dart';
-import 'package:myecl/cinema/providers/session_list_provider.dart';
-import 'package:myecl/cinema/repositories/session_repository.dart';
+import 'package:titan/cinema/class/session.dart';
+import 'package:titan/cinema/providers/session_list_provider.dart';
+import 'package:titan/cinema/repositories/session_repository.dart';
 
 class MockSessionRepository extends Mock implements SessionRepository {}
 

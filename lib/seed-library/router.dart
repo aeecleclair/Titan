@@ -1,31 +1,31 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/seed-library/providers/is_seed_library_admin_provider.dart';
-import 'package:myecl/seed-library/ui/pages/add_edit_species_page/add_edit_species_page.dart'
+import 'package:titan/drawer/class/module.dart';
+import 'package:titan/seed-library/providers/is_seed_library_admin_provider.dart';
+import 'package:titan/seed-library/ui/pages/add_edit_species_page/add_edit_species_page.dart'
     deferred as add_edit_species_page;
-import 'package:myecl/seed-library/ui/pages/edit_plant_detail_page/edit_plant_detail_page.dart'
+import 'package:titan/seed-library/ui/pages/edit_plant_detail_page/edit_plant_detail_page.dart'
     deferred as edit_plant_detail_page;
-import 'package:myecl/seed-library/ui/pages/edit_presentation_page/edit_information_page.dart'
+import 'package:titan/seed-library/ui/pages/edit_presentation_page/edit_information_page.dart'
     deferred as edit_information_page;
-import 'package:myecl/seed-library/ui/pages/information_page/text.dart'
+import 'package:titan/seed-library/ui/pages/information_page/text.dart'
     deferred as information_page;
-import 'package:myecl/seed-library/ui/pages/main_page/main_page.dart'
+import 'package:titan/seed-library/ui/pages/main_page/main_page.dart'
     deferred as main_page;
-import 'package:myecl/seed-library/ui/pages/plant_detail_page/plant_detail_page.dart'
+import 'package:titan/seed-library/ui/pages/plant_detail_page/plant_detail_page.dart'
     deferred as plant_detail_page;
-import 'package:myecl/seed-library/ui/pages/plants_page/plants_page.dart'
+import 'package:titan/seed-library/ui/pages/plants_page/plants_page.dart'
     deferred as plants_page;
-import 'package:myecl/seed-library/ui/pages/plant_deposit_page/plant_deposit_page.dart'
+import 'package:titan/seed-library/ui/pages/plant_deposit_page/plant_deposit_page.dart'
     deferred as plant_deposit_page;
-import 'package:myecl/seed-library/ui/pages/species_page/species_page.dart'
+import 'package:titan/seed-library/ui/pages/species_page/species_page.dart'
     deferred as species_page;
-import 'package:myecl/seed-library/ui/pages/stock_page/stocks_page.dart'
+import 'package:titan/seed-library/ui/pages/stock_page/stocks_page.dart'
     deferred as stocks_page;
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:titan/tools/middlewares/admin_middleware.dart';
+import 'package:titan/tools/middlewares/authenticated_middleware.dart';
+import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SeedLibraryRouter {

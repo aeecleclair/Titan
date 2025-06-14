@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
 
 class AMAPColorConstants extends ColorConstants {
   static final Color background = Colors.grey.shade100;

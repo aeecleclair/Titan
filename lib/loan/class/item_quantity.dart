@@ -1,4 +1,4 @@
-import 'package:myecl/loan/class/item_simple.dart';
+import 'package:titan/loan/class/item_simple.dart';
 
 class ItemQuantity {
   ItemQuantity({required this.itemSimple, required this.quantity});

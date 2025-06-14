@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/wallet.dart';
-import 'package:myecl/paiement/repositories/users_me_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:titan/paiement/class/wallet.dart';
+import 'package:titan/paiement/repositories/users_me_repository.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
 
 class MyWalletNotifier extends SingleNotifier<Wallet> {
   final UsersMeRepository usersMeRepository;

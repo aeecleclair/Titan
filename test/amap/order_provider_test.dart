@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/providers/order_provider.dart';
+import 'package:titan/amap/class/order.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/providers/order_provider.dart';
 
 void main() {
   group('OrderNotifier', () {

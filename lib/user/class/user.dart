@@ -1,9 +1,9 @@
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/applicant.dart';
-import 'package:myecl/user/class/simple_users.dart';
-import 'package:myecl/user/class/floors.dart';
+import 'package:titan/admin/class/account_type.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/user/class/applicant.dart';
+import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/user/class/floors.dart';
 
 class User {
   User({

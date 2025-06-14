@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/paiement/class/history.dart';
-import 'package:myecl/paiement/providers/my_history_provider.dart';
-import 'package:myecl/paiement/providers/selected_transactions_provider.dart';
-import 'package:myecl/paiement/ui/pages/stats_page/month_section_summary.dart';
-import 'package:myecl/paiement/ui/pages/stats_page/transaction_chart.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:titan/paiement/class/history.dart';
+import 'package:titan/paiement/providers/my_history_provider.dart';
+import 'package:titan/paiement/providers/selected_transactions_provider.dart';
+import 'package:titan/paiement/ui/pages/stats_page/month_section_summary.dart';
+import 'package:titan/paiement/ui/pages/stats_page/transaction_chart.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 
 class SumUpChart extends HookConsumerWidget {
   final DateTime currentMonth;

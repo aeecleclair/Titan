@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/providers/cash_list_provider.dart';
-import 'package:myecl/amap/providers/searching_amap_user_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/pages/admin_page/adding_user_container.dart';
-import 'package:myecl/amap/ui/pages/admin_page/cash_container.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:titan/amap/providers/cash_list_provider.dart';
+import 'package:titan/amap/providers/searching_amap_user_provider.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/amap/ui/pages/admin_page/adding_user_container.dart';
+import 'package:titan/amap/ui/pages/admin_page/cash_container.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
+import 'package:titan/user/providers/user_list_provider.dart';
 
 class AccountHandler extends HookConsumerWidget {
   const AccountHandler({super.key});

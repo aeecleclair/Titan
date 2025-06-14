@@ -2,8 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/paiement/class/history.dart';
-import 'package:myecl/paiement/tools/functions.dart';
+import 'package:titan/paiement/class/history.dart';
+import 'package:titan/paiement/tools/functions.dart';
 
 class TransactionCard extends StatelessWidget {
   final History transaction;

@@ -1,6 +1,6 @@
-import 'package:myecl/purchases/class/product_variant.dart';
-import 'package:myecl/purchases/class/user_ticket.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/purchases/class/product_variant.dart';
+import 'package:titan/purchases/class/user_ticket.dart';
+import 'package:titan/tools/functions.dart';
 
 class Ticket {
   Ticket({

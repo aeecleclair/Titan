@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class AdminShrinkButton extends StatelessWidget {
   final Future<void> Function() onTap;

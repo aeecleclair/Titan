@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/login/class/account_type.dart';
-import 'package:myecl/login/class/create_account.dart';
-import 'package:myecl/login/class/recover_request.dart';
-import 'package:myecl/login/tools/functions.dart';
+import 'package:titan/login/class/account_type.dart';
+import 'package:titan/login/class/create_account.dart';
+import 'package:titan/login/class/recover_request.dart';
+import 'package:titan/login/tools/functions.dart';
 
 void main() {
   group('Testing RecoverRequest class', () {

@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/create_device.dart';
-import 'package:myecl/paiement/class/wallet_device.dart';
-import 'package:myecl/paiement/repositories/devices_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:titan/paiement/class/create_device.dart';
+import 'package:titan/paiement/class/wallet_device.dart';
+import 'package:titan/paiement/repositories/devices_repository.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
 
 class DeviceListNotifier extends SingleNotifier<WalletDevice> {
   final DevicesRepository devicesRepository;

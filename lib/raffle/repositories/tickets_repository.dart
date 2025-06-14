@@ -1,5 +1,5 @@
-import 'package:myecl/raffle/class/tickets.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/raffle/class/tickets.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class TicketRepository extends Repository {
   @override

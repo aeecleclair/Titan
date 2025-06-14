@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/login/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/login/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
 class CreateAccountField extends HookConsumerWidget {
   final TextEditingController controller;

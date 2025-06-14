@@ -1,19 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/settings/ui/pages/change_pass/change_pass.dart'
+import 'package:titan/settings/ui/pages/change_pass/change_pass.dart'
     deferred as change_pass;
-import 'package:myecl/settings/ui/pages/edit_user_page/edit_user_page.dart'
+import 'package:titan/settings/ui/pages/edit_user_page/edit_user_page.dart'
     deferred as edit_user_page;
-import 'package:myecl/settings/ui/pages/log_page/log_page.dart'
+import 'package:titan/settings/ui/pages/log_page/log_page.dart'
     deferred as log_page;
-import 'package:myecl/settings/ui/pages/main_page/main_page.dart'
+import 'package:titan/settings/ui/pages/main_page/main_page.dart'
     deferred as main_page;
-import 'package:myecl/settings/ui/pages/modules_page/modules_page.dart'
+import 'package:titan/settings/ui/pages/modules_page/modules_page.dart'
     deferred as modules_page;
-import 'package:myecl/settings/ui/pages/notification_page/notification_page.dart'
+import 'package:titan/settings/ui/pages/notification_page/notification_page.dart'
     deferred as notification_page;
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:titan/tools/middlewares/authenticated_middleware.dart';
+import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SettingsRouter {

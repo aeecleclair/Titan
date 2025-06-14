@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/purchases/class/ticket_generator.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/purchases/class/ticket_generator.dart';
 
 class TicketGeneratorNotifier extends StateNotifier<TicketGenerator> {
   TicketGeneratorNotifier({required String token})

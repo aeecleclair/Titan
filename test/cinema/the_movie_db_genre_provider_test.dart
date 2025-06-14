@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/cinema/class/the_movie_db_genre.dart';
-import 'package:myecl/cinema/providers/the_movie_db_genre_provider.dart';
-import 'package:myecl/cinema/repositories/the_movie_db_repository.dart';
-import 'package:myecl/tools/exception.dart';
+import 'package:titan/cinema/class/the_movie_db_genre.dart';
+import 'package:titan/cinema/providers/the_movie_db_genre_provider.dart';
+import 'package:titan/cinema/repositories/the_movie_db_repository.dart';
+import 'package:titan/tools/exception.dart';
 
 class MockTheMovieDBRepository extends Mock implements TheMovieDBRepository {}
 

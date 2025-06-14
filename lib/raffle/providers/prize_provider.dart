@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/raffle/class/prize.dart';
+import 'package:titan/raffle/class/prize.dart';
 
 class PrizeNotifier extends StateNotifier<Prize> {
   PrizeNotifier() : super(Prize.empty());
