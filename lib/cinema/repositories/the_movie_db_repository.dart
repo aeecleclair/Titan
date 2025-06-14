@@ -8,6 +8,8 @@ class TheMovieDBRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'cinema/themoviedb/';
 
+  TheMovieDBRepository(super.ref);
+
   Future<TheMovieDBMovie> getMovie(String movieId) async {
     return TheMovieDBMovie.fromJson(await getOne(movieId));
   }
@@ -15,5 +17,5 @@ class TheMovieDBRepository extends Repository {
 
 final theMovieDBRepository = Provider<TheMovieDBRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return TheMovieDBRepository()..setToken(token);
+  return TheMovieDBRepository(ref)..setToken(token);
 });

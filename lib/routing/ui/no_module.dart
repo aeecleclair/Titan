@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/module_root_list_provider.dart';
-import 'package:myecl/others/tools/constants.dart';
-import 'package:myecl/tools/providers/path_forwarding_provider.dart';
+import 'package:myecl/routing/tools/constants.dart';
+import 'package:myecl/router.dart';
+import 'package:myecl/routing/providers/auth_redirect_service_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class NoModulePage extends HookConsumerWidget {
@@ -12,10 +13,15 @@ class NoModulePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final moduleVisibilityList = ref.watch(moduleRootListProvider);
-    final pathForwarding = ref.read(pathForwardingProvider);
+    final redirectPath = ref.watch(
+      authRedirectServiceProvider.select(
+        (service) => service.getRedirect(QR.currentPath),
+      ),
+    );
+
     moduleVisibilityList.maybeWhen(
       data: (data) {
-        QR.to(pathForwarding.path);
+        QR.to(redirectPath ?? AppRouter.root);
       },
       orElse: () {},
     );

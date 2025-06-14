@@ -20,14 +20,14 @@ class PhonebookTemplate extends HookConsumerWidget {
             title: PhonebookTextConstants.phonebook,
             root: PhonebookRouter.root,
             onBack: () {
-              if (QR.currentPath !=
+              if (Uri.parse(QR.currentPath).path !=
                   PhonebookRouter.root +
                       PhonebookRouter.admin +
                       PhonebookRouter.editAssociation +
                       PhonebookRouter.addEditMember) {
                 kindNotifier.setKind('');
               }
-              if (QR.currentPath ==
+              if (Uri.parse(QR.currentPath).path ==
                   PhonebookRouter.root +
                       PhonebookRouter.admin +
                       PhonebookRouter.editAssociation) {

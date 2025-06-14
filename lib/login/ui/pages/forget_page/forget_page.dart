@@ -92,9 +92,7 @@ class ForgetPassword extends HookConsumerWidget {
                     const SizedBox(height: 30),
                     SignInUpBar(
                       label: LoginTextConstants.recover,
-                      isLoading: ref
-                          .watch(loadingProvider)
-                          .maybeWhen(data: (data) => data, orElse: () => false),
+                      isLoading: ref.watch(isAuthLoadingProvider),
                       onPressed: () async {
                         final value = await signUpNotifier.recoverUser(
                           email.text,

@@ -1,4 +1,13 @@
-enum ErrorType { tokenExpire, notFound, invalidData, conflict }
+enum ErrorType {
+  tokenExpire,
+  notFound,
+  invalidData,
+  conflict,
+  unexpectedResponse,
+  apiError,
+  noDefaultValue,
+  tokenRefreshing,
+}
 
 class AppException implements Exception {
   ErrorType type;

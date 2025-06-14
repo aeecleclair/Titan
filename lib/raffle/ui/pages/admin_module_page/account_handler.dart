@@ -8,7 +8,6 @@ import 'package:myecl/raffle/providers/searching_raffle_user_provider.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/admin_module_page/adding_user_container.dart';
 import 'package:myecl/raffle/ui/pages/admin_module_page/cash_container.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
 
 class AccountHandler extends HookConsumerWidget {
@@ -35,22 +34,20 @@ class AccountHandler extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 30),
           alignment: Alignment.centerLeft,
           child: TextField(
-            onChanged: (value) {
-              tokenExpireWrapper(ref, () async {
-                if (!searchingAmapUser) {
-                  if (editingController.text.isNotEmpty) {
-                    await usersNotifier.filterUsers(editingController.text);
-                  } else {
-                    usersNotifier.clear();
-                  }
+            onChanged: (value) async {
+              if (!searchingAmapUser) {
+                if (editingController.text.isNotEmpty) {
+                  await usersNotifier.filterUsers(editingController.text);
                 } else {
-                  if (editingController.text.isNotEmpty) {
-                    await cashNotifier.filterCashList(editingController.text);
-                  } else {
-                    cashNotifier.refreshCashList();
-                  }
+                  usersNotifier.clear();
                 }
-              });
+              } else {
+                if (editingController.text.isNotEmpty) {
+                  await cashNotifier.filterCashList(editingController.text);
+                } else {
+                  cashNotifier.refreshCashList();
+                }
+              }
             },
             focusNode: focusNode,
             controller: editingController,

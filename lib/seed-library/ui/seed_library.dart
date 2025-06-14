@@ -17,7 +17,7 @@ class SeedLibraryTemplate extends StatelessWidget {
           TopBar(
             title: SeedLibraryTextConstants.seedLibrary,
             root: SeedLibraryRouter.root,
-            rightIcon: QR.currentPath == SeedLibraryRouter.root
+            rightIcon: Uri.parse(QR.currentPath).path == SeedLibraryRouter.root
                 ? IconButton(
                     onPressed: () {
                       QR.to(

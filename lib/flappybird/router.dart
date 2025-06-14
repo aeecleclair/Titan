@@ -5,8 +5,8 @@ import 'package:myecl/flappybird/ui/pages/game_page/game_page.dart'
     deferred as play_page;
 import 'package:myecl/flappybird/ui/pages/leaderboard_page/leaderboard_page.dart'
     deferred as main_page;
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:myecl/routing/middlewares/authenticated_middleware.dart';
+import 'package:myecl/routing/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class FlappyBirdRouter {

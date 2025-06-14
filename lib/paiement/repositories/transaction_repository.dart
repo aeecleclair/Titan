@@ -8,6 +8,8 @@ class TransactionsRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'myeclpay/transactions';
 
+  TransactionsRepository(super.ref);
+
   Future<bool> refundTransaction(String transactionId, Refund refund) async {
     return await create(refund.toJson(), suffix: '/$transactionId/refund');
   }
@@ -19,5 +21,5 @@ class TransactionsRepository extends Repository {
 
 final transactionsRepositoryProvider = Provider<TransactionsRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return TransactionsRepository()..setToken(token);
+  return TransactionsRepository(ref)..setToken(token);
 });

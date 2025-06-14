@@ -8,6 +8,8 @@ class ContenderRepository extends Repository {
   // ignore: overridden_fields
   final ext = "campaign/lists";
 
+  ContenderRepository(super.ref);
+
   Future<bool> deleteContender(String contenderId) async {
     return await delete("/$contenderId");
   }
@@ -31,5 +33,5 @@ class ContenderRepository extends Repository {
 
 final contenderRepositoryProvider = Provider<ContenderRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return ContenderRepository()..setToken(token);
+  return ContenderRepository(ref)..setToken(token);
 });

@@ -23,7 +23,6 @@ import 'package:myecl/raffle/ui/pages/creation_edit_page/ticket_handler.dart';
 import 'package:myecl/raffle/ui/pages/creation_edit_page/winning_ticket_handler.dart';
 import 'package:myecl/raffle/ui/raffle.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
@@ -203,14 +202,12 @@ class CreationPage extends HookConsumerWidget {
                 onTap: () async {
                   if (raffle.raffleStatusType == RaffleStatusType.creation &&
                       formKey.currentState!.validate()) {
-                    await tokenExpireWrapper(ref, () async {
-                      Raffle newRaffle = raffle.copyWith(
-                        name: name.text,
-                        description: raffle.description,
-                        raffleStatusType: raffle.raffleStatusType,
-                      );
-                      await raffleListNotifier.updateRaffle(newRaffle);
-                    });
+                    Raffle newRaffle = raffle.copyWith(
+                      name: name.text,
+                      description: raffle.description,
+                      raffleStatusType: raffle.raffleStatusType,
+                    );
+                    await raffleListNotifier.updateRaffle(newRaffle);
                     raffleList.when(
                       data: (list) async {
                         if (logo.value != null) {
@@ -253,55 +250,53 @@ class CreationPage extends HookConsumerWidget {
                     child: WaitingButton(
                       builder: (child) => BlueBtn(child: child),
                       onTap: () async {
-                        await tokenExpireWrapper(ref, () async {
-                          await showDialog(
-                            context: context,
-                            builder: (context) => CustomDialogBox(
-                              title:
-                                  raffle.raffleStatusType ==
-                                      RaffleStatusType.creation
-                                  ? RaffleTextConstants.openRaffle
-                                  : RaffleTextConstants.closeRaffle,
-                              descriptions:
-                                  raffle.raffleStatusType ==
-                                      RaffleStatusType.creation
-                                  ? RaffleTextConstants.openRaffleDescription
-                                  : RaffleTextConstants.closeRaffleDescription,
-                              onYes: () async {
-                                switch (raffle.raffleStatusType) {
-                                  case RaffleStatusType.creation:
-                                    await raffleListNotifier.openRaffle(
-                                      raffle.copyWith(
-                                        description: raffle.description,
-                                        raffleStatusType: RaffleStatusType.open,
-                                      ),
-                                    );
-                                    QR.back();
-                                    break;
-                                  case RaffleStatusType.open:
-                                    await raffleListNotifier.lockRaffle(
-                                      raffle.copyWith(
-                                        description: raffle.description,
-                                        raffleStatusType: RaffleStatusType.lock,
-                                      ),
-                                    );
-                                    prizeList.whenData((prizes) {
-                                      for (var prize in prizes) {
-                                        if (prize.raffleId == raffle.id) {
-                                          winningTicketListNotifier.drawPrize(
-                                            prize,
-                                          );
-                                        }
+                        await showDialog(
+                          context: context,
+                          builder: (context) => CustomDialogBox(
+                            title:
+                                raffle.raffleStatusType ==
+                                    RaffleStatusType.creation
+                                ? RaffleTextConstants.openRaffle
+                                : RaffleTextConstants.closeRaffle,
+                            descriptions:
+                                raffle.raffleStatusType ==
+                                    RaffleStatusType.creation
+                                ? RaffleTextConstants.openRaffleDescription
+                                : RaffleTextConstants.closeRaffleDescription,
+                            onYes: () async {
+                              switch (raffle.raffleStatusType) {
+                                case RaffleStatusType.creation:
+                                  await raffleListNotifier.openRaffle(
+                                    raffle.copyWith(
+                                      description: raffle.description,
+                                      raffleStatusType: RaffleStatusType.open,
+                                    ),
+                                  );
+                                  QR.back();
+                                  break;
+                                case RaffleStatusType.open:
+                                  await raffleListNotifier.lockRaffle(
+                                    raffle.copyWith(
+                                      description: raffle.description,
+                                      raffleStatusType: RaffleStatusType.lock,
+                                    ),
+                                  );
+                                  prizeList.whenData((prizes) {
+                                    for (var prize in prizes) {
+                                      if (prize.raffleId == raffle.id) {
+                                        winningTicketListNotifier.drawPrize(
+                                          prize,
+                                        );
                                       }
-                                    });
-                                    QR.back();
-                                    break;
-                                  default:
-                                }
-                              },
-                            ),
-                          );
-                        });
+                                    }
+                                  });
+                                  QR.back();
+                                  break;
+                                default:
+                              }
+                            },
+                          ),
+                        );
                       },
                       child: BlueBtn(
                         child: Text(

@@ -11,7 +11,6 @@ import 'package:myecl/seed-library/ui/components/types_bar.dart';
 import 'package:myecl/seed-library/ui/seed_library.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
@@ -229,58 +228,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                           return;
                         }
                         if (isEdit) {
-                          await tokenExpireWrapper(ref, () async {
-                            final value = await speciesListNotifier
-                                .updateSpecies(
-                                  species.copyWith(
-                                    name: name.text,
-                                    prefix: prefix.text,
-                                    type: type,
-                                    difficulty: difficulty,
-                                    card: card.text,
-                                    nbSeedsRecommended: int.tryParse(
-                                      nbSeedsRecommended.text,
-                                    ),
-                                    startSeason: startMonth.isNotEmpty
-                                        ? DateTime(
-                                            2021,
-                                            SeedLibraryTextConstants.months
-                                                    .indexOf(startMonth) +
-                                                1,
-                                            1,
-                                          )
-                                        : null,
-                                    endSeason: endMonth.isNotEmpty
-                                        ? DateTime(
-                                            2021,
-                                            SeedLibraryTextConstants.months
-                                                    .indexOf(endMonth) +
-                                                1,
-                                            1,
-                                          )
-                                        : null,
-                                    timeMaturation: int.tryParse(
-                                      maturationTime.text,
-                                    ),
-                                  ),
-                                );
-                            if (value) {
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                SeedLibraryTextConstants.updatedSpecies,
-                              );
-                              QR.back();
-                            } else {
-                              displayToastWithContext(
-                                TypeMsg.error,
-                                SeedLibraryTextConstants.updatingError,
-                              );
-                            }
-                          });
-                          return;
-                        }
-                        await tokenExpireWrapper(ref, () async {
-                          final value = await speciesListNotifier.createSpecies(
+                          final value = await speciesListNotifier.updateSpecies(
                             species.copyWith(
                               name: name.text,
                               prefix: prefix.text,
@@ -316,16 +264,62 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                           if (value) {
                             displayToastWithContext(
                               TypeMsg.msg,
-                              SeedLibraryTextConstants.addedSpecies,
+                              SeedLibraryTextConstants.updatedSpecies,
                             );
                             QR.back();
                           } else {
                             displayToastWithContext(
                               TypeMsg.error,
-                              SeedLibraryTextConstants.addingError,
+                              SeedLibraryTextConstants.updatingError,
                             );
                           }
-                        });
+                          return;
+                        }
+                        final value = await speciesListNotifier.createSpecies(
+                          species.copyWith(
+                            name: name.text,
+                            prefix: prefix.text,
+                            type: type,
+                            difficulty: difficulty,
+                            card: card.text,
+                            nbSeedsRecommended: int.tryParse(
+                              nbSeedsRecommended.text,
+                            ),
+                            startSeason: startMonth.isNotEmpty
+                                ? DateTime(
+                                    2021,
+                                    SeedLibraryTextConstants.months.indexOf(
+                                          startMonth,
+                                        ) +
+                                        1,
+                                    1,
+                                  )
+                                : null,
+                            endSeason: endMonth.isNotEmpty
+                                ? DateTime(
+                                    2021,
+                                    SeedLibraryTextConstants.months.indexOf(
+                                          endMonth,
+                                        ) +
+                                        1,
+                                    1,
+                                  )
+                                : null,
+                            timeMaturation: int.tryParse(maturationTime.text),
+                          ),
+                        );
+                        if (value) {
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            SeedLibraryTextConstants.addedSpecies,
+                          );
+                          QR.back();
+                        } else {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            SeedLibraryTextConstants.addingError,
+                          );
+                        }
                       },
                       child: Text(
                         isEdit

@@ -10,6 +10,8 @@ class StatusRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'campaign/status';
 
+  StatusRepository(super.ref);
+
   Future<Status> getStatus() async {
     return stringToStatus((await getOne(''))['status']);
   }
@@ -62,5 +64,5 @@ class StatusRepository extends Repository {
 
 final statusRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return StatusRepository()..setToken(token);
+  return StatusRepository(ref)..setToken(token);
 });

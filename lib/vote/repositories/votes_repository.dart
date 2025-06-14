@@ -8,6 +8,8 @@ class VotesRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'campaign/votes';
 
+  VotesRepository(super.ref);
+
   Future<Votes> addVote(Votes votes) async {
     await create(votes.toJson());
     return votes;
@@ -20,5 +22,5 @@ class VotesRepository extends Repository {
 
 final votesRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return VotesRepository()..setToken(token);
+  return VotesRepository(ref)..setToken(token);
 });

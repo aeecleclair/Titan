@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/votes.dart';
 import 'package:myecl/vote/providers/sections_provider.dart';
 import 'package:myecl/vote/providers/selected_contender_provider.dart';
@@ -56,25 +55,23 @@ class VoteButton extends HookConsumerWidget {
                 return CustomDialogBox(
                   title: VoteTextConstants.vote,
                   descriptions: VoteTextConstants.confirmVote,
-                  onYes: () {
-                    tokenExpireWrapper(ref, () async {
-                      final result = await votesNotifier.addVote(
-                        Votes(id: selectedContender.id),
+                  onYes: () async {
+                    final result = await votesNotifier.addVote(
+                      Votes(id: selectedContender.id),
+                    );
+                    if (result) {
+                      votedSectionNotifier.addVote(section.id);
+                      selectedContenderNotifier.clear();
+                      displayVoteToastWithContext(
+                        TypeMsg.msg,
+                        VoteTextConstants.voteSuccess,
                       );
-                      if (result) {
-                        votedSectionNotifier.addVote(section.id);
-                        selectedContenderNotifier.clear();
-                        displayVoteToastWithContext(
-                          TypeMsg.msg,
-                          VoteTextConstants.voteSuccess,
-                        );
-                      } else {
-                        displayVoteToastWithContext(
-                          TypeMsg.error,
-                          VoteTextConstants.voteError,
-                        );
-                      }
-                    });
+                    } else {
+                      displayVoteToastWithContext(
+                        TypeMsg.error,
+                        VoteTextConstants.voteError,
+                      );
+                    }
                   },
                 );
               },

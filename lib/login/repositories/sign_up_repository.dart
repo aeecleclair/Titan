@@ -11,6 +11,8 @@ class SignUpRepository extends Repository {
   // ignore: overridden_fields
   final ext = "users/";
 
+  SignUpRepository(super.ref);
+
   Future<bool> createUser(String email, AccountType accountType) async {
     try {
       final value = await create({
@@ -70,5 +72,5 @@ class SignUpRepository extends Repository {
 
 final signUpRepositoryProvider = Provider<SignUpRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return SignUpRepository()..setToken(token);
+  return SignUpRepository(ref)..setToken(token);
 });

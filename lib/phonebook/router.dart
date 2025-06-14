@@ -10,8 +10,8 @@ import 'package:myecl/phonebook/ui/pages/association_page/association_page.dart'
 import 'package:myecl/phonebook/ui/pages/main_page/main_page.dart';
 import 'package:myecl/phonebook/ui/pages/member_detail_page/member_detail_page.dart';
 import 'package:myecl/phonebook/ui/pages/membership_editor_page/membership_editor_page.dart';
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
+import 'package:myecl/routing/middlewares/admin_middleware.dart';
+import 'package:myecl/routing/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PhonebookRouter {

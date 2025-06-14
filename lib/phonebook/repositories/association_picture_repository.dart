@@ -1,12 +1,15 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
 class AssociationPictureRepository extends LogoRepository {
   @override
   // ignore: overridden_fields
   final ext = 'phonebook/associations/';
+  AssociationPictureRepository(super.ref);
 
   Future<Image> getAssociationPicture(String associationId) async {
     final uint8List = await getLogo(associationId, suffix: "/picture");
@@ -24,3 +27,9 @@ class AssociationPictureRepository extends LogoRepository {
     return Image.memory(uint8List);
   }
 }
+
+final associationPictureRepositoryProvider =
+    Provider<AssociationPictureRepository>((ref) {
+      final token = ref.watch(tokenProvider);
+      return AssociationPictureRepository(ref)..setToken(token);
+    });

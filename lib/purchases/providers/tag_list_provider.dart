@@ -1,14 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/purchases/repositories/scanner_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 
 class TagListNotifier extends ListNotifier<String> {
-  final ScannerRepository scannerRepository = ScannerRepository();
+  final ScannerRepository scannerRepository;
   AsyncValue<List<String>> tagList = const AsyncValue.loading();
-  TagListNotifier({required String token}) : super(const AsyncValue.loading()) {
-    scannerRepository.setToken(token);
-  }
+  TagListNotifier(this.scannerRepository) : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<String>>> loadTags(
     String sellerId,
@@ -23,7 +20,7 @@ class TagListNotifier extends ListNotifier<String> {
 
 final tagListProvider =
     StateNotifierProvider<TagListNotifier, AsyncValue<List<String>>>((ref) {
-      final token = ref.watch(tokenProvider);
-      TagListNotifier notifier = TagListNotifier(token: token);
+      final scannerRepository = ref.watch(scannerRepositoryProvider);
+      TagListNotifier notifier = TagListNotifier(scannerRepository);
       return notifier;
     });

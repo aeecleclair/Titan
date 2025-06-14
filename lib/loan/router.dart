@@ -13,9 +13,9 @@ import 'package:myecl/loan/ui/pages/loan_group_page/add_edit_loan_page.dart'
     deferred as add_edit_loan_page;
 import 'package:myecl/loan/ui/pages/main_page/main_page.dart'
     deferred as main_page;
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:myecl/routing/middlewares/admin_middleware.dart';
+import 'package:myecl/routing/middlewares/authenticated_middleware.dart';
+import 'package:myecl/routing/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LoanRouter {

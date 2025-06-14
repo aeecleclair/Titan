@@ -9,6 +9,8 @@ class AmapUserRepository extends Repository {
   // ignore: overridden_fields
   final ext = "amap/users/";
 
+  AmapUserRepository(super.ref);
+
   Future<List<Order>> getOrderList(String userId) async {
     return List<Order>.from(
       (await getList(suffix: "$userId/orders")).map((x) => Order.fromJson(x)),
@@ -22,5 +24,5 @@ class AmapUserRepository extends Repository {
 
 final amapUserRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return AmapUserRepository()..setToken(token);
+  return AmapUserRepository(ref)..setToken(token);
 });

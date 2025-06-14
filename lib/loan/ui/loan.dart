@@ -21,7 +21,7 @@ class LoanTemplate extends HookConsumerWidget {
             title: LoanTextConstants.loan,
             root: LoanRouter.root,
             onBack: () {
-              if (QR.currentPath ==
+              if (Uri.parse(QR.currentPath).path ==
                   LoanRouter.root + LoanRouter.admin + LoanRouter.addEditLoan) {
                 final loanersItemsNotifier = ref.watch(
                   loanersItemsProvider.notifier,

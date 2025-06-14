@@ -6,6 +6,8 @@ class TagRepository extends Repository {
   // ignore: overridden_fields
   final ext = "advert/tag/";
 
+  TagRepository(super.ref);
+
   Future<List<Tag>> getAllTag() async {
     return (await getList()).map((e) => Tag.fromJson(e)).toList();
   }

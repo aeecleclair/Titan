@@ -10,7 +10,6 @@ import 'package:myecl/raffle/router.dart';
 import 'package:myecl/raffle/tools/constants.dart';
 import 'package:myecl/raffle/ui/pages/creation_edit_page/ticket_ui.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -117,22 +116,20 @@ class TicketHandler extends HookConsumerWidget {
                                   title: "Supprimer le ticket",
                                   descriptions:
                                       "Voulez-vous vraiment supprimer ce ticket?",
-                                  onYes: () {
-                                    tokenExpireWrapper(ref, () async {
-                                      final value = await packTicketsNotifier
-                                          .deletePackTicket(e);
-                                      if (value) {
-                                        displayToastWithContext(
-                                          TypeMsg.msg,
-                                          RaffleTextConstants.deletedTicket,
-                                        );
-                                      } else {
-                                        displayToastWithContext(
-                                          TypeMsg.error,
-                                          RaffleTextConstants.deletingError,
-                                        );
-                                      }
-                                    });
+                                  onYes: () async {
+                                    final value = await packTicketsNotifier
+                                        .deletePackTicket(e);
+                                    if (value) {
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        RaffleTextConstants.deletedTicket,
+                                      );
+                                    } else {
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        RaffleTextConstants.deletingError,
+                                      );
+                                    }
                                   },
                                 ),
                               );

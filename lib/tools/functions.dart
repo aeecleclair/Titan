@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:myecl/tools/plausible/plausible.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 enum TypeMsg { msg, error }
@@ -512,4 +513,16 @@ String getTitanPackageName() {
 
 String getTitanLogo() {
   return "assets/images/logo_${getAppFlavor()}.png";
+}
+
+void removeQueryParam(String keyToRemove) {
+  final params = QR.params.asMap;
+  params.remove(keyToRemove);
+  QR.params.updateParams(QParams(params: params));
+}
+
+void addQueryParam(String key, String value) {
+  final params = QR.params.asMap;
+  params[key] = ParamValue(value, keepAlive: true);
+  QR.params.updateParams(QParams(params: params));
 }

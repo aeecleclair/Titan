@@ -8,7 +8,6 @@ import 'package:myecl/admin/providers/association_membership_provider.dart';
 import 'package:myecl/admin/tools/constants.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
 
@@ -122,29 +121,27 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                     return;
                   }
 
-                  await tokenExpireWrapper(ref, () async {
-                    final value = await associationMembershipListNotifier
-                        .updateAssociationMembership(
-                          associationMembership.copyWith(name: name.text),
-                        );
-                    if (value) {
-                      associationMembershipNotifier.setAssociationMembership(
-                        associationMembership.copyWith(
-                          name: name.text,
-                          managerGroupId: groupIdController.text,
-                        ),
+                  final value = await associationMembershipListNotifier
+                      .updateAssociationMembership(
+                        associationMembership.copyWith(name: name.text),
                       );
-                      displayToastWithContext(
-                        TypeMsg.msg,
-                        AdminTextConstants.updatedAssociationMembership,
-                      );
-                    } else {
-                      displayToastWithContext(
-                        TypeMsg.msg,
-                        AdminTextConstants.updatingError,
-                      );
-                    }
-                  });
+                  if (value) {
+                    associationMembershipNotifier.setAssociationMembership(
+                      associationMembership.copyWith(
+                        name: name.text,
+                        managerGroupId: groupIdController.text,
+                      ),
+                    );
+                    displayToastWithContext(
+                      TypeMsg.msg,
+                      AdminTextConstants.updatedAssociationMembership,
+                    );
+                  } else {
+                    displayToastWithContext(
+                      TypeMsg.msg,
+                      AdminTextConstants.updatingError,
+                    );
+                  }
                 },
                 child: const Text(
                   AdminTextConstants.edit,

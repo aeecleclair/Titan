@@ -1,16 +1,13 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/advert/class/announcer.dart';
 import 'package:myecl/advert/repositories/announcer_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class AnnouncerListNotifier extends ListNotifier<Announcer> {
-  final AnnouncerRepository _announcerRepository = AnnouncerRepository();
-  AnnouncerListNotifier({required String token})
-    : super(const AsyncValue.loading()) {
-    _announcerRepository.setToken(token);
-  }
+  final AnnouncerRepository _announcerRepository;
+  AnnouncerListNotifier(this._announcerRepository)
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Announcer>>> loadAllAnnouncerList() async {
     return await loadList(_announcerRepository.getAllAnnouncer);
@@ -48,9 +45,9 @@ final announcerListProvider =
     StateNotifierProvider<AnnouncerListNotifier, AsyncValue<List<Announcer>>>((
       ref,
     ) {
-      final token = ref.watch(tokenProvider);
+      final repository = ref.watch(announcerRepositoryProvider);
       AnnouncerListNotifier announcerListNotifier = AnnouncerListNotifier(
-        token: token,
+        repository,
       );
       tokenExpireWrapperAuth(ref, () async {
         await announcerListNotifier.loadAllAnnouncerList();
@@ -62,9 +59,9 @@ final userAnnouncerListProvider =
     StateNotifierProvider<AnnouncerListNotifier, AsyncValue<List<Announcer>>>((
       ref,
     ) {
-      final token = ref.watch(tokenProvider);
+      final repository = ref.watch(announcerRepositoryProvider);
       AnnouncerListNotifier announcerListNotifier = AnnouncerListNotifier(
-        token: token,
+        repository,
       );
       tokenExpireWrapperAuth(ref, () async {
         await announcerListNotifier.loadMyAnnouncerList();

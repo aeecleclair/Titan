@@ -8,6 +8,8 @@ class SectionRepository extends Repository {
   // ignore: overridden_fields
   final ext = "campaign/sections";
 
+  SectionRepository(super.ref);
+
   Future<Section> getSection(String sectionId) async {
     return Section.fromJson(await getOne("/$sectionId"));
   }
@@ -31,5 +33,5 @@ class SectionRepository extends Repository {
 
 final sectionRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return SectionRepository()..setToken(token);
+  return SectionRepository(ref)..setToken(token);
 });
