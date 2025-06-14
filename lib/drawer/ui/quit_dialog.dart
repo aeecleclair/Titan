@@ -29,6 +29,7 @@ class QuitDialog extends HookConsumerWidget {
             descriptions: DrawerTextConstants.loginOut,
             title: DrawerTextConstants.logOut,
             onYes: () {
+              displayQuitNotifier.setDisplay(false);
               auth.signOut();
               if (!kIsWeb) {
                 ref.watch(messagesProvider.notifier).forgetDevice();
@@ -36,7 +37,6 @@ class QuitDialog extends HookConsumerWidget {
               }
               isCachingNotifier.set(false);
               displayToast(context, TypeMsg.msg, DrawerTextConstants.logOut);
-              displayQuitNotifier.setDisplay(false);
             },
             onNo: () {
               displayQuitNotifier.setDisplay(false);
