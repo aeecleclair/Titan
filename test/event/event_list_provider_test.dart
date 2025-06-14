@@ -5,6 +5,7 @@ import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/repositories/event_repository.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:myecl/tools/functions.dart';
 
 class MockEventRepository extends Mock implements EventRepository {}
 

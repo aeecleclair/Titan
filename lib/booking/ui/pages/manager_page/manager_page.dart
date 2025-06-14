@@ -8,6 +8,7 @@ import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/booking/ui/booking.dart';
 import 'package:myecl/booking/ui/calendar/calendar.dart';
 import 'package:myecl/booking/ui/pages/manager_page/list_booking.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/layouts/refresher.dart';
 
 class ManagerPage extends HookConsumerWidget {
