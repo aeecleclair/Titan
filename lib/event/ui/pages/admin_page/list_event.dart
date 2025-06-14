@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/tools/constants.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/providers/confirmed_event_list_provider.dart';
 import 'package:myecl/event/providers/event_list_provider.dart';
 import 'package:myecl/event/providers/event_provider.dart';
 import 'package:myecl/event/router.dart';
+import 'package:myecl/event/tools/constants.dart';
 import 'package:myecl/event/ui/components/event_ui.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/align_left_text.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
@@ -102,8 +102,8 @@ class ListEvent extends HookConsumerWidget {
                     context: context,
                     builder: (context) {
                       return CustomDialogBox(
-                        title: BookingTextConstants.confirm,
-                        descriptions: BookingTextConstants.confirmBooking,
+                        title: EventTextConstants.confirm,
+                        descriptions: EventTextConstants.confirmEvent,
                         onYes: () async {
                           await tokenExpireWrapper(ref, () async {
                             eventListNotifier
@@ -126,8 +126,8 @@ class ListEvent extends HookConsumerWidget {
                     context: context,
                     builder: (context) {
                       return CustomDialogBox(
-                        title: BookingTextConstants.decline,
-                        descriptions: BookingTextConstants.declineBooking,
+                        title: EventTextConstants.decline,
+                        descriptions: EventTextConstants.declineEvent,
                         onYes: () async {
                           await tokenExpireWrapper(ref, () async {
                             eventListNotifier

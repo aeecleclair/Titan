@@ -4,6 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
 import 'package:myecl/booking/repositories/booking_repository.dart';
+import 'package:myecl/tools/functions.dart';
 
 class MockBookingRepository extends Mock implements BookingRepository {}
 

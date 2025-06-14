@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/class/room.dart';
+import 'package:myecl/service/class/room.dart';
 import 'package:myecl/booking/tools/functions.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/user/class/applicant.dart';

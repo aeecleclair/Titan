@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/booking/class/room.dart';
+import 'package:myecl/service/class/room.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class RoomRepository extends Repository {
