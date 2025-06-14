@@ -20,16 +20,14 @@ import 'package:universal_html/html.dart' as html;
 final authTokenProvider =
     StateNotifierProvider<AuthNotifier, AsyncValue<AuthToken>>((ref) {
       final openIdRepository = ref.watch(openIdRepositoryProvider);
+
       final authNotifier = AuthNotifier(
         appAuth: FlutterAppAuth(),
         secureStorage: FlutterSecureStorage(),
         cacheManager: CacheManager(),
         openIdRepository: openIdRepository,
       );
-      final isOnline = ref.watch(connectionStatusProvider);
-      if (isOnline) {
-        Future(() => authNotifier.refreshAccessToken());
-      }
+
       return authNotifier;
     });
 
@@ -59,16 +57,6 @@ final isAuthCachedProvider = StateNotifierProvider<IsAuthCachedNotifier, bool>((
         isAuthCachedNotifier.set(!isOnline && value != "");
       });
   return isAuthCachedNotifier;
-});
-
-final fetchRefreshTokenProvider = FutureProvider<bool>((ref) async {
-  final authNotifier = ref.read(authTokenProvider.notifier);
-  final authToken = ref.watch(authTokenProvider);
-  if (authToken is AsyncLoading) {
-    // If the auth notifier is already loading, we don't need to refresh again.
-    return false;
-  }
-  return await authNotifier.refreshAccessToken();
 });
 
 final isLoggedInProvider = Provider<bool>((ref) {
@@ -127,7 +115,10 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
     required this.secureStorage,
     required this.cacheManager,
     required this.openIdRepository,
-  }) : super(const AsyncLoading());
+  }) : super(AsyncData(AuthToken.empty())) {
+    // Initialize the authentication state by checking if a token is cached
+    _initializeAuthState();
+  }
 
   static const Base64Codec base64 = Base64Codec.urlSafe();
   static const String userIdName = "id";
@@ -142,8 +133,16 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
       "${Repository.host}.well-known/openid-configuration";
   static List<String> scopes = ["API"];
 
+  Future<void> _initializeAuthState() async {
+    refreshAccessToken();
+  }
+
   /// Signs in the user using the appropriate flow based on the platform.
   Future<void> signIn() async {
+    if (state is AsyncLoading) {
+      // If already loading, return to avoid multiple request attempts
+      return;
+    }
     state = const AsyncLoading();
     try {
       if (kIsWeb) {
@@ -257,6 +256,10 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
   /// If the token is successfully refreshed, it stores the new token.
   /// If an error occurs, it updates the state with the error.
   Future<bool> refreshAccessToken() async {
+    if (state is AsyncLoading) {
+      // If already loading, return false to avoid multiple refresh attempts
+      return false;
+    }
     state = const AsyncLoading();
     final refreshToken = await secureStorage.read(key: tokenName);
     if (refreshToken != null) {

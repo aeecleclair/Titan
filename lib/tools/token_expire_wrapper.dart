@@ -30,22 +30,21 @@ Future<T> _tokenExpireInternal<T>(
   dynamic error,
   dynamic stackTrace,
 ) async {
+  final authToken = ref.read(authTokenProvider);
   final tokenNotifier = ref.read(authTokenProvider.notifier);
-  final isTokenRefreshed = ref.watch(fetchRefreshTokenProvider);
-  final refreshTokenFuture = ref.watch(fetchRefreshTokenProvider.future);
 
-  final isLoggedIn = ref.watch(isLoggedInProvider);
+  final isLoggedIn = ref.read(isLoggedInProvider);
   if (error is AppException &&
       error.type == ErrorType.tokenExpire &&
       isLoggedIn) {
-    if (isTokenRefreshed.isLoading) {
+    if (authToken.isLoading) {
       return throw (AppException(
         ErrorType.tokenRefreshing,
         "Token is refreshing, please wait.",
       ));
     }
     try {
-      final hasRefreshed = await refreshTokenFuture;
+      final hasRefreshed = await tokenNotifier.refreshAccessToken();
       if (hasRefreshed) {
         return await f();
       } else {
