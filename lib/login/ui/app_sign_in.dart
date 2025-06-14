@@ -22,11 +22,9 @@ class AppSignIn extends HookConsumerWidget {
     final authNotifier = ref.read(authTokenProvider.notifier);
     final controller = ref.watch(backgroundAnimationProvider);
 
-    final forwardedFrom =
-        QR.params[forwardedFromKey]?.toString() ?? AppRouter.root;
     final redirectPath = ref.watch(
       authRedirectServiceProvider.select(
-        (service) => service.getRedirect(forwardedFrom),
+        (service) => service.getRedirect(QR.currentPath),
       ),
     );
 

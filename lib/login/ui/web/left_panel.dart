@@ -21,12 +21,9 @@ class LeftPanel extends HookConsumerWidget {
     final controller = ref.watch(backgroundAnimationProvider);
     final isLoading = ref.watch(isAuthLoadingProvider);
 
-    final forwardedFrom =
-        QR.params[forwardedFromKey]?.toString() ?? AppRouter.root;
-
     final redirectPath = ref.watch(
       authRedirectServiceProvider.select(
-        (service) => service.getRedirect(forwardedFrom),
+        (service) => service.getRedirect(QR.currentPath),
       ),
     );
 

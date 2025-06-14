@@ -13,11 +13,9 @@ class NoModulePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final moduleVisibilityList = ref.watch(moduleRootListProvider);
-    final forwardedFrom =
-        QR.params[forwardedFromKey]?.toString() ?? AppRouter.root;
     final redirectPath = ref.watch(
       authRedirectServiceProvider.select(
-        (service) => service.getRedirect(forwardedFrom),
+        (service) => service.getRedirect(QR.currentPath),
       ),
     );
 
