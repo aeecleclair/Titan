@@ -84,9 +84,9 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: disabled == true ? null : onPressed,
-      behavior: HitTestBehavior.opaque,
+      borderRadius: BorderRadius.circular(8),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
