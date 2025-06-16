@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
 class PhCoverRepository extends LogoRepository {
@@ -18,6 +17,5 @@ class PhCoverRepository extends LogoRepository {
 }
 
 final phCoverRepositoryProvider = Provider<PhCoverRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return PhCoverRepository(ref)..setToken(token);
+  return PhCoverRepository(ref);
 });

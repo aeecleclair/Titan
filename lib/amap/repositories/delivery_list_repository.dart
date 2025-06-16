@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class DeliveryListRepository extends Repository {
@@ -62,6 +61,5 @@ class DeliveryListRepository extends Repository {
 }
 
 final deliveryListRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return DeliveryListRepository(ref)..setToken(token);
+  return DeliveryListRepository(ref);
 });

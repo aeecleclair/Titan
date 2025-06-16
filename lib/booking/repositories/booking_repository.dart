@@ -1,5 +1,4 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -60,6 +59,5 @@ class BookingRepository extends Repository {
 }
 
 final bookingRepositoryProvider = Provider<BookingRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return BookingRepository(ref)..setToken(token);
+  return BookingRepository(ref);
 });

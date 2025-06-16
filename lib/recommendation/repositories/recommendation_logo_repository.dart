@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
 class RecommendationLogoRepository extends LogoRepository {
@@ -26,6 +25,5 @@ class RecommendationLogoRepository extends LogoRepository {
 
 final recommendationLogoRepositoryProvider =
     Provider<RecommendationLogoRepository>((ref) {
-      final token = ref.watch(tokenProvider);
-      return RecommendationLogoRepository(ref)..setToken(token);
+      return RecommendationLogoRepository(ref);
     });

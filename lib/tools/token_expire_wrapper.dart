@@ -1,14 +1,15 @@
 import 'dart:async';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:myecl/auth/class/auth_token.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/exception.dart';
 
-/// A wrapper for handling token expiration errors in asynchronous functions.
-/// It attempts to refresh the token and re-execute the function if the token has expired.
-/// This variation is designed for async functions that return a value.
+/// A wrapper for handling token expiration in asynchronous functions.
+/// This function checks if the token is valid before executing the provided function.
+/// If the token is expired, it attempts to refresh the token and then re-execute the
+/// provided function. (A lock is used to ensure that only one refresh happens at a time.)
+/// If the refresh fails, it signs out the user and throws an exception.
 Future<T> tokenExpireWrapper<T>(Ref ref, Future<T> Function() f) async {
   final authToken = ref.read(authTokenProvider);
 
@@ -34,10 +35,7 @@ Future<T> tokenExpireWrapper<T>(Ref ref, Future<T> Function() f) async {
       if (hasRefreshed) {
         return await f();
       } else {
-        throw AppException(
-          ErrorType.tokenRefreshFailed,
-          "Refresh returned false",
-        );
+        throw AppException(ErrorType.tokenRefreshFailed, "Refresh failed");
       }
     } catch (e, s) {
       tokenNotifier.signOut();

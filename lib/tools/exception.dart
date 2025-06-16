@@ -7,6 +7,8 @@ enum ErrorType {
   apiError,
   noDefaultValue,
   tokenRefreshing,
+  emptyToken,
+  tokenRefreshFailed,
 }
 
 class AppException implements Exception {

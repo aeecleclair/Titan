@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/purchases/class/seller.dart';
 import 'package:myecl/purchases/repositories/user_information_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class SellerListNotifier extends ListNotifier<Seller> {
   final UserInformationRepository sellerRepository;
@@ -22,8 +21,6 @@ final sellerListProvider =
       SellerListNotifier notifier = SellerListNotifier(
         userInformationRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadSellers();
-      });
+      notifier.loadSellers();
       return notifier;
     });

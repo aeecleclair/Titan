@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/seed-library/class/species.dart';
 import 'package:myecl/seed-library/class/species_type.dart';
 import 'package:myecl/tools/repository/repository.dart';
@@ -43,6 +42,5 @@ class SpeciesRepository extends Repository {
 }
 
 final speciesRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return SpeciesRepository(ref)..setToken(token);
+  return SpeciesRepository(ref);
 });

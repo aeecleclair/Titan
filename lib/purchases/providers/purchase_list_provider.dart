@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/purchases/class/purchase.dart';
 import 'package:myecl/purchases/repositories/user_purchase_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class PurchaseListNotifier extends ListNotifier<Purchase> {
   final UserPurchaseRepository userPurchaseRepository;
@@ -38,8 +37,6 @@ final purchaseListProvider =
       PurchaseListNotifier notifier = PurchaseListNotifier(
         userPurchaseRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadPurchases();
-      });
+      notifier.loadPurchases();
       return notifier;
     });

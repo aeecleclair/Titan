@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/repositories/module_visibility_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 
 class ModuleListNotifier extends ListNotifier<String> {
@@ -20,9 +19,7 @@ final moduleRootListProvider =
       final userProvider = ref.watch(asyncUserProvider);
       ModuleListNotifier notifier = ModuleListNotifier(repository: repository);
       userProvider.maybeWhen(
-        data: (data) => tokenExpireWrapperAuth(ref, () async {
-          await notifier.loadMyModuleRoots();
-        }),
+        data: (data) => notifier.loadMyModuleRoots(),
         orElse: () {},
       );
       return notifier;

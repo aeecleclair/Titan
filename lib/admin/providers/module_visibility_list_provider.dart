@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/class/module_visibility.dart';
 import 'package:myecl/admin/repositories/module_visibility_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ModuleVisibilityListNotifier extends ListNotifier<ModuleVisibility> {
   ModuleVisibilityRepository repository;
@@ -89,8 +88,6 @@ final moduleVisibilityListProvider =
       ModuleVisibilityListNotifier notifier = ModuleVisibilityListNotifier(
         repository: repository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadModuleVisibility();
-      });
+      notifier.loadModuleVisibility();
       return notifier;
     });

@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class SectionVoteCountRepository extends Repository {
@@ -15,6 +14,5 @@ class SectionVoteCountRepository extends Repository {
 }
 
 final sectionVoteCountRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return SectionVoteCountRepository(ref)..setToken(token);
+  return SectionVoteCountRepository(ref);
 });

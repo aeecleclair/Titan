@@ -5,7 +5,6 @@ import 'package:myecl/raffle/class/tickets.dart';
 import 'package:myecl/raffle/repositories/tickets_repository.dart';
 import 'package:myecl/raffle/repositories/user_tickets_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserTicketListNotifier extends ListNotifier<Ticket> {
   final UserDetailRepository _userDetailRepository;
@@ -42,12 +41,10 @@ final userTicketListProvider =
         userDetailRepository,
         ticketsRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        final userId = ref.watch(userIdProvider);
-        userId.whenData((value) async {
-          notifier.setId(value);
-          await notifier.loadTicketList();
-        });
+      final userId = ref.watch(userIdProvider);
+      userId.whenData((value) async {
+        notifier.setId(value);
+        notifier.loadTicketList();
       });
       return notifier;
     });

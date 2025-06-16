@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/raffle/class/prize.dart';
 import 'package:myecl/raffle/class/tickets.dart';
 import 'package:myecl/tools/repository/repository.dart';
@@ -42,6 +41,5 @@ class LotRepository extends Repository {
 }
 
 final lotRepositoryProvider = Provider<LotRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return LotRepository(ref)..setToken(token);
+  return LotRepository(ref);
 });

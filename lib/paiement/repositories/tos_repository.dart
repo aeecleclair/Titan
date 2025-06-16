@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/paiement/class/tos.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -20,6 +19,5 @@ class TosRepository extends Repository {
 }
 
 final tosRepositoryProvider = Provider<TosRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return TosRepository(ref)..setToken(token);
+  return TosRepository(ref);
 });

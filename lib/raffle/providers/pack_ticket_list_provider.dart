@@ -5,7 +5,6 @@ import 'package:myecl/raffle/providers/raffle_id_provider.dart';
 import 'package:myecl/raffle/repositories/raffle_detail_repository.dart';
 import 'package:myecl/raffle/repositories/pack_ticket_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class PackTicketsListNotifier extends ListNotifier<PackTicket> {
   final PackTicketRepository _packTicketsRepository;
@@ -60,12 +59,10 @@ final packTicketListProvider =
         packTicketsRepository,
         raffleDetailRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        final raffleId = ref.watch(raffleIdProvider);
-        if (raffleId != Raffle.empty().id) {
-          notifier.setRaffleId(raffleId);
-          notifier.loadPackTicketList();
-        }
-      });
+      final raffleId = ref.watch(raffleIdProvider);
+      if (raffleId != Raffle.empty().id) {
+        notifier.setRaffleId(raffleId);
+        notifier.loadPackTicketList();
+      }
       return notifier;
     });

@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/class/association_kinds.dart';
 import 'package:myecl/phonebook/repositories/association_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class AssociationKindsNotifier extends SingleNotifier<AssociationKinds> {
   final AssociationRepository associationRepository;
@@ -27,8 +26,6 @@ final associationKindsProvider =
       AssociationKindsNotifier notifier = AssociationKindsNotifier(
         associationRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadAssociationKinds();
-      });
+      notifier.loadAssociationKinds();
       return notifier;
     });

@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/vote/class/votes.dart';
 
@@ -21,6 +20,5 @@ class VotesRepository extends Repository {
 }
 
 final votesRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return VotesRepository(ref)..setToken(token);
+  return VotesRepository(ref);
 });

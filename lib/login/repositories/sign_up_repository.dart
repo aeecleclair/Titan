@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/class/account_type.dart';
 import 'package:myecl/login/class/create_account.dart';
 import 'package:myecl/login/class/recover_request.dart';
@@ -71,6 +70,5 @@ class SignUpRepository extends Repository {
 }
 
 final signUpRepositoryProvider = Provider<SignUpRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return SignUpRepository(ref)..setToken(token);
+  return SignUpRepository(ref);
 });

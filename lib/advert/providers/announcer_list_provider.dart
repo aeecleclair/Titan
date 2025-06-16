@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/advert/class/announcer.dart';
 import 'package:myecl/advert/repositories/announcer_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class AnnouncerListNotifier extends ListNotifier<Announcer> {
   final AnnouncerRepository _announcerRepository;
@@ -49,9 +48,7 @@ final announcerListProvider =
       AnnouncerListNotifier announcerListNotifier = AnnouncerListNotifier(
         repository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await announcerListNotifier.loadAllAnnouncerList();
-      });
+      announcerListNotifier.loadAllAnnouncerList();
       return announcerListNotifier;
     });
 
@@ -63,8 +60,6 @@ final userAnnouncerListProvider =
       AnnouncerListNotifier announcerListNotifier = AnnouncerListNotifier(
         repository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await announcerListNotifier.loadMyAnnouncerList();
-      });
+      announcerListNotifier.loadMyAnnouncerList();
       return announcerListNotifier;
     });

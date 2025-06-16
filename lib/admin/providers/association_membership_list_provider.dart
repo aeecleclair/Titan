@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/class/association_membership_simple.dart';
 import 'package:myecl/admin/repositories/association_membership_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class AssociationMembershipListNotifier
     extends ListNotifier<AssociationMembership> {
@@ -67,8 +66,6 @@ final allAssociationMembershipListProvider =
           AssociationMembershipListNotifier(
             associationMembershipRepository: associationMembershipRepository,
           );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadAssociationMemberships();
-      });
+      provider.loadAssociationMemberships();
       return provider;
     });

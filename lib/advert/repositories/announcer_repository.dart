@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/advert/class/announcer.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class AnnouncerRepository extends Repository {
@@ -44,6 +43,5 @@ class AnnouncerRepository extends Repository {
 }
 
 final announcerRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return AnnouncerRepository(ref)..setToken(token);
+  return AnnouncerRepository(ref);
 });

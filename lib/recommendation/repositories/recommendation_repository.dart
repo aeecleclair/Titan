@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/recommendation/class/recommendation.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -34,6 +33,5 @@ class RecommendationRepository extends Repository {
 final recommendationRepositoryProvider = Provider<RecommendationRepository>((
   ref,
 ) {
-  final token = ref.watch(tokenProvider);
-  return RecommendationRepository(ref)..setToken(token);
+  return RecommendationRepository(ref);
 });

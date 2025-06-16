@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/loan/repositories/loaner_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class LoanerListNotifier extends ListNotifier<Loaner> {
   final LoanerRepository loanerRepository;
@@ -42,8 +41,6 @@ final loanerListProvider =
       LoanerListNotifier orderListNotifier = LoanerListNotifier(
         loanerRepository: loanerRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await orderListNotifier.loadLoanerList();
-      });
+      orderListNotifier.loadLoanerList();
       return orderListNotifier;
     });

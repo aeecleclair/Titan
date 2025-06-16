@@ -1,7 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/cinema/repositories/cinema_topic_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class CinemaTopicsProvider extends ListNotifier<String> {
   final CinemaTopicRepository cinemaTopicRepository;
@@ -47,8 +46,6 @@ final cinemaTopicsProvider =
     ) {
       final repository = ref.watch(cinemaTopicRepositoryProvider);
       CinemaTopicsProvider notifier = CinemaTopicsProvider(repository);
-      tokenExpireWrapperAuth(ref, () async {
-        notifier.getTopics();
-      });
+      notifier.getTopics();
       return notifier;
     });

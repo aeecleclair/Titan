@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/purchases/class/ticket.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/class/simple_users.dart';
@@ -66,6 +65,5 @@ class ScannerRepository extends Repository {
 }
 
 final scannerRepositoryProvider = Provider<ScannerRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return ScannerRepository(ref)..setToken(token);
+  return ScannerRepository(ref);
 });

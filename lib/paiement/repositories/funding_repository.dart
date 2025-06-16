@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/paiement/class/funding_url.dart';
 import 'package:myecl/paiement/class/init_info.dart';
 import 'package:myecl/paiement/class/transfert.dart';
@@ -22,6 +21,5 @@ class FundingRepository extends Repository {
 }
 
 final fundingRepositoryProvider = Provider<FundingRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return FundingRepository(ref)..setToken(token);
+  return FundingRepository(ref);
 });

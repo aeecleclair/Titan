@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/cinema/class/the_movie_db_genre.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -16,6 +15,5 @@ class TheMovieDBRepository extends Repository {
 }
 
 final theMovieDBRepository = Provider<TheMovieDBRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return TheMovieDBRepository(ref)..setToken(token);
+  return TheMovieDBRepository(ref);
 });

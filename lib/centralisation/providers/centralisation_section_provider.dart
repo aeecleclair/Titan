@@ -3,7 +3,6 @@ import 'package:myecl/centralisation/class/module.dart';
 import 'package:myecl/centralisation/class/section.dart';
 import 'package:myecl/centralisation/repositories/section_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class SectionNotifier extends ListNotifier<Section> {
   SectionRepository sectionRepository = SectionRepository();
@@ -23,8 +22,6 @@ class SectionNotifier extends ListNotifier<Section> {
 final sectionProvider =
     StateNotifierProvider<SectionNotifier, AsyncValue<List<Section>>>((ref) {
       SectionNotifier notifier = SectionNotifier();
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.initState();
-      });
+      notifier.initState();
       return notifier;
     });

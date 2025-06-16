@@ -4,7 +4,6 @@ import 'package:myecl/raffle/class/raffle.dart';
 import 'package:myecl/raffle/providers/raffle_id_provider.dart';
 import 'package:myecl/raffle/repositories/prize_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class LotListNotifier extends ListNotifier<Prize> {
   final LotRepository _lotRepository;
@@ -53,12 +52,10 @@ final prizeListProvider =
     StateNotifierProvider<LotListNotifier, AsyncValue<List<Prize>>>((ref) {
       final lotRepository = ref.watch(lotRepositoryProvider);
       final notifier = LotListNotifier(lotRepository);
-      tokenExpireWrapperAuth(ref, () async {
-        final raffleId = ref.watch(raffleIdProvider);
-        if (raffleId != Raffle.empty().id) {
-          notifier.setRaffleId(raffleId);
-          notifier.loadPrizeList();
-        }
-      });
+      final raffleId = ref.watch(raffleIdProvider);
+      if (raffleId != Raffle.empty().id) {
+        notifier.setRaffleId(raffleId);
+        notifier.loadPrizeList();
+      }
       return notifier;
     });

@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class CinemaTopicRepository extends Repository {
@@ -28,6 +27,5 @@ class CinemaTopicRepository extends Repository {
 }
 
 final cinemaTopicRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return CinemaTopicRepository(ref)..setToken(token);
+  return CinemaTopicRepository(ref);
 });

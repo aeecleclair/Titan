@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/service/class/topic.dart';
 import 'package:myecl/service/repositories/notification_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class TopicsProvider extends ListNotifier<Topic> {
   final NotificationRepository notificationRepository;
@@ -83,8 +82,6 @@ final topicsProvider =
       TopicsProvider notifier = TopicsProvider(
         notificationRepository: notificationRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        notifier.getTopics();
-      });
+      notifier.getTopics();
       return notifier;
     });

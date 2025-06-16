@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/flappybird/class/score.dart';
 import 'package:myecl/flappybird/repositories/score_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class ScoreListNotifier extends SingleNotifier<Score> {
   final ScoreRepository _scoreRepository;
@@ -17,8 +16,6 @@ final userScoreProvider =
     StateNotifierProvider<ScoreListNotifier, AsyncValue<Score>>((ref) {
       final scoreRepository = ref.watch(scoreRepositoryProvider);
       final notifier = ScoreListNotifier(scoreRepository);
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.getLeaderBoardPosition();
-      });
+      notifier.getLeaderBoardPosition();
       return notifier;
     });

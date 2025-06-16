@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/class/school.dart';
 import 'package:myecl/admin/repositories/school_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class SchoolListNotifier extends ListNotifier<School> {
   final SchoolRepository schoolRepository;
@@ -51,8 +50,6 @@ final allSchoolListProvider =
       SchoolListNotifier provider = SchoolListNotifier(
         schoolRepository: schoolRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadSchools();
-      });
+      provider.loadSchools();
       return provider;
     });

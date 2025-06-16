@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/loan/class/loaner.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -42,6 +41,5 @@ class LoanerRepository extends Repository {
 }
 
 final loanerRepositoryProvider = Provider<LoanerRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return LoanerRepository(ref)..setToken(token);
+  return LoanerRepository(ref);
 });

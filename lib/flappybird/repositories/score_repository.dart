@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/flappybird/class/score.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -33,6 +32,5 @@ class ScoreRepository extends Repository {
 }
 
 final scoreRepositoryProvider = Provider<ScoreRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return ScoreRepository(ref)..setToken(token);
+  return ScoreRepository(ref);
 });

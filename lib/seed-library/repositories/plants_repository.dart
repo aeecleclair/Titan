@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/seed-library/class/plant_complete.dart';
 import 'package:myecl/seed-library/class/plant_creation.dart';
 import 'package:myecl/seed-library/class/plant_simple.dart';
@@ -58,6 +57,5 @@ class PlantsRepository extends Repository {
 }
 
 final plantsRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return PlantsRepository(ref)..setToken(token);
+  return PlantsRepository(ref);
 });

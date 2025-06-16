@@ -3,7 +3,6 @@ import 'package:myecl/purchases/class/ticket.dart';
 import 'package:myecl/purchases/repositories/scanner_repository.dart';
 import 'package:myecl/purchases/repositories/user_information_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class TicketListNotifier extends ListNotifier<Ticket> {
   final UserInformationRepository ticketRepository;
@@ -50,8 +49,6 @@ final ticketListProvider =
         ticketRepository: userInformationRepository,
         scannerRepository: scannerRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadTickets();
-      });
+      notifier.loadTickets();
       return notifier;
     });

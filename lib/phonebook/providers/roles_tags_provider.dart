@@ -3,7 +3,6 @@ import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/complete_member.dart';
 import 'package:myecl/phonebook/repositories/role_tags_repository.dart';
 import 'package:myecl/tools/providers/map_provider.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class RolesTagsNotifier extends MapNotifier<String, bool> {
   final RolesTagsRepository rolesTagsRepository;
@@ -38,8 +37,6 @@ final rolesTagsProvider =
     >((ref) {
       final rolesTagsRepository = ref.watch(rolesTagsRepositoryProvider);
       RolesTagsNotifier notifier = RolesTagsNotifier(rolesTagsRepository);
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadRolesTags();
-      });
+      notifier.loadRolesTags();
       return notifier;
     });

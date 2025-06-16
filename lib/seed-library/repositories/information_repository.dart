@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/seed-library/class/information.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -20,6 +19,5 @@ class InformationRepository extends Repository {
 }
 
 final informationRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return InformationRepository(ref)..setToken(token);
+  return InformationRepository(ref);
 });

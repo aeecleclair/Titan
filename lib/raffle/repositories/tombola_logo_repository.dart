@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
@@ -28,6 +27,5 @@ class TombolaLogoRepository extends LogoRepository {
 }
 
 final tombolaLogoRepositoryProvider = Provider<TombolaLogoRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return TombolaLogoRepository(ref)..setToken(token);
+  return TombolaLogoRepository(ref);
 });

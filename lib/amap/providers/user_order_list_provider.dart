@@ -6,7 +6,6 @@ import 'package:myecl/amap/repositories/order_list_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserOrderListNotifier extends ListNotifier<Order> {
   final OrderListRepository orderListRepository;
@@ -175,11 +174,9 @@ final userOrderListProvider =
         userRepository: amapUserRepository,
         orderListRepository: orderListRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        final userId = ref.watch(userIdProvider);
-        userId.whenData(
-          (value) async => await userOrderListNotifier.loadOrderList(value),
-        );
-      });
+      final userId = ref.watch(userIdProvider);
+      userId.whenData(
+        (value) async => userOrderListNotifier.loadOrderList(value),
+      );
       return userOrderListNotifier;
     });

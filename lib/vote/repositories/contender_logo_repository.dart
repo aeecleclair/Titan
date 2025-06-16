@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
@@ -29,6 +28,5 @@ class ContenderLogoRepository extends LogoRepository {
 final contenderLogoRepositoryProvider = Provider<ContenderLogoRepository>((
   ref,
 ) {
-  final token = ref.watch(tokenProvider);
-  return ContenderLogoRepository(ref)..setToken(token);
+  return ContenderLogoRepository(ref);
 });

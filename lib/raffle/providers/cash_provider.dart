@@ -3,7 +3,6 @@ import 'package:myecl/raffle/class/cash.dart';
 import 'package:myecl/raffle/repositories/cash_repository.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class CashProvider extends ListNotifier<Cash> {
   final CashRepository _cashRepository;
@@ -66,8 +65,6 @@ final cashProvider =
     StateNotifierProvider<CashProvider, AsyncValue<List<Cash>>>((ref) {
       final cashRepository = ref.watch(cashRepositoryProvider);
       CashProvider cashProvider = CashProvider(cashRepository);
-      tokenExpireWrapperAuth(ref, () async {
-        await cashProvider.loadCashList();
-      });
+      cashProvider.loadCashList();
       return cashProvider;
     });

@@ -1,6 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/contender.dart';
 import 'package:myecl/vote/repositories/contender_repository.dart';
 import 'package:myecl/vote/tools/functions.dart';
@@ -92,8 +91,6 @@ final contenderListProvider =
       final contenderListNotifier = ContenderListNotifier(
         contenderRepository: contenderRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await contenderListNotifier.loadContenderList();
-      });
+      contenderListNotifier.loadContenderList();
       return contenderListNotifier;
     });

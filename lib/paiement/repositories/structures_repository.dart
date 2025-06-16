@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/paiement/class/store.dart';
 import 'package:myecl/paiement/class/structure.dart';
 import 'package:myecl/tools/repository/repository.dart';
@@ -54,6 +53,5 @@ class StructuresRepository extends Repository {
 }
 
 final structuresRepositoryProvider = Provider<StructuresRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return StructuresRepository(ref)..setToken(token);
+  return StructuresRepository(ref);
 });

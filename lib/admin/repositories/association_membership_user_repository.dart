@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/class/user_association_membership.dart';
 import 'package:myecl/admin/class/user_association_membership_base.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class AssociationMembershipUserRepository extends Repository {
@@ -56,6 +55,5 @@ class AssociationMembershipUserRepository extends Repository {
 }
 
 final associationMembershipUserRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return AssociationMembershipUserRepository(ref)..setToken(token);
+  return AssociationMembershipUserRepository(ref);
 });

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/cache/cache_manager.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/functions.dart';
@@ -184,6 +185,9 @@ abstract class Repository {
     bool cacheResponse = false,
   }) async {
     return await tokenExpireWrapper(ref, () async {
+      ref
+          .read(authTokenProvider)
+          .whenData((token) => setToken(token.accessToken));
       return await _request<T>(
         method: method,
         path: path,
@@ -224,6 +228,29 @@ abstract class Repository {
   /// is not found and no default value can be provided.
   Future<T> getOne<T>(String id, {String suffix = ""}) async {
     return _requestWithRefreshToken<T>(
+      method: HttpMethod.get,
+      path: ext + id + suffix,
+      onErrorDefault: () => throw AppException(
+        ErrorType.noDefaultValue,
+        "Item with ID $id not found",
+      ),
+      cacheResponse: true,
+    );
+  }
+
+  /// Fetches a single item by its ID without authentication.
+  ///
+  /// The request is made to `ext/id/suffix`.
+  /// This method is useful for public endpoints that do not require authentication.
+  /// On network errors, it attempts to return cached data.
+  ///
+  /// [id]: The identifier of the item to fetch.
+  /// [suffix]: Optional additional path segment after the item ID.
+  /// Returns a `Future` that resolves to an object of type `T`.
+  /// Throws an [AppException] with `ErrorType.noDefaultValue` if the item
+  /// is not found and no default value can be provided.
+  Future<T> noAuthGetOne<T>(String id, {String suffix = ""}) async {
+    return _request<T>(
       method: HttpMethod.get,
       path: ext + id + suffix,
       onErrorDefault: () => throw AppException(

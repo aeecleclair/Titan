@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/seed-library/class/species_type.dart';
 import 'package:myecl/seed-library/repositories/species_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class SpeciesListNotifier extends ListNotifier<SpeciesType> {
   final SpeciesRepository speciesRepository;
@@ -22,9 +21,7 @@ final speciesTypeListProvider =
       SpeciesListNotifier provider = SpeciesListNotifier(
         speciesRepository: speciesRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadSpeciesTypes();
-      });
+      provider.loadSpeciesTypes();
       return provider;
     });
 

@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/raffle/class/prize.dart';
 import 'package:myecl/raffle/class/tickets.dart';
 import 'package:myecl/tools/repository/repository.dart';
@@ -27,6 +26,5 @@ class UserDetailRepository extends Repository {
 }
 
 final userDetailRepositoryProvider = Provider<UserDetailRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return UserDetailRepository(ref)..setToken(token);
+  return UserDetailRepository(ref);
 });

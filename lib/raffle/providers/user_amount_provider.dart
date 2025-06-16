@@ -3,7 +3,6 @@ import 'package:myecl/raffle/class/cash.dart';
 import 'package:myecl/raffle/repositories/cash_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserCashNotifier extends SingleNotifier<Cash> {
   final CashRepository _cashRepository;
@@ -36,11 +35,7 @@ final userAmountProvider =
     StateNotifierProvider<UserCashNotifier, AsyncValue<Cash>>((ref) {
       final cashRepository = ref.watch(cashRepositoryProvider);
       UserCashNotifier userCashNotifier = UserCashNotifier(cashRepository);
-      tokenExpireWrapperAuth(ref, () async {
-        final userId = ref.watch(userIdProvider);
-        userId.whenData(
-          (value) async => await userCashNotifier.loadCashByUser(value),
-        );
-      });
+      final userId = ref.watch(userIdProvider);
+      userId.whenData((value) async => userCashNotifier.loadCashByUser(value));
       return userCashNotifier;
     });
