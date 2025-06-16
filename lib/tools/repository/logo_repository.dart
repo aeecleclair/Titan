@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:http/http.dart' as http;
@@ -12,7 +14,9 @@ import 'package:path_provider/path_provider.dart';
 abstract class LogoRepository extends Repository {
   static const String expiredTokenDetail = "Could not validate credentials";
 
-  LogoRepository(super.ref);
+  LogoRepository(Ref ref) : super(ref) {
+    setToken(ref.read(tokenProvider));
+  }
 
   Future<Uint8List> getLogo(String id, {String suffix = ""}) async {
     try {
