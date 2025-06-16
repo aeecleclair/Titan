@@ -10,6 +10,8 @@ jobs:
   extract-version:
     name: Determine version
     # On macOS worker `base64 -D -o` should be used instead of `base64 -d >`
+    # Using a Runner Image that include the required NDK should considerably improve performance
+    # as the build step won't require its installation
     runs-on: ubuntu-24.04
     outputs:
       tag: ${{ steps.get-version.outputs.tag }}
