@@ -20,7 +20,6 @@ import 'package:universal_html/html.dart' as html;
 final authTokenProvider =
     StateNotifierProvider<AuthNotifier, AsyncValue<AuthToken>>((ref) {
       final openIdRepository = ref.watch(openIdRepositoryProvider);
-      print("Creating AuthNotifier with openIdRepository: $openIdRepository");
       final authNotifier = AuthNotifier(
         appAuth: FlutterAppAuth(),
         secureStorage: FlutterSecureStorage(),
@@ -136,7 +135,15 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
   static List<String> scopes = ["API"];
 
   Future<void> _initializeAuthState() async {
-    refreshAccessToken();
+    secureStorage.read(key: tokenName).then((token) {
+      if (token != null && token.isNotEmpty) {
+        // If a refresh token is found, fetch the access token
+        refreshAccessToken();
+      } else {
+        // If no token is found, set the state to an empty token
+        state = AsyncData(AuthToken.empty());
+      }
+    });
   }
 
   /// Signs in the user using the appropriate flow based on the platform.
@@ -298,7 +305,7 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
         grantType: AuthGrantType.refreshToken,
       ),
     );
-    _saveAndStoreToken(authToken);
+    await _saveAndStoreToken(authToken);
   }
 
   // Refreshes access token for mobile applications.
@@ -313,7 +320,7 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
         allowInsecureConnections: kDebugMode,
       ),
     );
-    _saveAndStoreToken(AuthToken.fromTokenResponse(response));
+    await _saveAndStoreToken(AuthToken.fromTokenResponse(response));
   }
 
   /// Deletes the authentication token from secure storage and cache.
@@ -329,9 +336,9 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
   }
 
   /// Saves the authentication token in the state and stores it securely.
-  void _saveAndStoreToken(AuthToken authToken) {
+  Future<void> _saveAndStoreToken(AuthToken authToken) async {
     state = AsyncData(authToken);
-    secureStorage.write(key: tokenName, value: authToken.refreshToken);
+    await secureStorage.write(key: tokenName, value: authToken.refreshToken);
   }
 
   // --- Helper Methods ---
