@@ -10,7 +10,7 @@ jobs:
   extract-version:
     name: Determine version
     # On macOS worker `base64 -D -o` should be used instead of `base64 -d >`
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       tag: ${{ steps.get-version.outputs.tag }}
       isAlpha: ${{ steps.get-version.outputs.isAlpha }}
