@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:myecl/auth/class/auth_token.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/exception.dart';
 
@@ -6,53 +10,69 @@ import 'package:myecl/tools/exception.dart';
 /// It attempts to refresh the token and re-execute the function if the token has expired.
 /// This variation is designed for async functions that return a value.
 Future<T> tokenExpireWrapper<T>(Ref ref, Future<T> Function() f) async {
-  try {
-    return await f();
-  } catch (error, stackTrace) {
-    return _tokenExpireInternal(ref, f, error, stackTrace);
-  }
-}
-
-/// A wrapper for handling token expiration errors in asynchronous functions.
-/// It attempts to refresh the token and re-execute the function if the token has expired.
-/// This variation is designed for async functions that do not return a value.
-void tokenExpireWrapperAuth(Ref ref, Future<dynamic> Function() f) async {
-  try {
-    await f();
-  } catch (error, stackTrace) {
-    await _tokenExpireInternal(ref, f, error, stackTrace);
-  }
-}
-
-Future<T> _tokenExpireInternal<T>(
-  Ref ref,
-  Future<T> Function() f,
-  dynamic error,
-  dynamic stackTrace,
-) async {
   final authToken = ref.read(authTokenProvider);
+
+  final isTokenValid =
+      authToken.hasValue &&
+      authToken.value != null &&
+      authToken.value != AuthToken.empty() &&
+      !JwtDecoder.isExpired(authToken.value!.accessToken);
+
+  if (isTokenValid) {
+    return await f();
+  }
+
   final tokenNotifier = ref.read(authTokenProvider.notifier);
 
-  final isLoggedIn = ref.read(isLoggedInProvider);
-  if (error is AppException &&
-      error.type == ErrorType.tokenExpire &&
-      isLoggedIn) {
-    if (authToken.isLoading) {
-      return throw (AppException(
-        ErrorType.tokenRefreshing,
-        "Token is refreshing, please wait.",
-      ));
-    }
+  return Future(() async {
     try {
-      final hasRefreshed = await tokenNotifier.refreshAccessToken();
+      // Ensure only one refresh happens at a time
+      final hasRefreshed = await _refreshLock.refresh(() async {
+        return await tokenNotifier.refreshAccessToken();
+      });
+
       if (hasRefreshed) {
         return await f();
       } else {
-        tokenNotifier.signOut();
+        throw AppException(
+          ErrorType.tokenRefreshFailed,
+          "Refresh returned false",
+        );
       }
-    } catch (e) {
+    } catch (e, s) {
       tokenNotifier.signOut();
+      Error.throwWithStackTrace(e, s);
+    }
+  });
+}
+
+class _TokenRefreshLock {
+  Completer<void>? _refreshCompleter;
+
+  bool get isRefreshing => _refreshCompleter != null;
+
+  /// This method ensures that the provided callback is executed only once at a time.
+  /// If a refresh is already in progress, it waits for the existing refresh to complete.
+  Future<bool> refresh(Future<bool> Function() callback) async {
+    if (_refreshCompleter != null) {
+      // Already refreshing, just wait for it
+      await _refreshCompleter!.future;
+      return true;
+    }
+
+    _refreshCompleter = Completer();
+
+    try {
+      final result = await callback();
+      _refreshCompleter?.complete();
+      return result;
+    } catch (e, s) {
+      _refreshCompleter?.completeError(e, s);
+      rethrow;
+    } finally {
+      _refreshCompleter = null;
     }
   }
-  Error.throwWithStackTrace(error, stackTrace);
 }
+
+final _refreshLock = _TokenRefreshLock();
