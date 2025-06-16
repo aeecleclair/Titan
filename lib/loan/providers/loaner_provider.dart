@@ -7,8 +7,10 @@ final loanerProvider = Provider((ref) {
   final loanerId = ref.watch(loanerIdProvider);
   final loanerList = ref.watch(userLoanerListProvider);
   return loanerList.maybeWhen(
-    data: (loanerList) =>
-        loanerList.firstWhere((loaner) => loaner.id == loanerId),
+    data: (loanerList) => loanerList.firstWhere(
+      (loaner) => loaner.id == loanerId,
+      orElse: () => Loaner.empty(),
+    ),
     orElse: () => Loaner.empty(),
   );
 });
