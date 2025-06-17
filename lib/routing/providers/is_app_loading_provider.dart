@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myecl/admin/providers/module_root_list_provider.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
@@ -8,7 +9,8 @@ final isAppLoadingProvider = StateProvider<bool>((ref) {
   final isAuthLoading = ref.watch(isAuthLoadingProvider);
   final isLoggedIn = ref.watch(isLoggedInProvider);
   final asyncUser = ref.watch(asyncUserProvider);
+  final moduleRootList = ref.watch(moduleRootListProvider);
   return versionVerifier.isLoading ||
       isAuthLoading ||
-      (isLoggedIn && asyncUser.isLoading);
+      (isLoggedIn && (asyncUser.isLoading || moduleRootList.isLoading));
 });
