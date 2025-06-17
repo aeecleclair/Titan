@@ -134,6 +134,18 @@ abstract class Repository {
           if (cacheResponse && !kIsWeb) {
             await cacheManager.writeCache(path, decodedBody);
           }
+          if (decodedBody.isEmpty) {
+            if (response.statusCode == 204) {
+              // No content response, return default value
+              logger.info("No content for $uri, returning default value.");
+              if (T == bool) {
+                // 204 should be typed as bool
+                return true as T;
+              } else {
+                return onErrorDefault();
+              }
+            }
+          }
           return parseSuccess(decodedBody);
         } catch (e) {
           logger.error("Error decoding successful response for $uri: $e");
