@@ -39,8 +39,3 @@ class AssociationMemberRepository extends Repository {
     return await delete("memberships/$membershipId");
   }
 }
-
-final associationMemberRepositoryProvider =
-    Provider<AssociationMemberRepository>((ref) {
-      return AssociationMemberRepository(ref);
-    });

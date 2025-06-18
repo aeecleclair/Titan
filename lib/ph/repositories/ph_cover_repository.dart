@@ -15,7 +15,3 @@ class PhCoverRepository extends LogoRepository {
     return uint8List;
   }
 }
-
-final phCoverRepositoryProvider = Provider<PhCoverRepository>((ref) {
-  return PhCoverRepository(ref);
-});

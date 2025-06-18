@@ -25,7 +25,7 @@ final votedSectionProvider =
     StateNotifierProvider<VotedSectionProvider, AsyncValue<List<String>>>((
       ref,
     ) {
-      final votesRepository = ref.watch(votedSectionRepositoryProvider);
+      final votesRepository = VotedSectionRepository(ref);
       VotedSectionProvider votesProvider = VotedSectionProvider(
         votesRepository: votesRepository,
       );

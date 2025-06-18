@@ -17,7 +17,3 @@ class TransactionsRepository extends Repository {
     return await create({}, suffix: '/$transactionId/cancel');
   }
 }
-
-final transactionsRepositoryProvider = Provider<TransactionsRepository>((ref) {
-  return TransactionsRepository(ref);
-});

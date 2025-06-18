@@ -78,7 +78,7 @@ class TopicsProvider extends ListNotifier<Topic> {
 
 final topicsProvider =
     StateNotifierProvider<TopicsProvider, AsyncValue<List<Topic>>>((ref) {
-      final notificationRepository = ref.watch(notificationRepositoryProvider);
+      final notificationRepository = NotificationRepository(ref);
       TopicsProvider notifier = TopicsProvider(
         notificationRepository: notificationRepository,
       );

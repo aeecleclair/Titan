@@ -34,7 +34,3 @@ class TicketRepository extends Repository {
     );
   }
 }
-
-final ticketRepositoryProvider = Provider<TicketRepository>((ref) {
-  return TicketRepository(ref);
-});

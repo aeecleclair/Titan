@@ -17,7 +17,3 @@ class TosRepository extends Repository {
     return await create(tos.toJson(), suffix: "tos");
   }
 }
-
-final tosRepositoryProvider = Provider<TosRepository>((ref) {
-  return TosRepository(ref);
-});

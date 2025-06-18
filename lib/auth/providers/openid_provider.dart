@@ -19,7 +19,7 @@ import 'package:universal_html/html.dart' as html;
 
 final authTokenProvider =
     StateNotifierProvider<AuthNotifier, AsyncValue<AuthToken>>((ref) {
-      final openIdRepository = ref.watch(openIdRepositoryProvider);
+      final openIdRepository = OpenIdRepository(ref);
       final authNotifier = AuthNotifier(
         appAuth: FlutterAppAuth(),
         secureStorage: FlutterSecureStorage(),
@@ -59,26 +59,32 @@ final isAuthCachedProvider = StateNotifierProvider<IsAuthCachedNotifier, bool>((
 });
 
 final isLoggedInProvider = Provider<bool>((ref) {
-  final accessToken = ref.watch(tokenProvider);
+  final isLoggedIn = ref.watch(
+    tokenProvider.select(
+      (accessToken) =>
+          accessToken.isEmpty ? false : !JwtDecoder.isExpired(accessToken),
+    ),
+  );
   final isAuthCached = ref.watch(isAuthCachedProvider);
   if (isAuthCached) {
     return true;
   }
-  return accessToken.isEmpty ? false : !JwtDecoder.isExpired(accessToken);
+  return isLoggedIn;
 });
 
 /// This provider checks if the user is currently loading the authentication state.
 /// It returns true if the authentication token is being fetched or refreshed.
 final isAuthLoadingProvider = Provider<bool>((ref) {
-  final asyncAuthToken = ref.watch(authTokenProvider);
-  return asyncAuthToken.isLoading;
+  return ref.watch(
+    authTokenProvider.select((authToken) => authToken.isLoading),
+  );
 });
 
 final userIdProvider = FutureProvider<String>((ref) {
   final cacheManager = ref.read(authTokenProvider.notifier).cacheManager;
-  return ref
-      .watch(authTokenProvider)
-      .when(
+  return ref.watch(
+    authTokenProvider.select(
+      (authToken) => authToken.when(
         data: (authToken) {
           final id = authToken.accessToken == ""
               ? ""
@@ -88,13 +94,20 @@ final userIdProvider = FutureProvider<String>((ref) {
         },
         error: (e, s) => "",
         loading: () => cacheManager.readCache(AuthNotifier.userIdName),
-      );
+      ),
+    ),
+  );
 });
 
 final tokenProvider = Provider((ref) {
-  return ref
-      .watch(authTokenProvider)
-      .maybeWhen(data: (authToken) => authToken.accessToken, orElse: () => "");
+  return ref.watch(
+    authTokenProvider.select(
+      (authToken) => authToken.maybeWhen(
+        data: (authToken) => authToken.accessToken,
+        orElse: () => "",
+      ),
+    ),
+  );
 });
 
 /// The AuthNotifier class is responsible for managing the authentication state

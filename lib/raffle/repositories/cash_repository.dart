@@ -29,7 +29,3 @@ class CashRepository extends Repository {
     return await update(cash.toJson(), cash.user.id, suffix: "/cash");
   }
 }
-
-final cashRepositoryProvider = Provider<CashRepository>((ref) {
-  return CashRepository(ref);
-});

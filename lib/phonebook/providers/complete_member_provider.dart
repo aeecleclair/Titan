@@ -5,7 +5,7 @@ import 'package:myecl/phonebook/repositories/member_repository.dart';
 
 final completeMemberProvider =
     StateNotifierProvider<CompleteMemberProvider, CompleteMember>((ref) {
-      final memberRepository = ref.watch(memberRepositoryProvider);
+      final memberRepository = MemberRepository(ref);
       return CompleteMemberProvider(memberRepository);
     });
 

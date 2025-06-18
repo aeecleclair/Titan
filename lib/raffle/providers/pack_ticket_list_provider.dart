@@ -53,8 +53,8 @@ final packTicketListProvider =
       PackTicketsListNotifier,
       AsyncValue<List<PackTicket>>
     >((ref) {
-      final packTicketsRepository = ref.watch(packTicketRepositoryProvider);
-      final raffleDetailRepository = ref.watch(raffleDetailRepositoryProvider);
+      final packTicketsRepository = PackTicketRepository(ref);
+      final raffleDetailRepository = RaffleDetailRepository(ref);
       final notifier = PackTicketsListNotifier(
         packTicketsRepository,
         raffleDetailRepository,

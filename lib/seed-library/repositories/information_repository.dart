@@ -17,7 +17,3 @@ class InformationRepository extends Repository {
     return await update(information.toJson(), "");
   }
 }
-
-final informationRepositoryProvider = Provider((ref) {
-  return InformationRepository(ref);
-});

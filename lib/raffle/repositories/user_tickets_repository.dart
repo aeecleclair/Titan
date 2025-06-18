@@ -24,7 +24,3 @@ class UserDetailRepository extends Repository {
     );
   }
 }
-
-final userDetailRepositoryProvider = Provider<UserDetailRepository>((ref) {
-  return UserDetailRepository(ref);
-});

@@ -79,7 +79,3 @@ class UserRepository extends Repository {
     }
   }
 }
-
-final userRepositoryProvider = Provider((ref) {
-  return UserRepository(ref);
-});

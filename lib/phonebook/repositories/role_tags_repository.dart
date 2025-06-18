@@ -14,7 +14,3 @@ class RolesTagsRepository extends Repository {
     return rolesTags;
   }
 }
-
-final rolesTagsRepositoryProvider = Provider<RolesTagsRepository>((ref) {
-  return RolesTagsRepository(ref);
-});

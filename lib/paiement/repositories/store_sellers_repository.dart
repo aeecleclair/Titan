@@ -35,7 +35,3 @@ class SellerStoreRepository extends Repository {
     return await update(seller.toJson(), "/$storeId/sellers/$userId");
   }
 }
-
-final sellerStoreRepositoryProvider = Provider<SellerStoreRepository>((ref) {
-  return SellerStoreRepository(ref);
-});

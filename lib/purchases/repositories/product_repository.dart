@@ -17,7 +17,3 @@ class ProductRepository extends Repository {
     );
   }
 }
-
-final productRepositoryProvider = Provider<ProductRepository>((ref) {
-  return ProductRepository(ref);
-});

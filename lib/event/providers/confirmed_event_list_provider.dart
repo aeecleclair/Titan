@@ -31,7 +31,7 @@ final confirmedEventListProvider =
     StateNotifierProvider<ConfirmedEventListProvider, AsyncValue<List<Event>>>((
       ref,
     ) {
-      final eventRepository = ref.watch(eventRepositoryProvider);
+      final eventRepository = EventRepository(ref);
       final provider = ConfirmedEventListProvider(
         eventRepository: eventRepository,
       );

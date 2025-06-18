@@ -24,9 +24,3 @@ class ContenderLogoRepository extends LogoRepository {
     return Image.memory(await addLogo(bytes, id, suffix: "/logo"));
   }
 }
-
-final contenderLogoRepositoryProvider = Provider<ContenderLogoRepository>((
-  ref,
-) {
-  return ContenderLogoRepository(ref);
-});

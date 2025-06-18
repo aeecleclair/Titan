@@ -25,7 +25,3 @@ class PhRepository extends Repository {
     return await delete(id);
   }
 }
-
-final phRepositoryProvider = Provider<PhRepository>((ref) {
-  return PhRepository(ref);
-});

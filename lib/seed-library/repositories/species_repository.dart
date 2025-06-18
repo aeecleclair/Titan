@@ -40,7 +40,3 @@ class SpeciesRepository extends Repository {
     return Species.fromJson(await create(species.toJson()));
   }
 }
-
-final speciesRepositoryProvider = Provider((ref) {
-  return SpeciesRepository(ref);
-});

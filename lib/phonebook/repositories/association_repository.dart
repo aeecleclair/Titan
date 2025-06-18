@@ -44,7 +44,3 @@ class AssociationRepository extends Repository {
     );
   }
 }
-
-final associationRepositoryProvider = Provider<AssociationRepository>((ref) {
-  return AssociationRepository(ref);
-});

@@ -7,9 +7,7 @@ import 'package:myecl/tools/providers/single_notifier.dart';
 
 final associationPictureProvider =
     StateNotifierProvider<AssociationPictureNotifier, AsyncValue<Image>>((ref) {
-      final associationPictureRepository = ref.watch(
-        associationPictureRepositoryProvider,
-      );
+      final associationPictureRepository = AssociationPictureRepository(ref);
       AssociationPictureNotifier notifier = AssociationPictureNotifier(
         associationPictureRepository,
       );

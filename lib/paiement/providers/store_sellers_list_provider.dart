@@ -49,7 +49,7 @@ final sellerStoreProvider =
       AsyncValue<List<Seller>>,
       String
     >((ref, storeId) {
-      final sellerStoreRepository = ref.watch(sellerStoreRepositoryProvider);
+      final sellerStoreRepository = SellerStoreRepository(ref);
       return StoreSellerListNotifier(
         sellerStoreRepository: sellerStoreRepository,
       )..getStoreSellerList(storeId);

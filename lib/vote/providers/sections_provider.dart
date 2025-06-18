@@ -38,7 +38,7 @@ class SectionNotifier extends ListNotifier<Section> {
 
 final sectionsProvider =
     StateNotifierProvider<SectionNotifier, AsyncValue<List<Section>>>((ref) {
-      final sectionRepository = ref.watch(sectionRepositoryProvider);
+      final sectionRepository = SectionRepository(ref);
       SectionNotifier notifier = SectionNotifier(
         sectionRepository: sectionRepository,
       );

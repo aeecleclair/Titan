@@ -63,7 +63,3 @@ class ScannerRepository extends Repository {
     );
   }
 }
-
-final scannerRepositoryProvider = Provider<ScannerRepository>((ref) {
-  return ScannerRepository(ref);
-});

@@ -36,7 +36,7 @@ class PhListNotifier extends ListNotifier<Ph> {
 
 final phListProvider =
     StateNotifierProvider<PhListNotifier, AsyncValue<List<Ph>>>((ref) {
-      final repository = ref.watch(phRepositoryProvider);
+      final repository = PhRepository(ref);
       final notifier = PhListNotifier(repository);
       notifier.loadPhList();
       return notifier;

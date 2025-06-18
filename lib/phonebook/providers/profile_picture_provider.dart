@@ -5,9 +5,7 @@ import 'package:myecl/user/repositories/profile_picture_repository.dart';
 
 final profilePictureProvider =
     StateNotifierProvider<ProfilePictureNotifier, AsyncValue<Image>>((ref) {
-      final profilePictureRepository = ref.watch(
-        profilePictureRepositoryProvider,
-      );
+      final profilePictureRepository = ProfilePictureRepository(ref);
       return ProfilePictureNotifier(profilePictureRepository);
     });
 

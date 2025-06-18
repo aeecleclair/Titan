@@ -35,8 +35,8 @@ final userTicketListProvider =
     StateNotifierProvider<UserTicketListNotifier, AsyncValue<List<Ticket>>>((
       ref,
     ) {
-      final userDetailRepository = ref.watch(userDetailRepositoryProvider);
-      final ticketsRepository = ref.watch(ticketRepositoryProvider);
+      final userDetailRepository = UserDetailRepository(ref);
+      final ticketsRepository = TicketRepository(ref);
       UserTicketListNotifier notifier = UserTicketListNotifier(
         userDetailRepository,
         ticketsRepository,

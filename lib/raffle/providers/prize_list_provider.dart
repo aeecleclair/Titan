@@ -50,7 +50,7 @@ class LotListNotifier extends ListNotifier<Prize> {
 
 final prizeListProvider =
     StateNotifierProvider<LotListNotifier, AsyncValue<List<Prize>>>((ref) {
-      final lotRepository = ref.watch(lotRepositoryProvider);
+      final lotRepository = LotRepository(ref);
       final notifier = LotListNotifier(lotRepository);
       final raffleId = ref.watch(raffleIdProvider);
       if (raffleId != Raffle.empty().id) {

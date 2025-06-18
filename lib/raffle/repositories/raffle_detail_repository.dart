@@ -38,7 +38,3 @@ class RaffleDetailRepository extends Repository {
     return RaffleStats.fromJson(await getOne(raffleId, suffix: "/stats"));
   }
 }
-
-final raffleDetailRepositoryProvider = Provider<RaffleDetailRepository>((ref) {
-  return RaffleDetailRepository(ref);
-});

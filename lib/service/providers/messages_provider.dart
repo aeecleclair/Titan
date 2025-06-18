@@ -32,7 +32,7 @@ class MessagesProvider extends ListNotifier<Message> {
 final messagesProvider =
     StateNotifierProvider<MessagesProvider, AsyncValue<List<Message>>>((ref) {
       final firebaseToken = ref.watch(firebaseTokenProvider);
-      final notificationRepository = ref.watch(notificationRepositoryProvider);
+      final notificationRepository = NotificationRepository(ref);
       MessagesProvider notifier = MessagesProvider(notificationRepository);
       firebaseToken.then((value) => notifier.setFirebaseToken(value));
       return notifier;

@@ -22,7 +22,7 @@ final associationKindsProvider =
       AssociationKindsNotifier,
       AsyncValue<AssociationKinds>
     >((ref) {
-      final associationRepository = ref.watch(associationRepositoryProvider);
+      final associationRepository = AssociationRepository(ref);
       AssociationKindsNotifier notifier = AssociationKindsNotifier(
         associationRepository,
       );

@@ -111,9 +111,7 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
 
 final profilePictureProvider =
     StateNotifierProvider<ProfilePictureNotifier, AsyncValue<Uint8List>>((ref) {
-      final profilePictureRepository = ref.watch(
-        profilePictureRepositoryProvider,
-      );
+      final profilePictureRepository = ProfilePictureRepository(ref);
       ProfilePictureNotifier notifier = ProfilePictureNotifier(
         profilePictureRepository: profilePictureRepository,
       );

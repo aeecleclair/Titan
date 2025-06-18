@@ -18,7 +18,3 @@ class VotesRepository extends Repository {
     return await delete("");
   }
 }
-
-final votesRepositoryProvider = Provider((ref) {
-  return VotesRepository(ref);
-});

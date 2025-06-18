@@ -17,7 +17,3 @@ class ProfilePictureRepository extends LogoRepository {
     return await addLogo(bytes, "me", suffix: "/profile-picture");
   }
 }
-
-final profilePictureRepositoryProvider = Provider((ref) {
-  return ProfilePictureRepository(ref);
-});

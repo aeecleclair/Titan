@@ -46,7 +46,7 @@ class EventListNotifier extends ListNotifier<Event> {
 
 final eventListProvider =
     StateNotifierProvider<EventListNotifier, AsyncValue<List<Event>>>((ref) {
-      final eventRepository = ref.watch(eventRepositoryProvider);
+      final eventRepository = EventRepository(ref);
       EventListNotifier notifier = EventListNotifier(
         eventRepository: eventRepository,
       );

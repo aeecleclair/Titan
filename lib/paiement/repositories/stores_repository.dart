@@ -56,7 +56,3 @@ class StoresRepository extends Repository {
     return response["success"] == true;
   }
 }
-
-final storesRepositoryProvider = Provider<StoresRepository>((ref) {
-  return StoresRepository(ref);
-});

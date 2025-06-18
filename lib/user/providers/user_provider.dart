@@ -53,7 +53,7 @@ class UserNotifier extends SingleNotifier<User> {
 
 final asyncUserProvider = StateNotifierProvider<UserNotifier, AsyncValue<User>>(
   (ref) {
-    final UserRepository userRepository = ref.watch(userRepositoryProvider);
+    final UserRepository userRepository = UserRepository(ref);
     UserNotifier userNotifier = UserNotifier(userRepository: userRepository);
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final id = ref

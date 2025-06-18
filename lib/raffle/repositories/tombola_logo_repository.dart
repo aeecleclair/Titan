@@ -25,7 +25,3 @@ class TombolaLogoRepository extends LogoRepository {
     return Image.memory(uint8List);
   }
 }
-
-final tombolaLogoRepositoryProvider = Provider<TombolaLogoRepository>((ref) {
-  return TombolaLogoRepository(ref);
-});

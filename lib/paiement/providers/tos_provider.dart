@@ -18,6 +18,6 @@ class TOSNotifier extends SingleNotifier<TOS> {
 }
 
 final tosProvider = StateNotifierProvider<TOSNotifier, AsyncValue<TOS>>((ref) {
-  final tosRepository = ref.watch(tosRepositoryProvider);
+  final tosRepository = TosRepository(ref);
   return TOSNotifier(tosRepository: tosRepository)..getTOS();
 });

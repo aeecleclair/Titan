@@ -13,7 +13,3 @@ class ResultRepository extends Repository {
     return List<Result>.from((await getList()).map((e) => Result.fromJson(e)));
   }
 }
-
-final resultRepositoryProvider = Provider((ref) {
-  return ResultRepository(ref);
-});

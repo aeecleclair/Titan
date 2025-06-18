@@ -14,7 +14,3 @@ class VersionRepository extends Repository {
     return Version.fromJson(await noAuthGetOne(""));
   }
 }
-
-final versionRepositoryProvider = Provider((ref) {
-  return VersionRepository(ref);
-});

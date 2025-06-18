@@ -33,7 +33,7 @@ class UserCashNotifier extends SingleNotifier<Cash> {
 
 final userAmountProvider =
     StateNotifierProvider<UserCashNotifier, AsyncValue<Cash>>((ref) {
-      final cashRepository = ref.watch(cashRepositoryProvider);
+      final cashRepository = CashRepository(ref);
       UserCashNotifier userCashNotifier = UserCashNotifier(cashRepository);
       final userId = ref.watch(userIdProvider);
       userId.whenData((value) async => userCashNotifier.loadCashByUser(value));

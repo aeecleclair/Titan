@@ -29,7 +29,3 @@ class ContenderRepository extends Repository {
     return delete("/?list_type=$type");
   }
 }
-
-final contenderRepositoryProvider = Provider<ContenderRepository>((ref) {
-  return ContenderRepository(ref);
-});

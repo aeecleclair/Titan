@@ -24,7 +24,7 @@ class TicketsListNotifier extends ListNotifier<Ticket> {
 
 final ticketsListProvider =
     StateNotifierProvider<TicketsListNotifier, AsyncValue<List<Ticket>>>((ref) {
-      final raffleDetailRepository = ref.watch(raffleDetailRepositoryProvider);
+      final raffleDetailRepository = RaffleDetailRepository(ref);
       final notifier = TicketsListNotifier(raffleDetailRepository);
       final raffleId = ref.watch(raffleIdProvider);
       if (raffleId != Raffle.empty().id) {

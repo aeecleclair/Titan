@@ -27,7 +27,7 @@ final scannedUsersListProvider =
       ScannedUsersListNotifier,
       AsyncValue<List<SimpleUser>>
     >((ref) {
-      final scannerRepository = ref.watch(scannerRepositoryProvider);
+      final scannerRepository = ScannerRepository(ref);
       ScannedUsersListNotifier notifier = ScannedUsersListNotifier(
         scannerRepository,
       );

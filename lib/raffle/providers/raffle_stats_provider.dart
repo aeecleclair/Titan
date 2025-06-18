@@ -27,7 +27,7 @@ class RaffleStatsNotifier extends SingleNotifier<RaffleStats> {
 
 final raffleStatsProvider =
     StateNotifierProvider<RaffleStatsNotifier, AsyncValue<RaffleStats>>((ref) {
-      final raffleDetailRepository = ref.watch(raffleDetailRepositoryProvider);
+      final raffleDetailRepository = RaffleDetailRepository(ref);
       RaffleStatsNotifier notifier = RaffleStatsNotifier(
         raffleDetailRepository,
       );

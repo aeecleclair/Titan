@@ -44,7 +44,7 @@ final ticketListProvider =
       final userInformationRepository = ref.watch(
         userInformationRepositoryProvider,
       );
-      final scannerRepository = ref.watch(scannerRepositoryProvider);
+      final scannerRepository = ScannerRepository(ref);
       TicketListNotifier notifier = TicketListNotifier(
         ticketRepository: userInformationRepository,
         scannerRepository: scannerRepository,

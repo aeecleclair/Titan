@@ -33,7 +33,7 @@ final purchaseListProvider =
     StateNotifierProvider<PurchaseListNotifier, AsyncValue<List<Purchase>>>((
       ref,
     ) {
-      final userPurchaseRepository = ref.watch(userPurchaseRepositoryProvider);
+      final userPurchaseRepository = UserPurchaseRepository(ref);
       PurchaseListNotifier notifier = PurchaseListNotifier(
         userPurchaseRepository,
       );

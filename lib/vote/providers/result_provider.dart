@@ -15,7 +15,7 @@ class ResultNotifier extends ListNotifier<Result> {
 
 final resultProvider =
     StateNotifierProvider<ResultNotifier, AsyncValue<List<Result>>>((ref) {
-      final resultRepository = ref.watch(resultRepositoryProvider);
+      final resultRepository = ResultRepository(ref);
       final resultNotifier = ResultNotifier(resultRepository: resultRepository);
       resultNotifier.loadResult();
       return resultNotifier;

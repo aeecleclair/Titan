@@ -63,7 +63,7 @@ final associationListProvider =
       AssociationListNotifier,
       AsyncValue<List<Association>>
     >((ref) {
-      final associationRepository = ref.watch(associationRepositoryProvider);
+      final associationRepository = AssociationRepository(ref);
       AssociationListNotifier notifier = AssociationListNotifier(
         associationRepository,
       );

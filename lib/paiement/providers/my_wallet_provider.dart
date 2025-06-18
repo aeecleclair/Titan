@@ -15,7 +15,7 @@ class MyWalletNotifier extends SingleNotifier<Wallet> {
 
 final myWalletProvider =
     StateNotifierProvider<MyWalletNotifier, AsyncValue<Wallet>>((ref) {
-      final usersMeRepository = ref.watch(usersMeRepositoryProvider);
+      final usersMeRepository = UsersMeRepository(ref);
       return MyWalletNotifier(usersMeRepository: usersMeRepository)
         ..getMyWallet();
     });

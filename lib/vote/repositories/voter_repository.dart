@@ -21,7 +21,3 @@ class VoterRepository extends Repository {
     return (await getList()).map((e) => Voter.fromJson(e)).toList();
   }
 }
-
-final voterRepositoryProvider = Provider((ref) {
-  return VoterRepository(ref);
-});

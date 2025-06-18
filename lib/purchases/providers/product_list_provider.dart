@@ -18,7 +18,7 @@ final productListProvider =
     StateNotifierProvider<ProductListNotifier, AsyncValue<List<Product>>>((
       ref,
     ) {
-      final productRepository = ref.watch(productRepositoryProvider);
+      final productRepository = ProductRepository(ref);
       ProductListNotifier notifier = ProductListNotifier(productRepository);
       return notifier;
     });

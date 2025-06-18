@@ -60,7 +60,3 @@ class StatusRepository extends Repository {
     }
   }
 }
-
-final statusRepositoryProvider = Provider((ref) {
-  return StatusRepository(ref);
-});

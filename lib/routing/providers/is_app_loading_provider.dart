@@ -5,12 +5,18 @@ import 'package:myecl/user/providers/user_provider.dart';
 import 'package:myecl/version/providers/version_verifier_provider.dart';
 
 final isAppLoadingProvider = StateProvider<bool>((ref) {
-  final versionVerifier = ref.watch(versionVerifierProvider);
+  final versionVerifierLoading = ref.watch(
+    versionVerifierProvider.select((value) => value.isLoading),
+  );
   final isAuthLoading = ref.watch(isAuthLoadingProvider);
   final isLoggedIn = ref.watch(isLoggedInProvider);
-  final asyncUser = ref.watch(asyncUserProvider);
-  final moduleRootList = ref.watch(moduleRootListProvider);
-  return versionVerifier.isLoading ||
+  final asyncUserLoading = ref.watch(
+    asyncUserProvider.select((value) => value.isLoading),
+  );
+  final moduleRootListLoading = ref.watch(
+    moduleRootListProvider.select((value) => value.isLoading),
+  );
+  return versionVerifierLoading ||
       isAuthLoading ||
-      (isLoggedIn && (asyncUser.isLoading || moduleRootList.isLoading));
+      (isLoggedIn && (asyncUserLoading || moduleRootListLoading));
 });

@@ -44,7 +44,7 @@ final eventEventListProvider =
     StateNotifierProvider<EventEventListProvider, AsyncValue<List<Event>>>((
       ref,
     ) {
-      final eventRepository = ref.watch(eventRepositoryProvider);
+      final eventRepository = EventRepository(ref);
       final userId = ref.watch(userIdProvider);
       final provider = EventEventListProvider(eventRepository: eventRepository);
       userId.whenData((value) async {

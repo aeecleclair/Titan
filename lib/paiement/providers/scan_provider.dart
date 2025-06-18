@@ -28,6 +28,6 @@ class ScanNotifier extends SingleNotifier<Transaction> {
 
 final scanProvider =
     StateNotifierProvider<ScanNotifier, AsyncValue<Transaction>>((ref) {
-      final storesRepository = ref.watch(storesRepositoryProvider);
+      final storesRepository = StoresRepository(ref);
       return ScanNotifier(storesRepository: storesRepository);
     });

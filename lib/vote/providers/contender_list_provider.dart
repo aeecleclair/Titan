@@ -87,7 +87,7 @@ final contenderListProvider =
     StateNotifierProvider<ContenderListNotifier, AsyncValue<List<Contender>>>((
       ref,
     ) {
-      final contenderRepository = ref.watch(contenderRepositoryProvider);
+      final contenderRepository = ContenderRepository(ref);
       final contenderListNotifier = ContenderListNotifier(
         contenderRepository: contenderRepository,
       );

@@ -33,7 +33,7 @@ class ScannerNotifier extends SingleNotifier<Ticket> {
 
 final scannerProvider =
     StateNotifierProvider<ScannerNotifier, AsyncValue<Ticket>>((ref) {
-      final scannerRepository = ref.watch(scannerRepositoryProvider);
+      final scannerRepository = ScannerRepository(ref);
       ScannerNotifier notifier = ScannerNotifier(scannerRepository);
       return notifier;
     });

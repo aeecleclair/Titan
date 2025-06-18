@@ -26,8 +26,3 @@ class AssociationPictureRepository extends LogoRepository {
     return Image.memory(uint8List);
   }
 }
-
-final associationPictureRepositoryProvider =
-    Provider<AssociationPictureRepository>((ref) {
-      return AssociationPictureRepository(ref);
-    });

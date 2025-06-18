@@ -49,7 +49,3 @@ class EventRepository extends Repository {
     return await delete(id);
   }
 }
-
-final eventRepositoryProvider = Provider<EventRepository>((ref) {
-  return EventRepository(ref);
-});

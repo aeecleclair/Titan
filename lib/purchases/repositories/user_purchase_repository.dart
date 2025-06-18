@@ -15,7 +15,3 @@ class UserPurchaseRepository extends Repository {
     );
   }
 }
-
-final userPurchaseRepositoryProvider = Provider<UserPurchaseRepository>((ref) {
-  return UserPurchaseRepository(ref);
-});

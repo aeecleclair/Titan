@@ -18,7 +18,7 @@ class InformationNotifier extends SingleNotifier<Information> {
 
 final informationProvider =
     StateNotifierProvider<InformationNotifier, AsyncValue<Information>>((ref) {
-      final informationRepository = ref.watch(informationRepositoryProvider);
+      final informationRepository = InformationRepository(ref);
       InformationNotifier informationNotifier = InformationNotifier(
         informationRepository: informationRepository,
       );

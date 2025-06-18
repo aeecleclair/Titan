@@ -11,13 +11,15 @@ import 'package:myecl/tools/exception.dart';
 /// provided function. (A lock is used to ensure that only one refresh happens at a time.)
 /// If the refresh fails, it signs out the user and throws an exception.
 Future<T> tokenExpireWrapper<T>(Ref ref, Future<T> Function() f) async {
-  final authToken = ref.read(authTokenProvider);
-
-  final isTokenValid =
-      authToken.hasValue &&
-      authToken.value != null &&
-      authToken.value != AuthToken.empty() &&
-      !JwtDecoder.isExpired(authToken.value!.accessToken);
+  final isTokenValid = ref.read(
+    authTokenProvider.select(
+      (authToken) =>
+          authToken.hasValue &&
+          authToken.value != null &&
+          authToken.value != AuthToken.empty() &&
+          !JwtDecoder.isExpired(authToken.value!.accessToken),
+    ),
+  );
 
   if (isTokenValid) {
     return await f();

@@ -25,7 +25,3 @@ class PackTicketRepository extends Repository {
     return await delete("/$id");
   }
 }
-
-final packTicketRepositoryProvider = Provider<PackTicketRepository>((ref) {
-  return PackTicketRepository(ref);
-});

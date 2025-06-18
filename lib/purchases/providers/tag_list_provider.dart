@@ -20,7 +20,7 @@ class TagListNotifier extends ListNotifier<String> {
 
 final tagListProvider =
     StateNotifierProvider<TagListNotifier, AsyncValue<List<String>>>((ref) {
-      final scannerRepository = ref.watch(scannerRepositoryProvider);
+      final scannerRepository = ScannerRepository(ref);
       TagListNotifier notifier = TagListNotifier(scannerRepository);
       return notifier;
     });

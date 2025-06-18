@@ -6,12 +6,12 @@ import 'package:myecl/ph/repositories/ph_pdf_repository.dart';
 class PhPdf extends FamilyAsyncNotifier<Uint8List, String> {
   @override
   Future<Uint8List> build(String arg) async {
-    final PhPdfRepository phPdfRepository = ref.watch(phPdfRepositoryProvider);
+    final PhPdfRepository phPdfRepository = PhPdfRepository(ref);
     return await phPdfRepository.getPhPdf(arg);
   }
 
   Future<Uint8List> updatePhPdf(Uint8List bytes) async {
-    final PhPdfRepository phPdfRepository = ref.watch(phPdfRepositoryProvider);
+    final PhPdfRepository phPdfRepository = PhPdfRepository(ref);
     return await phPdfRepository.updatePhPdf(bytes, arg);
   }
 }

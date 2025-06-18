@@ -27,6 +27,6 @@ class DeviceListNotifier extends SingleNotifier<WalletDevice> {
 
 final deviceProvider =
     StateNotifierProvider<DeviceListNotifier, AsyncValue<WalletDevice>>((ref) {
-      final deviceListRepository = ref.watch(devicesRepositoryProvider);
+      final deviceListRepository = DevicesRepository(ref);
       return DeviceListNotifier(devicesRepository: deviceListRepository);
     });

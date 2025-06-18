@@ -37,7 +37,3 @@ class RaffleRepository extends Repository {
     return await update(raffle.toJson(), "/${raffle.id}", suffix: "/lock");
   }
 }
-
-final raffleRepositoryProvider = Provider<RaffleRepository>((ref) {
-  return RaffleRepository(ref);
-});

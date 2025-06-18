@@ -54,7 +54,3 @@ class NotificationRepository extends Repository {
     );
   }
 }
-
-final notificationRepositoryProvider = Provider((ref) {
-  return NotificationRepository(ref);
-});

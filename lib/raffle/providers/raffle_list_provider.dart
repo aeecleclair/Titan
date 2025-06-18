@@ -51,7 +51,7 @@ class RaffleListNotifier extends ListNotifier<Raffle> {
 
 final raffleListProvider =
     StateNotifierProvider<RaffleListNotifier, AsyncValue<List<Raffle>>>((ref) {
-      final raffleRepository = ref.watch(raffleRepositoryProvider);
+      final raffleRepository = RaffleRepository(ref);
       RaffleListNotifier notifier = RaffleListNotifier(raffleRepository);
       notifier.loadRaffleList();
       return notifier;

@@ -39,7 +39,3 @@ class LotRepository extends Repository {
     );
   }
 }
-
-final lotRepositoryProvider = Provider<LotRepository>((ref) {
-  return LotRepository(ref);
-});

@@ -19,7 +19,3 @@ class FundingRepository extends Repository {
     return FundingUrl.fromJson(await create(info.toJson(), suffix: "init"));
   }
 }
-
-final fundingRepositoryProvider = Provider<FundingRepository>((ref) {
-  return FundingRepository(ref);
-});

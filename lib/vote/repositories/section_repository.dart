@@ -29,7 +29,3 @@ class SectionRepository extends Repository {
     return (await getList()).map((e) => Section.fromJson(e)).toList();
   }
 }
-
-final sectionRepositoryProvider = Provider((ref) {
-  return SectionRepository(ref);
-});

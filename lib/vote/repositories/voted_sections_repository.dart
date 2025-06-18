@@ -12,7 +12,3 @@ class VotedSectionRepository extends Repository {
     return (await getList()).cast();
   }
 }
-
-final votedSectionRepositoryProvider = Provider((ref) {
-  return VotedSectionRepository(ref);
-});

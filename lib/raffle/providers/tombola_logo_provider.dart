@@ -32,7 +32,7 @@ class TombolaLogoProvider extends SingleNotifier<Image> {
 final tombolaLogoProvider =
     StateNotifierProvider<TombolaLogoProvider, AsyncValue<Image>>((ref) {
       final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
-      final repository = ref.watch(tombolaLogoRepositoryProvider);
+      final repository = TombolaLogoRepository(ref);
       return TombolaLogoProvider(
         tombolaLogosNotifier: tombolaLogosNotifier,
         repository: repository,

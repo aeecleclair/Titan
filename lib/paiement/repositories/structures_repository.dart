@@ -51,7 +51,3 @@ class StructuresRepository extends Repository {
     );
   }
 }
-
-final structuresRepositoryProvider = Provider<StructuresRepository>((ref) {
-  return StructuresRepository(ref);
-});

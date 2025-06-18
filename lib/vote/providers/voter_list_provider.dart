@@ -27,7 +27,7 @@ class VoterListNotifier extends ListNotifier<Voter> {
 
 final voterListProvider =
     StateNotifierProvider<VoterListNotifier, AsyncValue<List<Voter>>>((ref) {
-      final repository = ref.watch(voterRepositoryProvider);
+      final repository = VoterRepository(ref);
       final voterListNotifier = VoterListNotifier(repository);
       voterListNotifier.loadVoterList();
       return voterListNotifier;

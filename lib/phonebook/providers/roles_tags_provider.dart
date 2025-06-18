@@ -35,7 +35,7 @@ final rolesTagsProvider =
       RolesTagsNotifier,
       Map<String, AsyncValue<List<bool>>?>
     >((ref) {
-      final rolesTagsRepository = ref.watch(rolesTagsRepositoryProvider);
+      final rolesTagsRepository = RolesTagsRepository(ref);
       RolesTagsNotifier notifier = RolesTagsNotifier(rolesTagsRepository);
       notifier.loadRolesTags();
       return notifier;

@@ -39,7 +39,3 @@ class UserListRepository extends Repository {
     );
   }
 }
-
-final userListRepositoryProvider = Provider((ref) {
-  return UserListRepository(ref);
-});

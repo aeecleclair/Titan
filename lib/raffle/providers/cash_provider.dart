@@ -63,7 +63,7 @@ class CashProvider extends ListNotifier<Cash> {
 
 final cashProvider =
     StateNotifierProvider<CashProvider, AsyncValue<List<Cash>>>((ref) {
-      final cashRepository = ref.watch(cashRepositoryProvider);
+      final cashRepository = CashRepository(ref);
       CashProvider cashProvider = CashProvider(cashRepository);
       cashProvider.loadCashList();
       return cashProvider;

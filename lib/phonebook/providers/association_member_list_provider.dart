@@ -117,7 +117,7 @@ final associationMemberListProvider =
       AsyncValue<List<CompleteMember>>
     >((ref) {
       AssociationMemberListNotifier provider = AssociationMemberListNotifier(
-        ref.watch(associationMemberRepositoryProvider),
+        AssociationMemberRepository(ref),
       );
       final association = ref.watch(associationProvider);
 

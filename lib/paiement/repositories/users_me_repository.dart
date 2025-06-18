@@ -31,7 +31,3 @@ class UsersMeRepository extends Repository {
     return Wallet.fromJson(await getOne("wallet"));
   }
 }
-
-final usersMeRepositoryProvider = Provider<UsersMeRepository>((ref) {
-  return UsersMeRepository(ref);
-});

@@ -55,7 +55,3 @@ class PlantsRepository extends Repository {
     return PlantSimple.fromJson(await create(plants.toJson()));
   }
 }
-
-final plantsRepositoryProvider = Provider((ref) {
-  return PlantsRepository(ref);
-});

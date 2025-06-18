@@ -17,7 +17,7 @@ final speciesTypeListProvider =
     StateNotifierProvider<SpeciesListNotifier, AsyncValue<List<SpeciesType>>>((
       ref,
     ) {
-      final speciesRepository = ref.watch(speciesRepositoryProvider);
+      final speciesRepository = SpeciesRepository(ref);
       SpeciesListNotifier provider = SpeciesListNotifier(
         speciesRepository: speciesRepository,
       );

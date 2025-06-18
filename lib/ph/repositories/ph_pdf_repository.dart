@@ -20,7 +20,3 @@ class PhPdfRepository extends PdfRepository {
     return uint8List;
   }
 }
-
-final phPdfRepositoryProvider = Provider<PhPdfRepository>((ref) {
-  return PhPdfRepository(ref);
-});

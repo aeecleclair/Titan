@@ -54,7 +54,7 @@ class StatusNotifier extends SingleNotifier<Status> {
 
 final statusProvider =
     StateNotifierProvider<StatusNotifier, AsyncValue<Status>>((ref) {
-      final statusRepository = ref.watch(statusRepositoryProvider);
+      final statusRepository = StatusRepository(ref);
       final statusNotifier = StatusNotifier(statusRepository: statusRepository);
       statusNotifier.loadStatus();
       return statusNotifier;

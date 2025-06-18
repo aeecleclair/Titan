@@ -33,7 +33,7 @@ final winningTicketListProvider =
     StateNotifierProvider<WinningTicketNotifier, AsyncValue<List<Ticket>>>((
       ref,
     ) {
-      final lotRepository = ref.watch(lotRepositoryProvider);
+      final lotRepository = LotRepository(ref);
       WinningTicketNotifier notifier = WinningTicketNotifier(lotRepository);
       final ticketFromRaffle = ref.watch(ticketsListProvider);
       final winningTickets = ticketFromRaffle.maybeWhen<List<Ticket>>(

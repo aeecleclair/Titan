@@ -28,7 +28,3 @@ class DevicesRepository extends Repository {
     return await create(id, suffix: '/$id/revoke');
   }
 }
-
-final devicesRepositoryProvider = Provider<DevicesRepository>((ref) {
-  return DevicesRepository(ref);
-});

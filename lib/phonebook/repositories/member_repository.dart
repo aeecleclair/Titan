@@ -13,7 +13,3 @@ class MemberRepository extends Repository {
     return CompleteMember.fromJson(await getOne(memberId));
   }
 }
-
-final memberRepositoryProvider = Provider<MemberRepository>((ref) {
-  return MemberRepository(ref);
-});

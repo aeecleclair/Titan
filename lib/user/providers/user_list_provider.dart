@@ -32,7 +32,7 @@ final userList =
     StateNotifierProvider<UserListNotifier, AsyncValue<List<SimpleUser>>>((
       ref,
     ) {
-      final userListRepository = ref.watch(userListRepositoryProvider);
+      final userListRepository = UserListRepository(ref);
       UserListNotifier userListNotifier = UserListNotifier(
         userListRepository: userListRepository,
       );

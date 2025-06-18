@@ -61,7 +61,7 @@ final plantListProvider =
     StateNotifierProvider<PlantListNotifier, AsyncValue<List<PlantSimple>>>((
       ref,
     ) {
-      final plantRepository = ref.watch(plantsRepositoryProvider);
+      final plantRepository = PlantsRepository(ref);
       PlantListNotifier provider = PlantListNotifier(
         plantsRepository: plantRepository,
       );
@@ -78,7 +78,7 @@ final myPlantListProvider =
     StateNotifierProvider<PlantListNotifier, AsyncValue<List<PlantSimple>>>((
       ref,
     ) {
-      final plantRepository = ref.watch(plantsRepositoryProvider);
+      final plantRepository = PlantsRepository(ref);
       PlantListNotifier provider = PlantListNotifier(
         plantsRepository: plantRepository,
       );

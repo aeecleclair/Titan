@@ -12,7 +12,3 @@ class SectionVoteCountRepository extends Repository {
     return await getOne(id);
   }
 }
-
-final sectionVoteCountRepositoryProvider = Provider((ref) {
-  return SectionVoteCountRepository(ref);
-});
