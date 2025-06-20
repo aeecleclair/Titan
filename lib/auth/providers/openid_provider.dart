@@ -75,9 +75,11 @@ final isLoggedInProvider = Provider<bool>((ref) {
 /// This provider checks if the user is currently loading the authentication state.
 /// It returns true if the authentication token is being fetched or refreshed.
 final isAuthLoadingProvider = Provider<bool>((ref) {
-  return ref.watch(
+  final authNotifier = ref.watch(authTokenProvider.notifier);
+  final isLoading = ref.watch(
     authTokenProvider.select((authToken) => authToken.isLoading),
   );
+  return isLoading || authNotifier.isRefreshing;
 });
 
 final userIdProvider = FutureProvider<String>((ref) {
@@ -121,6 +123,8 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
   final FlutterSecureStorage secureStorage;
   final CacheManager cacheManager;
   final OpenIdRepository openIdRepository;
+
+  bool isRefreshing = false;
 
   AuthNotifier({
     required this.appAuth,
@@ -283,14 +287,15 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
   /// If the token is successfully refreshed, it stores the new token.
   /// If an error occurs, it updates the state with the error.
   Future<bool> refreshAccessToken() async {
-    if (state is AsyncLoading) {
+    if (isRefreshing) {
       // If already loading, return false to avoid multiple refresh attempts
       return false;
     }
-    state = const AsyncLoading();
     final refreshToken = await secureStorage.read(key: tokenName);
     if (refreshToken != null) {
       try {
+        isRefreshing = true;
+
         if (kIsWeb) {
           await _refreshAccessTokenWeb(refreshToken);
         } else {
@@ -299,6 +304,8 @@ class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
         return true;
       } catch (e, s) {
         state = AsyncError(e, s);
+      } finally {
+        isRefreshing = false;
       }
     } else {
       state = const AsyncError("No token found", StackTrace.empty);
