@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/paiement/class/history.dart';
 import 'package:myecl/paiement/class/qr_code_data.dart';
 import 'package:myecl/paiement/class/store.dart';

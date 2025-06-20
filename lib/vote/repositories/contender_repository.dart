@@ -1,4 +1,3 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/vote/class/contender.dart';
 

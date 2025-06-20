@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/vote/class/voter.dart';
 

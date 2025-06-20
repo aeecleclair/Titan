@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/purchases/class/ticket.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/class/simple_users.dart';

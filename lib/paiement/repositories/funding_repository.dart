@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/paiement/class/funding_url.dart';
 import 'package:myecl/paiement/class/init_info.dart';
 import 'package:myecl/paiement/class/transfert.dart';

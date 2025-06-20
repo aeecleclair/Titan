@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
 class ProfilePictureRepository extends LogoRepository {

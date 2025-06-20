@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/phonebook/class/association.dart';
 import 'package:myecl/phonebook/class/association_kinds.dart';
 import 'package:myecl/tools/repository/repository.dart';

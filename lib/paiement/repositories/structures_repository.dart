@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/paiement/class/store.dart';
 import 'package:myecl/paiement/class/structure.dart';
 import 'package:myecl/tools/repository/repository.dart';

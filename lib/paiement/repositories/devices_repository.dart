@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/paiement/class/create_device.dart';
 import 'package:myecl/paiement/class/wallet_device.dart';
 import 'package:myecl/tools/repository/repository.dart';

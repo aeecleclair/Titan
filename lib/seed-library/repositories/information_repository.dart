@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/seed-library/class/information.dart';
 import 'package:myecl/tools/repository/repository.dart';
 

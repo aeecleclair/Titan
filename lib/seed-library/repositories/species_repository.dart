@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/seed-library/class/species.dart';
 import 'package:myecl/seed-library/class/species_type.dart';
 import 'package:myecl/tools/repository/repository.dart';
