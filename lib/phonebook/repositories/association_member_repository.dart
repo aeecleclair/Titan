@@ -7,6 +7,8 @@ class AssociationMemberRepository extends Repository {
   // ignore: overridden_fields
   final ext = "phonebook/associations/";
 
+  AssociationMemberRepository(super.ref);
+
   Future<List<CompleteMember>> getAssociationMemberList(
     String associationId,
     String year,

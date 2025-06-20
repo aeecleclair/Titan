@@ -1,5 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/vote/tools/functions.dart';
 
@@ -9,6 +7,8 @@ class StatusRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = 'campaign/status';
+
+  StatusRepository(super.ref);
 
   Future<Status> getStatus() async {
     return stringToStatus((await getOne(''))['status']);
@@ -59,8 +59,3 @@ class StatusRepository extends Repository {
     }
   }
 }
-
-final statusRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return StatusRepository()..setToken(token);
-});

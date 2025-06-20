@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
@@ -9,6 +10,8 @@ class AdvertPosterRepository extends LogoRepository {
   @override
   // ignore: overridden_fields
   final ext = "advert/";
+
+  AdvertPosterRepository(super.ref);
 
   Future<Image> getAdvertPoster(String id) async {
     final uint8List = await getLogo("", suffix: "adverts/$id/picture");
@@ -23,3 +26,7 @@ class AdvertPosterRepository extends LogoRepository {
     return Image.memory(uint8List);
   }
 }
+
+final advertPosterRepositoryProvider = Provider((ref) {
+  return AdvertPosterRepository(ref);
+});

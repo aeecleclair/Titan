@@ -21,7 +21,6 @@ import 'package:myecl/phonebook/ui/phonebook.dart';
 import 'package:myecl/phonebook/ui/pages/association_editor_page/member_editable_card.dart';
 import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
@@ -122,9 +121,9 @@ class AssociationEditorPage extends HookConsumerWidget {
                                 associationId: association.id,
                               ),
                             );
-                            if (QR.currentPath.contains(
-                              PhonebookRouter.admin,
-                            )) {
+                            if (Uri.parse(
+                              QR.currentPath,
+                            ).path.contains(PhonebookRouter.admin)) {
                               QR.to(
                                 PhonebookRouter.root +
                                     PhonebookRouter.admin +
@@ -170,35 +169,33 @@ class AssociationEditorPage extends HookConsumerWidget {
                           );
                         },
                         onReorder: (int oldIndex, int newIndex) async {
-                          await tokenExpireWrapper(ref, () async {
-                            final result = await associationMemberListNotifier
-                                .reorderMember(
-                                  associationMemberSortedList[oldIndex],
-                                  associationMemberSortedList[oldIndex]
-                                      .memberships
-                                      .firstWhere(
-                                        (element) =>
-                                            element.associationId ==
-                                                association.id &&
-                                            element.mandateYear ==
-                                                association.mandateYear,
-                                      )
-                                      .copyWith(order: newIndex),
-                                  oldIndex,
-                                  newIndex,
-                                );
-                            if (result) {
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                PhonebookTextConstants.memberReordered,
+                          final result = await associationMemberListNotifier
+                              .reorderMember(
+                                associationMemberSortedList[oldIndex],
+                                associationMemberSortedList[oldIndex]
+                                    .memberships
+                                    .firstWhere(
+                                      (element) =>
+                                          element.associationId ==
+                                              association.id &&
+                                          element.mandateYear ==
+                                              association.mandateYear,
+                                    )
+                                    .copyWith(order: newIndex),
+                                oldIndex,
+                                newIndex,
                               );
-                            } else {
-                              displayToastWithContext(
-                                TypeMsg.error,
-                                PhonebookTextConstants.reorderingError,
-                              );
-                            }
-                          });
+                          if (result) {
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              PhonebookTextConstants.memberReordered,
+                            );
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              PhonebookTextConstants.reorderingError,
+                            );
+                          }
                         },
                         children: associationMemberSortedList
                             .map(
@@ -263,43 +260,41 @@ class AssociationEditorPage extends HookConsumerWidget {
                               TextButton(
                                 onPressed: () async {
                                   Navigator.pop(context);
-                                  await tokenExpireWrapper(ref, () async {
-                                    final value = await associationListNotifier
-                                        .updateAssociation(
-                                          association.copyWith(
-                                            mandateYear:
-                                                association.mandateYear + 1,
-                                          ),
-                                        );
-                                    if (value) {
-                                      displayToastWithContext(
-                                        TypeMsg.msg,
-                                        PhonebookTextConstants
-                                            .newMandateConfirmed,
-                                      );
-                                      associationNotifier.setAssociation(
+                                  final value = await associationListNotifier
+                                      .updateAssociation(
                                         association.copyWith(
                                           mandateYear:
                                               association.mandateYear + 1,
                                         ),
                                       );
-                                      if (QR.currentPath.contains(
-                                        PhonebookRouter.associationDetail,
-                                      )) {
-                                        kindNotifier.setKind("");
-                                        QR.to(
-                                          PhonebookRouter.root +
-                                              PhonebookRouter.associationDetail,
-                                        );
-                                      }
-                                    } else {
-                                      displayToastWithContext(
-                                        TypeMsg.error,
-                                        PhonebookTextConstants
-                                            .mandateChangingError,
+                                  if (value) {
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      PhonebookTextConstants
+                                          .newMandateConfirmed,
+                                    );
+                                    associationNotifier.setAssociation(
+                                      association.copyWith(
+                                        mandateYear:
+                                            association.mandateYear + 1,
+                                      ),
+                                    );
+                                    if (Uri.parse(QR.currentPath).path.contains(
+                                      PhonebookRouter.associationDetail,
+                                    )) {
+                                      kindNotifier.setKind("");
+                                      QR.to(
+                                        PhonebookRouter.root +
+                                            PhonebookRouter.associationDetail,
                                       );
                                     }
-                                  });
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      PhonebookTextConstants
+                                          .mandateChangingError,
+                                    );
+                                  }
                                 },
                                 child: const Text(
                                   PhonebookTextConstants.validation,

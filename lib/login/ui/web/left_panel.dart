@@ -6,8 +6,9 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/login/providers/animation_provider.dart';
 import 'package:myecl/login/router.dart';
 import 'package:myecl/login/tools/constants.dart';
+import 'package:myecl/router.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/providers/path_forwarding_provider.dart';
+import 'package:myecl/routing/providers/auth_redirect_service_provider.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -16,12 +17,15 @@ class LeftPanel extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authNotifier = ref.watch(authTokenProvider.notifier);
-    final pathForwarding = ref.read(pathForwardingProvider);
+    final authNotifier = ref.read(authTokenProvider.notifier);
     final controller = ref.watch(backgroundAnimationProvider);
-    final isLoading = ref
-        .watch(loadingProvider)
-        .maybeWhen(data: (data) => data, orElse: () => false);
+    final isLoading = ref.watch(isAuthLoadingProvider);
+
+    final redirectPath = ref.watch(
+      authRedirectServiceProvider.select(
+        (service) => service.getRedirect(QR.currentPath),
+      ),
+    );
 
     return Column(
       children: [
@@ -82,12 +86,12 @@ class LeftPanel extends HookConsumerWidget {
               const SizedBox(height: 70),
               WaitingButton(
                 onTap: () async {
-                  await authNotifier.getTokenFromRequest();
+                  await authNotifier.signIn();
                   ref
                       .watch(authTokenProvider)
                       .when(
                         data: (token) {
-                          QR.to(pathForwarding.path);
+                          QR.to(redirectPath ?? AppRouter.root);
                         },
                         error: (e, s) {
                           displayToast(

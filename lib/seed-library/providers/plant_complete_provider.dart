@@ -27,6 +27,6 @@ class PlantNotifier extends SingleNotifier<PlantComplete> {
 
 final plantProvider =
     StateNotifierProvider<PlantNotifier, AsyncValue<PlantComplete>>((ref) {
-      final plantRepository = ref.watch(plantsRepositoryProvider);
+      final plantRepository = PlantsRepository(ref);
       return PlantNotifier(plantsRepository: plantRepository);
     });

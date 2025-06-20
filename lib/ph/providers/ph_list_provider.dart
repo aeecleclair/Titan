@@ -1,15 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/ph/class/ph.dart';
 import 'package:myecl/ph/repositories/ph_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class PhListNotifier extends ListNotifier<Ph> {
-  final PhRepository _phRepository = PhRepository();
-  PhListNotifier({required String token}) : super(const AsyncValue.loading()) {
-    _phRepository.setToken(token);
-  }
+  final PhRepository _phRepository;
+  PhListNotifier(this._phRepository) : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Ph>>> loadPhList() async {
     return await loadList(() async => _phRepository.getAllPh());
@@ -40,10 +36,8 @@ class PhListNotifier extends ListNotifier<Ph> {
 
 final phListProvider =
     StateNotifierProvider<PhListNotifier, AsyncValue<List<Ph>>>((ref) {
-      final token = ref.watch(tokenProvider);
-      final notifier = PhListNotifier(token: token);
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadPhList();
-      });
+      final repository = PhRepository(ref);
+      final notifier = PhListNotifier(repository);
+      notifier.loadPhList();
       return notifier;
     });

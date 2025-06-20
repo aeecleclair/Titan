@@ -9,7 +9,6 @@ import 'package:myecl/paiement/providers/store_sellers_list_provider.dart';
 import 'package:myecl/paiement/ui/pages/store_admin_page/right_check_box.dart';
 import 'package:myecl/paiement/ui/pages/store_admin_page/seller_right_dialog.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/builders/waiting_button.dart';
 import 'package:myecl/user/class/simple_users.dart';
@@ -66,37 +65,35 @@ class SearchResult extends HookConsumerWidget {
                   ],
                 ),
                 onYes: () async {
-                  await tokenExpireWrapper(ref, () async {
-                    newAdminNotifier.updateNewAdmin(simpleUser);
-                    queryController.text = simpleUser.getName();
-                    Seller seller = Seller(
-                      storeId: store.id,
-                      userId: simpleUser.id,
-                      user: simpleUser,
-                      canBank: sellerRightsList[0],
-                      canSeeHistory: sellerRightsList[1],
-                      canCancel: sellerRightsList[2],
-                      canManageSellers: sellerRightsList[3],
-                    );
-                    final value = await sellerStoreNotifier.createStoreSeller(
-                      seller,
-                    );
-                    if (value) {
-                      queryController.clear();
-                      usersNotifier.clear();
-                      sellerRightsListNotifier.clearRights();
-                      newAdminNotifier.resetNewAdmin();
-                      displayToastWithContext(TypeMsg.msg, "Vendeur ajouté");
-                      if (context.mounted) {
-                        Navigator.of(context).pop();
-                      }
-                    } else {
-                      displayToastWithContext(
-                        TypeMsg.error,
-                        "Erreur lors de l'ajout",
-                      );
+                  newAdminNotifier.updateNewAdmin(simpleUser);
+                  queryController.text = simpleUser.getName();
+                  Seller seller = Seller(
+                    storeId: store.id,
+                    userId: simpleUser.id,
+                    user: simpleUser,
+                    canBank: sellerRightsList[0],
+                    canSeeHistory: sellerRightsList[1],
+                    canCancel: sellerRightsList[2],
+                    canManageSellers: sellerRightsList[3],
+                  );
+                  final value = await sellerStoreNotifier.createStoreSeller(
+                    seller,
+                  );
+                  if (value) {
+                    queryController.clear();
+                    usersNotifier.clear();
+                    sellerRightsListNotifier.clearRights();
+                    newAdminNotifier.resetNewAdmin();
+                    displayToastWithContext(TypeMsg.msg, "Vendeur ajouté");
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
                     }
-                  });
+                  } else {
+                    displayToastWithContext(
+                      TypeMsg.error,
+                      "Erreur lors de l'ajout",
+                    );
+                  }
                   onChoose();
                 },
               );

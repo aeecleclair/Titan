@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/loan/class/item.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -7,6 +6,8 @@ class ItemRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "loans/loaners/";
+
+  ItemRepository(super.ref);
 
   Future<List<Item>> getItemList(String loanerId) async {
     return List<Item>.from(
@@ -30,6 +31,5 @@ class ItemRepository extends Repository {
 }
 
 final itemRepositoryProvider = Provider<ItemRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return ItemRepository()..setToken(token);
+  return ItemRepository(ref);
 });

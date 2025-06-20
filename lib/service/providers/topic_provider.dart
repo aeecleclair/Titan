@@ -1,16 +1,12 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/service/class/topic.dart';
 import 'package:myecl/service/repositories/notification_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class TopicsProvider extends ListNotifier<Topic> {
-  final NotificationRepository notificationRepository =
-      NotificationRepository();
-  TopicsProvider({required String token}) : super(const AsyncValue.loading()) {
-    notificationRepository.setToken(token);
-  }
+  final NotificationRepository notificationRepository;
+  TopicsProvider({required this.notificationRepository})
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Topic>>> getTopics() async {
     return await loadList(notificationRepository.getTopics);
@@ -82,10 +78,10 @@ class TopicsProvider extends ListNotifier<Topic> {
 
 final topicsProvider =
     StateNotifierProvider<TopicsProvider, AsyncValue<List<Topic>>>((ref) {
-      final token = ref.watch(tokenProvider);
-      TopicsProvider notifier = TopicsProvider(token: token);
-      tokenExpireWrapperAuth(ref, () async {
-        notifier.getTopics();
-      });
+      final notificationRepository = NotificationRepository(ref);
+      TopicsProvider notifier = TopicsProvider(
+        notificationRepository: notificationRepository,
+      );
+      notifier.getTopics();
       return notifier;
     });

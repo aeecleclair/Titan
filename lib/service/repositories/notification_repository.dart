@@ -9,6 +9,8 @@ class NotificationRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'notification/';
 
+  NotificationRepository(super.ref);
+
   Future<List<Message>> getMessages(String firebaseToken) async {
     final messages = List<Message>.from(
       (await getList(

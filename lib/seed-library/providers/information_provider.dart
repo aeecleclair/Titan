@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/seed-library/class/information.dart';
 import 'package:myecl/seed-library/repositories/information_repository.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class InformationNotifier extends SingleNotifier<Information> {
   final InformationRepository informationRepository;
@@ -19,13 +18,11 @@ class InformationNotifier extends SingleNotifier<Information> {
 
 final informationProvider =
     StateNotifierProvider<InformationNotifier, AsyncValue<Information>>((ref) {
-      final informationRepository = ref.watch(informationRepositoryProvider);
+      final informationRepository = InformationRepository(ref);
       InformationNotifier informationNotifier = InformationNotifier(
         informationRepository: informationRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        informationNotifier.loadInformation();
-      });
+      informationNotifier.loadInformation();
       return informationNotifier;
     });
 

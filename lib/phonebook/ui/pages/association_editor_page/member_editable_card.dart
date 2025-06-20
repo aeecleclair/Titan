@@ -133,7 +133,9 @@ class MemberEditableCard extends HookConsumerWidget {
               completeMemberNotifier.setCompleteMember(member);
               membershipNotifier.setMembership(assoMembership);
               memberRoleTagsNotifier.reset();
-              if (QR.currentPath.contains(PhonebookRouter.admin)) {
+              if (Uri.parse(
+                QR.currentPath,
+              ).path.contains(PhonebookRouter.admin)) {
                 QR.to(
                   PhonebookRouter.root +
                       PhonebookRouter.admin +

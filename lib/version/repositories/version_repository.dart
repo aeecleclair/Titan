@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/version/class/version.dart';
 
@@ -7,12 +6,10 @@ class VersionRepository extends Repository {
   // ignore: overridden_fields
   final ext = "information";
 
+  VersionRepository(super.ref);
+
   Future<Version> getVersion() async {
     initLogger();
-    return Version.fromJson(await getOne(""));
+    return Version.fromJson(await noAuthGetOne(""));
   }
 }
-
-final versionRepositoryProvider = Provider((ref) {
-  return VersionRepository();
-});

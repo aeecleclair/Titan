@@ -19,9 +19,9 @@ import 'package:myecl/amap/ui/pages/presentation_page/text.dart'
 import 'package:myecl/amap/ui/pages/product_pages/add_edit_product.dart'
     deferred as add_edit_product;
 import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:myecl/routing/middlewares/admin_middleware.dart';
+import 'package:myecl/routing/middlewares/authenticated_middleware.dart';
+import 'package:myecl/routing/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AmapRouter {

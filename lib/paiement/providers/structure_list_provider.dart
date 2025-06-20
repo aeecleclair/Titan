@@ -41,7 +41,7 @@ final structureListProvider =
     StateNotifierProvider<StructureListNotifier, AsyncValue<List<Structure>>>((
       ref,
     ) {
-      final structureRepository = ref.watch(structuresRepositoryProvider);
+      final structureRepository = StructuresRepository(ref);
       final notifier = StructureListNotifier(
         structuresRepository: structureRepository,
       )..getStructures();

@@ -7,6 +7,8 @@ class LotRepository extends Repository {
   // ignore: overridden_fields
   final ext = "tombola/prizes";
 
+  LotRepository(super.ref);
+
   Future<List<Prize>> getPrizeList(String raffle) async {
     return List<Prize>.from((await getList()).map((x) => Prize.fromJson(x)));
   }

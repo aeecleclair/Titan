@@ -7,6 +7,8 @@ class AssociationRepository extends Repository {
   // ignore: overridden_fields
   final ext = "phonebook/associations/";
 
+  AssociationRepository(super.ref);
+
   Future<List<Association>> getAssociationList() async {
     return List<Association>.from(
       (await getList()).map((x) => Association.fromJson(x)),

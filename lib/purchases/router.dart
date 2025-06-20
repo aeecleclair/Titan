@@ -9,8 +9,8 @@ import 'package:myecl/purchases/ui/pages/purchase_page/purchase_page.dart';
 import 'package:myecl/purchases/ui/pages/scan_page/scan_page.dart';
 import 'package:myecl/purchases/ui/pages/ticket_page/ticket_page.dart';
 import 'package:myecl/purchases/ui/pages/user_list_page/user_list_page.dart';
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
+import 'package:myecl/routing/middlewares/admin_middleware.dart';
+import 'package:myecl/routing/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PurchasesRouter {

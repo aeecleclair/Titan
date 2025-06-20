@@ -6,6 +6,8 @@ class VoterRepository extends Repository {
   // ignore: overridden_fields
   final ext = "campaign/voters";
 
+  VoterRepository(super.ref);
+
   Future<bool> deleteVoter(String voterId) async {
     return await delete("/$voterId");
   }

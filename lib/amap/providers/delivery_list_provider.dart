@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/delivery.dart';
 import 'package:myecl/amap/repositories/delivery_list_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class DeliveryListNotifier extends ListNotifier<Delivery> {
   final DeliveryListRepository deliveriesListRepository;
@@ -114,9 +113,7 @@ final deliveryListProvider =
       DeliveryListNotifier orderListNotifier = DeliveryListNotifier(
         deliveriesListRepository: deliveryListRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await orderListNotifier.loadDeliveriesList();
-      });
+      orderListNotifier.loadDeliveriesList();
       return orderListNotifier;
     });
 

@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/class/user.dart';
 import 'package:myecl/user/repositories/user_repository.dart';
 
@@ -54,18 +53,15 @@ class UserNotifier extends SingleNotifier<User> {
 
 final asyncUserProvider = StateNotifierProvider<UserNotifier, AsyncValue<User>>(
   (ref) {
-    final UserRepository userRepository = ref.watch(userRepositoryProvider);
+    final UserRepository userRepository = UserRepository(ref);
     UserNotifier userNotifier = UserNotifier(userRepository: userRepository);
-    final token = ref.watch(tokenProvider);
-    tokenExpireWrapperAuth(ref, () async {
-      final isLoggedIn = ref.watch(isLoggedInProvider);
-      final id = ref
-          .watch(idProvider)
-          .maybeWhen(data: (value) => value, orElse: () => "");
-      if (isLoggedIn && id != "" && token != "") {
-        return userNotifier..loadMe();
-      }
-    });
+    final isLoggedIn = ref.watch(isLoggedInProvider);
+    final id = ref
+        .watch(userIdProvider)
+        .maybeWhen(data: (value) => value, orElse: () => "");
+    if (isLoggedIn && id != "") {
+      return userNotifier..loadMe();
+    }
     return userNotifier;
   },
 );

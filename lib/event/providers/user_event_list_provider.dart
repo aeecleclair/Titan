@@ -3,7 +3,6 @@ import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/event/repositories/event_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class EventEventListProvider extends ListNotifier<Event> {
   final EventRepository eventRepository;
@@ -45,14 +44,12 @@ final eventEventListProvider =
     StateNotifierProvider<EventEventListProvider, AsyncValue<List<Event>>>((
       ref,
     ) {
-      final eventRepository = ref.watch(eventRepositoryProvider);
-      final userId = ref.watch(idProvider);
+      final eventRepository = EventRepository(ref);
+      final userId = ref.watch(userIdProvider);
       final provider = EventEventListProvider(eventRepository: eventRepository);
-      tokenExpireWrapperAuth(ref, () async {
-        userId.whenData((value) async {
-          provider.setId(value);
-          await provider.loadConfirmedEvent();
-        });
+      userId.whenData((value) async {
+        provider.setId(value);
+        provider.loadConfirmedEvent();
       });
       return provider;
     });

@@ -1,17 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/raffle/class/cash.dart';
 import 'package:myecl/raffle/repositories/cash_repository.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class CashProvider extends ListNotifier<Cash> {
-  final CashRepository _cashRepository = CashRepository();
+  final CashRepository _cashRepository;
   AsyncValue<List<Cash>> _cashList = const AsyncLoading();
-  CashProvider({required String token}) : super(const AsyncLoading()) {
-    _cashRepository.setToken(token);
-  }
+  CashProvider(this._cashRepository) : super(const AsyncLoading());
 
   Future<AsyncValue<List<Cash>>> loadCashList() async {
     return _cashList = await loadList(_cashRepository.getCashList);
@@ -67,10 +63,8 @@ class CashProvider extends ListNotifier<Cash> {
 
 final cashProvider =
     StateNotifierProvider<CashProvider, AsyncValue<List<Cash>>>((ref) {
-      final token = ref.watch(tokenProvider);
-      CashProvider cashProvider = CashProvider(token: token);
-      tokenExpireWrapperAuth(ref, () async {
-        await cashProvider.loadCashList();
-      });
+      final cashRepository = CashRepository(ref);
+      CashProvider cashProvider = CashProvider(cashRepository);
+      cashProvider.loadCashList();
       return cashProvider;
     });

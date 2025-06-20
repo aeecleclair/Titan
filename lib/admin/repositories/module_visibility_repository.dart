@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/class/module_visibility.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -5,6 +6,8 @@ class ModuleVisibilityRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "module-visibility/";
+
+  ModuleVisibilityRepository(super.ref);
 
   Future<List<ModuleVisibility>> getModuleVisibilityList() async {
     return List<ModuleVisibility>.from(
@@ -43,3 +46,7 @@ class ModuleVisibilityRepository extends Repository {
     return await delete("$root/account-types/$allowedAccounTypes");
   }
 }
+
+final moduleVisibilityRepositoryProvider = Provider((ref) {
+  return ModuleVisibilityRepository(ref);
+});

@@ -13,7 +13,6 @@ import 'package:myecl/tools/constants.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/loader.dart';
 import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
@@ -113,32 +112,30 @@ class SearchUser extends HookConsumerWidget {
                         descriptions: AdminTextConstants.removeGroupMember,
                         title: AdminTextConstants.deleting,
                         onYes: () async {
-                          await tokenExpireWrapper(ref, () async {
-                            Group newGroup = g[0].copyWith(
-                              members: g[0].members
-                                  .where((element) => element.id != x.id)
-                                  .toList(),
+                          Group newGroup = g[0].copyWith(
+                            members: g[0].members
+                                .where((element) => element.id != x.id)
+                                .toList(),
+                          );
+                          final value = await groupNotifier.deleteMember(
+                            newGroup,
+                            x,
+                          );
+                          if (value) {
+                            simpleGroupGroupsNotifier.setTData(
+                              newGroup.id,
+                              AsyncData([newGroup]),
                             );
-                            final value = await groupNotifier.deleteMember(
-                              newGroup,
-                              x,
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              AdminTextConstants.updatedGroup,
                             );
-                            if (value) {
-                              simpleGroupGroupsNotifier.setTData(
-                                newGroup.id,
-                                AsyncData([newGroup]),
-                              );
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                AdminTextConstants.updatedGroup,
-                              );
-                            } else {
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                AdminTextConstants.updatingError,
-                              );
-                            }
-                          });
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              AdminTextConstants.updatingError,
+                            );
+                          }
                         },
                       ),
                     );

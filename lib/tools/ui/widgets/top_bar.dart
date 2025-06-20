@@ -34,6 +34,7 @@ class TopBar extends HookConsumerWidget {
         TopBarCallback(moduleRoot: root, onMenu: onMenu, onBack: onBack),
       );
     });
+    final isRootModule = Uri.parse(QR.currentPath).pathSegments.length <= 1;
     return Column(
       children: [
         const SizedBox(height: 15),
@@ -45,7 +46,7 @@ class TopBar extends HookConsumerWidget {
                 builder: (BuildContext appBarContext) {
                   return IconButton(
                     onPressed: () {
-                      if (QR.currentPath == root) {
+                      if (isRootModule) {
                         if (animation != null) {
                           final controllerNotifier = ref.watch(
                             swipeControllerProvider(animation).notifier,
@@ -59,7 +60,7 @@ class TopBar extends HookConsumerWidget {
                       }
                     },
                     icon: HeroIcon(
-                      QR.currentPath == root
+                      isRootModule
                           ? HeroIcons.bars3BottomLeft
                           : HeroIcons.chevronLeft,
                       color: textStyle?.color ?? Colors.black,

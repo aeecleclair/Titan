@@ -7,6 +7,8 @@ class UserDetailRepository extends Repository {
   // ignore: overridden_fields
   final ext = "tombola/users";
 
+  UserDetailRepository(super.ref);
+
   Future<List<Ticket>> getTicketsListByUserId(String userId) async {
     return List<Ticket>.from(
       (await getList(

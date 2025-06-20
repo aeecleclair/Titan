@@ -11,8 +11,8 @@ import 'package:myecl/login/ui/pages/recover_password/recover_password_page.dart
 import 'package:myecl/login/ui/pages/register_page/register_page.dart'
     deferred as register_page;
 import 'package:myecl/login/ui/web/web_sign_in.dart' deferred as web_sign_in;
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:myecl/routing/middlewares/authenticated_middleware.dart';
+import 'package:myecl/routing/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LoginRouter {

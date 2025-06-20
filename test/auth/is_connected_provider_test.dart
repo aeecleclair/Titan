@@ -1,7 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/auth/providers/is_connected_provider.dart';
+import 'package:myecl/auth/providers/connection_status_provider.dart';
 
 void main() {
   group('IsConnectedProvider', () {
@@ -16,8 +16,8 @@ void main() {
 
     test('isConnectedProvider returns the correct value', () {
       final container = ProviderContainer();
-      final provider = container.read(isConnectedProvider.notifier);
-      expect(container.read(isConnectedProvider), provider.state);
+      final provider = container.read(connectionStatusProvider.notifier);
+      expect(container.read(connectionStatusProvider), provider.state);
     });
   });
 }

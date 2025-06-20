@@ -1,20 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/purchases/class/ticket.dart';
 import 'package:myecl/purchases/repositories/scanner_repository.dart';
 import 'package:myecl/purchases/repositories/user_information_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class TicketListNotifier extends ListNotifier<Ticket> {
-  final UserInformationRepository ticketRepository =
-      UserInformationRepository();
-  final ScannerRepository scannerRepository = ScannerRepository();
-  TicketListNotifier({required String token})
-    : super(const AsyncValue.loading()) {
-    ticketRepository.setToken(token);
-    scannerRepository.setToken(token);
-  }
+  final UserInformationRepository ticketRepository;
+  final ScannerRepository scannerRepository;
+  TicketListNotifier({
+    required this.ticketRepository,
+    required this.scannerRepository,
+  }) : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Ticket>>> loadTickets() async {
     return await loadList(ticketRepository.getTicketList);
@@ -45,10 +41,14 @@ class TicketListNotifier extends ListNotifier<Ticket> {
 
 final ticketListProvider =
     StateNotifierProvider<TicketListNotifier, AsyncValue<List<Ticket>>>((ref) {
-      final token = ref.watch(tokenProvider);
-      TicketListNotifier notifier = TicketListNotifier(token: token);
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadTickets();
-      });
+      final userInformationRepository = ref.watch(
+        userInformationRepositoryProvider,
+      );
+      final scannerRepository = ScannerRepository(ref);
+      TicketListNotifier notifier = TicketListNotifier(
+        ticketRepository: userInformationRepository,
+        scannerRepository: scannerRepository,
+      );
+      notifier.loadTickets();
       return notifier;
     });

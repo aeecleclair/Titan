@@ -6,6 +6,8 @@ class RaffleRepository extends Repository {
   // ignore: overridden_fields
   final ext = "tombola/raffles";
 
+  RaffleRepository(super.ref);
+
   Future<List<Raffle>> getRaffleList() async {
     return List<Raffle>.from((await getList()).map((x) => Raffle.fromJson(x)));
   }

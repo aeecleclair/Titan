@@ -6,6 +6,8 @@ class MemberRepository extends Repository {
   // ignore: overridden_fields
   final ext = "phonebook/member/";
 
+  MemberRepository(super.ref);
+
   Future<CompleteMember> getCompleteMember(String memberId) async {
     return CompleteMember.fromJson(await getOne(memberId));
   }

@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/class/group.dart';
 import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/class/simple_users.dart';
 import 'dart:convert';
@@ -12,6 +11,8 @@ class GroupRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "groups/";
+
+  GroupRepository(super.ref);
 
   Future<List<SimpleGroup>> getGroupList() async {
     return List<SimpleGroup>.from(
@@ -60,6 +61,5 @@ class GroupRepository extends Repository {
 }
 
 final groupRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return GroupRepository()..setToken(token);
+  return GroupRepository(ref);
 });

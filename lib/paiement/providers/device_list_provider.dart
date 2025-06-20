@@ -26,7 +26,7 @@ final deviceListProvider =
     StateNotifierProvider<DeviceListNotifier, AsyncValue<List<WalletDevice>>>((
       ref,
     ) {
-      final deviceListRepository = ref.watch(devicesRepositoryProvider);
+      final deviceListRepository = DevicesRepository(ref);
       return DeviceListNotifier(devicesRepository: deviceListRepository)
         ..getDeviceList();
     });

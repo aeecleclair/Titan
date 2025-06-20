@@ -26,6 +26,6 @@ class TransactionNotifier extends SingleNotifier<bool> {
 
 final transactionProvider =
     StateNotifierProvider<TransactionNotifier, AsyncValue<bool>>((ref) {
-      final transactionRepository = ref.watch(transactionsRepositoryProvider);
+      final transactionRepository = TransactionsRepository(ref);
       return TransactionNotifier(transactionRepository: transactionRepository);
     });

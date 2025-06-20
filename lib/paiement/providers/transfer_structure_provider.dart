@@ -16,7 +16,7 @@ class TransferStructureNotifier extends StateNotifier {
 }
 
 final transferStructureProvider = StateNotifierProvider((ref) {
-  final structureRepository = ref.watch(structuresRepositoryProvider);
+  final structureRepository = StructuresRepository(ref);
   final notifier = TransferStructureNotifier(
     structuresRepository: structureRepository,
   );

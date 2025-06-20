@@ -3,21 +3,29 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/exception.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:http/http.dart' as http;
+import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 
 abstract class LogoRepository extends Repository {
   static const String expiredTokenDetail = "Could not validate credentials";
 
+  LogoRepository(super.ref);
+
   Future<Uint8List> getLogo(String id, {String suffix = ""}) async {
     try {
-      final response = await http.get(
-        Uri.parse("${Repository.host}$ext$id$suffix"),
-        headers: headers,
-      );
+      final response = await tokenExpireWrapper(ref, () async {
+        final token = ref.read(tokenProvider);
+        setToken(token);
+        return http.get(
+          Uri.parse("${Repository.host}$ext$id$suffix"),
+          headers: headers,
+        );
+      });
       if (response.statusCode == 200) {
         try {
           return response.bodyBytes;
@@ -71,7 +79,11 @@ abstract class LogoRepository extends Repository {
               contentType: MediaType('image', 'jpeg'),
             ),
           );
-    final response = await request.send();
+    final response = await tokenExpireWrapper(ref, () async {
+      final token = ref.read(tokenProvider);
+      setToken(token);
+      return await request.send();
+    });
     response.stream.transform(utf8.decoder).listen((value) async {
       if (response.statusCode == 201) {
         try {
@@ -98,7 +110,11 @@ abstract class LogoRepository extends Repository {
   }
 
   Future<File> saveLogoToTemp(String path) async {
-    final response = await http.get(Uri.parse(path));
+    final response = await tokenExpireWrapper(ref, () async {
+      final token = ref.read(tokenProvider);
+      setToken(token);
+      return http.get(Uri.parse(path));
+    });
     if (response.statusCode == 200) {
       try {
         Directory tempDir = await getTemporaryDirectory();

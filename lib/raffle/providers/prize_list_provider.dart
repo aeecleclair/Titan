@@ -1,18 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/raffle/class/prize.dart';
 import 'package:myecl/raffle/class/raffle.dart';
 import 'package:myecl/raffle/providers/raffle_id_provider.dart';
 import 'package:myecl/raffle/repositories/prize_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class LotListNotifier extends ListNotifier<Prize> {
-  final LotRepository _lotRepository = LotRepository();
+  final LotRepository _lotRepository;
   late String raffleId;
-  LotListNotifier({required String token}) : super(const AsyncValue.loading()) {
-    _lotRepository.setToken(token);
-  }
+  LotListNotifier(this._lotRepository) : super(const AsyncValue.loading());
 
   void setRaffleId(String id) {
     raffleId = id;
@@ -54,14 +50,12 @@ class LotListNotifier extends ListNotifier<Prize> {
 
 final prizeListProvider =
     StateNotifierProvider<LotListNotifier, AsyncValue<List<Prize>>>((ref) {
-      final token = ref.watch(tokenProvider);
-      final notifier = LotListNotifier(token: token);
-      tokenExpireWrapperAuth(ref, () async {
-        final raffleId = ref.watch(raffleIdProvider);
-        if (raffleId != Raffle.empty().id) {
-          notifier.setRaffleId(raffleId);
-          notifier.loadPrizeList();
-        }
-      });
+      final lotRepository = LotRepository(ref);
+      final notifier = LotListNotifier(lotRepository);
+      final raffleId = ref.watch(raffleIdProvider);
+      if (raffleId != Raffle.empty().id) {
+        notifier.setRaffleId(raffleId);
+        notifier.loadPrizeList();
+      }
       return notifier;
     });

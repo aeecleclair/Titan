@@ -1,16 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/vote/class/voter.dart';
 import 'package:myecl/vote/repositories/voter_repository.dart';
 
 class VoterListNotifier extends ListNotifier<Voter> {
-  final VoterRepository _voterRepository = VoterRepository();
-  VoterListNotifier({required String token})
-    : super(const AsyncValue.loading()) {
-    _voterRepository.setToken(token);
-  }
+  final VoterRepository _voterRepository;
+  VoterListNotifier(this._voterRepository) : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Voter>>> loadVoterList() async {
     return await loadList(_voterRepository.getVoters);
@@ -32,10 +27,8 @@ class VoterListNotifier extends ListNotifier<Voter> {
 
 final voterListProvider =
     StateNotifierProvider<VoterListNotifier, AsyncValue<List<Voter>>>((ref) {
-      final token = ref.watch(tokenProvider);
-      final voterListNotifier = VoterListNotifier(token: token);
-      tokenExpireWrapperAuth(ref, () async {
-        await voterListNotifier.loadVoterList();
-      });
+      final repository = VoterRepository(ref);
+      final voterListNotifier = VoterListNotifier(repository);
+      voterListNotifier.loadVoterList();
       return voterListNotifier;
     });

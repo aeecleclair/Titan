@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/class/association_membership_simple.dart';
 import 'package:myecl/admin/class/user_association_membership.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -9,6 +8,8 @@ class AssociationMembershipRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "memberships/";
+
+  AssociationMembershipRepository(super.ref);
 
   Future<List<AssociationMembership>> getAssociationMembershipList() async {
     return List<AssociationMembership>.from(
@@ -75,6 +76,5 @@ class AssociationMembershipRepository extends Repository {
 }
 
 final associationMembershipRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return AssociationMembershipRepository()..setToken(token);
+  return AssociationMembershipRepository(ref);
 });

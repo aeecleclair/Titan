@@ -6,6 +6,8 @@ class RolesTagsRepository extends Repository {
   // ignore: overridden_fields
   final ext = "phonebook/";
 
+  RolesTagsRepository(super.ref);
+
   Future<RolesTags> getRolesTags() async {
     RolesTags rolesTags = RolesTags.fromJson(await getOne("roletags"));
     return rolesTags;

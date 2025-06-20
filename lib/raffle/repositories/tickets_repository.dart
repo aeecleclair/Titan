@@ -6,6 +6,8 @@ class TicketRepository extends Repository {
   // ignore: overridden_fields
   final ext = "tombola/tickets";
 
+  TicketRepository(super.ref);
+
   Future<Ticket> getTicket(String id) async {
     return Ticket.fromJson(await getOne("/$id"));
   }

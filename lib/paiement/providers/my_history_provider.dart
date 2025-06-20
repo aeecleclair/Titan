@@ -15,7 +15,7 @@ class MyHistoryNotifier extends ListNotifier<History> {
 
 final myHistoryProvider =
     StateNotifierProvider<MyHistoryNotifier, AsyncValue<List<History>>>((ref) {
-      final historyRepository = ref.watch(usersMeRepositoryProvider);
+      final historyRepository = UsersMeRepository(ref);
       return MyHistoryNotifier(usersMeRepository: historyRepository)
         ..getHistory();
     });

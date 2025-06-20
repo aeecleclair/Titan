@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/booking/repositories/rooms_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class RoomListNotifier extends ListNotifier<Room> {
   final RoomRepository roomRepository;
@@ -39,8 +38,6 @@ final roomListProvider =
     StateNotifierProvider<RoomListNotifier, AsyncValue<List<Room>>>((ref) {
       final roomRepository = ref.watch(roomRepositoryProvider);
       final provider = RoomListNotifier(roomRepository: roomRepository);
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadRooms();
-      });
+      provider.loadRooms();
       return provider;
     });

@@ -17,7 +17,6 @@ import 'package:myecl/loan/ui/pages/loan_group_page/number_selected_text.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/search_result.dart';
 import 'package:myecl/loan/ui/pages/loan_group_page/start_date_entry.dart';
 import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
 import 'package:myecl/tools/ui/widgets/text_entry.dart';
 import 'package:myecl/user/providers/user_list_provider.dart';
@@ -82,16 +81,12 @@ class AddEditLoanPage extends HookConsumerWidget {
                     const SizedBox(height: 20),
                     TextEntry(
                       label: LoanTextConstants.borrower,
-                      onChanged: (value) {
-                        tokenExpireWrapper(ref, () async {
-                          if (queryController.text.isNotEmpty) {
-                            await usersNotifier.filterUsers(
-                              queryController.text,
-                            );
-                          } else {
-                            usersNotifier.clear();
-                          }
-                        });
+                      onChanged: (value) async {
+                        if (queryController.text.isNotEmpty) {
+                          await usersNotifier.filterUsers(queryController.text);
+                        } else {
+                          usersNotifier.clear();
+                        }
                       },
                       canBeEmpty: false,
                       controller: queryController,

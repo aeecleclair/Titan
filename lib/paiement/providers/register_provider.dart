@@ -14,6 +14,6 @@ class RegisterNotifier extends SingleNotifier<bool> {
 
 final registerProvider =
     StateNotifierProvider<RegisterNotifier, AsyncValue<bool>>((ref) {
-      final registerRepository = ref.watch(usersMeRepositoryProvider);
+      final registerRepository = UsersMeRepository(ref);
       return RegisterNotifier(usersMeRepository: registerRepository);
     });

@@ -26,7 +26,7 @@ final sellerHistoryProvider =
     StateNotifierProvider<SellerHistoryNotifier, AsyncValue<List<History>>>((
       ref,
     ) {
-      final storesRepository = ref.watch(storesRepositoryProvider);
+      final storesRepository = StoresRepository(ref);
       final selectedStore = ref.watch(selectedStoreProvider);
       final selectedInterval = ref.watch(selectedIntervalProvider);
       if (selectedStore.id != Store.empty().id) {

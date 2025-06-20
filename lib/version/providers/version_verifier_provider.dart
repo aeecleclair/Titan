@@ -15,7 +15,7 @@ class VersionVerifierNotifier extends SingleNotifier<Version> {
 
 final versionVerifierProvider =
     StateNotifierProvider<VersionVerifierNotifier, AsyncValue<Version>>((ref) {
-      final versionRepository = ref.watch(versionRepositoryProvider);
+      final versionRepository = VersionRepository(ref);
       final notifier = VersionVerifierNotifier(
         versionRepository: versionRepository,
       );

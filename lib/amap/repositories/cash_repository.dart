@@ -1,12 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/cash.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class CashRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "amap/users/";
+
+  CashRepository(super.ref);
 
   Future<List<Cash>> getCashList() async {
     return List<Cash>.from(
@@ -30,6 +31,5 @@ class CashRepository extends Repository {
 }
 
 final cashRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return CashRepository()..setToken(token);
+  return CashRepository(ref);
 });

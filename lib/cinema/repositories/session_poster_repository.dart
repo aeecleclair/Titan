@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/repository/logo_repository.dart';
 
@@ -11,6 +10,8 @@ class SessionPosterRepository extends LogoRepository {
   @override
   // ignore: overridden_fields
   final ext = 'cinema/sessions/';
+
+  SessionPosterRepository(super.ref);
 
   Future<Image> getSessionLogo(String id) async {
     final bytes = await getLogo(id, suffix: "/poster");
@@ -29,6 +30,5 @@ class SessionPosterRepository extends LogoRepository {
 }
 
 final sessionPosterRepository = Provider<SessionPosterRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return SessionPosterRepository()..setToken(token);
+  return SessionPosterRepository(ref);
 });

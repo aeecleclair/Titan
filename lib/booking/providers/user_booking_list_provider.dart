@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/booking/class/booking.dart';
 import 'package:myecl/booking/repositories/booking_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserBookingListProvider extends ListNotifier<Booking> {
   final BookingRepository bookingRepository;
@@ -44,8 +43,6 @@ final userBookingListProvider =
       final provider = UserBookingListProvider(
         bookingRepository: bookingRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadUserBookings();
-      });
+      provider.loadUserBookings();
       return provider;
     });

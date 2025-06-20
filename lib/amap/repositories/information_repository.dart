@@ -1,12 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/information.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class InformationRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "amap/information";
+
+  InformationRepository(super.ref);
 
   Future<Information> getInformation() async {
     return Information.fromJson(await getOne(""));
@@ -26,6 +27,5 @@ class InformationRepository extends Repository {
 }
 
 final informationRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return InformationRepository()..setToken(token);
+  return InformationRepository(ref);
 });

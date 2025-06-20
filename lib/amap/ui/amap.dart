@@ -17,7 +17,7 @@ class AmapTemplate extends StatelessWidget {
           TopBar(
             title: AMAPTextConstants.amap,
             root: AmapRouter.root,
-            rightIcon: QR.currentPath == AmapRouter.root
+            rightIcon: Uri.parse(QR.currentPath).path == AmapRouter.root
                 ? IconButton(
                     onPressed: () {
                       QR.to(AmapRouter.root + AmapRouter.presentation);

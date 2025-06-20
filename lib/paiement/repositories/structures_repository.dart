@@ -1,5 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/paiement/class/store.dart';
 import 'package:myecl/paiement/class/structure.dart';
 import 'package:myecl/tools/repository/repository.dart';
@@ -8,6 +6,8 @@ class StructuresRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = 'myeclpay/structures';
+
+  StructuresRepository(super.ref);
 
   Future<Structure> createStructure(Structure structure) async {
     return Structure.fromJson(await create(structure.toJson()));
@@ -50,8 +50,3 @@ class StructuresRepository extends Repository {
     );
   }
 }
-
-final structuresRepositoryProvider = Provider<StructuresRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return StructuresRepository()..setToken(token);
-});

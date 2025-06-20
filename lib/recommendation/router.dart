@@ -9,9 +9,9 @@ import 'package:myecl/recommendation/ui/pages/information_page.dart'
     deferred as information_page;
 import 'package:myecl/recommendation/ui/pages/add_edit_page.dart'
     deferred as add_edit_page;
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:myecl/routing/middlewares/admin_middleware.dart';
+import 'package:myecl/routing/middlewares/authenticated_middleware.dart';
+import 'package:myecl/routing/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RecommendationRouter {

@@ -1,12 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class DeliveryProductListRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "amap/deliveries/";
+
+  DeliveryProductListRepository(super.ref);
 
   Future<Product> createProduct(String deliveryId, Product product) async {
     return Product.fromJson(
@@ -28,6 +29,5 @@ class DeliveryProductListRepository extends Repository {
 }
 
 final deliveryProductListRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return DeliveryProductListRepository()..setToken(token);
+  return DeliveryProductListRepository(ref);
 });

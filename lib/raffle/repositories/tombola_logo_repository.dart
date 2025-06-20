@@ -9,6 +9,8 @@ class TombolaLogoRepository extends LogoRepository {
   // ignore: overridden_fields
   final ext = 'tombola/raffles/';
 
+  TombolaLogoRepository(super.ref);
+
   Future<Image> getTombolaLogo(String id) async {
     final uint8List = await getLogo(id, suffix: "/logo");
     if (uint8List.isEmpty) {

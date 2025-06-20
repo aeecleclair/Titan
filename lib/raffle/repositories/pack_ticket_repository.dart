@@ -6,6 +6,8 @@ class PackTicketRepository extends Repository {
   // ignore: overridden_fields
   final ext = "tombola/pack_tickets";
 
+  PackTicketRepository(super.ref);
+
   Future<PackTicket> getPackTicket(String id) async {
     return PackTicket.fromJson(await getOne(id));
   }

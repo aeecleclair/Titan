@@ -1,23 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/raffle/class/raffle.dart';
 import 'package:myecl/raffle/class/pack_ticket.dart';
 import 'package:myecl/raffle/providers/raffle_id_provider.dart';
 import 'package:myecl/raffle/repositories/raffle_detail_repository.dart';
 import 'package:myecl/raffle/repositories/pack_ticket_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class PackTicketsListNotifier extends ListNotifier<PackTicket> {
-  final PackTicketRepository _packTicketsRepository = PackTicketRepository();
-  final RaffleDetailRepository _raffleDetailRepository =
-      RaffleDetailRepository();
+  final PackTicketRepository _packTicketsRepository;
+  final RaffleDetailRepository _raffleDetailRepository;
   late String raffleId;
-  PackTicketsListNotifier({required String token})
-    : super(const AsyncValue.loading()) {
-    _packTicketsRepository.setToken(token);
-    _raffleDetailRepository.setToken(token);
-  }
+  PackTicketsListNotifier(
+    this._packTicketsRepository,
+    this._raffleDetailRepository,
+  ) : super(const AsyncValue.loading());
 
   void setRaffleId(String id) {
     raffleId = id;
@@ -57,14 +53,16 @@ final packTicketListProvider =
       PackTicketsListNotifier,
       AsyncValue<List<PackTicket>>
     >((ref) {
-      final token = ref.watch(tokenProvider);
-      final notifier = PackTicketsListNotifier(token: token);
-      tokenExpireWrapperAuth(ref, () async {
-        final raffleId = ref.watch(raffleIdProvider);
-        if (raffleId != Raffle.empty().id) {
-          notifier.setRaffleId(raffleId);
-          notifier.loadPackTicketList();
-        }
-      });
+      final packTicketsRepository = PackTicketRepository(ref);
+      final raffleDetailRepository = RaffleDetailRepository(ref);
+      final notifier = PackTicketsListNotifier(
+        packTicketsRepository,
+        raffleDetailRepository,
+      );
+      final raffleId = ref.watch(raffleIdProvider);
+      if (raffleId != Raffle.empty().id) {
+        notifier.setRaffleId(raffleId);
+        notifier.loadPackTicketList();
+      }
       return notifier;
     });

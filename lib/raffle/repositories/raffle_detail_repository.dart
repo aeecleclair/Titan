@@ -9,6 +9,8 @@ class RaffleDetailRepository extends Repository {
   // ignore: overridden_fields
   final ext = "tombola/raffle/";
 
+  RaffleDetailRepository(super.ref);
+
   Future<List<PackTicket>> getPackTicketListFromRaffle(String raffleId) async {
     return List<PackTicket>.from(
       (await getList(

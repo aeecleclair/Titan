@@ -1,5 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/vote/class/section.dart';
 
@@ -7,6 +5,8 @@ class SectionRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "campaign/sections";
+
+  SectionRepository(super.ref);
 
   Future<Section> getSection(String sectionId) async {
     return Section.fromJson(await getOne("/$sectionId"));
@@ -28,8 +28,3 @@ class SectionRepository extends Repository {
     return (await getList()).map((e) => Section.fromJson(e)).toList();
   }
 }
-
-final sectionRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return SectionRepository()..setToken(token);
-});

@@ -1,5 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/paiement/class/history.dart';
 import 'package:myecl/paiement/class/user_store.dart';
 import 'package:myecl/paiement/class/wallet.dart';
@@ -9,6 +7,8 @@ class UsersMeRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = 'myeclpay/users/me/';
+
+  UsersMeRepository(super.ref);
 
   Future<bool> register() async {
     return await create({}, suffix: 'register');
@@ -30,8 +30,3 @@ class UsersMeRepository extends Repository {
     return Wallet.fromJson(await getOne("wallet"));
   }
 }
-
-final usersMeRepositoryProvider = Provider<UsersMeRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return UsersMeRepository()..setToken(token);
-});

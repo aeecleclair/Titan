@@ -7,8 +7,6 @@ final phCoverProvider = FutureProvider.family<Uint8List, String>((
   ref,
   id,
 ) async {
-  final PhCoverRepository phPdfFirstPageRepository = ref.watch(
-    phCoverRepositoryProvider,
-  );
+  final PhCoverRepository phPdfFirstPageRepository = PhCoverRepository(ref);
   return await phPdfFirstPageRepository.getPhPdfFirstPage(id);
 });

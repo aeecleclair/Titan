@@ -11,9 +11,9 @@ import 'package:myecl/event/ui/pages/event_pages/add_edit_event_page.dart'
     deferred as add_edit_event_page;
 import 'package:myecl/event/ui/pages/main_page/main_page.dart'
     deferred as main_page;
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:myecl/routing/middlewares/admin_middleware.dart';
+import 'package:myecl/routing/middlewares/authenticated_middleware.dart';
+import 'package:myecl/routing/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventRouter {

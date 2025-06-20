@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/cinema/class/session.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -7,6 +6,8 @@ class SessionRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = 'cinema/sessions';
+
+  SessionRepository(super.ref);
 
   Future<List<Session>> getAllSessions() async {
     return (await getList()).map((e) => Session.fromJson(e)).toList();
@@ -30,6 +31,5 @@ class SessionRepository extends Repository {
 }
 
 final sessionRepositoryProvider = Provider<SessionRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return SessionRepository()..setToken(token);
+  return SessionRepository(ref);
 });

@@ -5,17 +5,13 @@ import 'package:myecl/raffle/class/tickets.dart';
 import 'package:myecl/raffle/repositories/tickets_repository.dart';
 import 'package:myecl/raffle/repositories/user_tickets_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserTicketListNotifier extends ListNotifier<Ticket> {
-  final UserDetailRepository _userDetailRepository = UserDetailRepository();
-  final TicketRepository _ticketsRepository = TicketRepository();
+  final UserDetailRepository _userDetailRepository;
+  final TicketRepository _ticketsRepository;
   late String userId;
-  UserTicketListNotifier({required String token})
-    : super(const AsyncValue.loading()) {
-    _userDetailRepository.setToken(token);
-    _ticketsRepository.setToken(token);
-  }
+  UserTicketListNotifier(this._userDetailRepository, this._ticketsRepository)
+    : super(const AsyncValue.loading());
 
   void setId(String id) {
     userId = id;
@@ -39,14 +35,16 @@ final userTicketListProvider =
     StateNotifierProvider<UserTicketListNotifier, AsyncValue<List<Ticket>>>((
       ref,
     ) {
-      final token = ref.watch(tokenProvider);
-      UserTicketListNotifier notifier = UserTicketListNotifier(token: token);
-      tokenExpireWrapperAuth(ref, () async {
-        final userId = ref.watch(idProvider);
-        userId.whenData((value) async {
-          notifier.setId(value);
-          await notifier.loadTicketList();
-        });
+      final userDetailRepository = UserDetailRepository(ref);
+      final ticketsRepository = TicketRepository(ref);
+      UserTicketListNotifier notifier = UserTicketListNotifier(
+        userDetailRepository,
+        ticketsRepository,
+      );
+      final userId = ref.watch(userIdProvider);
+      userId.whenData((value) async {
+        notifier.setId(value);
+        notifier.loadTicketList();
       });
       return notifier;
     });

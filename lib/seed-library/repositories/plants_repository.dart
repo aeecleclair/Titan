@@ -1,5 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/seed-library/class/plant_complete.dart';
 import 'package:myecl/seed-library/class/plant_creation.dart';
 import 'package:myecl/seed-library/class/plant_simple.dart';
@@ -9,6 +7,8 @@ class PlantsRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "seed_library/plants/";
+
+  PlantsRepository(super.ref);
 
   Future<List<PlantSimple>> getPlantSimplelist() async {
     return List<PlantSimple>.from(
@@ -54,8 +54,3 @@ class PlantsRepository extends Repository {
     return PlantSimple.fromJson(await create(plants.toJson()));
   }
 }
-
-final plantsRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return PlantsRepository()..setToken(token);
-});

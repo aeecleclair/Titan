@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/recommendation/class/recommendation.dart';
 import 'package:myecl/recommendation/repositories/recommendation_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class RecommendationListNotifier extends ListNotifier<Recommendation> {
   final RecommendationRepository recommendationRepository;
@@ -53,8 +52,6 @@ final recommendationListProvider =
       final provider = RecommendationListNotifier(
         recommendationRepository: recommendatioRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadRecommendation();
-      });
+      provider.loadRecommendation();
       return provider;
     });

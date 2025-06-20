@@ -1,5 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 import 'package:myecl/user/class/simple_users.dart';
 
@@ -7,6 +5,8 @@ class UserListRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "users/";
+
+  UserListRepository(super.ref);
 
   Future<List<SimpleUser>> getAllUsers() async {
     return List<SimpleUser>.from(
@@ -38,8 +38,3 @@ class UserListRepository extends Repository {
     );
   }
 }
-
-final userListRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return UserListRepository()..setToken(token);
-});

@@ -14,6 +14,6 @@ class SectionVoteCountNotifier extends SingleNotifier<int> {
 
 final sectionVoteCountProvider =
     StateNotifierProvider<SectionVoteCountNotifier, AsyncValue<int>>((ref) {
-      final repository = ref.watch(sectionVoteCountRepositoryProvider);
+      final repository = SectionVoteCountRepository(ref);
       return SectionVoteCountNotifier(repository: repository);
     });

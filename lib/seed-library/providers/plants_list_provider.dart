@@ -3,7 +3,6 @@ import 'package:myecl/seed-library/class/plant_creation.dart';
 import 'package:myecl/seed-library/class/plant_simple.dart';
 import 'package:myecl/seed-library/repositories/plants_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class PlantListNotifier extends ListNotifier<PlantSimple> {
   final PlantsRepository plantsRepository;
@@ -62,13 +61,11 @@ final plantListProvider =
     StateNotifierProvider<PlantListNotifier, AsyncValue<List<PlantSimple>>>((
       ref,
     ) {
-      final plantRepository = ref.watch(plantsRepositoryProvider);
+      final plantRepository = PlantsRepository(ref);
       PlantListNotifier provider = PlantListNotifier(
         plantsRepository: plantRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadPlants();
-      });
+      provider.loadPlants();
       return provider;
     });
 
@@ -81,13 +78,11 @@ final myPlantListProvider =
     StateNotifierProvider<PlantListNotifier, AsyncValue<List<PlantSimple>>>((
       ref,
     ) {
-      final plantRepository = ref.watch(plantsRepositoryProvider);
+      final plantRepository = PlantsRepository(ref);
       PlantListNotifier provider = PlantListNotifier(
         plantsRepository: plantRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadMyPlants();
-      });
+      provider.loadMyPlants();
       return provider;
     });
 

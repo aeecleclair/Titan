@@ -7,6 +7,9 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
   Future<AsyncValue<List<T>>> loadList(Future<List<T>> Function() f) async {
     try {
       final data = await f();
+      if (!mounted) {
+        return AsyncValue.error("Component unmounted", StackTrace.current);
+      }
       state = AsyncValue.data(data);
       return state;
     } catch (e) {

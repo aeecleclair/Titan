@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/admin/class/simple_group.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 import 'package:myecl/user/class/simple_users.dart';
 import 'package:myecl/user/repositories/user_list_repository.dart';
 
@@ -33,12 +32,10 @@ final userList =
     StateNotifierProvider<UserListNotifier, AsyncValue<List<SimpleUser>>>((
       ref,
     ) {
-      final userListRepository = ref.watch(userListRepositoryProvider);
+      final userListRepository = UserListRepository(ref);
       UserListNotifier userListNotifier = UserListNotifier(
         userListRepository: userListRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        userListNotifier.clear();
-      });
+      userListNotifier.clear();
       return userListNotifier;
     });

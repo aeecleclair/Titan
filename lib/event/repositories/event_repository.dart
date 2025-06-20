@@ -1,5 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/event/class/event.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -7,6 +5,8 @@ class EventRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "calendar/events/";
+
+  EventRepository(super.ref);
 
   Future<List<Event>> getAllEvent() async {
     return List<Event>.from((await getList()).map((x) => Event.fromJson(x)));
@@ -48,8 +48,3 @@ class EventRepository extends Repository {
     return await delete(id);
   }
 }
-
-final eventRepositoryProvider = Provider<EventRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return EventRepository()..setToken(token);
-});

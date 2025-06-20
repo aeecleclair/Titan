@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/booking/class/room.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -7,6 +6,8 @@ class RoomRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = 'booking/rooms';
+
+  RoomRepository(super.ref);
 
   Future<List<Room>> getRoomList() async {
     return List<Room>.from((await getList()).map((x) => Room.fromJson(x)));
@@ -26,6 +27,5 @@ class RoomRepository extends Repository {
 }
 
 final roomRepositoryProvider = Provider<RoomRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return RoomRepository()..setToken(token);
+  return RoomRepository(ref);
 });

@@ -21,9 +21,9 @@ import 'package:myecl/paiement/ui/pages/store_stats_page/store_stats_page.dart'
     deferred as store_stats_page;
 import 'package:myecl/paiement/ui/pages/transfer_structure_page/transfer_structure_page.dart'
     deferred as transfer_structure_page;
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:myecl/routing/middlewares/admin_middleware.dart';
+import 'package:myecl/routing/middlewares/authenticated_middleware.dart';
+import 'package:myecl/routing/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PaymentRouter {

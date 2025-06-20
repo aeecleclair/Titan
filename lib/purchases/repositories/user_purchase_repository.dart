@@ -6,6 +6,8 @@ class UserPurchaseRepository extends Repository {
   // ignore: overridden_fields
   final ext = "cdr/me/";
 
+  UserPurchaseRepository(super.ref);
+
   Future<List<Purchase>> getPurchaseList() async {
     return List<Purchase>.from(
       (await getList(suffix: "purchases/")).map((x) => Purchase.fromJson(x)),

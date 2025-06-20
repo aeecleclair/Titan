@@ -7,6 +7,7 @@ class AssociationPictureRepository extends LogoRepository {
   @override
   // ignore: overridden_fields
   final ext = 'phonebook/associations/';
+  AssociationPictureRepository(super.ref);
 
   Future<Image> getAssociationPicture(String associationId) async {
     final uint8List = await getLogo(associationId, suffix: "/picture");

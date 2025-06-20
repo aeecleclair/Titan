@@ -7,6 +7,9 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
   Future<AsyncValue<T>> load(Future<T> Function() f) async {
     try {
       final data = await f();
+      if (!mounted) {
+        return AsyncValue.error("Component unmounted", StackTrace.current);
+      }
       state = AsyncValue.data(data);
       return state;
     } catch (e) {

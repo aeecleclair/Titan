@@ -1,5 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/paiement/class/history.dart';
 import 'package:myecl/paiement/class/qr_code_data.dart';
 import 'package:myecl/paiement/class/store.dart';
@@ -11,6 +9,8 @@ class StoresRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = 'myeclpay/stores';
+
+  StoresRepository(super.ref);
 
   Future<bool> updateStore(Store store) async {
     return await update(store.toJson(), "/${store.id}");
@@ -55,8 +55,3 @@ class StoresRepository extends Repository {
     return response["success"] == true;
   }
 }
-
-final storesRepositoryProvider = Provider<StoresRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return StoresRepository()..setToken(token);
-});

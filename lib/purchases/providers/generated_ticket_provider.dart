@@ -1,10 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/purchases/class/ticket_generator.dart';
 
 class TicketGeneratorNotifier extends StateNotifier<TicketGenerator> {
-  TicketGeneratorNotifier({required String token})
-    : super(TicketGenerator.empty());
+  TicketGeneratorNotifier() : super(TicketGenerator.empty());
 
   void setTicketGenerator(TicketGenerator i) {
     state = i;
@@ -13,7 +11,6 @@ class TicketGeneratorNotifier extends StateNotifier<TicketGenerator> {
 
 final ticketGeneratorProvider =
     StateNotifierProvider<TicketGeneratorNotifier, TicketGenerator>((ref) {
-      final token = ref.watch(tokenProvider);
-      TicketGeneratorNotifier notifier = TicketGeneratorNotifier(token: token);
+      TicketGeneratorNotifier notifier = TicketGeneratorNotifier();
       return notifier;
     });

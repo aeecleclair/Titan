@@ -11,11 +11,11 @@ import 'package:myecl/home/router.dart';
 import 'package:myecl/home/ui/home.dart' deferred as home_page;
 import 'package:myecl/loan/router.dart';
 import 'package:myecl/login/router.dart';
-import 'package:myecl/others/ui/loading_page.dart' deferred as loading_page;
-import 'package:myecl/others/ui/no_internet_page.dart'
+import 'package:myecl/routing/ui/loading_page.dart' deferred as loading_page;
+import 'package:myecl/routing/ui/no_internet_page.dart'
     deferred as no_internet_page;
-import 'package:myecl/others/ui/no_module.dart' deferred as no_module_page;
-import 'package:myecl/others/ui/update_page.dart' deferred as update_page;
+import 'package:myecl/routing/ui/no_module.dart' deferred as no_module_page;
+import 'package:myecl/routing/ui/update_page.dart' deferred as update_page;
 import 'package:myecl/paiement/router.dart';
 import 'package:myecl/phonebook/router.dart';
 import 'package:myecl/ph/router.dart';
@@ -24,8 +24,9 @@ import 'package:myecl/recommendation/router.dart';
 import 'package:myecl/seed-library/router.dart';
 import 'package:myecl/settings/router.dart';
 import 'package:myecl/raffle/router.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:myecl/routing/middlewares/authenticated_middleware.dart';
+import 'package:myecl/routing/middlewares/deferred_middleware.dart';
+import 'package:myecl/routing/middlewares/root_middleware.dart';
 import 'package:myecl/vote/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -46,6 +47,7 @@ class AppRouter {
         path: root,
         builder: () => home_page.HomePage(),
         middleware: [
+          RootMiddleware(ref),
           AuthenticatedMiddleware(ref),
           DeferredLoadingMiddleware(home_page.loadLibrary),
         ],

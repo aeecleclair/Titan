@@ -1,12 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
 class OrderListRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "amap/";
+
+  OrderListRepository(super.ref);
 
   Future<Order> createOrder(Order order) async {
     return Order.fromJson(await create(order.toJson(), suffix: "orders"));
@@ -36,6 +37,5 @@ class OrderListRepository extends Repository {
 }
 
 final orderListRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return OrderListRepository()..setToken(token);
+  return OrderListRepository(ref);
 });

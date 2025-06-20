@@ -6,6 +6,8 @@ class ProductRepository extends Repository {
   // ignore: overridden_fields
   final ext = "cdr/sellers/";
 
+  ProductRepository(super.ref);
+
   Future<List<Product>> getProductList(String sellerId) async {
     return List<Product>.from(
       (await getList(

@@ -3,7 +3,6 @@ import 'package:myecl/amap/class/cash.dart';
 import 'package:myecl/amap/repositories/amap_user_repository.dart';
 import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
 
 class UserCashNotifier extends SingleNotifier<Cash> {
   final AmapUserRepository amapUserRepository;
@@ -41,11 +40,7 @@ final userAmountProvider =
       UserCashNotifier userCashNotifier = UserCashNotifier(
         amapUserRepository: amapUserRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        final userId = ref.watch(idProvider);
-        userId.whenData(
-          (value) async => await userCashNotifier.loadCashByUser(value),
-        );
-      });
+      final userId = ref.watch(userIdProvider);
+      userId.whenData((value) async => userCashNotifier.loadCashByUser(value));
       return userCashNotifier;
     });

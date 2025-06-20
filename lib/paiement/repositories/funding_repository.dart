@@ -1,5 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/paiement/class/funding_url.dart';
 import 'package:myecl/paiement/class/init_info.dart';
 import 'package:myecl/paiement/class/transfert.dart';
@@ -10,6 +8,8 @@ class FundingRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'myeclpay/transfer/';
 
+  FundingRepository(super.ref);
+
   Future getAdminPaymentUrl(Transfer transfer) async {
     return await create(transfer.toJson(), suffix: "admin");
   }
@@ -18,8 +18,3 @@ class FundingRepository extends Repository {
     return FundingUrl.fromJson(await create(info.toJson(), suffix: "init"));
   }
 }
-
-final fundingRepositoryProvider = Provider<FundingRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return FundingRepository()..setToken(token);
-});

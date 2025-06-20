@@ -3,8 +3,6 @@ import 'package:myecl/admin/class/account_type.dart';
 import 'package:myecl/admin/repositories/account_type_repository.dart';
 import 'package:myecl/tools/providers/list_notifier.dart';
 
-import 'package:myecl/tools/token_expire_wrapper.dart';
-
 class AccountTypesNotifier extends ListNotifier<AccountType> {
   final AccountTypeRepository accountTypeRepository;
   AccountTypesNotifier({required this.accountTypeRepository})
@@ -23,8 +21,6 @@ final allAccountTypesListProvider =
       AccountTypesNotifier provider = AccountTypesNotifier(
         accountTypeRepository: accountTypeRepository,
       );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadAccountTypes();
-      });
+      provider.loadAccountTypes();
       return provider;
     });

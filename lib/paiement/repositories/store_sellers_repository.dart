@@ -1,5 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
 import 'package:myecl/paiement/class/seller.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -7,6 +5,8 @@ class SellerStoreRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = 'myeclpay/stores';
+
+  SellerStoreRepository(super.ref);
 
   Future<Seller> createSeller(String storeId, Seller seller) async {
     return Seller.fromJson(
@@ -34,8 +34,3 @@ class SellerStoreRepository extends Repository {
     return await update(seller.toJson(), "/$storeId/sellers/$userId");
   }
 }
-
-final sellerStoreRepositoryProvider = Provider<SellerStoreRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return SellerStoreRepository()..setToken(token);
-});

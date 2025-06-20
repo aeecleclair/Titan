@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/tools/repository/repository.dart';
 
@@ -5,6 +6,8 @@ class AdvertRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = 'advert/';
+
+  AdvertRepository(super.ref);
 
   Future<List<Advert>> getAllAdvert() async {
     return (await getList(
@@ -28,3 +31,7 @@ class AdvertRepository extends Repository {
     return await delete("adverts/$id");
   }
 }
+
+final advertRepositoryProvider = Provider((ref) {
+  return AdvertRepository(ref);
+});

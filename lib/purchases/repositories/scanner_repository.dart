@@ -7,6 +7,8 @@ class ScannerRepository extends Repository {
   // ignore: overridden_fields
   final ext = "cdr/sellers/";
 
+  ScannerRepository(super.ref);
+
   Future<Ticket> scanTicket(
     String sellerId,
     String productId,
