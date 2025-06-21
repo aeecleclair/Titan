@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/room_list_provider.dart';
+import 'package:myecl/service/providers/room_list_provider.dart';
 import 'package:myecl/event/ui/event.dart';
 import 'package:myecl/event/ui/pages/event_pages/checkbox_entry.dart';
 import 'package:myecl/event/class/event.dart';
