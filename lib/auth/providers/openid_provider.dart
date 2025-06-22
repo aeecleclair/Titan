@@ -7,7 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
-import 'package:myecl/auth/providers/is_connected_provider.dart';
+import 'package:myecl/auth/class/auth_request.dart';
+import 'package:myecl/auth/class/auth_token.dart';
+import 'package:myecl/auth/providers/connection_status_provider.dart';
 import 'package:myecl/auth/repository/openid_repository.dart';
 import 'package:myecl/tools/cache/cache_manager.dart';
 import 'package:myecl/tools/functions.dart';
@@ -16,62 +18,59 @@ import 'dart:convert';
 import 'package:universal_html/html.dart' as html;
 
 final authTokenProvider =
-    StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
-      (ref) {
-        OpenIdTokenProvider openIdTokenProvider = OpenIdTokenProvider();
-        final isConnected = ref.watch(isConnectedProvider);
-        if (isConnected) {
-          openIdTokenProvider.getTokenFromStorage();
-        }
-        return openIdTokenProvider;
-      },
-    );
+    StateNotifierProvider<AuthNotifier, AsyncValue<AuthToken>>((ref) {
+      final authNotifier = AuthNotifier(
+        appAuth: FlutterAppAuth(),
+        secureStorage: FlutterSecureStorage(),
+        cacheManager: CacheManager(),
+        openIdRepository: OpenIdRepository(),
+      );
+      final isOnline = ref.watch(connectionStatusProvider);
+      if (isOnline) {
+        authNotifier.refreshAccessToken();
+      }
+      return authNotifier;
+    });
 
-class IsLoggedInProvider extends StateNotifier<bool> {
-  IsLoggedInProvider(super.b);
-
-  void refresh(AsyncValue<Map<String, String>> token) {
-    state = token.maybeWhen(
-      data: (tokens) => tokens["token"] == ""
-          ? false
-          : !JwtDecoder.isExpired(tokens["token"] as String),
-      orElse: () => false,
-    );
-  }
-}
-
-class IsCachingProvider extends StateNotifier<bool> {
-  IsCachingProvider(super.b);
+class IsCachingNotifier extends StateNotifier<bool> {
+  IsCachingNotifier(super.b);
 
   void set(bool b) {
     state = b;
   }
 }
 
-final isCachingProvider = StateNotifierProvider<IsCachingProvider, bool>((ref) {
-  final IsCachingProvider isCachingProvider = IsCachingProvider(false);
+final isCachingProvider = StateNotifierProvider<IsCachingNotifier, bool>((ref) {
+  final IsCachingNotifier isCachingProvider = IsCachingNotifier(false);
 
-  final isConnected = ref.watch(isConnectedProvider);
-  CacheManager().readCache("id").then((value) {
-    isCachingProvider.set(!isConnected && value != "");
-  });
+  final isConnected = ref.watch(connectionStatusProvider);
+  ref
+      .read(authTokenProvider.notifier)
+      .cacheManager
+      .readCache(AuthNotifier.userIdName)
+      .then((value) {
+        isCachingProvider.set(!isConnected && value != "");
+      });
   return isCachingProvider;
 });
 
-final isLoggedInProvider = StateNotifierProvider<IsLoggedInProvider, bool>((
-  ref,
-) {
-  final IsLoggedInProvider isLoggedInProvider = IsLoggedInProvider(false);
+final refreshTokenProvider = FutureProvider<bool>((ref) {
+  final authNotifier = ref.read(authTokenProvider.notifier);
+  return authNotifier.refreshAccessToken();
+});
 
-  final isConnected = ref.watch(isConnectedProvider);
+final isLoggedInProvider = Provider<bool>((ref) {
   final authToken = ref.watch(authTokenProvider);
   final isCaching = ref.watch(isCachingProvider);
-  if (isConnected) {
-    isLoggedInProvider.refresh(authToken);
-  } else if (isCaching) {
-    return IsLoggedInProvider(true);
+  if (isCaching) {
+    return true;
   }
-  return isLoggedInProvider;
+  return authToken.maybeWhen(
+    data: (authToken) => authToken.accessToken == ""
+        ? false
+        : !JwtDecoder.isExpired(authToken.accessToken),
+    orElse: () => false,
+  );
 });
 
 final loadingProvider = FutureProvider<bool>((ref) {
@@ -80,284 +79,269 @@ final loadingProvider = FutureProvider<bool>((ref) {
       ref
           .watch(authTokenProvider)
           .when(
-            data: (tokens) =>
-                tokens["token"] != "" && ref.watch(isLoggedInProvider),
+            data: (authToken) =>
+                authToken.accessToken != "" && ref.watch(isLoggedInProvider),
             error: (e, s) => false,
             loading: () => true,
           );
 });
 
-final idProvider = FutureProvider<String>((ref) {
-  final cacheManager = CacheManager();
+final userIdProvider = FutureProvider<String>((ref) {
+  final cacheManager = ref.read(authTokenProvider.notifier).cacheManager;
   return ref
       .watch(authTokenProvider)
       .when(
-        data: (tokens) {
-          final id = tokens["token"] == ""
+        data: (authToken) {
+          final id = authToken.accessToken == ""
               ? ""
-              : JwtDecoder.decode(tokens["token"] as String)["sub"];
-          cacheManager.writeCache("id", id);
+              : JwtDecoder.decode(authToken.accessToken)["sub"];
+          cacheManager.writeCache(AuthNotifier.userIdName, id);
           return id;
         },
         error: (e, s) => "",
-        loading: () => cacheManager.readCache("id"),
+        loading: () => cacheManager.readCache(AuthNotifier.userIdName),
       );
 });
 
 final tokenProvider = Provider((ref) {
   return ref
       .watch(authTokenProvider)
-      .maybeWhen(data: (tokens) => tokens["token"] as String, orElse: () => "");
+      .maybeWhen(data: (authToken) => authToken.accessToken, orElse: () => "");
 });
 
-class OpenIdTokenProvider
-    extends StateNotifier<AsyncValue<Map<String, String>>> {
-  FlutterAppAuth appAuth = const FlutterAppAuth();
-  final CacheManager cacheManager = CacheManager();
-  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
-  final Base64Codec base64 = const Base64Codec.urlSafe();
-  final OpenIdRepository openIdRepository = OpenIdRepository();
-  final String tokenName = "my_ecl_auth_token";
-  final String clientId = "Titan";
-  final String tokenKey = "token";
-  final String refreshTokenKey = "refresh_token";
-  final String redirectURLScheme = "${getTitanPackageName()}://authorized";
-  final String redirectURL = "${getTitanURL()}/static.html";
-  final String discoveryUrl =
-      "${Repository.host}.well-known/openid-configuration";
-  final List<String> scopes = ["API"];
-  OpenIdTokenProvider() : super(const AsyncValue.loading());
+/// The AuthNotifier class is responsible for managing the authentication state
+/// of the application. It handles signing in, signing out, refreshing tokens,
+/// and storing authentication tokens securely.
+///
+/// It uses the Flutter AppAuth package for OAuth 2.0 authorization code flow
+/// with PKCE for mobile applications, and a web-based flow for web applications.
+class AuthNotifier extends StateNotifier<AsyncValue<AuthToken>> {
+  final FlutterAppAuth appAuth;
+  final FlutterSecureStorage secureStorage;
+  final CacheManager cacheManager;
+  final OpenIdRepository openIdRepository;
 
-  String generateRandomString(int len) {
-    var r = Random.secure();
+  AuthNotifier({
+    required this.appAuth,
+    required this.secureStorage,
+    required this.cacheManager,
+    required this.openIdRepository,
+  }) : super(const AsyncLoading());
+
+  static const Base64Codec base64 = Base64Codec.urlSafe();
+  static const String userIdName = "id";
+
+  // --- OIDC Configuration ---
+  static const String tokenName = "my_ecl_auth_token";
+  static const String clientId = "Titan";
+  static final String redirectURLScheme =
+      "${getTitanPackageName()}://authorized";
+  static final String redirectURL = "${getTitanURL()}/static.html";
+  static final String discoveryUrl =
+      "${Repository.host}.well-known/openid-configuration";
+  static List<String> scopes = ["API"];
+
+  /// Signs in the user using the appropriate flow based on the platform.
+  Future<void> signIn() async {
+    state = const AsyncLoading();
+    try {
+      if (kIsWeb) {
+        await _signInWeb();
+      } else {
+        await _signInMobile();
+      }
+    } catch (e, s) {
+      state = AsyncError("Error $e", s);
+    } finally {
+      // Ensure the state is updated to reflect the loading status
+      if (state is AsyncLoading) {
+        // If the sign-in process fails, reset the state to an empty token
+        // to avoid leaving the app in a loading state.
+        // This is important for mobile apps where the user might not be able
+        // to retry the sign-in easily.
+        state = AsyncData(AuthToken.empty());
+      }
+    }
+  }
+
+  /// Signs in the user using the mobile app flow.
+  /// This method uses the Flutter AppAuth package to perform the OAuth 2.0
+  /// authorization code flow with PKCE.
+  Future<void> _signInMobile() async {
+    AuthorizationTokenResponse response = await appAuth
+        .authorizeAndExchangeCode(
+          AuthorizationTokenRequest(
+            clientId,
+            redirectURLScheme,
+            discoveryUrl: discoveryUrl,
+            scopes: scopes,
+            allowInsecureConnections: kDebugMode,
+          ),
+        );
+    _saveAndStoreToken(AuthToken.fromTokenResponse(response));
+  }
+
+  /// Signs in the user using the web flow.
+  /// This method opens a popup window for the user to authenticate and
+  /// then retrieves the authorization code from the redirect URI.
+  /// It uses the code to request an access token from the OpenID provider.
+  Future<void> _signInWeb() async {
+    final codeVerifier = _generateRandomString(128);
+    final authUrl = _generateAuthUrl(codeVerifier);
+
+    html.WindowBase? popupWin = html.window.open(
+      authUrl,
+      "Hyperion",
+      "width=800, height=900, scrollbars=yes",
+    );
+
+    final completer = Completer();
+    void checkWindowClosed() {
+      if (popupWin != null && popupWin!.closed == true) {
+        completer.complete();
+      } else {
+        Future.delayed(const Duration(milliseconds: 100), checkWindowClosed);
+      }
+    }
+
+    checkWindowClosed();
+    completer.future.then((_) {
+      state.maybeWhen(
+        loading: () {
+          state = AsyncData(AuthToken.empty());
+        },
+        orElse: () {},
+      );
+    });
+
+    Future<void> login(String data) async {
+      final receivedUri = Uri.parse(data);
+      final token = receivedUri.queryParameters["code"];
+      if (popupWin != null) {
+        popupWin!.close();
+        popupWin = null;
+      }
+      try {
+        if (token != null && token.isNotEmpty) {
+          final authToken = await openIdRepository.getToken(
+            AuthRequest(
+              token: token,
+              clientId: clientId,
+              redirectUri: redirectURL,
+              codeVerifier: codeVerifier,
+              grantType: AuthGrantType.authorizationCode,
+            ),
+          );
+          _saveAndStoreToken(authToken);
+        } else {
+          throw Exception('Wrong credentials');
+        }
+      } on TimeoutException catch (_) {
+        throw Exception('No response from server');
+      } catch (e) {
+        rethrow;
+      }
+    }
+
+    html.window.onMessage.listen((event) {
+      if (event.data.toString().contains('code=')) {
+        login(event.data);
+      }
+    });
+  }
+
+  /// Refreshes the access token based on the current platform.
+  /// For web applications, it uses the OpenID repository to refresh the token.
+  /// For mobile applications, it uses the Flutter AppAuth package to refresh the token.
+  /// If the token is successfully refreshed, it stores the new token.
+  /// If an error occurs, it updates the state with the error.
+  Future<bool> refreshAccessToken() async {
+    state = const AsyncLoading();
+    final refreshToken = await secureStorage.read(key: tokenName);
+    if (refreshToken != null) {
+      try {
+        if (kIsWeb) {
+          await _refreshAccessTokenWeb(refreshToken);
+        } else {
+          await _refreshAccessTokenMobile(refreshToken);
+        }
+        return true;
+      } catch (e, s) {
+        state = AsyncError(e, s);
+      }
+    } else {
+      state = const AsyncError("No token found", StackTrace.empty);
+    }
+
+    return false;
+  }
+
+  // Refreshes access token for web applications.
+  Future<void> _refreshAccessTokenWeb(String refreshToken) async {
+    final authToken = await openIdRepository.getToken(
+      AuthRequest(
+        token: refreshToken,
+        clientId: clientId,
+        redirectUri: redirectURL,
+        codeVerifier: "",
+        grantType: AuthGrantType.refreshToken,
+      ),
+    );
+    _saveAndStoreToken(authToken);
+  }
+
+  // Refreshes access token for mobile applications.
+  Future<void> _refreshAccessTokenMobile(String? refreshToken) async {
+    final response = await appAuth.token(
+      TokenRequest(
+        clientId,
+        redirectURLScheme,
+        discoveryUrl: discoveryUrl,
+        scopes: scopes,
+        refreshToken: refreshToken,
+        allowInsecureConnections: kDebugMode,
+      ),
+    );
+    _saveAndStoreToken(AuthToken.fromTokenResponse(response));
+  }
+
+  /// Deletes the authentication token from secure storage and cache.
+  void signOut() {
+    try {
+      secureStorage.delete(key: tokenName);
+      cacheManager.deleteCache(tokenName);
+      cacheManager.deleteCache(userIdName);
+      state = AsyncData(AuthToken.empty());
+    } catch (e) {
+      state = AsyncError(e, StackTrace.empty);
+    }
+  }
+
+  /// Saves the authentication token in the state and stores it securely.
+  void _saveAndStoreToken(AuthToken authToken) {
+    state = AsyncData(authToken);
+    secureStorage.write(key: tokenName, value: authToken.refreshToken);
+  }
+
+  // --- Helper Methods ---
+
+  /// Generates a random string of the specified length.
+  /// This is used to create a code verifier for the OAuth 2.0 PKCE flow.
+  static String _generateRandomString(int len) {
+    final r = Random.secure();
     const chars =
         'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
     return List.generate(len, (index) => chars[r.nextInt(chars.length)]).join();
   }
 
-  String hash(String data) {
+  /// Hashes the given data using SHA-256 and encodes it in Base64.
+  /// This is used to create a code challenge for the OAuth 2.0 PKCE flow.
+  static String _hash(String data) {
     return base64.encode(sha256.convert(utf8.encode(data)).bytes);
   }
 
-  Future getTokenFromRequest() async {
-    html.WindowBase? popupWin;
-    final codeVerifier = generateRandomString(128);
-
-    final authUrl =
-        "${Repository.host}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}&redirect_uri=$redirectURL&code_challenge=${hash(codeVerifier)}&code_challenge_method=S256";
-
-    state = const AsyncValue.loading();
-    try {
-      if (kIsWeb) {
-        popupWin = html.window.open(
-          authUrl,
-          "Hyperion",
-          "width=800, height=900, scrollbars=yes",
-        );
-
-        final completer = Completer();
-        void checkWindowClosed() {
-          if (popupWin != null && popupWin!.closed == true) {
-            completer.complete();
-          } else {
-            Future.delayed(
-              const Duration(milliseconds: 100),
-              checkWindowClosed,
-            );
-          }
-        }
-
-        checkWindowClosed();
-        completer.future.then((_) {
-          state.maybeWhen(
-            loading: () {
-              state = AsyncValue.data({tokenKey: "", refreshTokenKey: ""});
-            },
-            orElse: () {},
-          );
-        });
-
-        void login(String data) async {
-          final receivedUri = Uri.parse(data);
-          final token = receivedUri.queryParameters["code"];
-          if (popupWin != null) {
-            popupWin!.close();
-            popupWin = null;
-          }
-          try {
-            if (token != null && token.isNotEmpty) {
-              final resp = await openIdRepository.getToken(
-                token,
-                clientId,
-                redirectURL.toString(),
-                codeVerifier,
-                "authorization_code",
-              );
-              final accessToken = resp[tokenKey]!;
-              final refreshToken = resp[refreshTokenKey]!;
-              await _secureStorage.write(key: tokenName, value: refreshToken);
-              state = AsyncValue.data({
-                tokenKey: accessToken,
-                refreshTokenKey: refreshToken,
-              });
-            } else {
-              throw Exception('Wrong credentials');
-            }
-          } on TimeoutException catch (_) {
-            throw Exception('No response from server');
-          } catch (e) {
-            rethrow;
-          }
-        }
-
-        html.window.onMessage.listen((event) {
-          if (event.data.toString().contains('code=')) {
-            login(event.data);
-          }
-        });
-      } else {
-        AuthorizationTokenResponse resp = await appAuth
-            .authorizeAndExchangeCode(
-              AuthorizationTokenRequest(
-                clientId,
-                redirectURLScheme,
-                discoveryUrl: discoveryUrl,
-                scopes: scopes,
-                allowInsecureConnections: kDebugMode,
-              ),
-            );
-        await _secureStorage.write(key: tokenName, value: resp.refreshToken);
-        state = AsyncValue.data({
-          tokenKey: resp.accessToken!,
-          refreshTokenKey: resp.refreshToken!,
-        });
-      }
-    } catch (e) {
-      state = AsyncValue.error("Error $e", StackTrace.empty);
-    }
-  }
-
-  Future getTokenFromStorage() async {
-    state = const AsyncValue.loading();
-    _secureStorage.read(key: tokenName).then((token) async {
-      if (token != null) {
-        try {
-          if (kIsWeb) {
-            final resp = await openIdRepository.getToken(
-              token,
-              clientId,
-              "",
-              "",
-              refreshTokenKey,
-            );
-            final accessToken = resp[tokenKey]!;
-            final refreshToken = resp[refreshTokenKey]!;
-            await _secureStorage.write(key: tokenName, value: refreshToken);
-            state = AsyncValue.data({
-              tokenKey: accessToken,
-              refreshTokenKey: refreshToken,
-            });
-          } else {
-            final resp = await appAuth.token(
-              TokenRequest(
-                clientId,
-                redirectURLScheme,
-                discoveryUrl: discoveryUrl,
-                scopes: scopes,
-                refreshToken: token,
-                allowInsecureConnections: kDebugMode,
-              ),
-            );
-            state = AsyncValue.data({
-              tokenKey: resp.accessToken!,
-              refreshTokenKey: resp.refreshToken!,
-            });
-            storeToken();
-          }
-        } catch (e) {
-          state = AsyncValue.error(e, StackTrace.empty);
-        }
-      } else {
-        state = const AsyncValue.error("No token found", StackTrace.empty);
-      }
-    });
-  }
-
-  Future<void> getAuthToken(String authorizationToken) async {
-    appAuth
-        .token(
-          TokenRequest(
-            clientId,
-            redirectURLScheme,
-            discoveryUrl: discoveryUrl,
-            scopes: scopes,
-            authorizationCode: authorizationToken,
-            allowInsecureConnections: kDebugMode,
-          ),
-        )
-        .then((resp) {
-          state = AsyncValue.data({
-            tokenKey: resp.accessToken!,
-            refreshTokenKey: resp.refreshToken!,
-          });
-        });
-  }
-
-  Future<bool> refreshToken() async {
-    return state.when(
-      data: (token) async {
-        if (token[refreshTokenKey] != null && token[refreshTokenKey] != "") {
-          TokenResponse? resp = await appAuth.token(
-            TokenRequest(
-              clientId,
-              redirectURLScheme,
-              discoveryUrl: discoveryUrl,
-              scopes: scopes,
-              refreshToken: token[refreshTokenKey] as String,
-              allowInsecureConnections: kDebugMode,
-            ),
-          );
-          state = AsyncValue.data({
-            tokenKey: resp.accessToken!,
-            refreshTokenKey: resp.refreshToken!,
-          });
-          storeToken();
-          return true;
-        }
-        state = const AsyncValue.error(e, StackTrace.empty);
-        return false;
-      },
-      error: (error, stackTrace) {
-        state = AsyncValue.error(error, stackTrace);
-        return false;
-      },
-      loading: () {
-        return false;
-      },
-    );
-  }
-
-  void storeToken() {
-    state.when(
-      data: (tokens) =>
-          _secureStorage.write(key: tokenName, value: tokens[refreshTokenKey]),
-      error: (e, s) {
-        throw e;
-      },
-      loading: () {
-        throw Exception("Token is not loaded");
-      },
-    );
-  }
-
-  void deleteToken() {
-    try {
-      _secureStorage.delete(key: tokenName);
-      cacheManager.deleteCache(tokenName);
-      cacheManager.deleteCache("id");
-      state = AsyncValue.data({tokenKey: "", refreshTokenKey: ""});
-    } catch (e) {
-      state = AsyncValue.error(e, StackTrace.empty);
-    }
+  /// Generates the authorization URL for the OAuth 2.0 PKCE flow.
+  String _generateAuthUrl(String codeVerifier) {
+    return "${Repository.host}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}&redirect_uri=$redirectURL&code_challenge=${_hash(codeVerifier)}&code_challenge_method=S256";
   }
 }

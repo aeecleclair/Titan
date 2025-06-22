@@ -82,7 +82,7 @@ class LeftPanel extends HookConsumerWidget {
               const SizedBox(height: 70),
               WaitingButton(
                 onTap: () async {
-                  await authNotifier.getTokenFromRequest();
+                  await authNotifier.signIn();
                   ref
                       .watch(authTokenProvider)
                       .when(
