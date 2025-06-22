@@ -8,10 +8,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myecl/advert/class/advert.dart';
 import 'package:myecl/advert/class/announcer.dart';
-import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/providers/advert_poster_provider.dart';
 import 'package:myecl/advert/providers/advert_posters_provider.dart';
-import 'package:myecl/advert/providers/advert_provider.dart';
+import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/tools/constants.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
@@ -29,7 +28,11 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final advert = ref.watch(advertProvider);
+    final String advertId = QR.params['advertId'].toString();
+
+    final advert =
+        ref.watch(singleAdvertProvider(advertId)).valueOrNull ?? Advert.empty();
+
     final key = GlobalKey<FormState>();
     final isEdit = advert.id != Advert.empty().id;
     final title = useTextEditingController(text: advert.title);

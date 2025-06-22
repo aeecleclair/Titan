@@ -31,11 +31,7 @@ class AdvertCard extends HookConsumerWidget {
     final posterNotifier = ref.watch(advertPosterProvider.notifier);
     final isWebFormat = ref.watch(isWebFormatProvider);
     return GestureDetector(
-      onTap: () {
-        if (!isWebFormat) {
-          onTap();
-        }
-      },
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.all(10),
         padding: EdgeInsets.all(isWebFormat ? 50 : 0),

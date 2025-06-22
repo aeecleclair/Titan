@@ -25,7 +25,7 @@ class AdvertRouter {
   static const String admin = '/admin';
   static const String addEditAdvert = '/add_edit_advert';
   static const String addRemAnnouncer = '/add_remove_announcer';
-  static const String detail = '/detail';
+  static const String detail = '/:advertId';
   static final Module module = Module(
     name: "Annonce",
     icon: const Left(HeroIcons.megaphone),

@@ -2,15 +2,15 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myecl/admin/providers/is_admin_provider.dart';
-import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/providers/advert_posters_provider.dart';
-import 'package:myecl/advert/providers/advert_provider.dart';
+import 'package:myecl/advert/providers/advert_list_provider.dart';
 import 'package:myecl/advert/providers/announcer_provider.dart';
 import 'package:myecl/advert/providers/is_advert_admin_provider.dart';
 import 'package:myecl/advert/ui/pages/advert.dart';
 import 'package:myecl/advert/router.dart';
 import 'package:myecl/advert/ui/components/announcer_bar.dart';
 import 'package:myecl/advert/ui/components/advert_card.dart';
+import 'package:myecl/tools/functions.dart';
 import 'package:myecl/tools/ui/builders/async_child.dart';
 import 'package:myecl/tools/ui/layouts/column_refresher.dart';
 import 'package:myecl/tools/ui/widgets/admin_button.dart';
@@ -22,7 +22,6 @@ class AdvertMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final advertNotifier = ref.watch(advertProvider.notifier);
     final advertList = ref.watch(advertListProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
@@ -88,8 +87,11 @@ class AdvertMainPage extends HookConsumerWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: AdvertCard(
                         onTap: () {
-                          advertNotifier.setAdvert(advert);
-                          QR.to(AdvertRouter.root + AdvertRouter.detail);
+                          QR.to(
+                            buildPath(AdvertRouter.root + AdvertRouter.detail, [
+                              advert.id,
+                            ]),
+                          );
                         },
                         advert: advert,
                       ),
