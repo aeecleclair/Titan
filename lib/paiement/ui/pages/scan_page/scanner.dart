@@ -217,12 +217,19 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
     );
   }
 
+  Future<void> disposeScanner() async {
+    if (mounted) {
+      await _subscription?.cancel();
+      _subscription = null;
+      await controller.stop();
+      await controller.dispose();
+    }
+  }
+
   @override
   Future<void> dispose() async {
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
-    unawaited(_subscription?.cancel());
-    _subscription = null;
-    await controller.dispose();
+    await disposeScanner();
   }
 }
