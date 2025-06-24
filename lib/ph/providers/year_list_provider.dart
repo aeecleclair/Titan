@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/ph/providers/ph_list_provider.dart';
+import 'package:titan/ph/providers/ph_list_provider.dart';
 
 class YearListNotifier extends StateNotifier<List<int>> {
   YearListNotifier(super.year);

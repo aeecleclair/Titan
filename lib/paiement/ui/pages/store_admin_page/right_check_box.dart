@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/providers/seller_rights_list_providder.dart';
+import 'package:titan/paiement/providers/seller_rights_list_providder.dart';
 
 class RightCheckBox extends ConsumerWidget {
   final int index;

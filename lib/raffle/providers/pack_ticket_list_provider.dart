@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/class/pack_ticket.dart';
-import 'package:myecl/raffle/providers/raffle_id_provider.dart';
-import 'package:myecl/raffle/repositories/raffle_detail_repository.dart';
-import 'package:myecl/raffle/repositories/pack_ticket_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/raffle/class/raffle.dart';
+import 'package:titan/raffle/class/pack_ticket.dart';
+import 'package:titan/raffle/providers/raffle_id_provider.dart';
+import 'package:titan/raffle/repositories/raffle_detail_repository.dart';
+import 'package:titan/raffle/repositories/pack_ticket_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class PackTicketsListNotifier extends ListNotifier<PackTicket> {
   final PackTicketRepository _packTicketsRepository = PackTicketRepository();

@@ -1,17 +1,17 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/recommendation/providers/is_recommendation_admin_provider.dart';
-import 'package:myecl/recommendation/ui/pages/main_page.dart'
+import 'package:titan/drawer/class/module.dart';
+import 'package:titan/recommendation/providers/is_recommendation_admin_provider.dart';
+import 'package:titan/recommendation/ui/pages/main_page.dart'
     deferred as main_page;
-import 'package:myecl/recommendation/ui/pages/information_page.dart'
+import 'package:titan/recommendation/ui/pages/information_page.dart'
     deferred as information_page;
-import 'package:myecl/recommendation/ui/pages/add_edit_page.dart'
+import 'package:titan/recommendation/ui/pages/add_edit_page.dart'
     deferred as add_edit_page;
-import 'package:myecl/tools/middlewares/admin_middleware.dart';
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:titan/tools/middlewares/admin_middleware.dart';
+import 'package:titan/tools/middlewares/authenticated_middleware.dart';
+import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RecommendationRouter {

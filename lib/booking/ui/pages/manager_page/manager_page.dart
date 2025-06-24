@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
-import 'package:myecl/booking/providers/manager_confirmed_booking_list_provider.dart';
-import 'package:myecl/service/providers/room_list_provider.dart';
-import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/calendar/calendar.dart';
-import 'package:myecl/booking/ui/pages/manager_page/list_booking.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/booking/class/booking.dart';
+import 'package:titan/booking/providers/manager_booking_list_provider.dart';
+import 'package:titan/booking/providers/manager_confirmed_booking_list_provider.dart';
+import 'package:titan/service/providers/room_list_provider.dart';
+import 'package:titan/booking/tools/constants.dart';
+import 'package:titan/booking/ui/booking.dart';
+import 'package:titan/booking/ui/calendar/calendar.dart';
+import 'package:titan/booking/ui/pages/manager_page/list_booking.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 
 class ManagerPage extends HookConsumerWidget {
   const ManagerPage({super.key});

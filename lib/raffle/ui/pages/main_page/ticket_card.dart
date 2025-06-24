@@ -2,14 +2,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/class/tickets.dart';
-import 'package:myecl/raffle/providers/raffle_list_provider.dart';
-import 'package:myecl/raffle/providers/tombola_logo_provider.dart';
-import 'package:myecl/raffle/providers/tombola_logos_provider.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/pages/main_page/ticket_card_background.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/raffle/class/raffle.dart';
+import 'package:titan/raffle/class/tickets.dart';
+import 'package:titan/raffle/providers/raffle_list_provider.dart';
+import 'package:titan/raffle/providers/tombola_logo_provider.dart';
+import 'package:titan/raffle/providers/tombola_logos_provider.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/raffle/ui/pages/main_page/ticket_card_background.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class TicketWidget extends HookConsumerWidget {
   final List<Ticket> ticket;

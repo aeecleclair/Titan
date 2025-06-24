@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/service/class/room.dart';
-import 'package:myecl/service/providers/room_list_provider.dart';
-import 'package:myecl/service/repositories/rooms_repository.dart';
+import 'package:titan/service/class/room.dart';
+import 'package:titan/service/providers/room_list_provider.dart';
+import 'package:titan/service/repositories/rooms_repository.dart';
 
 class MockRoomRepository extends Mock implements RoomRepository {}
 

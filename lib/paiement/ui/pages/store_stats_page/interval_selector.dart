@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/paiement/providers/selected_interval_provider.dart';
-import 'package:myecl/paiement/providers/selected_store_history.dart';
-import 'package:myecl/paiement/providers/selected_store_provider.dart';
+import 'package:titan/paiement/providers/selected_interval_provider.dart';
+import 'package:titan/paiement/providers/selected_store_history.dart';
+import 'package:titan/paiement/providers/selected_store_provider.dart';
 
 class IntervalSelector extends ConsumerWidget {
   const IntervalSelector({super.key});

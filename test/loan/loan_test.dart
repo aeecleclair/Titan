@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/class/item_quantity.dart';
-import 'package:myecl/loan/class/item_simple.dart';
-import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/class/loaner.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/admin/class/account_type.dart';
+import 'package:titan/loan/class/item.dart';
+import 'package:titan/loan/class/item_quantity.dart';
+import 'package:titan/loan/class/item_simple.dart';
+import 'package:titan/loan/class/loan.dart';
+import 'package:titan/loan/class/loaner.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 void main() {
   group('Testing Item class', () {

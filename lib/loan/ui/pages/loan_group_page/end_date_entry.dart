@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/providers/end_provider.dart';
-import 'package:myecl/loan/providers/initial_date_provider.dart';
-import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/widgets/date_entry.dart';
+import 'package:titan/loan/providers/end_provider.dart';
+import 'package:titan/loan/providers/initial_date_provider.dart';
+import 'package:titan/loan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/widgets/date_entry.dart';
 
 class EndDateEntry extends HookConsumerWidget {
   const EndDateEntry({super.key});

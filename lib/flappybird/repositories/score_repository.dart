@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
-import 'package:myecl/flappybird/class/score.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/flappybird/class/score.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class ScoreRepository extends Repository {
   @override

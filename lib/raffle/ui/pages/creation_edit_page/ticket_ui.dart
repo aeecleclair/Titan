@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/pack_ticket.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/raffle/class/pack_ticket.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class TicketUI extends HookConsumerWidget {
   final PackTicket packTicket;

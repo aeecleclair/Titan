@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/version/class/version.dart';
+import 'package:titan/version/class/version.dart';
 
 void main() {
   group('Testing Version class', () {

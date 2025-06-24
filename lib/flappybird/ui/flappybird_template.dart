@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/flappybird/providers/score_list_provider.dart';
-import 'package:myecl/flappybird/providers/user_score_provider.dart';
-import 'package:myecl/flappybird/router.dart';
-import 'package:myecl/tools/ui/widgets/top_bar.dart';
+import 'package:titan/flappybird/providers/score_list_provider.dart';
+import 'package:titan/flappybird/providers/user_score_provider.dart';
+import 'package:titan/flappybird/router.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class FlappyBirdTemplate extends HookConsumerWidget {

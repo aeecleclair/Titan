@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/providers/scroll_provider.dart';
+import 'package:titan/amap/providers/scroll_provider.dart';
 
 void main() {
   group('ScrollNotifier', () {

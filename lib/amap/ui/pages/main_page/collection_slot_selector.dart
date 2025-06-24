@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/providers/order_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/amap/class/order.dart';
+import 'package:titan/amap/providers/order_provider.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/amap/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
 
 class CollectionSlotSelector extends HookConsumerWidget {
   final CollectionSlot collectionSlot;

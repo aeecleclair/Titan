@@ -1,7 +1,7 @@
 import 'dart:core';
 
-import 'package:myecl/seed-library/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/seed-library/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
 
 class PlantSimple {
   final State state;

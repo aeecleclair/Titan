@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class OpenIdRepository extends Repository {
   Future<Map<String, String>> getToken(

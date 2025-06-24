@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/providers/orders_by_delivery_provider.dart';
-import 'package:myecl/amap/repositories/order_list_repository.dart';
+import 'package:titan/amap/class/order.dart';
+import 'package:titan/amap/providers/orders_by_delivery_provider.dart';
+import 'package:titan/amap/repositories/order_list_repository.dart';
 
 class MockOrderListRepository extends Mock implements OrderListRepository {}
 

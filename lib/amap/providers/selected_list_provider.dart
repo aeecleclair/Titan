@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/providers/product_list_provider.dart';
+import 'package:titan/amap/providers/product_list_provider.dart';
 
 final selectedListProvider =
     StateNotifierProvider<SelectedListProvider, List<bool>>((ref) {

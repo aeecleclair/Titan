@@ -1,7 +1,7 @@
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 enum CollectionSlot { midDay, evening }
 

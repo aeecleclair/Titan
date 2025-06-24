@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/loan/class/loan.dart';
+import 'package:titan/loan/class/loan.dart';
 
 class LoanNotifier extends StateNotifier<Loan> {
   LoanNotifier() : super(Loan.empty());

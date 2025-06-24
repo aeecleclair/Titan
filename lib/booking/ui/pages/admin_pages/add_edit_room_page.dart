@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:myecl/booking/class/manager.dart';
-import 'package:myecl/service/class/room.dart';
-import 'package:myecl/booking/providers/manager_list_provider.dart';
-import 'package:myecl/booking/providers/manager_id_provider.dart';
-import 'package:myecl/service/providers/room_list_provider.dart';
-import 'package:myecl/booking/providers/room_provider.dart';
-import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/pages/admin_pages/admin_entry.dart';
-import 'package:myecl/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
-import 'package:myecl/booking/ui/pages/admin_pages/admin_shrink_button.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/booking/class/manager.dart';
+import 'package:titan/service/class/room.dart';
+import 'package:titan/booking/providers/manager_list_provider.dart';
+import 'package:titan/booking/providers/manager_id_provider.dart';
+import 'package:titan/service/providers/room_list_provider.dart';
+import 'package:titan/booking/providers/room_provider.dart';
+import 'package:titan/booking/tools/constants.dart';
+import 'package:titan/booking/ui/booking.dart';
+import 'package:titan/booking/ui/pages/admin_pages/admin_entry.dart';
+import 'package:titan/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
+import 'package:titan/booking/ui/pages/admin_pages/admin_shrink_button.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/layouts/item_chip.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditRoomPage extends HookConsumerWidget {

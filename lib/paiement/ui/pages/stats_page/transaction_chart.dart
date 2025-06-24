@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/paiement/class/history.dart';
-import 'package:myecl/paiement/providers/selected_transactions_provider.dart';
-import 'package:myecl/paiement/tools/functions.dart';
-import 'package:myecl/paiement/ui/pages/stats_page/sum_up_card.dart';
+import 'package:titan/paiement/class/history.dart';
+import 'package:titan/paiement/providers/selected_transactions_provider.dart';
+import 'package:titan/paiement/tools/functions.dart';
+import 'package:titan/paiement/ui/pages/stats_page/sum_up_card.dart';
 
 class TransactionChart extends HookConsumerWidget {
   final Map<String, List<History>> transactionPerStore;

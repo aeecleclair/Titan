@@ -1,6 +1,6 @@
-import 'package:myecl/centralisation/class/section.dart';
+import 'package:titan/centralisation/class/section.dart';
 import 'package:http/http.dart' as http;
-import 'package:myecl/tools/logs/logger.dart';
+import 'package:titan/tools/logs/logger.dart';
 import 'dart:convert';
 
 class SectionRepository {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/seed-library/class/species.dart';
+import 'package:titan/seed-library/class/species.dart';
 
 class SmallSpeciesCard extends StatelessWidget {
   const SmallSpeciesCard({

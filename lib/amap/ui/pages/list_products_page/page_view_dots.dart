@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/providers/page_controller_provider.dart';
-import 'package:myecl/amap/providers/sorted_delivery_product.dart';
-import 'package:myecl/amap/tools/constants.dart';
+import 'package:titan/amap/providers/page_controller_provider.dart';
+import 'package:titan/amap/providers/sorted_delivery_product.dart';
+import 'package:titan/amap/tools/constants.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Dots extends HookConsumerWidget {

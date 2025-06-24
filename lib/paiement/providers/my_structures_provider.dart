@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/providers/structure_list_provider.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:titan/paiement/providers/structure_list_provider.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 final myStructuresProvider = StateProvider((ref) {
   final user = ref.watch(userProvider);

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/providers/cash_provider.dart';
-import 'package:myecl/raffle/providers/focus_provider.dart';
-import 'package:myecl/raffle/providers/searching_raffle_user_provider.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/pages/admin_module_page/adding_user_container.dart';
-import 'package:myecl/raffle/ui/pages/admin_module_page/cash_container.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:titan/raffle/providers/cash_provider.dart';
+import 'package:titan/raffle/providers/focus_provider.dart';
+import 'package:titan/raffle/providers/searching_raffle_user_provider.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/raffle/ui/pages/admin_module_page/adding_user_container.dart';
+import 'package:titan/raffle/ui/pages/admin_module_page/cash_container.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/user/providers/user_list_provider.dart';
 
 class AccountHandler extends HookConsumerWidget {
   const AccountHandler({super.key});

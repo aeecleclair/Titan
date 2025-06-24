@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/phonebook/ui/components/copiabled_text.dart';
+import 'package:titan/phonebook/ui/components/copiabled_text.dart';
 
 class CardField extends StatelessWidget {
   final String label;

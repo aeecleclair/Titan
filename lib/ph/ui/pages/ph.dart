@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/ph/router.dart';
-import 'package:myecl/tools/ui/widgets/top_bar.dart';
+import 'package:titan/ph/router.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 
 class PhTemplate extends HookConsumerWidget {
   final Widget child;

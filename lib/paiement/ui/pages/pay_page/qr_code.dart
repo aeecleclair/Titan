@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/providers/key_service_provider.dart';
-import 'package:myecl/paiement/providers/pay_amount_provider.dart';
-import 'package:myecl/paiement/tools/functions.dart';
-import 'package:myecl/tools/ui/widgets/loader.dart';
+import 'package:titan/paiement/providers/key_service_provider.dart';
+import 'package:titan/paiement/providers/pay_amount_provider.dart';
+import 'package:titan/paiement/tools/functions.dart';
+import 'package:titan/tools/ui/widgets/loader.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:uuid/uuid.dart';
 

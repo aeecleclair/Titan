@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/cinema/class/session.dart';
-import 'package:myecl/cinema/class/the_movie_db_genre.dart';
-import 'package:myecl/cinema/class/the_movie_db_search_result.dart';
-import 'package:myecl/cinema/repositories/session_repository.dart';
+import 'package:titan/cinema/class/session.dart';
+import 'package:titan/cinema/class/the_movie_db_genre.dart';
+import 'package:titan/cinema/class/the_movie_db_search_result.dart';
+import 'package:titan/cinema/repositories/session_repository.dart';
 
 class MockSessionRepository extends Mock implements SessionRepository {}
 

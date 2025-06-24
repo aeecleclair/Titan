@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/purchases/class/ticket.dart';
-import 'package:myecl/purchases/repositories/scanner_repository.dart';
-import 'package:myecl/purchases/repositories/user_information_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/purchases/class/ticket.dart';
+import 'package:titan/purchases/repositories/scanner_repository.dart';
+import 'package:titan/purchases/repositories/user_information_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class TicketListNotifier extends ListNotifier<Ticket> {
   final UserInformationRepository ticketRepository =

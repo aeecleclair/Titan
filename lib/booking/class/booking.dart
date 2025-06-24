@@ -1,6 +1,6 @@
-import 'package:myecl/service/class/room.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/applicant.dart';
+import 'package:titan/service/class/room.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/user/class/applicant.dart';
 
 class Booking {
   final String id;

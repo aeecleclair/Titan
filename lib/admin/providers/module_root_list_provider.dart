@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/repositories/module_visibility_repository.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:titan/admin/repositories/module_visibility_repository.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 class ModuleListNotifier extends ListNotifier<String> {
   ModuleVisibilityRepository repository = ModuleVisibilityRepository();

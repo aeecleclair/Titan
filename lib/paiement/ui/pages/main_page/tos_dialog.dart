@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class TOSDialogBox extends StatelessWidget {
   final String title, descriptions;

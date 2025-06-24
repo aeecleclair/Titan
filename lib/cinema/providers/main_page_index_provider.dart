@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/cinema/providers/session_list_provider.dart';
+import 'package:titan/cinema/providers/session_list_provider.dart';
 
 class MainPageIndexNotifier extends StateNotifier<int> {
   int startPage = 0;

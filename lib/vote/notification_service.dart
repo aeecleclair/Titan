@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/vote/providers/contender_list_provider.dart';
-import 'package:myecl/vote/providers/result_provider.dart';
-import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/router.dart';
+import 'package:titan/vote/providers/contender_list_provider.dart';
+import 'package:titan/vote/providers/result_provider.dart';
+import 'package:titan/vote/providers/status_provider.dart';
+import 'package:titan/vote/router.dart';
 import 'package:tuple/tuple.dart';
 
 final Map<String, Tuple2<String, List<StateNotifierProvider>>> voteProviders = {

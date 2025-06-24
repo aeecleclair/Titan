@@ -1,5 +1,5 @@
-import 'package:myecl/paiement/class/history.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/paiement/class/history.dart';
+import 'package:titan/tools/functions.dart';
 
 enum TransactionType { direct, request, refund }
 

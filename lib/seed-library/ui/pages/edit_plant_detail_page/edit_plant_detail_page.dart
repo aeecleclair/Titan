@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/seed-library/providers/plant_complete_provider.dart';
-import 'package:myecl/seed-library/ui/pages/edit_plant_detail_page/editable_plant_detail.dart';
-import 'package:myecl/seed-library/ui/seed_library.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:titan/seed-library/providers/plant_complete_provider.dart';
+import 'package:titan/seed-library/ui/pages/edit_plant_detail_page/editable_plant_detail.dart';
+import 'package:titan/seed-library/ui/seed_library.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 
 class EditPlantDetailPage extends HookConsumerWidget {
   const EditPlantDetailPage({super.key});

@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/amap/class/information.dart';
-import 'package:myecl/amap/providers/information_provider.dart';
-import 'package:myecl/amap/repositories/information_repository.dart';
+import 'package:titan/amap/class/information.dart';
+import 'package:titan/amap/providers/information_provider.dart';
+import 'package:titan/amap/repositories/information_repository.dart';
 
 class MockInformationRepository extends Mock implements InformationRepository {}
 

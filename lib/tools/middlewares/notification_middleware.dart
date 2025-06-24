@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/service/provider_list.dart';
+import 'package:titan/service/provider_list.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class NotificationMiddleWare extends QMiddleware {

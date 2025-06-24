@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/ui/widgets/top_bar.dart';
-import 'package:myecl/vote/router.dart';
-import 'package:myecl/vote/tools/constants.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
+import 'package:titan/vote/router.dart';
+import 'package:titan/vote/tools/constants.dart';
 
 class VoteTemplate extends StatelessWidget {
   final Widget child;

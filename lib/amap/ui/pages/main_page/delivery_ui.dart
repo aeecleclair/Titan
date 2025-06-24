@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/delivery.dart';
-import 'package:myecl/amap/providers/delivery_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/amap/class/delivery.dart';
+import 'package:titan/amap/providers/delivery_provider.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
 
 class DeliveryUi extends HookConsumerWidget {
   final Delivery delivery;

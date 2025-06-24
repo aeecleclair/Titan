@@ -1,16 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:myecl/service/class/message.dart' as message_class;
+import 'package:titan/service/class/message.dart' as message_class;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/service/local_notification_service.dart';
-import 'package:myecl/service/providers/firebase_token_expiration_provider.dart';
-import 'package:myecl/service/providers/firebase_token_provider.dart';
-import 'package:myecl/service/providers/messages_provider.dart';
-import 'package:myecl/service/providers/topic_provider.dart';
-import 'package:myecl/tools/logs/log.dart';
-import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:titan/service/local_notification_service.dart';
+import 'package:titan/service/providers/firebase_token_expiration_provider.dart';
+import 'package:titan/service/providers/firebase_token_provider.dart';
+import 'package:titan/service/providers/messages_provider.dart';
+import 'package:titan/service/providers/topic_provider.dart';
+import 'package:titan/tools/logs/log.dart';
+import 'package:titan/tools/repository/repository.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 void setUpNotification(WidgetRef ref) {
   final LocalNotificationService localNotificationService =

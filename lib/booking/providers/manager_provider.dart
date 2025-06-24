@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/manager.dart';
+import 'package:titan/booking/class/manager.dart';
 
 class ManagerNotifier extends StateNotifier<Manager> {
   ManagerNotifier() : super(Manager.empty());

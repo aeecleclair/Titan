@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/recommendation/class/recommendation.dart';
-import 'package:myecl/recommendation/providers/recommendation_list_provider.dart';
-import 'package:myecl/recommendation/repositories/recommendation_repository.dart';
+import 'package:titan/recommendation/class/recommendation.dart';
+import 'package:titan/recommendation/providers/recommendation_list_provider.dart';
+import 'package:titan/recommendation/repositories/recommendation_repository.dart';
 
 class MockRecommendationRepository extends Mock
     implements RecommendationRepository {}

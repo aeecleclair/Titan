@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/vote/repositories/status_repository.dart';
 
 class StatusNotifier extends SingleNotifier<Status> {
   final StatusRepository statusRepository;
