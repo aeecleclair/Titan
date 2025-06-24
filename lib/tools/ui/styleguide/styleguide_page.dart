@@ -6,6 +6,7 @@ import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/styleguide/navbar.dart';
 import 'package:titan/tools/ui/styleguide/router.dart';
+import 'package:titan/tools/ui/styleguide/searchbar.dart';
 import 'package:titan/tools/ui/widgets/top_bar.dart';
 
 class StyleGuidePage extends HookConsumerWidget {
@@ -300,6 +301,84 @@ class StyleGuidePage extends HookConsumerWidget {
                             onTap: () {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text('Profile tapped')),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Divider
+                    const Divider(height: 40),
+
+                    // SearchBar Section
+                    sectionHeader(
+                      "4. SearchBar",
+                      "A customizable search component with filtering capabilities",
+                    ),
+
+                    // SearchBar Examples
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 20),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Basic SearchBar:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          CustomSearchBar(
+                            hintText: "Search something...",
+                            onSearch: (_) {
+                              // Handle search logic in parent component
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Search callback triggered'),
+                                  duration: Duration(seconds: 1),
+                                ),
+                              );
+                            },
+                            onFilter: () {
+                              // Handle filter logic in parent component
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Filter button clicked'),
+                                  duration: Duration(seconds: 1),
+                                ),
+                              );
+                            },
+                          ),
+
+                          const SizedBox(height: 24),
+                          const Text(
+                            "SearchBar with Filters:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          CustomSearchBar(
+                            hintText: "Search users...",
+                            onSearch: (_) {
+                              // This is where you would handle search queries
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('User search triggered'),
+                                  duration: Duration(seconds: 1),
+                                ),
+                              );
+                            },
+                            onFilter: () {
+                              // This is where you would handle filter button clicks
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('User filter dialog opened'),
+                                  duration: Duration(seconds: 1),
+                                ),
                               );
                             },
                           ),
