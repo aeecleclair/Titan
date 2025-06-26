@@ -117,8 +117,7 @@ class FloatingNavbar extends HookWidget {
                         child: Material(
                           color: Colors.transparent,
                           borderRadius: BorderRadius.circular(borderRadius),
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(borderRadius),
+                          child: GestureDetector(
                             onTap: () {
                               item.onTap?.call();
                               currentIndex.value = index;

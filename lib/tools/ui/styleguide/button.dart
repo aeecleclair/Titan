@@ -84,9 +84,8 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: disabled == true ? null : onPressed,
-      borderRadius: BorderRadius.circular(8),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -100,8 +99,8 @@ class Button extends StatelessWidget {
             text,
             style: TextStyle(
               color: textColor,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+              fontSize: 18,
+              fontWeight: FontWeight.w900,
             ),
           ),
         ),
