@@ -976,15 +976,15 @@ class StyleGuidePage extends HookConsumerWidget {
                     ),
 
                     const SizedBox(height: 40),
-                    
+
                     // Icon Button Section
                     const Divider(height: 40),
-                    
+
                     sectionHeader(
                       "7. Icon Buttons",
                       "Icon-only buttons in various styles for compact UI elements",
                     ),
-                    
+
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 20),
                       padding: const EdgeInsets.all(16),
@@ -1010,7 +1010,9 @@ class StyleGuidePage extends HookConsumerWidget {
                                 ),
                                 onPressed: () {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Main icon button pressed')),
+                                    const SnackBar(
+                                      content: Text('Main icon button pressed'),
+                                    ),
                                   );
                                 },
                               ),
@@ -1022,7 +1024,11 @@ class StyleGuidePage extends HookConsumerWidget {
                                 ),
                                 onPressed: () {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Danger icon button pressed')),
+                                    const SnackBar(
+                                      content: Text(
+                                        'Danger icon button pressed',
+                                      ),
+                                    ),
                                   );
                                 },
                               ),
@@ -1034,7 +1040,11 @@ class StyleGuidePage extends HookConsumerWidget {
                                 ),
                                 onPressed: () {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('Secondary icon button pressed')),
+                                    const SnackBar(
+                                      content: Text(
+                                        'Secondary icon button pressed',
+                                      ),
+                                    ),
                                   );
                                 },
                               ),
@@ -1043,15 +1053,15 @@ class StyleGuidePage extends HookConsumerWidget {
                         ],
                       ),
                     ),
-                    
+
                     // List Item Template Section
                     const Divider(height: 40),
-                    
+
                     sectionHeader(
                       "8. List Item Template",
                       "Base component for creating consistent list items with customizable content",
                     ),
-                    
+
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 20),
                       padding: const EdgeInsets.all(16),
@@ -1076,7 +1086,9 @@ class StyleGuidePage extends HookConsumerWidget {
                             ),
                             onTap: () {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Template item tapped')),
+                                const SnackBar(
+                                  content: Text('Template item tapped'),
+                                ),
                               );
                             },
                           ),
@@ -1094,7 +1106,10 @@ class StyleGuidePage extends HookConsumerWidget {
                               color: ColorConstants.tertiary,
                             ),
                             trailing: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
                               decoration: BoxDecoration(
                                 color: ColorConstants.main,
                                 borderRadius: BorderRadius.circular(12),
@@ -1110,22 +1125,24 @@ class StyleGuidePage extends HookConsumerWidget {
                             ),
                             onTap: () {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Custom trailing item tapped')),
+                                const SnackBar(
+                                  content: Text('Custom trailing item tapped'),
+                                ),
                               );
                             },
                           ),
                         ],
                       ),
                     ),
-                    
+
                     // Toggle List Item Section
                     const Divider(height: 40),
-                    
+
                     sectionHeader(
                       "9. Toggle List Item",
                       "Toggleable list items with dynamic icons for selection state",
                     ),
-                    
+
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 20),
                       padding: const EdgeInsets.all(16),
@@ -1151,7 +1168,9 @@ class StyleGuidePage extends HookConsumerWidget {
                             selected: false,
                             onTap: () {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Toggle item tapped')),
+                                const SnackBar(
+                                  content: Text('Toggle item tapped'),
+                                ),
                               );
                             },
                           ),
@@ -1171,22 +1190,24 @@ class StyleGuidePage extends HookConsumerWidget {
                             selected: true,
                             onTap: () {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Selected toggle item tapped')),
+                                const SnackBar(
+                                  content: Text('Selected toggle item tapped'),
+                                ),
                               );
                             },
                           ),
                         ],
                       ),
                     ),
-                    
+
                     // Text Entry Section
                     const Divider(height: 40),
-                    
+
                     sectionHeader(
                       "10. Text Entry",
                       "Form input fields with validation support and customizable styling",
                     ),
-                    
+
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 20),
                       padding: const EdgeInsets.all(16),
@@ -1238,15 +1259,15 @@ class StyleGuidePage extends HookConsumerWidget {
                         ],
                       ),
                     ),
-                    
+
                     // Specialized Entry Fields Section
                     const Divider(height: 40),
-                    
+
                     sectionHeader(
                       "11. Specialized Entry Fields",
                       "Pre-configured entry fields for dates and images",
                     ),
-                    
+
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 20),
                       padding: const EdgeInsets.all(16),
@@ -1270,7 +1291,9 @@ class StyleGuidePage extends HookConsumerWidget {
                                 context: context,
                                 initialDate: DateTime.now(),
                                 firstDate: DateTime.now(),
-                                lastDate: DateTime.now().add(const Duration(days: 365)),
+                                lastDate: DateTime.now().add(
+                                  const Duration(days: 365),
+                                ),
                               );
                             },
                           ),
@@ -1285,14 +1308,16 @@ class StyleGuidePage extends HookConsumerWidget {
                             subtitle: "Tap to select an image",
                             onTap: () {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Image entry tapped')),
+                                const SnackBar(
+                                  content: Text('Image entry tapped'),
+                                ),
                               );
                             },
                           ),
                         ],
                       ),
                     ),
-                    
+
                     const SizedBox(height: 40),
                   ],
                 ),
