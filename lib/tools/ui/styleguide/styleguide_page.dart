@@ -4,12 +4,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
+import 'package:titan/tools/ui/styleguide/date_entry.dart';
 import 'package:titan/tools/ui/styleguide/horizontal_multi_select.dart';
+import 'package:titan/tools/ui/styleguide/icon_button.dart';
+import 'package:titan/tools/ui/styleguide/image_entry.dart';
 import 'package:titan/tools/ui/styleguide/item_chip.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
+import 'package:titan/tools/ui/styleguide/list_item_template.dart';
+import 'package:titan/tools/ui/styleguide/list_item_toggle.dart';
 import 'package:titan/tools/ui/styleguide/navbar.dart';
 import 'package:titan/tools/ui/styleguide/router.dart';
 import 'package:titan/tools/ui/styleguide/searchbar.dart';
+import 'package:titan/tools/ui/styleguide/text_entry.dart';
 import 'package:titan/tools/ui/widgets/top_bar.dart';
 
 class StyleGuidePage extends HookConsumerWidget {
@@ -969,6 +975,324 @@ class StyleGuidePage extends HookConsumerWidget {
                       ),
                     ),
 
+                    const SizedBox(height: 40),
+                    
+                    // Icon Button Section
+                    const Divider(height: 40),
+                    
+                    sectionHeader(
+                      "7. Icon Buttons",
+                      "Icon-only buttons in various styles for compact UI elements",
+                    ),
+                    
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 20),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Main Icon Button:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              CustomIconButton(
+                                icon: const HeroIcon(
+                                  HeroIcons.plus,
+                                  color: ColorConstants.background,
+                                ),
+                                onPressed: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Main icon button pressed')),
+                                  );
+                                },
+                              ),
+                              const SizedBox(width: 16),
+                              CustomIconButton.danger(
+                                icon: const HeroIcon(
+                                  HeroIcons.trash,
+                                  color: ColorConstants.background,
+                                ),
+                                onPressed: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Danger icon button pressed')),
+                                  );
+                                },
+                              ),
+                              const SizedBox(width: 16),
+                              CustomIconButton.secondary(
+                                icon: const HeroIcon(
+                                  HeroIcons.pencil,
+                                  color: ColorConstants.tertiary,
+                                ),
+                                onPressed: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Secondary icon button pressed')),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    
+                    // List Item Template Section
+                    const Divider(height: 40),
+                    
+                    sectionHeader(
+                      "8. List Item Template",
+                      "Base component for creating consistent list items with customizable content",
+                    ),
+                    
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 20),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Basic List Item Template:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          ListItemTemplate(
+                            title: "Template Item",
+                            subtitle: "Customizable list item template",
+                            icon: const HeroIcon(
+                              HeroIcons.documentText,
+                              color: ColorConstants.tertiary,
+                            ),
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Template item tapped')),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            "With Custom Trailing Widget:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          ListItemTemplate(
+                            title: "Custom Trailing",
+                            subtitle: "With a badge indicator",
+                            icon: const HeroIcon(
+                              HeroIcons.bell,
+                              color: ColorConstants.tertiary,
+                            ),
+                            trailing: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: ColorConstants.main,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: const Text(
+                                "New",
+                                style: TextStyle(
+                                  color: ColorConstants.background,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Custom trailing item tapped')),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    
+                    // Toggle List Item Section
+                    const Divider(height: 40),
+                    
+                    sectionHeader(
+                      "9. Toggle List Item",
+                      "Toggleable list items with dynamic icons for selection state",
+                    ),
+                    
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 20),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Unselected Item:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          ToggleListItem(
+                            title: "Add to Group",
+                            subtitle: "Tap to add this member",
+                            icon: const HeroIcon(
+                              HeroIcons.userGroup,
+                              color: ColorConstants.tertiary,
+                            ),
+                            selected: false,
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Toggle item tapped')),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            "Selected Item:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          ToggleListItem(
+                            title: "Member Added",
+                            subtitle: "This member is already in the group",
+                            icon: const HeroIcon(
+                              HeroIcons.userGroup,
+                              color: ColorConstants.tertiary,
+                            ),
+                            selected: true,
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Selected toggle item tapped')),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    
+                    // Text Entry Section
+                    const Divider(height: 40),
+                    
+                    sectionHeader(
+                      "10. Text Entry",
+                      "Form input fields with validation support and customizable styling",
+                    ),
+                    
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 20),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Basic Text Entry:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          TextEntry(
+                            label: "Name",
+                            controller: TextEditingController(),
+                            onChanged: (value) {
+                              // Handle text change
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            "Number Entry:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          TextEntry(
+                            label: "Amount",
+                            controller: TextEditingController(),
+                            isDouble: true,
+                            keyboardType: TextInputType.number,
+                            suffix: "€",
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            "Multiline Entry:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          TextEntry(
+                            label: "Description",
+                            controller: TextEditingController(),
+                            minLines: 3,
+                            maxLines: 5,
+                            keyboardType: TextInputType.multiline,
+                          ),
+                        ],
+                      ),
+                    ),
+                    
+                    // Specialized Entry Fields Section
+                    const Divider(height: 40),
+                    
+                    sectionHeader(
+                      "11. Specialized Entry Fields",
+                      "Pre-configured entry fields for dates and images",
+                    ),
+                    
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 20),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Date Entry:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          DateEntry(
+                            title: "Event Date",
+                            subtitle: "Select a date for your event",
+                            onTap: () {
+                              showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime.now().add(const Duration(days: 365)),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            "Image Entry:",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          ImageEntry(
+                            title: "Profile Picture",
+                            subtitle: "Tap to select an image",
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Image entry tapped')),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    
                     const SizedBox(height: 40),
                   ],
                 ),

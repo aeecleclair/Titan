@@ -74,7 +74,7 @@ class CustomIconButton extends StatelessWidget {
     return GestureDetector(
       onTap: disabled == true ? null : onPressed,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(8),
