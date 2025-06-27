@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/styleguide/list_item_template.dart';
 
 class ListItem extends StatelessWidget {
   final String title;
@@ -18,44 +19,14 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return ListItemTemplate(
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-        child: Row(
-          children: [
-            if (icon != null) ...[icon!, const SizedBox(width: 10)],
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: ColorConstants.tertiary,
-                    ),
-                  ),
-                  if (subtitle != null)
-                    Text(
-                      subtitle!,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: ColorConstants.onTertiary,
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 10),
-            const HeroIcon(
-              HeroIcons.chevronRight,
-              color: ColorConstants.tertiary,
-            ),
-          ],
-        ),
+      title: title,
+      subtitle: subtitle,
+      icon: icon,
+      trailing: const HeroIcon(
+        HeroIcons.chevronRight,
+        color: ColorConstants.tertiary,
       ),
     );
   }
