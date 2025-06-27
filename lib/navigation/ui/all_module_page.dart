@@ -1,0 +1,49 @@
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/admin/router.dart';
+import 'package:titan/navigation/providers/modules_provider.dart';
+import 'package:titan/settings/router.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/providers/path_forwarding_provider.dart';
+import 'package:titan/tools/ui/styleguide/list_item.dart';
+import 'package:titan/tools/ui/styleguide/searchbar.dart';
+
+class AllModulePage extends ConsumerWidget {
+  const AllModulePage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final modules = ref.watch(listModuleProvider);
+    final isAdmin = ref.watch(isAdminProvider);
+    return Container(
+      color: ColorConstants.background,
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(
+        children: [
+          CustomSearchBar(onSearch: (String query) {}, onFilter: () {}),
+          SizedBox(height: 30),
+          ...[
+            ...modules,
+            SettingsRouter.module,
+            if (isAdmin) AdminRouter.module,
+          ].map(
+            (module) => ListItem(
+              title: module.name,
+              subtitle: module.description,
+              onTap: () {
+                final pathForwardingNotifier = ref.watch(
+                  pathForwardingProvider.notifier,
+                );
+                pathForwardingNotifier.forward(module.root);
+                QR.to(module.root);
+              },
+            ),
+          ),
+          SizedBox(height: 80),
+        ],
+      ),
+    );
+  }
+}

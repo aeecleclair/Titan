@@ -1,4 +1,6 @@
+import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/admin/ui/pages/groups/add_group_page/add_group_page.dart'
     deferred as add_group_page;
@@ -28,6 +30,7 @@ import 'package:titan/admin/ui/pages/add_edit_structure_page/add_edit_structure_
     deferred as add_edit_structure_page;
 import 'package:titan/admin/ui/pages/main_page/main_page.dart'
     deferred as main_page;
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
@@ -50,6 +53,13 @@ class AdminRouter {
   static const String detailAssociationMembership =
       '/detail_association_membership';
   static const String addEditMember = '/add_edit_member';
+  static final Module module = Module(
+    name: "Administration",
+    description: "Gérer les groupes, écoles et structures",
+    icon: const Left(HeroIcons.users),
+    root: AdminRouter.root,
+    selected: false,
+  );
   AdminRouter(this.ref);
 
   QRoute route() => QRoute(

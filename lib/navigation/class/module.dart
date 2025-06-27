@@ -19,12 +19,14 @@ enum ModuleType {
 
 class Module {
   String name;
+  String description;
   Either<HeroIcons, String> icon;
   String root;
   bool selected;
 
   Module({
     required this.name,
+    required this.description,
     required this.icon,
     required this.root,
     required this.selected,
@@ -32,11 +34,13 @@ class Module {
 
   Module copy({
     String? name,
+    String? description,
     Either<HeroIcons, String>? icon,
     String? root,
     bool? selected,
   }) => Module(
     name: name ?? this.name,
+    description: description ?? this.description,
     icon: icon ?? this.icon,
     root: root ?? this.root,
     selected: selected ?? this.selected,

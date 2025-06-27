@@ -1,7 +1,7 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/tools/ui/styleguide/styleguide_page.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -10,6 +10,7 @@ class StyleGuideRouter {
   static const String root = '/styleguide';
   static final Module module = Module(
     name: "Style Guide",
+    description: "Explore the UI components and styles used in Titan",
     icon: const Left(HeroIcons.paintBrush),
     root: StyleGuideRouter.root,
     selected: false,

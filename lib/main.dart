@@ -8,13 +8,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:titan/login/providers/animation_provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:titan/drawer/providers/animation_provider.dart';
-import 'package:titan/drawer/providers/swipe_provider.dart';
-import 'package:titan/drawer/providers/top_bar_callback_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/router.dart';
 import 'package:titan/service/tools/setup.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/plausible/plausible_observer.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
@@ -90,60 +88,36 @@ class MyApp extends HookConsumerWidget {
       }, []);
     }
 
-    final popScope = PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) async {
-        final topBarCallBack = ref.watch(topBarCallBackProvider);
-        if (QR.currentPath.split('/').length <= 2) {
-          final animation = ref.watch(animationProvider);
-          if (animation != null) {
-            final controller = ref.watch(swipeControllerProvider(animation));
-            if (controller.isCompleted) {
-              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-            } else {
-              final controllerNotifier = ref.watch(
-                swipeControllerProvider(animation).notifier,
-              );
-              controllerNotifier.toggle();
-              topBarCallBack.onMenu?.call();
-            }
-          }
-          return;
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      title: 'MyECL',
+      scrollBehavior: MyCustomScrollBehavior(),
+      supportedLocales: const [Locale('en', 'US'), Locale('fr', 'FR')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+        textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: ColorConstants.background,
+      ),
+      routeInformationParser: const QRouteInformationParser(),
+      builder: (context, child) {
+        if (child == null) {
+          return const SizedBox();
         }
-        QR.back();
-        topBarCallBack.onBack?.call();
+        return AppTemplate(child: child);
       },
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        title: 'MyECL',
-        scrollBehavior: MyCustomScrollBehavior(),
-        supportedLocales: const [Locale('en', 'US'), Locale('fr', 'FR')],
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        theme: ThemeData(
-          primarySwatch: Colors.orange,
-          textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
-          brightness: Brightness.light,
-        ),
-        routeInformationParser: const QRouteInformationParser(),
-        builder: (context, child) {
-          if (child == null) {
-            return const SizedBox();
-          }
-          return AppTemplate(child: child);
-        },
-        routerDelegate: QRouterDelegate(
-          appRouter.routes,
-          observers: [if (plausible != null) PlausibleObserver(plausible)],
-          initPath: AppRouter.root,
-          navKey: navigatorKey,
-        ),
+      routerDelegate: QRouterDelegate(
+        appRouter.routes,
+        observers: [if (plausible != null) PlausibleObserver(plausible)],
+        initPath: AppRouter.root,
+        navKey: navigatorKey,
       ),
     );
-    return popScope;
   }
 }
 

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/settings/providers/module_list_provider.dart';
 
 class ModuleListNotifier extends StateNotifier<List<Module>> {

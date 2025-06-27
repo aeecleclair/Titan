@@ -20,17 +20,18 @@ class CustomSearchBar extends HookWidget {
   Widget build(BuildContext context) {
     final textController = useTextEditingController();
 
-    return Material(
-      elevation: 4,
-      borderRadius: BorderRadius.circular(50),
-      color: ColorConstants.background,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50),
+        color: ColorConstants.searchBar,
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
         child: Row(
           children: [
             HeroIcon(
               HeroIcons.magnifyingGlass,
-              color: ColorConstants.tertiary,
+              color: ColorConstants.onBackground,
               size: 24,
             ),
             const SizedBox(width: 8),
@@ -41,7 +42,10 @@ class CustomSearchBar extends HookWidget {
                 onChanged: (value) {
                   onSearch(value);
                 },
-                style: TextStyle(color: ColorConstants.tertiary, fontSize: 16),
+                style: TextStyle(
+                  color: ColorConstants.onBackground,
+                  fontSize: 16,
+                ),
                 decoration: InputDecoration(
                   hintText: hintText,
                   hintStyle: TextStyle(
@@ -57,7 +61,7 @@ class CustomSearchBar extends HookWidget {
               IconButton(
                 icon: HeroIcon(
                   HeroIcons.xMark,
-                  color: ColorConstants.tertiary,
+                  color: ColorConstants.onBackground,
                   size: 20,
                 ),
                 onPressed: () {
@@ -68,7 +72,7 @@ class CustomSearchBar extends HookWidget {
             IconButton(
               icon: HeroIcon(
                 HeroIcons.adjustmentsHorizontal,
-                color: ColorConstants.tertiary,
+                color: ColorConstants.onBackground,
                 size: 20,
               ),
               onPressed: onFilter,

@@ -1,7 +1,7 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/raffle/providers/is_raffle_admin.dart';
 import 'package:titan/raffle/ui/pages/admin_module_page/admin_module_page.dart'
     deferred as admin_module_page;
@@ -30,6 +30,7 @@ class RaffleRouter {
   static const String creation = '/creation';
   static final Module module = Module(
     name: "Tombola",
+    description: "Gérer les tombolas, les prix et les tickets",
     icon: const Left(HeroIcons.gift),
     root: RaffleRouter.root,
     selected: false,

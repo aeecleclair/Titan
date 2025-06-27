@@ -11,6 +11,8 @@ import 'package:titan/home/router.dart';
 import 'package:titan/home/ui/home.dart' deferred as home_page;
 import 'package:titan/loan/router.dart';
 import 'package:titan/login/router.dart';
+import 'package:titan/navigation/ui/all_module_page.dart'
+    deferred as all_module_page;
 import 'package:titan/others/ui/loading_page.dart' deferred as loading_page;
 import 'package:titan/others/ui/no_internet_page.dart'
     deferred as no_internet_page;
@@ -40,6 +42,7 @@ class AppRouter {
   static const String update = '/update';
   static const String noInternet = '/no_internet';
   static const String noModule = '/no_module';
+  static const String allModules = '/all_modules';
 
   AppRouter(this.ref) {
     routes = [
@@ -70,6 +73,14 @@ class AppRouter {
         path: noModule,
         builder: () => no_module_page.NoModulePage(),
         middleware: [DeferredLoadingMiddleware(no_module_page.loadLibrary)],
+      ),
+      QRoute(
+        path: allModules,
+        builder: () => all_module_page.AllModulePage(),
+        middleware: [
+          AuthenticatedMiddleware(ref),
+          DeferredLoadingMiddleware(all_module_page.loadLibrary),
+        ],
       ),
       AdminRouter(ref).route(),
       AdvertRouter(ref).route(),

@@ -3,7 +3,7 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/ph/providers/is_ph_admin_provider.dart';
 import 'package:titan/ph/ui/pages/form_page/add_edit_ph_page.dart'
     deferred as add_edit_ph_page;
@@ -27,6 +27,7 @@ class PhRouter {
   static const String add_ph = '/add_ph';
   static final Module module = Module(
     name: "PH",
+    description: "Gérer les PH, les formulaires et les administrateurs",
     icon: const Left(HeroIcons.newspaper),
     root: PhRouter.root,
     selected: false,

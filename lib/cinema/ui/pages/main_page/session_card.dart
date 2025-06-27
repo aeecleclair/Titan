@@ -8,7 +8,7 @@ import 'package:titan/cinema/providers/session_poster_map_provider.dart';
 import 'package:titan/cinema/providers/session_poster_provider.dart';
 import 'package:titan/cinema/tools/constants.dart';
 import 'package:titan/cinema/tools/functions.dart';
-import 'package:titan/drawer/providers/is_web_format_provider.dart';
+import 'package:titan/navigation/providers/is_web_format_provider.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 
 class SessionCard extends HookConsumerWidget {
