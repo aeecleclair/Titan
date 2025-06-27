@@ -1,7 +1,7 @@
 import 'package:either_dart/either.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/admin_page.dart';
 import 'package:titan/phonebook/ui/pages/association_creation_page/association_creation_page.dart';
@@ -25,6 +25,7 @@ class PhonebookRouter {
   static const String addEditMember = '/add_edit_member';
   static final Module module = Module(
     name: "Annuaire",
+    description: "Gérer les associations, les membres et les administrateurs",
     icon: const Left(HeroIcons.phone),
     root: PhonebookRouter.root,
     selected: false,

@@ -13,10 +13,8 @@ import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/styleguide/list_item_template.dart';
 import 'package:titan/tools/ui/styleguide/list_item_toggle.dart';
 import 'package:titan/tools/ui/styleguide/navbar.dart';
-import 'package:titan/tools/ui/styleguide/router.dart';
 import 'package:titan/tools/ui/styleguide/searchbar.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';
-import 'package:titan/tools/ui/widgets/top_bar.dart';
 
 class StyleGuidePage extends HookConsumerWidget {
   const StyleGuidePage({super.key});
@@ -47,7 +45,6 @@ class StyleGuidePage extends HookConsumerWidget {
     return SafeArea(
       child: Column(
         children: [
-          TopBar(title: "Style Guide", root: StyleGuideRouter.root),
           Expanded(
             child: SingleChildScrollView(
               child: Padding(

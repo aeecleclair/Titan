@@ -1,0 +1,105 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/navigation/providers/display_quit_popup.dart';
+import 'package:titan/navigation/providers/modules_provider.dart';
+import 'package:titan/navigation/providers/should_setup_provider.dart';
+import 'package:titan/router.dart';
+import 'package:titan/service/tools/setup.dart';
+import 'package:titan/navigation/ui/quit_dialog.dart';
+import 'package:titan/tools/providers/path_forwarding_provider.dart';
+import 'package:titan/tools/ui/styleguide/navbar.dart';
+import 'package:titan/user/providers/user_provider.dart';
+
+class DrawerTemplate extends HookConsumerWidget {
+  static Duration duration = const Duration(milliseconds: 200);
+  static const double maxSlide = 255;
+  static const dragRightStartVal = 60;
+  static const dragLeftStartVal = maxSlide - 20;
+  static bool shouldDrag = false;
+  final Widget child;
+
+  const DrawerTemplate({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
+    final modules = ref.watch(listModuleProvider);
+    final displayQuit = ref.watch(displayQuitProvider);
+    final shouldSetup = ref.watch(shouldSetupProvider);
+    final shouldSetupNotifier = ref.read(shouldSetupProvider.notifier);
+
+    Future(() {
+      if (!kIsWeb && user.id != "" && shouldSetup) {
+        setUpNotification(ref);
+        shouldSetupNotifier.setShouldSetup();
+      }
+    });
+
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Center(
+                    child: Text(
+                      'MyEMApp',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Container(color: Colors.yellow, child: child),
+                  ),
+                ),
+              ],
+            ),
+            Positioned(
+              left: 0,
+              bottom: 0,
+              right: 0,
+              child: FloatingNavbar(
+                items: [
+                  ...modules.sublist(0, 3).map((module) {
+                    return FloatingNavbarItem(
+                      title: module.name,
+                      onTap: () {
+                        final pathForwardingNotifier = ref.watch(
+                          pathForwardingProvider.notifier,
+                        );
+                        pathForwardingNotifier.forward(module.root);
+                        QR.to(module.root);
+                      },
+                    );
+                  }),
+                  FloatingNavbarItem(
+                    title: 'Autres',
+                    onTap: () {
+                      final pathForwardingNotifier = ref.watch(
+                        pathForwardingProvider.notifier,
+                      );
+                      pathForwardingNotifier.forward(AppRouter.allModules);
+                      QR.to(AppRouter.allModules);
+                    },
+                  ),
+                ],
+              ),
+            ),
+            if (displayQuit) const QuitDialog(),
+          ],
+        ),
+      ),
+    );
+  }
+}

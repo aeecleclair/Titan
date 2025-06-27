@@ -8,7 +8,7 @@ import 'package:titan/advert/providers/advert_poster_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
 import 'package:titan/advert/tools/constants.dart';
 import 'package:titan/cinema/tools/functions.dart';
-import 'package:titan/drawer/providers/is_web_format_provider.dart';
+import 'package:titan/navigation/providers/is_web_format_provider.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:titan/tools/ui/widgets/text_with_hyper_link.dart';
 

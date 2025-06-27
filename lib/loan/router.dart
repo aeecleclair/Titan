@@ -1,7 +1,7 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/loan/providers/is_loan_admin_provider.dart';
 import 'package:titan/loan/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
@@ -27,6 +27,7 @@ class LoanRouter {
   static const String detail = '/detail';
   static final Module module = Module(
     name: "Prêt",
+    description: "Gérer les prêts et les articles",
     icon: const Left(HeroIcons.buildingLibrary),
     root: LoanRouter.root,
     selected: false,

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/drawer/providers/is_web_format_provider.dart';
+import 'package:titan/navigation/providers/is_web_format_provider.dart';
 import 'package:titan/login/ui/app_sign_in.dart' deferred as app_sign_in;
 import 'package:titan/login/ui/pages/create_account_page/create_account_page.dart'
     deferred as create_account_page;

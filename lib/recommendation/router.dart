@@ -1,7 +1,7 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/recommendation/providers/is_recommendation_admin_provider.dart';
 import 'package:titan/recommendation/ui/pages/main_page.dart'
     deferred as main_page;
@@ -22,6 +22,7 @@ class RecommendationRouter {
   static const String addEdit = '/add_edit';
   static final Module module = Module(
     name: "Bons plans",
+    description: "Gérer les recommandations, les informations et les administrateurs",
     icon: const Left(HeroIcons.currencyEuro),
     root: RecommendationRouter.root,
     selected: false,
