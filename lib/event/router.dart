@@ -25,9 +25,7 @@ class EventRouter {
   static final Module module = Module(
     name: "Évenements",
     description: "Gérer les événements et les participants",
-    icon: const Left(HeroIcons.calendar),
     root: EventRouter.root,
-    selected: false,
   );
   EventRouter(this.ref);
 

@@ -78,40 +78,40 @@ class StyleGuidePage extends HookConsumerWidget {
                       ),
                       child: FloatingNavbar(
                         items: [
-                          FloatingNavbarItem(
-                            title: 'Home',
-                            onTap: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Home tapped')),
-                              );
-                            },
-                          ),
-                          FloatingNavbarItem(
-                            title: 'Search',
-                            onTap: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Search tapped')),
-                              );
-                            },
-                          ),
-                          FloatingNavbarItem(
-                            title: 'Favorites',
-                            onTap: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Favorites tapped'),
-                                ),
-                              );
-                            },
-                          ),
-                          FloatingNavbarItem(
-                            title: 'Profile',
-                            onTap: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Profile tapped')),
-                              );
-                            },
-                          ),
+                          // FloatingNavbarItem(
+                          //   title: 'Home',
+                          //   onTap: () {
+                          //     ScaffoldMessenger.of(context).showSnackBar(
+                          //       const SnackBar(content: Text('Home tapped')),
+                          //     );
+                          //   },
+                          // ),
+                          // FloatingNavbarItem(
+                          //   title: 'Search',
+                          //   onTap: () {
+                          //     ScaffoldMessenger.of(context).showSnackBar(
+                          //       const SnackBar(content: Text('Search tapped')),
+                          //     );
+                          //   },
+                          // ),
+                          // FloatingNavbarItem(
+                          //   title: 'Favorites',
+                          //   onTap: () {
+                          //     ScaffoldMessenger.of(context).showSnackBar(
+                          //       const SnackBar(
+                          //         content: Text('Favorites tapped'),
+                          //       ),
+                          //     );
+                          //   },
+                          // ),
+                          // FloatingNavbarItem(
+                          //   title: 'Profile',
+                          //   onTap: () {
+                          //     ScaffoldMessenger.of(context).showSnackBar(
+                          //       const SnackBar(content: Text('Profile tapped')),
+                          //     );
+                          //   },
+                          // ),
                         ],
                       ),
                     ),

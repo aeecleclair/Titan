@@ -15,9 +15,7 @@ class CentralisationRouter {
   static final Module module = Module(
     description: "Gérer la centralisation des données",
     name: CentralisationTextConstants.centralisation,
-    icon: const Left(HeroIcons.link),
     root: CentralisationRouter.root,
-    selected: false,
   );
   CentralisationRouter(this.ref);
 

@@ -40,9 +40,7 @@ class PaymentRouter {
   static final Module module = Module(
     name: "MyECLPay",
     description: "Gérer les paiements, les statistiques et les appareils",
-    icon: const Left(HeroIcons.creditCard),
     root: PaymentRouter.root,
-    selected: false,
   );
   PaymentRouter(this.ref);
 

@@ -29,9 +29,7 @@ class AdvertRouter {
   static final Module module = Module(
     name: "Annonce",
     description: "Gérer les annonces et les annonceurs",
-    icon: const Left(HeroIcons.megaphone),
     root: AdvertRouter.root,
-    selected: false,
   );
   AdvertRouter(this.ref);
 

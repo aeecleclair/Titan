@@ -28,9 +28,7 @@ class LoanRouter {
   static final Module module = Module(
     name: "Prêt",
     description: "Gérer les prêts et les articles",
-    icon: const Left(HeroIcons.buildingLibrary),
     root: LoanRouter.root,
-    selected: false,
   );
   LoanRouter(this.ref);
 

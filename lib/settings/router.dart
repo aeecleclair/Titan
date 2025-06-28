@@ -31,9 +31,7 @@ class SettingsRouter {
   static final Module module = Module(
     name: "Paramètres",
     description: "Gérer les paramètres de l'application",
-    icon: const Left(HeroIcons.cog),
     root: AdminRouter.root,
-    selected: false,
   );
 
   SettingsRouter(this.ref);

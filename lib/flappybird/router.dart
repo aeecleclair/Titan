@@ -16,9 +16,7 @@ class FlappyBirdRouter {
   static final Module module = Module(
     name: "FlappyBird",
     description: "Jouer à Flappy Bird et consulter le classement",
-    icon: const Right("assets/images/logo_flappybird.svg"),
     root: FlappyBirdRouter.root,
-    selected: false,
   );
   FlappyBirdRouter(this.ref);
 

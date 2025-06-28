@@ -28,9 +28,7 @@ class PhRouter {
   static final Module module = Module(
     name: "PH",
     description: "Gérer les PH, les formulaires et les administrateurs",
-    icon: const Left(HeroIcons.newspaper),
     root: PhRouter.root,
-    selected: false,
   );
   PhRouter(this.ref);
   QRoute route() => QRoute(

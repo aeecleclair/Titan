@@ -50,9 +50,7 @@ class SeedLibraryRouter {
   static final Module module = Module(
     name: "Grainothèque",
     description: "Gérer les graines, les espèces et les stocks",
-    icon: const Left(HeroIcons.inboxStack),
     root: SeedLibraryRouter.root,
-    selected: false,
   );
 
   QRoute route() => QRoute(
