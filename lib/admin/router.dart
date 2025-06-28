@@ -56,9 +56,7 @@ class AdminRouter {
   static final Module module = Module(
     name: "Administration",
     description: "Gérer les groupes, écoles et structures",
-    icon: const Left(HeroIcons.users),
     root: AdminRouter.root,
-    selected: false,
   );
   AdminRouter(this.ref);
 

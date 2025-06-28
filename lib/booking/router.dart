@@ -34,9 +34,7 @@ class BookingRouter {
   static final Module module = Module(
     name: "Réservation",
     description: "Gérer les réservations, les salles et les managers",
-    icon: const Left(HeroIcons.tableCells),
     root: BookingRouter.root,
-    selected: false,
   );
   BookingRouter(this.ref);
 

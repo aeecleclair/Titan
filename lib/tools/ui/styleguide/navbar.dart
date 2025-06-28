@@ -1,21 +1,71 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/providers/path_forwarding_provider.dart';
 
 class FloatingNavbarItem {
   final Function()? onTap;
-  final String title;
+  final Module module;
 
-  FloatingNavbarItem({this.onTap, required this.title});
+  FloatingNavbarItem({this.onTap, required this.module});
 }
 
-class FloatingNavbar extends HookWidget {
+// Get the current route path
+String getCurrentPath() {
+  if (QR.history.isEmpty) return '';
+
+  String currentPath = QR.history.last.path;
+  final parts = currentPath.split('/');
+  if (parts.length > 1 && parts[1].isNotEmpty) {
+    return '/${parts[1]}';
+  }
+  return '';
+}
+
+class FloatingNavbar extends HookConsumerWidget {
   final List<FloatingNavbarItem> items;
   const FloatingNavbar({super.key, required this.items});
   @override
-  Widget build(BuildContext context) {
-    final currentIndex = useState(0);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pathProvider = ref.watch(pathForwardingProvider);
+    // Track previous index for animation
+    final previousIndex = useRef<int>(0);
+    // Use useState to maintain internal state for animation
+    final currentState = useState<int>(3); // Default to "Autres"
+
+    // Get the path from router
+    final currentPath = pathProvider.path;
+
+    // Calculate the selected index based on the current path
+    final routeIndex = useState<int>(3);
+
+    useEffect(() {
+      // This effect runs on every build, but we only care about the initial path
+      if (currentPath.isNotEmpty) {
+        print("Current path: $currentPath");
+        print("items ${items.map((e) => e.module.root).toList()}");
+        routeIndex.value = items.indexWhere((item) => item.module.root == currentPath);
+        // Only use found index if it's in visible range
+        if (routeIndex.value < 0 || routeIndex.value >= items.length) {
+          routeIndex.value = 3; // No match or not in visible modules
+        }
+      }
+      print("Selected index: $routeIndex");
+      return null;
+    }, [currentPath]);
+
+
+    // Initialize the currentState on first render only
+    useEffect(() {
+      currentState.value = routeIndex.value;
+      previousIndex.value = routeIndex.value; // Initialize previous index
+      return null;
+    }, []);
+
     final borderRadius = 25.0;
 
     // Animation controller for all animations
@@ -26,20 +76,29 @@ class FloatingNavbar extends HookWidget {
     // Slide animation reference
     final slideAnimation = useRef<Animation<double>?>(null);
 
-    // Track previous index for animation
-    final previousIndex = useRef<int>(
-      0,
-    ); // Store the latest calculated item width to use in animations
+    // Store the latest calculated item width to use in animations
     final itemWidthRef = useRef<double>(0.0);
+
+    // Watch for path changes and update the selection with proper animation
+    useEffect(() {
+      if (currentPath.isNotEmpty && routeIndex.value != currentState.value) {
+        // When path changes, store current selection as previous
+        previousIndex.value = currentState.value;
+        // Then update to the new route-based selection
+        currentState.value = routeIndex.value;
+      }
+      return null;
+    }, [currentPath, routeIndex]);
 
     // Update animation when index changes - this needs to be in the build method, not in LayoutBuilder
     useEffect(() {
-      if (previousIndex.value != currentIndex.value && itemWidthRef.value > 0) {
+      // Only trigger animation if we have a valid item width and the index has changed
+      if (previousIndex.value != currentState.value && itemWidthRef.value > 0) {
         // Create tween from previous to current position
         slideAnimation.value =
             Tween<double>(
               begin: previousIndex.value * itemWidthRef.value,
-              end: currentIndex.value * itemWidthRef.value,
+              end: currentState.value * itemWidthRef.value,
             ).animate(
               CurvedAnimation(
                 parent: animationController,
@@ -50,12 +109,9 @@ class FloatingNavbar extends HookWidget {
         // Reset and start animation
         animationController.reset();
         animationController.forward();
-
-        // Store current index as previous for next change
-        previousIndex.value = currentIndex.value;
       }
       return null;
-    }, [currentIndex.value, itemWidthRef.value]);
+    }, [currentState.value, itemWidthRef.value]);
 
     // Use LayoutBuilder for proper sizing
     return Padding(
@@ -89,7 +145,7 @@ class FloatingNavbar extends HookWidget {
                       // Get current position from slide animation or fall back to current index
                       final leftPosition = slideAnimation.value != null
                           ? slideAnimation.value!.value
-                          : itemWidth * currentIndex.value;
+                          : itemWidth * currentState.value;
 
                       return Positioned(
                         left: leftPosition,
@@ -111,7 +167,7 @@ class FloatingNavbar extends HookWidget {
                     children: items.asMap().entries.map((entry) {
                       final index = entry.key;
                       final item = entry.value;
-                      final isSelected = index == currentIndex.value;
+                      final isSelected = index == currentState.value;
 
                       // Use AnimatedBuilder for text color to sync with indicator animation
                       return Expanded(
@@ -119,9 +175,17 @@ class FloatingNavbar extends HookWidget {
                           color: Colors.transparent,
                           borderRadius: BorderRadius.circular(borderRadius),
                           child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
                             onTap: () {
+                              // Only animate if this isn't already the selected item
+                              if (index != currentState.value) {
+                                // Store current index as previous for animation
+                                previousIndex.value = currentState.value;
+                                // Update the internal state immediately for animation
+                                currentState.value = index;
+                              }
+                              // Then call the callback
                               item.onTap?.call();
-                              currentIndex.value = index;
                             },
                             child: Container(
                               padding: const EdgeInsets.all(8),
@@ -133,7 +197,7 @@ class FloatingNavbar extends HookWidget {
                                   FontWeight textWeight;
 
                                   if (previousIndex.value ==
-                                      currentIndex.value) {
+                                      currentState.value) {
                                     // No transition happening
                                     textColor = isSelected
                                         ? ColorConstants.main
@@ -145,13 +209,13 @@ class FloatingNavbar extends HookWidget {
                                     // During transition, determine if this item is involved
                                     bool isInvolved =
                                         index == previousIndex.value ||
-                                        index == currentIndex.value;
+                                        index == currentState.value;
 
                                     if (!isInvolved) {
                                       // Not involved in transition
                                       textColor = ColorConstants.background;
                                       textWeight = FontWeight.normal;
-                                    } else if (index == currentIndex.value) {
+                                    } else if (index == currentState.value) {
                                       // Transitioning to selected
                                       final progress =
                                           animationController.value;
@@ -182,7 +246,7 @@ class FloatingNavbar extends HookWidget {
 
                                   return Center(
                                     child: AutoSizeText(
-                                      item.title,
+                                      item.module.name,
                                       style: TextStyle(
                                         color: textColor,
                                         fontSize: 14,

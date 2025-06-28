@@ -31,9 +31,7 @@ class RaffleRouter {
   static final Module module = Module(
     name: "Tombola",
     description: "Gérer les tombolas, les prix et les tickets",
-    icon: const Left(HeroIcons.gift),
     root: RaffleRouter.root,
-    selected: false,
   );
   RaffleRouter(this.ref);
   QRoute route() => QRoute(

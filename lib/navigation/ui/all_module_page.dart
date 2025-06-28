@@ -3,7 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/admin/router.dart';
-import 'package:titan/navigation/providers/modules_provider.dart';
+import 'package:titan/navigation/providers/navbar_module_list.dart';
+import 'package:titan/settings/providers/module_list_provider.dart';
 import 'package:titan/settings/router.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
@@ -15,8 +16,10 @@ class AllModulePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final modules = ref.watch(listModuleProvider);
-    final isAdmin = ref.watch(isAdminProvider);
+    final modules = ref.watch(modulesProvider);
+    final navbarListModuleNotifier = ref.watch(
+      navbarListModuleProvider.notifier,
+    );
     return Container(
       color: ColorConstants.background,
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -24,15 +27,12 @@ class AllModulePage extends ConsumerWidget {
         children: [
           CustomSearchBar(onSearch: (String query) {}, onFilter: () {}),
           SizedBox(height: 30),
-          ...[
-            ...modules,
-            SettingsRouter.module,
-            if (isAdmin) AdminRouter.module,
-          ].map(
+          ...modules.map(
             (module) => ListItem(
               title: module.name,
               subtitle: module.description,
               onTap: () {
+                navbarListModuleNotifier.pushModule(module);
                 final pathForwardingNotifier = ref.watch(
                   pathForwardingProvider.notifier,
                 );

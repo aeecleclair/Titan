@@ -24,9 +24,7 @@ class PurchasesRouter {
   static final Module module = Module(
     name: "Achats",
     description: "Gérer les achats, les tickets et l'historique",
-    icon: const Left(HeroIcons.shoppingBag),
     root: PurchasesRouter.root,
-    selected: false,
   );
   PurchasesRouter(this.ref);
 

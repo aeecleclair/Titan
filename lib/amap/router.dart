@@ -37,9 +37,7 @@ class AmapRouter {
   static final Module module = Module(
     name: "Amap",
     description: "Gérer les livraisons et les produits",
-    icon: const Left(HeroIcons.shoppingCart),
     root: AmapRouter.root,
-    selected: false,
   );
   AmapRouter(this.ref);
 

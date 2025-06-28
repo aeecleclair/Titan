@@ -26,9 +26,7 @@ class PhonebookRouter {
   static final Module module = Module(
     name: "Annuaire",
     description: "Gérer les associations, les membres et les administrateurs",
-    icon: const Left(HeroIcons.phone),
     root: PhonebookRouter.root,
-    selected: false,
   );
   PhonebookRouter(this.ref);
 

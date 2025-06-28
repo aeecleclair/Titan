@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/navigation/providers/display_quit_popup.dart';
-import 'package:titan/navigation/providers/modules_provider.dart';
+import 'package:titan/navigation/providers/navbar_module_list.dart';
 import 'package:titan/navigation/providers/should_setup_provider.dart';
 import 'package:titan/router.dart';
 import 'package:titan/service/tools/setup.dart';
 import 'package:titan/navigation/ui/quit_dialog.dart';
+import 'package:titan/settings/providers/module_list_provider.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/styleguide/navbar.dart';
 import 'package:titan/user/providers/user_provider.dart';
@@ -25,7 +27,10 @@ class DrawerTemplate extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
-    final modules = ref.watch(listModuleProvider);
+    final navbarListModule = ref.watch(navbarListModuleProvider);
+    final navbarListModuleNotifier = ref.watch(
+      navbarListModuleProvider.notifier,
+    );
     final displayQuit = ref.watch(displayQuitProvider);
     final shouldSetup = ref.watch(shouldSetupProvider);
     final shouldSetupNotifier = ref.read(shouldSetupProvider.notifier);
@@ -71,10 +76,11 @@ class DrawerTemplate extends HookConsumerWidget {
               right: 0,
               child: FloatingNavbar(
                 items: [
-                  ...modules.sublist(0, 3).map((module) {
+                  ...navbarListModule.map((module) {
                     return FloatingNavbarItem(
-                      title: module.name,
+                      module: module,
                       onTap: () {
+                        navbarListModuleNotifier.pushModule(module);
                         final pathForwardingNotifier = ref.watch(
                           pathForwardingProvider.notifier,
                         );
@@ -84,7 +90,7 @@ class DrawerTemplate extends HookConsumerWidget {
                     );
                   }),
                   FloatingNavbarItem(
-                    title: 'Autres',
+                    module: Module(name: 'Autres', description: '', root: AppRouter.allModules),
                     onTap: () {
                       final pathForwardingNotifier = ref.watch(
                         pathForwardingProvider.notifier,

@@ -26,9 +26,7 @@ class CinemaRouter {
   static final Module module = Module(
     name: "Cinéma",
     description: "Gérer les séances de cinéma",
-    icon: const Left(HeroIcons.ticket),
     root: CinemaRouter.root,
-    selected: false,
   );
   CinemaRouter(this.ref);
 

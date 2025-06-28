@@ -11,9 +11,7 @@ class StyleGuideRouter {
   static final Module module = Module(
     name: "Style Guide",
     description: "Explore the UI components and styles used in Titan",
-    icon: const Left(HeroIcons.paintBrush),
     root: StyleGuideRouter.root,
-    selected: false,
   );
   StyleGuideRouter(this.ref);
   QRoute route() => QRoute(

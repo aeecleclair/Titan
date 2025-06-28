@@ -16,9 +16,7 @@ class HomeRouter {
   static final Module module = Module(
     name: "Calendrier",
     description: "Consulter les événements et les activités",
-    icon: const Left(HeroIcons.calendarDays),
     root: HomeRouter.root,
-    selected: false,
   );
   HomeRouter(this.ref);
 

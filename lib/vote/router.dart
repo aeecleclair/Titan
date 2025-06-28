@@ -28,9 +28,7 @@ class VoteRouter {
   static final Module module = Module(
     name: "Vote",
     description: "Gérer les votes, les sections et les candidats",
-    icon: const Left(HeroIcons.envelopeOpen),
     root: VoteRouter.root,
-    selected: false,
   );
   VoteRouter(this.ref);
 

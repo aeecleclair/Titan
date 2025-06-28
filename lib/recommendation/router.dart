@@ -23,9 +23,7 @@ class RecommendationRouter {
   static final Module module = Module(
     name: "Bons plans",
     description: "Gérer les recommandations, les informations et les administrateurs",
-    icon: const Left(HeroIcons.currencyEuro),
     root: RecommendationRouter.root,
-    selected: false,
   );
 
   RecommendationRouter(this.ref);
