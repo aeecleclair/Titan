@@ -2,7 +2,7 @@ import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/phonebook/class/association.dart';
-import 'package:titan/phonebook/class/association_kinds.dart';
+import 'package:titan/phonebook/class/association_groupement.dart';
 import 'package:titan/phonebook/class/complete_member.dart';
 import 'package:titan/phonebook/class/membership.dart';
 import 'package:titan/phonebook/providers/roles_tags_provider.dart';
@@ -26,25 +26,23 @@ List<CompleteMember> sortedMembers(
 
 List<Association> sortedAssociationByKind(
   List<Association> associations,
-  AssociationKinds kinds,
+  List<AssociationGroupement> groupements,
 ) {
-  List<Association> sorted = [];
-  List<List<Association>> sortedByKind = List.generate(
-    kinds.kinds.length,
-    (index) => [],
-  );
+  Map<String, List<Association>> sortedByGroupement = {
+    for (var groupement in groupements) groupement.id: [],
+  };
   for (Association association in associations) {
-    sortedByKind[kinds.kinds.indexOf(association.kind)].add(association);
+    sortedByGroupement[association.groupementId]!.add(association);
   }
-  for (List<Association> list in sortedByKind) {
+  for (List<Association> list in sortedByGroupement.values) {
     list.sort(
       (a, b) => removeDiacritics(
         a.name,
       ).toLowerCase().compareTo(removeDiacritics(b.name).toLowerCase()),
     );
-    sorted.addAll(list);
   }
-  return sorted;
+  // Flatten the sorted map values into a single list
+  return sortedByGroupement.values.expand((list) => list).toList();
 }
 
 Color getColorFromTagList(WidgetRef ref, List<String> tags) {

@@ -1,5 +1,4 @@
 import 'package:titan/phonebook/class/association.dart';
-import 'package:titan/phonebook/class/association_kinds.dart';
 import 'package:titan/tools/repository/repository.dart';
 
 class AssociationRepository extends Repository {
@@ -23,10 +22,6 @@ class AssociationRepository extends Repository {
 
   Future<Association> createAssociation(Association association) async {
     return Association.fromJson(await create(association.toJson()));
-  }
-
-  Future<AssociationKinds> getAssociationKinds() async {
-    return AssociationKinds.fromJson(await getOne("kinds"));
   }
 
   Future<bool> deactivateAssociation(Association association) async {
