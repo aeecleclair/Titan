@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/admin/providers/is_admin_provider.dart';
-import 'package:titan/admin/router.dart';
 import 'package:titan/navigation/providers/navbar_module_list.dart';
 import 'package:titan/settings/providers/module_list_provider.dart';
-import 'package:titan/settings/router.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';

@@ -1,7 +1,5 @@
-import 'package:either_dart/either.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:titan/admin/router.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/settings/ui/pages/change_pass/change_pass.dart'

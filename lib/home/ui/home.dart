@@ -6,6 +6,7 @@ import 'package:titan/home/tools/constants.dart';
 import 'package:titan/home/ui/day_list.dart';
 import 'package:titan/home/ui/days_event.dart';
 import 'package:titan/home/ui/month_bar.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
 class HomePage extends HookConsumerWidget {
@@ -18,52 +19,55 @@ class HomePage extends HookConsumerWidget {
     final ScrollController scrollController = useScrollController();
     final daysEventScrollController = useScrollController();
 
-    return Column(
-      children: [
-        const SizedBox(height: 20),
-        MonthBar(
-          scrollController: scrollController,
-          width: MediaQuery.of(context).size.width,
-        ),
-        const SizedBox(height: 10),
-        DayList(scrollController, daysEventScrollController),
-        const SizedBox(height: 15),
-        const AlignLeftText(
-          HomeTextConstants.incomingEvents,
-          padding: EdgeInsets.symmetric(horizontal: 30.0),
-          fontSize: 25,
-        ),
-        const SizedBox(height: 10),
-        SizedBox(
-          height: MediaQuery.of(context).size.height - 320,
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            controller: daysEventScrollController,
-            child: sortedEventList.keys.isNotEmpty
-                ? Column(
-                    children: sortedEventList
-                        .map(
-                          (key, value) => MapEntry(
-                            key,
-                            DaysEvent(day: key, now: now, events: value),
-                          ),
-                        )
-                        .values
-                        .toList(),
-                  )
-                : const Center(
-                    child: Text(
-                      HomeTextConstants.noEvents,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
+    return Container(
+      color: ColorConstants.background,
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
+          MonthBar(
+            scrollController: scrollController,
+            width: MediaQuery.of(context).size.width,
+          ),
+          const SizedBox(height: 10),
+          DayList(scrollController, daysEventScrollController),
+          const SizedBox(height: 15),
+          const AlignLeftText(
+            HomeTextConstants.incomingEvents,
+            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            fontSize: 25,
+          ),
+          const SizedBox(height: 10),
+          SizedBox(
+            height: MediaQuery.of(context).size.height - 320,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              controller: daysEventScrollController,
+              child: sortedEventList.keys.isNotEmpty
+                  ? Column(
+                      children: sortedEventList
+                          .map(
+                            (key, value) => MapEntry(
+                              key,
+                              DaysEvent(day: key, now: now, events: value),
+                            ),
+                          )
+                          .values
+                          .toList(),
+                    )
+                  : const Center(
+                      child: Text(
+                        HomeTextConstants.noEvents,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
-                  ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

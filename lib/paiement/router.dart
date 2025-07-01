@@ -1,6 +1,4 @@
-import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/paiement/providers/is_payment_admin.dart';
 import 'package:titan/paiement/ui/pages/admin_page/admin_page.dart'

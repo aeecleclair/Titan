@@ -1,6 +1,4 @@
-import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';

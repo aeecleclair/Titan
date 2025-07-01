@@ -1,6 +1,4 @@
-import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:titan/centralisation/tools/constants.dart';
 import 'package:titan/centralisation/ui/pages/main_page.dart'
     deferred as main_page;

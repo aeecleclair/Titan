@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/tools/constants.dart';
 
 class PhTemplate extends HookConsumerWidget {
   final Widget child;
@@ -7,6 +8,6 @@ class PhTemplate extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return child;
+    return Container(color: ColorConstants.background, child: child);
   }
 }
