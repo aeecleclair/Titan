@@ -6,11 +6,7 @@ class Module {
   String description;
   String root;
 
-  Module({
-    required this.name,
-    required this.description,
-    required this.root,
-  });
+  Module({required this.name, required this.description, required this.root});
 
   Module copy({
     String? name,

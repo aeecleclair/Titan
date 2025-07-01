@@ -1,4 +1,3 @@
-import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/flappybird/ui/pages/game_page/game_page.dart'

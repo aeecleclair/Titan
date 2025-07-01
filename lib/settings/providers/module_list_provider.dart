@@ -8,22 +8,21 @@ import 'package:titan/amap/router.dart';
 import 'package:titan/booking/router.dart';
 import 'package:titan/centralisation/router.dart';
 import 'package:titan/cinema/router.dart';
+import 'package:titan/event/router.dart';
+import 'package:titan/loan/router.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:collection/collection.dart';
-import 'package:titan/event/router.dart';
 import 'package:titan/home/router.dart';
-import 'package:titan/loan/router.dart';
 import 'package:titan/paiement/router.dart';
-import 'package:titan/phonebook/router.dart';
 import 'package:titan/ph/router.dart';
+import 'package:titan/phonebook/router.dart';
 import 'package:titan/purchases/router.dart';
 import 'package:titan/raffle/router.dart';
 import 'package:titan/recommendation/router.dart';
-import 'package:titan/router.dart';
 import 'package:titan/seed-library/router.dart';
 import 'package:titan/settings/router.dart';
-import 'package:titan/vote/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:titan/vote/router.dart';
 
 final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
   ref,
@@ -48,20 +47,20 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   List<Module> allModules = [
     HomeRouter.module,
     AdvertRouter.module,
-    // AmapRouter.module,
-    // BookingRouter.module,
-    // CentralisationRouter.module,
-    // CinemaRouter.module,
-    // EventRouter.module,
-    // LoanRouter.module,
+    AmapRouter.module,
+    BookingRouter.module,
+    CentralisationRouter.module,
+    CinemaRouter.module,
+    EventRouter.module,
+    LoanRouter.module,
     PaymentRouter.module,
-    // PhonebookRouter.module,
-    // PhRouter.module,
-    // PurchasesRouter.module,
-    // RaffleRouter.module,
-    // RecommendationRouter.module,
-    // VoteRouter.module,
-    // SeedLibraryRouter.module,
+    PhonebookRouter.module,
+    PhRouter.module,
+    PurchasesRouter.module,
+    RaffleRouter.module,
+    RecommendationRouter.module,
+    VoteRouter.module,
+    SeedLibraryRouter.module,
   ];
   ModulesNotifier({required this.isAdmin}) : super([]);
 
@@ -127,12 +126,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     for (Module module in toDelete) {
       allModules.remove(module);
     }
-    allModules.addAll(
-      [
-        SettingsRouter.module,
-        if (isAdmin) AdminRouter.module,
-      ]
-    );
+    allModules.addAll([SettingsRouter.module, if (isAdmin) AdminRouter.module]);
     state = allModules;
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:titan/tools/constants.dart';
 
 class VoteTemplate extends StatelessWidget {
   final Widget child;
@@ -6,6 +7,6 @@ class VoteTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return child;
+    return Container(color: ColorConstants.background, child: child);
   }
 }

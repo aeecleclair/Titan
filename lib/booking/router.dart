@@ -1,6 +1,4 @@
-import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:titan/booking/providers/is_admin_provider.dart';
 import 'package:titan/booking/providers/is_manager_provider.dart';
 import 'package:titan/booking/ui/pages/admin_pages/add_edit_manager_page.dart'

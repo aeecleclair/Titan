@@ -1,6 +1,4 @@
-import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/event/ui/pages/detail_page/detail_page.dart'
     deferred as detail_page;
