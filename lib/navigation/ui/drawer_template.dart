@@ -9,7 +9,6 @@ import 'package:titan/navigation/providers/should_setup_provider.dart';
 import 'package:titan/router.dart';
 import 'package:titan/service/tools/setup.dart';
 import 'package:titan/navigation/ui/quit_dialog.dart';
-import 'package:titan/settings/providers/module_list_provider.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/styleguide/navbar.dart';
 import 'package:titan/user/providers/user_provider.dart';
@@ -80,23 +79,41 @@ class DrawerTemplate extends HookConsumerWidget {
                     return FloatingNavbarItem(
                       module: module,
                       onTap: () {
+                        // Use ref.read instead of ref.watch to avoid rebuilds
                         navbarListModuleNotifier.pushModule(module);
-                        final pathForwardingNotifier = ref.watch(
+                        final pathForwardingNotifier = ref.read(
                           pathForwardingProvider.notifier,
                         );
+
+                        // First update the path
                         pathForwardingNotifier.forward(module.root);
-                        QR.to(module.root);
+
+                        // Then navigate with a small delay to allow the UI to stabilize
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          QR.to(module.root);
+                        });
                       },
                     );
                   }),
                   FloatingNavbarItem(
-                    module: Module(name: 'Autres', description: '', root: AppRouter.allModules),
+                    module: Module(
+                      name: 'Autres',
+                      description: '',
+                      root: AppRouter.allModules,
+                    ),
                     onTap: () {
-                      final pathForwardingNotifier = ref.watch(
+                      // Use ref.read instead of ref.watch to avoid rebuilds
+                      final pathForwardingNotifier = ref.read(
                         pathForwardingProvider.notifier,
                       );
+
+                      // First update the path
                       pathForwardingNotifier.forward(AppRouter.allModules);
-                      QR.to(AppRouter.allModules);
+
+                      // Then navigate with a small delay to allow the UI to stabilize
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        QR.to(AppRouter.allModules);
+                      });
                     },
                   ),
                 ],
