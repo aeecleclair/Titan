@@ -48,7 +48,9 @@ class FloatingNavbar extends HookConsumerWidget {
       if (currentPath.isNotEmpty) {
         print("Current path: $currentPath");
         print("items ${items.map((e) => e.module.root).toList()}");
-        routeIndex.value = items.indexWhere((item) => item.module.root == currentPath);
+        routeIndex.value = items.indexWhere(
+          (item) => item.module.root == currentPath,
+        );
         // Only use found index if it's in visible range
         if (routeIndex.value < 0 || routeIndex.value >= items.length) {
           routeIndex.value = 3; // No match or not in visible modules
@@ -57,7 +59,6 @@ class FloatingNavbar extends HookConsumerWidget {
       print("Selected index: $routeIndex");
       return null;
     }, [currentPath]);
-
 
     // Initialize the currentState on first render only
     useEffect(() {
@@ -68,10 +69,19 @@ class FloatingNavbar extends HookConsumerWidget {
 
     final borderRadius = 25.0;
 
-    // Animation controller for all animations
+    // Animation controller for all animations with proper cleanup
     final animationController = useAnimationController(
       duration: const Duration(milliseconds: 300),
     );
+
+    // Ensure proper disposal
+    useEffect(() {
+      return () {
+        if (animationController.isAnimating) {
+          animationController.stop();
+        }
+      };
+    }, []);
 
     // Slide animation reference
     final slideAnimation = useRef<Animation<double>?>(null);
@@ -179,13 +189,27 @@ class FloatingNavbar extends HookConsumerWidget {
                             onTap: () {
                               // Only animate if this isn't already the selected item
                               if (index != currentState.value) {
+                                // First stop any running animation
+                                if (animationController.isAnimating) {
+                                  animationController.stop();
+                                }
+
                                 // Store current index as previous for animation
                                 previousIndex.value = currentState.value;
                                 // Update the internal state immediately for animation
                                 currentState.value = index;
+
+                                // Schedule navigation after the current frame completes
+                                WidgetsBinding.instance.addPostFrameCallback((
+                                  _,
+                                ) {
+                                  // Now it's safe to navigate
+                                  item.onTap?.call();
+                                });
+                              } else {
+                                // If already selected, just call the callback
+                                item.onTap?.call();
                               }
-                              // Then call the callback
-                              item.onTap?.call();
                             },
                             child: Container(
                               padding: const EdgeInsets.all(8),
