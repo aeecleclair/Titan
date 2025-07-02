@@ -21,6 +21,7 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddEditLoanPage extends HookConsumerWidget {
   const AddEditLoanPage({super.key});
@@ -58,8 +59,8 @@ class AddEditLoanPage extends HookConsumerWidget {
               const SizedBox(height: 30),
               StyledSearchBar(
                 label: isEdit
-                    ? LoanTextConstants.editLoan
-                    : LoanTextConstants.addLoan,
+                    ? AppLocalizations.of(context)!.loanEditLoan
+                    : AppLocalizations.of(context)!.loanAddLoan,
                 onChanged: (value) async {
                   if (value.isNotEmpty) {
                     loanersItemsNotifier.setTData(
@@ -81,7 +82,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                     const NumberSelectedText(),
                     const SizedBox(height: 20),
                     TextEntry(
-                      label: LoanTextConstants.borrower,
+                      label: AppLocalizations.of(context)!.loanBorrower,
                       onChanged: (value) {
                         tokenExpireWrapper(ref, () async {
                           if (queryController.text.isNotEmpty) {
@@ -104,13 +105,13 @@ class AddEditLoanPage extends HookConsumerWidget {
                     const EndDateEntry(),
                     const SizedBox(height: 30),
                     TextEntry(
-                      label: LoanTextConstants.note,
+                      label: AppLocalizations.of(context)!.loanNote,
                       controller: note,
                       canBeEmpty: true,
                     ),
                     const SizedBox(height: 30),
                     TextEntry(
-                      label: LoanTextConstants.caution,
+                      label: AppLocalizations.of(context)!.loanCaution,
                       controller: caution,
                       canBeEmpty: true,
                     ),
@@ -128,7 +129,7 @@ class AddEditLoanPage extends HookConsumerWidget {
                           displayToast(
                             context,
                             TypeMsg.error,
-                            LoanTextConstants.incorrectOrMissingFields,
+                            AppLocalizations.of(context)!.loanIncorrectOrMissingFields,
                           );
                         }
                       },

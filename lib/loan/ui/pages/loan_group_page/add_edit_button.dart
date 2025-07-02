@@ -18,6 +18,7 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddEditButton extends HookConsumerWidget {
   final TextEditingController note;
@@ -55,10 +56,10 @@ class AddEditButton extends HookConsumerWidget {
             displayToast(
               context,
               TypeMsg.error,
-              LoanTextConstants.invalidDates,
+              AppLocalizations.of(context)!.loanInvalidDates,
             );
           } else if (borrower.id.isEmpty) {
-            displayToast(context, TypeMsg.error, LoanTextConstants.noBorrower);
+            displayToast(context, TypeMsg.error, AppLocalizations.of(context)!.loanNoBorrower);
           } else {
             await items.when(
               data: (itemList) async {
@@ -99,31 +100,31 @@ class AddEditButton extends HookConsumerWidget {
                       if (isEdit) {
                         displayToastWithContext(
                           TypeMsg.msg,
-                          LoanTextConstants.updatedLoan,
+                          AppLocalizations.of(context)!.loanUpdatedLoan,
                         );
                       } else {
                         displayToastWithContext(
                           TypeMsg.msg,
-                          LoanTextConstants.addedLoan,
+                          AppLocalizations.of(context)!.loanAddedLoan,
                         );
                       }
                     } else {
                       if (isEdit) {
                         displayToastWithContext(
                           TypeMsg.error,
-                          LoanTextConstants.updatingError,
+                          AppLocalizations.of(context)!.loanUpdatingError,
                         );
                       } else {
                         displayToastWithContext(
                           TypeMsg.error,
-                          LoanTextConstants.addingError,
+                          AppLocalizations.of(context)!.loanAddingError,
                         );
                       }
                     }
                   } else {
                     displayToastWithContext(
                       TypeMsg.error,
-                      LoanTextConstants.noItemSelected,
+                      AppLocalizations.of(context)!.loanNoItemSelected,
                     );
                   }
                 });
@@ -135,7 +136,7 @@ class AddEditButton extends HookConsumerWidget {
                 displayToast(
                   context,
                   TypeMsg.error,
-                  LoanTextConstants.addingError,
+                  AppLocalizations.of(context)!.loanAddingError,
                 );
               },
             );
@@ -143,7 +144,7 @@ class AddEditButton extends HookConsumerWidget {
         });
       },
       child: Text(
-        isEdit ? LoanTextConstants.edit : LoanTextConstants.add,
+        isEdit ? AppLocalizations.of(context)!.loanEdit : AppLocalizations.of(context)!.loanAdd,
         style: const TextStyle(
           color: Colors.white,
           fontSize: 25,

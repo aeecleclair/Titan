@@ -9,6 +9,7 @@ import 'package:titan/loan/providers/start_provider.dart';
 import 'package:titan/loan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class StartDateEntry extends HookConsumerWidget {
   const StartDateEntry({super.key});
@@ -47,7 +48,7 @@ class StartDateEntry extends HookConsumerWidget {
             : now,
         firstDate: DateTime(now.year - 1, now.month, now.day),
       ),
-      label: LoanTextConstants.beginDate,
+      label: AppLocalizations.of(context)!.loanBeginDate,
       controller: TextEditingController(text: start),
     );
   }

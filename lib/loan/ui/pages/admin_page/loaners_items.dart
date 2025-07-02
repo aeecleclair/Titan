@@ -9,7 +9,6 @@ import 'package:titan/loan/providers/item_provider.dart';
 import 'package:titan/loan/providers/loaner_provider.dart';
 import 'package:titan/loan/providers/loaners_items_provider.dart';
 import 'package:titan/loan/router.dart';
-import 'package:titan/loan/tools/constants.dart';
 import 'package:titan/loan/ui/pages/admin_page/item_card.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
@@ -19,6 +18,7 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class LoanersItems extends HookConsumerWidget {
   const LoanersItems({super.key});
@@ -43,7 +43,7 @@ class LoanersItems extends HookConsumerWidget {
 
     final item = loanersItems[loaner];
     if (item == null) {
-      return const Center(child: Text(LoanTextConstants.noItems));
+      return Center(child: Text(AppLocalizations.of(context)!.loanNoItems));
     }
     return AsyncChild(
       value: item,
@@ -54,7 +54,7 @@ class LoanersItems extends HookConsumerWidget {
         return Column(
           children: [
             StyledSearchBar(
-              label: LoanTextConstants.itemHandling,
+              label: AppLocalizations.of(context)!.loanItemHandling,
               onChanged: (value) async {
                 if (value.isNotEmpty) {
                   loanersItemsNotifier.setTData(
@@ -97,7 +97,9 @@ class LoanersItems extends HookConsumerWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return CustomDialogBox(
-                        descriptions: LoanTextConstants.deletingItem,
+                        descriptions: AppLocalizations.of(
+                          context,
+                        )!.loanDeletingItem,
                         onYes: () {
                           tokenExpireWrapper(ref, () async {
                             final value = await itemListNotifier.deleteItem(
@@ -110,17 +112,17 @@ class LoanersItems extends HookConsumerWidget {
                               });
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                LoanTextConstants.deletedItem,
+                                AppLocalizations.of(context)!.loanDeletedItem,
                               );
                             } else {
                               displayToastWithContext(
                                 TypeMsg.error,
-                                LoanTextConstants.deletingError,
+                                AppLocalizations.of(context)!.loanDeletingError,
                               );
                             }
                           });
                         },
-                        title: LoanTextConstants.delete,
+                        title: AppLocalizations.of(context)!.loanDelete,
                       );
                     },
                   );

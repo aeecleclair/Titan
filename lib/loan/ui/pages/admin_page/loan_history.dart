@@ -14,6 +14,7 @@ import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/widgets/loader.dart';
 import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class HistoryLoan extends HookConsumerWidget {
   const HistoryLoan({super.key});
@@ -49,7 +50,7 @@ class HistoryLoan extends HookConsumerWidget {
         return Column(
           children: [
             StyledSearchBar(
-              label: LoanTextConstants.history,
+              label: AppLocalizations.of(context)!.loanHistory,
               onChanged: (value) async {
                 if (value.isNotEmpty) {
                   adminHistoryLoanListNotifier.setTData(

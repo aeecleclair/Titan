@@ -16,6 +16,7 @@ import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class LoanMainPage extends HookConsumerWidget {
   const LoanMainPage({super.key});
@@ -64,7 +65,7 @@ class LoanMainPage extends HookConsumerWidget {
                     ? Column(
                         children: [
                           AlignLeftText(
-                            '${onGoingLoan.length} ${LoanTextConstants.loan.toLowerCase()}${onGoingLoan.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
+                            '${onGoingLoan.length} ${AppLocalizations.of(context)!.loanLoan.toLowerCase()}${onGoingLoan.length > 1 ? 's' : ''} ${AppLocalizations.of(context)!.loanOnGoing.toLowerCase()}',
                             padding: const EdgeInsets.symmetric(
                               horizontal: 30.0,
                             ),
@@ -93,7 +94,7 @@ class LoanMainPage extends HookConsumerWidget {
                             Expanded(
                               child: Center(
                                 child: Text(
-                                  LoanTextConstants.noLoan,
+                                  AppLocalizations.of(context)!.loanNoLoan,
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -112,7 +113,7 @@ class LoanMainPage extends HookConsumerWidget {
                     children: [
                       const SizedBox(height: 30),
                       AlignLeftText(
-                        '${returnedLoan.length} ${LoanTextConstants.loan.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''} ${LoanTextConstants.returned.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''}',
+                        '${returnedLoan.length} ${AppLocalizations.of(context)!.loanLoan.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''} ${AppLocalizations.of(context)!.loanReturned.toLowerCase()}${returnedLoan.length > 1 ? 's' : ''}',
                         padding: const EdgeInsets.symmetric(horizontal: 30.0),
                         color: Colors.grey,
                       ),

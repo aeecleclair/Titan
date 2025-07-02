@@ -6,6 +6,7 @@ import 'package:titan/loan/tools/constants.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ItemCard extends StatelessWidget {
   final Item item;
@@ -46,8 +47,8 @@ class ItemCard extends StatelessWidget {
           const SizedBox(height: 5),
           Text(
             availableQuantity > 0
-                ? '$availableQuantity ${availableQuantity <= 1 ? LoanTextConstants.available : LoanTextConstants.availableMultiple}'
-                : LoanTextConstants.unavailable,
+                ? '$availableQuantity ${availableQuantity <= 1 ? AppLocalizations.of(context)!.loanAvailable : AppLocalizations.of(context)!.loanAvailableMultiple}'
+                : AppLocalizations.of(context)!.loanUnavailable,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
