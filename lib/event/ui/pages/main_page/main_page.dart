@@ -14,6 +14,7 @@ import 'package:titan/tools/ui/widgets/admin_button.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class EventMainPage extends HookConsumerWidget {
   const EventMainPage({super.key});
@@ -44,8 +45,8 @@ class EventMainPage extends HookConsumerWidget {
                     children: [
                       Text(
                         eventList.isEmpty
-                            ? EventTextConstants.noEvent
-                            : EventTextConstants.myEvents,
+                            ? AppLocalizations.of(context)!.eventNoEvent
+                            : AppLocalizations.of(context)!.eventMyEvents,
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

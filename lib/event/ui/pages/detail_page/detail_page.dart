@@ -7,6 +7,7 @@ import 'package:titan/event/ui/event.dart';
 import 'package:titan/event/ui/components/event_ui.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class DetailPage extends HookConsumerWidget {
   final bool isAdmin;
@@ -97,7 +98,7 @@ class DetailPage extends HookConsumerWidget {
                                     const SizedBox(height: 30),
                                     Text(
                                       event.applicant.phone ??
-                                          EventTextConstants.noPhoneRegistered,
+                                          AppLocalizations.of(context)!.eventNoPhoneRegistered,
                                       style: const TextStyle(fontSize: 25),
                                     ),
                                     const SizedBox(height: 50),

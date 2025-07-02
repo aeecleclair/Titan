@@ -15,6 +15,7 @@ import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class EventUi extends ConsumerWidget {
   final Event event;
@@ -175,7 +176,7 @@ class EventUi extends ConsumerWidget {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  decisionToString(event.decision),
+                  decisionToString(event.decision, context),
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: textColor,
@@ -209,7 +210,7 @@ class EventUi extends ConsumerWidget {
                                   : Colors.grey.shade300,
                               child: Center(
                                 child: Text(
-                                  EventTextConstants.edit,
+                                  AppLocalizations.of(context)!.eventEdit,
                                   style: TextStyle(
                                     color: textColor,
                                     fontSize: 15,
@@ -228,24 +229,31 @@ class EventUi extends ConsumerWidget {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return CustomDialogBox(
-                                    descriptions:
-                                        EventTextConstants.deletingEvent,
+                                    descriptions: AppLocalizations.of(
+                                      context,
+                                    )!.eventDeletingEvent,
                                     onYes: () async {
                                       final value = await eventListNotifier
                                           .deleteEvent(event);
                                       if (value) {
                                         displayToastWithContext(
                                           TypeMsg.msg,
-                                          EventTextConstants.deletedEvent,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.eventDeletedEvent,
                                         );
                                       } else {
                                         displayToastWithContext(
                                           TypeMsg.error,
-                                          EventTextConstants.deletingError,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.eventDeletingError,
                                         );
                                       }
                                     },
-                                    title: EventTextConstants.deleting,
+                                    title: AppLocalizations.of(
+                                      context,
+                                    )!.eventDeleting,
                                   );
                                 },
                               );
@@ -265,7 +273,7 @@ class EventUi extends ConsumerWidget {
                             ),
                             child: Center(
                               child: Text(
-                                EventTextConstants.delete,
+                                AppLocalizations.of(context)!.eventDelete,
                                 style: TextStyle(
                                   color: textColor,
                                   fontSize: 15,

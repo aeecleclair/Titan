@@ -23,6 +23,7 @@ import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddEditEventPage extends HookConsumerWidget {
   final eventTypeScrollKey = GlobalKey();
@@ -105,8 +106,8 @@ class AddEditEventPage extends HookConsumerWidget {
               const SizedBox(height: 40),
               AlignLeftText(
                 isEdit
-                    ? EventTextConstants.editEvent
-                    : EventTextConstants.addEvent,
+                    ? AppLocalizations.of(context)!.eventEditEvent
+                    : AppLocalizations.of(context)!.eventAddEvent,
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 color: Colors.grey,
               ),
@@ -141,16 +142,16 @@ class AddEditEventPage extends HookConsumerWidget {
                       children: [
                         TextEntry(
                           controller: name,
-                          label: EventTextConstants.name,
+                          label: AppLocalizations.of(context)!.eventName,
                         ),
                         const SizedBox(height: 30),
                         TextEntry(
                           controller: organizer,
-                          label: EventTextConstants.organizer,
+                          label: AppLocalizations.of(context)!.eventOrganizer,
                         ),
                         const SizedBox(height: 30),
                         CheckBoxEntry(
-                          title: EventTextConstants.recurrence,
+                          title: AppLocalizations.of(context)!.eventRecurrence,
                           valueNotifier: recurrent,
                           onChanged: () {
                             start.text = "";
@@ -160,7 +161,7 @@ class AddEditEventPage extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 20),
                         CheckBoxEntry(
-                          title: EventTextConstants.allDay,
+                          title: AppLocalizations.of(context)!.eventAllDay,
                           valueNotifier: allDay,
                           onChanged: () {
                             start.text = "";
@@ -174,21 +175,33 @@ class AddEditEventPage extends HookConsumerWidget {
                                 children: [
                                   Column(
                                     children: [
-                                      const Text(
-                                        EventTextConstants.recurrenceDays,
-                                        style: TextStyle(color: Colors.black),
+                                      Text(
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.eventRecurrenceDays,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
                                       ),
                                       const SizedBox(height: 10),
                                       Column(
-                                        children: EventTextConstants.dayList
-                                            .map(
-                                              (e) => GestureDetector(
-                                                onTap: () {
-                                                  selectedDaysNotifier.toggle(
-                                                    EventTextConstants.dayList
-                                                        .indexOf(e),
+                                        children: eventDayKeys
+                                            .asMap()
+                                            .entries
+                                            .map((entry) {
+                                              final index = entry.key;
+                                              final key = entry.value;
+                                              final localizedLabel =
+                                                  getLocalizedEventDay(
+                                                    context,
+                                                    key,
                                                   );
-                                                },
+
+                                              return GestureDetector(
+                                                onTap: () =>
+                                                    selectedDaysNotifier.toggle(
+                                                      index,
+                                                    ),
                                                 behavior:
                                                     HitTestBehavior.opaque,
                                                 child: Row(
@@ -197,7 +210,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                      e,
+                                                      localizedLabel,
                                                       style: TextStyle(
                                                         color: Colors
                                                             .grey
@@ -209,35 +222,38 @@ class AddEditEventPage extends HookConsumerWidget {
                                                       checkColor: Colors.white,
                                                       activeColor: Colors.black,
                                                       value:
-                                                          selectedDays[EventTextConstants
-                                                              .dayList
-                                                              .indexOf(e)],
-                                                      onChanged: (value) {
-                                                        selectedDaysNotifier
-                                                            .toggle(
-                                                              EventTextConstants
-                                                                  .dayList
-                                                                  .indexOf(e),
-                                                            );
-                                                      },
+                                                          selectedDays[index],
+                                                      onChanged: (_) =>
+                                                          selectedDaysNotifier
+                                                              .toggle(index),
                                                     ),
                                                   ],
                                                 ),
-                                              ),
-                                            )
+                                              );
+                                            })
                                             .toList(),
                                       ),
                                       const SizedBox(height: 20),
-                                      const Text(
-                                        EventTextConstants.interval,
-                                        style: TextStyle(color: Colors.black),
+                                      Text(
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.eventInterval,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
                                       ),
                                       const SizedBox(height: 10),
                                       TextEntry(
-                                        label: EventTextConstants.interval,
+                                        label: AppLocalizations.of(
+                                          context,
+                                        )!.eventInterval,
                                         controller: interval,
-                                        prefix: EventTextConstants.eventEvery,
-                                        suffix: EventTextConstants.weeks,
+                                        prefix: AppLocalizations.of(
+                                          context,
+                                        )!.eventEventEvery,
+                                        suffix: AppLocalizations.of(
+                                          context,
+                                        )!.eventWeeks,
                                         isInt: true,
                                         keyboardType: TextInputType.number,
                                       ),
@@ -251,15 +267,18 @@ class AddEditEventPage extends HookConsumerWidget {
                                                 start,
                                               ),
                                               controller: start,
-                                              label:
-                                                  EventTextConstants.startHour,
+                                              label: AppLocalizations.of(
+                                                context,
+                                              )!.eventStartHour,
                                             ),
                                             const SizedBox(height: 30),
                                             DateEntry(
                                               onTap: () =>
                                                   getOnlyHourDate(context, end),
                                               controller: end,
-                                              label: EventTextConstants.endHour,
+                                              label: AppLocalizations.of(
+                                                context,
+                                              )!.eventEndHour,
                                             ),
                                             const SizedBox(height: 30),
                                           ],
@@ -270,8 +289,9 @@ class AddEditEventPage extends HookConsumerWidget {
                                           recurrenceEndDate,
                                         ),
                                         controller: recurrenceEndDate,
-                                        label: EventTextConstants
-                                            .recurrenceEndDate,
+                                        label: AppLocalizations.of(
+                                          context,
+                                        )!.eventRecurrenceEndDate,
                                       ),
                                     ],
                                   ),
@@ -284,7 +304,9 @@ class AddEditEventPage extends HookConsumerWidget {
                                         ? getOnlyDayDate(context, start)
                                         : getFullDate(context, start),
                                     controller: start,
-                                    label: EventTextConstants.startDate,
+                                    label: AppLocalizations.of(
+                                      context,
+                                    )!.eventStartDate,
                                   ),
                                   const SizedBox(height: 30),
                                   DateEntry(
@@ -292,7 +314,9 @@ class AddEditEventPage extends HookConsumerWidget {
                                         ? getOnlyDayDate(context, end)
                                         : getFullDate(context, end),
                                     controller: end,
-                                    label: EventTextConstants.endDate,
+                                    label: AppLocalizations.of(
+                                      context,
+                                    )!.eventEndDate,
                                   ),
                                 ],
                               ),
@@ -309,7 +333,7 @@ class AddEditEventPage extends HookConsumerWidget {
                         },
                         selected: isRoom.value,
                         child: Text(
-                          EventTextConstants.room,
+                          AppLocalizations.of(context)!.eventRoom,
                           style: TextStyle(
                             color: isRoom.value ? Colors.white : Colors.black,
                             fontWeight: FontWeight.bold,
@@ -322,7 +346,7 @@ class AddEditEventPage extends HookConsumerWidget {
                         },
                         selected: !isRoom.value,
                         child: Text(
-                          EventTextConstants.other,
+                          AppLocalizations.of(context)!.eventOther,
                           style: TextStyle(
                             color: isRoom.value ? Colors.black : Colors.white,
                             fontWeight: FontWeight.bold,
@@ -369,7 +393,7 @@ class AddEditEventPage extends HookConsumerWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: TextEntry(
                             controller: location,
-                            label: EventTextConstants.location,
+                            label: AppLocalizations.of(context)!.eventLocation,
                           ),
                         ),
                   const SizedBox(height: 30),
@@ -379,7 +403,7 @@ class AddEditEventPage extends HookConsumerWidget {
                       children: [
                         TextEntry(
                           controller: description,
-                          label: EventTextConstants.description,
+                          label: AppLocalizations.of(context)!.eventDescription,
                           keyboardType: TextInputType.multiline,
                         ),
                         const SizedBox(height: 50),
@@ -404,7 +428,9 @@ class AddEditEventPage extends HookConsumerWidget {
                                 displayToast(
                                   context,
                                   TypeMsg.error,
-                                  EventTextConstants.invalidDates,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.eventInvalidDates,
                                 );
                               } else if (recurrent.value &&
                                   selectedDays
@@ -413,7 +439,9 @@ class AddEditEventPage extends HookConsumerWidget {
                                 displayToast(
                                   context,
                                   TypeMsg.error,
-                                  EventTextConstants.noDaySelected,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.eventNoDaySelected,
                                 );
                               } else {
                                 await tokenExpireWrapper(ref, () async {
@@ -491,24 +519,32 @@ class AddEditEventPage extends HookConsumerWidget {
                                     if (isEdit) {
                                       displayToastWithContext(
                                         TypeMsg.msg,
-                                        EventTextConstants.editedEvent,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.eventEditedEvent,
                                       );
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.msg,
-                                        EventTextConstants.addedEvent,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.eventAddedEvent,
                                       );
                                     }
                                   } else {
                                     if (isEdit) {
                                       displayToastWithContext(
                                         TypeMsg.error,
-                                        EventTextConstants.editingError,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.eventEditingError,
                                       );
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.error,
-                                        EventTextConstants.addingError,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.eventAddingError,
                                       );
                                     }
                                   }
@@ -518,8 +554,8 @@ class AddEditEventPage extends HookConsumerWidget {
                           },
                           child: Text(
                             isEdit
-                                ? EventTextConstants.edit
-                                : EventTextConstants.add,
+                                ? AppLocalizations.of(context)!.eventEdit
+                                : AppLocalizations.of(context)!.eventAdd,
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 25,
