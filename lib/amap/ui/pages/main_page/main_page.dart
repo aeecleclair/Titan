@@ -26,6 +26,7 @@ import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AmapMainPage extends HookConsumerWidget {
   const AmapMainPage({super.key});
@@ -83,7 +84,7 @@ class AmapMainPage extends HookConsumerWidget {
                     child: AsyncChild(
                       value: balance,
                       builder: (context, s) => Text(
-                        "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
+                        "${AppLocalizations.of(context)!.amapAmount} : ${s.balance.toStringAsFixed(2)}€",
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -181,8 +182,8 @@ class AmapMainPage extends HookConsumerWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const AlignLeftText(
-                                AMAPTextConstants.addOrder,
+                              AlignLeftText(
+                                AppLocalizations.of(context)!.amapAddOrder,
                                 color: Colors.white,
                               ),
                               IconButton(
@@ -234,7 +235,9 @@ class AmapMainPage extends HookConsumerWidget {
                             } else {
                               displayToastWithoutContext(
                                 TypeMsg.error,
-                                AMAPTextConstants.noSelectedDelivery,
+                                AppLocalizations.of(
+                                  context,
+                                )!.amapNoSelectedDelivery,
                               );
                             }
                           },
@@ -267,10 +270,10 @@ class AmapMainPage extends HookConsumerWidget {
                           child: Container(
                             padding: const EdgeInsets.only(bottom: 5),
                             width: double.infinity,
-                            child: const Center(
+                            child: Center(
                               child: Text(
-                                AMAPTextConstants.nextStep,
-                                style: TextStyle(
+                                AppLocalizations.of(context)!.amapNextStep,
+                                style: const TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.w900,
                                   color: Colors.white,

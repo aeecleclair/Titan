@@ -8,7 +8,6 @@ import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/components/item_card_ui.dart';
 import 'package:titan/admin/ui/pages/groups/group_page/group_ui.dart';
 import 'package:titan/loan/providers/loaner_list_provider.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
@@ -17,6 +16,7 @@ import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class GroupsPage extends HookConsumerWidget {
   const GroupsPage({super.key});
@@ -49,11 +49,11 @@ class GroupsPage extends HookConsumerWidget {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  AdminTextConstants.groups,
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.adminGroups,
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: ColorConstants.gradient1,
@@ -143,9 +143,12 @@ class GroupsPage extends HookConsumerWidget {
                                   context: context,
                                   builder: (context) {
                                     return CustomDialogBox(
-                                      title: AdminTextConstants.deleting,
-                                      descriptions:
-                                          AdminTextConstants.deleteGroup,
+                                      title: AppLocalizations.of(
+                                        context,
+                                      )!.adminDeleting,
+                                      descriptions: AppLocalizations.of(
+                                        context,
+                                      )!.adminDeleteGroup,
                                       onYes: () async {
                                         tokenExpireWrapper(ref, () async {
                                           final value = await groupsNotifier
@@ -153,12 +156,16 @@ class GroupsPage extends HookConsumerWidget {
                                           if (value) {
                                             displayToastWithContext(
                                               TypeMsg.msg,
-                                              AdminTextConstants.deletedGroup,
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.adminDeletedGroup,
                                             );
                                           } else {
                                             displayToastWithContext(
                                               TypeMsg.error,
-                                              AdminTextConstants.deletingError,
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.adminDeletingError,
                                             );
                                           }
                                         });

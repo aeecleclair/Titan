@@ -10,7 +10,6 @@ import 'package:titan/booking/providers/manager_confirmed_booking_list_provider.
 import 'package:titan/booking/providers/user_booking_list_provider.dart';
 import 'package:titan/booking/providers/selected_days_provider.dart';
 import 'package:titan/booking/router.dart';
-import 'package:titan/booking/tools/constants.dart';
 import 'package:titan/booking/ui/components/booking_card.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -18,6 +17,7 @@ import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ListBooking extends HookConsumerWidget {
   final List<Booking> bookings;
@@ -119,8 +119,8 @@ class ListBooking extends HookConsumerWidget {
                       context: context,
                       builder: (context) {
                         return CustomDialogBox(
-                          title: BookingTextConstants.confirm,
-                          descriptions: BookingTextConstants.confirmBooking,
+                          title: AppLocalizations.of(context)!.bookingConfirm,
+                          descriptions: AppLocalizations.of(context)!.bookingConfirmBooking,
                           onYes: () async {
                             await tokenExpireWrapper(ref, () async {
                               Booking newBooking = e.copyWith(
@@ -156,8 +156,8 @@ class ListBooking extends HookConsumerWidget {
                       context: context,
                       builder: (context) {
                         return CustomDialogBox(
-                          title: BookingTextConstants.decline,
-                          descriptions: BookingTextConstants.declineBooking,
+                          title: AppLocalizations.of(context)!.bookingDecline,
+                          descriptions: AppLocalizations.of(context)!.bookingDeclineBooking,
                           onYes: () async {
                             await tokenExpireWrapper(ref, () async {
                               Booking newBooking = e.copyWith(

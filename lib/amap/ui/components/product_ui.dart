@@ -6,6 +6,7 @@ import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -103,7 +104,7 @@ class ProductCard extends StatelessWidget {
               : Container(
                   margin: const EdgeInsets.only(bottom: 5),
                   child: Text(
-                    "${AMAPTextConstants.quantity} : ${product.quantity}",
+                    "${AppLocalizations.of(context)!.amapQuantity} : ${product.quantity}",
                     style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,

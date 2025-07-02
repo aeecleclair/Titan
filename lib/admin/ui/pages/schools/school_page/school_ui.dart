@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/school.dart';
 import 'package:titan/admin/tools/constants.dart';
+import 'package:titan/admin/tools/function.dart';
 import 'package:titan/admin/ui/components/item_card_ui.dart';
 import 'package:titan/admin/ui/pages/schools/school_page/school_button.dart';
 import 'package:titan/tools/constants.dart';
@@ -26,7 +27,7 @@ class SchoolUi extends HookConsumerWidget {
         const SizedBox(width: 10),
         Expanded(
           child: Text(
-            school.name,
+            getSchoolNameFromId(school.id, school.name, context),
             style: const TextStyle(
               color: Colors.black,
               fontSize: 20,

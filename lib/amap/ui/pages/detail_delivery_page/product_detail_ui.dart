@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:titan/amap/class/product.dart';
 import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ProductDetailCard extends StatelessWidget {
   final Product product;
@@ -41,7 +42,7 @@ class ProductDetailCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           AutoSizeText(
-            "${AMAPTextConstants.quantity} : $quantity",
+            "${AppLocalizations.of(context)!.amapQuantity} : $quantity",
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(

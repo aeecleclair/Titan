@@ -4,13 +4,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/group.dart';
 import 'package:titan/admin/providers/group_provider.dart';
 import 'package:titan/admin/providers/simple_groups_groups_provider.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class MemberResults extends HookConsumerWidget {
   const MemberResults({super.key});
@@ -64,12 +64,12 @@ class MemberResults extends HookConsumerWidget {
                                     );
                                     displayToastWithContext(
                                       TypeMsg.msg,
-                                      AdminTextConstants.addedMember,
+                                      AppLocalizations.of(context)!.adminAddedMember,
                                     );
                                   } else {
                                     displayToastWithContext(
                                       TypeMsg.error,
-                                      AdminTextConstants.addingError,
+                                      AppLocalizations.of(context)!.adminAddingError,
                                     );
                                   }
                                 });

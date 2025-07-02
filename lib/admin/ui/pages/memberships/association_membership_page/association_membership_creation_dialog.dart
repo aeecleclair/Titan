@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:titan/admin/class/simple_group.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class MembershipCreationDialogBox extends StatelessWidget {
   static const Color titleColor = ColorConstants.gradient1;
@@ -68,7 +68,9 @@ class MembershipCreationDialogBox extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text(
-                  AdminTextConstants.createAssociationMembership,
+                  AppLocalizations.of(
+                    context,
+                  )!.adminCreateAssociationMembership,
                   style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w800,
@@ -78,8 +80,10 @@ class MembershipCreationDialogBox extends StatelessWidget {
                 const SizedBox(height: 15),
                 TextField(
                   controller: nameController,
-                  decoration: const InputDecoration(
-                    hintText: AdminTextConstants.associationMembershipName,
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(
+                      context,
+                    )!.adminAssociationMembershipName,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -96,8 +100,8 @@ class MembershipCreationDialogBox extends StatelessWidget {
                         ),
                       )
                       .toList(),
-                  decoration: const InputDecoration(
-                    hintText: AdminTextConstants.group,
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.adminGroup,
                   ),
                 ),
                 const SizedBox(height: 20),

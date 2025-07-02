@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddAssociationTextEntry extends StatelessWidget {
   final TextEditingController controller;
@@ -45,7 +45,7 @@ class AddAssociationTextEntry extends StatelessWidget {
                   ? null
                   : (value) {
                       if (value == null || value.isEmpty) {
-                        return AdminTextConstants.emptyFieldError;
+                        return AppLocalizations.of(context)!.adminEmptyFieldError;
                       }
                       return null;
                     },

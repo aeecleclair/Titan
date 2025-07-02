@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/phonebook/class/association.dart';
 import 'package:titan/phonebook/providers/association_kind_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
@@ -17,6 +16,7 @@ import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AssociationCreationPage extends HookConsumerWidget {
   final scrollKey = GlobalKey();
@@ -68,13 +68,13 @@ class AssociationCreationPage extends HookConsumerWidget {
                     Container(margin: const EdgeInsets.symmetric(vertical: 10)),
                     TextEntry(
                       controller: name,
-                      label: AdminTextConstants.name,
+                      label: AppLocalizations.of(context)!.adminName,
                       canBeEmpty: false,
                     ),
                     const SizedBox(height: 30),
                     TextEntry(
                       controller: description,
-                      label: AdminTextConstants.description,
+                      label: AppLocalizations.of(context)!.adminDescription,
                       canBeEmpty: true,
                     ),
                     const SizedBox(height: 50),
@@ -134,13 +134,13 @@ class AssociationCreationPage extends HookConsumerWidget {
                           } else {
                             displayToastWithContext(
                               TypeMsg.error,
-                              AdminTextConstants.addingError,
+                              AppLocalizations.of(context)!.adminAddingError,
                             );
                           }
                         });
                       },
-                      child: const Text(
-                        AdminTextConstants.add,
+                      child: Text(
+                        AppLocalizations.of(context)!.adminAdd,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,

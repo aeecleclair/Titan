@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/school.dart';
 import 'package:titan/admin/providers/school_list_provider.dart';
 import 'package:titan/admin/providers/school_provider.dart';
-import 'package:titan/admin/tools/constants.dart';
+import 'package:titan/admin/tools/function.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/components/admin_button.dart';
 import 'package:titan/tools/constants.dart';
@@ -15,6 +15,7 @@ import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class EditSchoolPage extends HookConsumerWidget {
   const EditSchoolPage({super.key});
@@ -32,7 +33,7 @@ class EditSchoolPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    name.text = school.name;
+    name.text = getSchoolNameFromId(school.id, school.name, context);
     emailRegex.text = school.emailRegex;
 
     return AdminTemplate(
@@ -40,8 +41,8 @@ class EditSchoolPage extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Column(
           children: [
-            const AlignLeftText(
-              AdminTextConstants.edit,
+            AlignLeftText(
+              AppLocalizations.of(context)!.adminEdit,
               fontSize: 20,
               color: ColorConstants.gradient1,
             ),
@@ -56,7 +57,7 @@ class EditSchoolPage extends HookConsumerWidget {
                     child: TextEntry(
                       controller: name,
                       color: ColorConstants.gradient1,
-                      label: AdminTextConstants.name,
+                      label: AppLocalizations.of(context)!.adminName,
                       suffixIcon: const HeroIcon(HeroIcons.pencil),
                       enabledColor: Colors.transparent,
                     ),
@@ -67,7 +68,7 @@ class EditSchoolPage extends HookConsumerWidget {
                     child: TextEntry(
                       controller: emailRegex,
                       color: ColorConstants.gradient1,
-                      label: AdminTextConstants.emailRegex,
+                      label: AppLocalizations.of(context)!.adminEmailRegex,
                       suffixIcon: const HeroIcon(HeroIcons.pencil),
                       enabledColor: Colors.transparent,
                     ),
@@ -91,20 +92,20 @@ class EditSchoolPage extends HookConsumerWidget {
                           QR.back();
                           displayToastWithContext(
                             TypeMsg.msg,
-                            AdminTextConstants.updatedGroup,
+                            AppLocalizations.of(context)!.adminUpdatedGroup,
                           );
                         } else {
                           displayToastWithContext(
                             TypeMsg.msg,
-                            AdminTextConstants.updatingError,
+                            AppLocalizations.of(context)!.adminUpdatingError,
                           );
                         }
                       });
                     },
                     builder: (child) => AdminButton(child: child),
-                    child: const Text(
-                      AdminTextConstants.edit,
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.adminEdit,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: Colors.white,

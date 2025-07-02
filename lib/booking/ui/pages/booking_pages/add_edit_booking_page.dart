@@ -29,6 +29,7 @@ import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddEditBookingPage extends HookConsumerWidget {
   final dataKey = GlobalKey();
@@ -106,8 +107,8 @@ class AddEditBookingPage extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: AlignLeftText(
                   isEdit
-                      ? BookingTextConstants.editBooking
-                      : BookingTextConstants.addBooking,
+                      ? AppLocalizations.of(context)!.bookingEditBooking
+                      : AppLocalizations.of(context)!.bookingAddBooking,
                   color: Colors.grey,
                 ),
               ),
@@ -153,27 +154,27 @@ class AddEditBookingPage extends HookConsumerWidget {
                   children: [
                     TextEntry(
                       controller: entity,
-                      label: BookingTextConstants.entity,
+                      label: AppLocalizations.of(context)!.bookingEntity,
                     ),
                     const SizedBox(height: 30),
                     TextEntry(
                       controller: motif,
-                      label: BookingTextConstants.reason,
+                      label: AppLocalizations.of(context)!.bookingReason,
                     ),
                     const SizedBox(height: 30),
                     TextEntry(
-                      label: BookingTextConstants.note,
+                      label: AppLocalizations.of(context)!.bookingNote,
                       controller: note,
                       canBeEmpty: true,
                     ),
                     const SizedBox(height: 20),
                     CheckBoxEntry(
-                      title: BookingTextConstants.necessaryKey,
+                      title: AppLocalizations.of(context)!.bookingNecessaryKey,
                       valueNotifier: keyRequired,
                     ),
                     const SizedBox(height: 20),
                     CheckBoxEntry(
-                      title: BookingTextConstants.recurrence,
+                      title: AppLocalizations.of(context)!.bookingRecurrence,
                       valueNotifier: recurrent,
                       onChanged: () {
                         start.text = "";
@@ -183,7 +184,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 20),
                     CheckBoxEntry(
-                      title: BookingTextConstants.allDay,
+                      title: AppLocalizations.of(context)!.bookingAllDay,
                       valueNotifier: allDay,
                       onChanged: () {
                         start.text = "";
@@ -195,13 +196,15 @@ class AddEditBookingPage extends HookConsumerWidget {
                     recurrent.value
                         ? Column(
                             children: [
-                              const Text(
-                                BookingTextConstants.recurrenceDays,
-                                style: TextStyle(color: Colors.black),
+                              Text(
+                                AppLocalizations.of(
+                                  context,
+                                )!.bookingRecurrenceDays,
+                                style: const TextStyle(color: Colors.black),
                               ),
                               const SizedBox(height: 10),
                               Column(
-                                children: BookingTextConstants.weekDaysOrdered
+                                children: weekDaysOrdered
                                     .map(
                                       (e) => GestureDetector(
                                         onTap: () {
@@ -213,7 +216,10 @@ class AddEditBookingPage extends HookConsumerWidget {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              weekDayToString(e),
+                                              weekDayToLocalizedString(
+                                                context,
+                                                e,
+                                              ),
                                               style: TextStyle(
                                                 color: Colors.grey.shade700,
                                                 fontSize: 16,
@@ -234,15 +240,21 @@ class AddEditBookingPage extends HookConsumerWidget {
                                     .toList(),
                               ),
                               const SizedBox(height: 20),
-                              const Text(
-                                BookingTextConstants.interval,
+                              Text(
+                                AppLocalizations.of(context)!.bookingInterval,
                                 style: TextStyle(color: Colors.black),
                               ),
                               const SizedBox(height: 10),
                               TextEntry(
-                                label: BookingTextConstants.interval,
-                                prefix: BookingTextConstants.eventEvery,
-                                suffix: BookingTextConstants.weeks,
+                                label: AppLocalizations.of(
+                                  context,
+                                )!.bookingInterval,
+                                prefix: AppLocalizations.of(
+                                  context,
+                                )!.bookingEventEvery,
+                                suffix: AppLocalizations.of(
+                                  context,
+                                )!.bookingWeeks,
                                 controller: interval,
                                 isInt: true,
                               ),
@@ -254,14 +266,18 @@ class AddEditBookingPage extends HookConsumerWidget {
                                       onTap: () =>
                                           getOnlyHourDate(context, start),
                                       controller: start,
-                                      label: BookingTextConstants.startHour,
+                                      label: AppLocalizations.of(
+                                        context,
+                                      )!.bookingStartHour,
                                     ),
                                     const SizedBox(height: 30),
                                     DateEntry(
                                       onTap: () =>
                                           getOnlyHourDate(context, end),
                                       controller: end,
-                                      label: BookingTextConstants.endHour,
+                                      label: AppLocalizations.of(
+                                        context,
+                                      )!.bookingEndHour,
                                     ),
                                     const SizedBox(height: 30),
                                   ],
@@ -270,7 +286,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 onTap: () =>
                                     getOnlyDayDate(context, recurrenceEndDate),
                                 controller: recurrenceEndDate,
-                                label: BookingTextConstants.recurrenceEndDate,
+                                label: AppLocalizations.of(
+                                  context,
+                                )!.bookingRecurrenceEndDate,
                               ),
                             ],
                           )
@@ -281,7 +299,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                                     ? getOnlyDayDate(context, start)
                                     : getFullDate(context, start),
                                 controller: start,
-                                label: BookingTextConstants.startDate,
+                                label: AppLocalizations.of(
+                                  context,
+                                )!.bookingStartDate,
                               ),
                               const SizedBox(height: 30),
                               DateEntry(
@@ -289,7 +309,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                                     ? getOnlyDayDate(context, end)
                                     : getFullDate(context, end),
                                 controller: end,
-                                label: BookingTextConstants.endDate,
+                                label: AppLocalizations.of(
+                                  context,
+                                )!.bookingEndDate,
                               ),
                             ],
                           ),
@@ -313,19 +335,21 @@ class AddEditBookingPage extends HookConsumerWidget {
                             displayToast(
                               context,
                               TypeMsg.error,
-                              BookingTextConstants.invalidDates,
+                              AppLocalizations.of(context)!.bookingInvalidDates,
                             );
                           } else if (room.value.id.isEmpty) {
                             displayToast(
                               context,
                               TypeMsg.error,
-                              BookingTextConstants.invalidRoom,
+                              AppLocalizations.of(context)!.bookingInvalidRoom,
                             );
                           } else if (recurrent.value && selectedDays.isEmpty) {
                             displayToast(
                               context,
                               TypeMsg.error,
-                              BookingTextConstants.noDaySelected,
+                              AppLocalizations.of(
+                                context,
+                              )!.bookingNoDaySelected,
                             );
                           } else {
                             String recurrenceRule = "";
@@ -366,8 +390,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 displayToast(
                                   context,
                                   TypeMsg.error,
-                                  BookingTextConstants
-                                      .noAppointmentInReccurence,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.bookingNoAppointmentInReccurence,
                                 );
                                 return;
                               }
@@ -429,24 +454,32 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 if (isEdit) {
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    BookingTextConstants.editedBooking,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.bookingEditedBooking,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    BookingTextConstants.addedBooking,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.bookingAddedBooking,
                                   );
                                 }
                               } else {
                                 if (isEdit) {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    BookingTextConstants.editionError,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.bookingEditionError,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    BookingTextConstants.addingError,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.bookingAddingError,
                                   );
                                 }
                               }
@@ -456,14 +489,16 @@ class AddEditBookingPage extends HookConsumerWidget {
                           displayToast(
                             context,
                             TypeMsg.error,
-                            BookingTextConstants.incorrectOrMissingFields,
+                            AppLocalizations.of(
+                              context,
+                            )!.bookingIncorrectOrMissingFields,
                           );
                         }
                       },
                       child: Text(
                         isEdit
-                            ? BookingTextConstants.edit
-                            : BookingTextConstants.add,
+                            ? AppLocalizations.of(context)!.bookingEdit
+                            : AppLocalizations.of(context)!.bookingAdd,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 25,

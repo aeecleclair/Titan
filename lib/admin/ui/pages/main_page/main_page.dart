@@ -3,11 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/router.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/pages/main_page/menu_card_ui.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AdminMainPage extends HookConsumerWidget {
   const AdminMainPage({super.key});
@@ -38,8 +38,8 @@ class AdminMainPage extends HookConsumerWidget {
               onTap: () {
                 QR.to(AdminRouter.root + AdminRouter.editModuleVisibility);
               },
-              child: const MenuCardUi(
-                text: AdminTextConstants.visibilities,
+              child: MenuCardUi(
+                text: AppLocalizations.of(context)!.adminVisibilities,
                 icon: HeroIcons.eye,
               ),
             ),
@@ -47,8 +47,8 @@ class AdminMainPage extends HookConsumerWidget {
               onTap: () {
                 QR.to(AdminRouter.root + AdminRouter.groups);
               },
-              child: const MenuCardUi(
-                text: AdminTextConstants.groups,
+              child: MenuCardUi(
+                text: AppLocalizations.of(context)!.adminGroups,
                 icon: HeroIcons.users,
               ),
             ),
@@ -56,8 +56,8 @@ class AdminMainPage extends HookConsumerWidget {
               onTap: () {
                 QR.to(AdminRouter.root + AdminRouter.schools);
               },
-              child: const MenuCardUi(
-                text: AdminTextConstants.schools,
+              child: MenuCardUi(
+                text: AppLocalizations.of(context)!.adminSchools,
                 icon: HeroIcons.academicCap,
               ),
             ),
@@ -65,8 +65,8 @@ class AdminMainPage extends HookConsumerWidget {
               onTap: () {
                 QR.to(AdminRouter.root + AdminRouter.structures);
               },
-              child: const MenuCardUi(
-                text: AdminTextConstants.myEclPay,
+              child: MenuCardUi(
+                text: AppLocalizations.of(context)!.adminMyEclPay,
                 icon: HeroIcons.creditCard,
               ),
             ),

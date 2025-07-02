@@ -7,6 +7,7 @@ import 'package:titan/amap/ui/amap.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PresentationPage extends HookConsumerWidget {
   const PresentationPage({super.key});
@@ -31,7 +32,7 @@ class PresentationPage extends HookConsumerWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: AMAPTextConstants.presentation1,
+                      text: AppLocalizations.of(context)!.amapPresentation1,
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -68,23 +69,22 @@ class PresentationPage extends HookConsumerWidget {
                             } catch (e) {
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                AMAPTextConstants.errorLink,
+                                AppLocalizations.of(context)!.amapErrorLink,
                               );
                             }
                           },
                       ),
-                      error: (Object error, StackTrace stackTrace) =>
-                          const TextSpan(
-                            text: AMAPTextConstants.loadingError,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                      loading: () => const TextSpan(
-                        text: AMAPTextConstants.loading,
-                        style: TextStyle(color: Colors.red),
+                      error: (Object error, StackTrace stackTrace) => TextSpan(
+                        text: AppLocalizations.of(context)!.amapLoadingError,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                      loading: () => TextSpan(
+                        text: AppLocalizations.of(context)!.amapLoading,
+                        style: const TextStyle(color: Colors.red),
                       ),
                     ),
                     TextSpan(
-                      text: AMAPTextConstants.presentation2,
+                      text: AppLocalizations.of(context)!.amapPresentation2,
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -109,7 +109,7 @@ class PresentationPage extends HookConsumerWidget {
               AsyncChild(
                 value: information,
                 builder: (context, info) => Text(
-                  "${AMAPTextConstants.contact} : ${info.manager}	",
+                  "${AppLocalizations.of(context)!.amapContact} : ${info.manager}	",
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,

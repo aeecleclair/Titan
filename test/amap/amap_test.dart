@@ -15,6 +15,7 @@ import 'package:titan/amap/repositories/product_repository.dart';
 import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/tools/functions.dart';
 import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class MockAmapUserRespository extends Mock implements AmapUserRepository {}
 
@@ -431,11 +432,11 @@ void main() {
     test('Should return the correct string', () async {
       expect(
         uiCollectionSlotToString(CollectionSlot.midDay),
-        AMAPTextConstants.midDay,
+        AppLocalizations.of(context)!.amapMidDay,
       );
       expect(
         uiCollectionSlotToString(CollectionSlot.evening),
-        AMAPTextConstants.evening,
+        AppLocalizations.of(context)!.amapEvening,
       );
     });
     test('Should return a string', () async {

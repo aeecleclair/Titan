@@ -6,7 +6,6 @@ import 'package:titan/admin/class/group.dart';
 import 'package:titan/admin/providers/group_id_provider.dart';
 import 'package:titan/admin/providers/group_provider.dart';
 import 'package:titan/admin/providers/simple_groups_groups_provider.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/pages/groups/edit_group_page/results.dart';
 import 'package:titan/admin/ui/components/user_ui.dart';
 import 'package:titan/tools/constants.dart';
@@ -17,6 +16,7 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/loader.dart';
 import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class SearchUser extends HookConsumerWidget {
   const SearchUser({super.key});
@@ -47,7 +47,7 @@ class SearchUser extends HookConsumerWidget {
         return Column(
           children: [
             StyledSearchBar(
-              label: AdminTextConstants.members,
+              label: AppLocalizations.of(context)!.adminMembers,
               color: ColorConstants.gradient1,
               padding: const EdgeInsets.all(0),
               onChanged: (value) async {
@@ -110,8 +110,8 @@ class SearchUser extends HookConsumerWidget {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) => CustomDialogBox(
-                        descriptions: AdminTextConstants.removeGroupMember,
-                        title: AdminTextConstants.deleting,
+                        descriptions: AppLocalizations.of(context)!.adminRemoveGroupMember,
+                        title: AppLocalizations.of(context)!.adminDeleting,
                         onYes: () async {
                           await tokenExpireWrapper(ref, () async {
                             Group newGroup = g[0].copyWith(
@@ -130,12 +130,12 @@ class SearchUser extends HookConsumerWidget {
                               );
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                AdminTextConstants.updatedGroup,
+                                AppLocalizations.of(context)!.adminUpdatedGroup,
                               );
                             } else {
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                AdminTextConstants.updatingError,
+                                AppLocalizations.of(context)!.adminUpdatingError,
                               );
                             }
                           });

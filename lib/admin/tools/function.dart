@@ -1,11 +1,13 @@
+import 'package:flutter/widgets.dart';
 import 'package:titan/admin/tools/constants.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
-String getSchoolNameFromId(String id, String name) {
+String getSchoolNameFromId(String id, String name, BuildContext context) {
   if (id == SchoolIdConstant.noSchool.value) {
-    return AdminTextConstants.noSchool;
+    return AppLocalizations.of(context)!.adminNoSchool;
   }
   if (id == SchoolIdConstant.eclSchool.value) {
-    return AdminTextConstants.eclSchool;
+    return AppLocalizations.of(context)!.adminEclSchool;
   }
   return name;
 }

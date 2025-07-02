@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/amap/providers/order_provider.dart';
-import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/amap.dart';
 import 'package:titan/amap/ui/components/order_ui.dart';
 import 'package:titan/amap/ui/components/product_ui.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({super.key});
@@ -39,9 +39,9 @@ class DetailPage extends HookConsumerWidget {
                     child: Column(
                       children: [
                         const SizedBox(height: 50),
-                        const AlignLeftText(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          AMAPTextConstants.products,
+                        AlignLeftText(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          AppLocalizations.of(context)!.amapProducts,
                           fontSize: 25,
                         ),
                         const SizedBox(height: 10),

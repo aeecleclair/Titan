@@ -7,7 +7,6 @@ import 'package:titan/admin/providers/group_id_provider.dart';
 import 'package:titan/admin/providers/group_list_provider.dart';
 import 'package:titan/admin/providers/group_provider.dart';
 import 'package:titan/admin/providers/simple_groups_groups_provider.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/components/admin_button.dart';
 import 'package:titan/admin/ui/pages/groups/edit_group_page/search_user.dart';
@@ -19,6 +18,7 @@ import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class EditGroupPage extends HookConsumerWidget {
   const EditGroupPage({super.key});
@@ -60,8 +60,8 @@ class EditGroupPage extends HookConsumerWidget {
               description.text = group.description;
               return Column(
                 children: [
-                  const AlignLeftText(
-                    AdminTextConstants.edit,
+                  AlignLeftText(
+                    AppLocalizations.of(context)!.adminEdit,
                     fontSize: 20,
                     color: ColorConstants.gradient1,
                   ),
@@ -76,7 +76,7 @@ class EditGroupPage extends HookConsumerWidget {
                           child: TextEntry(
                             controller: name,
                             color: ColorConstants.gradient1,
-                            label: AdminTextConstants.name,
+                            label: AppLocalizations.of(context)!.adminName,
                             suffixIcon: const HeroIcon(HeroIcons.pencil),
                             enabledColor: Colors.transparent,
                           ),
@@ -87,7 +87,9 @@ class EditGroupPage extends HookConsumerWidget {
                           child: TextEntry(
                             controller: description,
                             color: ColorConstants.gradient1,
-                            label: AdminTextConstants.description,
+                            label: AppLocalizations.of(
+                              context,
+                            )!.adminDescription,
                             suffixIcon: const HeroIcon(HeroIcons.pencil),
                             enabledColor: Colors.transparent,
                           ),
@@ -111,20 +113,24 @@ class EditGroupPage extends HookConsumerWidget {
                                 QR.back();
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  AdminTextConstants.updatedGroup,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.adminUpdatedGroup,
                                 );
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  AdminTextConstants.updatingError,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.adminUpdatingError,
                                 );
                               }
                             });
                           },
                           builder: (child) => AdminButton(child: child),
-                          child: const Text(
-                            AdminTextConstants.edit,
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.adminEdit,
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
                               color: Colors.white,

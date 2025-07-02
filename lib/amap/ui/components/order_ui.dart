@@ -13,6 +13,7 @@ import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class OrderUI extends HookConsumerWidget {
   final Order order;
@@ -53,7 +54,7 @@ class OrderUI extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${AMAPTextConstants.the} ${processDate(order.deliveryDate)}',
+                '${AppLocalizations.of(context)!.amapThe} ${processDate(order.deliveryDate)}',
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -78,7 +79,7 @@ class OrderUI extends HookConsumerWidget {
           Row(
             children: [
               Text(
-                "${order.products.length} ${AMAPTextConstants.product}${order.products.length != 1 ? "s" : ""}",
+                "${order.products.length} ${AppLocalizations.of(context)!.amapProduct}${order.products.length != 1 ? "s" : ""}",
                 style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -98,7 +99,7 @@ class OrderUI extends HookConsumerWidget {
           ),
           const SizedBox(height: 3),
           Text(
-            uiCollectionSlotToString(order.collectionSlot),
+            uiCollectionSlotToString(order.collectionSlot, context),
             style: const TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w700,
@@ -132,8 +133,10 @@ class OrderUI extends HookConsumerWidget {
                           await showDialog(
                             context: context,
                             builder: ((context) => CustomDialogBox(
-                              title: AMAPTextConstants.delete,
-                              descriptions: AMAPTextConstants.deletingOrder,
+                              title: AppLocalizations.of(context)!.amapDelete,
+                              descriptions: AppLocalizations.of(
+                                context,
+                              )!.amapDeletingOrder,
                               onYes: () async {
                                 await tokenExpireWrapper(ref, () async {
                                   orderListNotifier.deleteOrder(order).then((
@@ -143,12 +146,16 @@ class OrderUI extends HookConsumerWidget {
                                       balanceNotifier.updateCash(order.amount);
                                       displayToastWithContext(
                                         TypeMsg.msg,
-                                        AMAPTextConstants.deletedOrder,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.amapDeletedOrder,
                                       );
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.error,
-                                        AMAPTextConstants.deletingError,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.amapDeletingError,
                                       );
                                     }
                                   });
@@ -171,9 +178,9 @@ class OrderUI extends HookConsumerWidget {
                       ),
                     ],
                   )
-                : const Text(
-                    AMAPTextConstants.locked,
-                    style: TextStyle(
+                : Text(
+                    AppLocalizations.of(context)!.amapLocked,
+                    style: const TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
                       color: AMAPColorConstants.textDark,

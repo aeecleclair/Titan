@@ -15,6 +15,7 @@ import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ProductHandler extends HookConsumerWidget {
   const ProductHandler({super.key});
@@ -37,9 +38,9 @@ class ProductHandler extends HookConsumerWidget {
 
     return Column(
       children: [
-        const AlignLeftText(
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          AMAPTextConstants.products,
+        AlignLeftText(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          AppLocalizations.of(context)!.amapProducts,
           color: AMAPColorConstants.textDark,
         ),
         const SizedBox(height: 10),
@@ -74,7 +75,9 @@ class ProductHandler extends HookConsumerWidget {
               ),
             ),
             products.isEmpty
-                ? const Center(child: Text(AMAPTextConstants.noProduct))
+                ? Center(
+                    child: Text(AppLocalizations.of(context)!.amapNoProduct),
+                  )
                 : Row(
                     children: products
                         .map(
@@ -84,9 +87,12 @@ class ProductHandler extends HookConsumerWidget {
                               await showDialog(
                                 context: context,
                                 builder: (context) => CustomDialogBox(
-                                  title: AMAPTextConstants.deleteProduct,
-                                  descriptions: AMAPTextConstants
-                                      .deleteProductDescription,
+                                  title: AppLocalizations.of(
+                                    context,
+                                  )!.amapDeleteProduct,
+                                  descriptions: AppLocalizations.of(
+                                    context,
+                                  )!.amapDeleteProductDescription,
                                   onYes: () {
                                     tokenExpireWrapper(ref, () async {
                                       final value = await productsNotifier
@@ -94,12 +100,16 @@ class ProductHandler extends HookConsumerWidget {
                                       if (value) {
                                         displayToastWithContext(
                                           TypeMsg.msg,
-                                          AMAPTextConstants.deletedProduct,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.amapDeletedProduct,
                                         );
                                       } else {
                                         displayToastWithContext(
                                           TypeMsg.error,
-                                          AMAPTextConstants.productInDelivery,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.amapProductInDelivery,
                                         );
                                       }
                                     });

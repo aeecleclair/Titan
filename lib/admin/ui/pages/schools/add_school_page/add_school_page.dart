@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/school.dart';
 import 'package:titan/admin/providers/school_list_provider.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/components/admin_button.dart';
 import 'package:titan/admin/ui/components/text_editing.dart';
@@ -12,6 +11,7 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddSchoolPage extends HookConsumerWidget {
   const AddSchoolPage({super.key});
@@ -37,12 +37,15 @@ class AddSchoolPage extends HookConsumerWidget {
             key: key,
             child: Column(
               children: [
-                const AlignLeftText(AdminTextConstants.addSchool),
+                AlignLeftText(AppLocalizations.of(context)!.adminAddSchool),
                 const SizedBox(height: 30),
-                TextEditing(controller: name, label: AdminTextConstants.name),
+                TextEditing(
+                  controller: name,
+                  label: AppLocalizations.of(context)!.adminName,
+                ),
                 TextEditing(
                   controller: emailRegex,
-                  label: AdminTextConstants.emailRegex,
+                  label: AppLocalizations.of(context)!.adminEmailRegex,
                 ),
                 WaitingButton(
                   onTap: () async {
@@ -58,20 +61,20 @@ class AddSchoolPage extends HookConsumerWidget {
                         QR.back();
                         displayToastWithContext(
                           TypeMsg.msg,
-                          AdminTextConstants.addedSchool,
+                          AppLocalizations.of(context)!.adminAddedSchool,
                         );
                       } else {
                         displayToastWithContext(
                           TypeMsg.error,
-                          AdminTextConstants.addingError,
+                          AppLocalizations.of(context)!.adminAddingError,
                         );
                       }
                     });
                   },
                   builder: (child) => AdminButton(child: child),
-                  child: const Text(
-                    AdminTextConstants.add,
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.adminAdd,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,

@@ -15,7 +15,7 @@ import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/column_refresher.dart';
 import 'package:titan/tools/ui/widgets/admin_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/advert/tools/constants.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AdvertMainPage extends HookConsumerWidget {
   const AdvertMainPage({super.key});
@@ -72,7 +72,7 @@ class AdvertMainPage extends HookConsumerWidget {
                                     AdvertRouter.addRemAnnouncer,
                               );
                             },
-                            text: AdvertTextConstants.management,
+                            text: AppLocalizations.of(context)!.advertManagement,
                           ),
                       ],
                     ),

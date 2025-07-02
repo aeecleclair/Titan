@@ -1,4 +1,3 @@
-import 'package:titan/admin/tools/function.dart';
 
 class School {
   School({required this.name, required this.id, required this.emailRegex});
@@ -7,7 +6,7 @@ class School {
   late final String emailRegex;
 
   School.fromJson(Map<String, dynamic> json) {
-    name = getSchoolNameFromId(json['id'], json['name']);
+    name = json['name'];
     id = json['id'];
     emailRegex = json['email_regex'];
   }

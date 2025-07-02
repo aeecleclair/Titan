@@ -1,33 +1,35 @@
-import 'package:titan/booking/tools/constants.dart';
+import 'package:flutter/material.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
-String decisionToString(Decision d) {
+String decisionToString(Decision d, BuildContext context) {
   switch (d) {
     case Decision.approved:
-      return BookingTextConstants.confirmed;
+      return AppLocalizations.of(context)!.bookingConfirmed;
     case Decision.declined:
-      return BookingTextConstants.declined;
+      return AppLocalizations.of(context)!.bookingDeclined;
     case Decision.pending:
-      return BookingTextConstants.pending;
+      return AppLocalizations.of(context)!.bookingPending;
   }
 }
 
-String weekDayToString(WeekDays day) {
+String weekDayToLocalizedString(BuildContext context, WeekDays day) {
+  final loc = AppLocalizations.of(context)!;
   switch (day) {
-    case WeekDays.sunday:
-      return "Dimanche";
     case WeekDays.monday:
-      return "Lundi";
+      return loc.bookingWeekDayMon;
     case WeekDays.tuesday:
-      return "Mardi";
+      return loc.bookingWeekDayTue;
     case WeekDays.wednesday:
-      return "Mercredi";
+      return loc.bookingWeekDayWed;
     case WeekDays.thursday:
-      return "Jeudi";
+      return loc.bookingWeekDayThu;
     case WeekDays.friday:
-      return "Vendredi";
+      return loc.bookingWeekDayFri;
     case WeekDays.saturday:
-      return "Samedi";
+      return loc.bookingWeekDaySat;
+    case WeekDays.sunday:
+      return loc.bookingWeekDaySun;
   }
 }

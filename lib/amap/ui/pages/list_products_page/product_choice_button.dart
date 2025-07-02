@@ -13,6 +13,7 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ProductChoiceButton extends HookConsumerWidget {
   const ProductChoiceButton({super.key});
@@ -69,7 +70,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                   displayToast(
                     context,
                     TypeMsg.error,
-                    AMAPTextConstants.noProduct,
+                    AppLocalizations.of(context)!.amapNoProduct,
                   );
                 } else {
                   Order newOrder = order.copyWith(
@@ -89,24 +90,24 @@ class ProductChoiceButton extends HookConsumerWidget {
                       if (isEdit) {
                         displayToastWithContext(
                           TypeMsg.msg,
-                          AMAPTextConstants.updatedOrder,
+                          AppLocalizations.of(context)!.amapUpdatedOrder,
                         );
                       } else {
                         displayToastWithContext(
                           TypeMsg.msg,
-                          AMAPTextConstants.addedOrder,
+                          AppLocalizations.of(context)!.amapAddedOrder,
                         );
                       }
                     } else {
                       if (isEdit) {
                         displayToastWithContext(
                           TypeMsg.error,
-                          AMAPTextConstants.updatingError,
+                          AppLocalizations.of(context)!.amapUpdatingError,
                         );
                       } else {
                         displayToastWithContext(
                           TypeMsg.error,
-                          AMAPTextConstants.addingError,
+                          AppLocalizations.of(context)!.amapAddingError,
                         );
                       }
                     }
@@ -114,7 +115,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                 }
               },
               child: Text(
-                "${AMAPTextConstants.confirm} (${order.amount.toStringAsFixed(2)}€)",
+                "${AppLocalizations.of(context)!.amapConfirm} (${order.amount.toStringAsFixed(2)}€)",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
@@ -159,8 +160,10 @@ class ProductChoiceButton extends HookConsumerWidget {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) => CustomDialogBox(
-                    descriptions: AMAPTextConstants.deletingOrder,
-                    title: AMAPTextConstants.deleting,
+                    descriptions: AppLocalizations.of(
+                      context,
+                    )!.amapDeletingOrder,
+                    title: AppLocalizations.of(context)!.amapDeleting,
                     onYes: () {
                       orderNotifier.setOrder(Order.empty());
                       QR.back();

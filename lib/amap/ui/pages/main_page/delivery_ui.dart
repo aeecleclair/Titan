@@ -4,6 +4,7 @@ import 'package:titan/amap/class/delivery.dart';
 import 'package:titan/amap/providers/delivery_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class DeliveryUi extends HookConsumerWidget {
   final Delivery delivery;
@@ -55,7 +56,7 @@ class DeliveryUi extends HookConsumerWidget {
             children: [
               const SizedBox(width: 10),
               Text(
-                '${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
+                '${AppLocalizations.of(context)!.amapThe} ${processDate(delivery.deliveryDate)}',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -66,7 +67,7 @@ class DeliveryUi extends HookConsumerWidget {
               ),
               const Spacer(),
               Text(
-                "${delivery.products.length} ${AMAPTextConstants.product}${delivery.products.length != 1 ? "s" : ""}",
+                "${delivery.products.length} ${AppLocalizations.of(context)!.amapProduct}${delivery.products.length != 1 ? "s" : ""}",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,

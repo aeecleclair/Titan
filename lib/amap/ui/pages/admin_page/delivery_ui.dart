@@ -19,6 +19,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class DeliveryUi extends HookConsumerWidget {
   final Delivery delivery;
@@ -67,7 +68,7 @@ class DeliveryUi extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
+                        '${AppLocalizations.of(context)!.amapThe} ${processDate(delivery.deliveryDate)}',
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -102,8 +103,8 @@ class DeliveryUi extends HookConsumerWidget {
                     dataBuilder: (context, orders) {
                       return Text(
                         orders.isEmpty
-                            ? AMAPTextConstants.noCurrentOrder
-                            : '${orders.length} ${AMAPTextConstants.oneOrder}${orders.length != 1 ? "s" : ""}',
+                            ? AppLocalizations.of(context)!.amapNoCurrentOrder
+                            : '${orders.length} ${AppLocalizations.of(context)!.amapOneOrder}${orders.length != 1 ? "s" : ""}',
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -113,7 +114,7 @@ class DeliveryUi extends HookConsumerWidget {
                     },
                   ),
                   Text(
-                    "${delivery.products.length} ${AMAPTextConstants.product}${delivery.products.length != 1 ? "s" : ""}",
+                    "${delivery.products.length} ${AppLocalizations.of(context)!.amapProduct}${delivery.products.length != 1 ? "s" : ""}",
                     style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w700,
@@ -177,9 +178,12 @@ class DeliveryUi extends HookConsumerWidget {
                       await showDialog(
                         context: context,
                         builder: ((context) => CustomDialogBox(
-                          title: AMAPTextConstants.deleteDelivery,
-                          descriptions:
-                              AMAPTextConstants.deleteDeliveryDescription,
+                          title: AppLocalizations.of(
+                            context,
+                          )!.amapDeleteDelivery,
+                          descriptions: AppLocalizations.of(
+                            context,
+                          )!.amapDeleteDeliveryDescription,
                           onYes: () async {
                             await tokenExpireWrapper(ref, () async {
                               deliveryListNotifier
@@ -188,12 +192,16 @@ class DeliveryUi extends HookConsumerWidget {
                                     if (value) {
                                       displayVoteWithContext(
                                         TypeMsg.msg,
-                                        AMAPTextConstants.deletedDelivery,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.amapDeletedDelivery,
                                       );
                                     } else {
                                       displayVoteWithContext(
                                         TypeMsg.error,
-                                        AMAPTextConstants.deletingError,
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.amapDeletingError,
                                       );
                                     }
                                   });
@@ -221,19 +229,23 @@ class DeliveryUi extends HookConsumerWidget {
                       context: context,
                       builder: ((context) => CustomDialogBox(
                         title: delivery.status == DeliveryStatus.creation
-                            ? AMAPTextConstants.openDelivery
+                            ? AppLocalizations.of(context)!.amapOpenDelivery
                             : delivery.status == DeliveryStatus.available
-                            ? AMAPTextConstants.lock
+                            ? AppLocalizations.of(context)!.amapLock
                             : delivery.status == DeliveryStatus.locked
-                            ? AMAPTextConstants.deliver
-                            : AMAPTextConstants.archive,
+                            ? AppLocalizations.of(context)!.amapDeliver
+                            : AppLocalizations.of(context)!.amapArchive,
                         descriptions: delivery.status == DeliveryStatus.creation
-                            ? AMAPTextConstants.openningDelivery
+                            ? AppLocalizations.of(context)!.amapOpenningDelivery
                             : delivery.status == DeliveryStatus.available
-                            ? AMAPTextConstants.lockingDelivery
+                            ? AppLocalizations.of(context)!.amapLockingDelivery
                             : delivery.status == DeliveryStatus.locked
-                            ? AMAPTextConstants.deliveringDelivery
-                            : AMAPTextConstants.archivingDelivery,
+                            ? AppLocalizations.of(
+                                context,
+                              )!.amapDeliveringDelivery
+                            : AppLocalizations.of(
+                                context,
+                              )!.amapArchivingDelivery,
                         onYes: () async {
                           await tokenExpireWrapper(ref, () async {
                             switch (delivery.status) {
@@ -243,12 +255,16 @@ class DeliveryUi extends HookConsumerWidget {
                                 if (value) {
                                   displayVoteWithContext(
                                     TypeMsg.msg,
-                                    AMAPTextConstants.deliveryOpened,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.amapDeliveryOpened,
                                   );
                                 } else {
                                   displayVoteWithContext(
                                     TypeMsg.error,
-                                    AMAPTextConstants.deliveryNotOpened,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.amapDeliveryNotOpened,
                                   );
                                 }
                                 break;
@@ -258,12 +274,16 @@ class DeliveryUi extends HookConsumerWidget {
                                 if (value) {
                                   displayVoteWithContext(
                                     TypeMsg.msg,
-                                    AMAPTextConstants.deliveryLocked,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.amapDeliveryLocked,
                                   );
                                 } else {
                                   displayVoteWithContext(
                                     TypeMsg.error,
-                                    AMAPTextConstants.deliveryNotLocked,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.amapDeliveryNotLocked,
                                   );
                                 }
                                 break;
@@ -273,12 +293,16 @@ class DeliveryUi extends HookConsumerWidget {
                                 if (value) {
                                   displayVoteWithContext(
                                     TypeMsg.msg,
-                                    AMAPTextConstants.deliveryDelivered,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.amapDeliveryDelivered,
                                   );
                                 } else {
                                   displayVoteWithContext(
                                     TypeMsg.error,
-                                    AMAPTextConstants.deliveryNotDelivered,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.amapDeliveryNotDelivered,
                                   );
                                 }
                                 break;
@@ -288,12 +312,16 @@ class DeliveryUi extends HookConsumerWidget {
                                 if (value) {
                                   displayVoteWithContext(
                                     TypeMsg.msg,
-                                    AMAPTextConstants.deliveryArchived,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.amapDeliveryArchived,
                                   );
                                 } else {
                                   displayVoteWithContext(
                                     TypeMsg.error,
-                                    AMAPTextConstants.deliveryNotArchived,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.amapDeliveryNotArchived,
                                   );
                                 }
                                 break;
@@ -345,12 +373,14 @@ class DeliveryUi extends HookConsumerWidget {
                         padding: const EdgeInsets.only(bottom: 2),
                         child: Text(
                           delivery.status == DeliveryStatus.creation
-                              ? AMAPTextConstants.openDelivery
+                              ? AppLocalizations.of(context)!.amapOpenDelivery
                               : delivery.status == DeliveryStatus.available
-                              ? AMAPTextConstants.closeDelivery
+                              ? AppLocalizations.of(context)!.amapCloseDelivery
                               : delivery.status == DeliveryStatus.locked
-                              ? AMAPTextConstants.endingDelivery
-                              : AMAPTextConstants.archiveDelivery,
+                              ? AppLocalizations.of(context)!.amapEndingDelivery
+                              : AppLocalizations.of(
+                                  context,
+                                )!.amapArchiveDelivery,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20,

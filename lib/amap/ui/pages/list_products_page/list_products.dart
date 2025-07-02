@@ -6,7 +6,6 @@ import 'package:titan/amap/providers/scroll_provider.dart';
 import 'package:titan/amap/providers/sorted_delivery_product.dart';
 import 'package:titan/amap/providers/page_controller_provider.dart';
 import 'package:titan/amap/providers/scroll_controller_provider.dart';
-import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/pages/list_products_page/category_page.dart';
 import 'package:titan/amap/ui/pages/list_products_page/web_page_navigation_button.dart';
 import 'package:titan/navigation/providers/is_web_format_provider.dart';
@@ -48,10 +47,10 @@ class ListProducts extends HookConsumerWidget {
             physics: const BouncingScrollPhysics(),
             children: sortedDeliveryProductsList.isEmpty
                 ? [
-                    const Center(
+                    Center(
                       child: Text(
-                        AMAPTextConstants.noProduct,
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.amapNoProduct,
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),

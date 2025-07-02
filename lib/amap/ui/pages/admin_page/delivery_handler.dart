@@ -13,6 +13,7 @@ import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class DeliveryHandler extends HookConsumerWidget {
   const DeliveryHandler({super.key});
@@ -24,9 +25,9 @@ class DeliveryHandler extends HookConsumerWidget {
     final selectedNotifier = ref.watch(selectedListProvider.notifier);
     return Column(
       children: [
-        const AlignLeftText(
-          AMAPTextConstants.deliveries,
-          padding: EdgeInsets.symmetric(horizontal: 30),
+        AlignLeftText(
+          AppLocalizations.of(context)!.amapDeliveries,
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           color: AMAPColorConstants.textDark,
         ),
         const SizedBox(height: 10),
