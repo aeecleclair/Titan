@@ -11,6 +11,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class MemberEditableCard extends HookConsumerWidget {
   const MemberEditableCard({super.key, required this.associationMembership});
@@ -94,12 +95,12 @@ class MemberEditableCard extends HookConsumerWidget {
                 if (result) {
                   displayToastWithContext(
                     TypeMsg.msg,
-                    PhonebookTextConstants.deletedMember,
+                    AppLocalizations.of(context)!.phonebookDeletedMember,
                   );
                 } else {
                   displayToastWithContext(
                     TypeMsg.error,
-                    PhonebookTextConstants.deletingError,
+                    AppLocalizations.of(context)!.phonebookDeletingError,
                   );
                 }
               });

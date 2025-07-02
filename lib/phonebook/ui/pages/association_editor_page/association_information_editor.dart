@@ -16,6 +16,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AssociationInformationEditor extends HookConsumerWidget {
   final scrollKey = GlobalKey();
@@ -71,8 +72,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                     controller: name,
                                     cursorColor: ColorConstants.gradient1,
                                     decoration: InputDecoration(
-                                      labelText:
-                                          PhonebookTextConstants.namePure,
+                                      labelText: AppLocalizations.of(
+                                        context,
+                                      )!.phonebookNamePure,
                                       labelStyle: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -94,8 +96,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                     ),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return PhonebookTextConstants
-                                            .emptyFieldError;
+                                        return AppLocalizations.of(
+                                          context,
+                                        )!.phonebookEmptyFieldError;
                                       }
                                       return null;
                                     },
@@ -115,8 +118,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                     controller: description,
                                     cursorColor: ColorConstants.gradient1,
                                     decoration: InputDecoration(
-                                      labelText:
-                                          PhonebookTextConstants.description,
+                                      labelText: AppLocalizations.of(
+                                        context,
+                                      )!.phonebookDescription,
                                       labelStyle: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -156,7 +160,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                               if (kind == '') {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  PhonebookTextConstants.emptyKindError,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.phonebookEmptyKindError,
                                 );
                                 return;
                               }
@@ -172,19 +178,23 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                 if (value) {
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    PhonebookTextConstants.updatedAssociation,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.phonebookUpdatedAssociation,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    PhonebookTextConstants.updatingError,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.phonebookUpdatingError,
                                   );
                                 }
                               });
                             },
-                            child: const Text(
-                              PhonebookTextConstants.edit,
-                              style: TextStyle(
+                            child: Text(
+                              AppLocalizations.of(context)!.phonebookEdit,
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
                                 color: Color.fromARGB(255, 255, 255, 255),
@@ -204,9 +214,11 @@ class AssociationInformationEditor extends HookConsumerWidget {
                     if (association.deactivated)
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10),
-                        child: const Text(
-                          PhonebookTextConstants.deactivatedAssociationWarning,
-                          style: TextStyle(
+                        child: Text(
+                          AppLocalizations.of(
+                            context,
+                          )!.phonebookDeactivatedAssociationWarning,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
@@ -251,7 +263,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                     children: [
                       SizedBox(
                         child: ExpansionTile(
-                          title: const Text(PhonebookTextConstants.groups),
+                          title: Text(
+                            AppLocalizations.of(context)!.phonebookGroups,
+                          ),
                           children: groups.maybeWhen(
                             data: (data) {
                               return data.map((group) {
@@ -329,6 +343,12 @@ class AssociationInformationEditor extends HookConsumerWidget {
                   ),
                   onTap: () async {
                     await tokenExpireWrapper(ref, () async {
+                      final updatedGroupsMsg = AppLocalizations.of(
+                        context,
+                      )!.phonebookUpdatedGroups;
+                      final updatingErrorMsg = AppLocalizations.of(
+                        context,
+                      )!.phonebookUpdatingError;
                       final value = await associationListNotifier
                           .updateAssociationGroups(
                             association.copyWith(
@@ -338,21 +358,15 @@ class AssociationInformationEditor extends HookConsumerWidget {
                             ),
                           );
                       if (value) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          PhonebookTextConstants.updatedGroups,
-                        );
+                        displayToastWithContext(TypeMsg.msg, updatedGroupsMsg);
                       } else {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          PhonebookTextConstants.updatingError,
-                        );
+                        displayToastWithContext(TypeMsg.msg, updatingErrorMsg);
                       }
                     });
                   },
-                  child: const Text(
-                    PhonebookTextConstants.updateGroups,
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.phonebookUpdateGroups,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                       color: Color.fromARGB(255, 255, 255, 255),

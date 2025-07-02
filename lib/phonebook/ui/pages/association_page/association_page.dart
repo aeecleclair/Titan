@@ -16,6 +16,7 @@ import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AssociationPage extends HookConsumerWidget {
   const AssociationPage({super.key});
@@ -70,7 +71,7 @@ class AssociationPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    "${PhonebookTextConstants.activeMandate} ${association.mandateYear}",
+                    "${AppLocalizations.of(context)!.phonebookActiveMandate} ${association.mandateYear}",
                     style: const TextStyle(fontSize: 15, color: Colors.black),
                   ),
                   const SizedBox(height: 20),
@@ -78,7 +79,7 @@ class AssociationPage extends HookConsumerWidget {
                     value: associationMemberList,
                     builder: (context, associationMembers) =>
                         associationMembers.isEmpty
-                        ? const Text(PhonebookTextConstants.noMember)
+                        ? Text(AppLocalizations.of(context)!.phonebookNoMember)
                         : Column(
                             children: associationMemberSortedList
                                 .map(

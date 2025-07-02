@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/phonebook/tools/constants.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class TextInputDialog extends HookConsumerWidget {
   const TextInputDialog({
@@ -47,14 +48,14 @@ class TextInputDialog extends HookConsumerWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text(PhonebookTextConstants.cancel),
+          child: Text(AppLocalizations.of(context)!.phonebookCancel),
         ),
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
             onConfirm();
           },
-          child: const Text(PhonebookTextConstants.validation),
+          child: Text(AppLocalizations.of(context)!.phonebookValidation),
         ),
       ],
     );

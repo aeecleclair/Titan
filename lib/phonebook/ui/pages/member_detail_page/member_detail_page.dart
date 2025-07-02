@@ -11,6 +11,7 @@ import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class MemberDetailPage extends HookConsumerWidget {
   const MemberDetailPage({super.key});
@@ -31,31 +32,31 @@ class MemberDetailPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     ElementField(
-                      label: PhonebookTextConstants.name,
+                      label: AppLocalizations.of(context)!.phonebookName,
                       value: memberProvider.member.name,
                     ),
                     ElementField(
-                      label: PhonebookTextConstants.firstname,
+                      label: AppLocalizations.of(context)!.phonebookFirstname,
                       value: memberProvider.member.firstname,
                     ),
                     if (memberProvider.member.nickname != null)
                       ElementField(
-                        label: PhonebookTextConstants.nickname,
+                        label: AppLocalizations.of(context)!.phonebookNickname,
                         value: memberProvider.member.nickname!,
                       ),
                     ElementField(
-                      label: PhonebookTextConstants.email,
+                      label: AppLocalizations.of(context)!.phonebookEmail,
                       value: memberProvider.member.email,
                     ),
                     if (memberProvider.member.phone != null)
                       ElementField(
-                        label: PhonebookTextConstants.phone,
+                        label: AppLocalizations.of(context)!.phonebookPhone,
                         value: memberProvider.member.phone!,
                       ),
                     ElementField(
-                      label: PhonebookTextConstants.promotion,
+                      label: AppLocalizations.of(context)!.phonebookPromotion,
                       value: memberProvider.member.promotion == 0
-                          ? PhonebookTextConstants.promoNotGiven
+                          ? AppLocalizations.of(context)!.phonebookPromoNotGiven
                           : memberProvider.member.promotion < 100
                           ? "20${memberProvider.member.promotion}"
                           : memberProvider.member.promotion.toString(),
@@ -68,8 +69,8 @@ class MemberDetailPage extends HookConsumerWidget {
             if (memberProvider.memberships.isNotEmpty)
               Text(
                 memberProvider.memberships.length == 1
-                    ? PhonebookTextConstants.association
-                    : PhonebookTextConstants.associations,
+                    ? AppLocalizations.of(context)!.phonebookAssociation
+                    : AppLocalizations.of(context)!.phonebookAssociations,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,

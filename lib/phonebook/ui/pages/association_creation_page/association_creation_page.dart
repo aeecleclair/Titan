@@ -45,13 +45,13 @@ class AssociationCreationPage extends HookConsumerWidget {
           child: Column(
             children: [
               const SizedBox(height: 30),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    PhonebookTextConstants.addAssociation,
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.phonebookAddAssociation,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                       color: ColorConstants.gradient1,
@@ -90,18 +90,28 @@ class AssociationCreationPage extends HookConsumerWidget {
                         if (!key.currentState!.validate()) {
                           displayToastWithContext(
                             TypeMsg.error,
-                            PhonebookTextConstants.emptyFieldError,
+                            AppLocalizations.of(
+                              context,
+                            )!.phonebookEmptyFieldError,
                           );
                           return;
                         }
                         if (kind == '') {
                           displayToastWithContext(
                             TypeMsg.error,
-                            PhonebookTextConstants.emptyKindError,
+                            AppLocalizations.of(
+                              context,
+                            )!.phonebookEmptyKindError,
                           );
                           return;
                         }
                         await tokenExpireWrapper(ref, () async {
+                          final addedMsg = AppLocalizations.of(
+                            context,
+                          )!.phonebookAddedAssociation;
+                          final adminAddingErrorMsg = AppLocalizations.of(
+                            context,
+                          )!.adminAddingError;
                           final value = await associationListNotifier
                               .createAssociation(
                                 Association.empty().copyWith(
@@ -112,10 +122,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                                 ),
                               );
                           if (value) {
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              PhonebookTextConstants.addedAssociation,
-                            );
+                            displayToastWithContext(TypeMsg.msg, addedMsg);
                             associations.when(
                               data: (d) {
                                 associationNotifier.setAssociation(d.last);
@@ -127,14 +134,16 @@ class AssociationCreationPage extends HookConsumerWidget {
                               },
                               error: (e, s) => displayToastWithContext(
                                 TypeMsg.error,
-                                PhonebookTextConstants.errorAssociationLoading,
+                                AppLocalizations.of(
+                                  context,
+                                )!.phonebookErrorAssociationLoading,
                               ),
                               loading: () {},
                             );
                           } else {
                             displayToastWithContext(
                               TypeMsg.error,
-                              AppLocalizations.of(context)!.adminAddingError,
+                              adminAddingErrorMsg,
                             );
                           }
                         });

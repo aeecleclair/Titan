@@ -17,6 +17,7 @@ import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/widgets/admin_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PhonebookMainPage extends HookConsumerWidget {
   const PhonebookMainPage({super.key});
@@ -69,8 +70,12 @@ class PhonebookMainPage extends HookConsumerWidget {
                     KindsBar(),
                     const SizedBox(height: 30),
                     if (associations.isEmpty)
-                      const Center(
-                        child: Text(PhonebookTextConstants.noAssociationFound),
+                      Center(
+                        child: Text(
+                          AppLocalizations.of(
+                            context,
+                          )!.phonebookNoAssociationFound,
+                        ),
                       )
                     else
                       ...associationFilteredList.map(

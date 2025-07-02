@@ -4,6 +4,7 @@ import 'package:titan/phonebook/providers/association_member_list_provider.dart'
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/user/providers/user_provider.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 final isPhonebookAdminProvider = StateProvider<bool>((ref) {
   final user = ref.watch(userProvider);
@@ -38,7 +39,7 @@ final isAssociationPresidentProvider = StateProvider<bool>((ref) {
             (membership) => membership.associationId == association.id,
           )
           .rolesTags
-          .contains(PhonebookTextConstants.presidentRoleTag)) {
+          .contains(presidentRoleTag)) {
         isPresident = true;
       }
     }

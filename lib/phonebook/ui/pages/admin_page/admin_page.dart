@@ -20,6 +20,7 @@ import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
@@ -89,8 +90,12 @@ class AdminPage extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 30),
                     if (associations.isEmpty)
-                      const Center(
-                        child: Text(PhonebookTextConstants.noAssociationFound),
+                      Center(
+                        child: Text(
+                          AppLocalizations.of(
+                            context,
+                          )!.phonebookNoAssociationFound,
+                        ),
                       )
                     else
                       ...associationFilteredList.map(
@@ -114,11 +119,21 @@ class AdminPage extends HookConsumerWidget {
                                       context: context,
                                       builder: (context) {
                                         return CustomDialogBox(
-                                          title:
-                                              PhonebookTextConstants.deleting,
-                                          descriptions: PhonebookTextConstants
-                                              .deleteAssociation,
+                                          title: AppLocalizations.of(
+                                            context,
+                                          )!.phonebookDeleting,
+                                          descriptions: AppLocalizations.of(
+                                            context,
+                                          )!.phonebookDeleteAssociation,
                                           onYes: () async {
+                                            final deletedAssociationMsg =
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.phonebookDeletedAssociation;
+                                            final deletingErrorMsg =
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.phonebookDeletingError;
                                             final result =
                                                 await associationListNotifier
                                                     .deleteAssociation(
@@ -127,14 +142,12 @@ class AdminPage extends HookConsumerWidget {
                                             if (result) {
                                               displayToastWithContext(
                                                 TypeMsg.msg,
-                                                PhonebookTextConstants
-                                                    .deletedAssociation,
+                                                deletedAssociationMsg,
                                               );
                                             } else {
                                               displayToastWithContext(
                                                 TypeMsg.error,
-                                                PhonebookTextConstants
-                                                    .deletingError,
+                                                deletingErrorMsg,
                                               );
                                             }
                                           },
@@ -145,11 +158,21 @@ class AdminPage extends HookConsumerWidget {
                                       context: context,
                                       builder: (context) {
                                         return CustomDialogBox(
-                                          title: PhonebookTextConstants
-                                              .deactivating,
-                                          descriptions: PhonebookTextConstants
-                                              .deactivateAssociation,
+                                          title: AppLocalizations.of(
+                                            context,
+                                          )!.phonebookDeactivating,
+                                          descriptions: AppLocalizations.of(
+                                            context,
+                                          )!.phonebookDeactivateAssociation,
                                           onYes: () async {
+                                            final deactivatedAssociationMsg =
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.phonebookDeactivatedAssociation;
+                                            final deactivatingErrorMsg =
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.phonebookDeactivatingError;
                                             final result =
                                                 await associationListNotifier
                                                     .deactivateAssociation(
@@ -158,14 +181,12 @@ class AdminPage extends HookConsumerWidget {
                                             if (result) {
                                               displayToastWithContext(
                                                 TypeMsg.msg,
-                                                PhonebookTextConstants
-                                                    .deactivatedAssociation,
+                                                deactivatedAssociationMsg,
                                               );
                                             } else {
                                               displayToastWithContext(
                                                 TypeMsg.error,
-                                                PhonebookTextConstants
-                                                    .deactivatingError,
+                                                deactivatingErrorMsg,
                                               );
                                             }
                                           },

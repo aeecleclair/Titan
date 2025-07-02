@@ -24,6 +24,7 @@ import 'package:titan/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/phonebook/providers/complete_member_provider.dart';
 import 'package:titan/phonebook/ui/pages/membership_editor_page/search_result.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class MembershipEditorPage extends HookConsumerWidget {
   const MembershipEditorPage({super.key});
@@ -61,13 +62,13 @@ class MembershipEditorPage extends HookConsumerWidget {
             children: [
               AlignLeftText(
                 isEdit
-                    ? PhonebookTextConstants.editMembership
-                    : PhonebookTextConstants.addMember,
+                    ? AppLocalizations.of(context)!.phonebookEditMembership
+                    : AppLocalizations.of(context)!.phonebookAddMember,
               ),
               if (!isEdit) ...[
                 StyledSearchBar(
                   padding: EdgeInsets.zero,
-                  label: PhonebookTextConstants.member,
+                  label: AppLocalizations.of(context)!.phonebookMember,
                   editingController: queryController,
                   onChanged: (value) async {
                     tokenExpireWrapper(ref, () async {
@@ -146,7 +147,7 @@ class MembershipEditorPage extends HookConsumerWidget {
               const SizedBox(height: 30),
               TextEntry(
                 controller: apparentNameController,
-                label: PhonebookTextConstants.apparentName,
+                label: AppLocalizations.of(context)!.phonebookApparentName,
               ),
               const SizedBox(height: 50),
               WaitingButton(
@@ -159,8 +160,8 @@ class MembershipEditorPage extends HookConsumerWidget {
                 ),
                 child: Text(
                   !isEdit
-                      ? PhonebookTextConstants.add
-                      : PhonebookTextConstants.edit,
+                      ? AppLocalizations.of(context)!.phonebookAdd
+                      : AppLocalizations.of(context)!.phonebookEdit,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -171,14 +172,14 @@ class MembershipEditorPage extends HookConsumerWidget {
                   if (member.member.id == "") {
                     displayToastWithContext(
                       TypeMsg.msg,
-                      PhonebookTextConstants.emptyMember,
+                      AppLocalizations.of(context)!.phonebookEmptyMember,
                     );
                     return;
                   }
                   if (apparentNameController.text == "") {
                     displayToastWithContext(
                       TypeMsg.msg,
-                      PhonebookTextConstants.emptyApparentName,
+                      AppLocalizations.of(context)!.phonebookEmptyApparentName,
                     );
                     return;
                   }
@@ -207,13 +208,13 @@ class MembershipEditorPage extends HookConsumerWidget {
                         );
                         displayToastWithContext(
                           TypeMsg.msg,
-                          PhonebookTextConstants.updatedMember,
+                          AppLocalizations.of(context)!.phonebookUpdatedMember,
                         );
                         QR.back();
                       } else {
                         displayToastWithContext(
                           TypeMsg.error,
-                          PhonebookTextConstants.updatingError,
+                          AppLocalizations.of(context)!.phonebookUpdatingError,
                         );
                       }
                     } else {
@@ -233,7 +234,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                           .isNotEmpty) {
                         displayToastWithContext(
                           TypeMsg.msg,
-                          PhonebookTextConstants.existingMembership,
+                          AppLocalizations.of(context)!.phonebookExistingMembership,
                         );
                         return;
                       }
@@ -255,13 +256,13 @@ class MembershipEditorPage extends HookConsumerWidget {
                       if (value) {
                         displayToastWithContext(
                           TypeMsg.msg,
-                          PhonebookTextConstants.addedMember,
+                          AppLocalizations.of(context)!.phonebookAddedMember,
                         );
                         QR.back();
                       } else {
                         displayToastWithContext(
                           TypeMsg.error,
-                          PhonebookTextConstants.addingError,
+                          AppLocalizations.of(context)!.phonebookAddingError,
                         );
                       }
                     }

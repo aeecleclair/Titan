@@ -13,6 +13,7 @@ import 'package:titan/phonebook/tools/function.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class MemberCard extends HookConsumerWidget {
   const MemberCard({
@@ -131,7 +132,7 @@ class MemberCard extends HookConsumerWidget {
                 child: Text(
                   textAlign: TextAlign.right,
                   assoMembership == null
-                      ? PhonebookTextConstants.noMemberRole
+                      ? AppLocalizations.of(context)!.phonebookNoMemberRole
                       : assoMembership.apparentName,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
