@@ -12,6 +12,7 @@ import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/layouts/item_chip.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class HistoryPage extends HookConsumerWidget {
   const HistoryPage({super.key});
@@ -55,7 +56,11 @@ class HistoryPage extends HookConsumerWidget {
 
             if (children.isEmpty) {
               children.add(
-                const Center(child: Text(PurchasesTextConstants.noPurchases)),
+                Center(
+                  child: Text(
+                    AppLocalizations.of(context)!.purchasesNoPurchases,
+                  ),
+                ),
               );
             }
             return Column(
@@ -86,8 +91,9 @@ class HistoryPage extends HookConsumerWidget {
               ],
             );
           },
-          errorBuilder: (error, stack) =>
-              const Center(child: Text(PurchasesTextConstants.purchasesError)),
+          errorBuilder: (error, stack) => Center(
+            child: Text(AppLocalizations.of(context)!.purchasesPurchasesError),
+          ),
         ),
       ),
     );

@@ -14,6 +14,7 @@ import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PurchasesMainPage extends HookConsumerWidget {
   const PurchasesMainPage({super.key});
@@ -39,7 +40,7 @@ class PurchasesMainPage extends HookConsumerWidget {
                 children: [
                   CustomButton(
                     icon: HeroIcons.clock,
-                    text: PurchasesTextConstants.history,
+                    text: AppLocalizations.of(context)!.purchasesHistory,
                     onTap: () {
                       QR.to(PurchasesRouter.root + PurchasesRouter.history);
                     },
@@ -47,7 +48,7 @@ class PurchasesMainPage extends HookConsumerWidget {
                   if (isAdmin)
                     CustomButton(
                       icon: HeroIcons.viewfinderCircle,
-                      text: PurchasesTextConstants.scan,
+                      text: AppLocalizations.of(context)!.purchasesScan,
                       onTap: () {
                         QR.to(PurchasesRouter.root + PurchasesRouter.scan);
                       },
@@ -55,9 +56,9 @@ class PurchasesMainPage extends HookConsumerWidget {
                 ],
               ),
             ),
-            const AlignLeftText(
-              padding: EdgeInsets.only(left: 30),
-              PurchasesTextConstants.tickets,
+            AlignLeftText(
+              padding: const EdgeInsets.only(left: 30),
+              AppLocalizations.of(context)!.purchasesTickets,
               fontSize: 20,
             ),
             AsyncChild(
@@ -66,8 +67,10 @@ class PurchasesMainPage extends HookConsumerWidget {
                 return Column(
                   children: [
                     if (tickets.isEmpty)
-                      const Center(
-                        child: Text(PurchasesTextConstants.noTickets),
+                      Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.purchasesNoTickets,
+                        ),
                       )
                     else
                       ...ticketList.maybeWhen(
@@ -86,7 +89,9 @@ class PurchasesMainPage extends HookConsumerWidget {
                           ),
                         ),
                         orElse: () => [
-                          const Text(PurchasesTextConstants.ticketsError),
+                          Text(
+                            AppLocalizations.of(context)!.purchasesTicketsError,
+                          ),
                         ],
                       ),
                   ],

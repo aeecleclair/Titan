@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/purchases/class/purchase.dart';
 import 'package:titan/purchases/tools/constants.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PurchaseCard extends HookConsumerWidget {
   const PurchaseCard({
@@ -42,9 +43,9 @@ class PurchaseCard extends HookConsumerWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     )
-                  : const Text(
-                      PurchasesTextConstants.notPaid,
-                      style: TextStyle(
+                  : Text(
+                      AppLocalizations.of(context)!.purchasesNotPaid,
+                      style: const TextStyle(
                         color: Colors.red,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

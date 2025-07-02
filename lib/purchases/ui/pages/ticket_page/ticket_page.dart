@@ -9,6 +9,7 @@ import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/widgets/loader.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class TicketPage extends HookConsumerWidget {
   const TicketPage({super.key});
@@ -63,7 +64,7 @@ class TicketPage extends HookConsumerWidget {
                       ),
                 const SizedBox(height: 10),
                 Text(
-                  "${PurchasesTextConstants.leftScan}: ${data.scanLeft.toString()}",
+                  "${AppLocalizations.of(context)!.purchasesLeftScan}: ${data.scanLeft.toString()}",
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 const SizedBox(height: 10),
