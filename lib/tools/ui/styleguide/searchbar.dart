@@ -5,13 +5,13 @@ import 'package:titan/tools/constants.dart';
 
 class CustomSearchBar extends HookWidget {
   final String hintText;
-  final Function() onFilter;
+  final Function()? onFilter;
   final Function(String) onSearch;
   final bool autofocus;
   const CustomSearchBar({
     super.key,
     this.hintText = 'Rechercher',
-    required this.onFilter,
+    this.onFilter,
     required this.onSearch,
     this.autofocus = false,
   });
@@ -65,15 +65,16 @@ class CustomSearchBar extends HookWidget {
                 },
                 splashRadius: 20,
               ),
-            IconButton(
-              icon: HeroIcon(
-                HeroIcons.adjustmentsHorizontal,
-                color: ColorConstants.tertiary,
-                size: 20,
+            if (onFilter != null)
+              IconButton(
+                icon: HeroIcon(
+                  HeroIcons.adjustmentsHorizontal,
+                  color: ColorConstants.tertiary,
+                  size: 20,
+                ),
+                onPressed: onFilter,
+                splashRadius: 20,
               ),
-              onPressed: onFilter,
-              splashRadius: 20,
-            ),
           ],
         ),
       ),
