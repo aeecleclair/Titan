@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:titan/ph/class/ph.dart';
-import 'package:titan/ph/tools/constants.dart';
 import 'package:titan/ph/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';

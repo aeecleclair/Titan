@@ -8,7 +8,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/ph/providers/edit_pdf_provider.dart';
 import 'package:titan/ph/providers/file_picker_result_provider.dart';
 import 'package:titan/ph/providers/ph_send_pdf_provider.dart';
-import 'package:titan/ph/tools/constants.dart';
 import 'package:titan/ph/ui/button.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/l10n/app_localizations.dart';
