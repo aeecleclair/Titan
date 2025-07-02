@@ -9,7 +9,6 @@ import 'package:titan/raffle/providers/raffle_list_provider.dart';
 import 'package:titan/raffle/providers/tombola_logos_provider.dart';
 import 'package:titan/raffle/providers/user_tickets_provider.dart';
 import 'package:titan/raffle/router.dart';
-import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/raffle/ui/components/section_title.dart';
 import 'package:titan/raffle/ui/pages/main_page/raffle_card.dart';
 import 'package:titan/raffle/ui/pages/main_page/ticket_card.dart';
@@ -19,6 +18,7 @@ import 'package:titan/tools/ui/widgets/admin_button.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class RaffleMainPage extends HookConsumerWidget {
   const RaffleMainPage({super.key});
@@ -54,7 +54,9 @@ class RaffleMainPage extends HookConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const SectionTitle(text: RaffleTextConstants.tickets),
+                  SectionTitle(
+                    text: AppLocalizations.of(context)!.raffleTickets,
+                  ),
                   if (isAdmin)
                     AdminButton(
                       onTap: () {
@@ -104,7 +106,11 @@ class RaffleMainPage extends HookConsumerWidget {
                     }
                   }
                   return ticketSum.isEmpty
-                      ? const Center(child: Text(RaffleTextConstants.noTicket))
+                      ? Center(
+                          child: Text(
+                            AppLocalizations.of(context)!.raffleNoTicket,
+                          ),
+                        )
                       : HorizontalListView.builder(
                           height: 135,
                           items: ticketSum.keys.toList(),
@@ -153,8 +159,10 @@ class RaffleMainPage extends HookConsumerWidget {
                             top: 20,
                             left: 5,
                           ),
-                          child: const SectionTitle(
-                            text: RaffleTextConstants.actualRaffles,
+                          child: SectionTitle(
+                            text: AppLocalizations.of(
+                              context,
+                            )!.raffleActualRaffles,
                           ),
                         ),
                       ...onGoingRaffles.map((e) => RaffleWidget(raffle: e)),
@@ -165,8 +173,10 @@ class RaffleMainPage extends HookConsumerWidget {
                             top: 20,
                             left: 5,
                           ),
-                          child: const SectionTitle(
-                            text: RaffleTextConstants.nextRaffles,
+                          child: SectionTitle(
+                            text: AppLocalizations.of(
+                              context,
+                            )!.raffleNextRaffles,
                           ),
                         ),
                       ...incomingRaffles.map((e) => RaffleWidget(raffle: e)),
@@ -177,20 +187,24 @@ class RaffleMainPage extends HookConsumerWidget {
                             top: 20,
                             left: 5,
                           ),
-                          child: const SectionTitle(
-                            text: RaffleTextConstants.pastRaffles,
+                          child: SectionTitle(
+                            text: AppLocalizations.of(
+                              context,
+                            )!.rafflePastRaffles,
                           ),
                         ),
                       ...pastRaffles.map((e) => RaffleWidget(raffle: e)),
                       if (onGoingRaffles.isEmpty &&
                           incomingRaffles.isEmpty &&
                           pastRaffles.isEmpty)
-                        const SizedBox(
+                        SizedBox(
                           height: 100,
                           child: Center(
                             child: Text(
-                              RaffleTextConstants.noCurrentRaffle,
-                              style: TextStyle(fontSize: 20),
+                              AppLocalizations.of(
+                                context,
+                              )!.raffleNoCurrentRaffle,
+                              style: const TextStyle(fontSize: 20),
                             ),
                           ),
                         ),

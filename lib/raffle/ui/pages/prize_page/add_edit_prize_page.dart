@@ -15,6 +15,7 @@ import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddEditPrizePage extends HookConsumerWidget {
   const AddEditPrizePage({super.key});
@@ -49,32 +50,38 @@ class AddEditPrizePage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
-                    const AlignLeftText(
-                      RaffleTextConstants.addPrize,
+                    AlignLeftText(
+                      AppLocalizations.of(context)!.raffleAddPrize,
                       fontSize: 25,
                       color: RaffleColorConstants.gradient1,
                     ),
                     const SizedBox(height: 35),
-                    const SectionTitle(text: RaffleTextConstants.quantity),
+                    SectionTitle(
+                      text: AppLocalizations.of(context)!.raffleQuantity,
+                    ),
                     const SizedBox(height: 5),
                     TextEntry(
-                      label: RaffleTextConstants.quantity,
+                      label: AppLocalizations.of(context)!.raffleQuantity,
                       isInt: true,
                       controller: quantity,
                       keyboardType: TextInputType.number,
                     ),
                     const SizedBox(height: 50),
-                    const SectionTitle(text: RaffleTextConstants.name),
+                    SectionTitle(
+                      text: AppLocalizations.of(context)!.raffleName,
+                    ),
                     const SizedBox(height: 5),
                     TextEntry(
-                      label: RaffleTextConstants.name,
+                      label: AppLocalizations.of(context)!.raffleName,
                       controller: name,
                     ),
                     const SizedBox(height: 50),
-                    const SectionTitle(text: RaffleTextConstants.description),
+                    SectionTitle(
+                      text: AppLocalizations.of(context)!.raffleDescription,
+                    ),
                     const SizedBox(height: 5),
                     TextEntry(
-                      label: RaffleTextConstants.description,
+                      label: AppLocalizations.of(context)!.raffleDescription,
                       canBeEmpty: true,
                       controller: description,
                     ),
@@ -101,24 +108,32 @@ class AddEditPrizePage extends HookConsumerWidget {
                               if (isEdit) {
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  RaffleTextConstants.editedTicket,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.raffleEditedTicket,
                                 );
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  RaffleTextConstants.addedTicket,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.raffleAddedTicket,
                                 );
                               }
                             } else {
                               if (isEdit) {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  RaffleTextConstants.editingError,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.raffleEditingError,
                                 );
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  RaffleTextConstants.addingError,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.raffleAddingError,
                                 );
                               }
                             }
@@ -127,14 +142,14 @@ class AddEditPrizePage extends HookConsumerWidget {
                           displayToast(
                             context,
                             TypeMsg.error,
-                            RaffleTextConstants.addingError,
+                            AppLocalizations.of(context)!.raffleAddingError,
                           );
                         }
                       },
                       child: Text(
                         isEdit
-                            ? RaffleTextConstants.editPrize
-                            : RaffleTextConstants.addPrize,
+                            ? AppLocalizations.of(context)!.raffleEditPrize
+                            : AppLocalizations.of(context)!.raffleAddPrize,
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,

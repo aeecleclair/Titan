@@ -13,6 +13,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class TicketHandler extends HookConsumerWidget {
   const TicketHandler({super.key});
@@ -124,12 +125,12 @@ class TicketHandler extends HookConsumerWidget {
                                       if (value) {
                                         displayToastWithContext(
                                           TypeMsg.msg,
-                                          RaffleTextConstants.deletedTicket,
+                                          AppLocalizations.of(context)!.raffleDeletedTicket,
                                         );
                                       } else {
                                         displayToastWithContext(
                                           TypeMsg.error,
-                                          RaffleTextConstants.deletingError,
+                                          AppLocalizations.of(context)!.raffleDeletingError,
                                         );
                                       }
                                     });

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/raffle/class/prize.dart';
 import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PrizeDialog extends HookConsumerWidget {
   final Prize prize;
@@ -65,7 +66,7 @@ class PrizeDialog extends HookConsumerWidget {
               child: FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  "${prize.quantity} ${RaffleTextConstants.prize}${prize.quantity > 1 ? "s" : ""} ${RaffleTextConstants.winnable}${prize.quantity > 1 ? "s" : ""}",
+                  "${prize.quantity} ${AppLocalizations.of(context)!.rafflePrize}${prize.quantity > 1 ? "s" : ""} ${AppLocalizations.of(context)!.raffleWinnable}${prize.quantity > 1 ? "s" : ""}",
                   style: const TextStyle(
                     color: RaffleColorConstants.writtenWhite,
                     fontSize: 50,
@@ -77,7 +78,7 @@ class PrizeDialog extends HookConsumerWidget {
             const Spacer(),
             AutoSizeText(
               prize.description == null || prize.description!.isEmpty
-                  ? RaffleTextConstants.noDescription
+                  ? AppLocalizations.of(context)!.raffleNoDescription
                   : prize.description!,
               maxLines: 4,
               textAlign: TextAlign.justify,
