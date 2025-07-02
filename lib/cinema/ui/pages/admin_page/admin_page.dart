@@ -5,13 +5,13 @@ import 'package:titan/cinema/class/session.dart';
 import 'package:titan/cinema/providers/session_list_provider.dart';
 import 'package:titan/cinema/providers/session_provider.dart';
 import 'package:titan/cinema/router.dart';
-import 'package:titan/cinema/tools/constants.dart';
 import 'package:titan/cinema/ui/cinema.dart';
 import 'package:titan/cinema/ui/pages/admin_page/admin_session_card.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
@@ -60,8 +60,8 @@ class AdminPage extends HookConsumerWidget {
                       context: context,
                       builder: (context) {
                         return CustomDialogBox(
-                          title: CinemaTextConstants.deleting,
-                          descriptions: CinemaTextConstants.deleteSession,
+                          title: AppLocalizations.of(context)!.cinemaDeleting,
+                          descriptions: AppLocalizations.of(context)!.cinemaDeleteSession,
                           onYes: () {
                             sessionListNotifier.deleteSession(session);
                           },

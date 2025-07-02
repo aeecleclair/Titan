@@ -9,7 +9,6 @@ import 'package:titan/cinema/providers/session_list_provider.dart';
 import 'package:titan/cinema/providers/session_poster_map_provider.dart';
 import 'package:titan/cinema/providers/session_provider.dart';
 import 'package:titan/cinema/router.dart';
-import 'package:titan/cinema/tools/constants.dart';
 import 'package:titan/cinema/ui/cinema.dart';
 import 'package:titan/cinema/ui/pages/main_page/session_card.dart';
 import 'package:titan/navigation/providers/is_web_format_provider.dart';
@@ -17,6 +16,7 @@ import 'package:titan/tools/ui/widgets/admin_button.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class CinemaMainPage extends HookConsumerWidget {
   const CinemaMainPage({super.key});
@@ -63,9 +63,9 @@ class CinemaMainPage extends HookConsumerWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        CinemaTextConstants.incomingSession,
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.cinemaIncomingSession,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
@@ -88,12 +88,12 @@ class CinemaMainPage extends HookConsumerWidget {
                 builder: (context, data) {
                   data.sort((a, b) => a.start.compareTo(b.start));
                   if (data.isEmpty) {
-                    return const SizedBox(
+                    return SizedBox(
                       height: 200,
                       child: Center(
                         child: Text(
-                          CinemaTextConstants.noSession,
-                          style: TextStyle(
+                          AppLocalizations.of(context)!.cinemaNoSession,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,

@@ -10,7 +10,6 @@ import 'package:titan/cinema/providers/session_poster_map_provider.dart';
 import 'package:titan/cinema/providers/session_poster_provider.dart';
 import 'package:titan/cinema/providers/session_provider.dart';
 import 'package:titan/cinema/providers/the_movie_db_genre_provider.dart';
-import 'package:titan/cinema/tools/constants.dart';
 import 'package:titan/cinema/tools/functions.dart';
 import 'package:titan/cinema/ui/cinema.dart';
 import 'package:titan/cinema/ui/pages/session_pages/tmdb_button.dart';
@@ -22,6 +21,7 @@ import 'package:titan/tools/ui/widgets/date_entry.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddEditSessionPage extends HookConsumerWidget {
   const AddEditSessionPage({super.key});
@@ -74,8 +74,8 @@ class AddEditSessionPage extends HookConsumerWidget {
               children: [
                 AlignLeftText(
                   isEdit
-                      ? CinemaTextConstants.editSession
-                      : CinemaTextConstants.addSession,
+                      ? AppLocalizations.of(context)!.cinemaEditSession
+                      : AppLocalizations.of(context)!.cinemaAddSession,
                   color: Colors.grey,
                 ),
                 const SizedBox(height: 30),
@@ -83,7 +83,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   controller: tmdbUrl,
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
-                    labelText: CinemaTextConstants.importFromTMDB,
+                    labelText: AppLocalizations.of(context)!.cinemaImportFromTMDB,
                     labelStyle: const TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -95,7 +95,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                           if (tmdbUrl.text.isEmpty) {
                             displayToastWithContext(
                               TypeMsg.error,
-                              CinemaTextConstants.emptyUrl,
+                              AppLocalizations.of(context)!.cinemaEmptyUrl,
                             );
                             return;
                           }
@@ -135,7 +135,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                           } on FormatException catch (_) {
                             displayToastWithContext(
                               TypeMsg.error,
-                              CinemaTextConstants.invalidUrl,
+                              AppLocalizations.of(context)!.cinemaInvalidUrl,
                             );
                             return;
                           }
@@ -183,10 +183,10 @@ class AddEditSessionPage extends HookConsumerWidget {
                             )
                     : Image.memory(logo.value!, fit: BoxFit.cover),
                 const SizedBox(height: 30),
-                TextEntry(label: CinemaTextConstants.name, controller: name),
+                TextEntry(label: AppLocalizations.of(context)!.cinemaName, controller: name),
                 const SizedBox(height: 30),
                 TextEntry(
-                  label: CinemaTextConstants.posterUrl,
+                  label: AppLocalizations.of(context)!.cinemaPosterUrl,
                   controller: posterUrl,
                   onChanged: (value) async {
                     logo.value = await getFromUrl(posterUrl.text);
@@ -196,30 +196,30 @@ class AddEditSessionPage extends HookConsumerWidget {
                 const SizedBox(height: 30),
                 DateEntry(
                   onTap: () => getFullDate(context, start),
-                  label: CinemaTextConstants.sessionDate,
+                  label: AppLocalizations.of(context)!.cinemaSessionDate,
                   controller: start,
                 ),
                 const SizedBox(height: 30),
                 DateEntry(
                   onTap: () => getOnlyHourDate(context, duration),
-                  label: CinemaTextConstants.duration,
+                  label: AppLocalizations.of(context)!.cinemaDuration,
                   controller: duration,
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
-                  label: CinemaTextConstants.genre,
+                  label: AppLocalizations.of(context)!.cinemaGenre,
                   controller: genre,
                   canBeEmpty: true,
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
-                  label: CinemaTextConstants.overview,
+                  label: AppLocalizations.of(context)!.cinemaOverview,
                   controller: overview,
                   canBeEmpty: true,
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
-                  label: CinemaTextConstants.tagline,
+                  label: AppLocalizations.of(context)!.cinemaTagline,
                   controller: tagline,
                   canBeEmpty: true,
                 ),
@@ -234,7 +234,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                       if (logo.value == null && logoFile.value == null) {
                         displayToastWithContext(
                           TypeMsg.error,
-                          CinemaTextConstants.noPoster,
+                          AppLocalizations.of(context)!.cinemaNoPoster,
                         );
                         return;
                       }
@@ -279,7 +279,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                             );
                             displayToastWithContext(
                               TypeMsg.msg,
-                              CinemaTextConstants.editedSession,
+                              AppLocalizations.of(context)!.cinemaEditedSession,
                             );
                           } else {
                             sessionList.maybeWhen(
@@ -302,19 +302,19 @@ class AddEditSessionPage extends HookConsumerWidget {
                             );
                             displayToastWithContext(
                               TypeMsg.msg,
-                              CinemaTextConstants.addedSession,
+                              AppLocalizations.of(context)!.cinemaAddedSession,
                             );
                           }
                         } else {
                           if (isEdit) {
                             displayToastWithContext(
                               TypeMsg.error,
-                              CinemaTextConstants.editingError,
+                              AppLocalizations.of(context)!.cinemaEditingError,
                             );
                           } else {
                             displayToastWithContext(
                               TypeMsg.error,
-                              CinemaTextConstants.addingError,
+                              AppLocalizations.of(context)!.cinemaAddingError,
                             );
                           }
                         }
@@ -323,12 +323,12 @@ class AddEditSessionPage extends HookConsumerWidget {
                       displayToast(
                         context,
                         TypeMsg.error,
-                        CinemaTextConstants.incorrectOrMissingFields,
+                        AppLocalizations.of(context)!.cinemaIncorrectOrMissingFields,
                       );
                     }
                   },
                   child: Text(
-                    isEdit ? CinemaTextConstants.edit : CinemaTextConstants.add,
+                    isEdit ? AppLocalizations.of(context)!.cinemaEdit : AppLocalizations.of(context)!.cinemaAdd,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 25,
