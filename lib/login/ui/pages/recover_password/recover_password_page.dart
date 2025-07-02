@@ -7,7 +7,6 @@ import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/login/class/recover_request.dart';
 import 'package:titan/login/providers/sign_up_provider.dart';
 import 'package:titan/login/router.dart';
-import 'package:titan/login/tools/constants.dart';
 import 'package:titan/login/ui/components/login_field.dart';
 import 'package:titan/login/ui/auth_page.dart';
 import 'package:titan/login/ui/components/sign_in_up_bar.dart';

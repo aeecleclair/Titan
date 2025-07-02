@@ -6,7 +6,6 @@ import 'package:titan/event/class/event.dart';
 import 'package:titan/event/providers/event_provider.dart';
 import 'package:titan/event/providers/user_event_list_provider.dart';
 import 'package:titan/event/router.dart';
-import 'package:titan/event/tools/constants.dart';
 import 'package:titan/event/tools/functions.dart';
 import 'package:titan/event/ui/components/edit_delete_button.dart';
 import 'package:titan/tools/constants.dart';

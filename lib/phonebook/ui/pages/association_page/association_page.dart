@@ -9,7 +9,6 @@ import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/association_member_list_provider.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/pages/association_page/member_card.dart';
 import 'package:titan/phonebook/ui/pages/association_page/web_member_card.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';

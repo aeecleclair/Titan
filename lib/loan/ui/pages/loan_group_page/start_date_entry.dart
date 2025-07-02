@@ -6,7 +6,6 @@ import 'package:titan/loan/providers/initial_date_provider.dart';
 import 'package:titan/loan/providers/item_list_provider.dart';
 import 'package:titan/loan/providers/selected_items_provider.dart';
 import 'package:titan/loan/providers/start_provider.dart';
-import 'package:titan/loan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
 import 'package:titan/l10n/app_localizations.dart';

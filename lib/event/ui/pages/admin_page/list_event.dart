@@ -7,7 +7,6 @@ import 'package:titan/event/providers/confirmed_event_list_provider.dart';
 import 'package:titan/event/providers/event_list_provider.dart';
 import 'package:titan/event/providers/event_provider.dart';
 import 'package:titan/event/router.dart';
-import 'package:titan/event/tools/constants.dart';
 import 'package:titan/event/ui/components/event_ui.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';

@@ -14,7 +14,6 @@ import 'package:titan/loan/providers/loaner_provider.dart';
 import 'package:titan/loan/providers/loaners_items_provider.dart';
 import 'package:titan/loan/providers/start_provider.dart';
 import 'package:titan/loan/router.dart';
-import 'package:titan/loan/tools/constants.dart';
 import 'package:titan/loan/ui/pages/admin_page/loan_card.dart';
 import 'package:titan/loan/ui/pages/admin_page/delay_dialog.dart';
 import 'package:titan/tools/functions.dart';

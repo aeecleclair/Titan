@@ -7,7 +7,6 @@ import 'package:titan/phonebook/class/membership.dart';
 import 'package:titan/phonebook/providers/member_pictures_provider.dart';
 import 'package:titan/phonebook/providers/profile_picture_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/providers/complete_member_provider.dart';
 import 'package:titan/phonebook/tools/function.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';

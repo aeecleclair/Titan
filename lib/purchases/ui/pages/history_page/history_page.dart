@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/purchases/providers/purchase_list_provider.dart';
 import 'package:titan/purchases/providers/purchase_provider.dart';
 import 'package:titan/purchases/router.dart';
-import 'package:titan/purchases/tools/constants.dart';
 import 'package:titan/purchases/ui/pages/history_page/purchase_card.dart';
 import 'package:titan/purchases/ui/purchases.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';

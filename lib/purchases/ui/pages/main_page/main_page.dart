@@ -5,7 +5,6 @@ import 'package:titan/purchases/providers/purchases_admin_provider.dart';
 import 'package:titan/purchases/providers/ticket_list_provider.dart';
 import 'package:titan/purchases/providers/ticket_provider.dart';
 import 'package:titan/purchases/router.dart';
-import 'package:titan/purchases/tools/constants.dart';
 import 'package:titan/purchases/ui/pages/main_page/custom_button.dart';
 import 'package:titan/purchases/ui/pages/main_page/ticket_card.dart';
 import 'package:titan/purchases/ui/purchases.dart';

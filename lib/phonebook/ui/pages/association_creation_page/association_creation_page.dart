@@ -6,7 +6,6 @@ import 'package:titan/phonebook/providers/association_kind_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/components/kinds_bar.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/tools/constants.dart';

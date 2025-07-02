@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/login/providers/animation_provider.dart';
 import 'package:titan/login/router.dart';
-import 'package:titan/login/tools/constants.dart';
 import 'package:titan/login/ui/auth_page.dart';
 import 'package:titan/login/ui/components/sign_in_up_bar.dart';
 import 'package:titan/tools/constants.dart';

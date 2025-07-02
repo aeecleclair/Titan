@@ -8,7 +8,6 @@ import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/components/kinds_bar.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/association_research_bar.dart';

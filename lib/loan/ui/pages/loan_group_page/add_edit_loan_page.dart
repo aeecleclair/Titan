@@ -8,7 +8,6 @@ import 'package:titan/loan/providers/item_list_provider.dart';
 import 'package:titan/loan/providers/loan_provider.dart';
 import 'package:titan/loan/providers/loaner_provider.dart';
 import 'package:titan/loan/providers/loaners_items_provider.dart';
-import 'package:titan/loan/tools/constants.dart';
 import 'package:titan/loan/ui/loan.dart';
 import 'package:titan/loan/ui/pages/loan_group_page/add_edit_button.dart';
 import 'package:titan/loan/ui/pages/loan_group_page/end_date_entry.dart';

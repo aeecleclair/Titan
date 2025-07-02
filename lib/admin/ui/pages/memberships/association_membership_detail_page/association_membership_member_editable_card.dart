@@ -8,7 +8,6 @@ import 'package:titan/admin/router.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/delete_button.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/edition_button.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';

@@ -15,7 +15,6 @@ import 'package:titan/phonebook/providers/membership_provider.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/pages/association_editor_page/association_information_editor.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/phonebook/ui/pages/association_editor_page/member_editable_card.dart';

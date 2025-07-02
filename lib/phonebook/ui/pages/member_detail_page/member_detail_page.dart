@@ -4,7 +4,6 @@ import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/complete_member_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/pages/member_detail_page/element_field.dart';
 import 'package:titan/phonebook/ui/pages/member_detail_page/membership_card.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';

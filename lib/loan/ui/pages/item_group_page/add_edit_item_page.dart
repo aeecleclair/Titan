@@ -6,7 +6,6 @@ import 'package:titan/loan/providers/item_list_provider.dart';
 import 'package:titan/loan/providers/item_provider.dart';
 import 'package:titan/loan/providers/loaner_provider.dart';
 import 'package:titan/loan/providers/loaners_items_provider.dart';
-import 'package:titan/loan/tools/constants.dart';
 import 'package:titan/loan/ui/loan.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';

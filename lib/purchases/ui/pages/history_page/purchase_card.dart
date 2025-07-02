@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/purchases/class/purchase.dart';
-import 'package:titan/purchases/tools/constants.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:titan/l10n/app_localizations.dart';
 

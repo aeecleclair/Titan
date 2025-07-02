@@ -6,7 +6,6 @@ import 'package:titan/purchases/providers/generated_ticket_provider.dart';
 import 'package:titan/purchases/providers/scanner_provider.dart';
 import 'package:titan/purchases/providers/seller_list_provider.dart';
 import 'package:titan/purchases/providers/seller_provider.dart';
-import 'package:titan/purchases/tools/constants.dart';
 import 'package:titan/purchases/ui/pages/scan_page/ticket_card.dart';
 import 'package:titan/purchases/ui/pages/scan_page/scan_dialog.dart';
 import 'package:titan/purchases/ui/purchases.dart';
