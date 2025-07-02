@@ -11,6 +11,7 @@ import 'package:titan/ph/providers/ph_send_pdf_provider.dart';
 import 'package:titan/ph/tools/constants.dart';
 import 'package:titan/ph/ui/button.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PdfPicker extends HookConsumerWidget {
   final bool isEdit;
@@ -48,7 +49,7 @@ class PdfPicker extends HookConsumerWidget {
             } else {
               displayToastWithContext(
                 TypeMsg.error,
-                PhTextConstants.toHeavyFile,
+                AppLocalizations.of(context)!.phToHeavyFile,
               );
             }
           }
@@ -58,10 +59,10 @@ class PdfPicker extends HookConsumerWidget {
         },
         child: MyButton(
           text: isEdit
-              ? PhTextConstants.editPdfFile
+              ? AppLocalizations.of(context)!.phEditPdfFile
               : (result != null)
               ? result.files.single.name
-              : PhTextConstants.addPdfFile,
+              : AppLocalizations.of(context)!.phAddPdfFile,
         ),
       ),
     );

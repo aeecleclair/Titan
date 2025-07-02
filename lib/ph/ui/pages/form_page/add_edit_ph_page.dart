@@ -20,6 +20,7 @@ import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PhAddEditPhPage extends HookConsumerWidget {
   const PhAddEditPhPage({super.key});
@@ -55,7 +56,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                   children: [
                     TextEntry(
                       maxLines: 1,
-                      label: PhTextConstants.phName,
+                      label: AppLocalizations.of(context)!.phPhName,
                       controller: name,
                       textInputAction: TextInputAction.done,
                     ),
@@ -64,7 +65,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                       child: Column(
                         children: [
                           DateEntry(
-                            label: PhTextConstants.date,
+                            label: AppLocalizations.of(context)!.phDate,
                             controller: dateController,
                             onTap: () {
                               getOnlyDayDate(
@@ -135,15 +136,15 @@ class PhAddEditPhPage extends HookConsumerWidget {
                                 displayPhToastWithContext(
                                   TypeMsg.msg,
                                   isEdit
-                                      ? PhTextConstants.edited
-                                      : PhTextConstants.added,
+                                      ? AppLocalizations.of(context)!.phEdited
+                                      : AppLocalizations.of(context)!.phAdded,
                                 );
                                 editPdfNotifier.editPdf(false);
                               }
                             } else {
                               displayPhToastWithContext(
                                 TypeMsg.error,
-                                PhTextConstants.addingFileError,
+                                AppLocalizations.of(context)!.phAddingFileError,
                               );
                             }
                           });
@@ -151,12 +152,12 @@ class PhAddEditPhPage extends HookConsumerWidget {
                           displayToast(
                             context,
                             TypeMsg.error,
-                            PhTextConstants.missingInformatonsOrPdf,
+                            AppLocalizations.of(context)!.phMissingInformatonsOrPdf,
                           );
                         }
                       },
                       child: Text(
-                        isEdit ? PhTextConstants.edit : PhTextConstants.add,
+                        isEdit ? AppLocalizations.of(context)!.phEdit : AppLocalizations.of(context)!.phAdd,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 25,

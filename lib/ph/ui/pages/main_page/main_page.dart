@@ -12,6 +12,7 @@ import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/widgets/admin_button.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PhMainPage extends HookConsumerWidget {
   const PhMainPage({super.key});
@@ -40,7 +41,9 @@ class PhMainPage extends HookConsumerWidget {
               onTap: () {
                 QR.to(PhRouter.root + PhRouter.past_ph_selection);
               },
-              child: const MyButton(text: PhTextConstants.seePreviousJournal),
+              child: MyButton(
+                text: AppLocalizations.of(context)!.phSeePreviousJournal,
+              ),
             ),
           ),
           const SizedBox(height: 10),
@@ -49,7 +52,9 @@ class PhMainPage extends HookConsumerWidget {
             builder: (context, phs) {
               phs.sort((a, b) => a.date.compareTo(b.date));
               if (phs.isEmpty) {
-                return const Text(PhTextConstants.noJournalInDatabase);
+                return Text(
+                  AppLocalizations.of(context)!.phNoJournalInDatabase,
+                );
               } else {
                 final idLastPh = phs.last.id;
                 final lastPhPdf = ref.watch(phPdfProvider(idLastPh));
