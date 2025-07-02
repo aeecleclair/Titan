@@ -16,6 +16,7 @@ import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class RecoverPasswordPage extends HookConsumerWidget {
   const RecoverPasswordPage({super.key});
@@ -41,7 +42,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
     List<Widget> steps = [
       CreateAccountField(
         controller: activationCode,
-        label: LoginTextConstants.activationCode,
+        label: AppLocalizations.of(context)!.loginActivationCode,
         index: 1,
         pageController: pageController,
         currentPage: currentPage,
@@ -51,7 +52,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
         children: [
           CreateAccountField(
             controller: password,
-            label: LoginTextConstants.newPassword,
+            label: AppLocalizations.of(context)!.loginNewPassword,
             index: 2,
             pageController: pageController,
             currentPage: currentPage,
@@ -67,7 +68,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
         ],
       ),
       SignInUpBar(
-        label: LoginTextConstants.endResetPassword,
+        label: AppLocalizations.of(context)!.loginEndResetPassword,
         isLoading: false,
         onPressed: () async {
           if (password.text.isNotEmpty && activationCode.text.isNotEmpty) {
@@ -79,20 +80,20 @@ class RecoverPasswordPage extends HookConsumerWidget {
             if (value) {
               displayToastWithContext(
                 TypeMsg.msg,
-                LoginTextConstants.resetedPassword,
+                AppLocalizations.of(context)!.loginResetedPassword,
               );
               authTokenNotifier.deleteToken();
               QR.to(LoginRouter.root);
             } else {
               displayToastWithContext(
                 TypeMsg.error,
-                LoginTextConstants.invalidToken,
+                AppLocalizations.of(context)!.loginInvalidToken,
               );
             }
           } else {
             displayToastWithContext(
               TypeMsg.error,
-              LoginTextConstants.fillAllFields,
+              AppLocalizations.of(context)!.loginFillAllFields,
             );
           }
         },
@@ -129,7 +130,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  LoginTextConstants.resetPasswordTitle,
+                  AppLocalizations.of(context)!.loginResetPasswordTitle,
                   style: GoogleFonts.elMessiri(
                     textStyle: const TextStyle(
                       fontSize: 30,

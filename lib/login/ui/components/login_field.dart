@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/login/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class CreateAccountField extends HookConsumerWidget {
   final TextEditingController controller;
@@ -19,14 +19,7 @@ class CreateAccountField extends HookConsumerWidget {
   final bool isPassword;
   final bool mustBeInt;
   final String? Function(String?)? validator;
-  final dict = {
-    RegExp(r'[A-Z]'): LoginTextConstants.passwordUppercaseError,
-    RegExp(r'[a-z]'): LoginTextConstants.passwordLowercaseError,
-    RegExp(r'[0-9]'): LoginTextConstants.passwordNumberError,
-    RegExp(r'[!@#$%^&*(),.?":{}|<>\-_[\]+=;]'):
-        LoginTextConstants.passwordSpecialCaracterError,
-  };
-  CreateAccountField({
+  const CreateAccountField({
     super.key,
     required this.controller,
     required this.label,
@@ -45,6 +38,18 @@ class CreateAccountField extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final dict = {
+      RegExp(r'[A-Z]'): AppLocalizations.of(
+        context,
+      )!.loginPasswordUppercaseError,
+      RegExp(r'[a-z]'): AppLocalizations.of(
+        context,
+      )!.loginPasswordLowercaseError,
+      RegExp(r'[0-9]'): AppLocalizations.of(context)!.loginPasswordNumberError,
+      RegExp(r'[!@#$%^&*(),.?":{}|<>\-_[\]+=;]'): AppLocalizations.of(
+        context,
+      )!.loginPasswordSpecialCaracterError,
+    };
     final isPassword = keyboardType == TextInputType.visiblePassword;
     final hidePassword = useState(isPassword);
     return Column(
@@ -112,9 +117,9 @@ class CreateAccountField extends HookConsumerWidget {
                   return null;
                 }
                 if (value == null || value.isEmpty) {
-                  return LoginTextConstants.emptyFieldError;
+                  return AppLocalizations.of(context)!.loginEmptyFieldError;
                 } else if (isPassword && value.length < 6) {
-                  return LoginTextConstants.passwordLengthError;
+                  return AppLocalizations.of(context)!.loginPasswordLengthError;
                 }
                 for (var key in dict.keys) {
                   if (isPassword && !value.contains(key)) {
@@ -122,7 +127,7 @@ class CreateAccountField extends HookConsumerWidget {
                   }
                 }
                 if (mustBeInt && int.tryParse(value) == null) {
-                  return LoginTextConstants.mustBeIntError;
+                  return AppLocalizations.of(context)!.loginMustBeIntError;
                 }
                 return validator?.call(value);
               },

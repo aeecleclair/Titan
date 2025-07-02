@@ -6,12 +6,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/login/providers/sign_up_provider.dart';
 import 'package:titan/login/router.dart';
-import 'package:titan/login/tools/constants.dart';
 import 'package:titan/login/ui/auth_page.dart';
 import 'package:titan/login/ui/components/sign_in_up_bar.dart';
 import 'package:titan/login/ui/components/text_from_decoration.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ForgetPassword extends HookConsumerWidget {
   const ForgetPassword({super.key});
@@ -55,7 +55,7 @@ class ForgetPassword extends HookConsumerWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    LoginTextConstants.forgetPassword,
+                    AppLocalizations.of(context)!.loginForgetPassword,
                     style: GoogleFonts.elMessiri(
                       textStyle: const TextStyle(
                         fontSize: 30,
@@ -82,7 +82,7 @@ class ForgetPassword extends HookConsumerWidget {
                           ),
                           decoration: signInRegisterInputDecoration(
                             isSignIn: false,
-                            hintText: LoginTextConstants.email,
+                            hintText: AppLocalizations.of(context)!.loginEmail,
                           ),
                           keyboardType: TextInputType.emailAddress,
                           autofillHints: const [AutofillHints.email],
@@ -91,7 +91,7 @@ class ForgetPassword extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 30),
                     SignInUpBar(
-                      label: LoginTextConstants.recover,
+                      label: AppLocalizations.of(context)!.loginRecover,
                       isLoading: ref
                           .watch(loadingProvider)
                           .maybeWhen(data: (data) => data, orElse: () => false),
@@ -102,7 +102,7 @@ class ForgetPassword extends HookConsumerWidget {
                         if (value) {
                           displayToastWithContext(
                             TypeMsg.msg,
-                            LoginTextConstants.sendedResetMail,
+                            AppLocalizations.of(context)!.loginSendedResetMail,
                           );
                           email.clear();
                           QR.to(
@@ -112,7 +112,7 @@ class ForgetPassword extends HookConsumerWidget {
                         } else {
                           displayToastWithContext(
                             TypeMsg.error,
-                            LoginTextConstants.mailSendingError,
+                            AppLocalizations.of(context)!.loginMailSendingError,
                           );
                         }
                       },
@@ -129,9 +129,9 @@ class ForgetPassword extends HookConsumerWidget {
                             onTap: () {
                               QR.to(LoginRouter.root);
                             },
-                            child: const Text(
-                              LoginTextConstants.signIn,
-                              style: TextStyle(
+                            child: Text(
+                              AppLocalizations.of(context)!.loginSignIn,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w800,
                                 decoration: TextDecoration.underline,
@@ -151,9 +151,9 @@ class ForgetPassword extends HookConsumerWidget {
                                     LoginRouter.mailReceived,
                               );
                             },
-                            child: const Text(
-                              LoginTextConstants.recievedMail,
-                              style: TextStyle(
+                            child: Text(
+                              AppLocalizations.of(context)!.loginRecievedMail,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w800,
                                 decoration: TextDecoration.underline,

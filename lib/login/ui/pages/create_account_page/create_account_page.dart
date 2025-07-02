@@ -19,6 +19,7 @@ import 'package:titan/tools/ui/widgets/date_entry.dart';
 import 'package:titan/user/class/floors.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class CreateAccountPage extends HookConsumerWidget {
   const CreateAccountPage({super.key});
@@ -71,7 +72,7 @@ class CreateAccountPage extends HookConsumerWidget {
     List<Widget> steps = [
       CreateAccountField(
         controller: activationCode,
-        label: LoginTextConstants.activationCode,
+        label: AppLocalizations.of(context)!.loginActivationCode,
         index: 1,
         pageController: pageController,
         currentPage: currentPage,
@@ -81,7 +82,7 @@ class CreateAccountPage extends HookConsumerWidget {
         children: [
           CreateAccountField(
             controller: password,
-            label: LoginTextConstants.password,
+            label: AppLocalizations.of(context)!.loginPassword,
             index: 2,
             pageController: pageController,
             currentPage: currentPage,
@@ -100,7 +101,7 @@ class CreateAccountPage extends HookConsumerWidget {
         children: [
           CreateAccountField(
             controller: passwordConfirmation,
-            label: LoginTextConstants.confirmPassword,
+            label: AppLocalizations.of(context)!.loginConfirmPassword,
             index: 3,
             pageController: pageController,
             currentPage: currentPage,
@@ -108,7 +109,7 @@ class CreateAccountPage extends HookConsumerWidget {
             keyboardType: TextInputType.visiblePassword,
             validator: (value) {
               if (value != password.text) {
-                return LoginTextConstants.passwordMustMatch;
+                return AppLocalizations.of(context)!.loginPasswordMustMatch;
               }
               return null;
             },
@@ -123,7 +124,7 @@ class CreateAccountPage extends HookConsumerWidget {
       ),
       CreateAccountField(
         controller: name,
-        label: LoginTextConstants.name,
+        label: AppLocalizations.of(context)!.loginName,
         index: 4,
         pageController: pageController,
         currentPage: currentPage,
@@ -133,7 +134,7 @@ class CreateAccountPage extends HookConsumerWidget {
       ),
       CreateAccountField(
         controller: firstname,
-        label: LoginTextConstants.firstname,
+        label: AppLocalizations.of(context)!.loginFirstname,
         index: 5,
         pageController: pageController,
         currentPage: currentPage,
@@ -143,21 +144,21 @@ class CreateAccountPage extends HookConsumerWidget {
       ),
       CreateAccountField(
         controller: nickname,
-        label: LoginTextConstants.nickname,
+        label: AppLocalizations.of(context)!.loginNickname,
         index: 6,
         pageController: pageController,
         currentPage: currentPage,
         formKey: formKeys[5],
         keyboardType: TextInputType.name,
         canBeEmpty: true,
-        hint: LoginTextConstants.canBeEmpty,
+        hint: AppLocalizations.of(context)!.loginCanBeEmpty,
       ),
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(height: 9),
-          const AlignLeftText(
-            LoginTextConstants.birthday,
+          AlignLeftText(
+            AppLocalizations.of(context)!.loginBirthday,
             fontSize: 20,
             color: ColorConstants.background2,
           ),
@@ -176,7 +177,7 @@ class CreateAccountPage extends HookConsumerWidget {
                   lastDate: DateTime.now(),
                 );
               },
-              label: LoginTextConstants.birthday,
+              label: AppLocalizations.of(context)!.loginBirthday,
               controller: birthday,
               color: Colors.white,
               enabledColor: ColorConstants.background2,
@@ -187,7 +188,7 @@ class CreateAccountPage extends HookConsumerWidget {
       ),
       CreateAccountField(
         controller: phone,
-        label: LoginTextConstants.phone,
+        label: AppLocalizations.of(context)!.loginPhone,
         index: 8,
         pageController: pageController,
         currentPage: currentPage,
@@ -195,11 +196,11 @@ class CreateAccountPage extends HookConsumerWidget {
         keyboardType: TextInputType.phone,
         autofillHints: const [AutofillHints.telephoneNumber],
         canBeEmpty: true,
-        hint: LoginTextConstants.canBeEmpty,
+        hint: AppLocalizations.of(context)!.loginCanBeEmpty,
       ),
       CreateAccountField(
         controller: promo,
-        label: LoginTextConstants.promo,
+        label: AppLocalizations.of(context)!.loginPromo,
         index: 9,
         pageController: pageController,
         currentPage: currentPage,
@@ -207,14 +208,14 @@ class CreateAccountPage extends HookConsumerWidget {
         keyboardType: TextInputType.number,
         canBeEmpty: true,
         mustBeInt: true,
-        hint: LoginTextConstants.canBeEmpty,
+        hint: AppLocalizations.of(context)!.loginCanBeEmpty,
       ),
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(height: 8),
-          const AlignLeftText(
-            LoginTextConstants.floor,
+          AlignLeftText(
+            AppLocalizations.of(context)!.loginFloor,
             fontSize: 20,
             color: ColorConstants.background2,
           ),
@@ -248,7 +249,7 @@ class CreateAccountPage extends HookConsumerWidget {
         ],
       ),
       SignInUpBar(
-        label: LoginTextConstants.endActivation,
+        label: AppLocalizations.of(context)!.loginEndActivation,
         isLoading: false,
         onPressed: () async {
           if (name.text.isNotEmpty &&
@@ -277,14 +278,14 @@ class CreateAccountPage extends HookConsumerWidget {
               if (value) {
                 displayToastWithContext(
                   TypeMsg.msg,
-                  LoginTextConstants.accountActivated,
+                  AppLocalizations.of(context)!.loginAccountActivated,
                 );
                 authTokenNotifier.deleteToken();
                 QR.to(LoginRouter.root);
               } else {
                 displayToastWithContext(
                   TypeMsg.error,
-                  LoginTextConstants.accountNotActivated,
+                  AppLocalizations.of(context)!.loginAccountNotActivated,
                 );
               }
             } catch (e) {
@@ -293,7 +294,7 @@ class CreateAccountPage extends HookConsumerWidget {
           } else {
             displayToastWithContext(
               TypeMsg.error,
-              LoginTextConstants.fillAllFields,
+              AppLocalizations.of(context)!.loginFillAllFields,
             );
           }
         },
@@ -330,7 +331,7 @@ class CreateAccountPage extends HookConsumerWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  LoginTextConstants.createAccountTitle,
+                  AppLocalizations.of(context)!.loginCreateAccountTitle,
                   style: GoogleFonts.elMessiri(
                     textStyle: const TextStyle(
                       fontSize: 30,

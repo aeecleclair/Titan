@@ -11,6 +11,7 @@ import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class SignIn extends HookConsumerWidget {
   const SignIn({super.key});
@@ -38,7 +39,7 @@ class SignIn extends HookConsumerWidget {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      LoginTextConstants.appName,
+                      AppLocalizations.of(context)!.loginAppName,
                       style: GoogleFonts.elMessiri(
                         textStyle: const TextStyle(
                           fontSize: 40,
@@ -67,7 +68,7 @@ class SignIn extends HookConsumerWidget {
                                     data: (data) => data,
                                     orElse: () => false,
                                   ),
-                              label: LoginTextConstants.signIn,
+                              label: AppLocalizations.of(context)!.loginSignIn,
                               onPressed: () async {
                                 await authNotifier.getTokenFromRequest();
                                 ref
@@ -80,7 +81,9 @@ class SignIn extends HookConsumerWidget {
                                         displayToast(
                                           context,
                                           TypeMsg.error,
-                                          LoginTextConstants.loginFailed,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.loginLoginFailed,
                                         );
                                       },
                                       loading: () {},
@@ -113,9 +116,11 @@ class SignIn extends HookConsumerWidget {
                               onTap: () {
                                 QR.to(LoginRouter.createAccount);
                               },
-                              child: const Text(
-                                LoginTextConstants.createAccount,
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(
+                                  context,
+                                )!.loginCreateAccount,
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w800,
                                   decoration: TextDecoration.underline,
@@ -137,9 +142,11 @@ class SignIn extends HookConsumerWidget {
                               onTap: () {
                                 QR.to(LoginRouter.forgotPassword);
                               },
-                              child: const Text(
-                                LoginTextConstants.forgotPassword,
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(
+                                  context,
+                                )!.loginForgotPassword,
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w800,
                                   decoration: TextDecoration.underline,

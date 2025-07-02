@@ -12,6 +12,7 @@ import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AppSignIn extends HookConsumerWidget {
   const AppSignIn({super.key});
@@ -66,7 +67,7 @@ class AppSignIn extends HookConsumerWidget {
                                 data: (data) => data,
                                 orElse: () => false,
                               ),
-                          label: LoginTextConstants.signIn,
+                          label: AppLocalizations.of(context)!.loginSignIn,
                           onPressed: () async {
                             await authNotifier.getTokenFromRequest();
                             ref
@@ -79,7 +80,9 @@ class AppSignIn extends HookConsumerWidget {
                                     displayToast(
                                       context,
                                       TypeMsg.error,
-                                      LoginTextConstants.loginFailed,
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.loginLoginFailed,
                                     );
                                   },
                                   loading: () {},
@@ -108,9 +111,9 @@ class AppSignIn extends HookConsumerWidget {
                             QR.to(LoginRouter.createAccount);
                             controller?.forward();
                           },
-                          child: const Text(
-                            LoginTextConstants.createAccount,
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.loginCreateAccount,
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w800,
                               decoration: TextDecoration.underline,
@@ -128,9 +131,9 @@ class AppSignIn extends HookConsumerWidget {
                             QR.to(LoginRouter.forgotPassword);
                             controller?.forward();
                           },
-                          child: const Text(
-                            LoginTextConstants.forgotPassword,
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.loginForgotPassword,
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w800,
                               decoration: TextDecoration.underline,
