@@ -101,7 +101,9 @@ class RecommendationCard extends HookConsumerWidget {
                             );
                             displayToastWithContext(
                               TypeMsg.msg,
-                              AppLocalizations.of(context)!.recommendationCopiedCode,
+                              AppLocalizations.of(
+                                context,
+                              )!.recommendationCopiedCode,
                             );
                           },
                           icon: const Icon(Icons.copy),
@@ -159,9 +161,18 @@ class RecommendationCard extends HookConsumerWidget {
                                     await showDialog(
                                       context: context,
                                       builder: (context) => CustomDialogBox(
-                                        descriptions: RecommendationTextConstants
-                                            .deleteRecommendationConfirmation,
+                                        descriptions: AppLocalizations.of(
+                                          context,
+                                        )!.recommendationDeleteRecommendationConfirmation,
                                         onYes: () async {
+                                          final deletedRecommendationMsg =
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.recommendationDeletedRecommendation;
+                                          final deletedRecommendationErrorMsg =
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.recommendationDeletingRecommendationError;
                                           final value =
                                               await recommendationListNotifier
                                                   .deleteRecommendation(
@@ -170,20 +181,19 @@ class RecommendationCard extends HookConsumerWidget {
                                           if (value) {
                                             displayToastWithContext(
                                               TypeMsg.msg,
-                                              RecommendationTextConstants
-                                                  .deletedRecommendation,
+                                              deletedRecommendationMsg,
                                             );
                                             QR.back();
                                           } else {
                                             displayToastWithContext(
                                               TypeMsg.error,
-                                              RecommendationTextConstants
-                                                  .deletingRecommendationError,
+                                              deletedRecommendationErrorMsg,
                                             );
                                           }
                                         },
-                                        title: RecommendationTextConstants
-                                            .deleteRecommendation,
+                                        title: AppLocalizations.of(
+                                          context,
+                                        )!.recommendationDeleteRecommendation,
                                       ),
                                     );
                                   });
