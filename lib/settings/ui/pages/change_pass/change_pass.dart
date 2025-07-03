@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/settings/tools/constants.dart';
 import 'package:titan/settings/ui/pages/change_pass/password_strength.dart';
 import 'package:titan/settings/ui/pages/change_pass/test_entry_style.dart';
 import 'package:titan/settings/ui/settings.dart';
@@ -14,6 +13,7 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ChangePassPage extends HookConsumerWidget {
   const ChangePassPage({super.key});
@@ -43,8 +43,8 @@ class ChangePassPage extends HookConsumerWidget {
             child: Column(
               children: [
                 const SizedBox(height: 30),
-                const AlignLeftText(
-                  SettingsTextConstants.changePassword,
+                AlignLeftText(
+                  AppLocalizations.of(context)!.settingsChangePassword,
                   fontSize: 20,
                 ),
                 const SizedBox(height: 30),
@@ -53,14 +53,16 @@ class ChangePassPage extends HookConsumerWidget {
                   child: TextFormField(
                     cursorColor: ColorConstants.gradient1,
                     decoration: changePassInputDecoration(
-                      hintText: SettingsTextConstants.oldPassword,
+                      hintText: AppLocalizations.of(
+                        context,
+                      )!.settingsOldPassword,
                       notifier: hideOldPass,
                     ),
                     controller: oldPassword,
                     obscureText: hideOldPass.value,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return SettingsTextConstants.emptyField;
+                        return AppLocalizations.of(context)!.settingsEmptyField;
                       }
                       return null;
                     },
@@ -72,14 +74,16 @@ class ChangePassPage extends HookConsumerWidget {
                   child: TextFormField(
                     cursorColor: ColorConstants.gradient1,
                     decoration: changePassInputDecoration(
-                      hintText: SettingsTextConstants.newPassword,
+                      hintText: AppLocalizations.of(
+                        context,
+                      )!.settingsNewPassword,
                       notifier: hideNewPass,
                     ),
                     controller: newPassword,
                     obscureText: hideNewPass.value,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return SettingsTextConstants.emptyField;
+                        return AppLocalizations.of(context)!.settingsEmptyField;
                       }
                       return null;
                     },
@@ -91,16 +95,20 @@ class ChangePassPage extends HookConsumerWidget {
                   child: TextFormField(
                     cursorColor: ColorConstants.gradient1,
                     decoration: changePassInputDecoration(
-                      hintText: SettingsTextConstants.confirmPassword,
+                      hintText: AppLocalizations.of(
+                        context,
+                      )!.settingsConfirmPassword,
                       notifier: hideConfirmPass,
                     ),
                     controller: confirmPassword,
                     obscureText: hideConfirmPass.value,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return SettingsTextConstants.emptyField;
+                        return AppLocalizations.of(context)!.settingsEmptyField;
                       } else if (value != newPassword.text) {
-                        return SettingsTextConstants.passwordsNotMatch;
+                        return AppLocalizations.of(
+                          context,
+                        )!.settingsPasswordsNotMatch;
                       }
                       return null;
                     },
@@ -122,7 +130,9 @@ class ChangePassPage extends HookConsumerWidget {
                       await showDialog(
                         context: context,
                         builder: (context) => CustomDialogBox(
-                          descriptions: SettingsTextConstants.changingPassword,
+                          descriptions: AppLocalizations.of(
+                            context,
+                          )!.settingsChangingPassword,
                           onYes: () async {
                             await tokenExpireWrapper(ref, () async {
                               final value = await userNotifier.changePassword(
@@ -134,25 +144,29 @@ class ChangePassPage extends HookConsumerWidget {
                                 QR.back();
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  SettingsTextConstants.passwordChanged,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.settingsPasswordChanged,
                                 );
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  SettingsTextConstants.updatingError,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.settingsUpdatingError,
                                 );
                               }
                             });
                           },
-                          title: SettingsTextConstants.edit,
+                          title: AppLocalizations.of(context)!.settingsEdit,
                         ),
                       );
                     }
                   },
-                  child: const Center(
+                  child: Center(
                     child: Text(
-                      SettingsTextConstants.save,
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.settingsSave,
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,

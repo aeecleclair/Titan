@@ -12,10 +12,8 @@ import 'package:titan/amap/repositories/delivery_product_list_repository.dart';
 import 'package:titan/amap/repositories/information_repository.dart';
 import 'package:titan/amap/repositories/order_list_repository.dart';
 import 'package:titan/amap/repositories/product_repository.dart';
-import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/tools/functions.dart';
 import 'package:titan/user/class/simple_users.dart';
-import 'package:titan/l10n/app_localizations.dart';
 
 class MockAmapUserRespository extends Mock implements AmapUserRepository {}
 

@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:titan/booking/class/booking.dart';
 import 'package:titan/service/class/room.dart';
-import 'package:titan/booking/tools/functions.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/user/class/applicant.dart';
 import 'package:titan/user/class/simple_users.dart';

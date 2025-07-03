@@ -5,7 +5,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:titan/settings/router.dart';
-import 'package:titan/settings/tools/constants.dart';
 import 'package:titan/settings/ui/pages/edit_user_page/picture_button.dart';
 import 'package:titan/settings/ui/pages/edit_user_page/user_field_modifier.dart';
 import 'package:titan/settings/ui/settings.dart';
@@ -22,6 +21,7 @@ import 'package:titan/user/class/floors.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:titan/user/providers/profile_picture_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class EditUserPage extends HookConsumerWidget {
   const EditUserPage({super.key});
@@ -69,8 +69,8 @@ class EditUserPage extends HookConsumerWidget {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                const AlignLeftText(
-                  SettingsTextConstants.editAccount,
+                AlignLeftText(
+                  AppLocalizations.of(context)!.settingsEditAccount,
                   color: Colors.grey,
                 ),
                 const SizedBox(height: 40),
@@ -107,26 +107,36 @@ class EditUserPage extends HookConsumerWidget {
                             left: 0,
                             child: GestureDetector(
                               onTap: () async {
+                                final updatedProfilePictureMsg =
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.settingsUpdatedProfilePicture;
+                                final tooHeavyProfilePictureMsg =
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.settingsTooHeavyProfilePicture;
+                                final profilePictureErrorMsg =
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.settingsErrorProfilePicture;
                                 final value = await profilePictureNotifier
                                     .setProfilePicture(ImageSource.gallery);
                                 if (value != null) {
                                   if (value) {
                                     displayToastWithContext(
                                       TypeMsg.msg,
-                                      SettingsTextConstants
-                                          .updatedProfilePicture,
+                                      updatedProfilePictureMsg,
                                     );
                                   } else {
                                     displayToastWithContext(
                                       TypeMsg.error,
-                                      SettingsTextConstants
-                                          .tooHeavyProfilePicture,
+                                      tooHeavyProfilePictureMsg,
                                     );
                                   }
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    SettingsTextConstants.errorProfilePicture,
+                                    profilePictureErrorMsg,
                                   );
                                 }
                               },
@@ -138,26 +148,36 @@ class EditUserPage extends HookConsumerWidget {
                             right: 0,
                             child: GestureDetector(
                               onTap: () async {
+                                final updatedProfilePictureMsg =
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.settingsUpdatedProfilePicture;
+                                final tooHeavyProfilePictureMsg =
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.settingsTooHeavyProfilePicture;
+                                final profilePictureErrorMsg =
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.settingsErrorProfilePicture;
                                 final value = await profilePictureNotifier
                                     .setProfilePicture(ImageSource.camera);
                                 if (value != null) {
                                   if (value) {
                                     displayToastWithContext(
                                       TypeMsg.msg,
-                                      SettingsTextConstants
-                                          .updatedProfilePicture,
+                                      updatedProfilePictureMsg,
                                     );
                                   } else {
                                     displayToastWithContext(
                                       TypeMsg.error,
-                                      SettingsTextConstants
-                                          .tooHeavyProfilePicture,
+                                      tooHeavyProfilePictureMsg,
                                     );
                                   }
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    SettingsTextConstants.errorProfilePicture,
+                                    profilePictureErrorMsg,
                                   );
                                 }
                               },
@@ -177,13 +197,16 @@ class EditUserPage extends HookConsumerWidget {
                                   if (value) {
                                     displayToastWithContext(
                                       TypeMsg.msg,
-                                      SettingsTextConstants
-                                          .updatedProfilePicture,
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.settingsUpdatedProfilePicture,
                                     );
                                   } else {
                                     displayToastWithContext(
                                       TypeMsg.error,
-                                      SettingsTextConstants.errorProfilePicture,
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.settingsErrorProfilePicture,
                                     );
                                   }
                                 }
@@ -203,7 +226,7 @@ class EditUserPage extends HookConsumerWidget {
                   Container(
                     margin: const EdgeInsets.only(bottom: 20),
                     child: Text(
-                      '${SettingsTextConstants.promo} ${user.promo}',
+                      '${AppLocalizations.of(context)!.settingsPromo} ${user.promo}',
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -212,7 +235,7 @@ class EditUserPage extends HookConsumerWidget {
                     ),
                   ),
                 AutoSizeText(
-                  '${SettingsTextConstants.email} : ${user.email}',
+                  '${AppLocalizations.of(context)!.settingsEmail} : ${user.email}',
                   maxLines: 1,
                   style: const TextStyle(
                     fontSize: 18,
@@ -222,13 +245,13 @@ class EditUserPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 50),
                 UserFieldModifier(
-                  label: SettingsTextConstants.nickname,
+                  label: AppLocalizations.of(context)!.settingsNickname,
                   keyboardType: TextInputType.text,
                   controller: nickNameController,
                 ),
                 const SizedBox(height: 50),
                 UserFieldModifier(
-                  label: SettingsTextConstants.phone,
+                  label: AppLocalizations.of(context)!.settingsPhone,
                   keyboardType: TextInputType.text,
                   controller: phoneController,
                 ),
@@ -238,7 +261,7 @@ class EditUserPage extends HookConsumerWidget {
                     SizedBox(
                       width: 120,
                       child: Text(
-                        SettingsTextConstants.birthday,
+                        AppLocalizations.of(context)!.settingsBirthday,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
@@ -249,7 +272,7 @@ class EditUserPage extends HookConsumerWidget {
                     Expanded(
                       child: AbsorbPointer(
                         child: TextEntry(
-                          label: SettingsTextConstants.birthday,
+                          label: AppLocalizations.of(context)!.settingsBirthday,
                           controller: dateController,
                         ),
                       ),
@@ -301,7 +324,7 @@ class EditUserPage extends HookConsumerWidget {
                     SizedBox(
                       width: 120,
                       child: Text(
-                        SettingsTextConstants.floor,
+                        AppLocalizations.of(context)!.settingsFloor,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
@@ -314,7 +337,7 @@ class EditUserPage extends HookConsumerWidget {
                         items: items,
                         value: floorController.text,
                         hint: Text(
-                          SettingsTextConstants.floor,
+                          AppLocalizations.of(context)!.settingsFloor,
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w400,
@@ -371,7 +394,7 @@ class EditUserPage extends HookConsumerWidget {
                       if (value) {
                         displayToastWithContext(
                           TypeMsg.msg,
-                          SettingsTextConstants.updatedProfile,
+                          AppLocalizations.of(context)!.settingsUpdatedProfile,
                         );
                         QR.removeNavigator(
                           SettingsRouter.root + SettingsRouter.editAccount,
@@ -379,15 +402,15 @@ class EditUserPage extends HookConsumerWidget {
                       } else {
                         displayToastWithContext(
                           TypeMsg.error,
-                          SettingsTextConstants.updatingError,
+                          AppLocalizations.of(context)!.settingsUpdatingError,
                         );
                       }
                     });
                   },
-                  child: const Center(
+                  child: Center(
                     child: Text(
-                      SettingsTextConstants.save,
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.settingsSave,
+                      style: const TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w400,
                         color: Colors.white,
