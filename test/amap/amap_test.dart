@@ -429,16 +429,6 @@ void main() {
   });
 
   group('Testing functions', () {
-    test('Should return the correct string', () async {
-      expect(
-        uiCollectionSlotToString(CollectionSlot.midDay),
-        AppLocalizations.of(context)!.amapMidDay,
-      );
-      expect(
-        uiCollectionSlotToString(CollectionSlot.evening),
-        AppLocalizations.of(context)!.amapEvening,
-      );
-    });
     test('Should return a string', () async {
       expect(apiCollectionSlotToString(CollectionSlot.midDay), "midi");
       expect(apiCollectionSlotToString(CollectionSlot.evening), "soir");

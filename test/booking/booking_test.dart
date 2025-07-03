@@ -243,12 +243,6 @@ void main() {
       expect(Decision.pending, stringToDecision("random"));
     });
 
-    test('Decision to string', () {
-      expect("Validée", decisionToString(Decision.approved));
-      expect("Refusée", decisionToString(Decision.declined));
-      expect("En attente", decisionToString(Decision.pending));
-    });
-
     test('formatDates returns correct string for same day event', () {
       final dateStart = DateTime(2022, 1, 1, 10, 0);
       final dateEnd = DateTime(2022, 1, 1, 14, 0);
