@@ -7,8 +7,8 @@ import 'package:titan/vote/providers/section_id_provider.dart';
 import 'package:titan/vote/providers/sections_provider.dart';
 import 'package:titan/vote/providers/selected_contender_provider.dart';
 import 'package:titan/vote/providers/voted_section_provider.dart';
-import 'package:titan/vote/tools/constants.dart';
 import 'package:titan/vote/ui/pages/main_page/side_item.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ListSideItem extends HookConsumerWidget {
   final List<Section> sectionList;
@@ -47,8 +47,8 @@ class ListSideItem extends HookConsumerWidget {
                 showDialog(
                   context: context,
                   builder: (context) => CustomDialogBox(
-                    title: VoteTextConstants.warning,
-                    descriptions: VoteTextConstants.warningMessage,
+                    title: AppLocalizations.of(context)!.voteWarning,
+                    descriptions: AppLocalizations.of(context)!.voteWarningMessage,
                     onYes: () {
                       selectedContenderNotifier.clear();
                       animation.forward(from: 0);

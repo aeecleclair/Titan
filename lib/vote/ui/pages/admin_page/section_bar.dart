@@ -12,9 +12,9 @@ import 'package:titan/vote/providers/sections_provider.dart';
 import 'package:titan/vote/providers/status_provider.dart';
 import 'package:titan/vote/repositories/status_repository.dart';
 import 'package:titan/vote/router.dart';
-import 'package:titan/vote/tools/constants.dart';
 import 'package:titan/vote/ui/pages/admin_page/section_chip.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class SectionBar extends HookConsumerWidget {
   const SectionBar({super.key});
@@ -62,20 +62,20 @@ class SectionBar extends HookConsumerWidget {
             await showDialog(
               context: context,
               builder: (context) => CustomDialogBox(
-                title: VoteTextConstants.deleteSection,
-                descriptions: VoteTextConstants.deleteSectionDescription,
+                title: AppLocalizations.of(context)!.voteDeleteSection,
+                descriptions: AppLocalizations.of(context)!.voteDeleteSectionDescription,
                 onYes: () async {
                   final result = await sectionsNotifier.deleteSection(key);
                   if (result) {
                     sectionContenderListNotifier.deleteT(key);
                     displayVoteToastWithContext(
                       TypeMsg.msg,
-                      VoteTextConstants.deletedSection,
+                      AppLocalizations.of(context)!.voteDeletedSection,
                     );
                   } else {
                     displayVoteToastWithContext(
                       TypeMsg.error,
-                      VoteTextConstants.deletingError,
+                      AppLocalizations.of(context)!.voteDeletingError,
                     );
                   }
                 },

@@ -10,9 +10,9 @@ import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:titan/vote/class/section.dart';
 import 'package:titan/vote/providers/sections_contender_provider.dart';
 import 'package:titan/vote/providers/sections_provider.dart';
-import 'package:titan/vote/tools/constants.dart';
 import 'package:titan/vote/ui/vote.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddSectionPage extends HookConsumerWidget {
   const AddSectionPage({super.key});
@@ -37,8 +37,8 @@ class AddSectionPage extends HookConsumerWidget {
         child: Column(
           children: [
             const SizedBox(height: 50),
-            const AlignLeftText(
-              VoteTextConstants.addSection,
+            AlignLeftText(
+              AppLocalizations.of(context)!.voteAddSection,
               color: Colors.grey,
             ),
             Form(
@@ -48,12 +48,12 @@ class AddSectionPage extends HookConsumerWidget {
                   const SizedBox(height: 30),
                   TextEntry(
                     controller: name,
-                    label: VoteTextConstants.sectionName,
+                    label: AppLocalizations.of(context)!.voteSectionName,
                   ),
                   const SizedBox(height: 30),
                   TextEntry(
                     controller: description,
-                    label: VoteTextConstants.sectionDescription,
+                    label: AppLocalizations.of(context)!.voteSectionDescription,
                   ),
                   const SizedBox(height: 50),
                   WaitingButton(
@@ -74,19 +74,19 @@ class AddSectionPage extends HookConsumerWidget {
                           });
                           displayVoteToastWithContext(
                             TypeMsg.msg,
-                            VoteTextConstants.addedSection,
+                            AppLocalizations.of(context)!.voteAddedSection,
                           );
                         } else {
                           displayVoteToastWithContext(
                             TypeMsg.error,
-                            VoteTextConstants.addingError,
+                            AppLocalizations.of(context)!.voteAddingError,
                           );
                         }
                       });
                     },
-                    child: const Text(
-                      VoteTextConstants.add,
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.voteAdd,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 25,
                         fontWeight: FontWeight.bold,

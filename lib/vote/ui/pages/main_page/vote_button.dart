@@ -10,7 +10,7 @@ import 'package:titan/vote/providers/status_provider.dart';
 import 'package:titan/vote/providers/voted_section_provider.dart';
 import 'package:titan/vote/providers/votes_provider.dart';
 import 'package:titan/vote/repositories/status_repository.dart';
-import 'package:titan/vote/tools/constants.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class VoteButton extends HookConsumerWidget {
   const VoteButton({super.key});
@@ -54,8 +54,8 @@ class VoteButton extends HookConsumerWidget {
               context: context,
               builder: (context) {
                 return CustomDialogBox(
-                  title: VoteTextConstants.vote,
-                  descriptions: VoteTextConstants.confirmVote,
+                  title: AppLocalizations.of(context)!.voteVote,
+                  descriptions: AppLocalizations.of(context)!.voteConfirmVote,
                   onYes: () {
                     tokenExpireWrapper(ref, () async {
                       final result = await votesNotifier.addVote(
@@ -66,12 +66,12 @@ class VoteButton extends HookConsumerWidget {
                         selectedContenderNotifier.clear();
                         displayVoteToastWithContext(
                           TypeMsg.msg,
-                          VoteTextConstants.voteSuccess,
+                          AppLocalizations.of(context)!.voteVoteSuccess,
                         );
                       } else {
                         displayVoteToastWithContext(
                           TypeMsg.error,
-                          VoteTextConstants.voteError,
+                          AppLocalizations.of(context)!.voteVoteError,
                         );
                       }
                     });
@@ -107,16 +107,16 @@ class VoteButton extends HookConsumerWidget {
           child: Center(
             child: Text(
               selectedContender.id != ""
-                  ? VoteTextConstants.voteFor + selectedContender.name
+                  ? AppLocalizations.of(context)!.voteVoteFor + selectedContender.name
                   : alreadyVotedSection.contains(section.id)
-                  ? VoteTextConstants.alreadyVoted
+                  ? AppLocalizations.of(context)!.voteAlreadyVoted
                   : s == Status.open
-                  ? VoteTextConstants.chooseList
+                  ? AppLocalizations.of(context)!.voteChooseList
                   : s == Status.waiting
-                  ? VoteTextConstants.notOpenedVote
+                  ? AppLocalizations.of(context)!.voteNotOpenedVote
                   : s == Status.closed
-                  ? VoteTextConstants.closedVote
-                  : VoteTextConstants.onGoingCount,
+                  ? AppLocalizations.of(context)!.voteClosedVote
+                  : AppLocalizations.of(context)!.voteOnGoingCount,
               style: TextStyle(
                 color:
                     (selectedContender.id == "" && s != Status.open) ||

@@ -16,9 +16,9 @@ import 'package:titan/vote/providers/sections_provider.dart';
 import 'package:titan/vote/providers/status_provider.dart';
 import 'package:titan/vote/repositories/status_repository.dart';
 import 'package:titan/vote/router.dart';
-import 'package:titan/vote/tools/constants.dart';
 import 'package:titan/vote/ui/pages/admin_page/contender_card.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class SectionContenderItems extends HookConsumerWidget {
   const SectionContenderItems({super.key});
@@ -90,8 +90,8 @@ class SectionContenderItems extends HookConsumerWidget {
               context: context,
               builder: (context) {
                 return CustomDialogBox(
-                  title: VoteTextConstants.deletePretendance,
-                  descriptions: VoteTextConstants.deletePretendanceDesc,
+                  title: AppLocalizations.of(context)!.voteDeletePretendance,
+                  descriptions: AppLocalizations.of(context)!.voteDeletePretendanceDesc,
                   onYes: () {
                     tokenExpireWrapper(ref, () async {
                       final value = await contenderListNotifier.deleteContender(
@@ -100,7 +100,7 @@ class SectionContenderItems extends HookConsumerWidget {
                       if (value) {
                         displayVoteToastWithContext(
                           TypeMsg.msg,
-                          VoteTextConstants.pretendanceDeleted,
+                          AppLocalizations.of(context)!.votePretendanceDeleted,
                         );
                         contenderListNotifier.copy().then((value) {
                           sectionContenderListNotifier.setTData(section, value);
@@ -108,7 +108,7 @@ class SectionContenderItems extends HookConsumerWidget {
                       } else {
                         displayVoteToastWithContext(
                           TypeMsg.error,
-                          VoteTextConstants.pretendanceNotDeleted,
+                          AppLocalizations.of(context)!.votePretendanceNotDeleted,
                         );
                       }
                     });
