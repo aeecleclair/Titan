@@ -29,7 +29,7 @@ class DateEntry extends StatelessWidget {
         child: TextEntry(
           label: label,
           controller: controller,
-          noValueError: TextConstants.noDateError,
+          noValueError: "Date is required",
           enabled: enabled,
           color: color,
           enabledColor: enabledColor,

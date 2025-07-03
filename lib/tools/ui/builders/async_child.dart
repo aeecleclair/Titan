@@ -29,7 +29,7 @@ class AsyncChild<T> extends StatelessWidget {
         errorBuilder ??
         (error, stack) => Center(
           child: Text(
-            "${TextConstants.error}:$error",
+            "An error occured:$error",
             style: TextStyle(color: loaderColor),
           ),
         );

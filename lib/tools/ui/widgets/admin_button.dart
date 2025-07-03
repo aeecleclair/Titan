@@ -13,7 +13,7 @@ class AdminButton extends StatelessWidget {
     required this.onTap,
     this.textColor = Colors.white,
     this.color = Colors.black,
-    this.text = TextConstants.admin,
+    this.text = "Admin",
     this.colors,
   });
 
