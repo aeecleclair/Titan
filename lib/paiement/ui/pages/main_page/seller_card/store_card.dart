@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/providers/barcode_provider.dart';
 import 'package:titan/paiement/providers/ongoing_transaction.dart';
 import 'package:titan/paiement/providers/selected_store_provider.dart';
@@ -36,13 +37,13 @@ class StoreCard extends HookConsumerWidget {
         Color.fromARGB(255, 0, 68, 68),
         Color.fromARGB(255, 0, 29, 29),
       ],
-      title: 'Solde associatif',
+      title: AppLocalizations.of(context)!.paiementStoreBalance,
       actionButtons: [
         if (store.canBank)
           MainCardButton(
             colors: buttonGradient,
             icon: HeroIcons.viewfinderCircle,
-            title: "Scanner",
+            title: AppLocalizations.of(context)!.paiementScan,
             onPressed: () async {
               showModalBottomSheet(
                 context: context,
@@ -65,7 +66,7 @@ class StoreCard extends HookConsumerWidget {
               // storeAdminListNotifier.getStoreAdminList(store.id);
               QR.to(PaymentRouter.root + PaymentRouter.storeAdmin);
             },
-            title: 'Gestion',
+            title: AppLocalizations.of(context)!.paiementManagement,
           ),
         if (store.canSeeHistory)
           MainCardButton(
@@ -74,7 +75,7 @@ class StoreCard extends HookConsumerWidget {
             onPressed: () async {
               QR.to(PaymentRouter.root + PaymentRouter.storeStats);
             },
-            title: 'Historique',
+            title: AppLocalizations.of(context)!.paiementHistory,
           ),
         if (store.structure.managerUser.id == me.id)
           MainCardButton(
@@ -83,7 +84,7 @@ class StoreCard extends HookConsumerWidget {
             onPressed: () async {
               QR.to(PaymentRouter.root + PaymentRouter.transferStructure);
             },
-            title: 'Passation',
+            title: AppLocalizations.of(context)!.paiementHandOver,
           ),
       ],
       child: SizedBox.expand(

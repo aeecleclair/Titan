@@ -3422,4 +3422,178 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get modulePayment => 'Payment';
+
+  @override
+  String get paiementTopUp => 'Recharge';
+
+  @override
+  String get paiementStoreManagement => 'Gestion des associations';
+
+  @override
+  String get paiementDeleteStore => 'Supprimer l\'association';
+
+  @override
+  String get paiementDeleteStoreDescription =>
+      'Voulez-vous vraiment supprimer cette association ?';
+
+  @override
+  String get paiementDeleteStoreError =>
+      'Impossible de supprimer l\'association';
+
+  @override
+  String get paiementStoreDeleted => 'Association supprimée';
+
+  @override
+  String get paiementAddThisDevice => 'Ajouter cet appareil';
+
+  @override
+  String get paiementThisDevice => '(cet appareil)';
+
+  @override
+  String get paiementCancelled => 'Annulé';
+
+  @override
+  String get paiementThe => 'Le';
+
+  @override
+  String get paiementOf => 'de';
+
+  @override
+  String get paiementRefundedThe => 'Remboursé le';
+
+  @override
+  String get paiementAt => 'à';
+
+  @override
+  String get paiementPleaseAcceptTOS =>
+      'Veuillez accepter les Conditions Générales d\'Utilisation.';
+
+  @override
+  String get paiementAskDeviceActivation =>
+      'Demande d\'activation de l\'appareil';
+
+  @override
+  String get paiementDeviceActivationReceived =>
+      'La demande d\'activation est prise en compte, veuilliez consulter votre boite mail pour finaliser la démarche';
+
+  @override
+  String get paiementRevokeDevice => 'Révoquer l\'appareil ?';
+
+  @override
+  String get paiementRevokeDeviceDescription =>
+      'Vous ne pourrez plus utiliser cet appareil pour les paiements';
+
+  @override
+  String get paiementDeviceRevoked => 'Appareil révoqué';
+
+  @override
+  String get paiementDeviceRevokingError =>
+      'Erreur lors de la révocation de l\'appareil';
+
+  @override
+  String get paiementPleaseAcceptPopup => 'Veuillez autoriser les popups';
+
+  @override
+  String get paiementProceedSuccessfully => 'Paiement effectué avec succès';
+
+  @override
+  String get paiementCancelledTransaction => 'Paiement annulé';
+
+  @override
+  String get paiementPleaseEnterMinAmount =>
+      'Veuillez entrer un montant supérieur à 1';
+
+  @override
+  String get paiementMaxAmount =>
+      'Le montant maximum de votre portefeuille est de';
+
+  @override
+  String get paiementPayWithHA => 'Payer avec HelloAsso';
+
+  @override
+  String get paiementBalanceAfterTopUp => 'Solde après recharge :';
+
+  @override
+  String get paiementPersonalBalance => 'Solde personnel';
+
+  @override
+  String get paiementDevices => 'Appareils';
+
+  @override
+  String get paiementPay => 'Payer';
+
+  @override
+  String get paiementDeviceNotRegistered => 'Appareil non enregistré';
+
+  @override
+  String get paiementDeviceNotRegisteredDescription =>
+      'Votre appareil n\'est pas encore enregistré. \nPour l\'enregistrer, veuillez vous rendre sur la page des appareils.';
+
+  @override
+  String get paiementAccessPage => 'Accéder à la page';
+
+  @override
+  String get paiementDeviceNotActivated => 'Appareil non activé';
+
+  @override
+  String get paiementDeviceNotActivatedDescription =>
+      'Votre appareil n\'est pas encore activé. \nPour l\'activer, veuillez vous rendre sur la page des appareils.';
+
+  @override
+  String get paiementReactivateRevokedDeviceDescription =>
+      'Votre appareil a été révoqué. \nPour le réactiver, veuillez vous rendre sur la page des appareils.';
+
+  @override
+  String get paiementDeviceRecoveryError =>
+      'Erreur lors de la récupération de l\'appareil';
+
+  @override
+  String get paiementStats => 'Stats';
+
+  @override
+  String get paimentTopUpAction => 'Recharger';
+
+  @override
+  String get paiementGetBalanceError =>
+      'Erreur lors de la récupération du solde : ';
+
+  @override
+  String get paiementLastTransactions => 'Dernières transactions';
+
+  @override
+  String get paiementGetTransactionsError =>
+      'Erreur lors de la récupération des transactions : ';
+
+  @override
+  String get paiementStoreBalance => 'Solde associatif';
+
+  @override
+  String get paiementScan => 'Scanner';
+
+  @override
+  String get paiementManagement => 'Gestion';
+
+  @override
+  String get paiementHistory => 'Historique';
+
+  @override
+  String get paiementHandOver => 'Passation';
+
+  @override
+  String get paiementStores => 'Associations';
+
+  @override
+  String get paiementAdmin => 'Administrateur';
+
+  @override
+  String get paiementSuccededTransaction => 'Paiement réussi';
+
+  @override
+  String get paiementNewCGU => 'Nouvelles Conditions Générales d\'Utilisation';
+
+  @override
+  String get paiementDecline => 'Refuser';
+
+  @override
+  String get paiementAccept => 'Accepter';
 }

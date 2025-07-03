@@ -6805,6 +6805,324 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Paiement'**
   String get modulePayment;
+
+  /// No description provided for @paiementTopUp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recharge'**
+  String get paiementTopUp;
+
+  /// No description provided for @paiementStoreManagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gestion des associations'**
+  String get paiementStoreManagement;
+
+  /// No description provided for @paiementDeleteStore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer l\'association'**
+  String get paiementDeleteStore;
+
+  /// No description provided for @paiementDeleteStoreDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voulez-vous vraiment supprimer cette association ?'**
+  String get paiementDeleteStoreDescription;
+
+  /// No description provided for @paiementDeleteStoreError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de supprimer l\'association'**
+  String get paiementDeleteStoreError;
+
+  /// No description provided for @paiementStoreDeleted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Association supprimée'**
+  String get paiementStoreDeleted;
+
+  /// No description provided for @paiementAddThisDevice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter cet appareil'**
+  String get paiementAddThisDevice;
+
+  /// No description provided for @paiementThisDevice.
+  ///
+  /// In fr, this message translates to:
+  /// **'(cet appareil)'**
+  String get paiementThisDevice;
+
+  /// No description provided for @paiementCancelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annulé'**
+  String get paiementCancelled;
+
+  /// No description provided for @paiementThe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le'**
+  String get paiementThe;
+
+  /// No description provided for @paiementOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'de'**
+  String get paiementOf;
+
+  /// No description provided for @paiementRefundedThe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Remboursé le'**
+  String get paiementRefundedThe;
+
+  /// No description provided for @paiementAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'à'**
+  String get paiementAt;
+
+  /// No description provided for @paiementPleaseAcceptTOS.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez accepter les Conditions Générales d\'Utilisation.'**
+  String get paiementPleaseAcceptTOS;
+
+  /// No description provided for @paiementAskDeviceActivation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande d\'activation de l\'appareil'**
+  String get paiementAskDeviceActivation;
+
+  /// No description provided for @paiementDeviceActivationReceived.
+  ///
+  /// In fr, this message translates to:
+  /// **'La demande d\'activation est prise en compte, veuilliez consulter votre boite mail pour finaliser la démarche'**
+  String get paiementDeviceActivationReceived;
+
+  /// No description provided for @paiementRevokeDevice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Révoquer l\'appareil ?'**
+  String get paiementRevokeDevice;
+
+  /// No description provided for @paiementRevokeDeviceDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous ne pourrez plus utiliser cet appareil pour les paiements'**
+  String get paiementRevokeDeviceDescription;
+
+  /// No description provided for @paiementDeviceRevoked.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appareil révoqué'**
+  String get paiementDeviceRevoked;
+
+  /// No description provided for @paiementDeviceRevokingError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de la révocation de l\'appareil'**
+  String get paiementDeviceRevokingError;
+
+  /// No description provided for @paiementPleaseAcceptPopup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez autoriser les popups'**
+  String get paiementPleaseAcceptPopup;
+
+  /// No description provided for @paiementProceedSuccessfully.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement effectué avec succès'**
+  String get paiementProceedSuccessfully;
+
+  /// No description provided for @paiementCancelledTransaction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement annulé'**
+  String get paiementCancelledTransaction;
+
+  /// No description provided for @paiementPleaseEnterMinAmount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez entrer un montant supérieur à 1'**
+  String get paiementPleaseEnterMinAmount;
+
+  /// No description provided for @paiementMaxAmount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le montant maximum de votre portefeuille est de'**
+  String get paiementMaxAmount;
+
+  /// No description provided for @paiementPayWithHA.
+  ///
+  /// In fr, this message translates to:
+  /// **'Payer avec HelloAsso'**
+  String get paiementPayWithHA;
+
+  /// No description provided for @paiementBalanceAfterTopUp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Solde après recharge :'**
+  String get paiementBalanceAfterTopUp;
+
+  /// No description provided for @paiementPersonalBalance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Solde personnel'**
+  String get paiementPersonalBalance;
+
+  /// No description provided for @paiementDevices.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appareils'**
+  String get paiementDevices;
+
+  /// No description provided for @paiementPay.
+  ///
+  /// In fr, this message translates to:
+  /// **'Payer'**
+  String get paiementPay;
+
+  /// No description provided for @paiementDeviceNotRegistered.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appareil non enregistré'**
+  String get paiementDeviceNotRegistered;
+
+  /// No description provided for @paiementDeviceNotRegisteredDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre appareil n\'est pas encore enregistré. \nPour l\'enregistrer, veuillez vous rendre sur la page des appareils.'**
+  String get paiementDeviceNotRegisteredDescription;
+
+  /// No description provided for @paiementAccessPage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accéder à la page'**
+  String get paiementAccessPage;
+
+  /// No description provided for @paiementDeviceNotActivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appareil non activé'**
+  String get paiementDeviceNotActivated;
+
+  /// No description provided for @paiementDeviceNotActivatedDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre appareil n\'est pas encore activé. \nPour l\'activer, veuillez vous rendre sur la page des appareils.'**
+  String get paiementDeviceNotActivatedDescription;
+
+  /// No description provided for @paiementReactivateRevokedDeviceDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre appareil a été révoqué. \nPour le réactiver, veuillez vous rendre sur la page des appareils.'**
+  String get paiementReactivateRevokedDeviceDescription;
+
+  /// No description provided for @paiementDeviceRecoveryError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de la récupération de l\'appareil'**
+  String get paiementDeviceRecoveryError;
+
+  /// No description provided for @paiementStats.
+  ///
+  /// In fr, this message translates to:
+  /// **'Stats'**
+  String get paiementStats;
+
+  /// No description provided for @paimentTopUpAction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Recharger'**
+  String get paimentTopUpAction;
+
+  /// No description provided for @paiementGetBalanceError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de la récupération du solde : '**
+  String get paiementGetBalanceError;
+
+  /// No description provided for @paiementLastTransactions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernières transactions'**
+  String get paiementLastTransactions;
+
+  /// No description provided for @paiementGetTransactionsError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de la récupération des transactions : '**
+  String get paiementGetTransactionsError;
+
+  /// No description provided for @paiementStoreBalance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Solde associatif'**
+  String get paiementStoreBalance;
+
+  /// No description provided for @paiementScan.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanner'**
+  String get paiementScan;
+
+  /// No description provided for @paiementManagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gestion'**
+  String get paiementManagement;
+
+  /// No description provided for @paiementHistory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique'**
+  String get paiementHistory;
+
+  /// No description provided for @paiementHandOver.
+  ///
+  /// In fr, this message translates to:
+  /// **'Passation'**
+  String get paiementHandOver;
+
+  /// No description provided for @paiementStores.
+  ///
+  /// In fr, this message translates to:
+  /// **'Associations'**
+  String get paiementStores;
+
+  /// No description provided for @paiementAdmin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Administrateur'**
+  String get paiementAdmin;
+
+  /// No description provided for @paiementSuccededTransaction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement réussi'**
+  String get paiementSuccededTransaction;
+
+  /// No description provided for @paiementNewCGU.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelles Conditions Générales d\'Utilisation'**
+  String get paiementNewCGU;
+
+  /// No description provided for @paiementDecline.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refuser'**
+  String get paiementDecline;
+
+  /// No description provided for @paiementAccept.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accepter'**
+  String get paiementAccept;
 }
 
 class _AppLocalizationsDelegate

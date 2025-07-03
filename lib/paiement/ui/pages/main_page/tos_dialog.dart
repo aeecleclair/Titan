@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
@@ -82,8 +83,8 @@ class TOSDialogBox extends StatelessWidget {
                               ? Navigator.of(context).pop()
                               : onNo?.call();
                         },
-                        child: const Text(
-                          "Refuser",
+                        child: Text(
+                          AppLocalizations.of(context)!.paiementDecline,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -99,8 +100,8 @@ class TOSDialogBox extends StatelessWidget {
                           await onYes();
                         },
                         builder: (child) => child,
-                        child: const Text(
-                          "Accepter",
+                        child: Text(
+                          AppLocalizations.of(context)!.paiementAccept,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
