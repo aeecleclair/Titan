@@ -3368,4 +3368,58 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get voteWarningMessage =>
       'Selection will not be saved.\nDo you want to continue?';
+
+  @override
+  String get moduleAdvert => 'Advert';
+
+  @override
+  String get moduleAmap => 'AMAP';
+
+  @override
+  String get moduleBooking => 'Booking';
+
+  @override
+  String get moduleCalendar => 'Calendar';
+
+  @override
+  String get moduleCentralisation => 'Centralisation';
+
+  @override
+  String get moduleCinema => 'Cinema';
+
+  @override
+  String get moduleEvent => 'Event';
+
+  @override
+  String get moduleFlappyBird => 'Flappy Bird';
+
+  @override
+  String get moduleLoan => 'Loan';
+
+  @override
+  String get modulePhonebook => 'Phonebook';
+
+  @override
+  String get modulePurchases => 'Purchases';
+
+  @override
+  String get moduleRaffle => 'Raffle';
+
+  @override
+  String get moduleRecommendation => 'Recommendation';
+
+  @override
+  String get moduleSeedLibrary => 'Seed Library';
+
+  @override
+  String get moduleVote => 'Vote';
+
+  @override
+  String get modulePh => 'PH';
+
+  @override
+  String get moduleSettings => 'Settings';
+
+  @override
+  String get modulePayment => 'Payment';
 }

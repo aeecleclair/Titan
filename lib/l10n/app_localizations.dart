@@ -6697,6 +6697,114 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'La sélection ne sera pas sauvegardée.\nVoulez-vous continuer ?'**
   String get voteWarningMessage;
+
+  /// No description provided for @moduleAdvert.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonce'**
+  String get moduleAdvert;
+
+  /// No description provided for @moduleAmap.
+  ///
+  /// In fr, this message translates to:
+  /// **'AMAP'**
+  String get moduleAmap;
+
+  /// No description provided for @moduleBooking.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réservation'**
+  String get moduleBooking;
+
+  /// No description provided for @moduleCalendar.
+  ///
+  /// In fr, this message translates to:
+  /// **'Calendrier'**
+  String get moduleCalendar;
+
+  /// No description provided for @moduleCentralisation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Centralisation'**
+  String get moduleCentralisation;
+
+  /// No description provided for @moduleCinema.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cinéma'**
+  String get moduleCinema;
+
+  /// No description provided for @moduleEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement'**
+  String get moduleEvent;
+
+  /// No description provided for @moduleFlappyBird.
+  ///
+  /// In fr, this message translates to:
+  /// **'Flappy Bird'**
+  String get moduleFlappyBird;
+
+  /// No description provided for @moduleLoan.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prêt'**
+  String get moduleLoan;
+
+  /// No description provided for @modulePhonebook.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuaire'**
+  String get modulePhonebook;
+
+  /// No description provided for @modulePurchases.
+  ///
+  /// In fr, this message translates to:
+  /// **'Achats'**
+  String get modulePurchases;
+
+  /// No description provided for @moduleRaffle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tombola'**
+  String get moduleRaffle;
+
+  /// No description provided for @moduleRecommendation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bons plans'**
+  String get moduleRecommendation;
+
+  /// No description provided for @moduleSeedLibrary.
+  ///
+  /// In fr, this message translates to:
+  /// **'Grainothèque'**
+  String get moduleSeedLibrary;
+
+  /// No description provided for @moduleVote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vote'**
+  String get moduleVote;
+
+  /// No description provided for @modulePh.
+  ///
+  /// In fr, this message translates to:
+  /// **'PH'**
+  String get modulePh;
+
+  /// No description provided for @moduleSettings.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paramètres'**
+  String get moduleSettings;
+
+  /// No description provided for @modulePayment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement'**
+  String get modulePayment;
 }
 
 class _AppLocalizationsDelegate
