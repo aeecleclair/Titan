@@ -2154,7 +2154,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phonebookPhone => 'Phone:';
 
   @override
-  String get phonebookPhonebook => 'Directory';
+  String get phonebookPhonebook => 'Phonebook';
 
   @override
   String get phonebookPhonebookSearch => 'Search';
@@ -2534,7 +2534,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get raffleAddPackTicket => 'Add ticket pack';
 
   @override
-  String get recommendationRecommendation => 'Deals';
+  String get recommendationRecommendation => 'Recommendation';
 
   @override
   String get recommendationTitle => 'Title';
