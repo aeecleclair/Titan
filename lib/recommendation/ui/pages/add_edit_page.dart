@@ -11,7 +11,6 @@ import 'package:titan/recommendation/providers/recommendation_list_provider.dart
 import 'package:titan/recommendation/providers/recommendation_logo_map_provider.dart';
 import 'package:titan/recommendation/providers/recommendation_logo_provider.dart';
 import 'package:titan/recommendation/providers/recommendation_provider.dart';
-import 'package:titan/recommendation/tools/constants.dart';
 import 'package:titan/recommendation/ui/widgets/recommendation_template.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
@@ -19,6 +18,7 @@ import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/widgets/image_picker_on_tap.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddEditRecommendationPage extends HookConsumerWidget {
   const AddEditRecommendationPage({super.key});
@@ -71,14 +71,14 @@ class AddEditRecommendationPage extends HookConsumerWidget {
               children: [
                 TextEntry(
                   maxLines: 1,
-                  label: RecommendationTextConstants.title,
+                  label: AppLocalizations.of(context)!.recommendationTitle,
                   controller: title,
                 ),
                 const SizedBox(height: 30),
                 FormField<File>(
                   validator: (e) {
                     if (logoBytes.value == null && !isEdit) {
-                      return RecommendationTextConstants.addImage;
+                      return AppLocalizations.of(context)!.recommendationAddImage;
                     }
                     return null;
                   },
@@ -111,7 +111,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                 ),
                 TextEntry(
                   maxLines: 1,
-                  label: RecommendationTextConstants.code,
+                  label: AppLocalizations.of(context)!.recommendationCode,
                   controller: code,
                   canBeEmpty: true,
                 ),
@@ -120,7 +120,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                   minLines: 1,
                   maxLines: 2,
                   keyboardType: TextInputType.multiline,
-                  label: RecommendationTextConstants.summary,
+                  label: AppLocalizations.of(context)!.recommendationSummary,
                   controller: summary,
                 ),
                 const SizedBox(height: 30),
@@ -128,15 +128,15 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                   minLines: 5,
                   maxLines: 50,
                   keyboardType: TextInputType.multiline,
-                  label: RecommendationTextConstants.description,
+                  label: AppLocalizations.of(context)!.recommendationDescription,
                   controller: description,
                 ),
                 const SizedBox(height: 50),
                 WaitingButton(
                   child: Text(
                     isEdit
-                        ? RecommendationTextConstants.edit
-                        : RecommendationTextConstants.add,
+                        ? AppLocalizations.of(context)!.recommendationEdit
+                        : AppLocalizations.of(context)!.recommendationAdd,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 25,
@@ -166,7 +166,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                           );
                           displayAdvertToastWithContext(
                             TypeMsg.msg,
-                            RecommendationTextConstants.editedRecommendation,
+                            AppLocalizations.of(context)!.recommendationEditedRecommendation,
                           );
                           recommendationList.maybeWhen(
                             data: (list) {
@@ -183,7 +183,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                         } else {
                           displayAdvertToastWithContext(
                             TypeMsg.msg,
-                            RecommendationTextConstants.addedRecommendation,
+                            AppLocalizations.of(context)!.recommendationAddedRecommendation,
                           );
                           recommendationList.maybeWhen(
                             data: (list) {
@@ -202,15 +202,15 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                         displayAdvertToastWithContext(
                           TypeMsg.error,
                           isEdit
-                              ? RecommendationTextConstants.editingError
-                              : RecommendationTextConstants.addingError,
+                              ? AppLocalizations.of(context)!.recommendationEditingError
+                              : AppLocalizations.of(context)!.recommendationAddingError,
                         );
                       }
                     } else {
                       displayToast(
                         context,
                         TypeMsg.error,
-                        RecommendationTextConstants.incorrectOrMissingFields,
+                        AppLocalizations.of(context)!.recommendationIncorrectOrMissingFields,
                       );
                     }
                   },

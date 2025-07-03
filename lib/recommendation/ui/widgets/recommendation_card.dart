@@ -17,6 +17,7 @@ import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class RecommendationCard extends HookConsumerWidget {
   final Recommendation recommendation;
@@ -100,7 +101,7 @@ class RecommendationCard extends HookConsumerWidget {
                             );
                             displayToastWithContext(
                               TypeMsg.msg,
-                              RecommendationTextConstants.copiedCode,
+                              AppLocalizations.of(context)!.recommendationCopiedCode,
                             );
                           },
                           icon: const Icon(Icons.copy),
