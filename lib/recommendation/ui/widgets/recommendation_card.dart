@@ -9,7 +9,6 @@ import 'package:titan/recommendation/providers/recommendation_logo_map_provider.
 import 'package:titan/recommendation/providers/recommendation_logo_provider.dart';
 import 'package:titan/recommendation/providers/recommendation_provider.dart';
 import 'package:titan/recommendation/router.dart';
-import 'package:titan/recommendation/tools/constants.dart';
 import 'package:titan/recommendation/ui/widgets/recommendation_card_layout.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
