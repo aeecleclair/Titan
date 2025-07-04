@@ -26,6 +26,7 @@ import 'package:titan/settings/router.dart';
 import 'package:titan/raffle/router.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
+import 'package:titan/tools/ui/styleguide/router.dart';
 import 'package:titan/vote/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -90,6 +91,7 @@ class AppRouter {
       RaffleRouter(ref).route(),
       RecommendationRouter(ref).route(),
       SettingsRouter(ref).route(),
+      StyleGuideRouter(ref).route(),
       VoteRouter(ref).route(),
       SeedLibraryRouter(ref).route(),
     ];
