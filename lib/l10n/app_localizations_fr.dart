@@ -3622,4 +3622,238 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get paiementAccept => 'Accepter';
+
+  @override
+  String get paiementAmount => 'Montant';
+
+  @override
+  String get paiementValidUntil => 'Valide jusqu\'à';
+
+  @override
+  String get paiementClose => 'Fermer';
+
+  @override
+  String get paiementPleaseEnterValidAmount =>
+      'Veuillez entrer un montant valide';
+
+  @override
+  String get paiementPleaseAuthenticate => 'Veuillez vous authentifier';
+
+  @override
+  String get paiementAthenticationRequired =>
+      'Authentification requise pour payer';
+
+  @override
+  String get paiementNoThanks => 'Non merci';
+
+  @override
+  String get paiementAuthentificationFailed => 'Échec de l\'authentification';
+
+  @override
+  String get paiementPleaseAddDevice =>
+      'Veuillez ajouter cet appareil pour payer';
+
+  @override
+  String get paiementPayment => 'Paiement';
+
+  @override
+  String get paiementBalanceAfterTransaction => 'Solde après paiement : ';
+
+  @override
+  String get paiementCancel => 'Annuler';
+
+  @override
+  String get paiementLimitedTo => 'Limité à';
+
+  @override
+  String get paiementScanCode => 'Scanner un code';
+
+  @override
+  String get paiementNext => 'Suivant';
+
+  @override
+  String get paiementCancelTransaction => 'Annuler la transaction';
+
+  @override
+  String get paiementTransactionCancelled => 'Transaction annulée';
+
+  @override
+  String get paiementTransactionCancelledDescription =>
+      'Voulez-vous vraiment annuler la transaction de';
+
+  @override
+  String get paiementTransactionCancelledError =>
+      'Erreur lors de l\'annulation de la transaction';
+
+  @override
+  String get paiementNoMembership => 'Aucune adhésion';
+
+  @override
+  String get paiementNoMembershipDescription =>
+      'Ce produit n\'est pas disponnible pour les non-adhérents. Confirmer l\'encaissement ?';
+
+  @override
+  String get paiementQRCodeAlreadyUsed => 'QR Code déjà utilisé';
+
+  @override
+  String get paiementCameraPermissionRequired =>
+      'Permission d\'accès à la caméra requise';
+
+  @override
+  String get paiementCameraPerssionRequiredDescription =>
+      'Pour scanner un QR Code, vous devez autoriser l\'accès à la caméra.';
+
+  @override
+  String get paiementSettings => 'Paramètres';
+
+  @override
+  String get paiementReceived => 'Reçu';
+
+  @override
+  String get paiementSpent => 'Déboursé';
+
+  @override
+  String get paiementNoTrasactionForThisMonth =>
+      'Aucune transaction pour ce mois';
+
+  @override
+  String get paiementNoTransactinon => 'Aucune transaction';
+
+  @override
+  String get paiementSellerRigths => 'Droits du vendeur';
+
+  @override
+  String get paiementCanBank => 'Peut encaisser';
+
+  @override
+  String get paiementCanSeeHistory => 'Peut voir l\'historique';
+
+  @override
+  String get paiementCanCancelTransaction => 'Peut annuler des transactions';
+
+  @override
+  String get paiementCanManageSellers => 'Peut gérer les vendeurs';
+
+  @override
+  String get paiementAddedSeller => 'Vendeur ajouté';
+
+  @override
+  String get paiementAddingSellerError => 'Erreur lors de l\'ajout du vendeur';
+
+  @override
+  String get paiementBank => 'Encaisser';
+
+  @override
+  String get paiementSeeHistory => 'Voir l\'historique';
+
+  @override
+  String get paiementCancelTransactions => 'Annuler les transactions';
+
+  @override
+  String get paiementManageSellers => 'Gérer les vendeurs';
+
+  @override
+  String get paiementStructureAdmin => 'Administrateur de la structure';
+
+  @override
+  String get paiementRightsOf => 'Droits de';
+
+  @override
+  String get paiementRightsUpdated => 'Droits mis à jour';
+
+  @override
+  String get paiementRightsUpdateError =>
+      'Erreur lors de la mise à jour des droits';
+
+  @override
+  String get paiementDeleteSellerDescription =>
+      'Voulez-vous vraiment supprimer ce vendeur ?';
+
+  @override
+  String get paiementDeletedSeller => 'Vendeur supprimé';
+
+  @override
+  String get paiementDeletingSellerError =>
+      'Erreur lors de la suppression du vendeur';
+
+  @override
+  String get paiementDeleteSeller => 'Supprimer le vendeur';
+
+  @override
+  String get paiementAdd => 'Ajouter';
+
+  @override
+  String get paiementAddSeller => 'Ajouter un vendeur';
+
+  @override
+  String get paiementSellerError =>
+      'Vous n\'êtes pas vendeur de cette association';
+
+  @override
+  String get paiementSellersOf => 'Les vendeurs de';
+
+  @override
+  String get paiementModify => 'Modifier';
+
+  @override
+  String get paiementAStore => 'une association';
+
+  @override
+  String get paiementStoreName => 'Nom de l\'association';
+
+  @override
+  String get paiementSuccessfullyAddedStore =>
+      'Association ajoutée avec succès';
+
+  @override
+  String get paiementSuccessfullyModifiedStore =>
+      'Association modifiée avec succès';
+
+  @override
+  String get paiementAddingStoreError =>
+      'Erreur lors de l\'ajout de l\'association';
+
+  @override
+  String get paiementModifyingStoreError =>
+      'Erreur lors de la modification de l\'association';
+
+  @override
+  String get paiementRefund => 'Remboursement';
+
+  @override
+  String get paiementDoneTransaction => 'Transaction effectuée';
+
+  @override
+  String get paiementRefundAction => 'Rembourser';
+
+  @override
+  String get paiementTotalDuringPeriod => 'Total sur la période';
+
+  @override
+  String get paiementMean => 'Moyenne : ';
+
+  @override
+  String get paiementTransaction => 'ransaction';
+
+  @override
+  String get paiementTransferStructure => 'Transfert de structure';
+
+  @override
+  String get paiementYouAreTransferingStructureTo =>
+      'Vous êtes sur le point de transférer la structure à ';
+
+  @override
+  String get paiementTransferStructureDescription =>
+      'Le nouveau responsable aura accès à toutes les fonctionnalités de gestion de la structure. Vous allez recevoir un email pour valider ce transfert. Le lien ne sera actif que pendant 20 minutes. Cette action est irréversible. Êtes-vous sûr de vouloir continuer ?';
+
+  @override
+  String get paiementTransferStructureError =>
+      'Erreur lors du transfert de la structure';
+
+  @override
+  String get paiementTransferStructureSuccess =>
+      'Transfert de structure demandé avec succès';
+
+  @override
+  String get paiementNextAccountable => 'Prochain responsable';
 }

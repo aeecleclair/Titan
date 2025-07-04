@@ -7123,6 +7123,432 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Accepter'**
   String get paiementAccept;
+
+  /// No description provided for @paiementAmount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Montant'**
+  String get paiementAmount;
+
+  /// No description provided for @paiementValidUntil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valide jusqu\'à'**
+  String get paiementValidUntil;
+
+  /// No description provided for @paiementClose.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermer'**
+  String get paiementClose;
+
+  /// No description provided for @paiementPleaseEnterValidAmount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez entrer un montant valide'**
+  String get paiementPleaseEnterValidAmount;
+
+  /// No description provided for @paiementPleaseAuthenticate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez vous authentifier'**
+  String get paiementPleaseAuthenticate;
+
+  /// No description provided for @paiementAthenticationRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Authentification requise pour payer'**
+  String get paiementAthenticationRequired;
+
+  /// No description provided for @paiementNoThanks.
+  ///
+  /// In fr, this message translates to:
+  /// **'Non merci'**
+  String get paiementNoThanks;
+
+  /// No description provided for @paiementAuthentificationFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de l\'authentification'**
+  String get paiementAuthentificationFailed;
+
+  /// No description provided for @paiementPleaseAddDevice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez ajouter cet appareil pour payer'**
+  String get paiementPleaseAddDevice;
+
+  /// No description provided for @paiementPayment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement'**
+  String get paiementPayment;
+
+  /// No description provided for @paiementBalanceAfterTransaction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Solde après paiement : '**
+  String get paiementBalanceAfterTransaction;
+
+  /// No description provided for @paiementCancel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler'**
+  String get paiementCancel;
+
+  /// No description provided for @paiementLimitedTo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Limité à'**
+  String get paiementLimitedTo;
+
+  /// No description provided for @paiementScanCode.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanner un code'**
+  String get paiementScanCode;
+
+  /// No description provided for @paiementNext.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivant'**
+  String get paiementNext;
+
+  /// No description provided for @paiementCancelTransaction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler la transaction'**
+  String get paiementCancelTransaction;
+
+  /// No description provided for @paiementTransactionCancelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Transaction annulée'**
+  String get paiementTransactionCancelled;
+
+  /// No description provided for @paiementTransactionCancelledDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voulez-vous vraiment annuler la transaction de'**
+  String get paiementTransactionCancelledDescription;
+
+  /// No description provided for @paiementTransactionCancelledError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de l\'annulation de la transaction'**
+  String get paiementTransactionCancelledError;
+
+  /// No description provided for @paiementNoMembership.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune adhésion'**
+  String get paiementNoMembership;
+
+  /// No description provided for @paiementNoMembershipDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce produit n\'est pas disponnible pour les non-adhérents. Confirmer l\'encaissement ?'**
+  String get paiementNoMembershipDescription;
+
+  /// No description provided for @paiementQRCodeAlreadyUsed.
+  ///
+  /// In fr, this message translates to:
+  /// **'QR Code déjà utilisé'**
+  String get paiementQRCodeAlreadyUsed;
+
+  /// No description provided for @paiementCameraPermissionRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Permission d\'accès à la caméra requise'**
+  String get paiementCameraPermissionRequired;
+
+  /// No description provided for @paiementCameraPerssionRequiredDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour scanner un QR Code, vous devez autoriser l\'accès à la caméra.'**
+  String get paiementCameraPerssionRequiredDescription;
+
+  /// No description provided for @paiementSettings.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paramètres'**
+  String get paiementSettings;
+
+  /// No description provided for @paiementReceived.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reçu'**
+  String get paiementReceived;
+
+  /// No description provided for @paiementSpent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déboursé'**
+  String get paiementSpent;
+
+  /// No description provided for @paiementNoTrasactionForThisMonth.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune transaction pour ce mois'**
+  String get paiementNoTrasactionForThisMonth;
+
+  /// No description provided for @paiementNoTransactinon.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune transaction'**
+  String get paiementNoTransactinon;
+
+  /// No description provided for @paiementSellerRigths.
+  ///
+  /// In fr, this message translates to:
+  /// **'Droits du vendeur'**
+  String get paiementSellerRigths;
+
+  /// No description provided for @paiementCanBank.
+  ///
+  /// In fr, this message translates to:
+  /// **'Peut encaisser'**
+  String get paiementCanBank;
+
+  /// No description provided for @paiementCanSeeHistory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Peut voir l\'historique'**
+  String get paiementCanSeeHistory;
+
+  /// No description provided for @paiementCanCancelTransaction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Peut annuler des transactions'**
+  String get paiementCanCancelTransaction;
+
+  /// No description provided for @paiementCanManageSellers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Peut gérer les vendeurs'**
+  String get paiementCanManageSellers;
+
+  /// No description provided for @paiementAddedSeller.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vendeur ajouté'**
+  String get paiementAddedSeller;
+
+  /// No description provided for @paiementAddingSellerError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de l\'ajout du vendeur'**
+  String get paiementAddingSellerError;
+
+  /// No description provided for @paiementBank.
+  ///
+  /// In fr, this message translates to:
+  /// **'Encaisser'**
+  String get paiementBank;
+
+  /// No description provided for @paiementSeeHistory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir l\'historique'**
+  String get paiementSeeHistory;
+
+  /// No description provided for @paiementCancelTransactions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler les transactions'**
+  String get paiementCancelTransactions;
+
+  /// No description provided for @paiementManageSellers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les vendeurs'**
+  String get paiementManageSellers;
+
+  /// No description provided for @paiementStructureAdmin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Administrateur de la structure'**
+  String get paiementStructureAdmin;
+
+  /// No description provided for @paiementRightsOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Droits de'**
+  String get paiementRightsOf;
+
+  /// No description provided for @paiementRightsUpdated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Droits mis à jour'**
+  String get paiementRightsUpdated;
+
+  /// No description provided for @paiementRightsUpdateError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de la mise à jour des droits'**
+  String get paiementRightsUpdateError;
+
+  /// No description provided for @paiementDeleteSellerDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voulez-vous vraiment supprimer ce vendeur ?'**
+  String get paiementDeleteSellerDescription;
+
+  /// No description provided for @paiementDeletedSeller.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vendeur supprimé'**
+  String get paiementDeletedSeller;
+
+  /// No description provided for @paiementDeletingSellerError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de la suppression du vendeur'**
+  String get paiementDeletingSellerError;
+
+  /// No description provided for @paiementDeleteSeller.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer le vendeur'**
+  String get paiementDeleteSeller;
+
+  /// No description provided for @paiementAdd.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter'**
+  String get paiementAdd;
+
+  /// No description provided for @paiementAddSeller.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un vendeur'**
+  String get paiementAddSeller;
+
+  /// No description provided for @paiementSellerError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous n\'êtes pas vendeur de cette association'**
+  String get paiementSellerError;
+
+  /// No description provided for @paiementSellersOf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les vendeurs de'**
+  String get paiementSellersOf;
+
+  /// No description provided for @paiementModify.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier'**
+  String get paiementModify;
+
+  /// No description provided for @paiementAStore.
+  ///
+  /// In fr, this message translates to:
+  /// **'une association'**
+  String get paiementAStore;
+
+  /// No description provided for @paiementStoreName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom de l\'association'**
+  String get paiementStoreName;
+
+  /// No description provided for @paiementSuccessfullyAddedStore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Association ajoutée avec succès'**
+  String get paiementSuccessfullyAddedStore;
+
+  /// No description provided for @paiementSuccessfullyModifiedStore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Association modifiée avec succès'**
+  String get paiementSuccessfullyModifiedStore;
+
+  /// No description provided for @paiementAddingStoreError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de l\'ajout de l\'association'**
+  String get paiementAddingStoreError;
+
+  /// No description provided for @paiementModifyingStoreError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de la modification de l\'association'**
+  String get paiementModifyingStoreError;
+
+  /// No description provided for @paiementRefund.
+  ///
+  /// In fr, this message translates to:
+  /// **'Remboursement'**
+  String get paiementRefund;
+
+  /// No description provided for @paiementDoneTransaction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Transaction effectuée'**
+  String get paiementDoneTransaction;
+
+  /// No description provided for @paiementRefundAction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rembourser'**
+  String get paiementRefundAction;
+
+  /// No description provided for @paiementTotalDuringPeriod.
+  ///
+  /// In fr, this message translates to:
+  /// **'Total sur la période'**
+  String get paiementTotalDuringPeriod;
+
+  /// No description provided for @paiementMean.
+  ///
+  /// In fr, this message translates to:
+  /// **'Moyenne : '**
+  String get paiementMean;
+
+  /// No description provided for @paiementTransaction.
+  ///
+  /// In fr, this message translates to:
+  /// **'ransaction'**
+  String get paiementTransaction;
+
+  /// No description provided for @paiementTransferStructure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Transfert de structure'**
+  String get paiementTransferStructure;
+
+  /// No description provided for @paiementYouAreTransferingStructureTo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous êtes sur le point de transférer la structure à '**
+  String get paiementYouAreTransferingStructureTo;
+
+  /// No description provided for @paiementTransferStructureDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le nouveau responsable aura accès à toutes les fonctionnalités de gestion de la structure. Vous allez recevoir un email pour valider ce transfert. Le lien ne sera actif que pendant 20 minutes. Cette action est irréversible. Êtes-vous sûr de vouloir continuer ?'**
+  String get paiementTransferStructureDescription;
+
+  /// No description provided for @paiementTransferStructureError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors du transfert de la structure'**
+  String get paiementTransferStructureError;
+
+  /// No description provided for @paiementTransferStructureSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Transfert de structure demandé avec succès'**
+  String get paiementTransferStructureSuccess;
+
+  /// No description provided for @paiementNextAccountable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochain responsable'**
+  String get paiementNextAccountable;
 }
 
 class _AppLocalizationsDelegate

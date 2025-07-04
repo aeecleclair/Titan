@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class CancelButton extends HookWidget {
@@ -90,7 +91,7 @@ class CancelButton extends HookWidget {
                   height: 50,
                   alignment: Alignment.center,
                   child: Text(
-                    'Annuler (${((1 - disablingAnimationController.value) * 30).toStringAsFixed(0)}s)',
+                    '${AppLocalizations.of(context)!.paiementCancel} (${((1 - disablingAnimationController.value) * 30).toStringAsFixed(0)}s)',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

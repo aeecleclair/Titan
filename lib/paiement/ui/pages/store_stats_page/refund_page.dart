@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/history.dart';
 import 'package:titan/paiement/class/refund.dart';
 import 'package:titan/paiement/providers/refund_amount_provider.dart';
@@ -48,7 +49,7 @@ class ReFundPage extends ConsumerWidget {
           children: [
             const SizedBox(height: 20),
             Text(
-              'Remboursement',
+              AppLocalizations.of(context)!.paiementRefund,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,
@@ -144,7 +145,9 @@ class ReFundPage extends ConsumerWidget {
                         data: (value) {
                           displayToastWithContext(
                             TypeMsg.msg,
-                            "Transaction effectuée",
+                            AppLocalizations.of(
+                              context,
+                            )!.paiementDoneTransaction,
                           );
                           ref.invalidate(sellerHistoryProvider);
                           Navigator.of(context).pop();
@@ -164,7 +167,7 @@ class ReFundPage extends ConsumerWidget {
                       child: child,
                     ),
                     child: Text(
-                      "Rembourser",
+                      AppLocalizations.of(context)!.paiementRefundAction,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,

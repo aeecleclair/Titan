@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/store.dart' as store_class;
 import 'package:titan/paiement/class/structure.dart';
 import 'package:titan/paiement/providers/my_stores_provider.dart';
@@ -40,7 +41,7 @@ class AddEditStorePage extends HookConsumerWidget {
             children: [
               const SizedBox(height: 10),
               AlignLeftText(
-                "${isEdit ? 'Modifier' : 'Ajouter'} une association ${structure.name}",
+                "${isEdit ? '${AppLocalizations.of(context)!.paiementModify}' : AppLocalizations.of(context)!.paiementAdd}} ${AppLocalizations.of(context)!.paiementAStore} ${structure.name}",
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 color: Colors.grey,
               ),
@@ -54,7 +55,9 @@ class AddEditStorePage extends HookConsumerWidget {
                       children: [
                         TextEntry(
                           controller: name,
-                          label: "Nom de l'association",
+                          label: AppLocalizations.of(
+                            context,
+                          )!.paiementStoreName,
                         ),
                         const SizedBox(height: 50),
                         WaitingButton(
@@ -90,21 +93,31 @@ class AddEditStorePage extends HookConsumerWidget {
                                 displayToastWithContext(
                                   TypeMsg.msg,
                                   isEdit
-                                      ? "L'association a été modifiée avec succès"
-                                      : "L'association a été ajoutée avec succès",
+                                      ? AppLocalizations.of(
+                                          context,
+                                        )!.paiementSuccessfullyAddedStore
+                                      : AppLocalizations.of(
+                                          context,
+                                        )!.paiementSuccessfullyModifiedStore,
                                 );
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
                                   isEdit
-                                      ? "Une erreur est survenue lors de la modification de l'association"
-                                      : "Une erreur est survenue lors de l'ajout de l'association",
+                                      ? AppLocalizations.of(
+                                          context,
+                                        )!.paiementModifyingStoreError
+                                      : AppLocalizations.of(
+                                          context,
+                                        )!.paiementAddingStoreError,
                                 );
                               }
                             }
                           },
                           child: Text(
-                            isEdit ? "Modifier" : "Ajouter",
+                            isEdit
+                                ? AppLocalizations.of(context)!.paiementModify
+                                : AppLocalizations.of(context)!.paiementAdd,
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 25,
