@@ -99,7 +99,7 @@ class FloatingNavbar extends HookConsumerWidget {
     }, [currentState.value, itemWidthRef.value]);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Material(
         elevation: 10,
         shadowColor: ColorConstants.main.withOpacity(0.2),
@@ -107,7 +107,7 @@ class FloatingNavbar extends HookConsumerWidget {
         color: ColorConstants.main,
         child: Container(
           height: borderRadius * 2,
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(borderRadius),
           ),
