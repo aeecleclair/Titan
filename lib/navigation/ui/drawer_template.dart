@@ -39,6 +39,7 @@ class DrawerTemplate extends HookConsumerWidget {
     final shouldSetup = ref.watch(shouldSetupProvider);
     final shouldSetupNotifier = ref.read(shouldSetupProvider.notifier);
     final animation = ref.watch(navbarAnimationProvider);
+    final pathForwarding = ref.read(pathForwardingProvider);
     final pathForwardingNotifier = ref.read(pathForwardingProvider.notifier);
 
     Future(() {
@@ -55,66 +56,68 @@ class DrawerTemplate extends HookConsumerWidget {
             child: Stack(
               children: [
                 child,
-                Positioned(
-                  left: 0,
-                  bottom: 0,
-                  right: 0,
-                  child: Visibility(
-                    visible: animation!.isCompleted && animation.value == 1.0,
-                    child: AnimatedBuilder(
-                      animation: animation,
-                      builder: (context, child) => Opacity(
-                        opacity: animation.value,
-                        child: FloatingNavbar(
-                          items: [
-                            FloatingNavbarItem(
-                              module: FeedRouter.module,
-                              onTap: () {
-                                pathForwardingNotifier.forward(FeedRouter.root);
-                                WidgetsBinding.instance.addPostFrameCallback((
-                                  _,
-                                ) {
-                                  QR.to(FeedRouter.root);
-                                });
-                              },
-                            ),
-                            ...navbarListModule.map((module) {
-                              return FloatingNavbarItem(
-                                module: module,
+                if (pathForwarding.isLoggedIn)
+                  Positioned(
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    child: Visibility(
+                      visible: animation!.isCompleted && animation.value == 1.0,
+                      child: AnimatedBuilder(
+                        animation: animation,
+                        builder: (context, child) => Opacity(
+                          opacity: animation.value,
+                          child: FloatingNavbar(
+                            items: [
+                              FloatingNavbarItem(
+                                module: FeedRouter.module,
                                 onTap: () {
-                                  navbarListModuleNotifier.pushModule(module);
-                                  pathForwardingNotifier.forward(module.root);
+                                  pathForwardingNotifier.forward(
+                                    FeedRouter.root,
+                                  );
                                   WidgetsBinding.instance.addPostFrameCallback((
                                     _,
                                   ) {
-                                    QR.to(module.root);
+                                    QR.to(FeedRouter.root);
                                   });
                                 },
-                              );
-                            }),
-                            FloatingNavbarItem(
-                              module: Module(
-                                name: 'Autres',
-                                description: '',
-                                root: AppRouter.allModules,
                               ),
-                              onTap: () {
-                                pathForwardingNotifier.forward(
-                                  AppRouter.allModules,
+                              ...navbarListModule.map((module) {
+                                return FloatingNavbarItem(
+                                  module: module,
+                                  onTap: () {
+                                    navbarListModuleNotifier.pushModule(module);
+                                    pathForwardingNotifier.forward(module.root);
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback((_) {
+                                          QR.to(module.root);
+                                        });
+                                  },
                                 );
-                                WidgetsBinding.instance.addPostFrameCallback((
-                                  _,
-                                ) {
-                                  QR.to(AppRouter.allModules);
-                                });
-                              },
-                            ),
-                          ],
+                              }),
+                              FloatingNavbarItem(
+                                module: Module(
+                                  name: 'Autres',
+                                  description: '',
+                                  root: AppRouter.allModules,
+                                ),
+                                onTap: () {
+                                  pathForwardingNotifier.forward(
+                                    AppRouter.allModules,
+                                  );
+                                  WidgetsBinding.instance.addPostFrameCallback((
+                                    _,
+                                  ) {
+                                    QR.to(AppRouter.allModules);
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
                 if (displayQuit) const QuitDialog(),
               ],
             ),
