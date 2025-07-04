@@ -18,40 +18,45 @@ class AllModulePage extends ConsumerWidget {
     final navbarListModuleNotifier = ref.watch(
       navbarListModuleProvider.notifier,
     );
-    return Column(
-      children: [
-        TopBar(),
-        Expanded(
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Container(
-              color: ColorConstants.background,
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                children: [
-                  CustomSearchBar(onSearch: (String query) {}, onFilter: () {}),
-                  SizedBox(height: 30),
-                  ...modules.map(
-                    (module) => ListItem(
-                      title: module.name,
-                      subtitle: module.description,
-                      onTap: () {
-                        navbarListModuleNotifier.pushModule(module);
-                        final pathForwardingNotifier = ref.watch(
-                          pathForwardingProvider.notifier,
-                        );
-                        pathForwardingNotifier.forward(module.root);
-                        QR.to(module.root);
-                      },
+    return Container(
+      color: ColorConstants.background,
+      child: Column(
+        children: [
+          TopBar(),
+          Expanded(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  children: [
+                    CustomSearchBar(
+                      onSearch: (String query) {},
+                      onFilter: () {},
                     ),
-                  ),
-                  SizedBox(height: 80),
-                ],
+                    SizedBox(height: 30),
+                    ...modules.map(
+                      (module) => ListItem(
+                        title: module.name,
+                        subtitle: module.description,
+                        onTap: () {
+                          navbarListModuleNotifier.pushModule(module);
+                          final pathForwardingNotifier = ref.watch(
+                            pathForwardingProvider.notifier,
+                          );
+                          pathForwardingNotifier.forward(module.root);
+                          QR.to(module.root);
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 80),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
