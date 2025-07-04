@@ -10,6 +10,7 @@ import 'package:titan/login/providers/animation_provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/navigation/providers/navbar_animation.dart';
 import 'package:titan/router.dart';
 import 'package:titan/service/tools/setup.dart';
 import 'package:titan/tools/constants.dart';
@@ -50,11 +51,19 @@ class MyApp extends HookConsumerWidget {
     final animationController = useAnimationController(
       duration: const Duration(seconds: 2),
     );
+    final navbarAnimationController = useAnimationController(
+      duration: const Duration(milliseconds: 200),
+      initialValue: 1.0,
+    );
     final animationNotifier = ref.read(backgroundAnimationProvider.notifier);
+    final navbarAnimationNotifier = ref.read(navbarAnimationProvider.notifier);
     final navigatorKey = GlobalKey<NavigatorState>();
     final plausible = getPlausible();
     final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     Future(() => animationNotifier.setController(animationController));
+    Future(
+      () => navbarAnimationNotifier.setController(navbarAnimationController),
+    );
 
     if (!kIsWeb) {
       useEffect(() {

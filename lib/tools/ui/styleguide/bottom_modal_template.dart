@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/navigation/providers/navbar_animation.dart';
 import 'package:titan/tools/constants.dart';
 
 enum BottomModalType { main, danger }
@@ -92,6 +94,7 @@ class BottomModalTemplate extends StatelessWidget {
                 child,
                 if (actions != null && actions!.isNotEmpty)
                   Column(children: actions!),
+                SizedBox(height: 20),
               ],
             ),
           ),
@@ -99,4 +102,25 @@ class BottomModalTemplate extends StatelessWidget {
       ],
     );
   }
+}
+
+Future showCustomBottomModal({
+  required BuildContext context,
+  required Widget modal,
+  required WidgetRef ref,
+  Function? onCloseCallback,
+}) async {
+  final navbarAnimationNotifier = ref.watch(navbarAnimationProvider.notifier);
+  navbarAnimationNotifier.toggle();
+  await showModalBottomSheet(
+    elevation: 3,
+    backgroundColor: Colors.transparent,
+    isScrollControlled: true,
+    useRootNavigator: true,
+    context: context,
+    builder: (_) => modal,
+  ).then((value) {
+    navbarAnimationNotifier.toggle();
+    onCloseCallback?.call();
+  });
 }

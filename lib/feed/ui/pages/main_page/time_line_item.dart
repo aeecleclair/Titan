@@ -52,7 +52,6 @@ class TimelineItem extends StatelessWidget {
                               color: ColorConstants.onTertiary,
                             ),
                           ),
-                          // Expanded(child: DottedVerticalLine()),
                         ],
                       ),
                     ),
