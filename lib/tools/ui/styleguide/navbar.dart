@@ -14,7 +14,6 @@ class FloatingNavbarItem {
   FloatingNavbarItem({this.onTap, required this.module});
 }
 
-// Get the current route path
 String getCurrentPath() {
   if (QR.history.isEmpty) return '';
 
@@ -32,49 +31,36 @@ class FloatingNavbar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pathProvider = ref.watch(pathForwardingProvider);
-    // Track previous index for animation
     final previousIndex = useRef<int>(0);
-    // Use useState to maintain internal state for animation
-    final currentState = useState<int>(3); // Default to "Autres"
+    final currentState = useState<int>(3);
 
-    // Get the path from router
     final currentPath = pathProvider.path;
-
-    // Calculate the selected index based on the current path
     final routeIndex = useState<int>(3);
 
     useEffect(() {
-      // This effect runs on every build, but we only care about the initial path
       if (currentPath.isNotEmpty) {
-        print("Current path: $currentPath");
-        print("items ${items.map((e) => e.module.root).toList()}");
         routeIndex.value = items.indexWhere(
           (item) => item.module.root == currentPath,
         );
-        // Only use found index if it's in visible range
         if (routeIndex.value < 0 || routeIndex.value >= items.length) {
-          routeIndex.value = 3; // No match or not in visible modules
+          routeIndex.value = 3;
         }
       }
-      print("Selected index: $routeIndex");
       return null;
     }, [currentPath]);
 
-    // Initialize the currentState on first render only
     useEffect(() {
       currentState.value = routeIndex.value;
-      previousIndex.value = routeIndex.value; // Initialize previous index
+      previousIndex.value = routeIndex.value;
       return null;
     }, []);
 
     final borderRadius = 25.0;
 
-    // Animation controller for all animations with proper cleanup
     final animationController = useAnimationController(
       duration: const Duration(milliseconds: 300),
     );
 
-    // Ensure proper disposal
     useEffect(() {
       return () {
         if (animationController.isAnimating) {
@@ -83,28 +69,19 @@ class FloatingNavbar extends HookConsumerWidget {
       };
     }, []);
 
-    // Slide animation reference
     final slideAnimation = useRef<Animation<double>?>(null);
-
-    // Store the latest calculated item width to use in animations
     final itemWidthRef = useRef<double>(0.0);
 
-    // Watch for path changes and update the selection with proper animation
     useEffect(() {
       if (currentPath.isNotEmpty && routeIndex.value != currentState.value) {
-        // When path changes, store current selection as previous
         previousIndex.value = currentState.value;
-        // Then update to the new route-based selection
         currentState.value = routeIndex.value;
       }
       return null;
     }, [currentPath, routeIndex]);
 
-    // Update animation when index changes - this needs to be in the build method, not in LayoutBuilder
     useEffect(() {
-      // Only trigger animation if we have a valid item width and the index has changed
       if (previousIndex.value != currentState.value && itemWidthRef.value > 0) {
-        // Create tween from previous to current position
         slideAnimation.value =
             Tween<double>(
               begin: previousIndex.value * itemWidthRef.value,
@@ -112,18 +89,15 @@ class FloatingNavbar extends HookConsumerWidget {
             ).animate(
               CurvedAnimation(
                 parent: animationController,
-                curve: Curves.easeOutCubic, // Smoother easing curve
+                curve: Curves.easeOutCubic,
               ),
             );
-
-        // Reset and start animation
         animationController.reset();
         animationController.forward();
       }
       return null;
     }, [currentState.value, itemWidthRef.value]);
 
-    // Use LayoutBuilder for proper sizing
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
       child: Material(
@@ -139,20 +113,16 @@ class FloatingNavbar extends HookConsumerWidget {
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {
-              // Calculate item width based on actual available width
               final availableWidth = constraints.maxWidth;
               final itemWidth = availableWidth / items.length;
 
-              // Store the width for use in the useEffect hook
               itemWidthRef.value = itemWidth;
 
               return Stack(
                 children: [
-                  // Animated selection indicator with smooth slide
                   AnimatedBuilder(
                     animation: animationController,
                     builder: (context, _) {
-                      // Get current position from slide animation or fall back to current index
                       final leftPosition = slideAnimation.value != null
                           ? slideAnimation.value!.value
                           : itemWidth * currentState.value;
@@ -171,7 +141,6 @@ class FloatingNavbar extends HookConsumerWidget {
                       );
                     },
                   ),
-                  // Items row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: items.asMap().entries.map((entry) {
@@ -179,7 +148,6 @@ class FloatingNavbar extends HookConsumerWidget {
                       final item = entry.value;
                       final isSelected = index == currentState.value;
 
-                      // Use AnimatedBuilder for text color to sync with indicator animation
                       return Expanded(
                         child: Material(
                           color: Colors.transparent,
@@ -187,27 +155,20 @@ class FloatingNavbar extends HookConsumerWidget {
                           child: GestureDetector(
                             behavior: HitTestBehavior.opaque,
                             onTap: () {
-                              // Only animate if this isn't already the selected item
                               if (index != currentState.value) {
-                                // First stop any running animation
                                 if (animationController.isAnimating) {
                                   animationController.stop();
                                 }
 
-                                // Store current index as previous for animation
                                 previousIndex.value = currentState.value;
-                                // Update the internal state immediately for animation
                                 currentState.value = index;
 
-                                // Schedule navigation after the current frame completes
                                 WidgetsBinding.instance.addPostFrameCallback((
                                   _,
                                 ) {
-                                  // Now it's safe to navigate
                                   item.onTap?.call();
                                 });
                               } else {
-                                // If already selected, just call the callback
                                 item.onTap?.call();
                               }
                             },
@@ -216,13 +177,11 @@ class FloatingNavbar extends HookConsumerWidget {
                               child: AnimatedBuilder(
                                 animation: animationController,
                                 builder: (context, child) {
-                                  // Calculate color and weight based on selection and animation
                                   Color textColor;
                                   FontWeight textWeight;
 
                                   if (previousIndex.value ==
                                       currentState.value) {
-                                    // No transition happening
                                     textColor = isSelected
                                         ? ColorConstants.main
                                         : ColorConstants.background;
@@ -230,17 +189,14 @@ class FloatingNavbar extends HookConsumerWidget {
                                         ? FontWeight.w600
                                         : FontWeight.normal;
                                   } else {
-                                    // During transition, determine if this item is involved
                                     bool isInvolved =
                                         index == previousIndex.value ||
                                         index == currentState.value;
 
                                     if (!isInvolved) {
-                                      // Not involved in transition
                                       textColor = ColorConstants.background;
                                       textWeight = FontWeight.normal;
                                     } else if (index == currentState.value) {
-                                      // Transitioning to selected
                                       final progress =
                                           animationController.value;
                                       textColor = Color.lerp(
@@ -248,12 +204,10 @@ class FloatingNavbar extends HookConsumerWidget {
                                         ColorConstants.main,
                                         progress,
                                       )!;
-                                      // Use a simpler approach for font weight transition
                                       textWeight = progress < 0.5
                                           ? FontWeight.normal
                                           : FontWeight.w600;
                                     } else {
-                                      // Transitioning from selected
                                       final progress =
                                           animationController.value;
                                       textColor = Color.lerp(
@@ -261,7 +215,6 @@ class FloatingNavbar extends HookConsumerWidget {
                                         ColorConstants.background,
                                         progress,
                                       )!;
-                                      // Use a simpler approach for font weight transition
                                       textWeight = progress < 0.5
                                           ? FontWeight.w600
                                           : FontWeight.normal;

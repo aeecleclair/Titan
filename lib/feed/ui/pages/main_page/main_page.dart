@@ -4,8 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/feed/class/feed_item.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/feed/ui/pages/main_page/feed_timeline.dart';
-import 'package:titan/navigation/providers/navbar_animation.dart';
-import 'package:titan/navigation/ui/drawer_template.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/searchbar.dart';
@@ -53,19 +51,13 @@ class FeedMainPage extends HookConsumerWidget {
 
             const SizedBox(height: 20),
 
-            // // Timeline
             SizedBox(
               height: MediaQuery.of(context).size.height - 193,
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: FeedTimeline(
                   items: filteredItems.value,
-                  onItemTap: (item) {
-                    // TODO: Handle item tap
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Event tapped: ${item.title}')),
-                    );
-                  },
+                  onItemTap: (item) {},
                 ),
               ),
             ),

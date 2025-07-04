@@ -39,6 +39,7 @@ class DrawerTemplate extends HookConsumerWidget {
     final shouldSetup = ref.watch(shouldSetupProvider);
     final shouldSetupNotifier = ref.read(shouldSetupProvider.notifier);
     final animation = ref.watch(navbarAnimationProvider);
+    final pathForwardingNotifier = ref.read(pathForwardingProvider.notifier);
 
     Future(() {
       if (!kIsWeb && user.id != "" && shouldSetup) {
@@ -69,15 +70,7 @@ class DrawerTemplate extends HookConsumerWidget {
                             FloatingNavbarItem(
                               module: FeedRouter.module,
                               onTap: () {
-                                // Use ref.read instead of ref.watch to avoid rebuilds
-                                final pathForwardingNotifier = ref.read(
-                                  pathForwardingProvider.notifier,
-                                );
-
-                                // First update the path
                                 pathForwardingNotifier.forward(FeedRouter.root);
-
-                                // Then navigate with a small delay to allow the UI to stabilize
                                 WidgetsBinding.instance.addPostFrameCallback((
                                   _,
                                 ) {
@@ -89,16 +82,8 @@ class DrawerTemplate extends HookConsumerWidget {
                               return FloatingNavbarItem(
                                 module: module,
                                 onTap: () {
-                                  // Use ref.read instead of ref.watch to avoid rebuilds
                                   navbarListModuleNotifier.pushModule(module);
-                                  final pathForwardingNotifier = ref.read(
-                                    pathForwardingProvider.notifier,
-                                  );
-
-                                  // First update the path
                                   pathForwardingNotifier.forward(module.root);
-
-                                  // Then navigate with a small delay to allow the UI to stabilize
                                   WidgetsBinding.instance.addPostFrameCallback((
                                     _,
                                   ) {
@@ -114,17 +99,9 @@ class DrawerTemplate extends HookConsumerWidget {
                                 root: AppRouter.allModules,
                               ),
                               onTap: () {
-                                // Use ref.read instead of ref.watch to avoid rebuilds
-                                final pathForwardingNotifier = ref.read(
-                                  pathForwardingProvider.notifier,
-                                );
-
-                                // First update the path
                                 pathForwardingNotifier.forward(
                                   AppRouter.allModules,
                                 );
-
-                                // Then navigate with a small delay to allow the UI to stabilize
                                 WidgetsBinding.instance.addPostFrameCallback((
                                   _,
                                 ) {
