@@ -43,7 +43,7 @@ class EventAction extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(width: 8),
+        const SizedBox(width: 10),
 
         // Action button
         GestureDetector(
@@ -51,7 +51,7 @@ class EventAction extends StatelessWidget {
             if (isActionEnabled) onActionPressed!.call();
           },
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
             width: 100,
             decoration: BoxDecoration(
               color: isActionEnabled

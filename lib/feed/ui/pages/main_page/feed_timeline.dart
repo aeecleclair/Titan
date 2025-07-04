@@ -12,14 +12,12 @@ class FeedTimeline extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ...items.map((item) {
-          final index = items.indexOf(item);
-          return TimelineItem(
+        ...items.map(
+          (item) => TimelineItem(
             item: item,
             onTap: onItemTap != null ? () => onItemTap!(item) : null,
-            isLast: index == items.length - 1,
-          );
-        }),
+          ),
+        ),
         SizedBox(height: 80),
       ],
     );
