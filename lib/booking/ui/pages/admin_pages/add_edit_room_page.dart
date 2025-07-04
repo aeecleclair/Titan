@@ -113,21 +113,29 @@ class AddEditRoomPage extends HookConsumerWidget {
                           isEdit
                               ? displayToastWithContext(
                                   TypeMsg.msg,
-                                  AppLocalizations.of(context)!.bookingEditedRoom,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.bookingEditedRoom,
                                 )
                               : displayToastWithContext(
                                   TypeMsg.msg,
-                                  AppLocalizations.of(context)!.bookingAddedRoom,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.bookingAddedRoom,
                                 );
                         } else {
                           isEdit
                               ? displayToastWithContext(
                                   TypeMsg.error,
-                                  AppLocalizations.of(context)!.bookingEditionError,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.bookingEditionError,
                                 )
                               : displayToastWithContext(
                                   TypeMsg.error,
-                                  AppLocalizations.of(context)!.bookingAddingError,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.bookingAddingError,
                                 );
                         }
                       });
@@ -144,8 +152,9 @@ class AddEditRoomPage extends HookConsumerWidget {
                           await showDialog(
                             context: context,
                             builder: (context) => CustomDialogBox(
-                              descriptions:
-                                  AppLocalizations.of(context)!.bookingDeleteRoomConfirmation,
+                              descriptions: AppLocalizations.of(
+                                context,
+                              )!.bookingDeleteRoomConfirmation,
                               onYes: () async {
                                 final value = await roomListNotifier.deleteRoom(
                                   room,
@@ -154,16 +163,22 @@ class AddEditRoomPage extends HookConsumerWidget {
                                   QR.back();
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    AppLocalizations.of(context)!.bookingDeletedRoom,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.bookingDeletedRoom,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    AppLocalizations.of(context)!.bookingDeletingError,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.bookingDeletingError,
                                   );
                                 }
                               },
-                              title: AppLocalizations.of(context)!.bookingDeleteBooking,
+                              title: AppLocalizations.of(
+                                context,
+                              )!.bookingDeleteBooking,
                             ),
                           );
                         });

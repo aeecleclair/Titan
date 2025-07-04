@@ -97,7 +97,9 @@ class DetailPage extends HookConsumerWidget {
                                     const SizedBox(height: 30),
                                     Text(
                                       event.applicant.phone ??
-                                          AppLocalizations.of(context)!.eventNoPhoneRegistered,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.eventNoPhoneRegistered,
                                       style: const TextStyle(fontSize: 25),
                                     ),
                                     const SizedBox(height: 50),

@@ -125,12 +125,16 @@ class TicketHandler extends HookConsumerWidget {
                                       if (value) {
                                         displayToastWithContext(
                                           TypeMsg.msg,
-                                          AppLocalizations.of(context)!.raffleDeletedTicket,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.raffleDeletedTicket,
                                         );
                                       } else {
                                         displayToastWithContext(
                                           TypeMsg.error,
-                                          AppLocalizations.of(context)!.raffleDeletingError,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.raffleDeletingError,
                                         );
                                       }
                                     });

@@ -256,12 +256,16 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                 );
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  AppLocalizations.of(context)!.raffleBoughtTicket,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.raffleBoughtTicket,
                                 );
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  AppLocalizations.of(context)!.raffleAddingError,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.raffleAddingError,
                                 );
                               }
                               navigationPop();

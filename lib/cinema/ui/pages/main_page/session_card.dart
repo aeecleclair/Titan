@@ -164,7 +164,9 @@ class SessionCard extends HookConsumerWidget {
                                     const SizedBox(height: 10),
                                     Text(
                                       session.overview ??
-                                          AppLocalizations.of(context)!.cinemaNoOverview,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.cinemaNoOverview,
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(fontSize: 16),
                                     ),

@@ -58,7 +58,11 @@ class AddEditButton extends HookConsumerWidget {
               AppLocalizations.of(context)!.loanInvalidDates,
             );
           } else if (borrower.id.isEmpty) {
-            displayToast(context, TypeMsg.error, AppLocalizations.of(context)!.loanNoBorrower);
+            displayToast(
+              context,
+              TypeMsg.error,
+              AppLocalizations.of(context)!.loanNoBorrower,
+            );
           } else {
             await items.when(
               data: (itemList) async {
@@ -143,7 +147,9 @@ class AddEditButton extends HookConsumerWidget {
         });
       },
       child: Text(
-        isEdit ? AppLocalizations.of(context)!.loanEdit : AppLocalizations.of(context)!.loanAdd,
+        isEdit
+            ? AppLocalizations.of(context)!.loanEdit
+            : AppLocalizations.of(context)!.loanAdd,
         style: const TextStyle(
           color: Colors.white,
           fontSize: 25,

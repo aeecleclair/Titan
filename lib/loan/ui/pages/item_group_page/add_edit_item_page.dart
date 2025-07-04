@@ -62,7 +62,10 @@ class AddEditItemPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 30),
-                    TextEntry(label: AppLocalizations.of(context)!.loanName, controller: name),
+                    TextEntry(
+                      label: AppLocalizations.of(context)!.loanName,
+                      controller: name,
+                    ),
                     const SizedBox(height: 30),
                     TextEntry(
                       keyboardType: TextInputType.number,
@@ -93,6 +96,12 @@ class AddEditItemPage extends HookConsumerWidget {
                         child: child,
                       ),
                       onTap: () async {
+                        final updatedItemMsg = isEdit
+                            ? AppLocalizations.of(context)!.loanUpdatedItem
+                            : AppLocalizations.of(context)!.loanAddedObject;
+                        final updatedItemErrorMsg = isEdit
+                            ? AppLocalizations.of(context)!.loanUpdatingError
+                            : AppLocalizations.of(context)!.loanAddingError;
                         if (key.currentState == null) {
                           return;
                         }
@@ -123,41 +132,31 @@ class AddEditItemPage extends HookConsumerWidget {
                                 loaner,
                                 await itemListNotifier.copy(),
                               );
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AppLocalizations.of(context)!.loanUpdatedItem,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AppLocalizations.of(context)!.loanAddedObject,
-                                );
-                              }
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                updatedItemMsg,
+                              );
                             } else {
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  AppLocalizations.of(context)!.loanUpdatingError,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  AppLocalizations.of(context)!.loanAddingError,
-                                );
-                              }
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                updatedItemErrorMsg,
+                              );
                             }
                           });
                         } else {
                           displayToast(
                             context,
                             TypeMsg.error,
-                            AppLocalizations.of(context)!.loanIncorrectOrMissingFields,
+                            AppLocalizations.of(
+                              context,
+                            )!.loanIncorrectOrMissingFields,
                           );
                         }
                       },
                       child: Text(
-                        isEdit ? AppLocalizations.of(context)!.loanEdit : AppLocalizations.of(context)!.loanAdd,
+                        isEdit
+                            ? AppLocalizations.of(context)!.loanEdit
+                            : AppLocalizations.of(context)!.loanAdd,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 25,

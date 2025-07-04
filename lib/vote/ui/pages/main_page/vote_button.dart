@@ -107,7 +107,8 @@ class VoteButton extends HookConsumerWidget {
           child: Center(
             child: Text(
               selectedContender.id != ""
-                  ? AppLocalizations.of(context)!.voteVoteFor + selectedContender.name
+                  ? AppLocalizations.of(context)!.voteVoteFor +
+                        selectedContender.name
                   : alreadyVotedSection.contains(section.id)
                   ? AppLocalizations.of(context)!.voteAlreadyVoted
                   : s == Status.open

@@ -110,7 +110,9 @@ class SearchUser extends HookConsumerWidget {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) => CustomDialogBox(
-                        descriptions: AppLocalizations.of(context)!.adminRemoveGroupMember,
+                        descriptions: AppLocalizations.of(
+                          context,
+                        )!.adminRemoveGroupMember,
                         title: AppLocalizations.of(context)!.adminDeleting,
                         onYes: () async {
                           await tokenExpireWrapper(ref, () async {
@@ -135,7 +137,9 @@ class SearchUser extends HookConsumerWidget {
                             } else {
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                AppLocalizations.of(context)!.adminUpdatingError,
+                                AppLocalizations.of(
+                                  context,
+                                )!.adminUpdatingError,
                               );
                             }
                           });

@@ -79,7 +79,9 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                     FormField<File>(
                       validator: (e) {
                         if (poster.value == null && !isEdit) {
-                          return AppLocalizations.of(context)!.advertChoosingPoster;
+                          return AppLocalizations.of(
+                            context,
+                          )!.advertChoosingPoster;
                         }
                         return null;
                       },
@@ -176,7 +178,9 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
               FormField<List<Announcer>>(
                 validator: (e) {
                   if (selectedAnnouncers.isEmpty) {
-                    return AppLocalizations.of(context)!.advertChoosingAnnouncer;
+                    return AppLocalizations.of(
+                      context,
+                    )!.advertChoosingAnnouncer;
                   }
                   return null;
                 },
@@ -241,7 +245,9 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                               if (isEdit) {
                                 displayAdvertToastWithContext(
                                   TypeMsg.msg,
-                                  AppLocalizations.of(context)!.advertEditedAdvert,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.advertEditedAdvert,
                                 );
                                 advertList.maybeWhen(
                                   data: (list) {
@@ -257,7 +263,9 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                               } else {
                                 displayAdvertToastWithContext(
                                   TypeMsg.msg,
-                                  AppLocalizations.of(context)!.advertAddedAdvert,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.advertAddedAdvert,
                                 );
                                 advertList.maybeWhen(
                                   data: (list) {
@@ -273,7 +281,9 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                             } else {
                               displayAdvertToastWithContext(
                                 TypeMsg.error,
-                                AppLocalizations.of(context)!.advertEditingError,
+                                AppLocalizations.of(
+                                  context,
+                                )!.advertEditingError,
                               );
                             }
                           });
@@ -281,7 +291,9 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                           displayToast(
                             context,
                             TypeMsg.error,
-                            AppLocalizations.of(context)!.advertIncorrectOrMissingFields,
+                            AppLocalizations.of(
+                              context,
+                            )!.advertIncorrectOrMissingFields,
                           );
                         }
                       },

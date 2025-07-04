@@ -27,7 +27,10 @@ class CopiabledText extends StatelessWidget {
       style: style,
       onTap: () {
         Clipboard.setData(ClipboardData(text: data));
-        displayToastWithContext(TypeMsg.msg, AppLocalizations.of(context)!.phonebookCopied);
+        displayToastWithContext(
+          TypeMsg.msg,
+          AppLocalizations.of(context)!.phonebookCopied,
+        );
       },
     );
   }

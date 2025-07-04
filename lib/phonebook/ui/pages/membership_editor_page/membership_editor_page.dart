@@ -233,7 +233,9 @@ class MembershipEditorPage extends HookConsumerWidget {
                           .isNotEmpty) {
                         displayToastWithContext(
                           TypeMsg.msg,
-                          AppLocalizations.of(context)!.phonebookExistingMembership,
+                          AppLocalizations.of(
+                            context,
+                          )!.phonebookExistingMembership,
                         );
                         return;
                       }

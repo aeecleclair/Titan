@@ -110,7 +110,9 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                   child: child,
                 ),
                 child: Text(
-                  !isEdit ? AppLocalizations.of(context)!.adminAdd : AppLocalizations.of(context)!.adminEdit,
+                  !isEdit
+                      ? AppLocalizations.of(context)!.adminAdd
+                      : AppLocalizations.of(context)!.adminEdit,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -164,7 +166,9 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                       } else {
                         displayToastWithContext(
                           TypeMsg.error,
-                          AppLocalizations.of(context)!.adminMembershipUpdatingError,
+                          AppLocalizations.of(
+                            context,
+                          )!.adminMembershipUpdatingError,
                         );
                       }
                     } else {
@@ -188,7 +192,9 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                       } else {
                         displayToastWithContext(
                           TypeMsg.error,
-                          AppLocalizations.of(context)!.adminMembershipAddingError,
+                          AppLocalizations.of(
+                            context,
+                          )!.adminMembershipAddingError,
                         );
                       }
                     }

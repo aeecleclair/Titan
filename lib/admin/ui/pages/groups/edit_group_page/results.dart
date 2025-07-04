@@ -64,12 +64,16 @@ class MemberResults extends HookConsumerWidget {
                                     );
                                     displayToastWithContext(
                                       TypeMsg.msg,
-                                      AppLocalizations.of(context)!.adminAddedMember,
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.adminAddedMember,
                                     );
                                   } else {
                                     displayToastWithContext(
                                       TypeMsg.error,
-                                      AppLocalizations.of(context)!.adminAddingError,
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.adminAddingError,
                                     );
                                   }
                                 });

@@ -1,4 +1,3 @@
-
 class School {
   School({required this.name, required this.id, required this.emailRegex});
   late final String name;

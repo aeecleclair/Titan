@@ -120,7 +120,9 @@ class ListBooking extends HookConsumerWidget {
                       builder: (context) {
                         return CustomDialogBox(
                           title: AppLocalizations.of(context)!.bookingConfirm,
-                          descriptions: AppLocalizations.of(context)!.bookingConfirmBooking,
+                          descriptions: AppLocalizations.of(
+                            context,
+                          )!.bookingConfirmBooking,
                           onYes: () async {
                             await tokenExpireWrapper(ref, () async {
                               Booking newBooking = e.copyWith(
@@ -157,7 +159,9 @@ class ListBooking extends HookConsumerWidget {
                       builder: (context) {
                         return CustomDialogBox(
                           title: AppLocalizations.of(context)!.bookingDecline,
-                          descriptions: AppLocalizations.of(context)!.bookingDeclineBooking,
+                          descriptions: AppLocalizations.of(
+                            context,
+                          )!.bookingDeclineBooking,
                           onYes: () async {
                             await tokenExpireWrapper(ref, () async {
                               Booking newBooking = e.copyWith(

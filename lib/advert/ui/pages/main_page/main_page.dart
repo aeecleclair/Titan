@@ -72,7 +72,9 @@ class AdvertMainPage extends HookConsumerWidget {
                                     AdvertRouter.addRemAnnouncer,
                               );
                             },
-                            text: AppLocalizations.of(context)!.advertManagement,
+                            text: AppLocalizations.of(
+                              context,
+                            )!.advertManagement,
                           ),
                       ],
                     ),

@@ -83,7 +83,9 @@ class AddEditSessionPage extends HookConsumerWidget {
                   controller: tmdbUrl,
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.cinemaImportFromTMDB,
+                    labelText: AppLocalizations.of(
+                      context,
+                    )!.cinemaImportFromTMDB,
                     labelStyle: const TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -183,7 +185,10 @@ class AddEditSessionPage extends HookConsumerWidget {
                             )
                     : Image.memory(logo.value!, fit: BoxFit.cover),
                 const SizedBox(height: 30),
-                TextEntry(label: AppLocalizations.of(context)!.cinemaName, controller: name),
+                TextEntry(
+                  label: AppLocalizations.of(context)!.cinemaName,
+                  controller: name,
+                ),
                 const SizedBox(height: 30),
                 TextEntry(
                   label: AppLocalizations.of(context)!.cinemaPosterUrl,
@@ -323,12 +328,16 @@ class AddEditSessionPage extends HookConsumerWidget {
                       displayToast(
                         context,
                         TypeMsg.error,
-                        AppLocalizations.of(context)!.cinemaIncorrectOrMissingFields,
+                        AppLocalizations.of(
+                          context,
+                        )!.cinemaIncorrectOrMissingFields,
                       );
                     }
                   },
                   child: Text(
-                    isEdit ? AppLocalizations.of(context)!.cinemaEdit : AppLocalizations.of(context)!.cinemaAdd,
+                    isEdit
+                        ? AppLocalizations.of(context)!.cinemaEdit
+                        : AppLocalizations.of(context)!.cinemaAdd,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 25,

@@ -36,7 +36,11 @@ class QuitDialog extends HookConsumerWidget {
                 ref.watch(firebaseTokenExpirationProvider.notifier).reset();
               }
               isCachingNotifier.set(false);
-              displayToast(context, TypeMsg.msg, AppLocalizations.of(context)!.drawerLogOut);
+              displayToast(
+                context,
+                TypeMsg.msg,
+                AppLocalizations.of(context)!.drawerLogOut,
+              );
               displayQuitNotifier.setDisplay(false);
             },
             onNo: () {

@@ -91,7 +91,9 @@ class SectionContenderItems extends HookConsumerWidget {
               builder: (context) {
                 return CustomDialogBox(
                   title: AppLocalizations.of(context)!.voteDeletePretendance,
-                  descriptions: AppLocalizations.of(context)!.voteDeletePretendanceDesc,
+                  descriptions: AppLocalizations.of(
+                    context,
+                  )!.voteDeletePretendanceDesc,
                   onYes: () {
                     tokenExpireWrapper(ref, () async {
                       final value = await contenderListNotifier.deleteContender(
@@ -108,7 +110,9 @@ class SectionContenderItems extends HookConsumerWidget {
                       } else {
                         displayVoteToastWithContext(
                           TypeMsg.error,
-                          AppLocalizations.of(context)!.votePretendanceNotDeleted,
+                          AppLocalizations.of(
+                            context,
+                          )!.votePretendanceNotDeleted,
                         );
                       }
                     });

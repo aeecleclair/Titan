@@ -121,7 +121,9 @@ class AdvertAdminPage extends HookConsumerWidget {
                         builder: (context) {
                           return CustomDialogBox(
                             title: AppLocalizations.of(context)!.advertDeleting,
-                            descriptions: AppLocalizations.of(context)!.advertDeleteAdvert,
+                            descriptions: AppLocalizations.of(
+                              context,
+                            )!.advertDeleteAdvert,
                             onYes: () {
                               advertListNotifier.deleteAdvert(advert);
                               advertPostersNotifier.deleteE(advert.id, 0);

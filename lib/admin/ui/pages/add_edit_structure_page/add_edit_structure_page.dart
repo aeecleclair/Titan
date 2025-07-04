@@ -67,7 +67,10 @@ class AddEditStructurePage extends HookConsumerWidget {
                       : AppLocalizations.of(context)!.adminAddStructure,
                 ),
                 const SizedBox(height: 20),
-                TextEditing(controller: name, label: AppLocalizations.of(context)!.adminName),
+                TextEditing(
+                  controller: name,
+                  label: AppLocalizations.of(context)!.adminName,
+                ),
                 AsyncChild(
                   value: allAssociationMembershipList,
                   builder: (context, allAssociationMembershipList) {
@@ -163,8 +166,12 @@ class AddEditStructurePage extends HookConsumerWidget {
                           displayToastWithContext(
                             TypeMsg.msg,
                             isEdit
-                                ? AppLocalizations.of(context)!.adminEditedStructure
-                                : AppLocalizations.of(context)!.adminAddedStructure,
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.adminEditedStructure
+                                : AppLocalizations.of(
+                                    context,
+                                  )!.adminAddedStructure,
                           );
                         } else {
                           displayToastWithContext(
@@ -177,7 +184,9 @@ class AddEditStructurePage extends HookConsumerWidget {
                   },
                   builder: (child) => AdminButton(child: child),
                   child: Text(
-                    isEdit ? AppLocalizations.of(context)!.adminEdit : AppLocalizations.of(context)!.adminAdd,
+                    isEdit
+                        ? AppLocalizations.of(context)!.adminEdit
+                        : AppLocalizations.of(context)!.adminAdd,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

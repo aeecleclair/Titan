@@ -61,7 +61,9 @@ class AdminPage extends HookConsumerWidget {
                       builder: (context) {
                         return CustomDialogBox(
                           title: AppLocalizations.of(context)!.cinemaDeleting,
-                          descriptions: AppLocalizations.of(context)!.cinemaDeleteSession,
+                          descriptions: AppLocalizations.of(
+                            context,
+                          )!.cinemaDeleteSession,
                           onYes: () {
                             sessionListNotifier.deleteSession(session);
                           },

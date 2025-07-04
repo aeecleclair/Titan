@@ -143,7 +143,9 @@ class OnGoingLoan extends HookConsumerWidget {
                             } else {
                               displayToastWithContext(
                                 TypeMsg.error,
-                                AppLocalizations.of(context)!.loanExtendingError,
+                                AppLocalizations.of(
+                                  context,
+                                )!.loanExtendingError,
                               );
                             }
                           });
@@ -157,7 +159,9 @@ class OnGoingLoan extends HookConsumerWidget {
                     context: context,
                     builder: (context) => CustomDialogBox(
                       title: AppLocalizations.of(context)!.loanReturnLoan,
-                      descriptions: AppLocalizations.of(context)!.loanReturnLoanDescription,
+                      descriptions: AppLocalizations.of(
+                        context,
+                      )!.loanReturnLoanDescription,
                       onYes: () async {
                         await tokenExpireWrapper(ref, () async {
                           final loanItemsId = e.itemsQuantity
