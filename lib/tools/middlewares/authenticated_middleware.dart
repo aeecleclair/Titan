@@ -5,7 +5,6 @@ import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/feed/router.dart';
 import 'package:titan/login/router.dart';
 import 'package:titan/router.dart';
-import 'package:titan/settings/providers/module_list_provider.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/version/providers/titan_version_provider.dart';
 import 'package:titan/version/providers/version_verifier_provider.dart';
@@ -22,7 +21,6 @@ class AuthenticatedMiddleware extends QMiddleware {
     final versionVerifier = ref.watch(versionVerifierProvider);
     final titanVersion = ref.watch(titanVersionProvider);
     final isLoggedIn = ref.watch(isLoggedInProvider);
-    final modules = ref.read(modulesProvider);
     final check = versionVerifier.whenData(
       (value) => value.minimalTitanVersion <= titanVersion,
     );
@@ -31,7 +29,6 @@ class AuthenticatedMiddleware extends QMiddleware {
         path != "/") {
       pathForwardingNotifier.forward(path);
     }
-    print("Redirecting to ${pathForwardingNotifier.state}");
     return check.when(
       data: (value) {
         if (!value) {

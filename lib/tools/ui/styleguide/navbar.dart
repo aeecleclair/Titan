@@ -102,7 +102,7 @@ class FloatingNavbar extends HookConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Material(
         elevation: 10,
-        shadowColor: ColorConstants.main.withOpacity(0.2),
+        shadowColor: ColorConstants.main.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(borderRadius),
         color: ColorConstants.main,
         child: Container(
