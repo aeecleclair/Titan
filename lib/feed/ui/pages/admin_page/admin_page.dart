@@ -19,12 +19,13 @@ class AdminPage extends HookConsumerWidget {
     // Controllers for Post form
     final postTitleController = useTextEditingController();
     final postDescriptionController = useTextEditingController();
+    final postStartDateController = useTextEditingController();
 
     // Controllers for Event form
     final eventTitleController = useTextEditingController();
     final eventDescriptionController = useTextEditingController();
     final eventLocationController = useTextEditingController();
-    final eventPlacesController = useTextEditingController();
+    final shotgunDateController = useTextEditingController();
     final eventExternalLinkController = useTextEditingController();
 
     // Selected date state for event
@@ -76,6 +77,7 @@ class AdminPage extends HookConsumerWidget {
                     child: PostForm(
                       titleController: postTitleController,
                       descriptionController: postDescriptionController,
+                      startDateController: postStartDateController,
                     ),
                   ),
 
@@ -88,7 +90,7 @@ class AdminPage extends HookConsumerWidget {
                       startDateController: eventStartDateController,
                       endDateController: eventEndDateController,
                       locationController: eventLocationController,
-                      placesController: eventPlacesController,
+                      shotgunDateController: shotgunDateController,
                       externalLinkController: eventExternalLinkController,
                     ),
                   ),

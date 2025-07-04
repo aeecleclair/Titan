@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
+import 'package:titan/tools/ui/styleguide/image_entry.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';
-import 'package:titan/tools/ui/widgets/date_entry.dart';
+import 'package:titan/tools/ui/styleguide/date_entry.dart';
 
 class EventForm extends StatelessWidget {
   final TextEditingController titleController;
@@ -9,7 +10,7 @@ class EventForm extends StatelessWidget {
   final TextEditingController startDateController;
   final TextEditingController endDateController;
   final TextEditingController locationController;
-  final TextEditingController placesController;
+  final TextEditingController shotgunDateController;
   final TextEditingController externalLinkController;
 
   const EventForm({
@@ -19,20 +20,18 @@ class EventForm extends StatelessWidget {
     required this.startDateController,
     required this.endDateController,
     required this.locationController,
-    required this.placesController,
+    required this.shotgunDateController,
     required this.externalLinkController,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      // Add padding at the bottom for the navbar
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
       child: Column(
         key: const ValueKey('event_form'),
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Event Form - Event with more details including dates
           TextEntry(label: "Titre", controller: titleController),
           const SizedBox(height: 20),
           TextEntry(
@@ -56,25 +55,20 @@ class EventForm extends StatelessWidget {
                 startDateController.text = formattedDate;
               }
             },
-            controller: startDateController,
-            label: "Date de début",
+            title: "Date de début",
+            subtitle: "Sélectionnez une date",
           ),
           const SizedBox(height: 20),
           DateEntry(
             onTap: () async {
-              // Parse start date if available
               DateTime startDate = DateTime.now();
               if (startDateController.text.isNotEmpty) {
-                try {
-                  final parts = startDateController.text.split('/');
-                  startDate = DateTime(
-                    int.parse(parts[2]), // year
-                    int.parse(parts[1]), // month
-                    int.parse(parts[0]), // day
-                  );
-                } catch (e) {
-                  // Use current date as fallback
-                }
+                final parts = startDateController.text.split('/');
+                startDate = DateTime(
+                  int.parse(parts[2]),
+                  int.parse(parts[1]),
+                  int.parse(parts[0]),
+                );
               }
 
               final pickedDate = await showDatePicker(
@@ -89,29 +83,50 @@ class EventForm extends StatelessWidget {
                 endDateController.text = formattedDate;
               }
             },
-            controller: endDateController,
-            label: "Date de fin",
+            title: "Date de fin",
+            subtitle: "Sélectionnez une date",
           ),
           const SizedBox(height: 20),
           TextEntry(label: "Lieu", controller: locationController),
           const SizedBox(height: 20),
-          TextEntry(
-            label: "Nombre de places",
-            controller: placesController,
-            keyboardType: TextInputType.number,
-            isInt: true,
+          DateEntry(
+            onTap: () async {
+              final pickedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime.now(),
+                lastDate: DateTime.now().add(const Duration(days: 365)),
+              );
+              if (pickedDate != null) {
+                final formattedDate =
+                    "${pickedDate.day.toString().padLeft(2, '0')}/${pickedDate.month.toString().padLeft(2, '0')}/${pickedDate.year}";
+                shotgunDateController.text = formattedDate;
+              }
+            },
+            title: "Date et heure du SG",
+            subtitle: "Sélectionnez une date",
           ),
           const SizedBox(height: 20),
           TextEntry(
-            label: "Lien externe",
+            label: "Lien externe pour le SG",
             controller: externalLinkController,
             canBeEmpty: true,
+          ),
+          const SizedBox(height: 20),
+          ImageEntry(
+            title: "Image",
+            subtitle: "Sélectionnez une image",
+            onTap: () {
+              // Logic to add an image
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text('Image ajoutée')));
+            },
           ),
           const SizedBox(height: 40),
           Button(
             text: "Créer l'événement",
             onPressed: () {
-              // Validate required fields
               if (titleController.text.isEmpty ||
                   descriptionController.text.isEmpty ||
                   startDateController.text.isEmpty ||
@@ -126,14 +141,11 @@ class EventForm extends StatelessWidget {
                 );
                 return;
               }
-
-              // TODO: Implement event submission
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Événement créé avec succès')),
               );
             },
           ),
-          // Add extra bottom padding for navbar
           const SizedBox(height: 80),
         ],
       ),

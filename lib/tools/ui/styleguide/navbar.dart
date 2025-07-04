@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
@@ -12,17 +11,6 @@ class FloatingNavbarItem {
   final Module module;
 
   FloatingNavbarItem({this.onTap, required this.module});
-}
-
-String getCurrentPath() {
-  if (QR.history.isEmpty) return '';
-
-  String currentPath = QR.history.last.path;
-  final parts = currentPath.split('/');
-  if (parts.length > 1 && parts[1].isNotEmpty) {
-    return '/${parts[1]}';
-  }
-  return '';
 }
 
 class FloatingNavbar extends HookConsumerWidget {
@@ -39,8 +27,13 @@ class FloatingNavbar extends HookConsumerWidget {
 
     useEffect(() {
       if (currentPath.isNotEmpty) {
+        String currentPathRoot = "/";
+        final parts = currentPath.split('/');
+        if (parts.length > 1 && parts[1].isNotEmpty) {
+          currentPathRoot = '/${parts[1]}';
+        }
         routeIndex.value = items.indexWhere(
-          (item) => item.module.root == currentPath,
+          (item) => item.module.root == currentPathRoot,
         );
         if (routeIndex.value < 0 || routeIndex.value >= items.length) {
           routeIndex.value = 3;
