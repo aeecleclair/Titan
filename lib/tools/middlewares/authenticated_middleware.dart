@@ -50,6 +50,7 @@ class AuthenticatedMiddleware extends QMiddleware {
           return FeedRouter.root;
         }
         if (pathForwardingNotifier.state.path != path) {
+          pathForwardingNotifier.forward(path);
           return pathForwardingNotifier.state.path;
         }
         return null;
