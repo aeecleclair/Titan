@@ -2,6 +2,7 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/feed/router.dart';
 import 'package:titan/login/router.dart';
 import 'package:titan/router.dart';
 import 'package:titan/settings/providers/module_list_provider.dart';
@@ -48,11 +49,8 @@ class AuthenticatedMiddleware extends QMiddleware {
           pathForwardingNotifier.login();
         }
         if (pathForwardingNotifier.state.path == "/") {
-          if (modules.isEmpty) {
-            return AppRouter.noModule;
-          }
-          pathForwardingNotifier.forward(modules.first.root);
-          return modules.first.root;
+          pathForwardingNotifier.forward(FeedRouter.root);
+          return FeedRouter.root;
         }
         if (pathForwardingNotifier.state.path != path) {
           return pathForwardingNotifier.state.path;

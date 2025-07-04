@@ -20,8 +20,8 @@ import 'package:titan/purchases/router.dart';
 import 'package:titan/raffle/router.dart';
 import 'package:titan/recommendation/router.dart';
 import 'package:titan/seed-library/router.dart';
-import 'package:titan/settings/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:titan/settings/router.dart';
 import 'package:titan/vote/router.dart';
 
 final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((

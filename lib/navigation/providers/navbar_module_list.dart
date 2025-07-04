@@ -3,10 +3,10 @@ import 'package:titan/navigation/class/module.dart';
 import 'package:titan/settings/providers/module_list_provider.dart';
 
 class ModuleListNotifier extends StateNotifier<List<Module>> {
-  final int maxNumberOfModules = 3;
+  final int maxNumberOfModules = 2;
   ModuleListNotifier(List<Module> modules)
     : listModule = List.from(modules),
-      super(modules.take(3).toList());
+      super(modules.take(2).toList());
 
   final List<Module> listModule;
 
