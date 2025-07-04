@@ -61,7 +61,7 @@ class TimelineItem extends StatelessWidget {
               ),
             ],
           ),
-          if (item.needsRegistration)
+          if (item.type != FeedItemType.announcement)
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Row(
@@ -81,7 +81,21 @@ class TimelineItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Expanded(child: EventAction()),
+                  Expanded(
+                    child: EventAction(
+                      title: item.type == FeedItemType.action
+                          ? 'Tu peux voter'
+                          : 'Tu es invité',
+                      subtitle: item.type == FeedItemType.action
+                          ? '254 votants'
+                          : '75 participants',
+                      onActionPressed: item.onRegister,
+                      actionButtonText: item.type == FeedItemType.action
+                          ? 'Participer'
+                          : 'Voter',
+                      isActionEnabled: true,
+                    ),
+                  ),
                 ],
               ),
             ),

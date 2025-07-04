@@ -40,7 +40,7 @@ class FeedMainPage extends HookConsumerWidget {
 
             // // Timeline
             SizedBox(
-              height: MediaQuery.of(context).size.height - 190,
+              height: MediaQuery.of(context).size.height - 193,
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: FeedTimeline(

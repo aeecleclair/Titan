@@ -21,7 +21,7 @@ class EventCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 50),
+                SizedBox(height: 70),
                 Text(
                   item.title,
                   style: const TextStyle(
@@ -42,19 +42,13 @@ class EventCard extends StatelessWidget {
           ),
           if (item.isTerminated)
             Positioned(
-              top: 0,
-              right: 0,
+              bottom: 53,
+              left: 15,
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 5,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
                 decoration: const BoxDecoration(
                   color: ColorConstants.main,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(15),
-                    bottomLeft: Radius.circular(15),
-                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
                 child: const Text(
                   'Terminé',
@@ -62,6 +56,22 @@ class EventCard extends StatelessWidget {
                     color: ColorConstants.background,
                     fontSize: 10,
                   ),
+                ),
+              ),
+            ),
+          if (item.isOngoing)
+            Positioned(
+              bottom: 53,
+              left: 15,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                decoration: const BoxDecoration(
+                  color: ColorConstants.background,
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
+                child: const Text(
+                  'En cours',
+                  style: TextStyle(color: ColorConstants.main, fontSize: 10),
                 ),
               ),
             ),

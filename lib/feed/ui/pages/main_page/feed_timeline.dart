@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:titan/feed/class/feed_item.dart';
 import 'package:titan/feed/ui/pages/main_page/time_line_item.dart';
-import 'package:titan/tools/ui/widgets/dotted_vertical_line.dart';
 
 class FeedTimeline extends StatelessWidget {
   final List<FeedItem> items;

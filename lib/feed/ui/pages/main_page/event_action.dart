@@ -1,27 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:titan/tools/constants.dart';
 
-/// A widget that displays event actions such as
-/// invitation status and registration button.
 class EventAction extends StatelessWidget {
-  /// The text to display for the invitation status.
-  final String invitationText;
-
-  /// The number of participants (null if not applicable).
-  final int? participantsCount;
-
-  /// Callback when the action button is pressed.
+  final String title, subtitle, actionButtonText;
   final VoidCallback? onActionPressed;
-
-  /// Text to display on the action button.
-  final String actionButtonText;
+  final bool isActionEnabled;
 
   const EventAction({
     super.key,
-    this.invitationText = 'Tu es invité',
-    this.participantsCount,
+    required this.title,
+    required this.subtitle,
     this.onActionPressed,
-    this.actionButtonText = 'Prendre ma place',
+    required this.actionButtonText,
+    required this.isActionEnabled,
   });
 
   @override
@@ -29,23 +20,22 @@ class EventAction extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Invitation text with participant count
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              invitationText,
+              title,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 13,
                 fontWeight: FontWeight.bold,
-                color: ColorConstants.tertiary,
+                color: ColorConstants.onTertiary,
               ),
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              '$participantsCount participants',
+              subtitle,
               style: const TextStyle(
-                fontSize: 10,
+                fontSize: 11,
                 color: ColorConstants.secondary,
               ),
               overflow: TextOverflow.ellipsis,
@@ -57,18 +47,29 @@ class EventAction extends StatelessWidget {
 
         // Action button
         GestureDetector(
-          onTap: onActionPressed,
+          onTap: () {
+            if (isActionEnabled) onActionPressed!.call();
+          },
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            width: 100,
             decoration: BoxDecoration(
-              color: ColorConstants.tertiary,
+              color: isActionEnabled
+                  ? ColorConstants.background
+                  : ColorConstants.tertiary,
               borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: ColorConstants.tertiary, width: 2),
             ),
-            child: Text(
-              actionButtonText,
-              style: const TextStyle(
-                fontSize: 12,
-                color: ColorConstants.background,
+            child: Center(
+              child: Text(
+                actionButtonText,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: isActionEnabled
+                      ? ColorConstants.tertiary
+                      : ColorConstants.background,
+                ),
               ),
             ),
           ),

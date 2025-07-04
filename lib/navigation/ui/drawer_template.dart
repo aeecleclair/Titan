@@ -62,12 +62,7 @@ class DrawerTemplate extends HookConsumerWidget {
                   ),
                 ),
                 SizedBox(height: 10),
-                Expanded(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Container(color: Colors.yellow, child: child),
-                  ),
-                ),
+                Expanded(child: child),
               ],
             ),
             Positioned(
