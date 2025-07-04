@@ -61,7 +61,9 @@ class MyApp extends HookConsumerWidget {
     final plausible = getPlausible();
     final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     Future(() => animationNotifier.setController(animationController));
-    Future(() => navbarAnimationNotifier.setController(navbarAnimationController));
+    Future(
+      () => navbarAnimationNotifier.setController(navbarAnimationController),
+    );
 
     if (!kIsWeb) {
       useEffect(() {

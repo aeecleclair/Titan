@@ -31,8 +31,7 @@ class NavbarAnimationProvider extends StateNotifier<AnimationController?> {
   }
 }
 
-final navbarAnimationProvider = StateNotifierProvider<NavbarAnimationProvider, AnimationController?>((
-  ref,
-) {
-  return NavbarAnimationProvider();
-});
+final navbarAnimationProvider =
+    StateNotifierProvider<NavbarAnimationProvider, AnimationController?>((ref) {
+      return NavbarAnimationProvider();
+    });

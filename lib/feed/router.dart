@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/navigation/class/module.dart';
-import 'package:titan/feed/ui/pages/main_page/main_page.dart' deferred as main_page;
+import 'package:titan/feed/ui/pages/main_page/main_page.dart'
+    deferred as main_page;
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';

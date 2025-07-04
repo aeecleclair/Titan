@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum FeedItemType {
-  event,
-  action,
-  announcement,
-}
+enum FeedItemType { event, action, announcement }
 
 class FeedItem {
   final FeedItemType type;
