@@ -5,7 +5,10 @@ import 'package:titan/feed/class/feed_item.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/feed/ui/pages/main_page/feed_timeline.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/button.dart';
+import 'package:titan/tools/ui/styleguide/item_chip.dart';
 import 'package:titan/tools/ui/styleguide/searchbar.dart';
 
 class FeedMainPage extends HookConsumerWidget {
@@ -28,7 +31,39 @@ class FeedMainPage extends HookConsumerWidget {
                 await showCustomBottomModal(
                   modal: BottomModalTemplate(
                     title: 'Filtrer',
-                    child: Container(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Groupes d\'association'),
+                        SizedBox(height: 10),
+                        HorizontalListView(
+                          height: 50,
+                          children: [
+                            ItemChip(child: Text('Option 1')),
+                            ItemChip(child: Text('Option 2')),
+                            ItemChip(child: Text('Option 3')),
+                          ],
+                        ),
+                        SizedBox(height: 30),
+                        Text('Associations'),
+                        SizedBox(height: 10),
+                        HorizontalListView(
+                          height: 50,
+                          children: [
+                            ItemChip(child: Text('Association 1')),
+                            ItemChip(child: Text('Association 2')),
+                            ItemChip(child: Text('Association 3')),
+                          ],
+                        ),
+                        SizedBox(height: 40),
+                        Button(
+                          text: 'Appliquer',
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                   context: context,
                   ref: ref,

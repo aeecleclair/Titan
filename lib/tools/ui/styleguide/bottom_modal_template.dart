@@ -65,7 +65,7 @@ class BottomModalTemplate extends StatelessWidget {
                   : ColorConstants.main,
               borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
             ),
-            padding: EdgeInsets.all(50),
+            padding: EdgeInsets.all(20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -80,7 +80,7 @@ class BottomModalTemplate extends StatelessWidget {
                         : ColorConstants.background,
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 if (description != null)
                   Text(
                     description!,
