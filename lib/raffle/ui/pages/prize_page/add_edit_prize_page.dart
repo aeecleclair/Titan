@@ -100,42 +100,34 @@ class AddEditPrizePage extends HookConsumerWidget {
                             final prizeNotifier = ref.watch(
                               prizeListProvider.notifier,
                             );
+                            final editedTicket = isEdit
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.raffleEditedTicket
+                                : AppLocalizations.of(
+                                    context,
+                                  )!.raffleAddedTicket;
+                            final addingError = isEdit
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.raffleEditingError
+                                : AppLocalizations.of(
+                                    context,
+                                  )!.raffleAddingError;
                             final value = isEdit
                                 ? await prizeNotifier.updatePrize(newPrize)
                                 : await prizeNotifier.addPrize(newPrize);
                             if (value) {
                               QR.back();
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.raffleEditedTicket,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.raffleAddedTicket,
-                                );
-                              }
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                editedTicket,
+                              );
                             } else {
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.raffleEditingError,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.raffleAddingError,
-                                );
-                              }
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                addingError,
+                              );
                             }
                           });
                         } else {

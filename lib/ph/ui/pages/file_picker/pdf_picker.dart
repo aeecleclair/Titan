@@ -30,6 +30,7 @@ class PdfPicker extends HookConsumerWidget {
       height: 40,
       child: GestureDetector(
         onTap: () async {
+          final tooHeavyFileMsg = AppLocalizations.of(context)!.phToHeavyFile;
           final selectedFile = await FilePicker.platform.pickFiles(
             allowMultiple: false,
             type: FileType.custom,
@@ -46,10 +47,7 @@ class PdfPicker extends HookConsumerWidget {
             if (bytes.length < 10000000) {
               phSendPdfNotifier.set(bytes);
             } else {
-              displayToastWithContext(
-                TypeMsg.error,
-                AppLocalizations.of(context)!.phToHeavyFile,
-              );
+              displayToastWithContext(TypeMsg.error, tooHeavyFileMsg);
             }
           }
           if (isEdit) {

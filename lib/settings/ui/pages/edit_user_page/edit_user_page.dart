@@ -191,22 +191,26 @@ class EditUserPage extends HookConsumerWidget {
                             right: 60,
                             child: GestureDetector(
                               onTap: () async {
+                                final updatedProfilePictureMsg =
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.settingsUpdatedProfilePicture;
+                                final profilePictureErrorMsg =
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.settingsErrorProfilePicture;
                                 final value = await profilePictureNotifier
                                     .cropImage();
                                 if (value != null) {
                                   if (value) {
                                     displayToastWithContext(
                                       TypeMsg.msg,
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.settingsUpdatedProfilePicture,
+                                      updatedProfilePictureMsg,
                                     );
                                   } else {
                                     displayToastWithContext(
                                       TypeMsg.error,
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.settingsErrorProfilePicture,
+                                      profilePictureErrorMsg,
                                     );
                                   }
                                 }
@@ -374,6 +378,12 @@ class EditUserPage extends HookConsumerWidget {
                     child: child,
                   ),
                   onTap: () async {
+                    final settingsUpdatedProfileMsg = AppLocalizations.of(
+                      context,
+                    )!.settingsUpdatedProfile;
+                    final settingsUpdatingErrorMsg = AppLocalizations.of(
+                      context,
+                    )!.settingsUpdatingError;
                     await tokenExpireWrapper(ref, () async {
                       final value = await asyncUserNotifier.updateMe(
                         user.copyWith(
@@ -394,7 +404,7 @@ class EditUserPage extends HookConsumerWidget {
                       if (value) {
                         displayToastWithContext(
                           TypeMsg.msg,
-                          AppLocalizations.of(context)!.settingsUpdatedProfile,
+                          settingsUpdatedProfileMsg,
                         );
                         QR.removeNavigator(
                           SettingsRouter.root + SettingsRouter.editAccount,
@@ -402,7 +412,7 @@ class EditUserPage extends HookConsumerWidget {
                       } else {
                         displayToastWithContext(
                           TypeMsg.error,
-                          AppLocalizations.of(context)!.settingsUpdatingError,
+                          settingsUpdatingErrorMsg,
                         );
                       }
                     });

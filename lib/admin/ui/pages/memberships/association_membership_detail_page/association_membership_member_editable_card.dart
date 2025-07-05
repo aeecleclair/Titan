@@ -88,19 +88,19 @@ class MemberEditableCard extends HookConsumerWidget {
             deactivated: false,
             deletion: true,
             onDelete: () async {
+              final deletedMemberMsg = AppLocalizations.of(
+                context,
+              )!.phonebookDeletedMember;
+              final deleteMemberErrorMsg = AppLocalizations.of(
+                context,
+              )!.phonebookDeletingError;
               await tokenExpireWrapper(ref, () async {
                 final result = await associationMembershipMemberListNotifier
                     .deleteMember(associationMembership);
                 if (result) {
-                  displayToastWithContext(
-                    TypeMsg.msg,
-                    AppLocalizations.of(context)!.phonebookDeletedMember,
-                  );
+                  displayToastWithContext(TypeMsg.msg, deletedMemberMsg);
                 } else {
-                  displayToastWithContext(
-                    TypeMsg.error,
-                    AppLocalizations.of(context)!.phonebookDeletingError,
-                  );
+                  displayToastWithContext(TypeMsg.error, deleteMemberErrorMsg);
                 }
               });
             },

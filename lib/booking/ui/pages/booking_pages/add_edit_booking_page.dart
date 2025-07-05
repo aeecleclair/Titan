@@ -322,6 +322,18 @@ class AddEditBookingPage extends HookConsumerWidget {
                         if (key.currentState == null) {
                           return;
                         }
+                        final editedBookingMsg = AppLocalizations.of(
+                          context,
+                        )!.bookingEditedBooking;
+                        final addedBookingMsg = AppLocalizations.of(
+                          context,
+                        )!.bookingAddedBooking;
+                        final editionErrorMsg = AppLocalizations.of(
+                          context,
+                        )!.bookingEditionError;
+                        final addingErrorMsg = AppLocalizations.of(
+                          context,
+                        )!.bookingAddingError;
                         if (key.currentState!.validate()) {
                           if (allDay.value) {
                             start.text = "${start.text} 00:00";
@@ -454,32 +466,24 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 if (isEdit) {
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.bookingEditedBooking,
+                                    editedBookingMsg,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.bookingAddedBooking,
+                                    addedBookingMsg,
                                   );
                                 }
                               } else {
                                 if (isEdit) {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.bookingEditionError,
+                                    editionErrorMsg,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.bookingAddingError,
+                                    addingErrorMsg,
                                   );
                                 }
                               }

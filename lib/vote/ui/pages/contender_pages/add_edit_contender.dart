@@ -258,6 +258,10 @@ class AddEditContenderPage extends HookConsumerWidget {
                                       role.text == '') {
                                     return;
                                   }
+                                  final alreadyAddedMemberMsg =
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.voteAlreadyAddedMember;
                                   if (addMemberKey.currentState!.validate()) {
                                     final value = await membersNotifier
                                         .addMember(
@@ -273,9 +277,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                                     } else {
                                       displayVoteToastWithContext(
                                         TypeMsg.error,
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.voteAlreadyAddedMember,
+                                        alreadyAddedMemberMsg,
                                       );
                                     }
                                   }
@@ -369,6 +371,16 @@ class AddEditContenderPage extends HookConsumerWidget {
                           section: section.value,
                           program: program.text,
                         );
+                        final editedPretendanceMsg = isEdit
+                            ? AppLocalizations.of(
+                                context,
+                              )!.voteEditedPretendance
+                            : AppLocalizations.of(
+                                context,
+                              )!.voteAddedPretendance;
+                        final editingPretendanceErrorMsg = AppLocalizations.of(
+                          context,
+                        )!.voteEditingError;
                         final value = isEdit
                             ? await contenderListNotifier.updateContender(
                                 newContender,
@@ -378,13 +390,11 @@ class AddEditContenderPage extends HookConsumerWidget {
                               );
                         if (value) {
                           QR.back();
+                          displayVoteToastWithContext(
+                            TypeMsg.msg,
+                            editedPretendanceMsg,
+                          );
                           if (isEdit) {
-                            displayVoteToastWithContext(
-                              TypeMsg.msg,
-                              AppLocalizations.of(
-                                context,
-                              )!.voteEditedPretendance,
-                            );
                             contenderList.maybeWhen(
                               data: (list) {
                                 final logoBytes = logo.value;
@@ -402,12 +412,6 @@ class AddEditContenderPage extends HookConsumerWidget {
                               orElse: () {},
                             );
                           } else {
-                            displayVoteToastWithContext(
-                              TypeMsg.msg,
-                              AppLocalizations.of(
-                                context,
-                              )!.voteAddedPretendance,
-                            );
                             contenderList.maybeWhen(
                               data: (list) {
                                 final newContender = list.last;
@@ -434,7 +438,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                         } else {
                           displayVoteToastWithContext(
                             TypeMsg.error,
-                            AppLocalizations.of(context)!.voteEditingError,
+                            editingPretendanceErrorMsg,
                           );
                         }
                       });

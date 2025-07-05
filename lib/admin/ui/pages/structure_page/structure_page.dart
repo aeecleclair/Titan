@@ -120,22 +120,26 @@ class StructurePage extends HookConsumerWidget {
                                         context,
                                       )!.adminDeleteGroup,
                                       onYes: () async {
+                                        final deletedGroupMsg =
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.adminDeletedGroup;
+                                        final deletingErrorMsg =
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.adminDeletingError;
                                         tokenExpireWrapper(ref, () async {
                                           final value = await structuresNotifier
                                               .deleteStructure(structure);
                                           if (value) {
                                             displayToastWithContext(
                                               TypeMsg.msg,
-                                              AppLocalizations.of(
-                                                context,
-                                              )!.adminDeletedGroup,
+                                              deletedGroupMsg,
                                             );
                                           } else {
                                             displayToastWithContext(
                                               TypeMsg.error,
-                                              AppLocalizations.of(
-                                                context,
-                                              )!.adminDeletingError,
+                                              deletingErrorMsg,
                                             );
                                           }
                                         });

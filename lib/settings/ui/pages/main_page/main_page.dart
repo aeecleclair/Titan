@@ -166,13 +166,13 @@ class SettingsMainPage extends HookConsumerWidget {
                   SettingsItem(
                     icon: HeroIcons.calendarDays,
                     onTap: () {
+                      final icalCopiedMsg = AppLocalizations.of(
+                        context,
+                      )!.settingsIcalCopied;
                       Clipboard.setData(
                         ClipboardData(text: "${Repository.host}calendar/ical"),
                       ).then((value) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AppLocalizations.of(context)!.settingsIcalCopied,
-                        );
+                        displayToastWithContext(TypeMsg.msg, icalCopiedMsg);
                       });
                     },
                     child: Text(
@@ -266,20 +266,22 @@ class SettingsMainPage extends HookConsumerWidget {
                               context,
                             )!.settingsDetelePersonalDataDesc,
                             onYes: () async {
+                              final sendedDemandMsg = AppLocalizations.of(
+                                context,
+                              )!.settingsSendedDemand;
+                              final errorSendingDemandMsg = AppLocalizations.of(
+                                context,
+                              )!.settingsErrorSendingDemand;
                               final value = await meNotifier.deletePersonal();
                               if (value) {
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.settingsSendedDemand,
+                                  sendedDemandMsg,
                                 );
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.settingsErrorSendingDemand,
+                                  errorSendingDemandMsg,
                                 );
                               }
                             },

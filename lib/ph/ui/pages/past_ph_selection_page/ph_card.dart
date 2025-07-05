@@ -54,6 +54,9 @@ class PhCard extends HookConsumerWidget {
               right: 5,
               child: GestureDetector(
                 onTap: () async {
+                  final successDownloadingMsg = AppLocalizations.of(
+                    context,
+                  )!.phSuccesDowloading;
                   late final Uint8List pdfBytes;
 
                   try {
@@ -80,7 +83,7 @@ class PhCard extends HookConsumerWidget {
                   if (path != null) {
                     displayPhToastWithContext(
                       TypeMsg.msg,
-                      AppLocalizations.of(context)!.phSuccesDowloading,
+                      successDownloadingMsg,
                     );
                   }
                 },

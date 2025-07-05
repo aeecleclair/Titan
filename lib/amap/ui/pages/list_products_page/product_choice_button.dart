@@ -79,6 +79,18 @@ class ProductChoiceButton extends HookConsumerWidget {
                     lastAmount: order.amount,
                   );
                   await tokenExpireWrapper(ref, () async {
+                    final updatedOrderMsg = AppLocalizations.of(
+                      context,
+                    )!.amapUpdatedOrder;
+                    final addedOrderMsg = AppLocalizations.of(
+                      context,
+                    )!.amapAddedOrder;
+                    final updatingErrorMsg = AppLocalizations.of(
+                      context,
+                    )!.amapUpdatingError;
+                    final addingErrorMsg = AppLocalizations.of(
+                      context,
+                    )!.amapAddingError;
                     final value = isEdit
                         ? await orderListNotifier.updateOrder(newOrder)
                         : await orderListNotifier.addOrder(newOrder);
@@ -88,27 +100,18 @@ class ProductChoiceButton extends HookConsumerWidget {
                         order.lastAmount - order.amount,
                       );
                       if (isEdit) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AppLocalizations.of(context)!.amapUpdatedOrder,
-                        );
+                        displayToastWithContext(TypeMsg.msg, updatedOrderMsg);
                       } else {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AppLocalizations.of(context)!.amapAddedOrder,
-                        );
+                        displayToastWithContext(TypeMsg.msg, addedOrderMsg);
                       }
                     } else {
                       if (isEdit) {
                         displayToastWithContext(
                           TypeMsg.error,
-                          AppLocalizations.of(context)!.amapUpdatingError,
+                          updatingErrorMsg,
                         );
                       } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AppLocalizations.of(context)!.amapAddingError,
-                        );
+                        displayToastWithContext(TypeMsg.error, addingErrorMsg);
                       }
                     }
                   });

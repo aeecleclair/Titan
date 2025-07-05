@@ -95,6 +95,12 @@ class SectionContenderItems extends HookConsumerWidget {
                     context,
                   )!.voteDeletePretendanceDesc,
                   onYes: () {
+                    final pretendanceDeletedMsg = AppLocalizations.of(
+                      context,
+                    )!.votePretendanceDeleted;
+                    final pretendanceNotDeletedMsg = AppLocalizations.of(
+                      context,
+                    )!.votePretendanceNotDeleted;
                     tokenExpireWrapper(ref, () async {
                       final value = await contenderListNotifier.deleteContender(
                         e,
@@ -102,7 +108,7 @@ class SectionContenderItems extends HookConsumerWidget {
                       if (value) {
                         displayVoteToastWithContext(
                           TypeMsg.msg,
-                          AppLocalizations.of(context)!.votePretendanceDeleted,
+                          pretendanceDeletedMsg,
                         );
                         contenderListNotifier.copy().then((value) {
                           sectionContenderListNotifier.setTData(section, value);
@@ -110,9 +116,7 @@ class SectionContenderItems extends HookConsumerWidget {
                       } else {
                         displayVoteToastWithContext(
                           TypeMsg.error,
-                          AppLocalizations.of(
-                            context,
-                          )!.votePretendanceNotDeleted,
+                          pretendanceNotDeletedMsg,
                         );
                       }
                     });

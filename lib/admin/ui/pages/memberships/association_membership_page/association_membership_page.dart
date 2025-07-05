@@ -88,6 +88,14 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                     nameController: nameController,
                                     groupIdController: groupIdController,
                                     onYes: () async {
+                                      final createdAssociationMembershipMsg =
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.adminCreatedAssociationMembership;
+                                      final creationErrorMsg =
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.adminCreationError;
                                       tokenExpireWrapper(ref, () async {
                                         final value =
                                             await associationMembershipsNotifier
@@ -104,16 +112,12 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                         if (value) {
                                           displayToastWithContext(
                                             TypeMsg.msg,
-                                            AppLocalizations.of(
-                                              context,
-                                            )!.adminCreatedAssociationMembership,
+                                            createdAssociationMembershipMsg,
                                           );
                                         } else {
                                           displayToastWithContext(
                                             TypeMsg.error,
-                                            AppLocalizations.of(
-                                              context,
-                                            )!.adminCreationError,
+                                            creationErrorMsg,
                                           );
                                         }
                                       });
@@ -165,6 +169,14 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                       )!.adminDeleteAssociationMembership,
                                       onYes: () async {
                                         tokenExpireWrapper(ref, () async {
+                                          final deletedAssociationMembershipMsg =
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.adminDeletedAssociationMembership;
+                                          final deletingErrorMsg =
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.adminDeletingError;
                                           final value =
                                               await associationMembershipsNotifier
                                                   .deleteAssociationMembership(
@@ -173,16 +185,12 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                           if (value) {
                                             displayToastWithContext(
                                               TypeMsg.msg,
-                                              AppLocalizations.of(
-                                                context,
-                                              )!.adminDeletedAssociationMembership,
+                                              deletedAssociationMembershipMsg,
                                             );
                                           } else {
                                             displayToastWithContext(
                                               TypeMsg.error,
-                                              AppLocalizations.of(
-                                                context,
-                                              )!.adminDeletingError,
+                                              deletingErrorMsg,
                                             );
                                           }
                                         });

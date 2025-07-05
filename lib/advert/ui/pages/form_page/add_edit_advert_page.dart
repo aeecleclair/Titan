@@ -235,6 +235,15 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                               tags: textTagsController.text.split(', '),
                               title: title.text,
                             );
+                            final editedAdvertMsg = AppLocalizations.of(
+                              context,
+                            )!.advertEditedAdvert;
+                            final addedAdvertMsg = AppLocalizations.of(
+                              context,
+                            )!.advertAddedAdvert;
+                            final editingErrorMsg = AppLocalizations.of(
+                              context,
+                            )!.advertEditingError;
                             final value = isEdit
                                 ? await advertListNotifier.updateAdvert(
                                     newAdvert,
@@ -245,9 +254,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                               if (isEdit) {
                                 displayAdvertToastWithContext(
                                   TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.advertEditedAdvert,
+                                  editedAdvertMsg,
                                 );
                                 advertList.maybeWhen(
                                   data: (list) {
@@ -263,9 +270,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                               } else {
                                 displayAdvertToastWithContext(
                                   TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.advertAddedAdvert,
+                                  addedAdvertMsg,
                                 );
                                 advertList.maybeWhen(
                                   data: (list) {
@@ -281,9 +286,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                             } else {
                               displayAdvertToastWithContext(
                                 TypeMsg.error,
-                                AppLocalizations.of(
-                                  context,
-                                )!.advertEditingError,
+                                editingErrorMsg,
                               );
                             }
                           });

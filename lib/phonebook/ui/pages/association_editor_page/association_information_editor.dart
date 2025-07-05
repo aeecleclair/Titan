@@ -165,6 +165,12 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                 );
                                 return;
                               }
+                              final updatedAssociationMsg = AppLocalizations.of(
+                                context,
+                              )!.phonebookUpdatedAssociation;
+                              final updatingErrorMsg = AppLocalizations.of(
+                                context,
+                              )!.phonebookUpdatingError;
                               await tokenExpireWrapper(ref, () async {
                                 final value = await associationListNotifier
                                     .updateAssociation(
@@ -177,16 +183,12 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                 if (value) {
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.phonebookUpdatedAssociation,
+                                    updatedAssociationMsg,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.phonebookUpdatingError,
+                                    updatingErrorMsg,
                                   );
                                 }
                               });

@@ -79,6 +79,12 @@ class EditSchoolPage extends HookConsumerWidget {
                       if (!key.currentState!.validate()) {
                         return;
                       }
+                      final updatedGroupMsg = AppLocalizations.of(
+                        context,
+                      )!.adminUpdatedGroup;
+                      final updatingErrorMsg = AppLocalizations.of(
+                        context,
+                      )!.adminUpdatingError;
                       await tokenExpireWrapper(ref, () async {
                         School newSchool = school.copyWith(
                           name: name.text,
@@ -90,14 +96,11 @@ class EditSchoolPage extends HookConsumerWidget {
                         );
                         if (value) {
                           QR.back();
-                          displayToastWithContext(
-                            TypeMsg.msg,
-                            AppLocalizations.of(context)!.adminUpdatedGroup,
-                          );
+                          displayToastWithContext(TypeMsg.msg, updatedGroupMsg);
                         } else {
                           displayToastWithContext(
                             TypeMsg.msg,
-                            AppLocalizations.of(context)!.adminUpdatingError,
+                            updatingErrorMsg,
                           );
                         }
                       });

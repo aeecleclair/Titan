@@ -67,17 +67,23 @@ class SectionBar extends HookConsumerWidget {
                   context,
                 )!.voteDeleteSectionDescription,
                 onYes: () async {
+                  final deleteSectionSuccessMsg = AppLocalizations.of(
+                    context,
+                  )!.voteDeletedSection;
+                  final deleteSectionErrorMsg = AppLocalizations.of(
+                    context,
+                  )!.voteDeletingError;
                   final result = await sectionsNotifier.deleteSection(key);
                   if (result) {
                     sectionContenderListNotifier.deleteT(key);
                     displayVoteToastWithContext(
                       TypeMsg.msg,
-                      AppLocalizations.of(context)!.voteDeletedSection,
+                      deleteSectionSuccessMsg,
                     );
                   } else {
                     displayVoteToastWithContext(
                       TypeMsg.error,
-                      AppLocalizations.of(context)!.voteDeletingError,
+                      deleteSectionErrorMsg,
                     );
                   }
                 },

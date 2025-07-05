@@ -96,14 +96,17 @@ class ForgetPassword extends HookConsumerWidget {
                           .watch(loadingProvider)
                           .maybeWhen(data: (data) => data, orElse: () => false),
                       onPressed: () async {
+                        final sendedResetMail = AppLocalizations.of(
+                          context,
+                        )!.loginSendedResetMail;
+                        final mailSendingError = AppLocalizations.of(
+                          context,
+                        )!.loginMailSendingError;
                         final value = await signUpNotifier.recoverUser(
                           email.text,
                         );
                         if (value) {
-                          displayToastWithContext(
-                            TypeMsg.msg,
-                            AppLocalizations.of(context)!.loginSendedResetMail,
-                          );
+                          displayToastWithContext(TypeMsg.msg, sendedResetMail);
                           email.clear();
                           QR.to(
                             LoginRouter.forgotPassword +
@@ -112,7 +115,7 @@ class ForgetPassword extends HookConsumerWidget {
                         } else {
                           displayToastWithContext(
                             TypeMsg.error,
-                            AppLocalizations.of(context)!.loginMailSendingError,
+                            mailSendingError,
                           );
                         }
                       },

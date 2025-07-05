@@ -120,21 +120,25 @@ class TicketHandler extends HookConsumerWidget {
                                       "Voulez-vous vraiment supprimer ce ticket?",
                                   onYes: () {
                                     tokenExpireWrapper(ref, () async {
+                                      final deletedTicketMsg =
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.raffleDeletedTicket;
+                                      final deletingErrorMsg =
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.raffleDeletingError;
                                       final value = await packTicketsNotifier
                                           .deletePackTicket(e);
                                       if (value) {
                                         displayToastWithContext(
                                           TypeMsg.msg,
-                                          AppLocalizations.of(
-                                            context,
-                                          )!.raffleDeletedTicket,
+                                          deletedTicketMsg,
                                         );
                                       } else {
                                         displayToastWithContext(
                                           TypeMsg.error,
-                                          AppLocalizations.of(
-                                            context,
-                                          )!.raffleDeletingError,
+                                          deletingErrorMsg,
                                         );
                                       }
                                     });

@@ -232,21 +232,25 @@ class EventUi extends ConsumerWidget {
                                       context,
                                     )!.eventDeletingEvent,
                                     onYes: () async {
+                                      final deletedEventMsg =
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.eventDeletedEvent;
+                                      final deletingErrorMsg =
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.eventDeletingError;
                                       final value = await eventListNotifier
                                           .deleteEvent(event);
                                       if (value) {
                                         displayToastWithContext(
                                           TypeMsg.msg,
-                                          AppLocalizations.of(
-                                            context,
-                                          )!.eventDeletedEvent,
+                                          deletedEventMsg,
                                         );
                                       } else {
                                         displayToastWithContext(
                                           TypeMsg.error,
-                                          AppLocalizations.of(
-                                            context,
-                                          )!.eventDeletingError,
+                                          deletingErrorMsg,
                                         );
                                       }
                                     },

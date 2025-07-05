@@ -57,6 +57,12 @@ class VoteButton extends HookConsumerWidget {
                   title: AppLocalizations.of(context)!.voteVote,
                   descriptions: AppLocalizations.of(context)!.voteConfirmVote,
                   onYes: () {
+                    final voteSuccessMsg = AppLocalizations.of(
+                      context,
+                    )!.voteVoteSuccess;
+                    final voteErrorMsg = AppLocalizations.of(
+                      context,
+                    )!.voteVoteError;
                     tokenExpireWrapper(ref, () async {
                       final result = await votesNotifier.addVote(
                         Votes(id: selectedContender.id),
@@ -66,12 +72,12 @@ class VoteButton extends HookConsumerWidget {
                         selectedContenderNotifier.clear();
                         displayVoteToastWithContext(
                           TypeMsg.msg,
-                          AppLocalizations.of(context)!.voteVoteSuccess,
+                          voteSuccessMsg,
                         );
                       } else {
                         displayVoteToastWithContext(
                           TypeMsg.error,
-                          AppLocalizations.of(context)!.voteVoteError,
+                          voteErrorMsg,
                         );
                       }
                     });

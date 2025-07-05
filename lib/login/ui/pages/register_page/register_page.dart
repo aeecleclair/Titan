@@ -114,6 +114,12 @@ class Register extends HookConsumerWidget {
                           .watch(loadingProvider)
                           .maybeWhen(data: (data) => data, orElse: () => false),
                       onPressed: () async {
+                        final sendedMailMsg = AppLocalizations.of(
+                          context,
+                        )!.loginSendedMail;
+                        final mailSendingErrorMsg = AppLocalizations.of(
+                          context,
+                        )!.loginMailSendingError;
                         if (key.currentState!.validate()) {
                           final value = await signUpNotifier.createUser(
                             mail.text,
@@ -126,16 +132,11 @@ class Register extends HookConsumerWidget {
                               LoginRouter.createAccount +
                                   LoginRouter.mailReceived,
                             );
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              AppLocalizations.of(context)!.loginSendedMail,
-                            );
+                            displayToastWithContext(TypeMsg.msg, sendedMailMsg);
                           } else {
                             displayToastWithContext(
                               TypeMsg.error,
-                              AppLocalizations.of(
-                                context,
-                              )!.loginMailSendingError,
+                              mailSendingErrorMsg,
                             );
                           }
                         } else {

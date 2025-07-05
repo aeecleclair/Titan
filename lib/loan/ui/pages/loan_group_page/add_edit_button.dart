@@ -91,6 +91,12 @@ class AddEditButton extends HookConsumerWidget {
                       start: DateTime.parse(processDateBack(start)),
                       returned: false,
                     );
+                    final addedLoanMsg = isEdit
+                        ? AppLocalizations.of(context)!.loanUpdatedLoan
+                        : AppLocalizations.of(context)!.loanAddedLoan;
+                    final addingErrorMsg = isEdit
+                        ? AppLocalizations.of(context)!.loanUpdatingError
+                        : AppLocalizations.of(context)!.loanAddingError;
                     final value = isEdit
                         ? await loanListNotifier.updateLoan(newLoan)
                         : await loanListNotifier.addLoan(newLoan);
@@ -100,29 +106,9 @@ class AddEditButton extends HookConsumerWidget {
                         await loanListNotifier.copy(),
                       );
                       QR.back();
-                      if (isEdit) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AppLocalizations.of(context)!.loanUpdatedLoan,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AppLocalizations.of(context)!.loanAddedLoan,
-                        );
-                      }
+                      displayToastWithContext(TypeMsg.msg, addedLoanMsg);
                     } else {
-                      if (isEdit) {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AppLocalizations.of(context)!.loanUpdatingError,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AppLocalizations.of(context)!.loanAddingError,
-                        );
-                      }
+                      displayToastWithContext(TypeMsg.error, addingErrorMsg);
                     }
                   } else {
                     displayToastWithContext(

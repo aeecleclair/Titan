@@ -151,6 +151,12 @@ class UserCashUi extends HookConsumerWidget {
                                 if (key.currentState == null) {
                                   return;
                                 }
+                                final updatedAmountMsg = AppLocalizations.of(
+                                  context,
+                                )!.amapUpdatedAmount;
+                                final updatingErrorMsg = AppLocalizations.of(
+                                  context,
+                                )!.amapUpdatingError;
                                 if (key.currentState!.validate()) {
                                   await tokenExpireWrapper(ref, () async {
                                     await ref
@@ -169,16 +175,12 @@ class UserCashUi extends HookConsumerWidget {
                                             toggle();
                                             displayVoteWithContext(
                                               TypeMsg.msg,
-                                              AppLocalizations.of(
-                                                context,
-                                              )!.amapUpdatedAmount,
+                                              updatedAmountMsg,
                                             );
                                           } else {
                                             displayVoteWithContext(
                                               TypeMsg.error,
-                                              AppLocalizations.of(
-                                                context,
-                                              )!.amapUpdatingError,
+                                              updatingErrorMsg,
                                             );
                                           }
                                         });

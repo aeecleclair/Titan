@@ -235,6 +235,18 @@ class AddEditSessionPage extends HookConsumerWidget {
                     if (key.currentState == null) {
                       return;
                     }
+                    final editedSessionMsg = AppLocalizations.of(
+                      context,
+                    )!.cinemaEditedSession;
+                    final addedSessionMsg = AppLocalizations.of(
+                      context,
+                    )!.cinemaAddedSession;
+                    final editingErrorMsg = AppLocalizations.of(
+                      context,
+                    )!.cinemaEditingError;
+                    final addingErrorMsg = AppLocalizations.of(
+                      context,
+                    )!.cinemaAddingError;
                     if (key.currentState!.validate()) {
                       if (logo.value == null && logoFile.value == null) {
                         displayToastWithContext(
@@ -284,7 +296,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                             );
                             displayToastWithContext(
                               TypeMsg.msg,
-                              AppLocalizations.of(context)!.cinemaEditedSession,
+                              editedSessionMsg,
                             );
                           } else {
                             sessionList.maybeWhen(
@@ -307,19 +319,19 @@ class AddEditSessionPage extends HookConsumerWidget {
                             );
                             displayToastWithContext(
                               TypeMsg.msg,
-                              AppLocalizations.of(context)!.cinemaAddedSession,
+                              addedSessionMsg,
                             );
                           }
                         } else {
                           if (isEdit) {
                             displayToastWithContext(
                               TypeMsg.error,
-                              AppLocalizations.of(context)!.cinemaEditingError,
+                              editingErrorMsg,
                             );
                           } else {
                             displayToastWithContext(
                               TypeMsg.error,
-                              AppLocalizations.of(context)!.cinemaAddingError,
+                              addingErrorMsg,
                             );
                           }
                         }

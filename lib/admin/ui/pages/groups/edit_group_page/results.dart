@@ -53,6 +53,12 @@ class MemberResults extends HookConsumerWidget {
                               Group newGroup = group.value!.copyWith(
                                 members: group.value!.members + [e],
                               );
+                              final addedMemberMsg = AppLocalizations.of(
+                                context,
+                              )!.adminAddedMember;
+                              final addingErrorMsg = AppLocalizations.of(
+                                context,
+                              )!.adminAddingError;
                               await tokenExpireWrapper(ref, () async {
                                 groupNotifier.addMember(newGroup, e).then((
                                   value,
@@ -64,16 +70,12 @@ class MemberResults extends HookConsumerWidget {
                                     );
                                     displayToastWithContext(
                                       TypeMsg.msg,
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.adminAddedMember,
+                                      addedMemberMsg,
                                     );
                                   } else {
                                     displayToastWithContext(
                                       TypeMsg.error,
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.adminAddingError,
+                                      addingErrorMsg,
                                     );
                                   }
                                 });

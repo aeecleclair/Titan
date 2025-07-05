@@ -50,6 +50,12 @@ class AddSchoolPage extends HookConsumerWidget {
                 WaitingButton(
                   onTap: () async {
                     await tokenExpireWrapper(ref, () async {
+                      final addedSchoolMsg = AppLocalizations.of(
+                        context,
+                      )!.adminAddedSchool;
+                      final addingErrorMsg = AppLocalizations.of(
+                        context,
+                      )!.adminAddingError;
                       final value = await schoolListNotifier.createSchool(
                         School(
                           name: name.text,
@@ -59,15 +65,9 @@ class AddSchoolPage extends HookConsumerWidget {
                       );
                       if (value) {
                         QR.back();
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AppLocalizations.of(context)!.adminAddedSchool,
-                        );
+                        displayToastWithContext(TypeMsg.msg, addedSchoolMsg);
                       } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AppLocalizations.of(context)!.adminAddingError,
-                        );
+                        displayToastWithContext(TypeMsg.error, addingErrorMsg);
                       }
                     });
                   },

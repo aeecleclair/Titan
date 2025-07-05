@@ -146,6 +146,12 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                       return;
                     }
                     if (isEdit) {
+                      final updatedMembershipMsg = AppLocalizations.of(
+                        context,
+                      )!.adminUpdatedMembership;
+                      final updatingErrorMsg = AppLocalizations.of(
+                        context,
+                      )!.adminMembershipUpdatingError;
                       final value = await associationMembershipMembersNotifier
                           .updateMember(
                             membership.copyWith(
@@ -160,15 +166,13 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                       if (value) {
                         displayToastWithContext(
                           TypeMsg.msg,
-                          AppLocalizations.of(context)!.adminUpdatedMembership,
+                          updatedMembershipMsg,
                         );
                         QR.back();
                       } else {
                         displayToastWithContext(
                           TypeMsg.error,
-                          AppLocalizations.of(
-                            context,
-                          )!.adminMembershipUpdatingError,
+                          updatingErrorMsg,
                         );
                       }
                     } else {
@@ -181,21 +185,19 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                         startDate: DateTime.parse(processDateBack(start.text)),
                         endDate: DateTime.parse(processDateBack(end.text)),
                       );
+                      final addedMemberMsg = AppLocalizations.of(
+                        context,
+                      )!.adminAddedMember;
+                      final addingErrorMsg = AppLocalizations.of(
+                        context,
+                      )!.adminMembershipAddingError;
                       final value = await associationMembershipMembersNotifier
                           .addMember(membershipAdd, membership.user);
                       if (value) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AppLocalizations.of(context)!.adminAddedMember,
-                        );
+                        displayToastWithContext(TypeMsg.msg, addedMemberMsg);
                         QR.back();
                       } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AppLocalizations.of(
-                            context,
-                          )!.adminMembershipAddingError,
-                        );
+                        displayToastWithContext(TypeMsg.error, addingErrorMsg);
                       }
                     }
                   });

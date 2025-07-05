@@ -117,6 +117,12 @@ class OnGoingLoan extends HookConsumerWidget {
                   loanersItemsNotifier.setTData(loaner, itemList);
                 },
                 onCalendar: () async {
+                  final extendedLoanMsg = AppLocalizations.of(
+                    context,
+                  )!.loanExtendedLoan;
+                  final extendedLoanErrorMsg = AppLocalizations.of(
+                    context,
+                  )!.loanExtendingError;
                   await showDialog<int>(
                     context: context,
                     builder: (BuildContext context) {
@@ -138,14 +144,12 @@ class OnGoingLoan extends HookConsumerWidget {
                               );
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                AppLocalizations.of(context)!.loanExtendedLoan,
+                                extendedLoanMsg,
                               );
                             } else {
                               displayToastWithContext(
                                 TypeMsg.error,
-                                AppLocalizations.of(
-                                  context,
-                                )!.loanExtendingError,
+                                extendedLoanErrorMsg,
                               );
                             }
                           });
@@ -163,6 +167,12 @@ class OnGoingLoan extends HookConsumerWidget {
                         context,
                       )!.loanReturnLoanDescription,
                       onYes: () async {
+                        final returningLoanMsg = AppLocalizations.of(
+                          context,
+                        )!.loanReturnedLoan;
+                        final returningLoanErrorMsg = AppLocalizations.of(
+                          context,
+                        )!.loanReturningError;
                         await tokenExpireWrapper(ref, () async {
                           final loanItemsId = e.itemsQuantity
                               .map((e) => e.itemSimple.id)
@@ -192,12 +202,12 @@ class OnGoingLoan extends HookConsumerWidget {
                             );
                             displayToastWithContext(
                               TypeMsg.msg,
-                              AppLocalizations.of(context)!.loanReturnedLoan,
+                              returningLoanMsg,
                             );
                           } else {
                             displayToastWithContext(
                               TypeMsg.msg,
-                              AppLocalizations.of(context)!.loanReturningError,
+                              returningLoanErrorMsg,
                             );
                           }
                         });

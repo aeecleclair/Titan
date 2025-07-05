@@ -60,6 +60,14 @@ class AddLoanerPage extends HookConsumerWidget {
                                             name: e.name,
                                           );
                                           tokenExpireWrapper(ref, () async {
+                                            final addedLoanerMsg =
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.adminAddedLoaner;
+                                            final addingErrorMsg =
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.adminAddingError;
                                             final value =
                                                 await loanerListNotifier
                                                     .addLoaner(newLoaner);
@@ -67,16 +75,12 @@ class AddLoanerPage extends HookConsumerWidget {
                                               QR.back();
                                               displayToastWithContext(
                                                 TypeMsg.msg,
-                                                AppLocalizations.of(
-                                                  context,
-                                                )!.adminAddedLoaner,
+                                                addedLoanerMsg,
                                               );
                                             } else {
                                               displayToastWithContext(
                                                 TypeMsg.error,
-                                                AppLocalizations.of(
-                                                  context,
-                                                )!.adminAddingError,
+                                                addingErrorMsg,
                                               );
                                             }
                                           });

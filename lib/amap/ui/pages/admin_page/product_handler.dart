@@ -94,22 +94,26 @@ class ProductHandler extends HookConsumerWidget {
                                     context,
                                   )!.amapDeleteProductDescription,
                                   onYes: () {
+                                    final deletedProductMsg =
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.amapDeletedProduct;
+                                    final deletingErrorMsg =
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.amapDeletingError;
                                     tokenExpireWrapper(ref, () async {
                                       final value = await productsNotifier
                                           .deleteProduct(e);
                                       if (value) {
                                         displayToastWithContext(
                                           TypeMsg.msg,
-                                          AppLocalizations.of(
-                                            context,
-                                          )!.amapDeletedProduct,
+                                          deletedProductMsg,
                                         );
                                       } else {
                                         displayToastWithContext(
                                           TypeMsg.error,
-                                          AppLocalizations.of(
-                                            context,
-                                          )!.amapProductInDelivery,
+                                          deletingErrorMsg,
                                         );
                                       }
                                     });

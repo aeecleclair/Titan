@@ -95,15 +95,13 @@ class RecommendationCard extends HookConsumerWidget {
                         ),
                         IconButton(
                           onPressed: () async {
+                            final copiedCodeMsg = AppLocalizations.of(
+                              context,
+                            )!.recommendationCopiedCode;
                             await Clipboard.setData(
                               ClipboardData(text: recommendation.code!),
                             );
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              AppLocalizations.of(
-                                context,
-                              )!.recommendationCopiedCode,
-                            );
+                            displayToastWithContext(TypeMsg.msg, copiedCodeMsg);
                           },
                           icon: const Icon(Icons.copy),
                         ),

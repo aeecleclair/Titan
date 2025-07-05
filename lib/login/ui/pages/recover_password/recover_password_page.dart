@@ -70,6 +70,12 @@ class RecoverPasswordPage extends HookConsumerWidget {
         label: AppLocalizations.of(context)!.loginEndResetPassword,
         isLoading: false,
         onPressed: () async {
+          final resetedPasswordMsg = AppLocalizations.of(
+            context,
+          )!.loginResetedPassword;
+          final invalidTokenMsg = AppLocalizations.of(
+            context,
+          )!.loginInvalidToken;
           if (password.text.isNotEmpty && activationCode.text.isNotEmpty) {
             RecoverRequest recoverRequest = RecoverRequest(
               resetToken: activationCode.text.trim(),
@@ -77,17 +83,11 @@ class RecoverPasswordPage extends HookConsumerWidget {
             );
             final value = await signUpNotifier.resetPassword(recoverRequest);
             if (value) {
-              displayToastWithContext(
-                TypeMsg.msg,
-                AppLocalizations.of(context)!.loginResetedPassword,
-              );
+              displayToastWithContext(TypeMsg.msg, resetedPasswordMsg);
               authTokenNotifier.deleteToken();
               QR.to(LoginRouter.root);
             } else {
-              displayToastWithContext(
-                TypeMsg.error,
-                AppLocalizations.of(context)!.loginInvalidToken,
-              );
+              displayToastWithContext(TypeMsg.error, invalidTokenMsg);
             }
           } else {
             displayToastWithContext(

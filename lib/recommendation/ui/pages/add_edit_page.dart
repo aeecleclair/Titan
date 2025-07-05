@@ -157,6 +157,20 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                         summary: summary.text,
                         description: description.text,
                       );
+                      final editedRecommendationMsg = isEdit
+                          ? AppLocalizations.of(
+                              context,
+                            )!.recommendationEditedRecommendation
+                          : AppLocalizations.of(
+                              context,
+                            )!.recommendationAddedRecommendation;
+                      final editingErrorMsg = isEdit
+                          ? AppLocalizations.of(
+                              context,
+                            )!.recommendationEditingError
+                          : AppLocalizations.of(
+                              context,
+                            )!.recommendationAddingError;
                       final value = isEdit
                           ? await recommendationListNotifier
                                 .updateRecommendation(newRecommendation)
@@ -164,15 +178,13 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                               newRecommendation,
                             );
                       if (value) {
+                        displayAdvertToastWithContext(
+                          TypeMsg.msg,
+                          editedRecommendationMsg,
+                        );
                         if (isEdit) {
                           recommendationNotifier.setRecommendation(
                             newRecommendation,
-                          );
-                          displayAdvertToastWithContext(
-                            TypeMsg.msg,
-                            AppLocalizations.of(
-                              context,
-                            )!.recommendationEditedRecommendation,
                           );
                           recommendationList.maybeWhen(
                             data: (list) {
@@ -187,12 +199,6 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                             orElse: () {},
                           );
                         } else {
-                          displayAdvertToastWithContext(
-                            TypeMsg.msg,
-                            AppLocalizations.of(
-                              context,
-                            )!.recommendationAddedRecommendation,
-                          );
                           recommendationList.maybeWhen(
                             data: (list) {
                               final newRecommendation = list.last;
@@ -209,13 +215,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                       } else {
                         displayAdvertToastWithContext(
                           TypeMsg.error,
-                          isEdit
-                              ? AppLocalizations.of(
-                                  context,
-                                )!.recommendationEditingError
-                              : AppLocalizations.of(
-                                  context,
-                                )!.recommendationAddingError,
+                          editingErrorMsg,
                         );
                       }
                     } else {

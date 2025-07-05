@@ -49,6 +49,12 @@ class AddGroupPage extends HookConsumerWidget {
                 ),
                 WaitingButton(
                   onTap: () async {
+                    final addedGroupMsg = AppLocalizations.of(
+                      context,
+                    )!.adminAddedGroup;
+                    final addingErrorMsg = AppLocalizations.of(
+                      context,
+                    )!.adminAddingError;
                     await tokenExpireWrapper(ref, () async {
                       final value = await groupListNotifier.createGroup(
                         SimpleGroup(
@@ -59,15 +65,9 @@ class AddGroupPage extends HookConsumerWidget {
                       );
                       if (value) {
                         QR.back();
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AppLocalizations.of(context)!.adminAddedGroup,
-                        );
+                        displayToastWithContext(TypeMsg.msg, addedGroupMsg);
                       } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AppLocalizations.of(context)!.adminAddingError,
-                        );
+                        displayToastWithContext(TypeMsg.error, addingErrorMsg);
                       }
                     });
                   },

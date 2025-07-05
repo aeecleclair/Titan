@@ -146,6 +146,12 @@ class DetailOrderUI extends HookConsumerWidget {
                         context,
                       )!.amapDeletingOrder,
                       onYes: () async {
+                        final deletedOrderMsg = AppLocalizations.of(
+                          context,
+                        )!.amapDeletedOrder;
+                        final deletingErrorMsg = AppLocalizations.of(
+                          context,
+                        )!.amapDeletingError;
                         await tokenExpireWrapper(ref, () async {
                           final index = orderList.maybeWhen(
                             data: (data) => data.indexWhere(
@@ -170,12 +176,12 @@ class DetailOrderUI extends HookConsumerWidget {
                               );
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                AppLocalizations.of(context)!.amapDeletedOrder,
+                                deletedOrderMsg,
                               );
                             } else {
                               displayToastWithContext(
                                 TypeMsg.error,
-                                AppLocalizations.of(context)!.amapDeletingError,
+                                deletingErrorMsg,
                               );
                             }
                           });

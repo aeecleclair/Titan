@@ -105,38 +105,23 @@ class AddEditRoomPage extends HookConsumerWidget {
                           name: name.text,
                           managerId: managerId,
                         );
+                        final editedRoomMsg = isEdit
+                            ? AppLocalizations.of(context)!.bookingEditedRoom
+                            : AppLocalizations.of(context)!.bookingAddedRoom;
+                        final addingErrorMsg = isEdit
+                            ? AppLocalizations.of(context)!.bookingEditionError
+                            : AppLocalizations.of(context)!.bookingAddingError;
                         final value = isEdit
                             ? await roomListNotifier.updateRoom(newRoom)
                             : await roomListNotifier.addRoom(newRoom);
                         if (value) {
                           QR.back();
-                          isEdit
-                              ? displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.bookingEditedRoom,
-                                )
-                              : displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.bookingAddedRoom,
-                                );
+                          displayToastWithContext(TypeMsg.msg, editedRoomMsg);
                         } else {
-                          isEdit
-                              ? displayToastWithContext(
-                                  TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.bookingEditionError,
-                                )
-                              : displayToastWithContext(
-                                  TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.bookingAddingError,
-                                );
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            addingErrorMsg,
+                          );
                         }
                       });
                     },
@@ -156,6 +141,12 @@ class AddEditRoomPage extends HookConsumerWidget {
                                 context,
                               )!.bookingDeleteRoomConfirmation,
                               onYes: () async {
+                                final deletedRoomMsg = AppLocalizations.of(
+                                  context,
+                                )!.bookingDeletedRoom;
+                                final deletingErrorMsg = AppLocalizations.of(
+                                  context,
+                                )!.bookingDeletingError;
                                 final value = await roomListNotifier.deleteRoom(
                                   room,
                                 );
@@ -163,16 +154,12 @@ class AddEditRoomPage extends HookConsumerWidget {
                                   QR.back();
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.bookingDeletedRoom,
+                                    deletedRoomMsg,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.bookingDeletingError,
+                                    deletingErrorMsg,
                                   );
                                 }
                               },

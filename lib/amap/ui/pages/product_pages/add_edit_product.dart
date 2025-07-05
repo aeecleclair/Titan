@@ -187,6 +187,18 @@ class AddEditProduct extends HookConsumerWidget {
                             quantity: 0,
                           );
                           await tokenExpireWrapper(ref, () async {
+                            final updatedProductMsg = isEdit
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.amapUpdatedProduct
+                                : AppLocalizations.of(
+                                    context,
+                                  )!.amapAddedProduct;
+                            final addingErrorMsg = isEdit
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.amapUpdatingError
+                                : AppLocalizations.of(context)!.amapAddingError;
                             final value = isEdit
                                 ? await productsNotifier.updateProduct(
                                     newProduct,
@@ -195,12 +207,6 @@ class AddEditProduct extends HookConsumerWidget {
                             if (value) {
                               if (isEdit) {
                                 formKey.currentState!.reset();
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.amapUpdatedProduct,
-                                );
                               } else {
                                 ref
                                     .watch(selectedListProvider.notifier)
@@ -210,27 +216,16 @@ class AddEditProduct extends HookConsumerWidget {
                                         orElse: () => [],
                                       ),
                                     );
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.amapAddedProduct,
-                                );
                               }
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                updatedProductMsg,
+                              );
                             } else {
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.amapUpdatingError,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  AppLocalizations.of(context)!.amapAddingError,
-                                );
-                              }
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                addingErrorMsg,
+                              );
                             }
                             QR.back();
                           });

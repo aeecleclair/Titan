@@ -138,6 +138,12 @@ class OrderUI extends HookConsumerWidget {
                                 context,
                               )!.amapDeletingOrder,
                               onYes: () async {
+                                final deletedOrderMsg = AppLocalizations.of(
+                                  context,
+                                )!.amapDeletedOrder;
+                                final deletingErrorMsg = AppLocalizations.of(
+                                  context,
+                                )!.amapDeletingError;
                                 await tokenExpireWrapper(ref, () async {
                                   orderListNotifier.deleteOrder(order).then((
                                     value,
@@ -146,16 +152,12 @@ class OrderUI extends HookConsumerWidget {
                                       balanceNotifier.updateCash(order.amount);
                                       displayToastWithContext(
                                         TypeMsg.msg,
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.amapDeletedOrder,
+                                        deletedOrderMsg,
                                       );
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.error,
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.amapDeletingError,
+                                        deletingErrorMsg,
                                       );
                                     }
                                   });

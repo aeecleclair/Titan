@@ -59,6 +59,12 @@ class AddSectionPage extends HookConsumerWidget {
                   WaitingButton(
                     builder: (child) => AddEditButtonLayout(child: child),
                     onTap: () async {
+                      final addedSectionMsg = AppLocalizations.of(
+                        context,
+                      )!.voteAddedSection;
+                      final addingErrorMsg = AppLocalizations.of(
+                        context,
+                      )!.voteAddingError;
                       await tokenExpireWrapper(ref, () async {
                         final value = await sectionListNotifier.addSection(
                           Section(
@@ -74,12 +80,12 @@ class AddSectionPage extends HookConsumerWidget {
                           });
                           displayVoteToastWithContext(
                             TypeMsg.msg,
-                            AppLocalizations.of(context)!.voteAddedSection,
+                            addedSectionMsg,
                           );
                         } else {
                           displayVoteToastWithContext(
                             TypeMsg.error,
-                            AppLocalizations.of(context)!.voteAddingError,
+                            addingErrorMsg,
                           );
                         }
                       });

@@ -125,6 +125,11 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                   }
 
                   await tokenExpireWrapper(ref, () async {
+                    final updatedAssociationMembershipMsg = AppLocalizations.of(
+                      context,
+                    )!.adminUpdatedAssociationMembership;
+                    final updatingAssociationMembershipErrorMsg =
+                        AppLocalizations.of(context)!.adminUpdatingError;
                     final value = await associationMembershipListNotifier
                         .updateAssociationMembership(
                           associationMembership.copyWith(name: name.text),
@@ -138,14 +143,12 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                       );
                       displayToastWithContext(
                         TypeMsg.msg,
-                        AppLocalizations.of(
-                          context,
-                        )!.adminUpdatedAssociationMembership,
+                        updatedAssociationMembershipMsg,
                       );
                     } else {
                       displayToastWithContext(
                         TypeMsg.msg,
-                        AppLocalizations.of(context)!.adminUpdatingError,
+                        updatingAssociationMembershipErrorMsg,
                       );
                     }
                   });

@@ -170,6 +170,12 @@ class AssociationEditorPage extends HookConsumerWidget {
                           );
                         },
                         onReorder: (int oldIndex, int newIndex) async {
+                          final memberReorderedMsg = AppLocalizations.of(
+                            context,
+                          )!.phonebookMemberReordered;
+                          final reorderingErrorMsg = AppLocalizations.of(
+                            context,
+                          )!.phonebookReorderingError;
                           await tokenExpireWrapper(ref, () async {
                             final result = await associationMemberListNotifier
                                 .reorderMember(
@@ -190,16 +196,12 @@ class AssociationEditorPage extends HookConsumerWidget {
                             if (result) {
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                AppLocalizations.of(
-                                  context,
-                                )!.phonebookMemberReordered,
+                                memberReorderedMsg,
                               );
                             } else {
                               displayToastWithContext(
                                 TypeMsg.error,
-                                AppLocalizations.of(
-                                  context,
-                                )!.phonebookReorderingError,
+                                reorderingErrorMsg,
                               );
                             }
                           });

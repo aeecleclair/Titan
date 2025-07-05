@@ -149,6 +149,19 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                   final deliveryNotifier = ref.watch(
                                     deliveryListProvider.notifier,
                                   );
+                                  final editedCommandMsg = AppLocalizations.of(
+                                    context,
+                                  )!.amapEditedCommand;
+                                  final addedCommandMsg = AppLocalizations.of(
+                                    context,
+                                  )!.amapAddedCommand;
+                                  final editingErrorMsg = AppLocalizations.of(
+                                    context,
+                                  )!.amapEditingError;
+                                  final alreadyExistCommandMsg =
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.amapAlreadyExistCommand;
                                   final value = isEdit
                                       ? await deliveryNotifier.updateDelivery(
                                           del,
@@ -159,9 +172,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                     if (isEdit) {
                                       displayToastWithContext(
                                         TypeMsg.msg,
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.amapEditedCommand,
+                                        editedCommandMsg,
                                       );
                                     } else {
                                       final deliveryOrdersNotifier = ref.watch(
@@ -177,25 +188,19 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                       });
                                       displayToastWithContext(
                                         TypeMsg.msg,
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.amapAddedCommand,
+                                        addedCommandMsg,
                                       );
                                     }
                                   } else {
                                     if (isEdit) {
                                       displayToastWithContext(
                                         TypeMsg.error,
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.amapEditingError,
+                                        editingErrorMsg,
                                       );
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.error,
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.amapAlreadyExistCommand,
+                                        alreadyExistCommandMsg,
                                       );
                                     }
                                   }

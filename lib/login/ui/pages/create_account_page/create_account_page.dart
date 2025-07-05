@@ -270,22 +270,22 @@ class CreateAccountPage extends HookConsumerWidget {
               activationToken: activationCode.text.trim(),
               password: password.text,
             );
+            final accountActivatedMsg = AppLocalizations.of(
+              context,
+            )!.loginAccountActivated;
+            final accountNotActivatedMsg = AppLocalizations.of(
+              context,
+            )!.loginAccountNotActivated;
             try {
               final value = await signUpNotifier.activateUser(
                 finalCreateAccount,
               );
               if (value) {
-                displayToastWithContext(
-                  TypeMsg.msg,
-                  AppLocalizations.of(context)!.loginAccountActivated,
-                );
+                displayToastWithContext(TypeMsg.msg, accountActivatedMsg);
                 authTokenNotifier.deleteToken();
                 QR.to(LoginRouter.root);
               } else {
-                displayToastWithContext(
-                  TypeMsg.error,
-                  AppLocalizations.of(context)!.loginAccountNotActivated,
-                );
+                displayToastWithContext(TypeMsg.error, accountNotActivatedMsg);
               }
             } catch (e) {
               displayToastWithContext(TypeMsg.error, e.toString());

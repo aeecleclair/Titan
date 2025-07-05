@@ -251,7 +251,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get advertAdd => 'Add';
 
   @override
-  String get advertAddedAdvert => 'Ad published';
+  String get advertAddedAdvert => 'Advert published';
 
   @override
   String get advertAddedAnnouncer => 'Announcer added';
@@ -263,7 +263,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get advertAdmin => 'Admin';
 
   @override
-  String get advertAdvert => 'Ad';
+  String get advertAdvert => 'Advert';
 
   @override
   String get advertChoosingAnnouncer => 'Please choose an announcer';
@@ -287,7 +287,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get advertEdit => 'Edit';
 
   @override
-  String get advertEditedAdvert => 'Ad edited';
+  String get advertEditedAdvert => 'Advert edited';
 
   @override
   String get advertEditingError => 'Error while editing';

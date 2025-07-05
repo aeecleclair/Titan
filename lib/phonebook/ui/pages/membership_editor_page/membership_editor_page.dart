@@ -198,6 +198,12 @@ class MembershipEditorPage extends HookConsumerWidget {
                             (membership) => membership.id == membershipEdit.id,
                           )] =
                           membershipEdit;
+                      final updatedMemberMsg = AppLocalizations.of(
+                        context,
+                      )!.phonebookUpdatedMember;
+                      final updatingErrorMsg = AppLocalizations.of(
+                        context,
+                      )!.phonebookUpdatingError;
                       final value = await associationMemberListNotifier
                           .updateMember(member, membershipEdit);
                       if (value) {
@@ -205,15 +211,12 @@ class MembershipEditorPage extends HookConsumerWidget {
                           association.id,
                           association.mandateYear.toString(),
                         );
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AppLocalizations.of(context)!.phonebookUpdatedMember,
-                        );
+                        displayToastWithContext(TypeMsg.msg, updatedMemberMsg);
                         QR.back();
                       } else {
                         displayToastWithContext(
                           TypeMsg.error,
-                          AppLocalizations.of(context)!.phonebookUpdatingError,
+                          updatingErrorMsg,
                         );
                       }
                     } else {
@@ -252,19 +255,19 @@ class MembershipEditorPage extends HookConsumerWidget {
                           orElse: () => 0,
                         ),
                       );
+                      final addedMemberMsg = AppLocalizations.of(
+                        context,
+                      )!.phonebookAddedMember;
+                      final addingErrorMsg = AppLocalizations.of(
+                        context,
+                      )!.phonebookAddingError;
                       final value = await associationMemberListNotifier
                           .addMember(member, membershipAdd);
                       if (value) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AppLocalizations.of(context)!.phonebookAddedMember,
-                        );
+                        displayToastWithContext(TypeMsg.msg, addedMemberMsg);
                         QR.back();
                       } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AppLocalizations.of(context)!.phonebookAddingError,
-                        );
+                        displayToastWithContext(TypeMsg.error, addingErrorMsg);
                       }
                     }
                   });

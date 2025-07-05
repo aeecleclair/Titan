@@ -72,6 +72,21 @@ class AddEditStorePage extends HookConsumerWidget {
                             if (key.currentState == null) {
                               return;
                             }
+                            final successfullyAddedStoreMsg = isEdit
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.paiementSuccessfullyModifiedStore
+                                : AppLocalizations.of(
+                                    context,
+                                  )!.paiementSuccessfullyAddedStore;
+                            final addingErrorMsg = isEdit
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.paiementModifyingStoreError
+                                : AppLocalizations.of(
+                                    context,
+                                  )!.paiementAddingStoreError;
+
                             if (key.currentState!.validate()) {
                               store_class.Store newStore = store.copyWith(
                                 name: name.text,
@@ -92,24 +107,12 @@ class AddEditStorePage extends HookConsumerWidget {
                                 QR.back();
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  isEdit
-                                      ? AppLocalizations.of(
-                                          context,
-                                        )!.paiementSuccessfullyAddedStore
-                                      : AppLocalizations.of(
-                                          context,
-                                        )!.paiementSuccessfullyModifiedStore,
+                                  successfullyAddedStoreMsg,
                                 );
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  isEdit
-                                      ? AppLocalizations.of(
-                                          context,
-                                        )!.paiementModifyingStoreError
-                                      : AppLocalizations.of(
-                                          context,
-                                        )!.paiementAddingStoreError,
+                                  addingErrorMsg,
                                 );
                               }
                             }

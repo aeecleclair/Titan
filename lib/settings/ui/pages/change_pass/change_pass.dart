@@ -134,6 +134,12 @@ class ChangePassPage extends HookConsumerWidget {
                             context,
                           )!.settingsChangingPassword,
                           onYes: () async {
+                            final passwordChangedMsg = AppLocalizations.of(
+                              context,
+                            )!.settingsPasswordChanged;
+                            final passwordChangeErrorMsg = AppLocalizations.of(
+                              context,
+                            )!.settingsUpdatingError;
                             await tokenExpireWrapper(ref, () async {
                               final value = await userNotifier.changePassword(
                                 oldPassword.text,
@@ -144,16 +150,12 @@ class ChangePassPage extends HookConsumerWidget {
                                 QR.back();
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.settingsPasswordChanged,
+                                  passwordChangedMsg,
                                 );
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.settingsUpdatingError,
+                                  passwordChangeErrorMsg,
                                 );
                               }
                             });

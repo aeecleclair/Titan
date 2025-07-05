@@ -61,6 +61,9 @@ class PresentationPage extends HookConsumerWidget {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () async {
+                            final errorLinkMsg = AppLocalizations.of(
+                              context,
+                            )!.amapErrorLink;
                             try {
                               await launchUrl(
                                 Uri.parse(info.link),
@@ -69,7 +72,7 @@ class PresentationPage extends HookConsumerWidget {
                             } catch (e) {
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                AppLocalizations.of(context)!.amapErrorLink,
+                                errorLinkMsg,
                               );
                             }
                           },

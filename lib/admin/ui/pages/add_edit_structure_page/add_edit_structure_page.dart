@@ -141,6 +141,12 @@ class AddEditStructurePage extends HookConsumerWidget {
                     }
                     if (key.currentState!.validate()) {
                       await tokenExpireWrapper(ref, () async {
+                        final editedStructureMsg = isEdit
+                            ? AppLocalizations.of(context)!.adminEditedStructure
+                            : AppLocalizations.of(context)!.adminAddedStructure;
+                        final addedStructureErrorMsg = AppLocalizations.of(
+                          context,
+                        )!.adminAddingError;
                         final value = isEdit
                             ? await structureListNotifier.updateStructure(
                                 Structure(
@@ -165,18 +171,12 @@ class AddEditStructurePage extends HookConsumerWidget {
                           structureManagerNotifier.setUser(SimpleUser.empty());
                           displayToastWithContext(
                             TypeMsg.msg,
-                            isEdit
-                                ? AppLocalizations.of(
-                                    context,
-                                  )!.adminEditedStructure
-                                : AppLocalizations.of(
-                                    context,
-                                  )!.adminAddedStructure,
+                            editedStructureMsg,
                           );
                         } else {
                           displayToastWithContext(
                             TypeMsg.error,
-                            AppLocalizations.of(context)!.adminAddingError,
+                            addedStructureErrorMsg,
                           );
                         }
                       });

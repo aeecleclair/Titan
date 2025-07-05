@@ -100,6 +100,12 @@ class EditGroupPage extends HookConsumerWidget {
                             if (!key.currentState!.validate()) {
                               return;
                             }
+                            final updatedGroupMsg = AppLocalizations.of(
+                              context,
+                            )!.adminUpdatedGroup;
+                            final updatingErrorMsg = AppLocalizations.of(
+                              context,
+                            )!.adminUpdatingError;
                             await tokenExpireWrapper(ref, () async {
                               Group newGroup = group.copyWith(
                                 name: name.text,
@@ -113,16 +119,12 @@ class EditGroupPage extends HookConsumerWidget {
                                 QR.back();
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.adminUpdatedGroup,
+                                  updatedGroupMsg,
                                 );
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.adminUpdatingError,
+                                  updatingErrorMsg,
                                 );
                               }
                             });

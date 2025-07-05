@@ -105,6 +105,12 @@ class AddEditManagerPage extends HookConsumerWidget {
                           name: name.text,
                           groupId: groupId,
                         );
+                        final editedManagerMsg = isEdit
+                            ? AppLocalizations.of(context)!.bookingEditedManager
+                            : AppLocalizations.of(context)!.bookingAddedManager;
+                        final editedManagerErrorMsg = isEdit
+                            ? AppLocalizations.of(context)!.bookingEditionError
+                            : AppLocalizations.of(context)!.bookingAddingError;
                         final value = isEdit
                             ? await managerListNotifier.updateManager(
                                 newManager,
@@ -112,33 +118,15 @@ class AddEditManagerPage extends HookConsumerWidget {
                             : await managerListNotifier.addManager(newManager);
                         if (value) {
                           QR.back();
-                          isEdit
-                              ? displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.bookingEditedManager,
-                                )
-                              : displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.bookingAddedManager,
-                                );
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            editedManagerMsg,
+                          );
                         } else {
-                          isEdit
-                              ? displayToastWithContext(
-                                  TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.bookingEditionError,
-                                )
-                              : displayToastWithContext(
-                                  TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.bookingAddingError,
-                                );
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            editedManagerErrorMsg,
+                          );
                         }
                       });
                     },
@@ -158,22 +146,24 @@ class AddEditManagerPage extends HookConsumerWidget {
                                 context,
                               )!.bookingDeleteManagerConfirmation,
                               onYes: () async {
+                                final deletedManagerMsg = AppLocalizations.of(
+                                  context,
+                                )!.bookingDeletedManager;
+                                final deletingErrorMsg = AppLocalizations.of(
+                                  context,
+                                )!.bookingDeletingError;
                                 final value = await managerListNotifier
                                     .deleteManager(manager);
                                 if (value) {
                                   QR.back();
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.bookingDeletedManager,
+                                    deletedManagerMsg,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.bookingDeletingError,
+                                    deletingErrorMsg,
                                   );
                                 }
                               },

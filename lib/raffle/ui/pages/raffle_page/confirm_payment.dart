@@ -248,6 +248,12 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                             );
                           } else {
                             await tokenExpireWrapper(ref, () async {
+                              final boughtTicketMsg = AppLocalizations.of(
+                                context,
+                              )!.raffleBoughtTicket;
+                              final boughtTicketErrorMsg = AppLocalizations.of(
+                                context,
+                              )!.raffleAddingError;
                               final value = await userTicketListNotifier
                                   .buyTicket(packTicket);
                               if (value) {
@@ -256,16 +262,12 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                 );
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.raffleBoughtTicket,
+                                  boughtTicketMsg,
                                 );
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.raffleAddingError,
+                                  boughtTicketErrorMsg,
                                 );
                               }
                               navigationPop();

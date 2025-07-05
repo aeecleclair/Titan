@@ -126,6 +126,20 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                             final typeTicketNotifier = ref.watch(
                               packTicketListProvider.notifier,
                             );
+                            final editedTicketMsg = isEdit
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.raffleEditedTicket
+                                : AppLocalizations.of(
+                                    context,
+                                  )!.raffleAddedTicket;
+                            final addingErrorMsg = isEdit
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.raffleEditingError
+                                : AppLocalizations.of(
+                                    context,
+                                  )!.raffleAddingError;
                             final value = isEdit
                                 ? await typeTicketNotifier.updatePackTicket(
                                     newPackTicket,
@@ -135,37 +149,15 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                                   );
                             if (value) {
                               QR.back();
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.raffleEditedTicket,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.raffleAddedTicket,
-                                );
-                              }
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                editedTicketMsg,
+                              );
                             } else {
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.raffleEditingError,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.raffleAlreadyExistTicket,
-                                );
-                              }
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                addingErrorMsg,
+                              );
                             }
                           });
                         } else {

@@ -128,6 +128,14 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                           context,
                                                         )!.advertDeleteAnnouncer,
                                                     onYes: () {
+                                                      final removedAnnouncerMsg =
+                                                          AppLocalizations.of(
+                                                            context,
+                                                          )!.advertRemovedAnnouncer;
+                                                      final removingErrorMsg =
+                                                          AppLocalizations.of(
+                                                            context,
+                                                          )!.advertRemovingError;
                                                       tokenExpireWrapper(ref, () async {
                                                         final value = await announcerListNotifier
                                                             .deleteAnnouncer(
@@ -142,16 +150,12 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                         if (value) {
                                                           displayToastWithContext(
                                                             TypeMsg.msg,
-                                                            AppLocalizations.of(
-                                                              context,
-                                                            )!.advertRemovedAnnouncer,
+                                                            removedAnnouncerMsg,
                                                           );
                                                         } else {
                                                           displayToastWithContext(
                                                             TypeMsg.error,
-                                                            AppLocalizations.of(
-                                                              context,
-                                                            )!.advertRemovingError,
+                                                            removingErrorMsg,
                                                           );
                                                         }
                                                         announcerListNotifier

@@ -115,6 +115,12 @@ class SearchUser extends HookConsumerWidget {
                         )!.adminRemoveGroupMember,
                         title: AppLocalizations.of(context)!.adminDeleting,
                         onYes: () async {
+                          final updatedGroupMsg = AppLocalizations.of(
+                            context,
+                          )!.adminUpdatedGroup;
+                          final updatingErrorMsg = AppLocalizations.of(
+                            context,
+                          )!.adminUpdatingError;
                           await tokenExpireWrapper(ref, () async {
                             Group newGroup = g[0].copyWith(
                               members: g[0].members
@@ -132,14 +138,12 @@ class SearchUser extends HookConsumerWidget {
                               );
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                AppLocalizations.of(context)!.adminUpdatedGroup,
+                                updatedGroupMsg,
                               );
                             } else {
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                AppLocalizations.of(
-                                  context,
-                                )!.adminUpdatingError,
+                                updatingErrorMsg,
                               );
                             }
                           });

@@ -95,6 +95,12 @@ class PhAddEditPhPage extends HookConsumerWidget {
                         if (key.currentState == null) {
                           return;
                         }
+                        final addedPhMsg = isEdit
+                            ? AppLocalizations.of(context)!.phEdited
+                            : AppLocalizations.of(context)!.phAdded;
+                        final phAddingFileErrorMsg = AppLocalizations.of(
+                          context,
+                        )!.phAddingFileError;
                         if (true &&
                             (!listEquals(phSendPdf, Uint8List(0)) || isEdit)) {
                           await tokenExpireWrapper(ref, () async {
@@ -134,16 +140,14 @@ class PhAddEditPhPage extends HookConsumerWidget {
                                 }
                                 displayPhToastWithContext(
                                   TypeMsg.msg,
-                                  isEdit
-                                      ? AppLocalizations.of(context)!.phEdited
-                                      : AppLocalizations.of(context)!.phAdded,
+                                  addedPhMsg,
                                 );
                                 editPdfNotifier.editPdf(false);
                               }
                             } else {
                               displayPhToastWithContext(
                                 TypeMsg.error,
-                                AppLocalizations.of(context)!.phAddingFileError,
+                                phAddingFileErrorMsg,
                               );
                             }
                           });

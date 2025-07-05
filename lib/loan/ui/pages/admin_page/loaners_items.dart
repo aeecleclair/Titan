@@ -101,6 +101,12 @@ class LoanersItems extends HookConsumerWidget {
                           context,
                         )!.loanDeletingItem,
                         onYes: () {
+                          final deletedItemMsg = AppLocalizations.of(
+                            context,
+                          )!.loanDeletedItem;
+                          final deletingErrorMsg = AppLocalizations.of(
+                            context,
+                          )!.loanDeletingError;
                           tokenExpireWrapper(ref, () async {
                             final value = await itemListNotifier.deleteItem(
                               e,
@@ -112,12 +118,12 @@ class LoanersItems extends HookConsumerWidget {
                               });
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                AppLocalizations.of(context)!.loanDeletedItem,
+                                deletedItemMsg,
                               );
                             } else {
                               displayToastWithContext(
                                 TypeMsg.error,
-                                AppLocalizations.of(context)!.loanDeletingError,
+                                deletingErrorMsg,
                               );
                             }
                           });

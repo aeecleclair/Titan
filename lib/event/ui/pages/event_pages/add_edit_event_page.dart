@@ -413,6 +413,18 @@ class AddEditEventPage extends HookConsumerWidget {
                             if (key.currentState == null) {
                               return;
                             }
+                            final editedEventMsg = AppLocalizations.of(
+                              context,
+                            )!.eventEditedEvent;
+                            final addedEventMsg = AppLocalizations.of(
+                              context,
+                            )!.eventAddedEvent;
+                            final editingErrorMsg = AppLocalizations.of(
+                              context,
+                            )!.eventEditingError;
+                            final addingErrorMsg = AppLocalizations.of(
+                              context,
+                            )!.eventAddingError;
                             if (key.currentState!.validate()) {
                               if (allDay.value) {
                                 start.text =
@@ -519,32 +531,24 @@ class AddEditEventPage extends HookConsumerWidget {
                                     if (isEdit) {
                                       displayToastWithContext(
                                         TypeMsg.msg,
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.eventEditedEvent,
+                                        editedEventMsg,
                                       );
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.msg,
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.eventAddedEvent,
+                                        addedEventMsg,
                                       );
                                     }
                                   } else {
                                     if (isEdit) {
                                       displayToastWithContext(
                                         TypeMsg.error,
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.eventEditingError,
+                                        editingErrorMsg,
                                       );
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.error,
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.eventAddingError,
+                                        addingErrorMsg,
                                       );
                                     }
                                   }
