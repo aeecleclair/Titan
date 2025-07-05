@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/others/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/version/providers/titan_version_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
