@@ -112,6 +112,22 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
     }
   }
 
+  void showCameraPermissionDeniedDialog() async {
+    await showDialog(
+      context: context,
+      builder: (context) => CustomDialogBox(
+        title: 'Permission caméra requise',
+        descriptions:
+            'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. Veuillez accorder cette permission dans les paramètres de votre appareil.',
+        onYes: () async {
+          Navigator.of(context).pop();
+          await openAppSettings();
+        },
+        yesText: 'Paramètres',
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -122,19 +138,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
     unawaited(() async {
       await controller.start();
       if (!controller.value.hasCameraPermission) {
-        showDialog(
-          context: context,
-          builder: (context) => CustomDialogBox(
-            title: 'Permission caméra requise',
-            descriptions:
-                'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. Veuillez accorder cette permission dans les paramètres de votre appareil.',
-            onYes: () async {
-              Navigator.of(context).pop();
-              await openAppSettings();
-            },
-            yesText: 'Paramètres',
-          ),
-        );
+        showCameraPermissionDeniedDialog();
       }
     }());
   }

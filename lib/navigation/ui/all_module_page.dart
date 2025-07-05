@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/navigation/providers/navbar_module_list.dart';
+import 'package:titan/navigation/ui/top_bar.dart';
 import 'package:titan/settings/providers/module_list_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
@@ -19,26 +20,41 @@ class AllModulePage extends ConsumerWidget {
     );
     return Container(
       color: ColorConstants.background,
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         children: [
-          CustomSearchBar(onSearch: (String query) {}, onFilter: () {}),
-          SizedBox(height: 30),
-          ...modules.map(
-            (module) => ListItem(
-              title: module.name,
-              subtitle: module.description,
-              onTap: () {
-                navbarListModuleNotifier.pushModule(module);
-                final pathForwardingNotifier = ref.watch(
-                  pathForwardingProvider.notifier,
-                );
-                pathForwardingNotifier.forward(module.root);
-                QR.to(module.root);
-              },
+          TopBar(),
+          Expanded(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  children: [
+                    CustomSearchBar(
+                      onSearch: (String query) {},
+                      onFilter: () {},
+                    ),
+                    SizedBox(height: 30),
+                    ...modules.map(
+                      (module) => ListItem(
+                        title: module.name,
+                        subtitle: module.description,
+                        onTap: () {
+                          navbarListModuleNotifier.pushModule(module);
+                          final pathForwardingNotifier = ref.watch(
+                            pathForwardingProvider.notifier,
+                          );
+                          pathForwardingNotifier.forward(module.root);
+                          QR.to(module.root);
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 80),
+                  ],
+                ),
+              ),
             ),
           ),
-          SizedBox(height: 80),
         ],
       ),
     );
