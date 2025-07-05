@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/phonebook/providers/association_filtered_list_provider.dart';
-import 'package:titan/phonebook/providers/association_kind_provider.dart';
+import 'package:titan/phonebook/providers/association_groupement_list_provider.dart';
+import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/ui/components/kinds_bar.dart';
+import 'package:titan/phonebook/tools/constants.dart';
+import 'package:titan/phonebook/ui/components/groupement_bar.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/association_research_bar.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/editable_association_card.dart';
@@ -19,6 +21,7 @@ import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:tuple/tuple.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
 class AdminPage extends HookConsumerWidget {
@@ -27,7 +30,12 @@ class AdminPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final associationNotifier = ref.watch(associationProvider.notifier);
-    final kindNotifier = ref.watch(associationKindProvider.notifier);
+    final associationGroupementsNotifier = ref.watch(
+      associationGroupementProvider.notifier,
+    );
+    final associationGroupementList = ref.watch(
+      associationGroupementListProvider,
+    );
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associationList = ref.watch(associationListProvider);
     final associationFilteredList = ref.watch(associationFilteredListProvider);
@@ -50,39 +58,46 @@ class AdminPage extends HookConsumerWidget {
               child: AssociationResearchBar(),
             ),
             const SizedBox(height: 10),
-            AsyncChild(
-              value: associationList,
-              builder: (context, associations) {
-                return Column(
-                  children: [
-                    KindsBar(),
-                    GestureDetector(
-                      onTap: isPhonebookAdmin
-                          ? () {
-                              QR.to(
-                                PhonebookRouter.root +
-                                    PhonebookRouter.admin +
-                                    PhonebookRouter.createAssociaiton,
-                              );
-                            }
-                          : null,
-                      child: CardLayout(
-                        margin: const EdgeInsets.only(
-                          bottom: 10,
-                          top: 20,
-                          left: 40,
-                          right: 40,
-                        ),
-                        width: double.infinity,
-                        height: 100,
-                        color: isPhonebookAdmin
-                            ? Colors.white
-                            : ColorConstants.deactivated2,
-                        child: Center(
-                          child: HeroIcon(
-                            HeroIcons.plus,
-                            size: 40,
-                            color: Colors.grey.shade500,
+            Async2Child(
+              values: Tuple2(associationList, associationGroupementList),
+              builder:
+                  (
+                    context,
+                    syncAssociationList,
+                    syncAssociationGroupementList,
+                  ) {
+                    return Column(
+                      children: [
+                        KindsBar(),
+                        GestureDetector(
+                          onTap: isPhonebookAdmin
+                              ? () {
+                                  QR.to(
+                                    PhonebookRouter.root +
+                                        PhonebookRouter.admin +
+                                        PhonebookRouter.createAssociaiton,
+                                  );
+                                }
+                              : null,
+                          child: CardLayout(
+                            margin: const EdgeInsets.only(
+                              bottom: 10,
+                              top: 20,
+                              left: 40,
+                              right: 40,
+                            ),
+                            width: double.infinity,
+                            height: 100,
+                            color: isPhonebookAdmin
+                                ? Colors.white
+                                : ColorConstants.deactivated2,
+                            child: Center(
+                              child: HeroIcon(
+                                HeroIcons.plus,
+                                size: 40,
+                                color: Colors.grey.shade500,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -194,11 +209,9 @@ class AdminPage extends HookConsumerWidget {
                                     );
                             },
                           ),
-                        ),
-                      ),
-                  ],
-                );
-              },
+                      ],
+                    );
+                  },
             ),
           ],
         ),

@@ -3,7 +3,7 @@ class Association {
     required this.id,
     required this.name,
     required this.description,
-    required this.kind,
+    required this.groupementId,
     required this.mandateYear,
     required this.deactivated,
     required this.associatedGroups,
@@ -12,7 +12,7 @@ class Association {
   late final String id;
   late final String name;
   late final String description;
-  late final String kind;
+  late final String groupementId;
   late final int mandateYear;
   late final bool deactivated;
   late final List<String> associatedGroups;
@@ -21,7 +21,7 @@ class Association {
     id = json['id'];
     name = json['name'];
     description = json['description'];
-    kind = json['kind'];
+    groupementId = json['groupement_id'];
     mandateYear = json['mandate_year'];
     deactivated = json['deactivated'];
     associatedGroups = List<String>.from(json['associated_groups']);
@@ -32,7 +32,7 @@ class Association {
       'id': id,
       'name': name,
       'description': description,
-      'kind': kind,
+      'groupement_id': groupementId,
       'mandate_year': mandateYear,
       'deactivated': deactivated,
       'associated_groups': associatedGroups,
@@ -44,7 +44,7 @@ class Association {
     String? id,
     String? name,
     String? description,
-    String? kind,
+    String? groupementId,
     int? mandateYear,
     bool? deactivated,
     List<String>? associatedGroups,
@@ -53,7 +53,7 @@ class Association {
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
-      kind: kind ?? this.kind,
+      groupementId: groupementId ?? this.groupementId,
       mandateYear: mandateYear ?? this.mandateYear,
       deactivated: deactivated ?? this.deactivated,
       associatedGroups: associatedGroups ?? this.associatedGroups,
@@ -64,7 +64,7 @@ class Association {
     id = "";
     name = "";
     description = "";
-    kind = "";
+    groupementId = "";
     mandateYear = 0;
     deactivated = false;
     associatedGroups = [];
@@ -76,6 +76,6 @@ class Association {
 
   @override
   String toString() {
-    return "Association(Nom : $name, id : $id, description : $description, kind : $kind, mandate_year : $mandateYear, deactivated : $deactivated, associated_groups : $associatedGroups)";
+    return "Association(Nom : $name, id : $id, description : $description, groupement_id : $groupementId, mandate_year : $mandateYear, deactivated : $deactivated, associated_groups : $associatedGroups)";
   }
 }
