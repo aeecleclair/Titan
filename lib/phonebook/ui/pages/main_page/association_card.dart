@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/phonebook/class/association.dart';
+import 'package:titan/phonebook/class/association_groupement.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 
 class AssociationCard extends HookConsumerWidget {
   const AssociationCard({
     super.key,
     required this.association,
+    required this.groupement,
     required this.onClicked,
   });
 
   final Association association;
+  final AssociationGroupement groupement;
   final VoidCallback onClicked;
 
   @override
@@ -33,7 +36,7 @@ class AssociationCard extends HookConsumerWidget {
                   ),
                 ),
               ),
-              Text(association.kind),
+              Text(groupement.name),
             ],
           ),
         ),

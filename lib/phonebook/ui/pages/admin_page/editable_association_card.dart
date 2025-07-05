@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/phonebook/class/association.dart';
+import 'package:titan/phonebook/class/association_groupement.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/delete_button.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/edition_button.dart';
 
 class EditableAssociationCard extends HookConsumerWidget {
   final Association association;
+  final AssociationGroupement associationGroupement;
   final bool isPhonebookAdmin;
   final void Function() onEdit;
   final Future Function() onDelete;
   const EditableAssociationCard({
     super.key,
     required this.association,
+    required this.associationGroupement,
     required this.isPhonebookAdmin,
     required this.onEdit,
     required this.onDelete,
@@ -49,7 +52,7 @@ class EditableAssociationCard extends HookConsumerWidget {
           ),
           Expanded(
             child: Text(
-              association.kind,
+              associationGroupement.name,
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 16,
