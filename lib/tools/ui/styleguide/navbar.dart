@@ -216,7 +216,7 @@ class FloatingNavbar extends HookConsumerWidget {
 
                                   return Center(
                                     child: AutoSizeText(
-                                      item.module.name,
+                                      item.module.getName(context),
                                       style: TextStyle(
                                         color: textColor,
                                         fontSize: 14,

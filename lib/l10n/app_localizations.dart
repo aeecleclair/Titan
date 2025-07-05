@@ -6800,6 +6800,30 @@ abstract class AppLocalizations {
   /// **'Paramètres'**
   String get moduleSettings;
 
+  /// No description provided for @moduleFeed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Feed'**
+  String get moduleFeed;
+
+  /// No description provided for @moduleStyleGuide.
+  ///
+  /// In fr, this message translates to:
+  /// **'StyleGuide'**
+  String get moduleStyleGuide;
+
+  /// No description provided for @moduleAdmin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Adminitration'**
+  String get moduleAdmin;
+
+  /// No description provided for @moduleOthers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autres :'**
+  String get moduleOthers;
+
   /// No description provided for @modulePayment.
   ///
   /// In fr, this message translates to:

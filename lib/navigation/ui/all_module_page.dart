@@ -37,7 +37,7 @@ class AllModulePage extends ConsumerWidget {
                     SizedBox(height: 30),
                     ...modules.map(
                       (module) => ListItem(
-                        title: module.name,
+                        title: module.getName(context),
                         subtitle: module.description,
                         onTap: () {
                           navbarListModuleNotifier.pushModule(module);

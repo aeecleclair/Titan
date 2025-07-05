@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/event/ui/pages/detail_page/detail_page.dart'
     deferred as detail_page;
@@ -12,7 +13,7 @@ class HomeRouter {
   static const String root = '/home';
   static const String detail = '/detail';
   static final Module module = Module(
-    name: "Calendrier",
+    getName: (context) => AppLocalizations.of(context)!.moduleCalendar,
     description: "Consulter les événements et les activités",
     root: HomeRouter.root,
   );

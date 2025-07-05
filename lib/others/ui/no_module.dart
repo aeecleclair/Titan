@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/module_root_list_provider.dart';
-import 'package:titan/others/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -21,7 +20,7 @@ class NoModulePage extends HookConsumerWidget {
       },
       orElse: () {},
     );
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: ColorConstants.background,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),

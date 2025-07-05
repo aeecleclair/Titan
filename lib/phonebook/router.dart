@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/admin_page.dart';
@@ -22,7 +23,7 @@ class PhonebookRouter {
   static const String memberDetail = '/member_detail';
   static const String addEditMember = '/add_edit_member';
   static final Module module = Module(
-    name: "Annuaire",
+    getName: (context) => AppLocalizations.of(context)!.modulePhonebook,
     description: "Gérer les associations, les membres et les administrateurs",
     root: PhonebookRouter.root,
   );

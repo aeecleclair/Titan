@@ -3447,6 +3447,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get moduleSettings => 'Paramètres';
 
   @override
+  String get moduleFeed => 'Feed';
+
+  @override
+  String get moduleStyleGuide => 'StyleGuide';
+
+  @override
+  String get moduleAdmin => 'Adminitration';
+
+  @override
+  String get moduleOthers => 'Autres :';
+
+  @override
   String get modulePayment => 'Paiement';
 
   @override

@@ -3421,6 +3421,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moduleSettings => 'Settings';
 
   @override
+  String get moduleFeed => 'Feed';
+
+  @override
+  String get moduleStyleGuide => 'StyleGuide';
+
+  @override
+  String get moduleAdmin => 'Adminitration';
+
+  @override
+  String get moduleOthers => 'Others :';
+
+  @override
   String get modulePayment => 'Payment';
 
   @override

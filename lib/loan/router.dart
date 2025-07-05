@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/loan/providers/is_loan_admin_provider.dart';
 import 'package:titan/loan/ui/pages/admin_page/admin_page.dart'
@@ -24,7 +25,7 @@ class LoanRouter {
   static const String addEditItem = '/add_edit_item';
   static const String detail = '/detail';
   static final Module module = Module(
-    name: "Prêt",
+    getName: (context) => AppLocalizations.of(context)!.moduleLoan,
     description: "Gérer les prêts et les articles",
     root: LoanRouter.root,
   );
