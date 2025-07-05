@@ -53,18 +53,16 @@ Widget handleLoadingAndError(
   Color? loaderColor,
 }) {
   final nonNullOrElseBuilder = orElseBuilder ?? (context, child) => child;
-  final nonNullLoadingBuilder =
-      loadingBuilder ?? (context) => Loader(color: loaderColor);
-  final nonNullErrorBuilder =
-      errorBuilder ??
-      (error, stack) => Center(
-        child: Text(
-          "${TextConstants.error}:$error",
-          style: TextStyle(color: loaderColor),
-        ),
-      );
-  if (values.any((test) => test.hasError)) {
-    final firstError = values.firstWhere((test) => test.hasError);
+  if (values.any((value) => value.hasError)) {
+    final nonNullErrorBuilder =
+        errorBuilder ??
+        (error, stack) => Center(
+          child: Text(
+            "${TextConstants.error}:$error",
+            style: TextStyle(color: loaderColor),
+          ),
+        );
+    final firstError = values.firstWhere((value) => value.hasError);
     final error = firstError.error;
     final stackTrace = firstError.stackTrace;
     return nonNullOrElseBuilder(
@@ -72,20 +70,22 @@ Widget handleLoadingAndError(
       nonNullErrorBuilder(error, stackTrace),
     );
   }
-  if (values.any((test) => test.isLoading)) {
+  if (values.any((value) => value.isLoading)) {
+    final nonNullLoadingBuilder =
+        loadingBuilder ?? (context) => Loader(color: loaderColor);
     return nonNullOrElseBuilder(context, nonNullLoadingBuilder(context));
   }
   return nonNullOrElseBuilder(context, const SizedBox.shrink());
 }
 
-class Async2Child<P, Q> extends StatelessWidget {
+class Async2Children<P, Q> extends StatelessWidget {
   final Tuple2<AsyncValue<P>, AsyncValue<Q>> values;
-  final Widget Function(BuildContext context, P values1, Q values2) builder;
+  final Widget Function(BuildContext context, P value1, Q value2) builder;
   final Widget Function(Object? error, StackTrace? stack)? errorBuilder;
   final Widget Function(BuildContext context)? loadingBuilder;
   final Widget Function(BuildContext context, Widget child)? orElseBuilder;
   final Color? loaderColor;
-  const Async2Child({
+  const Async2Children({
     super.key,
     required this.values,
     required this.builder,
@@ -97,8 +97,7 @@ class Async2Child<P, Q> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<AsyncValue> listValues = [values.item1, values.item2];
-    if (listValues.any((test) => test.hasError) ||
-        listValues.any((test) => test.isLoading)) {
+    if (listValues.any((value) => value.hasError || value.isLoading)) {
       return handleLoadingAndError(
         listValues,
         context,
@@ -112,15 +111,15 @@ class Async2Child<P, Q> extends StatelessWidget {
   }
 }
 
-class Async3Child<P, Q, R> extends StatelessWidget {
+class Async3Children<P, Q, R> extends StatelessWidget {
   final Tuple3<AsyncValue<P>, AsyncValue<Q>, AsyncValue<R>> values;
-  final Widget Function(BuildContext context, P values1, Q values2, R value3)
+  final Widget Function(BuildContext context, P value1, Q value2, R value3)
   builder;
   final Widget Function(Object? error, StackTrace? stack)? errorBuilder;
   final Widget Function(BuildContext context)? loadingBuilder;
   final Widget Function(BuildContext context, Widget child)? orElseBuilder;
   final Color? loaderColor;
-  const Async3Child({
+  const Async3Children({
     super.key,
     required this.values,
     required this.builder,
@@ -132,8 +131,7 @@ class Async3Child<P, Q, R> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<AsyncValue> listValues = [values.item1, values.item2, values.item3];
-    if (listValues.any((test) => test.hasError) ||
-        listValues.any((test) => test.isLoading)) {
+    if (listValues.any((value) => value.hasError || value.isLoading)) {
       return handleLoadingAndError(
         listValues,
         context,
@@ -152,14 +150,14 @@ class Async3Child<P, Q, R> extends StatelessWidget {
   }
 }
 
-class Async4Child<P, Q, R, S> extends StatelessWidget {
+class Async4Children<P, Q, R, S> extends StatelessWidget {
   final Tuple4<AsyncValue<P>, AsyncValue<Q>, AsyncValue<R>, AsyncValue<S>>
   values;
   final Widget Function(
     BuildContext context,
-    P values1,
+    P value1,
     Q value2,
-    R values3,
+    R value3,
     S value4,
   )
   builder;
@@ -167,7 +165,7 @@ class Async4Child<P, Q, R, S> extends StatelessWidget {
   final Widget Function(BuildContext context)? loadingBuilder;
   final Widget Function(BuildContext context, Widget child)? orElseBuilder;
   final Color? loaderColor;
-  const Async4Child({
+  const Async4Children({
     super.key,
     required this.values,
     required this.builder,
@@ -179,8 +177,7 @@ class Async4Child<P, Q, R, S> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<AsyncValue> listValues = [values.item1, values.item2, values.item3];
-    if (listValues.any((test) => test.hasError) ||
-        listValues.any((test) => test.isLoading)) {
+    if (listValues.any((value) => value.hasError || value.isLoading)) {
       return handleLoadingAndError(
         listValues,
         context,
@@ -200,7 +197,7 @@ class Async4Child<P, Q, R, S> extends StatelessWidget {
   }
 }
 
-class Async5Child<P, Q, R, S, T> extends StatelessWidget {
+class Async5Children<P, Q, R, S, T> extends StatelessWidget {
   final Tuple5<
     AsyncValue<P>,
     AsyncValue<Q>,
@@ -211,9 +208,9 @@ class Async5Child<P, Q, R, S, T> extends StatelessWidget {
   values;
   final Widget Function(
     BuildContext context,
-    P values1,
+    P value1,
     Q value2,
-    R values3,
+    R value3,
     S value4,
     T value5,
   )
@@ -222,7 +219,7 @@ class Async5Child<P, Q, R, S, T> extends StatelessWidget {
   final Widget Function(BuildContext context)? loadingBuilder;
   final Widget Function(BuildContext context, Widget child)? orElseBuilder;
   final Color? loaderColor;
-  const Async5Child({
+  const Async5Children({
     super.key,
     required this.values,
     required this.builder,
@@ -240,8 +237,7 @@ class Async5Child<P, Q, R, S, T> extends StatelessWidget {
       values.item4,
       values.item5,
     ];
-    if (listValues.any((test) => test.hasError) ||
-        listValues.any((test) => test.isLoading)) {
+    if (listValues.any((value) => value.hasError || value.isLoading)) {
       return handleLoadingAndError(
         listValues,
         context,
