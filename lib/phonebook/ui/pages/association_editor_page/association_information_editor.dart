@@ -56,7 +56,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                 key: key,
                 child: Column(
                   children: [
-                    KindsBar(key: scrollKey),
+                    AssociationGroupementBar(key: scrollKey),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Column(

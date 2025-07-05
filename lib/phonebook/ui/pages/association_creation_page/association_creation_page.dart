@@ -60,7 +60,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              KindsBar(key: scrollKey),
+              AssociationGroupementBar(key: scrollKey),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Column(

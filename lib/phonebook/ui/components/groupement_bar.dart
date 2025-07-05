@@ -6,8 +6,8 @@ import 'package:titan/phonebook/providers/association_groupement_list_provider.d
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/item_chip.dart';
 
-class KindsBar extends HookConsumerWidget {
-  KindsBar({super.key});
+class AssociationGroupementBar extends HookConsumerWidget {
+  AssociationGroupementBar({super.key});
   final dataKey = GlobalKey();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -64,7 +64,7 @@ class KindsBar extends HookConsumerWidget {
                 },
               ),
             )
-          : SizedBox(height: 0),
+          : SizedBox.shrink(),
     );
   }
 }

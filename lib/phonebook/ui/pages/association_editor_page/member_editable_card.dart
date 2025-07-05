@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/delete_button.dart';
+import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/edition_button.dart';
 import 'package:titan/phonebook/class/association.dart';
 import 'package:titan/phonebook/class/complete_member.dart';
 import 'package:titan/phonebook/class/membership.dart';
@@ -13,8 +15,6 @@ import 'package:titan/phonebook/providers/profile_picture_provider.dart';
 import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 import 'package:titan/phonebook/router.dart';
 import 'package:titan/phonebook/tools/function.dart';
-import 'package:titan/phonebook/ui/pages/admin_page/delete_button.dart';
-import 'package:titan/phonebook/ui/pages/admin_page/edition_button.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
