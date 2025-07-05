@@ -9,7 +9,7 @@ import 'package:titan/amap/providers/scroll_controller_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/pages/list_products_page/category_page.dart';
 import 'package:titan/amap/ui/pages/list_products_page/web_page_navigation_button.dart';
-import 'package:titan/drawer/providers/is_web_format_provider.dart';
+import 'package:titan/navigation/providers/is_web_format_provider.dart';
 
 class ListProducts extends HookConsumerWidget {
   const ListProducts({super.key});

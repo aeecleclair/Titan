@@ -45,8 +45,6 @@ class ModulesPage extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: Row(
                   children: [
-                    module.getIcon(Colors.grey.shade700),
-                    const SizedBox(width: 20),
                     Text(
                       module.name,
                       style: const TextStyle(

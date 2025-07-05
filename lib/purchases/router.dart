@@ -1,7 +1,5 @@
-import 'package:either_dart/either.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/purchases/providers/purchases_admin_provider.dart';
 import 'package:titan/purchases/ui/pages/history_page/history_page.dart';
 import 'package:titan/purchases/ui/pages/main_page/main_page.dart';
@@ -23,9 +21,8 @@ class PurchasesRouter {
   static const String purchase = '/purchase';
   static final Module module = Module(
     name: "Achats",
-    icon: const Left(HeroIcons.shoppingBag),
+    description: "Gérer les achats, les tickets et l'historique",
     root: PurchasesRouter.root,
-    selected: false,
   );
   PurchasesRouter(this.ref);
 

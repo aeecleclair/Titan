@@ -1,6 +1,4 @@
-import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:titan/booking/providers/is_admin_provider.dart';
 import 'package:titan/booking/providers/is_manager_provider.dart';
 import 'package:titan/booking/ui/pages/admin_pages/add_edit_manager_page.dart'
@@ -17,7 +15,7 @@ import 'package:titan/booking/ui/pages/manager_page/manager_page.dart'
     deferred as manager_page;
 import 'package:titan/booking/ui/pages/admin_pages/add_edit_room_page.dart'
     deferred as add_edit_room_page;
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
@@ -33,9 +31,8 @@ class BookingRouter {
   static const String room = '/room';
   static final Module module = Module(
     name: "Réservation",
-    icon: const Left(HeroIcons.tableCells),
+    description: "Gérer les réservations, les salles et les managers",
     root: BookingRouter.root,
-    selected: false,
   );
   BookingRouter(this.ref);
 

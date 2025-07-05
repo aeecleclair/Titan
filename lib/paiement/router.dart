@@ -1,7 +1,5 @@
-import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/paiement/providers/is_payment_admin.dart';
 import 'package:titan/paiement/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
@@ -39,9 +37,8 @@ class PaymentRouter {
   static const String storeStats = '/storeStats';
   static final Module module = Module(
     name: "MyECLPay",
-    icon: const Left(HeroIcons.creditCard),
+    description: "Gérer les paiements, les statistiques et les appareils",
     root: PaymentRouter.root,
-    selected: false,
   );
   PaymentRouter(this.ref);
 

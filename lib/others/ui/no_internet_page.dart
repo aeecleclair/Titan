@@ -16,6 +16,7 @@ class NoInternetPage extends HookConsumerWidget {
     final isConnectedNotifier = ref.watch(isConnectedProvider.notifier);
     return Scaffold(
       body: Container(
+        color: ColorConstants.background,
         padding: const EdgeInsets.all(30),
         height: MediaQuery.of(context).size.height * 0.90,
         child: Center(
