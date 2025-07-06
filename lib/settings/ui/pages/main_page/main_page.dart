@@ -23,6 +23,8 @@ import 'package:titan/user/providers/profile_picture_provider.dart';
 import 'package:titan/version/providers/titan_version_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
+import '../../../tools/functions.dart';
+
 class SettingsMainPage extends HookConsumerWidget {
   const SettingsMainPage({super.key});
 
@@ -189,8 +191,8 @@ class SettingsMainPage extends HookConsumerWidget {
                   SettingsItem(
                     icon: HeroIcons.lockClosed,
                     onTap: () {
-                      QR.to(
-                        SettingsRouter.root + SettingsRouter.changePassword,
+                      openLink(
+                        "${getTitanHost()}calypsso/change-password/?email=${me.email}",
                       );
                     },
                     child: const Text(
