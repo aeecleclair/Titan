@@ -6821,7 +6821,7 @@ abstract class AppLocalizations {
   /// No description provided for @moduleOthers.
   ///
   /// In fr, this message translates to:
-  /// **'Autres :'**
+  /// **'Autres'**
   String get moduleOthers;
 
   /// No description provided for @modulePayment.

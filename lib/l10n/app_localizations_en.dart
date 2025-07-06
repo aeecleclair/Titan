@@ -3427,10 +3427,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moduleStyleGuide => 'StyleGuide';
 
   @override
-  String get moduleAdmin => 'Adminitration';
+  String get moduleAdmin => 'Administration';
 
   @override
-  String get moduleOthers => 'Others :';
+  String get moduleOthers => 'Others';
 
   @override
   String get modulePayment => 'Payment';

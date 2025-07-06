@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/login/providers/animation_provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_fonts/google_fonts.dart';
@@ -103,6 +104,7 @@ class MyApp extends HookConsumerWidget {
       scrollBehavior: MyCustomScrollBehavior(),
       supportedLocales: const [Locale('en', 'US'), Locale('fr', 'FR')],
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

@@ -1120,7 +1120,7 @@
     "moduleFeed": "Feed",
     "moduleStyleGuide": "StyleGuide",
     "moduleAdmin": "Adminitration",
-    "moduleOthers": "Autres :",
+    "moduleOthers": "Autres",
     "modulePayment": "Paiement",
     "paiementTopUp" : "Recharge",
     "paiementStoreManagement" : "Gestion des associations",

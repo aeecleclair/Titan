@@ -3456,7 +3456,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get moduleAdmin => 'Adminitration';
 
   @override
-  String get moduleOthers => 'Autres :';
+  String get moduleOthers => 'Autres';
 
   @override
   String get modulePayment => 'Paiement';
