@@ -81,7 +81,6 @@ class AppRouter {
       HomeRouter(ref).route(),
       LoanRouter(ref).route(),
       LoginRouter(ref).route(),
-      LoginRouter(ref).passwordRoute(),
       PaymentRouter(ref).route(),
       PhonebookRouter(ref).route(),
       PhRouter(ref).route(),
