@@ -80,7 +80,6 @@ class AppRouter {
       FlappyBirdRouter(ref).route(),
       HomeRouter(ref).route(),
       LoanRouter(ref).route(),
-      LoginRouter(ref).accountRoute(),
       LoginRouter(ref).route(),
       LoginRouter(ref).passwordRoute(),
       PaymentRouter(ref).route(),
