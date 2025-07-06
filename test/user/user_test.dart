@@ -396,30 +396,4 @@ void main() {
       expect(await userNotifier.updateMe(newUser), false);
     });
   });
-
-  group('Testing changePassword', () {
-    test('Should change password', () async {
-      final mockUser = MockUserRepository();
-      final User user = User.empty();
-      when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
-      when(
-        () => mockUser.changePassword('old', 'new', user.email),
-      ).thenAnswer((_) async => true);
-      final UserNotifier userNotifier = UserNotifier(userRepository: mockUser);
-      await userNotifier.loadMe();
-      expect(await userNotifier.changePassword('old', 'new', user), true);
-    });
-
-    test('Should catch error when changePassword fail', () async {
-      final mockUser = MockUserRepository();
-      final User user = User.empty();
-      when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
-      when(
-        () => mockUser.changePassword('old', 'new', user.email),
-      ).thenAnswer((_) async => false);
-      final UserNotifier userNotifier = UserNotifier(userRepository: mockUser);
-      await userNotifier.loadMe();
-      expect(await userNotifier.changePassword('old', 'new', user), false);
-    });
-  });
 }

@@ -4,7 +4,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/login/providers/animation_provider.dart';
-import 'package:titan/login/router.dart';
 import 'package:titan/login/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
@@ -87,6 +86,7 @@ class LeftPanel extends HookConsumerWidget {
                       .watch(authTokenProvider)
                       .when(
                         data: (token) {
+                          controller?.reverse();
                           QR.to(pathForwarding.path);
                         },
                         error: (e, s) {
@@ -96,7 +96,9 @@ class LeftPanel extends HookConsumerWidget {
                             LoginTextConstants.loginFailed,
                           );
                         },
-                        loading: () {},
+                        loading: () {
+                          controller?.forward();
+                        },
                       );
                 },
                 builder: (child) => Container(
@@ -158,46 +160,7 @@ class LeftPanel extends HookConsumerWidget {
                 ),
               ),
               const Spacer(flex: 3),
-              SizedBox(
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        QR.to(LoginRouter.createAccount);
-                        controller?.forward();
-                      },
-                      child: const Text(
-                        LoginTextConstants.createAccount,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                          color: Color.fromARGB(255, 48, 48, 48),
-                        ),
-                      ),
-                    ),
-                    const Spacer(flex: 4),
-                    GestureDetector(
-                      onTap: () {
-                        QR.to(LoginRouter.forgotPassword);
-                        controller?.forward();
-                      },
-                      child: const Text(
-                        LoginTextConstants.forgotPassword,
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                          color: Color.fromARGB(255, 48, 48, 48),
-                        ),
-                      ),
-                    ),
-                    const Spacer(),
-                  ],
-                ),
-              ),
+              SizedBox(width: double.infinity),
               const SizedBox(height: 50),
             ],
           ),
