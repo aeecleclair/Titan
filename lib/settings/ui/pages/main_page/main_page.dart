@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/settings/ui/pages/main_page/change_pass.dart';
 
 import 'package:titan/settings/ui/settings.dart';
