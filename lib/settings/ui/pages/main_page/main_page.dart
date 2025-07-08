@@ -1,322 +1,219 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/flappybird/ui/flappybird_item_chip.dart';
-import 'package:titan/settings/providers/logs_provider.dart';
-import 'package:titan/settings/router.dart';
-import 'package:titan/settings/ui/pages/main_page/settings_item.dart';
-import 'package:titan/settings/ui/settings.dart';
-import 'package:titan/tools/ui/widgets/align_left_text.dart';
-import 'package:titan/tools/ui/builders/async_child.dart';
-import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:titan/tools/ui/layouts/item_chip.dart';
-import 'package:titan/tools/ui/layouts/refresher.dart';
-import 'package:titan/tools/repository/repository.dart';
-import 'package:titan/user/providers/user_provider.dart';
-import 'package:titan/user/providers/profile_picture_provider.dart';
-import 'package:titan/version/providers/titan_version_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/settings/ui/pages/main_page/change_pass.dart';
+
+import 'package:titan/settings/ui/settings.dart';
+import 'package:titan/tools/constants.dart';
+
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/button.dart';
+import 'package:titan/tools/ui/styleguide/item_chip.dart';
+import 'package:titan/tools/ui/styleguide/list_item.dart';
+import 'package:titan/tools/ui/styleguide/list_item_template.dart';
+import 'package:titan/tools/ui/styleguide/searchbar.dart';
 
 class SettingsMainPage extends HookConsumerWidget {
   const SettingsMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final me = ref.watch(userProvider);
-    final meNotifier = ref.watch(asyncUserProvider.notifier);
-    final titanVersion = ref.watch(titanVersionProvider);
-    final profilePicture = ref.watch(profilePictureProvider);
-    ref.watch(logsProvider.notifier).getLogs();
-
-    void displayToastWithContext(TypeMsg type, String msg) {
-      displayToast(context, type, msg);
-    }
-
     return SettingsTemplate(
-      child: Refresher(
-        onRefresh: () async {
-          await meNotifier.loadMe();
-        },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 25),
-            AsyncChild(
-              value: profilePicture,
-              builder: (context, profile) {
-                return Center(
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.3),
-                              spreadRadius: 6,
-                              blurRadius: 10,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: CircleAvatar(
-                          radius: 70,
-                          backgroundImage: profile.isEmpty
-                              ? AssetImage(getTitanLogo())
-                              : Image.memory(profile).image,
-                        ),
-                      ),
-                      Positioned(
-                        top: 0,
-                        left: -MediaQuery.of(context).size.width / 2 + 70,
-                        child: Column(
+            CustomSearchBar(
+              onFilter: () async {
+                await showCustomBottomModal(
+                  modal: BottomModalTemplate(
+                    title: 'Filtrer',
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Groupes d\'association'),
+                        SizedBox(height: 10),
+                        HorizontalListView(
+                          height: 50,
                           children: [
-                            const SizedBox(height: 125),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.white.withValues(alpha: 0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 10,
-                                    offset: const Offset(-2, -3),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    children: [
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        me.nickname ?? me.firstname,
-                                        style: const TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 3),
-                                  Text(
-                                    me.nickname != null
-                                        ? "${me.firstname} ${me.name}"
-                                        : me.name,
-                                    style: const TextStyle(fontSize: 20),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            ItemChip(child: Text('Option 1')),
+                            ItemChip(child: Text('Option 2')),
+                            ItemChip(child: Text('Option 3')),
                           ],
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 30),
+                        Text('Associations'),
+                        SizedBox(height: 10),
+                        HorizontalListView(
+                          height: 50,
+                          children: [
+                            ItemChip(child: Text('Association 1')),
+                            ItemChip(child: Text('Association 2')),
+                            ItemChip(child: Text('Association 3')),
+                          ],
+                        ),
+                        SizedBox(height: 40),
+                        Button(
+                          text: 'Appliquer',
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    ),
                   ),
+                  context: context,
+                  ref: ref,
                 );
               },
-              errorBuilder: (e, s) =>
-                  const HeroIcon(HeroIcons.userCircle, size: 140),
+              onSearch: (_) {},
             ),
-            const SizedBox(height: 100),
-            HorizontalListView.builder(
-              height: 40,
-              items: me.groups,
-              itemBuilder: (context, item, i) => ItemChip(
-                selected: true,
-                child: Text(
-                  capitalize(item.name),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+            const SizedBox(height: 20),
+            const Text(
+              "Paramètres",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: ColorConstants.title,
               ),
-              lastChild: const FlappyBirdItemChip(),
             ),
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Column(
-                children: [
-                  AlignLeftText(
-                    AppLocalizations.of(context)!.settingsAccount,
-                    fontSize: 25,
-                  ),
-                  const SizedBox(height: 30),
-                  SettingsItem(
-                    icon: HeroIcons.pencil,
-                    onTap: () {
-                      QR.to(SettingsRouter.root + SettingsRouter.editAccount);
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.settingsEditAccount,
-                      style: const TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  SettingsItem(
-                    icon: HeroIcons.calendarDays,
-                    onTap: () {
-                      final icalCopiedMsg = AppLocalizations.of(
-                        context,
-                      )!.settingsIcalCopied;
-                      Clipboard.setData(
-                        ClipboardData(text: "${Repository.host}calendar/ical"),
-                      ).then((value) {
-                        displayToastWithContext(TypeMsg.msg, icalCopiedMsg);
-                      });
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.settingsEventsIcal,
-                      style: const TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                  ),
-                  const SizedBox(height: 50),
-                  AlignLeftText(
-                    AppLocalizations.of(context)!.settingsSecurity,
-                    fontSize: 25,
-                  ),
-                  const SizedBox(height: 30),
-                  SettingsItem(
-                    icon: HeroIcons.lockClosed,
-                    onTap: () {
-                      QR.to(
-                        SettingsRouter.root + SettingsRouter.changePassword,
-                      );
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.settingsEditPassword,
-                      style: const TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                  ),
-                  const SizedBox(height: 50),
-                  if (!kIsWeb) ...[
-                    AlignLeftText(
-                      AppLocalizations.of(context)!.settingsHelp,
-                      fontSize: 25,
-                    ),
-                    const SizedBox(height: 30),
-                    SettingsItem(
-                      icon: HeroIcons.clipboardDocumentList,
-                      onTap: () {
-                        QR.to(SettingsRouter.root + SettingsRouter.logs);
-                      },
-                      child: Text(
-                        AppLocalizations.of(context)!.settingsLogs,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
+            const SizedBox(height: 20),
+            ListItem(
+              title: "Langue",
+              subtitle: "Français",
+              onTap: () async {
+                await showCustomBottomModal(
+                  modal: BottomModalTemplate(
+                    title: 'Choix de la langue',
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListItemTemplate(
+                          title: "🇫🇷 Français",
+                          trailing: Container(),
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 50),
-                  ],
-                  AlignLeftText(
-                    AppLocalizations.of(context)!.settingsPersonalisation,
-                    fontSize: 25,
-                  ),
-                  const SizedBox(height: 30),
-                  SettingsItem(
-                    icon: HeroIcons.queueList,
-                    onTap: () {
-                      QR.to(SettingsRouter.root + SettingsRouter.modules);
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.settingsModules,
-                      style: const TextStyle(fontSize: 16, color: Colors.black),
+                        ListItemTemplate(
+                          title: "🇬🇧 English",
+                          trailing: const HeroIcon(
+                            HeroIcons.check,
+                            color: ColorConstants.tertiary,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 30),
-                  SettingsItem(
-                    icon: HeroIcons.bellAlert,
-                    onTap: () {
-                      QR.to(SettingsRouter.root + SettingsRouter.notifications);
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.settingsNotifications,
-                      style: const TextStyle(fontSize: 16, color: Colors.black),
+                  context: context,
+                  ref: ref,
+                );
+              },
+            ),
+            ListItem(
+              title: "Notifications",
+              subtitle: "2/3 activées",
+              onTap: () async {
+                bool showAnnonceDetails = false;
+                await showCustomBottomModal(
+                  modal: BottomModalTemplate(
+                    title: 'Notifications',
+                    child: StatefulBuilder(
+                      builder: (context, setState) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ListItemTemplate(
+                              title: "Feed",
+                              trailing: Container(),
+                            ),
+                            ListItemTemplate(
+                              title: "Campagnes",
+                              trailing: const HeroIcon(
+                                HeroIcons.check,
+                                color: ColorConstants.tertiary,
+                              ),
+                            ),
+                            ListItemTemplate(
+                              title: "Annonces",
+                              trailing: const HeroIcon(
+                                HeroIcons.chevronDown,
+                                color: ColorConstants.tertiary,
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  showAnnonceDetails = !showAnnonceDetails;
+                                });
+                              },
+                            ),
+                            if (showAnnonceDetails) ...[
+                              const SizedBox(height: 8),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ListItemTemplate(
+                                      title: "BDE",
+                                      trailing: Container(),
+                                    ),
+                                    ListItemTemplate(
+                                      title: "BDS",
+                                      trailing: const HeroIcon(
+                                        HeroIcons.check,
+                                        color: ColorConstants.tertiary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ],
+                        );
+                      },
                     ),
                   ),
-                  const SizedBox(height: 50),
-                  AlignLeftText(
-                    AppLocalizations.of(context)!.settingsPersonalData,
-                    fontSize: 25,
-                  ),
-                  const SizedBox(height: 30),
-                  SettingsItem(
-                    icon: HeroIcons.circleStack,
-                    onTap: () async {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return CustomDialogBox(
-                            title: AppLocalizations.of(
-                              context,
-                            )!.settingsDetelePersonalData,
-                            descriptions: AppLocalizations.of(
-                              context,
-                            )!.settingsDetelePersonalDataDesc,
-                            onYes: () async {
-                              final sendedDemandMsg = AppLocalizations.of(
-                                context,
-                              )!.settingsSendedDemand;
-                              final errorSendingDemandMsg = AppLocalizations.of(
-                                context,
-                              )!.settingsErrorSendingDemand;
-                              final value = await meNotifier.deletePersonal();
-                              if (value) {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  sendedDemandMsg,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  errorSendingDemandMsg,
-                                );
-                              }
-                            },
-                          );
-                        },
-                      );
-                    },
-                    child: Text(
-                      AppLocalizations.of(context)!.settingsDetelePersonalData,
-                      style: const TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                  ),
-                  const SizedBox(height: 60),
-                  Text(
-                    "${AppLocalizations.of(context)!.settingsVersion} $titanVersion",
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  AutoSizeText(
-                    Repository.host,
-                    maxLines: 1,
-                    minFontSize: 10,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                ],
+                  context: context,
+                  ref: ref,
+                );
+              },
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              "Événement",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: ColorConstants.title,
               ),
+            ),
+            const ListItem(
+              title: "Lien ical",
+              subtitle: "Synchroniser avec votre calendrier",
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              "Profil",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: ColorConstants.title,
+              ),
+            ),
+            ListItem(
+              title: "Mot de passe",
+              subtitle: "Changer mon mot de passe",
+              onTap: () async {
+                await showCustomBottomModal(
+                  modal: BottomModalTemplate(
+                    title: 'Mot de passe',
+                    child: ChangePassPage(),
+                  ),
+                  context: context,
+                  ref: ref,
+                );
+              },
             ),
           ],
         ),
