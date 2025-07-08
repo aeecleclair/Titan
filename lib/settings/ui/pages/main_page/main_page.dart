@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/settings/ui/pages/main_page/change_pass.dart';
 
 import 'package:titan/settings/ui/settings.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 
@@ -20,6 +23,10 @@ class SettingsMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
     return SettingsTemplate(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -187,9 +194,19 @@ class SettingsMainPage extends HookConsumerWidget {
                 color: ColorConstants.title,
               ),
             ),
-            const ListItem(
+            ListItem(
               title: "Lien ical",
               subtitle: "Synchroniser avec votre calendrier",
+              onTap: () {
+                Clipboard.setData(
+                  ClipboardData(text: "${Repository.host}calendar/ical"),
+                ).then((value) {
+                  displayToastWithContext(
+                    TypeMsg.msg,
+                    "Lien ical copié dans le presse-papiers",
+                  );
+                });
+              },
             ),
             const SizedBox(height: 20),
             const Text(
