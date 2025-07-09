@@ -7,7 +7,7 @@ import 'package:titan/admin/providers/all_account_types_list_provider.dart';
 import 'package:titan/admin/providers/all_groups_list_provider.dart';
 import 'package:titan/admin/providers/is_expanded_list_provider.dart';
 import 'package:titan/admin/providers/module_visibility_list_provider.dart';
-import 'package:titan/admin/tools/constants.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ModulesExpansionPanel extends HookConsumerWidget {
   final List<ModuleVisibility> modules;
@@ -52,8 +52,8 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                   Column(
                     children: [
                       const Divider(),
-                      const Text(
-                        AdminTextConstants.accountTypes,
+                      Text(
+                        AppLocalizations.of(context)!.adminAccountTypes,
                         style: TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
                           fontSize: 20,
@@ -133,9 +133,9 @@ class ModulesExpansionPanel extends HookConsumerWidget {
                   const Divider(),
                   Column(
                     children: [
-                      const Text(
-                        AdminTextConstants.groups,
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.adminGroups,
+                        style: const TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
                           fontSize: 20,
                           fontWeight: FontWeight.w900,

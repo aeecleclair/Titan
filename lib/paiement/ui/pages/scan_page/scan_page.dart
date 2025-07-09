@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/providers/barcode_provider.dart';
 import 'package:titan/paiement/providers/bypass_provider.dart';
 import 'package:titan/paiement/providers/ongoing_transaction.dart';
@@ -77,7 +78,7 @@ class ScanPage extends HookConsumerWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              "Limité à ${store.structure.associationMembership.name}",
+                              "${AppLocalizations.of(context)!.paiementLimitedTo} ${store.structure.associationMembership.name}",
                               style: TextStyle(
                                 color: bypass
                                     ? Colors.white.withValues(alpha: 0.5)
@@ -149,7 +150,9 @@ class ScanPage extends HookConsumerWidget {
                                   child: Column(
                                     children: [
                                       Text(
-                                        "Montant",
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.paiementAmount,
                                         style: TextStyle(
                                           fontSize: 13,
                                           color: Colors.white,
@@ -223,8 +226,10 @@ class ScanPage extends HookConsumerWidget {
                               builder: (context, child) {
                                 return Opacity(
                                   opacity: opacity.value,
-                                  child: const Text(
-                                    'Scanner un code',
+                                  child: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.paiementScanCode,
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -247,7 +252,7 @@ class ScanPage extends HookConsumerWidget {
                   const Spacer(),
                   AsyncChild(
                     value: ongoingTransaction,
-                    errorBuilder: (context, child) => Padding(
+                    errorBuilder: (errorContext, child) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: GestureDetector(
                         child: Container(
@@ -258,8 +263,8 @@ class ScanPage extends HookConsumerWidget {
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white.withValues(alpha: 0.8),
                           ),
-                          child: const Text(
-                            'Suivant',
+                          child: Text(
+                            AppLocalizations.of(context)!.paiementNext,
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -285,9 +290,11 @@ class ScanPage extends HookConsumerWidget {
                                   context: context,
                                   builder: (context) {
                                     return CustomDialogBox(
-                                      title: "Annuler la transaction",
+                                      title: AppLocalizations.of(
+                                        context,
+                                      )!.paiementCancelTransaction,
                                       descriptions:
-                                          "Voulez-vous vraiment annuler la transaction de ${formatter.format(transaction.total / 100)} € ?",
+                                          "${AppLocalizations.of(context)!.paiementTransactionCancelledDescription} ${formatter.format(transaction.total / 100)} € ?",
                                       onYes: () async {
                                         tokenExpireWrapper(ref, () async {
                                           final value =
@@ -300,7 +307,9 @@ class ScanPage extends HookConsumerWidget {
                                               if (value) {
                                                 displayToastWithContext(
                                                   TypeMsg.msg,
-                                                  "Transaction annulée",
+                                                  AppLocalizations.of(
+                                                    context,
+                                                  )!.paiementTransactionCancelled,
                                                 );
                                                 ref
                                                     .read(
@@ -311,7 +320,9 @@ class ScanPage extends HookConsumerWidget {
                                               } else {
                                                 displayToastWithContext(
                                                   TypeMsg.error,
-                                                  "Erreur lors de l'annulation",
+                                                  AppLocalizations.of(
+                                                    context,
+                                                  )!.paiementTransactionCancelledError,
                                                 );
                                               }
                                               ongoingTransactionNotifier
@@ -346,8 +357,8 @@ class ScanPage extends HookConsumerWidget {
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white.withValues(alpha: 0.8),
                                 ),
-                                child: const Text(
-                                  'Suivant',
+                                child: Text(
+                                  AppLocalizations.of(context)!.paiementNext,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,

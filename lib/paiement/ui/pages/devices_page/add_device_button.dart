@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class AddDeviceButton extends StatelessWidget {
@@ -60,7 +61,7 @@ class AddDeviceButton extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        "Ajouter cet appareil",
+                        AppLocalizations.of(context)!.paiementAddThisDevice,
                         style: TextStyle(
                           color: Color(0xff204550),
                           fontSize: 20,

@@ -16,6 +16,7 @@ import 'package:titan/amap/ui/pages/presentation_page/text.dart'
     deferred as presentation_page;
 import 'package:titan/amap/ui/pages/product_pages/add_edit_product.dart'
     deferred as add_edit_product;
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
@@ -33,7 +34,7 @@ class AmapRouter {
   static const String presentation = '/presentation';
   static const String addEditProduct = '/add_edit_product';
   static final Module module = Module(
-    name: "Amap",
+    getName: (context) => AppLocalizations.of(context)!.amapAmap,
     description: "Gérer les livraisons et les produits",
     root: AmapRouter.root,
   );

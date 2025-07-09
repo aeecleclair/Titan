@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/paiement/providers/is_payment_admin.dart';
 import 'package:titan/paiement/ui/pages/admin_page/admin_page.dart'
@@ -36,7 +37,7 @@ class PaymentRouter {
   static const String storeAdmin = '/storeAdmin';
   static const String storeStats = '/storeStats';
   static final Module module = Module(
-    name: "MyECLPay",
+    getName: (context) => AppLocalizations.of(context)!.modulePayment,
     description: "Gérer les paiements, les statistiques et les appareils",
     root: PaymentRouter.root,
   );

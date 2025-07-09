@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/feed/router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/navigation/providers/display_quit_popup.dart';
 import 'package:titan/navigation/providers/navbar_animation.dart';
@@ -97,7 +98,9 @@ class DrawerTemplate extends HookConsumerWidget {
                               }),
                               FloatingNavbarItem(
                                 module: Module(
-                                  name: 'Autres',
+                                  getName: (context) => AppLocalizations.of(
+                                    context,
+                                  )!.moduleOthers,
                                   description: '',
                                   root: AppRouter.allModules,
                                 ),

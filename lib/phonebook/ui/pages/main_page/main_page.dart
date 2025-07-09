@@ -8,7 +8,6 @@ import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/components/kinds_bar.dart';
 import 'package:titan/phonebook/ui/pages/main_page/association_card.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
@@ -17,6 +16,7 @@ import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/widgets/admin_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PhonebookMainPage extends HookConsumerWidget {
   const PhonebookMainPage({super.key});
@@ -69,8 +69,12 @@ class PhonebookMainPage extends HookConsumerWidget {
                     KindsBar(),
                     const SizedBox(height: 30),
                     if (associations.isEmpty)
-                      const Center(
-                        child: Text(PhonebookTextConstants.noAssociationFound),
+                      Center(
+                        child: Text(
+                          AppLocalizations.of(
+                            context,
+                          )!.phonebookNoAssociationFound,
+                        ),
                       )
                     else
                       ...associationFilteredList.map(

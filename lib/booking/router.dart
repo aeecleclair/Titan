@@ -15,6 +15,7 @@ import 'package:titan/booking/ui/pages/manager_page/manager_page.dart'
     deferred as manager_page;
 import 'package:titan/booking/ui/pages/admin_pages/add_edit_room_page.dart'
     deferred as add_edit_room_page;
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
@@ -30,7 +31,7 @@ class BookingRouter {
   static const String detail = '/detail';
   static const String room = '/room';
   static final Module module = Module(
-    name: "Réservation",
+    getName: (context) => AppLocalizations.of(context)!.moduleBooking,
     description: "Gérer les réservations, les salles et les managers",
     root: BookingRouter.root,
   );

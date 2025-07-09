@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/purchases/providers/purchases_admin_provider.dart';
 import 'package:titan/purchases/ui/pages/history_page/history_page.dart';
@@ -20,7 +21,7 @@ class PurchasesRouter {
   static const String ticket = '/ticket';
   static const String purchase = '/purchase';
   static final Module module = Module(
-    name: "Achats",
+    getName: (context) => AppLocalizations.of(context)!.modulePurchases,
     description: "Gérer les achats, les tickets et l'historique",
     root: PurchasesRouter.root,
   );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:titan/tools/constants.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -14,7 +13,7 @@ class CustomButton extends StatelessWidget {
     required this.onTap,
     this.textColor = Colors.white,
     this.color = Colors.black,
-    this.text = TextConstants.admin,
+    this.text = 'Admin',
     this.colors,
     required this.icon,
   });

@@ -9,7 +9,6 @@ import 'package:titan/cinema/providers/cinema_topic_provider.dart';
 import 'package:titan/cinema/providers/session_poster_map_provider.dart';
 import 'package:titan/cinema/providers/session_poster_provider.dart';
 import 'package:titan/cinema/providers/session_provider.dart';
-import 'package:titan/cinema/tools/constants.dart';
 import 'package:titan/cinema/tools/functions.dart';
 import 'package:titan/service/class/message.dart';
 import 'package:titan/service/local_notification_service.dart';
@@ -17,6 +16,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({super.key});
@@ -153,7 +153,7 @@ class DetailPage extends HookConsumerWidget {
                       child: Text(
                         session.overview != null
                             ? session.overview!
-                            : CinemaTextConstants.noOverview,
+                            : AppLocalizations.of(context)!.cinemaNoOverview,
                         textAlign: TextAlign.left,
                         style: const TextStyle(fontSize: 15),
                       ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:titan/booking/class/booking.dart';
-import 'package:titan/booking/tools/constants.dart';
 import 'package:titan/booking/ui/calendar/calendar_dialog_button.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class CalendarDialog extends StatelessWidget {
   final Booking booking;
@@ -50,7 +50,7 @@ class CalendarDialog extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                "${BookingTextConstants.bookedfor} ${booking.entity} ${BookingTextConstants.by} ${booking.applicant.getName()}",
+                "${AppLocalizations.of(context)!.bookingBookedFor} ${booking.entity} ${AppLocalizations.of(context)!.bookingBy} ${booking.applicant.getName()}",
                 style: const TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 15,
@@ -103,7 +103,9 @@ class CalendarDialog extends StatelessWidget {
                     Flexible(
                       child: Text(
                         booking.applicant.phone ??
-                            BookingTextConstants.noPhoneRegistered,
+                            AppLocalizations.of(
+                              context,
+                            )!.bookingNoPhoneRegistered,
                         style: const TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 15,

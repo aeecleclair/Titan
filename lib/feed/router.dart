@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/feed/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
@@ -16,7 +17,7 @@ class FeedRouter {
   static const String root = '/feed';
   static const String admin = '/admin';
   static final Module module = Module(
-    name: "Feed",
+    getName: (context) => AppLocalizations.of(context)!.moduleFeed,
     description: "Consulter les actualités et mises à jour",
     root: FeedRouter.root,
   );

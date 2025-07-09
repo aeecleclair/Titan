@@ -1,14 +1,15 @@
+import 'package:flutter/widgets.dart';
 import 'package:titan/amap/class/delivery.dart';
 import 'package:titan/amap/class/order.dart';
-import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 // Slots in Titan UI must changed based on language
-String uiCollectionSlotToString(CollectionSlot slot) {
+String uiCollectionSlotToString(CollectionSlot slot, BuildContext context) {
   switch (slot) {
     case CollectionSlot.midDay:
-      return AMAPTextConstants.midDay;
+      return AppLocalizations.of(context)!.amapMidDay;
     case CollectionSlot.evening:
-      return AMAPTextConstants.evening;
+      return AppLocalizations.of(context)!.amapEvening;
   }
 }
 

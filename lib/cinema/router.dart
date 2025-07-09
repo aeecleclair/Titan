@@ -8,6 +8,7 @@ import 'package:titan/cinema/ui/pages/main_page/main_page.dart'
     deferred as main_page;
 import 'package:titan/cinema/ui/pages/session_pages/add_edit_session.dart'
     deferred as add_edit_session_page;
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
@@ -22,7 +23,7 @@ class CinemaRouter {
   static const String addEdit = '/add_edit';
   static const String detail = '/detail';
   static final Module module = Module(
-    name: "Cinéma",
+    getName: (context) => AppLocalizations.of(context)!.moduleCinema,
     description: "Gérer les séances de cinéma",
     root: CinemaRouter.root,
   );

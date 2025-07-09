@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:titan/booking/class/booking.dart';
 import 'package:titan/service/class/room.dart';
-import 'package:titan/booking/tools/functions.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/user/class/applicant.dart';
 import 'package:titan/user/class/simple_users.dart';
@@ -241,12 +240,6 @@ void main() {
       expect(Decision.declined, stringToDecision("declined"));
       expect(Decision.pending, stringToDecision("pending"));
       expect(Decision.pending, stringToDecision("random"));
-    });
-
-    test('Decision to string', () {
-      expect("Validée", decisionToString(Decision.approved));
-      expect("Refusée", decisionToString(Decision.declined));
-      expect("En attente", decisionToString(Decision.pending));
     });
 
     test('formatDates returns correct string for same day event', () {

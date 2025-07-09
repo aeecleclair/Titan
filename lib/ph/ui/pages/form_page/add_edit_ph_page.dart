@@ -9,7 +9,6 @@ import 'package:titan/ph/providers/ph_pdf_provider.dart';
 import 'package:titan/ph/providers/ph_send_pdf_provider.dart';
 import 'package:titan/ph/providers/ph_provider.dart';
 import 'package:titan/ph/providers/edit_pdf_provider.dart';
-import 'package:titan/ph/tools/constants.dart';
 import 'package:titan/ph/tools/functions.dart';
 import 'package:titan/ph/ui/pages/file_picker/pdf_picker.dart';
 import 'package:titan/ph/ui/pages/ph.dart';
@@ -20,6 +19,7 @@ import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PhAddEditPhPage extends HookConsumerWidget {
   const PhAddEditPhPage({super.key});
@@ -55,7 +55,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                   children: [
                     TextEntry(
                       maxLines: 1,
-                      label: PhTextConstants.phName,
+                      label: AppLocalizations.of(context)!.phPhName,
                       controller: name,
                       textInputAction: TextInputAction.done,
                     ),
@@ -64,7 +64,7 @@ class PhAddEditPhPage extends HookConsumerWidget {
                       child: Column(
                         children: [
                           DateEntry(
-                            label: PhTextConstants.date,
+                            label: AppLocalizations.of(context)!.phDate,
                             controller: dateController,
                             onTap: () {
                               getOnlyDayDate(
@@ -95,6 +95,12 @@ class PhAddEditPhPage extends HookConsumerWidget {
                         if (key.currentState == null) {
                           return;
                         }
+                        final addedPhMsg = isEdit
+                            ? AppLocalizations.of(context)!.phEdited
+                            : AppLocalizations.of(context)!.phAdded;
+                        final phAddingFileErrorMsg = AppLocalizations.of(
+                          context,
+                        )!.phAddingFileError;
                         if (true &&
                             (!listEquals(phSendPdf, Uint8List(0)) || isEdit)) {
                           await tokenExpireWrapper(ref, () async {
@@ -134,16 +140,14 @@ class PhAddEditPhPage extends HookConsumerWidget {
                                 }
                                 displayPhToastWithContext(
                                   TypeMsg.msg,
-                                  isEdit
-                                      ? PhTextConstants.edited
-                                      : PhTextConstants.added,
+                                  addedPhMsg,
                                 );
                                 editPdfNotifier.editPdf(false);
                               }
                             } else {
                               displayPhToastWithContext(
                                 TypeMsg.error,
-                                PhTextConstants.addingFileError,
+                                phAddingFileErrorMsg,
                               );
                             }
                           });
@@ -151,12 +155,16 @@ class PhAddEditPhPage extends HookConsumerWidget {
                           displayToast(
                             context,
                             TypeMsg.error,
-                            PhTextConstants.missingInformatonsOrPdf,
+                            AppLocalizations.of(
+                              context,
+                            )!.phMissingInformatonsOrPdf,
                           );
                         }
                       },
                       child: Text(
-                        isEdit ? PhTextConstants.edit : PhTextConstants.add,
+                        isEdit
+                            ? AppLocalizations.of(context)!.phEdit
+                            : AppLocalizations.of(context)!.phAdd,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 25,

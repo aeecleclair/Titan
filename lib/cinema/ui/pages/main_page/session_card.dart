@@ -6,10 +6,10 @@ import 'package:titan/cinema/providers/cinema_topic_provider.dart';
 import 'package:titan/cinema/providers/scroll_provider.dart';
 import 'package:titan/cinema/providers/session_poster_map_provider.dart';
 import 'package:titan/cinema/providers/session_poster_provider.dart';
-import 'package:titan/cinema/tools/constants.dart';
 import 'package:titan/cinema/tools/functions.dart';
 import 'package:titan/navigation/providers/is_web_format_provider.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class SessionCard extends HookConsumerWidget {
   final Session session;
@@ -164,7 +164,9 @@ class SessionCard extends HookConsumerWidget {
                                     const SizedBox(height: 10),
                                     Text(
                                       session.overview ??
-                                          CinemaTextConstants.noOverview,
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.cinemaNoOverview,
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(fontSize: 16),
                                     ),

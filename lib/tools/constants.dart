@@ -20,17 +20,6 @@ class ColorConstants {
   static const Color mainBorder = Color(0xFF950303);
 }
 
-class TextConstants {
-  static const String admin = 'Admin';
-  static const String error = "Une erreur est survenue";
-  static const String noValue = "Veuillez entrer une valeur";
-  static const String invalidNumber = "Veuillez entrer un nombre";
-  static const String noDateError = "Veuillez entrer une date";
-  static const String imageSizeTooBig =
-      "La taille de l'image ne doit pas dépasser 4 Mio";
-  static const String imageError = "Erreur lors de l'ajout de l'image";
-}
-
 const String previousEmailRegex =
     r'^[\w\-.]*@((ecl\d{2})|(alternance\d{4})|(master)|(auditeur)).ec-lyon.fr$';
 

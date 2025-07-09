@@ -16,6 +16,7 @@ import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddEditProduct extends HookConsumerWidget {
   const AddEditProduct({super.key});
@@ -34,7 +35,7 @@ class AddEditProduct extends HookConsumerWidget {
     );
     final beginState = isEdit
         ? product.category
-        : AMAPTextConstants.createCategory;
+        : AppLocalizations.of(context)!.amapCreateCategory;
     final categoryController = ref.watch(selectedCategoryProvider(beginState));
     final categoryNotifier = ref.watch(
       selectedCategoryProvider(beginState).notifier,
@@ -57,8 +58,8 @@ class AddEditProduct extends HookConsumerWidget {
                 const SizedBox(height: 10),
                 AlignLeftText(
                   isEdit
-                      ? AMAPTextConstants.editProduct
-                      : AMAPTextConstants.addProduct,
+                      ? AppLocalizations.of(context)!.amapEditProduct
+                      : AppLocalizations.of(context)!.amapAddProduct,
                   color: AMAPColorConstants.green2,
                 ),
                 const SizedBox(height: 40),
@@ -66,7 +67,7 @@ class AddEditProduct extends HookConsumerWidget {
                   children: [
                     Center(
                       child: TextEntry(
-                        label: AMAPTextConstants.name,
+                        label: AppLocalizations.of(context)!.amapName,
                         controller: nameController,
                         color: AMAPColorConstants.greenGradient2,
                         enabledColor: AMAPColorConstants.enabled,
@@ -75,7 +76,7 @@ class AddEditProduct extends HookConsumerWidget {
                     const SizedBox(height: 30),
                     Center(
                       child: TextEntry(
-                        label: AMAPTextConstants.price,
+                        label: AppLocalizations.of(context)!.amapPrice,
                         isDouble: true,
                         color: AMAPColorConstants.greenGradient2,
                         enabledColor: AMAPColorConstants.enabled,
@@ -84,8 +85,8 @@ class AddEditProduct extends HookConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    const AlignLeftText(
-                      AMAPTextConstants.category,
+                    AlignLeftText(
+                      AppLocalizations.of(context)!.amapCategory,
                       fontSize: 20,
                       color: AMAPColorConstants.greenGradient2,
                     ),
@@ -110,32 +111,41 @@ class AddEditProduct extends HookConsumerWidget {
                             ),
                           ),
                         ),
-                        items: [AMAPTextConstants.createCategory, ...categories]
-                            .map((String value) {
+                        items:
+                            [
+                              AppLocalizations.of(context)!.amapCreateCategory,
+                              ...categories,
+                            ].map((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(value),
                               );
-                            })
-                            .toList(),
+                            }).toList(),
                         onChanged: (value) {
                           categoryNotifier.setText(
-                            value ?? AMAPTextConstants.createCategory,
+                            value ??
+                                AppLocalizations.of(
+                                  context,
+                                )!.amapCreateCategory,
                           );
                           newCategory.text = "";
                         },
                       ),
                     ),
                     if (categoryController ==
-                        AMAPTextConstants.createCategory) ...[
+                        AppLocalizations.of(context)!.amapCreateCategory) ...[
                       const SizedBox(height: 30),
                       Center(
                         child: TextEntry(
-                          label: AMAPTextConstants.createCategory,
-                          noValueError: AMAPTextConstants.pickChooseCategory,
+                          label: AppLocalizations.of(
+                            context,
+                          )!.amapCreateCategory,
+                          noValueError: AppLocalizations.of(
+                            context,
+                          )!.amapPickChooseCategory,
                           enabled:
                               categoryController ==
-                              AMAPTextConstants.createCategory,
+                              AppLocalizations.of(context)!.amapCreateCategory,
                           onChanged: (value) {
                             newCategory.text = value;
                             newCategory.selection = TextSelection.fromPosition(
@@ -162,7 +172,9 @@ class AddEditProduct extends HookConsumerWidget {
                         if (formKey.currentState!.validate()) {
                           String cate =
                               categoryController ==
-                                  AMAPTextConstants.createCategory
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.amapCreateCategory
                               ? newCategory.text
                               : categoryController;
                           Product newProduct = Product(
@@ -175,6 +187,18 @@ class AddEditProduct extends HookConsumerWidget {
                             quantity: 0,
                           );
                           await tokenExpireWrapper(ref, () async {
+                            final updatedProductMsg = isEdit
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.amapUpdatedProduct
+                                : AppLocalizations.of(
+                                    context,
+                                  )!.amapAddedProduct;
+                            final addingErrorMsg = isEdit
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.amapUpdatingError
+                                : AppLocalizations.of(context)!.amapAddingError;
                             final value = isEdit
                                 ? await productsNotifier.updateProduct(
                                     newProduct,
@@ -183,10 +207,6 @@ class AddEditProduct extends HookConsumerWidget {
                             if (value) {
                               if (isEdit) {
                                 formKey.currentState!.reset();
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AMAPTextConstants.updatedProduct,
-                                );
                               } else {
                                 ref
                                     .watch(selectedListProvider.notifier)
@@ -196,23 +216,16 @@ class AddEditProduct extends HookConsumerWidget {
                                         orElse: () => [],
                                       ),
                                     );
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  AMAPTextConstants.addedProduct,
-                                );
                               }
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                updatedProductMsg,
+                              );
                             } else {
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  AMAPTextConstants.updatingError,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  AMAPTextConstants.addingError,
-                                );
-                              }
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                addingErrorMsg,
+                              );
                             }
                             QR.back();
                           });
@@ -220,8 +233,8 @@ class AddEditProduct extends HookConsumerWidget {
                       },
                       child: Text(
                         isEdit
-                            ? AMAPTextConstants.update
-                            : AMAPTextConstants.add,
+                            ? AppLocalizations.of(context)!.amapUpdate
+                            : AppLocalizations.of(context)!.amapAdd,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,

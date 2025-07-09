@@ -12,7 +12,6 @@ import 'package:titan/booking/providers/manager_booking_list_provider.dart';
 import 'package:titan/booking/providers/selected_days_provider.dart';
 import 'package:titan/booking/providers/user_booking_list_provider.dart';
 import 'package:titan/booking/router.dart';
-import 'package:titan/booking/tools/constants.dart';
 import 'package:titan/booking/ui/booking.dart';
 import 'package:titan/booking/ui/calendar/calendar.dart';
 import 'package:titan/booking/ui/components/booking_card.dart';
@@ -26,6 +25,7 @@ import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class BookingMainPage extends HookConsumerWidget {
   const BookingMainPage({super.key});
@@ -80,7 +80,7 @@ class BookingMainPage extends HookConsumerWidget {
                     children: [
                       if (isManager)
                         AdminButton(
-                          text: BookingTextConstants.management,
+                          text: AppLocalizations.of(context)!.bookingManagement,
                           onTap: () {
                             QR.to(BookingRouter.root + BookingRouter.manager);
                           },
@@ -97,13 +97,13 @@ class BookingMainPage extends HookConsumerWidget {
                 const SizedBox(height: 10),
                 const Expanded(child: Calendar(isManagerPage: false)),
                 const SizedBox(height: 30),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      BookingTextConstants.myBookings,
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.bookingMyBookings,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Color.fromARGB(255, 149, 149, 149),
@@ -151,11 +151,19 @@ class BookingMainPage extends HookConsumerWidget {
                             await showDialog(
                               context: context,
                               builder: (context) => CustomDialogBox(
-                                descriptions: BookingTextConstants
-                                    .deleteBookingConfirmation,
+                                descriptions: AppLocalizations.of(
+                                  context,
+                                )!.bookingDeleteBookingConfirmation,
                                 onYes: () async {
+                                  final deleteMsg = AppLocalizations.of(
+                                    context,
+                                  )!.bookingDeleteBooking;
+                                  final errorMsg = AppLocalizations.of(
+                                    context,
+                                  )!.bookingDeletingError;
                                   final value = await bookingsNotifier
                                       .deleteBooking(e);
+
                                   if (value) {
                                     ref
                                         .read(
@@ -164,16 +172,18 @@ class BookingMainPage extends HookConsumerWidget {
                                         .loadUserManageBookings;
                                     displayToastWithContext(
                                       TypeMsg.msg,
-                                      BookingTextConstants.deleteBooking,
+                                      deleteMsg,
                                     );
                                   } else {
                                     displayToastWithContext(
                                       TypeMsg.error,
-                                      BookingTextConstants.deletingError,
+                                      errorMsg,
                                     );
                                   }
                                 },
-                                title: BookingTextConstants.deleteBooking,
+                                title: AppLocalizations.of(
+                                  context,
+                                )!.bookingDeleteBooking,
                               ),
                             );
                           });

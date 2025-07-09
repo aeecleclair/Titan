@@ -7,7 +7,6 @@ import 'package:titan/admin/providers/association_membership_members_list_provid
 import 'package:titan/admin/providers/association_membership_provider.dart';
 import 'package:titan/admin/providers/user_association_membership_provider.dart';
 import 'package:titan/admin/router.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/association_membership_information_editor.dart';
 import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/association_membership_member_editable_card.dart';
@@ -17,6 +16,7 @@ import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AssociationMembershipEditorPage extends HookConsumerWidget {
   final scrollKey = GlobalKey();
@@ -49,7 +49,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "${AdminTextConstants.associationMembership} ${associationMembership.name}",
+                  "${AppLocalizations.of(context)!.adminAssociationMembership} ${associationMembership.name}",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
@@ -61,9 +61,9 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
               const SizedBox(height: 30),
               Row(
                 children: [
-                  const Text(
-                    AdminTextConstants.members,
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.adminMembers,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                       color: ColorConstants.gradient1,
@@ -71,7 +71,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    "(${associationMembershipFilteredList.length} ${AdminTextConstants.members})",
+                    "(${associationMembershipFilteredList.length} ${AppLocalizations.of(context)!.adminMembers})",
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -113,14 +113,14 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 10),
               ExpansionTile(
-                title: const Text(AdminTextConstants.filters),
+                title: Text(AppLocalizations.of(context)!.adminFilters),
                 children: const [SearchFilters()],
               ),
               const SizedBox(height: 20),
               ResearchBar(),
               const SizedBox(height: 10),
               associationMembershipFilteredList.isEmpty
-                  ? const Text(AdminTextConstants.noMember)
+                  ? Text(AppLocalizations.of(context)!.adminNoMember)
                   : SizedBox(
                       height: 400,
                       child: ListView.builder(

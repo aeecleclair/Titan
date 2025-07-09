@@ -33,7 +33,7 @@ class TextEntry extends StatelessWidget {
     this.color = ColorConstants.tertiary,
     this.enabledColor = ColorConstants.tertiary,
     this.errorColor = ColorConstants.main,
-    this.noValueError = TextConstants.noValue,
+    this.noValueError = "No value",
     this.suffixIcon,
     this.isNegative = false,
     this.textInputAction = TextInputAction.next,
@@ -95,14 +95,14 @@ class TextEntry extends StatelessWidget {
         if (isInt) {
           final intValue = int.tryParse(value);
           if (intValue == null || (intValue < 0 && !isNegative)) {
-            return TextConstants.invalidNumber;
+            return "Invalid number";
           }
         }
 
         if (isDouble) {
           final doubleValue = double.tryParse(value.replaceAll(',', '.'));
           if (doubleValue == null || (doubleValue < 0 && !isNegative)) {
-            return TextConstants.invalidNumber;
+            return "Invalid number";
           }
         }
 

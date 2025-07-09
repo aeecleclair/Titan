@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/raffle/providers/is_raffle_admin.dart';
 import 'package:titan/raffle/ui/pages/admin_module_page/admin_module_page.dart'
@@ -27,7 +28,7 @@ class RaffleRouter {
   static const String addEditPackTicket = '/add_edit_pack_ticket';
   static const String creation = '/creation';
   static final Module module = Module(
-    name: "Tombola",
+    getName: (context) => AppLocalizations.of(context)!.moduleRaffle,
     description: "Gérer les tombolas, les prix et les tickets",
     root: RaffleRouter.root,
   );

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/event/providers/sorted_event_list_provider.dart';
-import 'package:titan/home/tools/constants.dart';
 import 'package:titan/home/ui/day_list.dart';
 import 'package:titan/home/ui/days_event.dart';
 import 'package:titan/home/ui/month_bar.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
@@ -31,8 +31,8 @@ class HomePage extends HookConsumerWidget {
           const SizedBox(height: 10),
           DayList(scrollController, daysEventScrollController),
           const SizedBox(height: 15),
-          const AlignLeftText(
-            HomeTextConstants.incomingEvents,
+          AlignLeftText(
+            AppLocalizations.of(context)!.homeIncomingEvents,
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             fontSize: 25,
           ),
@@ -54,9 +54,9 @@ class HomePage extends HookConsumerWidget {
                           .values
                           .toList(),
                     )
-                  : const Center(
+                  : Center(
                       child: Text(
-                        HomeTextConstants.noEvents,
+                        AppLocalizations.of(context)!.homeNoEvents,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,

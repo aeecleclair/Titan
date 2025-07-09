@@ -11,6 +11,7 @@ import 'package:titan/advert/ui/pages/form_page/add_rem_announcer_page.dart'
     deferred as add_rem_announcer_page;
 import 'package:titan/advert/ui/pages/main_page/main_page.dart'
     deferred as main_page;
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
@@ -25,7 +26,7 @@ class AdvertRouter {
   static const String addRemAnnouncer = '/add_remove_announcer';
   static const String detail = '/detail';
   static final Module module = Module(
-    name: "Annonce",
+    getName: (context) => AppLocalizations.of(context)!.moduleAdvert,
     description: "Gérer les annonces et les annonceurs",
     root: AdvertRouter.root,
   );

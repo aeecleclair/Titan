@@ -25,12 +25,12 @@ import 'package:titan/vote/providers/contender_list_provider.dart';
 import 'package:titan/vote/providers/contender_provider.dart';
 import 'package:titan/vote/providers/sections_contender_provider.dart';
 import 'package:titan/vote/providers/sections_provider.dart';
-import 'package:titan/vote/tools/constants.dart';
 import 'package:titan/vote/ui/components/member_card.dart';
 import 'package:titan/vote/ui/pages/contender_pages/search_result.dart';
 import 'package:titan/vote/ui/pages/admin_page/section_chip.dart';
 import 'package:titan/vote/ui/vote.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddEditContenderPage extends HookConsumerWidget {
   const AddEditContenderPage({super.key});
@@ -82,9 +82,9 @@ class AddEditContenderPage extends HookConsumerWidget {
           key: key,
           child: Column(
             children: [
-              const AlignLeftText(
-                VoteTextConstants.addPretendance,
-                padding: EdgeInsets.only(
+              AlignLeftText(
+                AppLocalizations.of(context)!.voteAddPretendance,
+                padding: const EdgeInsets.only(
                   top: 40,
                   left: 30,
                   right: 30,
@@ -156,7 +156,7 @@ class AddEditContenderPage extends HookConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: TextEntry(
-                  label: VoteTextConstants.name,
+                  label: AppLocalizations.of(context)!.voteName,
                   controller: name,
                 ),
               ),
@@ -180,7 +180,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                 child: TextEntry(
                   keyboardType: TextInputType.multiline,
                   controller: description,
-                  label: VoteTextConstants.description,
+                  label: AppLocalizations.of(context)!.voteDescription,
                 ),
               ),
               const SizedBox(height: 30),
@@ -207,7 +207,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                     focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.black, width: 2.0),
                     ),
-                    labelText: VoteTextConstants.addMember,
+                    labelText: AppLocalizations.of(context)!.voteAddMember,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -221,7 +221,9 @@ class AddEditContenderPage extends HookConsumerWidget {
                           child: Column(
                             children: <Widget>[
                               TextEntry(
-                                label: VoteTextConstants.members,
+                                label: AppLocalizations.of(
+                                  context,
+                                )!.voteMembers,
                                 onChanged: (newQuery) {
                                   showNotifier.setId(true);
                                   tokenExpireWrapper(ref, () async {
@@ -243,7 +245,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                                 queryController: queryController,
                               ),
                               TextEntry(
-                                label: VoteTextConstants.role,
+                                label: AppLocalizations.of(context)!.voteRole,
                                 controller: role,
                               ),
                               const SizedBox(height: 30),
@@ -256,6 +258,10 @@ class AddEditContenderPage extends HookConsumerWidget {
                                       role.text == '') {
                                     return;
                                   }
+                                  final alreadyAddedMemberMsg =
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.voteAlreadyAddedMember;
                                   if (addMemberKey.currentState!.validate()) {
                                     final value = await membersNotifier
                                         .addMember(
@@ -271,7 +277,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                                     } else {
                                       displayVoteToastWithContext(
                                         TypeMsg.error,
-                                        VoteTextConstants.alreadyAddedMember,
+                                        alreadyAddedMemberMsg,
                                       );
                                     }
                                   }
@@ -300,9 +306,9 @@ class AddEditContenderPage extends HookConsumerWidget {
                                       ),
                                     ],
                                   ),
-                                  child: const Text(
-                                    VoteTextConstants.add,
-                                    style: TextStyle(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.voteAdd,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
@@ -323,7 +329,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: TextEntry(
                   keyboardType: TextInputType.multiline,
-                  label: VoteTextConstants.program,
+                  label: AppLocalizations.of(context)!.voteProgram,
                   controller: program,
                 ),
               ),
@@ -365,6 +371,16 @@ class AddEditContenderPage extends HookConsumerWidget {
                           section: section.value,
                           program: program.text,
                         );
+                        final editedPretendanceMsg = isEdit
+                            ? AppLocalizations.of(
+                                context,
+                              )!.voteEditedPretendance
+                            : AppLocalizations.of(
+                                context,
+                              )!.voteAddedPretendance;
+                        final editingPretendanceErrorMsg = AppLocalizations.of(
+                          context,
+                        )!.voteEditingError;
                         final value = isEdit
                             ? await contenderListNotifier.updateContender(
                                 newContender,
@@ -374,11 +390,11 @@ class AddEditContenderPage extends HookConsumerWidget {
                               );
                         if (value) {
                           QR.back();
+                          displayVoteToastWithContext(
+                            TypeMsg.msg,
+                            editedPretendanceMsg,
+                          );
                           if (isEdit) {
-                            displayVoteToastWithContext(
-                              TypeMsg.msg,
-                              VoteTextConstants.editedPretendance,
-                            );
                             contenderList.maybeWhen(
                               data: (list) {
                                 final logoBytes = logo.value;
@@ -396,10 +412,6 @@ class AddEditContenderPage extends HookConsumerWidget {
                               orElse: () {},
                             );
                           } else {
-                            displayVoteToastWithContext(
-                              TypeMsg.msg,
-                              VoteTextConstants.addedPretendance,
-                            );
                             contenderList.maybeWhen(
                               data: (list) {
                                 final newContender = list.last;
@@ -426,7 +438,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                         } else {
                           displayVoteToastWithContext(
                             TypeMsg.error,
-                            VoteTextConstants.editingError,
+                            editingPretendanceErrorMsg,
                           );
                         }
                       });
@@ -434,13 +446,15 @@ class AddEditContenderPage extends HookConsumerWidget {
                       displayToast(
                         context,
                         TypeMsg.error,
-                        VoteTextConstants.incorrectOrMissingFields,
+                        AppLocalizations.of(
+                          context,
+                        )!.voteIncorrectOrMissingFields,
                       );
                     }
                   },
-                  child: const Text(
-                    VoteTextConstants.edit,
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.voteEdit,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 25,
                       fontWeight: FontWeight.bold,

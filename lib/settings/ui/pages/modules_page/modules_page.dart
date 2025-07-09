@@ -46,7 +46,7 @@ class ModulesPage extends HookConsumerWidget {
                 child: Row(
                   children: [
                     Text(
-                      module.name,
+                      module.getName(context),
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,

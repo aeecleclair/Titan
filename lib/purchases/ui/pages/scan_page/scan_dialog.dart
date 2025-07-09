@@ -14,6 +14,7 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ScanDialog extends HookConsumerWidget {
   final String sellerId;
@@ -57,15 +58,15 @@ class ScanDialog extends HookConsumerWidget {
                       tagNotifier.setTag(value);
                     },
                     cursorColor: PurchasesColorConstants.textDark,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       isDense: true,
                       label: Text(
-                        PurchasesTextConstants.tag,
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.purchasesTag,
+                        style: const TextStyle(
                           color: PurchasesColorConstants.textDark,
                         ),
                       ),
-                      focusedBorder: UnderlineInputBorder(
+                      focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: ColorConstants.gradient1),
                       ),
                     ),
@@ -188,7 +189,7 @@ class ScanDialog extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            "${data.scanLeft.toString()} / ${ticket.maxUse} ${PurchasesTextConstants.leftScan}",
+                            "${data.scanLeft.toString()} / ${ticket.maxUse} ${AppLocalizations.of(context)!.purchasesLeftScan}",
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.black,
@@ -264,9 +265,9 @@ class ScanDialog extends HookConsumerWidget {
                         ],
                       );
                     },
-                    loading: () => const Text(
-                      PurchasesTextConstants.loading,
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    loading: () => Text(
+                      AppLocalizations.of(context)!.purchasesLoading,
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                     error: (error, stack) => Column(
                       children: [

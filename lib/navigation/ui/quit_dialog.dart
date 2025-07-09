@@ -3,11 +3,11 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/navigation/providers/display_quit_popup.dart';
-import 'package:titan/navigation/tools/constants.dart';
 import 'package:titan/service/providers/firebase_token_expiration_provider.dart';
 import 'package:titan/service/providers/messages_provider.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class QuitDialog extends HookConsumerWidget {
   const QuitDialog({super.key});
@@ -26,8 +26,8 @@ class QuitDialog extends HookConsumerWidget {
         child: GestureDetector(
           onTap: () {},
           child: CustomDialogBox(
-            descriptions: DrawerTextConstants.loginOut,
-            title: DrawerTextConstants.logOut,
+            descriptions: AppLocalizations.of(context)!.drawerLoginOut,
+            title: AppLocalizations.of(context)!.drawerLogOut,
             onYes: () {
               auth.deleteToken();
               if (!kIsWeb) {
@@ -35,7 +35,11 @@ class QuitDialog extends HookConsumerWidget {
                 ref.watch(firebaseTokenExpirationProvider.notifier).reset();
               }
               isCachingNotifier.set(false);
-              displayToast(context, TypeMsg.msg, DrawerTextConstants.logOut);
+              displayToast(
+                context,
+                TypeMsg.msg,
+                AppLocalizations.of(context)!.drawerLogOut,
+              );
               displayQuitNotifier.setDisplay(false);
             },
             onNo: () {

@@ -15,6 +15,7 @@ import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ConfirmPaymentDialog extends HookConsumerWidget {
   final PackTicket packTicket;
@@ -247,6 +248,12 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                             );
                           } else {
                             await tokenExpireWrapper(ref, () async {
+                              final boughtTicketMsg = AppLocalizations.of(
+                                context,
+                              )!.raffleBoughtTicket;
+                              final boughtTicketErrorMsg = AppLocalizations.of(
+                                context,
+                              )!.raffleAddingError;
                               final value = await userTicketListNotifier
                                   .buyTicket(packTicket);
                               if (value) {
@@ -255,12 +262,12 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                 );
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  RaffleTextConstants.boughtTicket,
+                                  boughtTicketMsg,
                                 );
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  RaffleTextConstants.addingError,
+                                  boughtTicketErrorMsg,
                                 );
                               }
                               navigationPop();

@@ -8,9 +8,9 @@ import 'package:titan/admin/router.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/delete_button.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/edition_button.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class MemberEditableCard extends HookConsumerWidget {
   const MemberEditableCard({super.key, required this.associationMembership});
@@ -88,19 +88,19 @@ class MemberEditableCard extends HookConsumerWidget {
             deactivated: false,
             deletion: true,
             onDelete: () async {
+              final deletedMemberMsg = AppLocalizations.of(
+                context,
+              )!.phonebookDeletedMember;
+              final deleteMemberErrorMsg = AppLocalizations.of(
+                context,
+              )!.phonebookDeletingError;
               await tokenExpireWrapper(ref, () async {
                 final result = await associationMembershipMemberListNotifier
                     .deleteMember(associationMembership);
                 if (result) {
-                  displayToastWithContext(
-                    TypeMsg.msg,
-                    PhonebookTextConstants.deletedMember,
-                  );
+                  displayToastWithContext(TypeMsg.msg, deletedMemberMsg);
                 } else {
-                  displayToastWithContext(
-                    TypeMsg.error,
-                    PhonebookTextConstants.deletingError,
-                  );
+                  displayToastWithContext(TypeMsg.error, deleteMemberErrorMsg);
                 }
               });
             },

@@ -12,6 +12,7 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddEditPackTicketPage extends HookConsumerWidget {
   const AddEditPackTicketPage({super.key});
@@ -46,11 +47,11 @@ class AddEditPackTicketPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  const Align(
+                  Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      RaffleTextConstants.addTypeTicketSimple,
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.raffleAddTypeTicketSimple,
+                      style: const TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: 25,
                         color: RaffleColorConstants.gradient1,
@@ -75,7 +76,9 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                     isInt: true,
                     validator: (value) {
                       if (int.parse(value) < 1) {
-                        return RaffleTextConstants.mustBePositive;
+                        return AppLocalizations.of(
+                          context,
+                        )!.raffleMustBePositive;
                       }
                       return null;
                     },
@@ -123,6 +126,20 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                             final typeTicketNotifier = ref.watch(
                               packTicketListProvider.notifier,
                             );
+                            final editedTicketMsg = isEdit
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.raffleEditedTicket
+                                : AppLocalizations.of(
+                                    context,
+                                  )!.raffleAddedTicket;
+                            final addingErrorMsg = isEdit
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.raffleEditingError
+                                : AppLocalizations.of(
+                                    context,
+                                  )!.raffleAddingError;
                             final value = isEdit
                                 ? await typeTicketNotifier.updatePackTicket(
                                     newPackTicket,
@@ -132,50 +149,40 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                                   );
                             if (value) {
                               QR.back();
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  RaffleTextConstants.editedTicket,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  RaffleTextConstants.addedTicket,
-                                );
-                              }
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                editedTicketMsg,
+                              );
                             } else {
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  RaffleTextConstants.editingError,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  RaffleTextConstants.alreadyExistTicket,
-                                );
-                              }
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                addingErrorMsg,
+                              );
                             }
                           });
                         } else {
                           displayToast(
                             context,
                             TypeMsg.error,
-                            RaffleTextConstants.invalidPrice,
+                            AppLocalizations.of(context)!.raffleInvalidPrice,
                           );
                         }
                       } else {
                         displayToast(
                           context,
                           TypeMsg.error,
-                          RaffleTextConstants.addingError,
+                          AppLocalizations.of(context)!.raffleAddingError,
                         );
                       }
                     },
                     child: Text(
                       isEdit
-                          ? RaffleTextConstants.editTypeTicketSimple
-                          : RaffleTextConstants.addTypeTicketSimple,
+                          ? AppLocalizations.of(
+                              context,
+                            )!.raffleEditTypeTicketSimple
+                          : AppLocalizations.of(
+                              context,
+                            )!.raffleAddTypeTicketSimple,
                     ),
                   ),
                   const SizedBox(height: 40),

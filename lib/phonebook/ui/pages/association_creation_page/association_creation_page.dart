@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/phonebook/class/association.dart';
 import 'package:titan/phonebook/providers/association_kind_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/components/kinds_bar.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/tools/constants.dart';
@@ -17,6 +15,7 @@ import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AssociationCreationPage extends HookConsumerWidget {
   final scrollKey = GlobalKey();
@@ -45,13 +44,13 @@ class AssociationCreationPage extends HookConsumerWidget {
           child: Column(
             children: [
               const SizedBox(height: 30),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    PhonebookTextConstants.addAssociation,
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.phonebookAddAssociation,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                       color: ColorConstants.gradient1,
@@ -68,13 +67,13 @@ class AssociationCreationPage extends HookConsumerWidget {
                     Container(margin: const EdgeInsets.symmetric(vertical: 10)),
                     TextEntry(
                       controller: name,
-                      label: AdminTextConstants.name,
+                      label: AppLocalizations.of(context)!.adminName,
                       canBeEmpty: false,
                     ),
                     const SizedBox(height: 30),
                     TextEntry(
                       controller: description,
-                      label: AdminTextConstants.description,
+                      label: AppLocalizations.of(context)!.adminDescription,
                       canBeEmpty: true,
                     ),
                     const SizedBox(height: 50),
@@ -90,18 +89,28 @@ class AssociationCreationPage extends HookConsumerWidget {
                         if (!key.currentState!.validate()) {
                           displayToastWithContext(
                             TypeMsg.error,
-                            PhonebookTextConstants.emptyFieldError,
+                            AppLocalizations.of(
+                              context,
+                            )!.phonebookEmptyFieldError,
                           );
                           return;
                         }
                         if (kind == '') {
                           displayToastWithContext(
                             TypeMsg.error,
-                            PhonebookTextConstants.emptyKindError,
+                            AppLocalizations.of(
+                              context,
+                            )!.phonebookEmptyKindError,
                           );
                           return;
                         }
                         await tokenExpireWrapper(ref, () async {
+                          final addedMsg = AppLocalizations.of(
+                            context,
+                          )!.phonebookAddedAssociation;
+                          final adminAddingErrorMsg = AppLocalizations.of(
+                            context,
+                          )!.adminAddingError;
                           final value = await associationListNotifier
                               .createAssociation(
                                 Association.empty().copyWith(
@@ -112,10 +121,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                                 ),
                               );
                           if (value) {
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              PhonebookTextConstants.addedAssociation,
-                            );
+                            displayToastWithContext(TypeMsg.msg, addedMsg);
                             associations.when(
                               data: (d) {
                                 associationNotifier.setAssociation(d.last);
@@ -127,20 +133,22 @@ class AssociationCreationPage extends HookConsumerWidget {
                               },
                               error: (e, s) => displayToastWithContext(
                                 TypeMsg.error,
-                                PhonebookTextConstants.errorAssociationLoading,
+                                AppLocalizations.of(
+                                  context,
+                                )!.phonebookErrorAssociationLoading,
                               ),
                               loading: () {},
                             );
                           } else {
                             displayToastWithContext(
                               TypeMsg.error,
-                              AdminTextConstants.addingError,
+                              adminAddingErrorMsg,
                             );
                           }
                         });
                       },
-                      child: const Text(
-                        AdminTextConstants.add,
+                      child: Text(
+                        AppLocalizations.of(context)!.adminAdd,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,

@@ -5,11 +5,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/login/providers/animation_provider.dart';
 import 'package:titan/login/router.dart';
-import 'package:titan/login/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class LeftPanel extends HookConsumerWidget {
   const LeftPanel({super.key});
@@ -93,7 +93,7 @@ class LeftPanel extends HookConsumerWidget {
                           displayToast(
                             context,
                             TypeMsg.error,
-                            LoginTextConstants.loginFailed,
+                            AppLocalizations.of(context)!.loginLoginFailed,
                           );
                         },
                         loading: () {},
@@ -131,9 +131,9 @@ class LeftPanel extends HookConsumerWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      LoginTextConstants.signIn,
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.loginSignIn,
+                      style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -168,9 +168,9 @@ class LeftPanel extends HookConsumerWidget {
                         QR.to(LoginRouter.createAccount);
                         controller?.forward();
                       },
-                      child: const Text(
-                        LoginTextConstants.createAccount,
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)!.loginCreateAccount,
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           decoration: TextDecoration.underline,
@@ -184,9 +184,9 @@ class LeftPanel extends HookConsumerWidget {
                         QR.to(LoginRouter.forgotPassword);
                         controller?.forward();
                       },
-                      child: const Text(
-                        LoginTextConstants.forgotPassword,
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)!.loginForgotPassword,
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           decoration: TextDecoration.underline,

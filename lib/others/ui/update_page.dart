@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/others/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/version/providers/titan_version_provider.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class UpdatePage extends HookConsumerWidget {
   const UpdatePage({super.key});
@@ -20,16 +20,16 @@ class UpdatePage extends HookConsumerWidget {
             const Spacer(flex: 2),
             const HeroIcon(HeroIcons.bellAlert, size: 100),
             const SizedBox(height: 50),
-            const Center(
+            Center(
               child: Text(
-                OthersTextConstants.tooOldVersion,
+                AppLocalizations.of(context)!.othersTooOldVersion,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ),
             const Spacer(flex: 3),
             Text(
-              "${OthersTextConstants.version} $titanVersion",
+              "${AppLocalizations.of(context)!.othersVersion} $titanVersion",
               style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w500,

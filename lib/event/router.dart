@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/event/providers/is_admin_provider.dart';
 import 'package:titan/event/ui/pages/detail_page/detail_page.dart'
@@ -21,7 +22,7 @@ class EventRouter {
   static const String addEdit = '/add_edit';
   static const String detail = '/detail';
   static final Module module = Module(
-    name: "Évenements",
+    getName: (context) => AppLocalizations.of(context)!.moduleEvent,
     description: "Gérer les événements et les participants",
     root: EventRouter.root,
   );

@@ -6,7 +6,6 @@ import 'package:titan/event/providers/event_provider.dart';
 import 'package:titan/event/providers/is_admin_provider.dart';
 import 'package:titan/event/providers/user_event_list_provider.dart';
 import 'package:titan/event/router.dart';
-import 'package:titan/event/tools/constants.dart';
 import 'package:titan/event/ui/event.dart';
 import 'package:titan/event/ui/components/event_ui.dart';
 import 'package:titan/tools/ui/layouts/column_refresher.dart';
@@ -14,6 +13,7 @@ import 'package:titan/tools/ui/widgets/admin_button.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class EventMainPage extends HookConsumerWidget {
   const EventMainPage({super.key});
@@ -44,8 +44,8 @@ class EventMainPage extends HookConsumerWidget {
                     children: [
                       Text(
                         eventList.isEmpty
-                            ? EventTextConstants.noEvent
-                            : EventTextConstants.myEvents,
+                            ? AppLocalizations.of(context)!.eventNoEvent
+                            : AppLocalizations.of(context)!.eventMyEvents,
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

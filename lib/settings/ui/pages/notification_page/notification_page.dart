@@ -4,12 +4,12 @@ import 'package:load_switch/load_switch.dart';
 import 'package:titan/service/class/topic.dart';
 import 'package:titan/service/providers/topic_provider.dart';
 import 'package:titan/service/tools/functions.dart';
-import 'package:titan/settings/tools/constants.dart';
 import 'package:titan/settings/ui/settings.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class NotificationPage extends HookConsumerWidget {
   const NotificationPage({super.key});
@@ -27,9 +27,9 @@ class NotificationPage extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Column(
             children: [
-              const AlignLeftText(
-                SettingsTextConstants.updateNotification,
-                padding: EdgeInsets.symmetric(vertical: 30),
+              AlignLeftText(
+                AppLocalizations.of(context)!.settingsUpdateNotification,
+                padding: const EdgeInsets.symmetric(vertical: 30),
                 color: Colors.grey,
               ),
               AsyncChild(

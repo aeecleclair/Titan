@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/phonebook/providers/research_filter_provider.dart';
 import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AssociationResearchBar extends HookConsumerWidget {
   const AssociationResearchBar({super.key});
@@ -21,18 +22,18 @@ class AssociationResearchBar extends HookConsumerWidget {
       focusNode: focusNode,
       controller: editingController,
       cursorColor: PhonebookColorConstants.textDark,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         isDense: true,
-        suffixIcon: Icon(
+        suffixIcon: const Icon(
           Icons.search,
           color: PhonebookColorConstants.textDark,
           size: 30,
         ),
         label: Text(
-          PhonebookTextConstants.research,
-          style: TextStyle(color: PhonebookColorConstants.textDark),
+          AppLocalizations.of(context)!.phonebookResearch,
+          style: const TextStyle(color: PhonebookColorConstants.textDark),
         ),
-        focusedBorder: UnderlineInputBorder(
+        focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: ColorConstants.gradient1),
         ),
       ),

@@ -11,6 +11,7 @@ import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class UserCashUi extends HookConsumerWidget {
   final Cash cash;
@@ -195,7 +196,9 @@ class UserCashUi extends HookConsumerWidget {
                                     controller: amount,
                                     keyboardType: TextInputType.number,
                                     validator: (value) => value!.isEmpty
-                                        ? RaffleTextConstants.add
+                                        ? AppLocalizations.of(
+                                            context,
+                                          )!.raffleAdd
                                         : null,
                                     cursorColor: RaffleColorConstants.textDark,
                                     decoration: const InputDecoration(
@@ -230,6 +233,14 @@ class UserCashUi extends HookConsumerWidget {
                                     }
                                     if (key.currentState!.validate()) {
                                       await tokenExpireWrapper(ref, () async {
+                                        final raffleUpdatedAmountMsg =
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.raffleUpdatedAmount;
+                                        final raffleUpdatingErrorMsg =
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.raffleUpdatingError;
                                         await ref
                                             .read(cashProvider.notifier)
                                             .updateCash(
@@ -242,14 +253,12 @@ class UserCashUi extends HookConsumerWidget {
                                                 toggle();
                                                 displayVoteWithContext(
                                                   TypeMsg.msg,
-                                                  RaffleTextConstants
-                                                      .updatedAmount,
+                                                  raffleUpdatedAmountMsg,
                                                 );
                                               } else {
                                                 displayVoteWithContext(
                                                   TypeMsg.error,
-                                                  RaffleTextConstants
-                                                      .updatingError,
+                                                  raffleUpdatingErrorMsg,
                                                 );
                                               }
                                             });

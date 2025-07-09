@@ -14,6 +14,7 @@ import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/raffle/ui/raffle.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class RaffleWidget extends HookConsumerWidget {
   final Raffle raffle;
@@ -107,10 +108,10 @@ class RaffleWidget extends HookConsumerWidget {
                                 fontSize: 30,
                               ),
                             ),
-                            const Text(
-                              RaffleTextConstants.tickets,
+                            Text(
+                              AppLocalizations.of(context)!.raffleTickets,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: RaffleColorConstants.textDark,
                                 fontSize: 20,
                               ),
@@ -127,10 +128,10 @@ class RaffleWidget extends HookConsumerWidget {
                                 fontSize: 30,
                               ),
                             ),
-                            const Text(
-                              RaffleTextConstants.gathered,
+                            Text(
+                              AppLocalizations.of(context)!.raffleGathered,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: RaffleColorConstants.textDark,
                                 fontSize: 20,
                               ),
