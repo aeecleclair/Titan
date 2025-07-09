@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/ui/pages/transfer_structure_page/search_result.dart';
 import 'package:titan/paiement/ui/paiement.dart';
 import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
@@ -20,7 +21,7 @@ class TransferStructurePage extends HookConsumerWidget {
         child: Column(
           children: [
             StyledSearchBar(
-              label: "Prochain responsable",
+              label: AppLocalizations.of(context)!.paiementNextAccountable,
               color: Color.fromARGB(255, 6, 75, 75),
               padding: const EdgeInsets.all(0),
               editingController: queryController,

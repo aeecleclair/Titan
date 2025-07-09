@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/user_store.dart';
 import 'package:titan/paiement/providers/is_payment_admin.dart';
 import 'package:titan/paiement/providers/my_stores_provider.dart';
@@ -25,8 +26,8 @@ class StoreList extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               alignment: Alignment.centerLeft,
-              child: const Text(
-                "Associations",
+              child: Text(
+                AppLocalizations.of(context)!.paiementStores,
                 style: TextStyle(
                   color: Color.fromARGB(255, 0, 29, 29),
                   fontSize: 20,
@@ -49,7 +50,9 @@ class StoreList extends ConsumerWidget {
                 return Column(
                   children: [
                     if (isAdmin) ...[
-                      const StoreDivider(name: "Administrateur"),
+                      StoreDivider(
+                        name: AppLocalizations.of(context)!.paiementAdmin,
+                      ),
                       const StoreAdminCard(),
                     ],
                     ...sortedByMembership.map((membership, stores) {

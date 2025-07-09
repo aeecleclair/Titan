@@ -5,12 +5,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/all_groups_list_provider.dart';
 import 'package:titan/admin/providers/association_membership_list_provider.dart';
 import 'package:titan/admin/providers/association_membership_provider.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AssociationMembershipInformationEditor extends HookConsumerWidget {
   final scrollKey = GlobalKey();
@@ -55,7 +55,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                         controller: name,
                         cursorColor: ColorConstants.gradient1,
                         decoration: InputDecoration(
-                          labelText: AdminTextConstants.name,
+                          labelText: AppLocalizations.of(context)!.adminName,
                           labelStyle: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -75,7 +75,9 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AdminTextConstants.emptyFieldError;
+                            return AppLocalizations.of(
+                              context,
+                            )!.adminEmptyFieldError;
                           }
                           return null;
                         },
@@ -84,11 +86,11 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                   ],
                 ),
               ),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  AdminTextConstants.group,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  AppLocalizations.of(context)!.adminGroup,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
               DropdownButtonFormField<String>(
@@ -104,8 +106,8 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                       ),
                     )
                     .toList(),
-                decoration: const InputDecoration(
-                  hintText: AdminTextConstants.group,
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.adminGroup,
                 ),
               ),
               const SizedBox(height: 20),
@@ -123,6 +125,11 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                   }
 
                   await tokenExpireWrapper(ref, () async {
+                    final updatedAssociationMembershipMsg = AppLocalizations.of(
+                      context,
+                    )!.adminUpdatedAssociationMembership;
+                    final updatingAssociationMembershipErrorMsg =
+                        AppLocalizations.of(context)!.adminUpdatingError;
                     final value = await associationMembershipListNotifier
                         .updateAssociationMembership(
                           associationMembership.copyWith(name: name.text),
@@ -136,19 +143,19 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                       );
                       displayToastWithContext(
                         TypeMsg.msg,
-                        AdminTextConstants.updatedAssociationMembership,
+                        updatedAssociationMembershipMsg,
                       );
                     } else {
                       displayToastWithContext(
                         TypeMsg.msg,
-                        AdminTextConstants.updatingError,
+                        updatingAssociationMembershipErrorMsg,
                       );
                     }
                   });
                 },
-                child: const Text(
-                  AdminTextConstants.edit,
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.adminEdit,
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: Color.fromARGB(255, 255, 255, 255),

@@ -13,6 +13,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class TicketHandler extends HookConsumerWidget {
   const TicketHandler({super.key});
@@ -119,17 +120,25 @@ class TicketHandler extends HookConsumerWidget {
                                       "Voulez-vous vraiment supprimer ce ticket?",
                                   onYes: () {
                                     tokenExpireWrapper(ref, () async {
+                                      final deletedTicketMsg =
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.raffleDeletedTicket;
+                                      final deletingErrorMsg =
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.raffleDeletingError;
                                       final value = await packTicketsNotifier
                                           .deletePackTicket(e);
                                       if (value) {
                                         displayToastWithContext(
                                           TypeMsg.msg,
-                                          RaffleTextConstants.deletedTicket,
+                                          deletedTicketMsg,
                                         );
                                       } else {
                                         displayToastWithContext(
                                           TypeMsg.error,
-                                          RaffleTextConstants.deletingError,
+                                          deletingErrorMsg,
                                         );
                                       }
                                     });

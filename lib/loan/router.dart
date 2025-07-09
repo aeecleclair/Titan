@@ -1,7 +1,6 @@
-import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/loan/providers/is_loan_admin_provider.dart';
 import 'package:titan/loan/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
@@ -26,10 +25,9 @@ class LoanRouter {
   static const String addEditItem = '/add_edit_item';
   static const String detail = '/detail';
   static final Module module = Module(
-    name: "Prêt",
-    icon: const Left(HeroIcons.buildingLibrary),
+    getName: (context) => AppLocalizations.of(context)!.moduleLoan,
+    description: "Gérer les prêts et les articles",
     root: LoanRouter.root,
-    selected: false,
   );
   LoanRouter(this.ref);
 

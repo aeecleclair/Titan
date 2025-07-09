@@ -3,13 +3,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
 import 'package:titan/admin/providers/association_membership_provider.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class SearchFilters extends HookConsumerWidget {
   const SearchFilters({super.key});
@@ -38,11 +38,11 @@ class SearchFilters extends HookConsumerWidget {
               child: Column(
                 children: [
                   Text(
-                    AdminTextConstants.startDate,
+                    AppLocalizations.of(context)!.adminStartDate,
                     style: const TextStyle(fontSize: 18),
                   ),
                   DateEntry(
-                    label: AdminTextConstants.startDateMinimal,
+                    label: AppLocalizations.of(context)!.adminStartDateMinimal,
                     controller: startMinimal,
                     onTap: () => getOnlyDayDate(
                       context,
@@ -53,7 +53,7 @@ class SearchFilters extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 20),
                   DateEntry(
-                    label: AdminTextConstants.startDateMaximal,
+                    label: AppLocalizations.of(context)!.adminStartDateMaximal,
                     controller: startMaximal,
                     onTap: () => getOnlyDayDate(
                       context,
@@ -71,11 +71,11 @@ class SearchFilters extends HookConsumerWidget {
               child: Column(
                 children: [
                   Text(
-                    AdminTextConstants.endDate,
+                    AppLocalizations.of(context)!.adminEndDate,
                     style: const TextStyle(fontSize: 18),
                   ),
                   DateEntry(
-                    label: AdminTextConstants.endDateMinimal,
+                    label: AppLocalizations.of(context)!.adminEndDateMinimal,
                     controller: endMinimal,
                     onTap: () => getOnlyDayDate(
                       context,
@@ -86,7 +86,7 @@ class SearchFilters extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 20),
                   DateEntry(
-                    label: AdminTextConstants.endDateMaximal,
+                    label: AppLocalizations.of(context)!.adminEndDateMaximal,
                     controller: endMaximal,
                     onTap: () => getOnlyDayDate(
                       context,
@@ -139,7 +139,7 @@ class SearchFilters extends HookConsumerWidget {
                   child: child,
                 ),
                 child: Text(
-                  AdminTextConstants.validateFilters,
+                  AppLocalizations.of(context)!.adminValidateFilters,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -173,7 +173,7 @@ class SearchFilters extends HookConsumerWidget {
                   child: child,
                 ),
                 child: Text(
-                  AdminTextConstants.clearFilters,
+                  AppLocalizations.of(context)!.adminClearFilters,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,

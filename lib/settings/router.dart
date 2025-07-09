@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/admin/router.dart';
+import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/settings/ui/pages/change_pass/change_pass.dart'
     deferred as change_pass;
 import 'package:titan/settings/ui/pages/edit_user_page/edit_user_page.dart'
@@ -24,6 +27,12 @@ class SettingsRouter {
   static const String logs = '/logs';
   static const String modules = '/modules';
   static const String notifications = '/notifications';
+  static final Module module = Module(
+    getName: (context) => AppLocalizations.of(context)!.moduleSettings,
+    description: "Gérer les paramètres de l'application",
+    root: AdminRouter.root,
+  );
+
   SettingsRouter(this.ref);
 
   QRoute route() => QRoute(

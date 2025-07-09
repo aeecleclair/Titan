@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/providers/selected_store_provider.dart';
 import 'package:titan/paiement/providers/transfer_structure_provider.dart';
 import 'package:titan/tools/constants.dart';
@@ -32,10 +33,16 @@ class SearchResult extends HookConsumerWidget {
         context: context,
         builder: (context) {
           return CustomDialogBox(
-            title: 'Transfert de structure',
+            title: AppLocalizations.of(context)!.paiementTransferStructure,
             descriptions:
-                'Vous êtes sur le point de transférer la structure à ${simpleUser.getName()}. Le nouveau responsable aura accès à toutes les fonctionnalités de gestion de la structure. Vous allez recevoir un email pour valider ce transfert. Le lien ne sera actif que pendant 20 minutes. Cette action est irréversible. Êtes-vous sûr de vouloir continuer ?',
+                '${AppLocalizations.of(context)!.paiementYouAreTransferingStructureTo} ${simpleUser.getName()}. ${AppLocalizations.of(context)!.paiementTransferStructureDescription}',
             onYes: () async {
+              final transferStructureSeccessMsg = AppLocalizations.of(
+                context,
+              )!.paiementTransferStructureSuccess;
+              final transferStructureErrorMsg = AppLocalizations.of(
+                context,
+              )!.paiementTransferStructureError;
               final value = await transferStructureNotifier.initTransfer(
                 selectedStore.structure,
                 simpleUser.id,
@@ -43,12 +50,12 @@ class SearchResult extends HookConsumerWidget {
               if (value) {
                 displayToastWithContext(
                   TypeMsg.msg,
-                  "Transfert de structure demandé avec succès.",
+                  transferStructureSeccessMsg,
                 );
               } else {
                 displayToastWithContext(
                   TypeMsg.error,
-                  "Une erreur est survenue lors du transfert de structure.",
+                  transferStructureErrorMsg,
                 );
               }
             },

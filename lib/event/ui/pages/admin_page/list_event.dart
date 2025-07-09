@@ -7,7 +7,6 @@ import 'package:titan/event/providers/confirmed_event_list_provider.dart';
 import 'package:titan/event/providers/event_list_provider.dart';
 import 'package:titan/event/providers/event_provider.dart';
 import 'package:titan/event/router.dart';
-import 'package:titan/event/tools/constants.dart';
 import 'package:titan/event/ui/components/event_ui.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -15,6 +14,7 @@ import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ListEvent extends HookConsumerWidget {
   final List<Event> events;
@@ -102,8 +102,10 @@ class ListEvent extends HookConsumerWidget {
                     context: context,
                     builder: (context) {
                       return CustomDialogBox(
-                        title: EventTextConstants.confirm,
-                        descriptions: EventTextConstants.confirmEvent,
+                        title: AppLocalizations.of(context)!.eventConfirm,
+                        descriptions: AppLocalizations.of(
+                          context,
+                        )!.eventConfirmEvent,
                         onYes: () async {
                           await tokenExpireWrapper(ref, () async {
                             eventListNotifier
@@ -126,8 +128,10 @@ class ListEvent extends HookConsumerWidget {
                     context: context,
                     builder: (context) {
                       return CustomDialogBox(
-                        title: EventTextConstants.decline,
-                        descriptions: EventTextConstants.declineEvent,
+                        title: AppLocalizations.of(context)!.eventDecline,
+                        descriptions: AppLocalizations.of(
+                          context,
+                        )!.eventDeclineEvent,
                         onYes: () async {
                           await tokenExpireWrapper(ref, () async {
                             eventListNotifier

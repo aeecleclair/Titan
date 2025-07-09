@@ -13,7 +13,6 @@ import 'package:titan/advert/providers/advert_poster_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
 import 'package:titan/advert/providers/advert_provider.dart';
 import 'package:titan/advert/providers/announcer_provider.dart';
-import 'package:titan/advert/tools/constants.dart';
 import 'package:titan/advert/ui/pages/advert.dart';
 import 'package:titan/advert/ui/components/announcer_bar.dart';
 import 'package:titan/tools/functions.dart';
@@ -23,6 +22,7 @@ import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/widgets/image_picker_on_tap.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AdvertAddEditAdvertPage extends HookConsumerWidget {
   const AdvertAddEditAdvertPage({super.key});
@@ -72,14 +72,16 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                   children: [
                     TextEntry(
                       maxLines: 1,
-                      label: AdvertTextConstants.title,
+                      label: AppLocalizations.of(context)!.advertTitle,
                       controller: title,
                     ),
                     const SizedBox(height: 20),
                     FormField<File>(
                       validator: (e) {
                         if (poster.value == null && !isEdit) {
-                          return AdvertTextConstants.choosingPoster;
+                          return AppLocalizations.of(
+                            context,
+                          )!.advertChoosingPoster;
                         }
                         return null;
                       },
@@ -166,7 +168,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                       minLines: 5,
                       maxLines: 50,
                       keyboardType: TextInputType.multiline,
-                      label: AdvertTextConstants.content,
+                      label: AppLocalizations.of(context)!.advertContent,
                       controller: content,
                     ),
                   ],
@@ -176,7 +178,9 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
               FormField<List<Announcer>>(
                 validator: (e) {
                   if (selectedAnnouncers.isEmpty) {
-                    return AdvertTextConstants.choosingAnnouncer;
+                    return AppLocalizations.of(
+                      context,
+                    )!.advertChoosingAnnouncer;
                   }
                   return null;
                 },
@@ -208,7 +212,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                   children: [
                     TextEntry(
                       maxLines: 1,
-                      label: AdvertTextConstants.tags,
+                      label: AppLocalizations.of(context)!.advertTags,
                       canBeEmpty: true,
                       controller: textTagsController,
                     ),
@@ -231,6 +235,15 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                               tags: textTagsController.text.split(', '),
                               title: title.text,
                             );
+                            final editedAdvertMsg = AppLocalizations.of(
+                              context,
+                            )!.advertEditedAdvert;
+                            final addedAdvertMsg = AppLocalizations.of(
+                              context,
+                            )!.advertAddedAdvert;
+                            final editingErrorMsg = AppLocalizations.of(
+                              context,
+                            )!.advertEditingError;
                             final value = isEdit
                                 ? await advertListNotifier.updateAdvert(
                                     newAdvert,
@@ -241,7 +254,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                               if (isEdit) {
                                 displayAdvertToastWithContext(
                                   TypeMsg.msg,
-                                  AdvertTextConstants.editedAdvert,
+                                  editedAdvertMsg,
                                 );
                                 advertList.maybeWhen(
                                   data: (list) {
@@ -257,7 +270,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                               } else {
                                 displayAdvertToastWithContext(
                                   TypeMsg.msg,
-                                  AdvertTextConstants.addedAdvert,
+                                  addedAdvertMsg,
                                 );
                                 advertList.maybeWhen(
                                   data: (list) {
@@ -273,7 +286,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                             } else {
                               displayAdvertToastWithContext(
                                 TypeMsg.error,
-                                AdvertTextConstants.editingError,
+                                editingErrorMsg,
                               );
                             }
                           });
@@ -281,14 +294,16 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                           displayToast(
                             context,
                             TypeMsg.error,
-                            AdvertTextConstants.incorrectOrMissingFields,
+                            AppLocalizations.of(
+                              context,
+                            )!.advertIncorrectOrMissingFields,
                           );
                         }
                       },
                       child: Text(
                         isEdit
-                            ? AdvertTextConstants.edit
-                            : AdvertTextConstants.add,
+                            ? AppLocalizations.of(context)!.advertEdit
+                            : AppLocalizations.of(context)!.advertAdd,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 25,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/seller.dart';
 import 'package:titan/paiement/providers/selected_store_provider.dart';
 import 'package:titan/paiement/providers/store_sellers_list_provider.dart';
@@ -67,11 +68,11 @@ class SellerRightCard extends ConsumerWidget {
     );
 
     final labels = [
-      "Encaisser",
-      "Voir l'historique",
-      "Annuler les transactions",
-      "Gérer les vendeurs",
-      "Administrateur de la structure",
+      AppLocalizations.of(context)!.paiementBank,
+      AppLocalizations.of(context)!.paiementSeeHistory,
+      AppLocalizations.of(context)!.paiementCancelTransactions,
+      AppLocalizations.of(context)!.paiementManageSellers,
+      AppLocalizations.of(context)!.paiementStructureAdmin,
     ];
 
     List<bool> sellerRights = [
@@ -119,7 +120,7 @@ class SellerRightCard extends ConsumerWidget {
                       const SizedBox(height: 20),
                       Expanded(
                         child: Text(
-                          "Droits de ${storeSeller.user.nickname ?? ("${storeSeller.user.firstname} ${storeSeller.user.name}")}",
+                          "${AppLocalizations.of(context)!.paiementRightsOf} ${storeSeller.user.nickname ?? ("${storeSeller.user.firstname} ${storeSeller.user.name}")}",
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             color: Color.fromARGB(255, 0, 29, 29),
@@ -155,6 +156,14 @@ class SellerRightCard extends ConsumerWidget {
                                     ),
                                     onChanged: (value) async {
                                       await tokenExpireWrapper(ref, () async {
+                                        final rightsUpdatedMsg =
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.paiementRightsUpdated;
+                                        final rightsUpdateErrorMsg =
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.paiementRightsUpdateError;
                                         final value = await sellerStoreNotifier
                                             .updateStoreSeller(
                                               storeSeller.copyWith(
@@ -175,7 +184,7 @@ class SellerRightCard extends ConsumerWidget {
                                         if (value) {
                                           displayToastWithContext(
                                             TypeMsg.msg,
-                                            "Droits mis à jour",
+                                            rightsUpdatedMsg,
                                           );
                                           sellerRights[i] = !sellerRights[i];
                                           if (context.mounted) {
@@ -184,7 +193,7 @@ class SellerRightCard extends ConsumerWidget {
                                         } else {
                                           displayToastWithContext(
                                             TypeMsg.error,
-                                            "Impossible de mettre à jour les droits",
+                                            rightsUpdateErrorMsg,
                                           );
                                         }
                                       });
@@ -199,17 +208,27 @@ class SellerRightCard extends ConsumerWidget {
                             await showDialog(
                               context: context,
                               builder: (context) => CustomDialogBox(
-                                title: "Supprimer l'association",
-                                descriptions:
-                                    "Voulez-vous vraiment supprimer ce vendeur ?",
+                                title: AppLocalizations.of(
+                                  context,
+                                )!.paiementDeleteStore,
+                                descriptions: AppLocalizations.of(
+                                  context,
+                                )!.paiementDeleteSellerDescription,
                                 onYes: () {
                                   tokenExpireWrapper(ref, () async {
+                                    final deleteSellerMsg = AppLocalizations.of(
+                                      context,
+                                    )!.paiementDeletedSeller;
+                                    final deletingSellerErrorMsg =
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.paiementDeletingSellerError;
                                     final value = await sellerStoreNotifier
                                         .deleteStoreSeller(storeSeller);
                                     if (value) {
                                       displayToastWithContext(
                                         TypeMsg.msg,
-                                        "Vendeur supprimé",
+                                        deleteSellerMsg,
                                       );
                                       if (context.mounted) {
                                         Navigator.pop(context);
@@ -217,7 +236,7 @@ class SellerRightCard extends ConsumerWidget {
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.error,
-                                        "Impossible de supprimer le vendeur",
+                                        deletingSellerErrorMsg,
                                       );
                                     }
                                   });
@@ -225,22 +244,27 @@ class SellerRightCard extends ConsumerWidget {
                               ),
                             );
                           },
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
                             child: AddEditButtonLayout(
-                              colors: [Color(0xFF9E131F), Color(0xFF590512)],
+                              colors: const [
+                                Color(0xFF9E131F),
+                                Color(0xFF590512),
+                              ],
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  HeroIcon(
+                                  const HeroIcon(
                                     HeroIcons.trash,
                                     color: Colors.white,
                                     size: 20,
                                   ),
-                                  SizedBox(width: 15),
+                                  const SizedBox(width: 15),
                                   Text(
-                                    "Supprimer le vendeur",
-                                    style: TextStyle(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.paiementDeleteSeller,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,
                                     ),

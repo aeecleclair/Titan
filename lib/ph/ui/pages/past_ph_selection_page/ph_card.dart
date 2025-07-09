@@ -8,12 +8,12 @@ import 'package:titan/ph/providers/ph_cover_provider.dart';
 import 'package:titan/ph/providers/ph_provider.dart';
 import 'package:titan/ph/providers/ph_pdf_provider.dart';
 import 'package:titan/ph/router.dart';
-import 'package:titan/ph/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PhCard extends HookConsumerWidget {
   final Ph ph;
@@ -54,6 +54,9 @@ class PhCard extends HookConsumerWidget {
               right: 5,
               child: GestureDetector(
                 onTap: () async {
+                  final successDownloadingMsg = AppLocalizations.of(
+                    context,
+                  )!.phSuccesDowloading;
                   late final Uint8List pdfBytes;
 
                   try {
@@ -80,7 +83,7 @@ class PhCard extends HookConsumerWidget {
                   if (path != null) {
                     displayPhToastWithContext(
                       TypeMsg.msg,
-                      PhTextConstants.succesDowloading,
+                      successDownloadingMsg,
                     );
                   }
                 },

@@ -11,6 +11,7 @@ import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AccountHandler extends HookConsumerWidget {
   const AccountHandler({super.key});
@@ -28,7 +29,7 @@ class AccountHandler extends HookConsumerWidget {
     return Column(
       children: [
         StyledSearchBar(
-          label: AMAPTextConstants.accounts,
+          label: AppLocalizations.of(context)!.amapAccounts,
           color: AMAPColorConstants.textDark,
           onChanged: (value) async {
             if (!searchingAmapUser) {

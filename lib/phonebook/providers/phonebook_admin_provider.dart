@@ -38,7 +38,7 @@ final isAssociationPresidentProvider = StateProvider<bool>((ref) {
             (membership) => membership.associationId == association.id,
           )
           .rolesTags
-          .contains(PhonebookTextConstants.presidentRoleTag)) {
+          .contains(presidentRoleTag)) {
         isPresident = true;
       }
     }

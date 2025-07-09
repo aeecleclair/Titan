@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class Consts {
@@ -102,10 +103,12 @@ class SellerRightDialog extends StatelessWidget {
                               ),
                               child: child,
                             ),
-                            child: const Center(
+                            child: Center(
                               child: Text(
-                                "Ajouter",
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                AppLocalizations.of(context)!.paiementAdd,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),

@@ -6,7 +6,6 @@ import 'package:titan/purchases/providers/generated_ticket_provider.dart';
 import 'package:titan/purchases/providers/scanner_provider.dart';
 import 'package:titan/purchases/providers/seller_list_provider.dart';
 import 'package:titan/purchases/providers/seller_provider.dart';
-import 'package:titan/purchases/tools/constants.dart';
 import 'package:titan/purchases/ui/pages/scan_page/ticket_card.dart';
 import 'package:titan/purchases/ui/pages/scan_page/scan_dialog.dart';
 import 'package:titan/purchases/ui/purchases.dart';
@@ -15,6 +14,7 @@ import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/layouts/item_chip.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ScanPage extends HookConsumerWidget {
   const ScanPage({super.key});
@@ -74,7 +74,11 @@ class ScanPage extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 10),
                     seller.id == ""
-                        ? const Text(PurchasesTextConstants.pleaseSelectSeller)
+                        ? Text(
+                            AppLocalizations.of(
+                              context,
+                            )!.purchasesPleaseSelectSeller,
+                          )
                         : AsyncChild(
                             value: products,
                             builder: (context, products) {
@@ -83,8 +87,10 @@ class ScanPage extends HookConsumerWidget {
                                     product.ticketGenerators.isNotEmpty,
                               );
                               if (scannableProducts.isEmpty) {
-                                return const Text(
-                                  PurchasesTextConstants.noScannableProducts,
+                                return Text(
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.purchasesNoScannableProducts,
                                 );
                               }
                               return Column(
@@ -127,7 +133,7 @@ class ScanPage extends HookConsumerWidget {
             //   decoration: const InputDecoration(
             //     isDense: true,
             //     label: Text(
-            //       PurchasesTextConstants.tag,
+            //       AppLocalizations.of(context)!.purchasesTag,
             //       style: TextStyle(
             //         color: PurchasesColorConstants.textDark,
             //       ),
@@ -139,12 +145,12 @@ class ScanPage extends HookConsumerWidget {
             // ),
             // tag == ""
             //     ? const Text(
-            //         PurchasesTextConstants.noTagGiven,
+            //         AppLocalizations.of(context)!.purchasesNoTagGiven,
             //         style: TextStyle(color: Colors.red),
             //       )
             //     : const SizedBox(),
             // product.id == ""
-            //     ? const Text(PurchasesTextConstants.pleaseSelectProduct)
+            //     ? const Text(AppLocalizations.of(context)!.purchasesPleaseSelectProduct)
             //     : Padding(
             //         padding: const EdgeInsets.all(30),
             //         child: SizedBox(

@@ -4,11 +4,11 @@ import 'package:titan/ph/providers/ph_list_provider.dart';
 import 'package:titan/ph/providers/ph_provider.dart';
 import 'package:titan/ph/providers/selected_year_list_provider.dart';
 import 'package:titan/ph/router.dart';
-import 'package:titan/ph/tools/constants.dart';
 import 'package:titan/ph/ui/pages/admin_page/admin_ph_card.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AdminPhList extends HookConsumerWidget {
   const AdminPhList({super.key});
@@ -41,8 +41,10 @@ class AdminPhList extends HookConsumerWidget {
                         context: context,
                         builder: (context) {
                           return CustomDialogBox(
-                            title: PhTextConstants.delete,
-                            descriptions: PhTextConstants.irreversibleAction,
+                            title: AppLocalizations.of(context)!.phDelete,
+                            descriptions: AppLocalizations.of(
+                              context,
+                            )!.phIrreversibleAction,
                             onYes: () {
                               phListNotifier.deletePh(ph);
                             },

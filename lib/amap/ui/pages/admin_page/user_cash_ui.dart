@@ -13,6 +13,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class UserCashUi extends HookConsumerWidget {
   final Cash cash;
@@ -150,6 +151,12 @@ class UserCashUi extends HookConsumerWidget {
                                 if (key.currentState == null) {
                                   return;
                                 }
+                                final updatedAmountMsg = AppLocalizations.of(
+                                  context,
+                                )!.amapUpdatedAmount;
+                                final updatingErrorMsg = AppLocalizations.of(
+                                  context,
+                                )!.amapUpdatingError;
                                 if (key.currentState!.validate()) {
                                   await tokenExpireWrapper(ref, () async {
                                     await ref
@@ -168,12 +175,12 @@ class UserCashUi extends HookConsumerWidget {
                                             toggle();
                                             displayVoteWithContext(
                                               TypeMsg.msg,
-                                              AMAPTextConstants.updatedAmount,
+                                              updatedAmountMsg,
                                             );
                                           } else {
                                             displayVoteWithContext(
                                               TypeMsg.error,
-                                              AMAPTextConstants.updatingError,
+                                              updatingErrorMsg,
                                             );
                                           }
                                         });

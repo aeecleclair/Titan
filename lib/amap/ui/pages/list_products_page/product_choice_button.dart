@@ -13,6 +13,7 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ProductChoiceButton extends HookConsumerWidget {
   const ProductChoiceButton({super.key});
@@ -69,7 +70,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                   displayToast(
                     context,
                     TypeMsg.error,
-                    AMAPTextConstants.noProduct,
+                    AppLocalizations.of(context)!.amapNoProduct,
                   );
                 } else {
                   Order newOrder = order.copyWith(
@@ -78,6 +79,18 @@ class ProductChoiceButton extends HookConsumerWidget {
                     lastAmount: order.amount,
                   );
                   await tokenExpireWrapper(ref, () async {
+                    final updatedOrderMsg = AppLocalizations.of(
+                      context,
+                    )!.amapUpdatedOrder;
+                    final addedOrderMsg = AppLocalizations.of(
+                      context,
+                    )!.amapAddedOrder;
+                    final updatingErrorMsg = AppLocalizations.of(
+                      context,
+                    )!.amapUpdatingError;
+                    final addingErrorMsg = AppLocalizations.of(
+                      context,
+                    )!.amapAddingError;
                     final value = isEdit
                         ? await orderListNotifier.updateOrder(newOrder)
                         : await orderListNotifier.addOrder(newOrder);
@@ -87,34 +100,25 @@ class ProductChoiceButton extends HookConsumerWidget {
                         order.lastAmount - order.amount,
                       );
                       if (isEdit) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AMAPTextConstants.updatedOrder,
-                        );
+                        displayToastWithContext(TypeMsg.msg, updatedOrderMsg);
                       } else {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AMAPTextConstants.addedOrder,
-                        );
+                        displayToastWithContext(TypeMsg.msg, addedOrderMsg);
                       }
                     } else {
                       if (isEdit) {
                         displayToastWithContext(
                           TypeMsg.error,
-                          AMAPTextConstants.updatingError,
+                          updatingErrorMsg,
                         );
                       } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AMAPTextConstants.addingError,
-                        );
+                        displayToastWithContext(TypeMsg.error, addingErrorMsg);
                       }
                     }
                   });
                 }
               },
               child: Text(
-                "${AMAPTextConstants.confirm} (${order.amount.toStringAsFixed(2)}€)",
+                "${AppLocalizations.of(context)!.amapConfirm} (${order.amount.toStringAsFixed(2)}€)",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
@@ -159,8 +163,10 @@ class ProductChoiceButton extends HookConsumerWidget {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) => CustomDialogBox(
-                    descriptions: AMAPTextConstants.deletingOrder,
-                    title: AMAPTextConstants.deleting,
+                    descriptions: AppLocalizations.of(
+                      context,
+                    )!.amapDeletingOrder,
+                    title: AppLocalizations.of(context)!.amapDeleting,
                     onYes: () {
                       orderNotifier.setOrder(Order.empty());
                       QR.back();

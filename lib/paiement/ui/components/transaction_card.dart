@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/history.dart';
 import 'package:titan/paiement/tools/functions.dart';
 
@@ -41,7 +42,7 @@ class TransactionCard extends StatelessWidget {
 
     final transactionName = transaction.type != HistoryType.transfer
         ? transaction.otherWalletName
-        : "Recharge";
+        : AppLocalizations.of(context)!.paiementTopUp;
 
     final colors = getTransactionColors(transaction);
 
@@ -106,7 +107,7 @@ class TransactionCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: Text(
-                            "Annulé",
+                            AppLocalizations.of(context)!.paiementCancelled,
                             style: TextStyle(
                               color: const Color.fromARGB(255, 204, 70, 25),
                               fontSize: 12,
@@ -118,7 +119,7 @@ class TransactionCard extends StatelessWidget {
                   ),
                   if (transaction.refund == null) const SizedBox(height: 5),
                   Text(
-                    "Le ${DateFormat("EEE dd MMMM yyyy à HH:mm", "fr_FR").format(transaction.creation)}",
+                    "${AppLocalizations.of(context)!.paiementThe} ${DateFormat("EEE dd MMMM yyyy ${AppLocalizations.of(context)!.paiementAt} HH:mm", "fr_FR").format(transaction.creation)}",
                     style: const TextStyle(
                       color: Color(0xff204550),
                       fontSize: 12,
@@ -126,7 +127,7 @@ class TransactionCard extends StatelessWidget {
                   ),
                   if (transaction.refund != null)
                     Text(
-                      "Remboursé le ${DateFormat("EEE dd MMMM yyyy à HH:mm", "fr_FR").format(transaction.refund!.creation)} de ${formatter.format(transaction.refund!.total / 100)} €",
+                      "${AppLocalizations.of(context)!.paiementRefundedThe} ${DateFormat("EEE dd MMMM yyyy ${AppLocalizations.of(context)!.paiementAt} HH:mm", "fr_FR").format(transaction.refund!.creation)} ${AppLocalizations.of(context)!.paiementOf} ${formatter.format(transaction.refund!.total / 100)} €",
                       style: const TextStyle(
                         color: Color.fromARGB(255, 16, 46, 55),
                         fontSize: 9,

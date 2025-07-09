@@ -10,6 +10,7 @@ import 'package:titan/raffle/ui/pages/admin_module_page/adding_user_container.da
 import 'package:titan/raffle/ui/pages/admin_module_page/cash_container.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AccountHandler extends HookConsumerWidget {
   const AccountHandler({super.key});
@@ -55,22 +56,22 @@ class AccountHandler extends HookConsumerWidget {
             focusNode: focusNode,
             controller: editingController,
             cursorColor: RaffleColorConstants.textDark,
-            decoration: const InputDecoration(
-              labelText: RaffleTextConstants.accounts,
-              labelStyle: TextStyle(
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.raffleAccounts,
+              labelStyle: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: RaffleColorConstants.textDark,
               ),
-              suffixIcon: Icon(
+              suffixIcon: const Icon(
                 Icons.search,
                 color: RaffleColorConstants.textDark,
                 size: 30,
               ),
-              enabledBorder: UnderlineInputBorder(
+              enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
               ),
-              focusedBorder: UnderlineInputBorder(
+              focusedBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(color: RaffleColorConstants.textDark),
               ),
             ),

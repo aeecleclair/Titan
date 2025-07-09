@@ -30,6 +30,7 @@ import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/ui/widgets/image_picker_on_tap.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class CreationPage extends HookConsumerWidget {
   const CreationPage({super.key});
@@ -80,13 +81,13 @@ class CreationPage extends HookConsumerWidget {
         child: Column(
           children: [
             const SizedBox(height: 30),
-            const Padding(
-              padding: EdgeInsets.only(top: 10, left: 30, right: 30),
+            Padding(
+              padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  RaffleTextConstants.editRaffle,
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.raffleEditRaffle,
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Color.fromARGB(255, 149, 149, 149),
@@ -186,7 +187,7 @@ class CreationPage extends HookConsumerWidget {
                 child: Form(
                   key: formKey,
                   child: TextEntry(
-                    label: RaffleTextConstants.name,
+                    label: AppLocalizations.of(context)!.raffleName,
                     enabled:
                         raffle.raffleStatusType == RaffleStatusType.creation,
                     controller: name,
@@ -223,7 +224,7 @@ class CreationPage extends HookConsumerWidget {
                     );
                   }
                 },
-                child: const Text(RaffleTextConstants.edit),
+                child: Text(AppLocalizations.of(context)!.raffleEdit),
               ),
             ),
             const SizedBox(height: 40),
@@ -235,9 +236,9 @@ class CreationPage extends HookConsumerWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               alignment: Alignment.centerLeft,
-              child: const Text(
-                RaffleTextConstants.editRaffle,
-                style: TextStyle(
+              child: Text(
+                AppLocalizations.of(context)!.raffleEditRaffle,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: RaffleColorConstants.textDark,
@@ -260,13 +261,21 @@ class CreationPage extends HookConsumerWidget {
                               title:
                                   raffle.raffleStatusType ==
                                       RaffleStatusType.creation
-                                  ? RaffleTextConstants.openRaffle
-                                  : RaffleTextConstants.closeRaffle,
+                                  ? AppLocalizations.of(
+                                      context,
+                                    )!.raffleOpenRaffle
+                                  : AppLocalizations.of(
+                                      context,
+                                    )!.raffleCloseRaffle,
                               descriptions:
                                   raffle.raffleStatusType ==
                                       RaffleStatusType.creation
-                                  ? RaffleTextConstants.openRaffleDescription
-                                  : RaffleTextConstants.closeRaffleDescription,
+                                  ? AppLocalizations.of(
+                                      context,
+                                    )!.raffleOpenRaffleDescription
+                                  : AppLocalizations.of(
+                                      context,
+                                    )!.raffleCloseRaffleDescription,
                               onYes: () async {
                                 switch (raffle.raffleStatusType) {
                                   case RaffleStatusType.creation:
@@ -306,8 +315,8 @@ class CreationPage extends HookConsumerWidget {
                       child: BlueBtn(
                         child: Text(
                           raffle.raffleStatusType == RaffleStatusType.open
-                              ? RaffleTextConstants.close
-                              : RaffleTextConstants.open,
+                              ? AppLocalizations.of(context)!.raffleClose
+                              : AppLocalizations.of(context)!.raffleOpen,
                         ),
                       ),
                     ),
