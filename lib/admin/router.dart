@@ -17,7 +17,7 @@ class AdminRouter {
   static const String groupNotifications = '/group_notifications';
   static final Module module = Module(
     getName: (context) => "Admin",
-    description: "Gérer les paramètres de l'application",
+    description: "Gérer les utilisateurs de l'application",
     root: AdminRouter.root,
   );
 

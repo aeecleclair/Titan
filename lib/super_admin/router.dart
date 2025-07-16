@@ -52,7 +52,7 @@ class SuperAdminRouter {
       '/detail_association_membership';
   static const String addEditMember = '/add_edit_member';
   static final Module module = Module(
-    getName: (context) => "SuperAdmin",
+    getName: (context) => "Super Admin",
     description: "Gérer les groupes, écoles et structures",
     root: SuperAdminRouter.root,
   );
