@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/settings/ui/pages/main_page/change_pass.dart';
 
 import 'package:titan/settings/ui/settings.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 import 'package:titan/tools/repository/repository.dart';
 
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
@@ -90,7 +92,7 @@ class SettingsMainPage extends HookConsumerWidget {
             const SizedBox(height: 20),
             ListItem(
               title: "Langue",
-              subtitle: "Français",
+              subtitle: ref.watch(localeProvider)?.languageCode,
               onTap: () async {
                 await showCustomBottomModal(
                   modal: BottomModalTemplate(
@@ -100,15 +102,35 @@ class SettingsMainPage extends HookConsumerWidget {
                       children: [
                         ListItemTemplate(
                           title: "🇫🇷 Français",
-                          trailing: Container(),
+                          onTap: () async {
+                            await ref
+                                .read(localeProvider.notifier)
+                                .setLocale(const Locale('fr'));
+                          },
+                          trailing:
+                              ref.watch(localeProvider)?.languageCode == 'fr'
+                              ? const HeroIcon(
+                                  HeroIcons.check,
+                                  color: ColorConstants.tertiary,
+                                )
+                              : Container(),
                         ),
                         ListItemTemplate(
                           title: "🇬🇧 English",
-                          trailing: const HeroIcon(
-                            HeroIcons.check,
-                            color: ColorConstants.tertiary,
-                          ),
+                          onTap: () async {
+                            await ref
+                                .read(localeProvider.notifier)
+                                .setLocale(const Locale('en'));
+                          },
+                          trailing:
+                              ref.watch(localeProvider)?.languageCode == 'en'
+                              ? const HeroIcon(
+                                  HeroIcons.check,
+                                  color: ColorConstants.tertiary,
+                                )
+                              : Container(),
                         ),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
@@ -118,7 +140,7 @@ class SettingsMainPage extends HookConsumerWidget {
               },
             ),
             ListItem(
-              title: "Notifications",
+              title: AppLocalizations.of(context)!.cinemaNoSession,
               subtitle: "2/3 activées",
               onTap: () async {
                 bool showAnnonceDetails = false;
