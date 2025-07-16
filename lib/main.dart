@@ -17,6 +17,7 @@ import 'package:titan/service/tools/setup.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/plausible/plausible_observer.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -98,36 +99,42 @@ class MyApp extends HookConsumerWidget {
       }, []);
     }
 
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'MyECL',
-      scrollBehavior: MyCustomScrollBehavior(),
-      supportedLocales: const [Locale('en', 'US'), Locale('fr', 'FR')],
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
-        brightness: Brightness.light,
-        scaffoldBackgroundColor: ColorConstants.background,
-      ),
-      routeInformationParser: const QRouteInformationParser(),
-      builder: (context, child) {
-        if (child == null) {
-          return const SizedBox();
-        }
-        return AppTemplate(child: child);
+    return Consumer(
+      builder: (context, ref, _) {
+        final currentLocale = ref.watch(localeProvider);
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          title: 'MyECL',
+          scrollBehavior: MyCustomScrollBehavior(),
+          locale: currentLocale,
+          supportedLocales: const [Locale('en'), Locale('fr')],
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          theme: ThemeData(
+            primarySwatch: Colors.red,
+            textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
+            brightness: Brightness.light,
+            scaffoldBackgroundColor: ColorConstants.background,
+          ),
+          routeInformationParser: const QRouteInformationParser(),
+          builder: (context, child) {
+            if (child == null) {
+              return const SizedBox();
+            }
+            return AppTemplate(child: child);
+          },
+          routerDelegate: QRouterDelegate(
+            appRouter.routes,
+            observers: [if (plausible != null) PlausibleObserver(plausible)],
+            initPath: AppRouter.root,
+            navKey: navigatorKey,
+          ),
+        );
       },
-      routerDelegate: QRouterDelegate(
-        appRouter.routes,
-        observers: [if (plausible != null) PlausibleObserver(plausible)],
-        initPath: AppRouter.root,
-        navKey: navigatorKey,
-      ),
     );
   }
 }
