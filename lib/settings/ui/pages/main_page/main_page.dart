@@ -140,7 +140,7 @@ class SettingsMainPage extends HookConsumerWidget {
               },
             ),
             ListItem(
-              title: AppLocalizations.of(context)!.cinemaNoSession,
+              title: "Notifications",
               subtitle: "2/3 activées",
               onTap: () async {
                 bool showAnnonceDetails = false;
