@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/settings/ui/pages/main_page/change_pass.dart';
 
 import 'package:titan/settings/ui/settings.dart';
@@ -165,8 +164,10 @@ class SettingsMainPage extends HookConsumerWidget {
                             ),
                             ListItemTemplate(
                               title: "Annonces",
-                              trailing: const HeroIcon(
-                                HeroIcons.chevronDown,
+                              trailing: HeroIcon(
+                                showAnnonceDetails
+                                    ? HeroIcons.minus
+                                    : HeroIcons.plus,
                                 color: ColorConstants.tertiary,
                               ),
                               onTap: () {
