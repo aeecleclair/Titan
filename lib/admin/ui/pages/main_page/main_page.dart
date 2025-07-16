@@ -27,6 +27,17 @@ class AdminMainPage extends HookConsumerWidget {
               onTap: () =>
                   QR.to(AdminRouter.root + AdminRouter.usersManagement),
             ),
+            ListItem(
+              title: "Gestion des groupes",
+              subtitle: "Gérer les groupes d'utilisateurs",
+              onTap: () => QR.to(AdminRouter.root + AdminRouter.usersGroups),
+            ),
+            ListItem(
+              title: "Notifications de groupe",
+              subtitle: "Gérer les notifications pour les groupes",
+              onTap: () =>
+                  QR.to(AdminRouter.root + AdminRouter.groupNotification),
+            ),
           ],
         ),
       ),
