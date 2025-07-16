@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/super_admin/providers/is_admin_provider.dart';
 import 'package:titan/phonebook/providers/association_filtered_list_provider.dart';
 import 'package:titan/phonebook/providers/association_kind_provider.dart';
 import 'package:titan/phonebook/providers/association_kinds_provider.dart';
@@ -23,8 +23,8 @@ class PhonebookMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
-    final isAdmin = ref.watch(isAdminProvider);
+    final isPhonebookSuperAdmin = ref.watch(isPhonebookSuperAdminProvider);
+    final isSuperAdmin = ref.watch(isSuperAdminProvider);
     final associationNotifier = ref.watch(associationProvider.notifier);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associationList = ref.watch(associationListProvider);
@@ -47,10 +47,10 @@ class PhonebookMainPage extends HookConsumerWidget {
               child: Row(
                 children: [
                   const ResearchBar(),
-                  if (isPhonebookAdmin || isAdmin)
+                  if (isPhonebookSuperAdmin || isSuperAdmin)
                     Padding(
                       padding: const EdgeInsets.only(left: 20),
-                      child: AdminButton(
+                      child: SuperAdminButton(
                         onTap: () {
                           kindNotifier.setKind('');
                           QR.to(PhonebookRouter.root + PhonebookRouter.admin);

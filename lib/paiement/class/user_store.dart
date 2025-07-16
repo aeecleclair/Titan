@@ -55,7 +55,7 @@ class UserStore extends Store {
     bool? canSeeHistory,
     bool? canCancel,
     bool? canManageSellers,
-    bool? storeAdmin,
+    bool? storeSuperAdmin,
   }) {
     return UserStore(
       id: id ?? this.id,

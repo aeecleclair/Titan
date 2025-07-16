@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/super_admin/providers/is_admin_provider.dart';
 import 'package:titan/advert/providers/advert_list_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
 import 'package:titan/advert/providers/advert_provider.dart';
@@ -28,8 +28,8 @@ class AdvertMainPage extends HookConsumerWidget {
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final selected = ref.watch(announcerProvider);
     final selectedNotifier = ref.watch(announcerProvider.notifier);
-    final isAdmin = ref.watch(isAdminProvider);
-    final isAdvertAdmin = ref.watch(isAdvertAdminProvider);
+    final isSuperAdmin = ref.watch(isSuperAdminProvider);
+    final isAdvertSuperAdmin = ref.watch(isAdvertSuperAdminProvider);
     return AdvertTemplate(
       child: Stack(
         children: [
@@ -57,15 +57,15 @@ class AdvertMainPage extends HookConsumerWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        if (isAdvertAdmin)
-                          AdminButton(
+                        if (isAdvertSuperAdmin)
+                          SuperAdminButton(
                             onTap: () {
                               selectedNotifier.clearAnnouncer();
                               QR.to(AdvertRouter.root + AdvertRouter.admin);
                             },
                           ),
-                        if (isAdmin)
-                          AdminButton(
+                        if (isSuperAdmin)
+                          SuperAdminButton(
                             onTap: () {
                               QR.to(
                                 AdvertRouter.root +

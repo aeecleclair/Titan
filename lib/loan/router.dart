@@ -47,9 +47,9 @@ class LoanRouter {
     children: [
       QRoute(
         path: admin,
-        builder: () => admin_page.AdminPage(),
+        builder: () => admin_page.SuperAdminPage(),
         middleware: [
-          AdminMiddleware(ref, isLoanAdminProvider),
+          SuperAdminMiddleware(ref, isLoanSuperAdminProvider),
           DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [

@@ -1,4 +1,4 @@
-import 'package:titan/admin/class/account_type.dart';
+import 'package:titan/super_admin/class/account_type.dart';
 import 'package:titan/user/class/simple_users.dart';
 
 class Applicant extends SimpleUser {

@@ -16,8 +16,8 @@ import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
-class StoreAdminPage extends HookConsumerWidget {
-  const StoreAdminPage({super.key});
+class StoreSuperAdminPage extends HookConsumerWidget {
+  const StoreSuperAdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

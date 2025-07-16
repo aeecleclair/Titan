@@ -51,7 +51,7 @@ class AssociationEditorPage extends HookConsumerWidget {
     final membershipNotifier = ref.watch(membershipProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
     final memberRoleTagsNotifier = ref.watch(memberRoleTagsProvider.notifier);
-    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
+    final isPhonebookSuperAdmin = ref.watch(isPhonebookSuperAdminProvider);
     final isAssociationPresident = ref.watch(isAssociationPresidentProvider);
     final kindNotifier = ref.watch(associationKindProvider.notifier);
 
@@ -100,7 +100,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                       height: 40,
                       decoration: BoxDecoration(
                         color:
-                            (isPhonebookAdmin || isAssociationPresident) &&
+                            (isPhonebookSuperAdmin || isAssociationPresident) &&
                                 !association.deactivated
                             ? ColorConstants.gradient1
                             : ColorConstants.deactivated1,
@@ -109,7 +109,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                       child: child,
                     ),
                     onTap:
-                        (isPhonebookAdmin || isAssociationPresident) &&
+                        (isPhonebookSuperAdmin || isAssociationPresident) &&
                             !association.deactivated
                         ? () async {
                             rolesTagsNotifier.resetChecked();
@@ -156,7 +156,7 @@ class AssociationEditorPage extends HookConsumerWidget {
               builder: (context, associationMembers) =>
                   associationMembers.isEmpty
                   ? Text(AppLocalizations.of(context)!.phonebookNoMember)
-                  : (isPhonebookAdmin || isAssociationPresident) &&
+                  : (isPhonebookSuperAdmin || isAssociationPresident) &&
                         !association.deactivated
                   ? SizedBox(
                       height: 400,
@@ -238,7 +238,7 @@ class AssociationEditorPage extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: WaitingButton(
                 builder: (child) => AddEditButtonLayout(
-                  colors: isPhonebookAdmin && !association.deactivated
+                  colors: isPhonebookSuperAdmin && !association.deactivated
                       ? [ColorConstants.gradient1, ColorConstants.gradient2]
                       : [
                           ColorConstants.deactivated1,
@@ -246,7 +246,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                         ],
                   child: child,
                 ),
-                onTap: isPhonebookAdmin && !association.deactivated
+                onTap: isPhonebookSuperAdmin && !association.deactivated
                     ? () async {
                         showDialog(
                           context: context,

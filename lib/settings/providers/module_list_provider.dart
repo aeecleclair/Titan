@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/admin/router.dart';
+import 'package:titan/super_admin/providers/is_admin_provider.dart';
+import 'package:titan/super_admin/router.dart';
 import 'package:titan/advert/router.dart';
-import 'package:titan/admin/providers/all_my_module_roots_list_provider.dart';
+import 'package:titan/super_admin/providers/all_my_module_roots_list_provider.dart';
 import 'package:titan/amap/router.dart';
 import 'package:titan/booking/router.dart';
 import 'package:titan/centralisation/router.dart';
@@ -32,9 +33,9 @@ final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
       .map((root) => '/$root')
       .toList();
 
-  final isAdmin = ref.watch(isAdminProvider);
+  final isSuperAdmin = ref.watch(isSuperAdminProvider);
 
-  ModulesNotifier modulesNotifier = ModulesNotifier(isAdmin: isAdmin);
+  ModulesNotifier modulesNotifier = ModulesNotifier(isSuperAdmin: isSuperAdmin);
   modulesNotifier.loadModules(myModulesRoot);
   return modulesNotifier;
 });
@@ -42,7 +43,7 @@ final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
 class ModulesNotifier extends StateNotifier<List<Module>> {
   String dbModule = "modules";
   String dbAllModules = "allModules";
-  final bool isAdmin;
+  final bool isSuperAdmin;
   final eq = const DeepCollectionEquality.unordered();
   List<Module> allModules = [
     HomeRouter.module,
@@ -61,8 +62,9 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     RecommendationRouter.module,
     VoteRouter.module,
     SeedLibraryRouter.module,
+    AdminRouter.module,
   ];
-  ModulesNotifier({required this.isAdmin}) : super([]);
+  ModulesNotifier({required this.isSuperAdmin}) : super([]);
 
   void saveModules() {
     SharedPreferences.getInstance().then((prefs) {
@@ -126,7 +128,10 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     for (Module module in toDelete) {
       allModules.remove(module);
     }
-    allModules.addAll([SettingsRouter.module, if (isAdmin) AdminRouter.module]);
+    allModules.addAll([
+      SettingsRouter.module,
+      if (isSuperAdmin) SuperAdminRouter.module,
+    ]);
     state = allModules;
   }
 

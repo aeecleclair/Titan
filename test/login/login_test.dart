@@ -225,7 +225,7 @@ void main() {
       );
     });
 
-    test('Account Type to ID - Admin', () {
+    test('Account Type to ID - SuperAdmin', () {
       expect(
         accountTypeToID(AccountType.admin),
         '0a25cb76-4b63-4fd3-b939-da6d9feabf28',

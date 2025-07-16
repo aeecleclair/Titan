@@ -35,7 +35,7 @@ class AmapMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final order = ref.watch(orderProvider);
     final orderNotifier = ref.read(orderProvider.notifier);
-    final isAdmin = ref.watch(isAmapAdminProvider);
+    final isSuperAdmin = ref.watch(isAmapSuperAdminProvider);
     final delivery = ref.watch(deliveryProvider);
     final deliveriesNotifier = ref.read(deliveryListProvider.notifier);
     final ordersNotifier = ref.read(userOrderListProvider.notifier);
@@ -94,8 +94,8 @@ class AmapMainPage extends HookConsumerWidget {
                       loaderColor: AMAPColorConstants.greenGradient1,
                     ),
                   ),
-                  if (isAdmin)
-                    AdminButton(
+                  if (isSuperAdmin)
+                    SuperAdminButton(
                       onTap: () {
                         QR.to(AmapRouter.root + AmapRouter.admin);
                       },

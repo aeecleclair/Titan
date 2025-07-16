@@ -20,7 +20,7 @@ class EventMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAdmin = ref.watch(isEventAdminProvider);
+    final isSuperAdmin = ref.watch(isEventSuperAdminProvider);
     final eventNotifier = ref.watch(eventProvider.notifier);
     final eventListNotifier = ref.watch(eventEventListProvider.notifier);
     final events = ref.watch(eventEventListProvider);
@@ -52,8 +52,8 @@ class EventMainPage extends HookConsumerWidget {
                           color: Colors.grey,
                         ),
                       ),
-                      if (isAdmin)
-                        AdminButton(
+                      if (isSuperAdmin)
+                        SuperAdminButton(
                           onTap: () {
                             QR.to(EventRouter.root + EventRouter.admin);
                           },

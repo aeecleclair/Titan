@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/super_admin/class/simple_group.dart';
 import 'package:titan/user/class/user.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:titan/vote/providers/is_vote_admin_provider.dart';
 
 void main() {
-  group('isVoteAdmin', () {
+  group('isVoteSuperAdmin', () {
     test('should return true if user is a vote admin', () {
       final container = ProviderContainer(
         overrides: [
@@ -22,9 +22,9 @@ void main() {
         ],
       );
 
-      final isVoteAdminState = container.read(isVoteAdminProvider);
+      final isVoteSuperAdminState = container.read(isVoteSuperAdminProvider);
 
-      expect(isVoteAdminState, true);
+      expect(isVoteSuperAdminState, true);
     });
 
     test('should return false if user is not a vote admin', () {
@@ -42,9 +42,9 @@ void main() {
         ],
       );
 
-      final isVoteAdminState = container.read(isVoteAdminProvider);
+      final isVoteSuperAdminState = container.read(isVoteSuperAdminProvider);
 
-      expect(isVoteAdminState, false);
+      expect(isVoteSuperAdminState, false);
     });
   });
 }

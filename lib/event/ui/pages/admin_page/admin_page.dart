@@ -10,8 +10,8 @@ import 'package:titan/tools/ui/widgets/calendar.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
-class AdminPage extends HookConsumerWidget {
-  const AdminPage({super.key});
+class SuperAdminPage extends HookConsumerWidget {
+  const SuperAdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

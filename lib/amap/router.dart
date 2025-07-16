@@ -56,9 +56,9 @@ class AmapRouter {
     children: [
       QRoute(
         path: admin,
-        builder: () => admin_page.AdminPage(),
+        builder: () => admin_page.SuperAdminPage(),
         middleware: [
-          AdminMiddleware(ref, isAmapAdminProvider),
+          SuperAdminMiddleware(ref, isAmapSuperAdminProvider),
           DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [

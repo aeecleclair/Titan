@@ -24,7 +24,7 @@ class PlantsRepository extends Repository {
     return PlantSimple.fromJson(await getOne(plantsId));
   }
 
-  Future<List<PlantSimple>> getListPlantSimpleAdmin(String userId) async {
+  Future<List<PlantSimple>> getListPlantSimpleSuperAdmin(String userId) async {
     return List<PlantSimple>.from(
       (await getList(
         suffix: "users/$userId",

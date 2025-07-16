@@ -101,7 +101,7 @@ class ListBooking extends HookConsumerWidget {
                 items: bookings,
                 itemBuilder: (context, e, i) => BookingCard(
                   booking: e,
-                  isAdmin: true,
+                  isSuperAdmin: true,
                   isDetail: false,
                   onEdit: () {
                     handleBooking(e);

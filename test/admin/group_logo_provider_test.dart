@@ -3,8 +3,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:titan/admin/providers/group_logo_provider.dart';
-import 'package:titan/admin/repositories/group_logo_repository.dart';
+import 'package:titan/super_admin/providers/group_logo_provider.dart';
+import 'package:titan/super_admin/repositories/group_logo_repository.dart';
 
 class MockGroupLogoRepository extends Mock implements GroupLogoRepository {}
 

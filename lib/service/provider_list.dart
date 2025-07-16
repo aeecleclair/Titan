@@ -1,4 +1,4 @@
-import 'package:titan/admin/notification_service.dart';
+import 'package:titan/super_admin/notification_service.dart';
 import 'package:titan/advert/notification_service.dart';
 import 'package:titan/amap/notification_service.dart';
 import 'package:titan/booking/notification_service.dart';

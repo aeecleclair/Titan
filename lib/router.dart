@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/admin/router.dart';
+import 'package:titan/super_admin/router.dart';
 import 'package:titan/advert/router.dart';
 import 'package:titan/amap/router.dart';
 import 'package:titan/booking/router.dart';
@@ -88,7 +89,7 @@ class AppRouter {
               FadeTransition(opacity: animation, child: child),
         ),
       ),
-      AdminRouter(ref).route(),
+      SuperAdminRouter(ref).route(),
       AdvertRouter(ref).route(),
       AmapRouter(ref).route(),
       BookingRouter(ref).route(),
@@ -112,6 +113,7 @@ class AppRouter {
       StyleGuideRouter(ref).route(),
       VoteRouter(ref).route(),
       SeedLibraryRouter(ref).route(),
+      AdminRouter(ref).route(),
     ];
   }
 }

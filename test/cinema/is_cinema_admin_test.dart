@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/super_admin/class/simple_group.dart';
 import 'package:titan/cinema/providers/is_cinema_admin.dart';
 import 'package:titan/user/class/user.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
 void main() {
-  group('isCinemaAdmin', () {
+  group('isCinemaSuperAdmin', () {
     test('should return true if user is a cinema admin', () {
       final container = ProviderContainer(
         overrides: [
@@ -15,7 +15,7 @@ void main() {
               groups: [
                 SimpleGroup.empty().copyWith(
                   id: 'ce5f36e6-5377-489f-9696-de70e2477300',
-                  name: 'Cinema Admin',
+                  name: 'Cinema SuperAdmin',
                 ),
               ],
             ),
@@ -23,9 +23,11 @@ void main() {
         ],
       );
 
-      final isCinemaAdminState = container.read(isCinemaAdminProvider);
+      final isCinemaSuperAdminState = container.read(
+        isCinemaSuperAdminProvider,
+      );
 
-      expect(isCinemaAdminState, true);
+      expect(isCinemaSuperAdminState, true);
     });
 
     test('should return false if user is not a cinema admin', () {
@@ -42,9 +44,11 @@ void main() {
         ],
       );
 
-      final isCinemaAdminState = container.read(isCinemaAdminProvider);
+      final isCinemaSuperAdminState = container.read(
+        isCinemaSuperAdminProvider,
+      );
 
-      expect(isCinemaAdminState, false);
+      expect(isCinemaSuperAdminState, false);
     });
   });
 }

@@ -19,8 +19,8 @@ import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
-class AdvertAdminPage extends HookConsumerWidget {
-  const AdvertAdminPage({super.key});
+class AdvertSuperAdminPage extends HookConsumerWidget {
+  const AdvertSuperAdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -100,7 +100,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                   ),
                 ),
                 ...filteredSortedUserAnnouncerAdverts.map(
-                  (advert) => AdminAdvertCard(
+                  (advert) => SuperAdminAdvertCard(
                     onTap: () {
                       advertNotifier.setAdvert(advert);
                       QR.to(AdvertRouter.root + AdvertRouter.detail);

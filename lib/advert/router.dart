@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/super_admin/providers/is_admin_provider.dart';
 import 'package:titan/advert/providers/is_advert_admin_provider.dart';
 import 'package:titan/advert/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
@@ -48,9 +48,9 @@ class AdvertRouter {
     children: [
       QRoute(
         path: admin,
-        builder: () => admin_page.AdvertAdminPage(),
+        builder: () => admin_page.AdvertSuperAdminPage(),
         middleware: [
-          AdminMiddleware(ref, isAdvertAdminProvider),
+          SuperAdminMiddleware(ref, isAdvertSuperAdminProvider),
           DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [
@@ -72,7 +72,7 @@ class AdvertRouter {
         path: addRemAnnouncer,
         builder: () => add_rem_announcer_page.AddRemAnnouncerPage(),
         middleware: [
-          AdminMiddleware(ref, isAdminProvider),
+          SuperAdminMiddleware(ref, isSuperAdminProvider),
           DeferredLoadingMiddleware(add_rem_announcer_page.loadLibrary),
         ],
       ),

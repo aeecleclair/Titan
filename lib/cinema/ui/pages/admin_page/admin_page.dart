@@ -13,8 +13,8 @@ import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
-class AdminPage extends HookConsumerWidget {
-  const AdminPage({super.key});
+class SuperAdminPage extends HookConsumerWidget {
+  const SuperAdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,7 +45,7 @@ class AdminPage extends HookConsumerWidget {
                 ),
               ),
               ...data.map(
-                (session) => AdminSessionCard(
+                (session) => SuperAdminSessionCard(
                   session: session,
                   onEdit: () {
                     sessionNotifier.setSession(session);

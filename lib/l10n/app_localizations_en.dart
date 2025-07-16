@@ -54,7 +54,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminEditedStructure => 'Structure edited';
 
   @override
-  String get adminAdministration => 'Administration';
+  String get adminSuperAdministration => 'SuperAdministration';
 
   @override
   String get adminAssociationMembership => 'Membership';
@@ -260,7 +260,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get advertAddingError => 'Error while adding';
 
   @override
-  String get advertAdmin => 'Admin';
+  String get advertSuperAdmin => 'SuperAdmin';
 
   @override
   String get advertAdvert => 'Advert';
@@ -407,7 +407,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get amapAddOrder => 'Add an order';
 
   @override
-  String get amapAdmin => 'Admin';
+  String get amapSuperAdmin => 'SuperAdmin';
 
   @override
   String get amapAlreadyExistCommand => 'An order already exists for this date';
@@ -751,7 +751,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingAddManager => 'Add manager';
 
   @override
-  String get bookingAdminPage => 'Admin';
+  String get bookingSuperAdminPage => 'SuperAdmin';
 
   @override
   String get bookingAllDay => 'All day';
@@ -1121,7 +1121,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cinemaThe => 'The';
 
   @override
-  String get drawerAdmin => 'Administration';
+  String get drawerSuperAdmin => 'SuperAdministration';
 
   @override
   String get drawerAndroidAppLink =>
@@ -1422,7 +1422,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loanAddingError => 'Error while adding';
 
   @override
-  String get loanAdmin => 'Administrator';
+  String get loanSuperAdmin => 'SuperAdministrator';
 
   @override
   String get loanAvailable => 'Available';
@@ -1849,7 +1849,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'No modules available, please try again later 😢😢';
 
   @override
-  String get othersAdmin => 'Admin';
+  String get othersSuperAdmin => 'SuperAdmin';
 
   @override
   String get othersError => 'An error occurred';
@@ -1951,10 +1951,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phonebookAddRole => 'Add a role';
 
   @override
-  String get phonebookAdmin => 'Admin';
+  String get phonebookSuperAdmin => 'SuperAdmin';
 
   @override
-  String get phonebookAdminPage => 'Admin page';
+  String get phonebookSuperAdminPage => 'SuperAdmin page';
 
   @override
   String get phonebookAll => 'All';
@@ -2942,7 +2942,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsAddProfilePicture => 'Add a photo';
 
   @override
-  String get settingsAdmin => 'Administrator';
+  String get settingsSuperAdmin => 'SuperAdministrator';
 
   @override
   String get settingsAskHelp => 'Ask for help';
@@ -3466,7 +3466,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moduleStyleGuide => 'StyleGuide';
 
   @override
-  String get moduleAdmin => 'Administration';
+  String get moduleSuperAdmin => 'SuperAdministration';
 
   @override
   String get moduleOthers => 'Others';
@@ -3627,7 +3627,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementStores => 'Associations';
 
   @override
-  String get paiementAdmin => 'Administrator';
+  String get paiementSuperAdmin => 'SuperAdministrator';
 
   @override
   String get paiementSuccededTransaction => 'Successful payment';
@@ -3767,7 +3767,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementManageSellers => 'Manage sellers';
 
   @override
-  String get paiementStructureAdmin => 'Structure administrator';
+  String get paiementStructureSuperAdmin => 'Structure administrator';
 
   @override
   String get paiementRightsOf => 'Rights of';

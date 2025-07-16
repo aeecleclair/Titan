@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class SectionChip extends StatelessWidget {
-  final bool selected, isAdmin;
+  final bool selected, isSuperAdmin;
   final String label;
   final Function()? onTap, onDelete;
   const SectionChip({
     super.key,
     required this.label,
-    this.isAdmin = false,
+    this.isSuperAdmin = false,
     this.selected = false,
     this.onTap,
     this.onDelete,
@@ -34,7 +34,7 @@ class SectionChip extends StatelessWidget {
                 fontSize: 18.0,
               ),
             ),
-            if (isAdmin && selected)
+            if (isSuperAdmin && selected)
               Container(
                 margin: const EdgeInsets.only(left: 10.0),
                 child: GestureDetector(

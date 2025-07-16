@@ -13,7 +13,7 @@ class CustomButton extends StatelessWidget {
     required this.onTap,
     this.textColor = Colors.white,
     this.color = Colors.black,
-    this.text = 'Admin',
+    this.text = 'SuperAdmin',
     this.colors,
     required this.icon,
   });

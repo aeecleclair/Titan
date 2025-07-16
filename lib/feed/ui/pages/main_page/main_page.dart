@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/super_admin/providers/is_admin_provider.dart';
 import 'package:titan/feed/class/feed_item.dart';
 import 'package:titan/feed/router.dart';
 import 'package:titan/feed/ui/feed.dart';
@@ -24,7 +24,7 @@ class FeedMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final feedItems = useState<List<FeedItem>>(FeedItem.getFakeItems());
     final filteredItems = useState<List<FeedItem>>(feedItems.value);
-    final isAdmin = ref.watch(isAdminProvider);
+    final isSuperAdmin = ref.watch(isSuperAdminProvider);
     final scrollController = useScrollController();
 
     return FeedTemplate(
@@ -93,7 +93,7 @@ class FeedMainPage extends HookConsumerWidget {
                     color: ColorConstants.title,
                   ),
                 ),
-                if (isAdmin)
+                if (isSuperAdmin)
                   CustomIconButton(
                     icon: HeroIcon(
                       HeroIcons.plus,

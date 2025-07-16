@@ -20,7 +20,7 @@ class PurchasesMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAdmin = ref.watch(isPurchasesAdminProvider);
+    final isSuperAdmin = ref.watch(isPurchasesSuperAdminProvider);
     final ticketList = ref.watch(ticketListProvider);
     final ticketListNotifier = ref.watch(ticketListProvider.notifier);
     final ticketNotifier = ref.watch(ticketProvider.notifier);
@@ -44,7 +44,7 @@ class PurchasesMainPage extends HookConsumerWidget {
                       QR.to(PurchasesRouter.root + PurchasesRouter.history);
                     },
                   ),
-                  if (isAdmin)
+                  if (isSuperAdmin)
                     CustomButton(
                       icon: HeroIcons.viewfinderCircle,
                       text: AppLocalizations.of(context)!.purchasesScan,

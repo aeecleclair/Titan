@@ -4,17 +4,17 @@ import 'package:titan/amap/providers/delivery_list_provider.dart';
 import 'package:titan/tools/providers/map_provider.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 
-class AdminDeliveryOrderListNotifier extends MapNotifier<String, Order> {
-  AdminDeliveryOrderListNotifier() : super();
+class SuperAdminDeliveryOrderListNotifier extends MapNotifier<String, Order> {
+  SuperAdminDeliveryOrderListNotifier() : super();
 }
 
 final adminDeliveryOrderListProvider =
     StateNotifierProvider<
-      AdminDeliveryOrderListNotifier,
+      SuperAdminDeliveryOrderListNotifier,
       Map<String, AsyncValue<List<Order>>?>
     >((ref) {
-      AdminDeliveryOrderListNotifier orderListNotifier =
-          AdminDeliveryOrderListNotifier();
+      SuperAdminDeliveryOrderListNotifier orderListNotifier =
+          SuperAdminDeliveryOrderListNotifier();
       tokenExpireWrapperAuth(ref, () async {
         final deliveries = ref.watch(deliveryList);
         orderListNotifier.loadTList(deliveries.map((e) => e.id).toList());

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class AdminScrollChips<T> extends HookWidget {
+class SuperAdminScrollChips<T> extends HookWidget {
   final bool isEdit;
   final List<T> data;
   final GlobalKey dataKey;
   final String pageStorageKeyName;
   final Widget Function(T) builder;
 
-  const AdminScrollChips({
+  const SuperAdminScrollChips({
     super.key,
     required this.isEdit,
     required this.dataKey,

@@ -189,7 +189,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                 items: members,
                 itemBuilder: (context, e, i) => MemberCard(
                   member: e,
-                  isAdmin: true,
+                  isSuperAdmin: true,
                   onDelete: () async {
                     membersNotifier.removeMember(e);
                   },

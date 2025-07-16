@@ -45,7 +45,7 @@ class PaymentMainPage extends HookConsumerWidget {
     final mySellersNotifier = ref.read(myStoresProvider.notifier);
     final myHistoryNotifier = ref.read(myHistoryProvider.notifier);
     final myWalletNotifier = ref.read(myWalletProvider.notifier);
-    final isAdmin = ref.watch(isPaymentAdminProvider);
+    final isSuperAdmin = ref.watch(isPaymentSuperAdminProvider);
     final flipped = useState(true);
 
     ref.listen(pathForwardingProvider, (previous, next) async {
@@ -144,7 +144,7 @@ class PaymentMainPage extends HookConsumerWidget {
                       AsyncChild(
                         value: mySellers,
                         builder: (context, mySellers) {
-                          if (mySellers.isEmpty && !isAdmin) {
+                          if (mySellers.isEmpty && !isSuperAdmin) {
                             return SizedBox(
                               height: 250,
                               width: MediaQuery.of(context).size.width,

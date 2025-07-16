@@ -42,8 +42,10 @@ class PhonebookRouter {
     children: [
       QRoute(
         path: admin,
-        builder: () => const AdminPage(),
-        middleware: [AdminMiddleware(ref, hasPhonebookAdminAccessProvider)],
+        builder: () => const SuperAdminPage(),
+        middleware: [
+          SuperAdminMiddleware(ref, hasPhonebookSuperAdminAccessProvider),
+        ],
         children: [
           QRoute(
             path: editAssociation,
@@ -68,7 +70,9 @@ class PhonebookRouter {
           QRoute(
             path: editAssociation,
             builder: () => AssociationEditorPage(),
-            middleware: [AdminMiddleware(ref, isAssociationPresidentProvider)],
+            middleware: [
+              SuperAdminMiddleware(ref, isAssociationPresidentProvider),
+            ],
             children: [
               QRoute(
                 path: addEditMember,

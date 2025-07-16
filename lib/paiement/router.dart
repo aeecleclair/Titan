@@ -35,7 +35,7 @@ class PaymentRouter {
   static const String fund = '/fund';
   static const String addEditStore = '/addEditStore';
   static const String transferStructure = '/transferStructure';
-  static const String storeAdmin = '/storeAdmin';
+  static const String storeSuperAdmin = '/storeSuperAdmin';
   static const String storeStats = '/storeStats';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.modulePayment,
@@ -68,16 +68,16 @@ class PaymentRouter {
         middleware: [DeferredLoadingMiddleware(devices_page.loadLibrary)],
       ),
       QRoute(
-        path: PaymentRouter.storeAdmin,
-        builder: () => store_admin_page.StoreAdminPage(),
+        path: PaymentRouter.storeSuperAdmin,
+        builder: () => store_admin_page.StoreSuperAdminPage(),
         middleware: [DeferredLoadingMiddleware(store_admin_page.loadLibrary)],
       ),
       QRoute(
         path: PaymentRouter.admin,
-        builder: () => admin_page.AdminPage(),
+        builder: () => admin_page.SuperAdminPage(),
         middleware: [
           DeferredLoadingMiddleware(admin_page.loadLibrary),
-          AdminMiddleware(ref, isPaymentAdminProvider),
+          SuperAdminMiddleware(ref, isPaymentSuperAdminProvider),
         ],
         children: [
           QRoute(

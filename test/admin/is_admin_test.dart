@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/class/simple_group.dart';
-import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/super_admin/class/simple_group.dart';
+import 'package:titan/super_admin/providers/is_admin_provider.dart';
 import 'package:titan/user/class/user.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
 void main() {
-  group('isAdminProvider', () {
+  group('isSuperAdminProvider', () {
     test('returns true if user is admin', () {
       final container = ProviderContainer(
         overrides: [
@@ -15,7 +15,7 @@ void main() {
               groups: [
                 SimpleGroup.empty().copyWith(
                   id: '0a25cb76-4b63-4fd3-b939-da6d9feabf28',
-                  name: 'Admin',
+                  name: 'SuperAdmin',
                 ),
                 SimpleGroup.empty().copyWith(id: '123', name: 'User'),
               ],
@@ -24,9 +24,9 @@ void main() {
         ],
       );
 
-      final isAdmin = container.read(isAdminProvider);
+      final isSuperAdmin = container.read(isSuperAdminProvider);
 
-      expect(isAdmin, true);
+      expect(isSuperAdmin, true);
     });
 
     test('returns false if user is not admin', () {
@@ -40,9 +40,9 @@ void main() {
         ],
       );
 
-      final isAdmin = container.read(isAdminProvider);
+      final isSuperAdmin = container.read(isSuperAdminProvider);
 
-      expect(isAdmin, false);
+      expect(isSuperAdmin, false);
     });
   });
 }

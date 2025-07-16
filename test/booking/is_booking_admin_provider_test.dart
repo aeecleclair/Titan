@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/super_admin/class/simple_group.dart';
 import 'package:titan/booking/providers/is_admin_provider.dart';
 import 'package:titan/user/class/user.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
 void main() {
-  group('isBookingAdminProvider', () {
+  group('isBookingSuperAdminProvider', () {
     test('should return true if user is a booking admin', () {
       final container = ProviderContainer(
         overrides: [
@@ -15,7 +15,7 @@ void main() {
               groups: [
                 SimpleGroup.empty().copyWith(
                   id: '0a25cb76-4b63-4fd3-b939-da6d9feabf28',
-                  name: 'Booking Admin',
+                  name: 'Booking SuperAdmin',
                 ),
                 SimpleGroup.empty().copyWith(id: '123', name: 'Other Group'),
               ],
@@ -24,7 +24,7 @@ void main() {
         ],
       );
 
-      final result = container.read(isAdminProvider);
+      final result = container.read(isSuperAdminProvider);
 
       expect(result, true);
     });
@@ -42,7 +42,7 @@ void main() {
         ],
       );
 
-      final result = container.read(isAdminProvider);
+      final result = container.read(isSuperAdminProvider);
 
       expect(result, false);
     });

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:titan/admin/providers/members_provider.dart';
+import 'package:titan/super_admin/providers/members_provider.dart';
 import 'package:titan/user/class/simple_users.dart';
 
 void main() {

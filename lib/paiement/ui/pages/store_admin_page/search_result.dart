@@ -32,8 +32,8 @@ class SearchResult extends HookConsumerWidget {
     final store = ref.watch(selectedStoreProvider);
     final users = ref.watch(userList);
     final usersNotifier = ref.watch(userList.notifier);
-    final newAdmin = ref.watch(newAdminProvider);
-    final newAdminNotifier = ref.watch(newAdminProvider.notifier);
+    final newSuperAdmin = ref.watch(newSuperAdminProvider);
+    final newSuperAdminNotifier = ref.watch(newSuperAdminProvider.notifier);
     final sellerStoreNotifier = ref.watch(
       sellerStoreProvider(store.id).notifier,
     );
@@ -83,7 +83,7 @@ class SearchResult extends HookConsumerWidget {
                 ),
                 onYes: () async {
                   await tokenExpireWrapper(ref, () async {
-                    newAdminNotifier.updateNewAdmin(simpleUser);
+                    newSuperAdminNotifier.updateNewSuperAdmin(simpleUser);
                     queryController.text = simpleUser.getName();
                     Seller seller = Seller(
                       storeId: store.id,
@@ -107,7 +107,7 @@ class SearchResult extends HookConsumerWidget {
                       queryController.clear();
                       usersNotifier.clear();
                       sellerRightsListNotifier.clearRights();
-                      newAdminNotifier.resetNewAdmin();
+                      newSuperAdminNotifier.resetNewSuperAdmin();
                       displayToastWithContext(TypeMsg.msg, addedSellerMsg);
                       if (context.mounted) {
                         Navigator.of(context).pop();
@@ -151,7 +151,7 @@ class SearchResult extends HookConsumerWidget {
                           simpleUser.getName(),
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: simpleUser.id == newAdmin.id
+                            fontWeight: simpleUser.id == newSuperAdmin.id
                                 ? FontWeight.bold
                                 : FontWeight.normal,
                           ),

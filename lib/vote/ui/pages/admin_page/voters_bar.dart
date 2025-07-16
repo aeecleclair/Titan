@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/providers/group_list_provider.dart';
+import 'package:titan/super_admin/providers/group_list_provider.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/vote/class/voter.dart';
 import 'package:titan/vote/providers/status_provider.dart';

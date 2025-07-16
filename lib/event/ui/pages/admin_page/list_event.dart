@@ -84,7 +84,7 @@ class ListEvent extends HookConsumerWidget {
               itemBuilder: (context, e, i) => EventUi(
                 event: e,
                 isDetailPage: true,
-                isAdmin: true,
+                isSuperAdmin: true,
                 onEdit: () {
                   eventNotifier.setEvent(e);
                   QR.to(

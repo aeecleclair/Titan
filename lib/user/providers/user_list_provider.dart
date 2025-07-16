@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/super_admin/class/simple_group.dart';
 import 'package:titan/tools/providers/list_notifier.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/user/class/simple_users.dart';

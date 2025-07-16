@@ -35,7 +35,7 @@ class HomeRouter {
     children: [
       QRoute(
         path: detail,
-        builder: () => detail_page.DetailPage(isAdmin: false),
+        builder: () => detail_page.DetailPage(isSuperAdmin: false),
         middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
       ),
     ],

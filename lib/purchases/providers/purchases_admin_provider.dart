@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/purchases/providers/seller_list_provider.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
-final isPurchasesAdminProvider = StateProvider<bool>((ref) {
+final isPurchasesSuperAdminProvider = StateProvider<bool>((ref) {
   final user = ref.watch(userProvider);
   final sellers = ref.watch(sellerListProvider);
   if (user.groups

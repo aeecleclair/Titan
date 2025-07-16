@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 
-class AdminButton extends StatelessWidget {
+class SuperAdminButton extends StatelessWidget {
   final VoidCallback onTap;
   final Color textColor;
   final Color? color;
   final List<Color>? colors;
   final String text;
-  const AdminButton({
+  const SuperAdminButton({
     super.key,
     required this.onTap,
     this.textColor = Colors.white,
     this.color = Colors.black,
-    this.text = "Admin",
+    this.text = "SuperAdmin",
     this.colors,
   });
 

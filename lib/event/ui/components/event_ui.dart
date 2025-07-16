@@ -18,13 +18,13 @@ import 'package:titan/l10n/app_localizations.dart';
 
 class EventUi extends ConsumerWidget {
   final Event event;
-  final bool isDetailPage, isAdmin;
+  final bool isDetailPage, isSuperAdmin;
   final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
   const EventUi({
     super.key,
     required this.event,
     this.isDetailPage = false,
-    this.isAdmin = false,
+    this.isSuperAdmin = false,
     this.onEdit,
     this.onConfirm,
     this.onDecline,
@@ -48,7 +48,7 @@ class EventUi extends ConsumerWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        if (!isDetailPage || isAdmin) {
+        if (!isDetailPage || isSuperAdmin) {
           onInfo?.call();
         }
       },
@@ -290,8 +290,8 @@ class EventUi extends ConsumerWidget {
                     ),
                   ],
                 ),
-              if (isAdmin) const Spacer(),
-              if (isAdmin)
+              if (isSuperAdmin) const Spacer(),
+              if (isSuperAdmin)
                 Row(
                   children: [
                     GestureDetector(
@@ -319,7 +319,7 @@ class EventUi extends ConsumerWidget {
                         }
                       },
                       child: CardButton(
-                        borderColor: isAdmin
+                        borderColor: isSuperAdmin
                             ? event.decision == Decision.approved
                                   ? Colors.black
                                   : Colors.transparent
@@ -339,7 +339,7 @@ class EventUi extends ConsumerWidget {
                       },
                       child: CardButton(
                         color: Colors.black,
-                        borderColor: isAdmin
+                        borderColor: isSuperAdmin
                             ? event.decision == Decision.declined
                                   ? Colors.white
                                   : Colors.transparent

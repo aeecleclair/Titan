@@ -36,7 +36,7 @@ class CinemaMainPage extends HookConsumerWidget {
       sessionListPageControllerProvider(initialPage),
     );
     final scrollNotifier = ref.watch(scrollProvider.notifier);
-    final isAdmin = ref.watch(isCinemaAdminProvider);
+    final isSuperAdmin = ref.watch(isCinemaSuperAdminProvider);
     final isWebFormat = ref.watch(isWebFormatProvider);
     pageController.addListener(() {
       scrollNotifier.setScroll(pageController.page!);
@@ -71,8 +71,8 @@ class CinemaMainPage extends HookConsumerWidget {
                           color: Colors.grey,
                         ),
                       ),
-                      if (isAdmin)
-                        AdminButton(
+                      if (isSuperAdmin)
+                        SuperAdminButton(
                           onTap: () {
                             QR.to(CinemaRouter.root + CinemaRouter.admin);
                             initialPageNotifier.setMainPageIndex(currentPage);

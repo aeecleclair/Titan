@@ -47,9 +47,9 @@ class VoteRouter {
     children: [
       QRoute(
         path: admin,
-        builder: () => admin_page.AdminPage(),
+        builder: () => admin_page.SuperAdminPage(),
         middleware: [
-          AdminMiddleware(ref, isVoteAdminProvider),
+          SuperAdminMiddleware(ref, isVoteSuperAdminProvider),
           DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [

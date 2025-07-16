@@ -17,8 +17,8 @@ import 'package:titan/loan/ui/pages/admin_page/on_going_loan.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 
-class AdminPage extends HookConsumerWidget {
-  const AdminPage({super.key});
+class SuperAdminPage extends HookConsumerWidget {
+  const SuperAdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -103,15 +103,15 @@ class AdminPage extends HookConsumerWidget {
                     final adminLoanListNotifier = ref.read(
                       adminLoanListProvider.notifier,
                     );
-                    final listAdminItems = adminLoanList[key];
-                    if (listAdminItems == null) {
+                    final listSuperAdminItems = adminLoanList[key];
+                    if (listSuperAdminItems == null) {
                       adminLoanListNotifier.autoLoadList(
                         ref,
                         key,
                         (key) => loanListNotifier.loadLoan(key.id),
                       );
                     } else {
-                      listAdminItems.whenData((adminLoanList) async {
+                      listSuperAdminItems.whenData((adminLoanList) async {
                         if (adminLoanList.isEmpty) {
                           adminLoanListNotifier.autoLoadList(
                             ref,
@@ -128,15 +128,16 @@ class AdminPage extends HookConsumerWidget {
                     final adminHistoryLoanListNotifier = ref.read(
                       adminHistoryLoanListProvider.notifier,
                     );
-                    final listAdminHistoryItems = adminHistoryLoanList[key];
-                    if (listAdminHistoryItems == null) {
+                    final listSuperAdminHistoryItems =
+                        adminHistoryLoanList[key];
+                    if (listSuperAdminHistoryItems == null) {
                       adminHistoryLoanListNotifier.autoLoadList(
                         ref,
                         key,
                         (key) => historyLoanListNotifier.loadLoan(key.id),
                       );
                     } else {
-                      listAdminHistoryItems.whenData((
+                      listSuperAdminHistoryItems.whenData((
                         adminHistoryLoanList,
                       ) async {
                         if (adminHistoryLoanList.isEmpty) {

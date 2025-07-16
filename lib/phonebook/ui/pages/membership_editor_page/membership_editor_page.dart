@@ -47,7 +47,7 @@ class MembershipEditorPage extends HookConsumerWidget {
       text: membership.apparentName,
     );
     final associationMembers = ref.watch(associationMemberListProvider);
-    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
+    final isPhonebookSuperAdmin = ref.watch(isPhonebookSuperAdminProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -113,12 +113,12 @@ class MembershipEditorPage extends HookConsumerWidget {
                             ),
                             fillColor:
                                 rolesTagList.keys.first == tagKey &&
-                                    !isPhonebookAdmin
+                                    !isPhonebookSuperAdmin
                                 ? WidgetStateProperty.all(Colors.black)
                                 : WidgetStateProperty.all(Colors.grey),
                             onChanged:
                                 rolesTagList.keys.first == tagKey &&
-                                    !isPhonebookAdmin
+                                    !isPhonebookSuperAdmin
                                 ? null
                                 : (value) {
                                     rolesTagList[tagKey] = AsyncData([value!]);

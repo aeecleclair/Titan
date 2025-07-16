@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/providers/group_id_provider.dart';
+import 'package:titan/super_admin/providers/group_id_provider.dart';
 import 'package:titan/booking/class/manager.dart';
 import 'package:titan/service/class/room.dart';
 import 'package:titan/booking/providers/confirmed_booking_list_provider.dart';
@@ -21,8 +21,8 @@ import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
-class AdminPage extends HookConsumerWidget {
-  const AdminPage({super.key});
+class SuperAdminPage extends HookConsumerWidget {
+  const SuperAdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

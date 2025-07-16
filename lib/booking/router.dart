@@ -53,9 +53,9 @@ class BookingRouter {
     children: [
       QRoute(
         path: admin,
-        builder: () => admin_page.AdminPage(),
+        builder: () => admin_page.SuperAdminPage(),
         middleware: [
-          AdminMiddleware(ref, isAdminProvider),
+          SuperAdminMiddleware(ref, isSuperAdminProvider),
           DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [
@@ -63,7 +63,7 @@ class BookingRouter {
             path: room,
             builder: () => add_edit_room_page.AddEditRoomPage(),
             middleware: [
-              AdminMiddleware(ref, isAdminProvider),
+              SuperAdminMiddleware(ref, isSuperAdminProvider),
               DeferredLoadingMiddleware(add_edit_room_page.loadLibrary),
             ],
           ),
@@ -71,7 +71,7 @@ class BookingRouter {
             path: manager,
             builder: () => add_edit_manager_page.AddEditManagerPage(),
             middleware: [
-              AdminMiddleware(ref, isAdminProvider),
+              SuperAdminMiddleware(ref, isSuperAdminProvider),
               DeferredLoadingMiddleware(add_edit_manager_page.loadLibrary),
             ],
           ),
@@ -81,15 +81,16 @@ class BookingRouter {
         path: manager,
         builder: () => manager_page.ManagerPage(),
         middleware: [
-          AdminMiddleware(ref, isManagerProvider),
+          SuperAdminMiddleware(ref, isManagerProvider),
           DeferredLoadingMiddleware(manager_page.loadLibrary),
         ],
         children: [
           QRoute(
             path: detail,
-            builder: () => detail_booking_page.DetailBookingPage(isAdmin: true),
+            builder: () =>
+                detail_booking_page.DetailBookingPage(isSuperAdmin: true),
             middleware: [
-              AdminMiddleware(ref, isManagerProvider),
+              SuperAdminMiddleware(ref, isManagerProvider),
               DeferredLoadingMiddleware(detail_booking_page.loadLibrary),
             ],
           ),
@@ -98,7 +99,7 @@ class BookingRouter {
             builder: () =>
                 add_edit_booking_page.AddEditBookingPage(isManagerPage: true),
             middleware: [
-              AdminMiddleware(ref, isManagerProvider),
+              SuperAdminMiddleware(ref, isManagerProvider),
               DeferredLoadingMiddleware(add_edit_booking_page.loadLibrary),
             ],
           ),
@@ -114,7 +115,8 @@ class BookingRouter {
       ),
       QRoute(
         path: detail,
-        builder: () => detail_booking_page.DetailBookingPage(isAdmin: false),
+        builder: () =>
+            detail_booking_page.DetailBookingPage(isSuperAdmin: false),
         middleware: [
           DeferredLoadingMiddleware(detail_booking_page.loadLibrary),
         ],

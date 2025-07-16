@@ -12,8 +12,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
 class DetailBookingPage extends HookConsumerWidget {
-  final bool isAdmin;
-  const DetailBookingPage({super.key, required this.isAdmin});
+  final bool isSuperAdmin;
+  const DetailBookingPage({super.key, required this.isSuperAdmin});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -76,7 +76,7 @@ class DetailBookingPage extends HookConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 30),
-                        if (isAdmin)
+                        if (isSuperAdmin)
                           Column(
                             children: [
                               AutoSizeText(

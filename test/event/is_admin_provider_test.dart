@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/super_admin/class/simple_group.dart';
 import 'package:titan/event/providers/is_admin_provider.dart';
 import 'package:titan/user/class/user.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
 void main() {
-  group('isEventAdmin', () {
+  group('isEventSuperAdmin', () {
     test('should return true if user is event admin', () {
       final container = ProviderContainer(
         overrides: [
@@ -15,7 +15,7 @@ void main() {
               groups: [
                 SimpleGroup.empty().copyWith(
                   id: '53a669d6-84b1-4352-8d7c-421c1fbd9c6a',
-                  name: 'Admin',
+                  name: 'SuperAdmin',
                 ),
                 SimpleGroup.empty().copyWith(id: '123', name: 'User'),
               ],
@@ -24,9 +24,9 @@ void main() {
         ],
       );
 
-      final isEventAdminState = container.read(isEventAdminProvider);
+      final isEventSuperAdminState = container.read(isEventSuperAdminProvider);
 
-      expect(isEventAdminState, true);
+      expect(isEventSuperAdminState, true);
     });
 
     test('should return false if user is not event admin', () {
@@ -40,9 +40,9 @@ void main() {
         ],
       );
 
-      final isEventAdminState = container.read(isEventAdminProvider);
+      final isEventSuperAdminState = container.read(isEventSuperAdminProvider);
 
-      expect(isEventAdminState, false);
+      expect(isEventSuperAdminState, false);
     });
   });
 }
