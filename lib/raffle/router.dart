@@ -49,9 +49,9 @@ class RaffleRouter {
     children: [
       QRoute(
         path: admin,
-        builder: () => admin_module_page.SuperAdminModulePage(),
+        builder: () => admin_module_page.AdminModulePage(),
         middleware: [
-          SuperAdminMiddleware(ref, isRaffleSuperAdminProvider),
+          AdminMiddleware(ref, isRaffleAdminProvider),
           DeferredLoadingMiddleware(admin_module_page.loadLibrary),
         ],
       ),
@@ -59,7 +59,7 @@ class RaffleRouter {
         path: detail,
         builder: () => raffle_page.RaffleInfoPage(),
         middleware: [
-          SuperAdminMiddleware(ref, isRaffleSuperAdminProvider),
+          AdminMiddleware(ref, isRaffleAdminProvider),
           DeferredLoadingMiddleware(raffle_page.loadLibrary),
         ],
         children: [

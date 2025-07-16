@@ -32,7 +32,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
     final name = useTextEditingController(text: association.name);
     final description = useTextEditingController(text: association.description);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
-    final isAdmin = ref.watch(isAdminProvider);
+    final isAdmin = ref.watch(isSuperAdminProvider);
     final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
 
     final groups = ref.watch(allGroupListProvider);

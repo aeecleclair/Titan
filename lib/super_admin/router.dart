@@ -64,7 +64,7 @@ class SuperAdminRouter {
     builder: () => main_page.SuperAdminMainPage(),
     middleware: [
       AuthenticatedMiddleware(ref),
-      SuperAdminMiddleware(ref, isSuperAdminProvider),
+      AdminMiddleware(ref, isSuperAdminProvider),
       DeferredLoadingMiddleware(main_page.loadLibrary),
     ],
     children: [

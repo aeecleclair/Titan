@@ -51,7 +51,7 @@ class RecommendationRouter {
         path: addEdit,
         builder: () => add_edit_page.AddEditRecommendationPage(),
         middleware: [
-          SuperAdminMiddleware(ref, isRecommendationSuperAdminProvider),
+          AdminMiddleware(ref, isRecommendationAdminProvider),
           DeferredLoadingMiddleware(add_edit_page.loadLibrary),
         ],
       ),

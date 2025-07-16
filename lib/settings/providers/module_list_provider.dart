@@ -33,7 +33,7 @@ final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
       .map((root) => '/$root')
       .toList();
 
-  final isAdmin = ref.watch(isAdminProvider);
+  final isAdmin = ref.watch(isSuperAdminProvider);
 
   ModulesNotifier modulesNotifier = ModulesNotifier(isAdmin: isAdmin);
   modulesNotifier.loadModules(myModulesRoot);

@@ -75,7 +75,7 @@ class SeedLibraryRouter {
             path: SeedLibraryRouter.editInformation,
             builder: () => edit_information_page.EditInformationPage(),
             middleware: [
-              SuperAdminMiddleware(ref, isSeedLibrarySuperAdminProvider),
+              AdminMiddleware(ref, isSeedLibraryAdminProvider),
               DeferredLoadingMiddleware(edit_information_page.loadLibrary),
             ],
           ),
@@ -85,7 +85,7 @@ class SeedLibraryRouter {
         path: species,
         builder: () => species_page.SpeciesPage(),
         middleware: [
-          SuperAdminMiddleware(ref, isSeedLibrarySuperAdminProvider),
+          AdminMiddleware(ref, isSeedLibraryAdminProvider),
           DeferredLoadingMiddleware(species_page.loadLibrary),
         ],
         children: [

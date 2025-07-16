@@ -24,7 +24,7 @@ class PhonebookMainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
-    final isAdmin = ref.watch(isAdminProvider);
+    final isAdmin = ref.watch(isSuperAdminProvider);
     final associationNotifier = ref.watch(associationProvider.notifier);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associationList = ref.watch(associationListProvider);

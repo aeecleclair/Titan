@@ -41,7 +41,7 @@ class PurchasesRouter {
       QRoute(
         path: scan,
         builder: () => const ScanPage(),
-        middleware: [SuperAdminMiddleware(ref, isPurchasesSuperAdminProvider)],
+        middleware: [AdminMiddleware(ref, isPurchasesAdminProvider)],
       ),
       QRoute(
         path: history,

@@ -40,10 +40,10 @@ class FeedRouter {
     children: [
       QRoute(
         path: admin,
-        builder: () => admin_page.SuperAdminPage(),
+        builder: () => admin_page.AdminPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
-          SuperAdminMiddleware(ref, isSuperAdminProvider),
+          AdminMiddleware(ref, isSuperAdminProvider),
           DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
       ),

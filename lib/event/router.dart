@@ -44,15 +44,15 @@ class EventRouter {
     children: [
       QRoute(
         path: admin,
-        builder: () => admin_page.SuperAdminPage(),
+        builder: () => admin_page.AdminPage(),
         middleware: [
-          SuperAdminMiddleware(ref, isEventSuperAdminProvider),
+          AdminMiddleware(ref, isEventAdminProvider),
           DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [
           QRoute(
             path: detail,
-            builder: () => detail_page.DetailPage(isSuperAdmin: true),
+            builder: () => detail_page.DetailPage(isAdmin: true),
             middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
           ),
           QRoute(
@@ -73,7 +73,7 @@ class EventRouter {
       ),
       QRoute(
         path: detail,
-        builder: () => detail_page.DetailPage(isSuperAdmin: false),
+        builder: () => detail_page.DetailPage(isAdmin: false),
         middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
       ),
     ],

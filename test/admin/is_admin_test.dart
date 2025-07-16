@@ -24,7 +24,7 @@ void main() {
         ],
       );
 
-      final isAdmin = container.read(isAdminProvider);
+      final isAdmin = container.read(isSuperAdminProvider);
 
       expect(isAdmin, true);
     });
@@ -40,7 +40,7 @@ void main() {
         ],
       );
 
-      final isAdmin = container.read(isAdminProvider);
+      final isAdmin = container.read(isSuperAdminProvider);
 
       expect(isAdmin, false);
     });

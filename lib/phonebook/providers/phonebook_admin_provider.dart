@@ -20,7 +20,7 @@ final isPhonebookAdminProvider = StateProvider<bool>((ref) {
 
 final hasPhonebookAdminAccessProvider = StateProvider<bool>((ref) {
   final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
-  final isAdmin = ref.watch(isAdminProvider);
+  final isAdmin = ref.watch(isSuperAdminProvider);
   return isPhonebookAdmin || isAdmin;
 });
 

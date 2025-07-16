@@ -51,9 +51,9 @@ class CinemaRouter {
       ),
       QRoute(
         path: admin,
-        builder: () => admin_page.SuperAdminPage(),
+        builder: () => admin_page.AdminPage(),
         middleware: [
-          SuperAdminMiddleware(ref, isCinemaSuperAdminProvider),
+          AdminMiddleware(ref, isCinemaAdminProvider),
           DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [

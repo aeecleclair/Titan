@@ -54,9 +54,9 @@ class PhRouter {
       ),
       QRoute(
         path: admin,
-        builder: () => admin_page.SuperAdminPage(),
+        builder: () => admin_page.AdminPage(),
         middleware: [
-          SuperAdminMiddleware(ref, isPhSuperAdminProvider),
+          AdminMiddleware(ref, isPhAdminProvider),
           DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [
