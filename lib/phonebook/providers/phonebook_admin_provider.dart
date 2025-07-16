@@ -5,7 +5,7 @@ import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
-final isPhonebookSuperAdminProvider = StateProvider<bool>((ref) {
+final isPhonebookAdminProvider = StateProvider<bool>((ref) {
   final user = ref.watch(userProvider);
   if (user.groups
           .map((e) => e.id)
@@ -18,10 +18,10 @@ final isPhonebookSuperAdminProvider = StateProvider<bool>((ref) {
   return false;
 });
 
-final hasPhonebookSuperAdminAccessProvider = StateProvider<bool>((ref) {
-  final isPhonebookSuperAdmin = ref.watch(isPhonebookSuperAdminProvider);
-  final isSuperAdmin = ref.watch(isSuperAdminProvider);
-  return isPhonebookSuperAdmin || isSuperAdmin;
+final hasPhonebookAdminAccessProvider = StateProvider<bool>((ref) {
+  final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
+  final isAdmin = ref.watch(isAdminProvider);
+  return isPhonebookAdmin || isAdmin;
 });
 
 final isAssociationPresidentProvider = StateProvider<bool>((ref) {

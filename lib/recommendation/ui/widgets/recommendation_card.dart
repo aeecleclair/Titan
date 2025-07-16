@@ -30,9 +30,7 @@ class RecommendationCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isRecommendationSuperAdmin = ref.watch(
-      isRecommendationSuperAdminProvider,
-    );
+    final isRecommendationAdmin = ref.watch(isRecommendationAdminProvider);
     final recommendationNotifier = ref.watch(recommendationProvider.notifier);
     final recommendationListNotifier = ref.watch(
       recommendationListProvider.notifier,
@@ -139,7 +137,7 @@ class RecommendationCard extends HookConsumerWidget {
                   )
                 : SizedBox(
                     width: 50,
-                    child: isRecommendationSuperAdmin
+                    child: isRecommendationAdmin
                         ? Column(
                             children: [
                               GestureDetector(

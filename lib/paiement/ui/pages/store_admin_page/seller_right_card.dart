@@ -33,9 +33,9 @@ class SellerRightCard extends ConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final amISuperAdmin = me.userId == store.structure.managerUser.id;
+    final amIAdmin = me.userId == store.structure.managerUser.id;
 
-    final isStructureSuperAdmin =
+    final isStructureAdmin =
         storeSeller.userId == store.structure.managerUser.id;
 
     final icons =
@@ -72,7 +72,7 @@ class SellerRightCard extends ConsumerWidget {
       AppLocalizations.of(context)!.paiementSeeHistory,
       AppLocalizations.of(context)!.paiementCancelTransactions,
       AppLocalizations.of(context)!.paiementManageSellers,
-      AppLocalizations.of(context)!.paiementStructureSuperAdmin,
+      AppLocalizations.of(context)!.paiementStructureAdmin,
     ];
 
     List<bool> sellerRights = [
@@ -89,7 +89,7 @@ class SellerRightCard extends ConsumerWidget {
       }
     }
 
-    if (isStructureSuperAdmin) {
+    if (isStructureAdmin) {
       rightsLabel.add(labels[4]);
       rightsIcons.add(icons[4]);
     }
@@ -103,7 +103,7 @@ class SellerRightCard extends ConsumerWidget {
             context: context,
             backgroundColor: Colors.transparent,
             scrollControlDisabledMaxHeightRatio:
-                (((!amISuperAdmin || isStructureSuperAdmin) ? 80 : 100) +
+                (((!amIAdmin || isStructureAdmin) ? 80 : 100) +
                     45 * icons.length) /
                 MediaQuery.of(context).size.height,
             builder: (context) {
@@ -131,7 +131,7 @@ class SellerRightCard extends ConsumerWidget {
                       ),
                       const SizedBox(height: 10),
                       for (var i = 0; i < icons.length; i++)
-                        if (i < 4 || isStructureSuperAdmin)
+                        if (i < 4 || isStructureAdmin)
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             child: Row(
@@ -146,8 +146,7 @@ class SellerRightCard extends ConsumerWidget {
                                   ),
                                 ),
                                 const Spacer(),
-                                if (me.canManageSellers &&
-                                    !isStructureSuperAdmin)
+                                if (me.canManageSellers && !isStructureAdmin)
                                   Checkbox(
                                     value: sellerRights[i],
                                     activeColor: const Color(0xff204550),
@@ -203,7 +202,7 @@ class SellerRightCard extends ConsumerWidget {
                               ],
                             ),
                           ),
-                      if (me.canManageSellers && !isStructureSuperAdmin)
+                      if (me.canManageSellers && !isStructureAdmin)
                         GestureDetector(
                           onTap: () async {
                             await showDialog(

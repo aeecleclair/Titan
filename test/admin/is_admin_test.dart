@@ -6,7 +6,7 @@ import 'package:titan/user/class/user.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
 void main() {
-  group('isSuperAdminProvider', () {
+  group('isAdminProvider', () {
     test('returns true if user is admin', () {
       final container = ProviderContainer(
         overrides: [
@@ -15,7 +15,7 @@ void main() {
               groups: [
                 SimpleGroup.empty().copyWith(
                   id: '0a25cb76-4b63-4fd3-b939-da6d9feabf28',
-                  name: 'SuperAdmin',
+                  name: 'Admin',
                 ),
                 SimpleGroup.empty().copyWith(id: '123', name: 'User'),
               ],
@@ -24,9 +24,9 @@ void main() {
         ],
       );
 
-      final isSuperAdmin = container.read(isSuperAdminProvider);
+      final isAdmin = container.read(isAdminProvider);
 
-      expect(isSuperAdmin, true);
+      expect(isAdmin, true);
     });
 
     test('returns false if user is not admin', () {
@@ -40,9 +40,9 @@ void main() {
         ],
       );
 
-      final isSuperAdmin = container.read(isSuperAdminProvider);
+      final isAdmin = container.read(isAdminProvider);
 
-      expect(isSuperAdmin, false);
+      expect(isAdmin, false);
     });
   });
 }

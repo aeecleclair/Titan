@@ -10,8 +10,8 @@ import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
-class SuperAdminPage extends ConsumerWidget {
-  const SuperAdminPage({super.key});
+class AdminPage extends ConsumerWidget {
+  const AdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,7 +43,7 @@ class SuperAdminPage extends ConsumerWidget {
                 );
                 return Column(
                   children: storeFromStructures
-                      .map((store) => SuperAdminStoreCard(store: store))
+                      .map((store) => AdminStoreCard(store: store))
                       .toList(),
                 );
               },

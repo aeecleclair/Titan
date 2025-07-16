@@ -8,13 +8,13 @@ import 'package:titan/vote/class/members.dart';
 class MemberCard extends StatelessWidget {
   final Member member;
   final Function()? onEdit, onDelete;
-  final bool isSuperAdmin;
+  final bool isAdmin;
   const MemberCard({
     super.key,
     required this.member,
     this.onEdit,
     this.onDelete,
-    this.isSuperAdmin = false,
+    this.isAdmin = false,
   });
 
   @override
@@ -22,7 +22,7 @@ class MemberCard extends StatelessWidget {
     return CardLayout(
       id: member.id,
       width: 150,
-      height: isSuperAdmin ? 145 : 110,
+      height: isAdmin ? 145 : 110,
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.symmetric(horizontal: 17.0),
       child: Column(
@@ -54,7 +54,7 @@ class MemberCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 2),
-          if (!isSuperAdmin) const Spacer(),
+          if (!isAdmin) const Spacer(),
           AutoSizeText(
             member.role,
             maxLines: 1,
@@ -66,8 +66,8 @@ class MemberCard extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          if (isSuperAdmin) const Spacer(),
-          if (isSuperAdmin)
+          if (isAdmin) const Spacer(),
+          if (isAdmin)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -91,7 +91,7 @@ class MemberCard extends StatelessWidget {
                 ),
               ],
             ),
-          SizedBox(height: isSuperAdmin ? 10 : 15),
+          SizedBox(height: isAdmin ? 10 : 15),
         ],
       ),
     );

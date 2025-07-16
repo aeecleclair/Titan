@@ -23,8 +23,8 @@ class PhonebookMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isPhonebookSuperAdmin = ref.watch(isPhonebookSuperAdminProvider);
-    final isSuperAdmin = ref.watch(isSuperAdminProvider);
+    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
+    final isAdmin = ref.watch(isAdminProvider);
     final associationNotifier = ref.watch(associationProvider.notifier);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associationList = ref.watch(associationListProvider);
@@ -47,10 +47,10 @@ class PhonebookMainPage extends HookConsumerWidget {
               child: Row(
                 children: [
                   const ResearchBar(),
-                  if (isPhonebookSuperAdmin || isSuperAdmin)
+                  if (isPhonebookAdmin || isAdmin)
                     Padding(
                       padding: const EdgeInsets.only(left: 20),
-                      child: SuperAdminButton(
+                      child: AdminButton(
                         onTap: () {
                           kindNotifier.setKind('');
                           QR.to(PhonebookRouter.root + PhonebookRouter.admin);

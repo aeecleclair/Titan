@@ -1,14 +1,10 @@
-class PhSuperAdmin {
-  PhSuperAdmin({
-    required this.name,
-    required this.groupManagerId,
-    required this.id,
-  });
+class PhAdmin {
+  PhAdmin({required this.name, required this.groupManagerId, required this.id});
   late final String name;
   late final String groupManagerId;
   late final String id;
 
-  PhSuperAdmin.fromJson(Map<String, dynamic> json) {
+  PhAdmin.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     groupManagerId = json['group_manager_id'];
     id = json['id'];
@@ -22,15 +18,15 @@ class PhSuperAdmin {
     return data;
   }
 
-  PhSuperAdmin copyWith({String? name, String? groupManagerId, String? id}) {
-    return PhSuperAdmin(
+  PhAdmin copyWith({String? name, String? groupManagerId, String? id}) {
+    return PhAdmin(
       name: name ?? this.name,
       groupManagerId: groupManagerId ?? this.groupManagerId,
       id: id ?? this.id,
     );
   }
 
-  PhSuperAdmin.empty() {
+  PhAdmin.empty() {
     name = "";
     groupManagerId = "";
     id = "";
@@ -38,6 +34,6 @@ class PhSuperAdmin {
 
   @override
   String toString() {
-    return 'PhSuperAdmin(name: $name, groupManagerId: $groupManagerId, id: $id)';
+    return 'PhAdmin(name: $name, groupManagerId: $groupManagerId, id: $id)';
   }
 }

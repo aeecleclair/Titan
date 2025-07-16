@@ -7,12 +7,12 @@ import 'package:titan/advert/ui/components/advert_card.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 
-class SuperAdminAdvertCard extends HookConsumerWidget {
+class AdminAdvertCard extends HookConsumerWidget {
   final VoidCallback onTap, onEdit;
   final Future Function() onDelete;
   final Advert advert;
 
-  const SuperAdminAdvertCard({
+  const AdminAdvertCard({
     super.key,
     required this.advert,
     required this.onTap,

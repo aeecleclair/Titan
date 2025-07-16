@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
-final isRecommendationSuperAdminProvider = StateProvider<bool>((ref) {
+final isRecommendationAdminProvider = StateProvider<bool>((ref) {
   final me = ref.watch(userProvider);
   return me.groups
       .map((e) => e.id)

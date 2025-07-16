@@ -28,8 +28,8 @@ class AdvertMainPage extends HookConsumerWidget {
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final selected = ref.watch(announcerProvider);
     final selectedNotifier = ref.watch(announcerProvider.notifier);
-    final isSuperAdmin = ref.watch(isSuperAdminProvider);
-    final isAdvertSuperAdmin = ref.watch(isAdvertSuperAdminProvider);
+    final isAdmin = ref.watch(isAdminProvider);
+    final isAdvertAdmin = ref.watch(isAdvertAdminProvider);
     return AdvertTemplate(
       child: Stack(
         children: [
@@ -57,15 +57,15 @@ class AdvertMainPage extends HookConsumerWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        if (isAdvertSuperAdmin)
-                          SuperAdminButton(
+                        if (isAdvertAdmin)
+                          AdminButton(
                             onTap: () {
                               selectedNotifier.clearAnnouncer();
                               QR.to(AdvertRouter.root + AdvertRouter.admin);
                             },
                           ),
-                        if (isSuperAdmin)
-                          SuperAdminButton(
+                        if (isAdmin)
+                          AdminButton(
                             onTap: () {
                               QR.to(
                                 AdvertRouter.root +

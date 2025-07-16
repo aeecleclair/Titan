@@ -6,7 +6,7 @@ import 'package:titan/user/class/user.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
 void main() {
-  group('isCinemaSuperAdmin', () {
+  group('isCinemaAdmin', () {
     test('should return true if user is a cinema admin', () {
       final container = ProviderContainer(
         overrides: [
@@ -15,7 +15,7 @@ void main() {
               groups: [
                 SimpleGroup.empty().copyWith(
                   id: 'ce5f36e6-5377-489f-9696-de70e2477300',
-                  name: 'Cinema SuperAdmin',
+                  name: 'Cinema Admin',
                 ),
               ],
             ),
@@ -23,11 +23,9 @@ void main() {
         ],
       );
 
-      final isCinemaSuperAdminState = container.read(
-        isCinemaSuperAdminProvider,
-      );
+      final isCinemaAdminState = container.read(isCinemaAdminProvider);
 
-      expect(isCinemaSuperAdminState, true);
+      expect(isCinemaAdminState, true);
     });
 
     test('should return false if user is not a cinema admin', () {
@@ -44,11 +42,9 @@ void main() {
         ],
       );
 
-      final isCinemaSuperAdminState = container.read(
-        isCinemaSuperAdminProvider,
-      );
+      final isCinemaAdminState = container.read(isCinemaAdminProvider);
 
-      expect(isCinemaSuperAdminState, false);
+      expect(isCinemaAdminState, false);
     });
   });
 }

@@ -863,10 +863,10 @@ class StyleGuidePage extends HookConsumerWidget {
                             height: 70,
                             child: HorizontalMultiSelect<Map<String, dynamic>>(
                               items: const [
-                                {"name": "John", "role": "SuperAdmin"},
+                                {"name": "John", "role": "Admin"},
                                 {"name": "Emma", "role": "Editor"},
                                 {"name": "Michael", "role": "Viewer"},
-                                {"name": "Sarah", "role": "SuperAdmin"},
+                                {"name": "Sarah", "role": "Admin"},
                                 {"name": "David", "role": "Editor"},
                               ],
                               itemBuilder: (context, user, index, selected) {

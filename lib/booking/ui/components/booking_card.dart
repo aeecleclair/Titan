@@ -13,7 +13,7 @@ class BookingCard extends StatelessWidget {
   final Booking booking;
   final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
   final Future Function()? onDelete;
-  final bool isSuperAdmin, isDetail;
+  final bool isAdmin, isDetail;
   const BookingCard({
     super.key,
     required this.booking,
@@ -23,7 +23,7 @@ class BookingCard extends StatelessWidget {
     this.onInfo,
     this.onCopy,
     this.onDelete,
-    this.isSuperAdmin = false,
+    this.isAdmin = false,
     this.isDetail = false,
   });
 
@@ -36,7 +36,7 @@ class BookingCard extends StatelessWidget {
           ).endDate!.isAfter(DateTime.now())
         : booking.end.isAfter(DateTime.now());
     final showButton =
-        (isNotEnded && booking.decision == Decision.pending) || isSuperAdmin;
+        (isNotEnded && booking.decision == Decision.pending) || isAdmin;
     final List<Color> cardColor;
     final Color smallTextColor;
     final Color bigTextColor;
@@ -199,13 +199,13 @@ class BookingCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (isSuperAdmin) const Spacer(),
-                if (isSuperAdmin)
+                if (isAdmin) const Spacer(),
+                if (isAdmin)
                   GestureDetector(
                     onTap: onConfirm,
                     child: CardButton(
                       color: lightIconBackgroundColor,
-                      borderColor: isSuperAdmin
+                      borderColor: isAdmin
                           ? booking.decision == Decision.approved
                                 ? darkIconBackgroundColor
                                 : Colors.transparent
@@ -217,13 +217,13 @@ class BookingCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                if (isSuperAdmin) const Spacer(),
-                if (isSuperAdmin)
+                if (isAdmin) const Spacer(),
+                if (isAdmin)
                   GestureDetector(
                     onTap: onDecline,
                     child: CardButton(
                       color: darkIconBackgroundColor,
-                      borderColor: isSuperAdmin
+                      borderColor: isAdmin
                           ? booking.decision == Decision.declined
                                 ? Colors.white
                                 : Colors.transparent
@@ -237,8 +237,8 @@ class BookingCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                if (!isSuperAdmin) const Spacer(),
-                if (!isSuperAdmin && booking.decision == Decision.pending)
+                if (!isAdmin) const Spacer(),
+                if (!isAdmin && booking.decision == Decision.pending)
                   WaitingButton(
                     onTap: onDelete,
                     builder: (child) => CardButton(

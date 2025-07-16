@@ -30,7 +30,7 @@ class VoteMainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final statusNotifier = ref.watch(statusProvider.notifier);
-    final isSuperAdmin = ref.watch(isVoteSuperAdminProvider);
+    final isAdmin = ref.watch(isVoteAdminProvider);
     final sections = ref.watch(sectionsProvider);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final contenders = ref.watch(contenderListProvider);
@@ -62,13 +62,13 @@ class VoteMainPage extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Column(
               children: [
-                if (isSuperAdmin)
+                if (isAdmin)
                   Row(
                     children: [
                       const Spacer(),
                       Container(
                         margin: const EdgeInsets.only(right: 20),
-                        child: SuperAdminButton(
+                        child: AdminButton(
                           onTap: () {
                             QR.to(VoteRouter.root + VoteRouter.admin);
                           },
@@ -134,7 +134,7 @@ class VoteMainPage extends HookConsumerWidget {
             padding: const EdgeInsets.only(left: 30.0),
             child: Column(
               children: [
-                SizedBox(height: isSuperAdmin ? 10 : 15),
+                SizedBox(height: isAdmin ? 10 : 15),
                 AsyncChild(
                   value: sections,
                   builder: (context, sectionList) => Column(
@@ -143,10 +143,10 @@ class VoteMainPage extends HookConsumerWidget {
                         height:
                             MediaQuery.of(context).size.height -
                             (s == Status.open
-                                ? isSuperAdmin
+                                ? isAdmin
                                       ? 215
                                       : 220
-                                : isSuperAdmin
+                                : isAdmin
                                 ? 150
                                 : 155),
                         child: Row(
@@ -166,12 +166,12 @@ class VoteMainPage extends HookConsumerWidget {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         SectionTitle(sectionList: sectionList),
-                                        if (isSuperAdmin)
+                                        if (isAdmin)
                                           Container(
                                             margin: const EdgeInsets.only(
                                               right: 20,
                                             ),
-                                            child: SuperAdminButton(
+                                            child: AdminButton(
                                               onTap: () {
                                                 QR.to(
                                                   VoteRouter.root +

@@ -106,7 +106,7 @@ class OnGoingLoan extends HookConsumerWidget {
               items: data,
               itemBuilder: (context, e, i) => LoanCard(
                 loan: e,
-                isSuperAdmin: true,
+                isAdmin: true,
                 onEdit: () async {
                   await loanNotifier.setLoan(e);
                   startNotifier.setStart(processDate(e.start));

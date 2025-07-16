@@ -29,7 +29,7 @@ class RaffleMainPage extends HookConsumerWidget {
     final raffleListNotifier = ref.watch(raffleListProvider.notifier);
     final userTicketList = ref.watch(userTicketListProvider);
     final userTicketListNotifier = ref.watch(userTicketListProvider.notifier);
-    final isSuperAdmin = ref.watch(isRaffleSuperAdminProvider);
+    final isAdmin = ref.watch(isRaffleAdminProvider);
     final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
 
     final rafflesStatus = {};
@@ -57,8 +57,8 @@ class RaffleMainPage extends HookConsumerWidget {
                   SectionTitle(
                     text: AppLocalizations.of(context)!.raffleTickets,
                   ),
-                  if (isSuperAdmin)
-                    SuperAdminButton(
+                  if (isAdmin)
+                    AdminButton(
                       onTap: () {
                         QR.to(RaffleRouter.root + RaffleRouter.admin);
                       },

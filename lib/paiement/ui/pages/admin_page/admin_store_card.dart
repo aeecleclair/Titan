@@ -13,9 +13,9 @@ import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class SuperAdminStoreCard extends ConsumerWidget {
+class AdminStoreCard extends ConsumerWidget {
   final Store store;
-  const SuperAdminStoreCard({super.key, required this.store});
+  const AdminStoreCard({super.key, required this.store});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

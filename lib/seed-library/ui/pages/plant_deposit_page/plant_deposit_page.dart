@@ -30,7 +30,7 @@ class PlantDepositPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final seedLibrarySuperAdmin = ref.watch(isSeedLibrarySuperAdminProvider);
+    final seedLibraryAdmin = ref.watch(isSeedLibraryAdminProvider);
     final key = GlobalKey<FormState>();
     final scrollController = useScrollController();
     final species = ref.watch(syncSpeciesListProvider);
@@ -66,7 +66,7 @@ class PlantDepositPage extends HookConsumerWidget {
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),
         ),
-        child: (myPlants.isEmpty && !seedLibrarySuperAdmin)
+        child: (myPlants.isEmpty && !seedLibraryAdmin)
             ? const Center(
                 child: Text(
                   SeedLibraryTextConstants.depositNotAvailable,
@@ -121,7 +121,7 @@ class PlantDepositPage extends HookConsumerWidget {
                         ],
                       ),
                     ),
-                    if (selectedAncestor.id == '' && seedLibrarySuperAdmin) ...[
+                    if (selectedAncestor.id == '' && seedLibraryAdmin) ...[
                       Text(
                         SeedLibraryTextConstants.speciesSimple,
                         style: TextStyle(
@@ -206,7 +206,7 @@ class PlantDepositPage extends HookConsumerWidget {
                               }
                               if (selectedAncestor.id == '' &&
                                   selectedSpecies.id == '') {
-                                if (seedLibrarySuperAdmin) {
+                                if (seedLibraryAdmin) {
                                   displayToastWithContext(
                                     TypeMsg.error,
                                     SeedLibraryTextConstants

@@ -9,8 +9,8 @@ import 'package:titan/amap/ui/pages/admin_page/delivery_handler.dart';
 import 'package:titan/amap/ui/pages/admin_page/product_handler.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 
-class SuperAdminPage extends HookConsumerWidget {
-  const SuperAdminPage({super.key});
+class AdminPage extends HookConsumerWidget {
+  const AdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

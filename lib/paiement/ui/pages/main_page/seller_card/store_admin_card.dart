@@ -8,8 +8,8 @@ import 'package:titan/paiement/providers/selected_structure_provider.dart';
 import 'package:titan/paiement/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class StoreSuperAdminCard extends ConsumerWidget {
-  const StoreSuperAdminCard({super.key});
+class StoreAdminCard extends ConsumerWidget {
+  const StoreAdminCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

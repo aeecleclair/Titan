@@ -14,7 +14,7 @@ class InformationPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final information = ref.watch(informationProvider);
-    final isSeedLibrarySuperAdmin = ref.watch(isSeedLibrarySuperAdminProvider);
+    final isSeedLibraryAdmin = ref.watch(isSeedLibraryAdminProvider);
 
     return SeedLibraryTemplate(
       child: SingleChildScrollView(
@@ -25,7 +25,7 @@ class InformationPage extends HookConsumerWidget {
             value: information,
             builder: (context, info) => Column(
               children: [
-                if (isSeedLibrarySuperAdmin)
+                if (isSeedLibraryAdmin)
                   GestureDetector(
                     onTap: () {
                       QR.to(

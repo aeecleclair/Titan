@@ -9,11 +9,11 @@ import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
-class SuperAdminSessionCard extends HookConsumerWidget {
+class AdminSessionCard extends HookConsumerWidget {
   final Session session;
   final VoidCallback onTap, onEdit;
   final Future Function() onDelete;
-  const SuperAdminSessionCard({
+  const AdminSessionCard({
     super.key,
     required this.session,
     required this.onTap,

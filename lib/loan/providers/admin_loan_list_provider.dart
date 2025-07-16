@@ -7,17 +7,16 @@ import 'package:titan/loan/providers/user_loaner_list_provider.dart';
 import 'package:titan/tools/providers/map_provider.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 
-class SuperAdminLoanListNotifier extends MapNotifier<Loaner, Loan> {
-  SuperAdminLoanListNotifier() : super();
+class AdminLoanListNotifier extends MapNotifier<Loaner, Loan> {
+  AdminLoanListNotifier() : super();
 }
 
 final adminLoanListProvider =
     StateNotifierProvider<
-      SuperAdminLoanListNotifier,
+      AdminLoanListNotifier,
       Map<Loaner, AsyncValue<List<Loan>>?>
     >((ref) {
-      SuperAdminLoanListNotifier adminLoanListNotifier =
-          SuperAdminLoanListNotifier();
+      AdminLoanListNotifier adminLoanListNotifier = AdminLoanListNotifier();
       tokenExpireWrapperAuth(ref, () async {
         final loaners = ref.watch(loanerList);
         final loaner = ref.watch(loanerProvider);

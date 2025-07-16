@@ -115,7 +115,7 @@ class AddEditBookingPage extends HookConsumerWidget {
               const SizedBox(height: 20),
               AsyncChild(
                 value: rooms,
-                builder: (context, data) => SuperAdminScrollChips(
+                builder: (context, data) => AdminScrollChips(
                   key: scrollKey,
                   isEdit: isEdit,
                   dataKey: dataKey,

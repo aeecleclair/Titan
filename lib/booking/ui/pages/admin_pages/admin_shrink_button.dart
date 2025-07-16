@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
-class SuperAdminShrinkButton extends StatelessWidget {
+class AdminShrinkButton extends StatelessWidget {
   final Future<void> Function() onTap;
   final String buttonText;
-  const SuperAdminShrinkButton({
+  const AdminShrinkButton({
     super.key,
     required this.onTap,
     required this.buttonText,

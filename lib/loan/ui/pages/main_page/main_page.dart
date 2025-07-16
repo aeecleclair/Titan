@@ -25,7 +25,7 @@ class LoanMainPage extends HookConsumerWidget {
     final loanList = ref.watch(loanListProvider);
     final loanNotifier = ref.watch(loanProvider.notifier);
     final loanListNotifier = ref.watch(loanListProvider.notifier);
-    final isSuperAdmin = ref.watch(isLoanSuperAdminProvider);
+    final isAdmin = ref.watch(isLoanAdminProvider);
 
     ref.watch(adminLoanListProvider);
     ref.watch(itemListProvider);
@@ -133,11 +133,11 @@ class LoanMainPage extends HookConsumerWidget {
               ],
             ),
           ),
-          if (isSuperAdmin)
+          if (isAdmin)
             Positioned(
               top: 30,
               right: 30,
-              child: SuperAdminButton(
+              child: AdminButton(
                 onTap: () {
                   QR.to(LoanRouter.root + LoanRouter.admin);
                 },

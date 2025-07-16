@@ -51,7 +51,7 @@ class SectionBar extends HookConsumerWidget {
       itemBuilder: (context, key, i) => SectionChip(
         label: key.name,
         selected: section.id == key.id,
-        isSuperAdmin: status == Status.waiting,
+        isAdmin: status == Status.waiting,
         onTap: () async {
           tokenExpireWrapper(ref, () async {
             sectionIdNotifier.setId(key.id);

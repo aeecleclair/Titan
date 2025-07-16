@@ -9,8 +9,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
 class DetailPage extends HookConsumerWidget {
-  final bool isSuperAdmin;
-  const DetailPage({super.key, required this.isSuperAdmin});
+  final bool isAdmin;
+  const DetailPage({super.key, required this.isAdmin});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -68,7 +68,7 @@ class DetailPage extends HookConsumerWidget {
                                 ),
                               ),
                               const SizedBox(height: 20),
-                              if (isSuperAdmin)
+                              if (isAdmin)
                                 Column(
                                   children: [
                                     GestureDetector(

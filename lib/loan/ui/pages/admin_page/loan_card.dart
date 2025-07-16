@@ -12,7 +12,7 @@ import 'package:titan/l10n/app_localizations.dart';
 
 class LoanCard extends StatelessWidget {
   final Loan loan;
-  final bool isSuperAdmin, isDetail, isHistory;
+  final bool isAdmin, isDetail, isHistory;
   final Function()? onEdit, onInfo;
   final Future Function()? onCalendar, onReturn;
   const LoanCard({
@@ -22,7 +22,7 @@ class LoanCard extends StatelessWidget {
     this.onCalendar,
     this.onReturn,
     this.onInfo,
-    this.isSuperAdmin = false,
+    this.isAdmin = false,
     this.isDetail = false,
     this.isHistory = false,
   });
@@ -33,14 +33,14 @@ class LoanCard extends StatelessWidget {
         DateTime.now().compareTo(loan.end) > 0 && !loan.returned;
     return GestureDetector(
       onTap: () {
-        if (isSuperAdmin || isHistory) {
+        if (isAdmin || isHistory) {
           onInfo?.call();
         }
       },
       child: CardLayout(
         id: loan.id,
         width: 250,
-        height: (isSuperAdmin && !isDetail)
+        height: (isAdmin && !isDetail)
             ? 170
             : isHistory
             ? 120
@@ -56,7 +56,7 @@ class LoanCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (!isSuperAdmin && !isHistory)
+            if (!isAdmin && !isHistory)
               Column(
                 children: [
                   const SizedBox(height: 10),
@@ -90,7 +90,7 @@ class LoanCard extends StatelessWidget {
                   const SizedBox(height: 5),
                 ],
               ),
-            SizedBox(height: !isSuperAdmin && !isHistory ? 5 : 10),
+            SizedBox(height: !isAdmin && !isHistory ? 5 : 10),
             AutoSizeText(
               loan.borrower.getName(),
               maxLines: 1,
@@ -155,7 +155,7 @@ class LoanCard extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            if (isSuperAdmin)
+            if (isAdmin)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

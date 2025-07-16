@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class SuperAdminButton extends StatelessWidget {
+class AdminButton extends StatelessWidget {
   final Widget child;
-  const SuperAdminButton({super.key, required this.child});
+  const AdminButton({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

@@ -16,7 +16,7 @@ class StoreList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final stores = ref.watch(myStoresProvider);
-    final isSuperAdmin = ref.watch(isPaymentSuperAdminProvider);
+    final isAdmin = ref.watch(isPaymentAdminProvider);
     return SizedBox(
       height: maxHeight,
       child: SingleChildScrollView(
@@ -49,11 +49,11 @@ class StoreList extends ConsumerWidget {
                 }
                 return Column(
                   children: [
-                    if (isSuperAdmin) ...[
+                    if (isAdmin) ...[
                       StoreDivider(
-                        name: AppLocalizations.of(context)!.paiementSuperAdmin,
+                        name: AppLocalizations.of(context)!.paiementAdmin,
                       ),
-                      const StoreSuperAdminCard(),
+                      const StoreAdminCard(),
                     ],
                     ...sortedByMembership.map((membership, stores) {
                       final List<UserStore> alphabeticallyOrderedStores = stores

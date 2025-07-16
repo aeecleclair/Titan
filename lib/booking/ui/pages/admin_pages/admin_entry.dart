@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:titan/tools/constants.dart';
 
-class SuperAdminEntry extends StatelessWidget {
+class AdminEntry extends StatelessWidget {
   final String name;
   final TextEditingController nameController;
-  const SuperAdminEntry({
+  const AdminEntry({
     super.key,
     required this.name,
     required this.nameController,

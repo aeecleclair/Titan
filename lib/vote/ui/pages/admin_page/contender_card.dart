@@ -16,7 +16,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 class ContenderCard extends HookConsumerWidget {
   final Contender contender;
-  final bool isSuperAdmin, isDetail;
+  final bool isAdmin, isDetail;
   final Function()? onEdit;
   final Future Function()? onDelete;
   const ContenderCard({
@@ -24,7 +24,7 @@ class ContenderCard extends HookConsumerWidget {
     required this.contender,
     this.onEdit,
     this.onDelete,
-    this.isSuperAdmin = false,
+    this.isAdmin = false,
     this.isDetail = false,
   });
 
@@ -40,7 +40,7 @@ class ContenderCard extends HookConsumerWidget {
       height:
           (contender.listType != ListType.blank &&
               status == Status.waiting &&
-              isSuperAdmin)
+              isAdmin)
           ? 180
           : 130,
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
@@ -109,7 +109,7 @@ class ContenderCard extends HookConsumerWidget {
           const Spacer(),
           if (contender.listType != ListType.blank &&
               status == Status.waiting &&
-              isSuperAdmin)
+              isAdmin)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

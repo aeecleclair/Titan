@@ -54,7 +54,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminEditedStructure => 'Structure modifiée';
 
   @override
-  String get adminSuperAdministration => 'SuperAdministration';
+  String get adminAdministration => 'Administration';
 
   @override
   String get adminAssociationMembership => 'Adhésion';
@@ -163,7 +163,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminLooking => 'Recherche';
 
   @override
-  String get adminManager => 'SuperAdministrateur de la structure';
+  String get adminManager => 'Administrateur de la structure';
 
   @override
   String get adminMaximum => 'Maximum';
@@ -261,7 +261,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get advertAddingError => 'Erreur lors de l\'ajout';
 
   @override
-  String get advertSuperAdmin => 'SuperAdmin';
+  String get advertAdmin => 'Admin';
 
   @override
   String get advertAdvert => 'Annonce';
@@ -408,7 +408,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get amapAddOrder => 'Ajouter une commande';
 
   @override
-  String get amapSuperAdmin => 'SuperAdmin';
+  String get amapAdmin => 'Admin';
 
   @override
   String get amapAlreadyExistCommand =>
@@ -754,7 +754,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bookingAddManager => 'Ajouter un gestionnaire';
 
   @override
-  String get bookingSuperAdminPage => 'SuperAdministrateur';
+  String get bookingAdminPage => 'Administrateur';
 
   @override
   String get bookingAllDay => 'Toute la journée';
@@ -1125,7 +1125,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get cinemaThe => 'Le';
 
   @override
-  String get drawerSuperAdmin => 'SuperAdministration';
+  String get drawerAdmin => 'Administration';
 
   @override
   String get drawerAndroidAppLink =>
@@ -1428,7 +1428,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get loanAddingError => 'Erreur lors de l\'ajout';
 
   @override
-  String get loanSuperAdmin => 'SuperAdministrateur';
+  String get loanAdmin => 'Administrateur';
 
   @override
   String get loanAvailable => 'Disponible';
@@ -1856,7 +1856,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucun module disponible, veuillez réessayer ultérieurement 😢😢';
 
   @override
-  String get othersSuperAdmin => 'SuperAdmin';
+  String get othersAdmin => 'Admin';
 
   @override
   String get othersError => 'Une erreur est survenue';
@@ -1960,10 +1960,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phonebookAddRole => 'Ajouter un rôle';
 
   @override
-  String get phonebookSuperAdmin => 'SuperAdmin';
+  String get phonebookAdmin => 'Admin';
 
   @override
-  String get phonebookSuperAdminPage => 'Page SuperAdministrateur';
+  String get phonebookAdminPage => 'Page Administrateur';
 
   @override
   String get phonebookAll => 'Toutes';
@@ -2961,7 +2961,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsAddProfilePicture => 'Ajouter une photo';
 
   @override
-  String get settingsSuperAdmin => 'SuperAdministrateur';
+  String get settingsAdmin => 'Administrateur';
 
   @override
   String get settingsAskHelp => 'Demander de l\'aide';
@@ -3493,7 +3493,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get moduleStyleGuide => 'StyleGuide';
 
   @override
-  String get moduleSuperAdmin => 'SuperAdminitration';
+  String get moduleAdmin => 'Adminitration';
 
   @override
   String get moduleOthers => 'Autres';
@@ -3661,7 +3661,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementStores => 'Associations';
 
   @override
-  String get paiementSuperAdmin => 'SuperAdministrateur';
+  String get paiementAdmin => 'Administrateur';
 
   @override
   String get paiementSuccededTransaction => 'Paiement réussi';
@@ -3805,8 +3805,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementManageSellers => 'Gérer les vendeurs';
 
   @override
-  String get paiementStructureSuperAdmin =>
-      'SuperAdministrateur de la structure';
+  String get paiementStructureAdmin => 'Administrateur de la structure';
 
   @override
   String get paiementRightsOf => 'Droits de';

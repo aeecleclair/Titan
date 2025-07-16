@@ -73,7 +73,7 @@ class SectionContenderItems extends HookConsumerWidget {
         items: data,
         itemBuilder: (context, e, i) => ContenderCard(
           contender: e,
-          isSuperAdmin: true,
+          isAdmin: true,
           onEdit: () {
             tokenExpireWrapper(ref, () async {
               contenderNotifier.setId(e);

@@ -10,7 +10,7 @@ class FundingRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'myeclpay/transfer/';
 
-  Future getSuperAdminPaymentUrl(Transfer transfer) async {
+  Future getAdminPaymentUrl(Transfer transfer) async {
     return await create(transfer.toJson(), suffix: "admin");
   }
 

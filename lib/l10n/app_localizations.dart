@@ -188,11 +188,11 @@ abstract class AppLocalizations {
   /// **'Structure modifiée'**
   String get adminEditedStructure;
 
-  /// No description provided for @adminSuperAdministration.
+  /// No description provided for @adminAdministration.
   ///
   /// In fr, this message translates to:
-  /// **'SuperAdministration'**
-  String get adminSuperAdministration;
+  /// **'Administration'**
+  String get adminAdministration;
 
   /// No description provided for @adminAssociationMembership.
   ///
@@ -407,7 +407,7 @@ abstract class AppLocalizations {
   /// No description provided for @adminManager.
   ///
   /// In fr, this message translates to:
-  /// **'SuperAdministrateur de la structure'**
+  /// **'Administrateur de la structure'**
   String get adminManager;
 
   /// No description provided for @adminMaximum.
@@ -596,11 +596,11 @@ abstract class AppLocalizations {
   /// **'Erreur lors de l\'ajout'**
   String get advertAddingError;
 
-  /// No description provided for @advertSuperAdmin.
+  /// No description provided for @advertAdmin.
   ///
   /// In fr, this message translates to:
-  /// **'SuperAdmin'**
-  String get advertSuperAdmin;
+  /// **'Admin'**
+  String get advertAdmin;
 
   /// No description provided for @advertAdvert.
   ///
@@ -890,11 +890,11 @@ abstract class AppLocalizations {
   /// **'Ajouter une commande'**
   String get amapAddOrder;
 
-  /// No description provided for @amapSuperAdmin.
+  /// No description provided for @amapAdmin.
   ///
   /// In fr, this message translates to:
-  /// **'SuperAdmin'**
-  String get amapSuperAdmin;
+  /// **'Admin'**
+  String get amapAdmin;
 
   /// No description provided for @amapAlreadyExistCommand.
   ///
@@ -1568,11 +1568,11 @@ abstract class AppLocalizations {
   /// **'Ajouter un gestionnaire'**
   String get bookingAddManager;
 
-  /// No description provided for @bookingSuperAdminPage.
+  /// No description provided for @bookingAdminPage.
   ///
   /// In fr, this message translates to:
-  /// **'SuperAdministrateur'**
-  String get bookingSuperAdminPage;
+  /// **'Administrateur'**
+  String get bookingAdminPage;
 
   /// No description provided for @bookingAllDay.
   ///
@@ -2300,11 +2300,11 @@ abstract class AppLocalizations {
   /// **'Le'**
   String get cinemaThe;
 
-  /// No description provided for @drawerSuperAdmin.
+  /// No description provided for @drawerAdmin.
   ///
   /// In fr, this message translates to:
-  /// **'SuperAdministration'**
-  String get drawerSuperAdmin;
+  /// **'Administration'**
+  String get drawerAdmin;
 
   /// No description provided for @drawerAndroidAppLink.
   ///
@@ -2894,11 +2894,11 @@ abstract class AppLocalizations {
   /// **'Erreur lors de l\'ajout'**
   String get loanAddingError;
 
-  /// No description provided for @loanSuperAdmin.
+  /// No description provided for @loanAdmin.
   ///
   /// In fr, this message translates to:
-  /// **'SuperAdministrateur'**
-  String get loanSuperAdmin;
+  /// **'Administrateur'**
+  String get loanAdmin;
 
   /// No description provided for @loanAvailable.
   ///
@@ -3728,11 +3728,11 @@ abstract class AppLocalizations {
   /// **'Aucun module disponible, veuillez réessayer ultérieurement 😢😢'**
   String get othersNoModule;
 
-  /// No description provided for @othersSuperAdmin.
+  /// No description provided for @othersAdmin.
   ///
   /// In fr, this message translates to:
-  /// **'SuperAdmin'**
-  String get othersSuperAdmin;
+  /// **'Admin'**
+  String get othersAdmin;
 
   /// No description provided for @othersError.
   ///
@@ -3932,17 +3932,17 @@ abstract class AppLocalizations {
   /// **'Ajouter un rôle'**
   String get phonebookAddRole;
 
-  /// No description provided for @phonebookSuperAdmin.
+  /// No description provided for @phonebookAdmin.
   ///
   /// In fr, this message translates to:
-  /// **'SuperAdmin'**
-  String get phonebookSuperAdmin;
+  /// **'Admin'**
+  String get phonebookAdmin;
 
-  /// No description provided for @phonebookSuperAdminPage.
+  /// No description provided for @phonebookAdminPage.
   ///
   /// In fr, this message translates to:
-  /// **'Page SuperAdministrateur'**
-  String get phonebookSuperAdminPage;
+  /// **'Page Administrateur'**
+  String get phonebookAdminPage;
 
   /// No description provided for @phonebookAll.
   ///
@@ -5858,11 +5858,11 @@ abstract class AppLocalizations {
   /// **'Ajouter une photo'**
   String get settingsAddProfilePicture;
 
-  /// No description provided for @settingsSuperAdmin.
+  /// No description provided for @settingsAdmin.
   ///
   /// In fr, this message translates to:
-  /// **'SuperAdministrateur'**
-  String get settingsSuperAdmin;
+  /// **'Administrateur'**
+  String get settingsAdmin;
 
   /// No description provided for @settingsAskHelp.
   ///
@@ -6872,11 +6872,11 @@ abstract class AppLocalizations {
   /// **'StyleGuide'**
   String get moduleStyleGuide;
 
-  /// No description provided for @moduleSuperAdmin.
+  /// No description provided for @moduleAdmin.
   ///
   /// In fr, this message translates to:
-  /// **'SuperAdminitration'**
-  String get moduleSuperAdmin;
+  /// **'Adminitration'**
+  String get moduleAdmin;
 
   /// No description provided for @moduleOthers.
   ///
@@ -7178,11 +7178,11 @@ abstract class AppLocalizations {
   /// **'Associations'**
   String get paiementStores;
 
-  /// No description provided for @paiementSuperAdmin.
+  /// No description provided for @paiementAdmin.
   ///
   /// In fr, this message translates to:
-  /// **'SuperAdministrateur'**
-  String get paiementSuperAdmin;
+  /// **'Administrateur'**
+  String get paiementAdmin;
 
   /// No description provided for @paiementSuccededTransaction.
   ///
@@ -7448,11 +7448,11 @@ abstract class AppLocalizations {
   /// **'Gérer les vendeurs'**
   String get paiementManageSellers;
 
-  /// No description provided for @paiementStructureSuperAdmin.
+  /// No description provided for @paiementStructureAdmin.
   ///
   /// In fr, this message translates to:
-  /// **'SuperAdministrateur de la structure'**
-  String get paiementStructureSuperAdmin;
+  /// **'Administrateur de la structure'**
+  String get paiementStructureAdmin;
 
   /// No description provided for @paiementRightsOf.
   ///

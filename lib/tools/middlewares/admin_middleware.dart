@@ -2,14 +2,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class SuperAdminMiddleware extends QMiddleware {
-  final StateProvider<bool> isSuperAdminProvider;
+class AdminMiddleware extends QMiddleware {
+  final StateProvider<bool> isAdminProvider;
   final Ref ref;
 
-  SuperAdminMiddleware(this.ref, this.isSuperAdminProvider);
+  AdminMiddleware(this.ref, this.isAdminProvider);
 
   @override
   Future<String?> redirectGuard(String path) async {
-    return ref.watch(isSuperAdminProvider) ? null : AppRouter.root;
+    return ref.watch(isAdminProvider) ? null : AppRouter.root;
   }
 }

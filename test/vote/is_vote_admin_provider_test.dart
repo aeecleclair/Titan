@@ -6,7 +6,7 @@ import 'package:titan/user/providers/user_provider.dart';
 import 'package:titan/vote/providers/is_vote_admin_provider.dart';
 
 void main() {
-  group('isVoteSuperAdmin', () {
+  group('isVoteAdmin', () {
     test('should return true if user is a vote admin', () {
       final container = ProviderContainer(
         overrides: [
@@ -22,9 +22,9 @@ void main() {
         ],
       );
 
-      final isVoteSuperAdminState = container.read(isVoteSuperAdminProvider);
+      final isVoteAdminState = container.read(isVoteAdminProvider);
 
-      expect(isVoteSuperAdminState, true);
+      expect(isVoteAdminState, true);
     });
 
     test('should return false if user is not a vote admin', () {
@@ -42,9 +42,9 @@ void main() {
         ],
       );
 
-      final isVoteSuperAdminState = container.read(isVoteSuperAdminProvider);
+      final isVoteAdminState = container.read(isVoteAdminProvider);
 
-      expect(isVoteSuperAdminState, false);
+      expect(isVoteAdminState, false);
     });
   });
 }

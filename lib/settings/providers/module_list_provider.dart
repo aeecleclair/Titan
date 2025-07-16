@@ -33,9 +33,9 @@ final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
       .map((root) => '/$root')
       .toList();
 
-  final isSuperAdmin = ref.watch(isSuperAdminProvider);
+  final isAdmin = ref.watch(isAdminProvider);
 
-  ModulesNotifier modulesNotifier = ModulesNotifier(isSuperAdmin: isSuperAdmin);
+  ModulesNotifier modulesNotifier = ModulesNotifier(isAdmin: isAdmin);
   modulesNotifier.loadModules(myModulesRoot);
   return modulesNotifier;
 });
@@ -43,7 +43,7 @@ final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
 class ModulesNotifier extends StateNotifier<List<Module>> {
   String dbModule = "modules";
   String dbAllModules = "allModules";
-  final bool isSuperAdmin;
+  final bool isAdmin;
   final eq = const DeepCollectionEquality.unordered();
   List<Module> allModules = [
     HomeRouter.module,
@@ -64,7 +64,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     SeedLibraryRouter.module,
     AdminRouter.module,
   ];
-  ModulesNotifier({required this.isSuperAdmin}) : super([]);
+  ModulesNotifier({required this.isAdmin}) : super([]);
 
   void saveModules() {
     SharedPreferences.getInstance().then((prefs) {
@@ -128,10 +128,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     for (Module module in toDelete) {
       allModules.remove(module);
     }
-    allModules.addAll([
-      SettingsRouter.module,
-      if (isSuperAdmin) SuperAdminRouter.module,
-    ]);
+    allModules.addAll([SettingsRouter.module, if (isAdmin) AdminRouter.module]);
     state = allModules;
   }
 

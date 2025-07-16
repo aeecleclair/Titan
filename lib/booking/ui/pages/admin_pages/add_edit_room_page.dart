@@ -60,13 +60,13 @@ class AddEditRoomPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 50),
-                  SuperAdminEntry(
+                  AdminEntry(
                     name: AppLocalizations.of(context)!.bookingRoomName,
                     nameController: name,
                   ),
                   const SizedBox(height: 50),
                   managerList.when(
-                    data: (List<Manager> data) => SuperAdminScrollChips(
+                    data: (List<Manager> data) => AdminScrollChips(
                       data: data,
                       isEdit: isEdit,
                       dataKey: dataKey,
@@ -97,7 +97,7 @@ class AddEditRoomPage extends HookConsumerWidget {
                     },
                   ),
                   const SizedBox(height: 50),
-                  SuperAdminShrinkButton(
+                  AdminShrinkButton(
                     onTap: () async {
                       await tokenExpireWrapper(ref, () async {
                         Room newRoom = Room(
@@ -131,7 +131,7 @@ class AddEditRoomPage extends HookConsumerWidget {
                   ),
                   if (isEdit) ...[
                     const SizedBox(height: 30),
-                    SuperAdminShrinkButton(
+                    AdminShrinkButton(
                       onTap: () async {
                         await tokenExpireWrapper(ref, () async {
                           await showDialog(

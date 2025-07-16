@@ -35,7 +35,7 @@ class BookingMainPage extends HookConsumerWidget {
     const double minCalendarHeight = 400;
     const double sumOfHeightOfOthersWidgets = 361;
     final isManager = ref.watch(isManagerProvider);
-    final isSuperAdmin = ref.watch(isSuperAdminProvider);
+    final isAdmin = ref.watch(isAdminProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final confirmedBookingsNotifier = ref.watch(
       confirmedBookingListProvider.notifier,
@@ -72,21 +72,21 @@ class BookingMainPage extends HookConsumerWidget {
             ),
             child: Column(
               children: [
-                if (isSuperAdmin | isManager) const SizedBox(height: 10),
+                if (isAdmin | isManager) const SizedBox(height: 10),
                 SizedBox(
                   width: 300,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       if (isManager)
-                        SuperAdminButton(
+                        AdminButton(
                           text: AppLocalizations.of(context)!.bookingManagement,
                           onTap: () {
                             QR.to(BookingRouter.root + BookingRouter.manager);
                           },
                         ),
-                      if (isSuperAdmin)
-                        SuperAdminButton(
+                      if (isAdmin)
+                        AdminButton(
                           onTap: () {
                             QR.to(BookingRouter.root + BookingRouter.admin);
                           },

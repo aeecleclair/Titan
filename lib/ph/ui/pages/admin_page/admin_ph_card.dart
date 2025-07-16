@@ -6,10 +6,10 @@ import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
-class SuperAdminPhCard extends StatelessWidget {
+class AdminPhCard extends StatelessWidget {
   final VoidCallback onEdit, onDelete;
   final Ph ph;
-  const SuperAdminPhCard({
+  const AdminPhCard({
     super.key,
     required this.ph,
     required this.onEdit,

@@ -32,8 +32,8 @@ class AssociationInformationEditor extends HookConsumerWidget {
     final name = useTextEditingController(text: association.name);
     final description = useTextEditingController(text: association.description);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
-    final isSuperAdmin = ref.watch(isSuperAdminProvider);
-    final isPhonebookSuperAdmin = ref.watch(isPhonebookSuperAdminProvider);
+    final isAdmin = ref.watch(isAdminProvider);
+    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
 
     final groups = ref.watch(allGroupListProvider);
     List<SimpleGroup> selectedGroups = groups.maybeWhen(
@@ -50,7 +50,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
 
     return Column(
       children: [
-        isPhonebookSuperAdmin && !association.deactivated
+        isPhonebookAdmin && !association.deactivated
             ? Form(
                 key: key,
                 child: Column(
@@ -251,7 +251,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                   ],
                 ),
               ),
-        if (isSuperAdmin && !association.deactivated)
+        if (isAdmin && !association.deactivated)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(

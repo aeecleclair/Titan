@@ -18,9 +18,7 @@ class RecommendationMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isRecommendationSuperAdmin = ref.watch(
-      isRecommendationSuperAdminProvider,
-    );
+    final isRecommendationAdmin = ref.watch(isRecommendationAdminProvider);
     final recommendationNotifier = ref.watch(recommendationProvider.notifier);
     final recommendationList = ref.watch(recommendationListProvider);
     final recommendationListNotifier = ref.watch(
@@ -37,7 +35,7 @@ class RecommendationMainPage extends HookConsumerWidget {
           builder: (context, data) => Column(
             children: [
               const SizedBox(height: 30),
-              if (isRecommendationSuperAdmin)
+              if (isRecommendationAdmin)
                 GestureDetector(
                   onTap: () {
                     recommendationNotifier.setRecommendation(

@@ -28,8 +28,8 @@ import 'package:titan/vote/ui/pages/admin_page/voters_bar.dart';
 import 'package:titan/vote/ui/vote.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
-class SuperAdminPage extends HookConsumerWidget {
-  const SuperAdminPage({super.key});
+class AdminPage extends HookConsumerWidget {
+  const AdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -132,8 +132,7 @@ class SuperAdminPage extends HookConsumerWidget {
                                 ),
                               ),
                               WaitingButton(
-                                builder: (child) =>
-                                    SuperAdminButton(child: child),
+                                builder: (child) => AdminButton(child: child),
                                 onTap: () async {
                                   await showDialog(
                                     context: context,
@@ -168,7 +167,7 @@ class SuperAdminPage extends HookConsumerWidget {
                       if (status == Status.counting ||
                           status == Status.published)
                         WaitingButton(
-                          builder: (child) => SuperAdminButton(child: child),
+                          builder: (child) => AdminButton(child: child),
                           onTap: () async {
                             await showDialog(
                               context: context,

@@ -60,13 +60,13 @@ class AddEditManagerPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 50),
-                  SuperAdminEntry(
+                  AdminEntry(
                     name: AppLocalizations.of(context)!.bookingManagerName,
                     nameController: name,
                   ),
                   const SizedBox(height: 50),
                   groupList.when(
-                    data: (List<SimpleGroup> data) => SuperAdminScrollChips(
+                    data: (List<SimpleGroup> data) => AdminScrollChips(
                       isEdit: isEdit,
                       data: data,
                       dataKey: dataKey,
@@ -97,7 +97,7 @@ class AddEditManagerPage extends HookConsumerWidget {
                     },
                   ),
                   const SizedBox(height: 50),
-                  SuperAdminShrinkButton(
+                  AdminShrinkButton(
                     onTap: () async {
                       await tokenExpireWrapper(ref, () async {
                         Manager newManager = Manager(
@@ -136,7 +136,7 @@ class AddEditManagerPage extends HookConsumerWidget {
                   ),
                   if (isEdit) ...[
                     const SizedBox(height: 30),
-                    SuperAdminShrinkButton(
+                    AdminShrinkButton(
                       onTap: () async {
                         await tokenExpireWrapper(ref, () async {
                           await showDialog(

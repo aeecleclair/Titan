@@ -22,7 +22,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isSeedLibrarySuperAdmin = ref.watch(isSeedLibrarySuperAdminProvider);
+    final isSeedLibraryAdmin = ref.watch(isSeedLibraryAdminProvider);
     final information = ref.watch(syncInformationProvider);
     final speciesNotifier = ref.watch(speciesProvider.notifier);
     final seasonNotifier = ref.watch(seasonFilterProvider.notifier);
@@ -56,7 +56,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
                 : 1.5,
           ),
           children: [
-            if (isSeedLibrarySuperAdmin)
+            if (isSeedLibraryAdmin)
               GestureDetector(
                 onTap: () {
                   resetNotifier();

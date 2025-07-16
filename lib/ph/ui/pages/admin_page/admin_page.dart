@@ -14,8 +14,8 @@ import 'package:titan/ph/ui/pages/ph.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
-class SuperAdminPage extends HookConsumerWidget {
-  const SuperAdminPage({super.key});
+class AdminPage extends HookConsumerWidget {
+  const AdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,9 +26,7 @@ class SuperAdminPage extends HookConsumerWidget {
       child: Column(
         children: [
           const YearBar(),
-          const Expanded(
-            child: SingleChildScrollView(child: SuperAdminPhList()),
-          ),
+          const Expanded(child: SingleChildScrollView(child: AdminPhList())),
           const SizedBox(height: 20),
           GestureDetector(
             onTap: () {

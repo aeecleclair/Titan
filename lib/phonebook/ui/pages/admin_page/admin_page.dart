@@ -21,8 +21,8 @@ import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
-class SuperAdminPage extends HookConsumerWidget {
-  const SuperAdminPage({super.key});
+class AdminPage extends HookConsumerWidget {
+  const AdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,7 +32,7 @@ class SuperAdminPage extends HookConsumerWidget {
     final associationList = ref.watch(associationListProvider);
     final associationFilteredList = ref.watch(associationFilteredListProvider);
     final roleNotifier = ref.watch(rolesTagsProvider.notifier);
-    final isPhonebookSuperAdmin = ref.watch(isPhonebookSuperAdminProvider);
+    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -57,7 +57,7 @@ class SuperAdminPage extends HookConsumerWidget {
                   children: [
                     KindsBar(),
                     GestureDetector(
-                      onTap: isPhonebookSuperAdmin
+                      onTap: isPhonebookAdmin
                           ? () {
                               QR.to(
                                 PhonebookRouter.root +
@@ -75,7 +75,7 @@ class SuperAdminPage extends HookConsumerWidget {
                         ),
                         width: double.infinity,
                         height: 100,
-                        color: isPhonebookSuperAdmin
+                        color: isPhonebookAdmin
                             ? Colors.white
                             : ColorConstants.deactivated2,
                         child: Center(
@@ -102,7 +102,7 @@ class SuperAdminPage extends HookConsumerWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: EditableAssociationCard(
                             association: association,
-                            isPhonebookSuperAdmin: isPhonebookSuperAdmin,
+                            isPhonebookAdmin: isPhonebookAdmin,
                             onEdit: () {
                               kindNotifier.setKind(association.kind);
                               associationNotifier.setAssociation(association);

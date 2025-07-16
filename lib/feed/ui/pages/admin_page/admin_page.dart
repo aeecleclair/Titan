@@ -6,8 +6,8 @@ import 'package:titan/feed/ui/pages/admin_page/event_form.dart';
 import 'package:titan/feed/ui/pages/admin_page/post_form.dart';
 import 'package:titan/feed/ui/pages/admin_page/tab_navigation.dart';
 
-class SuperAdminPage extends HookConsumerWidget {
-  const SuperAdminPage({super.key});
+class AdminPage extends HookConsumerWidget {
+  const AdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

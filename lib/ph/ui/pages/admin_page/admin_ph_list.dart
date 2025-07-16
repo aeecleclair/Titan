@@ -10,8 +10,8 @@ import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
-class SuperAdminPhList extends HookConsumerWidget {
-  const SuperAdminPhList({super.key});
+class AdminPhList extends HookConsumerWidget {
+  const AdminPhList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +30,7 @@ class SuperAdminPhList extends HookConsumerWidget {
           return Column(
             children: list
                 .map(
-                  (ph) => SuperAdminPhCard(
+                  (ph) => AdminPhCard(
                     ph: ph,
                     onEdit: () {
                       QR.to(PhRouter.root + PhRouter.admin + PhRouter.add_ph);

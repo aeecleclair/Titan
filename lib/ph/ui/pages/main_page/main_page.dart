@@ -19,16 +19,16 @@ class PhMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isSuperAdmin = ref.watch(isPhSuperAdminProvider);
+    final isAdmin = ref.watch(isPhAdminProvider);
     final phList = ref.watch(phListProvider);
 
     return PhTemplate(
       child: Column(
         children: [
-          if (isSuperAdmin)
+          if (isAdmin)
             SizedBox(
               width: 116.7,
-              child: SuperAdminButton(
+              child: AdminButton(
                 onTap: () {
                   QR.to(PhRouter.root + PhRouter.admin);
                 },

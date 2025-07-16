@@ -6,7 +6,7 @@ import 'package:titan/user/class/user.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
 void main() {
-  group('isEventSuperAdmin', () {
+  group('isEventAdmin', () {
     test('should return true if user is event admin', () {
       final container = ProviderContainer(
         overrides: [
@@ -15,7 +15,7 @@ void main() {
               groups: [
                 SimpleGroup.empty().copyWith(
                   id: '53a669d6-84b1-4352-8d7c-421c1fbd9c6a',
-                  name: 'SuperAdmin',
+                  name: 'Admin',
                 ),
                 SimpleGroup.empty().copyWith(id: '123', name: 'User'),
               ],
@@ -24,9 +24,9 @@ void main() {
         ],
       );
 
-      final isEventSuperAdminState = container.read(isEventSuperAdminProvider);
+      final isEventAdminState = container.read(isEventAdminProvider);
 
-      expect(isEventSuperAdminState, true);
+      expect(isEventAdminState, true);
     });
 
     test('should return false if user is not event admin', () {
@@ -40,9 +40,9 @@ void main() {
         ],
       );
 
-      final isEventSuperAdminState = container.read(isEventSuperAdminProvider);
+      final isEventAdminState = container.read(isEventAdminProvider);
 
-      expect(isEventSuperAdminState, false);
+      expect(isEventAdminState, false);
     });
   });
 }
