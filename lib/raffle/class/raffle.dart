@@ -1,4 +1,4 @@
-import 'package:titan/super_admin/class/simple_group.dart';
+import 'package:titan/admin/class/simple_group.dart';
 import 'package:titan/raffle/class/raffle_status_type.dart';
 import 'package:titan/raffle/tools/functions.dart';
 

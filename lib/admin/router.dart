@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/admin/ui/pages/groups/add_group_page/add_group_page.dart'
+    deferred as add_group_page;
+import 'package:titan/admin/ui/pages/groups/edit_group_page/edit_group_page.dart'
+    deferred as edit_group_page;
 import 'package:titan/admin/ui/pages/main_page/main_page.dart'
     deferred as main_page;
-import 'package:titan/admin/ui/pages/users_groups_management_page/users_groups_management_page.dart'
-    deferred as users_groups_management_page;
+import 'package:titan/admin/ui/pages/groups/groups_page/groups_page.dart'
+    deferred as groups_page;
 import 'package:titan/admin/ui/pages/users_management_page/users_management_page.dart'
     deferred as users_managmement_page;
 import 'package:titan/admin/ui/pages/group_notifification_page/group_notification_page.dart'
     deferred as group_notification_page;
+
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
@@ -19,6 +24,8 @@ class AdminRouter {
   static const String usersManagement = '/users_management';
   static const String usersGroups = '/users_groups';
   static const String groupNotification = '/group_notification';
+  static const String addGroup = '/add_group';
+  static const String editGroup = '/edit_group';
   static final Module module = Module(
     getName: (context) => "Admin",
     description: "Gérer les utilisateurs de l'application",
@@ -49,9 +56,21 @@ class AdminRouter {
       ),
       QRoute(
         path: usersGroups,
-        builder: () => users_groups_management_page.UsersGroupsManagementPage(),
-        middleware: [
-          DeferredLoadingMiddleware(users_groups_management_page.loadLibrary),
+        builder: () => groups_page.GroupsPage(),
+        middleware: [DeferredLoadingMiddleware(groups_page.loadLibrary)],
+        children: [
+          QRoute(
+            path: addGroup,
+            builder: () => add_group_page.AddGroupPage(),
+            middleware: [DeferredLoadingMiddleware(add_group_page.loadLibrary)],
+          ),
+          QRoute(
+            path: editGroup,
+            builder: () => edit_group_page.EditGroupPage(),
+            middleware: [
+              DeferredLoadingMiddleware(edit_group_page.loadLibrary),
+            ],
+          ),
         ],
       ),
       QRoute(

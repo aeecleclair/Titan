@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/super_admin/class/account_type.dart';
 import 'package:titan/super_admin/class/module_visibility.dart';
 import 'package:titan/super_admin/providers/all_account_types_list_provider.dart';
-import 'package:titan/super_admin/providers/all_groups_list_provider.dart';
+import 'package:titan/admin/providers/all_groups_list_provider.dart';
 import 'package:titan/super_admin/providers/is_expanded_list_provider.dart';
 import 'package:titan/super_admin/providers/module_visibility_list_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';

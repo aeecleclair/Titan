@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/super_admin/class/group.dart';
-import 'package:titan/super_admin/providers/group_list_provider.dart';
+import 'package:titan/admin/class/group.dart';
+import 'package:titan/admin/providers/group_list_provider.dart';
 import 'package:titan/tools/providers/map_provider.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 

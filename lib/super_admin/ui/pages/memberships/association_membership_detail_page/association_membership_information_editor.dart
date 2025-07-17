@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/super_admin/providers/all_groups_list_provider.dart';
+import 'package:titan/admin/providers/all_groups_list_provider.dart';
 import 'package:titan/super_admin/providers/association_membership_list_provider.dart';
 import 'package:titan/super_admin/providers/association_membership_provider.dart';
 import 'package:titan/tools/constants.dart';

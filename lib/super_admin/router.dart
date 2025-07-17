@@ -1,15 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/super_admin/providers/is_admin_provider.dart';
-import 'package:titan/super_admin/ui/pages/groups/add_group_page/add_group_page.dart'
-    deferred as add_group_page;
-import 'package:titan/super_admin/ui/pages/groups/add_loaner_page/add_loaner_page.dart'
-    deferred as add_loaner_page;
+
 import 'package:titan/super_admin/ui/pages/edit_module_visibility/edit_module_visibility.dart'
     deferred as edit_module_visibility;
-import 'package:titan/super_admin/ui/pages/groups/edit_group_page/edit_group_page.dart'
-    deferred as edit_group_page;
-import 'package:titan/super_admin/ui/pages/groups/group_page/group_page.dart'
-    deferred as group_page;
+
 import 'package:titan/super_admin/ui/pages/memberships/add_edit_user_membership_page/add_edit_user_membership_page.dart'
     deferred as add_edit_user_membership_page;
 import 'package:titan/super_admin/ui/pages/memberships/association_membership_detail_page/association_membership_detail_page.dart'
@@ -68,32 +62,6 @@ class SuperAdminRouter {
       DeferredLoadingMiddleware(main_page.loadLibrary),
     ],
     children: [
-      QRoute(
-        path: groups,
-        builder: () => group_page.GroupsPage(),
-        middleware: [DeferredLoadingMiddleware(group_page.loadLibrary)],
-        children: [
-          QRoute(
-            path: addGroup,
-            builder: () => add_group_page.AddGroupPage(),
-            middleware: [DeferredLoadingMiddleware(add_group_page.loadLibrary)],
-          ),
-          QRoute(
-            path: editGroup,
-            builder: () => edit_group_page.EditGroupPage(),
-            middleware: [
-              DeferredLoadingMiddleware(edit_group_page.loadLibrary),
-            ],
-          ),
-          QRoute(
-            path: addLoaner,
-            builder: () => add_loaner_page.AddLoanerPage(),
-            middleware: [
-              DeferredLoadingMiddleware(add_loaner_page.loadLibrary),
-            ],
-          ),
-        ],
-      ),
       QRoute(
         path: editModuleVisibility,
         builder: () => edit_module_visibility.EditModulesVisibilityPage(),

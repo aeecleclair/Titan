@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:titan/super_admin/class/simple_group.dart';
-import 'package:titan/super_admin/providers/group_id_provider.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/admin/providers/group_id_provider.dart';
 import 'package:titan/booking/class/manager.dart';
 import 'package:titan/booking/providers/manager_list_provider.dart';
 import 'package:titan/booking/providers/manager_provider.dart';
@@ -15,7 +15,7 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/item_chip.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/super_admin/providers/group_list_provider.dart';
+import 'package:titan/admin/providers/group_list_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
 class AddEditManagerPage extends HookConsumerWidget {

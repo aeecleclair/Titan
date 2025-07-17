@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/super_admin/class/group.dart';
-import 'package:titan/super_admin/repositories/group_repository.dart';
+import 'package:titan/admin/class/group.dart';
+import 'package:titan/admin/repositories/group_repository.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
 import 'package:titan/user/class/simple_users.dart';
 

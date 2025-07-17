@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/super_admin/class/simple_group.dart';
+import 'package:titan/admin/class/simple_group.dart';
 import 'package:titan/user/class/user.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:titan/vote/providers/is_vote_admin_provider.dart';

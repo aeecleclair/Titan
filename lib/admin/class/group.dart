@@ -1,4 +1,4 @@
-import 'package:titan/super_admin/class/simple_group.dart';
+import 'package:titan/admin/class/simple_group.dart';
 import 'package:titan/user/class/simple_users.dart';
 
 class Group {

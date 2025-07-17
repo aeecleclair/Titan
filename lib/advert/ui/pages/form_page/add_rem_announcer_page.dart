@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/super_admin/providers/group_list_provider.dart';
+import 'package:titan/admin/providers/group_list_provider.dart';
 import 'package:titan/advert/class/announcer.dart';
 import 'package:titan/advert/providers/all_announcer_list_provider.dart';
 import 'package:titan/advert/providers/announcer_list_provider.dart';

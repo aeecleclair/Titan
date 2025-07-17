@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/super_admin/providers/all_account_types_list_provider.dart';
-import 'package:titan/super_admin/providers/all_groups_list_provider.dart';
+import 'package:titan/admin/providers/all_groups_list_provider.dart';
 import 'package:titan/super_admin/providers/module_visibility_list_provider.dart';
 import 'package:titan/super_admin/ui/admin.dart';
 import 'package:titan/super_admin/ui/pages/edit_module_visibility/modules_expansion_panel.dart';

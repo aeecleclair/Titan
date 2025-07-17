@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/super_admin/class/simple_group.dart';
-import 'package:titan/super_admin/repositories/group_repository.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/admin/repositories/group_repository.dart';
 import 'package:titan/tools/providers/list_notifier.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/user/class/user.dart';
