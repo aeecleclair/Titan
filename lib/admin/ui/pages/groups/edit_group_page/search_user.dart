@@ -63,7 +63,7 @@ class SearchUser extends HookConsumerWidget {
             ),
             const SizedBox(height: 10),
             Button(
-              text: 'Ajouter',
+              text: !add.value ? 'Ajouter' : "Terminer",
               onPressed: () {
                 add.value = !add.value;
                 if (add.value) {
