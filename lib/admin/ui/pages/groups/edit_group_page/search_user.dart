@@ -8,13 +8,12 @@ import 'package:titan/admin/providers/group_id_provider.dart';
 import 'package:titan/admin/providers/group_provider.dart';
 import 'package:titan/admin/ui/components/user_ui.dart';
 import 'package:titan/admin/ui/pages/groups/edit_group_page/results.dart';
-
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/styleguide/button.dart';
+import 'package:titan/tools/ui/styleguide/searchbar.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
-import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
@@ -33,6 +32,7 @@ class SearchUser extends HookConsumerWidget {
     );
 
     final add = useState(false);
+    final searchFocusNode = useFocusNode();
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -47,56 +47,32 @@ class SearchUser extends HookConsumerWidget {
       builder: (context, g) {
         return Column(
           children: [
-            StyledSearchBar(
-              label: AppLocalizations.of(context)!.adminMembers,
-              color: ColorConstants.gradient1,
-              padding: const EdgeInsets.all(0),
-              onChanged: (value) async {
+            CustomSearchBar(
+              focusNode: searchFocusNode,
+              onSearch: (value) async {
                 if (value.isNotEmpty) {
-                  await usersNotifier.filterUsers(value, excludeGroup: []);
+                  add.value
+                      ? await usersNotifier.filterUsers(value, excludeGroup: [])
+                      : await usersNotifier.filterUsers(
+                          value,
+                          excludeGroup: [],
+                        );
                 } else {
                   usersNotifier.clear();
                 }
               },
-              onSuffixIconTap: (focusNode, editingController) {
+            ),
+            const SizedBox(height: 10),
+            Button(
+              text: 'Ajouter',
+              onPressed: () {
                 add.value = !add.value;
-                if (!add.value) {
-                  editingController.clear();
-                  usersNotifier.clear();
-                  focusNode.unfocus();
+                if (add.value) {
+                  searchFocusNode.requestFocus();
                 } else {
-                  focusNode.requestFocus();
+                  searchFocusNode.unfocus();
                 }
               },
-              suffixIcon: Padding(
-                padding: const EdgeInsets.all(7.0),
-                child: Container(
-                  padding: const EdgeInsets.all(7),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        ColorConstants.gradient1,
-                        ColorConstants.gradient2,
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: ColorConstants.gradient2.withValues(alpha: 0.4),
-                        offset: const Offset(2, 3),
-                        blurRadius: 5,
-                      ),
-                    ],
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: HeroIcon(
-                    !add.value ? HeroIcons.plus : HeroIcons.xMark,
-                    size: 20,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
             ),
             if (add.value) const SizedBox(height: 10),
             if (add.value) const MemberResults(),
