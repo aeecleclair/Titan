@@ -20,6 +20,42 @@ class AssociationGroupementListNotifier
       associationGroupementRepository.getAssociationGroupements,
     );
   }
+
+  Future<bool> createAssociationGroupement(
+    AssociationGroupement associationGroupement,
+  ) async {
+    return await add(
+      associationGroupementRepository.createAssociationGroupement,
+      associationGroupement,
+    );
+  }
+
+  Future<bool> updateAssociationGroupement(
+    AssociationGroupement associationGroupement,
+  ) async {
+    return await update(
+      associationGroupementRepository.updateAssociationGroupement,
+      (associationGroupements, associationGroupement) => associationGroupements
+        ..[associationGroupements.indexWhere(
+              (g) => g.id == associationGroupement.id,
+            )] =
+            associationGroupement,
+      associationGroupement,
+    );
+  }
+
+  Future<bool> deleteAssociationGroupement(
+    AssociationGroupement associationGroupement,
+  ) async {
+    return await delete(
+      associationGroupementRepository.deleteAssociationGroupement,
+      (associationGroupements, associationGroupement) =>
+          associationGroupements
+            ..removeWhere((i) => i.id == associationGroupement.id),
+      associationGroupement.id,
+      associationGroupement,
+    );
+  }
 }
 
 final associationGroupementListProvider =

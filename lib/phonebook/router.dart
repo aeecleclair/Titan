@@ -3,8 +3,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
+import 'package:titan/phonebook/ui/pages/add_edit_groupement_page/groupement_add_edit_page.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/admin_page.dart';
-import 'package:titan/phonebook/ui/pages/association_creation_page/association_creation_page.dart';
+import 'package:titan/phonebook/ui/pages/association_add_edit_page/association_add_edit_page.dart';
 import 'package:titan/phonebook/ui/pages/association_editor_page/association_editor_page.dart';
 import 'package:titan/phonebook/ui/pages/association_page/association_page.dart';
 import 'package:titan/phonebook/ui/pages/main_page/main_page.dart';
@@ -19,6 +20,7 @@ class PhonebookRouter {
   static const String root = '/phonebook';
   static const String admin = '/admin';
   static const String createAssociaiton = '/create_association';
+  static const String addEditGroupement = '/add_edit_groupement';
   static const String editAssociation = '/edit_association';
   static const String associationDetail = '/association_detail';
   static const String memberDetail = '/member_detail';
@@ -57,7 +59,13 @@ class PhonebookRouter {
           ),
           QRoute(
             path: createAssociaiton,
-            builder: () => AssociationCreationPage(),
+            builder: () => AssociationAddEditPage(),
+            children: [
+              QRoute(
+                path: addEditGroupement,
+                builder: () => const AssociationGroupementAddEditPage(),
+              ),
+            ],
           ),
         ],
       ),

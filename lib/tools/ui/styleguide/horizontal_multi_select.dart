@@ -4,25 +4,28 @@ import 'package:titan/tools/ui/styleguide/item_chip.dart';
 
 class HorizontalMultiSelect<T> extends HookWidget {
   final List<T> items;
+  final T? selectedItem;
   final Widget Function(BuildContext context, T item, int index, bool selected)
   itemBuilder;
   final Widget? firstChild;
   final Function(T item)? onItemSelected;
   final Function(T item)? onLongPress;
+  final Function(T item1, T item2)? isEqual;
   final Widget? title;
   const HorizontalMultiSelect({
     super.key,
     required this.items,
+    this.selectedItem,
     required this.itemBuilder,
     this.firstChild,
     this.onItemSelected,
     this.onLongPress,
+    this.isEqual,
     this.title,
   });
 
   @override
   Widget build(BuildContext context) {
-    final selected = useState<int?>(null);
     return ListView.builder(
       scrollDirection: Axis.horizontal,
       clipBehavior: Clip.none,
@@ -32,14 +35,16 @@ class HorizontalMultiSelect<T> extends HookWidget {
           return firstChild!;
         }
         final item = items[index - (firstChild != null ? 1 : 0)];
+        final selected = isEqual != null
+            ? selectedItem != null
+                  ? isEqual!(item, selectedItem as T)
+                  : false
+            : item == selectedItem;
         return ItemChip(
-          selected: selected.value == index,
-          onTap: () {
-            selected.value = index;
-            onItemSelected?.call(item);
-          },
-          onLongPress: () => onLongPress?.call(item),
-          child: itemBuilder(context, item, index, selected.value == index),
+          selected: selected,
+          onTap: () => onItemSelected != null ? onItemSelected!(item) : null,
+          onLongPress: () => onLongPress != null ? onLongPress!(item) : null,
+          child: itemBuilder(context, item, index, selected),
         );
       },
     );

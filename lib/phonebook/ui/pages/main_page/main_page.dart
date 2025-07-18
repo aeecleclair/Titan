@@ -11,7 +11,7 @@ import 'package:titan/phonebook/router.dart';
 import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/pages/main_page/association_card.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
-import 'package:titan/phonebook/ui/components/research_bar.dart';
+import 'package:titan/phonebook/ui/components/association_research_bar.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/styleguide/icon_button.dart';
@@ -45,13 +45,13 @@ class PhonebookMainPage extends HookConsumerWidget {
           await associationGroupementListNotifier.loadAssociationGroupement();
           await associationListNotifier.loadAssociations();
         },
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Row(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: Column(
+            children: [
+              Row(
                 children: [
-                  AssociationResearchBar(),
+                  Expanded(child: AssociationResearchBar()),
                   if (isPhonebookAdmin || isAdmin) ...[
                     SizedBox(width: 10),
                     CustomIconButton(
