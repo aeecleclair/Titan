@@ -51,10 +51,13 @@ class SearchUser extends HookConsumerWidget {
               onSearch: (value) async {
                 if (value.isNotEmpty) {
                   add.value
-                      ? await usersNotifier.filterUsers(value, excludeGroup: [])
+                      ? await usersNotifier.filterUsers(
+                          value,
+                          excludeGroup: [g.toSimpleGroup()],
+                        )
                       : await usersNotifier.filterUsers(
                           value,
-                          excludeGroup: [],
+                          includeGroup: [g.toSimpleGroup()],
                         );
                 } else {
                   usersNotifier.clear();
