@@ -3,9 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/group.dart';
+import 'package:titan/admin/providers/group_from_simple_group_provider.dart';
 import 'package:titan/admin/providers/group_id_provider.dart';
 import 'package:titan/admin/providers/group_provider.dart';
-import 'package:titan/admin/providers/simple_groups_groups_provider.dart';
 import 'package:titan/admin/ui/components/user_ui.dart';
 import 'package:titan/admin/ui/pages/groups/edit_group_page/results.dart';
 
@@ -14,7 +14,6 @@ import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
-import 'package:titan/tools/ui/widgets/loader.dart';
 import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -24,26 +23,27 @@ class SearchUser extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final group = ref.watch(groupProvider);
     final usersNotifier = ref.watch(userList.notifier);
     final groupId = ref.watch(groupIdProvider);
     final groupNotifier = ref.watch(groupProvider.notifier);
-    final simpleGroupsGroups = ref.watch(simpleGroupsGroupsProvider);
-    final simpleGroupGroupsNotifier = ref.watch(
-      simpleGroupsGroupsProvider.notifier,
+    final groupMap = ref.watch(groupFromSimpleGroupProvider);
+    final group = groupMap[groupId];
+    final groupFromSimpleGroupNotifier = ref.watch(
+      groupFromSimpleGroupProvider.notifier,
     );
+
     final add = useState(false);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
-    final simpleGroup = simpleGroupsGroups[groupId];
-    if (simpleGroup == null) {
-      return const Loader();
+    if (group == null) {
+      return const Center(child: CircularProgressIndicator());
     }
+
     return AsyncChild(
-      value: simpleGroup,
+      value: group,
       builder: (context, g) {
         return Column(
           children: [
@@ -53,10 +53,7 @@ class SearchUser extends HookConsumerWidget {
               padding: const EdgeInsets.all(0),
               onChanged: (value) async {
                 if (value.isNotEmpty) {
-                  await usersNotifier.filterUsers(
-                    value,
-                    excludeGroup: [group.value!.toSimpleGroup()],
-                  );
+                  await usersNotifier.filterUsers(value, excludeGroup: []);
                 } else {
                   usersNotifier.clear();
                 }
@@ -104,7 +101,7 @@ class SearchUser extends HookConsumerWidget {
             if (add.value) const SizedBox(height: 10),
             if (add.value) const MemberResults(),
             if (!add.value)
-              ...g[0].members.map(
+              ...g.members.map(
                 (x) => UserUi(
                   user: x,
                   onDelete: () {
@@ -123,8 +120,8 @@ class SearchUser extends HookConsumerWidget {
                             context,
                           )!.adminUpdatingError;
                           await tokenExpireWrapper(ref, () async {
-                            Group newGroup = g[0].copyWith(
-                              members: g[0].members
+                            Group newGroup = g.copyWith(
+                              members: g.members
                                   .where((element) => element.id != x.id)
                                   .toList(),
                             );
@@ -133,9 +130,9 @@ class SearchUser extends HookConsumerWidget {
                               x,
                             );
                             if (value) {
-                              simpleGroupGroupsNotifier.setTData(
+                              groupFromSimpleGroupNotifier.setTData(
                                 newGroup.id,
-                                AsyncData([newGroup]),
+                                AsyncData(newGroup),
                               );
                               displayToastWithContext(
                                 TypeMsg.msg,

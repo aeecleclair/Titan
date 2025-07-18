@@ -41,11 +41,11 @@ class GroupNotificationPage extends HookConsumerWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  AppLocalizations.of(context)!.adminGroups,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: ColorConstants.gradient1,
+                  "Notifications de groupe",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: ColorConstants.title,
                   ),
                 ),
               ),
@@ -64,6 +64,7 @@ class GroupNotificationPage extends HookConsumerWidget {
                           ...g.map(
                             (group) => ListItem(
                               title: group.name,
+                              subtitle: group.description,
                               onTap: () async {
                                 await showCustomBottomModal(
                                   context: context,

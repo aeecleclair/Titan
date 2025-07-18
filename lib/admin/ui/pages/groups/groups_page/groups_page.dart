@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/admin.dart';
-import 'package:titan/admin/ui/pages/groups/groups_page/groups_ui.dart';
+import 'package:titan/admin/class/simple_group.dart';
 import 'package:titan/admin/providers/group_id_provider.dart';
 import 'package:titan/admin/providers/group_list_provider.dart';
+import 'package:titan/admin/providers/group_provider.dart';
 import 'package:titan/admin/router.dart';
-import 'package:titan/admin/ui/components/item_card_ui.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
-import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/button.dart';
+import 'package:titan/tools/ui/styleguide/list_item.dart';
+import 'package:titan/tools/ui/styleguide/text_entry.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -24,7 +27,10 @@ class GroupsPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final groups = ref.watch(allGroupListProvider);
     final groupsNotifier = ref.watch(allGroupListProvider.notifier);
+    final nameController = useTextEditingController();
+    final descController = useTextEditingController();
     final groupIdNotifier = ref.watch(groupIdProvider.notifier);
+    final groupListNotifier = ref.watch(allGroupListProvider.notifier);
     ref.watch(userList);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -43,11 +49,11 @@ class GroupsPage extends HookConsumerWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  AppLocalizations.of(context)!.adminGroups,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: ColorConstants.gradient1,
+                  "Gestion des groupes",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: ColorConstants.title,
                   ),
                 ),
               ),
@@ -63,76 +69,111 @@ class GroupsPage extends HookConsumerWidget {
                     children: [
                       Column(
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              QR.to(
-                                AdminRouter.root +
-                                    AdminRouter.usersGroups +
-                                    AdminRouter.addGroup,
+                          Button(
+                            text: 'Ajouter un groupe',
+                            onPressed: () async {
+                              await showCustomBottomModal(
+                                context: context,
+                                ref: ref,
+                                modal: BottomModalTemplate(
+                                  title: "Ajouter un groupe",
+                                  child: Column(
+                                    children: [
+                                      TextEntry(
+                                        label: 'Nom',
+                                        controller: nameController,
+                                      ),
+                                      const SizedBox(height: 20),
+                                      TextEntry(
+                                        label: 'Description',
+                                        controller: descController,
+                                      ),
+                                      const SizedBox(height: 20),
+                                      Button(
+                                        text: "Ajouter",
+                                        onPressed: () async {
+                                          final addedGroupMsg =
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.adminAddedGroup;
+                                          final addingErrorMsg =
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.adminAddingError;
+                                          await tokenExpireWrapper(
+                                            ref,
+                                            () async {
+                                              final value =
+                                                  await groupListNotifier
+                                                      .createGroup(
+                                                        SimpleGroup(
+                                                          name: nameController
+                                                              .text,
+                                                          description:
+                                                              descController
+                                                                  .text,
+                                                          id: '',
+                                                        ),
+                                                      );
+                                              if (value) {
+                                                QR.back();
+                                                displayToastWithContext(
+                                                  TypeMsg.msg,
+                                                  addedGroupMsg,
+                                                );
+                                              } else {
+                                                displayToastWithContext(
+                                                  TypeMsg.error,
+                                                  addingErrorMsg,
+                                                );
+                                              }
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               );
                             },
-                            child: ItemCardUi(
-                              children: [
-                                const Spacer(),
-                                HeroIcon(
-                                  HeroIcons.plus,
-                                  color: Colors.grey.shade700,
-                                  size: 40,
-                                ),
-                                const Spacer(),
-                              ],
-                            ),
                           ),
-
                           ...g.map(
-                            (group) => GroupUi(
-                              group: group,
-                              onEdit: () {
-                                groupIdNotifier.setId(group.id);
-                                QR.to(
-                                  AdminRouter.root +
-                                      AdminRouter.usersGroups +
-                                      AdminRouter.editGroup,
-                                );
-                              },
-                              onDelete: () async {
-                                await showDialog(
+                            (group) => ListItem(
+                              title: group.name,
+                              subtitle: group.description,
+                              onTap: () async {
+                                await showCustomBottomModal(
                                   context: context,
-                                  builder: (context) {
-                                    return CustomDialogBox(
-                                      title: AppLocalizations.of(
-                                        context,
-                                      )!.adminDeleting,
-                                      descriptions: AppLocalizations.of(
-                                        context,
-                                      )!.adminDeleteGroup,
-                                      onYes: () async {
-                                        tokenExpireWrapper(ref, () async {
-                                          final deletedGroupMsg =
-                                              AppLocalizations.of(
-                                                context,
-                                              )!.adminDeletedGroup;
-                                          final deletingErrorMsg =
-                                              AppLocalizations.of(
-                                                context,
-                                              )!.adminDeletingError;
-                                          final value = await groupsNotifier
-                                              .deleteGroup(group);
-                                          if (value) {
-                                            displayToastWithContext(
-                                              TypeMsg.msg,
-                                              deletedGroupMsg,
+                                  ref: ref,
+                                  modal: BottomModalTemplate(
+                                    title: group.name,
+                                    child: Column(
+                                      children: [
+                                        Button(
+                                          text: "Modifier",
+                                          onPressed: () async {},
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Button(
+                                          text: "Gérer les membres",
+                                          onPressed: () {
+                                            groupIdNotifier.setId(group.id);
+                                            QR.to(
+                                              AdminRouter.root +
+                                                  AdminRouter.usersGroups +
+                                                  AdminRouter.editGroup,
                                             );
-                                          } else {
-                                            displayToastWithContext(
-                                              TypeMsg.error,
-                                              deletingErrorMsg,
-                                            );
-                                          }
-                                        });
-                                      },
-                                    );
-                                  },
+                                          },
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Button(
+                                          text: "Supprimer le groupe",
+                                          type: ButtonType.danger,
+                                          onPressed: () async {},
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 );
                               },
                             ),
@@ -143,7 +184,6 @@ class GroupsPage extends HookConsumerWidget {
                     ],
                   );
                 },
-                loaderColor: ColorConstants.gradient1,
               ),
             ],
           ),
