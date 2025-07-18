@@ -24,7 +24,7 @@ class EditGroupPage extends ConsumerWidget {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: SingleAutoLoaderChild(
             item: group,
             notifier: groupFromSimpleGroupNotifier,
