@@ -1,23 +1,135 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/admin.dart';
+import 'package:titan/admin/providers/group_list_provider.dart';
+import 'package:titan/admin/repositories/notification_repository.dart';
+import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/button.dart';
+import 'package:titan/tools/ui/styleguide/list_item.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 
 class GroupNotificationPage extends HookConsumerWidget {
   const GroupNotificationPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final groups = ref.watch(allGroupListProvider);
+    final groupsNotifier = ref.watch(allGroupListProvider.notifier);
+    final notificationRepository = ref.watch(notificationRepositoryProvider);
+    final titleController = useTextEditingController();
+    final contentController = useTextEditingController();
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
     return AdminTemplate(
-      child: Padding(
-        padding: const EdgeInsets.all(40),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Notification de groupe",
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+      child: Refresher(
+        onRefresh: () async {
+          await groupsNotifier.loadGroups();
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  AppLocalizations.of(context)!.adminGroups,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: ColorConstants.gradient1,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+              AsyncChild(
+                value: groups,
+                builder: (context, g) {
+                  g.sort(
+                    (a, b) =>
+                        a.name.toLowerCase().compareTo(b.name.toLowerCase()),
+                  );
+                  return Column(
+                    children: [
+                      Column(
+                        children: [
+                          ...g.map(
+                            (group) => ListItem(
+                              title: group.name,
+                              onTap: () async {
+                                await showCustomBottomModal(
+                                  context: context,
+                                  ref: ref,
+                                  modal: BottomModalTemplate(
+                                    title: "Notifier le groupe ${group.name}",
+                                    child: Column(
+                                      children: [
+                                        TextEntry(
+                                          label: 'Titre',
+                                          controller: titleController,
+                                        ),
+                                        const SizedBox(height: 20),
+                                        TextEntry(
+                                          label: 'Contenu',
+                                          controller: contentController,
+                                          maxLines: 5,
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Button(
+                                          text: "Envoyer",
+                                          onPressed: () {
+                                            notificationRepository
+                                                .sendNotification(
+                                                  group.id,
+                                                  titleController.text,
+                                                  contentController.text,
+                                                )
+                                                .then((value) {
+                                                  if (value) {
+                                                    displayToastWithContext(
+                                                      TypeMsg.msg,
+                                                      "Notification envoyée avec succès",
+                                                    );
+                                                  } else {
+                                                    displayToastWithContext(
+                                                      TypeMsg.error,
+                                                      "Échec de l'envoi de la notification",
+                                                    );
+                                                  }
+                                                })
+                                                .catchError((error) {
+                                                  displayToastWithContext(
+                                                    TypeMsg.error,
+                                                    error.toString(),
+                                                  );
+                                                });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+                loaderColor: ColorConstants.gradient1,
+              ),
+            ],
+          ),
         ),
       ),
     );
