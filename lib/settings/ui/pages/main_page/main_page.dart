@@ -63,6 +63,7 @@ class SettingsMainPage extends HookConsumerWidget {
                           ListItemTemplate(
                             title: "🇫🇷 Français",
                             onTap: () async {
+                              Navigator.of(context).pop();
                               await ref
                                   .read(localeProvider.notifier)
                                   .setLocale(const Locale('fr'));
@@ -78,6 +79,7 @@ class SettingsMainPage extends HookConsumerWidget {
                           ListItemTemplate(
                             title: "🇬🇧 English",
                             onTap: () async {
+                              Navigator.of(context).pop();
                               await ref
                                   .read(localeProvider.notifier)
                                   .setLocale(const Locale('en'));
