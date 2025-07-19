@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:load_switch/load_switch.dart';
 import 'package:titan/settings/providers/notification_topic_provider.dart';
+import 'package:titan/settings/tools/functions.dart';
 import 'package:titan/settings/ui/pages/main_page/change_pass.dart';
+import 'package:titan/settings/ui/pages/main_page/load_switch_topic.dart';
 
 import 'package:titan/settings/ui/settings.dart';
 import 'package:titan/tools/constants.dart';
@@ -130,84 +131,68 @@ class SettingsMainPage extends HookConsumerWidget {
                           return AsyncChild(
                             value: notificationTopicList,
                             builder: (context, notificationTopicList) {
+                              final notificationTopicsByModuleRoot =
+                                  groupNotificationTopicsByModuleRoot(
+                                    notificationTopicList,
+                                  );
+                              final uniqueTopics =
+                                  notificationTopicsByModuleRoot[''] ?? [];
+                              final groupedTopics = Map.from(
+                                notificationTopicsByModuleRoot,
+                              )..remove('');
                               return Column(
                                 children: [
-                                  ...notificationTopicList.map(
+                                  ...uniqueTopics.map(
                                     (notificationTopic) => ListItemTemplate(
                                       title: notificationTopic.name,
-                                      trailing: LoadSwitch(
-                                        value:
-                                            notificationTopic.isUserSubscribed,
-                                        future: () async {
-                                          await notificationTopicListNotifier
-                                              .toggleSubscription(
-                                                notificationTopic,
-                                              );
-                                          return !notificationTopic
-                                              .isUserSubscribed;
-                                        },
-                                        height: 30,
-                                        width: 60,
-                                        curveIn: Curves.easeInBack,
-                                        curveOut: Curves.easeOutBack,
-                                        animationDuration: const Duration(
-                                          milliseconds: 500,
-                                        ),
-                                        switchDecoration: (value, _) =>
-                                            BoxDecoration(
-                                              color: value
-                                                  ? Colors.red.withValues(
-                                                      alpha: 0.3,
-                                                    )
-                                                  : Colors.grey.shade200,
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              shape: BoxShape.rectangle,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: value
-                                                      ? Colors.red.withValues(
-                                                          alpha: 0.2,
-                                                        )
-                                                      : Colors.grey.withValues(
-                                                          alpha: 0.2,
-                                                        ),
-                                                  spreadRadius: 1,
-                                                  blurRadius: 3,
-                                                  offset: const Offset(0, 1),
-                                                ),
-                                              ],
-                                            ),
-                                        spinColor: (value) =>
-                                            value ? Colors.red : Colors.grey,
-                                        spinStrokeWidth: 2,
-                                        thumbDecoration: (value, _) =>
-                                            BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                              shape: BoxShape.rectangle,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: value
-                                                      ? Colors.red.withValues(
-                                                          alpha: 0.2,
-                                                        )
-                                                      : Colors.grey.shade200
-                                                            .withValues(
-                                                              alpha: 0.2,
-                                                            ),
-                                                  spreadRadius: 5,
-                                                  blurRadius: 7,
-                                                  offset: const Offset(0, 3),
-                                                ),
-                                              ],
-                                            ),
-                                        onChange: (v) {},
-                                        onTap: (v) {},
+                                      trailing: LoadSwitchTopic(
+                                        notificationTopic: notificationTopic,
                                       ),
                                     ),
                                   ),
+                                  ...groupedTopics.entries.map((entry) {
+                                    final moduleRoot = entry.key;
+                                    final topics = entry.value;
+                                    bool expanded = false;
+                                    return StatefulBuilder(
+                                      builder: (context, setState) {
+                                        return Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(height: 20),
+                                            ListItemTemplate(
+                                              title: moduleRoot,
+                                              trailing: HeroIcon(
+                                                expanded
+                                                    ? HeroIcons.chevronDown
+                                                    : HeroIcons.chevronRight,
+                                                color: ColorConstants.tertiary,
+                                              ),
+                                              onTap: () {
+                                                setState(() {
+                                                  expanded = !expanded;
+                                                });
+                                              },
+                                            ),
+                                            const SizedBox(height: 10),
+                                            if (expanded)
+                                              ...topics.map(
+                                                (
+                                                  notificationTopic,
+                                                ) => ListItemTemplate(
+                                                  title: notificationTopic.name,
+                                                  trailing: LoadSwitchTopic(
+                                                    notificationTopic:
+                                                        notificationTopic,
+                                                  ),
+                                                ),
+                                              ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  }),
                                 ],
                               );
                             },
