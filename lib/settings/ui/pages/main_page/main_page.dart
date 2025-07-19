@@ -134,6 +134,8 @@ class SettingsMainPage extends HookConsumerWidget {
                               final notificationTopicsByModuleRoot =
                                   groupNotificationTopicsByModuleRoot(
                                     notificationTopicList,
+                                    ref,
+                                    context,
                                   );
                               final uniqueTopics =
                                   notificationTopicsByModuleRoot[''] ?? [];
@@ -153,7 +155,7 @@ class SettingsMainPage extends HookConsumerWidget {
                                   ...groupedTopics.entries.map((entry) {
                                     final moduleRoot = entry.key;
                                     final topics = entry.value;
-                                    bool expanded = false;
+                                    bool expanded = true;
                                     return StatefulBuilder(
                                       builder: (context, setState) {
                                         return Column(
