@@ -75,13 +75,13 @@ class DrawerTemplate extends HookConsumerWidget {
                           child: AnimatedOpacity(
                             opacity: navbarVisible ? 1.0 : 0.0,
                             duration: const Duration(milliseconds: 300),
-                            child: Visibility(
-                              visible:
-                                  animation!.isCompleted &&
-                                  animation.value == 1.0,
-                              child: AnimatedBuilder(
-                                animation: animation,
-                                builder: (context, child) => Opacity(
+                            child: AnimatedBuilder(
+                              animation: animation!,
+                              builder: (context, child) => Visibility(
+                                visible:
+                                    animation.isCompleted &&
+                                    animation.value == 1.0,
+                                child: Opacity(
                                   opacity: animation.value,
                                   child: FloatingNavbar(
                                     items: [
