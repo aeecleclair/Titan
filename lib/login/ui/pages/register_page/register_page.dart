@@ -13,6 +13,7 @@ import 'package:titan/login/ui/components/sign_in_up_bar.dart';
 import 'package:titan/login/ui/components/text_from_decoration.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class Register extends HookConsumerWidget {
   const Register({super.key});
@@ -58,7 +59,7 @@ class Register extends HookConsumerWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    LoginTextConstants.createAccountTitle,
+                    AppLocalizations.of(context)!.loginCreateAccountTitle,
                     style: GoogleFonts.elMessiri(
                       textStyle: const TextStyle(
                         fontSize: 30,
@@ -85,19 +86,21 @@ class Register extends HookConsumerWidget {
                           ),
                           decoration: signInRegisterInputDecoration(
                             isSignIn: false,
-                            hintText: LoginTextConstants.email,
+                            hintText: AppLocalizations.of(context)!.loginEmail,
                           ),
                           keyboardType: TextInputType.emailAddress,
                           autofillHints: const [AutofillHints.email],
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return LoginTextConstants.emailEmpty;
+                              return AppLocalizations.of(
+                                context,
+                              )!.loginEmailEmpty;
                             }
-                            RegExp regExp = RegExp(
-                              LoginTextConstants.emailRegExp,
-                            );
+                            RegExp regExp = RegExp(emailRegExp);
                             if (!regExp.hasMatch(value)) {
-                              return LoginTextConstants.emailInvalid;
+                              return AppLocalizations.of(
+                                context,
+                              )!.loginEmailInvalid;
                             }
                             return null;
                           },
@@ -106,11 +109,17 @@ class Register extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 30),
                     SignInUpBar(
-                      label: LoginTextConstants.create,
+                      label: AppLocalizations.of(context)!.loginCreate,
                       isLoading: ref
                           .watch(loadingProvider)
                           .maybeWhen(data: (data) => data, orElse: () => false),
                       onPressed: () async {
+                        final sendedMailMsg = AppLocalizations.of(
+                          context,
+                        )!.loginSendedMail;
+                        final mailSendingErrorMsg = AppLocalizations.of(
+                          context,
+                        )!.loginMailSendingError;
                         if (key.currentState!.validate()) {
                           final value = await signUpNotifier.createUser(
                             mail.text,
@@ -123,20 +132,17 @@ class Register extends HookConsumerWidget {
                               LoginRouter.createAccount +
                                   LoginRouter.mailReceived,
                             );
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              LoginTextConstants.sendedMail,
-                            );
+                            displayToastWithContext(TypeMsg.msg, sendedMailMsg);
                           } else {
                             displayToastWithContext(
                               TypeMsg.error,
-                              LoginTextConstants.mailSendingError,
+                              mailSendingErrorMsg,
                             );
                           }
                         } else {
                           displayToastWithContext(
                             TypeMsg.error,
-                            LoginTextConstants.emailInvalid,
+                            AppLocalizations.of(context)!.loginEmailInvalid,
                           );
                         }
                       },
@@ -153,9 +159,9 @@ class Register extends HookConsumerWidget {
                             onTap: () {
                               QR.to(LoginRouter.root);
                             },
-                            child: const Text(
-                              LoginTextConstants.signIn,
-                              style: TextStyle(
+                            child: Text(
+                              AppLocalizations.of(context)!.loginSignIn,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w800,
                                 decoration: TextDecoration.underline,
@@ -175,9 +181,9 @@ class Register extends HookConsumerWidget {
                                     LoginRouter.mailReceived,
                               );
                             },
-                            child: const Text(
-                              LoginTextConstants.recievedMail,
-                              style: TextStyle(
+                            child: Text(
+                              AppLocalizations.of(context)!.loginRecievedMail,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w800,
                                 decoration: TextDecoration.underline,

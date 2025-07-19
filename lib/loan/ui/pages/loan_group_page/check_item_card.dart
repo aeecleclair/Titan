@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:titan/loan/class/item.dart';
 import 'package:titan/loan/tools/constants.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class CheckItemCard extends StatelessWidget {
   final Item item;
@@ -40,8 +41,8 @@ class CheckItemCard extends StatelessWidget {
           const SizedBox(height: 5),
           Text(
             item.loanedQuantity < item.totalQuantity
-                ? '${item.totalQuantity - item.loanedQuantity} ${LoanTextConstants.available}'
-                : LoanTextConstants.unavailable,
+                ? '${item.totalQuantity - item.loanedQuantity} ${AppLocalizations.of(context)!.loanAvailable}'
+                : AppLocalizations.of(context)!.loanUnavailable,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
@@ -62,7 +63,7 @@ class CheckItemCard extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           AutoSizeText(
-            '${LoanTextConstants.duration} : ${item.suggestedLendingDuration.toInt()} ${LoanTextConstants.days}',
+            '${AppLocalizations.of(context)!.loanDuration} : ${item.suggestedLendingDuration.toInt()} ${AppLocalizations.of(context)!.loanDays}',
             maxLines: 1,
             style: TextStyle(
               fontSize: 13,

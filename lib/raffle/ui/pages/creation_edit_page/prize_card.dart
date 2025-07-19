@@ -5,6 +5,7 @@ import 'package:titan/raffle/class/prize.dart';
 import 'package:titan/raffle/class/raffle_status_type.dart';
 import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PrizeCard extends StatelessWidget {
   final Prize lot;
@@ -63,7 +64,7 @@ class PrizeCard extends StatelessWidget {
               const SizedBox(height: 4),
               AutoSizeText(
                 lot.quantity > 0
-                    ? "${RaffleTextConstants.quantity} : ${lot.quantity}"
+                    ? "${AppLocalizations.of(context)!.raffleQuantity} : ${lot.quantity}"
                     : "",
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,

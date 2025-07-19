@@ -13,13 +13,13 @@ import 'package:titan/booking/providers/manager_provider.dart';
 import 'package:titan/service/providers/room_list_provider.dart';
 import 'package:titan/booking/providers/room_provider.dart';
 import 'package:titan/booking/router.dart';
-import 'package:titan/booking/tools/constants.dart';
 import 'package:titan/booking/ui/booking.dart';
 import 'package:titan/booking/ui/calendar/calendar.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/item_chip.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
@@ -53,13 +53,13 @@ class AdminPage extends HookConsumerWidget {
                 const SizedBox(height: 20),
                 const Expanded(child: Calendar(isManagerPage: false)),
                 const SizedBox(height: 30),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      BookingTextConstants.room,
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.bookingRoom,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Color.fromARGB(255, 149, 149, 149),
@@ -123,13 +123,13 @@ class AdminPage extends HookConsumerWidget {
                   },
                 ),
                 const SizedBox(height: 20),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      BookingTextConstants.manager,
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.bookingManager,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Color.fromARGB(255, 149, 149, 149),

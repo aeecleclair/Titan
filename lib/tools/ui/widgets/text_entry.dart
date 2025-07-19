@@ -33,7 +33,7 @@ class TextEntry extends StatelessWidget {
     this.color = Colors.black,
     this.enabledColor = Colors.black,
     this.errorColor = ColorConstants.error,
-    this.noValueError = TextConstants.noValue,
+    this.noValueError = "This field is required",
     this.suffixIcon,
     this.isNegative = false,
     this.textInputAction = TextInputAction.next,
@@ -95,14 +95,14 @@ class TextEntry extends StatelessWidget {
         if (isInt) {
           final intValue = int.tryParse(value);
           if (intValue == null || (intValue < 0 && !isNegative)) {
-            return TextConstants.invalidNumber;
+            return "Invalid number";
           }
         }
 
         if (isDouble) {
           final doubleValue = double.tryParse(value.replaceAll(',', '.'));
           if (doubleValue == null || (doubleValue < 0 && !isNegative)) {
-            return TextConstants.invalidNumber;
+            return "Invalid number";
           }
         }
 

@@ -7,6 +7,7 @@ import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/pages/main_page/delivery_ui.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class DeliverySection extends HookConsumerWidget {
   final bool showSelected;
@@ -30,7 +31,7 @@ class DeliverySection extends HookConsumerWidget {
     return Column(
       children: [
         AlignLeftText(
-          AMAPTextConstants.deliveries,
+          AppLocalizations.of(context)!.amapDeliveries,
           padding: const EdgeInsets.symmetric(horizontal: 30),
           color: showSelected ? Colors.white : AMAPColorConstants.textDark,
         ),
@@ -38,8 +39,10 @@ class DeliverySection extends HookConsumerWidget {
           value: deliveries,
           builder: (context, data) {
             if (availableDeliveries.isEmpty) {
-              return const Center(
-                child: Text(AMAPTextConstants.notPlannedDelivery),
+              return Center(
+                child: Text(
+                  AppLocalizations.of(context)!.amapNotPlannedDelivery,
+                ),
               );
             }
             return SingleChildScrollView(

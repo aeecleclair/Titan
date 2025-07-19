@@ -9,7 +9,6 @@ import 'package:titan/admin/providers/association_membership_provider.dart';
 import 'package:titan/admin/router.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/components/item_card_ui.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/pages/memberships/association_membership_page/association_membership_creation_dialog.dart';
 import 'package:titan/admin/ui/pages/memberships/association_membership_page/association_membership_ui.dart';
 import 'package:titan/tools/constants.dart';
@@ -19,6 +18,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AssociationMembershipsPage extends HookConsumerWidget {
   const AssociationMembershipsPage({super.key});
@@ -55,18 +55,18 @@ class AssociationMembershipsPage extends HookConsumerWidget {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  AdminTextConstants.associationsMemberships,
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.adminAssociationsMemberships,
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: ColorConstants.gradient1,
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: 30),
               AsyncChild(
                 value: associationsMemberships,
                 builder: (context, g) {
@@ -88,6 +88,14 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                     nameController: nameController,
                                     groupIdController: groupIdController,
                                     onYes: () async {
+                                      final createdAssociationMembershipMsg =
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.adminCreatedAssociationMembership;
+                                      final creationErrorMsg =
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.adminCreationError;
                                       tokenExpireWrapper(ref, () async {
                                         final value =
                                             await associationMembershipsNotifier
@@ -104,13 +112,12 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                         if (value) {
                                           displayToastWithContext(
                                             TypeMsg.msg,
-                                            AdminTextConstants
-                                                .createdAssociationMembership,
+                                            createdAssociationMembershipMsg,
                                           );
                                         } else {
                                           displayToastWithContext(
                                             TypeMsg.error,
-                                            AdminTextConstants.creationError,
+                                            creationErrorMsg,
                                           );
                                         }
                                       });
@@ -154,11 +161,22 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                   context: context,
                                   builder: (context) {
                                     return CustomDialogBox(
-                                      title: AdminTextConstants.deleting,
-                                      descriptions: AdminTextConstants
-                                          .deleteAssociationMembership,
+                                      title: AppLocalizations.of(
+                                        context,
+                                      )!.adminDeleting,
+                                      descriptions: AppLocalizations.of(
+                                        context,
+                                      )!.adminDeleteAssociationMembership,
                                       onYes: () async {
                                         tokenExpireWrapper(ref, () async {
+                                          final deletedAssociationMembershipMsg =
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.adminDeletedAssociationMembership;
+                                          final deletingErrorMsg =
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.adminDeletingError;
                                           final value =
                                               await associationMembershipsNotifier
                                                   .deleteAssociationMembership(
@@ -167,13 +185,12 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                           if (value) {
                                             displayToastWithContext(
                                               TypeMsg.msg,
-                                              AdminTextConstants
-                                                  .deletedAssociationMembership,
+                                              deletedAssociationMembershipMsg,
                                             );
                                           } else {
                                             displayToastWithContext(
                                               TypeMsg.error,
-                                              AdminTextConstants.deletingError,
+                                              deletingErrorMsg,
                                             );
                                           }
                                         });

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:titan/paiement/router.dart';
-import 'package:titan/tools/ui/widgets/top_bar.dart';
-import 'package:titan/paiement/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
 
 class PaymentTemplate extends StatelessWidget {
   final Widget child;
@@ -9,16 +7,6 @@ class PaymentTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: [
-          const TopBar(
-            title: PaiementTextConstants.paiement,
-            root: PaymentRouter.root,
-          ),
-          Expanded(child: child),
-        ],
-      ),
-    );
+    return Container(color: ColorConstants.background, child: child);
   }
 }

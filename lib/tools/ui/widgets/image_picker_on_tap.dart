@@ -37,7 +37,7 @@ class ImagePickerOnTap extends StatelessWidget {
           if (size > maxHyperionFileSize) {
             displayToastWithContext(
               TypeMsg.error,
-              TextConstants.imageSizeTooBig,
+              "Image size exceeds the maximum limit of 4Mio. Please select a smaller image.",
             );
           } else {
             if (kIsWeb) {

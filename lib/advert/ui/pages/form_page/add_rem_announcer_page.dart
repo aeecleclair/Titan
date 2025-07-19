@@ -5,7 +5,6 @@ import 'package:titan/admin/providers/group_list_provider.dart';
 import 'package:titan/advert/class/announcer.dart';
 import 'package:titan/advert/providers/all_announcer_list_provider.dart';
 import 'package:titan/advert/providers/announcer_list_provider.dart';
-import 'package:titan/advert/tools/constants.dart';
 import 'package:titan/advert/ui/pages/advert.dart';
 import 'package:titan/advert/ui/pages/form_page/announcer_card.dart';
 import 'package:titan/tools/constants.dart';
@@ -13,6 +12,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddRemAnnouncerPage extends HookConsumerWidget {
   const AddRemAnnouncerPage({super.key});
@@ -40,11 +40,13 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
               SizedBox(
                 child: Column(
                   children: [
-                    const Align(
+                    Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        AdvertTextConstants.modifyAnnouncingGroup,
-                        style: TextStyle(
+                        AppLocalizations.of(
+                          context,
+                        )!.advertModifyAnnouncingGroup,
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
                           color: ColorConstants.gradient1,
@@ -75,6 +77,14 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                     name: e.name,
                                                   );
                                               tokenExpireWrapper(ref, () async {
+                                                final addedMessage =
+                                                    AppLocalizations.of(
+                                                      context,
+                                                    )!.advertAddedAnnouncer;
+                                                final errorMessage =
+                                                    AppLocalizations.of(
+                                                      context,
+                                                    )!.advertAddingError;
                                                 final value =
                                                     await announcerListNotifier
                                                         .addAnnouncer(
@@ -83,14 +93,12 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                 if (value) {
                                                   displayToastWithContext(
                                                     TypeMsg.msg,
-                                                    AdvertTextConstants
-                                                        .addedAnnouncer,
+                                                    addedMessage,
                                                   );
                                                 } else {
                                                   displayToastWithContext(
                                                     TypeMsg.error,
-                                                    AdvertTextConstants
-                                                        .addingError,
+                                                    errorMessage,
                                                   );
                                                 }
                                                 announcerListNotifier
@@ -112,12 +120,22 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                 context: context,
                                                 builder: (context) {
                                                   return CustomDialogBox(
-                                                    title: AdvertTextConstants
-                                                        .deleting,
+                                                    title: AppLocalizations.of(
+                                                      context,
+                                                    )!.advertDeleting,
                                                     descriptions:
-                                                        AdvertTextConstants
-                                                            .deleteAnnouncer,
+                                                        AppLocalizations.of(
+                                                          context,
+                                                        )!.advertDeleteAnnouncer,
                                                     onYes: () {
+                                                      final removedAnnouncerMsg =
+                                                          AppLocalizations.of(
+                                                            context,
+                                                          )!.advertRemovedAnnouncer;
+                                                      final removingErrorMsg =
+                                                          AppLocalizations.of(
+                                                            context,
+                                                          )!.advertRemovingError;
                                                       tokenExpireWrapper(ref, () async {
                                                         final value = await announcerListNotifier
                                                             .deleteAnnouncer(
@@ -132,14 +150,12 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                         if (value) {
                                                           displayToastWithContext(
                                                             TypeMsg.msg,
-                                                            AdvertTextConstants
-                                                                .removedAnnouncer,
+                                                            removedAnnouncerMsg,
                                                           );
                                                         } else {
                                                           displayToastWithContext(
                                                             TypeMsg.error,
-                                                            AdvertTextConstants
-                                                                .removingError,
+                                                            removingErrorMsg,
                                                           );
                                                         }
                                                         announcerListNotifier
@@ -158,9 +174,11 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                         )
                                         .toList(),
                               )
-                            : const Center(
+                            : Center(
                                 child: Text(
-                                  AdvertTextConstants.noMoreAnnouncer,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.advertNoMoreAnnouncer,
                                 ),
                               );
                       },

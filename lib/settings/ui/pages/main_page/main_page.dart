@@ -7,7 +7,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/flappybird/ui/flappybird_item_chip.dart';
 import 'package:titan/settings/providers/logs_provider.dart';
 import 'package:titan/settings/router.dart';
-import 'package:titan/settings/tools/constants.dart';
 import 'package:titan/settings/ui/pages/main_page/settings_item.dart';
 import 'package:titan/settings/ui/settings.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
@@ -22,6 +21,7 @@ import 'package:titan/user/providers/user_provider.dart';
 import 'package:titan/user/providers/profile_picture_provider.dart';
 import 'package:titan/version/providers/titan_version_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class SettingsMainPage extends HookConsumerWidget {
   const SettingsMainPage({super.key});
@@ -147,8 +147,8 @@ class SettingsMainPage extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Column(
                 children: [
-                  const AlignLeftText(
-                    SettingsTextConstants.account,
+                  AlignLeftText(
+                    AppLocalizations.of(context)!.settingsAccount,
                     fontSize: 25,
                   ),
                   const SizedBox(height: 30),
@@ -157,32 +157,32 @@ class SettingsMainPage extends HookConsumerWidget {
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.editAccount);
                     },
-                    child: const Text(
-                      SettingsTextConstants.editAccount,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                    child: Text(
+                      AppLocalizations.of(context)!.settingsEditAccount,
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 30),
                   SettingsItem(
                     icon: HeroIcons.calendarDays,
                     onTap: () {
+                      final icalCopiedMsg = AppLocalizations.of(
+                        context,
+                      )!.settingsIcalCopied;
                       Clipboard.setData(
                         ClipboardData(text: "${Repository.host}calendar/ical"),
                       ).then((value) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          SettingsTextConstants.icalCopied,
-                        );
+                        displayToastWithContext(TypeMsg.msg, icalCopiedMsg);
                       });
                     },
-                    child: const Text(
-                      SettingsTextConstants.eventsIcal,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                    child: Text(
+                      AppLocalizations.of(context)!.settingsEventsIcal,
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 50),
-                  const AlignLeftText(
-                    SettingsTextConstants.security,
+                  AlignLeftText(
+                    AppLocalizations.of(context)!.settingsSecurity,
                     fontSize: 25,
                   ),
                   const SizedBox(height: 30),
@@ -193,15 +193,15 @@ class SettingsMainPage extends HookConsumerWidget {
                         SettingsRouter.root + SettingsRouter.changePassword,
                       );
                     },
-                    child: const Text(
-                      SettingsTextConstants.editPassword,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                    child: Text(
+                      AppLocalizations.of(context)!.settingsEditPassword,
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 50),
                   if (!kIsWeb) ...[
-                    const AlignLeftText(
-                      SettingsTextConstants.help,
+                    AlignLeftText(
+                      AppLocalizations.of(context)!.settingsHelp,
                       fontSize: 25,
                     ),
                     const SizedBox(height: 30),
@@ -210,15 +210,18 @@ class SettingsMainPage extends HookConsumerWidget {
                       onTap: () {
                         QR.to(SettingsRouter.root + SettingsRouter.logs);
                       },
-                      child: const Text(
-                        SettingsTextConstants.logs,
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                      child: Text(
+                        AppLocalizations.of(context)!.settingsLogs,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 50),
                   ],
-                  const AlignLeftText(
-                    SettingsTextConstants.personalisation,
+                  AlignLeftText(
+                    AppLocalizations.of(context)!.settingsPersonalisation,
                     fontSize: 25,
                   ),
                   const SizedBox(height: 30),
@@ -227,9 +230,9 @@ class SettingsMainPage extends HookConsumerWidget {
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.modules);
                     },
-                    child: const Text(
-                      SettingsTextConstants.modules,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                    child: Text(
+                      AppLocalizations.of(context)!.settingsModules,
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -238,14 +241,14 @@ class SettingsMainPage extends HookConsumerWidget {
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.notifications);
                     },
-                    child: const Text(
-                      SettingsTextConstants.notifications,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                    child: Text(
+                      AppLocalizations.of(context)!.settingsNotifications,
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 50),
-                  const AlignLeftText(
-                    SettingsTextConstants.personalData,
+                  AlignLeftText(
+                    AppLocalizations.of(context)!.settingsPersonalData,
                     fontSize: 25,
                   ),
                   const SizedBox(height: 30),
@@ -256,20 +259,29 @@ class SettingsMainPage extends HookConsumerWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return CustomDialogBox(
-                            title: SettingsTextConstants.detelePersonalData,
-                            descriptions:
-                                SettingsTextConstants.detelePersonalDataDesc,
+                            title: AppLocalizations.of(
+                              context,
+                            )!.settingsDetelePersonalData,
+                            descriptions: AppLocalizations.of(
+                              context,
+                            )!.settingsDetelePersonalDataDesc,
                             onYes: () async {
+                              final sendedDemandMsg = AppLocalizations.of(
+                                context,
+                              )!.settingsSendedDemand;
+                              final errorSendingDemandMsg = AppLocalizations.of(
+                                context,
+                              )!.settingsErrorSendingDemand;
                               final value = await meNotifier.deletePersonal();
                               if (value) {
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  SettingsTextConstants.sendedDemand,
+                                  sendedDemandMsg,
                                 );
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  SettingsTextConstants.errorSendingDemand,
+                                  errorSendingDemandMsg,
                                 );
                               }
                             },
@@ -277,14 +289,14 @@ class SettingsMainPage extends HookConsumerWidget {
                         },
                       );
                     },
-                    child: const Text(
-                      SettingsTextConstants.detelePersonalData,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                    child: Text(
+                      AppLocalizations.of(context)!.settingsDetelePersonalData,
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 60),
                   Text(
-                    "${SettingsTextConstants.version} $titanVersion",
+                    "${AppLocalizations.of(context)!.settingsVersion} $titanVersion",
                     style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,

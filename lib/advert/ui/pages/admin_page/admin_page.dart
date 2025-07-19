@@ -8,7 +8,6 @@ import 'package:titan/advert/providers/advert_posters_provider.dart';
 import 'package:titan/advert/providers/advert_provider.dart';
 import 'package:titan/advert/providers/announcer_list_provider.dart';
 import 'package:titan/advert/providers/announcer_provider.dart';
-import 'package:titan/advert/tools/constants.dart';
 import 'package:titan/advert/ui/pages/admin_page/admin_advert_card.dart';
 import 'package:titan/advert/ui/pages/advert.dart';
 import 'package:titan/advert/router.dart';
@@ -18,6 +17,7 @@ import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:titan/tools/ui/layouts/column_refresher.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AdvertAdminPage extends HookConsumerWidget {
   const AdvertAdminPage({super.key});
@@ -120,8 +120,10 @@ class AdvertAdminPage extends HookConsumerWidget {
                         context: context,
                         builder: (context) {
                           return CustomDialogBox(
-                            title: AdvertTextConstants.deleting,
-                            descriptions: AdvertTextConstants.deleteAdvert,
+                            title: AppLocalizations.of(context)!.advertDeleting,
+                            descriptions: AppLocalizations.of(
+                              context,
+                            )!.advertDeleteAdvert,
                             onYes: () {
                               advertListNotifier.deleteAdvert(advert);
                               advertPostersNotifier.deleteE(advert.id, 0);

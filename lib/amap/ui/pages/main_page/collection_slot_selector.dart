@@ -38,7 +38,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
           ),
           child: Center(
             child: Text(
-              capitalize(uiCollectionSlotToString(collectionSlot)),
+              capitalize(uiCollectionSlotToString(collectionSlot, context)),
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,

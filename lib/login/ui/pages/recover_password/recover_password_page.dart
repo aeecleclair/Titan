@@ -7,7 +7,6 @@ import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/login/class/recover_request.dart';
 import 'package:titan/login/providers/sign_up_provider.dart';
 import 'package:titan/login/router.dart';
-import 'package:titan/login/tools/constants.dart';
 import 'package:titan/login/ui/components/login_field.dart';
 import 'package:titan/login/ui/auth_page.dart';
 import 'package:titan/login/ui/components/sign_in_up_bar.dart';
@@ -16,6 +15,7 @@ import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class RecoverPasswordPage extends HookConsumerWidget {
   const RecoverPasswordPage({super.key});
@@ -41,7 +41,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
     List<Widget> steps = [
       CreateAccountField(
         controller: activationCode,
-        label: LoginTextConstants.activationCode,
+        label: AppLocalizations.of(context)!.loginActivationCode,
         index: 1,
         pageController: pageController,
         currentPage: currentPage,
@@ -51,7 +51,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
         children: [
           CreateAccountField(
             controller: password,
-            label: LoginTextConstants.newPassword,
+            label: AppLocalizations.of(context)!.loginNewPassword,
             index: 2,
             pageController: pageController,
             currentPage: currentPage,
@@ -67,9 +67,15 @@ class RecoverPasswordPage extends HookConsumerWidget {
         ],
       ),
       SignInUpBar(
-        label: LoginTextConstants.endResetPassword,
+        label: AppLocalizations.of(context)!.loginEndResetPassword,
         isLoading: false,
         onPressed: () async {
+          final resetedPasswordMsg = AppLocalizations.of(
+            context,
+          )!.loginResetedPassword;
+          final invalidTokenMsg = AppLocalizations.of(
+            context,
+          )!.loginInvalidToken;
           if (password.text.isNotEmpty && activationCode.text.isNotEmpty) {
             RecoverRequest recoverRequest = RecoverRequest(
               resetToken: activationCode.text.trim(),
@@ -77,22 +83,16 @@ class RecoverPasswordPage extends HookConsumerWidget {
             );
             final value = await signUpNotifier.resetPassword(recoverRequest);
             if (value) {
-              displayToastWithContext(
-                TypeMsg.msg,
-                LoginTextConstants.resetedPassword,
-              );
+              displayToastWithContext(TypeMsg.msg, resetedPasswordMsg);
               authTokenNotifier.deleteToken();
               QR.to(LoginRouter.root);
             } else {
-              displayToastWithContext(
-                TypeMsg.error,
-                LoginTextConstants.invalidToken,
-              );
+              displayToastWithContext(TypeMsg.error, invalidTokenMsg);
             }
           } else {
             displayToastWithContext(
               TypeMsg.error,
-              LoginTextConstants.fillAllFields,
+              AppLocalizations.of(context)!.loginFillAllFields,
             );
           }
         },
@@ -129,7 +129,7 @@ class RecoverPasswordPage extends HookConsumerWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  LoginTextConstants.resetPasswordTitle,
+                  AppLocalizations.of(context)!.loginResetPasswordTitle,
                   style: GoogleFonts.elMessiri(
                     textStyle: const TextStyle(
                       fontSize: 30,

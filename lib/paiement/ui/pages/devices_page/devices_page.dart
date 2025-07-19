@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/create_device.dart';
 import 'package:titan/paiement/class/wallet_device.dart';
 import 'package:titan/paiement/providers/device_list_provider.dart';
@@ -97,7 +98,9 @@ class DevicesPage extends HookConsumerWidget {
                           if (!hasAcceptedToS) {
                             displayToastWithContext(
                               TypeMsg.error,
-                              "Veuillez accepter les Conditions Générales d'Utilisation.",
+                              AppLocalizations.of(
+                                context,
+                              )!.paiementPleaseAcceptTOS,
                             );
                             return;
                           }
@@ -123,10 +126,12 @@ class DevicesPage extends HookConsumerWidget {
                                 context: context,
                                 builder: (context) {
                                   return DeviceDialogBox(
-                                    title:
-                                        'Demande d\'activation de l\'appareil',
-                                    descriptions:
-                                        "La demande d'activation est prise en compte, veuilliez consulter votre boite mail pour finaliser la démarche",
+                                    title: AppLocalizations.of(
+                                      context,
+                                    )!.paiementAskDeviceActivation,
+                                    descriptions: AppLocalizations.of(
+                                      context,
+                                    )!.paiementDeviceActivationReceived,
                                     buttonText: "Ok",
                                     onClick: () {
                                       Navigator.of(context).pop();
@@ -146,7 +151,9 @@ class DevicesPage extends HookConsumerWidget {
                           if (!hasAcceptedToS) {
                             displayToastWithContext(
                               TypeMsg.error,
-                              "Veuillez accepter les Conditions Générales d'Utilisation.",
+                              AppLocalizations.of(
+                                context,
+                              )!.paiementPleaseAcceptTOS,
                             );
                             return;
                           }
@@ -154,11 +161,22 @@ class DevicesPage extends HookConsumerWidget {
                             context: context,
                             builder: (context) {
                               return CustomDialogBox(
-                                title: "Révoquer l'appareil ?",
-                                descriptions:
-                                    "Vous ne pourrez plus utiliser cet appareil pour les paiements",
+                                title: AppLocalizations.of(
+                                  context,
+                                )!.paiementRevokeDevice,
+                                descriptions: AppLocalizations.of(
+                                  context,
+                                )!.paiementRevokeDeviceDescription,
                                 onYes: () async {
                                   tokenExpireWrapper(ref, () async {
+                                    final deviceRevokedMsg =
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.paiementDeviceRevoked;
+                                    final deviceRevokingErrorMsg =
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.paiementDeviceRevokingError;
                                     final value = await devicesNotifier
                                         .revokeDevice(
                                           device.copyWith(
@@ -168,7 +186,7 @@ class DevicesPage extends HookConsumerWidget {
                                     if (value) {
                                       displayToastWithContext(
                                         TypeMsg.msg,
-                                        "Appareil révoqué",
+                                        deviceRevokedMsg,
                                       );
                                       final savedId = await keyService
                                           .getKeyId();
@@ -178,7 +196,7 @@ class DevicesPage extends HookConsumerWidget {
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.error,
-                                        "Erreur lors de la révocation de l'appareil",
+                                        deviceRevokingErrorMsg,
                                       );
                                     }
                                   });

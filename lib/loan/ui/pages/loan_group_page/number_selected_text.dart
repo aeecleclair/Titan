@@ -15,6 +15,7 @@ class NumberSelectedText extends HookConsumerWidget {
           0,
           (previousValue, element) => previousValue + element,
         ),
+        context,
       ),
     );
   }

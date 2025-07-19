@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class CopiabledText extends StatelessWidget {
   const CopiabledText(
@@ -27,7 +27,10 @@ class CopiabledText extends StatelessWidget {
       style: style,
       onTap: () {
         Clipboard.setData(ClipboardData(text: data));
-        displayToastWithContext(TypeMsg.msg, PhonebookTextConstants.copied);
+        displayToastWithContext(
+          TypeMsg.msg,
+          AppLocalizations.of(context)!.phonebookCopied,
+        );
       },
     );
   }

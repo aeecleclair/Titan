@@ -11,8 +11,8 @@ import 'package:titan/vote/providers/sections_provider.dart';
 import 'package:titan/vote/providers/status_provider.dart';
 import 'package:titan/vote/providers/voted_section_provider.dart';
 import 'package:titan/vote/repositories/status_repository.dart';
-import 'package:titan/vote/tools/constants.dart';
 import 'package:titan/vote/ui/pages/main_page/contender_card.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ListContenderCard extends HookConsumerWidget {
   final AnimationController animation;
@@ -103,10 +103,12 @@ class ListContenderCard extends HookConsumerWidget {
                     }).toList(),
                   ),
                 )
-              : const SizedBox(
+              : SizedBox(
                   height: 150,
                   child: Center(
-                    child: Text(VoteTextConstants.noPretendanceList),
+                    child: Text(
+                      AppLocalizations.of(context)!.voteNoPretendanceList,
+                    ),
                   ),
                 ),
         ),
@@ -180,7 +182,7 @@ class ListContenderCard extends HookConsumerWidget {
                           ),
                           const SizedBox(width: 10),
                           Text(
-                            VoteTextConstants.seeMore,
+                            AppLocalizations.of(context)!.voteSeeMore,
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.grey.shade100,

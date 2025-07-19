@@ -1,7 +1,6 @@
-import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/event/ui/pages/detail_page/detail_page.dart'
     deferred as detail_page;
 import 'package:titan/home/ui/home.dart' deferred as home_page;
@@ -14,10 +13,9 @@ class HomeRouter {
   static const String root = '/home';
   static const String detail = '/detail';
   static final Module module = Module(
-    name: "Calendrier",
-    icon: const Left(HeroIcons.calendarDays),
+    getName: (context) => AppLocalizations.of(context)!.moduleCalendar,
+    description: "Consulter les événements et les activités",
     root: HomeRouter.root,
-    selected: false,
   );
   HomeRouter(this.ref);
 

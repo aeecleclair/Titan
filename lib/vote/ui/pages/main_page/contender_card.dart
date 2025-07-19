@@ -11,9 +11,9 @@ import 'package:titan/vote/providers/selected_contender_provider.dart';
 import 'package:titan/vote/providers/status_provider.dart';
 import 'package:titan/vote/repositories/status_repository.dart';
 import 'package:titan/vote/router.dart';
-import 'package:titan/vote/tools/constants.dart';
 import 'package:titan/vote/ui/components/contender_logo.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ContenderCard extends HookConsumerWidget {
   final Contender contender;
@@ -258,9 +258,9 @@ class ContenderCard extends HookConsumerWidget {
                                   ),
                                 ),
                               )
-                            : const Text(
-                                VoteTextConstants.selected,
-                                style: TextStyle(
+                            : Text(
+                                AppLocalizations.of(context)!.voteSelected,
+                                style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,

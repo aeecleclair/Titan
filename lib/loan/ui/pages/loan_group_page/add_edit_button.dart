@@ -12,12 +12,12 @@ import 'package:titan/loan/providers/loaner_loan_list_provider.dart';
 import 'package:titan/loan/providers/loaner_provider.dart';
 import 'package:titan/loan/providers/selected_items_provider.dart';
 import 'package:titan/loan/providers/start_provider.dart';
-import 'package:titan/loan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddEditButton extends HookConsumerWidget {
   final TextEditingController note;
@@ -55,10 +55,14 @@ class AddEditButton extends HookConsumerWidget {
             displayToast(
               context,
               TypeMsg.error,
-              LoanTextConstants.invalidDates,
+              AppLocalizations.of(context)!.loanInvalidDates,
             );
           } else if (borrower.id.isEmpty) {
-            displayToast(context, TypeMsg.error, LoanTextConstants.noBorrower);
+            displayToast(
+              context,
+              TypeMsg.error,
+              AppLocalizations.of(context)!.loanNoBorrower,
+            );
           } else {
             await items.when(
               data: (itemList) async {
@@ -87,6 +91,12 @@ class AddEditButton extends HookConsumerWidget {
                       start: DateTime.parse(processDateBack(start)),
                       returned: false,
                     );
+                    final addedLoanMsg = isEdit
+                        ? AppLocalizations.of(context)!.loanUpdatedLoan
+                        : AppLocalizations.of(context)!.loanAddedLoan;
+                    final addingErrorMsg = isEdit
+                        ? AppLocalizations.of(context)!.loanUpdatingError
+                        : AppLocalizations.of(context)!.loanAddingError;
                     final value = isEdit
                         ? await loanListNotifier.updateLoan(newLoan)
                         : await loanListNotifier.addLoan(newLoan);
@@ -96,34 +106,14 @@ class AddEditButton extends HookConsumerWidget {
                         await loanListNotifier.copy(),
                       );
                       QR.back();
-                      if (isEdit) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          LoanTextConstants.updatedLoan,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          LoanTextConstants.addedLoan,
-                        );
-                      }
+                      displayToastWithContext(TypeMsg.msg, addedLoanMsg);
                     } else {
-                      if (isEdit) {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          LoanTextConstants.updatingError,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          LoanTextConstants.addingError,
-                        );
-                      }
+                      displayToastWithContext(TypeMsg.error, addingErrorMsg);
                     }
                   } else {
                     displayToastWithContext(
                       TypeMsg.error,
-                      LoanTextConstants.noItemSelected,
+                      AppLocalizations.of(context)!.loanNoItemSelected,
                     );
                   }
                 });
@@ -135,7 +125,7 @@ class AddEditButton extends HookConsumerWidget {
                 displayToast(
                   context,
                   TypeMsg.error,
-                  LoanTextConstants.addingError,
+                  AppLocalizations.of(context)!.loanAddingError,
                 );
               },
             );
@@ -143,7 +133,9 @@ class AddEditButton extends HookConsumerWidget {
         });
       },
       child: Text(
-        isEdit ? LoanTextConstants.edit : LoanTextConstants.add,
+        isEdit
+            ? AppLocalizations.of(context)!.loanEdit
+            : AppLocalizations.of(context)!.loanAdd,
         style: const TextStyle(
           color: Colors.white,
           fontSize: 25,

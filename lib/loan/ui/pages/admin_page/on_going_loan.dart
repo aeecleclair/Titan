@@ -14,7 +14,6 @@ import 'package:titan/loan/providers/loaner_provider.dart';
 import 'package:titan/loan/providers/loaners_items_provider.dart';
 import 'package:titan/loan/providers/start_provider.dart';
 import 'package:titan/loan/router.dart';
-import 'package:titan/loan/tools/constants.dart';
 import 'package:titan/loan/ui/pages/admin_page/loan_card.dart';
 import 'package:titan/loan/ui/pages/admin_page/delay_dialog.dart';
 import 'package:titan/tools/functions.dart';
@@ -26,6 +25,7 @@ import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/widgets/loader.dart';
 import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class OnGoingLoan extends HookConsumerWidget {
   const OnGoingLoan({super.key});
@@ -66,7 +66,7 @@ class OnGoingLoan extends HookConsumerWidget {
           children: [
             StyledSearchBar(
               label:
-                  '${data.isEmpty ? LoanTextConstants.none : data.length} ${LoanTextConstants.loan.toLowerCase()}${data.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
+                  '${data.isEmpty ? AppLocalizations.of(context)!.loanNone : data.length} ${AppLocalizations.of(context)!.loanLoan.toLowerCase()}${data.length > 1 ? 's' : ''} ${AppLocalizations.of(context)!.loanOnGoing.toLowerCase()}',
               onChanged: (value) async {
                 if (value.isNotEmpty) {
                   adminLoanListNotifier.setTData(
@@ -117,6 +117,12 @@ class OnGoingLoan extends HookConsumerWidget {
                   loanersItemsNotifier.setTData(loaner, itemList);
                 },
                 onCalendar: () async {
+                  final extendedLoanMsg = AppLocalizations.of(
+                    context,
+                  )!.loanExtendedLoan;
+                  final extendedLoanErrorMsg = AppLocalizations.of(
+                    context,
+                  )!.loanExtendingError;
                   await showDialog<int>(
                     context: context,
                     builder: (BuildContext context) {
@@ -138,12 +144,12 @@ class OnGoingLoan extends HookConsumerWidget {
                               );
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                LoanTextConstants.extendedLoan,
+                                extendedLoanMsg,
                               );
                             } else {
                               displayToastWithContext(
                                 TypeMsg.error,
-                                LoanTextConstants.extendingError,
+                                extendedLoanErrorMsg,
                               );
                             }
                           });
@@ -156,9 +162,17 @@ class OnGoingLoan extends HookConsumerWidget {
                   await showDialog(
                     context: context,
                     builder: (context) => CustomDialogBox(
-                      title: LoanTextConstants.returnLoan,
-                      descriptions: LoanTextConstants.returnLoanDescription,
+                      title: AppLocalizations.of(context)!.loanReturnLoan,
+                      descriptions: AppLocalizations.of(
+                        context,
+                      )!.loanReturnLoanDescription,
                       onYes: () async {
+                        final returningLoanMsg = AppLocalizations.of(
+                          context,
+                        )!.loanReturnedLoan;
+                        final returningLoanErrorMsg = AppLocalizations.of(
+                          context,
+                        )!.loanReturningError;
                         await tokenExpireWrapper(ref, () async {
                           final loanItemsId = e.itemsQuantity
                               .map((e) => e.itemSimple.id)
@@ -188,12 +202,12 @@ class OnGoingLoan extends HookConsumerWidget {
                             );
                             displayToastWithContext(
                               TypeMsg.msg,
-                              LoanTextConstants.returnedLoan,
+                              returningLoanMsg,
                             );
                           } else {
                             displayToastWithContext(
                               TypeMsg.msg,
-                              LoanTextConstants.returningError,
+                              returningLoanErrorMsg,
                             );
                           }
                         });

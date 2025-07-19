@@ -8,9 +8,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/ph/providers/edit_pdf_provider.dart';
 import 'package:titan/ph/providers/file_picker_result_provider.dart';
 import 'package:titan/ph/providers/ph_send_pdf_provider.dart';
-import 'package:titan/ph/tools/constants.dart';
 import 'package:titan/ph/ui/button.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PdfPicker extends HookConsumerWidget {
   final bool isEdit;
@@ -30,6 +30,7 @@ class PdfPicker extends HookConsumerWidget {
       height: 40,
       child: GestureDetector(
         onTap: () async {
+          final tooHeavyFileMsg = AppLocalizations.of(context)!.phToHeavyFile;
           final selectedFile = await FilePicker.platform.pickFiles(
             allowMultiple: false,
             type: FileType.custom,
@@ -46,10 +47,7 @@ class PdfPicker extends HookConsumerWidget {
             if (bytes.length < 10000000) {
               phSendPdfNotifier.set(bytes);
             } else {
-              displayToastWithContext(
-                TypeMsg.error,
-                PhTextConstants.toHeavyFile,
-              );
+              displayToastWithContext(TypeMsg.error, tooHeavyFileMsg);
             }
           }
           if (isEdit) {
@@ -58,10 +56,10 @@ class PdfPicker extends HookConsumerWidget {
         },
         child: MyButton(
           text: isEdit
-              ? PhTextConstants.editPdfFile
+              ? AppLocalizations.of(context)!.phEditPdfFile
               : (result != null)
               ? result.files.single.name
-              : PhTextConstants.addPdfFile,
+              : AppLocalizations.of(context)!.phAddPdfFile,
         ),
       ),
     );

@@ -16,13 +16,13 @@ import 'package:titan/vote/providers/status_provider.dart';
 import 'package:titan/vote/providers/voted_section_provider.dart';
 import 'package:titan/vote/repositories/status_repository.dart';
 import 'package:titan/vote/router.dart';
-import 'package:titan/vote/tools/constants.dart';
 import 'package:titan/vote/ui/pages/main_page/list_contender_card.dart';
 import 'package:titan/vote/ui/pages/main_page/list_side_item.dart';
 import 'package:titan/vote/ui/pages/main_page/section_title.dart';
 import 'package:titan/vote/ui/pages/main_page/vote_button.dart';
 import 'package:titan/vote/ui/vote.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class VoteMainPage extends HookConsumerWidget {
   const VoteMainPage({super.key});
@@ -76,11 +76,11 @@ class VoteMainPage extends HookConsumerWidget {
                       ),
                     ],
                   ),
-                const Expanded(
+                Expanded(
                   child: Center(
                     child: Text(
-                      VoteTextConstants.canNotVote,
-                      style: TextStyle(fontSize: 20),
+                      AppLocalizations.of(context)!.voteCanNotVote,
+                      style: const TextStyle(fontSize: 20),
                     ),
                   ),
                 ),

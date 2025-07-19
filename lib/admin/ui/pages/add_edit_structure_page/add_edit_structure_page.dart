@@ -5,7 +5,6 @@ import 'package:titan/admin/class/association_membership_simple.dart';
 import 'package:titan/admin/providers/association_membership_list_provider.dart';
 import 'package:titan/admin/providers/structure_manager_provider.dart';
 import 'package:titan/admin/providers/structure_provider.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/components/admin_button.dart';
 import 'package:titan/admin/ui/components/text_editing.dart';
@@ -22,6 +21,7 @@ import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/user/class/simple_users.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddEditStructurePage extends HookConsumerWidget {
   const AddEditStructurePage({super.key});
@@ -63,11 +63,14 @@ class AddEditStructurePage extends HookConsumerWidget {
                 const SizedBox(height: 20),
                 AlignLeftText(
                   isEdit
-                      ? AdminTextConstants.editStructure
-                      : AdminTextConstants.addStructure,
+                      ? AppLocalizations.of(context)!.adminEditStructure
+                      : AppLocalizations.of(context)!.adminAddStructure,
                 ),
                 const SizedBox(height: 20),
-                TextEditing(controller: name, label: AdminTextConstants.name),
+                TextEditing(
+                  controller: name,
+                  label: AppLocalizations.of(context)!.adminName,
+                ),
                 AsyncChild(
                   value: allAssociationMembershipList,
                   builder: (context, allAssociationMembershipList) {
@@ -103,7 +106,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                     ? Column(
                         children: [
                           Text(
-                            AdminTextConstants.manager,
+                            AppLocalizations.of(context)!.adminManager,
                             style: TextStyle(
                               color: ColorConstants.gradient1,
                               fontSize: 20,
@@ -132,12 +135,18 @@ class AddEditStructurePage extends HookConsumerWidget {
                     if (structureManager.id.isEmpty && !isEdit) {
                       displayToastWithContext(
                         TypeMsg.error,
-                        AdminTextConstants.noManager,
+                        AppLocalizations.of(context)!.adminNoManager,
                       );
                       return;
                     }
                     if (key.currentState!.validate()) {
                       await tokenExpireWrapper(ref, () async {
+                        final editedStructureMsg = isEdit
+                            ? AppLocalizations.of(context)!.adminEditedStructure
+                            : AppLocalizations.of(context)!.adminAddedStructure;
+                        final addedStructureErrorMsg = AppLocalizations.of(
+                          context,
+                        )!.adminAddingError;
                         final value = isEdit
                             ? await structureListNotifier.updateStructure(
                                 Structure(
@@ -162,14 +171,12 @@ class AddEditStructurePage extends HookConsumerWidget {
                           structureManagerNotifier.setUser(SimpleUser.empty());
                           displayToastWithContext(
                             TypeMsg.msg,
-                            isEdit
-                                ? AdminTextConstants.editedStructure
-                                : AdminTextConstants.addedStructure,
+                            editedStructureMsg,
                           );
                         } else {
                           displayToastWithContext(
                             TypeMsg.error,
-                            AdminTextConstants.addingError,
+                            addedStructureErrorMsg,
                           );
                         }
                       });
@@ -177,7 +184,9 @@ class AddEditStructurePage extends HookConsumerWidget {
                   },
                   builder: (child) => AdminButton(child: child),
                   child: Text(
-                    isEdit ? AdminTextConstants.edit : AdminTextConstants.add,
+                    isEdit
+                        ? AppLocalizations.of(context)!.adminEdit
+                        : AppLocalizations.of(context)!.adminAdd,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

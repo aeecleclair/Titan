@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/providers/my_structures_provider.dart';
 import 'package:titan/paiement/providers/selected_structure_provider.dart';
 import 'package:titan/paiement/router.dart';
@@ -33,7 +34,7 @@ class StoreAdminCard extends ConsumerWidget {
                 SizedBox(width: 15),
                 Expanded(
                   child: AutoSizeText(
-                    "Gestion des assocations ${structure.name}",
+                    "${AppLocalizations.of(context)!.paiementStoreManagement} ${structure.name}",
                     maxLines: 2,
                     style: TextStyle(
                       color: Color.fromARGB(255, 0, 29, 29),

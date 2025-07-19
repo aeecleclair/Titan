@@ -6,7 +6,7 @@ import 'package:titan/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:titan/booking/providers/manager_confirmed_booking_list_provider.dart';
 import 'package:titan/booking/ui/calendar/appointment_data_source.dart';
 import 'package:titan/booking/ui/calendar/calendar_dialog.dart';
-import 'package:titan/drawer/providers/is_web_format_provider.dart';
+import 'package:titan/navigation/providers/is_web_format_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 

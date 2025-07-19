@@ -1,7 +1,6 @@
-import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
@@ -26,10 +25,9 @@ class VoteRouter {
   static const String addSection = '/add_edit_section';
   static const String detail = '/detail';
   static final Module module = Module(
-    name: "Vote",
-    icon: const Left(HeroIcons.envelopeOpen),
+    getName: (context) => AppLocalizations.of(context)!.moduleVote,
+    description: "Gérer les votes, les sections et les candidats",
     root: VoteRouter.root,
-    selected: false,
   );
   VoteRouter(this.ref);
 

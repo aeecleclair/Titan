@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/vote/providers/result_provider.dart';
 import 'package:titan/vote/providers/sections_contender_provider.dart';
 import 'package:titan/vote/providers/sections_provider.dart';
-import 'package:titan/vote/tools/constants.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class VoteBars extends HookConsumerWidget {
   const VoteBars({super.key});
@@ -147,7 +147,7 @@ class VoteBars extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            '${voteValue[sectionIds[value.toInt()]] ?? 0} ${VoteTextConstants.votes}',
+                            '${voteValue[sectionIds[value.toInt()]] ?? 0} ${AppLocalizations.of(context)!.voteVotes}',
                             style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,

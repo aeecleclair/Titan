@@ -1,9 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/ph/providers/is_ph_admin_provider.dart';
 import 'package:titan/ph/ui/pages/form_page/add_edit_ph_page.dart'
     deferred as add_edit_ph_page;
@@ -26,10 +25,9 @@ class PhRouter {
   static const String admin = '/admin';
   static const String add_ph = '/add_ph';
   static final Module module = Module(
-    name: "PH",
-    icon: const Left(HeroIcons.newspaper),
+    getName: (context) => AppLocalizations.of(context)!.modulePh,
+    description: "Gérer les PH, les formulaires et les administrateurs",
     root: PhRouter.root,
-    selected: false,
   );
   PhRouter(this.ref);
   QRoute route() => QRoute(
