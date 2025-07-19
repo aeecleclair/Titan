@@ -29,6 +29,19 @@ class SettingsMainPage extends HookConsumerWidget {
     final notificationTopicListNotifier = ref.watch(
       notificationTopicListProvider.notifier,
     );
+    final notificationTopicList = ref.watch(notificationTopicListProvider);
+
+    final notificationAcivatedCounts = notificationTopicList.when(
+      data: (data) => data.where((topic) => topic.isUserSubscribed).length,
+      loading: () => 0,
+      error: (_, _) => 0,
+    );
+
+    final notificationTopicsLength = notificationTopicList.when(
+      data: (data) => data.length,
+      loading: () => 0,
+      error: (_, _) => 0,
+    );
 
     return SettingsTemplate(
       child: Refresher(
@@ -103,7 +116,8 @@ class SettingsMainPage extends HookConsumerWidget {
               ),
               ListItem(
                 title: "Notifications",
-                subtitle: "2/3 activées",
+                subtitle:
+                    "$notificationAcivatedCounts/$notificationTopicsLength activées",
                 onTap: () async {
                   await showCustomBottomModal(
                     modal: BottomModalTemplate(
