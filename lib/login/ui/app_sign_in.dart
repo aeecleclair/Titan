@@ -4,7 +4,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/login/providers/animation_provider.dart';
-import 'package:titan/login/router.dart';
 import 'package:titan/login/tools/constants.dart';
 import 'package:titan/login/ui/auth_page.dart';
 import 'package:titan/login/ui/components/sign_in_up_bar.dart';
@@ -73,6 +72,7 @@ class AppSignIn extends HookConsumerWidget {
                                 .watch(authTokenProvider)
                                 .when(
                                   data: (token) {
+                                    controller?.reverse();
                                     QR.to(pathForwarding.path);
                                   },
                                   error: (e, s) {
@@ -82,7 +82,9 @@ class AppSignIn extends HookConsumerWidget {
                                       LoginTextConstants.loginFailed,
                                     );
                                   },
-                                  loading: () {},
+                                  loading: () {
+                                    controller?.forward();
+                                  },
                                 );
                           },
                           color: ColorConstants.background2,
@@ -96,51 +98,6 @@ class AppSignIn extends HookConsumerWidget {
                     ),
                   ),
                   const Spacer(flex: 1),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 40,
-                        alignment: Alignment.centerLeft,
-                        child: InkWell(
-                          splashColor: const Color.fromRGBO(255, 255, 255, 1),
-                          onTap: () {
-                            QR.to(LoginRouter.createAccount);
-                            controller?.forward();
-                          },
-                          child: const Text(
-                            LoginTextConstants.createAccount,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w800,
-                              decoration: TextDecoration.underline,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 40,
-                        alignment: Alignment.centerLeft,
-                        child: InkWell(
-                          splashColor: const Color.fromRGBO(255, 255, 255, 1),
-                          onTap: () {
-                            QR.to(LoginRouter.forgotPassword);
-                            controller?.forward();
-                          },
-                          child: const Text(
-                            LoginTextConstants.forgotPassword,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w800,
-                              decoration: TextDecoration.underline,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),

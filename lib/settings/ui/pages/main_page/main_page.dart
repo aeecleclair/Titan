@@ -8,6 +8,7 @@ import 'package:titan/flappybird/ui/flappybird_item_chip.dart';
 import 'package:titan/settings/providers/logs_provider.dart';
 import 'package:titan/settings/router.dart';
 import 'package:titan/settings/tools/constants.dart';
+import 'package:titan/settings/tools/functions.dart';
 import 'package:titan/settings/ui/pages/main_page/settings_item.dart';
 import 'package:titan/settings/ui/settings.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
@@ -189,8 +190,8 @@ class SettingsMainPage extends HookConsumerWidget {
                   SettingsItem(
                     icon: HeroIcons.lockClosed,
                     onTap: () {
-                      QR.to(
-                        SettingsRouter.root + SettingsRouter.changePassword,
+                      openLink(
+                        "${getTitanHost()}calypsso/change-password/?email=${me.email}",
                       );
                     },
                     child: const Text(
