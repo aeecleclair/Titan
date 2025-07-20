@@ -24,7 +24,6 @@ import 'package:titan/user/providers/profile_picture_provider.dart';
 import 'package:titan/version/providers/titan_version_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-
 class SettingsMainPage extends HookConsumerWidget {
   const SettingsMainPage({super.key});
 
