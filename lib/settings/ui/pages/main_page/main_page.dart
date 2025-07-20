@@ -8,6 +8,7 @@ import 'package:titan/flappybird/ui/flappybird_item_chip.dart';
 import 'package:titan/settings/providers/logs_provider.dart';
 import 'package:titan/settings/router.dart';
 import 'package:titan/settings/tools/constants.dart';
+import 'package:titan/settings/tools/functions.dart';
 import 'package:titan/settings/ui/pages/main_page/settings_item.dart';
 import 'package:titan/settings/ui/settings.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
@@ -23,7 +24,6 @@ import 'package:titan/user/providers/profile_picture_provider.dart';
 import 'package:titan/version/providers/titan_version_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-import '../../../tools/functions.dart';
 
 class SettingsMainPage extends HookConsumerWidget {
   const SettingsMainPage({super.key});
