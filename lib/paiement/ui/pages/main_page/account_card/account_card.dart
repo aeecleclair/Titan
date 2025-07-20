@@ -108,20 +108,22 @@ class AccountCard extends HookConsumerWidget {
                 }
                 String? keyId = await keyService.getKeyId();
                 if (keyId == null) {
-                  await showDialog(
-                    context: context,
-                    builder: (context) {
-                      return DeviceDialogBox(
-                        title: 'Appareil non enregistré',
-                        descriptions:
-                            'Votre appareil n\'est pas encore enregistré. \nPour l\'enregistrer, veuillez vous rendre sur la page des appareils.',
-                        buttonText: 'Accéder à la page',
-                        onClick: () {
-                          QR.to(PaymentRouter.root + PaymentRouter.devices);
-                        },
-                      );
-                    },
-                  );
+                  if (context.mounted) {
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return DeviceDialogBox(
+                          title: 'Appareil non enregistré',
+                          descriptions:
+                              'Votre appareil n\'est pas encore enregistré. \nPour l\'enregistrer, veuillez vous rendre sur la page des appareils.',
+                          buttonText: 'Accéder à la page',
+                          onClick: () {
+                            QR.to(PaymentRouter.root + PaymentRouter.devices);
+                          },
+                        );
+                      },
+                    );
+                  }
                   return;
                 }
                 final device = await deviceNotifier.getDevice(keyId);
