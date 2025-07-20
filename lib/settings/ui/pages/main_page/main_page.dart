@@ -4,7 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/settings/providers/notification_topic_provider.dart';
 import 'package:titan/settings/tools/functions.dart';
-import 'package:titan/settings/ui/pages/main_page/change_pass.dart';
+import 'package:titan/settings/ui/pages/main_page/edit_profile.dart';
 import 'package:titan/settings/ui/pages/main_page/load_switch_topic.dart';
 
 import 'package:titan/settings/ui/settings.dart';
@@ -17,6 +17,8 @@ import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/styleguide/list_item_template.dart';
+import 'package:titan/user/providers/profile_picture_provider.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 class SettingsMainPage extends HookConsumerWidget {
   const SettingsMainPage({super.key});
@@ -31,6 +33,8 @@ class SettingsMainPage extends HookConsumerWidget {
       notificationTopicListProvider.notifier,
     );
     final notificationTopicList = ref.watch(notificationTopicListProvider);
+    final meNotifier = ref.watch(asyncUserProvider.notifier);
+    final profilePicture = ref.watch(profilePictureProvider);
 
     final notificationAcivatedCounts = notificationTopicList.when(
       data: (data) => data.where((topic) => topic.isUserSubscribed).length,
@@ -44,10 +48,15 @@ class SettingsMainPage extends HookConsumerWidget {
       error: (_, _) => 0,
     );
 
+    final selectedLanguage = ref.watch(localeProvider)?.languageCode == 'fr'
+        ? "Français"
+        : "English";
+
     return SettingsTemplate(
       child: Refresher(
         onRefresh: () async {
           await notificationTopicListNotifier.loadNotificationTopicList();
+          await meNotifier.loadMe();
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -55,18 +64,65 @@ class SettingsMainPage extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
+              AsyncChild(
+                value: profilePicture,
+                builder: (context, profile) {
+                  return Center(
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.3),
+                                spreadRadius: 6,
+                                blurRadius: 10,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: CircleAvatar(
+                            radius: 70,
+                            backgroundImage: profile.isEmpty
+                                ? AssetImage(getTitanLogo())
+                                : Image.memory(profile).image,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                errorBuilder: (e, s) =>
+                    const HeroIcon(HeroIcons.userCircle, size: 140),
+              ),
+              const SizedBox(height: 20),
               const Text(
-                "Paramètres",
+                "Compte",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: ColorConstants.title,
                 ),
               ),
-              const SizedBox(height: 20),
+              ListItem(
+                title: "Profil",
+                subtitle: "Modifier mon profil",
+                onTap: () async {
+                  await showCustomBottomModal(
+                    modal: BottomModalTemplate(
+                      title: 'Modifier mon profil',
+                      child: EditProfile(),
+                    ),
+                    context: context,
+                    ref: ref,
+                  );
+                },
+              ),
               ListItem(
                 title: "Langue",
-                subtitle: ref.watch(localeProvider)?.languageCode,
+                subtitle: selectedLanguage,
                 onTap: () async {
                   await showCustomBottomModal(
                     modal: BottomModalTemplate(
@@ -209,7 +265,7 @@ class SettingsMainPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 20),
               const Text(
-                "Événement",
+                "Événements",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -235,28 +291,6 @@ class SettingsMainPage extends HookConsumerWidget {
                 },
               ),
               const SizedBox(height: 20),
-              const Text(
-                "Profil",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: ColorConstants.title,
-                ),
-              ),
-              ListItem(
-                title: "Mot de passe",
-                subtitle: "Changer mon mot de passe",
-                onTap: () async {
-                  await showCustomBottomModal(
-                    modal: BottomModalTemplate(
-                      title: 'Mot de passe',
-                      child: ChangePassPage(),
-                    ),
-                    context: context,
-                    ref: ref,
-                  );
-                },
-              ),
             ],
           ),
         ),
