@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:titan/centralisation/router.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 import 'package:titan/tools/constants.dart';
 
 class CentralisationTemplate extends StatelessWidget {
@@ -7,6 +9,19 @@ class CentralisationTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: ColorConstants.background, child: child);
+    return Scaffold(
+      body: Container(
+        color: ColorConstants.background,
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const TopBar(root: CentralisationRouter.root),
+              Expanded(child: child),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

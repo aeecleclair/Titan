@@ -7,14 +7,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/login/providers/animation_provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/navigation/providers/navbar_animation.dart';
 import 'package:titan/router.dart';
 import 'package:titan/service/tools/setup.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/plausible/plausible_observer.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
@@ -49,19 +47,14 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(appRouterProvider);
-    final animationController = useAnimationController(
-      duration: const Duration(seconds: 2),
-    );
     final navbarAnimationController = useAnimationController(
       duration: const Duration(milliseconds: 200),
       initialValue: 1.0,
     );
-    final animationNotifier = ref.read(backgroundAnimationProvider.notifier);
     final navbarAnimationNotifier = ref.read(navbarAnimationProvider.notifier);
     final navigatorKey = GlobalKey<NavigatorState>();
     final plausible = getPlausible();
     final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
-    Future(() => animationNotifier.setController(animationController));
     Future(
       () => navbarAnimationNotifier.setController(navbarAnimationController),
     );
@@ -110,10 +103,9 @@ class MyApp extends HookConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.orange,
         textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
         brightness: Brightness.light,
-        scaffoldBackgroundColor: ColorConstants.background,
       ),
       routeInformationParser: const QRouteInformationParser(),
       builder: (context, child) {

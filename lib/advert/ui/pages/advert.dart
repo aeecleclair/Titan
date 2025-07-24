@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/advert/providers/announcer_provider.dart';
+import 'package:titan/advert/router.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 
 class AdvertTemplate extends HookConsumerWidget {
   final Widget child;
@@ -8,6 +11,25 @@ class AdvertTemplate extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(color: ColorConstants.background, child: child);
+    final selectedAnnouncersNotifier = ref.read(announcerProvider.notifier);
+    return Scaffold(
+      body: Container(
+        color: ColorConstants.background,
+        child: SafeArea(
+          child: Column(
+            children: [
+              TopBar(
+                root: AdvertRouter.root,
+                onBack: () {
+                  selectedAnnouncersNotifier.clearAnnouncer();
+                },
+              ),
+              const SizedBox(height: 30),
+              Expanded(child: child),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

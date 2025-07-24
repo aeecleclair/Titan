@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/admin/router.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 import 'package:titan/tools/constants.dart';
 
 class AdminTemplate extends HookConsumerWidget {
@@ -8,6 +10,21 @@ class AdminTemplate extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(color: ColorConstants.background, child: child);
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(color: ColorConstants.background),
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              TopBar(
+                root: AdminRouter.root,
+              ),
+              Expanded(child: child),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

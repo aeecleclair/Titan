@@ -20,7 +20,7 @@ import 'package:titan/user/providers/user_provider.dart';
 // Global navigator key that can be used to ensure bottom sheets appear above the navbar
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 
-class DrawerTemplate extends HookConsumerWidget {
+class NavigationTemplate extends HookConsumerWidget {
   static Duration duration = const Duration(milliseconds: 200);
   static const double maxSlide = 255;
   static const dragRightStartVal = 60;
@@ -28,7 +28,7 @@ class DrawerTemplate extends HookConsumerWidget {
   static bool shouldDrag = false;
   final Widget child;
 
-  const DrawerTemplate({super.key, required this.child});
+  const NavigationTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

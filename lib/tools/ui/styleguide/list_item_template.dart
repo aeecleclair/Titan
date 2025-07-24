@@ -24,7 +24,7 @@ class ListItemTemplate extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
         child: Row(
           children: [
             if (icon != null) ...[icon!, const SizedBox(width: 10)],
@@ -36,8 +36,8 @@ class ListItemTemplate extends StatelessWidget {
                     title,
                     style: TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.w900,
-                      color: ColorConstants.onTertiary,
+                      fontWeight: FontWeight.w500,
+                      color: ColorConstants.tertiary,
                     ),
                   ),
                   if (subtitle != null)

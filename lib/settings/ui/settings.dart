@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:titan/settings/router.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 import 'package:titan/tools/constants.dart';
 
 class SettingsTemplate extends StatelessWidget {
@@ -7,6 +9,17 @@ class SettingsTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: ColorConstants.background, child: child);
+    return Container(
+      color: ColorConstants.background,
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const TopBar(root: SettingsRouter.root),
+            Expanded(child: child),
+          ],
+        ),
+      ),
+    );
   }
 }

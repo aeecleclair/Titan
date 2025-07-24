@@ -10,6 +10,7 @@ import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/styleguide/searchbar.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 
 class AllModulePage extends HookConsumerWidget {
   const AllModulePage({super.key});
@@ -25,7 +26,7 @@ class AllModulePage extends HookConsumerWidget {
       color: ColorConstants.background,
       child: Column(
         children: [
-          TopBar(),
+          TopBar(root: AppRouter.allModules),
           Expanded(
             child: ScrollToHideNavbar(
               controller: scrollController,

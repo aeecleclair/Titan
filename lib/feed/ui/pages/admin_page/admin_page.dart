@@ -45,60 +45,58 @@ class AdminPage extends HookConsumerWidget {
     }, [selectedTabIndex.value]);
 
     return FeedTemplate(
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Tab Bar
-            TabNavigation(
-              selectedTabIndex: selectedTabIndex.value,
-              onTabChanged: (index) {
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Tab Bar
+          TabNavigation(
+            selectedTabIndex: selectedTabIndex.value,
+            onTabChanged: (index) {
+              previousTabIndex.value = selectedTabIndex.value;
+              selectedTabIndex.value = index;
+            },
+            tabLabels: const ['Post', 'Événement'],
+          ),
+
+          const SizedBox(height: 30),
+
+          // PageView for tab content with actual PageView widget
+          Expanded(
+            child: PageView(
+              controller: pageController,
+              physics: const BouncingScrollPhysics(),
+              onPageChanged: (index) {
                 previousTabIndex.value = selectedTabIndex.value;
                 selectedTabIndex.value = index;
               },
-              tabLabels: const ['Post', 'Événement'],
-            ),
-
-            const SizedBox(height: 30),
-
-            // PageView for tab content with actual PageView widget
-            Expanded(
-              child: PageView(
-                controller: pageController,
-                physics: const BouncingScrollPhysics(),
-                onPageChanged: (index) {
-                  previousTabIndex.value = selectedTabIndex.value;
-                  selectedTabIndex.value = index;
-                },
-                children: [
-                  // Post form
-                  SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: PostForm(
-                      titleController: postTitleController,
-                      descriptionController: postDescriptionController,
-                      startDateController: postStartDateController,
-                    ),
+              children: [
+                // Post form
+                SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: PostForm(
+                    titleController: postTitleController,
+                    descriptionController: postDescriptionController,
+                    startDateController: postStartDateController,
                   ),
+                ),
 
-                  // Event form
-                  SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: EventForm(
-                      titleController: eventTitleController,
-                      descriptionController: eventDescriptionController,
-                      startDateController: eventStartDateController,
-                      endDateController: eventEndDateController,
-                      locationController: eventLocationController,
-                      shotgunDateController: shotgunDateController,
-                      externalLinkController: eventExternalLinkController,
-                    ),
+                // Event form
+                SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: EventForm(
+                    titleController: eventTitleController,
+                    descriptionController: eventDescriptionController,
+                    startDateController: eventStartDateController,
+                    endDateController: eventEndDateController,
+                    locationController: eventLocationController,
+                    shotgunDateController: shotgunDateController,
+                    externalLinkController: eventExternalLinkController,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
