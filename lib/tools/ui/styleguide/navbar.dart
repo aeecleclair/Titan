@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/navigation/class/module.dart';
+import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 
@@ -19,11 +20,21 @@ class FloatingNavbar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pathProvider = ref.watch(pathForwardingProvider);
+    final navbarVisibilityNotifier = ref.read(
+      navbarVisibilityProvider.notifier,
+    );
     final previousIndex = useRef<int>(0);
     final currentState = useState<int>(3);
 
     final currentPath = pathProvider.path;
     final routeIndex = useState<int>(3);
+
+    final lastInteractionTime = useRef<DateTime>(DateTime.now());
+
+    void onUserInteraction() {
+      lastInteractionTime.value = DateTime.now();
+      navbarVisibilityNotifier.showTemporarily();
+    }
 
     useEffect(() {
       if (currentPath.isNotEmpty) {
@@ -91,150 +102,153 @@ class FloatingNavbar extends HookConsumerWidget {
       return null;
     }, [currentState.value, itemWidthRef.value]);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      child: Material(
-        elevation: 10,
-        shadowColor: ColorConstants.main.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(borderRadius),
-        color: ColorConstants.main,
-        child: Container(
-          height: borderRadius * 2,
-          padding: const EdgeInsets.symmetric(horizontal: 5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final availableWidth = constraints.maxWidth;
-              final itemWidth = availableWidth / items.length;
+    return Listener(
+      onPointerDown: (_) => onUserInteraction(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        child: Material(
+          elevation: 10,
+          shadowColor: ColorConstants.main.withValues(alpha: 0.2),
+          borderRadius: BorderRadius.circular(borderRadius),
+          color: ColorConstants.main,
+          child: Container(
+            height: borderRadius * 2,
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final availableWidth = constraints.maxWidth;
+                final itemWidth = availableWidth / items.length;
 
-              itemWidthRef.value = itemWidth;
+                itemWidthRef.value = itemWidth;
 
-              return Stack(
-                children: [
-                  AnimatedBuilder(
-                    animation: animationController,
-                    builder: (context, _) {
-                      final leftPosition = slideAnimation.value != null
-                          ? slideAnimation.value!.value
-                          : itemWidth * currentState.value;
+                return Stack(
+                  children: [
+                    AnimatedBuilder(
+                      animation: animationController,
+                      builder: (context, _) {
+                        final leftPosition = slideAnimation.value != null
+                            ? slideAnimation.value!.value
+                            : itemWidth * currentState.value;
 
-                      return Positioned(
-                        left: leftPosition,
-                        top: 4,
-                        bottom: 4,
-                        width: itemWidth,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: ColorConstants.background,
-                            borderRadius: BorderRadius.circular(borderRadius),
+                        return Positioned(
+                          left: leftPosition,
+                          top: 4,
+                          bottom: 4,
+                          width: itemWidth,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: ColorConstants.background,
+                              borderRadius: BorderRadius.circular(borderRadius),
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: items.asMap().entries.map((entry) {
-                      final index = entry.key;
-                      final item = entry.value;
-                      final isSelected = index == currentState.value;
+                        );
+                      },
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: items.asMap().entries.map((entry) {
+                        final index = entry.key;
+                        final item = entry.value;
+                        final isSelected = index == currentState.value;
 
-                      return Expanded(
-                        child: Material(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(borderRadius),
-                          child: GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              if (index != currentState.value) {
-                                if (animationController.isAnimating) {
-                                  animationController.stop();
-                                }
-
-                                previousIndex.value = currentState.value;
-                                currentState.value = index;
-
-                                WidgetsBinding.instance.addPostFrameCallback((
-                                  _,
-                                ) {
-                                  item.onTap?.call();
-                                });
-                              } else {
-                                item.onTap?.call();
-                              }
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              child: AnimatedBuilder(
-                                animation: animationController,
-                                builder: (context, child) {
-                                  Color textColor;
-                                  FontWeight textWeight;
-
-                                  if (previousIndex.value ==
-                                      currentState.value) {
-                                    textColor = isSelected
-                                        ? ColorConstants.main
-                                        : ColorConstants.background;
-                                    textWeight = isSelected
-                                        ? FontWeight.w600
-                                        : FontWeight.normal;
-                                  } else {
-                                    bool isInvolved =
-                                        index == previousIndex.value ||
-                                        index == currentState.value;
-
-                                    if (!isInvolved) {
-                                      textColor = ColorConstants.background;
-                                      textWeight = FontWeight.normal;
-                                    } else if (index == currentState.value) {
-                                      final progress =
-                                          animationController.value;
-                                      textColor = Color.lerp(
-                                        ColorConstants.background,
-                                        ColorConstants.main,
-                                        progress,
-                                      )!;
-                                      textWeight = progress < 0.5
-                                          ? FontWeight.normal
-                                          : FontWeight.w600;
-                                    } else {
-                                      final progress =
-                                          animationController.value;
-                                      textColor = Color.lerp(
-                                        ColorConstants.main,
-                                        ColorConstants.background,
-                                        progress,
-                                      )!;
-                                      textWeight = progress < 0.5
-                                          ? FontWeight.w600
-                                          : FontWeight.normal;
-                                    }
+                        return Expanded(
+                          child: Material(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(borderRadius),
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                if (index != currentState.value) {
+                                  if (animationController.isAnimating) {
+                                    animationController.stop();
                                   }
 
-                                  return Center(
-                                    child: AutoSizeText(
-                                      item.module.getName(context),
-                                      style: TextStyle(
-                                        color: textColor,
-                                        fontSize: 14,
-                                        fontWeight: textWeight,
+                                  previousIndex.value = currentState.value;
+                                  currentState.value = index;
+
+                                  WidgetsBinding.instance.addPostFrameCallback((
+                                    _,
+                                  ) {
+                                    item.onTap?.call();
+                                  });
+                                } else {
+                                  item.onTap?.call();
+                                }
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                child: AnimatedBuilder(
+                                  animation: animationController,
+                                  builder: (context, child) {
+                                    Color textColor;
+                                    FontWeight textWeight;
+
+                                    if (previousIndex.value ==
+                                        currentState.value) {
+                                      textColor = isSelected
+                                          ? ColorConstants.main
+                                          : ColorConstants.background;
+                                      textWeight = isSelected
+                                          ? FontWeight.w600
+                                          : FontWeight.normal;
+                                    } else {
+                                      bool isInvolved =
+                                          index == previousIndex.value ||
+                                          index == currentState.value;
+
+                                      if (!isInvolved) {
+                                        textColor = ColorConstants.background;
+                                        textWeight = FontWeight.normal;
+                                      } else if (index == currentState.value) {
+                                        final progress =
+                                            animationController.value;
+                                        textColor = Color.lerp(
+                                          ColorConstants.background,
+                                          ColorConstants.main,
+                                          progress,
+                                        )!;
+                                        textWeight = progress < 0.5
+                                            ? FontWeight.normal
+                                            : FontWeight.w600;
+                                      } else {
+                                        final progress =
+                                            animationController.value;
+                                        textColor = Color.lerp(
+                                          ColorConstants.main,
+                                          ColorConstants.background,
+                                          progress,
+                                        )!;
+                                        textWeight = progress < 0.5
+                                            ? FontWeight.w600
+                                            : FontWeight.normal;
+                                      }
+                                    }
+
+                                    return Center(
+                                      child: AutoSizeText(
+                                        item.module.getName(context),
+                                        style: TextStyle(
+                                          color: textColor,
+                                          fontSize: 14,
+                                          fontWeight: textWeight,
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ],
-              );
-            },
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),

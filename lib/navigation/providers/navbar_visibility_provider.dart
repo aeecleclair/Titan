@@ -6,8 +6,13 @@ class NavbarVisibilityNotifier extends StateNotifier<bool> {
 
   Timer? _debounceTimer;
   Timer? _hideTimer;
+  Timer? _autoShowTimer;
 
   bool _lastRequestedState = true;
+
+  static const Duration _autoShowDelay = Duration(milliseconds: 800);
+  static const Duration _debounceDelay = Duration(milliseconds: 50);
+  static const Duration _hideDelay = Duration(milliseconds: 100);
 
   void _updateState(bool visible) {
     _lastRequestedState = visible;
@@ -15,31 +20,72 @@ class NavbarVisibilityNotifier extends StateNotifier<bool> {
     _debounceTimer?.cancel();
     _hideTimer?.cancel();
 
+    if (visible) {
+      _autoShowTimer?.cancel();
+    }
+
     if (state != visible) {
       if (visible) {
-        _debounceTimer = Timer(const Duration(milliseconds: 50), () {
+        _debounceTimer = Timer(_debounceDelay, () {
           if (_lastRequestedState == true) {
             state = true;
           }
         });
       } else {
-        _hideTimer = Timer(const Duration(milliseconds: 100), () {
+        _hideTimer = Timer(_hideDelay, () {
           if (_lastRequestedState == false) {
             state = false;
+
+            _startAutoShowTimer();
           }
         });
       }
     }
   }
 
+  void _startAutoShowTimer() {
+    _autoShowTimer?.cancel();
+    _autoShowTimer = Timer(_autoShowDelay, () {
+      if (!state) {
+        _lastRequestedState = true;
+        state = true;
+      }
+    });
+  }
+
   void show() => _updateState(true);
+
   void hide() => _updateState(false);
+
   void toggle() => _updateState(!state);
+
+  void forceShow() {
+    _debounceTimer?.cancel();
+    _hideTimer?.cancel();
+    _autoShowTimer?.cancel();
+    _lastRequestedState = true;
+    state = true;
+  }
+
+  void hideWithoutAutoShow() {
+    _debounceTimer?.cancel();
+    _hideTimer?.cancel();
+    _autoShowTimer?.cancel();
+    _lastRequestedState = false;
+    state = false;
+  }
+
+  void showTemporarily() {
+    if (!state) {
+      forceShow();
+    }
+  }
 
   @override
   void dispose() {
     _debounceTimer?.cancel();
     _hideTimer?.cancel();
+    _autoShowTimer?.cancel();
     super.dispose();
   }
 }
