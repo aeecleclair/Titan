@@ -57,16 +57,6 @@ class FeedItem {
         participantsCount: 33,
         onRegister: () {},
       ),
-      FeedItem(
-        type: FeedItemType.action,
-        title: 'Campagne',
-        subtitle: 'Jusqu\'à minuit',
-        date: DateTime(2025, 11, 8),
-        isOngoing: true,
-        needsRegistration: true,
-        participantsCount: 33,
-        onRegister: () {},
-      ),
     ];
   }
 }
