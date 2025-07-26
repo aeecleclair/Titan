@@ -108,8 +108,7 @@ class FeedMainPage extends HookConsumerWidget {
 
             const SizedBox(height: 20),
 
-            SizedBox(
-              height: MediaQuery.of(context).size.height - 193,
+            Expanded(
               child: ScrollToHideNavbar(
                 controller: scrollController,
                 child: SingleChildScrollView(
