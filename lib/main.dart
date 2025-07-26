@@ -13,6 +13,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/navigation/providers/navbar_animation.dart';
 import 'package:titan/router.dart';
 import 'package:titan/service/tools/setup.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/plausible/plausible_observer.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
@@ -106,6 +107,7 @@ class MyApp extends HookConsumerWidget {
         primarySwatch: Colors.orange,
         textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
         brightness: Brightness.light,
+        scaffoldBackgroundColor: ColorConstants.background,
       ),
       routeInformationParser: const QRouteInformationParser(),
       builder: (context, child) {
