@@ -15,30 +15,32 @@ class PhonebookTemplate extends HookConsumerWidget {
     final kindNotifier = ref.watch(associationKindProvider.notifier);
     return Container(
       color: ColorConstants.background,
-      child: Column(
-        children: [
-          TopBar(
-            root: PhonebookRouter.root,
-            onBack: () {
-              if (QR.currentPath !=
-                  PhonebookRouter.root +
-                      PhonebookRouter.admin +
-                      PhonebookRouter.editAssociation +
-                      PhonebookRouter.addEditMember) {
-                kindNotifier.setKind('');
-              }
-              if (QR.currentPath ==
-                  PhonebookRouter.root +
-                      PhonebookRouter.admin +
-                      PhonebookRouter.editAssociation) {
-                QR.to(
-                  PhonebookRouter.root + PhonebookRouter.admin,
-                ); // Used on back after adding an association
-              }
-            },
-          ),
-          Expanded(child: child),
-        ],
+      child: SafeArea(
+        child: Column(
+          children: [
+            TopBar(
+              root: PhonebookRouter.root,
+              onBack: () {
+                if (QR.currentPath !=
+                    PhonebookRouter.root +
+                        PhonebookRouter.admin +
+                        PhonebookRouter.editAssociation +
+                        PhonebookRouter.addEditMember) {
+                  kindNotifier.setKind('');
+                }
+                if (QR.currentPath ==
+                    PhonebookRouter.root +
+                        PhonebookRouter.admin +
+                        PhonebookRouter.editAssociation) {
+                  QR.to(
+                    PhonebookRouter.root + PhonebookRouter.admin,
+                  ); // Used on back after adding an association
+                }
+              },
+            ),
+            Expanded(child: child),
+          ],
+        ),
       ),
     );
   }

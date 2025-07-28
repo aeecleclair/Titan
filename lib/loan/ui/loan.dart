@@ -16,24 +16,28 @@ class LoanTemplate extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       color: ColorConstants.background,
-      child: Column(
-        children: [
-          TopBar(
-            root: LoanRouter.root,
-            onBack: () {
-              if (QR.currentPath ==
-                  LoanRouter.root + LoanRouter.admin + LoanRouter.addEditLoan) {
-                final loanersItemsNotifier = ref.watch(
-                  loanersItemsProvider.notifier,
-                );
-                final loaner = ref.watch(loanerProvider);
-                final itemList = ref.watch(itemListProvider);
-                loanersItemsNotifier.setTData(loaner, itemList);
-              }
-            },
-          ),
-          Expanded(child: child),
-        ],
+      child: SafeArea(
+        child: Column(
+          children: [
+            TopBar(
+              root: LoanRouter.root,
+              onBack: () {
+                if (QR.currentPath ==
+                    LoanRouter.root +
+                        LoanRouter.admin +
+                        LoanRouter.addEditLoan) {
+                  final loanersItemsNotifier = ref.watch(
+                    loanersItemsProvider.notifier,
+                  );
+                  final loaner = ref.watch(loanerProvider);
+                  final itemList = ref.watch(itemListProvider);
+                  loanersItemsNotifier.setTData(loaner, itemList);
+                }
+              },
+            ),
+            Expanded(child: child),
+          ],
+        ),
       ),
     );
   }

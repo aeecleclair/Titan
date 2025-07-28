@@ -13,27 +13,30 @@ class SeedLibraryTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: ColorConstants.background,
-      child: Column(
-        children: [
-          TopBar(
-            root: SeedLibraryRouter.root,
-            rightIcon: QR.currentPath == SeedLibraryRouter.root
-                ? IconButton(
-                    onPressed: () {
-                      QR.to(
-                        SeedLibraryRouter.root + SeedLibraryRouter.information,
-                      );
-                    },
-                    icon: const HeroIcon(
-                      HeroIcons.informationCircle,
-                      color: Colors.black,
-                      size: 40,
-                    ),
-                  )
-                : null,
-          ),
-          Expanded(child: child),
-        ],
+      child: SafeArea(
+        child: Column(
+          children: [
+            TopBar(
+              root: SeedLibraryRouter.root,
+              rightIcon: QR.currentPath == SeedLibraryRouter.root
+                  ? IconButton(
+                      onPressed: () {
+                        QR.to(
+                          SeedLibraryRouter.root +
+                              SeedLibraryRouter.information,
+                        );
+                      },
+                      icon: const HeroIcon(
+                        HeroIcons.informationCircle,
+                        color: Colors.black,
+                        size: 40,
+                      ),
+                    )
+                  : null,
+            ),
+            Expanded(child: child),
+          ],
+        ),
       ),
     );
   }

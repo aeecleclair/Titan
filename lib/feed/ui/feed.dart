@@ -11,13 +11,14 @@ class FeedTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: ColorConstants.background,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(height: 40),
-          TopBar(root: FeedRouter.root),
-          Expanded(child: child),
-        ],
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            TopBar(root: FeedRouter.root),
+            Expanded(child: child),
+          ],
+        ),
       ),
     );
   }

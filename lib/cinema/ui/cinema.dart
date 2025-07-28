@@ -12,14 +12,14 @@ class CinemaTemplate extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       color: ColorConstants.background,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          TopBar(
-            root: CinemaRouter.root,
-          ),
-          Expanded(child: child),
-        ],
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            TopBar(root: CinemaRouter.root),
+            Expanded(child: child),
+          ],
+        ),
       ),
     );
   }
