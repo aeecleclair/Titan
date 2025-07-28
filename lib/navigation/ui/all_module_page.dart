@@ -4,12 +4,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/navigation/providers/navbar_module_list.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
-import 'package:titan/navigation/ui/top_bar.dart';
+import 'package:titan/router.dart';
 import 'package:titan/settings/providers/module_list_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/styleguide/searchbar.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 
 class AllModulePage extends HookConsumerWidget {
   const AllModulePage({super.key});
@@ -24,8 +25,10 @@ class AllModulePage extends HookConsumerWidget {
     return Container(
       color: ColorConstants.background,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          TopBar(),
+          const SizedBox(height: 40),
+          TopBar(root: AppRouter.allModules),
           Expanded(
             child: ScrollToHideNavbar(
               controller: scrollController,

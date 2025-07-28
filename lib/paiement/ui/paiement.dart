@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:titan/paiement/router.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 import 'package:titan/tools/constants.dart';
 
 class PaymentTemplate extends StatelessWidget {
@@ -7,6 +9,19 @@ class PaymentTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: ColorConstants.background, child: child);
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(color: ColorConstants.background),
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const TopBar(root: PaymentRouter.root),
+              Expanded(child: child),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

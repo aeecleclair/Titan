@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/navigation/ui/drawer_template.dart';
+import 'package:titan/navigation/ui/navigation_template.dart';
 import 'package:titan/version/providers/titan_version_provider.dart';
 import 'package:titan/version/providers/version_verifier_provider.dart';
 
@@ -26,7 +26,7 @@ class AppTemplate extends HookConsumerWidget {
         if (!isLoggedIn) {
           return child;
         }
-        return DrawerTemplate(child: child);
+        return NavigationTemplate(child: child);
       },
       orElse: () => child,
     );
