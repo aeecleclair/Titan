@@ -17,9 +17,7 @@ class AdminTemplate extends HookConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              TopBar(
-                root: AdminRouter.root,
-              ),
+              TopBar(root: AdminRouter.root),
               Expanded(child: child),
             ],
           ),
