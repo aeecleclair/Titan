@@ -14,6 +14,7 @@ class FeedTemplate extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          const SizedBox(height: 40),
           TopBar(root: FeedRouter.root),
           Expanded(child: child),
         ],
