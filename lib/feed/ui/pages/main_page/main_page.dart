@@ -8,6 +8,7 @@ import 'package:titan/feed/class/feed_item.dart';
 import 'package:titan/feed/router.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/feed/ui/pages/main_page/feed_timeline.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
@@ -24,6 +25,7 @@ class FeedMainPage extends HookConsumerWidget {
     final feedItems = useState<List<FeedItem>>(FeedItem.getFakeItems());
     final filteredItems = useState<List<FeedItem>>(feedItems.value);
     final isAdmin = ref.watch(isAdminProvider);
+    final scrollController = useScrollController();
 
     return FeedTemplate(
       child: Container(
@@ -106,13 +108,16 @@ class FeedMainPage extends HookConsumerWidget {
 
             const SizedBox(height: 20),
 
-            SizedBox(
-              height: MediaQuery.of(context).size.height - 193,
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: FeedTimeline(
-                  items: filteredItems.value,
-                  onItemTap: (item) {},
+            Expanded(
+              child: ScrollToHideNavbar(
+                controller: scrollController,
+                child: SingleChildScrollView(
+                  controller: scrollController,
+                  physics: const BouncingScrollPhysics(),
+                  child: FeedTimeline(
+                    items: filteredItems.value,
+                    onItemTap: (item) {},
+                  ),
                 ),
               ),
             ),
