@@ -8,7 +8,6 @@ import 'package:titan/navigation/class/module.dart';
 import 'package:titan/navigation/providers/display_quit_popup.dart';
 import 'package:titan/navigation/providers/navbar_animation.dart';
 import 'package:titan/navigation/providers/navbar_module_list.dart';
-import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 import 'package:titan/navigation/providers/should_setup_provider.dart';
 import 'package:titan/router.dart';
 import 'package:titan/service/tools/setup.dart';
