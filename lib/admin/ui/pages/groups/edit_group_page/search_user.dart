@@ -30,8 +30,6 @@ class SearchUser extends HookConsumerWidget {
       groupFromSimpleGroupProvider.notifier,
     );
 
-    final searchFocusNode = useFocusNode();
-
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -45,7 +43,6 @@ class SearchUser extends HookConsumerWidget {
               children: [
                 Expanded(
                   child: CustomSearchBar(
-                    focusNode: searchFocusNode,
                     onSearch: (value) async {
                       if (value.isNotEmpty) {
                         await usersNotifier.filterUsers(
