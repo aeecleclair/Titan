@@ -93,7 +93,7 @@ class FeedMainPage extends HookConsumerWidget {
                     color: ColorConstants.title,
                   ),
                 ),
-                if (isAdmin)
+                if (isSuperAdmin)
                   CustomIconButton(
                     icon: HeroIcon(
                       HeroIcons.plus,
