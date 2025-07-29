@@ -61,13 +61,14 @@ class MemberResults extends HookConsumerWidget {
                               )!.adminAddingError;
                               await tokenExpireWrapper(ref, () async {
                                 groupNotifier.addMember(newGroup, e).then((
-                                  value,
+                                  result,
                                 ) {
-                                  if (value) {
+                                  if (result) {
                                     simpleGroupGroupsNotifier.setTData(
                                       newGroup.id,
                                       AsyncData([newGroup]),
                                     );
+                                    value.remove(e);
                                     displayToastWithContext(
                                       TypeMsg.msg,
                                       addedMemberMsg,
