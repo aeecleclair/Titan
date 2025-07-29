@@ -8,7 +8,6 @@ import 'package:titan/phonebook/providers/association_groupement_list_provider.d
 import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/pages/main_page/association_card.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/phonebook/ui/components/association_research_bar.dart';
@@ -70,37 +69,38 @@ class PhonebookMainPage extends HookConsumerWidget {
                   ],
                 ],
               ),
-            ),
-            Async2Child(
-              values: Tuple2(associationList, associationGroupementList),
-              builder: (context, associations, associationGroupements) {
-                return Column(
-                  children: [
-                    if (associations.isEmpty)
-                      Center(
-                        child: Text(
-                          AppLocalizations.of(
-                            context,
-                          )!.phonebookNoAssociationFound,
+              Async2Children(
+                values: Tuple2(associationList, associationGroupementList),
+                builder: (context, associations, associationGroupements) {
+                  return Column(
+                    children: [
+                      if (associations.isEmpty)
+                        Center(
+                          child: Text(
+                            AppLocalizations.of(
+                              context,
+                            )!.phonebookNoAssociationFound,
+                          ),
+                        )
+                      else
+                        ...associationFilteredList.map(
+                          (association) => !association.deactivated
+                              ? AssociationCard(
+                                  association: association,
+                                  groupement: associationGroupements.firstWhere(
+                                    (groupement) =>
+                                        groupement.id ==
+                                        association.groupementId,
+                                  ),
+                                )
+                              : const SizedBox.shrink(),
                         ),
-                      )
-                    else
-                      ...associationFilteredList.map(
-                        (association) => !association.deactivated
-                            ? AssociationCard(
-                                association: association,
-                                groupement: associationGroupements.firstWhere(
-                                  (groupement) =>
-                                      groupement.id == association.groupementId,
-                                ),
-                              )
-                            : const SizedBox.shrink(),
-                      ),
-                  ],
-                );
-              },
-            ),
-          ],
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

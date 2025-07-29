@@ -1945,6 +1945,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phonebookAddAssociation => 'Ajouter une association';
 
   @override
+  String get phonebookAddAssociationGroupement =>
+      'Ajouter un groupement d\'association';
+
+  @override
   String get phonebookAddedAssociation => 'Association ajoutée';
 
   @override
@@ -2000,6 +2004,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !';
 
   @override
+  String get phonebookConfirm => 'Confirmer';
+
+  @override
   String get phonebookCopied => 'Copié dans le presse-papier';
 
   @override
@@ -2043,6 +2050,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get phonebookEdit => 'Modifier';
+
+  @override
+  String get phonebookEditAssociationGroupement =>
+      'Modifier le groupement d\'association';
 
   @override
   String get phonebookEditMembership => 'Modifier le rôle';

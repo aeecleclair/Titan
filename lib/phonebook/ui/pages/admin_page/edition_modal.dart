@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/phonebook/class/association.dart';
 import 'package:titan/phonebook/class/association_groupement.dart';
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
@@ -17,11 +17,13 @@ class AssociationEditionModal extends HookConsumerWidget {
   final Association association;
   final AssociationGroupement groupement;
   final bool isPhonebookAdmin;
+  final bool isAdmin;
   const AssociationEditionModal({
     super.key,
     required this.association,
     required this.groupement,
     required this.isPhonebookAdmin,
+    required this.isAdmin,
   });
 
   @override
@@ -58,21 +60,23 @@ class AssociationEditionModal extends HookConsumerWidget {
                       );
                     },
                   ),
-                  SizedBox(height: 5),
-                  Button(
-                    text: "Gérer les groupes",
-                    onPressed: () {
-                      associationGroupementsNotifier.setAssociationGroupement(
-                        groupement,
-                      );
-                      associationNotifier.setAssociation(association);
-                      QR.to(
-                        PhonebookRouter.root +
-                            PhonebookRouter.admin +
-                            PhonebookRouter.editAssociation,
-                      );
-                    },
-                  ),
+                  if (isAdmin) ...[
+                    SizedBox(height: 5),
+                    Button(
+                      text: "Gérer les groupes",
+                      onPressed: () {
+                        associationGroupementsNotifier.setAssociationGroupement(
+                          groupement,
+                        );
+                        associationNotifier.setAssociation(association);
+                        QR.to(
+                          PhonebookRouter.root +
+                              PhonebookRouter.admin +
+                              PhonebookRouter.editAssociation,
+                        );
+                      },
+                    ),
+                  ],
                   SizedBox(height: 5),
                   Button(
                     text: "Gérer les membres",
@@ -114,7 +118,7 @@ class AssociationEditionModal extends HookConsumerWidget {
                 ]
               : [
                   Button.danger(
-                    text: PhonebookTextConstants.confirm,
+                    text: AppLocalizations.of(context)!.phonebookConfirm,
                     onPressed: association.deactivated
                         ? () async {
                             final result = await associationListNotifier
@@ -122,12 +126,16 @@ class AssociationEditionModal extends HookConsumerWidget {
                             if (result) {
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                PhonebookTextConstants.deletedAssociation,
+                                AppLocalizations.of(
+                                  context,
+                                )!.phonebookDeletedAssociation,
                               );
                             } else {
                               displayToastWithContext(
                                 TypeMsg.error,
-                                PhonebookTextConstants.deletingError,
+                                AppLocalizations.of(
+                                  context,
+                                )!.phonebookDeletingError,
                               );
                             }
                           }
@@ -137,19 +145,23 @@ class AssociationEditionModal extends HookConsumerWidget {
                             if (result) {
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                PhonebookTextConstants.deactivatedAssociation,
+                                AppLocalizations.of(
+                                  context,
+                                )!.phonebookDeactivatedAssociation,
                               );
                             } else {
                               displayToastWithContext(
                                 TypeMsg.error,
-                                PhonebookTextConstants.deactivatingError,
+                                AppLocalizations.of(
+                                  context,
+                                )!.phonebookDeactivatingError,
                               );
                             }
                           },
                   ),
                   SizedBox(height: 5),
                   Button(
-                    text: PhonebookTextConstants.cancel,
+                    text: AppLocalizations.of(context)!.phonebookCancel,
                     onPressed: () => isSuppresion.value = false,
                   ),
                 ],

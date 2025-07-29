@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/widgets/loader.dart';
 import 'package:tuple/tuple.dart';
 
@@ -57,7 +58,7 @@ Widget handleLoadingAndError(
         errorBuilder ??
         (error, stack) => Center(
           child: Text(
-            "${TextConstants.error}:$error",
+            "${AppLocalizations.of(context)!.adminError}:$error",
             style: TextStyle(color: loaderColor),
           ),
         );

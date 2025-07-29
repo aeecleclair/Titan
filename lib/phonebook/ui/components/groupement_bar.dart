@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -12,9 +14,14 @@ import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/item_chip.dart';
 
 class AssociationGroupementBar extends HookConsumerWidget {
-  AssociationGroupementBar({super.key, this.editable = false});
+  AssociationGroupementBar({
+    super.key,
+    this.editable = false,
+    this.scrollDirection = Axis.horizontal,
+  });
   final dataKey = GlobalKey();
   final bool editable;
+  final Axis scrollDirection;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -95,9 +102,11 @@ class AssociationGroupementBar extends HookConsumerWidget {
       value: associationGroupementList,
       builder: (context, associationGroupements) => SizedBox(
         width: MediaQuery.of(context).size.width,
-        height: 40,
+        height: scrollDirection == Axis.horizontal
+            ? 40
+            : min(associationGroupements.length * 70, 140),
         child: ListView.builder(
-          scrollDirection: Axis.horizontal,
+          scrollDirection: scrollDirection,
           itemCount: editable
               ? associationGroupements.length + 1
               : associationGroupements.length,
@@ -105,6 +114,7 @@ class AssociationGroupementBar extends HookConsumerWidget {
             if (editable && index == 0) {
               return ItemChip(
                 key: Key("add"),
+                scrollDirection: scrollDirection,
                 onTap: () {
                   associationGroupementNotifier.resetAssociationGroupement();
                   QR.to(
@@ -121,6 +131,7 @@ class AssociationGroupementBar extends HookConsumerWidget {
             final selected = associationGroupement.id == item.id;
             return ItemChip(
               key: selected ? dataKey : null,
+              scrollDirection: scrollDirection,
               selected: selected,
               onTap: () {
                 associationGroupement.id != item.id

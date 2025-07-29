@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/phonebook/providers/association_filtered_list_provider.dart';
 import 'package:titan/phonebook/providers/association_groupement_list_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/components/association_research_bar.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/editable_association_card.dart';
@@ -31,6 +31,7 @@ class AdminPage extends HookConsumerWidget {
     final associationFilteredList = ref.watch(associationFilteredListProvider);
     final roleNotifier = ref.watch(rolesTagsProvider.notifier);
     final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
+    final isAdmin = ref.watch(isAdminProvider);
 
     return PhonebookTemplate(
       child: Refresher(
@@ -67,9 +68,11 @@ class AdminPage extends HookConsumerWidget {
                       ),
                       SizedBox(height: 5),
                       if (associations.isEmpty)
-                        const Center(
+                        Center(
                           child: Text(
-                            PhonebookTextConstants.noAssociationFound,
+                            AppLocalizations.of(
+                              context,
+                            )!.phonebookNoAssociationFound,
                           ),
                         )
                       else
@@ -81,6 +84,7 @@ class AdminPage extends HookConsumerWidget {
                                   groupement.id == association.groupementId,
                             ),
                             isPhonebookAdmin: isPhonebookAdmin,
+                            isAdmin: isAdmin,
                           ),
                         ),
                     ],

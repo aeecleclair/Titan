@@ -41,7 +41,9 @@ class AssociationResearchBar extends HookConsumerWidget {
                     ],
                     child: Padding(
                       padding: EdgeInsetsGeometry.symmetric(vertical: 10),
-                      child: AssociationGroupementBar(),
+                      child: AssociationGroupementBar(
+                        scrollDirection: Axis.vertical,
+                      ),
                     ),
                   ),
                 ),

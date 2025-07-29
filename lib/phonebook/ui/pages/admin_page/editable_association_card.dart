@@ -7,17 +7,20 @@ import 'package:titan/phonebook/providers/association_picture_provider.dart';
 import 'package:titan/phonebook/providers/associations_picture_map_provider.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/edition_modal.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
 
 class EditableAssociationCard extends HookConsumerWidget {
   final Association association;
   final AssociationGroupement groupement;
   final bool isPhonebookAdmin;
+  final bool isAdmin;
   const EditableAssociationCard({
     super.key,
     required this.association,
     required this.groupement,
     required this.isPhonebookAdmin,
+    required this.isAdmin,
   });
 
   @override
@@ -45,17 +48,15 @@ class EditableAssociationCard extends HookConsumerWidget {
             subtitle: groupement.name,
             icon: CircleAvatar(child: Image(image: data.first.image)),
             onTap: () {
-              showModalBottomSheet(
+              showCustomBottomModal(
+                ref: ref,
                 context: context,
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                builder: (context) {
-                  return AssociationEditionModal(
-                    association: association,
-                    groupement: groupement,
-                    isPhonebookAdmin: isPhonebookAdmin,
-                  );
-                },
+                modal: AssociationEditionModal(
+                  association: association,
+                  groupement: groupement,
+                  isPhonebookAdmin: isPhonebookAdmin,
+                  isAdmin: isAdmin,
+                ),
               );
             },
           ),

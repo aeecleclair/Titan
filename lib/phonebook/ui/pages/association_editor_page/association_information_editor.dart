@@ -9,7 +9,6 @@ import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/components/groupement_bar.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';

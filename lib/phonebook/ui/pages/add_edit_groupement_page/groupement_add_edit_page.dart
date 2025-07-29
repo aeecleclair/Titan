@@ -1,11 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/tools/constants.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/phonebook/class/association_groupement.dart';
 import 'package:titan/phonebook/providers/association_groupement_list_provider.dart';
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -39,8 +40,12 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 associationGroupement.id.isNotEmpty
-                    ? PhonebookTextConstants.editAssociationGroupement
-                    : PhonebookTextConstants.addAssociationGroupement,
+                    ? AppLocalizations.of(
+                        context,
+                      )!.phonebookEditAssociationGroupement
+                    : AppLocalizations.of(
+                        context,
+                      )!.phonebookAddAssociationGroupement,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
@@ -51,15 +56,17 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
             const SizedBox(height: 30),
             TextEntry(
               controller: name,
-              label: AdminTextConstants.name,
+              label: AppLocalizations.of(context)!.phonebookName,
               canBeEmpty: false,
             ),
             const SizedBox(height: 50),
             Button(
-              text: AdminTextConstants.add,
+              text: AppLocalizations.of(context)!.phonebookAdd,
               onPressed: () async {
                 if (name.text.isEmpty) {
-                  showSnackBarWithContext(AdminTextConstants.emptyFieldError);
+                  showSnackBarWithContext(
+                    AppLocalizations.of(context)!.phonebookEmptyFieldError,
+                  );
                   return;
                 }
                 await tokenExpireWrapper(ref, () async {
@@ -73,11 +80,13 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
                         );
                     if (value) {
                       showSnackBarWithContext(
-                        PhonebookTextConstants.addedAssociation,
+                        AppLocalizations.of(context)!.phonebookAddedAssociation,
                       );
                       QR.back();
                     } else {
-                      showSnackBarWithContext(AdminTextConstants.updatingError);
+                      showSnackBarWithContext(
+                        AppLocalizations.of(context)!.phonebookUpdatingError,
+                      );
                     }
                     return;
                   }
@@ -87,11 +96,13 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
                       );
                   if (value) {
                     showSnackBarWithContext(
-                      PhonebookTextConstants.addedAssociation,
+                      AppLocalizations.of(context)!.phonebookAddedAssociation,
                     );
                     QR.back();
                   } else {
-                    showSnackBarWithContext(AdminTextConstants.addingError);
+                    showSnackBarWithContext(
+                      AppLocalizations.of(context)!.phonebookAddingError,
+                    );
                   }
                 });
               },

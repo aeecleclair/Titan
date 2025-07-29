@@ -3902,6 +3902,12 @@ abstract class AppLocalizations {
   /// **'Ajouter une association'**
   String get phonebookAddAssociation;
 
+  /// No description provided for @phonebookAddAssociationGroupement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un groupement d\'association'**
+  String get phonebookAddAssociationGroupement;
+
   /// No description provided for @phonebookAddedAssociation.
   ///
   /// In fr, this message translates to:
@@ -4010,6 +4016,12 @@ abstract class AppLocalizations {
   /// **'Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !'**
   String get phonebookChangeMandateConfirm;
 
+  /// No description provided for @phonebookConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer'**
+  String get phonebookConfirm;
+
   /// No description provided for @phonebookCopied.
   ///
   /// In fr, this message translates to:
@@ -4093,6 +4105,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Modifier'**
   String get phonebookEdit;
+
+  /// No description provided for @phonebookEditAssociationGroupement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le groupement d\'association'**
+  String get phonebookEditAssociationGroupement;
 
   /// No description provided for @phonebookEditMembership.
   ///
