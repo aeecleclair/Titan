@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/cinema/providers/is_cinema_admin.dart';
 import 'package:titan/cinema/ui/pages/admin_page/admin_page.dart'
@@ -38,6 +39,10 @@ class CinemaRouter {
       NotificationMiddleWare(ref),
       DeferredLoadingMiddleware(main_page.loadLibrary),
     ],
+    pageType: QCustomPage(
+      transitionsBuilder: (_, animation, _, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
     children: [
       QRoute(
         path: detail,
