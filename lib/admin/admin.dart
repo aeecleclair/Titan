@@ -11,12 +11,14 @@ class AdminTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: ColorConstants.background,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          TopBar(root: AdminRouter.root),
-          Expanded(child: child),
-        ],
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            TopBar(root: AdminRouter.root),
+            Expanded(child: child),
+          ],
+        ),
       ),
     );
   }
