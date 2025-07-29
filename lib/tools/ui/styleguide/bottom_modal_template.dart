@@ -111,16 +111,19 @@ Future showCustomBottomModal({
   Function? onCloseCallback,
 }) async {
   final navbarAnimationNotifier = ref.watch(navbarAnimationProvider.notifier);
-  navbarAnimationNotifier.toggle();
-  await showModalBottomSheet(
-    elevation: 3,
-    backgroundColor: Colors.transparent,
-    isScrollControlled: true,
-    useRootNavigator: true,
-    context: context,
-    builder: (_) => modal,
-  ).then((value) {
-    navbarAnimationNotifier.toggle();
+  navbarAnimationNotifier.hideForModal();
+
+  try {
+    await showModalBottomSheet(
+      elevation: 3,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      useRootNavigator: true,
+      context: context,
+      builder: (_) => modal,
+    );
+  } finally {
+    navbarAnimationNotifier.showForModal();
     onCloseCallback?.call();
-  });
+  }
 }

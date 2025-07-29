@@ -7,8 +7,6 @@ import 'package:titan/admin/class/simple_group.dart';
 import 'package:titan/admin/providers/group_id_provider.dart';
 import 'package:titan/admin/providers/group_list_provider.dart';
 import 'package:titan/admin/router.dart';
-import 'package:titan/navigation/providers/modal_provider.dart';
-import 'package:titan/navigation/providers/navbar_animation.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
