@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/ui/pages/groups/add_group_page/add_group_page.dart'
-    deferred as add_group_page;
 import 'package:titan/admin/ui/pages/groups/edit_group_page/edit_group_page.dart'
     deferred as edit_group_page;
 import 'package:titan/admin/ui/pages/main_page/main_page.dart'
@@ -59,11 +57,6 @@ class AdminRouter {
         builder: () => groups_page.GroupsPage(),
         middleware: [DeferredLoadingMiddleware(groups_page.loadLibrary)],
         children: [
-          QRoute(
-            path: addGroup,
-            builder: () => add_group_page.AddGroupPage(),
-            middleware: [DeferredLoadingMiddleware(add_group_page.loadLibrary)],
-          ),
           QRoute(
             path: editGroup,
             builder: () => edit_group_page.EditGroupPage(),
