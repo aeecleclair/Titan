@@ -7,6 +7,8 @@ import 'package:titan/admin/class/simple_group.dart';
 import 'package:titan/admin/providers/group_id_provider.dart';
 import 'package:titan/admin/providers/group_list_provider.dart';
 import 'package:titan/admin/router.dart';
+import 'package:titan/navigation/providers/modal_provider.dart';
+import 'package:titan/navigation/providers/navbar_animation.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
@@ -65,6 +67,8 @@ class GroupsPage extends HookConsumerWidget {
                       color: Colors.white,
                     ),
                     onPressed: () async {
+                      nameController.text = '';
+                      descController.text = '';
                       await showCustomBottomModal(
                         context: context,
                         ref: ref,
@@ -147,7 +151,72 @@ class GroupsPage extends HookConsumerWidget {
                                   children: [
                                     Button(
                                       text: "Modifier",
-                                      onPressed: () async {},
+                                      onPressed: () async {
+                                        nameController.text = group.name;
+                                        descController.text = group.description;
+                                        Navigator.pop(context);
+                                        await showCustomBottomModal(
+                                          context: context,
+                                          ref: ref,
+                                          modal: BottomModalTemplate(
+                                            title: "Modifier le groupe",
+                                            child: Column(
+                                              children: [
+                                                TextEntry(
+                                                  label: "Nom",
+                                                  controller: nameController,
+                                                ),
+                                                const SizedBox(height: 20),
+                                                TextEntry(
+                                                  label: "Description",
+                                                  controller: descController,
+                                                ),
+                                                const SizedBox(height: 20),
+                                                Button(
+                                                  text: "Éditer",
+                                                  onPressed: () async {
+                                                    final addedGroupMsg =
+                                                        AppLocalizations.of(
+                                                          context,
+                                                        )!.adminAddedGroup;
+                                                    final addingErrorMsg =
+                                                        AppLocalizations.of(
+                                                          context,
+                                                        )!.adminAddingError;
+                                                    await tokenExpireWrapper(ref, () async {
+                                                      final value =
+                                                          await groupListNotifier
+                                                              .updateGroup(
+                                                                SimpleGroup(
+                                                                  name:
+                                                                      nameController
+                                                                          .text,
+                                                                  description:
+                                                                      descController
+                                                                          .text,
+                                                                  id: '',
+                                                                ),
+                                                              );
+                                                      if (value) {
+                                                        QR.back();
+                                                        displayToastWithContext(
+                                                          TypeMsg.msg,
+                                                          addedGroupMsg,
+                                                        );
+                                                      } else {
+                                                        displayToastWithContext(
+                                                          TypeMsg.error,
+                                                          addingErrorMsg,
+                                                        );
+                                                      }
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                     const SizedBox(height: 20),
                                     Button(
