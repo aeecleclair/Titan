@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/amap/providers/is_amap_admin_provider.dart';
 import 'package:titan/amap/ui/pages/admin_page/admin_page.dart'
@@ -48,6 +49,10 @@ class AmapRouter {
       AuthenticatedMiddleware(ref),
       DeferredLoadingMiddleware(main_page.loadLibrary),
     ],
+    pageType: QCustomPage(
+      transitionsBuilder: (_, animation, _, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
     children: [
       QRoute(
         path: admin,

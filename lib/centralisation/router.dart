@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/centralisation/ui/pages/main_page.dart'
     deferred as main_page;
@@ -26,5 +27,9 @@ class CentralisationRouter {
       AuthenticatedMiddleware(ref),
       DeferredLoadingMiddleware(main_page.loadLibrary),
     ],
+    pageType: QCustomPage(
+      transitionsBuilder: (_, animation, _, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
   );
 }

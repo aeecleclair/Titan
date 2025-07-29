@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/booking/providers/is_admin_provider.dart';
 import 'package:titan/booking/providers/is_manager_provider.dart';
@@ -45,6 +46,10 @@ class BookingRouter {
       AuthenticatedMiddleware(ref),
       DeferredLoadingMiddleware(main_page.loadLibrary),
     ],
+    pageType: QCustomPage(
+      transitionsBuilder: (_, animation, _, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
     children: [
       QRoute(
         path: admin,

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/advert/providers/is_advert_admin_provider.dart';
@@ -40,6 +41,10 @@ class AdvertRouter {
       AuthenticatedMiddleware(ref),
       DeferredLoadingMiddleware(main_page.loadLibrary),
     ],
+    pageType: QCustomPage(
+      transitionsBuilder: (_, animation, _, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
     children: [
       QRoute(
         path: admin,

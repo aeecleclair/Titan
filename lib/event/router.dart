@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
@@ -36,6 +37,10 @@ class EventRouter {
       AuthenticatedMiddleware(ref),
       DeferredLoadingMiddleware(main_page.loadLibrary),
     ],
+    pageType: QCustomPage(
+      transitionsBuilder: (_, animation, _, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
     children: [
       QRoute(
         path: admin,

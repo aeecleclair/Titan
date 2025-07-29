@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
@@ -34,6 +35,10 @@ class PhonebookRouter {
     path: PhonebookRouter.root,
     builder: () => const PhonebookMainPage(),
     middleware: [AuthenticatedMiddleware(ref)],
+    pageType: QCustomPage(
+      transitionsBuilder: (_, animation, _, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
     children: [
       QRoute(
         path: admin,

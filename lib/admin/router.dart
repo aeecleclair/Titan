@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/admin/ui/pages/groups/add_group_page/add_group_page.dart'
@@ -68,6 +69,10 @@ class AdminRouter {
       AdminMiddleware(ref, isAdminProvider),
       DeferredLoadingMiddleware(main_page.loadLibrary),
     ],
+    pageType: QCustomPage(
+      transitionsBuilder: (_, animation, _, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
     children: [
       QRoute(
         path: groups,
