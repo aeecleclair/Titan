@@ -192,7 +192,7 @@ class GroupsPage extends HookConsumerWidget {
                                                                   description:
                                                                       descController
                                                                           .text,
-                                                                  id: '',
+                                                                  id: group.id,
                                                                 ),
                                                               );
                                                       if (value) {
