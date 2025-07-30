@@ -23,6 +23,11 @@ class AdminMainPage extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Gestion", style: Theme.of(context).textTheme.headlineMedium),
+            const SizedBox(height: 20),
+            Text(
+              "Utilisateurs & Groupes",
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
             ListItem(
               title: "Gestion des utilisateurs",
               subtitle: "Gérer les utilisateurs de l'application",
@@ -47,6 +52,15 @@ class AdminMainPage extends HookConsumerWidget {
               subtitle: "Gérer les notifications pour les groupes",
               onTap: () =>
                   QR.to(AdminRouter.root + AdminRouter.groupNotification),
+            ),
+            Text(
+              "Module de paiement",
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            ListItem(
+              title: "Paiement",
+              subtitle: "Gérer les structures du module de paiement",
+              onTap: () => QR.to(AdminRouter.root + AdminRouter.structures),
             ),
           ],
         ),

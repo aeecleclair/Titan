@@ -10,14 +10,19 @@ import 'package:titan/admin/ui/pages/users_management_page/users_management_page
     deferred as users_managmement_page;
 import 'package:titan/admin/ui/pages/group_notifification_page/group_notification_page.dart'
     deferred as group_notification_page;
-
+import 'package:titan/super_admin/ui/pages/add_edit_structure_page/add_edit_structure_page.dart'
+    deferred as add_edit_structure_page;
 import 'package:titan/navigation/class/module.dart';
+import 'package:titan/admin/ui/pages/structure_page/structure_page.dart'
+    deferred as structure_page;
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminRouter {
   final Ref ref;
+  static const String structures = '/structures';
+  static const String addEditStructure = '/add_edit_structure';
   static const String root = '/admin';
   static const String usersManagement = '/users_management';
   static const String usersGroups = '/users_groups';
@@ -71,6 +76,20 @@ class AdminRouter {
         builder: () => group_notification_page.GroupNotificationPage(),
         middleware: [
           DeferredLoadingMiddleware(group_notification_page.loadLibrary),
+        ],
+      ),
+      QRoute(
+        path: structures,
+        builder: () => structure_page.StructurePage(),
+        middleware: [DeferredLoadingMiddleware(structure_page.loadLibrary)],
+        children: [
+          QRoute(
+            path: addEditStructure,
+            builder: () => add_edit_structure_page.AddEditStructurePage(),
+            middleware: [
+              DeferredLoadingMiddleware(add_edit_structure_page.loadLibrary),
+            ],
+          ),
         ],
       ),
     ],

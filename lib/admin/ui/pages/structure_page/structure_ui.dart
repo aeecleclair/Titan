@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/super_admin/ui/components/item_card_ui.dart';
-import 'package:titan/super_admin/ui/pages/structure_page/structure_button.dart';
 import 'package:titan/paiement/class/structure.dart';
+import 'package:titan/super_admin/ui/pages/structure_page/structure_button.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 

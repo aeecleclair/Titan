@@ -6,7 +6,7 @@ import 'package:titan/super_admin/providers/structure_provider.dart';
 import 'package:titan/super_admin/router.dart';
 import 'package:titan/super_admin/ui/admin.dart';
 import 'package:titan/super_admin/ui/components/item_card_ui.dart';
-import 'package:titan/super_admin/ui/pages/structure_page/structure_ui.dart';
+import 'package:titan/admin/ui/pages/structure_page/structure_ui.dart';
 import 'package:titan/paiement/class/structure.dart';
 import 'package:titan/paiement/providers/structure_list_provider.dart';
 import 'package:titan/tools/constants.dart';
@@ -51,11 +51,7 @@ class StructurePage extends HookConsumerWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   AppLocalizations.of(context)!.adminStructures,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: ColorConstants.gradient1,
-                  ),
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
               ),
               const SizedBox(height: 30),
