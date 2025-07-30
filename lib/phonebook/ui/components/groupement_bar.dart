@@ -59,7 +59,7 @@ class AssociationGroupementBar extends HookConsumerWidget {
               QR.to(
                 PhonebookRouter.root +
                     PhonebookRouter.admin +
-                    PhonebookRouter.createAssociaiton +
+                    PhonebookRouter.addEditAssociation +
                     PhonebookRouter.addEditGroupement,
               );
             },
@@ -120,7 +120,7 @@ class AssociationGroupementBar extends HookConsumerWidget {
                   QR.to(
                     PhonebookRouter.root +
                         PhonebookRouter.admin +
-                        PhonebookRouter.createAssociaiton +
+                        PhonebookRouter.addEditAssociation +
                         PhonebookRouter.addEditGroupement,
                   );
                 },

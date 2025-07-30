@@ -9,7 +9,7 @@ import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/association_member_list_provider.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/ui/pages/association_page/member_card.dart';
+import 'package:titan/phonebook/ui/components/member_card.dart';
 import 'package:titan/phonebook/ui/pages/association_page/web_member_card.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -90,6 +90,7 @@ class AssociationPage extends HookConsumerWidget {
                                       : MemberCard(
                                           member: member,
                                           association: association,
+                                          deactivated: false,
                                         ),
                                 )
                                 .toList(),
@@ -106,7 +107,7 @@ class AssociationPage extends HookConsumerWidget {
                       QR.to(
                         PhonebookRouter.root +
                             PhonebookRouter.associationDetail +
-                            PhonebookRouter.editAssociation,
+                            PhonebookRouter.addEditAssociation,
                       );
                     },
                     child: Container(

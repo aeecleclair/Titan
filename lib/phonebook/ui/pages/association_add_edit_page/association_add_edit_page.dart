@@ -111,7 +111,7 @@ class AssociationAddEditPage extends HookConsumerWidget {
                             QR.to(
                               PhonebookRouter.root +
                                   PhonebookRouter.admin +
-                                  PhonebookRouter.editAssociation,
+                                  PhonebookRouter.addEditAssociation,
                             );
                           },
                           error: (e, s) => showSnackBarWithContext(

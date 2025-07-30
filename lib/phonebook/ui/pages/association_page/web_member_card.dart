@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/phonebook/class/association.dart';
@@ -35,10 +34,9 @@ class WebMemberCard extends HookConsumerWidget {
     final memberPicturesNotifier = ref.watch(memberPicturesProvider.notifier);
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
 
-    Membership? assoMembership = member.memberships.firstWhereOrNull(
-      (memberships) =>
-          memberships.associationId == association.id &&
-          memberships.mandateYear == association.mandateYear,
+    Membership assoMembership = getMembershipForAssociation(
+      member,
+      association,
     );
 
     return Padding(
@@ -171,12 +169,8 @@ class WebMemberCard extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
+                          assoMembership.apparentName,
                           textAlign: TextAlign.right,
-                          assoMembership == null
-                              ? AppLocalizations.of(
-                                  context,
-                                )!.phonebookNoMemberRole
-                              : assoMembership.apparentName,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -281,12 +275,8 @@ class WebMemberCard extends HookConsumerWidget {
                   Column(
                     children: [
                       Text(
+                        assoMembership.apparentName,
                         textAlign: TextAlign.right,
-                        assoMembership == null
-                            ? AppLocalizations.of(
-                                context,
-                              )!.phonebookNoMemberRole
-                            : assoMembership.apparentName,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,

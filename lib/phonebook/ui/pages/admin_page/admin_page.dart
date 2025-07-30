@@ -61,7 +61,7 @@ class AdminPage extends HookConsumerWidget {
                                 QR.to(
                                   PhonebookRouter.root +
                                       PhonebookRouter.admin +
-                                      PhonebookRouter.createAssociaiton,
+                                      PhonebookRouter.addEditAssociation,
                                 );
                               }
                             : null,

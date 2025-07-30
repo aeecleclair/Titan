@@ -39,6 +39,10 @@ class AssociationEditionModal extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    AppLocalizations localizeWithContext() {
+      return AppLocalizations.of(context)!;
+    }
+
     return BottomModalTemplate(
       title: "title",
       type: isSuppresion.value ? BottomModalType.danger : BottomModalType.main,
@@ -56,7 +60,7 @@ class AssociationEditionModal extends HookConsumerWidget {
                       QR.to(
                         PhonebookRouter.root +
                             PhonebookRouter.admin +
-                            PhonebookRouter.editAssociation,
+                            PhonebookRouter.addEditAssociation,
                       );
                     },
                   ),
@@ -72,7 +76,7 @@ class AssociationEditionModal extends HookConsumerWidget {
                         QR.to(
                           PhonebookRouter.root +
                               PhonebookRouter.admin +
-                              PhonebookRouter.editAssociation,
+                              PhonebookRouter.editAssociationGroups,
                         );
                       },
                     ),
@@ -88,7 +92,7 @@ class AssociationEditionModal extends HookConsumerWidget {
                       QR.to(
                         PhonebookRouter.root +
                             PhonebookRouter.admin +
-                            PhonebookRouter.editAssociation,
+                            PhonebookRouter.editAssociationMembers,
                       );
                     },
                   ),
@@ -126,16 +130,13 @@ class AssociationEditionModal extends HookConsumerWidget {
                             if (result) {
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                AppLocalizations.of(
-                                  context,
-                                )!.phonebookDeletedAssociation,
+                                localizeWithContext()
+                                    .phonebookDeletedAssociation,
                               );
                             } else {
                               displayToastWithContext(
                                 TypeMsg.error,
-                                AppLocalizations.of(
-                                  context,
-                                )!.phonebookDeletingError,
+                                localizeWithContext().phonebookDeletingError,
                               );
                             }
                           }
@@ -145,23 +146,21 @@ class AssociationEditionModal extends HookConsumerWidget {
                             if (result) {
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                AppLocalizations.of(
-                                  context,
-                                )!.phonebookDeactivatedAssociation,
+                                localizeWithContext()
+                                    .phonebookDeactivatedAssociation,
                               );
                             } else {
                               displayToastWithContext(
                                 TypeMsg.error,
-                                AppLocalizations.of(
-                                  context,
-                                )!.phonebookDeactivatingError,
+                                localizeWithContext()
+                                    .phonebookDeactivatingError,
                               );
                             }
                           },
                   ),
                   SizedBox(height: 5),
                   Button(
-                    text: AppLocalizations.of(context)!.phonebookCancel,
+                    text: localizeWithContext().phonebookCancel,
                     onPressed: () => isSuppresion.value = false,
                   ),
                 ],
