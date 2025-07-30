@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/super_admin/providers/is_admin_provider.dart';
 
@@ -61,6 +62,10 @@ class SuperAdminRouter {
       AdminMiddleware(ref, isSuperAdminProvider),
       DeferredLoadingMiddleware(main_page.loadLibrary),
     ],
+    pageType: QCustomPage(
+      transitionsBuilder: (_, animation, _, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
     children: [
       QRoute(
         path: editModuleVisibility,

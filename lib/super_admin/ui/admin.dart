@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/router.dart';
+import 'package:titan/super_admin/router.dart';
 import 'package:titan/tools/ui/widgets/top_bar.dart';
 import 'package:titan/tools/constants.dart';
 
@@ -17,7 +17,7 @@ class SuperAdminTemplate extends HookConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              TopBar(root: AdminRouter.root),
+              TopBar(root: SuperAdminRouter.root),
               Expanded(child: child),
             ],
           ),
