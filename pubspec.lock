@@ -1658,14 +1658,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.3"
-  zxcvbn:
-    dependency: "direct main"
-    description:
-      name: zxcvbn
-      sha256: "5d860ab87c0e7f295902697afd364aa722d89d4e5839e8800ad1b0faf3d63b08"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
 sdks:
   dart: ">=3.8.0 <4.0.0"
   flutter: ">=3.32.0"
