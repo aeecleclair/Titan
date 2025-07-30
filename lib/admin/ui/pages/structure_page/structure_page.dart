@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/admin/admin.dart';
+import 'package:titan/admin/router.dart';
 import 'package:titan/super_admin/providers/structure_manager_provider.dart';
 import 'package:titan/super_admin/providers/structure_provider.dart';
 import 'package:titan/super_admin/router.dart';
-import 'package:titan/super_admin/ui/admin.dart';
 import 'package:titan/super_admin/ui/components/item_card_ui.dart';
 import 'package:titan/admin/ui/pages/structure_page/structure_ui.dart';
 import 'package:titan/paiement/class/structure.dart';
 import 'package:titan/paiement/providers/structure_list_provider.dart';
+import 'package:titan/super_admin/ui/pages/add_edit_structure_page/add_edit_structure_page.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/icon_button.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
@@ -37,7 +41,7 @@ class StructurePage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return SuperAdminTemplate(
+    return AdminTemplate(
       child: Refresher(
         onRefresh: () async {
           await structuresNotifier.getStructures();
@@ -45,14 +49,33 @@ class StructurePage extends HookConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  AppLocalizations.of(context)!.adminStructures,
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
+              Row(
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.adminStructures,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  const Spacer(),
+                  CustomIconButton(
+                    icon: HeroIcon(
+                      HeroIcons.plus,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      structureNotifier.setStructure(Structure.empty());
+                      structureManagerNotifier.setUser(SimpleUser.empty());
+                      QR.to(
+                        AdminRouter.root +
+                            AdminRouter.structures +
+                            AdminRouter.addEditStructure,
+                      );
+                    },
+                  ),
+                ],
               ),
               const SizedBox(height: 30),
               AsyncChild(
@@ -66,30 +89,6 @@ class StructurePage extends HookConsumerWidget {
                     children: [
                       Column(
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              structureNotifier.setStructure(Structure.empty());
-                              structureManagerNotifier.setUser(
-                                SimpleUser.empty(),
-                              );
-                              QR.to(
-                                SuperAdminRouter.root +
-                                    SuperAdminRouter.structures +
-                                    SuperAdminRouter.addEditStructure,
-                              );
-                            },
-                            child: ItemCardUi(
-                              children: [
-                                const Spacer(),
-                                HeroIcon(
-                                  HeroIcons.plus,
-                                  color: Colors.grey.shade700,
-                                  size: 40,
-                                ),
-                                const Spacer(),
-                              ],
-                            ),
-                          ),
                           ...structures.map(
                             (structure) => StructureUi(
                               group: structure,
