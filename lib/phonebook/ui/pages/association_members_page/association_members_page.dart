@@ -17,7 +17,7 @@ import 'package:titan/phonebook/ui/components/member_card.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
-import 'package:titan/tools/ui/styleguide/list_item.dart';
+import 'package:titan/tools/ui/styleguide/list_item_template.dart';
 
 class AssociationMembersPage extends HookConsumerWidget {
   const AssociationMembersPage({super.key});
@@ -56,13 +56,14 @@ class AssociationMembersPage extends HookConsumerWidget {
           ),
           if (!association.deactivated) ...[
             SizedBox(height: 10),
-            ListItem(
+            ListItemTemplate(
               icon: const HeroIcon(
                 HeroIcons.plus,
                 size: 40,
                 color: Colors.black,
               ),
               title: "Ajouter",
+              trailing: SizedBox.shrink(),
               onTap: () async {
                 rolesTagsNotifier.resetChecked();
                 memberRoleTagsNotifier.reset();
@@ -95,8 +96,7 @@ class AssociationMembersPage extends HookConsumerWidget {
             builder: (context, associationMembers) => associationMembers.isEmpty
                 ? Text(AppLocalizations.of(context)!.phonebookNoMember)
                 : !association.deactivated
-                ? SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.7,
+                ? Expanded(
                     child: ReorderableListView(
                       proxyDecorator: (child, index, animation) {
                         return Material(
@@ -144,6 +144,7 @@ class AssociationMembersPage extends HookConsumerWidget {
                               key: ValueKey(member.member.id),
                               member: member,
                               association: association,
+                              editable: true,
                             ),
                           )
                           .toList(),
@@ -157,6 +158,7 @@ class AssociationMembersPage extends HookConsumerWidget {
                         key: ValueKey(associationMembers[index].member.id),
                         member: associationMembers[index],
                         association: association,
+                        editable: true,
                       );
                     },
                   ),

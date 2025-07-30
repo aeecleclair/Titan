@@ -14,7 +14,7 @@ import 'package:titan/phonebook/ui/pages/admin_page/editable_association_card.da
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/tools/ui/styleguide/list_item.dart';
+import 'package:titan/tools/ui/styleguide/list_item_template.dart';
 import 'package:tuple/tuple.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
@@ -49,13 +49,14 @@ class AdminPage extends HookConsumerWidget {
                 builder: (context, associations, associationGroupements) {
                   return Column(
                     children: [
-                      ListItem(
+                      ListItemTemplate(
                         title: "Ajouter une association",
                         icon: HeroIcon(
                           HeroIcons.plus,
                           size: 40,
                           color: Colors.grey.shade500,
                         ),
+                        trailing: SizedBox.shrink(),
                         onTap: isPhonebookAdmin
                             ? () {
                                 QR.to(

@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
+import 'package:titan/phonebook/providers/association_picture_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/router.dart';
 import 'package:titan/phonebook/ui/components/groupement_bar.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
+import 'package:titan/settings/ui/pages/edit_user_page/picture_button.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';
 
@@ -25,6 +30,10 @@ class AssociationAddEditPage extends HookConsumerWidget {
     final associations = ref.watch(associationListProvider);
     final association = ref.watch(associationProvider);
     final associationNotifier = ref.watch(associationProvider.notifier);
+    final associationPicture = ref.watch(associationPictureProvider);
+    final associationPictureNotifier = ref.watch(
+      associationPictureProvider.notifier,
+    );
     final associationGroupement = ref.watch(associationGroupementProvider);
     final name = useTextEditingController(text: association.name);
     final description = useTextEditingController(text: association.description);
@@ -33,6 +42,10 @@ class AssociationAddEditPage extends HookConsumerWidget {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(message)));
+    }
+
+    AppLocalizations localizeWithContext() {
+      return AppLocalizations.of(context)!;
     }
 
     return PhonebookTemplate(
@@ -60,6 +73,124 @@ class AssociationAddEditPage extends HookConsumerWidget {
                     ),
                   ),
                 ),
+                if (association.id != "") ...[
+                  const SizedBox(height: 30),
+                  AsyncChild(
+                    value: associationPicture,
+                    builder: (context, image) {
+                      return Center(
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.1),
+                                    spreadRadius: 5,
+                                    blurRadius: 10,
+                                    offset: const Offset(2, 3),
+                                  ),
+                                ],
+                              ),
+                              child: CircleAvatar(
+                                radius: 80,
+                                backgroundImage: image.image,
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              left: 0,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  final updatedProfilePictureMsg =
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.settingsUpdatedProfilePicture;
+                                  final tooHeavyProfilePictureMsg =
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.settingsTooHeavyProfilePicture;
+                                  final profilePictureErrorMsg =
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.settingsErrorProfilePicture;
+                                  final value = await associationPictureNotifier
+                                      .setProfilePicture(
+                                        ImageSource.gallery,
+                                        association.id,
+                                      );
+                                  if (value != null) {
+                                    if (value) {
+                                      showSnackBarWithContext(
+                                        updatedProfilePictureMsg,
+                                      );
+                                    } else {
+                                      showSnackBarWithContext(
+                                        tooHeavyProfilePictureMsg,
+                                      );
+                                    }
+                                  } else {
+                                    showSnackBarWithContext(
+                                      profilePictureErrorMsg,
+                                    );
+                                  }
+                                },
+                                child: const PictureButton(
+                                  icon: HeroIcons.photo,
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  final updatedProfilePictureMsg =
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.settingsUpdatedProfilePicture;
+                                  final tooHeavyProfilePictureMsg =
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.settingsTooHeavyProfilePicture;
+                                  final profilePictureErrorMsg =
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.settingsErrorProfilePicture;
+                                  final value = await associationPictureNotifier
+                                      .setProfilePicture(
+                                        ImageSource.camera,
+                                        association.id,
+                                      );
+                                  if (value != null) {
+                                    if (value) {
+                                      showSnackBarWithContext(
+                                        updatedProfilePictureMsg,
+                                      );
+                                    } else {
+                                      showSnackBarWithContext(
+                                        tooHeavyProfilePictureMsg,
+                                      );
+                                    }
+                                  } else {
+                                    showSnackBarWithContext(
+                                      profilePictureErrorMsg,
+                                    );
+                                  }
+                                },
+                                child: const PictureButton(
+                                  icon: HeroIcons.camera,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ],
                 const SizedBox(height: 30),
                 AssociationGroupementBar(editable: true),
                 Container(margin: const EdgeInsets.symmetric(vertical: 10)),
@@ -90,41 +221,60 @@ class AssociationAddEditPage extends HookConsumerWidget {
                       return;
                     }
                     await tokenExpireWrapper(ref, () async {
-                      final value = await associationListNotifier
-                          .createAssociation(
-                            association.copyWith(
-                              name: name.text,
-                              description: description.text,
-                              groupementId: associationGroupement.id,
-                              mandateYear: DateTime.now().year,
-                            ),
-                          );
-                      if (value) {
-                        showSnackBarWithContext(
-                          AppLocalizations.of(
-                            context,
-                          )!.phonebookAddedAssociation,
-                        );
-                        associations.when(
-                          data: (d) {
-                            associationNotifier.setAssociation(d.last);
-                            QR.to(
-                              PhonebookRouter.root +
-                                  PhonebookRouter.admin +
-                                  PhonebookRouter.addEditAssociation,
+                      if (association.id == '') {
+                        final value = await associationListNotifier
+                            .createAssociation(
+                              association.copyWith(
+                                name: name.text,
+                                description: description.text,
+                                groupementId: associationGroupement.id,
+                                mandateYear: DateTime.now().year,
+                              ),
                             );
-                          },
-                          error: (e, s) => showSnackBarWithContext(
-                            AppLocalizations.of(
-                              context,
-                            )!.phonebookErrorAssociationLoading,
-                          ),
-                          loading: () {},
-                        );
+                        if (value) {
+                          showSnackBarWithContext(
+                            localizeWithContext().phonebookAddedAssociation,
+                          );
+                          associations.when(
+                            data: (d) {
+                              associationNotifier.setAssociation(d.last);
+                              QR.to(
+                                PhonebookRouter.root +
+                                    PhonebookRouter.admin +
+                                    PhonebookRouter.addEditAssociation,
+                              );
+                            },
+                            error: (e, s) => showSnackBarWithContext(
+                              AppLocalizations.of(
+                                context,
+                              )!.phonebookErrorAssociationLoading,
+                            ),
+                            loading: () {},
+                          );
+                        } else {
+                          showSnackBarWithContext(
+                            localizeWithContext().phonebookAddingError,
+                          );
+                        }
                       } else {
-                        showSnackBarWithContext(
-                          AppLocalizations.of(context)!.adminAddingError,
-                        );
+                        final value = await associationListNotifier
+                            .updateAssociation(
+                              association.copyWith(
+                                name: name.text,
+                                description: description.text,
+                                groupementId: associationGroupement.id,
+                              ),
+                            );
+                        if (value) {
+                          showSnackBarWithContext(
+                            localizeWithContext().phonebookUpdatedAssociation,
+                          );
+                          QR.to(PhonebookRouter.root + PhonebookRouter.admin);
+                        } else {
+                          showSnackBarWithContext(
+                            localizeWithContext().phonebookUpdatingError,
+                          );
+                        }
                       }
                     });
                   },

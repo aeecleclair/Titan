@@ -52,6 +52,7 @@ class AssociationCard extends HookConsumerWidget {
             icon: CircleAvatar(child: Image(image: data.first.image)),
             onTap: () {
               associationNotifier.setAssociation(association);
+              associationPictureNotifier.getAssociationPicture(association.id);
               associationGroupementNotifier.setAssociationGroupement(
                 groupement,
               );

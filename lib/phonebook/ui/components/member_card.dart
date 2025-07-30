@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/phonebook/class/association.dart';
@@ -10,9 +11,10 @@ import 'package:titan/phonebook/providers/profile_picture_provider.dart';
 import 'package:titan/phonebook/router.dart';
 import 'package:titan/phonebook/tools/function.dart';
 import 'package:titan/phonebook/ui/pages/association_members_page/member_edition_modal.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
-import 'package:titan/tools/ui/styleguide/list_item.dart';
+import 'package:titan/tools/ui/styleguide/list_item_template.dart';
 
 class MemberCard extends HookConsumerWidget {
   const MemberCard({
@@ -43,7 +45,7 @@ class MemberCard extends HookConsumerWidget {
       association,
     );
 
-    return ListItem(
+    return ListItemTemplate(
       title:
           "${(member.member.nickname ?? '${member.member.firstname} ${member.member.name}')} - ${assoMembership.apparentName}",
       subtitle: member.member.nickname != null
@@ -75,6 +77,12 @@ class MemberCard extends HookConsumerWidget {
               memberNotifier.setCompleteMember(member);
               QR.to(PhonebookRouter.root + PhonebookRouter.memberDetail);
             },
+      trailing: !editable
+          ? const HeroIcon(
+              HeroIcons.chevronRight,
+              color: ColorConstants.tertiary,
+            )
+          : SizedBox.shrink(),
     );
   }
 }
