@@ -58,6 +58,7 @@ class AllModulePage extends HookConsumerWidget {
                               pathForwardingProvider.notifier,
                             );
                             pathForwardingNotifier.forward(module.root);
+
                             QR.to(module.root);
                             navbarVisibilityNotifier.show();
                           },
