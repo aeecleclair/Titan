@@ -93,18 +93,6 @@ class SearchUser extends HookConsumerWidget {
               ],
             ),
             const SizedBox(height: 10),
-
-            // Button(
-            //   text: !add.value ? 'Ajouter' : "Terminer",
-            //   onPressed: () {
-            //     add.value = !add.value;
-            //     if (add.value) {
-            //       searchFocusNode.requestFocus();
-            //     } else {
-            //       searchFocusNode.unfocus();
-            //     }
-            //   },
-            // ),
             ...g.members.map(
               (x) => UserUi(
                 user: x,

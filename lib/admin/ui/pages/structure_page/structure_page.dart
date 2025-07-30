@@ -6,14 +6,10 @@ import 'package:titan/admin/router.dart';
 import 'package:titan/super_admin/providers/structure_manager_provider.dart';
 import 'package:titan/super_admin/providers/structure_provider.dart';
 import 'package:titan/super_admin/router.dart';
-import 'package:titan/super_admin/ui/components/item_card_ui.dart';
 import 'package:titan/admin/ui/pages/structure_page/structure_ui.dart';
 import 'package:titan/paiement/class/structure.dart';
 import 'package:titan/paiement/providers/structure_list_provider.dart';
-import 'package:titan/super_admin/ui/pages/add_edit_structure_page/add_edit_structure_page.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
-import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/icon_button.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
@@ -151,7 +147,6 @@ class StructurePage extends HookConsumerWidget {
                     ],
                   );
                 },
-                loaderColor: ColorConstants.gradient1,
               ),
             ],
           ),
