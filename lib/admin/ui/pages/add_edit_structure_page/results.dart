@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/super_admin/providers/structure_manager_provider.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
@@ -41,9 +40,7 @@ class MemberResults extends HookConsumerWidget {
                           onTap: () async {
                             structureManagerNotifier.setUser(e);
                             usersNotifier.clear();
-                            // TODO: Confirmation dialog
                           },
-                          waitingColor: ColorConstants.gradient1,
                           builder: (child) => child,
                           child: const HeroIcon(HeroIcons.plus),
                         ),
@@ -55,7 +52,6 @@ class MemberResults extends HookConsumerWidget {
             )
             .toList(),
       ),
-      loaderColor: ColorConstants.gradient1,
     );
   }
 }

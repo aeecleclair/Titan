@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/admin/admin.dart';
 import 'package:titan/super_admin/class/association_membership_simple.dart';
 import 'package:titan/super_admin/providers/association_membership_list_provider.dart';
 import 'package:titan/super_admin/providers/structure_manager_provider.dart';
 import 'package:titan/super_admin/providers/structure_provider.dart';
-import 'package:titan/super_admin/ui/admin.dart';
 import 'package:titan/super_admin/ui/components/admin_button.dart';
 import 'package:titan/super_admin/ui/components/text_editing.dart';
-import 'package:titan/super_admin/ui/pages/add_edit_structure_page/search_user.dart';
+import 'package:titan/admin/ui/pages/add_edit_structure_page/search_user.dart';
 import 'package:titan/paiement/class/structure.dart';
 import 'package:titan/paiement/providers/structure_list_provider.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -49,7 +48,7 @@ class AddEditStructurePage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return SuperAdminTemplate(
+    return AdminTemplate(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: SingleChildScrollView(
@@ -60,12 +59,6 @@ class AddEditStructurePage extends HookConsumerWidget {
             key: key,
             child: Column(
               children: [
-                const SizedBox(height: 20),
-                AlignLeftText(
-                  isEdit
-                      ? AppLocalizations.of(context)!.adminEditStructure
-                      : AppLocalizations.of(context)!.adminAddStructure,
-                ),
                 const SizedBox(height: 20),
                 TextEditing(
                   controller: name,
@@ -108,7 +101,6 @@ class AddEditStructurePage extends HookConsumerWidget {
                           Text(
                             AppLocalizations.of(context)!.adminManager,
                             style: TextStyle(
-                              color: ColorConstants.gradient1,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -117,7 +109,6 @@ class AddEditStructurePage extends HookConsumerWidget {
                           Text(
                             structureManager.getName(),
                             style: TextStyle(
-                              color: ColorConstants.gradient1,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),

@@ -10,7 +10,7 @@ import 'package:titan/admin/ui/pages/users_management_page/users_management_page
     deferred as users_managmement_page;
 import 'package:titan/admin/ui/pages/group_notifification_page/group_notification_page.dart'
     deferred as group_notification_page;
-import 'package:titan/super_admin/ui/pages/add_edit_structure_page/add_edit_structure_page.dart'
+import 'package:titan/admin/ui/pages/add_edit_structure_page/add_edit_structure_page.dart'
     deferred as add_edit_structure_page;
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/admin/ui/pages/structure_page/structure_page.dart'
