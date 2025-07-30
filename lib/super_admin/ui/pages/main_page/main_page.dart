@@ -47,15 +47,6 @@ class SuperAdminMainPage extends HookConsumerWidget {
             ),
             GestureDetector(
               onTap: () {
-                QR.to(SuperAdminRouter.root + SuperAdminRouter.groups);
-              },
-              child: MenuCardUi(
-                text: AppLocalizations.of(context)!.adminGroups,
-                icon: HeroIcons.users,
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
                 QR.to(SuperAdminRouter.root + SuperAdminRouter.schools);
               },
               child: MenuCardUi(
