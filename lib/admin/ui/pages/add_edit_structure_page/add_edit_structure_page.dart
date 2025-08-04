@@ -6,7 +6,6 @@ import 'package:titan/super_admin/class/association_membership_simple.dart';
 import 'package:titan/super_admin/providers/association_membership_list_provider.dart';
 import 'package:titan/super_admin/providers/structure_manager_provider.dart';
 import 'package:titan/super_admin/providers/structure_provider.dart';
-import 'package:titan/super_admin/ui/components/admin_button.dart';
 import 'package:titan/super_admin/ui/components/text_editing.dart';
 import 'package:titan/admin/ui/pages/add_edit_structure_page/search_user.dart';
 import 'package:titan/paiement/class/structure.dart';
@@ -16,11 +15,11 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/layouts/item_chip.dart';
-import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/user/class/simple_users.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/vote/ui/pages/admin_page/admin_button.dart';
 
 class AddEditStructurePage extends HookConsumerWidget {
   const AddEditStructurePage({super.key});
@@ -173,7 +172,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                       });
                     }
                   },
-                  builder: (child) => SuperAdminButton(child: child),
+                  builder: (child) => AdminButton(child: child),
                   child: Text(
                     isEdit
                         ? AppLocalizations.of(context)!.adminEdit
