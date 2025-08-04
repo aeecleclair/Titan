@@ -447,6 +447,8 @@
   "eventDayFri": "Vendredi",
   "eventDaySat": "Samedi",
   "eventDaySun": "Dimanche",
+  "globalConfirm": "Confirmer",
+  "globalCancel": "Annuler",
   "homeCalendar": "Calendrier",
   "homeEventOf": "Évènements du",
   "homeIncomingEvents": "Évènements à venir",
@@ -669,6 +671,9 @@
   "phonebookDescription": "Description",
   "phonebookEdit": "Modifier",
   "phonebookEditAssociationGroupement": "Modifier le groupement d'association",
+  "phonebookEditAssociationGroups": "Gérer les groupes",
+  "phonebookEditAssociationInfo": "Modifier",
+  "phonebookEditAssociationMembers": "Gérer les membres",
   "phonebookEditMembership": "Modifier le rôle",
   "phonebookEmail": "Email :",
   "phonebookEmailCopied": "Email copié dans le presse-papier",
@@ -687,14 +692,40 @@
   "phonebookErrorRoleTagsLoading": "Erreur lors du chargement des tags de rôle",
   "phonebookExistingMembership": "Ce membre est déjà dans le mandat actuel",
   "phonebookFirstname": "Prénom :",
-  "phonebookGroups": "Groupes associés :",
+  "phonebookGroupementName": "Nom du groupement",
+  "phonebookGroups": "Gérer les groupes de {association}",
+  "@phonebookGroups": {
+    "description": "Permet de gérer les groupes d'une association",
+    "placeholders": {
+      "association": {
+        "type": "String"
+      }
+    }
+  },
   "phonebookMandateChangingError": "Erreur lors du changement de mandat",
   "phonebookMember": "Membre",
   "phonebookMemberReordered": "Membre réordonné",
-  "phonebookMembers": "Membres",
+  "phonebookMembers": "Gérer les membres de {association}",
+  "@phonebookMembers": {
+    "description": "Permet de gérer les membres d'une association",
+    "placeholders": {
+      "association": {
+        "type": "String"
+      }
+    }
+  },
   "phonebookMembershipAssociationError": "Veuillez choisir une association",
   "phonebookMembershipRole": "Rôle :",
   "phonebookMembershipRoleError": "Veuillez choisir un rôle",
+  "phonebookModifyMembership": "Modifier le rôle de {name}",
+  "@phonebookModifyMembership": {
+    "description": "Permet de modifier le rôle d'un membre dans une association",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "phonebookName": "Nom :",
   "phonebookNameCopied": "Nom et prénom copié dans le presse-papier",
   "phonebookNamePure": "Nom",
@@ -705,6 +736,7 @@
   "phonebookNoAssociationFound": "Aucune association trouvée",
   "phonebookNoMember": "Aucun membre",
   "phonebookNoMemberRole": "Aucun role trouvé",
+  "phonebookNoRoleTags": "Aucun tag de rôle trouvé",
   "phonebookPhone": "Téléphone :",
   "phonebookPhonebook": "Annuaire",
   "phonebookPhonebookSearch": "Rechercher",
@@ -718,6 +750,7 @@
   "phonebookReorderingError": "Erreur lors du réordonnement",
   "phonebookResearch": "Rechercher",
   "phonebookRolePure": "Rôle",
+  "phonebookSearchMember": "un membre",
   "phonebookTooHeavyAssociationPicture": "L'image est trop lourde (max 4Mo)",
   "phonebookUpdateGroups": "Mettre à jour les groupes",
   "phonebookUpdatedAssociation": "Association modifiée",

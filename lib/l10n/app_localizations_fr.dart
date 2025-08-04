@@ -1371,6 +1371,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eventDaySun => 'Dimanche';
 
   @override
+  String get globalConfirm => 'Confirmer';
+
+  @override
+  String get globalCancel => 'Annuler';
+
+  @override
   String get homeCalendar => 'Calendrier';
 
   @override
@@ -2056,6 +2062,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Modifier le groupement d\'association';
 
   @override
+  String get phonebookEditAssociationGroups => 'Gérer les groupes';
+
+  @override
+  String get phonebookEditAssociationInfo => 'Modifier';
+
+  @override
+  String get phonebookEditAssociationMembers => 'Gérer les membres';
+
+  @override
   String get phonebookEditMembership => 'Modifier le rôle';
 
   @override
@@ -2120,7 +2135,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phonebookFirstname => 'Prénom :';
 
   @override
-  String get phonebookGroups => 'Groupes associés :';
+  String get phonebookGroupementName => 'Nom du groupement';
+
+  @override
+  String phonebookGroups(String association) {
+    return 'Gérer les groupes de $association';
+  }
 
   @override
   String get phonebookMandateChangingError =>
@@ -2133,7 +2153,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phonebookMemberReordered => 'Membre réordonné';
 
   @override
-  String get phonebookMembers => 'Membres';
+  String phonebookMembers(String association) {
+    return 'Gérer les membres de $association';
+  }
 
   @override
   String get phonebookMembershipAssociationError =>
@@ -2144,6 +2166,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get phonebookMembershipRoleError => 'Veuillez choisir un rôle';
+
+  @override
+  String phonebookModifyMembership(String name) {
+    return 'Modifier le rôle de $name';
+  }
 
   @override
   String get phonebookName => 'Nom :';
@@ -2174,6 +2201,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get phonebookNoMemberRole => 'Aucun role trouvé';
+
+  @override
+  String get phonebookNoRoleTags => 'Aucun tag de rôle trouvé';
 
   @override
   String get phonebookPhone => 'Téléphone :';
@@ -2213,6 +2243,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get phonebookRolePure => 'Rôle';
+
+  @override
+  String get phonebookSearchMember => 'un membre';
 
   @override
   String get phonebookTooHeavyAssociationPicture =>

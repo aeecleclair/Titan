@@ -8,14 +8,15 @@ import 'package:titan/phonebook/providers/association_picture_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/association_member_list_provider.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
-import 'package:titan/phonebook/router.dart';
 import 'package:titan/phonebook/ui/components/member_card.dart';
+import 'package:titan/phonebook/ui/pages/association_page/association_edition_modal.dart';
 import 'package:titan/phonebook/ui/pages/association_page/web_member_card.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/icon_button.dart';
 
 class AssociationPage extends HookConsumerWidget {
   const AssociationPage({super.key});
@@ -30,18 +31,21 @@ class AssociationPage extends HookConsumerWidget {
     final associationMemberListNotifier = ref.watch(
       associationMemberListProvider.notifier,
     );
+    final associationPicture = ref.watch(associationPictureProvider);
     final associationPictureNotifier = ref.watch(
       associationPictureProvider.notifier,
     );
     final isPresident = ref.watch(isAssociationPresidentProvider);
     final associationGroupement = ref.watch(associationGroupementProvider);
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     return PhonebookTemplate(
       child: Refresher(
         onRefresh: () async {
           await associationMemberListNotifier.loadMembers(
             association.id,
-            association.mandateYear.toString(),
+            association.mandateYear,
           );
           await associationPictureNotifier.getAssociationPicture(
             association.id,
@@ -53,10 +57,27 @@ class AssociationPage extends HookConsumerWidget {
             children: [
               Column(
                 children: [
+                  AsyncChild(
+                    value: associationPicture,
+                    builder: (context, image) {
+                      return Center(
+                        child: CircleAvatar(
+                          radius: 80,
+                          backgroundColor: Colors.white,
+                          backgroundImage: image.image,
+                        ),
+                      );
+                    },
+                  ),
                   const SizedBox(height: 20),
                   Text(
                     association.name,
                     style: const TextStyle(fontSize: 40, color: Colors.black),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "${localizeWithContext.phonebookActiveMandate} ${association.mandateYear}",
+                    style: const TextStyle(fontSize: 15, color: Colors.black),
                   ),
                   const SizedBox(height: 10),
                   Text(
@@ -68,17 +89,12 @@ class AssociationPage extends HookConsumerWidget {
                     association.description,
                     style: const TextStyle(fontSize: 15, color: Colors.black),
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "${AppLocalizations.of(context)!.phonebookActiveMandate} ${association.mandateYear}",
-                    style: const TextStyle(fontSize: 15, color: Colors.black),
-                  ),
                   const SizedBox(height: 20),
                   AsyncChild(
                     value: associationMemberList,
                     builder: (context, associationMembers) =>
                         associationMembers.isEmpty
-                        ? Text(AppLocalizations.of(context)!.phonebookNoMember)
+                        ? Text(localizeWithContext.phonebookNoMember)
                         : Column(
                             children: associationMemberSortedList
                                 .map(
@@ -96,56 +112,28 @@ class AssociationPage extends HookConsumerWidget {
                                 .toList(),
                           ),
                   ),
+                  const SizedBox(height: 80),
                 ],
               ),
               if (isPresident)
                 Positioned(
                   top: 20,
                   right: 20,
-                  child: GestureDetector(
-                    onTap: () {
-                      QR.to(
-                        PhonebookRouter.root +
-                            PhonebookRouter.associationDetail +
-                            PhonebookRouter.addEditAssociation,
+                  child: CustomIconButton(
+                    onPressed: () {
+                      showCustomBottomModal(
+                        context: context,
+                        modal: AssociationEditionModal(
+                          association: association,
+                          groupement: associationGroupement,
+                        ),
+                        ref: ref,
                       );
                     },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: const RadialGradient(
-                          colors: [
-                            Color.fromARGB(255, 98, 98, 98),
-                            Color.fromARGB(255, 27, 27, 27),
-                          ],
-                          center: Alignment.topLeft,
-                          radius: 1.3,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color.fromARGB(
-                              255,
-                              27,
-                              27,
-                              27,
-                            ).withValues(alpha: 0.3),
-                            spreadRadius: 5,
-                            blurRadius: 10,
-                            offset: const Offset(
-                              3,
-                              3,
-                            ), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: const HeroIcon(
-                        HeroIcons.pencil,
-                        color: Colors.white,
-                      ),
+                    icon: const HeroIcon(
+                      HeroIcons.pencilSquare,
+                      size: 30,
+                      color: Colors.black,
                     ),
                   ),
                 ),

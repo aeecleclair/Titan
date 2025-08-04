@@ -84,6 +84,7 @@ class PhonebookRouter {
               ),
             ],
           ),
+
           QRoute(
             path: editAssociationMembers,
             builder: () => association_members_page.AssociationMembersPage(),
@@ -106,15 +107,6 @@ class PhonebookRouter {
             middleware: [
               DeferredLoadingMiddleware(association_groups_page.loadLibrary),
             ],
-            children: [
-              QRoute(
-                path: addEditMember,
-                builder: () => membership_editor_page.MembershipEditorPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(membership_editor_page.loadLibrary),
-                ],
-              ),
-            ],
           ),
         ],
       ),
@@ -125,10 +117,31 @@ class PhonebookRouter {
         children: [
           QRoute(
             path: addEditAssociation,
+            builder: () => association_add_edit_page.AssociationAddEditPage(),
+            middleware: [
+              DeferredLoadingMiddleware(association_add_edit_page.loadLibrary),
+              AdminMiddleware(ref, isAssociationPresidentProvider),
+            ],
+            children: [
+              QRoute(
+                path: addEditGroupement,
+                builder: () =>
+                    groupement_add_edit_page.AssociationGroupementAddEditPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(
+                    groupement_add_edit_page.loadLibrary,
+                  ),
+                  AdminMiddleware(ref, isPhonebookAdminProvider),
+                ],
+              ),
+            ],
+          ),
+          QRoute(
+            path: editAssociationMembers,
             builder: () => association_members_page.AssociationMembersPage(),
             middleware: [
-              AdminMiddleware(ref, isAssociationPresidentProvider),
               DeferredLoadingMiddleware(association_members_page.loadLibrary),
+              AdminMiddleware(ref, isAssociationPresidentProvider),
             ],
             children: [
               QRoute(
@@ -136,6 +149,7 @@ class PhonebookRouter {
                 builder: () => membership_editor_page.MembershipEditorPage(),
                 middleware: [
                   DeferredLoadingMiddleware(membership_editor_page.loadLibrary),
+                  AdminMiddleware(ref, isAssociationPresidentProvider),
                 ],
               ),
             ],

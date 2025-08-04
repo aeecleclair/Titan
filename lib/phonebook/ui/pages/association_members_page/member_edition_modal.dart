@@ -7,15 +7,13 @@ import 'package:titan/phonebook/class/membership.dart';
 import 'package:titan/phonebook/providers/association_member_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/complete_member_provider.dart';
-import 'package:titan/phonebook/providers/member_role_tags_provider.dart';
 import 'package:titan/phonebook/providers/membership_provider.dart';
-import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 import 'package:titan/phonebook/router.dart';
 import 'package:titan/phonebook/tools/function.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
-import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/ui/styleguide/custom_dialog_box.dart';
 
 class MemberEditionModal extends HookConsumerWidget {
   final CompleteMember member;
@@ -34,16 +32,12 @@ class MemberEditionModal extends HookConsumerWidget {
     );
     final association = ref.watch(associationProvider);
     final membershipNotifier = ref.watch(membershipProvider.notifier);
-    final roleTagsNotifier = ref.watch(rolesTagsProvider.notifier);
-    final memberRoleTagsNotifier = ref.watch(memberRoleTagsProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
-    AppLocalizations localizeWithContext() {
-      return AppLocalizations.of(context)!;
-    }
+    AppLocalizations localizeWithContext = AppLocalizations.of(context)!;
 
     return BottomModalTemplate(
       title: "title",
@@ -54,23 +48,20 @@ class MemberEditionModal extends HookConsumerWidget {
             Button(
               text: "Modifier le rôle",
               onPressed: () {
-                roleTagsNotifier.resetChecked();
-                roleTagsNotifier.loadRoleTagsFromMember(member, association);
                 completeMemberNotifier.setCompleteMember(member);
                 membershipNotifier.setMembership(membership);
-                memberRoleTagsNotifier.reset();
                 if (QR.currentPath.contains(PhonebookRouter.admin)) {
                   QR.to(
                     PhonebookRouter.root +
                         PhonebookRouter.admin +
-                        PhonebookRouter.addEditAssociation +
+                        PhonebookRouter.editAssociationMembers +
                         PhonebookRouter.addEditMember,
                   );
                 } else {
                   QR.to(
                     PhonebookRouter.root +
                         PhonebookRouter.associationDetail +
-                        PhonebookRouter.addEditAssociation +
+                        PhonebookRouter.editAssociationMembers +
                         PhonebookRouter.addEditMember,
                   );
                 }
@@ -81,12 +72,13 @@ class MemberEditionModal extends HookConsumerWidget {
               text: "Supprimer le rôle",
               onPressed: () {
                 Navigator.of(context).pop();
-                showDialog(
+                showCustomDialog(
                   context: context,
-                  builder: (context) => CustomDialogBox(
+                  ref: ref,
+                  dialog: CustomDialogBox.danger(
                     title:
                         "Supprimer le rôle de ${member.member.nickname ?? '${member.member.firstname} ${member.member.name}'}",
-                    descriptions: "Cette action est irréversible",
+                    description: "Cette action est irréversible",
                     onYes: () async {
                       final result = await associationMemberListNotifier
                           .deleteMember(
@@ -96,12 +88,12 @@ class MemberEditionModal extends HookConsumerWidget {
                       if (result) {
                         displayToastWithContext(
                           TypeMsg.msg,
-                          localizeWithContext().phonebookDeletedMember,
+                          localizeWithContext.phonebookDeletedMember,
                         );
                       } else {
                         displayToastWithContext(
                           TypeMsg.error,
-                          localizeWithContext().phonebookDeletingError,
+                          localizeWithContext.phonebookDeletingError,
                         );
                       }
                     },

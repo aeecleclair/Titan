@@ -17,7 +17,7 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
 
   Future<AsyncValue<List<CompleteMember>>> loadMembers(
     String associationId,
-    String year,
+    int year,
   ) async {
     return await loadList(
       () async => associationMemberRepository.getAssociationMemberList(
@@ -122,10 +122,7 @@ final associationMemberListProvider =
       tokenExpireWrapperAuth(ref, () async {
         final association = ref.watch(associationProvider);
 
-        await provider.loadMembers(
-          association.id,
-          association.mandateYear.toString(),
-        );
+        await provider.loadMembers(association.id, association.mandateYear);
       });
       return provider;
     });

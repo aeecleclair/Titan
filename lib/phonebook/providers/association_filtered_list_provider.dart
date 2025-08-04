@@ -30,7 +30,8 @@ final associationFilteredListProvider = Provider<List<Association>>((ref) {
             .toList();
       }
       return associationGroupements.maybeWhen(
-        data: (kinds) => sortedAssociationByKind(filteredAssociations, kinds),
+        data: (groupements) =>
+            sortedAssociationByKind(filteredAssociations, groupements),
         orElse: () => filteredAssociations,
       );
     },

@@ -2780,6 +2780,18 @@ abstract class AppLocalizations {
   /// **'Dimanche'**
   String get eventDaySun;
 
+  /// No description provided for @globalConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer'**
+  String get globalConfirm;
+
+  /// No description provided for @globalCancel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler'**
+  String get globalCancel;
+
   /// No description provided for @homeCalendar.
   ///
   /// In fr, this message translates to:
@@ -4112,6 +4124,24 @@ abstract class AppLocalizations {
   /// **'Modifier le groupement d\'association'**
   String get phonebookEditAssociationGroupement;
 
+  /// No description provided for @phonebookEditAssociationGroups.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les groupes'**
+  String get phonebookEditAssociationGroups;
+
+  /// No description provided for @phonebookEditAssociationInfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier'**
+  String get phonebookEditAssociationInfo;
+
+  /// No description provided for @phonebookEditAssociationMembers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les membres'**
+  String get phonebookEditAssociationMembers;
+
   /// No description provided for @phonebookEditMembership.
   ///
   /// In fr, this message translates to:
@@ -4220,11 +4250,17 @@ abstract class AppLocalizations {
   /// **'Prénom :'**
   String get phonebookFirstname;
 
-  /// No description provided for @phonebookGroups.
+  /// No description provided for @phonebookGroupementName.
   ///
   /// In fr, this message translates to:
-  /// **'Groupes associés :'**
-  String get phonebookGroups;
+  /// **'Nom du groupement'**
+  String get phonebookGroupementName;
+
+  /// Permet de gérer les groupes d'une association
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les groupes de {association}'**
+  String phonebookGroups(String association);
 
   /// No description provided for @phonebookMandateChangingError.
   ///
@@ -4244,11 +4280,11 @@ abstract class AppLocalizations {
   /// **'Membre réordonné'**
   String get phonebookMemberReordered;
 
-  /// No description provided for @phonebookMembers.
+  /// Permet de gérer les membres d'une association
   ///
   /// In fr, this message translates to:
-  /// **'Membres'**
-  String get phonebookMembers;
+  /// **'Gérer les membres de {association}'**
+  String phonebookMembers(String association);
 
   /// No description provided for @phonebookMembershipAssociationError.
   ///
@@ -4267,6 +4303,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Veuillez choisir un rôle'**
   String get phonebookMembershipRoleError;
+
+  /// Permet de modifier le rôle d'un membre dans une association
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le rôle de {name}'**
+  String phonebookModifyMembership(String name);
 
   /// No description provided for @phonebookName.
   ///
@@ -4327,6 +4369,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Aucun role trouvé'**
   String get phonebookNoMemberRole;
+
+  /// No description provided for @phonebookNoRoleTags.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun tag de rôle trouvé'**
+  String get phonebookNoRoleTags;
 
   /// No description provided for @phonebookPhone.
   ///
@@ -4405,6 +4453,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Rôle'**
   String get phonebookRolePure;
+
+  /// No description provided for @phonebookSearchMember.
+  ///
+  /// In fr, this message translates to:
+  /// **'un membre'**
+  String get phonebookSearchMember;
 
   /// No description provided for @phonebookTooHeavyAssociationPicture.
   ///

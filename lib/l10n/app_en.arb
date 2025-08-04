@@ -447,6 +447,8 @@
   "eventDayFri": "Friday",
   "eventDaySat": "Saturday",
   "eventDaySun": "Sunday",
+  "globalConfirm": "Confirm",
+  "globalCancel": "Cancel",
   "homeCalendar": "Calendar",
   "homeEventOf": "Events of",
   "homeIncomingEvents": "Upcoming events",
@@ -669,6 +671,9 @@
   "phonebookDescription": "Description",
   "phonebookEdit": "Edit",
   "phonebookEditAssociationGroupement": "Edit association groupement",
+  "phonebookEditAssociationGroups": "Manage groups",
+  "phonebookEditAssociationInfo": "Edit",
+  "phonebookEditAssociationMembers": "Manage members",
   "phonebookEditMembership": "Edit role",
   "phonebookEmail": "Email:",
   "phonebookEmailCopied": "Email copied to clipboard",
@@ -687,14 +692,40 @@
   "phonebookErrorRoleTagsLoading": "Error loading role tags",
   "phonebookExistingMembership": "This member is already in the current mandate",
   "phonebookFirstname": "First name:",
-  "phonebookGroups": "Associated groups:",
+  "phonebookGroupementName": "Groupement name",
+  "phonebookGroups": "Manage {association} groups",
+  "@phonebookGroups": {
+    "description": "Manage the groups of an association",
+    "placeholders": {
+      "association": {
+        "type": "String"
+      }
+    }
+  },
   "phonebookMandateChangingError": "Error changing mandate",
   "phonebookMember": "Member",
   "phonebookMemberReordered": "Member reordered",
-  "phonebookMembers": "Members",
+  "phonebookMembers": "Manage {association} members",
+  "@phonebookMembers": {
+    "description": "Manage the members of an association",
+    "placeholders": {
+      "association": {
+        "type": "String"
+      }
+    }
+  },
   "phonebookMembershipAssociationError": "Please choose an association",
   "phonebookMembershipRole": "Role:",
   "phonebookMembershipRoleError": "Please choose a role",
+  "phonebookModifyMembership": "Modify {name}'s role",
+  "@phonebookModifyMembership": {
+    "description": "Modify the role of a member",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "phonebookName": "Last name:",
   "phonebookNameCopied": "Name and first name copied to clipboard",
   "phonebookNamePure": "Last name",
@@ -705,6 +736,7 @@
   "phonebookNoAssociationFound": "No association found",
   "phonebookNoMember": "No member",
   "phonebookNoMemberRole": "No role found",
+  "phonebookNoRoleTags": "No role tags found",
   "phonebookPhone": "Phone:",
   "phonebookPhonebook": "Phonebook",
   "phonebookPhonebookSearch": "Search",
@@ -718,6 +750,7 @@
   "phonebookReorderingError": "Error during reordering",
   "phonebookResearch": "Search",
   "phonebookRolePure": "Role",
+  "phonebookSearchMember": "Search a member",
   "phonebookTooHeavyAssociationPicture": "Image is too large (max 4MB)",
   "phonebookUpdateGroups": "Update groups",
   "phonebookUpdatedAssociation": "Association updated",

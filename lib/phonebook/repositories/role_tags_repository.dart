@@ -1,4 +1,3 @@
-import 'package:titan/phonebook/class/roles_tags.dart';
 import 'package:titan/tools/repository/repository.dart';
 
 class RolesTagsRepository extends Repository {
@@ -6,8 +5,7 @@ class RolesTagsRepository extends Repository {
   // ignore: overridden_fields
   final ext = "phonebook/";
 
-  Future<RolesTags> getRolesTags() async {
-    RolesTags rolesTags = RolesTags.fromJson(await getOne("roletags"));
-    return rolesTags;
+  Future<List<String>> getRolesTags() async {
+    return List<String>.from((await getOne("roletags"))["tags"]);
   }
 }

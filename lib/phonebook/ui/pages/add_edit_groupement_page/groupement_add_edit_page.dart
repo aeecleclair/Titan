@@ -30,6 +30,8 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
       ).showSnackBar(SnackBar(content: Text(message)));
     }
 
+    AppLocalizations localizeWithContext = AppLocalizations.of(context)!;
+
     return PhonebookTemplate(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30.0),
@@ -40,12 +42,8 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 associationGroupement.id.isNotEmpty
-                    ? AppLocalizations.of(
-                        context,
-                      )!.phonebookEditAssociationGroupement
-                    : AppLocalizations.of(
-                        context,
-                      )!.phonebookAddAssociationGroupement,
+                    ? localizeWithContext.phonebookEditAssociationGroupement
+                    : localizeWithContext.phonebookAddAssociationGroupement,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
@@ -56,21 +54,23 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
             const SizedBox(height: 30),
             TextEntry(
               controller: name,
-              label: AppLocalizations.of(context)!.phonebookName,
+              label: localizeWithContext.phonebookGroupementName,
               canBeEmpty: false,
             ),
             const SizedBox(height: 50),
             Button(
-              text: AppLocalizations.of(context)!.phonebookAdd,
+              text: associationGroupement.id != ""
+                  ? localizeWithContext.phonebookEdit
+                  : localizeWithContext.phonebookAdd,
               onPressed: () async {
                 if (name.text.isEmpty) {
                   showSnackBarWithContext(
-                    AppLocalizations.of(context)!.phonebookEmptyFieldError,
+                    localizeWithContext.phonebookEmptyFieldError,
                   );
                   return;
                 }
                 await tokenExpireWrapper(ref, () async {
-                  if (associationGroupement.id.isNotEmpty) {
+                  if (associationGroupement.id != "") {
                     final value = await associaitonGroupementListNotifier
                         .updateAssociationGroupement(
                           AssociationGroupement(
@@ -80,12 +80,12 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
                         );
                     if (value) {
                       showSnackBarWithContext(
-                        AppLocalizations.of(context)!.phonebookAddedAssociation,
+                        localizeWithContext.phonebookAddedAssociation,
                       );
                       QR.back();
                     } else {
                       showSnackBarWithContext(
-                        AppLocalizations.of(context)!.phonebookUpdatingError,
+                        localizeWithContext.phonebookUpdatingError,
                       );
                     }
                     return;
@@ -96,12 +96,12 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
                       );
                   if (value) {
                     showSnackBarWithContext(
-                      AppLocalizations.of(context)!.phonebookAddedAssociation,
+                      localizeWithContext.phonebookAddedAssociation,
                     );
                     QR.back();
                   } else {
                     showSnackBarWithContext(
-                      AppLocalizations.of(context)!.phonebookAddingError,
+                      localizeWithContext.phonebookAddingError,
                     );
                   }
                 });

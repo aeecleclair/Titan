@@ -35,6 +35,9 @@ class AssociationAddEditPage extends HookConsumerWidget {
       associationPictureProvider.notifier,
     );
     final associationGroupement = ref.watch(associationGroupementProvider);
+    final associationGroupementNotifier = ref.watch(
+      associationGroupementProvider.notifier,
+    );
     final name = useTextEditingController(text: association.name);
     final description = useTextEditingController(text: association.description);
 
@@ -44,9 +47,7 @@ class AssociationAddEditPage extends HookConsumerWidget {
       ).showSnackBar(SnackBar(content: Text(message)));
     }
 
-    AppLocalizations localizeWithContext() {
-      return AppLocalizations.of(context)!;
-    }
+    AppLocalizations localizeWithContext = AppLocalizations.of(context)!;
 
     return PhonebookTemplate(
       child: SingleChildScrollView(
@@ -64,8 +65,8 @@ class AssociationAddEditPage extends HookConsumerWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     association.id == ""
-                        ? AppLocalizations.of(context)!.phonebookAddAssociation
-                        : AppLocalizations.of(context)!.phonebookEdit,
+                        ? localizeWithContext.phonebookAddAssociation
+                        : localizeWithContext.phonebookEdit,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -96,6 +97,7 @@ class AssociationAddEditPage extends HookConsumerWidget {
                               ),
                               child: CircleAvatar(
                                 radius: 80,
+                                backgroundColor: Colors.white,
                                 backgroundImage: image.image,
                               ),
                             ),
@@ -104,18 +106,6 @@ class AssociationAddEditPage extends HookConsumerWidget {
                               left: 0,
                               child: GestureDetector(
                                 onTap: () async {
-                                  final updatedProfilePictureMsg =
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.settingsUpdatedProfilePicture;
-                                  final tooHeavyProfilePictureMsg =
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.settingsTooHeavyProfilePicture;
-                                  final profilePictureErrorMsg =
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.settingsErrorProfilePicture;
                                   final value = await associationPictureNotifier
                                       .setProfilePicture(
                                         ImageSource.gallery,
@@ -124,16 +114,19 @@ class AssociationAddEditPage extends HookConsumerWidget {
                                   if (value != null) {
                                     if (value) {
                                       showSnackBarWithContext(
-                                        updatedProfilePictureMsg,
+                                        localizeWithContext
+                                            .settingsUpdatedProfilePicture,
                                       );
                                     } else {
                                       showSnackBarWithContext(
-                                        tooHeavyProfilePictureMsg,
+                                        localizeWithContext
+                                            .settingsTooHeavyProfilePicture,
                                       );
                                     }
                                   } else {
                                     showSnackBarWithContext(
-                                      profilePictureErrorMsg,
+                                      localizeWithContext
+                                          .settingsErrorProfilePicture,
                                     );
                                   }
                                 },
@@ -147,18 +140,6 @@ class AssociationAddEditPage extends HookConsumerWidget {
                               right: 0,
                               child: GestureDetector(
                                 onTap: () async {
-                                  final updatedProfilePictureMsg =
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.settingsUpdatedProfilePicture;
-                                  final tooHeavyProfilePictureMsg =
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.settingsTooHeavyProfilePicture;
-                                  final profilePictureErrorMsg =
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.settingsErrorProfilePicture;
                                   final value = await associationPictureNotifier
                                       .setProfilePicture(
                                         ImageSource.camera,
@@ -167,16 +148,19 @@ class AssociationAddEditPage extends HookConsumerWidget {
                                   if (value != null) {
                                     if (value) {
                                       showSnackBarWithContext(
-                                        updatedProfilePictureMsg,
+                                        localizeWithContext
+                                            .settingsUpdatedProfilePicture,
                                       );
                                     } else {
                                       showSnackBarWithContext(
-                                        tooHeavyProfilePictureMsg,
+                                        localizeWithContext
+                                            .settingsTooHeavyProfilePicture,
                                       );
                                     }
                                   } else {
                                     showSnackBarWithContext(
-                                      profilePictureErrorMsg,
+                                      localizeWithContext
+                                          .settingsErrorProfilePicture,
                                     );
                                   }
                                 },
@@ -196,13 +180,13 @@ class AssociationAddEditPage extends HookConsumerWidget {
                 Container(margin: const EdgeInsets.symmetric(vertical: 10)),
                 TextEntry(
                   controller: name,
-                  label: AppLocalizations.of(context)!.phonebookName,
+                  label: localizeWithContext.phonebookName,
                   canBeEmpty: false,
                 ),
                 const SizedBox(height: 30),
                 TextEntry(
                   controller: description,
-                  label: AppLocalizations.of(context)!.phonebookDescription,
+                  label: localizeWithContext.phonebookDescription,
                   canBeEmpty: true,
                 ),
                 const SizedBox(height: 50),
@@ -210,13 +194,13 @@ class AssociationAddEditPage extends HookConsumerWidget {
                   onPressed: () async {
                     if (!key.currentState!.validate()) {
                       showSnackBarWithContext(
-                        AppLocalizations.of(context)!.phonebookEmptyFieldError,
+                        localizeWithContext.phonebookEmptyFieldError,
                       );
                       return;
                     }
                     if (associationGroupement.id == '') {
                       showSnackBarWithContext(
-                        AppLocalizations.of(context)!.phonebookEmptyKindError,
+                        localizeWithContext.phonebookEmptyKindError,
                       );
                       return;
                     }
@@ -233,7 +217,7 @@ class AssociationAddEditPage extends HookConsumerWidget {
                             );
                         if (value) {
                           showSnackBarWithContext(
-                            localizeWithContext().phonebookAddedAssociation,
+                            localizeWithContext.phonebookAddedAssociation,
                           );
                           associations.when(
                             data: (d) {
@@ -245,15 +229,14 @@ class AssociationAddEditPage extends HookConsumerWidget {
                               );
                             },
                             error: (e, s) => showSnackBarWithContext(
-                              AppLocalizations.of(
-                                context,
-                              )!.phonebookErrorAssociationLoading,
+                              localizeWithContext
+                                  .phonebookErrorAssociationLoading,
                             ),
                             loading: () {},
                           );
                         } else {
                           showSnackBarWithContext(
-                            localizeWithContext().phonebookAddingError,
+                            localizeWithContext.phonebookAddingError,
                           );
                         }
                       } else {
@@ -267,19 +250,23 @@ class AssociationAddEditPage extends HookConsumerWidget {
                             );
                         if (value) {
                           showSnackBarWithContext(
-                            localizeWithContext().phonebookUpdatedAssociation,
+                            localizeWithContext.phonebookUpdatedAssociation,
                           );
-                          QR.to(PhonebookRouter.root + PhonebookRouter.admin);
+
+                          associationGroupementNotifier
+                              .resetAssociationGroupement();
+                          QR.back();
                         } else {
                           showSnackBarWithContext(
-                            localizeWithContext().phonebookUpdatingError,
+                            localizeWithContext.phonebookUpdatingError,
                           );
                         }
                       }
                     });
                   },
-                  text: AppLocalizations.of(context)!.adminAdd,
+                  text: localizeWithContext.adminAdd,
                 ),
+                SizedBox(height: 80),
               ],
             ),
           ),

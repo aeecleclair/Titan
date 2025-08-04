@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -55,20 +56,23 @@ List<Association> sortedAssociationByKind(
 }
 
 Color getColorFromTagList(WidgetRef ref, List<String> tags) {
-  final rolesTags = ref.watch(rolesTagsProvider).keys.toList();
-  int index = 3;
-  for (String tag in tags) {
-    if (rolesTags.indexOf(tag) < index) {
-      index = rolesTags.indexOf(tag);
-    }
+  if (tags.isEmpty) {
+    return Colors.white;
   }
-  switch (index) {
-    case 0:
-      return const Color.fromARGB(255, 251, 109, 16);
-    case 1:
-      return const Color.fromARGB(255, 252, 145, 74);
-    case 2:
-      return const Color.fromARGB(255, 253, 193, 153);
-  }
-  return Colors.white;
+  final rolesTags = ref.watch(rolesTagsProvider);
+  return rolesTags.maybeWhen(
+    data: (allTags) {
+      int index = tags.map((tag) => allTags.indexOf(tag)).toList().min;
+      switch (index) {
+        case 0:
+          return const Color.fromARGB(255, 251, 109, 16);
+        case 1:
+          return const Color.fromARGB(255, 252, 145, 74);
+        case 2:
+          return const Color.fromARGB(255, 253, 193, 153);
+      }
+      return Colors.white;
+    },
+    orElse: () => Colors.white,
+  );
 }

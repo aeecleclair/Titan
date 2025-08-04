@@ -12,14 +12,14 @@ import 'package:titan/phonebook/router.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
-import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/ui/styleguide/custom_dialog_box.dart';
 
-class AssociationEditionModal extends HookConsumerWidget {
+class AssociationAdminEditionModal extends HookConsumerWidget {
   final Association association;
   final AssociationGroupement groupement;
   final bool isPhonebookAdmin;
   final bool isAdmin;
-  const AssociationEditionModal({
+  const AssociationAdminEditionModal({
     super.key,
     required this.association,
     required this.groupement,
@@ -42,12 +42,10 @@ class AssociationEditionModal extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    AppLocalizations localizeWithContext() {
-      return AppLocalizations.of(context)!;
-    }
+    AppLocalizations localizeWithContext = AppLocalizations.of(context)!;
 
     return BottomModalTemplate(
-      title: "title",
+      title: association.name,
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -108,11 +106,12 @@ class AssociationEditionModal extends HookConsumerWidget {
               text: "Passer au mandat ${association.mandateYear + 1}",
               onPressed: () {
                 Navigator.of(context).pop();
-                showDialog(
+                showCustomDialog(
                   context: context,
-                  builder: (context) => CustomDialogBox(
-                    title: "title",
-                    descriptions: "descriptions",
+                  ref: ref,
+                  dialog: CustomDialogBox.danger(
+                    title: "Passer au mandat ${association.mandateYear + 1}",
+                    description: "Cette action est irréversible",
                     onYes: () async {
                       final result = await associationListNotifier
                           .updateAssociation(
@@ -123,12 +122,12 @@ class AssociationEditionModal extends HookConsumerWidget {
                       if (result) {
                         displayToastWithContext(
                           TypeMsg.msg,
-                          localizeWithContext().phonebookUpdatedAssociation,
+                          localizeWithContext.phonebookUpdatedAssociation,
                         );
                       } else {
                         displayToastWithContext(
                           TypeMsg.error,
-                          localizeWithContext().phonebookUpdatingError,
+                          localizeWithContext.phonebookUpdatingError,
                         );
                       }
                     },
@@ -149,32 +148,33 @@ class AssociationEditionModal extends HookConsumerWidget {
                   if (result) {
                     displayToastWithContext(
                       TypeMsg.msg,
-                      localizeWithContext().phonebookDeactivatedAssociation,
+                      localizeWithContext.phonebookDeactivatedAssociation,
                     );
                   } else {
                     displayToastWithContext(
                       TypeMsg.error,
-                      localizeWithContext().phonebookDeactivatingError,
+                      localizeWithContext.phonebookDeactivatingError,
                     );
                   }
                 } else {
-                  showDialog(
+                  showCustomDialog(
                     context: context,
-                    builder: (context) => CustomDialogBox(
-                      title: "title",
-                      descriptions: "descriptions",
+                    ref: ref,
+                    dialog: CustomDialogBox.danger(
+                      title: "Supprimer l'association",
+                      description: "Cette action est irréversible",
                       onYes: () async {
                         final result = await associationListNotifier
                             .deleteAssociation(association);
                         if (result) {
                           displayToastWithContext(
                             TypeMsg.msg,
-                            localizeWithContext().phonebookDeletedAssociation,
+                            localizeWithContext.phonebookDeletedAssociation,
                           );
                         } else {
                           displayToastWithContext(
                             TypeMsg.error,
-                            localizeWithContext().phonebookDeletingError,
+                            localizeWithContext.phonebookDeletingError,
                           );
                         }
                       },

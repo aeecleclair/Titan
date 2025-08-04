@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/phonebook/class/association.dart';
 import 'package:titan/phonebook/class/association_groupement.dart';
 import 'package:titan/phonebook/providers/association_picture_provider.dart';
 import 'package:titan/phonebook/providers/associations_picture_map_provider.dart';
-import 'package:titan/phonebook/ui/pages/admin_page/association_edition_modal.dart';
+import 'package:titan/phonebook/ui/pages/admin_page/association_admin_edition_modal.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
@@ -34,36 +33,37 @@ class EditableAssociationCard extends HookConsumerWidget {
     final associationPictureNotifier = ref.watch(
       associationPictureProvider.notifier,
     );
-    return AutoLoaderChild(
-      group: associationPicture,
-      notifier: associationPictureMapNotifier,
-      mapKey: association.id,
-      loader: (associationId) =>
-          associationPictureNotifier.getAssociationPicture(associationId),
-      dataBuilder: (context, data) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5),
-          child: ListItem(
-            title: association.name,
-            subtitle: groupement.name,
-            icon: CircleAvatar(child: Image(image: data.first.image)),
-            onTap: () {
-              showCustomBottomModal(
-                ref: ref,
-                context: context,
-                modal: AssociationEditionModal(
-                  association: association,
-                  groupement: groupement,
-                  isPhonebookAdmin: isPhonebookAdmin,
-                  isAdmin: isAdmin,
-                ),
-              );
-            },
-          ),
-        );
-      },
-      errorBuilder: (error, stack) =>
-          const Center(child: HeroIcon(HeroIcons.exclamationCircle)),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: ListItem(
+        title: association.name,
+        subtitle: groupement.name,
+        icon: AutoLoaderChild(
+          group: associationPicture,
+          notifier: associationPictureMapNotifier,
+          mapKey: association.id,
+          loader: (associationId) =>
+              associationPictureNotifier.getAssociationPicture(associationId),
+          dataBuilder: (context, data) {
+            return CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Image(image: data.first.image),
+            );
+          },
+        ),
+        onTap: () {
+          showCustomBottomModal(
+            ref: ref,
+            context: context,
+            modal: AssociationAdminEditionModal(
+              association: association,
+              groupement: groupement,
+              isPhonebookAdmin: isPhonebookAdmin,
+              isAdmin: isAdmin,
+            ),
+          );
+        },
+      ),
     );
   }
 }

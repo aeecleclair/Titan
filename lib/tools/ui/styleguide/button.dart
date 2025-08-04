@@ -7,6 +7,7 @@ class Button extends StatelessWidget {
   final ButtonType type;
   final String text;
   final bool? disabled;
+  final double? fontSize;
   final Function() onPressed;
 
   const Button({
@@ -15,6 +16,7 @@ class Button extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.disabled = false,
+    this.fontSize,
   });
 
   const Button.danger({
@@ -22,6 +24,7 @@ class Button extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.disabled = false,
+    this.fontSize,
   }) : type = ButtonType.danger;
 
   const Button.onDanger({
@@ -29,6 +32,7 @@ class Button extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.disabled = false,
+    this.fontSize,
   }) : type = ButtonType.onDanger;
 
   const Button.secondary({
@@ -36,6 +40,7 @@ class Button extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.disabled = false,
+    this.fontSize,
   }) : type = ButtonType.secondary;
 
   Color get backgroundColor {
@@ -99,7 +104,7 @@ class Button extends StatelessWidget {
             text,
             style: TextStyle(
               color: textColor,
-              fontSize: 18,
+              fontSize: fontSize ?? 18,
               fontWeight: FontWeight.w900,
             ),
           ),

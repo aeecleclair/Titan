@@ -106,6 +106,7 @@ flutter:
     - assets/images/pipe.png
     - assets/images/logo_flappybird.svg
     - assets/images/helloasso.svg
+    - assets/images/vache.png
 
   uses-material-design: true
   generate: true

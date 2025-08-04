@@ -4,7 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/phonebook/providers/association_filtered_list_provider.dart';
 import 'package:titan/phonebook/providers/association_groupement_list_provider.dart';
+import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
+import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 import 'package:titan/phonebook/router.dart';
@@ -28,10 +30,16 @@ class AdminPage extends HookConsumerWidget {
     );
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associationList = ref.watch(associationListProvider);
+    final associationNotifier = ref.watch(associationProvider.notifier);
+    final associationGroupementNotifier = ref.watch(
+      associationGroupementProvider.notifier,
+    );
     final associationFilteredList = ref.watch(associationFilteredListProvider);
     final roleNotifier = ref.watch(rolesTagsProvider.notifier);
     final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
     final isAdmin = ref.watch(isAdminProvider);
+
+    final localizeWithContext = AppLocalizations.of(context)!;
 
     return PhonebookTemplate(
       child: Refresher(
@@ -44,6 +52,7 @@ class AdminPage extends HookConsumerWidget {
           child: Column(
             children: [
               AssociationResearchBar(),
+              const SizedBox(height: 10),
               Async2Children(
                 values: Tuple2(associationList, associationGroupementList),
                 builder: (context, associations, associationGroupements) {
@@ -59,6 +68,9 @@ class AdminPage extends HookConsumerWidget {
                         trailing: SizedBox.shrink(),
                         onTap: isPhonebookAdmin
                             ? () {
+                                associationNotifier.resetAssociation();
+                                associationGroupementNotifier
+                                    .resetAssociationGroupement();
                                 QR.to(
                                   PhonebookRouter.root +
                                       PhonebookRouter.admin +
@@ -71,9 +83,7 @@ class AdminPage extends HookConsumerWidget {
                       if (associations.isEmpty)
                         Center(
                           child: Text(
-                            AppLocalizations.of(
-                              context,
-                            )!.phonebookNoAssociationFound,
+                            localizeWithContext.phonebookNoAssociationFound,
                           ),
                         )
                       else
@@ -92,6 +102,7 @@ class AdminPage extends HookConsumerWidget {
                   );
                 },
               ),
+              const SizedBox(height: 80),
             ],
           ),
         ),

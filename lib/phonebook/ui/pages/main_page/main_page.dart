@@ -38,6 +38,8 @@ class PhonebookMainPage extends HookConsumerWidget {
       associationGroupementProvider.notifier,
     );
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     return PhonebookTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -69,36 +71,35 @@ class PhonebookMainPage extends HookConsumerWidget {
                   ],
                 ],
               ),
+              const SizedBox(height: 10),
               Async2Children(
                 values: Tuple2(associationList, associationGroupementList),
                 builder: (context, associations, associationGroupements) {
+                  if (associations.isEmpty) {
+                    return Center(
+                      child: Text(
+                        localizeWithContext.phonebookNoAssociationFound,
+                      ),
+                    );
+                  }
                   return Column(
                     children: [
-                      if (associations.isEmpty)
-                        Center(
-                          child: Text(
-                            AppLocalizations.of(
-                              context,
-                            )!.phonebookNoAssociationFound,
-                          ),
-                        )
-                      else
-                        ...associationFilteredList.map(
-                          (association) => !association.deactivated
-                              ? AssociationCard(
-                                  association: association,
-                                  groupement: associationGroupements.firstWhere(
-                                    (groupement) =>
-                                        groupement.id ==
-                                        association.groupementId,
-                                  ),
-                                )
-                              : const SizedBox.shrink(),
-                        ),
+                      ...associationFilteredList.map(
+                        (association) => !association.deactivated
+                            ? AssociationCard(
+                                association: association,
+                                groupement: associationGroupements.firstWhere(
+                                  (groupement) =>
+                                      groupement.id == association.groupementId,
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                      ),
                     ],
                   );
                 },
               ),
+              SizedBox(height: 80),
             ],
           ),
         ),

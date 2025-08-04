@@ -45,44 +45,49 @@ class MemberCard extends HookConsumerWidget {
       association,
     );
 
-    return ListItemTemplate(
-      title:
-          "${(member.member.nickname ?? '${member.member.firstname} ${member.member.name}')} - ${assoMembership.apparentName}",
-      subtitle: member.member.nickname != null
-          ? "${member.member.firstname} ${member.member.name}"
-          : null,
-      icon: AutoLoaderChild(
-        group: memberPictures,
-        notifier: memberPicturesNotifier,
-        mapKey: member,
-        loader: (ref) =>
-            profilePictureNotifier.getProfilePicture(member.member.id),
-        loadingBuilder: (context) =>
-            const CircleAvatar(radius: 20, child: CircularProgressIndicator()),
-        dataBuilder: (context, data) =>
-            CircleAvatar(child: Image(image: data.first.image)),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: ListItemTemplate(
+        title:
+            "${(member.member.nickname ?? '${member.member.firstname} ${member.member.name}')} - ${assoMembership.apparentName}",
+        subtitle: member.member.nickname != null
+            ? "${member.member.firstname} ${member.member.name}"
+            : null,
+        icon: AutoLoaderChild(
+          group: memberPictures,
+          notifier: memberPicturesNotifier,
+          mapKey: member,
+          loader: (ref) =>
+              profilePictureNotifier.getProfilePicture(member.member.id),
+          loadingBuilder: (context) => const CircleAvatar(
+            radius: 20,
+            child: CircularProgressIndicator(),
+          ),
+          dataBuilder: (context, data) =>
+              CircleAvatar(child: Image(image: data.first.image)),
+        ),
+        onTap: editable
+            ? () {
+                showCustomBottomModal(
+                  ref: ref,
+                  context: context,
+                  modal: MemberEditionModal(
+                    member: member,
+                    membership: assoMembership,
+                  ),
+                );
+              }
+            : () {
+                memberNotifier.setCompleteMember(member);
+                QR.to(PhonebookRouter.root + PhonebookRouter.memberDetail);
+              },
+        trailing: !editable
+            ? const HeroIcon(
+                HeroIcons.chevronRight,
+                color: ColorConstants.tertiary,
+              )
+            : SizedBox.shrink(),
       ),
-      onTap: editable
-          ? () {
-              showCustomBottomModal(
-                ref: ref,
-                context: context,
-                modal: MemberEditionModal(
-                  member: member,
-                  membership: assoMembership,
-                ),
-              );
-            }
-          : () {
-              memberNotifier.setCompleteMember(member);
-              QR.to(PhonebookRouter.root + PhonebookRouter.memberDetail);
-            },
-      trailing: !editable
-          ? const HeroIcon(
-              HeroIcons.chevronRight,
-              color: ColorConstants.tertiary,
-            )
-          : SizedBox.shrink(),
     );
   }
 }
