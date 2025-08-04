@@ -3,9 +3,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/admin.dart';
 import 'package:titan/admin/router.dart';
-import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
-import 'package:titan/super_admin/providers/structure_manager_provider.dart';
-import 'package:titan/super_admin/providers/structure_provider.dart';
+import 'package:titan/admin/providers/structure_manager_provider.dart';
+import 'package:titan/admin/providers/structure_provider.dart';
 import 'package:titan/paiement/class/structure.dart';
 import 'package:titan/paiement/providers/structure_list_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -32,9 +31,6 @@ class StructurePage extends HookConsumerWidget {
     final structureNotifier = ref.watch(structureProvider.notifier);
     final structureManagerNotifier = ref.watch(
       structureManagerProvider.notifier,
-    );
-    final navbarVisibilityNotifier = ref.read(
-      navbarVisibilityProvider.notifier,
     );
     ref.watch(userList);
 

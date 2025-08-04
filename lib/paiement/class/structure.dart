@@ -1,4 +1,4 @@
-import 'package:titan/super_admin/class/association_membership_simple.dart';
+import 'package:titan/admin/class/association_membership_simple.dart';
 import 'package:titan/user/class/simple_users.dart';
 
 class Structure {

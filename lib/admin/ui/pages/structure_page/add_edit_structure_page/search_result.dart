@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/super_admin/providers/structure_manager_provider.dart';
+import 'package:titan/admin/providers/structure_manager_provider.dart';
 import 'package:titan/tools/ui/styleguide/list_item_template.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 

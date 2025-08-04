@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/super_admin/class/association_membership_simple.dart';
+import 'package:titan/admin/class/association_membership_simple.dart';
 import 'package:titan/super_admin/ui/components/item_card_ui.dart';
 import 'package:titan/super_admin/ui/pages/memberships/association_membership_page/association_membership_button.dart';
 import 'package:titan/tools/constants.dart';
