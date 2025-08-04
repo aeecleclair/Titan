@@ -4,15 +4,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/association_membership_simple.dart';
 import 'package:titan/admin/providers/all_groups_list_provider.dart';
 import 'package:titan/admin/providers/association_membership_list_provider.dart';
+import 'package:titan/admin/ui/pages/association_membership_page/add_membership_modal.dart';
 import 'package:titan/super_admin/providers/association_membership_members_list_provider.dart';
 import 'package:titan/super_admin/providers/association_membership_provider.dart';
 import 'package:titan/super_admin/router.dart';
 import 'package:titan/super_admin/ui/admin.dart';
-import 'package:titan/super_admin/ui/components/item_card_ui.dart';
-import 'package:titan/admin/ui/pages/association_membership_page/association_membership_creation_dialog.dart';
 import 'package:titan/admin/ui/pages/association_membership_page/association_membership_ui.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/icon_button.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
@@ -39,10 +40,12 @@ class AssociationMembershipsPage extends HookConsumerWidget {
     );
     final groups = ref.watch(allGroupList);
 
-    final nameController = TextEditingController();
-    final groupIdController = TextEditingController();
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
+    }
+
+    void popWithContext() {
+      Navigator.of(context).pop();
     }
 
     return SuperAdminTemplate(
@@ -55,16 +58,48 @@ class AssociationMembershipsPage extends HookConsumerWidget {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  AppLocalizations.of(context)!.adminAssociationsMemberships,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: ColorConstants.gradient1,
+              Row(
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.adminAssociationMembership,
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                ),
+                  const Spacer(),
+                  CustomIconButton(
+                    icon: HeroIcon(
+                      HeroIcons.plus,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    onPressed: () async {
+                      await showCustomBottomModal(
+                        context: context,
+                        ref: ref,
+                        modal: AddMembershipModal(
+                          ref: ref,
+                          groups: groups,
+                          onSubmit: (group, name) {
+                            tokenExpireWrapper(ref, () async {
+                              final value = await associationMembershipsNotifier
+                                  .createAssociationMembership(
+                                    AssociationMembership.empty().copyWith(
+                                      managerGroupId: group.id,
+                                      name: name,
+                                    ),
+                                  );
+                              if (value) {
+                                displayToastWithContext(TypeMsg.msg, "Succès");
+                              } else {
+                                displayToastWithContext(TypeMsg.error, "Échec");
+                              }
+                              popWithContext();
+                            });
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
               SizedBox(height: 30),
               AsyncChild(
@@ -78,66 +113,6 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                     children: [
                       Column(
                         children: [
-                          GestureDetector(
-                            onTap: () async {
-                              await showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return MembershipCreationDialogBox(
-                                    groups: groups,
-                                    nameController: nameController,
-                                    groupIdController: groupIdController,
-                                    onYes: () async {
-                                      final createdAssociationMembershipMsg =
-                                          AppLocalizations.of(
-                                            context,
-                                          )!.adminCreatedAssociationMembership;
-                                      final creationErrorMsg =
-                                          AppLocalizations.of(
-                                            context,
-                                          )!.adminCreationError;
-                                      tokenExpireWrapper(ref, () async {
-                                        final value =
-                                            await associationMembershipsNotifier
-                                                .createAssociationMembership(
-                                                  AssociationMembership.empty()
-                                                      .copyWith(
-                                                        managerGroupId:
-                                                            groupIdController
-                                                                .text,
-                                                        name:
-                                                            nameController.text,
-                                                      ),
-                                                );
-                                        if (value) {
-                                          displayToastWithContext(
-                                            TypeMsg.msg,
-                                            createdAssociationMembershipMsg,
-                                          );
-                                        } else {
-                                          displayToastWithContext(
-                                            TypeMsg.error,
-                                            creationErrorMsg,
-                                          );
-                                        }
-                                      });
-                                    },
-                                  );
-                                },
-                              );
-                            },
-                            child: ItemCardUi(
-                              children: [
-                                const Spacer(),
-                                HeroIcon(
-                                  HeroIcons.plus,
-                                  color: Colors.grey.shade700,
-                                  size: 40,
-                                ),
-                                const Spacer(),
-                              ],
-                            ),
-                          ),
                           ...g.map(
                             (associationMembership) => AssociationMembershipUi(
                               associationMembership: associationMembership,
