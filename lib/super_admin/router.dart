@@ -9,7 +9,7 @@ import 'package:titan/super_admin/ui/pages/memberships/add_edit_user_membership_
     deferred as add_edit_user_membership_page;
 import 'package:titan/super_admin/ui/pages/memberships/association_membership_detail_page/association_membership_detail_page.dart'
     deferred as association_membership_detail_page;
-import 'package:titan/super_admin/ui/pages/memberships/association_membership_page/association_membership_page.dart'
+import 'package:titan/admin/ui/pages/association_membership_page/association_membership_page.dart'
     deferred as association_membership_page;
 import 'package:titan/super_admin/ui/pages/schools/school_page/school_page.dart'
     deferred as school_page;

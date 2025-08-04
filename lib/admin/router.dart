@@ -15,6 +15,8 @@ import 'package:titan/admin/ui/pages/structure_page/add_edit_structure_page/add_
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/admin/ui/pages/structure_page/structure_page.dart'
     deferred as structure_page;
+import 'package:titan/admin/ui/pages/association_membership_page/association_membership_page.dart'
+    deferred as association_membership_page;
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -29,6 +31,7 @@ class AdminRouter {
   static const String groupNotification = '/group_notification';
   static const String addGroup = '/add_group';
   static const String editGroup = '/edit_group';
+  static const String associationMemberships = '/association_memberships';
   static final Module module = Module(
     getName: (context) => "Admin",
     description: "Gérer les utilisateurs de l'application",
@@ -90,6 +93,13 @@ class AdminRouter {
               DeferredLoadingMiddleware(add_edit_structure_page.loadLibrary),
             ],
           ),
+        ],
+      ),
+      QRoute(
+        path: associationMemberships,
+        builder: () => association_membership_page.AssociationMembershipsPage(),
+        middleware: [
+          DeferredLoadingMiddleware(association_membership_page.loadLibrary),
         ],
       ),
     ],

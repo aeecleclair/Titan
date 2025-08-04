@@ -9,8 +9,8 @@ import 'package:titan/super_admin/providers/association_membership_provider.dart
 import 'package:titan/super_admin/router.dart';
 import 'package:titan/super_admin/ui/admin.dart';
 import 'package:titan/super_admin/ui/components/item_card_ui.dart';
-import 'package:titan/super_admin/ui/pages/memberships/association_membership_page/association_membership_creation_dialog.dart';
-import 'package:titan/super_admin/ui/pages/memberships/association_membership_page/association_membership_ui.dart';
+import 'package:titan/admin/ui/pages/association_membership_page/association_membership_creation_dialog.dart';
+import 'package:titan/admin/ui/pages/association_membership_page/association_membership_ui.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';

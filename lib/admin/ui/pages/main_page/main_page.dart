@@ -62,6 +62,13 @@ class AdminMainPage extends HookConsumerWidget {
               subtitle: "Gérer les structures du module de paiement",
               onTap: () => QR.to(AdminRouter.root + AdminRouter.structures),
             ),
+            Text("Adhésion", style: Theme.of(context).textTheme.titleLarge),
+            ListItem(
+              title: "Adhésion",
+              subtitle: "Gérer les adhésions des utilisateurs",
+              onTap: () =>
+                  QR.to(AdminRouter.root + AdminRouter.associationMemberships),
+            ),
           ],
         ),
       ),
