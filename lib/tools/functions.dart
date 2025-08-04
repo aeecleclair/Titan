@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:titan/tools/plausible/plausible.dart';
@@ -527,4 +530,18 @@ String getTitanPackageName() {
 
 String getTitanLogo() {
   return "assets/images/logo_${getAppFlavor()}.png";
+}
+
+void navigateTo(
+  String path, {
+  bool ignoreSamePath = true,
+  PageAlreadyExistAction? pageAlreadyExistAction,
+  bool waitForResult = false,
+  required WidgetRef ref,
+}) {
+  final navbarVisibilityNotifier = ref.read(navbarVisibilityProvider.notifier);
+  final navbarVisibility = ref.read(navbarVisibilityProvider);
+  print(navbarVisibility);
+  navbarVisibilityNotifier.show();
+  QR.to(path);
 }

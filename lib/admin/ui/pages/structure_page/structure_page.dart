@@ -3,14 +3,16 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/admin.dart';
 import 'package:titan/admin/router.dart';
+import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 import 'package:titan/super_admin/providers/structure_manager_provider.dart';
 import 'package:titan/super_admin/providers/structure_provider.dart';
-import 'package:titan/super_admin/router.dart';
-import 'package:titan/admin/ui/pages/structure_page/structure_ui.dart';
 import 'package:titan/paiement/class/structure.dart';
 import 'package:titan/paiement/providers/structure_list_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/icon_button.dart';
+import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
@@ -30,6 +32,9 @@ class StructurePage extends HookConsumerWidget {
     final structureNotifier = ref.watch(structureProvider.notifier);
     final structureManagerNotifier = ref.watch(
       structureManagerProvider.notifier,
+    );
+    final navbarVisibilityNotifier = ref.read(
+      navbarVisibilityProvider.notifier,
     );
     ref.watch(userList);
 
@@ -86,57 +91,87 @@ class StructurePage extends HookConsumerWidget {
                       Column(
                         children: [
                           ...structures.map(
-                            (structure) => StructureUi(
-                              group: structure,
-                              onEdit: () {
-                                structureNotifier.setStructure(structure);
-                                structureManagerNotifier.setUser(
-                                  structure.managerUser,
-                                );
-                                QR.to(
-                                  SuperAdminRouter.root +
-                                      SuperAdminRouter.structures +
-                                      SuperAdminRouter.addEditStructure,
-                                );
-                              },
-                              onDelete: () async {
-                                await showDialog(
+                            (structure) => ListItem(
+                              title: structure.name,
+                              onTap: () async {
+                                await showCustomBottomModal(
                                   context: context,
-                                  builder: (context) {
-                                    return CustomDialogBox(
-                                      title: AppLocalizations.of(
-                                        context,
-                                      )!.adminDeleting,
-                                      descriptions: AppLocalizations.of(
-                                        context,
-                                      )!.adminDeleteGroup,
-                                      onYes: () async {
-                                        final deletedGroupMsg =
-                                            AppLocalizations.of(
-                                              context,
-                                            )!.adminDeletedGroup;
-                                        final deletingErrorMsg =
-                                            AppLocalizations.of(
-                                              context,
-                                            )!.adminDeletingError;
-                                        tokenExpireWrapper(ref, () async {
-                                          final value = await structuresNotifier
-                                              .deleteStructure(structure);
-                                          if (value) {
-                                            displayToastWithContext(
-                                              TypeMsg.msg,
-                                              deletedGroupMsg,
+                                  ref: ref,
+                                  modal: BottomModalTemplate(
+                                    title: "Gestion des utilisateurs",
+                                    child: Column(
+                                      children: [
+                                        Button(
+                                          text: "Modifier",
+                                          onPressed: () {
+                                            structureNotifier.setStructure(
+                                              structure,
                                             );
-                                          } else {
-                                            displayToastWithContext(
-                                              TypeMsg.error,
-                                              deletingErrorMsg,
+                                            structureManagerNotifier.setUser(
+                                              structure.managerUser,
                                             );
-                                          }
-                                        });
-                                      },
-                                    );
-                                  },
+
+                                            QR.to(
+                                              AdminRouter.root +
+                                                  AdminRouter.structures +
+                                                  AdminRouter.addEditStructure,
+                                            );
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Button(
+                                          type: ButtonType.danger,
+                                          text: 'Supprimer',
+                                          onPressed: () async {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return CustomDialogBox(
+                                                  title: AppLocalizations.of(
+                                                    context,
+                                                  )!.adminDeleting,
+                                                  descriptions:
+                                                      AppLocalizations.of(
+                                                        context,
+                                                      )!.adminDeleteGroup,
+                                                  onYes: () async {
+                                                    final deletedGroupMsg =
+                                                        AppLocalizations.of(
+                                                          context,
+                                                        )!.adminDeletedGroup;
+                                                    final deletingErrorMsg =
+                                                        AppLocalizations.of(
+                                                          context,
+                                                        )!.adminDeletingError;
+                                                    tokenExpireWrapper(ref, () async {
+                                                      final value =
+                                                          await structuresNotifier
+                                                              .deleteStructure(
+                                                                structure,
+                                                              );
+                                                      if (value) {
+                                                        displayToastWithContext(
+                                                          TypeMsg.msg,
+                                                          deletedGroupMsg,
+                                                        );
+                                                      } else {
+                                                        displayToastWithContext(
+                                                          TypeMsg.error,
+                                                          deletingErrorMsg,
+                                                        );
+                                                      }
+                                                    });
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 );
                               },
                             ),
