@@ -24,7 +24,7 @@ class ListItemTemplate extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+        padding: const EdgeInsets.symmetric(vertical: 4),
         child: Row(
           children: [
             if (icon != null) ...[icon!, const SizedBox(width: 10)],

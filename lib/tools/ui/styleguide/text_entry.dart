@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 
 class TextEntry extends StatelessWidget {
@@ -41,6 +42,8 @@ class TextEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     return TextFormField(
       minLines: minLines,
       maxLines: maxLines,
@@ -54,7 +57,9 @@ class TextEntry extends StatelessWidget {
       enabled: enabled,
       decoration: InputDecoration(
         label: Text(
-          canBeEmpty ? '$label (optionnel)' : label,
+          canBeEmpty
+              ? '$label (${localizeWithContext.globalOptionnal})'
+              : label,
           style: TextStyle(color: color, height: 0.5),
         ),
         suffix: suffixIcon == null && suffix.isEmpty

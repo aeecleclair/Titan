@@ -30,7 +30,7 @@ class AssociationResearchBar extends HookConsumerWidget {
                   ref: ref,
                   context: context,
                   modal: BottomModalTemplate(
-                    title: "Groupements d'associations",
+                    title: "Filtrer",
                     description:
                         "Sélectionnez un ou plusieurs groupements pour filtrer les associations.",
                     actions: [

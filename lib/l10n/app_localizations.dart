@@ -2792,6 +2792,12 @@ abstract class AppLocalizations {
   /// **'Annuler'**
   String get globalCancel;
 
+  /// No description provided for @globalOptionnal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Optionnel'**
+  String get globalOptionnal;
+
   /// No description provided for @homeCalendar.
   ///
   /// In fr, this message translates to:
@@ -3896,12 +3902,6 @@ abstract class AppLocalizations {
   /// **'Téléchargé avec succès'**
   String get phSuccesDowloading;
 
-  /// No description provided for @phonebookActiveMandate.
-  ///
-  /// In fr, this message translates to:
-  /// **'Mandat actif :'**
-  String get phonebookActiveMandate;
-
   /// No description provided for @phonebookAdd.
   ///
   /// In fr, this message translates to:
@@ -3953,14 +3953,8 @@ abstract class AppLocalizations {
   /// No description provided for @phonebookAdmin.
   ///
   /// In fr, this message translates to:
-  /// **'Admin'**
+  /// **'Administration'**
   String get phonebookAdmin;
-
-  /// No description provided for @phonebookAdminPage.
-  ///
-  /// In fr, this message translates to:
-  /// **'Page Administrateur'**
-  String get phonebookAdminPage;
 
   /// No description provided for @phonebookAll.
   ///
@@ -3977,7 +3971,7 @@ abstract class AppLocalizations {
   /// No description provided for @phonebookAssociation.
   ///
   /// In fr, this message translates to:
-  /// **'Association :'**
+  /// **'Association'**
   String get phonebookAssociation;
 
   /// No description provided for @phonebookAssociationDetail.
@@ -3992,22 +3986,16 @@ abstract class AppLocalizations {
   /// **'Type d\'association :'**
   String get phonebookAssociationKind;
 
-  /// No description provided for @phonebookAssociationPure.
+  /// No description provided for @phonebookAssociationName.
   ///
   /// In fr, this message translates to:
-  /// **'Association'**
-  String get phonebookAssociationPure;
-
-  /// No description provided for @phonebookAssociationPureSearch.
-  ///
-  /// In fr, this message translates to:
-  /// **'  Association'**
-  String get phonebookAssociationPureSearch;
+  /// **'Nom de l\'association'**
+  String get phonebookAssociationName;
 
   /// No description provided for @phonebookAssociations.
   ///
   /// In fr, this message translates to:
-  /// **'Associations :'**
+  /// **'Associations'**
   String get phonebookAssociations;
 
   /// No description provided for @phonebookCancel.
@@ -4261,6 +4249,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Gérer les groupes de {association}'**
   String phonebookGroups(String association);
+
+  /// No description provided for @phonebookMandate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mandat'**
+  String get phonebookMandate;
 
   /// No description provided for @phonebookMandateChangingError.
   ///

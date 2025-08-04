@@ -82,14 +82,14 @@ class AssociationMembersPage extends HookConsumerWidget {
                       QR.to(
                         PhonebookRouter.root +
                             PhonebookRouter.admin +
-                            PhonebookRouter.addEditAssociation +
+                            PhonebookRouter.editAssociationMembers +
                             PhonebookRouter.addEditMember,
                       );
                     } else {
                       QR.to(
                         PhonebookRouter.root +
                             PhonebookRouter.associationDetail +
-                            PhonebookRouter.addEditAssociation +
+                            PhonebookRouter.editAssociationMembers +
                             PhonebookRouter.addEditMember,
                       );
                     }

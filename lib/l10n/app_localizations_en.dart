@@ -1371,6 +1371,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get globalCancel => 'Cancel';
 
   @override
+  String get globalOptionnal => 'Optional';
+
+  @override
   String get homeCalendar => 'Calendar';
 
   @override
@@ -1933,9 +1936,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phSuccesDowloading => 'Successfully downloaded';
 
   @override
-  String get phonebookActiveMandate => 'Active mandate:';
-
-  @override
   String get phonebookAdd => 'Add';
 
   @override
@@ -1961,10 +1961,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phonebookAddRole => 'Add a role';
 
   @override
-  String get phonebookAdmin => 'Admin';
-
-  @override
-  String get phonebookAdminPage => 'Admin page';
+  String get phonebookAdmin => 'Administation';
 
   @override
   String get phonebookAll => 'All';
@@ -1973,7 +1970,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phonebookApparentName => 'Public role name:';
 
   @override
-  String get phonebookAssociation => 'Association:';
+  String get phonebookAssociation => 'Association';
 
   @override
   String get phonebookAssociationDetail => 'Association details:';
@@ -1982,13 +1979,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phonebookAssociationKind => 'Type of association:';
 
   @override
-  String get phonebookAssociationPure => 'Association';
+  String get phonebookAssociationName => 'Association name';
 
   @override
-  String get phonebookAssociationPureSearch => '  Association';
-
-  @override
-  String get phonebookAssociations => 'Associations:';
+  String get phonebookAssociations => 'Associations';
 
   @override
   String get phonebookCancel => 'Cancel';
@@ -2128,6 +2122,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String phonebookGroups(String association) {
     return 'Manage $association groups';
   }
+
+  @override
+  String get phonebookMandate => 'Mandate';
 
   @override
   String get phonebookMandateChangingError => 'Error changing mandate';

@@ -16,6 +16,7 @@ Membership getMembershipForAssociation(
     (element) =>
         element.associationId == association.id &&
         element.mandateYear == association.mandateYear,
+    orElse: () => Membership.empty(),
   );
 }
 

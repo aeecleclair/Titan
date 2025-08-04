@@ -39,7 +39,6 @@ class AssociationPage extends HookConsumerWidget {
     final associationGroupement = ref.watch(associationGroupementProvider);
 
     final localizeWithContext = AppLocalizations.of(context)!;
-
     return PhonebookTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -51,92 +50,91 @@ class AssociationPage extends HookConsumerWidget {
             association.id,
           );
         },
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: Stack(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Column(
             children: [
-              Column(
-                children: [
-                  AsyncChild(
-                    value: associationPicture,
-                    builder: (context, image) {
-                      return Center(
-                        child: CircleAvatar(
-                          radius: 80,
-                          backgroundColor: Colors.white,
-                          backgroundImage: image.image,
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    association.name,
-                    style: const TextStyle(fontSize: 40, color: Colors.black),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "${localizeWithContext.phonebookActiveMandate} ${association.mandateYear}",
-                    style: const TextStyle(fontSize: 15, color: Colors.black),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    associationGroupement.name,
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    association.description,
-                    style: const TextStyle(fontSize: 15, color: Colors.black),
-                  ),
-                  const SizedBox(height: 20),
-                  AsyncChild(
-                    value: associationMemberList,
-                    builder: (context, associationMembers) =>
-                        associationMembers.isEmpty
-                        ? Text(localizeWithContext.phonebookNoMember)
-                        : Column(
-                            children: associationMemberSortedList
-                                .map(
-                                  (member) => kIsWeb
-                                      ? WebMemberCard(
-                                          member: member,
-                                          association: association,
-                                        )
-                                      : MemberCard(
-                                          member: member,
-                                          association: association,
-                                          deactivated: false,
-                                        ),
-                                )
-                                .toList(),
-                          ),
-                  ),
-                  const SizedBox(height: 80),
-                ],
+              AsyncChild(
+                value: associationPicture,
+                builder: (context, image) {
+                  return Center(
+                    child: CircleAvatar(
+                      radius: 80,
+                      backgroundColor: Colors.white,
+                      backgroundImage: image.image,
+                    ),
+                  );
+                },
               ),
-              if (isPresident)
-                Positioned(
-                  top: 20,
-                  right: 20,
-                  child: CustomIconButton(
-                    onPressed: () {
-                      showCustomBottomModal(
-                        context: context,
-                        modal: AssociationEditionModal(
-                          association: association,
-                          groupement: associationGroupement,
-                        ),
-                        ref: ref,
-                      );
-                    },
-                    icon: const HeroIcon(
-                      HeroIcons.pencilSquare,
-                      size: 30,
-                      color: Colors.black,
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 300,
+                    child: Text(
+                      association.name,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 40, color: Colors.black),
                     ),
                   ),
-                ),
+                  if (isPresident) ...[
+                    const SizedBox(width: 10),
+                    CustomIconButton.secondary(
+                      onPressed: () {
+                        showCustomBottomModal(
+                          context: context,
+                          modal: AssociationEditionModal(
+                            association: association,
+                            groupement: associationGroupement,
+                          ),
+                          ref: ref,
+                        );
+                      },
+                      icon: const HeroIcon(HeroIcons.pencilSquare, size: 30),
+                    ),
+                  ],
+                ],
+              ),
+              const SizedBox(height: 10),
+              Text(
+                associationGroupement.name,
+                style: const TextStyle(fontSize: 20, color: Colors.black),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "${localizeWithContext.phonebookMandate} ${association.mandateYear}",
+                style: const TextStyle(fontSize: 15, color: Colors.black),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                association.description,
+                style: const TextStyle(fontSize: 15, color: Colors.black),
+              ),
+              const SizedBox(height: 20),
+              AsyncChild(
+                value: associationMemberList,
+                builder: (context, associationMembers) =>
+                    associationMembers.isEmpty
+                    ? Text(localizeWithContext.phonebookNoMember)
+                    : Column(
+                        children: associationMemberSortedList
+                            .map(
+                              (member) => kIsWeb
+                                  ? WebMemberCard(
+                                      member: member,
+                                      association: association,
+                                    )
+                                  : MemberCard(
+                                      member: member,
+                                      association: association,
+                                      deactivated: false,
+                                    ),
+                            )
+                            .toList(),
+                      ),
+              ),
+              const SizedBox(height: 80),
             ],
           ),
         ),

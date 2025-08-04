@@ -16,6 +16,7 @@ import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/styleguide/icon_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:tuple/tuple.dart';
 
 class PhonebookMainPage extends HookConsumerWidget {
@@ -47,7 +48,7 @@ class PhonebookMainPage extends HookConsumerWidget {
           await associationListNotifier.loadAssociations();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
             children: [
               Row(
@@ -71,6 +72,8 @@ class PhonebookMainPage extends HookConsumerWidget {
                   ],
                 ],
               ),
+              const SizedBox(height: 10),
+              AlignLeftText(localizeWithContext.phonebookPhonebook),
               const SizedBox(height: 10),
               Async2Children(
                 values: Tuple2(associationList, associationGroupementList),

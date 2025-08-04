@@ -1377,6 +1377,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get globalCancel => 'Annuler';
 
   @override
+  String get globalOptionnal => 'Optionnel';
+
+  @override
   String get homeCalendar => 'Calendrier';
 
   @override
@@ -1942,9 +1945,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phSuccesDowloading => 'Téléchargé avec succès';
 
   @override
-  String get phonebookActiveMandate => 'Mandat actif :';
-
-  @override
   String get phonebookAdd => 'Ajouter';
 
   @override
@@ -1970,10 +1970,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phonebookAddRole => 'Ajouter un rôle';
 
   @override
-  String get phonebookAdmin => 'Admin';
-
-  @override
-  String get phonebookAdminPage => 'Page Administrateur';
+  String get phonebookAdmin => 'Administration';
 
   @override
   String get phonebookAll => 'Toutes';
@@ -1982,7 +1979,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phonebookApparentName => 'Nom public du rôle :';
 
   @override
-  String get phonebookAssociation => 'Association :';
+  String get phonebookAssociation => 'Association';
 
   @override
   String get phonebookAssociationDetail => 'Détail de l\'association :';
@@ -1991,13 +1988,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phonebookAssociationKind => 'Type d\'association :';
 
   @override
-  String get phonebookAssociationPure => 'Association';
+  String get phonebookAssociationName => 'Nom de l\'association';
 
   @override
-  String get phonebookAssociationPureSearch => '  Association';
-
-  @override
-  String get phonebookAssociations => 'Associations :';
+  String get phonebookAssociations => 'Associations';
 
   @override
   String get phonebookCancel => 'Annuler';
@@ -2141,6 +2135,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String phonebookGroups(String association) {
     return 'Gérer les groupes de $association';
   }
+
+  @override
+  String get phonebookMandate => 'Mandat';
 
   @override
   String get phonebookMandateChangingError =>

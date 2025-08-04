@@ -180,7 +180,7 @@ class AssociationAddEditPage extends HookConsumerWidget {
                 Container(margin: const EdgeInsets.symmetric(vertical: 10)),
                 TextEntry(
                   controller: name,
-                  label: localizeWithContext.phonebookName,
+                  label: localizeWithContext.phonebookAssociationName,
                   canBeEmpty: false,
                 ),
                 const SizedBox(height: 30),
@@ -264,7 +264,9 @@ class AssociationAddEditPage extends HookConsumerWidget {
                       }
                     });
                   },
-                  text: localizeWithContext.adminAdd,
+                  text: association.id != ""
+                      ? localizeWithContext.phonebookEdit
+                      : localizeWithContext.phonebookAdd,
                 ),
                 SizedBox(height: 80),
               ],

@@ -9,6 +9,7 @@ import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
 class MemberDetailPage extends HookConsumerWidget {
   const MemberDetailPage({super.key});
@@ -102,16 +103,12 @@ class MemberDetailPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 20),
               if (member.memberships.isNotEmpty)
-                Text(
+                AlignLeftText(
                   member.memberships.length == 1
                       ? localizeWithContext.phonebookAssociation
                       : localizeWithContext.phonebookAssociations,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
                 ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               AsyncChild(
                 value: associationList,
                 builder: (context, associations) => Column(

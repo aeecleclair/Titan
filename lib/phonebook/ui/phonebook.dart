@@ -15,6 +15,15 @@ class PhonebookTemplate extends HookConsumerWidget {
     final associationGroupementNotifer = ref.watch(
       associationGroupementProvider.notifier,
     );
+
+    final pathGroupementClearing = [
+      PhonebookRouter.root + PhonebookRouter.admin,
+      PhonebookRouter.root + PhonebookRouter.associationDetail,
+      PhonebookRouter.root +
+          PhonebookRouter.admin +
+          PhonebookRouter.addEditAssociation,
+    ];
+
     return Container(
       color: ColorConstants.background,
       child: SafeArea(
@@ -23,11 +32,7 @@ class PhonebookTemplate extends HookConsumerWidget {
             TopBar(
               root: PhonebookRouter.root,
               onBack: () {
-                if (QR.currentPath !=
-                    PhonebookRouter.root +
-                        PhonebookRouter.admin +
-                        PhonebookRouter.editAssociationMembers +
-                        PhonebookRouter.addEditMember) {
+                if (pathGroupementClearing.contains(QR.currentPath)) {
                   associationGroupementNotifer.resetAssociationGroupement();
                 }
               },
