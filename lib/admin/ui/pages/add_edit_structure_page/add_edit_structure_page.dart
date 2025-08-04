@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/admin.dart';
+import 'package:titan/admin/ui/pages/add_edit_structure_page/user_search_modal.dart';
 import 'package:titan/super_admin/class/association_membership_simple.dart';
 import 'package:titan/super_admin/providers/association_membership_list_provider.dart';
 import 'package:titan/super_admin/providers/structure_manager_provider.dart';
 import 'package:titan/super_admin/providers/structure_provider.dart';
-import 'package:titan/super_admin/ui/components/text_editing.dart';
-import 'package:titan/admin/ui/pages/add_edit_structure_page/search_user.dart';
 import 'package:titan/paiement/class/structure.dart';
 import 'package:titan/paiement/providers/structure_list_provider.dart';
 import 'package:titan/tools/functions.dart';
@@ -16,6 +15,9 @@ import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/layouts/item_chip.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/list_item.dart';
+import 'package:titan/tools/ui/styleguide/text_entry.dart';
 import 'package:titan/user/class/simple_users.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -59,10 +61,14 @@ class AddEditStructurePage extends HookConsumerWidget {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                TextEditing(
-                  controller: name,
-                  label: AppLocalizations.of(context)!.adminName,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextEntry(
+                    controller: name,
+                    label: AppLocalizations.of(context)!.adminName,
+                  ),
                 ),
+                const SizedBox(height: 20),
                 AsyncChild(
                   value: allAssociationMembershipList,
                   builder: (context, allAssociationMembershipList) {
@@ -94,7 +100,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                   },
                 ),
                 const SizedBox(height: 20),
-                isEdit
+                (isEdit | (structureManager.id != ""))
                     ? Column(
                         children: [
                           Text(
@@ -115,7 +121,16 @@ class AddEditStructurePage extends HookConsumerWidget {
                           const SizedBox(height: 10),
                         ],
                       )
-                    : const SearchUser(),
+                    : ListItem(
+                        title: "Selectioner un gestionnaire",
+                        onTap: () async {
+                          await showCustomBottomModal(
+                            context: context,
+                            ref: ref,
+                            modal: UserSearchModal(),
+                          );
+                        },
+                      ),
                 const SizedBox(height: 20),
                 WaitingButton(
                   onTap: () async {

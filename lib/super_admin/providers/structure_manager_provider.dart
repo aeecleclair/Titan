@@ -4,8 +4,8 @@ import 'package:titan/user/class/simple_users.dart';
 class StructureManagerProvider extends StateNotifier<SimpleUser> {
   StructureManagerProvider() : super(SimpleUser.empty());
 
-  void setUser(SimpleUser id) {
-    state = id;
+  void setUser(SimpleUser user) {
+    state = user;
   }
 }
 
