@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/super_admin/class/user_association_membership.dart';
-import 'package:titan/super_admin/providers/association_membership_members_list_provider.dart';
-import 'package:titan/super_admin/providers/research_filter_provider.dart';
+import 'package:titan/admin/class/user_association_membership.dart';
+import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
+import 'package:titan/admin/providers/research_filter_provider.dart';
 import 'package:diacritic/diacritic.dart';
 
 final associationMembershipFilteredListProvider =

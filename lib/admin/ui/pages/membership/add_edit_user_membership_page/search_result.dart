@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/super_admin/providers/user_association_membership_provider.dart';
+import 'package:titan/admin/providers/user_association_membership_provider.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {

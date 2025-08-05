@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/super_admin/class/user_association_membership.dart';
+import 'package:titan/admin/class/user_association_membership.dart';
 
 class UserAssociationMembershipNotifier
     extends StateNotifier<UserAssociationMembership> {

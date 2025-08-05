@@ -5,11 +5,11 @@ import 'package:titan/super_admin/providers/is_admin_provider.dart';
 import 'package:titan/super_admin/ui/pages/edit_module_visibility/edit_module_visibility.dart'
     deferred as edit_module_visibility;
 
-import 'package:titan/super_admin/ui/pages/memberships/add_edit_user_membership_page/add_edit_user_membership_page.dart'
+import 'package:titan/admin/ui/pages/membership/add_edit_user_membership_page/add_edit_user_membership_page.dart'
     deferred as add_edit_user_membership_page;
-import 'package:titan/admin/ui/pages/association_membership_detail_page/association_membership_detail_page.dart'
+import 'package:titan/admin/ui/pages/membership/association_membership_detail_page/association_membership_detail_page.dart'
     deferred as association_membership_detail_page;
-import 'package:titan/admin/ui/pages/association_membership_page/association_membership_page.dart'
+import 'package:titan/admin/ui/pages/membership/association_membership_page/association_membership_page.dart'
     deferred as association_membership_page;
 import 'package:titan/super_admin/ui/pages/schools/school_page/school_page.dart'
     deferred as school_page;

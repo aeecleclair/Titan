@@ -1,4 +1,4 @@
-import 'package:titan/super_admin/class/user_association_membership_base.dart';
+import 'package:titan/admin/class/user_association_membership_base.dart';
 import 'package:titan/user/class/simple_users.dart';
 
 class UserAssociationMembership extends UserAssociationMembershipBase {

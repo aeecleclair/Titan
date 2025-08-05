@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/admin/class/association_membership_simple.dart';
-import 'package:titan/super_admin/class/user_association_membership.dart';
+import 'package:titan/admin/class/user_association_membership.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/repository/repository.dart';

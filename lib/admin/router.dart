@@ -15,11 +15,11 @@ import 'package:titan/admin/ui/pages/structure_page/add_edit_structure_page/add_
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/admin/ui/pages/structure_page/structure_page.dart'
     deferred as structure_page;
-import 'package:titan/admin/ui/pages/association_membership_page/association_membership_page.dart'
+import 'package:titan/admin/ui/pages/membership/association_membership_page/association_membership_page.dart'
     deferred as association_membership_page;
-import 'package:titan/admin/ui/pages/association_membership_detail_page/association_membership_detail_page.dart'
+import 'package:titan/admin/ui/pages/membership/association_membership_detail_page/association_membership_detail_page.dart'
     deferred as association_membership_detail_page;
-import 'package:titan/super_admin/ui/pages/memberships/add_edit_user_membership_page/add_edit_user_membership_page.dart'
+import 'package:titan/admin/ui/pages/membership/add_edit_user_membership_page/add_edit_user_membership_page.dart'
     deferred as add_edit_user_membership_page;
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
