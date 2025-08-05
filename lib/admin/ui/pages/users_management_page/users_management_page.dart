@@ -1,6 +1,4 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/ui/pages/users_management_page/add_user_modal.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
