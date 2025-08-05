@@ -9,15 +9,17 @@ class SettingsTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: ColorConstants.background,
-      child: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const TopBar(root: SettingsRouter.root),
-            Expanded(child: child),
-          ],
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(color: ColorConstants.background),
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const TopBar(root: SettingsRouter.root),
+              Expanded(child: child),
+            ],
+          ),
         ),
       ),
     );
