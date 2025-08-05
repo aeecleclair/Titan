@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/admin/router.dart';
-import 'package:titan/super_admin/providers/is_admin_provider.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/advert/router.dart';
 import 'package:titan/super_admin/providers/all_my_module_roots_list_provider.dart';
 import 'package:titan/amap/router.dart';
@@ -33,7 +33,7 @@ final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
       .map((root) => '/$root')
       .toList();
 
-  final isAdmin = ref.watch(isSuperAdminProvider);
+  final isAdmin = ref.watch(isAdminProvider);
 
   ModulesNotifier modulesNotifier = ModulesNotifier(isAdmin: isAdmin);
   modulesNotifier.loadModules(myModulesRoot);

@@ -10,7 +10,7 @@ import 'package:titan/advert/ui/pages/advert.dart';
 import 'package:titan/advert/router.dart';
 import 'package:titan/advert/ui/components/announcer_bar.dart';
 import 'package:titan/advert/ui/components/advert_card.dart';
-import 'package:titan/super_admin/providers/is_admin_provider.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/column_refresher.dart';
 import 'package:titan/tools/ui/widgets/admin_button.dart';
@@ -28,7 +28,7 @@ class AdvertMainPage extends HookConsumerWidget {
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final selected = ref.watch(announcerProvider);
     final selectedNotifier = ref.watch(announcerProvider.notifier);
-    final isAdmin = ref.watch(isSuperAdminProvider);
+    final isAdmin = ref.watch(isAdminProvider);
     final isAdvertAdmin = ref.watch(isAdvertAdminProvider);
     return AdvertTemplate(
       child: Stack(

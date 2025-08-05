@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/simple_group.dart';
-import 'package:titan/super_admin/providers/is_admin_provider.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/user/class/user.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
@@ -24,7 +24,7 @@ void main() {
         ],
       );
 
-      final isAdmin = container.read(isSuperAdminProvider);
+      final isAdmin = container.read(isAdminProvider);
 
       expect(isAdmin, true);
     });
@@ -40,7 +40,7 @@ void main() {
         ],
       );
 
-      final isAdmin = container.read(isSuperAdminProvider);
+      final isAdmin = container.read(isAdminProvider);
 
       expect(isAdmin, false);
     });

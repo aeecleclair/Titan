@@ -4,7 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/simple_group.dart';
 import 'package:titan/admin/providers/group_list_provider.dart';
-import 'package:titan/super_admin/providers/is_admin_provider.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/phonebook/providers/association_kind_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
@@ -32,7 +32,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
     final name = useTextEditingController(text: association.name);
     final description = useTextEditingController(text: association.description);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
-    final isAdmin = ref.watch(isSuperAdminProvider);
+    final isAdmin = ref.watch(isAdminProvider);
     final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
 
     final groups = ref.watch(allGroupListProvider);

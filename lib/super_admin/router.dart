@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/super_admin/providers/is_admin_provider.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
 
 import 'package:titan/super_admin/ui/pages/edit_module_visibility/edit_module_visibility.dart'
     deferred as edit_module_visibility;
@@ -59,7 +59,7 @@ class SuperAdminRouter {
     builder: () => main_page.SuperAdminMainPage(),
     middleware: [
       AuthenticatedMiddleware(ref),
-      AdminMiddleware(ref, isSuperAdminProvider),
+      AdminMiddleware(ref, isAdminProvider),
       DeferredLoadingMiddleware(main_page.loadLibrary),
     ],
     pageType: QCustomPage(

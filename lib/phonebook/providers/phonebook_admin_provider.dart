@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/super_admin/providers/is_admin_provider.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/phonebook/providers/association_member_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/tools/constants.dart';
@@ -20,7 +20,7 @@ final isPhonebookAdminProvider = StateProvider<bool>((ref) {
 
 final hasPhonebookAdminAccessProvider = StateProvider<bool>((ref) {
   final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
-  final isAdmin = ref.watch(isSuperAdminProvider);
+  final isAdmin = ref.watch(isAdminProvider);
   return isPhonebookAdmin || isAdmin;
 });
 
