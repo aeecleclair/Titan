@@ -17,6 +17,10 @@ import 'package:titan/admin/ui/pages/structure_page/structure_page.dart'
     deferred as structure_page;
 import 'package:titan/admin/ui/pages/association_membership_page/association_membership_page.dart'
     deferred as association_membership_page;
+import 'package:titan/admin/ui/pages/association_membership_detail_page/association_membership_detail_page.dart'
+    deferred as association_membership_detail_page;
+import 'package:titan/super_admin/ui/pages/memberships/add_edit_user_membership_page/add_edit_user_membership_page.dart'
+    deferred as add_edit_user_membership_page;
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -32,6 +36,9 @@ class AdminRouter {
   static const String addGroup = '/add_group';
   static const String editGroup = '/edit_group';
   static const String associationMemberships = '/association_memberships';
+  static const String detailAssociationMembership =
+      '/detail_association_membership';
+  static const String addEditMember = '/add_edit_member';
   static final Module module = Module(
     getName: (context) => "Admin",
     description: "Gérer les utilisateurs de l'application",
@@ -100,6 +107,30 @@ class AdminRouter {
         builder: () => association_membership_page.AssociationMembershipsPage(),
         middleware: [
           DeferredLoadingMiddleware(association_membership_page.loadLibrary),
+        ],
+        children: [
+          QRoute(
+            path: detailAssociationMembership,
+            builder: () =>
+                association_membership_detail_page.AssociationMembershipEditorPage(),
+            middleware: [
+              DeferredLoadingMiddleware(
+                association_membership_detail_page.loadLibrary,
+              ),
+            ],
+            children: [
+              QRoute(
+                path: addEditMember,
+                builder: () =>
+                    add_edit_user_membership_page.AddEditUserMembershipPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(
+                    add_edit_user_membership_page.loadLibrary,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     ],

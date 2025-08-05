@@ -4,16 +4,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/association_membership_simple.dart';
 import 'package:titan/admin/providers/all_groups_list_provider.dart';
 import 'package:titan/admin/providers/association_membership_list_provider.dart';
+import 'package:titan/admin/router.dart';
 import 'package:titan/admin/ui/pages/association_membership_page/add_membership_modal.dart';
 import 'package:titan/super_admin/providers/association_membership_members_list_provider.dart';
 import 'package:titan/super_admin/providers/association_membership_provider.dart';
-import 'package:titan/super_admin/router.dart';
 import 'package:titan/super_admin/ui/admin.dart';
-import 'package:titan/admin/ui/pages/association_membership_page/association_membership_ui.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/icon_button.dart';
+import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
@@ -114,65 +115,87 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                       Column(
                         children: [
                           ...g.map(
-                            (associationMembership) => AssociationMembershipUi(
-                              associationMembership: associationMembership,
-                              onEdit: () {
-                                associationMembershipMembersNotifier
-                                    .loadAssociationMembershipMembers(
-                                      associationMembership.id,
-                                    );
-                                associationMembershipNotifier
-                                    .setAssociationMembership(
-                                      associationMembership,
-                                    );
-                                QR.to(
-                                  SuperAdminRouter.root +
-                                      SuperAdminRouter.associationMemberships +
-                                      SuperAdminRouter
-                                          .detailAssociationMembership,
-                                );
-                              },
-                              onDelete: () async {
-                                await showDialog(
+                            (associationMembership) => ListItem(
+                              title: associationMembership.name,
+                              onTap: () async {
+                                await showCustomBottomModal(
                                   context: context,
-                                  builder: (context) {
-                                    return CustomDialogBox(
-                                      title: AppLocalizations.of(
-                                        context,
-                                      )!.adminDeleting,
-                                      descriptions: AppLocalizations.of(
-                                        context,
-                                      )!.adminDeleteAssociationMembership,
-                                      onYes: () async {
-                                        tokenExpireWrapper(ref, () async {
-                                          final deletedAssociationMembershipMsg =
-                                              AppLocalizations.of(
-                                                context,
-                                              )!.adminDeletedAssociationMembership;
-                                          final deletingErrorMsg =
-                                              AppLocalizations.of(
-                                                context,
-                                              )!.adminDeletingError;
-                                          final value =
-                                              await associationMembershipsNotifier
-                                                  .deleteAssociationMembership(
-                                                    associationMembership,
-                                                  );
-                                          if (value) {
-                                            displayToastWithContext(
-                                              TypeMsg.msg,
-                                              deletedAssociationMembershipMsg,
+                                  ref: ref,
+                                  modal: BottomModalTemplate(
+                                    title: associationMembership.name,
+                                    child: Column(
+                                      children: [
+                                        Button(
+                                          text: "Modifier",
+                                          onPressed: () {
+                                            associationMembershipMembersNotifier
+                                                .loadAssociationMembershipMembers(
+                                                  associationMembership.id,
+                                                );
+                                            associationMembershipNotifier
+                                                .setAssociationMembership(
+                                                  associationMembership,
+                                                );
+                                            QR.to(
+                                              AdminRouter.root +
+                                                  AdminRouter
+                                                      .associationMemberships +
+                                                  AdminRouter
+                                                      .detailAssociationMembership,
                                             );
-                                          } else {
-                                            displayToastWithContext(
-                                              TypeMsg.error,
-                                              deletingErrorMsg,
+                                          },
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Button(
+                                          text: "Supprimer",
+                                          type: ButtonType.danger,
+                                          onPressed: () async {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return CustomDialogBox(
+                                                  title: AppLocalizations.of(
+                                                    context,
+                                                  )!.adminDeleting,
+                                                  descriptions: AppLocalizations.of(
+                                                    context,
+                                                  )!.adminDeleteAssociationMembership,
+                                                  onYes: () async {
+                                                    tokenExpireWrapper(ref, () async {
+                                                      final deletedAssociationMembershipMsg =
+                                                          AppLocalizations.of(
+                                                            context,
+                                                          )!.adminDeletedAssociationMembership;
+                                                      final deletingErrorMsg =
+                                                          AppLocalizations.of(
+                                                            context,
+                                                          )!.adminDeletingError;
+                                                      final value =
+                                                          await associationMembershipsNotifier
+                                                              .deleteAssociationMembership(
+                                                                associationMembership,
+                                                              );
+                                                      if (value) {
+                                                        displayToastWithContext(
+                                                          TypeMsg.msg,
+                                                          deletedAssociationMembershipMsg,
+                                                        );
+                                                      } else {
+                                                        displayToastWithContext(
+                                                          TypeMsg.error,
+                                                          deletingErrorMsg,
+                                                        );
+                                                      }
+                                                    });
+                                                  },
+                                                );
+                                              },
                                             );
-                                          }
-                                        });
-                                      },
-                                    );
-                                  },
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 );
                               },
                             ),
