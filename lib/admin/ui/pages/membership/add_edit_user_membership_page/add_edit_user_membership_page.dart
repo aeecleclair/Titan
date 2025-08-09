@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/admin/admin.dart';
 import 'package:titan/admin/class/user_association_membership.dart';
 import 'package:titan/admin/class/user_association_membership_base.dart';
 import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
 import 'package:titan/admin/providers/user_association_membership_provider.dart';
-import 'package:titan/super_admin/ui/admin.dart';
 import 'package:titan/admin/ui/pages/membership/add_edit_user_membership_page/search_result.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
@@ -42,7 +42,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    return SuperAdminTemplate(
+    return AdminTemplate(
       child: Padding(
         padding: const EdgeInsets.all(30.0),
         child: SingleChildScrollView(

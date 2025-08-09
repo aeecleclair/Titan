@@ -4,23 +4,12 @@ import 'package:titan/admin/providers/is_admin_provider.dart';
 
 import 'package:titan/super_admin/ui/pages/edit_module_visibility/edit_module_visibility.dart'
     deferred as edit_module_visibility;
-
-import 'package:titan/admin/ui/pages/membership/add_edit_user_membership_page/add_edit_user_membership_page.dart'
-    deferred as add_edit_user_membership_page;
-import 'package:titan/admin/ui/pages/membership/association_membership_detail_page/association_membership_detail_page.dart'
-    deferred as association_membership_detail_page;
-import 'package:titan/admin/ui/pages/membership/association_membership_page/association_membership_page.dart'
-    deferred as association_membership_page;
 import 'package:titan/super_admin/ui/pages/schools/school_page/school_page.dart'
     deferred as school_page;
 import 'package:titan/super_admin/ui/pages/schools/add_school_page/add_school_page.dart'
     deferred as add_school_page;
 import 'package:titan/super_admin/ui/pages/schools/edit_school_page/edit_school_page.dart'
     deferred as edit_school_page;
-import 'package:titan/admin/ui/pages/structure_page/structure_page.dart'
-    deferred as structure_page;
-import 'package:titan/admin/ui/pages/structure_page/add_edit_structure_page/add_edit_structure_page.dart'
-    deferred as add_edit_structure_page;
 import 'package:titan/super_admin/ui/pages/main_page/main_page.dart'
     deferred as main_page;
 import 'package:titan/navigation/class/module.dart';
@@ -91,82 +80,6 @@ class SuperAdminRouter {
             builder: () => edit_school_page.EditSchoolPage(),
             middleware: [
               DeferredLoadingMiddleware(edit_school_page.loadLibrary),
-            ],
-          ),
-        ],
-      ),
-      QRoute(
-        path: associationMemberships,
-        builder: () => association_membership_page.AssociationMembershipsPage(),
-        middleware: [
-          DeferredLoadingMiddleware(association_membership_page.loadLibrary),
-        ],
-        children: [
-          QRoute(
-            path: detailAssociationMembership,
-            builder: () =>
-                association_membership_detail_page.AssociationMembershipEditorPage(),
-            middleware: [
-              DeferredLoadingMiddleware(
-                association_membership_detail_page.loadLibrary,
-              ),
-            ],
-            children: [
-              QRoute(
-                path: addEditMember,
-                builder: () =>
-                    add_edit_user_membership_page.AddEditUserMembershipPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(
-                    add_edit_user_membership_page.loadLibrary,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-      QRoute(
-        path: structures,
-        builder: () => structure_page.StructurePage(),
-        middleware: [DeferredLoadingMiddleware(structure_page.loadLibrary)],
-        children: [
-          QRoute(
-            path: addEditStructure,
-            builder: () => add_edit_structure_page.AddEditStructurePage(),
-            middleware: [
-              DeferredLoadingMiddleware(add_edit_structure_page.loadLibrary),
-            ],
-          ),
-        ],
-      ),
-      QRoute(
-        path: associationMemberships,
-        builder: () => association_membership_page.AssociationMembershipsPage(),
-        middleware: [
-          DeferredLoadingMiddleware(association_membership_page.loadLibrary),
-        ],
-        children: [
-          QRoute(
-            path: detailAssociationMembership,
-            builder: () =>
-                association_membership_detail_page.AssociationMembershipEditorPage(),
-            middleware: [
-              DeferredLoadingMiddleware(
-                association_membership_detail_page.loadLibrary,
-              ),
-            ],
-            children: [
-              QRoute(
-                path: addEditMember,
-                builder: () =>
-                    add_edit_user_membership_page.AddEditUserMembershipPage(),
-                middleware: [
-                  DeferredLoadingMiddleware(
-                    add_edit_user_membership_page.loadLibrary,
-                  ),
-                ],
-              ),
             ],
           ),
         ],
