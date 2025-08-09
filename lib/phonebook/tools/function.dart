@@ -1,12 +1,8 @@
-import 'package:collection/collection.dart';
 import 'package:diacritic/diacritic.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/phonebook/class/association.dart';
 import 'package:titan/phonebook/class/association_groupement.dart';
 import 'package:titan/phonebook/class/complete_member.dart';
 import 'package:titan/phonebook/class/membership.dart';
-import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 
 Membership getMembershipForAssociation(
   CompleteMember member,
@@ -54,26 +50,4 @@ List<Association> sortedAssociationByKind(
   }
   // Flatten the sorted map values into a single list
   return sortedByGroupement.values.expand((list) => list).toList();
-}
-
-Color getColorFromTagList(WidgetRef ref, List<String> tags) {
-  if (tags.isEmpty) {
-    return Colors.white;
-  }
-  final rolesTags = ref.watch(rolesTagsProvider);
-  return rolesTags.maybeWhen(
-    data: (allTags) {
-      int index = tags.map((tag) => allTags.indexOf(tag)).toList().min;
-      switch (index) {
-        case 0:
-          return const Color.fromARGB(255, 251, 109, 16);
-        case 1:
-          return const Color.fromARGB(255, 252, 145, 74);
-        case 2:
-          return const Color.fromARGB(255, 253, 193, 153);
-      }
-      return Colors.white;
-    },
-    orElse: () => Colors.white,
-  );
 }
