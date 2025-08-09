@@ -50,7 +50,7 @@ class AssociationAdminEditionModal extends HookConsumerWidget {
         child: Column(
           children: [
             Button(
-              text: "Modifier les informations",
+              text: localizeWithContext.phonebookEditAssociationInfo,
               onPressed: () {
                 associationPictureNotifier.getAssociationPicture(
                   association.id,
@@ -70,7 +70,7 @@ class AssociationAdminEditionModal extends HookConsumerWidget {
             if (isAdmin) ...[
               SizedBox(height: 5),
               Button(
-                text: "Gérer les groupes",
+                text: localizeWithContext.phonebookEditAssociationGroups,
                 onPressed: () {
                   associationGroupementsNotifier.setAssociationGroupement(
                     groupement,
@@ -87,7 +87,7 @@ class AssociationAdminEditionModal extends HookConsumerWidget {
             ],
             SizedBox(height: 5),
             Button(
-              text: "Gérer les membres",
+              text: localizeWithContext.phonebookEditAssociationMembers,
               onPressed: () {
                 associationGroupementsNotifier.setAssociationGroupement(
                   groupement,
@@ -103,15 +103,19 @@ class AssociationAdminEditionModal extends HookConsumerWidget {
             ),
             SizedBox(height: 15),
             Button.danger(
-              text: "Passer au mandat ${association.mandateYear + 1}",
+              text: localizeWithContext.phonebookChangeTermYear(
+                association.mandateYear + 1,
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
-                showCustomDialog(
+                showCustomBottomModal(
                   context: context,
                   ref: ref,
-                  dialog: CustomDialogBox.danger(
-                    title: "Passer au mandat ${association.mandateYear + 1}",
-                    description: "Cette action est irréversible",
+                  modal: CustomDialogBox.danger(
+                    title: localizeWithContext.phonebookChangeTermYear(
+                      association.mandateYear + 1,
+                    ),
+                    description: localizeWithContext.globalIrreversibleAction,
                     onYes: () async {
                       final result = await associationListNotifier
                           .updateAssociation(
@@ -138,8 +142,8 @@ class AssociationAdminEditionModal extends HookConsumerWidget {
             SizedBox(height: 5),
             Button.danger(
               text: association.deactivated
-                  ? "Supprimer l'association"
-                  : "Désactiver l'association",
+                  ? localizeWithContext.phonebookDeleteAssociation
+                  : localizeWithContext.phonebookDeactivateAssociation,
               onPressed: () async {
                 Navigator.of(context).pop();
                 if (!association.deactivated) {
@@ -157,12 +161,14 @@ class AssociationAdminEditionModal extends HookConsumerWidget {
                     );
                   }
                 } else {
-                  showCustomDialog(
+                  showCustomBottomModal(
                     context: context,
                     ref: ref,
-                    dialog: CustomDialogBox.danger(
-                      title: "Supprimer l'association",
-                      description: "Cette action est irréversible",
+                    modal: CustomDialogBox.danger(
+                      title: localizeWithContext
+                          .phonebookDeleteSelectedAssociation(association.name),
+                      description: localizeWithContext
+                          .phonebookDeleteAssociationDescription,
                       onYes: () async {
                         final result = await associationListNotifier
                             .deleteAssociation(association);

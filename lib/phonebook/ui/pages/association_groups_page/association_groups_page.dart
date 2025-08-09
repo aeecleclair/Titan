@@ -66,7 +66,9 @@ class AssociationGroupsPage extends HookConsumerWidget {
             children: [
               AlignLeftText(
                 localizeWithContext.phonebookGroups(association.name),
+                fontSize: 20,
               ),
+              const SizedBox(height: 20),
               AsyncChild(
                 value: groups,
                 builder: (context, groupList) {
@@ -91,6 +93,7 @@ class AssociationGroupsPage extends HookConsumerWidget {
                   );
                 },
               ),
+              const SizedBox(height: 20),
               Button(
                 onPressed: () async {
                   await tokenExpireWrapper(ref, () async {

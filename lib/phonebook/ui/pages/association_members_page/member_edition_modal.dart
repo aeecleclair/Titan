@@ -40,14 +40,16 @@ class MemberEditionModal extends HookConsumerWidget {
     AppLocalizations localizeWithContext = AppLocalizations.of(context)!;
 
     return BottomModalTemplate(
-      title: "title",
+      title:
+          "${member.member.nickname ?? '${member.member.firstname} ${member.member.name}'} - ${membership.apparentName}",
       type: BottomModalType.main,
       child: SingleChildScrollView(
         child: Column(
           children: [
             Button(
-              text: "Modifier le rôle",
+              text: localizeWithContext.phonebookEditRole,
               onPressed: () {
+                Navigator.of(context).pop();
                 completeMemberNotifier.setCompleteMember(member);
                 membershipNotifier.setMembership(membership);
                 if (QR.currentPath.contains(PhonebookRouter.admin)) {
@@ -69,16 +71,17 @@ class MemberEditionModal extends HookConsumerWidget {
             ),
             SizedBox(height: 5),
             Button.danger(
-              text: "Supprimer le rôle",
+              text: localizeWithContext.phonebookDeleteRole,
               onPressed: () {
                 Navigator.of(context).pop();
-                showCustomDialog(
+                showCustomBottomModal(
                   context: context,
                   ref: ref,
-                  dialog: CustomDialogBox.danger(
-                    title:
-                        "Supprimer le rôle de ${member.member.nickname ?? '${member.member.firstname} ${member.member.name}'}",
-                    description: "Cette action est irréversible",
+                  modal: CustomDialogBox.danger(
+                    title: localizeWithContext.phonebookDeleteUserRole(
+                      member.member.nickname ?? member.getName(),
+                    ),
+                    description: localizeWithContext.globalIrreversibleAction,
                     onYes: () async {
                       final result = await associationMemberListNotifier
                           .deleteMember(

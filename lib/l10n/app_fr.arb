@@ -449,7 +449,16 @@
   "eventDaySun": "Dimanche",
   "globalConfirm": "Confirmer",
   "globalCancel": "Annuler",
-  "globalOptionnal": "Optionnel",
+  "globalIrreversibleAction": "Cette action est irréversible",
+  "globalOptionnal": "{text} (Optionnel)",
+  "@globalOptionnal": {
+    "description": "Texte avec complément optionnel",
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
   "homeCalendar": "Calendrier",
   "homeEventOf": "Évènements du",
   "homeIncomingEvents": "Évènements à venir",
@@ -647,23 +656,51 @@
   "phonebookApparentName": "Nom public du rôle :",
   "phonebookAssociation": "Association",
   "phonebookAssociationDetail": "Détail de l'association :",
+  "phonebookAssociationGroupement": "Groupement d'association",
   "phonebookAssociationKind": "Type d'association :",
   "phonebookAssociationName": "Nom de l'association",
   "phonebookAssociations": "Associations",
   "phonebookCancel": "Annuler",
-  "phonebookChangeMandate": "Passer au mandat ",
-  "phonebookChangeMandateConfirm": "Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !",
+  "phonebookChangeTermYear": "Passer au mandat {year}",
+  "@phonebookChangeTermYear": {
+    "description": "Permet de changer le mandat d'une association",
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "phonebookChangeTermConfirm": "Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !",
   "phonebookConfirm": "Confirmer",
   "phonebookCopied": "Copié dans le presse-papier",
-  "phonebookDeactivateAssociation": "Êtes-vous sûr de vouloir désactiver cette association ?\nCette action est irréversible !",
+  "phonebookDeactivateAssociation": "Désactiver l'association",
   "phonebookDeactivatedAssociation": "Association désactivée",
   "phonebookDeactivatedAssociationWarning": "Attention, cette association est désactivée, vous ne pouvez pas la modifier",
-  "phonebookDeactivating": "Désactiver l'association ?",
   "phonebookDeactivatingError": "Erreur lors de la désactivation",
   "phonebookDetail": "Détail :",
-  "phonebookDeleteAssociation": "Supprimer l'association ?\nCela va effacer tout l'historique de l'association",
+  "phonebookDeleteAssociation": "Supprimer l'association",
+  "phonebookDeleteSelectedAssociation": "Supprimer l'association {association} ?",
+  "@phonebookDeleteSelectedAssociation": {
+    "description": "Permet de supprimer une association",
+    "placeholders": {
+      "association": {
+        "type": "String"
+      }
+    }
+  },
+  "phonebookDeleteAssociationDescription": "Ceci va supprimer l'historique de l'association",
   "phonebookDeletedAssociation": "Association supprimée",
   "phonebookDeletedMember": "Membre supprimé",
+  "phonebookDeleteRole": "Supprimer le rôle",
+  "phonebookDeleteUserRole": "Supprimer le rôle de l'utilisateur {name} ?",
+  "@phonebookDeleteUserRole": {
+    "description": "Permet de supprimer le rôle d'un utilisateur dans une association",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "phonebookDeleting": "Suppression",
   "phonebookDeletingError": "Erreur lors de la suppression",
   "phonebookDescription": "Description",
@@ -672,7 +709,7 @@
   "phonebookEditAssociationGroups": "Gérer les groupes",
   "phonebookEditAssociationInfo": "Modifier",
   "phonebookEditAssociationMembers": "Gérer les membres",
-  "phonebookEditMembership": "Modifier le rôle",
+  "phonebookEditRole": "Modifier le rôle",
   "phonebookEmail": "Email :",
   "phonebookEmailCopied": "Email copié dans le presse-papier",
   "phonebookEmptyApparentName": "Veuillez entrer un nom de role",
@@ -700,8 +737,16 @@
       }
     }
   },
-  "phonebookMandate": "Mandat",
-  "phonebookMandateChangingError": "Erreur lors du changement de mandat",
+  "phonebookTerm": "Mandat {year}",
+  "@phonebookTerm": {
+    "description": "Année de mandat d'une association",
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "phonebookTermChangingError": "Erreur lors du changement de mandat",
   "phonebookMember": "Membre",
   "phonebookMemberReordered": "Membre réordonné",
   "phonebookMembers": "Gérer les membres de {association}",
@@ -728,8 +773,8 @@
   "phonebookName": "Nom :",
   "phonebookNameCopied": "Nom et prénom copié dans le presse-papier",
   "phonebookNamePure": "Nom",
-  "phonebookNewMandate": "Nouveau mandat",
-  "phonebookNewMandateConfirmed": "Mandat changé",
+  "phonebookNewTerm": "Nouveau mandat",
+  "phonebookNewTermConfirmed": "Mandat changé",
   "phonebookNickname": "Surnom :",
   "phonebookNicknameCopied": "Surnom copié dans le presse-papier",
   "phonebookNoAssociationFound": "Aucune association trouvée",
@@ -745,11 +790,19 @@
   "phonebookPhonebookSearchRole": "Poste",
   "phonebookPresidentRoleTag": "Prez'",
   "phonebookPromoNotGiven": "Promo non renseignée",
-  "phonebookPromotion": "Promotion :",
+  "phonebookPromotion": "Promotion {year}",
+  "@phonebookPromotion": {
+    "description": "Année de promotion d'un membre",
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
   "phonebookReorderingError": "Erreur lors du réordonnement",
   "phonebookResearch": "Rechercher",
   "phonebookRolePure": "Rôle",
-  "phonebookSearchMember": "un membre",
+  "phonebookSearchUser": "Rechercher un utilisateur",
   "phonebookTooHeavyAssociationPicture": "L'image est trop lourde (max 4Mo)",
   "phonebookUpdateGroups": "Mettre à jour les groupes",
   "phonebookUpdatedAssociation": "Association modifiée",

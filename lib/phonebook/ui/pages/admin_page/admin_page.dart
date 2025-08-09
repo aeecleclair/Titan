@@ -49,7 +49,7 @@ class AdminPage extends HookConsumerWidget {
           await roleNotifier.loadRolesTags();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
             children: [
               AssociationResearchBar(),
@@ -62,7 +62,7 @@ class AdminPage extends HookConsumerWidget {
                   return Column(
                     children: [
                       ListItemTemplate(
-                        title: "Ajouter une association",
+                        title: localizeWithContext.phonebookAddAssociation,
                         icon: HeroIcon(
                           HeroIcons.plus,
                           size: 40,

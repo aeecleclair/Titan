@@ -62,9 +62,9 @@ class MemberDetailPage extends HookConsumerWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 5),
                       Text(
-                        "${member.member.firstname} ${member.member.name}",
+                        member.getName(),
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -72,27 +72,28 @@ class MemberDetailPage extends HookConsumerWidget {
                       ),
                     ] else
                       Text(
-                        "${member.member.firstname} ${member.member.name}",
+                        member.getName(),
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     if (member.member.promotion != 0)
                       Text(
-                        "${localizeWithContext.phonebookPromotion} ${member.member.promotion < 100 ? '20${member.member.promotion}' : member.member.promotion.toString()}",
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                        localizeWithContext.phonebookPromotion(
+                          member.member.promotion < 100
+                              ? member.member.promotion + 2000
+                              : member.member.promotion,
                         ),
+                        style: const TextStyle(fontSize: 16),
                       ),
                     const SizedBox(height: 20),
                     Text(
                       member.member.email,
                       style: const TextStyle(fontSize: 16),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     if (member.member.phone != null)
                       Text(
                         member.member.phone!,

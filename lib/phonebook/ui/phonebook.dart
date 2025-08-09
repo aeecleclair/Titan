@@ -22,6 +22,12 @@ class PhonebookTemplate extends HookConsumerWidget {
       PhonebookRouter.root +
           PhonebookRouter.admin +
           PhonebookRouter.addEditAssociation,
+      PhonebookRouter.root +
+          PhonebookRouter.admin +
+          PhonebookRouter.editAssociationGroups,
+      PhonebookRouter.root +
+          PhonebookRouter.admin +
+          PhonebookRouter.editAssociationMembers,
     ];
 
     return Container(

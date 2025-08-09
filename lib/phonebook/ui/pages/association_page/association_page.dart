@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -10,7 +9,6 @@ import 'package:titan/phonebook/providers/association_member_list_provider.dart'
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:titan/phonebook/ui/components/member_card.dart';
 import 'package:titan/phonebook/ui/pages/association_page/association_edition_modal.dart';
-import 'package:titan/phonebook/ui/pages/association_page/web_member_card.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
@@ -103,7 +101,7 @@ class AssociationPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                "${localizeWithContext.phonebookMandate} ${association.mandateYear}",
+                localizeWithContext.phonebookTerm(association.mandateYear),
                 style: const TextStyle(fontSize: 15, color: Colors.black),
               ),
               const SizedBox(height: 10),
@@ -120,16 +118,11 @@ class AssociationPage extends HookConsumerWidget {
                     : Column(
                         children: associationMemberSortedList
                             .map(
-                              (member) => kIsWeb
-                                  ? WebMemberCard(
-                                      member: member,
-                                      association: association,
-                                    )
-                                  : MemberCard(
-                                      member: member,
-                                      association: association,
-                                      deactivated: false,
-                                    ),
+                              (member) => MemberCard(
+                                member: member,
+                                association: association,
+                                deactivated: false,
+                              ),
                             )
                             .toList(),
                       ),

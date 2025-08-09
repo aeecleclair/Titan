@@ -18,6 +18,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
 class AssociationAddEditPage extends HookConsumerWidget {
   final scrollKey = GlobalKey();
@@ -47,7 +48,7 @@ class AssociationAddEditPage extends HookConsumerWidget {
       ).showSnackBar(SnackBar(content: Text(message)));
     }
 
-    AppLocalizations localizeWithContext = AppLocalizations.of(context)!;
+    final localizeWithContext = AppLocalizations.of(context)!;
 
     return PhonebookTemplate(
       child: SingleChildScrollView(
@@ -175,7 +176,13 @@ class AssociationAddEditPage extends HookConsumerWidget {
                     },
                   ),
                 ],
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
+                AlignLeftText(
+                  localizeWithContext.phonebookAssociationGroupement,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 16,
+                ),
+                const SizedBox(height: 5),
                 AssociationGroupementBar(editable: true),
                 Container(margin: const EdgeInsets.symmetric(vertical: 10)),
                 TextEntry(
@@ -183,7 +190,7 @@ class AssociationAddEditPage extends HookConsumerWidget {
                   label: localizeWithContext.phonebookAssociationName,
                   canBeEmpty: false,
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 10),
                 TextEntry(
                   controller: description,
                   label: localizeWithContext.phonebookDescription,
@@ -252,7 +259,13 @@ class AssociationAddEditPage extends HookConsumerWidget {
                           showSnackBarWithContext(
                             localizeWithContext.phonebookUpdatedAssociation,
                           );
-
+                          associationNotifier.setAssociation(
+                            association.copyWith(
+                              name: name.text,
+                              description: description.text,
+                              groupementId: associationGroupement.id,
+                            ),
+                          );
                           associationGroupementNotifier
                               .resetAssociationGroupement();
                           QR.back();

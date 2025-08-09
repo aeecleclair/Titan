@@ -51,7 +51,6 @@ class MembershipEditorPage extends HookConsumerWidget {
     final localizeWithContext = AppLocalizations.of(context)!;
 
     Future<void> addMember() async {
-      // Test if the membership already exists with (association_id,member_id,mandate_year)
       final memberAssociationMemberships = member.memberships.where(
         (membership) => membership.associationId == association.id,
       );
@@ -144,11 +143,11 @@ class MembershipEditorPage extends HookConsumerWidget {
                 AlignLeftText(localizeWithContext.phonebookAddMember),
                 ListItemTemplate(
                   title: member.member.id == ""
-                      ? localizeWithContext.phonebookSearchMember
+                      ? localizeWithContext.phonebookSearchUser
                       : member.member.getName(),
                   subtitle: member.member.id == ""
                       ? ""
-                      : localizeWithContext.phonebookSearchMember,
+                      : localizeWithContext.phonebookSearchUser,
                   trailing: SizedBox.shrink(),
                   onTap: () => showCustomBottomModal(
                     context: context,
@@ -157,14 +156,11 @@ class MembershipEditorPage extends HookConsumerWidget {
                   ),
                 ),
               ] else
-                Text(
+                AlignLeftText(
                   localizeWithContext.phonebookModifyMembership(
-                    member.member.getName(),
+                    member.member.nickname ?? member.getName(),
                   ),
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  fontSize: 18,
                 ),
               const SizedBox(height: 10),
               rolesTagList.maybeWhen(

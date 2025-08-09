@@ -58,16 +58,17 @@ class AssociationMembersPage extends HookConsumerWidget {
             children: [
               AlignLeftText(
                 localizeWithContext.phonebookMembers(association.name),
+                fontSize: 20,
               ),
               if (!association.deactivated) ...[
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 ListItemTemplate(
                   icon: const HeroIcon(
                     HeroIcons.plus,
                     size: 40,
                     color: Colors.black,
                   ),
-                  title: "Ajouter",
+                  title: localizeWithContext.phonebookAddMember,
                   trailing: SizedBox.shrink(),
                   onTap: () async {
                     completeMemberNotifier.setCompleteMember(

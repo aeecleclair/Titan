@@ -2792,11 +2792,17 @@ abstract class AppLocalizations {
   /// **'Annuler'**
   String get globalCancel;
 
-  /// No description provided for @globalOptionnal.
+  /// No description provided for @globalIrreversibleAction.
   ///
   /// In fr, this message translates to:
-  /// **'Optionnel'**
-  String get globalOptionnal;
+  /// **'Cette action est irréversible'**
+  String get globalIrreversibleAction;
+
+  /// Texte avec complément optionnel
+  ///
+  /// In fr, this message translates to:
+  /// **'{text} (Optionnel)'**
+  String globalOptionnal(String text);
 
   /// No description provided for @homeCalendar.
   ///
@@ -3980,6 +3986,12 @@ abstract class AppLocalizations {
   /// **'Détail de l\'association :'**
   String get phonebookAssociationDetail;
 
+  /// No description provided for @phonebookAssociationGroupement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Groupement d\'association'**
+  String get phonebookAssociationGroupement;
+
   /// No description provided for @phonebookAssociationKind.
   ///
   /// In fr, this message translates to:
@@ -4004,17 +4016,17 @@ abstract class AppLocalizations {
   /// **'Annuler'**
   String get phonebookCancel;
 
-  /// No description provided for @phonebookChangeMandate.
+  /// Permet de changer le mandat d'une association
   ///
   /// In fr, this message translates to:
-  /// **'Passer au mandat '**
-  String get phonebookChangeMandate;
+  /// **'Passer au mandat {year}'**
+  String phonebookChangeTermYear(int year);
 
-  /// No description provided for @phonebookChangeMandateConfirm.
+  /// No description provided for @phonebookChangeTermConfirm.
   ///
   /// In fr, this message translates to:
   /// **'Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !'**
-  String get phonebookChangeMandateConfirm;
+  String get phonebookChangeTermConfirm;
 
   /// No description provided for @phonebookConfirm.
   ///
@@ -4031,7 +4043,7 @@ abstract class AppLocalizations {
   /// No description provided for @phonebookDeactivateAssociation.
   ///
   /// In fr, this message translates to:
-  /// **'Êtes-vous sûr de vouloir désactiver cette association ?\nCette action est irréversible !'**
+  /// **'Désactiver l\'association'**
   String get phonebookDeactivateAssociation;
 
   /// No description provided for @phonebookDeactivatedAssociation.
@@ -4045,12 +4057,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Attention, cette association est désactivée, vous ne pouvez pas la modifier'**
   String get phonebookDeactivatedAssociationWarning;
-
-  /// No description provided for @phonebookDeactivating.
-  ///
-  /// In fr, this message translates to:
-  /// **'Désactiver l\'association ?'**
-  String get phonebookDeactivating;
 
   /// No description provided for @phonebookDeactivatingError.
   ///
@@ -4067,8 +4073,20 @@ abstract class AppLocalizations {
   /// No description provided for @phonebookDeleteAssociation.
   ///
   /// In fr, this message translates to:
-  /// **'Supprimer l\'association ?\nCela va effacer tout l\'historique de l\'association'**
+  /// **'Supprimer l\'association'**
   String get phonebookDeleteAssociation;
+
+  /// Permet de supprimer une association
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer l\'association {association} ?'**
+  String phonebookDeleteSelectedAssociation(String association);
+
+  /// No description provided for @phonebookDeleteAssociationDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ceci va supprimer l\'historique de l\'association'**
+  String get phonebookDeleteAssociationDescription;
 
   /// No description provided for @phonebookDeletedAssociation.
   ///
@@ -4081,6 +4099,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Membre supprimé'**
   String get phonebookDeletedMember;
+
+  /// No description provided for @phonebookDeleteRole.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer le rôle'**
+  String get phonebookDeleteRole;
+
+  /// Permet de supprimer le rôle d'un utilisateur dans une association
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer le rôle de l\'utilisateur {name} ?'**
+  String phonebookDeleteUserRole(String name);
 
   /// No description provided for @phonebookDeleting.
   ///
@@ -4130,11 +4160,11 @@ abstract class AppLocalizations {
   /// **'Gérer les membres'**
   String get phonebookEditAssociationMembers;
 
-  /// No description provided for @phonebookEditMembership.
+  /// No description provided for @phonebookEditRole.
   ///
   /// In fr, this message translates to:
   /// **'Modifier le rôle'**
-  String get phonebookEditMembership;
+  String get phonebookEditRole;
 
   /// No description provided for @phonebookEmail.
   ///
@@ -4250,17 +4280,17 @@ abstract class AppLocalizations {
   /// **'Gérer les groupes de {association}'**
   String phonebookGroups(String association);
 
-  /// No description provided for @phonebookMandate.
+  /// Année de mandat d'une association
   ///
   /// In fr, this message translates to:
-  /// **'Mandat'**
-  String get phonebookMandate;
+  /// **'Mandat {year}'**
+  String phonebookTerm(int year);
 
-  /// No description provided for @phonebookMandateChangingError.
+  /// No description provided for @phonebookTermChangingError.
   ///
   /// In fr, this message translates to:
   /// **'Erreur lors du changement de mandat'**
-  String get phonebookMandateChangingError;
+  String get phonebookTermChangingError;
 
   /// No description provided for @phonebookMember.
   ///
@@ -4322,17 +4352,17 @@ abstract class AppLocalizations {
   /// **'Nom'**
   String get phonebookNamePure;
 
-  /// No description provided for @phonebookNewMandate.
+  /// No description provided for @phonebookNewTerm.
   ///
   /// In fr, this message translates to:
   /// **'Nouveau mandat'**
-  String get phonebookNewMandate;
+  String get phonebookNewTerm;
 
-  /// No description provided for @phonebookNewMandateConfirmed.
+  /// No description provided for @phonebookNewTermConfirmed.
   ///
   /// In fr, this message translates to:
   /// **'Mandat changé'**
-  String get phonebookNewMandateConfirmed;
+  String get phonebookNewTermConfirmed;
 
   /// No description provided for @phonebookNickname.
   ///
@@ -4424,11 +4454,11 @@ abstract class AppLocalizations {
   /// **'Promo non renseignée'**
   String get phonebookPromoNotGiven;
 
-  /// No description provided for @phonebookPromotion.
+  /// Année de promotion d'un membre
   ///
   /// In fr, this message translates to:
-  /// **'Promotion :'**
-  String get phonebookPromotion;
+  /// **'Promotion {year}'**
+  String phonebookPromotion(int year);
 
   /// No description provided for @phonebookReorderingError.
   ///
@@ -4448,11 +4478,11 @@ abstract class AppLocalizations {
   /// **'Rôle'**
   String get phonebookRolePure;
 
-  /// No description provided for @phonebookSearchMember.
+  /// No description provided for @phonebookSearchUser.
   ///
   /// In fr, this message translates to:
-  /// **'un membre'**
-  String get phonebookSearchMember;
+  /// **'Rechercher un utilisateur'**
+  String get phonebookSearchUser;
 
   /// No description provided for @phonebookTooHeavyAssociationPicture.
   ///

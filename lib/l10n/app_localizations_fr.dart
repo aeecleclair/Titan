@@ -1377,7 +1377,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get globalCancel => 'Annuler';
 
   @override
-  String get globalOptionnal => 'Optionnel';
+  String get globalIrreversibleAction => 'Cette action est irréversible';
+
+  @override
+  String globalOptionnal(String text) {
+    return '$text (Optionnel)';
+  }
 
   @override
   String get homeCalendar => 'Calendrier';
@@ -1985,6 +1990,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phonebookAssociationDetail => 'Détail de l\'association :';
 
   @override
+  String get phonebookAssociationGroupement => 'Groupement d\'association';
+
+  @override
   String get phonebookAssociationKind => 'Type d\'association :';
 
   @override
@@ -1997,10 +2005,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phonebookCancel => 'Annuler';
 
   @override
-  String get phonebookChangeMandate => 'Passer au mandat ';
+  String phonebookChangeTermYear(int year) {
+    return 'Passer au mandat $year';
+  }
 
   @override
-  String get phonebookChangeMandateConfirm =>
+  String get phonebookChangeTermConfirm =>
       'Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !';
 
   @override
@@ -2010,8 +2020,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phonebookCopied => 'Copié dans le presse-papier';
 
   @override
-  String get phonebookDeactivateAssociation =>
-      'Êtes-vous sûr de vouloir désactiver cette association ?\nCette action est irréversible !';
+  String get phonebookDeactivateAssociation => 'Désactiver l\'association';
 
   @override
   String get phonebookDeactivatedAssociation => 'Association désactivée';
@@ -2021,23 +2030,36 @@ class AppLocalizationsFr extends AppLocalizations {
       'Attention, cette association est désactivée, vous ne pouvez pas la modifier';
 
   @override
-  String get phonebookDeactivating => 'Désactiver l\'association ?';
-
-  @override
   String get phonebookDeactivatingError => 'Erreur lors de la désactivation';
 
   @override
   String get phonebookDetail => 'Détail :';
 
   @override
-  String get phonebookDeleteAssociation =>
-      'Supprimer l\'association ?\nCela va effacer tout l\'historique de l\'association';
+  String get phonebookDeleteAssociation => 'Supprimer l\'association';
+
+  @override
+  String phonebookDeleteSelectedAssociation(String association) {
+    return 'Supprimer l\'association $association ?';
+  }
+
+  @override
+  String get phonebookDeleteAssociationDescription =>
+      'Ceci va supprimer l\'historique de l\'association';
 
   @override
   String get phonebookDeletedAssociation => 'Association supprimée';
 
   @override
   String get phonebookDeletedMember => 'Membre supprimé';
+
+  @override
+  String get phonebookDeleteRole => 'Supprimer le rôle';
+
+  @override
+  String phonebookDeleteUserRole(String name) {
+    return 'Supprimer le rôle de l\'utilisateur $name ?';
+  }
 
   @override
   String get phonebookDeleting => 'Suppression';
@@ -2065,7 +2087,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phonebookEditAssociationMembers => 'Gérer les membres';
 
   @override
-  String get phonebookEditMembership => 'Modifier le rôle';
+  String get phonebookEditRole => 'Modifier le rôle';
 
   @override
   String get phonebookEmail => 'Email :';
@@ -2137,10 +2159,12 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get phonebookMandate => 'Mandat';
+  String phonebookTerm(int year) {
+    return 'Mandat $year';
+  }
 
   @override
-  String get phonebookMandateChangingError =>
+  String get phonebookTermChangingError =>
       'Erreur lors du changement de mandat';
 
   @override
@@ -2179,10 +2203,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phonebookNamePure => 'Nom';
 
   @override
-  String get phonebookNewMandate => 'Nouveau mandat';
+  String get phonebookNewTerm => 'Nouveau mandat';
 
   @override
-  String get phonebookNewMandateConfirmed => 'Mandat changé';
+  String get phonebookNewTermConfirmed => 'Mandat changé';
 
   @override
   String get phonebookNickname => 'Surnom :';
@@ -2230,7 +2254,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phonebookPromoNotGiven => 'Promo non renseignée';
 
   @override
-  String get phonebookPromotion => 'Promotion :';
+  String phonebookPromotion(int year) {
+    return 'Promotion $year';
+  }
 
   @override
   String get phonebookReorderingError => 'Erreur lors du réordonnement';
@@ -2242,7 +2268,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phonebookRolePure => 'Rôle';
 
   @override
-  String get phonebookSearchMember => 'un membre';
+  String get phonebookSearchUser => 'Rechercher un utilisateur';
 
   @override
   String get phonebookTooHeavyAssociationPicture =>

@@ -449,7 +449,16 @@
   "eventDaySun": "Sunday",
   "globalConfirm": "Confirm",
   "globalCancel": "Cancel",
-  "globalOptionnal": "Optional",
+  "globalIrreversibleAction": "This action is irreversible",
+  "globalOptionnal": "{text} (Optional)",
+  "@globalOptionnal": {
+    "description": "Text with optional complement",
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
   "homeCalendar": "Calendar",
   "homeEventOf": "Events of",
   "homeIncomingEvents": "Upcoming events",
@@ -647,23 +656,51 @@
   "phonebookApparentName": "Public role name:",
   "phonebookAssociation": "Association",
   "phonebookAssociationDetail": "Association details:",
+  "phonebookAssociationGroupement": "Association groupement",
   "phonebookAssociationKind": "Type of association:",
   "phonebookAssociationName": "Association name",
   "phonebookAssociations": "Associations",
   "phonebookCancel": "Cancel",
-  "phonebookChangeMandate": "Switch to mandate ",
-  "phonebookChangeMandateConfirm": "Are you sure you want to change the entire mandate?\nThis action is irreversible!",
+  "phonebookChangeTermYear": "Switch to {year} term",
+  "@phonebookChangeTermYear": {
+    "description": "Change the term year of the association",
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "phonebookChangeTermConfirm": "Are you sure you want to change the entire term?\nThis action is irreversible!",
   "phonebookConfirm": "Confirm",
   "phonebookCopied": "Copied to clipboard",
-  "phonebookDeactivateAssociation": "Are you sure you want to deactivate this association?\nThis action is irreversible!",
+  "phonebookDeactivateAssociation": "Deactivate association",
   "phonebookDeactivatedAssociation": "Association deactivated",
   "phonebookDeactivatedAssociationWarning": "Warning, this association is deactivated, you cannot modify it",
-  "phonebookDeactivating": "Deactivate the association?",
   "phonebookDeactivatingError": "Error during deactivation",
   "phonebookDetail": "Details:",
-  "phonebookDeleteAssociation": "Delete the association?\nThis will erase all association history",
+  "phonebookDeleteAssociation": "Delete association",
+  "phonebookDeleteSelectedAssociation": "Delete the association {association}?",
+  "@phonebookDeleteSelectedAssociation": {
+    "description": "Delete an association",
+    "placeholders": {
+      "association": {
+        "type": "String"
+      }
+    }
+  },
+  "phonebookDeleteAssociationDescription": "This will erase all association history",
   "phonebookDeletedAssociation": "Association deleted",
   "phonebookDeletedMember": "Member deleted",
+  "phonebookDeleteRole": "Delete role",
+  "phonebookDeleteUserRole": "Delete the role of {name}?",
+  "@phonebookDeleteUserRole": {
+    "description": "Delete the role of a user",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "phonebookDeleting": "Deleting",
   "phonebookDeletingError": "Error deleting",
   "phonebookDescription": "Description",
@@ -672,7 +709,7 @@
   "phonebookEditAssociationGroups": "Manage groups",
   "phonebookEditAssociationInfo": "Edit",
   "phonebookEditAssociationMembers": "Manage members",
-  "phonebookEditMembership": "Edit role",
+  "phonebookEditRole": "Edit role",
   "phonebookEmail": "Email:",
   "phonebookEmailCopied": "Email copied to clipboard",
   "phonebookEmptyApparentName": "Please enter a role name",
@@ -688,7 +725,7 @@
   "phonebookErrorLoadAssociationPicture": "Error loading association picture",
   "phonebookErrorLoadProfilePicture": "Error",
   "phonebookErrorRoleTagsLoading": "Error loading role tags",
-  "phonebookExistingMembership": "This member is already in the current mandate",
+  "phonebookExistingMembership": "This member is already in the current term",
   "phonebookFirstname": "First name:",
   "phonebookGroupementName": "Groupement name",
   "phonebookGroups": "Manage {association} groups",
@@ -700,8 +737,16 @@
       }
     }
   },
-  "phonebookMandate": "Mandate",
-  "phonebookMandateChangingError": "Error changing mandate",
+  "phonebookTerm": "{year} term",
+  "@phonebookTerm": {
+    "description": "Term year of the association",
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "phonebookTermChangingError": "Error changing term",
   "phonebookMember": "Member",
   "phonebookMemberReordered": "Member reordered",
   "phonebookMembers": "Manage {association} members",
@@ -728,8 +773,8 @@
   "phonebookName": "Last name:",
   "phonebookNameCopied": "Name and first name copied to clipboard",
   "phonebookNamePure": "Last name",
-  "phonebookNewMandate": "New mandate",
-  "phonebookNewMandateConfirmed": "Mandate changed",
+  "phonebookNewTerm": "New term",
+  "phonebookNewTermConfirmed": "Term changed",
   "phonebookNickname": "Nickname:",
   "phonebookNicknameCopied": "Nickname copied to clipboard",
   "phonebookNoAssociationFound": "No association found",
@@ -745,11 +790,19 @@
   "phonebookPhonebookSearchRole": "Position",
   "phonebookPresidentRoleTag": "Prez'",
   "phonebookPromoNotGiven": "Promotion not provided",
-  "phonebookPromotion": "Promotion:",
+  "phonebookPromotion": "Promotion {year}",
+  "@phonebookPromotion": {
+    "description": "Promotion year of the member",
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
   "phonebookReorderingError": "Error during reordering",
   "phonebookResearch": "Search",
   "phonebookRolePure": "Role",
-  "phonebookSearchMember": "Search a member",
+  "phonebookSearchUser": "Search a user",
   "phonebookTooHeavyAssociationPicture": "Image is too large (max 4MB)",
   "phonebookUpdateGroups": "Update groups",
   "phonebookUpdatedAssociation": "Association updated",
