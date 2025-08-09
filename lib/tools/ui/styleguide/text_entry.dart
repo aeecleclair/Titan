@@ -53,7 +53,7 @@ class TextEntry extends StatelessWidget {
       obscureText: obscureText,
       textInputAction: (keyboardType == TextInputType.multiline)
           ? TextInputAction.newline
-          : TextInputAction.next,
+          : textInputAction,
       enabled: enabled,
       decoration: InputDecoration(
         label: Text(
