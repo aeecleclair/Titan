@@ -15,13 +15,13 @@ class PictureButton extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: const LinearGradient(
-          colors: [ColorConstants.gradient1, ColorConstants.gradient2],
+          colors: [ColorConstants.main, ColorConstants.onMain],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         boxShadow: [
           BoxShadow(
-            color: ColorConstants.gradient2.withValues(alpha: 0.3),
+            color: ColorConstants.main.withValues(alpha: 0.3),
             spreadRadius: 2,
             blurRadius: 4,
             offset: const Offset(2, 3),
