@@ -707,7 +707,7 @@ abstract class AppLocalizations {
   /// No description provided for @adminChooseGroupManager.
   ///
   /// In fr, this message translates to:
-  /// **'Choisir un groupe pour gérer l\'adhésion'**
+  /// **'Groupe gestionnaire de l\'adhésion'**
   String get adminChooseGroupManager;
 
   /// No description provided for @adminSelectManager.
