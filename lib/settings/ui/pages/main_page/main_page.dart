@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/settings/providers/notification_topic_provider.dart';
 import 'package:titan/settings/tools/functions.dart';
 import 'package:titan/settings/ui/pages/main_page/edit_profile.dart';
@@ -48,9 +49,9 @@ class SettingsMainPage extends HookConsumerWidget {
       error: (_, _) => 0,
     );
 
-    final selectedLanguage = ref.watch(localeProvider)?.languageCode == 'fr'
-        ? "Français"
-        : "English";
+    final localizeWithContext = AppLocalizations.of(context)!;
+
+    final selectedLanguage = localizeWithContext.settingsLanguageVar;
 
     return SettingsTemplate(
       child: Refresher(
@@ -98,8 +99,8 @@ class SettingsMainPage extends HookConsumerWidget {
                     const HeroIcon(HeroIcons.userCircle, size: 140),
               ),
               const SizedBox(height: 20),
-              const Text(
-                "Compte",
+              Text(
+                localizeWithContext.settingsAccount,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -107,12 +108,12 @@ class SettingsMainPage extends HookConsumerWidget {
                 ),
               ),
               ListItem(
-                title: "Profil",
-                subtitle: "Modifier mon profil",
+                title: localizeWithContext.settingsProfile,
+                subtitle: localizeWithContext.settingsEditAccount,
                 onTap: () async {
                   await showCustomBottomModal(
                     modal: BottomModalTemplate(
-                      title: 'Modifier mon profil',
+                      title: localizeWithContext.settingsEditAccount,
                       child: EditProfile(),
                     ),
                     context: context,
@@ -121,12 +122,12 @@ class SettingsMainPage extends HookConsumerWidget {
                 },
               ),
               ListItem(
-                title: "Langue",
+                title: localizeWithContext.settingsLanguage,
                 subtitle: selectedLanguage,
                 onTap: () async {
                   await showCustomBottomModal(
                     modal: BottomModalTemplate(
-                      title: 'Choix de la langue',
+                      title: localizeWithContext.settingsChooseLanguage,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -172,13 +173,15 @@ class SettingsMainPage extends HookConsumerWidget {
                 },
               ),
               ListItem(
-                title: "Notifications",
-                subtitle:
-                    "$notificationAcivatedCounts/$notificationTopicsLength activées",
+                title: localizeWithContext.settingsNotifications,
+                subtitle: localizeWithContext.settingsNotificationCounter(
+                  notificationAcivatedCounts,
+                  notificationTopicsLength,
+                ),
                 onTap: () async {
                   await showCustomBottomModal(
                     modal: BottomModalTemplate(
-                      title: 'Notifications',
+                      title: localizeWithContext.settingsNotifications,
                       child: Consumer(
                         builder: (context, ref, child) {
                           final notificationTopicList = ref.watch(
@@ -264,8 +267,8 @@ class SettingsMainPage extends HookConsumerWidget {
                 },
               ),
               const SizedBox(height: 20),
-              const Text(
-                "Événements",
+              Text(
+                localizeWithContext.settingsEvent,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -273,8 +276,8 @@ class SettingsMainPage extends HookConsumerWidget {
                 ),
               ),
               ListItemTemplate(
-                title: "Lien ical",
-                subtitle: "Synchroniser avec votre calendrier",
+                title: localizeWithContext.settingsIcal,
+                subtitle: localizeWithContext.settingsSynncWithCalendar,
                 trailing: const HeroIcon(
                   HeroIcons.clipboardDocumentList,
                   color: ColorConstants.tertiary,
@@ -285,7 +288,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   ).then((value) {
                     displayToastWithContext(
                       TypeMsg.msg,
-                      "Lien ical copié dans le presse-papiers",
+                      localizeWithContext.settingsIcalCopied,
                     );
                   });
                 },

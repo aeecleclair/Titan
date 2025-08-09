@@ -3015,10 +3015,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsEdit => 'Modifier';
 
   @override
-  String get settingsEditAccount => 'Modifier le compte';
-
-  @override
-  String get settingsEditPassword => 'Modifier le mot de passe';
+  String get settingsEditAccount => 'Modifier mon profil';
 
   @override
   String get settingsEmail => 'Email';
@@ -3056,7 +3053,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsLanguage => 'Langue';
 
   @override
-  String get settingsLanguageFr => 'Français';
+  String get settingsLanguageVar => 'Français 🇫🇷';
 
   @override
   String get settingsLogs => 'Logs';
@@ -3156,6 +3153,49 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsPasswordStrengthVeryStrong => 'Très fort';
+
+  @override
+  String get settingsPhoneNumber => 'Numéro de téléphone';
+
+  @override
+  String get settingsValidate => 'Valider';
+
+  @override
+  String get settingsEditedAccount => 'Compte modifié avec succès';
+
+  @override
+  String get settingsFailedToEditAccount =>
+      'Échec de la modification du compte';
+
+  @override
+  String get settingsChooseLanguage => 'Choix de la langue';
+
+  @override
+  String settingsNotificationCounter(int active, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      active,
+      locale: localeName,
+      other: 'activées',
+      one: 'activée',
+      zero: 'activée',
+    );
+    return '$active/$total $_temp0';
+  }
+
+  @override
+  String get settingsEvent => 'Événement';
+
+  @override
+  String get settingsIcal => 'Lien Ical';
+
+  @override
+  String get settingsSynncWithCalendar => 'Synchroniser avec votre calendrier';
+
+  @override
+  String get settingsIcalLinkCopied => 'Lien Ical copié dans le presse-papier';
+
+  @override
+  String get settingsProfile => 'Profil';
 
   @override
   String get voteAdd => 'Ajouter';

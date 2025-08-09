@@ -5963,14 +5963,8 @@ abstract class AppLocalizations {
   /// No description provided for @settingsEditAccount.
   ///
   /// In fr, this message translates to:
-  /// **'Modifier le compte'**
+  /// **'Modifier mon profil'**
   String get settingsEditAccount;
-
-  /// No description provided for @settingsEditPassword.
-  ///
-  /// In fr, this message translates to:
-  /// **'Modifier le mot de passe'**
-  String get settingsEditPassword;
 
   /// No description provided for @settingsEmail.
   ///
@@ -6038,11 +6032,11 @@ abstract class AppLocalizations {
   /// **'Langue'**
   String get settingsLanguage;
 
-  /// No description provided for @settingsLanguageFr.
+  /// No description provided for @settingsLanguageVar.
   ///
   /// In fr, this message translates to:
-  /// **'Français'**
-  String get settingsLanguageFr;
+  /// **'Français 🇫🇷'**
+  String get settingsLanguageVar;
 
   /// No description provided for @settingsLogs.
   ///
@@ -6235,6 +6229,72 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Très fort'**
   String get settingsPasswordStrengthVeryStrong;
+
+  /// No description provided for @settingsPhoneNumber.
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro de téléphone'**
+  String get settingsPhoneNumber;
+
+  /// No description provided for @settingsValidate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider'**
+  String get settingsValidate;
+
+  /// No description provided for @settingsEditedAccount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte modifié avec succès'**
+  String get settingsEditedAccount;
+
+  /// No description provided for @settingsFailedToEditAccount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de la modification du compte'**
+  String get settingsFailedToEditAccount;
+
+  /// No description provided for @settingsChooseLanguage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choix de la langue'**
+  String get settingsChooseLanguage;
+
+  /// Affiche le nombre de notifications actives sur le total des notifications disponibles, avec gestion du pluriel
+  ///
+  /// In fr, this message translates to:
+  /// **'{active}/{total} {active, plural, zero {activée} one {activée} other {activées}}'**
+  String settingsNotificationCounter(int active, int total);
+
+  /// No description provided for @settingsEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement'**
+  String get settingsEvent;
+
+  /// No description provided for @settingsIcal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lien Ical'**
+  String get settingsIcal;
+
+  /// No description provided for @settingsSynncWithCalendar.
+  ///
+  /// In fr, this message translates to:
+  /// **'Synchroniser avec votre calendrier'**
+  String get settingsSynncWithCalendar;
+
+  /// No description provided for @settingsIcalLinkCopied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lien Ical copié dans le presse-papier'**
+  String get settingsIcalLinkCopied;
+
+  /// No description provided for @settingsProfile.
+  ///
+  /// In fr, this message translates to:
+  /// **'Profil'**
+  String get settingsProfile;
 
   /// No description provided for @voteAdd.
   ///

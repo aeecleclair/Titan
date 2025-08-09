@@ -32,6 +32,9 @@ class EditProfile extends ConsumerWidget {
 
     MediaQuery.of(context).viewInsets.bottom;
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+    final navigatorWithContext = Navigator.of(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: SingleChildScrollView(
@@ -75,24 +78,21 @@ class EditProfile extends ConsumerWidget {
                                 if (value) {
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.settingsUpdatedProfilePicture,
+                                    localizeWithContext
+                                        .settingsUpdatedProfilePicture,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.settingsTooHeavyProfilePicture,
+                                    localizeWithContext
+                                        .settingsTooHeavyProfilePicture,
                                   );
                                 }
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.settingsErrorProfilePicture,
+                                  localizeWithContext
+                                      .settingsErrorProfilePicture,
                                 );
                               }
                             },
@@ -110,24 +110,21 @@ class EditProfile extends ConsumerWidget {
                                 if (value) {
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.settingsUpdatedProfilePicture,
+                                    localizeWithContext
+                                        .settingsUpdatedProfilePicture,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.settingsTooHeavyProfilePicture,
+                                    localizeWithContext
+                                        .settingsTooHeavyProfilePicture,
                                   );
                                 }
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.settingsErrorProfilePicture,
+                                  localizeWithContext
+                                      .settingsErrorProfilePicture,
                                 );
                               }
                             },
@@ -145,16 +142,14 @@ class EditProfile extends ConsumerWidget {
                                 if (value) {
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.settingsUpdatedProfilePicture,
+                                    localizeWithContext
+                                        .settingsUpdatedProfilePicture,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    AppLocalizations.of(
-                                      context,
-                                    )!.settingsErrorProfilePicture,
+                                    localizeWithContext
+                                        .settingsErrorProfilePicture,
                                   );
                                 }
                               }
@@ -171,13 +166,13 @@ class EditProfile extends ConsumerWidget {
               ),
             SizedBox(height: View.of(context).viewInsets.bottom == 0 ? 30 : 10),
             TextEntry(
-              label: "Email",
+              label: localizeWithContext.settingsEmail,
               controller: textControllers[0],
               enabled: false,
             ),
             SizedBox(height: 20),
             TextEntry(
-              label: "Numéro de téléphone",
+              label: localizeWithContext.settingsPhoneNumber,
               controller: textControllers[1],
               textInputAction: TextInputAction.done,
               onChanged: (value) {
@@ -189,7 +184,7 @@ class EditProfile extends ConsumerWidget {
               children: [
                 Expanded(
                   child: TextEntry(
-                    label: "Date de naissance",
+                    label: localizeWithContext.settingsBirthday,
                     controller: textControllers[2],
                     enabled: false,
                   ),
@@ -214,7 +209,7 @@ class EditProfile extends ConsumerWidget {
             ),
             SizedBox(height: 30),
             Button(
-              text: "Valider",
+              text: localizeWithContext.settingsValidate,
               disabled:
                   !(textControllers[1].value.text != me.phone ||
                       textControllers[2].value.text.isNotEmpty),
@@ -234,10 +229,16 @@ class EditProfile extends ConsumerWidget {
                     );
                     final value = await asyncUserNotifier.updateMe(newMe);
                     if (value) {
-                      displayToastWithContext(TypeMsg.msg, "Succès");
-                      Navigator.of(context).pop();
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        localizeWithContext.settingsEditedAccount,
+                      );
+                      navigatorWithContext.pop();
                     } else {
-                      displayToastWithContext(TypeMsg.error, "Échec");
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        localizeWithContext.settingsFailedToEditAccount,
+                      );
                     }
                   });
                 }
