@@ -48,8 +48,8 @@ class GroupUi extends HookConsumerWidget {
             WaitingButton(
               onTap: onDelete,
               builder: (child) => GroupButton(
-                gradient1: ColorConstants.gradient1,
-                gradient2: ColorConstants.gradient2,
+                gradient1: ColorConstants.main,
+                gradient2: ColorConstants.onMain,
                 child: child,
               ),
               child: const HeroIcon(HeroIcons.xMark, color: Colors.white),
