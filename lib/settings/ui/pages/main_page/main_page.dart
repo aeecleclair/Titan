@@ -197,10 +197,11 @@ class SettingsMainPage extends HookConsumerWidget {
                                     context,
                                   );
                               final uniqueTopics =
-                                  notificationTopicsByModuleRoot[''] ?? [];
+                                  notificationTopicsByModuleRoot['others'] ??
+                                  [];
                               final groupedTopics = Map.from(
                                 notificationTopicsByModuleRoot,
-                              )..remove('');
+                              )..remove('others');
                               return Column(
                                 children: [
                                   ...uniqueTopics.map(

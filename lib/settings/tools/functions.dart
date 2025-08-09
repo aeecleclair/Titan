@@ -32,7 +32,7 @@ Map<String, List<NotificationTopic>> groupNotificationTopicsByModuleRoot(
   });
 
   if (singleTopics.isNotEmpty) {
-    result[""] = singleTopics;
+    result["others"] = singleTopics;
   }
 
   return result;
