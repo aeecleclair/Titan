@@ -14,11 +14,11 @@ class SuperAdminButton extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [ColorConstants.gradient1, ColorConstants.gradient2],
+          colors: [ColorConstants.main, ColorConstants.onMain],
         ),
         boxShadow: [
           BoxShadow(
-            color: ColorConstants.gradient2.withValues(alpha: 0.5),
+            color: ColorConstants.main.withValues(alpha: 0.5),
             blurRadius: 5,
             offset: const Offset(2, 2),
             spreadRadius: 2,
