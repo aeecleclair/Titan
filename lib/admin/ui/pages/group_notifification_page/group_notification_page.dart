@@ -102,7 +102,7 @@ class GroupNotificationPage extends HookConsumerWidget {
                                                     displayToastWithContext(
                                                       TypeMsg.msg,
                                                       localizeWithContext
-                                                          .adminNotificationSended,
+                                                          .adminNotificationSent,
                                                     );
                                                   } else {
                                                     displayToastWithContext(
