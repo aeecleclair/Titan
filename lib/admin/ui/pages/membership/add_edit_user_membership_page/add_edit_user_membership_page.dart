@@ -103,10 +103,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
               const SizedBox(height: 50),
               WaitingButton(
                 builder: (child) => AddEditButtonLayout(
-                  colors: const [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
-                  ],
+                  colors: const [ColorConstants.main, ColorConstants.onMain],
                   child: child,
                 ),
                 child: Text(
