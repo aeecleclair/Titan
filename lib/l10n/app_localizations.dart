@@ -263,7 +263,7 @@ abstract class AppLocalizations {
   /// No description provided for @adminDeleteGroup.
   ///
   /// In fr, this message translates to:
-  /// **'Supprimer le groupe ?'**
+  /// **'Supprimer le groupe'**
   String get adminDeleteGroup;
 
   /// No description provided for @adminDeletedGroup.
@@ -704,11 +704,11 @@ abstract class AppLocalizations {
   /// **'Gestion des adhésions'**
   String get adminAssociationMembershipsManagement;
 
-  /// No description provided for @adminChooseAssication.
+  /// No description provided for @adminChooseGroupManager.
   ///
   /// In fr, this message translates to:
   /// **'Choisir une association'**
-  String get adminChooseAssication;
+  String get adminChooseGroupManager;
 
   /// No description provided for @adminSelectManager.
   ///
@@ -803,7 +803,7 @@ abstract class AppLocalizations {
   /// No description provided for @advertDeleteAdvert.
   ///
   /// In fr, this message translates to:
-  /// **'Supprimer l\'annonce ?'**
+  /// **'Supprimer l\'annonce'**
   String get advertDeleteAdvert;
 
   /// No description provided for @advertDeleteAnnouncer.

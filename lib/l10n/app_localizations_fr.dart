@@ -91,7 +91,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminDeletedAssociationMembership => 'Adhésion supprimée';
 
   @override
-  String get adminDeleteGroup => 'Supprimer le groupe ?';
+  String get adminDeleteGroup => 'Supprimer le groupe';
 
   @override
   String get adminDeletedGroup => 'Groupe supprimé';
@@ -323,7 +323,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminAssociationMembershipsManagement => 'Gestion des adhésions';
 
   @override
-  String get adminChooseAssication => 'Choisir une association';
+  String get adminChooseGroupManager => 'Choisir une association';
 
   @override
   String get adminSelectManager => 'Sélectionner un gestionnaire';
@@ -372,7 +372,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get advertContent => 'Contenu';
 
   @override
-  String get advertDeleteAdvert => 'Supprimer l\'annonce ?';
+  String get advertDeleteAdvert => 'Supprimer l\'annonce';
 
   @override
   String get advertDeleteAnnouncer => 'Supprimer l\'annonceur ?';
