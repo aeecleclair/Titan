@@ -83,8 +83,7 @@ class AdminMainPage extends HookConsumerWidget {
             ListItem(
               title: "Annonceurs",
               subtitle: "Gérer les annonceurs",
-              onTap: () =>
-                  QR.to(AdminRouter.root + AdminRouter.associationMemberships),
+              onTap: () => QR.to(AdminRouter.root + AdminRouter.advertisers),
             ),
           ],
         ),

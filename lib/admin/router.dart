@@ -22,6 +22,8 @@ import 'package:titan/admin/ui/pages/membership/association_membership_detail_pa
     deferred as association_membership_detail_page;
 import 'package:titan/admin/ui/pages/membership/add_edit_user_membership_page/add_edit_user_membership_page.dart'
     deferred as add_edit_user_membership_page;
+import 'package:titan/admin/ui/pages/advertisers/advertisers_main_page.dart'
+    deferred as advertisers_main_page;
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -40,6 +42,7 @@ class AdminRouter {
   static const String detailAssociationMembership =
       '/detail_association_membership';
   static const String addEditMember = '/add_edit_member';
+  static const String advertisers = '/advertisers';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.adminAdmin,
     description: "Gérer les utilisateurs, groupes et structures",
@@ -132,6 +135,13 @@ class AdminRouter {
               ),
             ],
           ),
+        ],
+      ),
+      QRoute(
+        path: advertisers,
+        builder: () => advertisers_main_page.AdvertisersMainPage(),
+        middleware: [
+          DeferredLoadingMiddleware(advertisers_main_page.loadLibrary),
         ],
       ),
     ],
