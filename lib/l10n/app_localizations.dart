@@ -659,7 +659,7 @@ abstract class AppLocalizations {
   /// No description provided for @adminUsersManagementDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Gérez les utilisateurs de l\'application'**
+  /// **'Gérer les utilisateurs de l\'application'**
   String get adminUsersManagementDescription;
 
   /// No description provided for @adminManageUserGroups.
@@ -745,6 +745,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Supprimer des utilisateurs'**
   String get adminDeleteUsers;
+
+  /// No description provided for @adminAdmin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Admin'**
+  String get adminAdmin;
 
   /// No description provided for @advertAdd.
   ///
@@ -979,6 +985,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Déc.'**
   String get advertMonthDec;
+
+  /// No description provided for @advertModuleDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les annonces'**
+  String get advertModuleDescription;
 
   /// No description provided for @amapAccounts.
   ///

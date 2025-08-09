@@ -12,6 +12,7 @@ import 'package:titan/admin/ui/pages/group_notifification_page/group_notificatio
     deferred as group_notification_page;
 import 'package:titan/admin/ui/pages/structure_page/add_edit_structure_page/add_edit_structure_page.dart'
     deferred as add_edit_structure_page;
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/admin/ui/pages/structure_page/structure_page.dart'
     deferred as structure_page;
@@ -40,8 +41,8 @@ class AdminRouter {
       '/detail_association_membership';
   static const String addEditMember = '/add_edit_member';
   static final Module module = Module(
-    getName: (context) => "Admin",
-    description: "Gérer les utilisateurs de l'application",
+    getName: (context) => AppLocalizations.of(context)!.adminAdmin,
+    description: "Gérer les utilisateurs, groupes et structures",
     root: AdminRouter.root,
   );
 

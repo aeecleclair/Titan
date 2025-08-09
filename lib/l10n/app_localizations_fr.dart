@@ -296,7 +296,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get adminUsersManagementDescription =>
-      'Gérez les utilisateurs de l\'application';
+      'Gérer les utilisateurs de l\'application';
 
   @override
   String get adminManageUserGroups => 'Gérer les groupes d\'utilisateurs';
@@ -343,6 +343,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get adminDeleteUsers => 'Supprimer des utilisateurs';
+
+  @override
+  String get adminAdmin => 'Admin';
 
   @override
   String get advertAdd => 'Ajouter';
@@ -460,6 +463,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get advertMonthDec => 'Déc.';
+
+  @override
+  String get advertModuleDescription => 'Gérer les annonces';
 
   @override
   String get amapAccounts => 'Comptes';
