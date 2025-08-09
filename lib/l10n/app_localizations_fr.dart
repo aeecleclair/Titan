@@ -266,7 +266,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminSend => 'Envoyer';
 
   @override
-  String get adminNotificationSended => 'Notification envoyée';
+  String get adminNotificationSent => 'Notification envoyée';
 
   @override
   String get adminFailedToSendNotification =>
@@ -463,9 +463,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get advertMonthDec => 'Déc.';
-
-  @override
-  String get advertModuleDescription => 'Gérer les annonces';
 
   @override
   String get amapAccounts => 'Comptes';

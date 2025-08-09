@@ -602,11 +602,11 @@ abstract class AppLocalizations {
   /// **'Envoyer'**
   String get adminSend;
 
-  /// No description provided for @adminNotificationSended.
+  /// No description provided for @adminNotificationSent.
   ///
   /// In fr, this message translates to:
   /// **'Notification envoyée'**
-  String get adminNotificationSended;
+  String get adminNotificationSent;
 
   /// No description provided for @adminFailedToSendNotification.
   ///
@@ -985,12 +985,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Déc.'**
   String get advertMonthDec;
-
-  /// No description provided for @advertModuleDescription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Gérer les annonces'**
-  String get advertModuleDescription;
 
   /// No description provided for @amapAccounts.
   ///

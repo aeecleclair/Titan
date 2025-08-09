@@ -248,100 +248,98 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminVisibilities => 'Visibilities';
 
   @override
-  String get adminGroupNotification => 'Notification de groupe';
+  String get adminGroupNotification => 'Group notifications';
 
   @override
   String adminNotifyGroup(String groupName) {
-    return 'Notifier le groupe $groupName';
+    return 'Send a notification';
   }
 
   @override
-  String get adminTitle => 'Titre';
+  String get adminTitle => 'Title';
 
   @override
-  String get adminContent => 'Contenu';
+  String get adminContent => 'Content';
 
   @override
-  String get adminSend => 'Envoyer';
+  String get adminSend => 'Send';
 
   @override
-  String get adminNotificationSended => 'Notification envoyée';
+  String get adminNotificationSent => 'Notification sent';
 
   @override
-  String get adminFailedToSendNotification =>
-      'Échec de l\'envoi de la notification';
+  String get adminFailedToSendNotification => 'Failed to send notification';
 
   @override
-  String get adminGroupsManagement => 'Gestion des groupes';
+  String get adminGroupsManagement => 'Groups management';
 
   @override
-  String get adminEditGroup => 'Modifier le groupe';
+  String get adminEditGroup => 'Edit group';
 
   @override
-  String get adminManageMembers => 'Gérer les membres';
+  String get adminManageMembers => 'Manage members';
 
   @override
   String get adminDeleteGroupConfirmation =>
-      'Êtes-vous sûr de vouloir supprimer ce groupe ?';
+      'Are you sure you want to delete this group?';
 
   @override
-  String get adminFailedToDeleteGroup => 'Échec de la suppression du groupe';
+  String get adminFailedToDeleteGroup => 'Failed to delete group';
 
   @override
-  String get adminUsersAndGroups => 'Utilisateurs et groupes';
+  String get adminUsersAndGroups => 'Users and groups';
 
   @override
-  String get adminUsersManagement => 'Gestion des utilisateurs';
+  String get adminUsersManagement => 'Users management';
 
   @override
   String get adminUsersManagementDescription =>
-      'Gérer les utilisateurs de l\'application';
+      'Manage users, groups, and associations';
 
   @override
-  String get adminManageUserGroups => 'Gérer les groupes d\'utilisateurs';
+  String get adminManageUserGroups => 'Manage user groups';
 
   @override
-  String get adminSendNotificationToGroup =>
-      'Envoyer une notification à un groupe';
+  String get adminSendNotificationToGroup => 'Send notification to group';
 
   @override
-  String get adminPaiementModule => 'Module de paiement';
+  String get adminPaiementModule => 'Payment module';
 
   @override
-  String get adminPaiement => 'Paiement';
+  String get adminPaiement => 'Payment';
 
   @override
-  String get adminManagePaiementStructures =>
-      'Gérer les structures du module de paiement';
+  String get adminManagePaiementStructures => 'Manage payment structures';
 
   @override
   String get adminManageUsersAssociationMemberships =>
-      'Gérer les adhésions des utilisateurs';
+      'Manage users\' association memberships';
 
   @override
-  String get adminAssociationMembershipsManagement => 'Gestion des adhésions';
+  String get adminAssociationMembershipsManagement =>
+      'Association memberships management';
 
   @override
-  String get adminChooseGroupManager => 'Groupe gestionnaire de l\'adhésion';
+  String get adminChooseGroupManager =>
+      'Choose a group to manage this membership';
 
   @override
-  String get adminSelectManager => 'Sélectionner un gestionnaire';
+  String get adminSelectManager => 'Select a manager';
 
   @override
-  String get adminInviteUsers => 'Inviter des utilisateurs';
+  String get adminInviteUsers => 'Invite users';
 
   @override
-  String get adminImportList => 'Importer une liste';
+  String get adminImportList => 'Import a list';
 
   @override
-  String get adminInvitedUsers => 'Utilisateurs invités';
+  String get adminInvitedUsers => 'Invited users';
 
   @override
-  String get adminFailedToInviteUsers =>
-      'Échec de l\'invitation des utilisateurs';
+  String get adminFailedToInviteUsers => 'Failed to invite users';
 
   @override
-  String get adminDeleteUsers => 'Supprimer des utilisateurs';
+  String get adminDeleteUsers => 'Delete users';
 
   @override
   String get adminAdmin => 'Admin';
@@ -462,9 +460,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get advertMonthDec => 'Dec';
-
-  @override
-  String get advertModuleDescription => 'Gérer les annonces';
 
   @override
   String get amapAccounts => 'Accounts';
