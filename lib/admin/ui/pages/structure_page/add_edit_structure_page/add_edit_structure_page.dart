@@ -102,7 +102,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                   },
                 ),
                 const SizedBox(height: 20),
-                (isEdit | (structureManager.id != ""))
+                (isEdit)
                     ? Column(
                         children: [
                           Text(
