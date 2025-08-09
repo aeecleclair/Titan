@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/user_invitation_provider.dart';
+import 'package:titan/admin/tools/functions.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -43,23 +44,7 @@ class AddUsersModalContent extends HookConsumerWidget {
 
                 if (file.path != null) {
                   final fileContent = await File(file.path!).readAsString();
-
-                  final lines = fileContent.split('\n');
-                  final List<String> emails = [];
-
-                  for (var i = 0; i < lines.length; i++) {
-                    final line = lines[i].trim();
-                    if (line.isEmpty) continue;
-
-                    final columns = line.split(',');
-
-                    final email = columns[0].trim();
-
-                    if (email.contains('@')) {
-                      emails.add(email);
-                    }
-                  }
-                  mailList.value = emails;
+                  mailList.value = getMailListFromCSV(fileContent);
                 }
               }
             },
