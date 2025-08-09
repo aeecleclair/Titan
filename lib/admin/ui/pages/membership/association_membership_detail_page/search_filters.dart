@@ -132,10 +132,7 @@ class SearchFilters extends HookConsumerWidget {
                   });
                 },
                 builder: (child) => AddEditButtonLayout(
-                  colors: const [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
-                  ],
+                  colors: const [ColorConstants.main, ColorConstants.onMain],
                   child: child,
                 ),
                 child: Text(
@@ -166,10 +163,7 @@ class SearchFilters extends HookConsumerWidget {
                   });
                 },
                 builder: (child) => AddEditButtonLayout(
-                  colors: const [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
-                  ],
+                  colors: const [ColorConstants.main, ColorConstants.onMain],
                   child: child,
                 ),
                 child: Text(

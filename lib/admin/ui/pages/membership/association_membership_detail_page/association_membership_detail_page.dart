@@ -53,7 +53,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
-                    color: ColorConstants.gradient1,
+                    color: ColorConstants.main,
                   ),
                 ),
               ),
@@ -66,7 +66,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      color: ColorConstants.gradient1,
+                      color: ColorConstants.main,
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -75,7 +75,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      color: ColorConstants.gradient1,
+                      color: ColorConstants.main,
                     ),
                   ),
                   const Spacer(),
@@ -85,7 +85,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                       height: 40,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: ColorConstants.gradient1,
+                        color: ColorConstants.main,
                       ),
                       child: child,
                     ),

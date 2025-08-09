@@ -53,7 +53,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                     SizedBox(
                       child: TextFormField(
                         controller: name,
-                        cursorColor: ColorConstants.gradient1,
+                        cursorColor: ColorConstants.main,
                         decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.adminName,
                           labelStyle: const TextStyle(
@@ -68,9 +68,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                             borderSide: BorderSide(color: Colors.transparent),
                           ),
                           focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: ColorConstants.gradient1,
-                            ),
+                            borderSide: BorderSide(color: ColorConstants.main),
                           ),
                         ),
                         validator: (value) {
@@ -113,10 +111,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
               const SizedBox(height: 20),
               WaitingButton(
                 builder: (child) => AddEditButtonLayout(
-                  colors: const [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
-                  ],
+                  colors: const [ColorConstants.main, ColorConstants.onMain],
                   child: child,
                 ),
                 onTap: () async {
