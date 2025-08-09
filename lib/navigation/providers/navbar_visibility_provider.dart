@@ -33,11 +33,6 @@ class NavbarVisibilityNotifier extends StateNotifier<bool> {
       forceShow();
     }
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 }
 
 final navbarVisibilityProvider =

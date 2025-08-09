@@ -15,7 +15,6 @@ import 'package:titan/router.dart';
 import 'package:titan/service/tools/setup.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/plausible/plausible_observer.dart';
-import 'package:titan/tools/providers/locale_notifier.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -104,7 +103,7 @@ class MyApp extends HookConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       theme: ThemeData(
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.red,
         textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
         brightness: Brightness.light,
       ),
@@ -115,13 +114,12 @@ class MyApp extends HookConsumerWidget {
         }
         return AppTemplate(child: child);
       },
-	routerDelegate: QRouterDelegate(
+      routerDelegate: QRouterDelegate(
         appRouter.routes,
         observers: [if (plausible != null) PlausibleObserver(plausible)],
         initPath: AppRouter.root,
         navKey: navigatorKey,
       ),
-
     );
   }
 }
