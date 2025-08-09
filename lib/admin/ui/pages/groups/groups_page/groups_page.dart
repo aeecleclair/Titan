@@ -59,7 +59,7 @@ class GroupsPage extends HookConsumerWidget {
                 Row(
                   children: [
                     Text(
-                      localizeWithContext.adminGroupManagement,
+                      localizeWithContext.adminGroupsManagement,
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,

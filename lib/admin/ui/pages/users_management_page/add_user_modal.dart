@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/user_creation_provider.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
@@ -22,12 +23,14 @@ class AddUsersModalContent extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     return BottomModalTemplate(
-      title: "Ajouter des utilisateurs",
+      title: localizeWithContext.adminInviteUsers,
       child: Column(
         children: [
           Button(
-            text: selectedFileName.value ?? "Importer une liste",
+            text: selectedFileName.value ?? localizeWithContext.adminImportList,
             onPressed: () async {
               final result = await FilePicker.platform.pickFiles(
                 type: FileType.custom,
@@ -63,7 +66,7 @@ class AddUsersModalContent extends HookConsumerWidget {
           ),
           const SizedBox(height: 20),
           Button(
-            text: "Ajouter",
+            text: localizeWithContext.adminAdd,
             onPressed: () {
               tokenExpireWrapper(ref, () async {
                 final userCreationNotifier = ref.watch(
@@ -73,9 +76,15 @@ class AddUsersModalContent extends HookConsumerWidget {
                   mailList.value,
                 );
                 if (value) {
-                  displayToastWithContext(TypeMsg.msg, "Succès");
+                  displayToastWithContext(
+                    TypeMsg.msg,
+                    localizeWithContext.adminInvitedUsers,
+                  );
                 } else {
-                  displayToastWithContext(TypeMsg.error, "Échec");
+                  displayToastWithContext(
+                    TypeMsg.error,
+                    localizeWithContext.adminFailedToInviteUsers,
+                  );
                 }
                 // popWithContext();
               });

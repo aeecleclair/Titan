@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
@@ -24,20 +25,25 @@ class AddMembershipModal extends HookWidget {
     final nameController = useTextEditingController();
     final chosenGroup = useState<SimpleGroup?>(null);
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     return BottomModalTemplate(
-      title: "Gestion des adhésions",
+      title: localizeWithContext.adminAssociationMembershipsManagement,
       child: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TextEntry(label: "Nom", controller: nameController),
+              child: TextEntry(
+                label: localizeWithContext.adminName,
+                controller: nameController,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: chosenGroup.value == null
                   ? ListItem(
-                      title: "Choisir une association",
+                      title: localizeWithContext.adminChooseAssication,
                       onTap: () async {
                         FocusScope.of(context).unfocus();
                         final ctx = context;
@@ -48,7 +54,7 @@ class AddMembershipModal extends HookWidget {
                           context: ctx,
                           ref: ref,
                           modal: BottomModalTemplate(
-                            title: "Choisir une association",
+                            title: localizeWithContext.adminChooseAssication,
                             child: Column(
                               children: [
                                 ...groups.map(
@@ -70,7 +76,7 @@ class AddMembershipModal extends HookWidget {
             ),
             const SizedBox(height: 10),
             Button(
-              text: 'Ajouter',
+              text: localizeWithContext.adminAdd,
               onPressed: () {
                 if (chosenGroup.value != null) {
                   onSubmit(chosenGroup.value!, nameController.text);

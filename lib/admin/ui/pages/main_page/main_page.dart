@@ -4,6 +4,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/admin/admin.dart';
 import 'package:titan/admin/router.dart';
 import 'package:titan/admin/ui/pages/users_management_page/users_management_page.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
 
@@ -16,56 +17,65 @@ class AdminMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(userList);
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     return AdminTemplate(
       child: Padding(
         padding: const EdgeInsets.all(40),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Gestion", style: Theme.of(context).textTheme.headlineMedium),
+            Text(
+              localizeWithContext.adminAdministration,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
             const SizedBox(height: 20),
             Text(
-              "Utilisateurs & Groupes",
+              localizeWithContext.adminUsersAndGroups,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             ListItem(
-              title: "Gestion des utilisateurs",
-              subtitle: "Gérer les utilisateurs de l'application",
+              title: localizeWithContext.adminUsersManagement,
+              subtitle: localizeWithContext.adminUsersManagementDescription,
               onTap: () async {
                 await showCustomBottomModal(
                   context: context,
                   ref: ref,
                   modal: BottomModalTemplate(
-                    title: "Gestion des utilisateurs",
+                    title: localizeWithContext.adminUsersManagement,
                     child: UsersManagementPage(),
                   ),
                 );
               },
             ),
             ListItem(
-              title: "Gestion des groupes",
-              subtitle: "Gérer les groupes d'utilisateurs",
+              title: localizeWithContext.adminGroupsManagement,
+              subtitle: localizeWithContext.adminManageUserGroups,
               onTap: () => QR.to(AdminRouter.root + AdminRouter.usersGroups),
             ),
             ListItem(
-              title: "Notifications de groupe",
-              subtitle: "Gérer les notifications pour les groupes",
+              title: localizeWithContext.adminGroupNotification,
+              subtitle: localizeWithContext.adminSendNotificationToGroup,
               onTap: () =>
                   QR.to(AdminRouter.root + AdminRouter.groupNotification),
             ),
             Text(
-              "Module de paiement",
+              localizeWithContext.adminPaiementModule,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             ListItem(
-              title: "Paiement",
-              subtitle: "Gérer les structures du module de paiement",
+              title: localizeWithContext.adminPaiement,
+              subtitle: localizeWithContext.adminManagePaiementStructures,
               onTap: () => QR.to(AdminRouter.root + AdminRouter.structures),
             ),
-            Text("Adhésion", style: Theme.of(context).textTheme.titleLarge),
+            Text(
+              localizeWithContext.adminAssociationMembership,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
             ListItem(
-              title: "Adhésion",
-              subtitle: "Gérer les adhésions des utilisateurs",
+              title: localizeWithContext.adminAssociationMembership,
+              subtitle:
+                  localizeWithContext.adminManageUsersAssociationMemberships,
               onTap: () =>
                   QR.to(AdminRouter.root + AdminRouter.associationMemberships),
             ),

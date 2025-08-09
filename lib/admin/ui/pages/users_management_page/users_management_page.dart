@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/ui/pages/users_management_page/add_user_modal.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 
@@ -9,11 +10,12 @@ class UsersManagementPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizeWithContext = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Button(
-          text: 'Ajouter',
+          text: localizeWithContext.adminEdit,
           onPressed: () async {
             Navigator.pop(context);
             await showCustomBottomModal(
@@ -25,7 +27,7 @@ class UsersManagementPage extends HookConsumerWidget {
         ),
         const SizedBox(height: 20),
         Button(
-          text: 'Supprimer',
+          text: localizeWithContext.adminDelete,
           onPressed: () async {
             Navigator.pop(context);
             await showCustomBottomModal(
@@ -33,16 +35,20 @@ class UsersManagementPage extends HookConsumerWidget {
               ref: ref,
               modal: BottomModalTemplate(
                 type: BottomModalType.danger,
-                title: "Supprimer des utilisateurs",
+                title: localizeWithContext.adminDeleteUsers,
                 child: Column(
                   children: [
                     Button(
-                      text: "Importer une liste",
+                      text: localizeWithContext.adminImportList,
                       onPressed: () {},
                       type: ButtonType.onDanger,
                     ),
                     const SizedBox(height: 20),
-                    Button(text: "Supprimer", onPressed: () {}, disabled: true),
+                    Button(
+                      text: localizeWithContext.adminDelete,
+                      onPressed: () {},
+                      disabled: true,
+                    ),
                   ],
                 ),
               ),

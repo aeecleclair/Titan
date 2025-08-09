@@ -38,6 +38,8 @@ class StructurePage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     return AdminTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -52,7 +54,7 @@ class StructurePage extends HookConsumerWidget {
               Row(
                 children: [
                   Text(
-                    AppLocalizations.of(context)!.adminStructures,
+                    localizeWithContext.adminStructures,
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   const Spacer(),
@@ -94,11 +96,12 @@ class StructurePage extends HookConsumerWidget {
                                   context: context,
                                   ref: ref,
                                   modal: BottomModalTemplate(
-                                    title: "Gestion des utilisateurs",
+                                    title: localizeWithContext
+                                        .adminUsersManagement,
                                     child: Column(
                                       children: [
                                         Button(
-                                          text: "Modifier",
+                                          text: localizeWithContext.adminEdit,
                                           onPressed: () {
                                             structureNotifier.setStructure(
                                               structure,
@@ -118,7 +121,7 @@ class StructurePage extends HookConsumerWidget {
                                         const SizedBox(height: 10),
                                         Button(
                                           type: ButtonType.danger,
-                                          text: 'Supprimer',
+                                          text: localizeWithContext.adminDelete,
                                           onPressed: () async {
                                             await showDialog(
                                               context: context,
@@ -133,13 +136,11 @@ class StructurePage extends HookConsumerWidget {
                                                       )!.adminDeleteGroup,
                                                   onYes: () async {
                                                     final deletedGroupMsg =
-                                                        AppLocalizations.of(
-                                                          context,
-                                                        )!.adminDeletedGroup;
+                                                        localizeWithContext
+                                                            .adminDeletedGroup;
                                                     final deletingErrorMsg =
-                                                        AppLocalizations.of(
-                                                          context,
-                                                        )!.adminDeletingError;
+                                                        localizeWithContext
+                                                            .adminDeletingError;
                                                     tokenExpireWrapper(ref, () async {
                                                       final value =
                                                           await structuresNotifier

@@ -49,6 +49,8 @@ class AddEditStructurePage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     return AdminTemplate(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -65,7 +67,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: TextEntry(
                     controller: name,
-                    label: AppLocalizations.of(context)!.adminName,
+                    label: localizeWithContext.adminName,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -104,7 +106,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                     ? Column(
                         children: [
                           Text(
-                            AppLocalizations.of(context)!.adminManager,
+                            localizeWithContext.adminManager,
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -122,7 +124,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                         ],
                       )
                     : ListItem(
-                        title: "Selectioner un gestionnaire",
+                        title: localizeWithContext.adminSelectManager,
                         onTap: () async {
                           await showCustomBottomModal(
                             context: context,
@@ -140,15 +142,15 @@ class AddEditStructurePage extends HookConsumerWidget {
                     if (structureManager.id.isEmpty && !isEdit) {
                       displayToastWithContext(
                         TypeMsg.error,
-                        AppLocalizations.of(context)!.adminNoManager,
+                        localizeWithContext.adminNoManager,
                       );
                       return;
                     }
                     if (key.currentState!.validate()) {
                       await tokenExpireWrapper(ref, () async {
                         final editedStructureMsg = isEdit
-                            ? AppLocalizations.of(context)!.adminEditedStructure
-                            : AppLocalizations.of(context)!.adminAddedStructure;
+                            ? localizeWithContext.adminEditedStructure
+                            : localizeWithContext.adminAddedStructure;
                         final addedStructureErrorMsg = AppLocalizations.of(
                           context,
                         )!.adminAddingError;
@@ -190,8 +192,8 @@ class AddEditStructurePage extends HookConsumerWidget {
                   builder: (child) => AdminButton(child: child),
                   child: Text(
                     isEdit
-                        ? AppLocalizations.of(context)!.adminEdit
-                        : AppLocalizations.of(context)!.adminAdd,
+                        ? localizeWithContext.adminEdit
+                        : localizeWithContext.adminAdd,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

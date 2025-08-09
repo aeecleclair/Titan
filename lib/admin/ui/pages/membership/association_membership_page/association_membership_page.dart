@@ -49,6 +49,8 @@ class AssociationMembershipsPage extends HookConsumerWidget {
       Navigator.of(context).pop();
     }
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     return AdminTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -89,9 +91,16 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                     ),
                                   );
                               if (value) {
-                                displayToastWithContext(TypeMsg.msg, "Succès");
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  localizeWithContext
+                                      .adminCreatedAssociationMembership,
+                                );
                               } else {
-                                displayToastWithContext(TypeMsg.error, "Échec");
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  localizeWithContext.adminCreationError,
+                                );
                               }
                               popWithContext();
                             });
@@ -126,7 +135,7 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                     child: Column(
                                       children: [
                                         Button(
-                                          text: "Modifier",
+                                          text: localizeWithContext.adminEdit,
                                           onPressed: () {
                                             associationMembershipMembersNotifier
                                                 .loadAssociationMembershipMembers(
@@ -147,7 +156,7 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                         ),
                                         const SizedBox(height: 20),
                                         Button(
-                                          text: "Supprimer",
+                                          text: localizeWithContext.adminDelete,
                                           type: ButtonType.danger,
                                           onPressed: () async {
                                             await showDialog(
@@ -206,7 +215,7 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                     ],
                   );
                 },
-                loaderColor: ColorConstants.gradient1,
+                loaderColor: ColorConstants.main,
               ),
             ],
           ),
