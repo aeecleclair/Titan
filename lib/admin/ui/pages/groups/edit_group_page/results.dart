@@ -83,7 +83,7 @@ class MemberResults extends HookConsumerWidget {
                               });
                             }
                           },
-                          waitingColor: ColorConstants.gradient1,
+                          waitingColor: ColorConstants.main,
                           builder: (child) => child,
                           child: const HeroIcon(HeroIcons.plus),
                         ),
@@ -95,7 +95,7 @@ class MemberResults extends HookConsumerWidget {
             )
             .toList(),
       ),
-      loaderColor: ColorConstants.gradient1,
+      loaderColor: ColorConstants.main,
     );
   }
 }

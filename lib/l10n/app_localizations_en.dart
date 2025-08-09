@@ -248,6 +248,46 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminVisibilities => 'Visibilities';
 
   @override
+  String get adminGroupNotification => 'Notification de groupe';
+
+  @override
+  String adminNotifyGroup(String groupName) {
+    return 'Notifier le groupe $groupName';
+  }
+
+  @override
+  String get adminTitle => 'Titre';
+
+  @override
+  String get adminContent => 'Contenu';
+
+  @override
+  String get adminSend => 'Envoyer';
+
+  @override
+  String get adminNotificationSended => 'Notification envoyée';
+
+  @override
+  String get adminFailedToSendNotification =>
+      'Échec de l\'envoi de la notification';
+
+  @override
+  String get adminGroupManagement => 'Gestion des groupes';
+
+  @override
+  String get adminEditGroup => 'Modifier le groupe';
+
+  @override
+  String get adminManageMembers => 'Gérer les membres';
+
+  @override
+  String get adminDeleteGroupConfirmation =>
+      'Êtes-vous sûr de vouloir supprimer ce groupe ?';
+
+  @override
+  String get adminFailedToDeleteGroup => 'Échec de la suppression du groupe';
+
+  @override
   String get advertAdd => 'Add';
 
   @override

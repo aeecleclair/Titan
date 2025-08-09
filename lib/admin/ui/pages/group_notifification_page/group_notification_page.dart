@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/admin.dart';
 import 'package:titan/admin/providers/group_list_provider.dart';
 import 'package:titan/admin/repositories/notification_repository.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -27,6 +28,7 @@ class GroupNotificationPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    final localizeWithContext = AppLocalizations.of(context)!;
     return AdminTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -40,7 +42,7 @@ class GroupNotificationPage extends HookConsumerWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Notifications de groupe",
+                  localizeWithContext.adminGroupNotification,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -69,22 +71,25 @@ class GroupNotificationPage extends HookConsumerWidget {
                                   context: context,
                                   ref: ref,
                                   modal: BottomModalTemplate(
-                                    title: "Notifier le groupe ${group.name}",
+                                    title: localizeWithContext.adminNotifyGroup(
+                                      group.name,
+                                    ),
                                     child: Column(
                                       children: [
                                         TextEntry(
-                                          label: 'Titre',
+                                          label: localizeWithContext.adminTitle,
                                           controller: titleController,
                                         ),
                                         const SizedBox(height: 20),
                                         TextEntry(
-                                          label: 'Contenu',
+                                          label:
+                                              localizeWithContext.adminContent,
                                           controller: contentController,
                                           maxLines: 5,
                                         ),
                                         const SizedBox(height: 20),
                                         Button(
-                                          text: "Envoyer",
+                                          text: localizeWithContext.adminSend,
                                           onPressed: () {
                                             notificationRepository
                                                 .sendNotification(
@@ -96,12 +101,14 @@ class GroupNotificationPage extends HookConsumerWidget {
                                                   if (value) {
                                                     displayToastWithContext(
                                                       TypeMsg.msg,
-                                                      "Notification envoyée avec succès",
+                                                      localizeWithContext
+                                                          .adminNotificationSended,
                                                     );
                                                   } else {
                                                     displayToastWithContext(
                                                       TypeMsg.error,
-                                                      "Échec de l'envoi de la notification",
+                                                      localizeWithContext
+                                                          .adminFailedToSendNotification,
                                                     );
                                                   }
                                                 })
@@ -126,7 +133,7 @@ class GroupNotificationPage extends HookConsumerWidget {
                     ],
                   );
                 },
-                loaderColor: ColorConstants.gradient1,
+                loaderColor: ColorConstants.main,
               ),
             ],
           ),

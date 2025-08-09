@@ -572,6 +572,78 @@ abstract class AppLocalizations {
   /// **'Visibilités'**
   String get adminVisibilities;
 
+  /// No description provided for @adminGroupNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notification de groupe'**
+  String get adminGroupNotification;
+
+  /// Notifie les membres du groupe sélectionné
+  ///
+  /// In fr, this message translates to:
+  /// **'Notifier le groupe {groupName}'**
+  String adminNotifyGroup(String groupName);
+
+  /// No description provided for @adminTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre'**
+  String get adminTitle;
+
+  /// No description provided for @adminContent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contenu'**
+  String get adminContent;
+
+  /// No description provided for @adminSend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer'**
+  String get adminSend;
+
+  /// No description provided for @adminNotificationSended.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notification envoyée'**
+  String get adminNotificationSended;
+
+  /// No description provided for @adminFailedToSendNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de l\'envoi de la notification'**
+  String get adminFailedToSendNotification;
+
+  /// No description provided for @adminGroupManagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gestion des groupes'**
+  String get adminGroupManagement;
+
+  /// No description provided for @adminEditGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le groupe'**
+  String get adminEditGroup;
+
+  /// No description provided for @adminManageMembers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les membres'**
+  String get adminManageMembers;
+
+  /// No description provided for @adminDeleteGroupConfirmation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Êtes-vous sûr de vouloir supprimer ce groupe ?'**
+  String get adminDeleteGroupConfirmation;
+
+  /// No description provided for @adminFailedToDeleteGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de la suppression du groupe'**
+  String get adminFailedToDeleteGroup;
+
   /// No description provided for @advertAdd.
   ///
   /// In fr, this message translates to:

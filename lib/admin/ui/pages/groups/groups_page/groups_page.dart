@@ -40,6 +40,9 @@ class GroupsPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+    final navigatorWithContext = Navigator.of(context);
+
     return AdminTemplate(
       child: ScrollToHideNavbar(
         controller: scrollController,
@@ -56,7 +59,7 @@ class GroupsPage extends HookConsumerWidget {
                 Row(
                   children: [
                     Text(
-                      "Gestion des groupes",
+                      localizeWithContext.adminGroupManagement,
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -77,21 +80,21 @@ class GroupsPage extends HookConsumerWidget {
                           context: context,
                           ref: ref,
                           modal: BottomModalTemplate(
-                            title: "Ajouter un groupe",
+                            title: localizeWithContext.adminAddGroup,
                             child: Column(
                               children: [
                                 TextEntry(
-                                  label: 'Nom',
+                                  label: localizeWithContext.adminName,
                                   controller: nameController,
                                 ),
                                 const SizedBox(height: 20),
                                 TextEntry(
-                                  label: 'Description',
+                                  label: localizeWithContext.adminDescription,
                                   controller: descController,
                                 ),
                                 const SizedBox(height: 20),
                                 Button(
-                                  text: "Ajouter",
+                                  text: localizeWithContext.adminAdd,
                                   onPressed: () async {
                                     final addedGroupMsg = AppLocalizations.of(
                                       context,
@@ -154,7 +157,7 @@ class GroupsPage extends HookConsumerWidget {
                                   child: Column(
                                     children: [
                                       Button(
-                                        text: "Modifier",
+                                        text: localizeWithContext.adminEdit,
                                         onPressed: () async {
                                           nameController.text = group.name;
                                           descController.text =
@@ -164,21 +167,25 @@ class GroupsPage extends HookConsumerWidget {
                                             context: context,
                                             ref: ref,
                                             modal: BottomModalTemplate(
-                                              title: "Modifier le groupe",
+                                              title: localizeWithContext
+                                                  .adminEditGroup,
                                               child: Column(
                                                 children: [
                                                   TextEntry(
-                                                    label: "Nom",
+                                                    label: localizeWithContext
+                                                        .adminName,
                                                     controller: nameController,
                                                   ),
                                                   const SizedBox(height: 20),
                                                   TextEntry(
-                                                    label: "Description",
+                                                    label: localizeWithContext
+                                                        .adminDescription,
                                                     controller: descController,
                                                   ),
                                                   const SizedBox(height: 20),
                                                   Button(
-                                                    text: "Éditer",
+                                                    text: localizeWithContext
+                                                        .adminEdit,
                                                     onPressed: () async {
                                                       final addedGroupMsg =
                                                           AppLocalizations.of(
@@ -227,7 +234,8 @@ class GroupsPage extends HookConsumerWidget {
                                       ),
                                       const SizedBox(height: 20),
                                       Button(
-                                        text: "Gérer les membres",
+                                        text: localizeWithContext
+                                            .adminManageMembers,
                                         onPressed: () {
                                           Navigator.pop(context);
                                           groupIdNotifier.setId(group.id);
@@ -240,38 +248,47 @@ class GroupsPage extends HookConsumerWidget {
                                       ),
                                       const SizedBox(height: 20),
                                       Button(
-                                        text: "Supprimer le groupe",
+                                        text: localizeWithContext
+                                            .adminDeleteGroup,
                                         type: ButtonType.danger,
                                         onPressed: () async {
                                           await showDialog(
                                             context: context,
                                             builder: (context) {
                                               return CustomDialogBox(
-                                                title: "Delete",
-                                                descriptions:
-                                                    "Êtes-vous sûr de vouloir supprimer ce groupe ?",
+                                                title: localizeWithContext
+                                                    .adminDelete,
+                                                descriptions: localizeWithContext
+                                                    .adminDeleteGroupConfirmation,
                                                 onYes: () async {
-                                                  tokenExpireWrapper(ref, () async {
-                                                    final value =
-                                                        await groupsNotifier
-                                                            .deleteGroup(group);
-                                                    if (value) {
-                                                      displayToastWithContext(
-                                                        TypeMsg.msg,
-                                                        "Groupe supprimé avec succès",
-                                                      );
-                                                    } else {
-                                                      displayToastWithContext(
-                                                        TypeMsg.error,
-                                                        "Échec de la suppression du groupe",
-                                                      );
-                                                    }
-                                                  });
+                                                  tokenExpireWrapper(
+                                                    ref,
+                                                    () async {
+                                                      final value =
+                                                          await groupsNotifier
+                                                              .deleteGroup(
+                                                                group,
+                                                              );
+                                                      if (value) {
+                                                        displayToastWithContext(
+                                                          TypeMsg.msg,
+                                                          localizeWithContext
+                                                              .adminDeletedGroup,
+                                                        );
+                                                      } else {
+                                                        displayToastWithContext(
+                                                          TypeMsg.error,
+                                                          localizeWithContext
+                                                              .adminFailedToDeleteGroup,
+                                                        );
+                                                      }
+                                                    },
+                                                  );
                                                 },
                                               );
                                             },
                                           );
-                                          Navigator.pop(context);
+                                          navigatorWithContext.pop();
                                         },
                                       ),
                                     ],

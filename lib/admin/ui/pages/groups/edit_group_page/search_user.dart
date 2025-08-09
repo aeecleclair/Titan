@@ -32,6 +32,8 @@ class SearchUser extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     return AsyncChild(
       value: group,
       builder: (context, g) {
@@ -61,7 +63,7 @@ class SearchUser extends HookConsumerWidget {
                       context: context,
                       ref: ref,
                       modal: BottomModalTemplate(
-                        title: "Ajouter un membre",
+                        title: localizeWithContext.adminAddMember,
                         child: ConstrainedBox(
                           constraints: const BoxConstraints(maxHeight: 300),
                           child: Column(
