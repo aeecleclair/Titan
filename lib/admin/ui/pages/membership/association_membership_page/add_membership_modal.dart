@@ -43,7 +43,7 @@ class AddMembershipModal extends HookWidget {
               padding: const EdgeInsets.all(8.0),
               child: chosenGroup.value == null
                   ? ListItem(
-                      title: localizeWithContext.adminChooseAssication,
+                      title: localizeWithContext.adminChooseGroupManager,
                       onTap: () async {
                         FocusScope.of(context).unfocus();
                         final ctx = context;
@@ -54,7 +54,7 @@ class AddMembershipModal extends HookWidget {
                           context: ctx,
                           ref: ref,
                           modal: BottomModalTemplate(
-                            title: localizeWithContext.adminChooseAssication,
+                            title: localizeWithContext.adminChooseGroupManager,
                             child: Column(
                               children: [
                                 ...groups.map(

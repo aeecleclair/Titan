@@ -109,7 +109,7 @@
     "adminManagePaiementStructures" : "Gérer les structures du module de paiement",
     "adminManageUsersAssociationMemberships": "Gérer les adhésions des utilisateurs",
     "adminAssociationMembershipsManagement": "Gestion des adhésions",
-    "adminChooseGroupManager" : "Choisir une association",
+    "adminChooseGroupManager" : "Groupe gestionnaire de l'adhésion",
     "adminSelectManager" : "Sélectionner un gestionnaire",
     "adminInviteUsers" : "Inviter des utilisateurs",
     "adminImportList": "Importer une liste",

@@ -322,7 +322,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminAssociationMembershipsManagement => 'Gestion des adhésions';
 
   @override
-  String get adminChooseGroupManager => 'Choisir une association';
+  String get adminChooseGroupManager =>
+      'Choisir un groupe pour gérer l\'adhésion';
 
   @override
   String get adminSelectManager => 'Sélectionner un gestionnaire';
