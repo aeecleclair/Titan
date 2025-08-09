@@ -104,7 +104,7 @@ class AssociationGroupementBar extends HookConsumerWidget {
         width: MediaQuery.of(context).size.width,
         height: scrollDirection == Axis.horizontal
             ? 40
-            : min(associationGroupements.length * 70, 140),
+            : min(associationGroupements.length * 50, 220),
         child: ListView.builder(
           scrollDirection: scrollDirection,
           itemCount: editable

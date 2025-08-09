@@ -22,14 +22,14 @@ class ItemChip extends StatelessWidget {
       onLongPress: onLongPress,
       child: Container(
         margin: scrollDirection == Axis.horizontal
-            ? EdgeInsets.symmetric(horizontal: 10.0)
+            ? EdgeInsets.symmetric(horizontal: 5.0)
             : EdgeInsets.symmetric(vertical: 5.0),
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.0),
           color: selected ? Colors.black : Colors.grey.shade200,
         ),
-        child: child,
+        child: Center(child: child),
       ),
     );
   }
