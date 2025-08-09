@@ -37,17 +37,20 @@ class SettingsMainPage extends HookConsumerWidget {
     final meNotifier = ref.watch(asyncUserProvider.notifier);
     final profilePicture = ref.watch(profilePictureProvider);
 
-    final notificationAcivatedCounts = notificationTopicList.when(
-      data: (data) => data.where((topic) => topic.isUserSubscribed).length,
-      loading: () => 0,
-      error: (_, _) => 0,
+    final results = notificationTopicList.when(
+      data: (data) {
+        final activatedCount = data
+            .where((topic) => topic.isUserSubscribed)
+            .length;
+        final totalCount = data.length;
+        return {'activatedCount': activatedCount, 'totalCount': totalCount};
+      },
+      loading: () => {'activatedCount': 0, 'totalCount': 0},
+      error: (_, _) => {'activatedCount': 0, 'totalCount': 0},
     );
 
-    final notificationTopicsLength = notificationTopicList.when(
-      data: (data) => data.length,
-      loading: () => 0,
-      error: (_, _) => 0,
-    );
+    final notificationActivatedCounts = results['activatedCount']!;
+    final notificationTopicsLength = results['totalCount']!;
 
     final localizeWithContext = AppLocalizations.of(context)!;
 
@@ -175,7 +178,7 @@ class SettingsMainPage extends HookConsumerWidget {
               ListItem(
                 title: localizeWithContext.settingsNotifications,
                 subtitle: localizeWithContext.settingsNotificationCounter(
-                  notificationAcivatedCounts,
+                  notificationActivatedCounts,
                   notificationTopicsLength,
                 ),
                 onTap: () async {
