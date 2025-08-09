@@ -2998,9 +2998,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsEditAccount => 'Edit account';
 
   @override
-  String get settingsEditPassword => 'Edit password';
-
-  @override
   String get settingsEmail => 'Email';
 
   @override
@@ -3034,7 +3031,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLanguage => 'Language';
 
   @override
-  String get settingsLanguageFr => 'French';
+  String get settingsLanguageVar => 'English 🇬🇧';
 
   @override
   String get settingsLogs => 'Logs';
@@ -3131,6 +3128,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsPasswordStrengthVeryStrong => 'Very strong';
+
+  @override
+  String get settingsPhoneNumber => 'Phone number';
+
+  @override
+  String get settingsValidate => 'Confirm';
+
+  @override
+  String get settingsEditedAccount => 'Account edited';
+
+  @override
+  String get settingsFailedToEditAccount => 'Failed to edit account';
+
+  @override
+  String get settingsChooseLanguage => 'Choose a language';
+
+  @override
+  String settingsNotificationCounter(int active, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      active,
+      locale: localeName,
+      other: 'notifications',
+      one: 'notification',
+      zero: 'notification',
+    );
+    return '$active/$total active $_temp0';
+  }
+
+  @override
+  String get settingsEvent => 'Event';
+
+  @override
+  String get settingsIcal => 'Ical link';
+
+  @override
+  String get settingsSynncWithCalendar => 'Sync with calendar';
+
+  @override
+  String get settingsIcalLinkCopied => 'Ical link copied';
+
+  @override
+  String get settingsProfile => 'Profile';
 
   @override
   String get voteAdd => 'Add';

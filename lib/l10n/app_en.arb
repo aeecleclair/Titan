@@ -990,7 +990,7 @@
   "settingsHelp": "Help",
   "settingsIcalCopied": "Ical link copied!",
   "settingsLanguage": "Language",
-  "settingsLanguageFr": "French",
+  "settingsLanguageVar": "English 🇬🇧",
   "settingsLogs": "Logs",
   "settingsModules": "Modules",
   "settingsMyIcs": "My Ical link",
@@ -1023,6 +1023,24 @@
   "settingsPasswordStrengthMedium": "Medium",
   "settingsPasswordStrengthStrong": "Strong",
   "settingsPasswordStrengthVeryStrong": "Very strong",
+  "settingsPhoneNumber": "Phone number",
+  "settingsValidate": "Confirm",
+  "settingsEditedAccount": "Account edited",
+  "settingsFailedToEditAccount": "Failed to edit account",
+  "settingsChooseLanguage": "Choose a language",
+  "settingsNotificationCounter": "{active}/{total} active {active, plural, zero {notification} one {notification} other {notifications}}",
+  "@settingsNotificationCounter": {
+      "description": "Affiche le nombre de notifications actives sur le total des notifications disponibles, avec gestion du pluriel",
+      "placeholders": {
+          "active": { "type": "int" },
+          "total": { "type": "int" }
+      }
+  },
+  "settingsEvent" : "Event",
+  "settingsIcal": "Ical link",
+  "settingsSynncWithCalendar": "Sync with calendar",
+  "settingsIcalLinkCopied": "Ical link copied",
+  "settingsProfile": "Profile",
   "voteAdd": "Add",
   "voteAddMember": "Add a member",
   "voteAddedPretendance": "List added",

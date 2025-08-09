@@ -50,20 +50,22 @@ class TextEntry extends StatelessWidget {
       onChanged: onChanged,
       textInputAction: (keyboardType == TextInputType.multiline)
           ? TextInputAction.newline
-          : TextInputAction.next,
+          : textInputAction,
       enabled: enabled,
       decoration: InputDecoration(
         label: Text(
           canBeEmpty ? '$label (optionnel)' : label,
           style: TextStyle(color: color, height: 0.5),
         ),
+        suffixIcon: suffixIcon,
         suffix: suffixIcon == null && suffix.isEmpty
             ? null
-            : Container(
-                padding: const EdgeInsets.only(left: 10),
-                child:
-                    suffixIcon ?? Text(suffix, style: TextStyle(color: color)),
-              ),
+            : (suffixIcon == null
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(suffix, style: TextStyle(color: color)),
+                    )
+                  : null),
         prefix: prefix.isEmpty
             ? null
             : Container(

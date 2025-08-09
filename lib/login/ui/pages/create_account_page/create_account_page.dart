@@ -10,7 +10,7 @@ import 'package:titan/login/router.dart';
 import 'package:titan/login/ui/components/login_field.dart';
 import 'package:titan/login/ui/auth_page.dart';
 import 'package:titan/login/ui/components/sign_in_up_bar.dart';
-import 'package:titan/settings/ui/pages/change_pass/password_strength.dart';
+import 'package:titan/login/ui/components/password_strength.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
