@@ -29,7 +29,7 @@ class UserUi extends HookConsumerWidget {
             child: Container(
               padding: const EdgeInsets.all(7),
               decoration: BoxDecoration(
-                color: ColorConstants.error,
+                color: ColorConstants.onMain,
                 boxShadow: [
                   BoxShadow(
                     color: ColorConstants.background2.withValues(alpha: 0.4),
