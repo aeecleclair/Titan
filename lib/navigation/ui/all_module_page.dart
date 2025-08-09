@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/navigation/providers/navbar_module_list.dart';
+import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/router.dart';
 import 'package:titan/settings/providers/module_list_provider.dart';
@@ -20,6 +21,9 @@ class AllModulePage extends HookConsumerWidget {
     final modules = ref.watch(modulesProvider);
     final navbarListModuleNotifier = ref.watch(
       navbarListModuleProvider.notifier,
+    );
+    final navbarVisibilityNotifier = ref.read(
+      navbarVisibilityProvider.notifier,
     );
     final scrollController = useScrollController();
     return Container(
@@ -55,6 +59,7 @@ class AllModulePage extends HookConsumerWidget {
                             );
                             pathForwardingNotifier.forward(module.root);
                             QR.to(module.root);
+                            navbarVisibilityNotifier.show();
                           },
                         ),
                       ),

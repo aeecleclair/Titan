@@ -3031,7 +3031,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLanguage => 'Language';
 
   @override
-  String get settingsLanguageVar => 'English';
+  String get settingsLanguageVar => 'English 🇬🇧';
 
   @override
   String get settingsLogs => 'Logs';
