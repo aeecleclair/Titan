@@ -41,9 +41,7 @@ class AddEditStructurePage extends HookConsumerWidget {
       allAssociationMembershipListProvider,
     );
     final currentMembership = useState<AssociationMembership>(
-      (isEdit)
-          ? structure.associationMembership
-          : AssociationMembership.empty(),
+      isEdit ? structure.associationMembership : AssociationMembership.empty(),
     );
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -102,7 +100,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                   },
                 ),
                 const SizedBox(height: 20),
-                (isEdit)
+                isEdit
                     ? Column(
                         children: [
                           Text(
