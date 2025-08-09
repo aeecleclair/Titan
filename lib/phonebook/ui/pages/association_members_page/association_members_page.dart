@@ -18,7 +18,6 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/styleguide/list_item_template.dart';
-import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
 class AssociationMembersPage extends HookConsumerWidget {
   const AssociationMembersPage({super.key});
@@ -55,10 +54,11 @@ class AssociationMembersPage extends HookConsumerWidget {
             });
           },
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AlignLeftText(
+              Text(
                 localizeWithContext.phonebookMembers(association.name),
-                fontSize: 20,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               if (!association.deactivated) ...[
                 SizedBox(height: 20),
@@ -150,17 +150,17 @@ class AssociationMembersPage extends HookConsumerWidget {
                               .toList(),
                         ),
                       )
-                    : ListView.builder(
-                        itemCount: associationMembers.length,
-                        itemBuilder: (context, index) {
-                          return MemberCard(
-                            deactivated: true,
-                            key: ValueKey(associationMembers[index].member.id),
-                            member: associationMembers[index],
-                            association: association,
-                            editable: true,
-                          );
-                        },
+                    : Column(
+                        children: associationMemberSortedList
+                            .map(
+                              (e) => MemberCard(
+                                deactivated: true,
+                                member: e,
+                                association: association,
+                                editable: true,
+                              ),
+                            )
+                            .toList(),
                       ),
               ),
               SizedBox(height: 80),

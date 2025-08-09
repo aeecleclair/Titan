@@ -17,7 +17,6 @@ import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/tools/ui/styleguide/list_item_template.dart';
-import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:tuple/tuple.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
@@ -51,10 +50,14 @@ class AdminPage extends HookConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AssociationResearchBar(),
               const SizedBox(height: 10),
-              AlignLeftText(localizeWithContext.phonebookAdmin),
+              Text(
+                localizeWithContext.phonebookAdmin,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 10),
               Async2Children(
                 values: Tuple2(associationList, associationGroupementList),

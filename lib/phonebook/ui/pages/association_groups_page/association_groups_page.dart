@@ -15,7 +15,6 @@ import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/list_item_toggle.dart';
-import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
 class AssociationGroupsPage extends HookConsumerWidget {
   final scrollKey = GlobalKey();
@@ -63,10 +62,11 @@ class AssociationGroupsPage extends HookConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AlignLeftText(
+              Text(
                 localizeWithContext.phonebookGroups(association.name),
-                fontSize: 20,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
               AsyncChild(

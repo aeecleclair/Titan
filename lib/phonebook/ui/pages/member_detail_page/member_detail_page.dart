@@ -9,7 +9,6 @@ import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
-import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
 class MemberDetailPage extends HookConsumerWidget {
   const MemberDetailPage({super.key});
@@ -34,6 +33,7 @@ class MemberDetailPage extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
                 child: Column(
@@ -104,10 +104,11 @@ class MemberDetailPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 20),
               if (member.memberships.isNotEmpty)
-                AlignLeftText(
+                Text(
                   member.memberships.length == 1
                       ? localizeWithContext.phonebookAssociation
                       : localizeWithContext.phonebookAssociations,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               const SizedBox(height: 10),
               AsyncChild(

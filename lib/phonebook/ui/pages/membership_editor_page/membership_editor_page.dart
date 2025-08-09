@@ -15,7 +15,6 @@ import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/list_item_template.dart';
 import 'package:titan/tools/ui/styleguide/list_item_toggle.dart';
-import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/phonebook/providers/complete_member_provider.dart';
@@ -140,7 +139,10 @@ class MembershipEditorPage extends HookConsumerWidget {
           child: Column(
             children: [
               if (!isEdit) ...[
-                AlignLeftText(localizeWithContext.phonebookAddMember),
+                Text(
+                  localizeWithContext.phonebookAddMember,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
                 ListItemTemplate(
                   title: member.member.id == ""
                       ? localizeWithContext.phonebookSearchUser
@@ -156,11 +158,11 @@ class MembershipEditorPage extends HookConsumerWidget {
                   ),
                 ),
               ] else
-                AlignLeftText(
+                Text(
                   localizeWithContext.phonebookModifyMembership(
                     member.member.nickname ?? member.getName(),
                   ),
-                  fontSize: 18,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               const SizedBox(height: 10),
               rolesTagList.maybeWhen(

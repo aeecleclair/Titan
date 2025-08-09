@@ -18,7 +18,6 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';
-import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
 class AssociationAddEditPage extends HookConsumerWidget {
   final scrollKey = GlobalKey();
@@ -60,6 +59,7 @@ class AssociationAddEditPage extends HookConsumerWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 30),
                 Align(
@@ -177,10 +177,9 @@ class AssociationAddEditPage extends HookConsumerWidget {
                   ),
                 ],
                 const SizedBox(height: 20),
-                AlignLeftText(
+                Text(
                   localizeWithContext.phonebookAssociationGroupement,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 16,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
                 ),
                 const SizedBox(height: 5),
                 AssociationGroupementBar(editable: true),
