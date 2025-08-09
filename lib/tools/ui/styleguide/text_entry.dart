@@ -14,7 +14,6 @@ class TextEntry extends StatelessWidget {
   final String? Function(String)? validator;
   final int? minLines, maxLines;
   final TextInputAction textInputAction;
-  final bool obscureText;
 
   const TextEntry({
     super.key,
@@ -38,7 +37,6 @@ class TextEntry extends StatelessWidget {
     this.suffixIcon,
     this.isNegative = false,
     this.textInputAction = TextInputAction.next,
-    this.obscureText = false,
   });
 
   @override
@@ -50,7 +48,6 @@ class TextEntry extends StatelessWidget {
       keyboardType: keyboardType,
       cursorColor: color,
       onChanged: onChanged,
-      obscureText: obscureText,
       textInputAction: (keyboardType == TextInputType.multiline)
           ? TextInputAction.newline
           : textInputAction,
