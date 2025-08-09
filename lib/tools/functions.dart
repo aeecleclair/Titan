@@ -531,17 +531,3 @@ String getTitanPackageName() {
 String getTitanLogo() {
   return "assets/images/logo_${getAppFlavor()}.png";
 }
-
-void navigateTo(
-  String path, {
-  bool ignoreSamePath = true,
-  PageAlreadyExistAction? pageAlreadyExistAction,
-  bool waitForResult = false,
-  required WidgetRef ref,
-}) {
-  final navbarVisibilityNotifier = ref.read(navbarVisibilityProvider.notifier);
-  final navbarVisibility = ref.read(navbarVisibilityProvider);
-  print(navbarVisibility);
-  navbarVisibilityNotifier.show();
-  QR.to(path);
-}
