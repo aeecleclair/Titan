@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/repositories/user_invitation_repository.dart';
 
-class UserCreationNotifier extends StateNotifier<void> {
+class UserCreationNotifier extends StateNotifier {
   final UserCreationRepository userCreationRepository;
   UserCreationNotifier({required this.userCreationRepository}) : super(null);
 
