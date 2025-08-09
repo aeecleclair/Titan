@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/tools/repository/repository.dart';
 
-class UserCreationRepository extends Repository {
+class UserInvitationRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "users/";
@@ -13,7 +13,7 @@ class UserCreationRepository extends Repository {
   }
 }
 
-final userCreationRepositoryProvider = Provider((ref) {
+final userInvitationRepositoryProvider = Provider((ref) {
   final token = ref.watch(tokenProvider);
-  return UserCreationRepository()..setToken(token);
+  return UserInvitationRepository()..setToken(token);
 });

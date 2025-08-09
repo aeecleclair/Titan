@@ -1,18 +1,22 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/repositories/user_invitation_repository.dart';
 
-class UserCreationNotifier extends StateNotifier {
-  final UserCreationRepository userCreationRepository;
-  UserCreationNotifier({required this.userCreationRepository}) : super(null);
+class UserInvitationNotifier extends StateNotifier {
+  final UserInvitationRepository userInvitationRepository;
+  UserInvitationNotifier({required this.userInvitationRepository})
+    : super(null);
 
   Future<bool> createUsers(List<String> mailList) async {
-    return await userCreationRepository.createUsers(mailList);
+    return await userInvitationRepository.createUsers(mailList);
   }
 }
 
-final userCreationProvider = StateNotifierProvider<UserCreationNotifier, void>((
-  ref,
-) {
-  final userCreationRepository = ref.watch(userCreationRepositoryProvider);
-  return UserCreationNotifier(userCreationRepository: userCreationRepository);
-});
+final userInvitationProvider =
+    StateNotifierProvider<UserInvitationNotifier, void>((ref) {
+      final userInvitationRepository = ref.watch(
+        userInvitationRepositoryProvider,
+      );
+      return UserInvitationNotifier(
+        userInvitationRepository: userInvitationRepository,
+      );
+    });

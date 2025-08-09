@@ -69,10 +69,10 @@ class AddUsersModalContent extends HookConsumerWidget {
             text: localizeWithContext.adminAdd,
             onPressed: () {
               tokenExpireWrapper(ref, () async {
-                final userCreationNotifier = ref.watch(
-                  userCreationProvider.notifier,
+                final userInvitationNotifier = ref.watch(
+                  userInvitationProvider.notifier,
                 );
-                final value = await userCreationNotifier.createUsers(
+                final value = await userInvitationNotifier.createUsers(
                   mailList.value,
                 );
                 if (value) {
