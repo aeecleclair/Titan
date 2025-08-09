@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/settings/providers/edit_user_provider.dart';
 import 'package:titan/settings/ui/pages/main_page/picture_button.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -14,7 +14,7 @@ import 'package:titan/tools/ui/styleguide/text_entry.dart';
 import 'package:titan/user/providers/profile_picture_provider.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
-class EditProfile extends ConsumerWidget {
+class EditProfile extends HookConsumerWidget {
   const EditProfile({super.key});
 
   @override
@@ -27,8 +27,13 @@ class EditProfile extends ConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final textControllers = ref.watch(textControllersProvider);
-    final textControllersNotifier = ref.watch(textControllersProvider.notifier);
+    final emailController = useTextEditingController(text: me.email);
+    final phoneController = useTextEditingController(text: me.phone ?? '');
+    final birthdayController = useTextEditingController(
+      text: me.birthday != null
+          ? "${me.birthday!.day.toString().padLeft(2, '0')}/${me.birthday!.month.toString().padLeft(2, '0')}/${me.birthday!.year}"
+          : '',
+    );
 
     MediaQuery.of(context).viewInsets.bottom;
 
@@ -167,17 +172,14 @@ class EditProfile extends ConsumerWidget {
             SizedBox(height: View.of(context).viewInsets.bottom == 0 ? 30 : 10),
             TextEntry(
               label: localizeWithContext.settingsEmail,
-              controller: textControllers[0],
+              controller: emailController,
               enabled: false,
             ),
             SizedBox(height: 20),
             TextEntry(
               label: localizeWithContext.settingsPhoneNumber,
-              controller: textControllers[1],
+              controller: phoneController,
               textInputAction: TextInputAction.done,
-              onChanged: (value) {
-                textControllersNotifier.updateText(1, value);
-              },
             ),
             SizedBox(height: 20),
             Row(
@@ -185,7 +187,7 @@ class EditProfile extends ConsumerWidget {
                 Expanded(
                   child: TextEntry(
                     label: localizeWithContext.settingsBirthday,
-                    controller: textControllers[2],
+                    controller: birthdayController,
                     enabled: false,
                   ),
                 ),
@@ -199,9 +201,8 @@ class EditProfile extends ConsumerWidget {
                       lastDate: DateTime.now(),
                     );
                     if (date != null) {
-                      final formattedDate =
+                      birthdayController.text =
                           "${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}";
-                      textControllersNotifier.updateText(2, formattedDate);
                     }
                   },
                 ),
@@ -211,21 +212,22 @@ class EditProfile extends ConsumerWidget {
             Button(
               text: localizeWithContext.settingsValidate,
               disabled:
-                  !(textControllers[1].value.text != me.phone ||
-                      textControllers[2].value.text.isNotEmpty),
+                  !(phoneController.value.text != me.phone ||
+                      birthdayController.value.text !=
+                          "${me.birthday!.day.toString().padLeft(2, '0')}/${me.birthday!.month.toString().padLeft(2, '0')}/${me.birthday!.year}"),
               onPressed: () async {
-                if (textControllers[1].value.text != me.phone ||
-                    textControllers[2].value.text.isNotEmpty) {
+                if (phoneController.value.text != me.phone ||
+                    birthdayController.value.text.isNotEmpty) {
                   await tokenExpireWrapper(ref, () async {
                     final newMe = me.copyWith(
-                      birthday: textControllers[2].value.text.isNotEmpty
+                      birthday: birthdayController.value.text.isNotEmpty
                           ? DateTime.parse(
-                              processDateBack(textControllers[2].value.text),
+                              processDateBack(birthdayController.value.text),
                             )
                           : null,
-                      phone: textControllers[1].value.text.isEmpty
+                      phone: phoneController.value.text.isEmpty
                           ? null
-                          : textControllers[1].value.text,
+                          : phoneController.value.text,
                     );
                     final value = await asyncUserNotifier.updateMe(newMe);
                     if (value) {
