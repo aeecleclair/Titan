@@ -24,6 +24,7 @@ class EventActionAdmin extends ConsumerWidget {
             borderRadius: BorderRadius.circular(20),
             border: Border.all(color: ColorConstants.onMain, width: 2),
           ),
+          child: child,
         ),
         waitingColor: ColorConstants.background,
         child: Center(
