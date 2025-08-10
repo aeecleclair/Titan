@@ -33,7 +33,6 @@ class FeedMainPage extends HookConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Search bar
             CustomSearchBar(
               onFilter: () async {
                 await showCustomBottomModal(
@@ -96,11 +95,37 @@ class FeedMainPage extends HookConsumerWidget {
                 if (isSuperAdmin)
                   CustomIconButton(
                     icon: HeroIcon(
-                      HeroIcons.plus,
+                      HeroIcons.userGroup,
                       color: ColorConstants.background,
                     ),
                     onPressed: () {
-                      QR.to(FeedRouter.root + FeedRouter.admin);
+                      showCustomBottomModal(
+                        modal: BottomModalTemplate(
+                          title: 'Administration',
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Button(
+                                text: 'Créer un événement',
+                                onPressed: () {
+                                  QR.to(FeedRouter.root + FeedRouter.addEvent);
+                                },
+                              ),
+                              const SizedBox(height: 20),
+                              Button(
+                                text: 'Demandes de publication',
+                                onPressed: () {
+                                  QR.to(
+                                    FeedRouter.root + FeedRouter.eventHandling,
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        context: context,
+                        ref: ref,
+                      );
                     },
                   ),
               ],
