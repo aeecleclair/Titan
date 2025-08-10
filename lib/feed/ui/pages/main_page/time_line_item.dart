@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:titan/feed/class/feed_item.dart';
+import 'package:titan/feed/class/news.dart';
 import 'package:titan/feed/ui/pages/main_page/event_action.dart';
 import 'package:titan/feed/ui/pages/main_page/event_action_admin.dart';
 import 'package:titan/feed/ui/pages/main_page/event_card.dart';
@@ -8,7 +8,7 @@ import 'package:titan/tools/constants.dart';
 import 'package:titan/feed/ui/pages/main_page/dotted_vertical_line.dart';
 
 class TimelineItem extends StatelessWidget {
-  final FeedItem item;
+  final News item;
   final VoidCallback? onTap;
   final bool isAdmin;
 
@@ -22,7 +22,7 @@ class TimelineItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: item.type == FeedItemType.announcement && !isAdmin ? 160 : 200,
+      height: item.actionStart != null || isAdmin ? 200 : 160,
       child: Stack(
         children: [
           Padding(
@@ -44,7 +44,7 @@ class TimelineItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            DateFormat('d').format(item.date),
+                            DateFormat('d').format(item.start),
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -52,7 +52,7 @@ class TimelineItem extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            DateFormat('MMM').format(item.date).toUpperCase(),
+                            DateFormat('MMM').format(item.start).toUpperCase(),
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -70,7 +70,7 @@ class TimelineItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (item.type != FeedItemType.announcement || isAdmin)
+                if (item.actionStart != null || isAdmin)
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Row(
@@ -98,17 +98,12 @@ class TimelineItem extends StatelessWidget {
                           child: isAdmin
                               ? EventActionAdmin()
                               : EventAction(
-                                  title: item.type == FeedItemType.action
-                                      ? 'Tu peux voter'
-                                      : 'Tu es invité',
-                                  subtitle: item.type == FeedItemType.action
-                                      ? '254 votants'
-                                      : '75 participants',
-                                  onActionPressed: item.onRegister,
-                                  actionButtonText:
-                                      item.type == FeedItemType.action
-                                      ? 'Participer'
-                                      : 'Voter',
+                                  title: 'Action',
+                                  subtitle: 'Indication',
+                                  onActionPressed: () {
+                                    // Handle action press
+                                  },
+                                  actionButtonText: 'Ok',
                                   isActionEnabled: true,
                                 ),
                         ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:titan/feed/class/feed_item.dart';
+import 'package:titan/feed/class/news.dart';
 import 'package:titan/feed/ui/pages/main_page/time_line_item.dart';
 
 class FeedTimeline extends StatelessWidget {
-  final List<FeedItem> items;
-  final Function(FeedItem item)? onItemTap;
+  final List<News> items;
+  final Function(News item)? onItemTap;
   final bool isAdmin;
 
   const FeedTimeline({super.key, required this.items, this.onItemTap, required this.isAdmin});

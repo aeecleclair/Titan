@@ -4,12 +4,13 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
-import 'package:titan/feed/class/feed_item.dart';
+import 'package:titan/feed/providers/news_list_provider.dart';
 import 'package:titan/feed/router.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/feed/ui/pages/main_page/feed_timeline.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
@@ -22,8 +23,7 @@ class FeedMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final feedItems = useState<List<FeedItem>>(FeedItem.getFakeItems());
-    final filteredItems = useState<List<FeedItem>>(feedItems.value);
+    final news = ref.watch(newsListProvider);
     final isSuperAdmin = ref.watch(isAdminProvider);
     final scrollController = useScrollController();
 
@@ -139,10 +139,13 @@ class FeedMainPage extends HookConsumerWidget {
                 child: SingleChildScrollView(
                   controller: scrollController,
                   physics: const BouncingScrollPhysics(),
-                  child: FeedTimeline(
-                    isAdmin: isAdmin,
-                    items: filteredItems.value,
-                    onItemTap: (item) {},
+                  child: AsyncChild(
+                  value: news,
+                  builder: (context, news) => FeedTimeline(
+                      isAdmin: isAdmin,
+                      items: news,
+                      onItemTap: (item) {},
+                  ),
                   ),
                 ),
               ),
