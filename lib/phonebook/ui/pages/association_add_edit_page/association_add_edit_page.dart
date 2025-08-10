@@ -11,7 +11,7 @@ import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/router.dart';
 import 'package:titan/phonebook/ui/components/groupement_bar.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
-import 'package:titan/settings/ui/pages/edit_user_page/picture_button.dart';
+import 'package:titan/settings/ui/pages/main_page/picture_button.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
