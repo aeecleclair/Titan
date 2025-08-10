@@ -4,8 +4,6 @@ import 'package:titan/booking/providers/is_admin_provider.dart';
 import 'package:titan/advert/providers/is_advert_admin_provider.dart';
 import 'package:titan/advert/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
-import 'package:titan/advert/ui/pages/detail_page/detail.dart'
-    deferred as detail_page;
 import 'package:titan/advert/ui/pages/form_page/add_edit_advert_page.dart'
     deferred as add_edit_advert_page;
 import 'package:titan/advert/ui/pages/form_page/add_rem_announcer_page.dart'
@@ -25,7 +23,6 @@ class AdvertRouter {
   static const String admin = '/admin';
   static const String addEditAdvert = '/add_edit_advert';
   static const String addRemAnnouncer = '/add_remove_announcer';
-  static const String detail = '/detail';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleAdvert,
     getDescription: (context) =>
@@ -63,11 +60,6 @@ class AdvertRouter {
             ],
           ),
         ],
-      ),
-      QRoute(
-        path: detail,
-        builder: () => detail_page.AdvertDetailPage(),
-        middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
       ),
       QRoute(
         path: addRemAnnouncer,

@@ -4,7 +4,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/advert/providers/advert_list_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
-import 'package:titan/advert/providers/advert_provider.dart';
 import 'package:titan/advert/providers/announcer_provider.dart';
 import 'package:titan/advert/providers/is_advert_admin_provider.dart';
 import 'package:titan/advert/ui/pages/advert.dart';
@@ -22,7 +21,6 @@ class AdvertMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final advertNotifier = ref.watch(advertProvider.notifier);
     final advertList = ref.watch(advertListProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
@@ -86,10 +84,6 @@ class AdvertMainPage extends HookConsumerWidget {
                     children: [
                       ...filteredSortedAdvertData.map(
                         (advert) => AdvertCard(
-                          onTap: () {
-                            advertNotifier.setAdvert(advert);
-                            QR.to(AdvertRouter.root + AdvertRouter.detail);
-                          },
                           advert: advert,
                         ),
                       ),

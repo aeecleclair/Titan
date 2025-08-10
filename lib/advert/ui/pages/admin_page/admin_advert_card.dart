@@ -7,14 +7,13 @@ import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/styleguide/icon_button.dart';
 
 class AdminAdvertCard extends HookConsumerWidget {
-  final VoidCallback onTap, onEdit;
+  final VoidCallback onEdit;
   final Future Function() onDelete;
   final Advert advert;
 
   const AdminAdvertCard({
     super.key,
     required this.advert,
-    required this.onTap,
     required this.onEdit,
     required this.onDelete,
   });

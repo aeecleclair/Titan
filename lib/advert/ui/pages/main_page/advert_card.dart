@@ -5,16 +5,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/advert/class/advert.dart';
 import 'package:titan/advert/providers/advert_poster_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
-import 'package:titan/navigation/providers/is_web_format_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class AdvertCard extends HookConsumerWidget {
-  final VoidCallback onTap;
   final Advert advert;
 
-  const AdvertCard({super.key, required this.onTap, required this.advert});
+  const AdvertCard({super.key, required this.advert});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,118 +22,110 @@ class AdvertCard extends HookConsumerWidget {
     );
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final posterNotifier = ref.watch(advertPosterProvider.notifier);
-    final isWebFormat = ref.watch(isWebFormatProvider);
-    return GestureDetector(
-      onTap: () {
-        if (!isWebFormat) {
-          onTap();
-        }
-      },
-      child: Container(
-        margin: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Row(
-                children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.black,
-                    ),
-                    child: Center(
-                      child: Text(
-                        advert.announcer.name.isNotEmpty
-                            ? advert.announcer.name
-                                  .split(' ')
-                                  .take(2)
-                                  .map((s) => s[0].toUpperCase())
-                                  .join()
-                            : '?',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+    return Container(
+      margin: const EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.black,
+                  ),
+                  child: Center(
+                    child: Text(
+                      advert.announcer.name.isNotEmpty
+                          ? advert.announcer.name
+                                .split(' ')
+                                .take(2)
+                                .map((s) => s[0].toUpperCase())
+                                .join()
+                          : '?',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
-
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          advert.announcer.name,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                ),
+                const SizedBox(width: 12),
+    
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        advert.announcer.name,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
-                        Text(
-                          _capitalizeFirst(
-                            timeago.format(advert.date, locale: 'fr_short'),
-                          ),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                          ),
+                      ),
+                      Text(
+                        _capitalizeFirst(
+                          timeago.format(advert.date, locale: 'fr_short'),
                         ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 15),
-
-            AutoLoaderChild(
-              group: posters,
-              notifier: advertPostersNotifier,
-              mapKey: advert.id,
-              loader: (advertId) => posterNotifier.getAdvertPoster(advertId),
-              loadingBuilder: (context) => AspectRatio(
-                aspectRatio: 1,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: ColorConstants.onBackground,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Center(
-                    child: HeroIcon(HeroIcons.photo, size: 50),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              dataBuilder: (context, value) => AspectRatio(
-                aspectRatio: 1,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: ColorConstants.onBackground,
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                      image: value.first.image,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 15),
+    
+          AutoLoaderChild(
+            group: posters,
+            notifier: advertPostersNotifier,
+            mapKey: advert.id,
+            loader: (advertId) => posterNotifier.getAdvertPoster(advertId),
+            loadingBuilder: (context) => AspectRatio(
+              aspectRatio: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: ColorConstants.onBackground,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: const Center(
+                  child: HeroIcon(HeroIcons.photo, size: 50),
                 ),
               ),
             ),
-
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [_buildExpandableText(isExpanded)],
+            dataBuilder: (context, value) => AspectRatio(
+              aspectRatio: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: ColorConstants.onBackground,
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    image: value.first.image,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
             ),
-          ],
-        ),
+          ),
+    
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [_buildExpandableText(isExpanded)],
+            ),
+          ),
+        ],
       ),
     );
   }

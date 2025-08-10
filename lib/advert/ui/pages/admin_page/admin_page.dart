@@ -89,10 +89,6 @@ class AdvertAdminPage extends HookConsumerWidget {
                       children: [
                         ...filteredSortedUserAnnouncerAdverts.map(
                           (advert) => AdminAdvertCard(
-                            onTap: () {
-                              advertNotifier.setAdvert(advert);
-                              QR.to(AdvertRouter.root + AdvertRouter.detail);
-                            },
                             onEdit: () {
                               QR.to(
                                 AdvertRouter.root +
