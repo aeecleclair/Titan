@@ -33,7 +33,8 @@ class BookingRouter {
   static const String room = '/room';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleBooking,
-    description: "Gérer les réservations, les salles et les managers",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleBookingDescription,
     root: BookingRouter.root,
   );
   BookingRouter(this.ref);

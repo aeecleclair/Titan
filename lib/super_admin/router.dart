@@ -37,7 +37,7 @@ class SuperAdminRouter {
   static const String addEditMember = '/add_edit_member';
   static final Module module = Module(
     getName: (context) => "Super Admin",
-    description: "Gérer les groupes, écoles et structures",
+    getDescription: (context) => "Super Admin",
     root: SuperAdminRouter.root,
   );
   SuperAdminRouter(this.ref);

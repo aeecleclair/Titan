@@ -49,7 +49,8 @@ class SeedLibraryRouter {
   SeedLibraryRouter(this.ref);
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleSeedLibrary,
-    description: "Gérer les graines, les espèces et les stocks",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleSeedLibraryDescription,
     root: SeedLibraryRouter.root,
   );
 

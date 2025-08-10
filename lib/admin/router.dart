@@ -42,8 +42,9 @@ class AdminRouter {
   static const String addEditMember = '/add_edit_member';
   static const String advertisers = '/advertisers';
   static final Module module = Module(
-    getName: (context) => AppLocalizations.of(context)!.adminAdmin,
-    description: "Gérer les utilisateurs, groupes et structures",
+    getName: (context) => AppLocalizations.of(context)!.moduleAdmin,
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleAdminDescription,
     root: AdminRouter.root,
   );
 

@@ -3547,67 +3547,150 @@ class AppLocalizationsFr extends AppLocalizations {
   String get moduleAdvert => 'Annonce';
 
   @override
+  String get moduleAdvertDescription => 'Gérer les annonces';
+
+  @override
   String get moduleAmap => 'AMAP';
+
+  @override
+  String get moduleAmapDescription => 'Gérer les livraisons et les produits';
 
   @override
   String get moduleBooking => 'Réservation';
 
   @override
+  String get moduleBookingDescription =>
+      'Gérer les réservations, les salles et les managers';
+
+  @override
   String get moduleCalendar => 'Calendrier';
+
+  @override
+  String get moduleCalendarDescription =>
+      'Consulter les événements et les activités';
 
   @override
   String get moduleCentralisation => 'Centralisation';
 
   @override
+  String get moduleCentralisationDescription =>
+      'Gérer la centralisation des données';
+
+  @override
   String get moduleCinema => 'Cinéma';
+
+  @override
+  String get moduleCinemaDescription => 'Gérer les séances de cinéma';
 
   @override
   String get moduleEvent => 'Événement';
 
   @override
+  String get moduleEventDescription =>
+      'Gérer les événements et les participants';
+
+  @override
   String get moduleFlappyBird => 'Flappy Bird';
+
+  @override
+  String get moduleFlappyBirdDescription =>
+      'Jouer à Flappy Bird et consulter le classement';
 
   @override
   String get moduleLoan => 'Prêt';
 
   @override
+  String get moduleLoanDescription => 'Gérer les prêts et les articles';
+
+  @override
   String get modulePhonebook => 'Annuaire';
+
+  @override
+  String get modulePhonebookDescription =>
+      'Gérer les associations, les membres et les administrateurs';
 
   @override
   String get modulePurchases => 'Achats';
 
   @override
+  String get modulePurchasesDescription =>
+      'Gérer les achats, les tickets et l\'historique';
+
+  @override
   String get moduleRaffle => 'Tombola';
+
+  @override
+  String get moduleRaffleDescription =>
+      'Gérer les tombolas, les prix et les tickets';
 
   @override
   String get moduleRecommendation => 'Bons plans';
 
   @override
+  String get moduleRecommendationDescription =>
+      'Gérer les recommandations, les informations et les administrateurs';
+
+  @override
   String get moduleSeedLibrary => 'Grainothèque';
+
+  @override
+  String get moduleSeedLibraryDescription =>
+      'Gérer les graines, les espèces et les stocks';
 
   @override
   String get moduleVote => 'Vote';
 
   @override
+  String get moduleVoteDescription =>
+      'Gérer les votes, les sections et les candidats';
+
+  @override
   String get modulePh => 'PH';
+
+  @override
+  String get modulePhDescription =>
+      'Gérer les PH, les formulaires et les administrateurs';
 
   @override
   String get moduleSettings => 'Paramètres';
 
   @override
+  String get moduleSettingsDescription =>
+      'Gérer les paramètres de l\'application';
+
+  @override
   String get moduleFeed => 'Feed';
+
+  @override
+  String get moduleFeedDescription =>
+      'Consulter les actualités et mises à jour';
 
   @override
   String get moduleStyleGuide => 'StyleGuide';
 
   @override
+  String get moduleStyleGuideDescription =>
+      'Explore the UI components and styles used in Titan';
+
+  @override
   String get moduleAdmin => 'Adminitration';
+
+  @override
+  String get moduleAdminDescription =>
+      'Gérer les utilisateurs, groupes et structures';
 
   @override
   String get moduleOthers => 'Autres';
 
   @override
+  String get moduleOthersDescription => 'Afficher les autres modules';
+
+  @override
   String get modulePayment => 'Paiement';
+
+  @override
+  String get modulePaymentDescription =>
+      'Gérer les paiements, les statistiques et les appareils';
 
   @override
   String get paiementTopUp => 'Recharge';

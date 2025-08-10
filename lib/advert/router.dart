@@ -28,7 +28,8 @@ class AdvertRouter {
   static const String detail = '/detail';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleAdvert,
-    description: "Gérer les annonces et les annonceurs",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleAdvertDescription,
     root: AdvertRouter.root,
   );
   AdvertRouter(this.ref);

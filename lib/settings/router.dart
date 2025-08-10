@@ -15,7 +15,8 @@ class SettingsRouter {
   static const String root = '/settings';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleSettings,
-    description: "Gérer les paramètres de l'application",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleSettingsDescription,
     root: SettingsRouter.root,
   );
 

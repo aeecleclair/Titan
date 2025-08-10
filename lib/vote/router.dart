@@ -27,7 +27,8 @@ class VoteRouter {
   static const String detail = '/detail';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleVote,
-    description: "Gérer les votes, les sections et les candidats",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleVoteDescription,
     root: VoteRouter.root,
   );
   VoteRouter(this.ref);

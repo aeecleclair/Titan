@@ -27,7 +27,8 @@ class PhRouter {
   static const String add_ph = '/add_ph';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.modulePh,
-    description: "Gérer les PH, les formulaires et les administrateurs",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.modulePhDescription,
     root: PhRouter.root,
   );
   PhRouter(this.ref);

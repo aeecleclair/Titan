@@ -19,7 +19,8 @@ class FeedRouter {
   static const String admin = '/admin';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleFeed,
-    description: "Consulter les actualités et mises à jour",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleFeedDescription,
     root: FeedRouter.root,
   );
 

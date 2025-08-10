@@ -23,7 +23,8 @@ class PurchasesRouter {
   static const String purchase = '/purchase';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.modulePurchases,
-    description: "Gérer les achats, les tickets et l'historique",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.modulePurchasesDescription,
     root: PurchasesRouter.root,
   );
   PurchasesRouter(this.ref);

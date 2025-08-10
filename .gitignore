@@ -63,3 +63,6 @@ coverage/
 
 # Platforms not supported by this project
 /windows/
+
+# Missing translations
+missing.txt

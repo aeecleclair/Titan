@@ -3518,67 +3518,134 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moduleAdvert => 'Advert';
 
   @override
+  String get moduleAdvertDescription => 'View the latest adverts';
+
+  @override
   String get moduleAmap => 'AMAP';
+
+  @override
+  String get moduleAmapDescription => 'Order your AMAP basket';
 
   @override
   String get moduleBooking => 'Booking';
 
   @override
+  String get moduleBookingDescription => 'Book a room';
+
+  @override
   String get moduleCalendar => 'Calendar';
+
+  @override
+  String get moduleCalendarDescription => 'View the calendar of events';
 
   @override
   String get moduleCentralisation => 'Centralisation';
 
   @override
+  String get moduleCentralisationDescription => 'Viw all links';
+
+  @override
   String get moduleCinema => 'Cinema';
+
+  @override
+  String get moduleCinemaDescription => 'View the cinema schedule';
 
   @override
   String get moduleEvent => 'Event';
 
   @override
+  String get moduleEventDescription => 'View events';
+
+  @override
   String get moduleFlappyBird => 'Flappy Bird';
+
+  @override
+  String get moduleFlappyBirdDescription => 'Play Flappy Bird';
 
   @override
   String get moduleLoan => 'Loan';
 
   @override
+  String get moduleLoanDescription => 'See your loans';
+
+  @override
   String get modulePhonebook => 'Phonebook';
+
+  @override
+  String get modulePhonebookDescription => 'View the phonebook';
 
   @override
   String get modulePurchases => 'Purchases';
 
   @override
+  String get modulePurchasesDescription => 'View your purchases';
+
+  @override
   String get moduleRaffle => 'Raffle';
+
+  @override
+  String get moduleRaffleDescription => 'View the raffle';
 
   @override
   String get moduleRecommendation => 'Recommendation';
 
   @override
+  String get moduleRecommendationDescription => 'View the recommendations';
+
+  @override
   String get moduleSeedLibrary => 'Seed Library';
+
+  @override
+  String get moduleSeedLibraryDescription => 'View the seed library';
 
   @override
   String get moduleVote => 'Vote';
 
   @override
+  String get moduleVoteDescription => 'Vote for the campaigns';
+
+  @override
   String get modulePh => 'PH';
+
+  @override
+  String get modulePhDescription => 'View the PH';
 
   @override
   String get moduleSettings => 'Settings';
 
   @override
+  String get moduleSettingsDescription => 'Manage your settings';
+
+  @override
   String get moduleFeed => 'Feed';
+
+  @override
+  String get moduleFeedDescription => 'View the latest news';
 
   @override
   String get moduleStyleGuide => 'StyleGuide';
 
   @override
+  String get moduleStyleGuideDescription => 'Style guide for developers';
+
+  @override
   String get moduleAdmin => 'Administration';
+
+  @override
+  String get moduleAdminDescription =>
+      'Administration module for administrators';
 
   @override
   String get moduleOthers => 'Others';
 
   @override
+  String get moduleOthersDescription => 'Other modules';
+
+  @override
   String get modulePayment => 'Payment';
+
+  @override
+  String get modulePaymentDescription => 'Pay and see your transactions';
 
   @override
   String get paiementTopUp => 'Top-up';

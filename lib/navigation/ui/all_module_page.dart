@@ -84,7 +84,7 @@ class AllModulePage extends HookConsumerWidget {
                               Expanded(
                                 child: ListItem(
                                   title: module.getName(context),
-                                  subtitle: module.description,
+                                  subtitle: module.getDescription(context),
                                   onTap: () {
                                     navbarListModuleNotifier.pushModule(module);
                                     final pathForwardingNotifier = ref.watch(

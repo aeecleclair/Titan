@@ -27,7 +27,8 @@ class LoanRouter {
   static const String detail = '/detail';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleLoan,
-    description: "Gérer les prêts et les articles",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleLoanDescription,
     root: LoanRouter.root,
   );
   LoanRouter(this.ref);

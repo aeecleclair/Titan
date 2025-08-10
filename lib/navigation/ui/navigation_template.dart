@@ -117,7 +117,10 @@ class NavigationTemplate extends HookConsumerWidget {
                                             AppLocalizations.of(
                                               context,
                                             )!.moduleOthers,
-                                        description: '',
+                                        getDescription: (context) =>
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.moduleOthersDescription,
                                         root: AppRouter.allModules,
                                       ),
                                       onTap: () {

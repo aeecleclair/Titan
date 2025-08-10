@@ -22,8 +22,8 @@ class RecommendationRouter {
   static const String addEdit = '/add_edit';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleRecommendation,
-    description:
-        "Gérer les recommandations, les informations et les administrateurs",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleRecommendationDescription,
     root: RecommendationRouter.root,
   );
 

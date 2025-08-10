@@ -24,7 +24,8 @@ class EventRouter {
   static const String detail = '/detail';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleEvent,
-    description: "Gérer les événements et les participants",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleEventDescription,
     root: EventRouter.root,
   );
   EventRouter(this.ref);

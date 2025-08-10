@@ -15,7 +15,8 @@ class HomeRouter {
   static const String detail = '/detail';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleCalendar,
-    description: "Consulter les événements et les activités",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleCalendarDescription,
     root: HomeRouter.root,
   );
   HomeRouter(this.ref);

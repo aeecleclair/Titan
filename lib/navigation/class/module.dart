@@ -4,25 +4,25 @@ import 'package:heroicons/heroicons.dart';
 
 class Module {
   final String Function(BuildContext) getName;
-  String description;
+  final String Function(BuildContext) getDescription;
   String root;
 
   Module({
     required this.getName,
-    required this.description,
+    required this.getDescription,
     required this.root,
   });
 
   Module copy({
     String Function(BuildContext)? getName,
 
-    String? description,
+    String Function(BuildContext)? description,
     Either<HeroIcons, String>? icon,
     String? root,
     bool? selected,
   }) => Module(
     getName: getName ?? this.getName,
-    description: description ?? this.description,
+    getDescription: getDescription,
     root: root ?? this.root,
   );
 }

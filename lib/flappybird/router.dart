@@ -16,7 +16,8 @@ class FlappyBirdRouter {
   static const String leaderBoard = '/leaderboard';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleFlappyBird,
-    description: "Jouer à Flappy Bird et consulter le classement",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleFlappyBirdDescription,
     root: FlappyBirdRouter.root,
   );
   FlappyBirdRouter(this.ref);
