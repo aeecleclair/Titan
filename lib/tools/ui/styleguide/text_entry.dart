@@ -32,8 +32,8 @@ class TextEntry extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.textCapitalization = TextCapitalization.sentences,
     this.canBeEmpty = false,
-    this.color = ColorConstants.tertiary,
-    this.enabledColor = ColorConstants.tertiary,
+    this.color = ColorConstants.onTertiary,
+    this.enabledColor = ColorConstants.onTertiary,
     this.errorColor = ColorConstants.main,
     this.noValueError = "No value",
     this.suffixIcon,
@@ -97,25 +97,26 @@ class TextEntry extends StatelessWidget {
           return noValueError;
         }
 
-        if (isInt) {
-          final intValue = int.tryParse(value);
-          if (intValue == null || (intValue < 0 && !isNegative)) {
-            return "Invalid number";
+          if (isInt) {
+            final intValue = int.tryParse(value);
+            if (intValue == null || (intValue < 0 && !isNegative)) {
+              return "Invalid number";
+            }
           }
-        }
 
-        if (isDouble) {
-          final doubleValue = double.tryParse(value.replaceAll(',', '.'));
-          if (doubleValue == null || (doubleValue < 0 && !isNegative)) {
-            return "Invalid number";
+          if (isDouble) {
+            final doubleValue = double.tryParse(value.replaceAll(',', '.'));
+            if (doubleValue == null || (doubleValue < 0 && !isNegative)) {
+              return "Invalid number";
+            }
           }
-        }
 
-        if (validator == null) {
-          return null;
-        }
-        return validator!(value);
-      },
+          if (validator == null) {
+            return null;
+          }
+          return validator!(value);
+        },
+      ),
     );
   }
 }
