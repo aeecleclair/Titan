@@ -13,8 +13,8 @@ class CentralisationRouter {
   static const String root = '/centralisation';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleCentralisation,
-    description: "Gérer la centralisation des données",
-
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleCentralisationDescription,
     root: CentralisationRouter.root,
   );
   CentralisationRouter(this.ref);

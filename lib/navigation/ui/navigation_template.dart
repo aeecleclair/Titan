@@ -60,7 +60,7 @@ class NavigationTemplate extends HookConsumerWidget {
               if (pathForwarding.isLoggedIn)
                 Positioned(
                   left: 0,
-                  bottom: 20,
+                  bottom: 0,
                   right: 0,
                   child: Consumer(
                     builder: (context, ref, child) {
@@ -117,7 +117,10 @@ class NavigationTemplate extends HookConsumerWidget {
                                             AppLocalizations.of(
                                               context,
                                             )!.moduleOthers,
-                                        description: '',
+                                        getDescription: (context) =>
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.moduleOthersDescription,
                                         root: AppRouter.allModules,
                                       ),
                                       onTap: () {

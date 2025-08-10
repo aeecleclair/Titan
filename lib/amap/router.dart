@@ -35,8 +35,9 @@ class AmapRouter {
   static const String presentation = '/presentation';
   static const String addEditProduct = '/add_edit_product';
   static final Module module = Module(
-    getName: (context) => AppLocalizations.of(context)!.amapAmap,
-    description: "Gérer les livraisons et les produits",
+    getName: (context) => AppLocalizations.of(context)!.moduleAmap,
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleAmapDescription,
     root: AmapRouter.root,
   );
   AmapRouter(this.ref);

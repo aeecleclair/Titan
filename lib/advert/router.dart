@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/booking/providers/is_admin_provider.dart';
 import 'package:titan/advert/providers/is_advert_admin_provider.dart';
 import 'package:titan/advert/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
@@ -28,7 +28,8 @@ class AdvertRouter {
   static const String detail = '/detail';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleAdvert,
-    description: "Gérer les annonces et les annonceurs",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleAdvertDescription,
     root: AdvertRouter.root,
   );
   AdvertRouter(this.ref);

@@ -263,7 +263,7 @@ abstract class AppLocalizations {
   /// No description provided for @adminDeleteGroup.
   ///
   /// In fr, this message translates to:
-  /// **'Supprimer le groupe ?'**
+  /// **'Supprimer le groupe'**
   String get adminDeleteGroup;
 
   /// No description provided for @adminDeletedGroup.
@@ -572,6 +572,216 @@ abstract class AppLocalizations {
   /// **'Visibilités'**
   String get adminVisibilities;
 
+  /// No description provided for @adminGroupNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notification de groupe'**
+  String get adminGroupNotification;
+
+  /// Notifie les membres du groupe sélectionné
+  ///
+  /// In fr, this message translates to:
+  /// **'Notifier le groupe {groupName}'**
+  String adminNotifyGroup(String groupName);
+
+  /// No description provided for @adminTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre'**
+  String get adminTitle;
+
+  /// No description provided for @adminContent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contenu'**
+  String get adminContent;
+
+  /// No description provided for @adminSend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer'**
+  String get adminSend;
+
+  /// No description provided for @adminNotificationSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notification envoyée'**
+  String get adminNotificationSent;
+
+  /// No description provided for @adminFailedToSendNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de l\'envoi de la notification'**
+  String get adminFailedToSendNotification;
+
+  /// No description provided for @adminGroupsManagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gestion des groupes'**
+  String get adminGroupsManagement;
+
+  /// No description provided for @adminEditGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le groupe'**
+  String get adminEditGroup;
+
+  /// No description provided for @adminManageMembers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les membres'**
+  String get adminManageMembers;
+
+  /// No description provided for @adminDeleteGroupConfirmation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Êtes-vous sûr de vouloir supprimer ce groupe ?'**
+  String get adminDeleteGroupConfirmation;
+
+  /// No description provided for @adminFailedToDeleteGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de la suppression du groupe'**
+  String get adminFailedToDeleteGroup;
+
+  /// No description provided for @adminUsersAndGroups.
+  ///
+  /// In fr, this message translates to:
+  /// **'Utilisateurs et groupes'**
+  String get adminUsersAndGroups;
+
+  /// No description provided for @adminUsersManagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gestion des utilisateurs'**
+  String get adminUsersManagement;
+
+  /// No description provided for @adminUsersManagementDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les utilisateurs de l\'application'**
+  String get adminUsersManagementDescription;
+
+  /// No description provided for @adminManageUserGroups.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les groupes d\'utilisateurs'**
+  String get adminManageUserGroups;
+
+  /// No description provided for @adminSendNotificationToGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer une notification à un groupe'**
+  String get adminSendNotificationToGroup;
+
+  /// No description provided for @adminPaiementModule.
+  ///
+  /// In fr, this message translates to:
+  /// **'Module de paiement'**
+  String get adminPaiementModule;
+
+  /// No description provided for @adminPaiement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement'**
+  String get adminPaiement;
+
+  /// No description provided for @adminManagePaiementStructures.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les structures du module de paiement'**
+  String get adminManagePaiementStructures;
+
+  /// No description provided for @adminManageUsersAssociationMemberships.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les adhésions des utilisateurs'**
+  String get adminManageUsersAssociationMemberships;
+
+  /// No description provided for @adminAssociationMembershipsManagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gestion des adhésions'**
+  String get adminAssociationMembershipsManagement;
+
+  /// No description provided for @adminChooseGroupManager.
+  ///
+  /// In fr, this message translates to:
+  /// **'Groupe gestionnaire de l\'adhésion'**
+  String get adminChooseGroupManager;
+
+  /// No description provided for @adminSelectManager.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sélectionner un gestionnaire'**
+  String get adminSelectManager;
+
+  /// No description provided for @adminInviteUsers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inviter des utilisateurs'**
+  String get adminInviteUsers;
+
+  /// No description provided for @adminImportList.
+  ///
+  /// In fr, this message translates to:
+  /// **'Importer une liste'**
+  String get adminImportList;
+
+  /// No description provided for @adminInvitedUsers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Utilisateurs invités'**
+  String get adminInvitedUsers;
+
+  /// No description provided for @adminFailedToInviteUsers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de l\'invitation des utilisateurs'**
+  String get adminFailedToInviteUsers;
+
+  /// No description provided for @adminDeleteUsers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer des utilisateurs'**
+  String get adminDeleteUsers;
+
+  /// No description provided for @adminAdmin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Admin'**
+  String get adminAdmin;
+
+  /// No description provided for @adminAdverts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonces'**
+  String get adminAdverts;
+
+  /// No description provided for @adminAnnouncers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonceurs'**
+  String get adminAnnouncers;
+
+  /// No description provided for @adminManageAnnouncers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les annonceurs'**
+  String get adminManageAnnouncers;
+
+  /// No description provided for @adminDeleteAnnouncer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer cet annonceur ?'**
+  String get adminDeleteAnnouncer;
+
+  /// No description provided for @adminDeleteAnnouncerDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer cet annonceurs supprimera toutes ses annonces.'**
+  String get adminDeleteAnnouncerDescription;
+
   /// No description provided for @advertAdd.
   ///
   /// In fr, this message translates to:
@@ -629,7 +839,7 @@ abstract class AppLocalizations {
   /// No description provided for @advertDeleteAdvert.
   ///
   /// In fr, this message translates to:
-  /// **'Supprimer l\'annonce ?'**
+  /// **'Supprimer l\'annonce'**
   String get advertDeleteAdvert;
 
   /// No description provided for @advertDeleteAnnouncer.
@@ -6101,14 +6311,8 @@ abstract class AppLocalizations {
   /// No description provided for @settingsEditAccount.
   ///
   /// In fr, this message translates to:
-  /// **'Modifier le compte'**
+  /// **'Modifier mon profil'**
   String get settingsEditAccount;
-
-  /// No description provided for @settingsEditPassword.
-  ///
-  /// In fr, this message translates to:
-  /// **'Modifier le mot de passe'**
-  String get settingsEditPassword;
 
   /// No description provided for @settingsEmail.
   ///
@@ -6176,11 +6380,11 @@ abstract class AppLocalizations {
   /// **'Langue'**
   String get settingsLanguage;
 
-  /// No description provided for @settingsLanguageFr.
+  /// No description provided for @settingsLanguageVar.
   ///
   /// In fr, this message translates to:
-  /// **'Français'**
-  String get settingsLanguageFr;
+  /// **'Français 🇫🇷'**
+  String get settingsLanguageVar;
 
   /// No description provided for @settingsLogs.
   ///
@@ -6373,6 +6577,72 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Très fort'**
   String get settingsPasswordStrengthVeryStrong;
+
+  /// No description provided for @settingsPhoneNumber.
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro de téléphone'**
+  String get settingsPhoneNumber;
+
+  /// No description provided for @settingsValidate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider'**
+  String get settingsValidate;
+
+  /// No description provided for @settingsEditedAccount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte modifié avec succès'**
+  String get settingsEditedAccount;
+
+  /// No description provided for @settingsFailedToEditAccount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de la modification du compte'**
+  String get settingsFailedToEditAccount;
+
+  /// No description provided for @settingsChooseLanguage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choix de la langue'**
+  String get settingsChooseLanguage;
+
+  /// Affiche le nombre de notifications actives sur le total des notifications disponibles, avec gestion du pluriel
+  ///
+  /// In fr, this message translates to:
+  /// **'{active}/{total} {active, plural, zero {activée} one {activée} other {activées}}'**
+  String settingsNotificationCounter(int active, int total);
+
+  /// No description provided for @settingsEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement'**
+  String get settingsEvent;
+
+  /// No description provided for @settingsIcal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lien Ical'**
+  String get settingsIcal;
+
+  /// No description provided for @settingsSynncWithCalendar.
+  ///
+  /// In fr, this message translates to:
+  /// **'Synchroniser avec votre calendrier'**
+  String get settingsSynncWithCalendar;
+
+  /// No description provided for @settingsIcalLinkCopied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lien Ical copié dans le presse-papier'**
+  String get settingsIcalLinkCopied;
+
+  /// No description provided for @settingsProfile.
+  ///
+  /// In fr, this message translates to:
+  /// **'Profil'**
+  String get settingsProfile;
 
   /// No description provided for @voteAdd.
   ///
@@ -6842,11 +7112,23 @@ abstract class AppLocalizations {
   /// **'Annonce'**
   String get moduleAdvert;
 
+  /// No description provided for @moduleAdvertDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les annonces'**
+  String get moduleAdvertDescription;
+
   /// No description provided for @moduleAmap.
   ///
   /// In fr, this message translates to:
   /// **'AMAP'**
   String get moduleAmap;
+
+  /// No description provided for @moduleAmapDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les livraisons et les produits'**
+  String get moduleAmapDescription;
 
   /// No description provided for @moduleBooking.
   ///
@@ -6854,11 +7136,23 @@ abstract class AppLocalizations {
   /// **'Réservation'**
   String get moduleBooking;
 
+  /// No description provided for @moduleBookingDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les réservations, les salles et les managers'**
+  String get moduleBookingDescription;
+
   /// No description provided for @moduleCalendar.
   ///
   /// In fr, this message translates to:
   /// **'Calendrier'**
   String get moduleCalendar;
+
+  /// No description provided for @moduleCalendarDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Consulter les événements et les activités'**
+  String get moduleCalendarDescription;
 
   /// No description provided for @moduleCentralisation.
   ///
@@ -6866,11 +7160,23 @@ abstract class AppLocalizations {
   /// **'Centralisation'**
   String get moduleCentralisation;
 
+  /// No description provided for @moduleCentralisationDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer la centralisation des données'**
+  String get moduleCentralisationDescription;
+
   /// No description provided for @moduleCinema.
   ///
   /// In fr, this message translates to:
   /// **'Cinéma'**
   String get moduleCinema;
+
+  /// No description provided for @moduleCinemaDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les séances de cinéma'**
+  String get moduleCinemaDescription;
 
   /// No description provided for @moduleEvent.
   ///
@@ -6878,11 +7184,23 @@ abstract class AppLocalizations {
   /// **'Événement'**
   String get moduleEvent;
 
+  /// No description provided for @moduleEventDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les événements et les participants'**
+  String get moduleEventDescription;
+
   /// No description provided for @moduleFlappyBird.
   ///
   /// In fr, this message translates to:
   /// **'Flappy Bird'**
   String get moduleFlappyBird;
+
+  /// No description provided for @moduleFlappyBirdDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jouer à Flappy Bird et consulter le classement'**
+  String get moduleFlappyBirdDescription;
 
   /// No description provided for @moduleLoan.
   ///
@@ -6890,11 +7208,23 @@ abstract class AppLocalizations {
   /// **'Prêt'**
   String get moduleLoan;
 
+  /// No description provided for @moduleLoanDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les prêts et les articles'**
+  String get moduleLoanDescription;
+
   /// No description provided for @modulePhonebook.
   ///
   /// In fr, this message translates to:
   /// **'Annuaire'**
   String get modulePhonebook;
+
+  /// No description provided for @modulePhonebookDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les associations, les membres et les administrateurs'**
+  String get modulePhonebookDescription;
 
   /// No description provided for @modulePurchases.
   ///
@@ -6902,11 +7232,23 @@ abstract class AppLocalizations {
   /// **'Achats'**
   String get modulePurchases;
 
+  /// No description provided for @modulePurchasesDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les achats, les tickets et l\'historique'**
+  String get modulePurchasesDescription;
+
   /// No description provided for @moduleRaffle.
   ///
   /// In fr, this message translates to:
   /// **'Tombola'**
   String get moduleRaffle;
+
+  /// No description provided for @moduleRaffleDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les tombolas, les prix et les tickets'**
+  String get moduleRaffleDescription;
 
   /// No description provided for @moduleRecommendation.
   ///
@@ -6914,11 +7256,23 @@ abstract class AppLocalizations {
   /// **'Bons plans'**
   String get moduleRecommendation;
 
+  /// No description provided for @moduleRecommendationDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les recommandations, les informations et les administrateurs'**
+  String get moduleRecommendationDescription;
+
   /// No description provided for @moduleSeedLibrary.
   ///
   /// In fr, this message translates to:
   /// **'Grainothèque'**
   String get moduleSeedLibrary;
+
+  /// No description provided for @moduleSeedLibraryDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les graines, les espèces et les stocks'**
+  String get moduleSeedLibraryDescription;
 
   /// No description provided for @moduleVote.
   ///
@@ -6926,11 +7280,23 @@ abstract class AppLocalizations {
   /// **'Vote'**
   String get moduleVote;
 
+  /// No description provided for @moduleVoteDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les votes, les sections et les candidats'**
+  String get moduleVoteDescription;
+
   /// No description provided for @modulePh.
   ///
   /// In fr, this message translates to:
   /// **'PH'**
   String get modulePh;
+
+  /// No description provided for @modulePhDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les PH, les formulaires et les administrateurs'**
+  String get modulePhDescription;
 
   /// No description provided for @moduleSettings.
   ///
@@ -6938,11 +7304,23 @@ abstract class AppLocalizations {
   /// **'Paramètres'**
   String get moduleSettings;
 
+  /// No description provided for @moduleSettingsDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les paramètres de l\'application'**
+  String get moduleSettingsDescription;
+
   /// No description provided for @moduleFeed.
   ///
   /// In fr, this message translates to:
   /// **'Feed'**
   String get moduleFeed;
+
+  /// No description provided for @moduleFeedDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Consulter les actualités et mises à jour'**
+  String get moduleFeedDescription;
 
   /// No description provided for @moduleStyleGuide.
   ///
@@ -6950,11 +7328,23 @@ abstract class AppLocalizations {
   /// **'StyleGuide'**
   String get moduleStyleGuide;
 
+  /// No description provided for @moduleStyleGuideDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Explore the UI components and styles used in Titan'**
+  String get moduleStyleGuideDescription;
+
   /// No description provided for @moduleAdmin.
   ///
   /// In fr, this message translates to:
-  /// **'Adminitration'**
+  /// **'Admin'**
   String get moduleAdmin;
+
+  /// No description provided for @moduleAdminDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les utilisateurs, groupes et structures'**
+  String get moduleAdminDescription;
 
   /// No description provided for @moduleOthers.
   ///
@@ -6962,11 +7352,23 @@ abstract class AppLocalizations {
   /// **'Autres'**
   String get moduleOthers;
 
+  /// No description provided for @moduleOthersDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Afficher les autres modules'**
+  String get moduleOthersDescription;
+
   /// No description provided for @modulePayment.
   ///
   /// In fr, this message translates to:
   /// **'Paiement'**
   String get modulePayment;
+
+  /// No description provided for @modulePaymentDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les paiements, les statistiques et les appareils'**
+  String get modulePaymentDescription;
 
   /// No description provided for @paiementTopUp.
   ///

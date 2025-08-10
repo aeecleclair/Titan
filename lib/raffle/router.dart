@@ -30,7 +30,8 @@ class RaffleRouter {
   static const String creation = '/creation';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleRaffle,
-    description: "Gérer les tombolas, les prix et les tickets",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleRaffleDescription,
     root: RaffleRouter.root,
   );
   RaffleRouter(this.ref);

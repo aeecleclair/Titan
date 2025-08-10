@@ -9,7 +9,8 @@ class StyleGuideRouter {
   static const String root = '/styleguide';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleStyleGuide,
-    description: "Explore the UI components and styles used in Titan",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleStyleGuideDescription,
     root: StyleGuideRouter.root,
   );
   StyleGuideRouter(this.ref);

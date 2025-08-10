@@ -25,7 +25,8 @@ class CinemaRouter {
   static const String detail = '/detail';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleCinema,
-    description: "Gérer les séances de cinéma",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.moduleCinemaDescription,
     root: CinemaRouter.root,
   );
   CinemaRouter(this.ref);

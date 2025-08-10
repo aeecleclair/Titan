@@ -9,12 +9,19 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 class Refresher extends HookConsumerWidget {
   final Widget child;
   final Future Function() onRefresh;
-  const Refresher({super.key, required this.onRefresh, required this.child});
+  final ScrollController? controller;
+  const Refresher({
+    super.key,
+    required this.onRefresh,
+    required this.child,
+    this.controller,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (kIsWeb) {
       return SingleChildScrollView(
+        controller: controller,
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),
         ),
@@ -30,6 +37,7 @@ class Refresher extends HookConsumerWidget {
         tokenExpireWrapper(ref, onRefresh);
       },
       child: SingleChildScrollView(
+        controller: controller,
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),
         ),
@@ -42,6 +50,7 @@ class Refresher extends HookConsumerWidget {
   );
   Widget buildIOSList(WidgetRef ref) => LayoutBuilder(
     builder: (context, constraints) => CustomScrollView(
+      controller: controller,
       shrinkWrap: false,
       physics: const BouncingScrollPhysics(
         parent: AlwaysScrollableScrollPhysics(),

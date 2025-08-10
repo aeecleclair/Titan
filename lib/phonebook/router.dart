@@ -39,7 +39,8 @@ class PhonebookRouter {
   static const String addEditMember = '/add_edit_member';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.modulePhonebook,
-    description: "Gérer les associations, les membres et les administrateurs",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.modulePhonebookDescription,
     root: PhonebookRouter.root,
   );
   PhonebookRouter(this.ref);

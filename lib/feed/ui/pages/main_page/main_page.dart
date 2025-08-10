@@ -24,7 +24,7 @@ class FeedMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final feedItems = useState<List<FeedItem>>(FeedItem.getFakeItems());
     final filteredItems = useState<List<FeedItem>>(feedItems.value);
-    final isAdmin = ref.watch(isAdminProvider);
+    final isSuperAdmin = ref.watch(isAdminProvider);
     final scrollController = useScrollController();
 
     return FeedTemplate(
@@ -93,7 +93,7 @@ class FeedMainPage extends HookConsumerWidget {
                     color: ColorConstants.title,
                   ),
                 ),
-                if (isAdmin)
+                if (isSuperAdmin)
                   CustomIconButton(
                     icon: HeroIcon(
                       HeroIcons.plus,

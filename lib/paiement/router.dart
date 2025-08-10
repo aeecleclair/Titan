@@ -39,7 +39,8 @@ class PaymentRouter {
   static const String storeStats = '/storeStats';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.modulePayment,
-    description: "Gérer les paiements, les statistiques et les appareils",
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.modulePaymentDescription,
     root: PaymentRouter.root,
   );
   PaymentRouter(this.ref);

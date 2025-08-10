@@ -91,7 +91,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminDeletedAssociationMembership => 'Adhésion supprimée';
 
   @override
-  String get adminDeleteGroup => 'Supprimer le groupe ?';
+  String get adminDeleteGroup => 'Supprimer le groupe';
 
   @override
   String get adminDeletedGroup => 'Groupe supprimé';
@@ -249,6 +249,121 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminVisibilities => 'Visibilités';
 
   @override
+  String get adminGroupNotification => 'Notification de groupe';
+
+  @override
+  String adminNotifyGroup(String groupName) {
+    return 'Notifier le groupe $groupName';
+  }
+
+  @override
+  String get adminTitle => 'Titre';
+
+  @override
+  String get adminContent => 'Contenu';
+
+  @override
+  String get adminSend => 'Envoyer';
+
+  @override
+  String get adminNotificationSent => 'Notification envoyée';
+
+  @override
+  String get adminFailedToSendNotification =>
+      'Échec de l\'envoi de la notification';
+
+  @override
+  String get adminGroupsManagement => 'Gestion des groupes';
+
+  @override
+  String get adminEditGroup => 'Modifier le groupe';
+
+  @override
+  String get adminManageMembers => 'Gérer les membres';
+
+  @override
+  String get adminDeleteGroupConfirmation =>
+      'Êtes-vous sûr de vouloir supprimer ce groupe ?';
+
+  @override
+  String get adminFailedToDeleteGroup => 'Échec de la suppression du groupe';
+
+  @override
+  String get adminUsersAndGroups => 'Utilisateurs et groupes';
+
+  @override
+  String get adminUsersManagement => 'Gestion des utilisateurs';
+
+  @override
+  String get adminUsersManagementDescription =>
+      'Gérer les utilisateurs de l\'application';
+
+  @override
+  String get adminManageUserGroups => 'Gérer les groupes d\'utilisateurs';
+
+  @override
+  String get adminSendNotificationToGroup =>
+      'Envoyer une notification à un groupe';
+
+  @override
+  String get adminPaiementModule => 'Module de paiement';
+
+  @override
+  String get adminPaiement => 'Paiement';
+
+  @override
+  String get adminManagePaiementStructures =>
+      'Gérer les structures du module de paiement';
+
+  @override
+  String get adminManageUsersAssociationMemberships =>
+      'Gérer les adhésions des utilisateurs';
+
+  @override
+  String get adminAssociationMembershipsManagement => 'Gestion des adhésions';
+
+  @override
+  String get adminChooseGroupManager => 'Groupe gestionnaire de l\'adhésion';
+
+  @override
+  String get adminSelectManager => 'Sélectionner un gestionnaire';
+
+  @override
+  String get adminInviteUsers => 'Inviter des utilisateurs';
+
+  @override
+  String get adminImportList => 'Importer une liste';
+
+  @override
+  String get adminInvitedUsers => 'Utilisateurs invités';
+
+  @override
+  String get adminFailedToInviteUsers =>
+      'Échec de l\'invitation des utilisateurs';
+
+  @override
+  String get adminDeleteUsers => 'Supprimer des utilisateurs';
+
+  @override
+  String get adminAdmin => 'Admin';
+
+  @override
+  String get adminAdverts => 'Annonces';
+
+  @override
+  String get adminAnnouncers => 'Annonceurs';
+
+  @override
+  String get adminManageAnnouncers => 'Gérer les annonceurs';
+
+  @override
+  String get adminDeleteAnnouncer => 'Supprimer cet annonceur ?';
+
+  @override
+  String get adminDeleteAnnouncerDescription =>
+      'Supprimer cet annonceurs supprimera toutes ses annonces.';
+
+  @override
   String get advertAdd => 'Ajouter';
 
   @override
@@ -276,7 +391,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get advertContent => 'Contenu';
 
   @override
-  String get advertDeleteAdvert => 'Supprimer l\'annonce ?';
+  String get advertDeleteAdvert => 'Supprimer l\'annonce';
 
   @override
   String get advertDeleteAnnouncer => 'Supprimer l\'annonceur ?';
@@ -3107,10 +3222,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsEdit => 'Modifier';
 
   @override
-  String get settingsEditAccount => 'Modifier le compte';
-
-  @override
-  String get settingsEditPassword => 'Modifier le mot de passe';
+  String get settingsEditAccount => 'Modifier mon profil';
 
   @override
   String get settingsEmail => 'Email';
@@ -3148,7 +3260,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsLanguage => 'Langue';
 
   @override
-  String get settingsLanguageFr => 'Français';
+  String get settingsLanguageVar => 'Français 🇫🇷';
 
   @override
   String get settingsLogs => 'Logs';
@@ -3248,6 +3360,49 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsPasswordStrengthVeryStrong => 'Très fort';
+
+  @override
+  String get settingsPhoneNumber => 'Numéro de téléphone';
+
+  @override
+  String get settingsValidate => 'Valider';
+
+  @override
+  String get settingsEditedAccount => 'Compte modifié avec succès';
+
+  @override
+  String get settingsFailedToEditAccount =>
+      'Échec de la modification du compte';
+
+  @override
+  String get settingsChooseLanguage => 'Choix de la langue';
+
+  @override
+  String settingsNotificationCounter(int active, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      active,
+      locale: localeName,
+      other: 'activées',
+      one: 'activée',
+      zero: 'activée',
+    );
+    return '$active/$total $_temp0';
+  }
+
+  @override
+  String get settingsEvent => 'Événement';
+
+  @override
+  String get settingsIcal => 'Lien Ical';
+
+  @override
+  String get settingsSynncWithCalendar => 'Synchroniser avec votre calendrier';
+
+  @override
+  String get settingsIcalLinkCopied => 'Lien Ical copié dans le presse-papier';
+
+  @override
+  String get settingsProfile => 'Profil';
 
   @override
   String get voteAdd => 'Ajouter';
@@ -3491,67 +3646,150 @@ class AppLocalizationsFr extends AppLocalizations {
   String get moduleAdvert => 'Annonce';
 
   @override
+  String get moduleAdvertDescription => 'Gérer les annonces';
+
+  @override
   String get moduleAmap => 'AMAP';
+
+  @override
+  String get moduleAmapDescription => 'Gérer les livraisons et les produits';
 
   @override
   String get moduleBooking => 'Réservation';
 
   @override
+  String get moduleBookingDescription =>
+      'Gérer les réservations, les salles et les managers';
+
+  @override
   String get moduleCalendar => 'Calendrier';
+
+  @override
+  String get moduleCalendarDescription =>
+      'Consulter les événements et les activités';
 
   @override
   String get moduleCentralisation => 'Centralisation';
 
   @override
+  String get moduleCentralisationDescription =>
+      'Gérer la centralisation des données';
+
+  @override
   String get moduleCinema => 'Cinéma';
+
+  @override
+  String get moduleCinemaDescription => 'Gérer les séances de cinéma';
 
   @override
   String get moduleEvent => 'Événement';
 
   @override
+  String get moduleEventDescription =>
+      'Gérer les événements et les participants';
+
+  @override
   String get moduleFlappyBird => 'Flappy Bird';
+
+  @override
+  String get moduleFlappyBirdDescription =>
+      'Jouer à Flappy Bird et consulter le classement';
 
   @override
   String get moduleLoan => 'Prêt';
 
   @override
+  String get moduleLoanDescription => 'Gérer les prêts et les articles';
+
+  @override
   String get modulePhonebook => 'Annuaire';
+
+  @override
+  String get modulePhonebookDescription =>
+      'Gérer les associations, les membres et les administrateurs';
 
   @override
   String get modulePurchases => 'Achats';
 
   @override
+  String get modulePurchasesDescription =>
+      'Gérer les achats, les tickets et l\'historique';
+
+  @override
   String get moduleRaffle => 'Tombola';
+
+  @override
+  String get moduleRaffleDescription =>
+      'Gérer les tombolas, les prix et les tickets';
 
   @override
   String get moduleRecommendation => 'Bons plans';
 
   @override
+  String get moduleRecommendationDescription =>
+      'Gérer les recommandations, les informations et les administrateurs';
+
+  @override
   String get moduleSeedLibrary => 'Grainothèque';
+
+  @override
+  String get moduleSeedLibraryDescription =>
+      'Gérer les graines, les espèces et les stocks';
 
   @override
   String get moduleVote => 'Vote';
 
   @override
+  String get moduleVoteDescription =>
+      'Gérer les votes, les sections et les candidats';
+
+  @override
   String get modulePh => 'PH';
+
+  @override
+  String get modulePhDescription =>
+      'Gérer les PH, les formulaires et les administrateurs';
 
   @override
   String get moduleSettings => 'Paramètres';
 
   @override
+  String get moduleSettingsDescription =>
+      'Gérer les paramètres de l\'application';
+
+  @override
   String get moduleFeed => 'Feed';
+
+  @override
+  String get moduleFeedDescription =>
+      'Consulter les actualités et mises à jour';
 
   @override
   String get moduleStyleGuide => 'StyleGuide';
 
   @override
-  String get moduleAdmin => 'Adminitration';
+  String get moduleStyleGuideDescription =>
+      'Explore the UI components and styles used in Titan';
+
+  @override
+  String get moduleAdmin => 'Admin';
+
+  @override
+  String get moduleAdminDescription =>
+      'Gérer les utilisateurs, groupes et structures';
 
   @override
   String get moduleOthers => 'Autres';
 
   @override
+  String get moduleOthersDescription => 'Afficher les autres modules';
+
+  @override
   String get modulePayment => 'Paiement';
+
+  @override
+  String get modulePaymentDescription =>
+      'Gérer les paiements, les statistiques et les appareils';
 
   @override
   String get paiementTopUp => 'Recharge';

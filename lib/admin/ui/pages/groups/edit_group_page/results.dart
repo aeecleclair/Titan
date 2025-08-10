@@ -61,13 +61,14 @@ class MemberResults extends HookConsumerWidget {
                               )!.adminAddingError;
                               await tokenExpireWrapper(ref, () async {
                                 groupNotifier.addMember(newGroup, e).then((
-                                  value,
+                                  result,
                                 ) {
-                                  if (value) {
+                                  if (result) {
                                     simpleGroupGroupsNotifier.setTData(
                                       newGroup.id,
                                       AsyncData([newGroup]),
                                     );
+                                    value.remove(e);
                                     displayToastWithContext(
                                       TypeMsg.msg,
                                       addedMemberMsg,
@@ -82,7 +83,7 @@ class MemberResults extends HookConsumerWidget {
                               });
                             }
                           },
-                          waitingColor: ColorConstants.gradient1,
+                          waitingColor: ColorConstants.main,
                           builder: (child) => child,
                           child: const HeroIcon(HeroIcons.plus),
                         ),
@@ -94,7 +95,7 @@ class MemberResults extends HookConsumerWidget {
             )
             .toList(),
       ),
-      loaderColor: ColorConstants.gradient1,
+      loaderColor: ColorConstants.main,
     );
   }
 }

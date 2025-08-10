@@ -28,9 +28,11 @@ import 'package:titan/recommendation/router.dart';
 import 'package:titan/seed-library/router.dart';
 import 'package:titan/settings/router.dart';
 import 'package:titan/raffle/router.dart';
+import 'package:titan/super_admin/router.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:titan/tools/ui/styleguide/router.dart';
+
 import 'package:titan/vote/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -88,7 +90,6 @@ class AppRouter {
               FadeTransition(opacity: animation, child: child),
         ),
       ),
-      AdminRouter(ref).route(),
       AdvertRouter(ref).route(),
       AmapRouter(ref).route(),
       BookingRouter(ref).route(),
@@ -112,6 +113,8 @@ class AppRouter {
       StyleGuideRouter(ref).route(),
       VoteRouter(ref).route(),
       SeedLibraryRouter(ref).route(),
+      AdminRouter(ref).route(),
+      SuperAdminRouter(ref).route(),
     ];
   }
 }

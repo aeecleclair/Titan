@@ -15,6 +15,7 @@ import 'package:titan/router.dart';
 import 'package:titan/service/tools/setup.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/plausible/plausible_observer.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -95,6 +96,7 @@ class MyApp extends HookConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: 'MyECL',
       scrollBehavior: MyCustomScrollBehavior(),
+      locale: ref.watch(localeProvider),
       supportedLocales: const [Locale('en', 'US'), Locale('fr', 'FR')],
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -102,8 +104,9 @@ class MyApp extends HookConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      themeMode: ThemeMode.light,
       theme: ThemeData(
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.red,
         textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
         brightness: Brightness.light,
       ),

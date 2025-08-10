@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:titan/admin/class/account_type.dart';
+import 'package:titan/super_admin/class/account_type.dart';
 import 'package:titan/admin/class/group.dart';
 import 'package:titan/admin/class/simple_group.dart';
 import 'package:titan/admin/repositories/group_repository.dart';

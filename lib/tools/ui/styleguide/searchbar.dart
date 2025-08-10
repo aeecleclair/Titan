@@ -8,12 +8,14 @@ class CustomSearchBar extends HookWidget {
   final Function()? onFilter;
   final Function(String) onSearch;
   final bool autofocus;
+  final FocusNode? focusNode;
   const CustomSearchBar({
     super.key,
     this.hintText = 'Rechercher',
     this.onFilter,
     required this.onSearch,
     this.autofocus = false,
+    this.focusNode,
   });
 
   @override
@@ -37,6 +39,7 @@ class CustomSearchBar extends HookWidget {
             Expanded(
               child: TextField(
                 controller: textController,
+                focusNode: focusNode,
                 autofocus: autofocus,
                 onChanged: (value) {
                   onSearch(value);

@@ -248,6 +248,119 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminVisibilities => 'Visibilities';
 
   @override
+  String get adminGroupNotification => 'Group notifications';
+
+  @override
+  String adminNotifyGroup(String groupName) {
+    return 'Send a notification';
+  }
+
+  @override
+  String get adminTitle => 'Title';
+
+  @override
+  String get adminContent => 'Content';
+
+  @override
+  String get adminSend => 'Send';
+
+  @override
+  String get adminNotificationSent => 'Notification sent';
+
+  @override
+  String get adminFailedToSendNotification => 'Failed to send notification';
+
+  @override
+  String get adminGroupsManagement => 'Groups management';
+
+  @override
+  String get adminEditGroup => 'Edit group';
+
+  @override
+  String get adminManageMembers => 'Manage members';
+
+  @override
+  String get adminDeleteGroupConfirmation =>
+      'Are you sure you want to delete this group?';
+
+  @override
+  String get adminFailedToDeleteGroup => 'Failed to delete group';
+
+  @override
+  String get adminUsersAndGroups => 'Users and groups';
+
+  @override
+  String get adminUsersManagement => 'Users management';
+
+  @override
+  String get adminUsersManagementDescription =>
+      'Manage users, groups, and associations';
+
+  @override
+  String get adminManageUserGroups => 'Manage user groups';
+
+  @override
+  String get adminSendNotificationToGroup => 'Send notification to group';
+
+  @override
+  String get adminPaiementModule => 'Payment module';
+
+  @override
+  String get adminPaiement => 'Payment';
+
+  @override
+  String get adminManagePaiementStructures => 'Manage payment structures';
+
+  @override
+  String get adminManageUsersAssociationMemberships =>
+      'Manage users\' association memberships';
+
+  @override
+  String get adminAssociationMembershipsManagement =>
+      'Association memberships management';
+
+  @override
+  String get adminChooseGroupManager =>
+      'Choose a group to manage this membership';
+
+  @override
+  String get adminSelectManager => 'Select a manager';
+
+  @override
+  String get adminInviteUsers => 'Invite users';
+
+  @override
+  String get adminImportList => 'Import a list';
+
+  @override
+  String get adminInvitedUsers => 'Invited users';
+
+  @override
+  String get adminFailedToInviteUsers => 'Failed to invite users';
+
+  @override
+  String get adminDeleteUsers => 'Delete users';
+
+  @override
+  String get adminAdmin => 'Admin';
+
+  @override
+  String get adminAdverts => 'Adverts';
+
+  @override
+  String get adminAnnouncers => 'Announcers';
+
+  @override
+  String get adminManageAnnouncers => 'Manage announcers';
+
+  @override
+  String get adminDeleteAnnouncer => 'Delete announcer?';
+
+  @override
+  String get adminDeleteAnnouncerDescription =>
+      'Are you sure you want to delete this announcer? All their adverts will be deleted.';
+
+  @override
   String get advertAdd => 'Add';
 
   @override
@@ -3090,9 +3203,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsEditAccount => 'Edit account';
 
   @override
-  String get settingsEditPassword => 'Edit password';
-
-  @override
   String get settingsEmail => 'Email';
 
   @override
@@ -3126,7 +3236,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLanguage => 'Language';
 
   @override
-  String get settingsLanguageFr => 'French';
+  String get settingsLanguageVar => 'English 🇬🇧';
 
   @override
   String get settingsLogs => 'Logs';
@@ -3223,6 +3333,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsPasswordStrengthVeryStrong => 'Very strong';
+
+  @override
+  String get settingsPhoneNumber => 'Phone number';
+
+  @override
+  String get settingsValidate => 'Confirm';
+
+  @override
+  String get settingsEditedAccount => 'Account edited';
+
+  @override
+  String get settingsFailedToEditAccount => 'Failed to edit account';
+
+  @override
+  String get settingsChooseLanguage => 'Choose a language';
+
+  @override
+  String settingsNotificationCounter(int active, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      active,
+      locale: localeName,
+      other: 'notifications',
+      one: 'notification',
+      zero: 'notification',
+    );
+    return '$active/$total active $_temp0';
+  }
+
+  @override
+  String get settingsEvent => 'Event';
+
+  @override
+  String get settingsIcal => 'Ical link';
+
+  @override
+  String get settingsSynncWithCalendar => 'Sync with calendar';
+
+  @override
+  String get settingsIcalLinkCopied => 'Ical link copied';
+
+  @override
+  String get settingsProfile => 'Profile';
 
   @override
   String get voteAdd => 'Add';
@@ -3465,67 +3617,134 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moduleAdvert => 'Advert';
 
   @override
+  String get moduleAdvertDescription => 'View the latest adverts';
+
+  @override
   String get moduleAmap => 'AMAP';
+
+  @override
+  String get moduleAmapDescription => 'Order your AMAP basket';
 
   @override
   String get moduleBooking => 'Booking';
 
   @override
+  String get moduleBookingDescription => 'Book a room';
+
+  @override
   String get moduleCalendar => 'Calendar';
+
+  @override
+  String get moduleCalendarDescription => 'View the calendar of events';
 
   @override
   String get moduleCentralisation => 'Centralisation';
 
   @override
+  String get moduleCentralisationDescription => 'Viw all links';
+
+  @override
   String get moduleCinema => 'Cinema';
+
+  @override
+  String get moduleCinemaDescription => 'View the cinema schedule';
 
   @override
   String get moduleEvent => 'Event';
 
   @override
+  String get moduleEventDescription => 'View events';
+
+  @override
   String get moduleFlappyBird => 'Flappy Bird';
+
+  @override
+  String get moduleFlappyBirdDescription => 'Play Flappy Bird';
 
   @override
   String get moduleLoan => 'Loan';
 
   @override
+  String get moduleLoanDescription => 'See your loans';
+
+  @override
   String get modulePhonebook => 'Phonebook';
+
+  @override
+  String get modulePhonebookDescription => 'View the phonebook';
 
   @override
   String get modulePurchases => 'Purchases';
 
   @override
+  String get modulePurchasesDescription => 'View your purchases';
+
+  @override
   String get moduleRaffle => 'Raffle';
+
+  @override
+  String get moduleRaffleDescription => 'View the raffle';
 
   @override
   String get moduleRecommendation => 'Recommendation';
 
   @override
+  String get moduleRecommendationDescription => 'View the recommendations';
+
+  @override
   String get moduleSeedLibrary => 'Seed Library';
+
+  @override
+  String get moduleSeedLibraryDescription => 'View the seed library';
 
   @override
   String get moduleVote => 'Vote';
 
   @override
+  String get moduleVoteDescription => 'Vote for the campaigns';
+
+  @override
   String get modulePh => 'PH';
+
+  @override
+  String get modulePhDescription => 'View the PH';
 
   @override
   String get moduleSettings => 'Settings';
 
   @override
+  String get moduleSettingsDescription => 'Manage your settings';
+
+  @override
   String get moduleFeed => 'Feed';
+
+  @override
+  String get moduleFeedDescription => 'View the latest news';
 
   @override
   String get moduleStyleGuide => 'StyleGuide';
 
   @override
-  String get moduleAdmin => 'Administration';
+  String get moduleStyleGuideDescription => 'Style guide for developers';
+
+  @override
+  String get moduleAdmin => 'Admin';
+
+  @override
+  String get moduleAdminDescription =>
+      'Administration module for administrators';
 
   @override
   String get moduleOthers => 'Others';
 
   @override
+  String get moduleOthersDescription => 'Other modules';
+
+  @override
   String get modulePayment => 'Payment';
+
+  @override
+  String get modulePaymentDescription => 'Pay and see your transactions';
 
   @override
   String get paiementTopUp => 'Top-up';
