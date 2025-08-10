@@ -55,7 +55,7 @@ class FeedMainPage extends HookConsumerWidget {
             for (int i = 0; i < upcomingIndex; i++) {
               final currentItem = newsList[i];
 
-              final itemHeight = (currentItem.actionStart != null || isAdmin)
+              final itemHeight = (currentItem.actionStart != null || isSuperAdmin)
                   ? 200.0
                   : 160.0;
               scrollPosition += itemHeight;
