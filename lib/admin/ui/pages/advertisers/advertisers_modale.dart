@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AdvertisersMainPage extends StatelessWidget {
-  const AdvertisersMainPage({super.key});
+class AdvertisersModale extends StatelessWidget {
+  const AdvertisersModale({super.key});
 
   @override
   Widget build(BuildContext context) {
