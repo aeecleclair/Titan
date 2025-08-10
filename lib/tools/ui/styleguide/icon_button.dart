@@ -75,7 +75,9 @@ class CustomIconButton extends StatelessWidget {
     return WaitingButton(
       onTap: disabled == true ? null : () async => onPressed(),
       builder: (child) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+        height: 32,
+        width: 32,
+        padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(10),
