@@ -77,7 +77,7 @@ class EventAction extends StatelessWidget {
                       (isActionValidated
                               ? ColorConstants.background
                               : ColorConstants.tertiary)
-                          .withValues(alpha: isActionEnabled ? 255 : 100),
+                          .withValues(alpha: isActionEnabled ? 1 : 0.5),
                 ),
               ),
             ),

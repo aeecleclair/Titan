@@ -3,7 +3,6 @@ import 'package:titan/feed/class/news.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
-/// Capitalizes the first letter of a string
 String _capitalize(String text) {
   if (text.isEmpty) return text;
   return text[0].toUpperCase() + text.substring(1);
@@ -80,7 +79,6 @@ String getNewsSubtitle(
 
   final startDate = news.start.toLocal();
 
-  // For ongoing events, just display the end date if available
   if (isNewsOngoing(news) && news.end != null) {
     final untilText = _capitalize(
       AppLocalizations.of(context)?.dateUntil ??
@@ -88,17 +86,13 @@ String getNewsSubtitle(
     );
     subtitle =
         "$untilText ${formatUserFriendlyDate(news.end!.toLocal(), locale: locale, context: context)}";
-  }
-  // For events with no end date, just display the start date
-  else if (news.end == null) {
+  } else if (news.end == null) {
     subtitle = formatUserFriendlyDate(
       startDate,
       locale: locale,
       context: context,
     );
-  }
-  // For events with both start and end dates that are not ongoing
-  else {
+  } else {
     final endDate = news.end!.toLocal();
     bool sameDay =
         startDate.year == endDate.year &&
@@ -126,13 +120,11 @@ String getNewsSubtitle(
         AppLocalizations.of(context)?.dateFrom ?? 'de',
       );
 
-      // Determine if the end date is a special date (today, yesterday, tomorrow)
       final now = DateTime.now();
       final today = DateTime(now.year, now.month, now.day);
       final endDateTime = DateTime(endDate.year, endDate.month, endDate.day);
       final difference = endDateTime.difference(today).inDays;
 
-      // Use "à" (dateTo) instead of "au" (dateBetweenDays) for special dates
       final toWord = (difference >= -1 && difference <= 1)
           ? (AppLocalizations.of(context)?.dateTo ?? 'à')
           : (AppLocalizations.of(context)?.dateBetweenDays ?? 'au');

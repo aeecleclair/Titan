@@ -96,7 +96,7 @@ class TimelineItem extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          child: isAdmin
+                          child: !isAdmin
                               ? EventActionAdmin(item: item)
                               : EventAction(
                                   title: getActionTitle(item, context),
@@ -113,7 +113,7 @@ class TimelineItem extends StatelessWidget {
                                       ),
                                   isActionValidated: true,
                                   isActionEnabled:
-                                      (item.actionStart ?? item.start).isAfter(
+                                      (item.actionStart ?? item.start).isBefore(
                                         DateTime.now(),
                                       ) &&
                                       item.end != null &&
