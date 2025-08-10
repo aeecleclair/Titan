@@ -27,7 +27,9 @@ class AdminAdvertListNotifier extends ListNotifier<Advert> {
 }
 
 final adminAdvertListProvider =
-    StateNotifierProvider<AdminAdvertListNotifier, AsyncValue<List<Advert>>>((ref) {
+    StateNotifierProvider<AdminAdvertListNotifier, AsyncValue<List<Advert>>>((
+      ref,
+    ) {
       final token = ref.watch(tokenProvider);
       AdminAdvertListNotifier notifier = AdminAdvertListNotifier(token: token);
       tokenExpireWrapperAuth(ref, () async {

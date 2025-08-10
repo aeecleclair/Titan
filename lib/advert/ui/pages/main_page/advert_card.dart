@@ -56,7 +56,7 @@ class AdvertCard extends HookConsumerWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-    
+
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +85,7 @@ class AdvertCard extends HookConsumerWidget {
             ),
           ),
           const SizedBox(height: 15),
-    
+
           AutoLoaderChild(
             group: posters,
             notifier: advertPostersNotifier,
@@ -98,9 +98,7 @@ class AdvertCard extends HookConsumerWidget {
                   color: ColorConstants.onBackground,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Center(
-                  child: HeroIcon(HeroIcons.photo, size: 50),
-                ),
+                child: const Center(child: HeroIcon(HeroIcons.photo, size: 50)),
               ),
             ),
             dataBuilder: (context, value) => AspectRatio(
@@ -117,7 +115,7 @@ class AdvertCard extends HookConsumerWidget {
               ),
             ),
           ),
-    
+
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
