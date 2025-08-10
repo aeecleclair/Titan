@@ -8,7 +8,6 @@ import 'package:titan/advert/providers/advert_posters_provider.dart';
 import 'package:titan/advert/providers/advert_provider.dart';
 import 'package:titan/advert/providers/announcer_list_provider.dart';
 import 'package:titan/advert/providers/announcer_provider.dart';
-import 'package:titan/advert/ui/components/announcer_item.dart';
 import 'package:titan/advert/ui/components/special_action_button.dart';
 import 'package:titan/advert/ui/pages/admin_page/admin_advert_card.dart';
 import 'package:titan/advert/ui/pages/advert.dart';
@@ -36,6 +35,11 @@ class AdvertAdminPage extends HookConsumerWidget {
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final selectedAnnouncers = ref.watch(announcerProvider);
     final selectedAnnouncersNotifier = ref.read(announcerProvider.notifier);
+    final selectedNotifier = ref.read(announcerProvider.notifier);
+    final userAnnouncersSync = userAnnouncerList.maybeWhen(
+      orElse: () => [],
+      data: (data) => data,
+    );
     return AdvertTemplate(
       child: Column(
         children: [
@@ -53,6 +57,10 @@ class AdvertAdminPage extends HookConsumerWidget {
               SpecialActionButton(
                 onTap: () {
                   advertNotifier.setAdvert(Advert.empty());
+                  if (userAnnouncersSync.length == 1 &&
+                      selectedAnnouncers.isEmpty) {
+                    selectedNotifier.addAnnouncer(userAnnouncersSync[0]);
+                  }
                   QR.to(
                     AdvertRouter.root +
                         AdvertRouter.admin +

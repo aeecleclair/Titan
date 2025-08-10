@@ -12,6 +12,7 @@ import 'package:titan/advert/providers/advert_list_provider.dart';
 import 'package:titan/advert/providers/advert_poster_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
 import 'package:titan/advert/providers/advert_provider.dart';
+import 'package:titan/advert/providers/announcer_list_provider.dart';
 import 'package:titan/advert/providers/announcer_provider.dart';
 import 'package:titan/advert/ui/pages/advert.dart';
 import 'package:titan/advert/ui/components/announcer_bar.dart';
@@ -35,6 +36,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
     final title = useTextEditingController(text: advert.title);
     final content = useTextEditingController(text: advert.content);
     final selectedAnnouncers = ref.watch(announcerProvider);
+    final userAnnouncerList = ref.watch(userAnnouncerListProvider);
 
     final advertPosters = ref.watch(advertPostersProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
@@ -50,6 +52,11 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
       });
     }
 
+    final userAnnouncersSync = userAnnouncerList.maybeWhen(
+      orElse: () => [],
+      data: (data) => data,
+    );
+
     final ImagePicker picker = ImagePicker();
 
     void displayAdvertToastWithContext(TypeMsg type, String msg) {
@@ -63,37 +70,38 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
           key: key,
           child: Column(
             children: [
-              FormField<List<Announcer>>(
-                validator: (e) {
-                  if (selectedAnnouncers.isEmpty) {
-                    return AppLocalizations.of(
-                      context,
-                    )!.advertChoosingAnnouncer;
-                  }
-                  return null;
-                },
-                builder: (formFieldState) => Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    boxShadow: formFieldState.hasError
-                        ? [
-                            const BoxShadow(
-                              color: Colors.red,
-                              spreadRadius: 3,
-                              blurRadius: 3,
-                              offset: Offset(2, 2),
-                            ),
-                          ]
-                        : [],
-                  ),
-                  child: AnnouncerBar(
-                    useUserAnnouncers: true,
-                    multipleSelect: false,
-                    isNotClickable: isEdit,
+              if (userAnnouncersSync.length > 1)
+                FormField<List<Announcer>>(
+                  validator: (e) {
+                    if (selectedAnnouncers.isEmpty) {
+                      return AppLocalizations.of(
+                        context,
+                      )!.advertChoosingAnnouncer;
+                    }
+                    return null;
+                  },
+                  builder: (formFieldState) => Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      boxShadow: formFieldState.hasError
+                          ? [
+                              const BoxShadow(
+                                color: Colors.red,
+                                spreadRadius: 3,
+                                blurRadius: 3,
+                                offset: Offset(2, 2),
+                              ),
+                            ]
+                          : [],
+                    ),
+                    child: AnnouncerBar(
+                      useUserAnnouncers: true,
+                      multipleSelect: false,
+                      isNotClickable: isEdit,
+                    ),
                   ),
                 ),
-              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
