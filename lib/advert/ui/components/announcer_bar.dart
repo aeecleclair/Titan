@@ -1,10 +1,11 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/advert/providers/announcer_provider.dart';
 import 'package:titan/advert/providers/announcer_list_provider.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:titan/tools/ui/layouts/item_chip.dart';
 
 class AnnouncerBar extends HookConsumerWidget {
   final bool useUserAnnouncers;
@@ -25,41 +26,86 @@ class AnnouncerBar extends HookConsumerWidget {
     final announcerList = useUserAnnouncers
         ? ref.watch(userAnnouncerListProvider)
         : ref.watch(announcerListProvider);
-    final darkerColor = (isNotClickable) ? Colors.grey[800] : Colors.black;
 
     return AsyncChild(
       value: announcerList,
       builder: (context, userAnnouncers) => HorizontalListView.builder(
-        height: 40,
+        height: 66,
         items: userAnnouncers,
-        itemBuilder: (context, e, i) => GestureDetector(
-          onTap: () {
-            if (isNotClickable) {
-              return;
-            }
-            if (multipleSelect) {
-              selectedId.contains(e.id)
-                  ? selectedNotifier.removeAnnouncer(e)
-                  : selectedNotifier.addAnnouncer(e);
-            } else {
-              bool contain = selectedId.contains(e.id);
-              selectedNotifier.clearAnnouncer();
-              if (!contain) {
-                selectedNotifier.addAnnouncer(e);
+        itemBuilder: (context, e, i) {
+          final selected = selectedId.contains(e.id);
+          return GestureDetector(
+            onTap: () {
+              if (isNotClickable) {
+                return;
               }
-            }
-          },
-          child: ItemChip(
-            selected: selectedId.contains(e.id),
-            child: Text(
-              e.name,
-              style: TextStyle(
-                color: selectedId.contains(e.id) ? Colors.white : darkerColor,
-                fontWeight: FontWeight.bold,
+              if (multipleSelect) {
+                selected
+                    ? selectedNotifier.removeAnnouncer(e)
+                    : selectedNotifier.addAnnouncer(e);
+              } else {
+                selectedNotifier.clearAnnouncer();
+                if (!selected) {
+                  selectedNotifier.addAnnouncer(e);
+                }
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: selected
+                          ? Border.all(color: ColorConstants.tertiary, width: 3)
+                          : null,
+                      color: Colors.grey.shade100,
+                    ),
+                    child: Center(
+                      child: Text(
+                        e.name
+                            .split(' ')
+                            .take(2)
+                            .map((s) => s[0].toUpperCase())
+                            .join(),
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: selected
+                              ? ColorConstants.onTertiary
+                              : ColorConstants.tertiary,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  SizedBox(
+                    width: 55,
+                    child: AutoSizeText(
+                      e.name,
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: selected
+                            ? ColorConstants.onTertiary
+                            : ColorConstants.tertiary,
+                        fontWeight: selected
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
