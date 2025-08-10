@@ -6,6 +6,7 @@ import 'package:titan/advert/providers/advert_list_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
 import 'package:titan/advert/providers/announcer_provider.dart';
 import 'package:titan/advert/providers/is_advert_admin_provider.dart';
+import 'package:titan/advert/ui/components/special_action_button.dart';
 import 'package:titan/advert/ui/pages/advert.dart';
 import 'package:titan/advert/router.dart';
 import 'package:titan/advert/ui/components/announcer_bar.dart';
@@ -13,7 +14,6 @@ import 'package:titan/advert/ui/pages/main_page/advert_card.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
-import 'package:titan/tools/ui/styleguide/icon_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdvertMainPage extends HookConsumerWidget {
@@ -30,37 +30,40 @@ class AdvertMainPage extends HookConsumerWidget {
     return AdvertTemplate(
       child: Column(
         children: [
-          const AnnouncerBar(useUserAnnouncers: false, multipleSelect: true),
-          const SizedBox(height: 15),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Annonces",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: ColorConstants.title,
-                  ),
+          Row(
+            children: [
+              Expanded(
+                child: const AnnouncerBar(
+                  useUserAnnouncers: false,
+                  multipleSelect: true,
                 ),
-                if (isAdmin)
-                  CustomIconButton(
-                    icon: HeroIcon(
-                      HeroIcons.userGroup,
-                      color: ColorConstants.background,
-                    ),
-                    onPressed: () {
-                      selectedNotifier.clearAnnouncer();
-                      QR.to(AdvertRouter.root + AdvertRouter.admin);
-                    },
+              ),
+
+              if (isAdmin) ...[
+                SizedBox(width: 5),
+                Container(
+                  width: 2,
+                  height: 60,
+                  color: ColorConstants.secondary,
+                ),
+                SizedBox(width: 5),
+                SpecialActionButton(
+                  onTap: () {
+                    selectedNotifier.clearAnnouncer();
+                    QR.to(AdvertRouter.root + AdvertRouter.admin);
+                  },
+                  icon: HeroIcon(
+                    HeroIcons.userGroup,
+                    color: ColorConstants.background,
                   ),
+                  name: "Admin",
+                ),
+                SizedBox(width: 10),
               ],
-            ),
+            ],
           ),
-          const SizedBox(height: 5),
+
+          const SizedBox(height: 20),
 
           Expanded(
             child: AsyncChild(

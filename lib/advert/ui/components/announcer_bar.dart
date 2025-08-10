@@ -10,13 +10,11 @@ class AnnouncerBar extends HookConsumerWidget {
   final bool useUserAnnouncers;
   final bool multipleSelect;
   final bool isNotClickable;
-  final Widget? addButton;
   const AnnouncerBar({
     super.key,
     required this.multipleSelect,
     required this.useUserAnnouncers,
     this.isNotClickable = false,
-    this.addButton,
   });
 
   @override
@@ -31,7 +29,6 @@ class AnnouncerBar extends HookConsumerWidget {
     return AsyncChild(
       value: announcerList,
       builder: (context, userAnnouncers) => HorizontalListView.builder(
-        firstChild: addButton,
         height: 66,
         items: userAnnouncers,
         itemBuilder: (context, e, i) {

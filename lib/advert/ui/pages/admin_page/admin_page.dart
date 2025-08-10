@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/advert/class/advert.dart';
 import 'package:titan/advert/providers/advert_list_provider.dart';
@@ -8,10 +9,12 @@ import 'package:titan/advert/providers/advert_provider.dart';
 import 'package:titan/advert/providers/announcer_list_provider.dart';
 import 'package:titan/advert/providers/announcer_provider.dart';
 import 'package:titan/advert/ui/components/announcer_item.dart';
+import 'package:titan/advert/ui/components/special_action_button.dart';
 import 'package:titan/advert/ui/pages/admin_page/admin_advert_card.dart';
 import 'package:titan/advert/ui/pages/advert.dart';
 import 'package:titan/advert/router.dart';
 import 'package:titan/advert/ui/components/announcer_bar.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
@@ -36,22 +39,34 @@ class AdvertAdminPage extends HookConsumerWidget {
     return AdvertTemplate(
       child: Column(
         children: [
-          AnnouncerBar(
-            useUserAnnouncers: true,
-            multipleSelect: true,
-            addButton: AnnouncerItem(
-              name: 'Post',
-              avatarName: '+',
-              selected: false,
-              onTap: () {
-                advertNotifier.setAdvert(Advert.empty());
-                QR.to(
-                  AdvertRouter.root +
-                      AdvertRouter.admin +
-                      AdvertRouter.addEditAdvert,
-                );
-              },
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: AnnouncerBar(
+                  useUserAnnouncers: true,
+                  multipleSelect: true,
+                ),
+              ),
+              SizedBox(width: 5),
+              Container(width: 2, height: 60, color: ColorConstants.secondary),
+              SizedBox(width: 5),
+              SpecialActionButton(
+                onTap: () {
+                  advertNotifier.setAdvert(Advert.empty());
+                  QR.to(
+                    AdvertRouter.root +
+                        AdvertRouter.admin +
+                        AdvertRouter.addEditAdvert,
+                  );
+                },
+                icon: HeroIcon(
+                  HeroIcons.plus,
+                  color: ColorConstants.background,
+                ),
+                name: "Post",
+              ),
+              SizedBox(width: 10),
+            ],
           ),
           const SizedBox(height: 20),
           Expanded(
