@@ -42,6 +42,6 @@ final adminNewsListProvider =
       final newsRepository = NewsRepository()..setToken(token);
       AdminNewsListNotifier newsListNotifier = AdminNewsListNotifier(
         newsRepository: newsRepository,
-      );
+      )..loadNewsList();
       return newsListNotifier;
     });

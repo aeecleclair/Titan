@@ -20,6 +20,6 @@ final newsListProvider =
       final newsRepository = NewsRepository()..setToken(token);
       NewsListNotifier newsListNotifier = NewsListNotifier(
         newsRepository: newsRepository,
-      );
+      )..loadNewsList();
       return newsListNotifier;
     });
