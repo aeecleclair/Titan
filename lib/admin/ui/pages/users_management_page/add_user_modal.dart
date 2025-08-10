@@ -25,6 +25,8 @@ class AddUsersModalContent extends HookConsumerWidget {
 
     final localizeWithContext = AppLocalizations.of(context)!;
 
+    final navigatorWithContext = Navigator.of(context);
+
     return BottomModalTemplate(
       title: localizeWithContext.adminInviteUsers,
       child: Column(
@@ -70,7 +72,7 @@ class AddUsersModalContent extends HookConsumerWidget {
                     localizeWithContext.adminFailedToInviteUsers,
                   );
                 }
-                // popWithContext();
+                navigatorWithContext.pop();
               });
             },
             disabled: selectedFileName.value == null,
