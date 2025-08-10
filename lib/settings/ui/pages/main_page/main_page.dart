@@ -58,6 +58,7 @@ class SettingsMainPage extends HookConsumerWidget {
 
     return SettingsTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await notificationTopicListNotifier.loadNotificationTopicList();
           await meNotifier.loadMe();

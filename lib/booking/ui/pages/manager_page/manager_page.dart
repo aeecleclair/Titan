@@ -43,6 +43,7 @@ class ManagerPage extends HookConsumerWidget {
     );
     return BookingTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await ref
               .watch(managerBookingListProvider.notifier)

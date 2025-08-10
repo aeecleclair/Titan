@@ -32,6 +32,7 @@ class SchoolsPage extends HookConsumerWidget {
 
     return SuperAdminTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await schoolsNotifier.loadSchools();
         },

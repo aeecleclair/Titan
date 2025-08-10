@@ -43,6 +43,7 @@ class AdminPage extends HookConsumerWidget {
 
     return PhonebookTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await associationListNotifier.loadAssociations();
           await roleNotifier.loadRolesTags();

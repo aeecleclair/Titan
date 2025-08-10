@@ -34,6 +34,7 @@ class StoreAdminPage extends HookConsumerWidget {
 
     return PaymentTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await storeSellersNotifier.getStoreSellerList(store.id);
         },

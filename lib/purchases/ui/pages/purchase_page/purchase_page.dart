@@ -15,6 +15,7 @@ class PurchasePage extends HookConsumerWidget {
 
     return PurchasesTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {},
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),

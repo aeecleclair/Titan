@@ -41,6 +41,7 @@ class RaffleMainPage extends HookConsumerWidget {
 
     return RaffleTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await userTicketListNotifier.loadTicketList();
           await raffleListNotifier.loadRaffleList();

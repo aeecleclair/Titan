@@ -80,6 +80,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                           )
                           .toList();
                   return Refresher(
+                    controller: ScrollController(),
                     onRefresh: () async {
                       await advertListNotifier.loadAdverts();
                       await userAnnouncerListNotifier.loadMyAnnouncerList();

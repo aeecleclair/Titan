@@ -92,6 +92,7 @@ class VoteMainPage extends HookConsumerWidget {
     }
     return VoteTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await statusNotifier.loadStatus();
           if (s == Status.open) {

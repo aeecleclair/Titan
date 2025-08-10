@@ -30,6 +30,7 @@ class UserListPage extends HookConsumerWidget {
     final selectedTag = useState<String?>(null);
     return PurchasesTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           productId.maybeWhen(
             orElse: () {},

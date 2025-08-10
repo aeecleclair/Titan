@@ -73,6 +73,7 @@ class AdminPage extends HookConsumerWidget {
     }).toList();
     return EventTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await ref.watch(eventListProvider.notifier).loadEventList();
         },

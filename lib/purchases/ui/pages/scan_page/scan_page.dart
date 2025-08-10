@@ -32,6 +32,7 @@ class ScanPage extends HookConsumerWidget {
 
     return PurchasesTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await sellersNotifier.loadSellers();
           if (seller != Seller.empty()) {

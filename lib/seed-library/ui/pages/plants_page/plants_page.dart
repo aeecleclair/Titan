@@ -27,6 +27,7 @@ class PlantsPage extends HookConsumerWidget {
 
     return SeedLibraryTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await plantListNotifier.loadPlants();
         },

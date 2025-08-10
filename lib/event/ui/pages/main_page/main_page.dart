@@ -30,6 +30,7 @@ class EventMainPage extends HookConsumerWidget {
         builder: (context, eventList) {
           eventList.sort((a, b) => b.start.compareTo(a.start));
           return ColumnRefresher(
+            controller: ScrollController(),
             onRefresh: () async {
               await eventListNotifier.loadConfirmedEvent();
             },

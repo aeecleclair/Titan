@@ -14,6 +14,7 @@ class AdminModulePage extends HookConsumerWidget {
     final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
     return RaffleTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           tombolaLogosNotifier.resetTData();
         },

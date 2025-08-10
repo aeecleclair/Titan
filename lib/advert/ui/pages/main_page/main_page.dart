@@ -31,7 +31,7 @@ class AdvertMainPage extends HookConsumerWidget {
       child: Column(
         children: [
           const AnnouncerBar(useUserAnnouncers: false, multipleSelect: true),
-          const SizedBox(height: 20),
+          const SizedBox(height: 15),
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -60,6 +60,7 @@ class AdvertMainPage extends HookConsumerWidget {
               ],
             ),
           ),
+          const SizedBox(height: 5),
 
           Expanded(
             child: AsyncChild(
@@ -76,6 +77,7 @@ class AdvertMainPage extends HookConsumerWidget {
                       selected.isEmpty,
                 );
                 return Refresher(
+                  controller: ScrollController(),
                   onRefresh: () async {
                     await advertListNotifier.loadAdverts();
                     advertPostersNotifier.resetTData();
@@ -83,9 +85,7 @@ class AdvertMainPage extends HookConsumerWidget {
                   child: Column(
                     children: [
                       ...filteredSortedAdvertData.map(
-                        (advert) => AdvertCard(
-                          advert: advert,
-                        ),
+                        (advert) => AdvertCard(advert: advert),
                       ),
                       SizedBox(height: 80),
                     ],

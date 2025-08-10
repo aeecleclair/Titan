@@ -53,6 +53,7 @@ class DevicesPage extends HookConsumerWidget {
 
     return PaymentTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await devicesNotifier.getDeviceList();
         },

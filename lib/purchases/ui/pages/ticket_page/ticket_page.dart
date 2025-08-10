@@ -20,6 +20,7 @@ class TicketPage extends HookConsumerWidget {
 
     return PurchasesTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await ticketNotifier.loadTicketSecret();
         },

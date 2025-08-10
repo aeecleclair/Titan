@@ -26,6 +26,7 @@ class HistoryPage extends HookConsumerWidget {
 
     return PurchasesTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await purchasesListNotifier.loadPurchases();
         },

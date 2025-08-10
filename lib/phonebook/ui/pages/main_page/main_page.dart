@@ -42,6 +42,7 @@ class PhonebookMainPage extends HookConsumerWidget {
 
     return PhonebookTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await associationGroupementListNotifier.loadAssociationGroupement();
           await associationListNotifier.loadAssociations();

@@ -41,6 +41,7 @@ class AdminPage extends HookConsumerWidget {
 
     return LoanTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           final itemListNotifier = ref.read(itemListProvider.notifier);
           final loanersItemsNotifier = ref.read(loanersItemsProvider.notifier);
