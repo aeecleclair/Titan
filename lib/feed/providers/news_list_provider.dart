@@ -6,11 +6,27 @@ import 'package:titan/tools/providers/list_notifier.dart';
 
 class NewsListNotifier extends ListNotifier<News> {
   final NewsRepository newsRepository;
+  AsyncValue<List<News>> allNews = const AsyncValue.loading();
   NewsListNotifier({required this.newsRepository})
     : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<News>>> loadNewsList() async {
-    return await loadList(newsRepository.getPublishedNews);
+    return allNews = await loadList(newsRepository.getPublishedNews);
+  }
+
+  void filterNews(List<String> entities, List<String> modules) {
+    state = AsyncValue.data(
+      (allNews.value ?? []).where((news) {
+        final matchesEntity =
+            entities.isEmpty || entities.contains(news.entity);
+        final matchesModule = modules.isEmpty || modules.contains(news.module);
+        return matchesEntity && matchesModule;
+      }).toList(),
+    );
+  }
+
+  void resetFilters() {
+    state = AsyncValue.data(allNews.value ?? []);
   }
 }
 

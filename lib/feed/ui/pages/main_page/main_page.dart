@@ -4,18 +4,18 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/feed/class/news.dart';
 import 'package:titan/feed/providers/news_list_provider.dart';
 import 'package:titan/feed/router.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/feed/ui/pages/main_page/feed_timeline.dart';
+import 'package:titan/feed/ui/pages/main_page/filter_news.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
-import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/icon_button.dart';
-import 'package:titan/tools/ui/styleguide/item_chip.dart';
 import 'package:titan/tools/ui/styleguide/searchbar.dart';
 
 class FeedMainPage extends HookConsumerWidget {
@@ -35,43 +35,14 @@ class FeedMainPage extends HookConsumerWidget {
           children: [
             CustomSearchBar(
               onFilter: () async {
+                final syncNews = news.maybeWhen(
+                  orElse: () => <News>[],
+                  data: (loaded) => loaded,
+                );
+                final entities = syncNews.map((e) => e.entity).toList();
+                final modules = syncNews.map((e) => e.module).toList();
                 await showCustomBottomModal(
-                  modal: BottomModalTemplate(
-                    title: 'Filtrer',
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Groupes d\'association'),
-                        SizedBox(height: 10),
-                        HorizontalListView(
-                          height: 50,
-                          children: [
-                            ItemChip(child: Text('Option 1')),
-                            ItemChip(child: Text('Option 2')),
-                            ItemChip(child: Text('Option 3')),
-                          ],
-                        ),
-                        SizedBox(height: 30),
-                        Text('Associations'),
-                        SizedBox(height: 10),
-                        HorizontalListView(
-                          height: 50,
-                          children: [
-                            ItemChip(child: Text('Association 1')),
-                            ItemChip(child: Text('Association 2')),
-                            ItemChip(child: Text('Association 3')),
-                          ],
-                        ),
-                        SizedBox(height: 40),
-                        Button(
-                          text: 'Appliquer',
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
+                  modal: FilterNewsModal(entities: entities, modules: modules),
                   context: context,
                   ref: ref,
                 );
@@ -142,22 +113,22 @@ class FeedMainPage extends HookConsumerWidget {
                   controller: scrollController,
                   physics: const BouncingScrollPhysics(),
                   child: AsyncChild(
-                  value: news,
-                  builder: (context, news) => news.isEmpty
-                      ? const Center(
-                          child: Text(
-                            'Aucune actualité disponible',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: ColorConstants.tertiary,
+                    value: news,
+                    builder: (context, news) => news.isEmpty
+                        ? const Center(
+                            child: Text(
+                              'Aucune actualité disponible',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: ColorConstants.tertiary,
+                              ),
                             ),
-                          ),
-                        )
-                      : FeedTimeline(
+                          )
+                        : FeedTimeline(
                             isAdmin: isAdmin,
                             items: news,
                             onItemTap: (item) {},
-                        ),
+                          ),
                   ),
                 ),
               ),
