@@ -2,10 +2,7 @@ class FilterState {
   final List<String> selectedEntities;
   final List<String> selectedModules;
 
-  FilterState({
-    required this.selectedEntities,
-    required this.selectedModules,
-  });
+  FilterState({required this.selectedEntities, required this.selectedModules});
 
   FilterState copyWith({
     List<String>? selectedEntities,
@@ -18,9 +15,6 @@ class FilterState {
   }
 
   factory FilterState.empty() {
-    return FilterState(
-      selectedEntities: [],
-      selectedModules: [],
-    );
+    return FilterState(selectedEntities: [], selectedModules: []);
   }
 }

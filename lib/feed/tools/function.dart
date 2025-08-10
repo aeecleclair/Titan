@@ -1,6 +1,5 @@
 enum NewsStatus { waitingApproval, rejected, published }
 
-
 String newsStatusToString(NewsStatus status) {
   switch (status) {
     case NewsStatus.waitingApproval:

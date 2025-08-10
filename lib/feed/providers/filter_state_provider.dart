@@ -9,6 +9,7 @@ class FilterStateNotifier extends StateNotifier<FilterState> {
   }
 }
 
-final filterStateProvider = StateNotifierProvider<FilterStateNotifier, FilterState>((ref) {
-  return FilterStateNotifier();
-});
+final filterStateProvider =
+    StateNotifierProvider<FilterStateNotifier, FilterState>((ref) {
+      return FilterStateNotifier();
+    });

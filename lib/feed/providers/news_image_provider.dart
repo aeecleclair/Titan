@@ -9,17 +9,13 @@ class NewsImageNotifier extends SingleNotifier<Uint8List> {
     : super(const AsyncLoading());
 
   Future<AsyncValue<Uint8List>> getNewsImage(String userId) async {
-    return await load(
-      () async => newsImageRepository.getNewsImage(userId),
-    );
+    return await load(() async => newsImageRepository.getNewsImage(userId));
   }
 }
 
 final newsImageProvider =
     StateNotifierProvider<NewsImageNotifier, AsyncValue<Uint8List>>((ref) {
-      final newsImageRepository = ref.watch(
-        newsImageRepositoryProvider,
-      );
+      final newsImageRepository = ref.watch(newsImageRepositoryProvider);
       NewsImageNotifier notifier = NewsImageNotifier(
         newsImageRepository: newsImageRepository,
       );

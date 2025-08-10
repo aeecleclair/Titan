@@ -152,3 +152,51 @@ String getNewsSubtitle(
 
   return subtitle;
 }
+
+String getActionTitle(News news, BuildContext context) {
+  final module = news.module;
+
+  if (module == "campagne") {
+    return AppLocalizations.of(context)?.eventActionCampaign ?? 'Tu peux voter';
+  } else if (module == "event") {
+    return AppLocalizations.of(context)?.eventActionEvent ?? 'Tu est invité';
+  }
+  return '';
+}
+
+String getActionSubtitle(News news, BuildContext context) {
+  final module = news.module;
+
+  if (module == "campagne") {
+    return AppLocalizations.of(context)?.eventActionCampaignSubtitle ??
+        'Votez maintenant';
+  } else if (module == "event") {
+    return AppLocalizations.of(context)?.eventActionEventSubtitle ??
+        'Répondez à l\'invitation';
+  }
+  return '';
+}
+
+String getActionEnableButtonText(News news, BuildContext context) {
+  final module = news.module;
+
+  if (module == "campagne") {
+    return AppLocalizations.of(context)?.eventActionCampaignButton ?? 'Voter';
+  } else if (module == "event") {
+    return AppLocalizations.of(context)?.eventActionEventButton ?? 'Participer';
+  }
+  return '';
+}
+
+String getActionValidatedButtonText(News news, BuildContext context) {
+  final module = news.module;
+
+  if (module == "campagne") {
+    return AppLocalizations.of(context)?.eventActionCampaignValidated ??
+        'J\'ai voté !';
+  } else if (module == "event") {
+    return AppLocalizations.of(context)?.eventActionEventValidated ??
+        'Je viens !';
+  }
+  return '';
+}

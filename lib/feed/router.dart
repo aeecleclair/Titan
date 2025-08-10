@@ -52,7 +52,7 @@ class FeedRouter {
         ],
       ),
       QRoute(
-        path: eventHandling,  
+        path: eventHandling,
         builder: () => event_handling_page.EventHandlingPage(),
         middleware: [
           AuthenticatedMiddleware(ref),

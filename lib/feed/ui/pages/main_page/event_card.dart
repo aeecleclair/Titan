@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:titan/feed/class/news.dart';
-import 'package:titan/feed/tools/news_status_helper.dart';
+import 'package:titan/feed/tools/news_helper.dart';
 import 'package:titan/tools/constants.dart';
 
 class EventCard extends StatelessWidget {

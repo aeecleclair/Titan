@@ -66,6 +66,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get feedEventManagement => 'Gestion des événements';
 
   @override
+  String get eventActionCampaign => 'Tu peux voter';
+
+  @override
+  String get eventActionEvent => 'Tu es invité';
+
+  @override
+  String get eventActionCampaignSubtitle => 'Votez maintenant';
+
+  @override
+  String get eventActionEventSubtitle => 'Répondez à l\'invitation';
+
+  @override
+  String get eventActionCampaignButton => 'Voter';
+
+  @override
+  String get eventActionEventButton => 'Participer';
+
+  @override
+  String get eventActionCampaignValidated => 'J\'ai voté !';
+
+  @override
+  String get eventActionEventValidated => 'Je viens !';
+
+  @override
   String get adminAccountTypes => 'Types de compte';
 
   @override

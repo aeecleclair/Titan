@@ -212,6 +212,54 @@ abstract class AppLocalizations {
   /// **'Gestion des événements'**
   String get feedEventManagement;
 
+  /// No description provided for @eventActionCampaign.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu peux voter'**
+  String get eventActionCampaign;
+
+  /// No description provided for @eventActionEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu es invité'**
+  String get eventActionEvent;
+
+  /// No description provided for @eventActionCampaignSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votez maintenant'**
+  String get eventActionCampaignSubtitle;
+
+  /// No description provided for @eventActionEventSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Répondez à l\'invitation'**
+  String get eventActionEventSubtitle;
+
+  /// No description provided for @eventActionCampaignButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voter'**
+  String get eventActionCampaignButton;
+
+  /// No description provided for @eventActionEventButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Participer'**
+  String get eventActionEventButton;
+
+  /// No description provided for @eventActionCampaignValidated.
+  ///
+  /// In fr, this message translates to:
+  /// **'J\'ai voté !'**
+  String get eventActionCampaignValidated;
+
+  /// No description provided for @eventActionEventValidated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je viens !'**
+  String get eventActionEventValidated;
+
   /// No description provided for @adminAccountTypes.
   ///
   /// In fr, this message translates to:

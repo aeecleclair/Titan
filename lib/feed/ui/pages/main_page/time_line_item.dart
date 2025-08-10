@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/feed/class/news.dart';
+import 'package:titan/feed/tools/news_helper.dart';
 import 'package:titan/feed/ui/pages/main_page/event_action.dart';
 import 'package:titan/feed/ui/pages/main_page/event_action_admin.dart';
 import 'package:titan/feed/ui/pages/main_page/event_card.dart';
@@ -96,17 +97,27 @@ class TimelineItem extends StatelessWidget {
                         ),
                         Expanded(
                           child: isAdmin
-                              ? EventActionAdmin(
-                                item: item,
-                              )
+                              ? EventActionAdmin(item: item)
                               : EventAction(
-                                  title: 'Action',
-                                  subtitle: 'Indication',
+                                  title: getActionTitle(item, context),
+                                  subtitle: getActionSubtitle(item, context),
                                   onActionPressed: () {
                                     // Handle action press
                                   },
-                                  actionButtonText: 'Ok',
-                                  isActionEnabled: true,
+                                  actionEnableButtonText:
+                                      getActionEnableButtonText(item, context),
+                                  actionValidatedButtonText:
+                                      getActionValidatedButtonText(
+                                        item,
+                                        context,
+                                      ),
+                                  isActionValidated: true,
+                                  isActionEnabled:
+                                      (item.actionStart ?? item.start).isAfter(
+                                        DateTime.now(),
+                                      ) &&
+                                      item.end != null &&
+                                      item.end!.isAfter(DateTime.now()),
                                 ),
                         ),
                       ],
