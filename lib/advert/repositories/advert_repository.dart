@@ -12,6 +12,12 @@ class AdvertRepository extends Repository {
     )).map((e) => Advert.fromJson(e)).toList();
   }
 
+  Future<List<Advert>> getAllAdminAdvert() async {
+    return (await getList(
+      suffix: 'adverts/admin',
+    )).map((e) => Advert.fromJson(e)).toList();
+  }
+
   Future<Advert> getAdvert(String id) async {
     return Advert.fromJson(await getOne(id));
   }

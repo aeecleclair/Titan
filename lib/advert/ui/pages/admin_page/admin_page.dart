@@ -2,12 +2,15 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/advert/class/advert.dart';
+import 'package:titan/advert/providers/admin_advert_list_provider.dart';
 import 'package:titan/advert/providers/advert_list_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
 import 'package:titan/advert/providers/advert_provider.dart';
 import 'package:titan/advert/providers/announcer_list_provider.dart';
 import 'package:titan/advert/providers/announcer_provider.dart';
+import 'package:titan/advert/providers/is_advert_admin_provider.dart';
 import 'package:titan/advert/ui/components/special_action_button.dart';
 import 'package:titan/advert/ui/pages/admin_page/admin_advert_card.dart';
 import 'package:titan/advert/ui/pages/advert.dart';
@@ -26,13 +29,16 @@ class AdvertAdminPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final advertNotifier = ref.watch(advertProvider.notifier);
-    final advertList = ref.watch(advertListProvider);
+    final isAdmin = ref.watch(isAdminProvider);
+    final isAdvertAdmin = ref.watch(isAdvertAdminProvider);
+    final advertList = isAdmin
+        ? ref.watch(adminAdvertListProvider)
+        : ref.watch(advertListProvider);
     final userAnnouncerListNotifier = ref.watch(
       userAnnouncerListProvider.notifier,
     );
     final userAnnouncerList = ref.watch(userAnnouncerListProvider);
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
-    final advertListNotifier = ref.watch(advertListProvider.notifier);
     final selectedAnnouncers = ref.watch(announcerProvider);
     final selectedAnnouncersNotifier = ref.read(announcerProvider.notifier);
     final selectedNotifier = ref.read(announcerProvider.notifier);
@@ -47,33 +53,39 @@ class AdvertAdminPage extends HookConsumerWidget {
             children: [
               Expanded(
                 child: AnnouncerBar(
-                  useUserAnnouncers: true,
+                  useUserAnnouncers: !isAdmin,
                   multipleSelect: true,
                 ),
               ),
-              SizedBox(width: 5),
-              Container(width: 2, height: 60, color: ColorConstants.secondary),
-              SizedBox(width: 5),
-              SpecialActionButton(
-                onTap: () {
-                  advertNotifier.setAdvert(Advert.empty());
-                  if (userAnnouncersSync.length == 1 &&
-                      selectedAnnouncers.isEmpty) {
-                    selectedNotifier.addAnnouncer(userAnnouncersSync[0]);
-                  }
-                  QR.to(
-                    AdvertRouter.root +
-                        AdvertRouter.admin +
-                        AdvertRouter.addEditAdvert,
-                  );
-                },
-                icon: HeroIcon(
-                  HeroIcons.plus,
-                  color: ColorConstants.background,
+              if (!isAdmin || isAdvertAdmin) ...[
+                SizedBox(width: 5),
+                Container(
+                  width: 2,
+                  height: 60,
+                  color: ColorConstants.secondary,
                 ),
-                name: "Post",
-              ),
-              SizedBox(width: 10),
+                SizedBox(width: 5),
+                SpecialActionButton(
+                  onTap: () {
+                    advertNotifier.setAdvert(Advert.empty());
+                    if (userAnnouncersSync.length == 1 &&
+                        selectedAnnouncers.isEmpty) {
+                      selectedNotifier.addAnnouncer(userAnnouncersSync[0]);
+                    }
+                    QR.to(
+                      AdvertRouter.root +
+                          AdvertRouter.admin +
+                          AdvertRouter.addEditAdvert,
+                    );
+                  },
+                  icon: HeroIcon(
+                    HeroIcons.plus,
+                    color: ColorConstants.background,
+                  ),
+                  name: "Post",
+                ),
+                SizedBox(width: 10),
+              ],
             ],
           ),
           const SizedBox(height: 20),
@@ -105,7 +117,14 @@ class AdvertAdminPage extends HookConsumerWidget {
                   return Refresher(
                     controller: ScrollController(),
                     onRefresh: () async {
-                      await advertListNotifier.loadAdverts();
+                      if (isAdmin) {
+                        await ref
+                            .watch(adminAdvertListProvider.notifier)
+                            .loadAdverts();
+                      }
+                      await ref
+                          .watch(advertListProvider.notifier)
+                          .loadAdverts();
                       await userAnnouncerListNotifier.loadMyAnnouncerList();
                       advertPostersNotifier.resetTData();
                     },
@@ -136,8 +155,18 @@ class AdvertAdminPage extends HookConsumerWidget {
                                     descriptions: AppLocalizations.of(
                                       context,
                                     )!.advertDeleteAdvert,
-                                    onYes: () {
-                                      advertListNotifier.deleteAdvert(advert);
+                                    onYes: () async {
+                                      if (isAdmin) {
+                                        await ref
+                                            .watch(
+                                              adminAdvertListProvider.notifier,
+                                            )
+                                            .deleteAdvert(advert);
+                                      } else {
+                                        await ref
+                                            .watch(advertListProvider.notifier)
+                                            .deleteAdvert(advert);
+                                      }
                                       advertPostersNotifier.deleteE(
                                         advert.id,
                                         0,

@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/advert/providers/advert_list_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
 import 'package:titan/advert/providers/announcer_provider.dart';
@@ -26,7 +27,8 @@ class AdvertMainPage extends HookConsumerWidget {
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final selected = ref.watch(announcerProvider);
     final selectedNotifier = ref.watch(announcerProvider.notifier);
-    final isAdmin = ref.watch(isAdvertAdminProvider);
+    final isAdvertAdmin = ref.watch(isAdvertAdminProvider);
+    final isAdmin = ref.watch(isAdminProvider);
     return AdvertTemplate(
       child: Column(
         children: [
@@ -39,7 +41,7 @@ class AdvertMainPage extends HookConsumerWidget {
                 ),
               ),
 
-              if (isAdmin) ...[
+              if (isAdmin || isAdvertAdmin) ...[
                 SizedBox(width: 5),
                 Container(
                   width: 2,
