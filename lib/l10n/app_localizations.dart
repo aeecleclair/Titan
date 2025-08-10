@@ -752,6 +752,24 @@ abstract class AppLocalizations {
   /// **'Admin'**
   String get adminAdmin;
 
+  /// No description provided for @adminAdverts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonces'**
+  String get adminAdverts;
+
+  /// No description provided for @adminAnnouncers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonceurs'**
+  String get adminAnnouncers;
+
+  /// No description provided for @adminManageAnnouncers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les annonceurs'**
+  String get adminManageAnnouncers;
+
   /// No description provided for @advertAdd.
   ///
   /// In fr, this message translates to:

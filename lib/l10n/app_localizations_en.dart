@@ -345,6 +345,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminAdmin => 'Admin';
 
   @override
+  String get adminAdverts => 'Adverts';
+
+  @override
+  String get adminAnnouncers => 'Announcers';
+
+  @override
+  String get adminManageAnnouncers => 'Manage announcers';
+
+  @override
   String get advertAdd => 'Add';
 
   @override

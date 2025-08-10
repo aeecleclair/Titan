@@ -348,6 +348,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminAdmin => 'Admin';
 
   @override
+  String get adminAdverts => 'Annonces';
+
+  @override
+  String get adminAnnouncers => 'Annonceurs';
+
+  @override
+  String get adminManageAnnouncers => 'Gérer les annonceurs';
+
+  @override
   String get advertAdd => 'Ajouter';
 
   @override
