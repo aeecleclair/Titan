@@ -10,7 +10,7 @@ import 'package:titan/advert/providers/is_advert_admin_provider.dart';
 import 'package:titan/advert/ui/pages/advert.dart';
 import 'package:titan/advert/router.dart';
 import 'package:titan/advert/ui/components/announcer_bar.dart';
-import 'package:titan/advert/ui/components/advert_card.dart';
+import 'package:titan/advert/ui/pages/main_page/advert_card.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';

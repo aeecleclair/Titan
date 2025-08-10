@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/advert/class/advert.dart';
-import 'package:titan/advert/tools/constants.dart';
-import 'package:titan/advert/ui/components/advert_card.dart';
-import 'package:titan/tools/ui/builders/waiting_button.dart';
-import 'package:titan/tools/ui/layouts/card_button.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/styleguide/icon_button.dart';
 
 class AdminAdvertCard extends HookConsumerWidget {
   final VoidCallback onTap, onEdit;
@@ -23,50 +22,62 @@ class AdminAdvertCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: Stack(
-        children: [
-          AdvertCard(onTap: onTap, advert: advert),
-          Positioned(
-            top: 10,
-            right: 15,
-            child: Container(
-              margin: const EdgeInsets.only(top: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: onEdit,
-                    child: CardButton(
-                      colors: [Colors.grey.shade100, Colors.grey.shade400],
-                      shadowColor: Colors.grey.shade300.withValues(alpha: 0.2),
-                      child: const HeroIcon(
-                        HeroIcons.pencil,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        margin: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      advert.title,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 20),
-                  WaitingButton(
-                    onTap: onDelete,
-                    builder: (child) => CardButton(
-                      colors: const [
-                        AdvertColorConstants.redGradient1,
-                        AdvertColorConstants.redGradient2,
-                      ],
-                      shadowColor: AdvertColorConstants.redGradient2.withValues(
-                        alpha: 0.2,
+                    Text(
+                      _capitalizeFirst(
+                        timeago.format(advert.date, locale: 'fr_short'),
                       ),
-                      child: child,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: ColorConstants.tertiary,
+                      ),
                     ),
-                    child: const HeroIcon(HeroIcons.trash, color: Colors.white),
+                  ],
+                ),
+                const Spacer(),
+                CustomIconButton.secondary(
+                  onPressed: onEdit,
+                  icon: const HeroIcon(
+                    HeroIcons.pencil,
+                    color: ColorConstants.tertiary,
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(width: 20),
+                CustomIconButton.danger(
+                  onPressed: onDelete,
+                  icon: const HeroIcon(
+                    HeroIcons.trash,
+                    color: ColorConstants.background,
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  String _capitalizeFirst(String text) {
+    if (text.isEmpty) return text;
+    return text[0].toUpperCase() + text.substring(1);
   }
 }
