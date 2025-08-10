@@ -70,7 +70,7 @@ class AllModulePage extends HookConsumerWidget {
                                 }
                               },
                               child: HeroIcon(
-                                HeroIcons.star,
+                                HeroIcons.bookmark,
                                 style:
                                     preferedModuleRootList.contains(module.root)
                                     ? HeroIconStyle.solid
@@ -78,7 +78,7 @@ class AllModulePage extends HookConsumerWidget {
                                 size: 20,
                                 color:
                                     preferedModuleRootList.contains(module.root)
-                                    ? Colors.yellow
+                                    ? ColorConstants.main
                                     : Colors.grey,
                               ),
                             ),
