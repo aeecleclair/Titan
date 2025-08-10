@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/phonebook/providers/association_filtered_list_provider.dart';
-import 'package:titan/phonebook/providers/association_kind_provider.dart';
-import 'package:titan/phonebook/providers/association_kinds_provider.dart';
+import 'package:titan/phonebook/providers/association_groupement_provider.dart';
+import 'package:titan/phonebook/providers/association_groupement_list_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
-import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/ui/components/kinds_bar.dart';
 import 'package:titan/phonebook/ui/pages/main_page/association_card.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
-import 'package:titan/phonebook/ui/pages/main_page/research_bar.dart';
+import 'package:titan/phonebook/ui/components/association_research_bar.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
-import 'package:titan/tools/ui/widgets/admin_button.dart';
+import 'package:titan/tools/ui/styleguide/icon_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:tuple/tuple.dart';
 
 class PhonebookMainPage extends HookConsumerWidget {
   const PhonebookMainPage({super.key});
@@ -25,79 +25,83 @@ class PhonebookMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
     final isAdmin = ref.watch(isAdminProvider);
-    final associationNotifier = ref.watch(associationProvider.notifier);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associationList = ref.watch(associationListProvider);
-    final associationFilteredList = ref.watch(associationFilteredListProvider);
-    final associationKindsNotifier = ref.watch(
-      associationKindsProvider.notifier,
+    final associationGroupementList = ref.watch(
+      associationGroupementListProvider,
     );
-    final kindNotifier = ref.watch(associationKindProvider.notifier);
+    final associationFilteredList = ref.watch(associationFilteredListProvider);
+    final associationGroupementListNotifier = ref.watch(
+      associationGroupementListProvider.notifier,
+    );
+    final associationGroupementNotifier = ref.watch(
+      associationGroupementProvider.notifier,
+    );
+
+    final localizeWithContext = AppLocalizations.of(context)!;
 
     return PhonebookTemplate(
       child: Refresher(
         onRefresh: () async {
-          await associationKindsNotifier.loadAssociationKinds();
+          await associationGroupementListNotifier.loadAssociationGroupement();
           await associationListNotifier.loadAssociations();
         },
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Row(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Column(
+            children: [
+              Row(
                 children: [
-                  const ResearchBar(),
-                  if (isPhonebookAdmin || isAdmin)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: AdminButton(
-                        onTap: () {
-                          kindNotifier.setKind('');
-                          QR.to(PhonebookRouter.root + PhonebookRouter.admin);
-                        },
+                  Expanded(child: AssociationResearchBar()),
+                  if (isPhonebookAdmin || isAdmin) ...[
+                    SizedBox(width: 10),
+                    CustomIconButton(
+                      icon: HeroIcon(
+                        HeroIcons.cog6Tooth,
+                        color: Colors.white,
+                        size: 32,
+                        style: HeroIconStyle.outline,
                       ),
+                      onPressed: () {
+                        associationGroupementNotifier
+                            .resetAssociationGroupement();
+                        QR.to(PhonebookRouter.root + PhonebookRouter.admin);
+                      },
                     ),
+                  ],
                 ],
               ),
-            ),
-            const SizedBox(height: 10),
-            AsyncChild(
-              value: associationList,
-              builder: (context, associations) {
-                return Column(
-                  children: [
-                    KindsBar(),
-                    const SizedBox(height: 30),
-                    if (associations.isEmpty)
-                      Center(
-                        child: Text(
-                          AppLocalizations.of(
-                            context,
-                          )!.phonebookNoAssociationFound,
-                        ),
-                      )
-                    else
+              const SizedBox(height: 10),
+              Async2Children(
+                values: Tuple2(associationList, associationGroupementList),
+                builder: (context, associations, associationGroupements) {
+                  if (associations.isEmpty) {
+                    return Center(
+                      child: Text(
+                        localizeWithContext.phonebookNoAssociationFound,
+                      ),
+                    );
+                  }
+                  return Column(
+                    children: [
                       ...associationFilteredList.map(
                         (association) => !association.deactivated
                             ? AssociationCard(
                                 association: association,
-                                onClicked: () {
-                                  associationNotifier.setAssociation(
-                                    association,
-                                  );
-                                  QR.to(
-                                    PhonebookRouter.root +
-                                        PhonebookRouter.associationDetail,
-                                  );
-                                },
+                                groupement: associationGroupements.firstWhere(
+                                  (groupement) =>
+                                      groupement.id == association.groupementId,
+                                ),
                               )
                             : const SizedBox.shrink(),
                       ),
-                  ],
-                );
-              },
-            ),
-          ],
+                    ],
+                  );
+                },
+              ),
+              SizedBox(height: 80),
+            ],
+          ),
         ),
       ),
     );

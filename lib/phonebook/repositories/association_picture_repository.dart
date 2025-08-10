@@ -1,6 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/tools/repository/logo_repository.dart';
 
 class AssociationPictureRepository extends LogoRepository {
@@ -11,7 +14,7 @@ class AssociationPictureRepository extends LogoRepository {
   Future<Image> getAssociationPicture(String associationId) async {
     final uint8List = await getLogo(associationId, suffix: "/picture");
     if (uint8List.isEmpty) {
-      return Image.asset("assets/images/logo.png");
+      return Image.asset('assets/images/vache.png');
     }
     return Image.memory(uint8List);
   }
@@ -24,3 +27,10 @@ class AssociationPictureRepository extends LogoRepository {
     return Image.memory(uint8List);
   }
 }
+
+final associationPictureRepository = Provider<AssociationPictureRepository>((
+  ref,
+) {
+  final token = ref.watch(tokenProvider);
+  return AssociationPictureRepository()..setToken(token);
+});

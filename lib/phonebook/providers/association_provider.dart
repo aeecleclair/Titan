@@ -10,6 +10,10 @@ class AssociationNotifier extends Notifier<Association> {
   void setAssociation(Association association) {
     state = association;
   }
+
+  void resetAssociation() {
+    state = Association.empty();
+  }
 }
 
 final associationProvider = NotifierProvider<AssociationNotifier, Association>(

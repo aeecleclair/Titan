@@ -1,67 +1,53 @@
 import 'package:diacritic/diacritic.dart';
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/phonebook/class/association.dart';
-import 'package:titan/phonebook/class/association_kinds.dart';
+import 'package:titan/phonebook/class/association_groupement.dart';
 import 'package:titan/phonebook/class/complete_member.dart';
 import 'package:titan/phonebook/class/membership.dart';
-import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 
-int getPosition(CompleteMember member, String associationId) {
-  Membership membership = member.memberships.firstWhere(
-    (element) => element.associationId == associationId,
+Membership getMembershipForAssociation(
+  CompleteMember member,
+  Association association,
+) {
+  return member.memberships.firstWhere(
+    (element) =>
+        element.associationId == association.id &&
+        element.mandateYear == association.mandateYear,
+    orElse: () => Membership.empty(),
   );
+}
+
+int getPosition(CompleteMember member, Association association) {
+  final membership = getMembershipForAssociation(member, association);
   return membership.order;
 }
 
 List<CompleteMember> sortedMembers(
   List<CompleteMember> members,
-  String associationId,
+  Association association,
 ) {
   return members..sort(
     (a, b) =>
-        getPosition(a, associationId).compareTo(getPosition(b, associationId)),
+        getPosition(a, association).compareTo(getPosition(b, association)),
   );
 }
 
 List<Association> sortedAssociationByKind(
   List<Association> associations,
-  AssociationKinds kinds,
+  List<AssociationGroupement> groupements,
 ) {
-  List<Association> sorted = [];
-  List<List<Association>> sortedByKind = List.generate(
-    kinds.kinds.length,
-    (index) => [],
-  );
+  Map<String, List<Association>> sortedByGroupement = {
+    for (var groupement in groupements) groupement.id: [],
+  };
   for (Association association in associations) {
-    sortedByKind[kinds.kinds.indexOf(association.kind)].add(association);
+    sortedByGroupement[association.groupementId]!.add(association);
   }
-  for (List<Association> list in sortedByKind) {
+  for (List<Association> list in sortedByGroupement.values) {
     list.sort(
       (a, b) => removeDiacritics(
         a.name,
       ).toLowerCase().compareTo(removeDiacritics(b.name).toLowerCase()),
     );
-    sorted.addAll(list);
   }
-  return sorted;
-}
-
-Color getColorFromTagList(WidgetRef ref, List<String> tags) {
-  final rolesTags = ref.watch(rolesTagsProvider).keys.toList();
-  int index = 3;
-  for (String tag in tags) {
-    if (rolesTags.indexOf(tag) < index) {
-      index = rolesTags.indexOf(tag);
-    }
-  }
-  switch (index) {
-    case 0:
-      return const Color.fromARGB(255, 251, 109, 16);
-    case 1:
-      return const Color.fromARGB(255, 252, 145, 74);
-    case 2:
-      return const Color.fromARGB(255, 253, 193, 153);
-  }
-  return Colors.white;
+  // Flatten the sorted map values into a single list
+  return sortedByGroupement.values.expand((list) => list).toList();
 }

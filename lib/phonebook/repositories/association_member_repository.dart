@@ -9,7 +9,7 @@ class AssociationMemberRepository extends Repository {
 
   Future<List<CompleteMember>> getAssociationMemberList(
     String associationId,
-    String year,
+    int year,
   ) async {
     return List<CompleteMember>.from(
       (await getList(

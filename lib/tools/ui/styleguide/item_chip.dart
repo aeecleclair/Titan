@@ -6,11 +6,13 @@ class ItemChip extends StatelessWidget {
   final Function()? onTap;
   final Function()? onLongPress;
   final Widget child;
+  final Axis scrollDirection;
   const ItemChip({
     super.key,
     this.selected = false,
     this.onTap,
     this.onLongPress,
+    this.scrollDirection = Axis.horizontal,
     required this.child,
   });
 
@@ -20,7 +22,9 @@ class ItemChip extends StatelessWidget {
       onTap: onTap,
       onLongPress: onLongPress,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10.0),
+        margin: scrollDirection == Axis.horizontal
+            ? EdgeInsets.symmetric(horizontal: 5.0)
+            : EdgeInsets.symmetric(vertical: 5.0),
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.0),
@@ -29,7 +33,7 @@ class ItemChip extends StatelessWidget {
               ? ColorConstants.onTertiary
               : ColorConstants.background,
         ),
-        child: child,
+        child: Center(child: child),
       ),
     );
   }

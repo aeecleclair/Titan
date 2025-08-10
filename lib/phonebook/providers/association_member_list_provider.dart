@@ -17,7 +17,7 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
 
   Future<AsyncValue<List<CompleteMember>>> loadMembers(
     String associationId,
-    String year,
+    int year,
   ) async {
     return await loadList(
       () async => associationMemberRepository.getAssociationMemberList(
@@ -86,13 +86,7 @@ class AssociationMemberListNotifier extends ListNotifier<CompleteMember> {
                 e.associationId == membership.associationId &&
                 e.mandateYear == membership.mandateYear,
           );
-          memberships.remove(
-            memberships.firstWhere(
-              (e) =>
-                  e.associationId == membership.associationId &&
-                  e.mandateYear == membership.mandateYear,
-            ),
-          );
+          memberships.remove(oldMembership);
           memberships.add(oldMembership.copyWith(order: i));
           members[i].copyWith(membership: memberships);
         }
@@ -128,10 +122,7 @@ final associationMemberListProvider =
       tokenExpireWrapperAuth(ref, () async {
         final association = ref.watch(associationProvider);
 
-        await provider.loadMembers(
-          association.id,
-          association.mandateYear.toString(),
-        );
+        await provider.loadMembers(association.id, association.mandateYear);
       });
       return provider;
     });

@@ -11,7 +11,7 @@ final associationMemberSortedListProvider = Provider<List<CompleteMember>>((
   final association = ref.watch(associationProvider);
   return memberListProvider.maybeWhen(
     data: (members) {
-      return sortedMembers(members, association.id);
+      return sortedMembers(members, association);
     },
     orElse: () => List<CompleteMember>.empty(),
   );
