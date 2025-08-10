@@ -28,6 +28,50 @@ class FeedMainPage extends HookConsumerWidget {
     final isSuperAdmin = ref.watch(isAdminProvider);
     final scrollController = useScrollController();
 
+    // Auto-scroll to first upcoming news when data loads
+    useEffect(() {
+      if (news.hasValue && news.value!.isNotEmpty) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          final now = DateTime.now();
+          final newsList = news.value!;
+
+          // Sort the news the same way as in FeedTimeline
+          newsList.sort((a, b) {
+            if (a.start == b.start) {
+              if (a.end == null && b.end == null) return 0;
+              if (a.end == null) return -1;
+              if (b.end == null) return 1;
+              return a.end!.compareTo(b.end!);
+            }
+            return a.start.compareTo(b.start);
+          });
+
+          // Find the first upcoming news item
+          final upcomingIndex = newsList.indexWhere(
+            (item) =>
+                item.start.isAfter(now) ||
+                (item.end != null && item.end!.isAfter(now)),
+          );
+
+          if (upcomingIndex != -1 && scrollController.hasClients) {
+            // Calculate the actual position based on real item heights
+            double scrollPosition = 0.0;
+            for (int i = 0; i < upcomingIndex; i++) {
+              final currentItem = newsList[i];
+              // TimelineItem has fixed heights: 200px with actions, 160px without
+              final itemHeight = (currentItem.actionStart != null || isAdmin)
+                  ? 200.0
+                  : 160.0;
+              scrollPosition += itemHeight;
+            }
+
+            scrollController.jumpTo(scrollPosition);
+          }
+        });
+      }
+      return null;
+    }, [news]);
+
     return FeedTemplate(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
