@@ -15,7 +15,7 @@ class UsersManagementPage extends HookConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Button(
-          text: localizeWithContext.adminEdit,
+          text: localizeWithContext.adminAdd,
           onPressed: () async {
             Navigator.pop(context);
             await showCustomBottomModal(
