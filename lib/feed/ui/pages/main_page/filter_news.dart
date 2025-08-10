@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/feed/providers/filter_state_provider.dart';
 import 'package:titan/feed/providers/news_list_provider.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:titan/tools/ui/layouts/item_chip.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
+import 'package:titan/tools/ui/styleguide/item_chip.dart';
 
-class FilterNewsModal extends StatelessWidget {
+class FilterNewsModal extends HookWidget {
   final List<String> entities, modules;
   const FilterNewsModal({
     super.key,
@@ -17,11 +19,11 @@ class FilterNewsModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(
+    return HookConsumer(
       builder: (context, ref, child) {
         final newsListNotifier = ref.watch(newsListProvider.notifier);
-        final selectedEntities = useState<List<String>>([]);
-        final selectedModules = useState<List<String>>([]);
+        final filterState = ref.watch(filterStateProvider);
+        final filterStateNotifier = ref.watch(filterStateProvider.notifier);
         return BottomModalTemplate(
           title: 'Filtrer',
           child: Column(
@@ -34,28 +36,45 @@ class FilterNewsModal extends StatelessWidget {
                 children: entities
                     .map(
                       (entity) => ItemChip(
-                        selected: selectedEntities.value.contains(entity),
+                        selected: filterState.selectedEntities.contains(entity),
                         onTap: () {
-                          if (selectedEntities.value.contains(entity)) {
-                            selectedEntities.value.remove(entity);
+                          if (filterState.selectedEntities.contains(entity)) {
+                            filterStateNotifier.setFilterState(
+                              filterState.copyWith(
+                                selectedEntities: filterState.selectedEntities
+                                  ..remove(entity),
+                              ),
+                            );
                           } else {
-                            selectedEntities.value.add(entity);
+                            filterStateNotifier.setFilterState(
+                              filterState.copyWith(
+                                selectedEntities: filterState.selectedEntities
+                                  ..add(entity),
+                              ),
+                            );
                           }
-                          if (selectedEntities.value.isEmpty &&
-                              selectedModules.value.isEmpty) {
+                          if (filterState.selectedEntities.isEmpty &&
+                              filterState.selectedModules.isEmpty) {
                             newsListNotifier.resetFilters();
                           } else {
                             newsListNotifier.filterNews(
-                              selectedEntities.value,
-                              selectedModules.value,
+                              filterState.selectedEntities,
+                              filterState.selectedModules,
                             );
                           }
                           newsListNotifier.filterNews(
-                            selectedEntities.value,
-                            selectedModules.value,
+                            filterState.selectedEntities,
+                            filterState.selectedModules,
                           );
                         },
-                        child: Text(entity),
+                        child: Text(
+                          entity,
+                          style: TextStyle(
+                            color: filterState.selectedEntities.contains(entity)
+                                ? ColorConstants.background
+                                : ColorConstants.onTertiary,
+                          ),
+                        ),
                       ),
                     )
                     .toList(),
@@ -68,24 +87,41 @@ class FilterNewsModal extends StatelessWidget {
                 children: modules
                     .map(
                       (module) => ItemChip(
-                        selected: selectedModules.value.contains(module),
+                        selected: filterState.selectedModules.contains(module),
                         onTap: () {
-                          if (selectedModules.value.contains(module)) {
-                            selectedModules.value.remove(module);
+                          if (filterState.selectedModules.contains(module)) {
+                            filterStateNotifier.setFilterState(
+                              filterState.copyWith(
+                                selectedModules: filterState.selectedModules
+                                  ..remove(module),
+                              ),
+                            );
                           } else {
-                            selectedModules.value.add(module);
+                            filterStateNotifier.setFilterState(
+                              filterState.copyWith(
+                                selectedModules: filterState.selectedModules
+                                  ..add(module),
+                              ),
+                            );
                           }
-                          if (selectedEntities.value.isEmpty &&
-                              selectedModules.value.isEmpty) {
+                          if (filterState.selectedEntities.isEmpty &&
+                              filterState.selectedModules.isEmpty) {
                             newsListNotifier.resetFilters();
                           } else {
                             newsListNotifier.filterNews(
-                              selectedEntities.value,
-                              selectedModules.value,
+                              filterState.selectedEntities,
+                              filterState.selectedModules,
                             );
                           }
                         },
-                        child: Text(module),
+                        child: Text(
+                          module,
+                          style: TextStyle(
+                            color: filterState.selectedModules.contains(module)
+                                ? ColorConstants.background
+                                : ColorConstants.onTertiary,
+                          ),
+                        ),
                       ),
                     )
                     .toList(),

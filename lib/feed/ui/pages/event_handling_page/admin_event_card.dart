@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/feed/class/news.dart';
+import 'package:titan/feed/providers/admin_news_list_provider.dart';
 import 'package:titan/feed/tools/news_status_helper.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
-class AdminEventCard extends StatelessWidget {
+class AdminEventCard extends ConsumerWidget {
   final News news;
   const AdminEventCard({super.key, required this.news});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final locale = Localizations.localeOf(context).languageCode;
+    final newsAdminNotifier = ref.watch(adminNewsListProvider.notifier);
 
     return Container(
       decoration: BoxDecoration(
@@ -111,7 +114,9 @@ class AdminEventCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 WaitingButton(
-                  onTap: () async {},
+                  onTap: () async {
+                    await newsAdminNotifier.rejectNews(news);
+                  },
                   builder: (child) => Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,
@@ -142,7 +147,9 @@ class AdminEventCard extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 WaitingButton(
-                  onTap: () async {},
+                  onTap: () async {
+                    await newsAdminNotifier.approveNews(news);
+                  },
                   builder: (child) => Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,

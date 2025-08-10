@@ -24,6 +24,7 @@ class FeedMainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final news = ref.watch(newsListProvider);
+    final newsNotifier = ref.watch(newsListProvider.notifier);
     final isSuperAdmin = ref.watch(isAdminProvider);
     final scrollController = useScrollController();
 
@@ -35,7 +36,7 @@ class FeedMainPage extends HookConsumerWidget {
           children: [
             CustomSearchBar(
               onFilter: () async {
-                final syncNews = news.maybeWhen(
+                final syncNews = newsNotifier.allNews.maybeWhen(
                   orElse: () => <News>[],
                   data: (loaded) => loaded,
                 );
@@ -125,7 +126,7 @@ class FeedMainPage extends HookConsumerWidget {
                             ),
                           )
                         : FeedTimeline(
-                            isAdmin: isAdmin,
+                            isAdmin: isSuperAdmin,
                             items: news,
                             onItemTap: (item) {},
                           ),
