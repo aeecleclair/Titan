@@ -39,8 +39,8 @@ class FeedMainPage extends HookConsumerWidget {
                   orElse: () => <News>[],
                   data: (loaded) => loaded,
                 );
-                final entities = syncNews.map((e) => e.entity).toList();
-                final modules = syncNews.map((e) => e.module).toList();
+                final entities = syncNews.map((e) => e.entity).toSet().toList();
+                final modules = syncNews.map((e) => e.module).toSet().toList();
                 await showCustomBottomModal(
                   modal: FilterNewsModal(entities: entities, modules: modules),
                   context: context,
