@@ -302,12 +302,6 @@ abstract class AppLocalizations {
   /// **'Description'**
   String get adminDescription;
 
-  /// No description provided for @adminEclSchool.
-  ///
-  /// In fr, this message translates to:
-  /// **'Centrale Lyon'**
-  String get adminEclSchool;
-
   /// No description provided for @adminEdit.
   ///
   /// In fr, this message translates to:
@@ -451,12 +445,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Visibilité des modules'**
   String get adminModifyModuleVisibility;
-
-  /// No description provided for @adminMyEclPay.
-  ///
-  /// In fr, this message translates to:
-  /// **'MyECLPay'**
-  String get adminMyEclPay;
 
   /// No description provided for @adminName.
   ///

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/admin/admin.dart';
 import 'package:titan/admin/providers/all_groups_list_provider.dart';
@@ -68,7 +69,7 @@ class AdminMainPage extends HookConsumerWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             ListItem(
-              title: localizeWithContext.adminPaiement,
+              title: getPaymentName(),
               subtitle: localizeWithContext.adminManagePaiementStructures,
               onTap: () => QR.to(AdminRouter.root + AdminRouter.structures),
             ),

@@ -112,9 +112,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminDescription => 'Description';
 
   @override
-  String get adminEclSchool => 'Centrale Lyon';
-
-  @override
   String get adminEdit => 'Modifier';
 
   @override
@@ -187,9 +184,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get adminModifyModuleVisibility => 'Visibilité des modules';
-
-  @override
-  String get adminMyEclPay => 'MyECLPay';
 
   @override
   String get adminName => 'Nom';

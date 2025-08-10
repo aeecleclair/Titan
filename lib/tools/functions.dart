@@ -495,6 +495,22 @@ String getTitanHost() {
   return host;
 }
 
+String getPaymentName() {
+  var paymentName = dotenv.env["PAYMENT_NAME"];
+  if (paymentName == null || paymentName.isEmpty) {
+    paymentName = "Payment";
+  }
+  return paymentName;
+}
+
+String getBaseSchoolName() {
+  var schoolName = dotenv.env["SCHOOL_NAME"];
+  if (schoolName == null || schoolName.isEmpty) {
+    throw StateError("Could not find school name in environment variables");
+  }
+  return schoolName;
+}
+
 String getTitanURL() {
   switch (getAppFlavor()) {
     case "dev":
