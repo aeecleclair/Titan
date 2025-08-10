@@ -79,7 +79,7 @@ class AllModulePage extends HookConsumerWidget {
                                 color:
                                     preferedModuleRootList.contains(module.root)
                                     ? ColorConstants.main
-                                    : Colors.grey,
+                                    : ColorConstants.secondary,
                               ),
                             ),
                             Expanded(
