@@ -108,6 +108,7 @@ class FeedMainPage extends HookConsumerWidget {
                               Button(
                                 text: 'Créer un événement',
                                 onPressed: () {
+                                  Navigator.of(context).pop();
                                   QR.to(FeedRouter.root + FeedRouter.addEvent);
                                 },
                               ),
@@ -115,6 +116,7 @@ class FeedMainPage extends HookConsumerWidget {
                               Button(
                                 text: 'Demandes de publication',
                                 onPressed: () {
+                                  Navigator.of(context).pop();
                                   QR.to(
                                     FeedRouter.root + FeedRouter.eventHandling,
                                   );

@@ -39,6 +39,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dateUntil => 'Until';
 
   @override
+  String get feedFilterAll => 'All';
+
+  @override
+  String get feedFilterPending => 'Pending';
+
+  @override
+  String get feedFilterApproved => 'Approved';
+
+  @override
+  String get feedFilterRejected => 'Rejected';
+
+  @override
+  String get feedEmptyAll => 'No events available';
+
+  @override
+  String get feedEmptyPending => 'No events pending approval';
+
+  @override
+  String get feedEmptyApproved => 'No approved events';
+
+  @override
+  String get feedEmptyRejected => 'No rejected events';
+
+  @override
+  String get feedEventManagement => 'Event Management';
+
+  @override
   String get adminAccountTypes => 'Account types';
 
   @override

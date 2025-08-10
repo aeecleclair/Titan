@@ -158,6 +158,60 @@ abstract class AppLocalizations {
   /// **'Jusqu\'au'**
   String get dateUntil;
 
+  /// No description provided for @feedFilterAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous'**
+  String get feedFilterAll;
+
+  /// No description provided for @feedFilterPending.
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente'**
+  String get feedFilterPending;
+
+  /// No description provided for @feedFilterApproved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Approuvés'**
+  String get feedFilterApproved;
+
+  /// No description provided for @feedFilterRejected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejetés'**
+  String get feedFilterRejected;
+
+  /// No description provided for @feedEmptyAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun événement disponible'**
+  String get feedEmptyAll;
+
+  /// No description provided for @feedEmptyPending.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun événement en attente de validation'**
+  String get feedEmptyPending;
+
+  /// No description provided for @feedEmptyApproved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun événement approuvé'**
+  String get feedEmptyApproved;
+
+  /// No description provided for @feedEmptyRejected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun événement rejeté'**
+  String get feedEmptyRejected;
+
+  /// No description provided for @feedEventManagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gestion des événements'**
+  String get feedEventManagement;
+
   /// No description provided for @adminAccountTypes.
   ///
   /// In fr, this message translates to:
