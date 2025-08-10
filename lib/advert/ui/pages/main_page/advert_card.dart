@@ -151,7 +151,9 @@ class AdvertCard extends HookConsumerWidget {
 
     final fullText = title.isNotEmpty ? '$title $content' : content;
 
-    final isLong = fullText.length > 40;
+    const maxLength = 100;
+
+    final isLong = fullText.length > maxLength;
 
     return RichText(
       text: TextSpan(
@@ -166,7 +168,7 @@ class AdvertCard extends HookConsumerWidget {
           ],
           TextSpan(
             text: isLong && !isExpanded.value
-                ? '${content.substring(0, 40)}...'
+                ? '${content.substring(0, maxLength)}...'
                 : content,
           ),
           if (isLong) ...[
