@@ -2014,6 +2014,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !';
 
   @override
+  String get phonebookClose => 'Fermer';
+
+  @override
   String get phonebookConfirm => 'Confirmer';
 
   @override
@@ -2030,10 +2033,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Attention, cette association est désactivée, vous ne pouvez pas la modifier';
 
   @override
+  String phonebookDeactivateSelectedAssociation(String association) {
+    return 'Désactiver l\'association $association ?';
+  }
+
+  @override
   String get phonebookDeactivatingError => 'Erreur lors de la désactivation';
 
   @override
   String get phonebookDetail => 'Détail :';
+
+  @override
+  String get phonebookDelete => 'Supprimer';
 
   @override
   String get phonebookDeleteAssociation => 'Supprimer l\'association';
@@ -2148,7 +2159,21 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce membre est déjà dans le mandat actuel';
 
   @override
+  String get phonebookFilter => 'Filtrer';
+
+  @override
+  String get phonebookFilterDescription =>
+      'Sélectionnez un ou plusieurs groupements pour filtrer les associations.';
+
+  @override
   String get phonebookFirstname => 'Prénom :';
+
+  @override
+  String get phonebookGroupementDeleted => 'Groupement d\'association supprimé';
+
+  @override
+  String get phonebookGroupementDeleteError =>
+      'Erreur lors de la suppression du groupement d\'association';
 
   @override
   String get phonebookGroupementName => 'Nom du groupement';

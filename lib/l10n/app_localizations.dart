@@ -4028,6 +4028,12 @@ abstract class AppLocalizations {
   /// **'Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !'**
   String get phonebookChangeTermConfirm;
 
+  /// No description provided for @phonebookClose.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermer'**
+  String get phonebookClose;
+
   /// No description provided for @phonebookConfirm.
   ///
   /// In fr, this message translates to:
@@ -4058,6 +4064,12 @@ abstract class AppLocalizations {
   /// **'Attention, cette association est désactivée, vous ne pouvez pas la modifier'**
   String get phonebookDeactivatedAssociationWarning;
 
+  /// Permet de désactiver une association
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactiver l\'association {association} ?'**
+  String phonebookDeactivateSelectedAssociation(String association);
+
   /// No description provided for @phonebookDeactivatingError.
   ///
   /// In fr, this message translates to:
@@ -4069,6 +4081,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Détail :'**
   String get phonebookDetail;
+
+  /// No description provided for @phonebookDelete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer'**
+  String get phonebookDelete;
 
   /// No description provided for @phonebookDeleteAssociation.
   ///
@@ -4262,11 +4280,35 @@ abstract class AppLocalizations {
   /// **'Ce membre est déjà dans le mandat actuel'**
   String get phonebookExistingMembership;
 
+  /// No description provided for @phonebookFilter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer'**
+  String get phonebookFilter;
+
+  /// No description provided for @phonebookFilterDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sélectionnez un ou plusieurs groupements pour filtrer les associations.'**
+  String get phonebookFilterDescription;
+
   /// No description provided for @phonebookFirstname.
   ///
   /// In fr, this message translates to:
   /// **'Prénom :'**
   String get phonebookFirstname;
+
+  /// No description provided for @phonebookGroupementDeleted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Groupement d\'association supprimé'**
+  String get phonebookGroupementDeleted;
+
+  /// No description provided for @phonebookGroupementDeleteError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de la suppression du groupement d\'association'**
+  String get phonebookGroupementDeleteError;
 
   /// No description provided for @phonebookGroupementName.
   ///

@@ -49,7 +49,7 @@ class MembershipEditorPage extends HookConsumerWidget {
 
     final localizeWithContext = AppLocalizations.of(context)!;
 
-    Future<void> addMember() async {
+    Future addMember() async {
       final memberAssociationMemberships = member.memberships.where(
         (membership) => membership.associationId == association.id,
       );
@@ -96,7 +96,7 @@ class MembershipEditorPage extends HookConsumerWidget {
       }
     }
 
-    Future<void> updateMember() async {
+    Future updateMember() async {
       final membershipEdit = Membership(
         id: membership.id,
         memberId: membership.memberId,

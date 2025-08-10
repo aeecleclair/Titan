@@ -20,8 +20,7 @@ import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';
 
 class AssociationAddEditPage extends HookConsumerWidget {
-  final scrollKey = GlobalKey();
-  AssociationAddEditPage({super.key});
+  const AssociationAddEditPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

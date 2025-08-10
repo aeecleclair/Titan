@@ -2005,6 +2005,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Are you sure you want to change the entire term?\nThis action is irreversible!';
 
   @override
+  String get phonebookClose => 'Close';
+
+  @override
   String get phonebookConfirm => 'Confirm';
 
   @override
@@ -2021,10 +2024,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Warning, this association is deactivated, you cannot modify it';
 
   @override
+  String phonebookDeactivateSelectedAssociation(String association) {
+    return 'Désactiver l\'association $association ?';
+  }
+
+  @override
   String get phonebookDeactivatingError => 'Error during deactivation';
 
   @override
   String get phonebookDetail => 'Details:';
+
+  @override
+  String get phonebookDelete => 'Delete';
 
   @override
   String get phonebookDeleteAssociation => 'Delete association';
@@ -2135,7 +2146,21 @@ class AppLocalizationsEn extends AppLocalizations {
       'This member is already in the current term';
 
   @override
+  String get phonebookFilter => 'Filter';
+
+  @override
+  String get phonebookFilterDescription =>
+      'Filter the associations by their groupement';
+
+  @override
   String get phonebookFirstname => 'First name:';
+
+  @override
+  String get phonebookGroupementDeleted => 'Association groupement deleted';
+
+  @override
+  String get phonebookGroupementDeleteError =>
+      'Error deleting association groupement';
 
   @override
   String get phonebookGroupementName => 'Groupement name';

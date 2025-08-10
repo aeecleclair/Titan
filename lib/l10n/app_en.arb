@@ -671,13 +671,24 @@
     }
   },
   "phonebookChangeTermConfirm": "Are you sure you want to change the entire term?\nThis action is irreversible!",
+  "phonebookClose": "Close",
   "phonebookConfirm": "Confirm",
   "phonebookCopied": "Copied to clipboard",
   "phonebookDeactivateAssociation": "Deactivate association",
   "phonebookDeactivatedAssociation": "Association deactivated",
   "phonebookDeactivatedAssociationWarning": "Warning, this association is deactivated, you cannot modify it",
+  "phonebookDeactivateSelectedAssociation": "Désactiver l'association {association} ?",
+  "@phonebookDeactivateSelectedAssociation": {
+    "description": "Permet de désactiver une association",
+    "placeholders": {
+      "association": {
+        "type": "String"
+      }
+    }
+  },
   "phonebookDeactivatingError": "Error during deactivation",
   "phonebookDetail": "Details:",
+  "phonebookDelete": "Delete",
   "phonebookDeleteAssociation": "Delete association",
   "phonebookDeleteSelectedAssociation": "Delete the association {association}?",
   "@phonebookDeleteSelectedAssociation": {
@@ -726,7 +737,11 @@
   "phonebookErrorLoadProfilePicture": "Error",
   "phonebookErrorRoleTagsLoading": "Error loading role tags",
   "phonebookExistingMembership": "This member is already in the current term",
+  "phonebookFilter": "Filter",
+  "phonebookFilterDescription": "Filter the associations by their groupement",
   "phonebookFirstname": "First name:",
+  "phonebookGroupementDeleted": "Association groupement deleted",
+  "phonebookGroupementDeleteError": "Error deleting association groupement",
   "phonebookGroupementName": "Groupement name",
   "phonebookGroups": "Manage {association} groups",
   "@phonebookGroups": {

@@ -111,7 +111,7 @@ class AssociationAdminEditionModal extends HookConsumerWidget {
                 showCustomBottomModal(
                   context: context,
                   ref: ref,
-                  modal: CustomDialogBox.danger(
+                  modal: ConfirmModal.danger(
                     title: localizeWithContext.phonebookChangeTermYear(
                       association.mandateYear + 1,
                     ),
@@ -146,47 +146,57 @@ class AssociationAdminEditionModal extends HookConsumerWidget {
                   : localizeWithContext.phonebookDeactivateAssociation,
               onPressed: () async {
                 Navigator.of(context).pop();
-                if (!association.deactivated) {
-                  final result = await associationListNotifier
-                      .deactivateAssociation(association);
-                  if (result) {
-                    displayToastWithContext(
-                      TypeMsg.msg,
-                      localizeWithContext.phonebookDeactivatedAssociation,
-                    );
-                  } else {
-                    displayToastWithContext(
-                      TypeMsg.error,
-                      localizeWithContext.phonebookDeactivatingError,
-                    );
-                  }
-                } else {
-                  showCustomBottomModal(
-                    context: context,
-                    ref: ref,
-                    modal: CustomDialogBox.danger(
-                      title: localizeWithContext
-                          .phonebookDeleteSelectedAssociation(association.name),
-                      description: localizeWithContext
-                          .phonebookDeleteAssociationDescription,
-                      onYes: () async {
-                        final result = await associationListNotifier
-                            .deleteAssociation(association);
-                        if (result) {
-                          displayToastWithContext(
-                            TypeMsg.msg,
-                            localizeWithContext.phonebookDeletedAssociation,
-                          );
-                        } else {
-                          displayToastWithContext(
-                            TypeMsg.error,
-                            localizeWithContext.phonebookDeletingError,
-                          );
-                        }
-                      },
-                    ),
-                  );
-                }
+                showCustomBottomModal(
+                  context: context,
+                  ref: ref,
+                  modal: ConfirmModal.danger(
+                    title: association.deactivated
+                        ? localizeWithContext
+                              .phonebookDeleteSelectedAssociation(
+                                association.name,
+                              )
+                        : localizeWithContext
+                              .phonebookDeactivateSelectedAssociation(
+                                association.name,
+                              ),
+                    description: association.deactivated
+                        ? localizeWithContext
+                              .phonebookDeleteAssociationDescription
+                        : localizeWithContext.globalIrreversibleAction,
+                    onYes: association.deactivated
+                        ? () async {
+                            final result = await associationListNotifier
+                                .deactivateAssociation(association);
+                            if (result) {
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                localizeWithContext
+                                    .phonebookDeactivatedAssociation,
+                              );
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                localizeWithContext.phonebookDeactivatingError,
+                              );
+                            }
+                          }
+                        : () async {
+                            final result = await associationListNotifier
+                                .deleteAssociation(association);
+                            if (result) {
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                localizeWithContext.phonebookDeletedAssociation,
+                              );
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                localizeWithContext.phonebookDeletingError,
+                              );
+                            }
+                          },
+                  ),
+                );
               },
             ),
           ],

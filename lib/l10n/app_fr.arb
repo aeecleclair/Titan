@@ -671,13 +671,24 @@
     }
   },
   "phonebookChangeTermConfirm": "Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !",
+  "phonebookClose": "Fermer",
   "phonebookConfirm": "Confirmer",
   "phonebookCopied": "Copié dans le presse-papier",
   "phonebookDeactivateAssociation": "Désactiver l'association",
   "phonebookDeactivatedAssociation": "Association désactivée",
   "phonebookDeactivatedAssociationWarning": "Attention, cette association est désactivée, vous ne pouvez pas la modifier",
+  "phonebookDeactivateSelectedAssociation": "Désactiver l'association {association} ?",
+  "@phonebookDeactivateSelectedAssociation": {
+    "description": "Permet de désactiver une association",
+    "placeholders": {
+      "association": {
+        "type": "String"
+      }
+    }
+  },
   "phonebookDeactivatingError": "Erreur lors de la désactivation",
   "phonebookDetail": "Détail :",
+  "phonebookDelete": "Supprimer",
   "phonebookDeleteAssociation": "Supprimer l'association",
   "phonebookDeleteSelectedAssociation": "Supprimer l'association {association} ?",
   "@phonebookDeleteSelectedAssociation": {
@@ -726,7 +737,11 @@
   "phonebookErrorLoadProfilePicture": "Erreur",
   "phonebookErrorRoleTagsLoading": "Erreur lors du chargement des tags de rôle",
   "phonebookExistingMembership": "Ce membre est déjà dans le mandat actuel",
+  "phonebookFilter": "Filtrer",
+  "phonebookFilterDescription": "Sélectionnez un ou plusieurs groupements pour filtrer les associations.",
   "phonebookFirstname": "Prénom :",
+  "phonebookGroupementDeleted": "Groupement d'association supprimé",
+  "phonebookGroupementDeleteError": "Erreur lors de la suppression du groupement d'association",
   "phonebookGroupementName": "Nom du groupement",
   "phonebookGroups": "Gérer les groupes de {association}",
   "@phonebookGroups": {

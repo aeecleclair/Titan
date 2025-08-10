@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/phonebook/providers/association_groupement_list_provider.dart';
 import 'package:titan/phonebook/providers/research_filter_provider.dart';
 import 'package:titan/phonebook/ui/components/groupement_bar.dart';
@@ -17,6 +18,9 @@ class AssociationResearchBar extends HookConsumerWidget {
     final associaiontGroupementList = ref.watch(
       associationGroupementListProvider,
     );
+
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     return AsyncChild(
       value: associaiontGroupementList,
       builder: (context, groupements) {
@@ -30,12 +34,12 @@ class AssociationResearchBar extends HookConsumerWidget {
                   ref: ref,
                   context: context,
                   modal: BottomModalTemplate(
-                    title: "Filtrer",
-                    description:
-                        "Sélectionnez un ou plusieurs groupements pour filtrer les associations.",
+                    title: localizeWithContext.phonebookFilter,
+                    description: localizeWithContext.phonebookFilterDescription,
+                    // "Sélectionnez un ou plusieurs groupements pour filtrer les associations.",
                     actions: [
                       Button(
-                        text: "Fermer",
+                        text: localizeWithContext.phonebookClose,
                         onPressed: () => Navigator.pop(context),
                       ),
                     ],

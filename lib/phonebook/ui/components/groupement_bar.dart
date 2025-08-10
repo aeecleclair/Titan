@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/phonebook/class/association_groupement.dart';
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_groupement_list_provider.dart';
@@ -46,6 +47,8 @@ class AssociationGroupementBar extends HookConsumerWidget {
       Navigator.of(context).pop();
     }
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     void showEditDialog(AssociationGroupement item) => showCustomBottomModal(
       ref: ref,
       context: context,
@@ -53,7 +56,7 @@ class AssociationGroupementBar extends HookConsumerWidget {
         title: item.name,
         actions: [
           Button(
-            text: "Modifier",
+            text: localizeWithContext.phonebookEdit,
             onPressed: () {
               associationGroupementNotifier.setAssociationGroupement(item);
               QR.to(
@@ -66,17 +69,19 @@ class AssociationGroupementBar extends HookConsumerWidget {
           ),
           SizedBox(height: 30),
           Button.danger(
-            text: "Supprimer",
+            text: localizeWithContext.phonebookDelete,
             onPressed: () async {
               final result = await associationGroupementListNotifier
                   .deleteAssociationGroupement(item);
               if (result && context.mounted) {
                 popWithContext();
-                showSnackBarWithContext("Groupe supprimé");
+                showSnackBarWithContext(
+                  localizeWithContext.phonebookGroupementDeleted,
+                );
               }
               if (!result && context.mounted) {
                 showSnackBarWithContext(
-                  "Une erreur est survenue lors de la suppression du groupe",
+                  localizeWithContext.phonebookGroupementDeleteError,
                 );
               }
             },

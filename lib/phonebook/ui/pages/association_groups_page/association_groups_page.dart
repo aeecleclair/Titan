@@ -17,8 +17,7 @@ import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/list_item_toggle.dart';
 
 class AssociationGroupsPage extends HookConsumerWidget {
-  final scrollKey = GlobalKey();
-  AssociationGroupsPage({super.key});
+  const AssociationGroupsPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

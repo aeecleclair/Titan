@@ -77,7 +77,7 @@ class MemberEditionModal extends HookConsumerWidget {
                 showCustomBottomModal(
                   context: context,
                   ref: ref,
-                  modal: CustomDialogBox.danger(
+                  modal: ConfirmModal.danger(
                     title: localizeWithContext.phonebookDeleteUserRole(
                       member.member.nickname ?? member.getName(),
                     ),
