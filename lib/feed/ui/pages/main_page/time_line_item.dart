@@ -101,9 +101,8 @@ class TimelineItem extends StatelessWidget {
                               : EventAction(
                                   title: getActionTitle(item, context),
                                   subtitle: getActionSubtitle(item, context),
-                                  onActionPressed: () {
-                                    // Handle action press
-                                  },
+                                  onActionPressed: () =>
+                                      getActionButtonAction(item),
                                   actionEnableButtonText:
                                       getActionEnableButtonText(item, context),
                                   actionValidatedButtonText:

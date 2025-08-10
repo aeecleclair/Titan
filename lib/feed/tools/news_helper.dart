@@ -1,7 +1,11 @@
 import 'package:flutter/widgets.dart';
+import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/advert/router.dart';
+import 'package:titan/event/router.dart';
 import 'package:titan/feed/class/news.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/vote/router.dart';
 
 String _capitalize(String text) {
   if (text.isEmpty) return text;
@@ -191,4 +195,19 @@ String getActionValidatedButtonText(News news, BuildContext context) {
         'Je viens !';
   }
   return '';
+}
+
+void getActionButtonAction(News news) {
+  final module = news.module;
+
+  if (module == "campagne") {
+    QR.to(VoteRouter.root);
+  } else if (module == "event") {
+    // TODO : query event
+    QR.to(EventRouter.root);
+  } else if (module == "post") {
+    // TODO : set id
+    QR.to(AdvertRouter.root);
+  }
+  return;
 }
