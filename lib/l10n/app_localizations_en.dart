@@ -248,6 +248,112 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminVisibilities => 'Visibilities';
 
   @override
+  String get adminGroupNotification => 'Group notifications';
+
+  @override
+  String adminNotifyGroup(String groupName) {
+    return 'Send a notification';
+  }
+
+  @override
+  String get adminTitle => 'Title';
+
+  @override
+  String get adminContent => 'Content';
+
+  @override
+  String get adminSend => 'Send';
+
+  @override
+  String get adminNotificationSent => 'Notification sent';
+
+  @override
+  String get adminFailedToSendNotification => 'Failed to send notification';
+
+  @override
+  String get adminGroupsManagement => 'Groups management';
+
+  @override
+  String get adminEditGroup => 'Edit group';
+
+  @override
+  String get adminManageMembers => 'Manage members';
+
+  @override
+  String get adminDeleteGroupConfirmation =>
+      'Are you sure you want to delete this group?';
+
+  @override
+  String get adminFailedToDeleteGroup => 'Failed to delete group';
+
+  @override
+  String get adminUsersAndGroups => 'Users and groups';
+
+  @override
+  String get adminUsersManagement => 'Users management';
+
+  @override
+  String get adminUsersManagementDescription =>
+      'Manage users, groups, and associations';
+
+  @override
+  String get adminManageUserGroups => 'Manage user groups';
+
+  @override
+  String get adminSendNotificationToGroup => 'Send notification to group';
+
+  @override
+  String get adminPaiementModule => 'Payment module';
+
+  @override
+  String get adminPaiement => 'Payment';
+
+  @override
+  String get adminManagePaiementStructures => 'Manage payment structures';
+
+  @override
+  String get adminManageUsersAssociationMemberships =>
+      'Manage users\' association memberships';
+
+  @override
+  String get adminAssociationMembershipsManagement =>
+      'Association memberships management';
+
+  @override
+  String get adminChooseGroupManager =>
+      'Choose a group to manage this membership';
+
+  @override
+  String get adminSelectManager => 'Select a manager';
+
+  @override
+  String get adminInviteUsers => 'Invite users';
+
+  @override
+  String get adminImportList => 'Import a list';
+
+  @override
+  String get adminInvitedUsers => 'Invited users';
+
+  @override
+  String get adminFailedToInviteUsers => 'Failed to invite users';
+
+  @override
+  String get adminDeleteUsers => 'Delete users';
+
+  @override
+  String get adminAdmin => 'Admin';
+
+  @override
+  String get adminAdverts => 'Adverts';
+
+  @override
+  String get adminAnnouncers => 'Announcers';
+
+  @override
+  String get adminManageAnnouncers => 'Manage announcers';
+
+  @override
   String get advertAdd => 'Add';
 
   @override

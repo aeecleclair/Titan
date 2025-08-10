@@ -91,7 +91,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminDeletedAssociationMembership => 'Adhésion supprimée';
 
   @override
-  String get adminDeleteGroup => 'Supprimer le groupe ?';
+  String get adminDeleteGroup => 'Supprimer le groupe';
 
   @override
   String get adminDeletedGroup => 'Groupe supprimé';
@@ -249,6 +249,114 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminVisibilities => 'Visibilités';
 
   @override
+  String get adminGroupNotification => 'Notification de groupe';
+
+  @override
+  String adminNotifyGroup(String groupName) {
+    return 'Notifier le groupe $groupName';
+  }
+
+  @override
+  String get adminTitle => 'Titre';
+
+  @override
+  String get adminContent => 'Contenu';
+
+  @override
+  String get adminSend => 'Envoyer';
+
+  @override
+  String get adminNotificationSent => 'Notification envoyée';
+
+  @override
+  String get adminFailedToSendNotification =>
+      'Échec de l\'envoi de la notification';
+
+  @override
+  String get adminGroupsManagement => 'Gestion des groupes';
+
+  @override
+  String get adminEditGroup => 'Modifier le groupe';
+
+  @override
+  String get adminManageMembers => 'Gérer les membres';
+
+  @override
+  String get adminDeleteGroupConfirmation =>
+      'Êtes-vous sûr de vouloir supprimer ce groupe ?';
+
+  @override
+  String get adminFailedToDeleteGroup => 'Échec de la suppression du groupe';
+
+  @override
+  String get adminUsersAndGroups => 'Utilisateurs et groupes';
+
+  @override
+  String get adminUsersManagement => 'Gestion des utilisateurs';
+
+  @override
+  String get adminUsersManagementDescription =>
+      'Gérer les utilisateurs de l\'application';
+
+  @override
+  String get adminManageUserGroups => 'Gérer les groupes d\'utilisateurs';
+
+  @override
+  String get adminSendNotificationToGroup =>
+      'Envoyer une notification à un groupe';
+
+  @override
+  String get adminPaiementModule => 'Module de paiement';
+
+  @override
+  String get adminPaiement => 'Paiement';
+
+  @override
+  String get adminManagePaiementStructures =>
+      'Gérer les structures du module de paiement';
+
+  @override
+  String get adminManageUsersAssociationMemberships =>
+      'Gérer les adhésions des utilisateurs';
+
+  @override
+  String get adminAssociationMembershipsManagement => 'Gestion des adhésions';
+
+  @override
+  String get adminChooseGroupManager => 'Groupe gestionnaire de l\'adhésion';
+
+  @override
+  String get adminSelectManager => 'Sélectionner un gestionnaire';
+
+  @override
+  String get adminInviteUsers => 'Inviter des utilisateurs';
+
+  @override
+  String get adminImportList => 'Importer une liste';
+
+  @override
+  String get adminInvitedUsers => 'Utilisateurs invités';
+
+  @override
+  String get adminFailedToInviteUsers =>
+      'Échec de l\'invitation des utilisateurs';
+
+  @override
+  String get adminDeleteUsers => 'Supprimer des utilisateurs';
+
+  @override
+  String get adminAdmin => 'Admin';
+
+  @override
+  String get adminAdverts => 'Annonces';
+
+  @override
+  String get adminAnnouncers => 'Annonceurs';
+
+  @override
+  String get adminManageAnnouncers => 'Gérer les annonceurs';
+
+  @override
   String get advertAdd => 'Ajouter';
 
   @override
@@ -276,7 +384,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get advertContent => 'Contenu';
 
   @override
-  String get advertDeleteAdvert => 'Supprimer l\'annonce ?';
+  String get advertDeleteAdvert => 'Supprimer l\'annonce';
 
   @override
   String get advertDeleteAnnouncer => 'Supprimer l\'annonceur ?';

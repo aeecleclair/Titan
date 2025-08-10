@@ -8,6 +8,7 @@ class TextEntry extends StatelessWidget {
   final bool enabled;
   final TextEditingController controller;
   final TextInputType keyboardType;
+  final TextCapitalization textCapitalization;
   final Color color, enabledColor, errorColor;
   final Widget? suffixIcon;
   final Function(String)? onChanged;
@@ -29,6 +30,7 @@ class TextEntry extends StatelessWidget {
     this.isInt = false,
     this.isDouble = false,
     this.keyboardType = TextInputType.text,
+    this.textCapitalization = TextCapitalization.sentences,
     this.canBeEmpty = false,
     this.color = ColorConstants.tertiary,
     this.enabledColor = ColorConstants.tertiary,
@@ -46,6 +48,7 @@ class TextEntry extends StatelessWidget {
       maxLines: maxLines,
       controller: controller,
       keyboardType: keyboardType,
+      textCapitalization: textCapitalization,
       cursorColor: color,
       onChanged: onChanged,
       textInputAction: (keyboardType == TextInputType.multiline)

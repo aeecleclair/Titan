@@ -104,6 +104,7 @@ class MyApp extends HookConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      themeMode: ThemeMode.light,
       theme: ThemeData(
         primarySwatch: Colors.red,
         textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),

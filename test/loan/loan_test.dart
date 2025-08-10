@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:titan/admin/class/account_type.dart';
+import 'package:titan/super_admin/class/account_type.dart';
 import 'package:titan/loan/class/item.dart';
 import 'package:titan/loan/class/item_quantity.dart';
 import 'package:titan/loan/class/item_simple.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/admin/router.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/advert/router.dart';
-import 'package:titan/admin/providers/all_my_module_roots_list_provider.dart';
+import 'package:titan/super_admin/providers/all_my_module_roots_list_provider.dart';
 import 'package:titan/amap/router.dart';
 import 'package:titan/booking/router.dart';
 import 'package:titan/centralisation/router.dart';
@@ -22,6 +22,7 @@ import 'package:titan/recommendation/router.dart';
 import 'package:titan/seed-library/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:titan/settings/router.dart';
+import 'package:titan/super_admin/router.dart';
 import 'package:titan/vote/router.dart';
 
 final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
@@ -61,6 +62,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     RecommendationRouter.module,
     VoteRouter.module,
     SeedLibraryRouter.module,
+    AdminRouter.module,
   ];
   ModulesNotifier({required this.isAdmin}) : super([]);
 
@@ -126,7 +128,10 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     for (Module module in toDelete) {
       allModules.remove(module);
     }
-    allModules.addAll([SettingsRouter.module, if (isAdmin) AdminRouter.module]);
+    allModules.addAll([
+      SettingsRouter.module,
+      if (isAdmin) SuperAdminRouter.module,
+    ]);
     state = allModules;
   }
 

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/admin/admin.dart';
+import 'package:titan/admin/router.dart';
 import 'package:titan/admin/providers/structure_manager_provider.dart';
 import 'package:titan/admin/providers/structure_provider.dart';
-import 'package:titan/admin/router.dart';
-import 'package:titan/admin/ui/admin.dart';
-import 'package:titan/admin/ui/components/item_card_ui.dart';
-import 'package:titan/admin/ui/pages/structure_page/structure_ui.dart';
 import 'package:titan/paiement/class/structure.dart';
 import 'package:titan/paiement/providers/structure_list_provider.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/button.dart';
+import 'package:titan/tools/ui/styleguide/icon_button.dart';
+import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
@@ -37,6 +38,8 @@ class StructurePage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     return AdminTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -45,18 +48,33 @@ class StructurePage extends HookConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  AppLocalizations.of(context)!.adminStructures,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: ColorConstants.gradient1,
+              Row(
+                children: [
+                  Text(
+                    localizeWithContext.adminStructures,
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                ),
+                  const Spacer(),
+                  CustomIconButton(
+                    icon: HeroIcon(
+                      HeroIcons.plus,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      structureNotifier.setStructure(Structure.empty());
+                      structureManagerNotifier.setUser(SimpleUser.empty());
+                      QR.to(
+                        AdminRouter.root +
+                            AdminRouter.structures +
+                            AdminRouter.addEditStructure,
+                      );
+                    },
+                  ),
+                ],
               ),
               const SizedBox(height: 30),
               AsyncChild(
@@ -70,82 +88,87 @@ class StructurePage extends HookConsumerWidget {
                     children: [
                       Column(
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              structureNotifier.setStructure(Structure.empty());
-                              structureManagerNotifier.setUser(
-                                SimpleUser.empty(),
-                              );
-                              QR.to(
-                                AdminRouter.root +
-                                    AdminRouter.structures +
-                                    AdminRouter.addEditStructure,
-                              );
-                            },
-                            child: ItemCardUi(
-                              children: [
-                                const Spacer(),
-                                HeroIcon(
-                                  HeroIcons.plus,
-                                  color: Colors.grey.shade700,
-                                  size: 40,
-                                ),
-                                const Spacer(),
-                              ],
-                            ),
-                          ),
                           ...structures.map(
-                            (structure) => StructureUi(
-                              group: structure,
-                              onEdit: () {
-                                structureNotifier.setStructure(structure);
-                                structureManagerNotifier.setUser(
-                                  structure.managerUser,
-                                );
-                                QR.to(
-                                  AdminRouter.root +
-                                      AdminRouter.structures +
-                                      AdminRouter.addEditStructure,
-                                );
-                              },
-                              onDelete: () async {
-                                await showDialog(
+                            (structure) => ListItem(
+                              title: structure.name,
+                              onTap: () async {
+                                await showCustomBottomModal(
                                   context: context,
-                                  builder: (context) {
-                                    return CustomDialogBox(
-                                      title: AppLocalizations.of(
-                                        context,
-                                      )!.adminDeleting,
-                                      descriptions: AppLocalizations.of(
-                                        context,
-                                      )!.adminDeleteGroup,
-                                      onYes: () async {
-                                        final deletedGroupMsg =
-                                            AppLocalizations.of(
-                                              context,
-                                            )!.adminDeletedGroup;
-                                        final deletingErrorMsg =
-                                            AppLocalizations.of(
-                                              context,
-                                            )!.adminDeletingError;
-                                        tokenExpireWrapper(ref, () async {
-                                          final value = await structuresNotifier
-                                              .deleteStructure(structure);
-                                          if (value) {
-                                            displayToastWithContext(
-                                              TypeMsg.msg,
-                                              deletedGroupMsg,
+                                  ref: ref,
+                                  modal: BottomModalTemplate(
+                                    title: localizeWithContext
+                                        .adminUsersManagement,
+                                    child: Column(
+                                      children: [
+                                        Button(
+                                          text: localizeWithContext.adminEdit,
+                                          onPressed: () {
+                                            structureNotifier.setStructure(
+                                              structure,
                                             );
-                                          } else {
-                                            displayToastWithContext(
-                                              TypeMsg.error,
-                                              deletingErrorMsg,
+                                            structureManagerNotifier.setUser(
+                                              structure.managerUser,
                                             );
-                                          }
-                                        });
-                                      },
-                                    );
-                                  },
+
+                                            QR.to(
+                                              AdminRouter.root +
+                                                  AdminRouter.structures +
+                                                  AdminRouter.addEditStructure,
+                                            );
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Button(
+                                          type: ButtonType.danger,
+                                          text: localizeWithContext.adminDelete,
+                                          onPressed: () async {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return CustomDialogBox(
+                                                  title: AppLocalizations.of(
+                                                    context,
+                                                  )!.adminDeleting,
+                                                  descriptions:
+                                                      AppLocalizations.of(
+                                                        context,
+                                                      )!.adminDeleteGroup,
+                                                  onYes: () async {
+                                                    final deletedGroupMsg =
+                                                        localizeWithContext
+                                                            .adminDeletedGroup;
+                                                    final deletingErrorMsg =
+                                                        localizeWithContext
+                                                            .adminDeletingError;
+                                                    tokenExpireWrapper(ref, () async {
+                                                      final value =
+                                                          await structuresNotifier
+                                                              .deleteStructure(
+                                                                structure,
+                                                              );
+                                                      if (value) {
+                                                        displayToastWithContext(
+                                                          TypeMsg.msg,
+                                                          deletedGroupMsg,
+                                                        );
+                                                      } else {
+                                                        displayToastWithContext(
+                                                          TypeMsg.error,
+                                                          deletingErrorMsg,
+                                                        );
+                                                      }
+                                                    });
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 );
                               },
                             ),
@@ -156,7 +179,6 @@ class StructurePage extends HookConsumerWidget {
                     ],
                   );
                 },
-                loaderColor: ColorConstants.gradient1,
               ),
             ],
           ),

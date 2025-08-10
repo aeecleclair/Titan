@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/router.dart';
-import 'package:titan/admin/ui/admin.dart';
-import 'package:titan/admin/ui/pages/main_page/menu_card_ui.dart';
-import 'package:titan/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/admin/admin.dart';
+import 'package:titan/admin/providers/all_groups_list_provider.dart';
+import 'package:titan/admin/router.dart';
+import 'package:titan/admin/ui/pages/announcers/load_switch_announcers.dart';
+import 'package:titan/admin/ui/pages/users_management_page/users_management_page.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/list_item.dart';
+import 'package:titan/tools/ui/styleguide/list_item_template.dart';
+
+import 'package:titan/user/providers/user_list_provider.dart';
 
 class AdminMainPage extends HookConsumerWidget {
   const AdminMainPage({super.key});
@@ -16,59 +20,98 @@ class AdminMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(userList);
 
-    final controller = ScrollController();
+    final localizeWithContext = AppLocalizations.of(context)!;
+    final groupList = ref.watch(allGroupList);
 
     return AdminTemplate(
       child: Padding(
         padding: const EdgeInsets.all(40),
-        child: GridView(
-          controller: controller,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 20,
-            childAspectRatio:
-                MediaQuery.of(context).size.width <
-                    MediaQuery.of(context).size.height
-                ? 0.75
-                : 1.5,
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GestureDetector(
-              onTap: () {
-                QR.to(AdminRouter.root + AdminRouter.editModuleVisibility);
-              },
-              child: MenuCardUi(
-                text: AppLocalizations.of(context)!.adminVisibilities,
-                icon: HeroIcons.eye,
-              ),
+            Text(
+              localizeWithContext.adminAdministration,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
-            GestureDetector(
-              onTap: () {
-                QR.to(AdminRouter.root + AdminRouter.groups);
-              },
-              child: MenuCardUi(
-                text: AppLocalizations.of(context)!.adminGroups,
-                icon: HeroIcons.users,
-              ),
+            const SizedBox(height: 20),
+            Text(
+              localizeWithContext.adminUsersAndGroups,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-            GestureDetector(
-              onTap: () {
-                QR.to(AdminRouter.root + AdminRouter.schools);
+            ListItem(
+              title: localizeWithContext.adminUsersManagement,
+              subtitle: localizeWithContext.adminUsersManagementDescription,
+              onTap: () async {
+                await showCustomBottomModal(
+                  context: context,
+                  ref: ref,
+                  modal: BottomModalTemplate(
+                    title: localizeWithContext.adminUsersManagement,
+                    child: UsersManagementPage(),
+                  ),
+                );
               },
-              child: MenuCardUi(
-                text: AppLocalizations.of(context)!.adminSchools,
-                icon: HeroIcons.academicCap,
-              ),
             ),
-            GestureDetector(
-              onTap: () {
-                QR.to(AdminRouter.root + AdminRouter.structures);
+            ListItem(
+              title: localizeWithContext.adminGroupsManagement,
+              subtitle: localizeWithContext.adminManageUserGroups,
+              onTap: () => QR.to(AdminRouter.root + AdminRouter.usersGroups),
+            ),
+            ListItem(
+              title: localizeWithContext.adminGroupNotification,
+              subtitle: localizeWithContext.adminSendNotificationToGroup,
+              onTap: () =>
+                  QR.to(AdminRouter.root + AdminRouter.groupNotification),
+            ),
+            Text(
+              localizeWithContext.adminPaiementModule,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            ListItem(
+              title: localizeWithContext.adminPaiement,
+              subtitle: localizeWithContext.adminManagePaiementStructures,
+              onTap: () => QR.to(AdminRouter.root + AdminRouter.structures),
+            ),
+            Text(
+              localizeWithContext.adminAssociationMembership,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            ListItem(
+              title: localizeWithContext.adminAssociationMembership,
+              subtitle:
+                  localizeWithContext.adminManageUsersAssociationMemberships,
+              onTap: () =>
+                  QR.to(AdminRouter.root + AdminRouter.associationMemberships),
+            ),
+            Text("Annonces", style: Theme.of(context).textTheme.titleLarge),
+            ListItem(
+              title: "Annonceurs",
+              subtitle: "Gérer les annonceurs",
+              onTap: () async {
+                await showCustomBottomModal(
+                  context: context,
+                  ref: ref,
+                  modal: BottomModalTemplate(
+                    title: "Annonceurs",
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxHeight: 500),
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            ...groupList.map((group) {
+                              return ListItemTemplate(
+                                title: group.name,
+                                trailing: LoadSwitchAdvertisers(group: group),
+                              );
+                            }),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
               },
-              child: MenuCardUi(
-                text: AppLocalizations.of(context)!.adminMyEclPay,
-                icon: HeroIcons.creditCard,
-              ),
             ),
           ],
         ),

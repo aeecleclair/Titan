@@ -263,7 +263,7 @@ abstract class AppLocalizations {
   /// No description provided for @adminDeleteGroup.
   ///
   /// In fr, this message translates to:
-  /// **'Supprimer le groupe ?'**
+  /// **'Supprimer le groupe'**
   String get adminDeleteGroup;
 
   /// No description provided for @adminDeletedGroup.
@@ -572,6 +572,204 @@ abstract class AppLocalizations {
   /// **'Visibilités'**
   String get adminVisibilities;
 
+  /// No description provided for @adminGroupNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notification de groupe'**
+  String get adminGroupNotification;
+
+  /// Notifie les membres du groupe sélectionné
+  ///
+  /// In fr, this message translates to:
+  /// **'Notifier le groupe {groupName}'**
+  String adminNotifyGroup(String groupName);
+
+  /// No description provided for @adminTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre'**
+  String get adminTitle;
+
+  /// No description provided for @adminContent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contenu'**
+  String get adminContent;
+
+  /// No description provided for @adminSend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer'**
+  String get adminSend;
+
+  /// No description provided for @adminNotificationSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notification envoyée'**
+  String get adminNotificationSent;
+
+  /// No description provided for @adminFailedToSendNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de l\'envoi de la notification'**
+  String get adminFailedToSendNotification;
+
+  /// No description provided for @adminGroupsManagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gestion des groupes'**
+  String get adminGroupsManagement;
+
+  /// No description provided for @adminEditGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le groupe'**
+  String get adminEditGroup;
+
+  /// No description provided for @adminManageMembers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les membres'**
+  String get adminManageMembers;
+
+  /// No description provided for @adminDeleteGroupConfirmation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Êtes-vous sûr de vouloir supprimer ce groupe ?'**
+  String get adminDeleteGroupConfirmation;
+
+  /// No description provided for @adminFailedToDeleteGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de la suppression du groupe'**
+  String get adminFailedToDeleteGroup;
+
+  /// No description provided for @adminUsersAndGroups.
+  ///
+  /// In fr, this message translates to:
+  /// **'Utilisateurs et groupes'**
+  String get adminUsersAndGroups;
+
+  /// No description provided for @adminUsersManagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gestion des utilisateurs'**
+  String get adminUsersManagement;
+
+  /// No description provided for @adminUsersManagementDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les utilisateurs de l\'application'**
+  String get adminUsersManagementDescription;
+
+  /// No description provided for @adminManageUserGroups.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les groupes d\'utilisateurs'**
+  String get adminManageUserGroups;
+
+  /// No description provided for @adminSendNotificationToGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer une notification à un groupe'**
+  String get adminSendNotificationToGroup;
+
+  /// No description provided for @adminPaiementModule.
+  ///
+  /// In fr, this message translates to:
+  /// **'Module de paiement'**
+  String get adminPaiementModule;
+
+  /// No description provided for @adminPaiement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement'**
+  String get adminPaiement;
+
+  /// No description provided for @adminManagePaiementStructures.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les structures du module de paiement'**
+  String get adminManagePaiementStructures;
+
+  /// No description provided for @adminManageUsersAssociationMemberships.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les adhésions des utilisateurs'**
+  String get adminManageUsersAssociationMemberships;
+
+  /// No description provided for @adminAssociationMembershipsManagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gestion des adhésions'**
+  String get adminAssociationMembershipsManagement;
+
+  /// No description provided for @adminChooseGroupManager.
+  ///
+  /// In fr, this message translates to:
+  /// **'Groupe gestionnaire de l\'adhésion'**
+  String get adminChooseGroupManager;
+
+  /// No description provided for @adminSelectManager.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sélectionner un gestionnaire'**
+  String get adminSelectManager;
+
+  /// No description provided for @adminInviteUsers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inviter des utilisateurs'**
+  String get adminInviteUsers;
+
+  /// No description provided for @adminImportList.
+  ///
+  /// In fr, this message translates to:
+  /// **'Importer une liste'**
+  String get adminImportList;
+
+  /// No description provided for @adminInvitedUsers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Utilisateurs invités'**
+  String get adminInvitedUsers;
+
+  /// No description provided for @adminFailedToInviteUsers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de l\'invitation des utilisateurs'**
+  String get adminFailedToInviteUsers;
+
+  /// No description provided for @adminDeleteUsers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer des utilisateurs'**
+  String get adminDeleteUsers;
+
+  /// No description provided for @adminAdmin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Admin'**
+  String get adminAdmin;
+
+  /// No description provided for @adminAdverts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonces'**
+  String get adminAdverts;
+
+  /// No description provided for @adminAnnouncers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonceurs'**
+  String get adminAnnouncers;
+
+  /// No description provided for @adminManageAnnouncers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les annonceurs'**
+  String get adminManageAnnouncers;
+
   /// No description provided for @advertAdd.
   ///
   /// In fr, this message translates to:
@@ -629,7 +827,7 @@ abstract class AppLocalizations {
   /// No description provided for @advertDeleteAdvert.
   ///
   /// In fr, this message translates to:
-  /// **'Supprimer l\'annonce ?'**
+  /// **'Supprimer l\'annonce'**
   String get advertDeleteAdvert;
 
   /// No description provided for @advertDeleteAnnouncer.
