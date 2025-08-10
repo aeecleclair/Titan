@@ -1,8 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/phonebook/class/complete_member.dart';
 import 'package:titan/phonebook/providers/association_member_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
-import 'package:titan/phonebook/tools/constants.dart';
+import 'package:titan/phonebook/providers/roles_tags_provider.dart';
+import 'package:titan/phonebook/tools/function.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
 final isPhonebookAdminProvider = StateProvider<bool>((ref) {
@@ -24,24 +26,27 @@ final hasPhonebookAdminAccessProvider = StateProvider<bool>((ref) {
   return isPhonebookAdmin || isAdmin;
 });
 
-final isAssociationPresidentProvider = StateProvider<bool>((ref) {
+final isAssociationPresidentProvider = Provider<bool>((ref) {
   final association = ref.watch(associationProvider);
+  final rolesTags = ref.watch(rolesTagsProvider);
   final membersList = ref.watch(associationMemberListProvider);
   final me = ref.watch(userProvider);
-  bool isPresident = false;
-  membersList.whenData((members) {
-    if (members.map((e) => e.member.id).contains(me.id)) {
-      if (members
-          .firstWhere((completeMember) => completeMember.member.id == me.id)
-          .memberships
-          .firstWhere(
-            (membership) => membership.associationId == association.id,
-          )
-          .rolesTags
-          .contains(presidentRoleTag)) {
-        isPresident = true;
-      }
-    }
-  });
-  return isPresident;
+
+  return membersList.maybeWhen(
+    data: (members) {
+      final member = members.firstWhere(
+        (m) => m.member.id == me.id,
+        orElse: () => CompleteMember.empty(),
+      );
+      if (member.member.id == "") return false;
+      final membership = getMembershipForAssociation(member, association);
+      return rolesTags.maybeWhen(
+        data: (tags) {
+          return membership.rolesTags.contains(tags.first);
+        },
+        orElse: () => false,
+      );
+    },
+    orElse: () => false,
+  );
 });

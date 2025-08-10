@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/phonebook/providers/association_kind_provider.dart';
+import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/router.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/widgets/top_bar.dart';
@@ -12,7 +12,24 @@ class PhonebookTemplate extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final kindNotifier = ref.watch(associationKindProvider.notifier);
+    final associationGroupementNotifer = ref.watch(
+      associationGroupementProvider.notifier,
+    );
+
+    final pathGroupementClearing = [
+      PhonebookRouter.root + PhonebookRouter.admin,
+      PhonebookRouter.root + PhonebookRouter.associationDetail,
+      PhonebookRouter.root +
+          PhonebookRouter.admin +
+          PhonebookRouter.addEditAssociation,
+      PhonebookRouter.root +
+          PhonebookRouter.admin +
+          PhonebookRouter.editAssociationGroups,
+      PhonebookRouter.root +
+          PhonebookRouter.admin +
+          PhonebookRouter.editAssociationMembers,
+    ];
+
     return Container(
       color: ColorConstants.background,
       child: SafeArea(
@@ -21,20 +38,8 @@ class PhonebookTemplate extends HookConsumerWidget {
             TopBar(
               root: PhonebookRouter.root,
               onBack: () {
-                if (QR.currentPath !=
-                    PhonebookRouter.root +
-                        PhonebookRouter.admin +
-                        PhonebookRouter.editAssociation +
-                        PhonebookRouter.addEditMember) {
-                  kindNotifier.setKind('');
-                }
-                if (QR.currentPath ==
-                    PhonebookRouter.root +
-                        PhonebookRouter.admin +
-                        PhonebookRouter.editAssociation) {
-                  QR.to(
-                    PhonebookRouter.root + PhonebookRouter.admin,
-                  ); // Used on back after adding an association
+                if (pathGroupementClearing.contains(QR.currentPath)) {
+                  associationGroupementNotifer.resetAssociationGroupement();
                 }
               },
             ),

@@ -81,7 +81,7 @@
     "adminVisibilities": "Visibilités",
     "adminGroupNotification": "Notification de groupe",
     "adminNotifyGroup": "Notifier le groupe {groupName}",
-    "@adminNotifyGroup":{
+    "@adminNotifyGroup": {
         "description": "Notifie les membres du groupe sélectionné",
         "placeholders": {
             "groupName": {
@@ -106,12 +106,12 @@
     "adminSendNotificationToGroup": "Envoyer une notification à un groupe",
     "adminPaiementModule": "Module de paiement",
     "adminPaiement": "Paiement",
-    "adminManagePaiementStructures" : "Gérer les structures du module de paiement",
+    "adminManagePaiementStructures": "Gérer les structures du module de paiement",
     "adminManageUsersAssociationMemberships": "Gérer les adhésions des utilisateurs",
     "adminAssociationMembershipsManagement": "Gestion des adhésions",
-    "adminChooseGroupManager" : "Groupe gestionnaire de l'adhésion",
-    "adminSelectManager" : "Sélectionner un gestionnaire",
-    "adminInviteUsers" : "Inviter des utilisateurs",
+    "adminChooseGroupManager": "Groupe gestionnaire de l'adhésion",
+    "adminSelectManager": "Sélectionner un gestionnaire",
+    "adminInviteUsers": "Inviter des utilisateurs",
     "adminImportList": "Importer une liste",
     "adminInvitedUsers": "Utilisateurs invités",
     "adminFailedToInviteUsers": "Échec de l'invitation des utilisateurs",
@@ -119,7 +119,7 @@
     "adminAdmin": "Admin",
     "adminAdverts": "Annonces",
     "adminAnnouncers": "Annonceurs",
-    "adminManageAnnouncers" : "Gérer les annonceurs",
+    "adminManageAnnouncers": "Gérer les annonceurs",
     "adminDeleteAnnouncer": "Supprimer cet annonceur ?",
     "adminDeleteAnnouncerDescription": "Supprimer cet annonceurs supprimera toutes ses annonces.",
     "advertAdd": "Ajouter",
@@ -490,6 +490,18 @@
     "eventDayFri": "Vendredi",
     "eventDaySat": "Samedi",
     "eventDaySun": "Dimanche",
+    "globalConfirm": "Confirmer",
+    "globalCancel": "Annuler",
+    "globalIrreversibleAction": "Cette action est irréversible",
+    "globalOptionnal": "{text} (Optionnel)",
+    "@globalOptionnal": {
+        "description": "Texte avec complément optionnel",
+        "placeholders": {
+            "text": {
+                "type": "String"
+            }
+        }
+    },
     "homeCalendar": "Calendrier",
     "homeEventOf": "Évènements du",
     "homeIncomingEvents": "Évènements à venir",
@@ -674,42 +686,84 @@
     "phSeePreviousJournal": "Voir les anciens journaux",
     "phNoJournalInDatabase": "Pas encore de PH dans la base de donnée",
     "phSuccesDowloading": "Téléchargé avec succès",
-    "phonebookActiveMandate": "Mandat actif :",
     "phonebookAdd": "Ajouter",
     "phonebookAddAssociation": "Ajouter une association",
+    "phonebookAddAssociationGroupement": "Ajouter un groupement d'association",
     "phonebookAddedAssociation": "Association ajoutée",
     "phonebookAddedMember": "Membre ajouté",
     "phonebookAddingError": "Erreur lors de l'ajout",
     "phonebookAddMember": "Ajouter un membre",
     "phonebookAddRole": "Ajouter un rôle",
-    "phonebookAdmin": "Admin",
-    "phonebookAdminPage": "Page Administrateur",
+    "phonebookAdmin": "Administration",
     "phonebookAll": "Toutes",
     "phonebookApparentName": "Nom public du rôle :",
-    "phonebookAssociation": "Association :",
+    "phonebookAssociation": "Association",
     "phonebookAssociationDetail": "Détail de l'association :",
+    "phonebookAssociationGroupement": "Groupement d'association",
     "phonebookAssociationKind": "Type d'association :",
-    "phonebookAssociationPure": "Association",
-    "phonebookAssociationPureSearch": "  Association",
-    "phonebookAssociations": "Associations :",
+    "phonebookAssociationName": "Nom de l'association",
+    "phonebookAssociations": "Associations",
     "phonebookCancel": "Annuler",
-    "phonebookChangeMandate": "Passer au mandat ",
-    "phonebookChangeMandateConfirm": "Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !",
+    "phonebookChangeTermYear": "Passer au mandat {year}",
+    "@phonebookChangeTermYear": {
+        "description": "Permet de changer le mandat d'une association",
+        "placeholders": {
+            "year": {
+                "type": "int"
+            }
+        }
+    },
+    "phonebookChangeTermConfirm": "Êtes-vous sûr de vouloir changer tout le mandat ?\nCette action est irréversible !",
+    "phonebookClose": "Fermer",
+    "phonebookConfirm": "Confirmer",
     "phonebookCopied": "Copié dans le presse-papier",
-    "phonebookDeactivateAssociation": "Êtes-vous sûr de vouloir désactiver cette association ?\nCette action est irréversible !",
+    "phonebookDeactivateAssociation": "Désactiver l'association",
     "phonebookDeactivatedAssociation": "Association désactivée",
     "phonebookDeactivatedAssociationWarning": "Attention, cette association est désactivée, vous ne pouvez pas la modifier",
-    "phonebookDeactivating": "Désactiver l'association ?",
+    "phonebookDeactivateSelectedAssociation": "Désactiver l'association {association} ?",
+    "@phonebookDeactivateSelectedAssociation": {
+        "description": "Permet de désactiver une association",
+        "placeholders": {
+            "association": {
+                "type": "String"
+            }
+        }
+    },
     "phonebookDeactivatingError": "Erreur lors de la désactivation",
     "phonebookDetail": "Détail :",
-    "phonebookDeleteAssociation": "Supprimer l'association ?\nCela va effacer tout l'historique de l'association",
+    "phonebookDelete": "Supprimer",
+    "phonebookDeleteAssociation": "Supprimer l'association",
+    "phonebookDeleteSelectedAssociation": "Supprimer l'association {association} ?",
+    "@phonebookDeleteSelectedAssociation": {
+        "description": "Permet de supprimer une association",
+        "placeholders": {
+            "association": {
+                "type": "String"
+            }
+        }
+    },
+    "phonebookDeleteAssociationDescription": "Ceci va supprimer l'historique de l'association",
     "phonebookDeletedAssociation": "Association supprimée",
     "phonebookDeletedMember": "Membre supprimé",
+    "phonebookDeleteRole": "Supprimer le rôle",
+    "phonebookDeleteUserRole": "Supprimer le rôle de l'utilisateur {name} ?",
+    "@phonebookDeleteUserRole": {
+        "description": "Permet de supprimer le rôle d'un utilisateur dans une association",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
     "phonebookDeleting": "Suppression",
     "phonebookDeletingError": "Erreur lors de la suppression",
     "phonebookDescription": "Description",
     "phonebookEdit": "Modifier",
-    "phonebookEditMembership": "Modifier le rôle",
+    "phonebookEditAssociationGroupement": "Modifier le groupement d'association",
+    "phonebookEditAssociationGroups": "Gérer les groupes",
+    "phonebookEditAssociationInfo": "Modifier",
+    "phonebookEditAssociationMembers": "Gérer les membres",
+    "phonebookEditRole": "Modifier le rôle",
     "phonebookEmail": "Email :",
     "phonebookEmailCopied": "Email copié dans le presse-papier",
     "phonebookEmptyApparentName": "Veuillez entrer un nom de role",
@@ -726,25 +780,65 @@
     "phonebookErrorLoadProfilePicture": "Erreur",
     "phonebookErrorRoleTagsLoading": "Erreur lors du chargement des tags de rôle",
     "phonebookExistingMembership": "Ce membre est déjà dans le mandat actuel",
+    "phonebookFilter": "Filtrer",
+    "phonebookFilterDescription": "Sélectionnez un ou plusieurs groupements pour filtrer les associations.",
     "phonebookFirstname": "Prénom :",
-    "phonebookGroups": "Groupes associés :",
-    "phonebookMandateChangingError": "Erreur lors du changement de mandat",
+    "phonebookGroupementDeleted": "Groupement d'association supprimé",
+    "phonebookGroupementDeleteError": "Erreur lors de la suppression du groupement d'association",
+    "phonebookGroupementName": "Nom du groupement",
+    "phonebookGroups": "Gérer les groupes de {association}",
+    "@phonebookGroups": {
+        "description": "Permet de gérer les groupes d'une association",
+        "placeholders": {
+            "association": {
+                "type": "String"
+            }
+        }
+    },
+    "phonebookTerm": "Mandat {year}",
+    "@phonebookTerm": {
+        "description": "Année de mandat d'une association",
+        "placeholders": {
+            "year": {
+                "type": "int"
+            }
+        }
+    },
+    "phonebookTermChangingError": "Erreur lors du changement de mandat",
     "phonebookMember": "Membre",
     "phonebookMemberReordered": "Membre réordonné",
-    "phonebookMembers": "Membres",
+    "phonebookMembers": "Gérer les membres de {association}",
+    "@phonebookMembers": {
+        "description": "Permet de gérer les membres d'une association",
+        "placeholders": {
+            "association": {
+                "type": "String"
+            }
+        }
+    },
     "phonebookMembershipAssociationError": "Veuillez choisir une association",
     "phonebookMembershipRole": "Rôle :",
     "phonebookMembershipRoleError": "Veuillez choisir un rôle",
+    "phonebookModifyMembership": "Modifier le rôle de {name}",
+    "@phonebookModifyMembership": {
+        "description": "Permet de modifier le rôle d'un membre dans une association",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
     "phonebookName": "Nom :",
     "phonebookNameCopied": "Nom et prénom copié dans le presse-papier",
     "phonebookNamePure": "Nom",
-    "phonebookNewMandate": "Nouveau mandat",
-    "phonebookNewMandateConfirmed": "Mandat changé",
+    "phonebookNewTerm": "Nouveau mandat",
+    "phonebookNewTermConfirmed": "Mandat changé",
     "phonebookNickname": "Surnom :",
     "phonebookNicknameCopied": "Surnom copié dans le presse-papier",
     "phonebookNoAssociationFound": "Aucune association trouvée",
     "phonebookNoMember": "Aucun membre",
     "phonebookNoMemberRole": "Aucun role trouvé",
+    "phonebookNoRoleTags": "Aucun tag de rôle trouvé",
     "phonebookPhone": "Téléphone :",
     "phonebookPhonebook": "Annuaire",
     "phonebookPhonebookSearch": "Rechercher",
@@ -754,10 +848,19 @@
     "phonebookPhonebookSearchRole": "Poste",
     "phonebookPresidentRoleTag": "Prez'",
     "phonebookPromoNotGiven": "Promo non renseignée",
-    "phonebookPromotion": "Promotion :",
+    "phonebookPromotion": "Promotion {year}",
+    "@phonebookPromotion": {
+        "description": "Année de promotion d'un membre",
+        "placeholders": {
+            "year": {
+                "type": "int"
+            }
+        }
+    },
     "phonebookReorderingError": "Erreur lors du réordonnement",
     "phonebookResearch": "Rechercher",
     "phonebookRolePure": "Rôle",
+    "phonebookSearchUser": "Rechercher un utilisateur",
     "phonebookTooHeavyAssociationPicture": "L'image est trop lourde (max 4Mo)",
     "phonebookUpdateGroups": "Mettre à jour les groupes",
     "phonebookUpdatedAssociation": "Association modifiée",
@@ -1074,11 +1177,15 @@
     "@settingsNotificationCounter": {
         "description": "Affiche le nombre de notifications actives sur le total des notifications disponibles, avec gestion du pluriel",
         "placeholders": {
-            "active": { "type": "int" },
-            "total": { "type": "int" }
+            "active": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
         }
     },
-    "settingsEvent" : "Événement",
+    "settingsEvent": "Événement",
     "settingsIcal": "Lien Ical",
     "settingsSynncWithCalendar": "Synchroniser avec votre calendrier",
     "settingsIcalLinkCopied": "Lien Ical copié dans le presse-papier",
@@ -1204,8 +1311,8 @@
     "moduleOthersDescription": "Afficher les autres modules",
     "modulePayment": "Paiement",
     "modulePaymentDescription": "Gérer les paiements, les statistiques et les appareils",
-    "paiementTopUp" : "Recharge",
-    "paiementStoreManagement" : "Gestion des associations",
+    "paiementTopUp": "Recharge",
+    "paiementStoreManagement": "Gestion des associations",
     "paiementDeleteStore": "Supprimer l'association",
     "paiementDeleteStoreDescription": "Voulez-vous vraiment supprimer cette association ?",
     "paiementDeleteStoreError": "Impossible de supprimer l'association",
@@ -1213,23 +1320,23 @@
     "paiementAddThisDevice": "Ajouter cet appareil",
     "paiementThisDevice": "(cet appareil)",
     "paiementCancelled": "Annulé",
-    "paiementThe" : "Le",
+    "paiementThe": "Le",
     "paiementOf": "de",
     "paiementRefundedThe": "Remboursé le",
     "paiementAt": "à",
-    "paiementPleaseAcceptTOS" : "Veuillez accepter les Conditions Générales d'Utilisation.",
-    "paiementAskDeviceActivation" : "Demande d'activation de l'appareil",
-    "paiementDeviceActivationReceived" : "La demande d'activation est prise en compte, veuilliez consulter votre boite mail pour finaliser la démarche",
-    "paiementRevokeDevice" : "Révoquer l'appareil ?",
-    "paiementRevokeDeviceDescription" : "Vous ne pourrez plus utiliser cet appareil pour les paiements",
-    "paiementDeviceRevoked" : "Appareil révoqué",
-    "paiementDeviceRevokingError" : "Erreur lors de la révocation de l'appareil",
+    "paiementPleaseAcceptTOS": "Veuillez accepter les Conditions Générales d'Utilisation.",
+    "paiementAskDeviceActivation": "Demande d'activation de l'appareil",
+    "paiementDeviceActivationReceived": "La demande d'activation est prise en compte, veuilliez consulter votre boite mail pour finaliser la démarche",
+    "paiementRevokeDevice": "Révoquer l'appareil ?",
+    "paiementRevokeDeviceDescription": "Vous ne pourrez plus utiliser cet appareil pour les paiements",
+    "paiementDeviceRevoked": "Appareil révoqué",
+    "paiementDeviceRevokingError": "Erreur lors de la révocation de l'appareil",
     "paiementPleaseAcceptPopup": "Veuillez autoriser les popups",
     "paiementProceedSuccessfully": "Paiement effectué avec succès",
     "paiementCancelledTransaction": "Paiement annulé",
     "paiementPleaseEnterMinAmount": "Veuillez entrer un montant supérieur à 1",
     "paiementMaxAmount": "Le montant maximum de votre portefeuille est de",
-    "paiementPayWithHA" : "Payer avec HelloAsso",
+    "paiementPayWithHA": "Payer avec HelloAsso",
     "paiementBalanceAfterTopUp": "Solde après recharge :",
     "paiementPersonalBalance": "Solde personnel",
     "paiementDevices": "Appareils",
@@ -1246,7 +1353,7 @@
     "paiementGetBalanceError": "Erreur lors de la récupération du solde : ",
     "paiementLastTransactions": "Dernières transactions",
     "paiementGetTransactionsError": "Erreur lors de la récupération des transactions : ",
-    "paiementStoreBalance" : "Solde associatif",
+    "paiementStoreBalance": "Solde associatif",
     "paiementScan": "Scanner",
     "paiementManagement": "Gestion",
     "paiementHistory": "Historique",
@@ -1254,8 +1361,8 @@
     "paiementStores": "Associations",
     "paiementAdmin": "Administrateur",
     "paiementSuccededTransaction": "Paiement réussi",
-    "paiementNewCGU" : "Nouvelles Conditions Générales d'Utilisation",
-    "paiementDecline":  "Refuser",
+    "paiementNewCGU": "Nouvelles Conditions Générales d'Utilisation",
+    "paiementDecline": "Refuser",
     "paiementAccept": "Accepter",
     "paiementAmount": "Montant",
     "paiementValidUntil": "Valide jusqu'à",
@@ -1305,7 +1412,7 @@
     "paiementDeletedSeller": "Vendeur supprimé",
     "paiementDeletingSellerError": "Erreur lors de la suppression du vendeur",
     "paiementDeleteSeller": "Supprimer le vendeur",
-    "paiementAdd" : "Ajouter",
+    "paiementAdd": "Ajouter",
     "paiementAddSeller": "Ajouter un vendeur",
     "paiementSellerError": "Vous n'êtes pas vendeur de cette association",
     "paiementSellersOf": "Les vendeurs de",
@@ -1320,7 +1427,7 @@
     "paiementDoneTransaction": "Transaction effectuée",
     "paiementRefundAction": "Rembourser",
     "paiementTotalDuringPeriod": "Total sur la période",
-    "paiementMean" : "Moyenne : ",
+    "paiementMean": "Moyenne : ",
     "paiementTransaction": "ransaction",
     "paiementTransferStructure": "Transfert de structure",
     "paiementYouAreTransferingStructureTo": "Vous êtes sur le point de transférer la structure à ",

@@ -60,4 +60,8 @@ class CompleteMember {
         .firstWhere((element) => element.associationId == associationId)
         .rolesTags;
   }
+
+  String getName() {
+    return "${member.firstname} ${member.name}";
+  }
 }
