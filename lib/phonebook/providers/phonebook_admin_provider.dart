@@ -27,8 +27,6 @@ final hasPhonebookAdminAccessProvider = StateProvider<bool>((ref) {
 });
 
 final isAssociationPresidentProvider = Provider<bool>((ref) {
-  print("Provider is being evaluated");
-
   final association = ref.watch(associationProvider);
   final rolesTags = ref.watch(rolesTagsProvider);
   final membersList = ref.watch(associationMemberListProvider);
