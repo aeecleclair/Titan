@@ -1,4 +1,13 @@
+import 'package:flutter/widgets.dart';
 import 'package:titan/feed/class/news.dart';
+import 'package:intl/intl.dart';
+import 'package:titan/l10n/app_localizations.dart';
+
+/// Capitalizes the first letter of a string
+String _capitalize(String text) {
+  if (text.isEmpty) return text;
+  return text[0].toUpperCase() + text.substring(1);
+}
 
 bool isNewsTerminated(News news) {
   final now = DateTime.now();
@@ -10,23 +19,136 @@ bool isNewsTerminated(News news) {
 
 bool isNewsOngoing(News news) {
   final now = DateTime.now();
-  if (news.start.isBefore(now) && (news.end == null || news.end!.isAfter(now))) {
+  if (news.start.isBefore(now) &&
+      (news.end == null || news.end!.isAfter(now))) {
     return true;
   }
   return false;
 }
 
+String formatUserFriendlyDate(
+  DateTime date, {
+  String locale = 'fr',
+  required BuildContext context,
+}) {
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final dateDay = DateTime(date.year, date.month, date.day);
 
-String getNewsSubtitle(News news) {
-  String subtitle = '';
-  if (news.end != null) {
-    subtitle = '${news.start.toLocal().toIso8601String()} - ${news.end!.toLocal().toIso8601String()}';
+  final timeFormat = DateFormat('HH:mm');
+  final time = timeFormat.format(date);
+
+  final connector = AppLocalizations.of(context)?.dateAt ?? 'à';
+
+  final difference = dateDay.difference(today).inDays;
+
+  if (difference == 0) {
+    return "${_capitalize(AppLocalizations.of(context)?.dateToday ?? 'Aujourd\'hui')} $connector $time";
+  } else if (difference == -1) {
+    return "${_capitalize(AppLocalizations.of(context)?.dateYesterday ?? 'Hier')} $connector $time";
+  } else if (difference == 1) {
+    return "${_capitalize(AppLocalizations.of(context)?.dateTomorrow ?? 'Demain')} $connector $time";
+  } else if (difference > 1 && difference < 7) {
+    final dayName = _capitalize(DateFormat('EEEE', locale).format(date));
+    return "$dayName $connector $time";
+  } else if (difference < 0 && difference > -7) {
+    final dayName = _capitalize(DateFormat('EEEE', locale).format(date));
+    final prefix = AppLocalizations.of(context)?.dateLast ?? '';
+
+    final prefixWithSpace = prefix.isEmpty ? '' : _capitalize('$prefix ');
+    return "$prefixWithSpace$dayName $connector $time";
+  } else {
+    if (date.year == now.year) {
+      final monthDay = _capitalize(DateFormat('d MMM', locale).format(date));
+      return "$monthDay $connector $time";
+    } else {
+      final dateFormat = locale == 'fr' ? 'd MMM yyyy' : 'MMM d, yyyy';
+      final monthDayYear = _capitalize(
+        DateFormat(dateFormat, locale).format(date),
+      );
+      return "$monthDayYear $connector $time";
+    }
   }
+}
+
+String getNewsSubtitle(
+  News news, {
+  String locale = 'fr',
+  required BuildContext context,
+}) {
+  String subtitle = '';
+
+  final startDate = news.start.toLocal();
+
+  // For ongoing events, just display the end date if available
+  if (isNewsOngoing(news) && news.end != null) {
+    final untilText = _capitalize(
+      AppLocalizations.of(context)?.dateUntil ??
+          (locale == 'fr' ? "Jusqu'au" : "Until"),
+    );
+    subtitle =
+        "$untilText ${formatUserFriendlyDate(news.end!.toLocal(), locale: locale, context: context)}";
+  }
+  // For events with no end date, just display the start date
+  else if (news.end == null) {
+    subtitle = formatUserFriendlyDate(
+      startDate,
+      locale: locale,
+      context: context,
+    );
+  }
+  // For events with both start and end dates that are not ongoing
+  else {
+    final endDate = news.end!.toLocal();
+    bool sameDay =
+        startDate.year == endDate.year &&
+        startDate.month == endDate.month &&
+        startDate.day == endDate.day;
+
+    if (sameDay) {
+      final connector = AppLocalizations.of(context)?.dateAt ?? 'à';
+
+      String dateStr = formatUserFriendlyDate(
+        startDate,
+        locale: locale,
+        context: context,
+      ).split(' $connector ')[0];
+
+      final startTime = DateFormat('HH:mm').format(startDate);
+      final endTime = DateFormat('HH:mm').format(endDate);
+
+      final fromWord = AppLocalizations.of(context)?.dateFrom ?? 'de';
+      final toWord = AppLocalizations.of(context)?.dateTo ?? 'à';
+
+      subtitle = '$dateStr $fromWord $startTime $toWord $endTime';
+    } else {
+      final fromWord = _capitalize(
+        AppLocalizations.of(context)?.dateFrom ?? 'de',
+      );
+
+      // Determine if the end date is a special date (today, yesterday, tomorrow)
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day);
+      final endDateTime = DateTime(endDate.year, endDate.month, endDate.day);
+      final difference = endDateTime.difference(today).inDays;
+
+      // Use "à" (dateTo) instead of "au" (dateBetweenDays) for special dates
+      final toWord = (difference >= -1 && difference <= 1)
+          ? (AppLocalizations.of(context)?.dateTo ?? 'à')
+          : (AppLocalizations.of(context)?.dateBetweenDays ?? 'au');
+
+      subtitle =
+          '$fromWord ${formatUserFriendlyDate(startDate, locale: locale, context: context)} $toWord ${formatUserFriendlyDate(endDate, locale: locale, context: context)}';
+    }
+  }
+
   if (news.location != null && news.location!.isNotEmpty) {
     subtitle += ' | ${news.location}';
   }
+
   if (subtitle.isEmpty) {
     subtitle = news.entity;
   }
+
   return subtitle;
 }

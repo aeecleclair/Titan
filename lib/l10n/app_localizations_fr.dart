@@ -9,6 +9,36 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
+  String get dateToday => 'Aujourd\'hui';
+
+  @override
+  String get dateYesterday => 'Hier';
+
+  @override
+  String get dateTomorrow => 'Demain';
+
+  @override
+  String get dateAt => 'à';
+
+  @override
+  String get dateFrom => 'de';
+
+  @override
+  String get dateTo => 'à';
+
+  @override
+  String get dateBetweenDays => 'au';
+
+  @override
+  String get dateStarting => 'Commence';
+
+  @override
+  String get dateLast => '';
+
+  @override
+  String get dateUntil => 'Jusqu\'au';
+
+  @override
   String get adminAccountTypes => 'Types de compte';
 
   @override

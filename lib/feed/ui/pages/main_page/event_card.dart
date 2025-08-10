@@ -32,7 +32,11 @@ class EventCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  getNewsSubtitle(item),
+                  getNewsSubtitle(
+                    item,
+                    locale: Localizations.localeOf(context).languageCode,
+                    context: context,
+                  ),
                   style: const TextStyle(
                     fontSize: 12,
                     color: ColorConstants.background,

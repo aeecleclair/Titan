@@ -98,6 +98,66 @@ abstract class AppLocalizations {
     Locale('fr'),
   ];
 
+  /// No description provided for @dateToday.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aujourd\'hui'**
+  String get dateToday;
+
+  /// No description provided for @dateYesterday.
+  ///
+  /// In fr, this message translates to:
+  /// **'Hier'**
+  String get dateYesterday;
+
+  /// No description provided for @dateTomorrow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demain'**
+  String get dateTomorrow;
+
+  /// No description provided for @dateAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'à'**
+  String get dateAt;
+
+  /// No description provided for @dateFrom.
+  ///
+  /// In fr, this message translates to:
+  /// **'de'**
+  String get dateFrom;
+
+  /// No description provided for @dateTo.
+  ///
+  /// In fr, this message translates to:
+  /// **'à'**
+  String get dateTo;
+
+  /// No description provided for @dateBetweenDays.
+  ///
+  /// In fr, this message translates to:
+  /// **'au'**
+  String get dateBetweenDays;
+
+  /// No description provided for @dateStarting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commence'**
+  String get dateStarting;
+
+  /// No description provided for @dateLast.
+  ///
+  /// In fr, this message translates to:
+  /// **''**
+  String get dateLast;
+
+  /// No description provided for @dateUntil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jusqu\'au'**
+  String get dateUntil;
+
   /// No description provided for @adminAccountTypes.
   ///
   /// In fr, this message translates to:
