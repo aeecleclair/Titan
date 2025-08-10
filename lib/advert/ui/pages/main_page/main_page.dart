@@ -83,17 +83,18 @@ class AdvertMainPage extends HookConsumerWidget {
                     advertPostersNotifier.resetTData();
                   },
                   child: Column(
-                    children: filteredSortedAdvertData
-                        .map(
-                          (advert) => AdvertCard(
-                            onTap: () {
-                              advertNotifier.setAdvert(advert);
-                              QR.to(AdvertRouter.root + AdvertRouter.detail);
-                            },
-                            advert: advert,
-                          ),
-                        )
-                        .toList(),
+                    children: [
+                      ...filteredSortedAdvertData.map(
+                        (advert) => AdvertCard(
+                          onTap: () {
+                            advertNotifier.setAdvert(advert);
+                            QR.to(AdvertRouter.root + AdvertRouter.detail);
+                          },
+                          advert: advert,
+                        ),
+                      ),
+                      SizedBox(height: 80),
+                    ],
                   ),
                 );
               },
