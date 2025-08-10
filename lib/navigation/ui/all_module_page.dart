@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/navigation/providers/navbar_module_list.dart';
@@ -9,6 +10,7 @@ import 'package:titan/router.dart';
 import 'package:titan/settings/providers/module_list_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
+import 'package:titan/tools/providers/prefered_module_root_list_provider.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/styleguide/searchbar.dart';
 import 'package:titan/tools/ui/widgets/top_bar.dart';
@@ -26,6 +28,10 @@ class AllModulePage extends HookConsumerWidget {
       navbarVisibilityProvider.notifier,
     );
     final scrollController = useScrollController();
+    final preferedModuleRootList = ref.watch(preferedModuleListRootProvider);
+    final preferedModuleRootListNotifier = ref.watch(
+      preferedModuleListRootProvider.notifier,
+    );
     return Container(
       color: ColorConstants.background,
       child: Column(
@@ -49,19 +55,50 @@ class AllModulePage extends HookConsumerWidget {
                       ),
                       SizedBox(height: 30),
                       ...modules.map(
-                        (module) => ListItem(
-                          title: module.getName(context),
-                          subtitle: module.description,
-                          onTap: () {
-                            navbarListModuleNotifier.pushModule(module);
-                            final pathForwardingNotifier = ref.watch(
-                              pathForwardingProvider.notifier,
-                            );
-                            pathForwardingNotifier.forward(module.root);
+                        (module) => Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                if (preferedModuleRootList.contains(
+                                  module.root,
+                                )) {
+                                  preferedModuleRootListNotifier
+                                      .removePreferedModulesRoot(module.root);
+                                } else if (preferedModuleRootList.length < 2) {
+                                  preferedModuleRootListNotifier
+                                      .addPreferedModulesRoot(module.root);
+                                }
+                              },
+                              child: HeroIcon(
+                                HeroIcons.star,
+                                style:
+                                    preferedModuleRootList.contains(module.root)
+                                    ? HeroIconStyle.solid
+                                    : HeroIconStyle.outline,
+                                size: 20,
+                                color:
+                                    preferedModuleRootList.contains(module.root)
+                                    ? Colors.yellow
+                                    : Colors.grey,
+                              ),
+                            ),
+                            Expanded(
+                              child: ListItem(
+                                title: module.getName(context),
+                                subtitle: module.description,
+                                onTap: () {
+                                  navbarListModuleNotifier.pushModule(module);
+                                  final pathForwardingNotifier = ref.watch(
+                                    pathForwardingProvider.notifier,
+                                  );
+                                  pathForwardingNotifier.forward(module.root);
 
-                            QR.to(module.root);
-                            navbarVisibilityNotifier.show();
-                          },
+                                  QR.to(module.root);
+                                  navbarVisibilityNotifier.show();
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(height: 80),
