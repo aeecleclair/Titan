@@ -63,8 +63,11 @@ class MemberCard extends HookConsumerWidget {
             radius: 20,
             child: CircularProgressIndicator(),
           ),
-          dataBuilder: (context, data) =>
-              CircleAvatar(child: Image(image: data.first.image)),
+          dataBuilder: (context, data) => CircleAvatar(
+            radius: 20,
+            backgroundColor: Colors.white,
+            backgroundImage: Image(image: data.first.image).image,
+          ),
         ),
         onTap: editable
             ? () {

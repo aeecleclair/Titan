@@ -46,8 +46,9 @@ class EditableAssociationCard extends HookConsumerWidget {
               associationPictureNotifier.getAssociationPicture(associationId),
           dataBuilder: (context, data) {
             return CircleAvatar(
+              radius: 20,
               backgroundColor: Colors.white,
-              child: Image(image: data.first.image),
+              backgroundImage: Image(image: data.first.image).image,
             );
           },
         ),

@@ -51,7 +51,8 @@ class MemberDetailPage extends HookConsumerWidget {
                       ),
                       dataBuilder: (context, data) => CircleAvatar(
                         radius: 80,
-                        child: Image(image: data.first.image),
+                        backgroundColor: Colors.white,
+                        backgroundImage: Image(image: data.first.image).image,
                       ),
                     ),
                     if (member.member.nickname != null) ...[
