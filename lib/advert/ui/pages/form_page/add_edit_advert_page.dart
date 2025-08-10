@@ -36,9 +36,6 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
     final content = useTextEditingController(text: advert.content);
     final selectedAnnouncers = ref.watch(announcerProvider);
 
-    final tags = advert.tags;
-    var textTags = tags.join(', ');
-    final textTagsController = useTextEditingController(text: textTags);
     final advertPosters = ref.watch(advertPostersProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final posterNotifier = ref.watch(advertPosterProvider.notifier);
@@ -210,13 +207,6 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
                   children: [
-                    TextEntry(
-                      maxLines: 1,
-                      label: AppLocalizations.of(context)!.advertTags,
-                      canBeEmpty: true,
-                      controller: textTagsController,
-                    ),
-                    const SizedBox(height: 50),
                     WaitingButton(
                       onTap: () async {
                         if (key.currentState == null) {
@@ -232,7 +222,6 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                               announcer: selectedAnnouncers[0],
                               content: content.text,
                               date: isEdit ? advert.date : DateTime.now(),
-                              tags: textTagsController.text.split(', '),
                               title: title.text,
                             );
                             final editedAdvertMsg = AppLocalizations.of(

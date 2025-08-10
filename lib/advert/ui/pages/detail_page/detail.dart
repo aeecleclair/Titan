@@ -6,10 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:titan/advert/providers/advert_poster_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
 import 'package:titan/advert/providers/advert_provider.dart';
-import 'package:titan/advert/ui/components/tag_chip.dart';
 import 'package:titan/cinema/tools/functions.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
-import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/widgets/text_with_hyper_link.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -24,10 +22,6 @@ class AdvertDetailPage extends HookConsumerWidget {
     );
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final logoNotifier = ref.watch(advertPosterProvider.notifier);
-    final filteredTagList = advert.tags
-        .where((element) => element != "")
-        .toList();
-    final inTagChipsList = [advert.announcer.name] + filteredTagList;
 
     return Stack(
       children: [
@@ -101,15 +95,6 @@ class AdvertDetailPage extends HookConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    HorizontalListView.builder(
-                      height: 35,
-                      horizontalSpace: 30,
-                      items: inTagChipsList,
-                      itemBuilder:
-                          (BuildContext context, String item, int index) =>
-                              TagChip(tagName: item),
-                    ),
-                    const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: TextWithHyperLink(
