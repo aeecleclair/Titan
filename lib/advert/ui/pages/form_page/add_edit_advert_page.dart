@@ -19,8 +19,8 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/styleguide/text_entry.dart';
 import 'package:titan/tools/ui/widgets/image_picker_on_tap.dart';
-import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
@@ -63,10 +63,42 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
           key: key,
           child: Column(
             children: [
+              FormField<List<Announcer>>(
+                validator: (e) {
+                  if (selectedAnnouncers.isEmpty) {
+                    return AppLocalizations.of(
+                      context,
+                    )!.advertChoosingAnnouncer;
+                  }
+                  return null;
+                },
+                builder: (formFieldState) => Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    boxShadow: formFieldState.hasError
+                        ? [
+                            const BoxShadow(
+                              color: Colors.red,
+                              spreadRadius: 3,
+                              blurRadius: 3,
+                              offset: Offset(2, 2),
+                            ),
+                          ]
+                        : [],
+                  ),
+                  child: AnnouncerBar(
+                    useUserAnnouncers: true,
+                    multipleSelect: false,
+                    isNotClickable: isEdit,
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
                   children: [
+                    const SizedBox(height: 20),
                     TextEntry(
                       maxLines: 1,
                       label: AppLocalizations.of(context)!.advertTitle,
@@ -94,6 +126,9 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                   displayAdvertToastWithContext,
                               child: Container(
                                 decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(5),
+                                  ),
                                   color: Colors.white,
                                   boxShadow: [
                                     BoxShadow(
@@ -150,10 +185,19 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                           ),
                                         ],
                                       )
-                                    : const HeroIcon(
-                                        HeroIcons.photo,
-                                        size: 160,
-                                        color: Colors.grey,
+                                    : Container(
+                                        width: 285,
+                                        height: 160,
+                                        decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(5),
+                                          ),
+                                        ),
+                                        child: const HeroIcon(
+                                          HeroIcons.photo,
+                                          size: 160,
+                                          color: Colors.grey,
+                                        ),
                                       ),
                               ),
                             ),
@@ -161,6 +205,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 20),
                     TextEntry(
                       minLines: 5,
                       maxLines: 50,
@@ -172,37 +217,6 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 50),
-              FormField<List<Announcer>>(
-                validator: (e) {
-                  if (selectedAnnouncers.isEmpty) {
-                    return AppLocalizations.of(
-                      context,
-                    )!.advertChoosingAnnouncer;
-                  }
-                  return null;
-                },
-                builder: (formFieldState) => Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    boxShadow: formFieldState.hasError
-                        ? [
-                            const BoxShadow(
-                              color: Colors.red,
-                              spreadRadius: 3,
-                              blurRadius: 3,
-                              offset: Offset(2, 2),
-                            ),
-                          ]
-                        : [],
-                  ),
-                  child: AnnouncerBar(
-                    useUserAnnouncers: true,
-                    multipleSelect: false,
-                    isNotClickable: isEdit,
-                  ),
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
@@ -304,7 +318,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 100),
             ],
           ),
         ),
