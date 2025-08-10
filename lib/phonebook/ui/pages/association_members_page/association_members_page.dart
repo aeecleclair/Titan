@@ -45,6 +45,7 @@ class AssociationMembersPage extends HookConsumerWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Refresher(
+        controller: ScrollController(),
           onRefresh: () {
             return tokenExpireWrapper(ref, () async {
               await associationMemberListNotifier.loadMembers(

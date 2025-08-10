@@ -52,6 +52,7 @@ class AssociationGroupsPage extends HookConsumerWidget {
 
     return PhonebookTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await tokenExpireWrapper(ref, () async {
             await associationListNotifier.loadAssociations();
