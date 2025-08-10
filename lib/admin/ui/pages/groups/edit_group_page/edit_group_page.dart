@@ -23,6 +23,7 @@ class EditGroupPage extends ConsumerWidget {
     );
     return AdminTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await groupNotifier.loadGroup(groupId);
         },

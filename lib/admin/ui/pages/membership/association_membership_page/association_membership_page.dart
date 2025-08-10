@@ -53,6 +53,7 @@ class AssociationMembershipsPage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await associationMembershipsNotifier.loadAssociationMemberships();
         },
