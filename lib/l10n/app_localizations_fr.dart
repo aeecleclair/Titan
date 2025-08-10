@@ -357,6 +357,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminManageAnnouncers => 'Gérer les annonceurs';
 
   @override
+  String get adminDeleteAnnouncer => 'Supprimer cet annonceur ?';
+
+  @override
+  String get adminDeleteAnnouncerDescription =>
+      'Supprimer cet annonceurs supprimera toutes ses annonces.';
+
+  @override
   String get advertAdd => 'Ajouter';
 
   @override
@@ -3673,7 +3680,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Explore the UI components and styles used in Titan';
 
   @override
-  String get moduleAdmin => 'Adminitration';
+  String get moduleAdmin => 'Admin';
 
   @override
   String get moduleAdminDescription =>

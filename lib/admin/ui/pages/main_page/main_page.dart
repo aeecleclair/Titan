@@ -83,16 +83,19 @@ class AdminMainPage extends HookConsumerWidget {
               onTap: () =>
                   QR.to(AdminRouter.root + AdminRouter.associationMemberships),
             ),
-            Text("Annonces", style: Theme.of(context).textTheme.titleLarge),
+            Text(
+              localizeWithContext.adminAdverts,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
             ListItem(
-              title: "Annonceurs",
-              subtitle: "Gérer les annonceurs",
+              title: localizeWithContext.adminAnnouncers,
+              subtitle: localizeWithContext.adminManageAnnouncers,
               onTap: () async {
                 await showCustomBottomModal(
                   context: context,
                   ref: ref,
                   modal: BottomModalTemplate(
-                    title: "Annonceurs",
+                    title: localizeWithContext.adminAnnouncers,
                     child: ConstrainedBox(
                       constraints: const BoxConstraints(maxHeight: 500),
                       child: SingleChildScrollView(
