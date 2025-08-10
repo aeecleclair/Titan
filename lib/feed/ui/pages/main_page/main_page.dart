@@ -141,11 +141,21 @@ class FeedMainPage extends HookConsumerWidget {
                   physics: const BouncingScrollPhysics(),
                   child: AsyncChild(
                   value: news,
-                  builder: (context, news) => FeedTimeline(
-                      isAdmin: isAdmin,
-                      items: news,
-                      onItemTap: (item) {},
-                  ),
+                  builder: (context, news) => news.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'Aucune actualité disponible',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: ColorConstants.tertiary,
+                            ),
+                          ),
+                        )
+                      : FeedTimeline(
+                            isAdmin: isAdmin,
+                            items: news,
+                            onItemTap: (item) {},
+                        ),
                   ),
                 ),
               ),

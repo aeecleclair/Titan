@@ -96,7 +96,9 @@ class TimelineItem extends StatelessWidget {
                         ),
                         Expanded(
                           child: isAdmin
-                              ? EventActionAdmin()
+                              ? EventActionAdmin(
+                                item: item,
+                              )
                               : EventAction(
                                   title: 'Action',
                                   subtitle: 'Indication',

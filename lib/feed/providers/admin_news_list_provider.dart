@@ -36,7 +36,7 @@ class AdminNewsListNotifier extends ListNotifier<News> {
   }
 }
 
-final newsListProvider =
+final adminNewsListProvider =
     StateNotifierProvider<AdminNewsListNotifier, AsyncValue<List<News>>>((ref) {
       final token = ref.watch(tokenProvider);
       final newsRepository = NewsRepository()..setToken(token);
