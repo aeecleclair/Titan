@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/feed/class/feed_item.dart';
 import 'package:titan/feed/ui/pages/main_page/event_action.dart';
+import 'package:titan/feed/ui/pages/main_page/event_action_admin.dart';
 import 'package:titan/feed/ui/pages/main_page/event_card.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/feed/ui/pages/main_page/dotted_vertical_line.dart';
@@ -9,13 +10,19 @@ import 'package:titan/feed/ui/pages/main_page/dotted_vertical_line.dart';
 class TimelineItem extends StatelessWidget {
   final FeedItem item;
   final VoidCallback? onTap;
+  final bool isAdmin;
 
-  const TimelineItem({super.key, required this.item, this.onTap});
+  const TimelineItem({
+    super.key,
+    required this.item,
+    this.onTap,
+    required this.isAdmin,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: item.type == FeedItemType.announcement ? 160 : 200,
+      height: item.type == FeedItemType.announcement && !isAdmin ? 160 : 200,
       child: Stack(
         children: [
           Padding(
@@ -63,14 +70,17 @@ class TimelineItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (item.type != FeedItemType.announcement)
+                if (item.type != FeedItemType.announcement || isAdmin)
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 14, right: 45),
+                          padding: EdgeInsets.only(
+                            left: 14,
+                            right: isAdmin ? 33 : 45,
+                          ),
                           child: Container(
                             width: 20,
                             height: 20,
@@ -85,19 +95,22 @@ class TimelineItem extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          child: EventAction(
-                            title: item.type == FeedItemType.action
-                                ? 'Tu peux voter'
-                                : 'Tu es invité',
-                            subtitle: item.type == FeedItemType.action
-                                ? '254 votants'
-                                : '75 participants',
-                            onActionPressed: item.onRegister,
-                            actionButtonText: item.type == FeedItemType.action
-                                ? 'Participer'
-                                : 'Voter',
-                            isActionEnabled: true,
-                          ),
+                          child: isAdmin
+                              ? EventActionAdmin()
+                              : EventAction(
+                                  title: item.type == FeedItemType.action
+                                      ? 'Tu peux voter'
+                                      : 'Tu es invité',
+                                  subtitle: item.type == FeedItemType.action
+                                      ? '254 votants'
+                                      : '75 participants',
+                                  onActionPressed: item.onRegister,
+                                  actionButtonText:
+                                      item.type == FeedItemType.action
+                                      ? 'Participer'
+                                      : 'Voter',
+                                  isActionEnabled: true,
+                                ),
                         ),
                       ],
                     ),

@@ -5,8 +5,9 @@ import 'package:titan/feed/ui/pages/main_page/time_line_item.dart';
 class FeedTimeline extends StatelessWidget {
   final List<FeedItem> items;
   final Function(FeedItem item)? onItemTap;
+  final bool isAdmin;
 
-  const FeedTimeline({super.key, required this.items, this.onItemTap});
+  const FeedTimeline({super.key, required this.items, this.onItemTap, required this.isAdmin});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,7 @@ class FeedTimeline extends StatelessWidget {
         ...items.map(
           (item) => TimelineItem(
             item: item,
+            isAdmin: isAdmin,
             onTap: onItemTap != null ? () => onItemTap!(item) : null,
           ),
         ),

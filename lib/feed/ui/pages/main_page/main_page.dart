@@ -140,6 +140,7 @@ class FeedMainPage extends HookConsumerWidget {
                   controller: scrollController,
                   physics: const BouncingScrollPhysics(),
                   child: FeedTimeline(
+                    isAdmin: isAdmin,
                     items: filteredItems.value,
                     onItemTap: (item) {},
                   ),
