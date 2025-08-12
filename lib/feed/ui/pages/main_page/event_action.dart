@@ -2,17 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:titan/tools/constants.dart';
 
 class EventAction extends StatelessWidget {
-  final String title, subtitle, actionButtonText;
+  final String title,
+      subtitle,
+      actionEnableButtonText,
+      actionValidatedButtonText;
   final VoidCallback? onActionPressed;
-  final bool isActionEnabled;
+  final bool isActionEnabled, isActionValidated;
 
   const EventAction({
     super.key,
     required this.title,
     required this.subtitle,
     this.onActionPressed,
-    required this.actionButtonText,
+    required this.actionEnableButtonText,
+    required this.actionValidatedButtonText,
     required this.isActionEnabled,
+    required this.isActionValidated,
   });
 
   @override
@@ -48,27 +53,35 @@ class EventAction extends StatelessWidget {
         // Action button
         GestureDetector(
           onTap: () {
-            if (isActionEnabled) onActionPressed!.call();
+            if (isActionEnabled && !isActionValidated) onActionPressed!.call();
           },
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
             width: 100,
             decoration: BoxDecoration(
-              color: isActionEnabled
-                  ? ColorConstants.background
-                  : ColorConstants.tertiary,
+              color: isActionValidated
+                  ? ColorConstants.tertiary
+                  : ColorConstants.background,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: ColorConstants.tertiary, width: 2),
             ),
             child: Center(
               child: Text(
-                actionButtonText,
+                isActionValidated
+                    ? actionValidatedButtonText
+                    : actionEnableButtonText,
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
-                  color: isActionEnabled
-                      ? ColorConstants.tertiary
-                      : ColorConstants.background,
+                  color:
+                      (isActionValidated
+                              ? ColorConstants.background
+                              : ColorConstants.tertiary)
+                          .withValues(
+                            alpha: isActionEnabled && !isActionValidated
+                                ? 1
+                                : 0.5,
+                          ),
                 ),
               ),
             ),

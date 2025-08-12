@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:titan/tools/constants.dart';
 
 class ItemChip extends StatelessWidget {
   final bool selected;
@@ -27,7 +28,10 @@ class ItemChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.0),
-          color: selected ? Colors.black : Colors.grey.shade200,
+          border: Border.all(color: ColorConstants.onTertiary),
+          color: selected
+              ? ColorConstants.onTertiary
+              : ColorConstants.background,
         ),
         child: Center(child: child),
       ),

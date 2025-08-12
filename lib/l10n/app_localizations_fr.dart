@@ -9,6 +9,87 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
+  String get dateToday => 'Aujourd\'hui';
+
+  @override
+  String get dateYesterday => 'Hier';
+
+  @override
+  String get dateTomorrow => 'Demain';
+
+  @override
+  String get dateAt => 'à';
+
+  @override
+  String get dateFrom => 'de';
+
+  @override
+  String get dateTo => 'à';
+
+  @override
+  String get dateBetweenDays => 'au';
+
+  @override
+  String get dateStarting => 'Commence';
+
+  @override
+  String get dateLast => '';
+
+  @override
+  String get dateUntil => 'Jusqu\'au';
+
+  @override
+  String get feedFilterAll => 'Tous';
+
+  @override
+  String get feedFilterPending => 'En attente';
+
+  @override
+  String get feedFilterApproved => 'Approuvés';
+
+  @override
+  String get feedFilterRejected => 'Rejetés';
+
+  @override
+  String get feedEmptyAll => 'Aucun événement disponible';
+
+  @override
+  String get feedEmptyPending => 'Aucun événement en attente de validation';
+
+  @override
+  String get feedEmptyApproved => 'Aucun événement approuvé';
+
+  @override
+  String get feedEmptyRejected => 'Aucun événement rejeté';
+
+  @override
+  String get feedEventManagement => 'Gestion des événements';
+
+  @override
+  String get eventActionCampaign => 'Tu peux voter';
+
+  @override
+  String get eventActionEvent => 'Tu es invité';
+
+  @override
+  String get eventActionCampaignSubtitle => 'Votez maintenant';
+
+  @override
+  String get eventActionEventSubtitle => 'Répondez à l\'invitation';
+
+  @override
+  String get eventActionCampaignButton => 'Voter';
+
+  @override
+  String get eventActionEventButton => 'Participer';
+
+  @override
+  String get eventActionCampaignValidated => 'J\'ai voté !';
+
+  @override
+  String get eventActionEventValidated => 'Je viens !';
+
+  @override
   String get adminAccountTypes => 'Types de compte';
 
   @override

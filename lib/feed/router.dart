@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
-import 'package:titan/feed/ui/pages/admin_page/admin_page.dart'
-    deferred as admin_page;
+import 'package:titan/feed/ui/pages/add_event_page/add_event_page.dart'
+    deferred as add_event_page;
+import 'package:titan/feed/ui/pages/event_handling_page/event_handling_page.dart'
+    deferred as event_handling_page;
 import 'package:titan/feed/ui/pages/main_page/main_page.dart'
     deferred as main_page;
 import 'package:titan/tools/middlewares/admin_middleware.dart';
@@ -16,7 +18,8 @@ class FeedRouter {
   final Ref ref;
 
   static const String root = '/feed';
-  static const String admin = '/admin';
+  static const String addEvent = '/add_event';
+  static const String eventHandling = '/event_handling';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleFeed,
     getDescription: (context) =>
@@ -40,12 +43,21 @@ class FeedRouter {
     ),
     children: [
       QRoute(
-        path: admin,
-        builder: () => admin_page.AdminPage(),
+        path: addEvent,
+        builder: () => add_event_page.AddEventPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
           AdminMiddleware(ref, isAdminProvider),
-          DeferredLoadingMiddleware(admin_page.loadLibrary),
+          DeferredLoadingMiddleware(add_event_page.loadLibrary),
+        ],
+      ),
+      QRoute(
+        path: eventHandling,
+        builder: () => event_handling_page.EventHandlingPage(),
+        middleware: [
+          AuthenticatedMiddleware(ref),
+          AdminMiddleware(ref, isAdminProvider),
+          DeferredLoadingMiddleware(event_handling_page.loadLibrary),
         ],
       ),
     ],

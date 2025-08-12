@@ -15,7 +15,7 @@ class ImageEntry extends StatelessWidget {
       onTap: onTap,
       title: title,
       subtitle: subtitle,
-      trailing: const HeroIcon(HeroIcons.phone, color: ColorConstants.tertiary),
+      trailing: const HeroIcon(HeroIcons.photo, color: ColorConstants.tertiary),
     );
   }
 }

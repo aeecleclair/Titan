@@ -98,6 +98,168 @@ abstract class AppLocalizations {
     Locale('fr'),
   ];
 
+  /// No description provided for @dateToday.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aujourd\'hui'**
+  String get dateToday;
+
+  /// No description provided for @dateYesterday.
+  ///
+  /// In fr, this message translates to:
+  /// **'Hier'**
+  String get dateYesterday;
+
+  /// No description provided for @dateTomorrow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demain'**
+  String get dateTomorrow;
+
+  /// No description provided for @dateAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'à'**
+  String get dateAt;
+
+  /// No description provided for @dateFrom.
+  ///
+  /// In fr, this message translates to:
+  /// **'de'**
+  String get dateFrom;
+
+  /// No description provided for @dateTo.
+  ///
+  /// In fr, this message translates to:
+  /// **'à'**
+  String get dateTo;
+
+  /// No description provided for @dateBetweenDays.
+  ///
+  /// In fr, this message translates to:
+  /// **'au'**
+  String get dateBetweenDays;
+
+  /// No description provided for @dateStarting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commence'**
+  String get dateStarting;
+
+  /// No description provided for @dateLast.
+  ///
+  /// In fr, this message translates to:
+  /// **''**
+  String get dateLast;
+
+  /// No description provided for @dateUntil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jusqu\'au'**
+  String get dateUntil;
+
+  /// No description provided for @feedFilterAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous'**
+  String get feedFilterAll;
+
+  /// No description provided for @feedFilterPending.
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente'**
+  String get feedFilterPending;
+
+  /// No description provided for @feedFilterApproved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Approuvés'**
+  String get feedFilterApproved;
+
+  /// No description provided for @feedFilterRejected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejetés'**
+  String get feedFilterRejected;
+
+  /// No description provided for @feedEmptyAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun événement disponible'**
+  String get feedEmptyAll;
+
+  /// No description provided for @feedEmptyPending.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun événement en attente de validation'**
+  String get feedEmptyPending;
+
+  /// No description provided for @feedEmptyApproved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun événement approuvé'**
+  String get feedEmptyApproved;
+
+  /// No description provided for @feedEmptyRejected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun événement rejeté'**
+  String get feedEmptyRejected;
+
+  /// No description provided for @feedEventManagement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gestion des événements'**
+  String get feedEventManagement;
+
+  /// No description provided for @eventActionCampaign.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu peux voter'**
+  String get eventActionCampaign;
+
+  /// No description provided for @eventActionEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu es invité'**
+  String get eventActionEvent;
+
+  /// No description provided for @eventActionCampaignSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votez maintenant'**
+  String get eventActionCampaignSubtitle;
+
+  /// No description provided for @eventActionEventSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Répondez à l\'invitation'**
+  String get eventActionEventSubtitle;
+
+  /// No description provided for @eventActionCampaignButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voter'**
+  String get eventActionCampaignButton;
+
+  /// No description provided for @eventActionEventButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Participer'**
+  String get eventActionEventButton;
+
+  /// No description provided for @eventActionCampaignValidated.
+  ///
+  /// In fr, this message translates to:
+  /// **'J\'ai voté !'**
+  String get eventActionCampaignValidated;
+
+  /// No description provided for @eventActionEventValidated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je viens !'**
+  String get eventActionEventValidated;
+
   /// No description provided for @adminAccountTypes.
   ///
   /// In fr, this message translates to:

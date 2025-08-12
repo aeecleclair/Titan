@@ -29,6 +29,7 @@ class HorizontalMultiSelect<T> extends HookWidget {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
       clipBehavior: Clip.none,
+      physics: const BouncingScrollPhysics(),
       itemCount: items.length + (firstChild != null ? 1 : 0),
       itemBuilder: (context, index) {
         if (index == 0 && firstChild != null) {

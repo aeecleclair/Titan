@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:titan/feed/class/feed_item.dart';
+import 'package:titan/feed/class/news.dart';
+import 'package:titan/feed/tools/news_helper.dart';
 import 'package:titan/tools/constants.dart';
 
 class EventCard extends StatelessWidget {
-  final FeedItem item;
+  final News item;
 
   const EventCard({super.key, required this.item});
 
@@ -31,7 +32,11 @@ class EventCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  item.subtitle,
+                  getNewsSubtitle(
+                    item,
+                    locale: Localizations.localeOf(context).languageCode,
+                    context: context,
+                  ),
                   style: const TextStyle(
                     fontSize: 12,
                     color: ColorConstants.background,
@@ -40,7 +45,7 @@ class EventCard extends StatelessWidget {
               ],
             ),
           ),
-          if (item.isTerminated)
+          if (isNewsTerminated(item))
             Positioned(
               bottom: 53,
               left: 15,
@@ -59,7 +64,7 @@ class EventCard extends StatelessWidget {
                 ),
               ),
             ),
-          if (item.isOngoing)
+          if (isNewsOngoing(item))
             Positioned(
               bottom: 53,
               left: 15,
