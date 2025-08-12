@@ -24,7 +24,6 @@ class AdvertTemplate extends HookConsumerWidget {
                   selectedAnnouncersNotifier.clearAnnouncer();
                 },
               ),
-              const SizedBox(height: 30),
               Expanded(child: child),
             ],
           ),

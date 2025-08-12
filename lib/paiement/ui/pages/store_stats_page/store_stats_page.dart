@@ -21,6 +21,7 @@ class StoreStatsPage extends ConsumerWidget {
     final selectedInterval = ref.watch(selectedIntervalProvider);
     return PaymentTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await selectedHistoryNotifier.getHistory(
             selectedStore.id,

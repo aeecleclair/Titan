@@ -39,6 +39,7 @@ class AssociationPage extends HookConsumerWidget {
     final localizeWithContext = AppLocalizations.of(context)!;
     return PhonebookTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await associationMemberListNotifier.loadMembers(
             association.id,

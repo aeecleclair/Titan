@@ -51,6 +51,7 @@ class AdminPage extends HookConsumerWidget {
 
     return VoteTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await statusNotifier.loadStatus();
           if (status == Status.counting || status == Status.published) {

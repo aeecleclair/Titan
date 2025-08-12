@@ -132,6 +132,7 @@ class PaymentMainPage extends HookConsumerWidget {
           : LayoutBuilder(
               builder: (context, constraints) {
                 return Refresher(
+                  controller: ScrollController(),
                   onRefresh: () async {
                     await mySellersNotifier.getMyStores();
                     await myHistoryNotifier.getHistory();

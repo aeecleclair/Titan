@@ -54,6 +54,7 @@ class LoanMainPage extends HookConsumerWidget {
       child: Stack(
         children: [
           Refresher(
+            controller: ScrollController(),
             onRefresh: () async {
               await loanListNotifier.loadLoanList();
             },

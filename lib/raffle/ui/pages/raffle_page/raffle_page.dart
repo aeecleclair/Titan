@@ -31,6 +31,7 @@ class RaffleInfoPage extends HookConsumerWidget {
 
     return RaffleTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           userId.whenData(
             (value) async => await balanceNotifier.loadCashByUser(value),

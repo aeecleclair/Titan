@@ -27,6 +27,7 @@ class PurchasesMainPage extends HookConsumerWidget {
 
     return PurchasesTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await ticketListNotifier.loadTickets();
         },

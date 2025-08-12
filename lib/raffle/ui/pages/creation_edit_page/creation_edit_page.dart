@@ -73,6 +73,7 @@ class CreationPage extends HookConsumerWidget {
 
     return RaffleTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await cashNotifier.loadCashList();
           await packTicketListNotifier.loadPackTicketList();

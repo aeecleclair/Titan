@@ -37,6 +37,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
     final cash = ref.watch(cashListProvider);
     return AmapTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await deliveryProductListNotifier.loadProductList(delivery.products);
           await deliveryListNotifier.loadDeliveriesList();

@@ -20,6 +20,7 @@ class AdminPage extends ConsumerWidget {
     final structure = ref.watch(selectedStructureProvider);
     return PaymentTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await storeListNotifier.getStores();
         },

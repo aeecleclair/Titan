@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 enum CustomIconButtonType { main, danger, secondary }
 
@@ -71,17 +72,20 @@ class CustomIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: disabled == true ? null : onPressed,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+    return WaitingButton(
+      onTap: disabled == true ? null : () async => onPressed(),
+      builder: (child) => Container(
+        height: 32,
+        width: 32,
+        padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: borderColor, width: 2),
         ),
-        child: Center(child: icon),
+        child: child,
       ),
+      child: Center(child: icon),
     );
   }
 }

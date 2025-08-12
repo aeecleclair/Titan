@@ -66,6 +66,7 @@ class AmapMainPage extends HookConsumerWidget {
 
     return AmapTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await ordersNotifier.loadOrderList(me.id);
           await balanceNotifier.loadCashByUser(me.id);

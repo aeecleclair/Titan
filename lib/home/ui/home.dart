@@ -30,6 +30,7 @@ class HomePage extends HookConsumerWidget {
       color: ColorConstants.background,
       child: SafeArea(
         child: Refresher(
+          controller: ScrollController(),
           onRefresh: () async {
             await confirmedEventListNotifier.loadConfirmedEvent();
             now = DateTime.now();

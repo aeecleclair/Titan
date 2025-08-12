@@ -27,6 +27,7 @@ class RecommendationMainPage extends HookConsumerWidget {
 
     return RecommendationTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await recommendationListNotifier.loadRecommendation();
         },

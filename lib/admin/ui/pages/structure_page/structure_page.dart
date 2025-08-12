@@ -42,6 +42,7 @@ class StructurePage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await structuresNotifier.getStructures();
         },

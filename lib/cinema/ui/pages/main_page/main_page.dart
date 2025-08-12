@@ -45,6 +45,7 @@ class CinemaMainPage extends HookConsumerWidget {
 
     return CinemaTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await sessionListNotifier.loadSessions();
           ref.watch(mainPageIndexProvider.notifier).reset();

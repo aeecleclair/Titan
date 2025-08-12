@@ -31,6 +31,7 @@ class GroupNotificationPage extends HookConsumerWidget {
     final localizeWithContext = AppLocalizations.of(context)!;
     return AdminTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await groupsNotifier.loadGroups();
         },

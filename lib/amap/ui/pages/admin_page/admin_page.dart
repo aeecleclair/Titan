@@ -19,6 +19,7 @@ class AdminPage extends HookConsumerWidget {
     final productListNotifier = ref.read(productListProvider.notifier);
     return AmapTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await cashNotifier.loadCashList();
           await deliveryListNotifier.loadDeliveriesList();

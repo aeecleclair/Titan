@@ -39,6 +39,7 @@ class SpeciesPage extends HookConsumerWidget {
 
     return SeedLibraryTemplate(
       child: Refresher(
+        controller: ScrollController(),
         onRefresh: () async {
           await speciesListNotifier.loadSpecies();
         },

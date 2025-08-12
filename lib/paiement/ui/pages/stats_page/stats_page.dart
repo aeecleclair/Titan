@@ -19,6 +19,7 @@ class StatsPage extends HookConsumerWidget {
     return PaymentTemplate(
       child: LayoutBuilder(
         builder: (context, constraints) => Refresher(
+          controller: ScrollController(),
           onRefresh: () async {
             await myHistoryNotifier.getHistory();
           },

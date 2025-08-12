@@ -37,6 +37,7 @@ class AdminPage extends HookConsumerWidget {
     return BookingTemplate(
       child: LayoutBuilder(
         builder: (context, constraints) => Refresher(
+          controller: ScrollController(),
           onRefresh: () async {
             await ref.watch(roomListProvider.notifier).loadRooms();
             await ref

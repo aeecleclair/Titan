@@ -7,7 +7,6 @@ class Advert {
   late final String content;
   late final DateTime date;
   late final Announcer announcer;
-  late final List<String> tags;
 
   Advert({
     required this.id,
@@ -15,7 +14,6 @@ class Advert {
     required this.content,
     required this.date,
     required this.announcer,
-    required this.tags,
   });
 
   Advert.fromJson(Map<String, dynamic> json) {
@@ -24,7 +22,6 @@ class Advert {
     content = json["content"];
     date = processDateFromAPI(json["date"]);
     announcer = Announcer.fromJson(json["advertiser"]);
-    tags = json["tags"].split(', ');
   }
 
   Map<String, dynamic> toJson() {
@@ -34,7 +31,8 @@ class Advert {
     data["content"] = content;
     data["date"] = processDateToAPI(date);
     data["advertiser_id"] = announcer.id;
-    data["tags"] = tags.join(', ');
+    // TODO: waiting backend migration
+    data["tags"] = "";
     return data;
   }
 
@@ -44,7 +42,6 @@ class Advert {
     String? content,
     DateTime? date,
     Announcer? announcer,
-    List<String>? tags,
   }) {
     return Advert(
       id: id ?? this.id,
@@ -52,7 +49,6 @@ class Advert {
       content: content ?? this.content,
       date: date ?? this.date,
       announcer: announcer ?? this.announcer,
-      tags: tags ?? this.tags,
     );
   }
 
@@ -63,12 +59,11 @@ class Advert {
       content: "",
       date: DateTime.now(),
       announcer: Announcer.empty(),
-      tags: [],
     );
   }
 
   @override
   String toString() {
-    return 'Advert{id: $id, title: $title, content: $content, date: $date, announcer: $announcer, tags: $tags}';
+    return 'Advert{id: $id, title: $title, content: $content, date: $date, announcer: $announcer}';
   }
 }

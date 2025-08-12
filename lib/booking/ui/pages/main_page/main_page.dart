@@ -61,6 +61,7 @@ class BookingMainPage extends HookConsumerWidget {
     return BookingTemplate(
       child: LayoutBuilder(
         builder: (context, constraints) => Refresher(
+          controller: ScrollController(),
           onRefresh: () async {
             await confirmedBookingsNotifier.loadConfirmedBooking();
             await bookingsNotifier.loadUserBookings();
