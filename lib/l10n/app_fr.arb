@@ -1332,7 +1332,7 @@
   "moduleFeedDescription": "Consulter les actualités et mises à jour",
   "moduleStyleGuide": "StyleGuide",
   "moduleStyleGuideDescription": "Explore the UI components and styles used in Titan",
-  "moduleAdmin": "Adminitration",
+  "moduleAdmin": "Admin",
   "moduleAdminDescription": "Gérer les utilisateurs, groupes et structures",
   "moduleOthers": "Autres",
   "moduleOthersDescription": "Afficher les autres modules",

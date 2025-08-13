@@ -8,7 +8,7 @@ import 'package:titan/tools/repository/repository.dart';
 class UsersMeRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = 'myeclpay/users/me/';
+  final ext = 'mypayment/users/me/';
 
   Future<bool> register() async {
     return await create({}, suffix: 'register');
