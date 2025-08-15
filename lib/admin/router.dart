@@ -22,6 +22,8 @@ import 'package:titan/admin/ui/pages/membership/association_membership_detail_pa
     deferred as association_membership_detail_page;
 import 'package:titan/admin/ui/pages/membership/add_edit_user_membership_page/add_edit_user_membership_page.dart'
     deferred as add_edit_user_membership_page;
+import 'package:titan/admin/ui/pages/association_page/association_page.dart'
+    deferred as association_page;
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -40,7 +42,7 @@ class AdminRouter {
   static const String detailAssociationMembership =
       '/detail_association_membership';
   static const String addEditMember = '/add_edit_member';
-  static const String advertisers = '/advertisers';
+  static const String association = '/association';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleAdmin,
     getDescription: (context) =>
@@ -135,6 +137,11 @@ class AdminRouter {
             ],
           ),
         ],
+      ),
+      QRoute(
+        path: association,
+        builder: () => association_page.AssociationPage(),
+        middleware: [DeferredLoadingMiddleware(association_page.loadLibrary)],
       ),
     ],
   );
