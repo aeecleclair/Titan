@@ -4,7 +4,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/advert/class/advert.dart';
-import 'package:titan/advert/providers/admin_advert_list_provider.dart';
 import 'package:titan/advert/providers/advert_list_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
 import 'package:titan/advert/providers/advert_provider.dart';
@@ -31,9 +30,7 @@ class AdvertAdminPage extends HookConsumerWidget {
     final advertNotifier = ref.watch(advertProvider.notifier);
     final isAdmin = ref.watch(isAdminProvider);
     final isAdvertAdmin = ref.watch(isAdvertAdminProvider);
-    final advertList = isAdmin
-        ? ref.watch(adminAdvertListProvider)
-        : ref.watch(advertListProvider);
+    final advertList = ref.watch(advertListProvider);
     final userAnnouncerListNotifier = ref.watch(
       userAnnouncerListProvider.notifier,
     );
@@ -41,7 +38,6 @@ class AdvertAdminPage extends HookConsumerWidget {
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final selectedAnnouncers = ref.watch(announcerProvider);
     final selectedAnnouncersNotifier = ref.read(announcerProvider.notifier);
-    final selectedNotifier = ref.read(announcerProvider.notifier);
     final userAnnouncersSync = userAnnouncerList.maybeWhen(
       orElse: () => [],
       data: (data) => data,
@@ -70,7 +66,9 @@ class AdvertAdminPage extends HookConsumerWidget {
                     advertNotifier.setAdvert(Advert.empty());
                     if (userAnnouncersSync.length == 1 &&
                         selectedAnnouncers.isEmpty) {
-                      selectedNotifier.addAnnouncer(userAnnouncersSync[0]);
+                      selectedAnnouncersNotifier.addAnnouncer(
+                        userAnnouncersSync[0],
+                      );
                     }
                     QR.to(
                       AdvertRouter.root +
@@ -96,9 +94,11 @@ class AdvertAdminPage extends HookConsumerWidget {
                 value: userAnnouncerList,
                 builder: (context, userAnnouncerData) {
                   final userAnnouncerAdvert = advertData.where(
-                    (advert) => userAnnouncerData
-                        .where((element) => advert.announcer.id == element.id)
-                        .isNotEmpty,
+                    (advert) => !isAdmin
+                        ? userAnnouncerData.any(
+                            (element) => advert.announcer.id == element.id,
+                          )
+                        : true,
                   );
                   final sortedUserAnnouncerAdverts = userAnnouncerAdvert
                       .toList()
@@ -119,7 +119,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                     onRefresh: () async {
                       if (isAdmin) {
                         await ref
-                            .watch(adminAdvertListProvider.notifier)
+                            .watch(advertListProvider.notifier)
                             .loadAdverts();
                       }
                       await ref
@@ -158,9 +158,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                                     onYes: () async {
                                       if (isAdmin) {
                                         await ref
-                                            .watch(
-                                              adminAdvertListProvider.notifier,
-                                            )
+                                            .watch(advertListProvider.notifier)
                                             .deleteAdvert(advert);
                                       } else {
                                         await ref
