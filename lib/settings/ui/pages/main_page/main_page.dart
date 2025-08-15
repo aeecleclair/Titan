@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/tools/ui/widgets/vertical_clip_scroll.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/settings/providers/notification_topic_provider.dart';
 import 'package:titan/settings/tools/functions.dart';
@@ -186,84 +187,93 @@ class SettingsMainPage extends HookConsumerWidget {
                   await showCustomBottomModal(
                     modal: BottomModalTemplate(
                       title: localizeWithContext.settingsNotifications,
-                      child: Consumer(
-                        builder: (context, ref, child) {
-                          final notificationTopicList = ref.watch(
-                            notificationTopicListProvider,
-                          );
-                          return AsyncChild(
-                            value: notificationTopicList,
-                            builder: (context, notificationTopicList) {
-                              final notificationTopicsByModuleRoot =
-                                  groupNotificationTopicsByModuleRoot(
-                                    notificationTopicList,
-                                    ref,
-                                    context,
-                                  );
-                              final uniqueTopics =
-                                  notificationTopicsByModuleRoot['others'] ??
-                                  [];
-                              final groupedTopics = Map.from(
-                                notificationTopicsByModuleRoot,
-                              )..remove('others');
-                              return Column(
-                                children: [
-                                  ...uniqueTopics.map(
-                                    (notificationTopic) => ListItemTemplate(
-                                      title: notificationTopic.name,
-                                      trailing: LoadSwitchTopic(
-                                        notificationTopic: notificationTopic,
-                                      ),
-                                    ),
-                                  ),
-                                  ...groupedTopics.entries.map((entry) {
-                                    final moduleRoot = entry.key;
-                                    final topics = entry.value;
-                                    bool expanded = true;
-                                    return StatefulBuilder(
-                                      builder: (context, setState) {
-                                        return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const SizedBox(height: 20),
-                                            ListItemTemplate(
-                                              title: moduleRoot,
-                                              trailing: HeroIcon(
-                                                expanded
-                                                    ? HeroIcons.chevronDown
-                                                    : HeroIcons.chevronRight,
-                                                color: ColorConstants.tertiary,
-                                              ),
-                                              onTap: () {
-                                                setState(() {
-                                                  expanded = !expanded;
-                                                });
-                                              },
-                                            ),
-                                            const SizedBox(height: 10),
-                                            if (expanded)
-                                              ...topics.map(
-                                                (
-                                                  notificationTopic,
-                                                ) => ListItemTemplate(
-                                                  title: notificationTopic.name,
-                                                  trailing: LoadSwitchTopic(
-                                                    notificationTopic:
-                                                        notificationTopic,
-                                                  ),
-                                                ),
-                                              ),
-                                          ],
-                                        );
-                                      },
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxHeight: 600),
+                        child: Consumer(
+                          builder: (context, ref, child) {
+                            final notificationTopicList = ref.watch(
+                              notificationTopicListProvider,
+                            );
+                            return AsyncChild(
+                              value: notificationTopicList,
+                              builder: (context, notificationTopicList) {
+                                final notificationTopicsByModuleRoot =
+                                    groupNotificationTopicsByModuleRoot(
+                                      notificationTopicList,
+                                      ref,
+                                      context,
                                     );
-                                  }),
-                                ],
-                              );
-                            },
-                          );
-                        },
+                                final uniqueTopics =
+                                    notificationTopicsByModuleRoot['others'] ??
+                                    [];
+                                final groupedTopics = Map.from(
+                                  notificationTopicsByModuleRoot,
+                                )..remove('others');
+                                return VerticalClipScroll(
+                                  child: Column(
+                                    children: [
+                                      ...uniqueTopics.map(
+                                        (notificationTopic) => ListItemTemplate(
+                                          title: notificationTopic.name,
+                                          trailing: LoadSwitchTopic(
+                                            notificationTopic:
+                                                notificationTopic,
+                                          ),
+                                        ),
+                                      ),
+                                      ...groupedTopics.entries.map((entry) {
+                                        final moduleRoot = entry.key;
+                                        final topics = entry.value;
+                                        bool expanded = true;
+                                        return StatefulBuilder(
+                                          builder: (context, setState) {
+                                            return Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const SizedBox(height: 20),
+                                                ListItemTemplate(
+                                                  title: moduleRoot,
+                                                  trailing: HeroIcon(
+                                                    expanded
+                                                        ? HeroIcons.chevronDown
+                                                        : HeroIcons
+                                                              .chevronRight,
+                                                    color:
+                                                        ColorConstants.tertiary,
+                                                  ),
+                                                  onTap: () {
+                                                    setState(() {
+                                                      expanded = !expanded;
+                                                    });
+                                                  },
+                                                ),
+                                                const SizedBox(height: 10),
+                                                if (expanded)
+                                                  ...topics.map(
+                                                    (
+                                                      notificationTopic,
+                                                    ) => ListItemTemplate(
+                                                      title: notificationTopic
+                                                          .name,
+                                                      trailing: LoadSwitchTopic(
+                                                        notificationTopic:
+                                                            notificationTopic,
+                                                      ),
+                                                    ),
+                                                  ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
                       ),
                     ),
                     context: context,
