@@ -51,6 +51,8 @@ class NavigationTemplate extends HookConsumerWidget {
       }
     });
 
+    MediaQuery.of(context).viewInsets.bottom;
+
     return Builder(
       builder: (context) {
         return Scaffold(
@@ -77,7 +79,8 @@ class NavigationTemplate extends HookConsumerWidget {
                             builder: (context, child) => Visibility(
                               visible:
                                   animation.isCompleted &&
-                                  animation.value == 1.0,
+                                  animation.value == 1.0 &&
+                                  View.of(context).viewInsets.bottom == 0,
                               child: Opacity(
                                 opacity: animation.value,
                                 child: FloatingNavbar(
