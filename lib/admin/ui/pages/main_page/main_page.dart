@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/admin/admin.dart';
-import 'package:titan/admin/providers/all_groups_list_provider.dart';
 import 'package:titan/admin/router.dart';
-import 'package:titan/tools/ui/widgets/vertical_clip_scroll.dart';
-import 'package:titan/admin/ui/pages/announcers/load_switch_announcers.dart';
 import 'package:titan/admin/ui/pages/users_management_page/users_management_page.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
-import 'package:titan/tools/ui/styleguide/list_item_template.dart';
 
 import 'package:titan/user/providers/user_list_provider.dart';
 
@@ -22,7 +18,6 @@ class AdminMainPage extends HookConsumerWidget {
     ref.watch(userList);
 
     final localizeWithContext = AppLocalizations.of(context)!;
-    final groupList = ref.watch(allGroupList);
 
     return AdminTemplate(
       child: Padding(
@@ -85,35 +80,14 @@ class AdminMainPage extends HookConsumerWidget {
                   QR.to(AdminRouter.root + AdminRouter.associationMemberships),
             ),
             Text(
-              localizeWithContext.adminAdverts,
+              localizeWithContext.adminAssociations,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             ListItem(
-              title: localizeWithContext.adminAnnouncers,
-              subtitle: localizeWithContext.adminManageAnnouncers,
-              onTap: () async {
-                await showCustomBottomModal(
-                  context: context,
-                  ref: ref,
-                  modal: BottomModalTemplate(
-                    title: localizeWithContext.adminAnnouncers,
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxHeight: 500),
-                      child: VerticalClipScroll(
-                        child: Column(
-                          children: [
-                            ...groupList.map((group) {
-                              return ListItemTemplate(
-                                title: group.name,
-                                trailing: LoadSwitchAdvertisers(group: group),
-                              );
-                            }),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                );
+              title: localizeWithContext.adminAssociations,
+              subtitle: localizeWithContext.adminManageAssociations,
+              onTap: () {
+                QR.to(AdminRouter.root + AdminRouter.association);
               },
             ),
           ],

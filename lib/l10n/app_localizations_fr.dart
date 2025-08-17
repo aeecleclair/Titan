@@ -429,20 +429,65 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminAdmin => 'Admin';
 
   @override
-  String get adminAdverts => 'Annonces';
+  String get adminAssociations => 'Associations';
 
   @override
-  String get adminAnnouncers => 'Annonceurs';
+  String get adminManageAssociations => 'Gérer les associations';
 
   @override
-  String get adminManageAnnouncers => 'Gérer les annonceurs';
+  String get adminAddAssociation => 'Ajouter une association';
 
   @override
-  String get adminDeleteAnnouncer => 'Supprimer cet annonceur ?';
+  String get adminAssociationName => 'Nom de l\'association';
 
   @override
-  String get adminDeleteAnnouncerDescription =>
-      'Supprimer cet annonceurs supprimera toutes ses annonces.';
+  String get adminSelectGroupAssociationManager =>
+      'Séléctionner roupe gestionnaire de l\'association';
+
+  @override
+  String adminEditAssociation(String associationName) {
+    return 'Modifier l\'association : $associationName';
+  }
+
+  @override
+  String adminManagerGroup(String groupName) {
+    return 'Groupe gestionnaire : $groupName';
+  }
+
+  @override
+  String get adminAssociationCreated => 'Association créée';
+
+  @override
+  String get adminAssociationUpdated => 'Association mise à jour';
+
+  @override
+  String get adminAssociationCreationError =>
+      'Échec de la création de l\'association';
+
+  @override
+  String get adminAssociationUpdateError =>
+      'Échec de la mise à jour de l\'association';
+
+  @override
+  String get adminUpdatedAssociationLogo => 'Logo de l\'association mis à jour';
+
+  @override
+  String get adminTooHeavyLogo =>
+      'Le logo de l\'association est trop lourd, il doit faire moins de 4 Mo';
+
+  @override
+  String get adminFailedToUpdateAssociationLogo =>
+      'Échec de la mise à jour du logo de l\'association';
+
+  @override
+  String get adminChooseGroup => 'Choisir un groupe';
+
+  @override
+  String get adminChooseAssociationManagerGroup =>
+      'Choisir un groupe gestionnaire pour l\'association';
+
+  @override
+  String get adminConfirm => 'Valider';
 
   @override
   String get advertAdd => 'Ajouter';

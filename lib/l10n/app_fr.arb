@@ -144,11 +144,39 @@
   "adminFailedToInviteUsers": "Échec de l'invitation des utilisateurs",
   "adminDeleteUsers": "Supprimer des utilisateurs",
   "adminAdmin": "Admin",
-  "adminAdverts": "Annonces",
-  "adminAnnouncers": "Annonceurs",
-  "adminManageAnnouncers": "Gérer les annonceurs",
-  "adminDeleteAnnouncer": "Supprimer cet annonceur ?",
-  "adminDeleteAnnouncerDescription": "Supprimer cet annonceurs supprimera toutes ses annonces.",
+  "adminAssociations": "Associations",
+  "adminManageAssociations": "Gérer les associations",
+  "adminAddAssociation": "Ajouter une association",
+  "adminAssociationName": "Nom de l'association",
+  "adminSelectGroupAssociationManager": "Séléctionner roupe gestionnaire de l'association",
+  "adminEditAssociation": "Modifier l'association : {associationName}",
+  "@adminEditAssociation": {
+    "description": "Modifier les informations de l'association",
+    "placeholders": {
+      "associationName": {
+        "type": "String"
+      }
+    }
+  },
+  "adminManagerGroup" : "Groupe gestionnaire : {groupName}",
+  "@adminManagerGroup": {
+    "description": "Groupe qui gère l'association",
+    "placeholders": {
+      "groupName": {
+        "type": "String"
+      }
+    }
+  },
+  "adminAssociationCreated": "Association créée",
+  "adminAssociationUpdated": "Association mise à jour",
+  "adminAssociationCreationError": "Échec de la création de l'association",
+  "adminAssociationUpdateError": "Échec de la mise à jour de l'association",
+  "adminUpdatedAssociationLogo" : "Logo de l'association mis à jour",
+  "adminTooHeavyLogo": "Le logo de l'association est trop lourd, il doit faire moins de 4 Mo",
+  "adminFailedToUpdateAssociationLogo": "Échec de la mise à jour du logo de l'association",
+  "adminChooseGroup": "Choisir un groupe",
+  "adminChooseAssociationManagerGroup": "Choisir un groupe gestionnaire pour l'association",
+  "adminConfirm" : "Valider",
   "advertAdd": "Ajouter",
   "advertAddedAdvert": "Annonce publiée",
   "advertAddedAnnouncer": "Annonceur ajouté",
