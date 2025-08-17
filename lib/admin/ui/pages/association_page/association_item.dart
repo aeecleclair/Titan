@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/assocation.dart';
+import 'package:titan/admin/providers/all_groups_list_provider.dart';
 import 'package:titan/admin/providers/assocation_list_provider.dart';
 import 'package:titan/admin/providers/association_logo_provider.dart';
 import 'package:titan/admin/providers/associations_logo_map_provider.dart';
@@ -21,6 +22,8 @@ class AssociationItem extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final groups = ref.watch(allGroupList);
+    final group = groups.firstWhere((group) => group.id == association.groupId);
     final associationLogo = ref.watch(
       associationLogoMapProvider.select((value) => value[association.id]),
     );
@@ -34,10 +37,15 @@ class AssociationItem extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    void popWithContext() {
+      Navigator.of(context).pop();
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: ListItem(
         title: association.name,
+        subtitle: "Géré par : ${group.name}",
         icon: AutoLoaderChild(
           group: associationLogo,
           notifier: associationLogoMapNotifier,
@@ -71,9 +79,13 @@ class AssociationItem extends HookConsumerWidget {
                         ref: ref,
                         modal: BottomModalTemplate(
                           title: "Modifier l'association",
-                          child: EditAssociation(association: association),
+                          child: EditAssociation(
+                            association: association,
+                            group: group,
+                          ),
                         ),
                       );
+                      popWithContext();
                     },
                   ),
                   SizedBox(height: 10),

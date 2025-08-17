@@ -20,14 +20,18 @@ import 'package:titan/tools/ui/styleguide/text_entry.dart';
 
 class EditAssociation extends HookConsumerWidget {
   final Association association;
-  const EditAssociation({super.key, required this.association});
+  final SimpleGroup group;
+  const EditAssociation({
+    super.key,
+    required this.association,
+    required this.group,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final nameController = useTextEditingController(text: association.name);
     final groups = ref.watch(allGroupList);
-    final group = groups.firstWhere((group) => group.id == association.groupId);
     final chosenGroup = useState<SimpleGroup?>(group);
     final associationLogo = ref.watch(associationLogoProvider);
     final associationLogoNotifier = ref.watch(associationLogoProvider.notifier);
