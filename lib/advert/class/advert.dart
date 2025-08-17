@@ -31,8 +31,6 @@ class Advert {
     data["content"] = content;
     data["date"] = processDateToAPI(date);
     data["advertiser_id"] = announcer.id;
-    // TODO: waiting backend migration
-    data["tags"] = "";
     return data;
   }
 

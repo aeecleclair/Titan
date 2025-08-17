@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/advert/class/advert.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:titan/advert/providers/announcer_list_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/styleguide/icon_button.dart';
 
@@ -20,6 +21,11 @@ class AdminAdvertCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final userAnnouncerList = ref.watch(userAnnouncerListProvider);
+    final userAnnouncersIdListSync = userAnnouncerList.maybeWhen(
+      orElse: () => [],
+      data: (data) => data.map((e) => e.id).toList(),
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
@@ -52,13 +58,14 @@ class AdminAdvertCard extends HookConsumerWidget {
                   ],
                 ),
                 const Spacer(),
-                CustomIconButton.secondary(
-                  onPressed: onEdit,
-                  icon: const HeroIcon(
-                    HeroIcons.pencil,
-                    color: ColorConstants.tertiary,
+                if (userAnnouncersIdListSync.contains(advert.announcer.id))
+                  CustomIconButton.secondary(
+                    onPressed: onEdit,
+                    icon: const HeroIcon(
+                      HeroIcons.pencil,
+                      color: ColorConstants.tertiary,
+                    ),
                   ),
-                ),
                 const SizedBox(width: 20),
                 CustomIconButton.danger(
                   onPressed: onDelete,
