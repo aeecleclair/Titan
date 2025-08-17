@@ -3486,6 +3486,34 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsProfile => 'Profil';
 
   @override
+  String get settingsConnexion => 'Connexion';
+
+  @override
+  String get settingsDisconnect => 'Se déconnecter';
+
+  @override
+  String get settingsDisconnectDescription =>
+      'Êtes-vous sûr de vouloir vous déconnecter ?';
+
+  @override
+  String get settingsDisconnectionSuccess => 'Déconnexion réussie';
+
+  @override
+  String get settingsDeleteMyAccount => 'Supprimer mon compte';
+
+  @override
+  String get settingsDeleteMyAccountDescription =>
+      'Cette action notifie l\'administrateur que vous souhaitez supprimer votre compte.';
+
+  @override
+  String get settingsDeletionAsked =>
+      'Demande de suppression de compte envoyée';
+
+  @override
+  String get settingsDeleteMyAccountError =>
+      'Erreur lors de la demande de suppression de compte';
+
+  @override
   String get voteAdd => 'Ajouter';
 
   @override

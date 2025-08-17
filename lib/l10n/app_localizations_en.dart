@@ -3458,6 +3458,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsProfile => 'Profile';
 
   @override
+  String get settingsConnexion => 'Connection';
+
+  @override
+  String get settingsDisconnect => 'Disconnect';
+
+  @override
+  String get settingsDisconnectDescription =>
+      'Do you really want to disconnect?';
+
+  @override
+  String get settingsDisconnectionSuccess => 'Disconnected successfully';
+
+  @override
+  String get settingsDeleteMyAccount => 'Delete my account';
+
+  @override
+  String get settingsDeleteMyAccountDescription =>
+      'This action will send a request to the administrator to delete your account.';
+
+  @override
+  String get settingsDeletionAsked =>
+      'Your account deletion request has been sent to the administrator.';
+
+  @override
+  String get settingsDeleteMyAccountError =>
+      'Error sending account deletion request';
+
+  @override
   String get voteAdd => 'Add';
 
   @override

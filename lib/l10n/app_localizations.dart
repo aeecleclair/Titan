@@ -6806,6 +6806,54 @@ abstract class AppLocalizations {
   /// **'Profil'**
   String get settingsProfile;
 
+  /// No description provided for @settingsConnexion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Connexion'**
+  String get settingsConnexion;
+
+  /// No description provided for @settingsDisconnect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Se déconnecter'**
+  String get settingsDisconnect;
+
+  /// No description provided for @settingsDisconnectDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Êtes-vous sûr de vouloir vous déconnecter ?'**
+  String get settingsDisconnectDescription;
+
+  /// No description provided for @settingsDisconnectionSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déconnexion réussie'**
+  String get settingsDisconnectionSuccess;
+
+  /// No description provided for @settingsDeleteMyAccount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer mon compte'**
+  String get settingsDeleteMyAccount;
+
+  /// No description provided for @settingsDeleteMyAccountDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette action notifie l\'administrateur que vous souhaitez supprimer votre compte.'**
+  String get settingsDeleteMyAccountDescription;
+
+  /// No description provided for @settingsDeletionAsked.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande de suppression de compte envoyée'**
+  String get settingsDeletionAsked;
+
+  /// No description provided for @settingsDeleteMyAccountError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de la demande de suppression de compte'**
+  String get settingsDeleteMyAccountError;
+
   /// No description provided for @voteAdd.
   ///
   /// In fr, this message translates to:
