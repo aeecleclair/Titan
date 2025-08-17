@@ -89,40 +89,40 @@ class AssociationItem extends HookConsumerWidget {
                     },
                   ),
                   SizedBox(height: 10),
-                  Button(
-                    text: "Supprimer",
-                    onPressed: () async {
-                      await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return CustomDialogBox(
-                            title: AppLocalizations.of(context)!.adminDeleting,
-                            descriptions: AppLocalizations.of(
-                              context,
-                            )!.adminDeleteAssociationMembership,
-                            onYes: () async {
-                              tokenExpireWrapper(ref, () async {
-                                final value = await associationNotifier
-                                    .deleteAssociation(association);
-                                if (value) {
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    "Suppression réussie",
-                                  );
-                                } else {
-                                  displayToastWithContext(
-                                    TypeMsg.error,
-                                    "Échec de la suppression",
-                                  );
-                                }
-                              });
-                            },
-                          );
-                        },
-                      );
-                    },
-                    type: ButtonType.danger,
-                  ),
+                  // Button(
+                  //   text: "Supprimer",
+                  //   onPressed: () async {
+                  //     await showDialog(
+                  //       context: context,
+                  //       builder: (context) {
+                  //         return CustomDialogBox(
+                  //           title: AppLocalizations.of(context)!.adminDeleting,
+                  //           descriptions: AppLocalizations.of(
+                  //             context,
+                  //           )!.adminDeleteAssociationMembership,
+                  //           onYes: () async {
+                  //             tokenExpireWrapper(ref, () async {
+                  //               final value = await associationNotifier
+                  //                   .deleteAssociation(association);
+                  //               if (value) {
+                  //                 displayToastWithContext(
+                  //                   TypeMsg.msg,
+                  //                   "Suppression réussie",
+                  //                 );
+                  //               } else {
+                  //                 displayToastWithContext(
+                  //                   TypeMsg.error,
+                  //                   "Échec de la suppression",
+                  //                 );
+                  //               }
+                  //             });
+                  //           },
+                  //         );
+                  //       },
+                  //     );
+                  //   },
+                  //   type: ButtonType.danger,
+                  // ),
                 ],
               ),
             ),
