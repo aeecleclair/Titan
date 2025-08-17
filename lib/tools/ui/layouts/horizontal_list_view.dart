@@ -26,7 +26,6 @@ class HorizontalListView<T> extends StatelessWidget {
        lastChild = null,
        childDelegate = SingleChildScrollView(
          scrollDirection: Axis.horizontal,
-         clipBehavior: Clip.none,
          controller: scrollController,
          physics: const BouncingScrollPhysics(),
          child: Row(children: children!),
@@ -47,7 +46,6 @@ class HorizontalListView<T> extends StatelessWidget {
        children = null,
        childDelegate = ListView.builder(
          scrollDirection: Axis.horizontal,
-         clipBehavior: Clip.none,
          controller: scrollController,
          physics: const BouncingScrollPhysics(),
          itemCount:
