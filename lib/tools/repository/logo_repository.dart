@@ -38,6 +38,8 @@ abstract class LogoRepository extends Repository {
         } else {
           throw AppException(ErrorType.notFound, decoded["detail"]);
         }
+      } else if (response.statusCode == 404) {
+        return Uint8List(0);
       } else {
         Repository.logger.error(
           "GET $ext$id$suffix\n${response.statusCode} ${response.body}",

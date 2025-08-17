@@ -6,6 +6,7 @@ import 'package:titan/admin/class/assocation.dart';
 import 'package:titan/admin/providers/all_groups_list_provider.dart';
 import 'package:titan/admin/providers/assocation_list_provider.dart';
 import 'package:titan/admin/ui/pages/association_page/add_association_modal.dart';
+import 'package:titan/admin/ui/pages/association_page/association_item.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -86,6 +87,7 @@ class AssociationPage extends ConsumerWidget {
                     ),
                   ],
                 ),
+                SizedBox(height: 20),
                 Expanded(
                   child: Refresher(
                     controller: ScrollController(),
@@ -95,7 +97,8 @@ class AssociationPage extends ConsumerWidget {
                     child: Column(
                       children: [
                         ...associationList.map(
-                          (association) => Text(association.name),
+                          (association) =>
+                              AssociationItem(association: association),
                         ),
                       ],
                     ),
