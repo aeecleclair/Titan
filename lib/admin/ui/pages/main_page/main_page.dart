@@ -79,10 +79,13 @@ class AdminMainPage extends HookConsumerWidget {
               onTap: () =>
                   QR.to(AdminRouter.root + AdminRouter.associationMemberships),
             ),
-            Text("Associations", style: Theme.of(context).textTheme.titleLarge),
+            Text(
+              localizeWithContext.adminAssociations,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
             ListItem(
-              title: "Associations",
-              subtitle: "Gérer les associations",
+              title: localizeWithContext.adminAssociations,
+              subtitle: localizeWithContext.adminManageAssociations,
               onTap: () {
                 QR.to(AdminRouter.root + AdminRouter.association);
               },
