@@ -914,35 +914,107 @@ abstract class AppLocalizations {
   /// **'Admin'**
   String get adminAdmin;
 
-  /// No description provided for @adminAdverts.
+  /// No description provided for @adminAssociations.
   ///
   /// In fr, this message translates to:
-  /// **'Annonces'**
-  String get adminAdverts;
+  /// **'Associations'**
+  String get adminAssociations;
 
-  /// No description provided for @adminAnnouncers.
+  /// No description provided for @adminManageAssociations.
   ///
   /// In fr, this message translates to:
-  /// **'Annonceurs'**
-  String get adminAnnouncers;
+  /// **'Gérer les associations'**
+  String get adminManageAssociations;
 
-  /// No description provided for @adminManageAnnouncers.
+  /// No description provided for @adminAddAssociation.
   ///
   /// In fr, this message translates to:
-  /// **'Gérer les annonceurs'**
-  String get adminManageAnnouncers;
+  /// **'Ajouter une association'**
+  String get adminAddAssociation;
 
-  /// No description provided for @adminDeleteAnnouncer.
+  /// No description provided for @adminAssociationName.
   ///
   /// In fr, this message translates to:
-  /// **'Supprimer cet annonceur ?'**
-  String get adminDeleteAnnouncer;
+  /// **'Nom de l\'association'**
+  String get adminAssociationName;
 
-  /// No description provided for @adminDeleteAnnouncerDescription.
+  /// No description provided for @adminSelectGroupAssociationManager.
   ///
   /// In fr, this message translates to:
-  /// **'Supprimer cet annonceurs supprimera toutes ses annonces.'**
-  String get adminDeleteAnnouncerDescription;
+  /// **'Séléctionner roupe gestionnaire de l\'association'**
+  String get adminSelectGroupAssociationManager;
+
+  /// Modifier les informations de l'association
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier l\'association : {associationName}'**
+  String adminEditAssociation(String associationName);
+
+  /// Groupe qui gère l'association
+  ///
+  /// In fr, this message translates to:
+  /// **'Groupe gestionnaire : {groupName}'**
+  String adminManagerGroup(String groupName);
+
+  /// No description provided for @adminAssociationCreated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Association créée'**
+  String get adminAssociationCreated;
+
+  /// No description provided for @adminAssociationUpdated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Association mise à jour'**
+  String get adminAssociationUpdated;
+
+  /// No description provided for @adminAssociationCreationError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de la création de l\'association'**
+  String get adminAssociationCreationError;
+
+  /// No description provided for @adminAssociationUpdateError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de la mise à jour de l\'association'**
+  String get adminAssociationUpdateError;
+
+  /// No description provided for @adminUpdatedAssociationLogo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Logo de l\'association mis à jour'**
+  String get adminUpdatedAssociationLogo;
+
+  /// No description provided for @adminTooHeavyLogo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le logo de l\'association est trop lourd, il doit faire moins de 4 Mo'**
+  String get adminTooHeavyLogo;
+
+  /// No description provided for @adminFailedToUpdateAssociationLogo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de la mise à jour du logo de l\'association'**
+  String get adminFailedToUpdateAssociationLogo;
+
+  /// No description provided for @adminChooseGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir un groupe'**
+  String get adminChooseGroup;
+
+  /// No description provided for @adminChooseAssociationManagerGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir un groupe gestionnaire pour l\'association'**
+  String get adminChooseAssociationManagerGroup;
+
+  /// No description provided for @adminConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider'**
+  String get adminConfirm;
 
   /// No description provided for @advertAdd.
   ///

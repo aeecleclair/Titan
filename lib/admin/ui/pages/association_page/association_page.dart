@@ -7,6 +7,7 @@ import 'package:titan/admin/providers/all_groups_list_provider.dart';
 import 'package:titan/admin/providers/assocation_list_provider.dart';
 import 'package:titan/admin/ui/pages/association_page/add_association_modal.dart';
 import 'package:titan/admin/ui/pages/association_page/association_item.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -30,6 +31,8 @@ class AssociationPage extends ConsumerWidget {
       Navigator.of(context).pop();
     }
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     return AdminTemplate(
       child: AsyncChild(
         value: associationList,
@@ -41,7 +44,7 @@ class AssociationPage extends ConsumerWidget {
                 Row(
                   children: [
                     Text(
-                      "Association",
+                      localizeWithContext.adminAssociations,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     const Spacer(),
@@ -69,12 +72,13 @@ class AssociationPage extends ConsumerWidget {
                                 if (value) {
                                   displayToastWithContext(
                                     TypeMsg.msg,
-                                    "Association created successfully",
+                                    localizeWithContext.adminAssociationCreated,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    "Failed to create association",
+                                    localizeWithContext
+                                        .adminAssociationCreationError,
                                   );
                                 }
                                 popWithContext();

@@ -89,20 +89,19 @@ class EditAssociation extends HookConsumerWidget {
                                   displayToastWithContext(
                                     TypeMsg.msg,
                                     localizeWithContext
-                                        .settingsUpdatedProfilePicture,
+                                        .adminUpdatedAssociationLogo,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    localizeWithContext
-                                        .settingsTooHeavyProfilePicture,
+                                    localizeWithContext.adminTooHeavyLogo,
                                   );
                                 }
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
                                   localizeWithContext
-                                      .settingsErrorProfilePicture,
+                                      .adminFailedToUpdateAssociationLogo,
                                 );
                               }
                             },
@@ -121,20 +120,19 @@ class EditAssociation extends HookConsumerWidget {
                                   displayToastWithContext(
                                     TypeMsg.msg,
                                     localizeWithContext
-                                        .settingsUpdatedProfilePicture,
+                                        .adminUpdatedAssociationLogo,
                                   );
                                 } else {
                                   displayToastWithContext(
                                     TypeMsg.error,
-                                    localizeWithContext
-                                        .settingsTooHeavyProfilePicture,
+                                    localizeWithContext.adminTooHeavyLogo,
                                   );
                                 }
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
                                   localizeWithContext
-                                      .settingsErrorProfilePicture,
+                                      .adminFailedToUpdateAssociationLogo,
                                 );
                               }
                             },
@@ -148,12 +146,14 @@ class EditAssociation extends HookConsumerWidget {
               ),
             SizedBox(height: View.of(context).viewInsets.bottom == 0 ? 30 : 10),
             TextEntry(
-              label: "Nom de l'association",
+              label: localizeWithContext.adminAssociationName,
               controller: nameController,
             ),
             SizedBox(height: 20),
             ListItem(
-              title: "Groupe gestionnaire : ${chosenGroup.value!.name}",
+              title: localizeWithContext.adminManagerGroup(
+                chosenGroup.value!.name,
+              ),
               onTap: () async {
                 FocusScope.of(context).unfocus();
                 final ctx = context;
@@ -164,7 +164,7 @@ class EditAssociation extends HookConsumerWidget {
                   context: ctx,
                   ref: ref,
                   modal: BottomModalTemplate(
-                    title: "Choisir un groupe",
+                    title: localizeWithContext.adminChooseGroup,
                     child: Column(
                       children: [
                         ...groups.map(
@@ -184,7 +184,7 @@ class EditAssociation extends HookConsumerWidget {
             ),
             SizedBox(height: 20),
             Button(
-              text: "Valider",
+              text: localizeWithContext.adminConfirm,
               disabled:
                   !(nameController.value.text != association.name ||
                       chosenGroup.value!.id != association.groupId),
@@ -200,13 +200,13 @@ class EditAssociation extends HookConsumerWidget {
                   if (value) {
                     displayToastWithContext(
                       TypeMsg.msg,
-                      localizeWithContext.settingsEditedAccount,
+                      localizeWithContext.adminAssociationUpdated,
                     );
                     navigatorWithContext.pop();
                   } else {
                     displayToastWithContext(
                       TypeMsg.error,
-                      localizeWithContext.settingsFailedToEditAccount,
+                      localizeWithContext.adminAssociationUpdateError,
                     );
                   }
                 });

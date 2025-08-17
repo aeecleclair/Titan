@@ -426,20 +426,63 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminAdmin => 'Admin';
 
   @override
-  String get adminAdverts => 'Adverts';
+  String get adminAssociations => 'Associations';
 
   @override
-  String get adminAnnouncers => 'Announcers';
+  String get adminManageAssociations => 'Manage associations';
 
   @override
-  String get adminManageAnnouncers => 'Manage announcers';
+  String get adminAddAssociation => 'Add association';
 
   @override
-  String get adminDeleteAnnouncer => 'Delete announcer?';
+  String get adminAssociationName => 'Association name';
 
   @override
-  String get adminDeleteAnnouncerDescription =>
-      'Are you sure you want to delete this announcer? All their adverts will be deleted.';
+  String get adminSelectGroupAssociationManager =>
+      'Select a group to manage this association';
+
+  @override
+  String adminEditAssociation(String associationName) {
+    return 'Edit association : $associationName';
+  }
+
+  @override
+  String adminManagerGroup(String groupName) {
+    return 'Manager group : $groupName';
+  }
+
+  @override
+  String get adminAssociationCreated => 'Association created';
+
+  @override
+  String get adminAssociationUpdated => 'Association updated';
+
+  @override
+  String get adminAssociationCreationError =>
+      'Error while creating association';
+
+  @override
+  String get adminAssociationUpdateError => 'Error while updating association';
+
+  @override
+  String get adminUpdatedAssociationLogo => 'Association logo updated';
+
+  @override
+  String get adminTooHeavyLogo => 'Logo too heavy, maximum size is 4MB';
+
+  @override
+  String get adminFailedToUpdateAssociationLogo =>
+      'Failed to update association logo';
+
+  @override
+  String get adminChooseGroup => 'Choose a group';
+
+  @override
+  String get adminChooseAssociationManagerGroup =>
+      'Choose a group to manage this association';
+
+  @override
+  String get adminConfirm => 'Confirm';
 
   @override
   String get advertAdd => 'Add';

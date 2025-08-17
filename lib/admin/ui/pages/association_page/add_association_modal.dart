@@ -28,14 +28,14 @@ class AddAssociationModal extends HookWidget {
     final localizeWithContext = AppLocalizations.of(context)!;
 
     return BottomModalTemplate(
-      title: "Association Management",
+      title: localizeWithContext.adminAddAssociation,
       child: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextEntry(
-                label: "Nom de l'association",
+                label: localizeWithContext.adminAssociationName,
                 controller: nameController,
               ),
             ),
@@ -43,7 +43,8 @@ class AddAssociationModal extends HookWidget {
               padding: const EdgeInsets.all(8.0),
               child: chosenGroup.value == null
                   ? ListItem(
-                      title: "Choisir le groupe gestionnaire de l'association",
+                      title: localizeWithContext
+                          .adminChooseAssociationManagerGroup,
                       onTap: () async {
                         FocusScope.of(context).unfocus();
                         final ctx = context;
@@ -54,7 +55,7 @@ class AddAssociationModal extends HookWidget {
                           context: ctx,
                           ref: ref,
                           modal: BottomModalTemplate(
-                            title: "Choisir un groupe",
+                            title: localizeWithContext.adminChooseGroup,
                             child: Column(
                               children: [
                                 ...groups.map(
@@ -72,7 +73,38 @@ class AddAssociationModal extends HookWidget {
                         );
                       },
                     )
-                  : Text(chosenGroup.value!.name),
+                  : ListItem(
+                      title: localizeWithContext.adminManagerGroup(
+                        chosenGroup.value!.name,
+                      ),
+                      onTap: () async {
+                        FocusScope.of(context).unfocus();
+                        final ctx = context;
+                        await Future.delayed(Duration(milliseconds: 150));
+                        if (!ctx.mounted) return;
+
+                        await showCustomBottomModal(
+                          context: ctx,
+                          ref: ref,
+                          modal: BottomModalTemplate(
+                            title: localizeWithContext.adminChooseGroup,
+                            child: Column(
+                              children: [
+                                ...groups.map(
+                                  (e) => ListItem(
+                                    title: e.name,
+                                    onTap: () {
+                                      chosenGroup.value = e;
+                                      Navigator.of(ctx).pop();
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
             ),
             const SizedBox(height: 10),
             Button(

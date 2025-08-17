@@ -136,11 +136,39 @@
   "adminFailedToInviteUsers": "Failed to invite users",
   "adminDeleteUsers": "Delete users",
   "adminAdmin": "Admin",
-  "adminAdverts": "Adverts",
-  "adminAnnouncers": "Announcers",
-  "adminManageAnnouncers": "Manage announcers",
-  "adminDeleteAnnouncer": "Delete announcer?",
-  "adminDeleteAnnouncerDescription": "Are you sure you want to delete this announcer? All their adverts will be deleted.",
+  "adminAssociations" : "Associations",
+  "adminManageAssociations" : "Manage associations",
+  "adminAddAssociation" : "Add association",
+  "adminAssociationName" : "Association name",
+  "adminSelectGroupAssociationManager" : "Select a group to manage this association",
+  "adminEditAssociation" : "Edit association : {associationName}",
+  "@adminEditAssociation" : {
+    "description": "Edit association",
+    "placeholders": {
+      "associationName": {
+        "type": "String"
+      }
+    }
+  },
+  "adminManagerGroup" : "Manager group : {groupName}",
+  "@adminManagerGroup" : {
+    "description": "Manager group",
+    "placeholders": {
+      "groupName": {
+        "type": "String"
+      }
+    }
+  },
+  "adminAssociationCreated" : "Association created",
+  "adminAssociationUpdated" : "Association updated",
+  "adminAssociationCreationError" : "Error while creating association",
+  "adminAssociationUpdateError" : "Error while updating association",
+  "adminUpdatedAssociationLogo" : "Association logo updated",
+  "adminTooHeavyLogo" : "Logo too heavy, maximum size is 4MB",
+  "adminFailedToUpdateAssociationLogo": "Failed to update association logo",
+  "adminChooseGroup": "Choose a group",
+  "adminChooseAssociationManagerGroup": "Choose a group to manage this association",
+  "adminConfirm" : "Confirm",
   "advertAdd": "Add",
   "advertAddedAdvert": "Advert published",
   "advertAddedAnnouncer": "Announcer added",
