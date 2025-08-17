@@ -24,7 +24,7 @@ class AssociationLogoProvider extends SingleNotifier<Image> {
     return image;
   }
 
-  Future<bool?> setProfileLogo(ImageSource source, String associationId) async {
+  Future<bool?> setLogo(ImageSource source, String associationId) async {
     final previousState = state;
     state = const AsyncLoading();
     final XFile? image = await _picker.pickImage(

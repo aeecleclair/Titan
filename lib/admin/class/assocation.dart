@@ -27,7 +27,7 @@ class Association {
 
   Association.empty() {
     name = 'Nom';
-    groupId = 'Description';
+    groupId = '';
     id = '';
   }
 
