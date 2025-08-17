@@ -6,14 +6,14 @@ class Association {
 
   Association.fromJson(Map<String, dynamic> json) {
     name = json['name'];
-    groupId = json['groupId'];
+    groupId = json['group_id'];
     id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
-    data['groupId'] = groupId;
+    data['group_id'] = groupId;
     data['id'] = id;
     return data;
   }

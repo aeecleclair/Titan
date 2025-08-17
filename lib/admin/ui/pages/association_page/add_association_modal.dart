@@ -34,7 +34,10 @@ class AddAssociationModal extends HookWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TextEntry(label: "Admin", controller: nameController),
+              child: TextEntry(
+                label: "Nom de l'association",
+                controller: nameController,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
