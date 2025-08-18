@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/feed/class/news.dart';
+import 'package:titan/feed/providers/admin_news_list_provider.dart';
 import 'package:titan/feed/ui/feed.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/date_entry.dart';
+import 'package:titan/tools/ui/styleguide/icon_button.dart';
 import 'package:titan/tools/ui/styleguide/image_entry.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';
 
@@ -13,12 +17,17 @@ class AddEventPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final eventTitleController = useTextEditingController();
-    final eventDescriptionController = useTextEditingController();
     final eventLocationController = useTextEditingController();
     final shotgunDateController = useTextEditingController();
     final eventExternalLinkController = useTextEditingController();
     final eventStartDateController = useTextEditingController();
     final eventEndDateController = useTextEditingController();
+
+    final adminNewsListNotifier = ref.watch(adminNewsListProvider.notifier);
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
 
     return FeedTemplate(
       child: Expanded(
@@ -34,79 +43,111 @@ class AddEventPage extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextEntry(label: "Titre", controller: eventTitleController),
-                TextEntry(
-                  label: "Description",
-                  controller: eventDescriptionController,
-                  maxLines: 5,
-                  minLines: 3,
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextEntry(
+                        label: "Date de début ",
+                        controller: eventStartDateController,
+                        enabled: false,
+                      ),
+                    ),
+                    CustomIconButton(
+                      icon: const Icon(
+                        Icons.calendar_today,
+                        color: Colors.white,
+                      ),
+                      onPressed: () async {
+                        final date = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.now().add(
+                            const Duration(days: 365),
+                          ),
+                        );
+                        if (date != null) {
+                          eventStartDateController.text =
+                              "${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}";
+                        }
+                      },
+                    ),
+                  ],
                 ),
-                DateEntry(
-                  onTap: () async {
-                    final pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime.now().add(const Duration(days: 365)),
-                    );
-                    if (pickedDate != null) {
-                      final formattedDate =
-                          "${pickedDate.day.toString().padLeft(2, '0')}/${pickedDate.month.toString().padLeft(2, '0')}/${pickedDate.year}";
-                      eventStartDateController.text = formattedDate;
-                    }
-                  },
-                  title: "Date de début",
-                  subtitle: "Sélectionnez une date",
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextEntry(
+                        label: "Date de fin ",
+                        controller: eventEndDateController,
+                        enabled: false,
+                      ),
+                    ),
+                    CustomIconButton(
+                      icon: const Icon(
+                        Icons.calendar_today,
+                        color: Colors.white,
+                      ),
+                      onPressed: () async {
+                        final date = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.now().add(
+                            const Duration(days: 365),
+                          ),
+                        );
+                        if (date != null) {
+                          eventEndDateController.text =
+                              "${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}";
+                        }
+                      },
+                    ),
+                  ],
                 ),
-                DateEntry(
-                  onTap: () async {
-                    DateTime startDate = DateTime.now();
-                    if (eventStartDateController.text.isNotEmpty) {
-                      final parts = eventStartDateController.text.split('/');
-                      startDate = DateTime(
-                        int.parse(parts[2]),
-                        int.parse(parts[1]),
-                        int.parse(parts[0]),
-                      );
-                    }
-
-                    final pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: startDate,
-                      firstDate: startDate,
-                      lastDate: startDate.add(const Duration(days: 365)),
-                    );
-                    if (pickedDate != null) {
-                      final formattedDate =
-                          "${pickedDate.day.toString().padLeft(2, '0')}/${pickedDate.month.toString().padLeft(2, '0')}/${pickedDate.year}";
-                      eventEndDateController.text = formattedDate;
-                    }
-                  },
-                  title: "Date de fin",
-                  subtitle: "Sélectionnez une date",
-                ),
+                SizedBox(height: 10),
                 TextEntry(label: "Lieu", controller: eventLocationController),
-                DateEntry(
-                  onTap: () async {
-                    final pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime.now().add(const Duration(days: 365)),
-                    );
-                    if (pickedDate != null) {
-                      final formattedDate =
-                          "${pickedDate.day.toString().padLeft(2, '0')}/${pickedDate.month.toString().padLeft(2, '0')}/${pickedDate.year}";
-                      shotgunDateController.text = formattedDate;
-                    }
-                  },
-                  title: "Date et heure du SG",
-                  subtitle: "Sélectionnez une date",
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextEntry(
+                        label: "Date du SG ",
+                        controller: shotgunDateController,
+                        enabled: false,
+                      ),
+                    ),
+                    CustomIconButton(
+                      icon: const Icon(
+                        Icons.calendar_today,
+                        color: Colors.white,
+                      ),
+                      onPressed: () async {
+                        final date = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.now().add(
+                            const Duration(days: 365),
+                          ),
+                        );
+                        if (date != null) {
+                          shotgunDateController.text =
+                              "${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}";
+                        }
+                      },
+                    ),
+                  ],
                 ),
+                SizedBox(height: 10),
                 TextEntry(
                   label: "Lien externe pour le SG",
                   controller: eventExternalLinkController,
                   canBeEmpty: true,
                 ),
+                const SizedBox(height: 10),
                 ImageEntry(
                   title: "Image",
                   subtitle: "Sélectionnez une image",
@@ -119,26 +160,43 @@ class AddEventPage extends HookConsumerWidget {
                 const SizedBox(height: 40),
                 Button(
                   text: "Créer l'événement",
-                  onPressed: () {
+                  onPressed: () async {
                     if (eventTitleController.text.isEmpty ||
-                        eventDescriptionController.text.isEmpty ||
                         eventStartDateController.text.isEmpty ||
                         eventEndDateController.text.isEmpty ||
                         eventLocationController.text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Veuillez remplir tous les champs obligatoires',
-                          ),
-                        ),
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        "Veuillez remplir tous les champs obligatoires.",
                       );
                       return;
                     }
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Événement créé avec succès'),
+                    final newNews = News.empty().copyWith(
+                      title: eventTitleController.text,
+                      start: DateTime.parse(
+                        processDateBack(eventStartDateController.text),
                       ),
+                      end: DateTime.parse(
+                        processDateBack(eventEndDateController.text),
+                      ),
+                      location: eventLocationController.text,
+                      actionStart: DateTime.parse(
+                        processDateBack(shotgunDateController.text),
+                      ),
+                      // externalLink: eventExternalLinkController.text,
                     );
+                    final value = await adminNewsListNotifier.addNews(newNews);
+                    if (value) {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        "Événement créé avec succès !",
+                      );
+                    } else {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        "Échec de la création de l'événement.",
+                      );
+                    }
                   },
                 ),
                 const SizedBox(height: 80),

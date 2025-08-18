@@ -10,6 +10,7 @@ import 'package:titan/feed/ui/pages/event_handling_page/admin_event_card.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/styleguide/horizontal_multi_select.dart';
 
 class EventHandlingPage extends HookConsumerWidget {
@@ -22,10 +23,13 @@ class EventHandlingPage extends HookConsumerWidget {
     final selectedFilter = useState(NewsFilterType.pending);
 
     return FeedTemplate(
-      child: RefreshIndicator(
-        onRefresh: () => newsListNotifier.loadNewsList(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Refresher(
+          onRefresh: () {
+            return newsListNotifier.loadNewsList();
+          },
+          controller: ScrollController(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -47,7 +51,8 @@ class EventHandlingPage extends HookConsumerWidget {
                 height: 40,
                 child: HorizontalMultiSelect<NewsFilterType>(
                   items: NewsFilterType.values,
-                  itemBuilder: (context, item, index, selected) {
+                  selectedItem: selectedFilter.value,
+                  itemBuilder: (context, item, _, selected) {
                     final filterName = _getFilterName(context, item);
                     return Text(
                       filterName,
@@ -69,38 +74,34 @@ class EventHandlingPage extends HookConsumerWidget {
 
               const SizedBox(height: 16),
 
-              Expanded(
-                child: AsyncChild(
-                  value: newsListAsync,
-                  builder: (context, newsList) {
-                    final filteredNews = _getFilteredNews(
-                      newsList,
-                      selectedFilter.value,
-                    );
+              AsyncChild(
+                value: newsListAsync,
+                builder: (context, newsList) {
+                  final filteredNews = _getFilteredNews(
+                    newsList,
+                    selectedFilter.value,
+                  );
 
-                    if (filteredNews.isEmpty) {
-                      return Center(
-                        child: Text(
-                          _getEmptyMessage(context, selectedFilter.value),
-                          style: const TextStyle(
-                            color: ColorConstants.tertiary,
-                          ),
-                        ),
-                      );
-                    }
-
-                    return ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: filteredNews.length + 1,
-                      itemBuilder: (context, index) {
-                        if (index == filteredNews.length) {
-                          return const SizedBox(height: 80);
-                        }
-                        return AdminEventCard(news: filteredNews[index]);
-                      },
+                  if (filteredNews.isEmpty) {
+                    return Center(
+                      child: Text(
+                        _getEmptyMessage(context, selectedFilter.value),
+                        style: const TextStyle(color: ColorConstants.tertiary),
+                      ),
                     );
-                  },
-                ),
+                  }
+
+                  return ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: filteredNews.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == filteredNews.length) {
+                        return const SizedBox(height: 80);
+                      }
+                      return AdminEventCard(news: filteredNews[index]);
+                    },
+                  );
+                },
               ),
             ],
           ),

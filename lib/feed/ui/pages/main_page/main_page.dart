@@ -3,8 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/feed/class/news.dart';
+import 'package:titan/feed/providers/is_feed_admin_provider.dart';
 import 'package:titan/feed/providers/news_list_provider.dart';
 import 'package:titan/feed/router.dart';
 import 'package:titan/feed/ui/feed.dart';
@@ -26,7 +26,7 @@ class FeedMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final news = ref.watch(newsListProvider);
     final newsNotifier = ref.watch(newsListProvider.notifier);
-    final isSuperAdmin = ref.watch(isAdminProvider);
+    final isFeedAdmin = ref.watch(isFeedAdminProvider);
     final scrollController = useScrollController();
     final navbarVisibilityNotifier = ref.watch(
       navbarVisibilityProvider.notifier,
@@ -60,7 +60,7 @@ class FeedMainPage extends HookConsumerWidget {
               final currentItem = newsList[i];
 
               final itemHeight =
-                  (currentItem.actionStart != null || isSuperAdmin)
+                  (currentItem.actionStart != null || isFeedAdmin)
                   ? 200.0
                   : 160.0;
               scrollPosition += itemHeight;
@@ -110,7 +110,7 @@ class FeedMainPage extends HookConsumerWidget {
                     color: ColorConstants.title,
                   ),
                 ),
-                if (isSuperAdmin)
+                if (isFeedAdmin)
                   CustomIconButton(
                     icon: HeroIcon(
                       HeroIcons.userGroup,
@@ -172,7 +172,7 @@ class FeedMainPage extends HookConsumerWidget {
                             ),
                           )
                         : FeedTimeline(
-                            isAdmin: isSuperAdmin,
+                            isAdmin: isFeedAdmin,
                             items: news,
                             onItemTap: (item) {},
                           ),
