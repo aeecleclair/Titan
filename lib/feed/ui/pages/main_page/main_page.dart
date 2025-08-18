@@ -4,7 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/feed/class/news.dart';
-import 'package:titan/feed/providers/is_feed_admin_provider.dart';
+import 'package:titan/feed/providers/is_user_a_member_of_an_association.dart';
 import 'package:titan/feed/providers/news_list_provider.dart';
 import 'package:titan/feed/router.dart';
 import 'package:titan/feed/ui/feed.dart';

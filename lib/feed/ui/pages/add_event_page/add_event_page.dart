@@ -6,7 +6,6 @@ import 'package:titan/feed/providers/admin_news_list_provider.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
-import 'package:titan/tools/ui/styleguide/date_entry.dart';
 import 'package:titan/tools/ui/styleguide/icon_button.dart';
 import 'package:titan/tools/ui/styleguide/image_entry.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';
