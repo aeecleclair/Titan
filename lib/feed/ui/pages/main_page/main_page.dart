@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/feed/class/news.dart';
+import 'package:titan/feed/providers/is_feed_admin_provider.dart';
 import 'package:titan/feed/providers/is_user_a_member_of_an_association.dart';
 import 'package:titan/feed/providers/news_list_provider.dart';
 import 'package:titan/feed/router.dart';
@@ -26,6 +27,11 @@ class FeedMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final news = ref.watch(newsListProvider);
     final newsNotifier = ref.watch(newsListProvider.notifier);
+    final asyncIsUserAMemberOfAnAssociation = ref.watch(
+      isUserAMemberOfAnAssociationProvider,
+    );
+    final isUserAMemberOfAnAssociation = asyncIsUserAMemberOfAnAssociation
+        .maybeWhen(data: (isMember) => isMember, orElse: () => false);
     final isFeedAdmin = ref.watch(isFeedAdminProvider);
     final scrollController = useScrollController();
     final navbarVisibilityNotifier = ref.watch(
@@ -60,7 +66,8 @@ class FeedMainPage extends HookConsumerWidget {
               final currentItem = newsList[i];
 
               final itemHeight =
-                  (currentItem.actionStart != null || isFeedAdmin)
+                  (currentItem.actionStart != null ||
+                      isUserAMemberOfAnAssociation)
                   ? 200.0
                   : 160.0;
               scrollPosition += itemHeight;
@@ -110,7 +117,7 @@ class FeedMainPage extends HookConsumerWidget {
                     color: ColorConstants.title,
                   ),
                 ),
-                if (isFeedAdmin)
+                if (isUserAMemberOfAnAssociation)
                   CustomIconButton(
                     icon: HeroIcon(
                       HeroIcons.userGroup,
