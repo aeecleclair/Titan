@@ -8,9 +8,9 @@ class EventCreationNotifier extends SingleNotifier<EventCreation> {
   EventCreationNotifier({required this.eventRepository})
     : super(const AsyncValue.loading());
 
-    void fakeLoad() {
-      state = AsyncValue.data(EventCreation.empty());
-    }
+  void fakeLoad() {
+    state = AsyncValue.data(EventCreation.empty());
+  }
 
   Future<bool> addEvent(EventCreation event) async {
     return await add(eventRepository.createEvent, event);

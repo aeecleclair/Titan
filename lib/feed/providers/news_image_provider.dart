@@ -11,10 +11,8 @@ import 'package:titan/tools/providers/single_notifier.dart';
 class NewsImageNotifier extends SingleNotifier<Image> {
   final newsImageRepository = NewsImageRepository();
   final NewsImagesNotifier newsImagesNotifier;
-  NewsImageNotifier({
-    required String token,
-    required this.newsImagesNotifier,
-  }) : super(const AsyncValue.loading()) {
+  NewsImageNotifier({required String token, required this.newsImagesNotifier})
+    : super(const AsyncValue.loading()) {
     newsImageRepository.setToken(token);
   }
 

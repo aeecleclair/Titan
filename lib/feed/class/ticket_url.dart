@@ -1,8 +1,6 @@
 class TicketUrl {
   late final String ticketUrl;
-  TicketUrl({
-    required this.ticketUrl,
-  });
+  TicketUrl({required this.ticketUrl});
 
   TicketUrl.fromJson(Map<String, dynamic> json) {
     ticketUrl = json['ticket_url'];
@@ -14,12 +12,8 @@ class TicketUrl {
     return data;
   }
 
-  TicketUrl copyWith({
-    String? ticketUrl,
-  }) {
-    return TicketUrl(
-      ticketUrl: ticketUrl ?? this.ticketUrl,
-    );
+  TicketUrl copyWith({String? ticketUrl}) {
+    return TicketUrl(ticketUrl: ticketUrl ?? this.ticketUrl);
   }
 
   TicketUrl.empty() {

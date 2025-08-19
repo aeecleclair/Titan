@@ -18,7 +18,9 @@ class EventCreationRepository extends Repository {
   }
 }
 
-final eventCreationRepositoryProvider = Provider<EventCreationRepository>((ref) {
+final eventCreationRepositoryProvider = Provider<EventCreationRepository>((
+  ref,
+) {
   final token = ref.watch(tokenProvider);
   return EventCreationRepository()..setToken(token);
 });
