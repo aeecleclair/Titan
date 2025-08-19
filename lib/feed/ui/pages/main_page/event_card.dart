@@ -28,7 +28,7 @@ class EventCard extends ConsumerWidget {
           loader: (itemId) => imageNotifier.getNewsImage(itemId),
           orElseBuilder: (context, stack) => Container(
             width: double.infinity,
-            height: 130,
+            height: 125,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               gradient: const LinearGradient(
@@ -40,7 +40,7 @@ class EventCard extends ConsumerWidget {
           ),
           dataBuilder: (context, value) => Container(
             width: double.infinity,
-            height: 130,
+            height: 125,
             decoration: BoxDecoration(
               color: ColorConstants.onBackground,
               borderRadius: BorderRadius.circular(15),
