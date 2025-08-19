@@ -42,7 +42,6 @@ class EventCard extends ConsumerWidget {
             width: double.infinity,
             height: 125,
             decoration: BoxDecoration(
-              color: ColorConstants.onBackground,
               borderRadius: BorderRadius.circular(15),
               image: value.isEmpty
                   ? null
