@@ -272,6 +272,7 @@ class AddEventPage extends HookConsumerWidget {
                       onTap: () => getFullDate(context, shotgunDateController),
                       controller: shotgunDateController,
                       label: "Date du SG ",
+                      canBeEmpty: false,
                     ),
                     SizedBox(height: 10),
                     TextEntry(
@@ -280,16 +281,7 @@ class AddEventPage extends HookConsumerWidget {
                       canBeEmpty: true,
                     ),
                     const SizedBox(height: 10),
-
                     FormField<File>(
-                      validator: (e) {
-                        if (poster.value == null) {
-                          return AppLocalizations.of(
-                            context,
-                          )!.advertChoosingPoster;
-                        }
-                        return null;
-                      },
                       builder: (formFieldState) => Center(
                         child: Stack(
                           clipBehavior: Clip.none,
