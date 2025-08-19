@@ -117,42 +117,51 @@ class FeedMainPage extends HookConsumerWidget {
                     color: ColorConstants.title,
                   ),
                 ),
-                if (isUserAMemberOfAnAssociation)
+                if (isUserAMemberOfAnAssociation || isFeedAdmin)
                   CustomIconButton(
                     icon: HeroIcon(
                       HeroIcons.userGroup,
                       color: ColorConstants.background,
                     ),
                     onPressed: () {
-                      showCustomBottomModal(
-                        modal: BottomModalTemplate(
-                          title: 'Administration',
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Button(
-                                text: 'Créer un événement',
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  QR.to(FeedRouter.root + FeedRouter.addEvent);
-                                },
-                              ),
-                              const SizedBox(height: 20),
-                              Button(
-                                text: 'Demandes de publication',
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  QR.to(
-                                    FeedRouter.root + FeedRouter.eventHandling,
-                                  );
-                                },
-                              ),
-                            ],
+                      if (isFeedAdmin && !isUserAMemberOfAnAssociation) {
+                        QR.to(FeedRouter.root + FeedRouter.eventHandling);
+                      } else if (!isFeedAdmin && isUserAMemberOfAnAssociation) {
+                        QR.to(FeedRouter.root + FeedRouter.addEvent);
+                      } else {
+                        showCustomBottomModal(
+                          modal: BottomModalTemplate(
+                            title: 'Administration',
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Button(
+                                  text: 'Créer un événement',
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    QR.to(
+                                      FeedRouter.root + FeedRouter.addEvent,
+                                    );
+                                  },
+                                ),
+                                const SizedBox(height: 20),
+                                Button(
+                                  text: 'Demandes de publication',
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    QR.to(
+                                      FeedRouter.root +
+                                          FeedRouter.eventHandling,
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        context: context,
-                        ref: ref,
-                      );
+                          context: context,
+                          ref: ref,
+                        );
+                      }
                     },
                   ),
               ],
