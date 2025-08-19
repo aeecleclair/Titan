@@ -10,6 +10,7 @@ import 'package:titan/feed/router.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/feed/ui/pages/main_page/feed_timeline.dart';
 import 'package:titan/feed/ui/pages/main_page/filter_news.dart';
+import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -27,6 +28,9 @@ class FeedMainPage extends HookConsumerWidget {
     final newsNotifier = ref.watch(newsListProvider.notifier);
     final isSuperAdmin = ref.watch(isAdminProvider);
     final scrollController = useScrollController();
+    final navbarVisibilityNotifier = ref.watch(
+      navbarVisibilityProvider.notifier,
+    );
 
     useEffect(() {
       if (news.hasValue && news.value!.isNotEmpty) {
@@ -63,6 +67,7 @@ class FeedMainPage extends HookConsumerWidget {
             }
 
             scrollController.jumpTo(scrollPosition);
+            navbarVisibilityNotifier.show();
           }
         });
       }
