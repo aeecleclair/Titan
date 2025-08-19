@@ -34,9 +34,6 @@ class NavigationTemplate extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
     final navbarListModule = ref.watch(navbarListModuleProvider);
-    final navbarListModuleNotifier = ref.watch(
-      navbarListModuleProvider.notifier,
-    );
     final displayQuit = ref.watch(displayQuitProvider);
     final shouldSetup = ref.watch(shouldSetupProvider);
     final shouldSetupNotifier = ref.read(shouldSetupProvider.notifier);
