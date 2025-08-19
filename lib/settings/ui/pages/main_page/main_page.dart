@@ -69,7 +69,6 @@ class SettingsMainPage extends HookConsumerWidget {
         controller: ScrollController(),
         onRefresh: () async {
           await notificationTopicListNotifier.loadNotificationTopicList();
-          await meNotifier.loadMe();
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
