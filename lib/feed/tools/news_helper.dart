@@ -1,11 +1,14 @@
 import 'package:flutter/widgets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/advert/router.dart';
-import 'package:titan/event/router.dart';
 import 'package:titan/feed/class/news.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/feed/providers/event_ticket_url_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:titan/vote/router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 String _capitalize(String text) {
   if (text.isEmpty) return text;
@@ -165,10 +168,10 @@ String getActionSubtitle(News news, BuildContext context) {
 
   if (module == "campagne") {
     return AppLocalizations.of(context)?.eventActionCampaignSubtitle ??
-        'Votez maintenant';
+        'Votes maintenant';
   } else if (module == "event") {
     return AppLocalizations.of(context)?.eventActionEventSubtitle ??
-        'Répondez à l\'invitation';
+        'Réponds à l\'invitation';
   }
   return '';
 }
@@ -197,14 +200,34 @@ String getActionValidatedButtonText(News news, BuildContext context) {
   return '';
 }
 
-void getActionButtonAction(News news) {
+void getActionButtonAction(
+  News news,
+  BuildContext context,
+  WidgetRef ref,
+) async {
   final module = news.module;
 
   if (module == "campagne") {
     QR.to(VoteRouter.root);
   } else if (module == "event") {
-    // TODO : query event
-    QR.to(EventRouter.root);
+    final ticketUrlNotifier = ref.watch(ticketUrlProvider.notifier);
+    final ticketUrl = await ticketUrlNotifier.getTicketUrl(news.moduleObjectId);
+    ticketUrl.when(
+      data: (ticketUrl) async {
+        if (await canLaunchUrl(Uri.parse(ticketUrl.ticketUrl))) {
+          await launchUrl(
+            Uri.parse(ticketUrl.ticketUrl),
+            mode: LaunchMode.externalApplication,
+          );
+        } else {
+          displayToast(context, TypeMsg.error, 'Impossible d\'ouvrir le lien');
+        }
+      },
+      error: (e, stackTrace) {
+        displayToast(context, TypeMsg.error, e.toString());
+      },
+      loading: () {},
+    );
   } else if (module == "post") {
     // TODO : set id
     QR.to(AdvertRouter.root);

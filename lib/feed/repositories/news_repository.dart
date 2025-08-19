@@ -13,7 +13,6 @@ class NewsRepository extends Repository {
   }
 
   Future<News> createNews(News news) async {
-    print(news.toJson());
     return News.fromJson(await create(news.toJson(), suffix: "news"));
   }
 

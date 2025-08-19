@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/feed/class/news.dart';
 import 'package:titan/feed/tools/news_helper.dart';
@@ -8,7 +9,7 @@ import 'package:titan/feed/ui/pages/main_page/event_card.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/feed/ui/pages/main_page/dotted_vertical_line.dart';
 
-class TimelineItem extends StatelessWidget {
+class TimelineItem extends ConsumerWidget {
   final News item;
   final VoidCallback? onTap;
   final bool isAdmin;
@@ -21,7 +22,7 @@ class TimelineItem extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
       height: item.actionStart != null || isAdmin ? 200 : 160,
       child: Stack(
@@ -96,13 +97,13 @@ class TimelineItem extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          child: isAdmin
+                          child: !isAdmin
                               ? EventActionAdmin(item: item)
                               : EventAction(
                                   title: getActionTitle(item, context),
                                   subtitle: getActionSubtitle(item, context),
                                   onActionPressed: () =>
-                                      getActionButtonAction(item),
+                                      getActionButtonAction(item, context, ref),
                                   actionEnableButtonText:
                                       getActionEnableButtonText(item, context),
                                   actionValidatedButtonText:
@@ -110,7 +111,7 @@ class TimelineItem extends StatelessWidget {
                                         item,
                                         context,
                                       ),
-                                  isActionValidated: true,
+                                  isActionValidated: false,
                                   isActionEnabled:
                                       (item.actionStart ?? item.start).isBefore(
                                         DateTime.now(),
