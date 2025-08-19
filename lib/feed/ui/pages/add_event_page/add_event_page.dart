@@ -1,6 +1,11 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 // import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:titan/admin/class/assocation.dart';
 import 'package:titan/admin/providers/my_association_list_provider.dart';
@@ -11,6 +16,7 @@ import 'package:titan/event/ui/pages/event_pages/checkbox_entry.dart';
 import 'package:titan/feed/class/event_creation.dart';
 import 'package:titan/feed/providers/admin_news_list_provider.dart';
 import 'package:titan/feed/providers/event_creation_provider.dart';
+import 'package:titan/feed/providers/news_image_provider.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
@@ -20,9 +26,9 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/horizontal_multi_select.dart';
-import 'package:titan/tools/ui/styleguide/image_entry.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
+import 'package:titan/tools/ui/widgets/image_picker_on_tap.dart';
 
 class AddEventPage extends HookConsumerWidget {
   const AddEventPage({super.key});
@@ -43,6 +49,7 @@ class AddEventPage extends HookConsumerWidget {
 
     final eventCreationNotifier = ref.watch(eventCreationProvider.notifier);
     final adminNewsListNotifier = ref.watch(adminNewsListProvider.notifier);
+    final newsListNotifier = ref.watch(newsListProvider.notifier);
     // final interval = useTextEditingController();
     // final recurrenceEndDate = useTextEditingController();
     // final selectedDays = ref.watch(selectedDaysProvider);
@@ -50,6 +57,11 @@ class AddEventPage extends HookConsumerWidget {
     // final now = DateTime.now();
     final selectedAssociation = useState<Association?>(null);
 
+    final imageNotifier = ref.watch(newsImageProvider.notifier);
+    final poster = useState<Uint8List?>(null);
+    final posterFile = useState<Image?>(null);
+
+    final ImagePicker picker = ImagePicker();
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -81,8 +93,8 @@ class AddEventPage extends HookConsumerWidget {
                           onItemSelected: (association) {
                             selectedAssociation.value = association;
                           },
-                          itemBuilder: (context, association, index, selected) =>
-                              Text(
+                          itemBuilder:
+                              (context, association, index, selected) => Text(
                                 association.name,
                                 style: TextStyle(
                                   color: selected
@@ -106,6 +118,7 @@ class AddEventPage extends HookConsumerWidget {
                         // recurrenceEndDateController.text = "";
                       },
                     ),
+
                     // const SizedBox(height: 10),
                     // CheckBoxEntry(
                     //   title: AppLocalizations.of(context)!.eventRecurrence,
@@ -116,7 +129,6 @@ class AddEventPage extends HookConsumerWidget {
                     //     recurrenceEndDateController.text = "";
                     //   },
                     // ),
-            
                     const SizedBox(height: 30),
                     // recurrentController.value
                     //     ? Column(
@@ -140,7 +152,7 @@ class AddEventPage extends HookConsumerWidget {
                     //                     context,
                     //                     key,
                     //                   );
-            
+
                     //                   return GestureDetector(
                     //                     onTap: () =>
                     //                         selectedDaysNotifier.toggle(index),
@@ -232,28 +244,26 @@ class AddEventPage extends HookConsumerWidget {
                     //           ),
                     //         ],
                     //       )
-                        // : 
-                        Column(
-                            children: [
-                              DateEntry(
-                                onTap: () => allDay.value
-                                    ? getOnlyDayDate(context, startDateController)
-                                    : getFullDate(context, startDateController),
-                                controller: startDateController,
-                                label: AppLocalizations.of(
-                                  context,
-                                )!.eventStartDate,
-                              ),
-                              const SizedBox(height: 30),
-                              DateEntry(
-                                onTap: () => allDay.value
-                                    ? getOnlyDayDate(context, endDateController)
-                                    : getFullDate(context, endDateController),
-                                controller: endDateController,
-                                label: AppLocalizations.of(context)!.eventEndDate,
-                              ),
-                            ],
-                          ),
+                    // :
+                    Column(
+                      children: [
+                        DateEntry(
+                          onTap: () => allDay.value
+                              ? getOnlyDayDate(context, startDateController)
+                              : getFullDate(context, startDateController),
+                          controller: startDateController,
+                          label: AppLocalizations.of(context)!.eventStartDate,
+                        ),
+                        const SizedBox(height: 30),
+                        DateEntry(
+                          onTap: () => allDay.value
+                              ? getOnlyDayDate(context, endDateController)
+                              : getFullDate(context, endDateController),
+                          controller: endDateController,
+                          label: AppLocalizations.of(context)!.eventEndDate,
+                        ),
+                      ],
+                    ),
                     SizedBox(height: 10),
                     TextEntry(label: "Lieu", controller: locationController),
                     SizedBox(height: 10),
@@ -269,14 +279,105 @@ class AddEventPage extends HookConsumerWidget {
                       canBeEmpty: true,
                     ),
                     const SizedBox(height: 10),
-                    ImageEntry(
-                      title: "Image",
-                      subtitle: "Sélectionnez une image",
-                      onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Image ajoutée')),
-                        );
+
+                    FormField<File>(
+                      validator: (e) {
+                        if (poster.value == null) {
+                          return AppLocalizations.of(
+                            context,
+                          )!.advertChoosingPoster;
+                        }
+                        return null;
                       },
+                      builder: (formFieldState) => Center(
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            ImagePickerOnTap(
+                              picker: picker,
+                              imageBytesNotifier: poster,
+                              imageNotifier: posterFile,
+                              displayToastWithContext: displayToastWithContext,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(5),
+                                  ),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: formFieldState.hasError
+                                          ? Colors.red
+                                          : Colors.black.withValues(alpha: 0.1),
+                                      spreadRadius: 5,
+                                      blurRadius: 10,
+                                      offset: const Offset(2, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: posterFile.value != null
+                                    ? Stack(
+                                        children: [
+                                          Container(
+                                            width: 285,
+                                            height: 160,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                    Radius.circular(5),
+                                                  ),
+                                              image: DecorationImage(
+                                                image: poster.value != null
+                                                    ? Image.memory(
+                                                        poster.value!,
+                                                        fit: BoxFit.cover,
+                                                      ).image
+                                                    : posterFile.value!.image,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Container(
+                                                width: 50,
+                                                height: 50,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                        Radius.circular(5),
+                                                      ),
+                                                  color: Colors.white
+                                                      .withValues(alpha: 0.4),
+                                                ),
+                                                child: HeroIcon(
+                                                  HeroIcons.photo,
+                                                  size: 40,
+                                                  color: Colors.black
+                                                      .withValues(alpha: 0.5),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Container(
+                                        width: 285,
+                                        height: 160,
+                                        decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(5),
+                                          ),
+                                        ),
+                                        child: const HeroIcon(
+                                          HeroIcons.photo,
+                                          size: 160,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 40),
                     Button(
@@ -288,7 +389,7 @@ class AddEventPage extends HookConsumerWidget {
                         if (selectedAssociation.value == null) {
                           displayToastWithContext(
                             TypeMsg.error,
-                            "Veuillez sélectionner une association"
+                            "Veuillez sélectionner une association",
                           );
                           return;
                         }
@@ -315,13 +416,13 @@ class AddEventPage extends HookConsumerWidget {
                               TypeMsg.error,
                               AppLocalizations.of(context)!.eventInvalidDates,
                             );
-                          // } else if (recurrentController.value &&
-                          //     selectedDays.where((element) => element).isEmpty) {
-                          //   displayToast(
-                          //     context,
-                          //     TypeMsg.error,
-                          //     AppLocalizations.of(context)!.eventNoDaySelected,
-                          //   );
+                            // } else if (recurrentController.value &&
+                            //     selectedDays.where((element) => element).isEmpty) {
+                            //   displayToast(
+                            //     context,
+                            //     TypeMsg.error,
+                            //     AppLocalizations.of(context)!.eventNoDaySelected,
+                            //   );
                           } else {
                             await tokenExpireWrapper(ref, () async {
                               // String recurrenceRule = "";
@@ -381,16 +482,29 @@ class AddEventPage extends HookConsumerWidget {
                                 associationId: selectedAssociation.value!.id,
                                 ticketUrl: externalLinkController.text,
                               );
-                              final value = await eventCreationNotifier.addEvent(
-                                newEvent,
-                              );
+                              final value = await eventCreationNotifier
+                                  .addEvent(newEvent);
                               if (value) {
-                                adminNewsListNotifier.loadNewsList();
                                 Navigator.of(context).pop();
                                 displayToastWithContext(
                                   TypeMsg.msg,
                                   addedEventMsg,
                                 );
+                                newsListNotifier.loadNewsList();
+                                adminNewsListNotifier.loadNewsList().then((
+                                  news,
+                                ) {
+                                  news.maybeWhen(
+                                    data: (list) {
+                                      final newNews = list.last;
+                                      imageNotifier.updateNewsImage(
+                                        newNews.id,
+                                        poster.value!,
+                                      );
+                                    },
+                                    orElse: () {},
+                                  );
+                                });
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
