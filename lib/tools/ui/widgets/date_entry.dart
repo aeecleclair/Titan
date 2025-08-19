@@ -4,7 +4,7 @@ import 'package:titan/tools/ui/widgets/text_entry.dart';
 class DateEntry extends StatelessWidget {
   final VoidCallback onTap;
   final String label;
-  final bool enabled;
+  final bool enabled, canBeEmpty;
   final TextEditingController controller;
   final Color color, enabledColor, errorColor;
   final Widget? suffixIcon;
@@ -15,6 +15,7 @@ class DateEntry extends StatelessWidget {
     required this.controller,
     required this.onTap,
     this.enabled = true,
+    this.canBeEmpty = false,
     this.color = Colors.black,
     this.enabledColor = Colors.black,
     this.errorColor = Colors.red,
@@ -34,6 +35,7 @@ class DateEntry extends StatelessWidget {
           enabledColor: enabledColor,
           errorColor: errorColor,
           suffixIcon: suffixIcon,
+          canBeEmpty: canBeEmpty,
         ),
       ),
     );
