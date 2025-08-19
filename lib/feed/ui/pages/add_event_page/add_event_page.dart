@@ -17,6 +17,7 @@ import 'package:titan/feed/class/event_creation.dart';
 import 'package:titan/feed/providers/admin_news_list_provider.dart';
 import 'package:titan/feed/providers/event_creation_provider.dart';
 import 'package:titan/feed/providers/news_image_provider.dart';
+import 'package:titan/feed/providers/news_list_provider.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
