@@ -122,6 +122,7 @@ void main() {
         groups: [],
         phone: 'phone',
         promo: null,
+        isSuperAdmin: false,
       );
       expect(
         user.toString(),
@@ -158,6 +159,7 @@ void main() {
         "groups": [],
         "phone": "phone",
         "promo": null,
+        "is_super_admin": false,
       });
     });
   });

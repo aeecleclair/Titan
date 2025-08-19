@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/admin/ui/pages/groups/edit_group_page/edit_group_page.dart'
     deferred as edit_group_page;
 import 'package:titan/admin/ui/pages/main_page/main_page.dart'
@@ -24,6 +25,7 @@ import 'package:titan/admin/ui/pages/membership/add_edit_user_membership_page/ad
     deferred as add_edit_user_membership_page;
 import 'package:titan/admin/ui/pages/association_page/association_page.dart'
     deferred as association_page;
+import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -58,6 +60,7 @@ class AdminRouter {
     builder: () => main_page.AdminMainPage(),
     middleware: [
       AuthenticatedMiddleware(ref),
+      AdminMiddleware(ref, isAdminProvider),
       DeferredLoadingMiddleware(main_page.loadLibrary),
     ],
     pageType: QCustomPage(

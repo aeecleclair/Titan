@@ -19,6 +19,7 @@ class User {
     required this.phone,
     required this.createdOn,
     required this.groups,
+    required this.isSuperAdmin,
   });
   late final String name;
   late final String firstname;
@@ -32,6 +33,7 @@ class User {
   late final String? phone;
   late final DateTime createdOn;
   late final List<SimpleGroup> groups;
+  late final bool isSuperAdmin;
 
   User.fromJson(Map<String, dynamic> json) {
     name = capitaliseAll(json['name']);
@@ -56,6 +58,7 @@ class User {
     groups = List.from(
       json['groups'],
     ).map((e) => SimpleGroup.fromJson(e)).toList();
+    isSuperAdmin = json['is_super_admin'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -74,6 +77,7 @@ class User {
     data['phone'] = phone;
     data['created_on'] = processDateToAPI(createdOn);
     data['groups'] = groups.map((e) => e.toJson()).toList();
+    data['is_super_admin'] = isSuperAdmin;
     return data;
   }
 
@@ -90,6 +94,7 @@ class User {
     phone = null;
     createdOn = DateTime.now();
     groups = [];
+    isSuperAdmin = false;
   }
 
   User copyWith({
@@ -105,6 +110,7 @@ class User {
     String? phone,
     DateTime? createdOn,
     List<SimpleGroup>? groups,
+    bool? isSuperAdmin,
   }) {
     return User(
       name: name ?? this.name,
@@ -119,6 +125,7 @@ class User {
       phone: phone,
       createdOn: createdOn ?? this.createdOn,
       groups: groups ?? this.groups,
+      isSuperAdmin: isSuperAdmin ?? this.isSuperAdmin,
     );
   }
 

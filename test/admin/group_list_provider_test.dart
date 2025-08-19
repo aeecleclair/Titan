@@ -61,6 +61,7 @@ void main() {
         floor: '',
         phone: '',
         promo: null,
+        isSuperAdmin: false,
       );
       final GroupListNotifier groupNotifier = GroupListNotifier(
         groupRepository: mockGroup,

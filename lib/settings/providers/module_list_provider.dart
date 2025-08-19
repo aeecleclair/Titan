@@ -22,6 +22,7 @@ import 'package:titan/recommendation/router.dart';
 import 'package:titan/seed-library/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:titan/settings/router.dart';
+import 'package:titan/super_admin/providers/is_super_admin_provider.dart';
 import 'package:titan/super_admin/router.dart';
 import 'package:titan/vote/router.dart';
 
@@ -34,8 +35,12 @@ final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
       .toList();
 
   final isAdmin = ref.watch(isAdminProvider);
+  final isSuperAdmin = ref.watch(isSuperAdminProvider);
 
-  ModulesNotifier modulesNotifier = ModulesNotifier(isAdmin: isAdmin);
+  ModulesNotifier modulesNotifier = ModulesNotifier(
+    isAdmin: isAdmin,
+    isSuperAdmin: isSuperAdmin,
+  );
   modulesNotifier.loadModules(myModulesRoot);
   return modulesNotifier;
 });
@@ -44,6 +49,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   String dbModule = "modules";
   String dbAllModules = "allModules";
   final bool isAdmin;
+  final bool isSuperAdmin;
   final eq = const DeepCollectionEquality.unordered();
   List<Module> allModules = [
     HomeRouter.module,
@@ -62,9 +68,9 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     RecommendationRouter.module,
     VoteRouter.module,
     SeedLibraryRouter.module,
-    AdminRouter.module,
   ];
-  ModulesNotifier({required this.isAdmin}) : super([]);
+  ModulesNotifier({required this.isAdmin, required this.isSuperAdmin})
+    : super([]);
 
   void saveModules() {
     SharedPreferences.getInstance().then((prefs) {
@@ -130,7 +136,8 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     }
     allModules.addAll([
       SettingsRouter.module,
-      if (isAdmin) SuperAdminRouter.module,
+      if (isAdmin) AdminRouter.module,
+      if (isSuperAdmin) SuperAdminRouter.module,
     ]);
     state = allModules;
   }
