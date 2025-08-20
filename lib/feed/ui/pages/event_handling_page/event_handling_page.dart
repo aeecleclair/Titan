@@ -90,16 +90,12 @@ class EventHandlingPage extends HookConsumerWidget {
                       ),
                     );
                   }
-
-                  return ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: filteredNews.length + 1,
-                    itemBuilder: (context, index) {
-                      if (index == filteredNews.length) {
-                        return const SizedBox(height: 80);
-                      }
-                      return AdminEventCard(news: filteredNews[index]);
-                    },
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: filteredNews
+                          .map((news) => AdminEventCard(news: news))
+                          .toList(),
+                    ),
                   );
                 },
               ),
