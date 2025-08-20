@@ -11,7 +11,6 @@ import 'package:titan/feed/router.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/feed/ui/pages/main_page/feed_timeline.dart';
 import 'package:titan/feed/ui/pages/main_page/filter_news.dart';
-import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -31,9 +30,68 @@ class FeedMainPage extends HookConsumerWidget {
     );
     final isFeedAdmin = ref.watch(isFeedAdminProvider);
     final scrollController = useScrollController();
-    final navbarVisibilityNotifier = ref.watch(
-      navbarVisibilityProvider.notifier,
-    );
+
+    final showRefreshButton = useState(false);
+    final lastScrollPosition = useState(0.0);
+    final hasScrolledEnough = useState(false);
+    final lastUserScrollTime = useState(DateTime.now());
+    final consecutiveUpwardScrolls = useState(0);
+
+    Future<void> onRefresh() async {
+      showRefreshButton.value = false;
+      await newsNotifier.loadNewsList();
+    }
+
+    useEffect(() {
+      void scrollListener() {
+        if (!scrollController.hasClients) return;
+
+        final position = scrollController.position;
+        final currentScrollPosition = position.pixels;
+        final scrollDirection =
+            currentScrollPosition - lastScrollPosition.value;
+        final now = DateTime.now();
+
+        if (scrollDirection.abs() < 3) return;
+
+        final isAtTop = currentScrollPosition <= position.minScrollExtent;
+        final isAtBottom = currentScrollPosition >= position.maxScrollExtent;
+        final isInBounceZone = isAtTop || isAtBottom;
+
+        if (currentScrollPosition > 200 && !hasScrolledEnough.value) {
+          hasScrolledEnough.value = true;
+        }
+
+        if (scrollDirection < -15) {
+          final timeSinceLastScroll = now
+              .difference(lastUserScrollTime.value)
+              .inMilliseconds;
+
+          if (!isInBounceZone && timeSinceLastScroll > 50) {
+            consecutiveUpwardScrolls.value++;
+            lastUserScrollTime.value = now;
+
+            if (hasScrolledEnough.value &&
+                consecutiveUpwardScrolls.value >= 2 &&
+                !showRefreshButton.value) {
+              showRefreshButton.value = true;
+            }
+          }
+        } else if (scrollDirection > 5) {
+          consecutiveUpwardScrolls.value = 0;
+          lastUserScrollTime.value = now;
+
+          if (showRefreshButton.value && currentScrollPosition > 50) {
+            showRefreshButton.value = false;
+          }
+        }
+
+        lastScrollPosition.value = currentScrollPosition;
+      }
+
+      scrollController.addListener(scrollListener);
+      return () => scrollController.removeListener(scrollListener);
+    }, []);
 
     useEffect(() {
       if (news.hasValue && news.value!.isNotEmpty) {
@@ -71,7 +129,6 @@ class FeedMainPage extends HookConsumerWidget {
             }
 
             scrollController.jumpTo(scrollPosition);
-            navbarVisibilityNotifier.show();
           }
         });
       }
@@ -79,23 +136,52 @@ class FeedMainPage extends HookConsumerWidget {
     }, [news]);
 
     return FeedTemplate(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10),
-            Row(
+      child: Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Actualité",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: ColorConstants.title,
-                  ),
+                CustomSearchBar(
+                  onFilter: () async {
+                    final syncNews = newsNotifier.allNews.maybeWhen(
+                      orElse: () => <News>[],
+                      data: (loaded) => loaded,
+                    );
+                    final entities = syncNews
+                        .map((e) => e.entity)
+                        .toSet()
+                        .toList();
+                    final modules = syncNews
+                        .map((e) => e.module)
+                        .toSet()
+                        .toList();
+                    await showCustomBottomModal(
+                      modal: FilterNewsModal(
+                        entities: entities,
+                        modules: modules,
+                      ),
+                      context: context,
+                      ref: ref,
+                    );
+                  },
+                  onSearch: (_) {},
                 ),
-                Spacer(),
+
+                const SizedBox(height: 20),
+
+                Row(
+                  children: [
+                    const Text(
+                      "Actualité",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: ColorConstants.title,
+                      ),
+                    ),
+					Spacer(),
                 IconButton(
                   icon: HeroIcon(
                     HeroIcons.adjustmentsHorizontal,
@@ -126,87 +212,150 @@ class FeedMainPage extends HookConsumerWidget {
                   },
                   splashRadius: 20,
                 ),
-                if (isUserAMemberOfAnAssociation || isFeedAdmin)
-                  CustomIconButton(
-                    icon: HeroIcon(
-                      HeroIcons.userGroup,
-                      color: ColorConstants.background,
+                    if (isUserAMemberOfAnAssociation || isFeedAdmin)
+                      CustomIconButton(
+                        icon: HeroIcon(
+                          HeroIcons.userGroup,
+                          color: ColorConstants.background,
+                        ),
+                        onPressed: () {
+                          if (isFeedAdmin && !isUserAMemberOfAnAssociation) {
+                            QR.to(FeedRouter.root + FeedRouter.eventHandling);
+                          } else if (!isFeedAdmin &&
+                              isUserAMemberOfAnAssociation) {
+                            QR.to(FeedRouter.root + FeedRouter.addEvent);
+                          } else {
+                            showCustomBottomModal(
+                              modal: BottomModalTemplate(
+                                title: 'Administration',
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Button(
+                                      text: 'Créer un événement',
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        QR.to(
+                                          FeedRouter.root + FeedRouter.addEvent,
+                                        );
+                                      },
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Button(
+                                      text: 'Demandes de publication',
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        QR.to(
+                                          FeedRouter.root +
+                                              FeedRouter.eventHandling,
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              context: context,
+                              ref: ref,
+                            );
+                          }
+                        },
+                      ),
+                  ],
+                ),
+
+                const SizedBox(height: 20),
+
+                Expanded(
+                  child: ScrollToHideNavbar(
+                    controller: scrollController,
+                    child: SingleChildScrollView(
+                      controller: scrollController,
+                      physics: const BouncingScrollPhysics(),
+                      child: AsyncChild(
+                        value: news,
+                        builder: (context, news) => news.isEmpty
+                            ? const Center(
+                                child: Text(
+                                  'Aucune actualité disponible',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: ColorConstants.tertiary,
+                                  ),
+                                ),
+                              )
+                            : FeedTimeline(
+                                isAdmin: isFeedAdmin,
+                                items: news,
+                                onItemTap: (item) {},
+                              ),
+                      ),
                     ),
-                    onPressed: () {
-                      if (isFeedAdmin && !isUserAMemberOfAnAssociation) {
-                        QR.to(FeedRouter.root + FeedRouter.eventHandling);
-                      } else if (!isFeedAdmin && isUserAMemberOfAnAssociation) {
-                        QR.to(FeedRouter.root + FeedRouter.addEvent);
-                      } else {
-                        showCustomBottomModal(
-                          modal: BottomModalTemplate(
-                            title: 'Administration',
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Button(
-                                  text: 'Créer un événement',
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    QR.to(
-                                      FeedRouter.root + FeedRouter.addEvent,
-                                    );
-                                  },
-                                ),
-                                const SizedBox(height: 20),
-                                Button(
-                                  text: 'Demandes de publication',
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    QR.to(
-                                      FeedRouter.root +
-                                          FeedRouter.eventHandling,
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                          context: context,
-                          ref: ref,
-                        );
-                      }
-                    },
                   ),
+                ),
               ],
             ),
+          ),
 
-            const SizedBox(height: 10),
-
-            Expanded(
-              child: ScrollToHideNavbar(
-                controller: scrollController,
-                child: SingleChildScrollView(
-                  controller: scrollController,
-                  physics: const BouncingScrollPhysics(),
-                  child: AsyncChild(
-                    value: news,
-                    builder: (context, news) => news.isEmpty
-                        ? const Center(
-                            child: Text(
-                              'Aucune actualité disponible',
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            top: showRefreshButton.value ? 75 : 40,
+            left: 0,
+            right: 0,
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              opacity: showRefreshButton.value ? 1.0 : 0.0,
+              child: Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: ColorConstants.main,
+                    borderRadius: BorderRadius.circular(25),
+                    boxShadow: [
+                      BoxShadow(
+                        color: ColorConstants.onMain.withValues(alpha: 0.4),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: onRefresh,
+                      borderRadius: BorderRadius.circular(25),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            HeroIcon(
+                              HeroIcons.arrowPath,
+                              size: 16,
+                              color: ColorConstants.background,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Actualiser',
                               style: TextStyle(
-                                fontSize: 16,
-                                color: ColorConstants.tertiary,
+                                color: ColorConstants.background,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                          )
-                        : FeedTimeline(
-                            isAdmin: isFeedAdmin,
-                            items: news,
-                            onItemTap: (item) {},
-                          ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
