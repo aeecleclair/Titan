@@ -1,6 +1,7 @@
 import 'package:titan/tools/functions.dart';
 
-class EventCreation {
+class Event {
+  late final String id;
   late final String name;
   late final DateTime start;
   late final DateTime end;
@@ -11,7 +12,8 @@ class EventCreation {
   late final String associationId;
   late final String? ticketUrl;
 
-  EventCreation({
+  Event({
+    required this.id,
     required this.name,
     required this.start,
     required this.end,
@@ -23,7 +25,8 @@ class EventCreation {
     this.ticketUrl,
   });
 
-  EventCreation.fromJson(Map<String, dynamic> json) {
+  Event.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
     start = processDateFromAPI(json['start']);
     end = processDateFromAPI(json['end']);
@@ -53,11 +56,10 @@ class EventCreation {
     if (ticketUrl != null) {
       data['ticket_url'] = ticketUrl;
     }
-    data['description'] = ""; // TODO: remove
     return data;
   }
 
-  EventCreation copyWith({
+  Event copyWith({
     String? name,
     DateTime? start,
     DateTime? end,
@@ -69,7 +71,8 @@ class EventCreation {
     String? ticketUrl,
     bool? hasRoom,
   }) {
-    return EventCreation(
+    return Event(
+      id: id,
       name: name ?? this.name,
       start: start ?? this.start,
       end: end ?? this.end,
@@ -82,7 +85,8 @@ class EventCreation {
     );
   }
 
-  EventCreation.empty() {
+  Event.empty() {
+    id = '';
     name = '';
     start = DateTime.now();
     end = DateTime.now();
@@ -96,6 +100,6 @@ class EventCreation {
 
   @override
   String toString() {
-    return 'EventCreation{name: $name, start: $start, end: $end, allDay: $allDay, location: $location, recurrenceRule: $recurrenceRule, ticketUrlOpening: $ticketUrlOpening, associationId: $associationId, ticketUrl: $ticketUrl}';
+    return 'Event{name: $name, start: $start, end: $end, allDay: $allDay, location: $location, recurrenceRule: $recurrenceRule, ticketUrlOpening: $ticketUrlOpening, associationId: $associationId, ticketUrl: $ticketUrl}';
   }
 }

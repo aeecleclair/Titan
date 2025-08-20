@@ -21,13 +21,6 @@ class NewsImageNotifier extends SingleNotifier<Image> {
     newsImagesNotifier.setTData(id, AsyncData([image]));
     return image;
   }
-
-  Future<Image> updateNewsImage(String id, Uint8List bytes) async {
-    newsImagesNotifier.setTData(id, const AsyncLoading());
-    final image = await newsImageRepository.addNewsImage(bytes, id);
-    newsImagesNotifier.setTData(id, AsyncData([image]));
-    return image;
-  }
 }
 
 final newsImageProvider =
