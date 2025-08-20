@@ -54,20 +54,20 @@ class AdvertCard extends HookConsumerWidget {
             child: Row(
               children: [
                 Center(
-                    child: AutoLoaderChild(
-                      group: associationLogo,
-                      notifier: associationLogoMapNotifier,
-                      mapKey: advert.associationId,
-                      loader: (associationId) => associationLogoNotifier
-                          .getAssociationLogo(associationId),
-                      dataBuilder: (context, data) {
-                        return CircleAvatar(
-                          radius: 20,
-                          backgroundColor: Colors.white,
-                          backgroundImage: Image(image: data.first.image).image,
-                        );
-                      },
-                      orElseBuilder: (context, stack) => Container(
+                  child: AutoLoaderChild(
+                    group: associationLogo,
+                    notifier: associationLogoMapNotifier,
+                    mapKey: advert.associationId,
+                    loader: (associationId) => associationLogoNotifier
+                        .getAssociationLogo(associationId),
+                    dataBuilder: (context, data) {
+                      return CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.white,
+                        backgroundImage: Image(image: data.first.image).image,
+                      );
+                    },
+                    orElseBuilder: (context, stack) => Container(
                       width: 40,
                       height: 40,
                       decoration: const BoxDecoration(

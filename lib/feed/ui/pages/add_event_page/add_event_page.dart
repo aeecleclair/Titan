@@ -477,8 +477,7 @@ class AddEventPage extends HookConsumerWidget {
                               );
                               final eventCreated = await eventCreationNotifier
                                   .addEvent(newEvent);
-                              if (poster.value == null ||
-                                  posterFile.value == null) {
+                              if (poster.value == null) {
                                 Navigator.of(context).pop();
                                 displayToastWithContext(
                                   TypeMsg.msg,
