@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/login/providers/animation_provider.dart';
 import 'package:titan/login/ui/auth_page.dart';
 import 'package:titan/login/ui/components/sign_in_up_bar.dart';
 import 'package:titan/tools/constants.dart';
@@ -20,7 +19,6 @@ class AppSignIn extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authNotifier = ref.watch(authTokenProvider.notifier);
     final pathForwarding = ref.read(pathForwardingProvider);
-    final controller = ref.watch(backgroundAnimationProvider);
 
     return LoginTemplate(
       callback: (AnimationController controller) {
@@ -129,11 +127,8 @@ class AppSignIn extends HookConsumerWidget {
                           splashColor: const Color.fromRGBO(255, 255, 255, 1),
                           onTap: () async {
                             await launchUrl(
-                              Uri.parse(
-                                "${getTitanHost()}calypsso/change-password",
-                              ),
+                              Uri.parse("${getTitanHost()}calypsso/recover"),
                             );
-                            controller?.forward();
                           },
                           child: Text(
                             AppLocalizations.of(context)!.loginForgotPassword,
