@@ -71,6 +71,14 @@ jobs:
       - name: Get Packages
         run: flutter pub get
 
+      - name: Configure general env
+        run: |
+          echo PAYMENT_NAME=$PAYMENT_NAME >> .env
+          echo SCHOOL_NAME=$SCHOOL_NAME >> .env
+        env:
+          PAYMENT_NAME: ${{ vars.PAYMENT_NAME }}
+          SCHOOL_NAME: ${{ vars.SCHOOL_NAME }}
+
       - name: Configure Alpha env
         if: needs.extract-version.outputs.isAlpha == 'true'
         run: |

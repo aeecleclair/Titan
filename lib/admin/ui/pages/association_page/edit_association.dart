@@ -184,7 +184,7 @@ class EditAssociation extends HookConsumerWidget {
             ),
             SizedBox(height: 20),
             Button(
-              text: localizeWithContext.adminConfirm,
+              text: localizeWithContext.globalConfirm,
               disabled:
                   !(nameController.value.text != association.name ||
                       chosenGroup.value!.id != association.groupId),

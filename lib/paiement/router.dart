@@ -21,6 +21,7 @@ import 'package:titan/paiement/ui/pages/store_stats_page/store_stats_page.dart'
     deferred as store_stats_page;
 import 'package:titan/paiement/ui/pages/transfer_structure_page/transfer_structure_page.dart'
     deferred as transfer_structure_page;
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
@@ -38,7 +39,7 @@ class PaymentRouter {
   static const String storeAdmin = '/storeAdmin';
   static const String storeStats = '/storeStats';
   static final Module module = Module(
-    getName: (context) => AppLocalizations.of(context)!.modulePayment,
+    getName: (context) => getPaymentName(),
     getDescription: (context) =>
         AppLocalizations.of(context)!.modulePaymentDescription,
     root: PaymentRouter.root,

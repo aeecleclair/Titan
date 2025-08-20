@@ -464,12 +464,6 @@ abstract class AppLocalizations {
   /// **'Description'**
   String get adminDescription;
 
-  /// No description provided for @adminEclSchool.
-  ///
-  /// In fr, this message translates to:
-  /// **'Centrale Lyon'**
-  String get adminEclSchool;
-
   /// No description provided for @adminEdit.
   ///
   /// In fr, this message translates to:
@@ -613,12 +607,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Visibilité des modules'**
   String get adminModifyModuleVisibility;
-
-  /// No description provided for @adminMyEclPay.
-  ///
-  /// In fr, this message translates to:
-  /// **'MyECLPay'**
-  String get adminMyEclPay;
 
   /// No description provided for @adminName.
   ///
@@ -1009,12 +997,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Choisir un groupe gestionnaire pour l\'association'**
   String get adminChooseAssociationManagerGroup;
-
-  /// No description provided for @adminConfirm.
-  ///
-  /// In fr, this message translates to:
-  /// **'Valider'**
-  String get adminConfirm;
 
   /// No description provided for @advertAdd.
   ///
@@ -4403,7 +4385,7 @@ abstract class AppLocalizations {
   /// No description provided for @phonebookAdmin.
   ///
   /// In fr, this message translates to:
-  /// **'Administration'**
+  /// **'Admin'**
   String get phonebookAdmin;
 
   /// No description provided for @phonebookAll.
@@ -4574,6 +4556,12 @@ abstract class AppLocalizations {
   /// **'Supprimer le rôle de l\'utilisateur {name} ?'**
   String phonebookDeleteUserRole(String name);
 
+  /// No description provided for @phonebookDeactivating.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactiver l\'association ?'**
+  String get phonebookDeactivating;
+
   /// No description provided for @phonebookDeleting.
   ///
   /// In fr, this message translates to:
@@ -4627,6 +4615,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Modifier le rôle'**
   String get phonebookEditRole;
+
+  /// No description provided for @phonebookEditMembership.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le rôle'**
+  String get phonebookEditMembership;
 
   /// No description provided for @phonebookEmail.
   ///

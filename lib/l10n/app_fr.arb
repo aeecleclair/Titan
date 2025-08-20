@@ -61,7 +61,6 @@
   "adminDeleting": "Suppression",
   "adminDeletingError": "Erreur lors de la suppression",
   "adminDescription": "Description",
-  "adminEclSchool": "Centrale Lyon",
   "adminEdit": "Modifier",
   "adminEditStructure": "Modifier la structure",
   "adminEditMembership": "Modifier l'adhésion",
@@ -86,7 +85,6 @@
   "adminMembershipUpdatingError": "Erreur lors de la modification (surement dû à une superposition de dates)",
   "adminMinimum": "Minimum",
   "adminModifyModuleVisibility": "Visibilité des modules",
-  "adminMyEclPay": "MyECLPay",
   "adminName": "Nom",
   "adminNoManager": "Aucun manager n'est sélectionné",
   "adminNoMember": "Aucun membre",
@@ -158,7 +156,7 @@
       }
     }
   },
-  "adminManagerGroup" : "Groupe gestionnaire : {groupName}",
+  "adminManagerGroup": "Groupe gestionnaire : {groupName}",
   "@adminManagerGroup": {
     "description": "Groupe qui gère l'association",
     "placeholders": {
@@ -171,12 +169,11 @@
   "adminAssociationUpdated": "Association mise à jour",
   "adminAssociationCreationError": "Échec de la création de l'association",
   "adminAssociationUpdateError": "Échec de la mise à jour de l'association",
-  "adminUpdatedAssociationLogo" : "Logo de l'association mis à jour",
+  "adminUpdatedAssociationLogo": "Logo de l'association mis à jour",
   "adminTooHeavyLogo": "Le logo de l'association est trop lourd, il doit faire moins de 4 Mo",
   "adminFailedToUpdateAssociationLogo": "Échec de la mise à jour du logo de l'association",
   "adminChooseGroup": "Choisir un groupe",
   "adminChooseAssociationManagerGroup": "Choisir un groupe gestionnaire pour l'association",
-  "adminConfirm" : "Valider",
   "advertAdd": "Ajouter",
   "advertAddedAdvert": "Annonce publiée",
   "advertAddedAnnouncer": "Annonceur ajouté",
@@ -749,7 +746,7 @@
   "phonebookAddingError": "Erreur lors de l'ajout",
   "phonebookAddMember": "Ajouter un membre",
   "phonebookAddRole": "Ajouter un rôle",
-  "phonebookAdmin": "Administration",
+  "phonebookAdmin": "Admin",
   "phonebookAll": "Toutes",
   "phonebookApparentName": "Nom public du rôle :",
   "phonebookAssociation": "Association",
@@ -810,6 +807,7 @@
       }
     }
   },
+  "phonebookDeactivating": "Désactiver l'association ?",
   "phonebookDeleting": "Suppression",
   "phonebookDeletingError": "Erreur lors de la suppression",
   "phonebookDescription": "Description",
@@ -819,6 +817,7 @@
   "phonebookEditAssociationInfo": "Modifier",
   "phonebookEditAssociationMembers": "Gérer les membres",
   "phonebookEditRole": "Modifier le rôle",
+  "phonebookEditMembership": "Modifier le rôle",
   "phonebookEmail": "Email :",
   "phonebookEmailCopied": "Email copié dans le presse-papier",
   "phonebookEmptyApparentName": "Veuillez entrer un nom de role",
@@ -1251,7 +1250,7 @@
   "settingsDisconnectionSuccess": "Déconnexion réussie",
   "settingsDeleteMyAccount": "Supprimer mon compte",
   "settingsDeleteMyAccountDescription": "Cette action notifie l'administrateur que vous souhaitez supprimer votre compte.",
-  "settingsDeletionAsked" : "Demande de suppression de compte envoyée",
+  "settingsDeletionAsked": "Demande de suppression de compte envoyée",
   "settingsDeleteMyAccountError": "Erreur lors de la demande de suppression de compte",
   "voteAdd": "Ajouter",
   "voteAddMember": "Ajouter un membre",

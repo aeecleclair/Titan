@@ -61,7 +61,6 @@
   "adminDeleting": "Deleting",
   "adminDeletingError": "Error while deleting",
   "adminDescription": "Description",
-  "adminEclSchool": "Centrale Lyon",
   "adminEdit": "Edit",
   "adminEditStructure": "Edit structure",
   "adminEditMembership": "Edit membership",
@@ -86,7 +85,6 @@
   "adminMembershipUpdatingError": "Error while updating (likely due to overlapping dates)",
   "adminMinimum": "Minimum",
   "adminModifyModuleVisibility": "Module visibility",
-  "adminMyEclPay": "MyECLPay",
   "adminName": "Name",
   "adminNoManager": "No manager selected",
   "adminNoMember": "No member",
@@ -136,13 +134,13 @@
   "adminFailedToInviteUsers": "Failed to invite users",
   "adminDeleteUsers": "Delete users",
   "adminAdmin": "Admin",
-  "adminAssociations" : "Associations",
-  "adminManageAssociations" : "Manage associations",
-  "adminAddAssociation" : "Add association",
-  "adminAssociationName" : "Association name",
-  "adminSelectGroupAssociationManager" : "Select a group to manage this association",
-  "adminEditAssociation" : "Edit association : {associationName}",
-  "@adminEditAssociation" : {
+  "adminAssociations": "Associations",
+  "adminManageAssociations": "Manage associations",
+  "adminAddAssociation": "Add association",
+  "adminAssociationName": "Association name",
+  "adminSelectGroupAssociationManager": "Select a group to manage this association",
+  "adminEditAssociation": "Edit association : {associationName}",
+  "@adminEditAssociation": {
     "description": "Edit association",
     "placeholders": {
       "associationName": {
@@ -150,8 +148,8 @@
       }
     }
   },
-  "adminManagerGroup" : "Manager group : {groupName}",
-  "@adminManagerGroup" : {
+  "adminManagerGroup": "Manager group : {groupName}",
+  "@adminManagerGroup": {
     "description": "Manager group",
     "placeholders": {
       "groupName": {
@@ -159,16 +157,15 @@
       }
     }
   },
-  "adminAssociationCreated" : "Association created",
-  "adminAssociationUpdated" : "Association updated",
-  "adminAssociationCreationError" : "Error while creating association",
-  "adminAssociationUpdateError" : "Error while updating association",
-  "adminUpdatedAssociationLogo" : "Association logo updated",
-  "adminTooHeavyLogo" : "Logo too heavy, maximum size is 4MB",
+  "adminAssociationCreated": "Association created",
+  "adminAssociationUpdated": "Association updated",
+  "adminAssociationCreationError": "Error while creating association",
+  "adminAssociationUpdateError": "Error while updating association",
+  "adminUpdatedAssociationLogo": "Association logo updated",
+  "adminTooHeavyLogo": "Logo too heavy, maximum size is 4MB",
   "adminFailedToUpdateAssociationLogo": "Failed to update association logo",
   "adminChooseGroup": "Choose a group",
   "adminChooseAssociationManagerGroup": "Choose a group to manage this association",
-  "adminConfirm" : "Confirm",
   "advertAdd": "Add",
   "advertAddedAdvert": "Advert published",
   "advertAddedAnnouncer": "Announcer added",
@@ -741,7 +738,7 @@
   "phonebookAddingError": "Error adding",
   "phonebookAddMember": "Add a member",
   "phonebookAddRole": "Add a role",
-  "phonebookAdmin": "Administation",
+  "phonebookAdmin": "Admin",
   "phonebookAll": "All",
   "phonebookApparentName": "Public role name:",
   "phonebookAssociation": "Association",
@@ -802,6 +799,7 @@
       }
     }
   },
+  "phonebookDeactivating": "Deactivate the association?",
   "phonebookDeleting": "Deleting",
   "phonebookDeletingError": "Error deleting",
   "phonebookDescription": "Description",
@@ -811,6 +809,7 @@
   "phonebookEditAssociationInfo": "Edit",
   "phonebookEditAssociationMembers": "Manage members",
   "phonebookEditRole": "Edit role",
+  "phonebookEditMembership": "Edit role",
   "phonebookEmail": "Email:",
   "phonebookEmailCopied": "Email copied to clipboard",
   "phonebookEmptyApparentName": "Please enter a role name",
@@ -1244,7 +1243,7 @@
   "settingsDisconnectionSuccess": "Disconnected successfully",
   "settingsDeleteMyAccount": "Delete my account",
   "settingsDeleteMyAccountDescription": "This action will send a request to the administrator to delete your account.",
-  "settingsDeletionAsked" : "Your account deletion request has been sent to the administrator.",
+  "settingsDeletionAsked": "Your account deletion request has been sent to the administrator.",
   "settingsDeleteMyAccountError": "Error sending account deletion request",
   "voteAdd": "Add",
   "voteAddMember": "Add a member",
