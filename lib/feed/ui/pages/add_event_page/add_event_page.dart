@@ -14,10 +14,8 @@ import 'package:titan/admin/providers/my_association_list_provider.dart';
 // import 'package:titan/event/tools/functions.dart';
 import 'package:titan/event/ui/pages/event_pages/checkbox_entry.dart';
 import 'package:titan/feed/class/event.dart';
-import 'package:titan/feed/providers/admin_news_list_provider.dart';
 import 'package:titan/feed/providers/event_image_provider.dart';
 import 'package:titan/feed/providers/event_provider.dart';
-import 'package:titan/feed/providers/news_image_provider.dart';
 import 'package:titan/feed/providers/news_list_provider.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -50,9 +48,7 @@ class AddEventPage extends HookConsumerWidget {
     // final recurrenceEndDateController = useTextEditingController();
 
     final eventCreationNotifier = ref.watch(eventProvider.notifier);
-    final event = ref.watch(eventProvider);
     final eventImageNotifier = ref.watch(eventImageProvider.notifier);
-    final adminNewsListNotifier = ref.watch(adminNewsListProvider.notifier);
     final newsListNotifier = ref.watch(newsListProvider.notifier);
     // final interval = useTextEditingController();
     // final recurrenceEndDate = useTextEditingController();
