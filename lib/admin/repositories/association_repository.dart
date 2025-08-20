@@ -14,8 +14,10 @@ class AssociationRepository extends Repository {
     );
   }
 
-  Future<Association> getMyAssociation() async {
-    return Association.fromJson(await getOne("", suffix: "me"));
+  Future<List<Association>> getMyAssociations() async {
+    return List<Association>.from(
+      (await getList(suffix: "me")).map((x) => Association.fromJson(x)),
+    );
   }
 
   Future<bool> deleteAssociation(String associationId) async {

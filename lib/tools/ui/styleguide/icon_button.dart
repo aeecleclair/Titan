@@ -77,7 +77,6 @@ class CustomIconButton extends StatelessWidget {
       builder: (child) => Container(
         height: 32,
         width: 32,
-        padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(10),
