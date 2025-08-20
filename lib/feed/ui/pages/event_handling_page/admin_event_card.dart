@@ -114,73 +114,80 @@ class AdminEventCard extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                WaitingButton(
-                  onTap: () async {
-                    final newNews = news.copyWith(status: NewsStatus.rejected);
-                    await newsAdminNotifier.rejectNews(newNews);
-                  },
-                  builder: (child) => Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 5,
-                    ),
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: ColorConstants.main,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: ColorConstants.onMain,
-                        width: 2,
+                if (news.status != NewsStatus.rejected)
+                  WaitingButton(
+                    onTap: () async {
+                      final newNews = news.copyWith(
+                        status: NewsStatus.rejected,
+                      );
+                      await newsAdminNotifier.rejectNews(newNews);
+                    },
+                    builder: (child) => Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 5,
                       ),
-                    ),
-                    child: child,
-                  ),
-                  waitingColor: ColorConstants.background,
-                  child: Center(
-                    child: Text(
-                      "Rejeter",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: ColorConstants.background,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: ColorConstants.main,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: ColorConstants.onMain,
+                          width: 2,
+                        ),
                       ),
+                      child: child,
                     ),
-                  ),
-                ),
-                SizedBox(width: 10),
-                WaitingButton(
-                  onTap: () async {
-                    final newNews = news.copyWith(status: NewsStatus.published);
-                    await newsAdminNotifier.approveNews(newNews);
-                  },
-                  builder: (child) => Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 5,
-                    ),
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: ColorConstants.tertiary,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: ColorConstants.onTertiary,
-                        width: 2,
-                      ),
-                    ),
-                    child: child,
-                  ),
-                  waitingColor: ColorConstants.background,
-                  child: Center(
-                    child: Text(
-                      "Approuver",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: ColorConstants.background,
+                    waitingColor: ColorConstants.background,
+                    child: Center(
+                      child: Text(
+                        "Rejeter",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: ColorConstants.background,
+                        ),
                       ),
                     ),
                   ),
-                ),
+                if (news.status == NewsStatus.waitingApproval)
+                  SizedBox(width: 10),
+                if (news.status != NewsStatus.published)
+                  WaitingButton(
+                    onTap: () async {
+                      final newNews = news.copyWith(
+                        status: NewsStatus.published,
+                      );
+                      await newsAdminNotifier.approveNews(newNews);
+                    },
+                    builder: (child) => Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 5,
+                      ),
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: ColorConstants.tertiary,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: ColorConstants.onTertiary,
+                          width: 2,
+                        ),
+                      ),
+                      child: child,
+                    ),
+                    waitingColor: ColorConstants.background,
+                    child: Center(
+                      child: Text(
+                        "Approuver",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: ColorConstants.background,
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ],
