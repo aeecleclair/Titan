@@ -30,7 +30,6 @@ class CheckBoxEntry extends StatelessWidget {
             activeColor: Colors.black,
             value: valueNotifier.value,
             onChanged: (value) {
-              // valueNotifier.value = value!;
               onChanged();
             },
           ),
