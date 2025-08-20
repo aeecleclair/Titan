@@ -3,14 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/login/providers/animation_provider.dart';
-import 'package:titan/login/router.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LeftPanel extends HookConsumerWidget {
   const LeftPanel({super.key});
@@ -19,7 +18,6 @@ class LeftPanel extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authNotifier = ref.watch(authTokenProvider.notifier);
     final pathForwarding = ref.read(pathForwardingProvider);
-    final controller = ref.watch(backgroundAnimationProvider);
     final isLoading = ref
         .watch(loadingProvider)
         .maybeWhen(data: (data) => data, orElse: () => false);
@@ -160,9 +158,10 @@ class LeftPanel extends HookConsumerWidget {
                   children: [
                     const Spacer(),
                     GestureDetector(
-                      onTap: () {
-                        QR.to(LoginRouter.createAccount);
-                        controller?.forward();
+                      onTap: () async {
+                        await launchUrl(
+                          Uri.parse("${getTitanHost()}calypsso/register"),
+                        );
                       },
                       child: Text(
                         AppLocalizations.of(context)!.loginCreateAccount,
@@ -176,9 +175,10 @@ class LeftPanel extends HookConsumerWidget {
                     ),
                     const Spacer(flex: 4),
                     GestureDetector(
-                      onTap: () {
-                        QR.to(LoginRouter.forgotPassword);
-                        controller?.forward();
+                      onTap: () async {
+                        await launchUrl(
+                          Uri.parse("${getTitanHost()}calypsso/recover"),
+                        );
                       },
                       child: Text(
                         AppLocalizations.of(context)!.loginForgotPassword,

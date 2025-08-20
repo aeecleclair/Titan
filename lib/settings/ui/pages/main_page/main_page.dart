@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/service/providers/firebase_token_expiration_provider.dart';
 import 'package:titan/service/providers/messages_provider.dart';
-import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/ui/styleguide/custom_dialog_box.dart';
 import 'package:titan/tools/ui/widgets/vertical_clip_scroll.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/settings/providers/notification_topic_provider.dart';
@@ -26,6 +26,7 @@ import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/styleguide/list_item_template.dart';
 import 'package:titan/user/providers/profile_picture_provider.dart';
 import 'package:titan/user/providers/user_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsMainPage extends HookConsumerWidget {
   const SettingsMainPage({super.key});
@@ -323,65 +324,75 @@ class SettingsMainPage extends HookConsumerWidget {
                   color: ColorConstants.title,
                 ),
               ),
+              const SizedBox(height: 10),
+              ListItem(
+                title: localizeWithContext.settingsChangePassword,
+                onTap: () async {
+                  await launchUrl(
+                    Uri.parse("${getTitanHost()}calypsso/change-password"),
+                  );
+                },
+              ),
+              const SizedBox(height: 10),
               ListItem(
                 title: localizeWithContext.settingsDisconnect,
                 onTap: () async {
-                  await showDialog(
+                  await showCustomBottomModal(
+                    ref: ref,
                     context: context,
-                    builder: (context) {
-                      return CustomDialogBox(
-                        descriptions:
-                            localizeWithContext.settingsDisconnectDescription,
-                        title: localizeWithContext.settingsDisconnect,
-                        onYes: () {
-                          auth.deleteToken();
-                          if (!kIsWeb) {
-                            ref.watch(messagesProvider.notifier).forgetDevice();
-                            ref
-                                .watch(firebaseTokenExpirationProvider.notifier)
-                                .reset();
-                          }
-                          isCachingNotifier.set(false);
-                          displayToast(
-                            context,
-                            TypeMsg.msg,
-                            localizeWithContext.settingsDisconnectionSuccess,
-                          );
-                        },
-                      );
-                    },
+                    modal: ConfirmModal(
+                      description:
+                          localizeWithContext.settingsDisconnectDescription,
+                      title: localizeWithContext.settingsDisconnect,
+                      onYes: () {
+                        auth.deleteToken();
+                        if (!kIsWeb) {
+                          ref.watch(messagesProvider.notifier).forgetDevice();
+                          ref
+                              .watch(firebaseTokenExpirationProvider.notifier)
+                              .reset();
+                        }
+                        isCachingNotifier.set(false);
+                        displayToast(
+                          context,
+                          TypeMsg.msg,
+                          localizeWithContext.settingsDisconnectionSuccess,
+                        );
+                      },
+                    ),
                   );
                 },
               ),
+              const SizedBox(height: 10),
               ListItem(
                 title: localizeWithContext.settingsDeleteMyAccount,
                 onTap: () async {
-                  await showDialog(
+                  await showCustomBottomModal(
                     context: context,
-                    builder: (context) {
-                      return CustomDialogBox(
-                        descriptions: localizeWithContext
-                            .settingsDeleteMyAccountDescription,
-                        title: localizeWithContext.settingsDeleteMyAccount,
-                        onYes: () async {
-                          final value = await meNotifier.deletePersonal();
-                          if (value) {
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              localizeWithContext.settingsDeletionAsked,
-                            );
-                          } else {
-                            displayToastWithContext(
-                              TypeMsg.error,
-                              localizeWithContext.settingsDeleteMyAccountError,
-                            );
-                          }
-                        },
-                      );
-                    },
+                    ref: ref,
+                    modal: ConfirmModal.danger(
+                      description: localizeWithContext
+                          .settingsDeleteMyAccountDescription,
+                      title: localizeWithContext.settingsDeleteMyAccount,
+                      onYes: () async {
+                        final value = await meNotifier.deletePersonal();
+                        if (value) {
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            localizeWithContext.settingsDeletionAsked,
+                          );
+                        } else {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            localizeWithContext.settingsDeleteMyAccountError,
+                          );
+                        }
+                      },
+                    ),
                   );
                 },
               ),
+              const SizedBox(height: 80),
             ],
           ),
         ),

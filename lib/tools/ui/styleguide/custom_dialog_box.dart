@@ -3,8 +3,6 @@ import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 
-const double padding = 20.0;
-
 enum ModalType { main, danger }
 
 class ConfirmModal extends StatelessWidget {
@@ -38,10 +36,14 @@ class ConfirmModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppLocalizations localizeWithContext = AppLocalizations.of(context)!;
-    return BottomModalTemplate.danger(
+    return BottomModalTemplate(
       title: title,
       description: description,
+      type: type == ModalType.main
+          ? BottomModalType.main
+          : BottomModalType.danger,
       actions: [
+        const SizedBox(height: 20),
         Row(
           children: [
             Expanded(
