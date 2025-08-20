@@ -270,7 +270,7 @@ class AddEventPage extends HookConsumerWidget {
                       onTap: () => getFullDate(context, shotgunDateController),
                       controller: shotgunDateController,
                       label: "Date du SG ",
-                      canBeEmpty: false,
+                      canBeEmpty: true,
                     ),
                     SizedBox(height: 10),
                     TextEntry(
@@ -464,9 +464,14 @@ class AddEventPage extends HookConsumerWidget {
                                   processDateBack(endDateController.text),
                                 ),
                                 location: locationController.text,
-                                ticketUrlOpening: DateTime.parse(
-                                  processDateBack(shotgunDateController.text),
-                                ),
+                                ticketUrlOpening:
+                                    shotgunDateController.text != ""
+                                    ? DateTime.parse(
+                                        processDateBack(
+                                          shotgunDateController.text,
+                                        ),
+                                      )
+                                    : null,
                                 name: titleController.text,
                                 allDay: allDay.value,
                                 // recurrenceRule: recurrenceRule,
@@ -476,6 +481,16 @@ class AddEventPage extends HookConsumerWidget {
                               );
                               final eventCreated = await eventCreationNotifier
                                   .addEvent(newEvent);
+                              if (poster.value == null ||
+                                  posterFile.value == null) {
+                                Navigator.of(context).pop();
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  addedEventMsg,
+                                );
+                                newsListNotifier.loadNewsList();
+                                return;
+                              }
                               final value = await eventImageNotifier
                                   .addEventImage(
                                     eventCreated.id,
