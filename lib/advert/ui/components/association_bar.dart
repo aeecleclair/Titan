@@ -28,37 +28,40 @@ class AssociationBar extends HookConsumerWidget {
         : ref.watch(associationListProvider);
     return AsyncChild(
       value: associationList,
-      builder: (context, userAssociations) => HorizontalListView.builder(
-        height: 66,
-        items: userAssociations,
-        itemBuilder: (context, e, i) {
-          final selected = selectedId.contains(e.id);
-          return AssociationItem(
-            onTap: () {
-              if (isNotClickable) {
-                return;
-              }
-              if (multipleSelect) {
-                selected
-                    ? selectedNotifier.removeAssociation(e)
-                    : selectedNotifier.addAssociation(e);
-              } else {
-                selectedNotifier.clearAssociation();
-                if (!selected) {
-                  selectedNotifier.addAssociation(e);
+      builder: (context, userAssociations) {
+        return HorizontalListView.builder(
+          height: 66,
+          items: userAssociations,
+          itemBuilder: (context, e, i) {
+            final selected = selectedId.contains(e.id);
+            return AssociationItem(
+              onTap: () {
+                if (isNotClickable) {
+                  return;
                 }
-              }
-            },
-            name: e.name,
-            avatarName: e.name
-                .split(' ')
-                .take(2)
-                .map((s) => s[0].toUpperCase())
-                .join(),
-            selected: selected,
-          );
-        },
-      ),
+                if (multipleSelect) {
+                  selected
+                      ? selectedNotifier.removeAssociation(e)
+                      : selectedNotifier.addAssociation(e);
+                } else {
+                  selectedNotifier.clearAssociation();
+                  if (!selected) {
+                    selectedNotifier.addAssociation(e);
+                  }
+                }
+              },
+              associationId: e.id,
+              name: e.name,
+              avatarName: e.name
+                  .split(' ')
+                  .take(2)
+                  .map((s) => s[0].toUpperCase())
+                  .join(),
+              selected: selected,
+            );
+          },
+        );
+      },
     );
   }
 }
