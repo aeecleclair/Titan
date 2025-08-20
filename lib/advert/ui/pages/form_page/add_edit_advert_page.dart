@@ -224,12 +224,15 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                   ],
                 ),
               ),
-              CheckBoxEntry(
-                title: AppLocalizations.of(context)!.eventAllDay,
-                valueNotifier: postToFeed,
-                onChanged: () {
-                  postToFeed.value = !postToFeed.value;
-                },
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: CheckBoxEntry(
+                  title: "Poster dans le feed ?",
+                  valueNotifier: postToFeed,
+                  onChanged: () {
+                    postToFeed.value = !postToFeed.value;
+                  },
+                ),
               ),
               const SizedBox(height: 50),
               Padding(
