@@ -16,6 +16,7 @@ import 'package:titan/advert/providers/advert_provider.dart';
 import 'package:titan/advert/providers/selected_association_provider.dart';
 import 'package:titan/advert/ui/pages/advert.dart';
 import 'package:titan/advert/ui/components/association_bar.dart';
+import 'package:titan/event/ui/pages/event_pages/checkbox_entry.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
@@ -53,6 +54,8 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
         }
       });
     }
+
+    final postToFeed = useState(false);
 
     final ImagePicker picker = ImagePicker();
 
@@ -221,6 +224,13 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                   ],
                 ),
               ),
+              CheckBoxEntry(
+                title: AppLocalizations.of(context)!.eventAllDay,
+                valueNotifier: postToFeed,
+                onChanged: () {
+                  postToFeed.value = !postToFeed.value;
+                },
+              ),
               const SizedBox(height: 50),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -242,6 +252,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                               content: content.text,
                               date: isEdit ? advert.date : DateTime.now(),
                               title: title.text,
+                              postToFeed: postToFeed.value,
                             );
                             final editedAdvertMsg = AppLocalizations.of(
                               context,

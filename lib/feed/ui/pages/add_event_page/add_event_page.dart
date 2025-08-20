@@ -23,7 +23,6 @@ import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
-import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/horizontal_multi_select.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';

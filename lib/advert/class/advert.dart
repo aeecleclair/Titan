@@ -6,6 +6,7 @@ class Advert {
   late final String content;
   late final DateTime date;
   late final String associationId;
+  late final bool postToFeed;
 
   Advert({
     required this.id,
@@ -13,6 +14,7 @@ class Advert {
     required this.content,
     required this.date,
     required this.associationId,
+    required this.postToFeed,
   });
 
   Advert.fromJson(Map<String, dynamic> json) {
@@ -30,6 +32,7 @@ class Advert {
     data["content"] = content;
     data["date"] = processDateToAPI(date);
     data["advertiser_id"] = associationId;
+    data["post_to_feed"] = postToFeed;
     return data;
   }
 
@@ -39,6 +42,7 @@ class Advert {
     String? content,
     DateTime? date,
     String? associationId,
+    bool? postToFeed,
   }) {
     return Advert(
       id: id ?? this.id,
@@ -46,6 +50,7 @@ class Advert {
       content: content ?? this.content,
       date: date ?? this.date,
       associationId: associationId ?? this.associationId,
+      postToFeed: postToFeed ?? this.postToFeed,
     );
   }
 
@@ -56,6 +61,7 @@ class Advert {
       content: "",
       date: DateTime.now(),
       associationId: "",
+      postToFeed: false,
     );
   }
 
