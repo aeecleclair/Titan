@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/feed/class/news.dart';
 import 'package:titan/feed/providers/admin_news_list_provider.dart';
+import 'package:titan/feed/tools/function.dart';
 import 'package:titan/feed/tools/news_helper.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
@@ -115,7 +116,8 @@ class AdminEventCard extends ConsumerWidget {
               children: [
                 WaitingButton(
                   onTap: () async {
-                    await newsAdminNotifier.rejectNews(news);
+                    final newNews = news.copyWith(status: NewsStatus.rejected);
+                    await newsAdminNotifier.rejectNews(newNews);
                   },
                   builder: (child) => Container(
                     padding: const EdgeInsets.symmetric(
@@ -148,7 +150,8 @@ class AdminEventCard extends ConsumerWidget {
                 SizedBox(width: 10),
                 WaitingButton(
                   onTap: () async {
-                    await newsAdminNotifier.approveNews(news);
+                    final newNews = news.copyWith(status: NewsStatus.published);
+                    await newsAdminNotifier.approveNews(newNews);
                   },
                   builder: (child) => Container(
                     padding: const EdgeInsets.symmetric(
