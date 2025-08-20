@@ -224,6 +224,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: CheckBoxEntry(
@@ -234,7 +235,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                   },
                 ),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
