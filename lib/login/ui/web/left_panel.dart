@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/login/providers/animation_provider.dart';
 import 'package:titan/login/router.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
@@ -47,7 +48,10 @@ class LeftPanel extends HookConsumerWidget {
                       const SizedBox(width: 15),
                       const Text(
                         "-",
-                        style: TextStyle(fontSize: 25, color: Colors.black),
+                        style: TextStyle(
+                          fontSize: 25,
+                          color: ColorConstants.onTertiary,
+                        ),
                       ),
                       const SizedBox(width: 15),
                       const Text(
@@ -55,7 +59,7 @@ class LeftPanel extends HookConsumerWidget {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: ColorConstants.onTertiary,
                         ),
                       ),
                     ],
@@ -104,22 +108,14 @@ class LeftPanel extends HookConsumerWidget {
                   height: 60,
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFFFF8A14),
-                        Color.fromARGB(255, 255, 114, 0),
-                      ],
+                      colors: [ColorConstants.main, ColorConstants.onMain],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color.fromARGB(
-                          255,
-                          255,
-                          114,
-                          0,
-                        ).withValues(alpha: 0.2),
+                        color: ColorConstants.onMain.withValues(alpha: 0.2),
                         spreadRadius: 3,
                         blurRadius: 7,
                         offset: const Offset(0, 3),
@@ -136,7 +132,7 @@ class LeftPanel extends HookConsumerWidget {
                       style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: ColorConstants.background,
                       ),
                     ),
                     Container(
@@ -145,12 +141,12 @@ class LeftPanel extends HookConsumerWidget {
                           ? const Padding(
                               padding: EdgeInsets.all(12.0),
                               child: CircularProgressIndicator(
-                                color: Colors.white,
+                                color: ColorConstants.background,
                               ),
                             )
                           : const HeroIcon(
                               HeroIcons.arrowRight,
-                              color: Colors.white,
+                              color: ColorConstants.background,
                               size: 35.0,
                             ),
                     ),
@@ -174,7 +170,7 @@ class LeftPanel extends HookConsumerWidget {
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           decoration: TextDecoration.underline,
-                          color: Color.fromARGB(255, 48, 48, 48),
+                          color: ColorConstants.onTertiary,
                         ),
                       ),
                     ),
@@ -190,7 +186,7 @@ class LeftPanel extends HookConsumerWidget {
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           decoration: TextDecoration.underline,
-                          color: Color.fromARGB(255, 48, 48, 48),
+                          color: ColorConstants.onTertiary,
                         ),
                       ),
                     ),
