@@ -4,7 +4,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/login/providers/animation_provider.dart';
-import 'package:titan/login/router.dart';
 import 'package:titan/login/ui/auth_page.dart';
 import 'package:titan/login/ui/components/sign_in_up_bar.dart';
 import 'package:titan/tools/constants.dart';
@@ -12,6 +11,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppSignIn extends HookConsumerWidget {
   const AppSignIn({super.key});
@@ -106,9 +106,10 @@ class AppSignIn extends HookConsumerWidget {
                         alignment: Alignment.centerLeft,
                         child: InkWell(
                           splashColor: const Color.fromRGBO(255, 255, 255, 1),
-                          onTap: () {
-                            QR.to(LoginRouter.createAccount);
-                            controller?.forward();
+                          onTap: () async {
+                            await launchUrl(
+                              Uri.parse("${getTitanHost()}calypsso/register"),
+                            );
                           },
                           child: Text(
                             AppLocalizations.of(context)!.loginCreateAccount,
@@ -126,8 +127,12 @@ class AppSignIn extends HookConsumerWidget {
                         alignment: Alignment.centerLeft,
                         child: InkWell(
                           splashColor: const Color.fromRGBO(255, 255, 255, 1),
-                          onTap: () {
-                            QR.to(LoginRouter.forgotPassword);
+                          onTap: () async {
+                            await launchUrl(
+                              Uri.parse(
+                                "${getTitanHost()}calypsso/change-password",
+                              ),
+                            );
                             controller?.forward();
                           },
                           child: Text(
