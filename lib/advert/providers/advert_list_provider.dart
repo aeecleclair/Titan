@@ -13,9 +13,7 @@ class AdvertListNotifier extends ListNotifier<Advert> {
   }
 
   Future<AsyncValue<List<Advert>>> loadAdverts() async {
-    final list = await loadList(repository.getAllAdvert);
-    print(list);
-    return list;
+    return await loadList(repository.getAllAdvert);
   }
 
   Future<bool> addAdvert(Advert advert) async {
