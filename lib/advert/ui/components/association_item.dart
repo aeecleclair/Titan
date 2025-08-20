@@ -2,11 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:titan/tools/constants.dart';
 
-class AnnouncerItem extends StatelessWidget {
+class AssociationItem extends StatelessWidget {
   final String name, avatarName;
   final bool selected;
   final VoidCallback onTap;
-  const AnnouncerItem({
+  const AssociationItem({
     super.key,
     required this.name,
     required this.onTap,

@@ -1,51 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/advert/providers/announcer_provider.dart';
-import 'package:titan/advert/providers/announcer_list_provider.dart';
-import 'package:titan/advert/ui/components/announcer_item.dart';
+import 'package:titan/admin/providers/assocation_list_provider.dart';
+import 'package:titan/admin/providers/my_association_list_provider.dart';
+import 'package:titan/advert/providers/selected_association_provider.dart';
+import 'package:titan/advert/ui/components/association_item.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 
-class AnnouncerBar extends HookConsumerWidget {
-  final bool useUserAnnouncers;
+class AssociationBar extends HookConsumerWidget {
+  final bool useUserAssociations;
   final bool multipleSelect;
   final bool isNotClickable;
-  const AnnouncerBar({
+  const AssociationBar({
     super.key,
     required this.multipleSelect,
-    required this.useUserAnnouncers,
+    required this.useUserAssociations,
     this.isNotClickable = false,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selected = ref.watch(announcerProvider);
+    final selected = ref.watch(selectedAssociationProvider);
     final selectedId = selected.map((e) => e.id).toList();
-    final selectedNotifier = ref.read(announcerProvider.notifier);
-    final announcerList = useUserAnnouncers
-        ? ref.watch(userAnnouncerListProvider)
-        : ref.watch(announcerListProvider);
-
+    final selectedNotifier = ref.read(selectedAssociationProvider.notifier);
+    final associationList = useUserAssociations
+        ? ref.watch(asyncMyAssociationListProvider)
+        : ref.watch(associationListProvider);
     return AsyncChild(
-      value: announcerList,
-      builder: (context, userAnnouncers) => HorizontalListView.builder(
+      value: associationList,
+      builder: (context, userAssociations) => HorizontalListView.builder(
         height: 66,
-        items: userAnnouncers,
+        items: userAssociations,
         itemBuilder: (context, e, i) {
           final selected = selectedId.contains(e.id);
-          return AnnouncerItem(
+          return AssociationItem(
             onTap: () {
               if (isNotClickable) {
                 return;
               }
               if (multipleSelect) {
                 selected
-                    ? selectedNotifier.removeAnnouncer(e)
-                    : selectedNotifier.addAnnouncer(e);
+                    ? selectedNotifier.removeAssociation(e)
+                    : selectedNotifier.addAssociation(e);
               } else {
-                selectedNotifier.clearAnnouncer();
+                selectedNotifier.clearAssociation();
                 if (!selected) {
-                  selectedNotifier.addAnnouncer(e);
+                  selectedNotifier.addAssociation(e);
                 }
               }
             },

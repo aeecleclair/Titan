@@ -1,7 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/admin/providers/assocation_list_provider.dart';
 import 'package:titan/advert/class/advert.dart';
 import 'package:titan/advert/providers/advert_poster_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
@@ -22,6 +24,17 @@ class AdvertCard extends HookConsumerWidget {
     );
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final posterNotifier = ref.watch(advertPosterProvider.notifier);
+    final asyncAssociationList = ref.watch(associationListProvider);
+    final associationList = asyncAssociationList.when(
+      data: (data) => data,
+      loading: () => [],
+      error: (_, _) => [],
+    );
+    final associationName =
+        associationList
+            .firstWhereOrNull((e) => e.id == advert.associationId)
+            ?.name ??
+        '';
     return Container(
       margin: const EdgeInsets.all(10),
       child: Column(
@@ -40,13 +53,7 @@ class AdvertCard extends HookConsumerWidget {
                   ),
                   child: Center(
                     child: Text(
-                      advert.announcer.name.isNotEmpty
-                          ? advert.announcer.name
-                                .split(' ')
-                                .take(2)
-                                .map((s) => s[0].toUpperCase())
-                                .join()
-                          : '?',
+                      associationName,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -62,7 +69,7 @@ class AdvertCard extends HookConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        advert.announcer.name,
+                        associationName,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

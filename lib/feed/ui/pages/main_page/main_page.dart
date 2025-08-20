@@ -27,11 +27,9 @@ class FeedMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final news = ref.watch(newsListProvider);
     final newsNotifier = ref.watch(newsListProvider.notifier);
-    final asyncIsUserAMemberOfAnAssociation = ref.watch(
+    final isUserAMemberOfAnAssociation = ref.watch(
       isUserAMemberOfAnAssociationProvider,
     );
-    final isUserAMemberOfAnAssociation = asyncIsUserAMemberOfAnAssociation
-        .maybeWhen(data: (isMember) => isMember, orElse: () => false);
     final isFeedAdmin = ref.watch(isFeedAdminProvider);
     final scrollController = useScrollController();
     final navbarVisibilityNotifier = ref.watch(

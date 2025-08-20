@@ -82,27 +82,24 @@ class AddEventPage extends HookConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    AsyncChild(
-                      value: myAssociations,
-                      builder: (context, associations) => SizedBox(
-                        height: 50,
-                        child: HorizontalMultiSelect<Association>(
-                          items: associations,
-                          selectedItem: selectedAssociation.value,
-                          onItemSelected: (association) {
-                            selectedAssociation.value = association;
-                          },
-                          itemBuilder:
-                              (context, association, index, selected) => Text(
-                                association.name,
-                                style: TextStyle(
-                                  color: selected
-                                      ? ColorConstants.background
-                                      : ColorConstants.tertiary,
-                                  fontSize: 16,
-                                ),
+                    SizedBox(
+                      height: 50,
+                      child: HorizontalMultiSelect<Association>(
+                        items: myAssociations,
+                        selectedItem: selectedAssociation.value,
+                        onItemSelected: (association) {
+                          selectedAssociation.value = association;
+                        },
+                        itemBuilder: (context, association, index, selected) =>
+                            Text(
+                              association.name,
+                              style: TextStyle(
+                                color: selected
+                                    ? ColorConstants.background
+                                    : ColorConstants.tertiary,
+                                fontSize: 16,
                               ),
-                        ),
+                            ),
                       ),
                     ),
                     const SizedBox(height: 10),

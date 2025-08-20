@@ -1,4 +1,3 @@
-import 'package:titan/advert/class/announcer.dart';
 import 'package:titan/tools/functions.dart';
 
 class Advert {
@@ -6,14 +5,14 @@ class Advert {
   late final String title;
   late final String content;
   late final DateTime date;
-  late final Announcer announcer;
+  late final String associationId;
 
   Advert({
     required this.id,
     required this.title,
     required this.content,
     required this.date,
-    required this.announcer,
+    required this.associationId,
   });
 
   Advert.fromJson(Map<String, dynamic> json) {
@@ -21,7 +20,7 @@ class Advert {
     title = json["title"];
     content = json["content"];
     date = processDateFromAPI(json["date"]);
-    announcer = Announcer.fromJson(json["advertiser"]);
+    associationId = json["advertiser_id"];
   }
 
   Map<String, dynamic> toJson() {
@@ -30,7 +29,7 @@ class Advert {
     data["title"] = title;
     data["content"] = content;
     data["date"] = processDateToAPI(date);
-    data["advertiser_id"] = announcer.id;
+    data["advertiser_id"] = associationId;
     return data;
   }
 
@@ -39,14 +38,14 @@ class Advert {
     String? title,
     String? content,
     DateTime? date,
-    Announcer? announcer,
+    String? associationId,
   }) {
     return Advert(
       id: id ?? this.id,
       title: title ?? this.title,
       content: content ?? this.content,
       date: date ?? this.date,
-      announcer: announcer ?? this.announcer,
+      associationId: associationId ?? this.associationId,
     );
   }
 
@@ -56,12 +55,12 @@ class Advert {
       title: "",
       content: "",
       date: DateTime.now(),
-      announcer: Announcer.empty(),
+      associationId: "",
     );
   }
 
   @override
   String toString() {
-    return 'Advert{id: $id, title: $title, content: $content, date: $date, announcer: $announcer}';
+    return 'Advert{id: $id, title: $title, content: $content, date: $date, association_id: $associationId}';
   }
 }

@@ -12,32 +12,8 @@ class AdvertListNotifier extends ListNotifier<Advert> {
     repository.setToken(token);
   }
 
-  Future<AsyncValue<List<Advert>>> loadAdverts() async {
-    final list = await loadList(repository.getAllAdvert);
-    print(list);
-    return list;
-  }
-
-  Future<bool> addAdvert(Advert advert) async {
-    return await add(repository.addAdvert, advert);
-  }
-
-  Future<bool> updateAdvert(Advert advert) async {
-    return await update(
-      repository.updateAdvert,
-      (adverts, advert) =>
-          adverts..[adverts.indexWhere((b) => b.id == advert.id)] = advert,
-      advert,
-    );
-  }
-
-  Future<bool> deleteAdvert(Advert advert) async {
-    return await delete(
-      repository.deleteAdvert,
-      (adverts, advert) => adverts..removeWhere((b) => b.id == advert.id),
-      advert.id,
-      advert,
-    );
+  Future<AsyncValue<List<Advert>>> loadUserAssmicationList() async {
+    return await loadList(repository.getAllAdvert);
   }
 }
 
@@ -46,7 +22,7 @@ final advertListProvider =
       final token = ref.watch(tokenProvider);
       AdvertListNotifier notifier = AdvertListNotifier(token: token);
       tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadAdverts();
+        await notifier.loadUserAssmicationList();
       });
       return notifier;
     });
