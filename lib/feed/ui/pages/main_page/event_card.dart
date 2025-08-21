@@ -87,7 +87,7 @@ class EventCard extends ConsumerWidget {
             ],
           ),
         ),
-        if (isNewsTerminated(item))
+        if (isNewsTerminated(item) && item.module != "advert")
           Positioned(
             bottom: 53,
             left: 15,
@@ -106,7 +106,7 @@ class EventCard extends ConsumerWidget {
               ),
             ),
           ),
-        if (isNewsOngoing(item))
+        if (isNewsOngoing(item) && item.module != "advert")
           Positioned(
             bottom: 53,
             left: 15,

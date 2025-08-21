@@ -18,7 +18,6 @@ import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/icon_button.dart';
-import 'package:titan/tools/ui/styleguide/searchbar.dart';
 
 class FeedMainPage extends HookConsumerWidget {
   const FeedMainPage({super.key});
@@ -85,27 +84,8 @@ class FeedMainPage extends HookConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomSearchBar(
-              onFilter: () async {
-                final syncNews = newsNotifier.allNews.maybeWhen(
-                  orElse: () => <News>[],
-                  data: (loaded) => loaded,
-                );
-                final entities = syncNews.map((e) => e.entity).toSet().toList();
-                final modules = syncNews.map((e) => e.module).toSet().toList();
-                await showCustomBottomModal(
-                  modal: FilterNewsModal(entities: entities, modules: modules),
-                  context: context,
-                  ref: ref,
-                );
-              },
-              onSearch: (_) {},
-            ),
-
-            const SizedBox(height: 20),
-
+            const SizedBox(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
                   "Actualité",
@@ -114,6 +94,37 @@ class FeedMainPage extends HookConsumerWidget {
                     fontWeight: FontWeight.bold,
                     color: ColorConstants.title,
                   ),
+                ),
+                Spacer(),
+                IconButton(
+                  icon: HeroIcon(
+                    HeroIcons.adjustmentsHorizontal,
+                    color: ColorConstants.tertiary,
+                    size: 20,
+                  ),
+                  onPressed: () async {
+                    final syncNews = newsNotifier.allNews.maybeWhen(
+                      orElse: () => <News>[],
+                      data: (loaded) => loaded,
+                    );
+                    final entities = syncNews
+                        .map((e) => e.entity)
+                        .toSet()
+                        .toList();
+                    final modules = syncNews
+                        .map((e) => e.module)
+                        .toSet()
+                        .toList();
+                    await showCustomBottomModal(
+                      modal: FilterNewsModal(
+                        entities: entities,
+                        modules: modules,
+                      ),
+                      context: context,
+                      ref: ref,
+                    );
+                  },
+                  splashRadius: 20,
                 ),
                 if (isUserAMemberOfAnAssociation || isFeedAdmin)
                   CustomIconButton(
@@ -165,7 +176,7 @@ class FeedMainPage extends HookConsumerWidget {
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
 
             Expanded(
               child: ScrollToHideNavbar(

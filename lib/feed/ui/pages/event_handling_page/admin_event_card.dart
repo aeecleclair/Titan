@@ -3,6 +3,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/feed/class/news.dart';
 import 'package:titan/feed/providers/admin_news_list_provider.dart';
+import 'package:titan/feed/providers/news_list_provider.dart';
 import 'package:titan/feed/tools/function.dart';
 import 'package:titan/feed/tools/news_helper.dart';
 import 'package:titan/tools/constants.dart';
@@ -16,6 +17,7 @@ class AdminEventCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = Localizations.localeOf(context).languageCode;
     final newsAdminNotifier = ref.watch(adminNewsListProvider.notifier);
+    final newsNotifier = ref.watch(newsListProvider.notifier);
 
     return Container(
       decoration: BoxDecoration(
@@ -121,6 +123,7 @@ class AdminEventCard extends ConsumerWidget {
                         status: NewsStatus.rejected,
                       );
                       await newsAdminNotifier.rejectNews(newNews);
+                      await newsNotifier.loadNewsList();
                     },
                     builder: (child) => Container(
                       padding: const EdgeInsets.symmetric(
@@ -159,6 +162,7 @@ class AdminEventCard extends ConsumerWidget {
                         status: NewsStatus.published,
                       );
                       await newsAdminNotifier.approveNews(newNews);
+                      await newsNotifier.loadNewsList();
                     },
                     builder: (child) => Container(
                       padding: const EdgeInsets.symmetric(

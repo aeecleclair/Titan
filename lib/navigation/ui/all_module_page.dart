@@ -81,6 +81,7 @@ class AllModulePage extends HookConsumerWidget {
                                       : ColorConstants.secondary,
                                 ),
                               ),
+                              SizedBox(width: 10),
                               Expanded(
                                 child: ListItem(
                                   title: module.getName(context),

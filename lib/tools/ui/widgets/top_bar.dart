@@ -21,12 +21,11 @@ class TopBar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
-        const SizedBox(height: 10),
         Row(
           children: [
             SizedBox(
               width: 70,
-              height: 40,
+              height: 30,
               child: Builder(
                 builder: (BuildContext appBarContext) {
                   if (QR.currentPath == root) {
@@ -49,7 +48,7 @@ class TopBar extends HookConsumerWidget {
             Expanded(
               child: Center(
                 child: AutoSizeText(
-                  "MyEMApp",
+                  "myemapp",
                   maxLines: 1,
                   style:
                       textStyle ??

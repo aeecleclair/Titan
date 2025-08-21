@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:titan/feed/class/news.dart';
 import 'package:titan/feed/tools/news_helper.dart';
 import 'package:titan/feed/ui/pages/main_page/event_action.dart';
-import 'package:titan/feed/ui/pages/main_page/event_action_admin.dart';
 import 'package:titan/feed/ui/pages/main_page/event_card.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/feed/ui/pages/main_page/dotted_vertical_line.dart';
@@ -12,19 +11,13 @@ import 'package:titan/feed/ui/pages/main_page/dotted_vertical_line.dart';
 class TimelineItem extends ConsumerWidget {
   final News item;
   final VoidCallback? onTap;
-  final bool isAdmin;
 
-  const TimelineItem({
-    super.key,
-    required this.item,
-    this.onTap,
-    required this.isAdmin,
-  });
+  const TimelineItem({super.key, required this.item, this.onTap});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
-      height: item.actionStart != null || isAdmin ? 200 : 160,
+      height: item.actionStart != null ? 200 : 160,
       child: Stack(
         children: [
           Padding(
@@ -72,17 +65,14 @@ class TimelineItem extends ConsumerWidget {
                     ),
                   ],
                 ),
-                if (item.actionStart != null || isAdmin)
+                if (item.actionStart != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(
-                            left: 14,
-                            right: isAdmin ? 33 : 45,
-                          ),
+                          padding: EdgeInsets.only(left: 14, right: 45),
                           child: Container(
                             width: 20,
                             height: 20,
@@ -97,28 +87,25 @@ class TimelineItem extends ConsumerWidget {
                           ),
                         ),
                         Expanded(
-                          child: isAdmin
-                              ? EventActionAdmin(item: item)
-                              : EventAction(
-                                  title: getActionTitle(item, context),
-                                  subtitle: getActionSubtitle(item, context),
-                                  onActionPressed: () =>
-                                      getActionButtonAction(item, context, ref),
-                                  actionEnableButtonText:
-                                      getActionEnableButtonText(item, context),
-                                  actionValidatedButtonText:
-                                      getActionValidatedButtonText(
-                                        item,
-                                        context,
-                                      ),
-                                  isActionValidated: false,
-                                  isActionEnabled:
-                                      (item.actionStart ?? item.start).isBefore(
-                                        DateTime.now(),
-                                      ) &&
-                                      item.end != null &&
-                                      item.end!.isAfter(DateTime.now()),
-                                ),
+                          child: EventAction(
+                            title: getActionTitle(item, context),
+                            subtitle: getActionSubtitle(item, context),
+                            onActionPressed: () =>
+                                getActionButtonAction(item, context, ref),
+                            actionEnableButtonText: getActionEnableButtonText(
+                              item,
+                              context,
+                            ),
+                            actionValidatedButtonText:
+                                getActionValidatedButtonText(item, context),
+                            isActionValidated: false,
+                            isActionEnabled:
+                                (item.actionStart ?? item.start).isBefore(
+                                  DateTime.now(),
+                                ) &&
+                                item.end != null &&
+                                item.end!.isAfter(DateTime.now()),
+                          ),
                         ),
                       ],
                     ),

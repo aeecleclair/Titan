@@ -30,7 +30,6 @@ class FeedTimeline extends StatelessWidget {
         ...items.map(
           (item) => TimelineItem(
             item: item,
-            isAdmin: isAdmin,
             onTap: onItemTap != null ? () => onItemTap!(item) : null,
           ),
         ),
