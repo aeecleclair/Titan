@@ -6,13 +6,11 @@ import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 import 'package:titan/tools/constants.dart';
 
 class ScrollWithRefreshButton extends HookConsumerWidget {
-  final Widget child;
   final ScrollController controller;
   final Future<void> Function() onRefresh;
 
   const ScrollWithRefreshButton({
     super.key,
-    required this.child,
     required this.controller,
     required this.onRefresh,
   });
@@ -96,70 +94,55 @@ class ScrollWithRefreshButton extends HookConsumerWidget {
       await onRefresh();
     }
 
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        child,
-        AnimatedPositioned(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-          top: showRefreshButton.value ? -55 : -90,
-          left: 0,
-          right: 0,
-          child: AnimatedOpacity(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            opacity: showRefreshButton.value ? 1.0 : 0.0,
-            child: Center(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: ColorConstants.main,
-                  borderRadius: BorderRadius.circular(25),
-                  boxShadow: [
-                    BoxShadow(
-                      color: ColorConstants.onMain.withValues(alpha: 0.4),
-                      blurRadius: 8,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: handleRefresh,
-                    borderRadius: BorderRadius.circular(25),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          HeroIcon(
-                            HeroIcons.arrowPath,
-                            size: 16,
-                            color: ColorConstants.background,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Actualiser',
-                            style: TextStyle(
-                              color: ColorConstants.background,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
+    return AnimatedPositioned(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+      top: showRefreshButton.value ? 10 : -10,
+      left: 0,
+      right: 0,
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        opacity: showRefreshButton.value ? 1.0 : 0.0,
+        child: Center(
+          child: GestureDetector(
+            onTap: handleRefresh,
+            child: Container(
+              decoration: BoxDecoration(
+                color: ColorConstants.main,
+                borderRadius: BorderRadius.circular(25),
+                boxShadow: [
+                  BoxShadow(
+                    color: ColorConstants.onMain.withValues(alpha: 0.4),
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  HeroIcon(
+                    HeroIcons.arrowPath,
+                    size: 16,
+                    color: ColorConstants.background,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Actualiser',
+                    style: TextStyle(
+                      color: ColorConstants.background,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                ),
+                ],
               ),
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }

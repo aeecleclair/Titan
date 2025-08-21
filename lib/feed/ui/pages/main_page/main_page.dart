@@ -24,7 +24,7 @@ class FeedMainPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final news = ref.watch(newsListProvider);
-    final newsNotifier = ref.watch(newsListProvider.notifier);
+    final newsListNotifier = ref.watch(newsListProvider.notifier);
     final isUserAMemberOfAnAssociation = ref.watch(
       isUserAMemberOfAnAssociationProvider,
     );
@@ -32,7 +32,7 @@ class FeedMainPage extends HookConsumerWidget {
     final scrollController = useScrollController();
 
     Future<void> onRefresh() async {
-      await newsNotifier.loadNewsList();
+      await newsListNotifier.loadNewsList();
     }
 
     useEffect(() {
@@ -105,7 +105,7 @@ class FeedMainPage extends HookConsumerWidget {
                         size: 20,
                       ),
                       onPressed: () async {
-                        final syncNews = newsNotifier.allNews.maybeWhen(
+                        final syncNews = newsListNotifier.allNews.maybeWhen(
                           orElse: () => <News>[],
                           data: (loaded) => loaded,
                         );
@@ -182,35 +182,35 @@ class FeedMainPage extends HookConsumerWidget {
                 const SizedBox(height: 10),
 
                 Expanded(
-                  child: ScrollWithRefreshButton(
+                  child: SingleChildScrollView(
                     controller: scrollController,
-                    onRefresh: onRefresh,
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      physics: const BouncingScrollPhysics(),
-                      child: AsyncChild(
-                        value: news,
-                        builder: (context, news) => news.isEmpty
-                            ? const Center(
-                                child: Text(
-                                  'Aucune actualité disponible',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: ColorConstants.tertiary,
-                                  ),
+                    physics: const BouncingScrollPhysics(),
+                    child: AsyncChild(
+                      value: news,
+                      builder: (context, news) => news.isEmpty
+                          ? const Center(
+                              child: Text(
+                                'Aucune actualité disponible',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: ColorConstants.tertiary,
                                 ),
-                              )
-                            : FeedTimeline(
-                                isAdmin: isFeedAdmin,
-                                items: news,
-                                onItemTap: (item) {},
                               ),
-                      ),
+                            )
+                          : FeedTimeline(
+                              isAdmin: isFeedAdmin,
+                              items: news,
+                              onItemTap: (item) {},
+                            ),
                     ),
                   ),
                 ),
               ],
             ),
+          ),
+          ScrollWithRefreshButton(
+            controller: scrollController,
+            onRefresh: onRefresh,
           ),
         ],
       ),

@@ -141,10 +141,6 @@ String getNewsSubtitle(
     }
   }
 
-  if (news.location != null && news.location!.isNotEmpty) {
-    subtitle += ' | ${news.location}';
-  }
-
   if (subtitle.isEmpty) {
     subtitle = news.entity;
   }

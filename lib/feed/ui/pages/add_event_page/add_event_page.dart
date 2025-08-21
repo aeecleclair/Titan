@@ -108,6 +108,7 @@ class AddEventPage extends HookConsumerWidget {
                       title: AppLocalizations.of(context)!.eventAllDay,
                       valueNotifier: allDay,
                       onChanged: () {
+                        allDay.value = !allDay.value;
                         startDateController.text = "";
                         endDateController.text = "";
                         // recurrenceEndDateController.text = "";
@@ -124,7 +125,7 @@ class AddEventPage extends HookConsumerWidget {
                     //     recurrenceEndDateController.text = "";
                     //   },
                     // ),
-                    const SizedBox(height: 30),
+                    // const SizedBox(height: 0),
                     // recurrentController.value
                     //     ? Column(
                     //         children: [
@@ -240,24 +241,20 @@ class AddEventPage extends HookConsumerWidget {
                     //         ],
                     //       )
                     // :
-                    Column(
-                      children: [
-                        DateEntry(
-                          onTap: () => allDay.value
-                              ? getOnlyDayDate(context, startDateController)
-                              : getFullDate(context, startDateController),
-                          controller: startDateController,
-                          label: AppLocalizations.of(context)!.eventStartDate,
-                        ),
-                        const SizedBox(height: 30),
-                        DateEntry(
-                          onTap: () => allDay.value
-                              ? getOnlyDayDate(context, endDateController)
-                              : getFullDate(context, endDateController),
-                          controller: endDateController,
-                          label: AppLocalizations.of(context)!.eventEndDate,
-                        ),
-                      ],
+                    DateEntry(
+                      onTap: () => allDay.value
+                          ? getOnlyDayDate(context, startDateController)
+                          : getFullDate(context, startDateController),
+                      controller: startDateController,
+                      label: AppLocalizations.of(context)!.eventStartDate,
+                    ),
+                    const SizedBox(height: 10),
+                    DateEntry(
+                      onTap: () => allDay.value
+                          ? getOnlyDayDate(context, endDateController)
+                          : getFullDate(context, endDateController),
+                      controller: endDateController,
+                      label: AppLocalizations.of(context)!.eventEndDate,
                     ),
                     SizedBox(height: 10),
                     TextEntry(label: "Lieu", controller: locationController),

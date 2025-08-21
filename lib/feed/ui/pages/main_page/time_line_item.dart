@@ -16,8 +16,13 @@ class TimelineItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final showAction =
+        item.actionStart != null &&
+        item.actionStart!.isBefore(DateTime.now()) &&
+        item.end != null &&
+        item.end!.isAfter(DateTime.now());
     return SizedBox(
-      height: item.actionStart != null ? 200 : 160,
+      height: showAction ? 200 : 160,
       child: Stack(
         children: [
           Padding(
@@ -65,7 +70,7 @@ class TimelineItem extends ConsumerWidget {
                     ),
                   ],
                 ),
-                if (item.actionStart != null)
+                if (showAction)
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Row(
@@ -99,12 +104,7 @@ class TimelineItem extends ConsumerWidget {
                             actionValidatedButtonText:
                                 getActionValidatedButtonText(item, context),
                             isActionValidated: false,
-                            isActionEnabled:
-                                (item.actionStart ?? item.start).isBefore(
-                                  DateTime.now(),
-                                ) &&
-                                item.end != null &&
-                                item.end!.isAfter(DateTime.now()),
+                            isActionEnabled: true,
                           ),
                         ),
                       ],
