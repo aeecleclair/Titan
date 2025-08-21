@@ -119,7 +119,7 @@ class BackgroundPainter extends CustomPainter {
       Point(w, lerpDouble(0, h / 10.2, blueAnim.value)!),
     ]);
 
-    var colors = [ColorConstants.gradient1, ColorConstants.gradient2];
+    var colors = [ColorConstants.main, ColorConstants.onMain];
 
     Rect rectShape = Rect.fromLTWH(0, 0, w, h);
     final Gradient gradient = LinearGradient(
@@ -128,7 +128,7 @@ class BackgroundPainter extends CustomPainter {
       end: Alignment.topRight,
     );
 
-    paint = Paint()..color = ColorConstants.background2;
+    paint = Paint()..color = ColorConstants.onTertiary;
 
     paint2 = Paint()..shader = gradient.createShader(rectShape);
     paint3 = Paint()..shader = gradient.createShader(rectShape);
@@ -138,7 +138,7 @@ class BackgroundPainter extends CustomPainter {
 
     canvas.drawShadow(
       path,
-      ColorConstants.background2.withAlpha(125),
+      ColorConstants.onTertiary.withAlpha(125),
       10.0,
       false,
     );
