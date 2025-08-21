@@ -835,7 +835,7 @@
   "phonebookErrorRoleTagsLoading": "Erreur lors du chargement des tags de rôle",
   "phonebookExistingMembership": "Ce membre est déjà dans le mandat actuel",
   "phonebookFilter": "Filtrer",
-  "phonebookFilterDescription": "Sélectionnez un ou plusieurs groupements pour filtrer les associations.",
+  "phonebookFilterDescription": "Filtrer les associations par type",
   "phonebookFirstname": "Prénom :",
   "phonebookGroupementDeleted": "Groupement d'association supprimé",
   "phonebookGroupementDeleteError": "Erreur lors de la suppression du groupement d'association",

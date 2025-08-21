@@ -4727,7 +4727,7 @@ abstract class AppLocalizations {
   /// No description provided for @phonebookFilterDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Sélectionnez un ou plusieurs groupements pour filtrer les associations.'**
+  /// **'Filtrer les associations par type'**
   String get phonebookFilterDescription;
 
   /// No description provided for @phonebookFirstname.

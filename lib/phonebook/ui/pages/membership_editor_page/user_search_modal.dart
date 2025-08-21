@@ -24,7 +24,6 @@ class UserSearchModal extends HookConsumerWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SearchResult(queryController: textController),
             CustomSearchBar(
               autofocus: true,
               onSearch: (value) => tokenExpireWrapper(ref, () async {
@@ -37,6 +36,7 @@ class UserSearchModal extends HookConsumerWidget {
                 }
               }),
             ),
+            SearchResult(queryController: textController),
           ],
         ),
       ),

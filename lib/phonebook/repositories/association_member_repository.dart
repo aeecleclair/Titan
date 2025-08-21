@@ -12,9 +12,10 @@ class AssociationMemberRepository extends Repository {
     int year,
   ) async {
     return List<CompleteMember>.from(
-      (await getList(
-        suffix: "$associationId/members/$year",
-      )).map((x) => CompleteMember.fromJson(x)),
+      (await getList(suffix: "$associationId/members/$year")).map((x) {
+        print("AssociationMemberRepository.getAssociationMemberList: $x");
+        return CompleteMember.fromJson(x);
+      }),
     );
   }
 

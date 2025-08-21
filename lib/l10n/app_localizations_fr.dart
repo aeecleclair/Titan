@@ -2400,8 +2400,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get phonebookFilter => 'Filtrer';
 
   @override
-  String get phonebookFilterDescription =>
-      'Sélectionnez un ou plusieurs groupements pour filtrer les associations.';
+  String get phonebookFilterDescription => 'Filtrer les associations par type';
 
   @override
   String get phonebookFirstname => 'Prénom :';

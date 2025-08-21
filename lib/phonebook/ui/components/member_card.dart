@@ -44,12 +44,11 @@ class MemberCard extends HookConsumerWidget {
       member,
       association,
     );
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: ListItemTemplate(
         title:
-            "${(member.member.nickname ?? '${member.member.firstname} ${member.member.name}')} - ${assoMembership.apparentName}",
+            "${(member.member.nickname ?? member.getName())} - ${assoMembership.apparentName}",
         subtitle: member.member.nickname != null
             ? "${member.member.firstname} ${member.member.name}"
             : null,

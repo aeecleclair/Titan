@@ -5,7 +5,7 @@ class Member extends SimpleUser {
   Member({
     required super.name,
     required super.firstname,
-    required super.nickname,
+    super.nickname,
     required super.id,
     required super.accountType,
     required this.email,

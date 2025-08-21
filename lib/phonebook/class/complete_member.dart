@@ -1,4 +1,3 @@
-import 'package:titan/super_admin/class/account_type.dart';
 import 'package:titan/phonebook/class/membership.dart';
 import 'member.dart';
 
@@ -9,16 +8,7 @@ class CompleteMember {
   late final List<Membership> memberships;
 
   CompleteMember.fromJson(Map<String, dynamic> json) {
-    member = Member(
-      name: json['name'],
-      firstname: json['firstname'],
-      nickname: json['nickname'] ?? "",
-      id: json['id'],
-      accountType: AccountType(type: json['account_type']),
-      email: json['email'],
-      phone: json['phone'],
-      promotion: json['promo'] ?? 0,
-    );
+    member = Member.fromJson(json);
     memberships = List<Membership>.from(
       json['memberships'].map((membership) {
         return Membership.fromJson(membership);

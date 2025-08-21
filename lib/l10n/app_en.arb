@@ -827,7 +827,7 @@
   "phonebookErrorRoleTagsLoading": "Error loading role tags",
   "phonebookExistingMembership": "This member is already in the current term",
   "phonebookFilter": "Filter",
-  "phonebookFilterDescription": "Filter the associations by their groupement",
+  "phonebookFilterDescription": "Filter the associations by their type",
   "phonebookFirstname": "First name:",
   "phonebookGroupementDeleted": "Association groupement deleted",
   "phonebookGroupementDeleteError": "Error deleting association groupement",

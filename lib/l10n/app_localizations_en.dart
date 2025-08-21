@@ -2384,7 +2384,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get phonebookFilterDescription =>
-      'Filter the associations by their groupement';
+      'Filter the associations by their type';
 
   @override
   String get phonebookFirstname => 'First name:';

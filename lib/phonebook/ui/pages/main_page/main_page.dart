@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/advert/ui/components/special_action_button.dart';
 import 'package:titan/phonebook/providers/association_filtered_list_provider.dart';
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_groupement_list_provider.dart';
@@ -13,7 +14,6 @@ import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/phonebook/ui/components/association_research_bar.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
-import 'package:titan/tools/ui/styleguide/icon_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:tuple/tuple.dart';
@@ -56,14 +56,10 @@ class PhonebookMainPage extends HookConsumerWidget {
                   Expanded(child: AssociationResearchBar()),
                   if (isPhonebookAdmin || isAdmin) ...[
                     SizedBox(width: 10),
-                    CustomIconButton(
-                      icon: HeroIcon(
-                        HeroIcons.cog6Tooth,
-                        color: Colors.white,
-                        size: 32,
-                        style: HeroIconStyle.outline,
-                      ),
-                      onPressed: () {
+                    SpecialActionButton(
+                      icon: HeroIcon(HeroIcons.userGroup, color: Colors.white),
+                      name: localizeWithContext.phonebookAdmin,
+                      onTap: () {
                         associationGroupementNotifier
                             .resetAssociationGroupement();
                         QR.to(PhonebookRouter.root + PhonebookRouter.admin);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/phonebook/class/membership.dart';
 import 'package:titan/phonebook/providers/association_member_list_provider.dart';
@@ -144,13 +145,14 @@ class MembershipEditorPage extends HookConsumerWidget {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 ListItemTemplate(
+                  icon: const HeroIcon(HeroIcons.magnifyingGlass),
                   title: member.member.id == ""
                       ? localizeWithContext.phonebookSearchUser
                       : member.member.getName(),
                   subtitle: member.member.id == ""
-                      ? ""
+                      ? null
                       : localizeWithContext.phonebookSearchUser,
-                  trailing: SizedBox.shrink(),
+                  trailing: const HeroIcon(HeroIcons.plus),
                   onTap: () => showCustomBottomModal(
                     context: context,
                     modal: UserSearchModal(),
