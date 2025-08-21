@@ -85,33 +85,7 @@ class FeedMainPage extends HookConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomSearchBar(
-                  onFilter: () async {
-                    final syncNews = newsNotifier.allNews.maybeWhen(
-                      orElse: () => <News>[],
-                      data: (loaded) => loaded,
-                    );
-                    final entities = syncNews
-                        .map((e) => e.entity)
-                        .toSet()
-                        .toList();
-                    final modules = syncNews
-                        .map((e) => e.module)
-                        .toSet()
-                        .toList();
-                    await showCustomBottomModal(
-                      modal: FilterNewsModal(
-                        entities: entities,
-                        modules: modules,
-                      ),
-                      context: context,
-                      ref: ref,
-                    );
-                  },
-                  onSearch: (_) {},
-                ),
-
-                const SizedBox(height: 20),
+                const SizedBox(height: 5),
 
                 Row(
                   children: [
@@ -123,37 +97,37 @@ class FeedMainPage extends HookConsumerWidget {
                         color: ColorConstants.title,
                       ),
                     ),
-					Spacer(),
-                IconButton(
-                  icon: HeroIcon(
-                    HeroIcons.adjustmentsHorizontal,
-                    color: ColorConstants.tertiary,
-                    size: 20,
-                  ),
-                  onPressed: () async {
-                    final syncNews = newsNotifier.allNews.maybeWhen(
-                      orElse: () => <News>[],
-                      data: (loaded) => loaded,
-                    );
-                    final entities = syncNews
-                        .map((e) => e.entity)
-                        .toSet()
-                        .toList();
-                    final modules = syncNews
-                        .map((e) => e.module)
-                        .toSet()
-                        .toList();
-                    await showCustomBottomModal(
-                      modal: FilterNewsModal(
-                        entities: entities,
-                        modules: modules,
+                    Spacer(),
+                    IconButton(
+                      icon: HeroIcon(
+                        HeroIcons.adjustmentsHorizontal,
+                        color: ColorConstants.tertiary,
+                        size: 20,
                       ),
-                      context: context,
-                      ref: ref,
-                    );
-                  },
-                  splashRadius: 20,
-                ),
+                      onPressed: () async {
+                        final syncNews = newsNotifier.allNews.maybeWhen(
+                          orElse: () => <News>[],
+                          data: (loaded) => loaded,
+                        );
+                        final entities = syncNews
+                            .map((e) => e.entity)
+                            .toSet()
+                            .toList();
+                        final modules = syncNews
+                            .map((e) => e.module)
+                            .toSet()
+                            .toList();
+                        await showCustomBottomModal(
+                          modal: FilterNewsModal(
+                            entities: entities,
+                            modules: modules,
+                          ),
+                          context: context,
+                          ref: ref,
+                        );
+                      },
+                      splashRadius: 20,
+                    ),
                     if (isUserAMemberOfAnAssociation || isFeedAdmin)
                       CustomIconButton(
                         icon: HeroIcon(
@@ -205,7 +179,7 @@ class FeedMainPage extends HookConsumerWidget {
                   ],
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
 
                 Expanded(
                   child: ScrollWithRefreshButton(
