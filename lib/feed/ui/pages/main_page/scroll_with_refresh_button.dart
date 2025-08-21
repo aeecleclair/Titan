@@ -103,7 +103,7 @@ class ScrollWithRefreshButton extends HookConsumerWidget {
         AnimatedPositioned(
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
-          top: showRefreshButton.value ? -55 : -90,
+          top: showRefreshButton.value ? -50 : -90,
           left: 0,
           right: 0,
           child: AnimatedOpacity(
