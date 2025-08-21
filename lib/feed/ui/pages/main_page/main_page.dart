@@ -11,8 +11,7 @@ import 'package:titan/feed/router.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/feed/ui/pages/main_page/feed_timeline.dart';
 import 'package:titan/feed/ui/pages/main_page/filter_news.dart';
-import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
-import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
+import 'package:titan/feed/ui/pages/main_page/scroll_with_refresh_button.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
@@ -31,9 +30,10 @@ class FeedMainPage extends HookConsumerWidget {
     );
     final isFeedAdmin = ref.watch(isFeedAdminProvider);
     final scrollController = useScrollController();
-    final navbarVisibilityNotifier = ref.watch(
-      navbarVisibilityProvider.notifier,
-    );
+
+    Future<void> onRefresh() async {
+      await newsNotifier.loadNewsList();
+    }
 
     useEffect(() {
       if (news.hasValue && news.value!.isNotEmpty) {
@@ -71,7 +71,6 @@ class FeedMainPage extends HookConsumerWidget {
             }
 
             scrollController.jumpTo(scrollPosition);
-            navbarVisibilityNotifier.show();
           }
         });
       }
@@ -79,134 +78,141 @@ class FeedMainPage extends HookConsumerWidget {
     }, [news]);
 
     return FeedTemplate(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10),
-            Row(
+      child: Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Actualité",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: ColorConstants.title,
-                  ),
-                ),
-                Spacer(),
-                IconButton(
-                  icon: HeroIcon(
-                    HeroIcons.adjustmentsHorizontal,
-                    color: ColorConstants.tertiary,
-                    size: 20,
-                  ),
-                  onPressed: () async {
-                    final syncNews = newsNotifier.allNews.maybeWhen(
-                      orElse: () => <News>[],
-                      data: (loaded) => loaded,
-                    );
-                    final entities = syncNews
-                        .map((e) => e.entity)
-                        .toSet()
-                        .toList();
-                    final modules = syncNews
-                        .map((e) => e.module)
-                        .toSet()
-                        .toList();
-                    await showCustomBottomModal(
-                      modal: FilterNewsModal(
-                        entities: entities,
-                        modules: modules,
+                const SizedBox(height: 5),
+
+                Row(
+                  children: [
+                    const Text(
+                      "Actualité",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: ColorConstants.title,
                       ),
-                      context: context,
-                      ref: ref,
-                    );
-                  },
-                  splashRadius: 20,
-                ),
-                if (isUserAMemberOfAnAssociation || isFeedAdmin)
-                  CustomIconButton(
-                    icon: HeroIcon(
-                      HeroIcons.userGroup,
-                      color: ColorConstants.background,
                     ),
-                    onPressed: () {
-                      if (isFeedAdmin && !isUserAMemberOfAnAssociation) {
-                        QR.to(FeedRouter.root + FeedRouter.eventHandling);
-                      } else if (!isFeedAdmin && isUserAMemberOfAnAssociation) {
-                        QR.to(FeedRouter.root + FeedRouter.addEvent);
-                      } else {
-                        showCustomBottomModal(
-                          modal: BottomModalTemplate(
-                            title: 'Administration',
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Button(
-                                  text: 'Créer un événement',
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    QR.to(
-                                      FeedRouter.root + FeedRouter.addEvent,
-                                    );
-                                  },
-                                ),
-                                const SizedBox(height: 20),
-                                Button(
-                                  text: 'Demandes de publication',
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    QR.to(
-                                      FeedRouter.root +
-                                          FeedRouter.eventHandling,
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
+                    Spacer(),
+                    IconButton(
+                      icon: HeroIcon(
+                        HeroIcons.adjustmentsHorizontal,
+                        color: ColorConstants.tertiary,
+                        size: 20,
+                      ),
+                      onPressed: () async {
+                        final syncNews = newsNotifier.allNews.maybeWhen(
+                          orElse: () => <News>[],
+                          data: (loaded) => loaded,
+                        );
+                        final entities = syncNews
+                            .map((e) => e.entity)
+                            .toSet()
+                            .toList();
+                        final modules = syncNews
+                            .map((e) => e.module)
+                            .toSet()
+                            .toList();
+                        await showCustomBottomModal(
+                          modal: FilterNewsModal(
+                            entities: entities,
+                            modules: modules,
                           ),
                           context: context,
                           ref: ref,
                         );
-                      }
-                    },
-                  ),
-              ],
-            ),
-
-            const SizedBox(height: 10),
-
-            Expanded(
-              child: ScrollToHideNavbar(
-                controller: scrollController,
-                child: SingleChildScrollView(
-                  controller: scrollController,
-                  physics: const BouncingScrollPhysics(),
-                  child: AsyncChild(
-                    value: news,
-                    builder: (context, news) => news.isEmpty
-                        ? const Center(
-                            child: Text(
-                              'Aucune actualité disponible',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: ColorConstants.tertiary,
+                      },
+                      splashRadius: 20,
+                    ),
+                    if (isUserAMemberOfAnAssociation || isFeedAdmin)
+                      CustomIconButton(
+                        icon: HeroIcon(
+                          HeroIcons.userGroup,
+                          color: ColorConstants.background,
+                        ),
+                        onPressed: () {
+                          if (isFeedAdmin && !isUserAMemberOfAnAssociation) {
+                            QR.to(FeedRouter.root + FeedRouter.eventHandling);
+                          } else if (!isFeedAdmin &&
+                              isUserAMemberOfAnAssociation) {
+                            QR.to(FeedRouter.root + FeedRouter.addEvent);
+                          } else {
+                            showCustomBottomModal(
+                              modal: BottomModalTemplate(
+                                title: 'Administration',
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Button(
+                                      text: 'Créer un événement',
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        QR.to(
+                                          FeedRouter.root + FeedRouter.addEvent,
+                                        );
+                                      },
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Button(
+                                      text: 'Demandes de publication',
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        QR.to(
+                                          FeedRouter.root +
+                                              FeedRouter.eventHandling,
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          )
-                        : FeedTimeline(
-                            isAdmin: isFeedAdmin,
-                            items: news,
-                            onItemTap: (item) {},
-                          ),
+                              context: context,
+                              ref: ref,
+                            );
+                          }
+                        },
+                      ),
+                  ],
+                ),
+
+                const SizedBox(height: 10),
+
+                Expanded(
+                  child: ScrollWithRefreshButton(
+                    controller: scrollController,
+                    onRefresh: onRefresh,
+                    child: SingleChildScrollView(
+                      controller: scrollController,
+                      physics: const BouncingScrollPhysics(),
+                      child: AsyncChild(
+                        value: news,
+                        builder: (context, news) => news.isEmpty
+                            ? const Center(
+                                child: Text(
+                                  'Aucune actualité disponible',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: ColorConstants.tertiary,
+                                  ),
+                                ),
+                              )
+                            : FeedTimeline(
+                                isAdmin: isFeedAdmin,
+                                items: news,
+                                onItemTap: (item) {},
+                              ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
