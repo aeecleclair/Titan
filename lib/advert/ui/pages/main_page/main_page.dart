@@ -5,13 +5,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/advert/providers/advert_list_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
-import 'package:titan/advert/providers/announcer_provider.dart';
-import 'package:titan/advert/providers/is_advert_admin_provider.dart';
+import 'package:titan/advert/providers/selected_association_provider.dart';
 import 'package:titan/advert/ui/components/special_action_button.dart';
 import 'package:titan/advert/ui/pages/advert.dart';
 import 'package:titan/advert/router.dart';
-import 'package:titan/advert/ui/components/announcer_bar.dart';
+import 'package:titan/advert/ui/components/association_bar.dart';
 import 'package:titan/advert/ui/pages/main_page/advert_card.dart';
+import 'package:titan/feed/providers/is_user_a_member_of_an_association.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
@@ -25,9 +25,9 @@ class AdvertMainPage extends HookConsumerWidget {
     final advertList = ref.watch(advertListProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
-    final selected = ref.watch(announcerProvider);
-    final selectedNotifier = ref.watch(announcerProvider.notifier);
-    final isAdvertAdmin = ref.watch(isAdvertAdminProvider);
+    final selected = ref.watch(selectedAssociationProvider);
+    final selectedNotifier = ref.watch(selectedAssociationProvider.notifier);
+    final isAdvertAdmin = ref.watch(isUserAMemberOfAnAssociationProvider);
     final isAdmin = ref.watch(isAdminProvider);
     return AdvertTemplate(
       child: Column(
@@ -35,8 +35,8 @@ class AdvertMainPage extends HookConsumerWidget {
           Row(
             children: [
               Expanded(
-                child: const AnnouncerBar(
-                  useUserAnnouncers: false,
+                child: const AssociationBar(
+                  useUserAssociations: false,
                   multipleSelect: true,
                 ),
               ),
@@ -51,7 +51,7 @@ class AdvertMainPage extends HookConsumerWidget {
                 SizedBox(width: 5),
                 SpecialActionButton(
                   onTap: () {
-                    selectedNotifier.clearAnnouncer();
+                    selectedNotifier.clearAssociation();
                     QR.to(AdvertRouter.root + AdvertRouter.admin);
                   },
                   icon: HeroIcon(
@@ -77,7 +77,7 @@ class AdvertMainPage extends HookConsumerWidget {
                 final filteredSortedAdvertData = sortedAdvertData.where(
                   (advert) =>
                       selected
-                          .where((e) => advert.announcer.name == e.name)
+                          .where((e) => advert.associationId == e.id)
                           .isNotEmpty ||
                       selected.isEmpty,
                 );

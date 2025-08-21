@@ -1,7 +1,11 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/admin/providers/assocation_list_provider.dart';
+import 'package:titan/admin/providers/association_logo_provider.dart';
+import 'package:titan/admin/providers/associations_logo_map_provider.dart';
 import 'package:titan/advert/class/advert.dart';
 import 'package:titan/advert/providers/advert_poster_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
@@ -22,6 +26,24 @@ class AdvertCard extends HookConsumerWidget {
     );
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final posterNotifier = ref.watch(advertPosterProvider.notifier);
+    final asyncAssociationList = ref.watch(associationListProvider);
+    final associationList = asyncAssociationList.when(
+      data: (data) => data,
+      loading: () => [],
+      error: (_, _) => [],
+    );
+    final associationName =
+        associationList
+            .firstWhereOrNull((e) => e.id == advert.associationId)
+            ?.name ??
+        '';
+    final associationLogo = ref.watch(
+      associationLogoMapProvider.select((value) => value[advert.associationId]),
+    );
+    final associationLogoMapNotifier = ref.watch(
+      associationLogoMapProvider.notifier,
+    );
+    final associationLogoNotifier = ref.watch(associationLogoProvider.notifier);
     return Container(
       margin: const EdgeInsets.all(10),
       child: Column(
@@ -31,26 +53,38 @@ class AdvertCard extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Row(
               children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.black,
-                  ),
-                  child: Center(
-                    child: Text(
-                      advert.announcer.name.isNotEmpty
-                          ? advert.announcer.name
-                                .split(' ')
-                                .take(2)
-                                .map((s) => s[0].toUpperCase())
-                                .join()
-                          : '?',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                Center(
+                  child: AutoLoaderChild(
+                    group: associationLogo,
+                    notifier: associationLogoMapNotifier,
+                    mapKey: advert.associationId,
+                    loader: (associationId) => associationLogoNotifier
+                        .getAssociationLogo(associationId),
+                    dataBuilder: (context, data) {
+                      return CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.white,
+                        backgroundImage: Image(image: data.first.image).image,
+                      );
+                    },
+                    orElseBuilder: (context, stack) => Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.black,
+                      ),
+                      child: Text(
+                        associationName
+                            .split(' ')
+                            .take(2)
+                            .map((s) => s[0].toUpperCase())
+                            .join(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -62,7 +96,7 @@ class AdvertCard extends HookConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        advert.announcer.name,
+                        associationName,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

@@ -97,7 +97,7 @@ class TimelineItem extends ConsumerWidget {
                           ),
                         ),
                         Expanded(
-                          child: !isAdmin
+                          child: isAdmin
                               ? EventActionAdmin(item: item)
                               : EventAction(
                                   title: getActionTitle(item, context),

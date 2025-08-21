@@ -228,7 +228,7 @@ void getActionButtonAction(
       },
       loading: () {},
     );
-  } else if (module == "post") {
+  } else if (module == "advert") {
     // TODO : set id
     QR.to(AdvertRouter.root);
   }

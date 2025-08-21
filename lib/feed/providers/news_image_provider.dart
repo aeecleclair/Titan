@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -18,13 +16,6 @@ class NewsImageNotifier extends SingleNotifier<Image> {
 
   Future<Image> getNewsImage(String id) async {
     final image = await newsImageRepository.getNewsImage(id);
-    newsImagesNotifier.setTData(id, AsyncData([image]));
-    return image;
-  }
-
-  Future<Image> updateNewsImage(String id, Uint8List bytes) async {
-    newsImagesNotifier.setTData(id, const AsyncLoading());
-    final image = await newsImageRepository.addNewsImage(bytes, id);
     newsImagesNotifier.setTData(id, AsyncData([image]));
     return image;
   }

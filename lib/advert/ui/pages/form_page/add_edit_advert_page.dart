@@ -6,16 +6,17 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:titan/admin/class/assocation.dart';
+import 'package:titan/admin/providers/my_association_list_provider.dart';
 import 'package:titan/advert/class/advert.dart';
-import 'package:titan/advert/class/announcer.dart';
 import 'package:titan/advert/providers/advert_list_provider.dart';
 import 'package:titan/advert/providers/advert_poster_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
 import 'package:titan/advert/providers/advert_provider.dart';
-import 'package:titan/advert/providers/announcer_list_provider.dart';
-import 'package:titan/advert/providers/announcer_provider.dart';
+import 'package:titan/advert/providers/selected_association_provider.dart';
 import 'package:titan/advert/ui/pages/advert.dart';
-import 'package:titan/advert/ui/components/announcer_bar.dart';
+import 'package:titan/advert/ui/components/association_bar.dart';
+import 'package:titan/event/ui/pages/event_pages/checkbox_entry.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
@@ -35,14 +36,16 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
     final isEdit = advert.id != Advert.empty().id;
     final title = useTextEditingController(text: advert.title);
     final content = useTextEditingController(text: advert.content);
-    final selectedAnnouncers = ref.watch(announcerProvider);
-    final userAnnouncerList = ref.watch(userAnnouncerListProvider);
 
     final advertPosters = ref.watch(advertPostersProvider);
     final advertListNotifier = ref.watch(advertListProvider.notifier);
     final posterNotifier = ref.watch(advertPosterProvider.notifier);
     final poster = useState<Uint8List?>(null);
     final posterFile = useState<Image?>(null);
+
+    final userAssociations = ref.watch(myAssociationListProvider);
+
+    final selectedAssociation = ref.watch(selectedAssociationProvider);
 
     if (advertPosters[advert.id] != null) {
       advertPosters[advert.id]!.whenData((data) {
@@ -52,10 +55,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
       });
     }
 
-    final userAnnouncersSync = userAnnouncerList.maybeWhen(
-      orElse: () => [],
-      data: (data) => data,
-    );
+    final postToFeed = useState(false);
 
     final ImagePicker picker = ImagePicker();
 
@@ -70,10 +70,10 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
           key: key,
           child: Column(
             children: [
-              if (userAnnouncersSync.length > 1)
-                FormField<List<Announcer>>(
+              if (userAssociations.length > 1)
+                FormField<List<Association>>(
                   validator: (e) {
-                    if (selectedAnnouncers.isEmpty) {
+                    if (selectedAssociation.isEmpty) {
                       return AppLocalizations.of(
                         context,
                       )!.advertChoosingAnnouncer;
@@ -95,8 +95,8 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                             ]
                           : [],
                     ),
-                    child: AnnouncerBar(
-                      useUserAnnouncers: true,
+                    child: AssociationBar(
+                      useUserAssociations: true,
                       multipleSelect: false,
                       isNotClickable: isEdit,
                     ),
@@ -224,7 +224,18 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: CheckBoxEntry(
+                  title: "Poster dans le feed ?",
+                  valueNotifier: postToFeed,
+                  onChanged: () {
+                    postToFeed.value = !postToFeed.value;
+                  },
+                ),
+              ),
+              const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
@@ -235,16 +246,17 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                           return;
                         }
                         if (key.currentState!.validate() &&
-                            selectedAnnouncers.isNotEmpty &&
+                            selectedAssociation.isNotEmpty &&
                             (poster.value != null || isEdit)) {
                           await tokenExpireWrapper(ref, () async {
                             final advertList = ref.watch(advertListProvider);
                             Advert newAdvert = Advert(
                               id: isEdit ? advert.id : '',
-                              announcer: selectedAnnouncers[0],
+                              associationId: selectedAssociation[0].id,
                               content: content.text,
                               date: isEdit ? advert.date : DateTime.now(),
                               title: title.text,
+                              postToFeed: postToFeed.value,
                             );
                             final editedAdvertMsg = AppLocalizations.of(
                               context,

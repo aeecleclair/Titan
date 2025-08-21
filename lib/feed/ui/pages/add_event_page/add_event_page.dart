@@ -13,10 +13,9 @@ import 'package:titan/admin/providers/my_association_list_provider.dart';
 // import 'package:titan/event/tools/constants.dart';
 // import 'package:titan/event/tools/functions.dart';
 import 'package:titan/event/ui/pages/event_pages/checkbox_entry.dart';
-import 'package:titan/feed/class/event_creation.dart';
-import 'package:titan/feed/providers/admin_news_list_provider.dart';
-import 'package:titan/feed/providers/event_creation_provider.dart';
-import 'package:titan/feed/providers/news_image_provider.dart';
+import 'package:titan/feed/class/event.dart';
+import 'package:titan/feed/providers/event_image_provider.dart';
+import 'package:titan/feed/providers/event_provider.dart';
 import 'package:titan/feed/providers/news_list_provider.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -24,7 +23,6 @@ import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
-import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/horizontal_multi_select.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';
@@ -48,8 +46,8 @@ class AddEventPage extends HookConsumerWidget {
     // final recurrentController = useState(false);
     // final recurrenceEndDateController = useTextEditingController();
 
-    final eventCreationNotifier = ref.watch(eventCreationProvider.notifier);
-    final adminNewsListNotifier = ref.watch(adminNewsListProvider.notifier);
+    final eventCreationNotifier = ref.watch(eventProvider.notifier);
+    final eventImageNotifier = ref.watch(eventImageProvider.notifier);
     final newsListNotifier = ref.watch(newsListProvider.notifier);
     // final interval = useTextEditingController();
     // final recurrenceEndDate = useTextEditingController();
@@ -58,7 +56,6 @@ class AddEventPage extends HookConsumerWidget {
     // final now = DateTime.now();
     final selectedAssociation = useState<Association?>(null);
 
-    final imageNotifier = ref.watch(newsImageProvider.notifier);
     final poster = useState<Uint8List?>(null);
     final posterFile = useState<Image?>(null);
 
@@ -84,27 +81,24 @@ class AddEventPage extends HookConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    AsyncChild(
-                      value: myAssociations,
-                      builder: (context, associations) => SizedBox(
-                        height: 50,
-                        child: HorizontalMultiSelect<Association>(
-                          items: associations,
-                          selectedItem: selectedAssociation.value,
-                          onItemSelected: (association) {
-                            selectedAssociation.value = association;
-                          },
-                          itemBuilder:
-                              (context, association, index, selected) => Text(
-                                association.name,
-                                style: TextStyle(
-                                  color: selected
-                                      ? ColorConstants.background
-                                      : ColorConstants.tertiary,
-                                  fontSize: 16,
-                                ),
+                    SizedBox(
+                      height: 50,
+                      child: HorizontalMultiSelect<Association>(
+                        items: myAssociations,
+                        selectedItem: selectedAssociation.value,
+                        onItemSelected: (association) {
+                          selectedAssociation.value = association;
+                        },
+                        itemBuilder: (context, association, index, selected) =>
+                            Text(
+                              association.name,
+                              style: TextStyle(
+                                color: selected
+                                    ? ColorConstants.background
+                                    : ColorConstants.tertiary,
+                                fontSize: 16,
                               ),
-                        ),
+                            ),
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -272,7 +266,7 @@ class AddEventPage extends HookConsumerWidget {
                       onTap: () => getFullDate(context, shotgunDateController),
                       controller: shotgunDateController,
                       label: "Date du SG ",
-                      canBeEmpty: false,
+                      canBeEmpty: true,
                     ),
                     SizedBox(height: 10),
                     TextEntry(
@@ -457,7 +451,8 @@ class AddEventPage extends HookConsumerWidget {
                               //     ),
                               //   );
                               // }
-                              final newEvent = EventCreation(
+                              final newEvent = Event(
+                                id: "",
                                 start: DateTime.parse(
                                   processDateBack(startDateController.text),
                                 ),
@@ -465,9 +460,14 @@ class AddEventPage extends HookConsumerWidget {
                                   processDateBack(endDateController.text),
                                 ),
                                 location: locationController.text,
-                                ticketUrlOpening: DateTime.parse(
-                                  processDateBack(shotgunDateController.text),
-                                ),
+                                ticketUrlOpening:
+                                    shotgunDateController.text != ""
+                                    ? DateTime.parse(
+                                        processDateBack(
+                                          shotgunDateController.text,
+                                        ),
+                                      )
+                                    : null,
                                 name: titleController.text,
                                 allDay: allDay.value,
                                 // recurrenceRule: recurrenceRule,
@@ -475,8 +475,22 @@ class AddEventPage extends HookConsumerWidget {
                                 associationId: selectedAssociation.value!.id,
                                 ticketUrl: externalLinkController.text,
                               );
-                              final value = await eventCreationNotifier
+                              final eventCreated = await eventCreationNotifier
                                   .addEvent(newEvent);
+                              if (poster.value == null) {
+                                Navigator.of(context).pop();
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  addedEventMsg,
+                                );
+                                newsListNotifier.loadNewsList();
+                                return;
+                              }
+                              final value = await eventImageNotifier
+                                  .addEventImage(
+                                    eventCreated.id,
+                                    poster.value!,
+                                  );
                               if (value) {
                                 Navigator.of(context).pop();
                                 displayToastWithContext(
@@ -484,20 +498,6 @@ class AddEventPage extends HookConsumerWidget {
                                   addedEventMsg,
                                 );
                                 newsListNotifier.loadNewsList();
-                                adminNewsListNotifier.loadNewsList().then((
-                                  news,
-                                ) {
-                                  news.maybeWhen(
-                                    data: (list) {
-                                      final newNews = list.last;
-                                      imageNotifier.updateNewsImage(
-                                        newNews.id,
-                                        poster.value!,
-                                      );
-                                    },
-                                    orElse: () {},
-                                  );
-                                });
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,

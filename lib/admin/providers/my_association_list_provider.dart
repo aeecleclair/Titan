@@ -14,7 +14,7 @@ class MyAssociationListNotifier extends ListNotifier<Association> {
   }
 }
 
-final myAssociationListProvider =
+final asyncMyAssociationListProvider =
     StateNotifierProvider<
       MyAssociationListNotifier,
       AsyncValue<List<Association>>
@@ -28,3 +28,11 @@ final myAssociationListProvider =
       });
       return provider;
     });
+
+final myAssociationListProvider = Provider<List<Association>>((ref) {
+  final asyncMyAssociationList = ref.watch(asyncMyAssociationListProvider);
+  return asyncMyAssociationList.maybeWhen(
+    data: (associations) => associations,
+    orElse: () => [],
+  );
+});

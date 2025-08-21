@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/advert/providers/is_advert_admin_provider.dart';
+
 import 'package:titan/advert/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
 import 'package:titan/advert/ui/pages/form_page/add_edit_advert_page.dart'
     deferred as add_edit_advert_page;
 import 'package:titan/advert/ui/pages/main_page/main_page.dart'
     deferred as main_page;
+import 'package:titan/feed/providers/is_user_a_member_of_an_association.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/tools/middlewares/admin_middleware.dart';
@@ -44,7 +45,7 @@ class AdvertRouter {
         path: admin,
         builder: () => admin_page.AdvertAdminPage(),
         middleware: [
-          AdminMiddleware(ref, isAdvertAdminProvider),
+          AdminMiddleware(ref, isUserAMemberOfAnAssociationProvider),
           DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [

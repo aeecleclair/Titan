@@ -1,16 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/feed/class/event_creation.dart';
+import 'package:titan/feed/class/event.dart';
 import 'package:titan/feed/class/ticket_url.dart';
 import 'package:titan/tools/repository/repository.dart';
 
-class EventCreationRepository extends Repository {
+class EventRepository extends Repository {
   @override
   // ignore: overridden_fields
   final ext = "calendar/events/";
 
-  Future<EventCreation> createEvent(EventCreation event) async {
-    return EventCreation.fromJson(await create(event.toJson()));
+  Future<Event> createEvent(Event event) async {
+    return Event.fromJson(await create(event.toJson()));
+  }
+
+  Future<List<Event>> getEventList() async {
+    return List<Event>.from((await getList()).map((e) => Event.fromJson(e)));
   }
 
   Future<TicketUrl> getTicketUrl(String id) async {
@@ -18,9 +22,7 @@ class EventCreationRepository extends Repository {
   }
 }
 
-final eventCreationRepositoryProvider = Provider<EventCreationRepository>((
-  ref,
-) {
+final eventRepositoryProvider = Provider<EventRepository>((ref) {
   final token = ref.watch(tokenProvider);
-  return EventCreationRepository()..setToken(token);
+  return EventRepository()..setToken(token);
 });

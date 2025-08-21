@@ -8,6 +8,7 @@ import 'package:titan/feed/tools/news_filter_type.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/feed/ui/pages/event_handling_page/admin_event_card.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
@@ -90,16 +91,15 @@ class EventHandlingPage extends HookConsumerWidget {
                       ),
                     );
                   }
-
-                  return ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: filteredNews.length + 1,
-                    itemBuilder: (context, index) {
-                      if (index == filteredNews.length) {
-                        return const SizedBox(height: 80);
-                      }
-                      return AdminEventCard(news: filteredNews[index]);
-                    },
+                  return ScrollToHideNavbar(
+                    controller: ScrollController(),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: filteredNews
+                            .map((news) => AdminEventCard(news: news))
+                            .toList(),
+                      ),
+                    ),
                   );
                 },
               ),
