@@ -17,6 +17,8 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/plausible/plausible_observer.dart';
 import 'package:titan/tools/providers/locale_notifier.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
+import 'package:titan/tools/trads/en_timeago.dart';
+import 'package:titan/tools/trads/fr_timeago.dart';
 import 'package:titan/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:qlevar_router/qlevar_router.dart' as qqr;
@@ -37,8 +39,10 @@ void main() async {
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   }
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  timeago.setLocaleMessages('fr', timeago.FrMessages());
-  timeago.setLocaleMessages('fr_short', timeago.FrShortMessages());
+  timeago.setLocaleMessages('fr', CustomFrMessages());
+  timeago.setLocaleMessages('fr_short', CustomFrShortMessages());
+  timeago.setLocaleMessages('en', CustomEnMessages());
+  timeago.setLocaleMessages('en_short', CustomEnShortMessages());
   runApp(ProviderScope(child: MyApp()));
 }
 

@@ -377,6 +377,22 @@ class AddEventPage extends HookConsumerWidget {
                           );
                           return;
                         }
+                        if (externalLinkController.text.isEmpty &&
+                            shotgunDateController.text.isNotEmpty) {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            "Veuillez fournir un lien externe",
+                          );
+                          return;
+                        }
+                        if (externalLinkController.text.isNotEmpty &&
+                            shotgunDateController.text.isEmpty) {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            "Veuillez fournir une date",
+                          );
+                          return;
+                        }
                         final addedEventMsg = AppLocalizations.of(
                           context,
                         )!.eventAddedEvent;

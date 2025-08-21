@@ -159,6 +159,21 @@ String getActionTitle(News news, BuildContext context) {
   return '';
 }
 
+String getWaitingTitle(
+  News news,
+  BuildContext context, {
+  required String timeToGo,
+}) {
+  final module = news.module;
+
+  if (module == "campagne") {
+    return 'Vote $timeToGo';
+  } else if (module == "event") {
+    return 'Shotgun $timeToGo';
+  }
+  return '';
+}
+
 String getActionSubtitle(News news, BuildContext context) {
   final module = news.module;
 

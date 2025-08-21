@@ -66,6 +66,7 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   syncfusion_flutter_calendar: ^29.1.38
   timeago: ^3.7.0
+  timeago_flutter: ^3.7.0
   timezone: ^0.10.0
   tuple: ^2.0.0
   universal_html: ^2.0.8
