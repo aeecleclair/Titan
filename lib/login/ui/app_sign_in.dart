@@ -36,6 +36,7 @@ class AppSignIn extends HookConsumerWidget {
               child: Row(
                 children: [
                   Expanded(
+                    flex: 2,
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: AutoSizeText(
@@ -50,7 +51,7 @@ class AppSignIn extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  const Spacer(),
+                  const Spacer(flex: 3),
                 ],
               ),
             ),
