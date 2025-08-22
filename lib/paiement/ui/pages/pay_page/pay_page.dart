@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/providers/my_wallet_provider.dart';
 import 'package:titan/paiement/providers/pay_amount_provider.dart';
 import 'package:titan/paiement/ui/pages/pay_page/confirm_button.dart';
@@ -41,7 +42,7 @@ class PayPage extends ConsumerWidget {
           children: [
             const SizedBox(height: 20),
             Text(
-              'Paiement',
+              AppLocalizations.of(context)!.paiementPayment,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,
@@ -50,7 +51,7 @@ class PayPage extends ConsumerWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              'Solde après paiement : ${formatter.format(currentAmount - amountToSub)} €',
+              '${AppLocalizations.of(context)!.paiementBalanceAfterTransaction} ${formatter.format(currentAmount - amountToSub)} €',
               style: const TextStyle(color: Colors.white, fontSize: 15),
             ),
             Expanded(

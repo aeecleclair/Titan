@@ -8,6 +8,7 @@ import 'package:titan/raffle/providers/raffle_list_provider.dart';
 import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/raffle/ui/pages/admin_module_page/confirm_creation.dart';
 import 'package:titan/raffle/ui/pages/admin_module_page/tombola_card.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class TombolaHandler extends HookConsumerWidget {
   const TombolaHandler({super.key});
@@ -77,9 +78,9 @@ class TombolaHandler extends HookConsumerWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           alignment: Alignment.centerLeft,
-          child: const Text(
-            RaffleTextConstants.raffle,
-            style: TextStyle(
+          child: Text(
+            AppLocalizations.of(context)!.raffleRaffle,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: RaffleColorConstants.textDark,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/settings/tools/constants.dart';
 import 'package:titan/settings/ui/pages/change_pass/secure_bar.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PasswordStrength extends HookConsumerWidget {
   final TextEditingController newPassword;
@@ -23,7 +23,7 @@ class PasswordStrength extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentStrength = useState(
-      SettingsTextConstants.passwordStrengthVeryWeak,
+      AppLocalizations.of(context)!.settingsPasswordStrengthVeryWeak,
     );
     final useColor = textColor == Colors.black;
     return ValueListenableBuilder(
@@ -33,7 +33,7 @@ class PasswordStrength extends HookConsumerWidget {
           children: [
             const SizedBox(height: 10),
             AlignLeftText(
-              "${SettingsTextConstants.passwordStrength} : ${currentStrength.value}",
+              "${AppLocalizations.of(context)!.settingsPasswordStrength} : ${currentStrength.value}",
               color: textColor,
             ),
             const SizedBox(height: 10),
@@ -73,20 +73,25 @@ class PasswordStrength extends HookConsumerWidget {
               ]),
               strengthCallback: (strength) {
                 if (strength < 0.2) {
-                  currentStrength.value =
-                      SettingsTextConstants.passwordStrengthVeryWeak;
+                  currentStrength.value = AppLocalizations.of(
+                    context,
+                  )!.settingsPasswordStrengthVeryWeak;
                 } else if (strength < 0.4) {
-                  currentStrength.value =
-                      SettingsTextConstants.passwordStrengthWeak;
+                  currentStrength.value = AppLocalizations.of(
+                    context,
+                  )!.settingsPasswordStrengthWeak;
                 } else if (strength < 0.6) {
-                  currentStrength.value =
-                      SettingsTextConstants.passwordStrengthMedium;
+                  currentStrength.value = AppLocalizations.of(
+                    context,
+                  )!.settingsPasswordStrengthMedium;
                 } else if (strength < 0.8) {
-                  currentStrength.value =
-                      SettingsTextConstants.passwordStrengthStrong;
+                  currentStrength.value = AppLocalizations.of(
+                    context,
+                  )!.settingsPasswordStrengthStrong;
                 } else {
-                  currentStrength.value =
-                      SettingsTextConstants.passwordStrengthVeryStrong;
+                  currentStrength.value = AppLocalizations.of(
+                    context,
+                  )!.settingsPasswordStrengthVeryStrong;
                 }
               },
             ),

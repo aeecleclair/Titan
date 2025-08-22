@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/history.dart';
 import 'package:titan/paiement/providers/my_history_provider.dart';
 import 'package:titan/paiement/ui/pages/main_page/account_card/day_divider.dart';
@@ -23,9 +24,9 @@ class LastTransactions extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               alignment: Alignment.centerLeft,
-              child: const Text(
-                "Dernières transactions",
-                style: TextStyle(
+              child: Text(
+                AppLocalizations.of(context)!.paiementLastTransactions,
+                style: const TextStyle(
                   color: Color(0xff204550),
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -79,7 +80,7 @@ class LastTransactions extends ConsumerWidget {
               },
               errorBuilder: (error, stack) => Center(
                 child: Text(
-                  "Erreur lors de la récupération des transactions : $error",
+                  "${AppLocalizations.of(context)!.paiementGetTransactionsError} : $error",
                   style: TextStyle(color: Colors.red),
                 ),
               ),

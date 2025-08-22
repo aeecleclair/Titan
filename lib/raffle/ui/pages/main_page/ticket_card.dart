@@ -7,9 +7,9 @@ import 'package:titan/raffle/class/tickets.dart';
 import 'package:titan/raffle/providers/raffle_list_provider.dart';
 import 'package:titan/raffle/providers/tombola_logo_provider.dart';
 import 'package:titan/raffle/providers/tombola_logos_provider.dart';
-import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/raffle/ui/pages/main_page/ticket_card_background.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class TicketWidget extends HookConsumerWidget {
   final List<Ticket> ticket;
@@ -108,7 +108,7 @@ class TicketWidget extends HookConsumerWidget {
                     Expanded(
                       child: AutoSizeText(
                         isWinningTicket
-                            ? "${RaffleTextConstants.winner} !"
+                            ? "${AppLocalizations.of(context)!.raffleWinner} !"
                             : "${price.toStringAsFixed(2)} €",
                         maxLines: 1,
                         textAlign: TextAlign.right,
@@ -125,7 +125,7 @@ class TicketWidget extends HookConsumerWidget {
                 AutoSizeText(
                   isWinningTicket
                       ? ticket[0].prize!.name
-                      : "${ticket.length} ${RaffleTextConstants.ticket}${ticket.length > 1 ? "s" : ""}",
+                      : "${ticket.length} ${AppLocalizations.of(context)!.raffleTicket}${ticket.length > 1 ? "s" : ""}",
                   maxLines: 2,
                   style: TextStyle(
                     color: isWinningTicket

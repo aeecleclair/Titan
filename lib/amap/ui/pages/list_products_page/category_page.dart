@@ -10,6 +10,7 @@ import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/pages/list_products_page/product_ui_list.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class CategoryPage extends HookConsumerWidget {
   final String category;
@@ -160,7 +161,7 @@ class CategoryPage extends HookConsumerWidget {
                                       color: AMAPColorConstants.background,
                                     ),
                                     Text(
-                                      AMAPTextConstants.seeMore,
+                                      AppLocalizations.of(context)!.amapSeeMore,
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: AMAPColorConstants.background,

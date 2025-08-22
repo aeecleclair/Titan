@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/history.dart';
 import 'package:titan/paiement/providers/selected_transactions_provider.dart';
 import 'package:titan/paiement/tools/functions.dart';
@@ -62,9 +63,9 @@ class TransactionChart extends HookConsumerWidget {
     }
 
     return chartPart.isEmpty
-        ? const Center(
+        ? Center(
             child: Text(
-              "Aucune transaction",
+              AppLocalizations.of(context)!.paiementNoTransactinon,
               style: TextStyle(fontSize: 20, color: Colors.black54),
             ),
           )

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:titan/ph/class/ph.dart';
-import 'package:titan/ph/tools/constants.dart';
 import 'package:titan/ph/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AdminPhCard extends StatelessWidget {
   final VoidCallback onEdit, onDelete;
@@ -29,9 +29,9 @@ class AdminPhCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Text(
-                      PhTextConstants.nameField,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Text(
+                      AppLocalizations.of(context)!.phNameField,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.left,
                     ),
                     Text(shortenText(ph.name, 28)),
@@ -39,9 +39,9 @@ class AdminPhCard extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    const Text(
-                      PhTextConstants.dateField,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Text(
+                      AppLocalizations.of(context)!.phDateField,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.left,
                     ),
                     Text(shortenText(phFormatDate(ph.date), 28)),

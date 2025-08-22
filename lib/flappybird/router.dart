@@ -1,6 +1,6 @@
-import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/flappybird/ui/pages/game_page/game_page.dart'
     deferred as play_page;
 import 'package:titan/flappybird/ui/pages/leaderboard_page/leaderboard_page.dart'
@@ -14,10 +14,9 @@ class FlappyBirdRouter {
   static const String root = '/flappybird';
   static const String leaderBoard = '/leaderboard';
   static final Module module = Module(
-    name: "FlappyBird",
-    icon: const Right("assets/images/logo_flappybird.svg"),
+    getName: (context) => AppLocalizations.of(context)!.moduleFlappyBird,
+    description: "Jouer à Flappy Bird et consulter le classement",
     root: FlappyBirdRouter.root,
-    selected: false,
   );
   FlappyBirdRouter(this.ref);
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/providers/selected_store_provider.dart';
 import 'package:titan/paiement/providers/store_sellers_list_provider.dart';
 import 'package:titan/paiement/ui/pages/store_admin_page/search_result.dart';
@@ -42,7 +43,7 @@ class StoreAdminPage extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
               alignment: Alignment.centerLeft,
               child: Text(
-                "Les vendeurs de ${store.name}",
+                "${AppLocalizations.of(context)!.paiementSellersOf} ${store.name}",
                 style: const TextStyle(
                   color: Color.fromARGB(255, 0, 29, 29),
                   fontSize: 20,
@@ -55,22 +56,22 @@ class StoreAdminPage extends HookConsumerWidget {
                 onTap: () {
                   isSearching.value = true;
                 },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Center(
                         child: Text(
-                          "Ajouter un vendeur",
-                          style: TextStyle(
+                          AppLocalizations.of(context)!.paiementAddSeller,
+                          style: const TextStyle(
                             color: Color.fromARGB(255, 0, 29, 29),
                             fontSize: 14,
                           ),
                         ),
                       ),
-                      Spacer(),
-                      CardButton(
+                      const Spacer(),
+                      const CardButton(
                         size: 35,
                         child: HeroIcon(
                           HeroIcons.plus,
@@ -90,8 +91,10 @@ class StoreAdminPage extends HookConsumerWidget {
                       .where((seller) => seller.user.id == me.id)
                       .firstOrNull;
                   if (mySellers == null) {
-                    return const Center(
-                      child: Text('You are not a seller in this store'),
+                    return Center(
+                      child: Text(
+                        AppLocalizations.of(context)!.paiementSellerError,
+                      ),
                     );
                   }
                   return Column(
@@ -114,7 +117,7 @@ class StoreAdminPage extends HookConsumerWidget {
                   children: [
                     Expanded(
                       child: TextEntry(
-                        label: "Ajouter un vendeur",
+                        label: AppLocalizations.of(context)!.paiementAddSeller,
                         onChanged: (value) {
                           tokenExpireWrapper(ref, () async {
                             if (queryController.text.isNotEmpty) {

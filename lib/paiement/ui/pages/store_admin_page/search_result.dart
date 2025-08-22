@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/seller.dart';
 import 'package:titan/paiement/providers/new_admin_provider.dart';
 import 'package:titan/paiement/providers/selected_store_provider.dart';
@@ -52,17 +53,32 @@ class SearchResult extends HookConsumerWidget {
             builder: (context, ref, _) {
               final sellerRightsList = ref.watch(sellerRightsListProvider);
               return SellerRightDialog(
-                title: "Droit du vendeur",
+                title: AppLocalizations.of(context)!.paiementSellerRigths,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    RightCheckBox(title: "Peut encaisser", index: 0),
-                    RightCheckBox(title: "Peut voir l'historique", index: 1),
                     RightCheckBox(
-                      title: "Peut annuler des transactions",
+                      title: AppLocalizations.of(context)!.paiementCanBank,
+                      index: 0,
+                    ),
+                    RightCheckBox(
+                      title: AppLocalizations.of(
+                        context,
+                      )!.paiementCanSeeHistory,
+                      index: 1,
+                    ),
+                    RightCheckBox(
+                      title: AppLocalizations.of(
+                        context,
+                      )!.paiementCanCancelTransaction,
                       index: 2,
                     ),
-                    RightCheckBox(title: "Peut gérer les vendeurs", index: 3),
+                    RightCheckBox(
+                      title: AppLocalizations.of(
+                        context,
+                      )!.paiementCanManageSellers,
+                      index: 3,
+                    ),
                   ],
                 ),
                 onYes: () async {
@@ -78,6 +94,12 @@ class SearchResult extends HookConsumerWidget {
                       canCancel: sellerRightsList[2],
                       canManageSellers: sellerRightsList[3],
                     );
+                    final addedSellerMsg = AppLocalizations.of(
+                      context,
+                    )!.paiementAddedSeller;
+                    final addingSellerErrorMsg = AppLocalizations.of(
+                      context,
+                    )!.paiementAddingSellerError;
                     final value = await sellerStoreNotifier.createStoreSeller(
                       seller,
                     );
@@ -86,14 +108,14 @@ class SearchResult extends HookConsumerWidget {
                       usersNotifier.clear();
                       sellerRightsListNotifier.clearRights();
                       newAdminNotifier.resetNewAdmin();
-                      displayToastWithContext(TypeMsg.msg, "Vendeur ajouté");
+                      displayToastWithContext(TypeMsg.msg, addedSellerMsg);
                       if (context.mounted) {
                         Navigator.of(context).pop();
                       }
                     } else {
                       displayToastWithContext(
                         TypeMsg.error,
-                        "Erreur lors de l'ajout",
+                        addingSellerErrorMsg,
                       );
                     }
                   });

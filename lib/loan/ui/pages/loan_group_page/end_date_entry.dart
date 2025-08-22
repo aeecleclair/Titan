@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/loan/providers/end_provider.dart';
 import 'package:titan/loan/providers/initial_date_provider.dart';
-import 'package:titan/loan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class EndDateEntry extends HookConsumerWidget {
   const EndDateEntry({super.key});
@@ -22,7 +22,7 @@ class EndDateEntry extends HookConsumerWidget {
         initialDate: initialDate,
       ),
       controller: TextEditingController(text: end),
-      label: LoanTextConstants.endDate,
+      label: AppLocalizations.of(context)!.loanEndDate,
     );
   }
 }

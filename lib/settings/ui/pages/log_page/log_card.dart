@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:titan/settings/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/logs/log.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class LogCard extends StatelessWidget {
   final Log log;
@@ -66,7 +66,7 @@ class LogCard extends StatelessWidget {
                   displayToast(
                     context,
                     TypeMsg.msg,
-                    SettingsTextConstants.copied,
+                    AppLocalizations.of(context)!.settingsCopied,
                   );
                 },
                 child: const HeroIcon(HeroIcons.clipboard, color: Colors.white),

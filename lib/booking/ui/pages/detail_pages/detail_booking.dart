@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/booking/providers/booking_provider.dart';
-import 'package:titan/booking/tools/constants.dart';
 import 'package:titan/booking/tools/functions.dart';
 import 'package:titan/booking/ui/booking.dart';
 import 'package:titan/booking/ui/components/booking_card.dart';
 import 'package:titan/booking/ui/pages/detail_pages/contact_button.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class DetailBookingPage extends HookConsumerWidget {
   final bool isAdmin;
@@ -56,7 +56,7 @@ class DetailBookingPage extends HookConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                decisionToString(booking.decision),
+                                decisionToString(booking.decision, context),
                                 style: const TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
@@ -115,7 +115,7 @@ class DetailBookingPage extends HookConsumerWidget {
                                 Column(
                                   children: [
                                     AutoSizeText(
-                                      "${BookingTextConstants.bookedfor} ${booking.entity}",
+                                      "${AppLocalizations.of(context)!.bookingBookedFor} ${booking.entity}",
                                       style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -126,7 +126,9 @@ class DetailBookingPage extends HookConsumerWidget {
                               const SizedBox(height: 50),
                               Text(
                                 booking.applicant.phone ??
-                                    BookingTextConstants.noPhoneRegistered,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.bookingNoPhoneRegistered,
                                 style: const TextStyle(fontSize: 25),
                               ),
                               const SizedBox(height: 50),

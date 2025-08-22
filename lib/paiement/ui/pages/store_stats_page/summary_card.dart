@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/history.dart';
 
 class SummaryCard extends StatelessWidget {
@@ -70,8 +71,8 @@ class SummaryCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const AutoSizeText(
-                      "Total sur la période",
+                    AutoSizeText(
+                      AppLocalizations.of(context)!.paiementTotalDuringPeriod,
                       maxLines: 2,
                       style: TextStyle(color: Color(0xff204550), fontSize: 14),
                     ),
@@ -79,7 +80,7 @@ class SummaryCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  "Moyenne : ${formatter.format(mean / 100)} € / transaction",
+                  "${AppLocalizations.of(context)!.paiementMean} ${formatter.format(mean / 100)} € / ${AppLocalizations.of(context)!.paiementTransaction}",
                   style: const TextStyle(
                     color: Color(0xff204550),
                     fontSize: 12,

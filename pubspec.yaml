@@ -108,3 +108,4 @@ flutter:
     - assets/images/helloasso.svg
 
   uses-material-design: true
+  generate: true

@@ -3,9 +3,9 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/is_connected_provider.dart';
 import 'package:titan/home/router.dart';
-import 'package:titan/others/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class NoInternetPage extends HookConsumerWidget {
   const NoInternetPage({super.key});
@@ -16,6 +16,7 @@ class NoInternetPage extends HookConsumerWidget {
     final isConnectedNotifier = ref.watch(isConnectedProvider.notifier);
     return Scaffold(
       body: Container(
+        color: ColorConstants.background,
         padding: const EdgeInsets.all(30),
         height: MediaQuery.of(context).size.height * 0.90,
         child: Center(
@@ -24,16 +25,18 @@ class NoInternetPage extends HookConsumerWidget {
             children: [
               const HeroIcon(HeroIcons.signalSlash, size: 150),
               const SizedBox(height: 20),
-              const Center(
+              Center(
                 child: Text(
-                  OthersTextConstants.unableToConnectToServer,
+                  AppLocalizations.of(context)!.othersUnableToConnectToServer,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
               ),
               const SizedBox(height: 20),
-              const Center(
-                child: Text(OthersTextConstants.checkInternetConnection),
+              Center(
+                child: Text(
+                  AppLocalizations.of(context)!.othersCheckInternetConnection,
+                ),
               ),
               const SizedBox(height: 40),
               GestureDetector(
@@ -64,17 +67,17 @@ class NoInternetPage extends HookConsumerWidget {
                     ],
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      HeroIcon(
+                      const HeroIcon(
                         HeroIcons.arrowPath,
                         size: 35,
                         color: Colors.white,
                       ),
                       Text(
-                        OthersTextConstants.retry,
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.othersRetry,
+                        style: const TextStyle(
                           fontSize: 25,
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

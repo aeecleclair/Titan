@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/store.dart';
 import 'package:titan/paiement/providers/store_provider.dart';
 import 'package:titan/paiement/providers/stores_list_provider.dart';
@@ -77,23 +78,30 @@ class AdminStoreCard extends ConsumerWidget {
                   await showDialog(
                     context: context,
                     builder: (context) => CustomDialogBox(
-                      title: "Supprimer l'association",
-                      descriptions:
-                          "Voulez-vous vraiment supprimer cette association ?",
+                      title: AppLocalizations.of(context)!.paiementDeleteStore,
+                      descriptions: AppLocalizations.of(
+                        context,
+                      )!.paiementDeleteStoreDescription,
                       onYes: () {
                         tokenExpireWrapper(ref, () async {
+                          final storeDeletedMsg = AppLocalizations.of(
+                            context,
+                          )!.paiementStoreDeleted;
+                          final storeDeleteErrorMsg = AppLocalizations.of(
+                            context,
+                          )!.paiementDeleteStoreError;
                           final value = await storeListNotifier.deleteStore(
                             store,
                           );
                           if (value) {
                             displayToastWithContext(
                               TypeMsg.msg,
-                              "Association supprimée",
+                              storeDeletedMsg,
                             );
                           } else {
                             displayToastWithContext(
                               TypeMsg.error,
-                              "Impossible de supprimer l'association",
+                              storeDeleteErrorMsg,
                             );
                           }
                         });

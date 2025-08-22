@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:titan/home/providers/selected_day.dart';
 import 'package:titan/home/tools/constants.dart';
+import 'package:titan/home/tools/functions.dart';
 
 class DayCard extends HookConsumerWidget {
   final bool isToday;
@@ -81,9 +81,7 @@ class DayCard extends HookConsumerWidget {
             SizedBox(
               height: 15,
               child: Text(
-                HomeTextConstants.translateDayShort[DateFormat(
-                  'E',
-                ).format(day)]!,
+                getShortDayLabel(context, day),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: isToday ? Colors.white : Colors.black,

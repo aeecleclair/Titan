@@ -15,6 +15,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PrizeHandler extends HookConsumerWidget {
   const PrizeHandler({super.key});
@@ -169,18 +170,25 @@ class PrizeHandler extends HookConsumerWidget {
                                             "Voulez-vous vraiment supprimer ce lot?",
                                         onYes: () {
                                           tokenExpireWrapper(ref, () async {
+                                            final deletePriceMsg =
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.raffleDeletePrize;
+                                            final deletingErrorMsg =
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.raffleDeletingError;
                                             final value = await prizesNotifier
                                                 .deletePrize(e);
                                             if (value) {
                                               displayToastWithContext(
                                                 TypeMsg.msg,
-                                                RaffleTextConstants.deletePrize,
+                                                deletePriceMsg,
                                               );
                                             } else {
                                               displayToastWithContext(
                                                 TypeMsg.error,
-                                                RaffleTextConstants
-                                                    .deletingError,
+                                                deletingErrorMsg,
                                               );
                                             }
                                           });
@@ -223,8 +231,9 @@ class PrizeHandler extends HookConsumerWidget {
                                               error: (e, s) {
                                                 displayToastWithContext(
                                                   TypeMsg.error,
-                                                  RaffleTextConstants
-                                                      .drawingError,
+                                                  AppLocalizations.of(
+                                                    context,
+                                                  )!.raffleDrawingError,
                                                 );
                                               },
                                               loading: () {},

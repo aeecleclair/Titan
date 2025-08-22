@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/providers/selected_structure_provider.dart';
 import 'package:titan/paiement/providers/stores_list_provider.dart';
 import 'package:titan/paiement/ui/pages/admin_page/add_store_card.dart';
@@ -26,7 +27,7 @@ class AdminPage extends ConsumerWidget {
           children: [
             const SizedBox(height: 10),
             AlignLeftText(
-              "Gestion des associations ${structure.name}",
+              "${AppLocalizations.of(context)!} ${structure.name}",
               color: Colors.grey,
               fontSize: 20,
               fontWeight: FontWeight.bold,

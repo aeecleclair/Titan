@@ -1,7 +1,6 @@
-import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
-import 'package:titan/drawer/class/module.dart';
+import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/paiement/providers/is_payment_admin.dart';
 import 'package:titan/paiement/ui/pages/admin_page/admin_page.dart'
     deferred as admin_page;
@@ -38,10 +37,9 @@ class PaymentRouter {
   static const String storeAdmin = '/storeAdmin';
   static const String storeStats = '/storeStats';
   static final Module module = Module(
-    name: "MyECLPay",
-    icon: const Left(HeroIcons.creditCard),
+    getName: (context) => AppLocalizations.of(context)!.modulePayment,
+    description: "Gérer les paiements, les statistiques et les appareils",
     root: PaymentRouter.root,
-    selected: false,
   );
   PaymentRouter(this.ref);
 

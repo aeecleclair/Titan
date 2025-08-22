@@ -14,6 +14,7 @@ import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class DetailOrderUI extends HookConsumerWidget {
   final Order order;
@@ -105,7 +106,7 @@ class DetailOrderUI extends HookConsumerWidget {
           Row(
             children: [
               Text(
-                "${order.products.fold<int>(0, (value, product) => value + product.quantity)} ${AMAPTextConstants.product}${order.products.fold<int>(0, (value, product) => value + product.quantity) != 1 ? "s" : ""}",
+                "${order.products.fold<int>(0, (value, product) => value + product.quantity)} ${AppLocalizations.of(context)!.amapProduct}${order.products.fold<int>(0, (value, product) => value + product.quantity) != 1 ? "s" : ""}",
                 style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -127,7 +128,7 @@ class DetailOrderUI extends HookConsumerWidget {
           Row(
             children: [
               Text(
-                "${AMAPTextConstants.amount} : ${userCash.balance.toStringAsFixed(2)}€",
+                "${AppLocalizations.of(context)!.amapAmount} : ${userCash.balance.toStringAsFixed(2)}€",
                 style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -140,9 +141,17 @@ class DetailOrderUI extends HookConsumerWidget {
                   await showDialog(
                     context: context,
                     builder: ((context) => CustomDialogBox(
-                      title: AMAPTextConstants.delete,
-                      descriptions: AMAPTextConstants.deletingOrder,
+                      title: AppLocalizations.of(context)!.amapDelete,
+                      descriptions: AppLocalizations.of(
+                        context,
+                      )!.amapDeletingOrder,
                       onYes: () async {
+                        final deletedOrderMsg = AppLocalizations.of(
+                          context,
+                        )!.amapDeletedOrder;
+                        final deletingErrorMsg = AppLocalizations.of(
+                          context,
+                        )!.amapDeletingError;
                         await tokenExpireWrapper(ref, () async {
                           final index = orderList.maybeWhen(
                             data: (data) => data.indexWhere(
@@ -167,12 +176,12 @@ class DetailOrderUI extends HookConsumerWidget {
                               );
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                AMAPTextConstants.deletedOrder,
+                                deletedOrderMsg,
                               );
                             } else {
                               displayToastWithContext(
                                 TypeMsg.error,
-                                AMAPTextConstants.deletingError,
+                                deletingErrorMsg,
                               );
                             }
                           });

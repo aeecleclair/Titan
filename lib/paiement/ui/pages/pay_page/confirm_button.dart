@@ -6,6 +6,7 @@ import 'package:local_auth/local_auth.dart';
 import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_darwin/local_auth_darwin.dart';
 import 'package:titan/event/tools/functions.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/providers/key_service_provider.dart';
 import 'package:titan/paiement/providers/my_history_provider.dart';
 import 'package:titan/paiement/providers/my_wallet_provider.dart';
@@ -64,17 +65,17 @@ class ConfirmButton extends ConsumerWidget {
                 const SizedBox(height: 30),
                 Row(
                   children: [
-                    const SizedBox(width: 20),
+                    SizedBox(width: 20),
                     InfoCard(
                       icons: HeroIcons.currencyEuro,
-                      title: "Montant",
+                      title: AppLocalizations.of(context)!.paiementAmount,
                       value:
                           '${formatter.format(double.parse(payAmount.replaceAll(',', '.')))} €',
                     ),
                     const SizedBox(width: 10),
                     InfoCard(
                       icons: HeroIcons.clock,
-                      title: "Valide jusqu'à",
+                      title: AppLocalizations.of(context)!.paiementValidUntil,
                       value: processDateOnlyHour(
                         DateTime.now().add(const Duration(minutes: 5)),
                       ),
@@ -90,8 +91,8 @@ class ConfirmButton extends ConsumerWidget {
                   child: GestureDetector(
                     child: AddEditButtonLayout(
                       color: Colors.grey.shade200.withValues(alpha: 0.5),
-                      child: const Text(
-                        'Fermer',
+                      child: Text(
+                        AppLocalizations.of(context)!.paiementClose,
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -120,32 +121,38 @@ class ConfirmButton extends ConsumerWidget {
         if (!enabled) {
           displayToastWithContext(
             TypeMsg.error,
-            'Veuillez entrer un montant valide',
+            AppLocalizations.of(context)!.paiementPleaseEnterValidAmount,
           );
           return;
         }
+        final authentificationFailedMsg = AppLocalizations.of(
+          context,
+        )!.paiementAuthentificationFailed;
+        final pleaseAddDeviceMsg = AppLocalizations.of(
+          context,
+        )!.paiementPleaseAddDevice;
         final bool didAuthenticate = await auth.authenticate(
-          localizedReason: 'Veuillez vous authentifier pour payer',
+          localizedReason: AppLocalizations.of(
+            context,
+          )!.paiementPleaseAuthenticate,
           authMessages: [
-            const AndroidAuthMessages(
-              signInTitle: 'L\'authentification est requise pour payer',
-              cancelButton: 'Non merci',
+            AndroidAuthMessages(
+              signInTitle: AppLocalizations.of(
+                context,
+              )!.paiementAthenticationRequired,
+              cancelButton: AppLocalizations.of(context)!.paiementNoThanks,
             ),
-            const IOSAuthMessages(cancelButton: 'Non merci'),
+            IOSAuthMessages(
+              cancelButton: AppLocalizations.of(context)!.paiementNoThanks,
+            ),
           ],
         );
         if (!didAuthenticate) {
-          displayToastWithContext(
-            TypeMsg.error,
-            'L\'authentification a échoué',
-          );
+          displayToastWithContext(TypeMsg.error, authentificationFailedMsg);
           return;
         }
         if ((await keyService.getKeyId()) == null) {
-          displayToastWithContext(
-            TypeMsg.error,
-            'Veuillez ajouter cet appareil pour payer',
-          );
+          displayToastWithContext(TypeMsg.error, pleaseAddDeviceMsg);
           return;
         }
         displayQRModal();

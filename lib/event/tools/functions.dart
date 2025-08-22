@@ -1,17 +1,18 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:titan/event/class/event.dart';
-import 'package:titan/event/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
-String decisionToString(Decision d) {
+String decisionToString(Decision d, BuildContext context) {
   switch (d) {
     case Decision.approved:
-      return EventTextConstants.confirmed;
+      return AppLocalizations.of(context)!.eventConfirmed;
     case Decision.declined:
-      return EventTextConstants.declined;
+      return AppLocalizations.of(context)!.eventDeclined;
     case Decision.pending:
-      return EventTextConstants.pending;
+      return AppLocalizations.of(context)!.eventPending;
   }
 }
 
@@ -79,4 +80,26 @@ String formatDelayToToday(DateTime date, DateTime now) {
     return "Dans ${(date.month - now.month) % 12} mois";
   }
   return "Dans ${date.year - now.year} ans";
+}
+
+String getLocalizedEventDay(BuildContext context, String key) {
+  final loc = AppLocalizations.of(context)!;
+  switch (key) {
+    case 'eventDayMon':
+      return loc.eventDayMon;
+    case 'eventDayTue':
+      return loc.eventDayTue;
+    case 'eventDayWed':
+      return loc.eventDayWed;
+    case 'eventDayThu':
+      return loc.eventDayThu;
+    case 'eventDayFri':
+      return loc.eventDayFri;
+    case 'eventDaySat':
+      return loc.eventDaySat;
+    case 'eventDaySun':
+      return loc.eventDaySun;
+    default:
+      return key;
+  }
 }

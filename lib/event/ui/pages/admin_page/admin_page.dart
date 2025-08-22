@@ -3,12 +3,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/event/ui/event.dart';
 import 'package:titan/event/class/event.dart';
 import 'package:titan/event/providers/event_list_provider.dart';
-import 'package:titan/event/tools/constants.dart';
 import 'package:titan/event/ui/pages/admin_page/list_event.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/widgets/calendar.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
@@ -90,10 +90,10 @@ class AdminPage extends HookConsumerWidget {
             if (pendingEvents.isEmpty &&
                 confirmedEvents.isEmpty &&
                 canceledEvents.isEmpty)
-              const Center(
+              Center(
                 child: Text(
-                  EventTextConstants.noCurrentEvent,
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.eventNoCurrentEvent,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -101,20 +101,20 @@ class AdminPage extends HookConsumerWidget {
                 ),
               ),
             ListEvent(
-              title: EventTextConstants.pending,
+              title: AppLocalizations.of(context)!.eventPending,
               events: pendingEvents,
               canToggle: false,
             ),
             ListEvent(
-              title: EventTextConstants.confirmed,
+              title: AppLocalizations.of(context)!.eventConfirmed,
               events: confirmedEvents,
             ),
             ListEvent(
-              title: EventTextConstants.declined,
+              title: AppLocalizations.of(context)!.eventDeclined,
               events: canceledEvents,
             ),
             ListEvent(
-              title: EventTextConstants.history,
+              title: AppLocalizations.of(context)!.eventHistory,
               events: confirmedEvents + canceledEvents + pendingEvents,
               isHistory: true,
             ),

@@ -17,6 +17,7 @@ import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/widgets/loader.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class DetailDeliveryPage extends HookConsumerWidget {
   const DetailDeliveryPage({super.key});
@@ -47,15 +48,15 @@ class DetailDeliveryPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   Text(
-                    "${AMAPTextConstants.deliveryDate} : ${processDate(delivery.deliveryDate)}",
+                    "${AppLocalizations.of(context)!.amapDeliveryDate} : ${processDate(delivery.deliveryDate)}",
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const AlignLeftText(
-                    "${AMAPTextConstants.products} :",
+                  AlignLeftText(
+                    "${AppLocalizations.of(context)!.amapProducts} :",
                     color: AMAPColorConstants.textDark,
                   ),
                 ],
@@ -111,9 +112,9 @@ class DetailDeliveryPage extends HookConsumerWidget {
               );
             }).values,
             const SizedBox(height: 20),
-            const AlignLeftText(
-              "${AMAPTextConstants.orders} :",
-              padding: EdgeInsets.only(left: 30),
+            AlignLeftText(
+              "${AppLocalizations.of(context)!.amapOrders} :",
+              padding: const EdgeInsets.only(left: 30),
               color: AMAPColorConstants.textDark,
             ),
             const SizedBox(height: 30),
@@ -128,8 +129,10 @@ class DetailDeliveryPage extends HookConsumerWidget {
                         if (data.isEmpty) {
                           return Container(
                             margin: const EdgeInsets.only(bottom: 50),
-                            child: const Center(
-                              child: Text(AMAPTextConstants.noOrder),
+                            child: Center(
+                              child: Text(
+                                AppLocalizations.of(context)!.amapNoOrder,
+                              ),
                             ),
                           );
                         }

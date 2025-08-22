@@ -2,12 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:titan/booking/class/booking.dart';
-import 'package:titan/booking/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class BookingCard extends StatelessWidget {
   final Booking booking;
@@ -153,10 +153,10 @@ class BookingCard extends StatelessWidget {
             children: [
               Text(
                 booking.decision == Decision.pending
-                    ? BookingTextConstants.pending
+                    ? AppLocalizations.of(context)!.bookingPending
                     : booking.decision == Decision.approved
-                    ? BookingTextConstants.confirmed
-                    : BookingTextConstants.declined,
+                    ? AppLocalizations.of(context)!.bookingConfirmed
+                    : AppLocalizations.of(context)!.bookingDeclined,
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -164,7 +164,7 @@ class BookingCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '${BookingTextConstants.keysRequested}: ${booking.key ? BookingTextConstants.yes : BookingTextConstants.no}',
+                '${AppLocalizations.of(context)!.bookingKeysRequested}: ${booking.key ? AppLocalizations.of(context)!.bookingYes : AppLocalizations.of(context)!.bookingNo}',
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/purchases/providers/purchase_provider.dart';
-import 'package:titan/purchases/tools/constants.dart';
 import 'package:titan/purchases/ui/purchases.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class PurchasePage extends HookConsumerWidget {
   const PurchasePage({super.key});
@@ -31,9 +31,12 @@ class PurchasePage extends HookConsumerWidget {
                   ...!data.validated
                       ? [
                           const SizedBox(height: 10),
-                          const Text(
-                            PurchasesTextConstants.notPaid,
-                            style: TextStyle(fontSize: 20, color: Colors.red),
+                          Text(
+                            AppLocalizations.of(context)!.purchasesNotPaid,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.red,
+                            ),
                           ),
                         ]
                       : [],

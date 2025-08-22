@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/providers/fund_amount_provider.dart';
 import 'package:titan/paiement/providers/my_wallet_provider.dart';
 import 'package:titan/paiement/providers/tos_provider.dart';
@@ -48,7 +49,7 @@ class FundPage extends ConsumerWidget {
           children: [
             const SizedBox(height: 20),
             Text(
-              'Recharge',
+              AppLocalizations.of(context)!.paiementTopUp,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,
@@ -57,7 +58,7 @@ class FundPage extends ConsumerWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              'Solde après recharge : ${formatter.format(amountToAdd + currentAmount)} € (max: ${formatter.format(maxBalanceAmount)} €)',
+              '${AppLocalizations.of(context)!.paiementBalanceAfterTopUp} ${formatter.format(amountToAdd + currentAmount)} € (max: ${formatter.format(maxBalanceAmount)} €)',
               style: const TextStyle(color: Colors.white, fontSize: 15),
             ),
             Expanded(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/group_list_provider.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/loan/class/loaner.dart';
 import 'package:titan/loan/providers/all_loaner_list_provider.dart';
@@ -12,6 +11,7 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddLoanerPage extends HookConsumerWidget {
   const AddLoanerPage({super.key});
@@ -38,7 +38,9 @@ class AddLoanerPage extends HookConsumerWidget {
               SizedBox(
                 child: Column(
                   children: [
-                    const AlignLeftText(AdminTextConstants.addLoaningGroup),
+                    AlignLeftText(
+                      AppLocalizations.of(context)!.adminAddLoaningGroup,
+                    ),
                     const SizedBox(height: 30),
                     AsyncChild(
                       value: associations,
@@ -58,6 +60,14 @@ class AddLoanerPage extends HookConsumerWidget {
                                             name: e.name,
                                           );
                                           tokenExpireWrapper(ref, () async {
+                                            final addedLoanerMsg =
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.adminAddedLoaner;
+                                            final addingErrorMsg =
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.adminAddingError;
                                             final value =
                                                 await loanerListNotifier
                                                     .addLoaner(newLoaner);
@@ -65,12 +75,12 @@ class AddLoanerPage extends HookConsumerWidget {
                                               QR.back();
                                               displayToastWithContext(
                                                 TypeMsg.msg,
-                                                AdminTextConstants.addedLoaner,
+                                                addedLoanerMsg,
                                               );
                                             } else {
                                               displayToastWithContext(
                                                 TypeMsg.error,
-                                                AdminTextConstants.addingError,
+                                                addingErrorMsg,
                                               );
                                             }
                                           });
@@ -102,8 +112,12 @@ class AddLoanerPage extends HookConsumerWidget {
                                     )
                                     .toList(),
                               )
-                            : const Center(
-                                child: Text(AdminTextConstants.noMoreLoaner),
+                            : Center(
+                                child: Text(
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.adminNoMoreLoaner,
+                                ),
                               );
                       },
                     ),

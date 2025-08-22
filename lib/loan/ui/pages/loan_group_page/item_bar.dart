@@ -9,11 +9,11 @@ import 'package:titan/loan/providers/loaner_provider.dart';
 import 'package:titan/loan/providers/loaners_items_provider.dart';
 import 'package:titan/loan/providers/selected_items_provider.dart';
 import 'package:titan/loan/providers/start_provider.dart';
-import 'package:titan/loan/tools/constants.dart';
 import 'package:titan/loan/ui/pages/loan_group_page/check_item_card.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ItemBar extends HookConsumerWidget {
   final bool isEdit;
@@ -36,12 +36,15 @@ class ItemBar extends HookConsumerWidget {
         loaderColor: ColorConstants.background2,
         builder: (context, data) {
           if (loanersItems[loaner] == null) {
-            return const SizedBox(
+            return SizedBox(
               height: 180,
               child: Center(
                 child: Text(
-                  LoanTextConstants.noItems,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  AppLocalizations.of(context)!.loanNoItems,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             );
@@ -51,12 +54,12 @@ class ItemBar extends HookConsumerWidget {
             loaderColor: ColorConstants.background2,
             builder: (context, itemList) {
               if (itemList.isEmpty) {
-                return const SizedBox(
+                return SizedBox(
                   height: 180,
                   child: Center(
                     child: Text(
-                      LoanTextConstants.noItems,
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.loanNoItems,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                       ),

@@ -19,7 +19,6 @@ import 'package:titan/vote/providers/sections_provider.dart';
 import 'package:titan/vote/providers/show_graph_provider.dart';
 import 'package:titan/vote/providers/status_provider.dart';
 import 'package:titan/vote/repositories/status_repository.dart';
-import 'package:titan/vote/tools/constants.dart';
 import 'package:titan/vote/ui/pages/admin_page/admin_button.dart';
 import 'package:titan/vote/ui/pages/admin_page/section_bar.dart';
 import 'package:titan/vote/ui/pages/admin_page/section_contender_items.dart';
@@ -27,6 +26,7 @@ import 'package:titan/vote/ui/pages/admin_page/vote_bars.dart';
 import 'package:titan/vote/ui/pages/admin_page/vote_count.dart';
 import 'package:titan/vote/ui/pages/admin_page/voters_bar.dart';
 import 'package:titan/vote/ui/vote.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
@@ -85,17 +85,17 @@ class AdminPage extends HookConsumerWidget {
               const SizedBox(height: 20),
               const SectionBar(),
               const SizedBox(height: 30),
-              const AlignLeftText(
-                VoteTextConstants.voters,
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
-                color: Color.fromARGB(255, 149, 149, 149),
+              AlignLeftText(
+                AppLocalizations.of(context)!.voteVoters,
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                color: const Color.fromARGB(255, 149, 149, 149),
               ),
               const SizedBox(height: 30),
               const VotersBar(),
               const SizedBox(height: 30),
-              const AlignLeftText(
-                VoteTextConstants.pretendance,
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
+              AlignLeftText(
+                AppLocalizations.of(context)!.votePretendance,
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 color: Colors.grey,
               ),
               const SizedBox(height: 10),
@@ -108,9 +108,9 @@ class AdminPage extends HookConsumerWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        VoteTextConstants.vote,
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.voteVote,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
@@ -137,9 +137,12 @@ class AdminPage extends HookConsumerWidget {
                                   await showDialog(
                                     context: context,
                                     builder: (context) => CustomDialogBox(
-                                      title: VoteTextConstants.publish,
-                                      descriptions: VoteTextConstants
-                                          .publishVoteDescription,
+                                      title: AppLocalizations.of(
+                                        context,
+                                      )!.votePublish,
+                                      descriptions: AppLocalizations.of(
+                                        context,
+                                      )!.votePublishVoteDescription,
                                       onYes: () {
                                         statusNotifier.publishVote();
                                         ref
@@ -149,9 +152,9 @@ class AdminPage extends HookConsumerWidget {
                                     ),
                                   );
                                 },
-                                child: const Text(
-                                  VoteTextConstants.publish,
-                                  style: TextStyle(
+                                child: Text(
+                                  AppLocalizations.of(context)!.votePublish,
+                                  style: const TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
@@ -170,11 +173,22 @@ class AdminPage extends HookConsumerWidget {
                               context: context,
                               builder: (context) {
                                 return CustomDialogBox(
-                                  title: VoteTextConstants.resetVote,
-                                  descriptions:
-                                      VoteTextConstants.resetVoteDescription,
+                                  title: AppLocalizations.of(
+                                    context,
+                                  )!.voteResetVote,
+                                  descriptions: AppLocalizations.of(
+                                    context,
+                                  )!.voteResetVoteDescription,
                                   onYes: () async {
                                     await tokenExpireWrapper(ref, () async {
+                                      final resetedVotesMsg =
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.voteResetedVotes;
+                                      final resetedVotesErrorMsg =
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.voteErrorResetingVotes;
                                       final value = await statusNotifier
                                           .resetVote();
                                       ref
@@ -184,12 +198,12 @@ class AdminPage extends HookConsumerWidget {
                                         showVotesNotifier.toggle(false);
                                         displayVoteToastWithContext(
                                           TypeMsg.msg,
-                                          VoteTextConstants.resetedVotes,
+                                          resetedVotesMsg,
                                         );
                                       } else {
                                         displayVoteToastWithContext(
                                           TypeMsg.error,
-                                          VoteTextConstants.errorResetingVotes,
+                                          resetedVotesErrorMsg,
                                         );
                                       }
                                     });
@@ -198,9 +212,9 @@ class AdminPage extends HookConsumerWidget {
                               },
                             );
                           },
-                          child: const Text(
-                            VoteTextConstants.clear,
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.voteClear,
+                            style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -227,19 +241,19 @@ class AdminPage extends HookConsumerWidget {
                                 showVotesNotifier.toggle(true);
                               },
                               behavior: HitTestBehavior.opaque,
-                              child: const Column(
+                              child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  SizedBox(height: 40),
-                                  HeroIcon(
+                                  const SizedBox(height: 40),
+                                  const HeroIcon(
                                     HeroIcons.eye,
                                     size: 80.0,
                                     color: Colors.black,
                                   ),
-                                  SizedBox(height: 40),
+                                  const SizedBox(height: 40),
                                   Text(
-                                    VoteTextConstants.showVotes,
-                                    style: TextStyle(
+                                    AppLocalizations.of(context)!.voteShowVotes,
+                                    style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
@@ -264,24 +278,30 @@ class AdminPage extends HookConsumerWidget {
                           ),
                           onTap: () async {
                             await tokenExpireWrapper(ref, () async {
+                              final votesCountedMsg = AppLocalizations.of(
+                                context,
+                              )!.voteVotesCounted;
+                              final errorCountingVotesMsg = AppLocalizations.of(
+                                context,
+                              )!.voteErrorCountingVotes;
                               final value = await statusNotifier.countVote();
                               if (value) {
                                 displayVoteToastWithContext(
                                   TypeMsg.msg,
-                                  VoteTextConstants.votesCounted,
+                                  votesCountedMsg,
                                 );
                               } else {
                                 displayVoteToastWithContext(
                                   TypeMsg.error,
-                                  VoteTextConstants.errorCountingVotes,
+                                  errorCountingVotesMsg,
                                 );
                               }
                             });
                           },
-                          child: const Center(
+                          child: Center(
                             child: Text(
-                              VoteTextConstants.countVote,
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.voteCountVote,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
@@ -308,24 +328,30 @@ class AdminPage extends HookConsumerWidget {
                           ),
                           onTap: () async {
                             await tokenExpireWrapper(ref, () async {
+                              final closeVotesMsg = AppLocalizations.of(
+                                context,
+                              )!.voteVotesClosed;
+                              final errorClosingVotesMsg = AppLocalizations.of(
+                                context,
+                              )!.voteErrorClosingVotes;
                               final value = await statusNotifier.closeVote();
                               if (value) {
                                 displayVoteToastWithContext(
                                   TypeMsg.msg,
-                                  VoteTextConstants.votesClosed,
+                                  closeVotesMsg,
                                 );
                               } else {
                                 displayVoteToastWithContext(
                                   TypeMsg.error,
-                                  VoteTextConstants.errorClosingVotes,
+                                  errorClosingVotesMsg,
                                 );
                               }
                             });
                           },
-                          child: const Center(
+                          child: Center(
                             child: Text(
-                              VoteTextConstants.closeVote,
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.voteCloseVote,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
@@ -357,6 +383,13 @@ class AdminPage extends HookConsumerWidget {
                                 ),
                                 onTap: () async {
                                   await tokenExpireWrapper(ref, () async {
+                                    final openVotesMsg = AppLocalizations.of(
+                                      context,
+                                    )!.voteVotesOpened;
+                                    final errorOpeningVotesMsg =
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.voteErrorOpeningVotes;
                                     final value = await statusNotifier
                                         .openVote();
                                     ref
@@ -365,20 +398,20 @@ class AdminPage extends HookConsumerWidget {
                                     if (value) {
                                       displayVoteToastWithContext(
                                         TypeMsg.msg,
-                                        VoteTextConstants.votesOpened,
+                                        openVotesMsg,
                                       );
                                     } else {
                                       displayVoteToastWithContext(
                                         TypeMsg.error,
-                                        VoteTextConstants.errorOpeningVotes,
+                                        errorOpeningVotesMsg,
                                       );
                                     }
                                   });
                                 },
-                                child: const Center(
+                                child: Center(
                                   child: Text(
-                                    VoteTextConstants.openVote,
-                                    style: TextStyle(
+                                    AppLocalizations.of(context)!.voteOpenVote,
+                                    style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 20,
                                       fontWeight: FontWeight.w700,
@@ -412,11 +445,21 @@ class AdminPage extends HookConsumerWidget {
                                           await showDialog(
                                             context: context,
                                             builder: (context) => CustomDialogBox(
-                                              title:
-                                                  VoteTextConstants.deleteAll,
-                                              descriptions: VoteTextConstants
-                                                  .deleteAllDescription,
+                                              title: AppLocalizations.of(
+                                                context,
+                                              )!.voteDeleteAll,
+                                              descriptions: AppLocalizations.of(
+                                                context,
+                                              )!.voteDeleteAllDescription,
                                               onYes: () async {
+                                                final deleteAllVotesMsg =
+                                                    AppLocalizations.of(
+                                                      context,
+                                                    )!.voteDeletedAll;
+                                                final errorDeletingVotesMsg =
+                                                    AppLocalizations.of(
+                                                      context,
+                                                    )!.voteDeletingError;
                                                 await tokenExpireWrapper(
                                                   ref,
                                                   () async {
@@ -429,14 +472,12 @@ class AdminPage extends HookConsumerWidget {
                                                     if (value) {
                                                       displayVoteToastWithContext(
                                                         TypeMsg.msg,
-                                                        VoteTextConstants
-                                                            .deletedAll,
+                                                        deleteAllVotesMsg,
                                                       );
                                                     } else {
                                                       displayVoteToastWithContext(
                                                         TypeMsg.error,
-                                                        VoteTextConstants
-                                                            .deletingError,
+                                                        errorDeletingVotesMsg,
                                                       );
                                                     }
                                                   },
@@ -445,21 +486,23 @@ class AdminPage extends HookConsumerWidget {
                                             ),
                                           );
                                         },
-                                        child: const Center(
+                                        child: Center(
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                VoteTextConstants.all,
-                                                style: TextStyle(
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.voteAll,
+                                                style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w700,
                                                 ),
                                               ),
-                                              SizedBox(width: 10),
-                                              HeroIcon(
+                                              const SizedBox(width: 10),
+                                              const HeroIcon(
                                                 HeroIcons.trash,
                                                 color: Colors.white,
                                                 size: 20,
@@ -489,11 +532,21 @@ class AdminPage extends HookConsumerWidget {
                                           await showDialog(
                                             context: context,
                                             builder: (context) => CustomDialogBox(
-                                              title:
-                                                  VoteTextConstants.deletePipo,
-                                              descriptions: VoteTextConstants
-                                                  .deletePipoDescription,
+                                              title: AppLocalizations.of(
+                                                context,
+                                              )!.voteDeletePipo,
+                                              descriptions: AppLocalizations.of(
+                                                context,
+                                              )!.voteDeletePipoDescription,
                                               onYes: () async {
+                                                final deletePipoVotesMsg =
+                                                    AppLocalizations.of(
+                                                      context,
+                                                    )!.voteDeletedPipo;
+                                                final errorDeletingPipoVotesMsg =
+                                                    AppLocalizations.of(
+                                                      context,
+                                                    )!.voteDeletingError;
                                                 await tokenExpireWrapper(
                                                   ref,
                                                   () async {
@@ -508,14 +561,12 @@ class AdminPage extends HookConsumerWidget {
                                                     if (value) {
                                                       displayVoteToastWithContext(
                                                         TypeMsg.msg,
-                                                        VoteTextConstants
-                                                            .deletedPipo,
+                                                        deletePipoVotesMsg,
                                                       );
                                                     } else {
                                                       displayVoteToastWithContext(
                                                         TypeMsg.error,
-                                                        VoteTextConstants
-                                                            .deletingError,
+                                                        errorDeletingPipoVotesMsg,
                                                       );
                                                     }
                                                   },
@@ -524,21 +575,23 @@ class AdminPage extends HookConsumerWidget {
                                             ),
                                           );
                                         },
-                                        child: const Center(
+                                        child: Center(
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                VoteTextConstants.pipo,
-                                                style: TextStyle(
+                                                AppLocalizations.of(
+                                                  context,
+                                                )!.votePipo,
+                                                style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w700,
                                                 ),
                                               ),
-                                              SizedBox(width: 10),
-                                              HeroIcon(
+                                              const SizedBox(width: 10),
+                                              const HeroIcon(
                                                 HeroIcons.trash,
                                                 color: Colors.white,
                                                 size: 20,

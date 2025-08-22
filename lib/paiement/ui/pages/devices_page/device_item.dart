@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/wallet_device.dart';
 import 'package:titan/paiement/tools/functions.dart';
 
@@ -44,8 +45,8 @@ class DeviceItem extends ConsumerWidget {
                         ),
                       ),
                       if (isActual)
-                        const Text(
-                          '(cet appareil)',
+                        Text(
+                          AppLocalizations.of(context)!.paiementThisDevice,
                           style: TextStyle(
                             color: Color(0xff204550),
                             fontSize: 15,

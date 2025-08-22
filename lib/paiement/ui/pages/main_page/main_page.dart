@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/providers/has_accepted_tos_provider.dart';
 import 'package:titan/paiement/providers/my_wallet_provider.dart';
 import 'package:titan/paiement/providers/tos_provider.dart';
@@ -54,7 +55,11 @@ class PaymentMainPage extends HookConsumerWidget {
           !_handledKeys.contains("code")) {
         _handledKeys.add("code");
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          displayToast(context, TypeMsg.msg, "Paiement réussi");
+          displayToast(
+            context,
+            TypeMsg.msg,
+            AppLocalizations.of(context)!.paiementSuccededTransaction,
+          );
         });
       }
       await mySellersNotifier.getMyStores();
@@ -101,7 +106,7 @@ class PaymentMainPage extends HookConsumerWidget {
                   orElse: () => '',
                   data: (tos) => tos.tosContent,
                 ),
-                title: "Nouvelles Conditions Générales d'Utilisation",
+                title: AppLocalizations.of(context)!.paiementNewCGU,
                 onYes: () {
                   tos.maybeWhen(
                     orElse: () {},

@@ -13,6 +13,7 @@ import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class RaffleInfoPage extends HookConsumerWidget {
   const RaffleInfoPage({super.key});
@@ -67,7 +68,7 @@ class RaffleInfoPage extends HookConsumerWidget {
               child: AsyncChild(
                 value: balance,
                 builder: (context, s) => Text(
-                  "${RaffleTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
+                  "${AppLocalizations.of(context)!.raffleAmount} : ${s.balance.toStringAsFixed(2)}€",
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -84,7 +85,9 @@ class RaffleInfoPage extends HookConsumerWidget {
                       height: 190,
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: const Text(RaffleTextConstants.noTicketBuyable),
+                      child: Text(
+                        AppLocalizations.of(context)!.raffleNoTicketBuyable,
+                      ),
                     )
                   : HorizontalListView.builder(
                       height: 160,
@@ -116,19 +119,19 @@ class RaffleInfoPage extends HookConsumerWidget {
                           vertical: 10,
                           horizontal: 30,
                         ),
-                        child: const Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              RaffleTextConstants.actualPrize,
-                              style: TextStyle(
+                              AppLocalizations.of(context)!.raffleActualPrize,
+                              style: const TextStyle(
                                 fontSize: 25,
                                 color: RaffleColorConstants.gradient2,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 10),
-                            Text(RaffleTextConstants.noPrize),
+                            const SizedBox(height: 10),
+                            Text(AppLocalizations.of(context)!.raffleNoPrize),
                           ],
                         ),
                       )
@@ -136,8 +139,10 @@ class RaffleInfoPage extends HookConsumerWidget {
                         children: [
                           AlignLeftText(
                             prizes.isEmpty
-                                ? RaffleTextConstants.noPrize
-                                : RaffleTextConstants.actualPrize,
+                                ? AppLocalizations.of(context)!.raffleNoPrize
+                                : AppLocalizations.of(
+                                    context,
+                                  )!.raffleActualPrize,
                             padding: const EdgeInsets.symmetric(
                               vertical: 10,
                               horizontal: 30,
@@ -168,9 +173,9 @@ class RaffleInfoPage extends HookConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      RaffleTextConstants.actualPrize,
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!.raffleActualPrize,
+                      style: const TextStyle(
                         fontSize: 25,
                         color: RaffleColorConstants.gradient2,
                         fontWeight: FontWeight.bold,
@@ -190,9 +195,9 @@ class RaffleInfoPage extends HookConsumerWidget {
                   left: 30,
                   right: 30,
                 ),
-                child: const Text(
-                  RaffleTextConstants.description,
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.raffleDescription,
+                  style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                     color: RaffleColorConstants.gradient2,

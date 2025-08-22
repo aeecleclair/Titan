@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/history.dart';
 import 'package:titan/paiement/providers/my_history_provider.dart';
 import 'package:titan/paiement/providers/selected_transactions_provider.dart';
@@ -40,7 +41,7 @@ class SumUpChart extends HookConsumerWidget {
               transaction.type == HistoryType.refundCredited) {
             final transactionName = transaction.type != HistoryType.transfer
                 ? transaction.otherWalletName
-                : "Recharge";
+                : AppLocalizations.of(context)!.paiementTopUp;
             creditedTransactionPerStore[transactionName] = [
               ...?creditedTransactionPerStore[transactionName],
               transaction,
@@ -115,7 +116,9 @@ class SumUpChart extends HookConsumerWidget {
                                 );
                               },
                               child: MonthSectionSummary(
-                                title: "Reçu",
+                                title: AppLocalizations.of(
+                                  context,
+                                )!.paiementReceived,
                                 amount:
                                     '${formatter.format(transferTotal / 100)} €',
                                 color: const Color.fromARGB(255, 255, 119, 7),
@@ -147,7 +150,9 @@ class SumUpChart extends HookConsumerWidget {
                                 );
                               },
                               child: MonthSectionSummary(
-                                title: "Déboursé",
+                                title: AppLocalizations.of(
+                                  context,
+                                )!.paiementSpent,
                                 amount: '${formatter.format(total / 100)} €',
                                 color: const Color.fromARGB(255, 1, 127, 128),
                                 darkColor: const Color.fromARGB(
@@ -174,8 +179,10 @@ class SumUpChart extends HookConsumerWidget {
             : Container(
                 height: 300,
                 alignment: Alignment.center,
-                child: const Text(
-                  "Aucune transaction pour ce mois",
+                child: Text(
+                  AppLocalizations.of(
+                    context,
+                  )!.paiementNoTrasactionForThisMonth,
                   style: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
               );

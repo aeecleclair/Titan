@@ -8,12 +8,12 @@ import 'package:titan/phonebook/providers/member_pictures_provider.dart';
 import 'package:titan/phonebook/providers/profile_picture_provider.dart';
 import 'package:titan/phonebook/providers/complete_member_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/tools/function.dart';
 import 'package:titan/phonebook/ui/pages/association_page/card_field.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class WebMemberCard extends HookConsumerWidget {
   const WebMemberCard({
@@ -137,20 +137,28 @@ class WebMemberCard extends HookConsumerWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 CardField(
-                                  label: PhonebookTextConstants.promotion,
+                                  label: AppLocalizations.of(
+                                    context,
+                                  )!.phonebookPromotion,
                                   value: member.member.promotion == 0
-                                      ? PhonebookTextConstants.promoNotGiven
+                                      ? AppLocalizations.of(
+                                          context,
+                                        )!.phonebookPromoNotGiven
                                       : member.member.promotion < 100
                                       ? "20${member.member.promotion}"
                                       : member.member.promotion.toString(),
                                 ),
                                 CardField(
-                                  label: PhonebookTextConstants.email,
+                                  label: AppLocalizations.of(
+                                    context,
+                                  )!.phonebookEmail,
                                   value: member.member.email,
                                 ),
                                 if (member.member.phone != null)
                                   CardField(
-                                    label: PhonebookTextConstants.phone,
+                                    label: AppLocalizations.of(
+                                      context,
+                                    )!.phonebookPhone,
                                     value: member.member.phone!,
                                   ),
                               ],
@@ -165,7 +173,9 @@ class WebMemberCard extends HookConsumerWidget {
                         Text(
                           textAlign: TextAlign.right,
                           assoMembership == null
-                              ? PhonebookTextConstants.noMemberRole
+                              ? AppLocalizations.of(
+                                  context,
+                                )!.phonebookNoMemberRole
                               : assoMembership.apparentName,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
@@ -216,9 +226,11 @@ class WebMemberCard extends HookConsumerWidget {
                         ),
                       const SizedBox(height: 5),
                       CardField(
-                        label: PhonebookTextConstants.promotion,
+                        label: AppLocalizations.of(context)!.phonebookPromotion,
                         value: member.member.promotion == 0
-                            ? PhonebookTextConstants.promoNotGiven
+                            ? AppLocalizations.of(
+                                context,
+                              )!.phonebookPromoNotGiven
                             : member.member.promotion < 100
                             ? "20${member.member.promotion}"
                             : member.member.promotion.toString(),
@@ -229,12 +241,16 @@ class WebMemberCard extends HookConsumerWidget {
                           child: Row(
                             children: [
                               CardField(
-                                label: PhonebookTextConstants.email,
+                                label: AppLocalizations.of(
+                                  context,
+                                )!.phonebookEmail,
                                 value: member.member.email,
                               ),
                               if (member.member.phone != null)
                                 CardField(
-                                  label: PhonebookTextConstants.phone,
+                                  label: AppLocalizations.of(
+                                    context,
+                                  )!.phonebookPhone,
                                   value: member.member.phone!,
                                 ),
                             ],
@@ -244,13 +260,17 @@ class WebMemberCard extends HookConsumerWidget {
                         Column(
                           children: [
                             CardField(
-                              label: PhonebookTextConstants.email,
+                              label: AppLocalizations.of(
+                                context,
+                              )!.phonebookEmail,
                               value: member.member.email,
                               showLabel: false,
                             ),
                             if (member.member.phone != null)
                               CardField(
-                                label: PhonebookTextConstants.phone,
+                                label: AppLocalizations.of(
+                                  context,
+                                )!.phonebookPhone,
                                 value: member.member.phone!,
                                 showLabel: false,
                               ),
@@ -263,7 +283,9 @@ class WebMemberCard extends HookConsumerWidget {
                       Text(
                         textAlign: TextAlign.right,
                         assoMembership == null
-                            ? PhonebookTextConstants.noMemberRole
+                            ? AppLocalizations.of(
+                                context,
+                              )!.phonebookNoMemberRole
                             : assoMembership.apparentName,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,

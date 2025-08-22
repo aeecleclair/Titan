@@ -15,7 +15,6 @@ import 'package:titan/phonebook/providers/membership_provider.dart';
 import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 import 'package:titan/phonebook/router.dart';
-import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/pages/association_editor_page/association_information_editor.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/phonebook/ui/pages/association_editor_page/member_editable_card.dart';
@@ -27,6 +26,7 @@ import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AssociationEditorPage extends HookConsumerWidget {
   final scrollKey = GlobalKey();
@@ -76,9 +76,9 @@ class AssociationEditorPage extends HookConsumerWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               alignment: Alignment.centerLeft,
-              child: const Text(
-                PhonebookTextConstants.edit,
-                style: TextStyle(
+              child: Text(
+                AppLocalizations.of(context)!.phonebookEdit,
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
                   color: ColorConstants.gradient1,
@@ -92,7 +92,7 @@ class AssociationEditorPage extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Row(
                 children: [
-                  const Text(PhonebookTextConstants.members),
+                  Text(AppLocalizations.of(context)!.phonebookMembers),
                   const Spacer(),
                   WaitingButton(
                     builder: (child) => Container(
@@ -155,7 +155,7 @@ class AssociationEditorPage extends HookConsumerWidget {
               value: associationMemberList,
               builder: (context, associationMembers) =>
                   associationMembers.isEmpty
-                  ? const Text(PhonebookTextConstants.noMember)
+                  ? Text(AppLocalizations.of(context)!.phonebookNoMember)
                   : (isPhonebookAdmin || isAssociationPresident) &&
                         !association.deactivated
                   ? SizedBox(
@@ -170,6 +170,12 @@ class AssociationEditorPage extends HookConsumerWidget {
                           );
                         },
                         onReorder: (int oldIndex, int newIndex) async {
+                          final memberReorderedMsg = AppLocalizations.of(
+                            context,
+                          )!.phonebookMemberReordered;
+                          final reorderingErrorMsg = AppLocalizations.of(
+                            context,
+                          )!.phonebookReorderingError;
                           await tokenExpireWrapper(ref, () async {
                             final result = await associationMemberListNotifier
                                 .reorderMember(
@@ -190,12 +196,12 @@ class AssociationEditorPage extends HookConsumerWidget {
                             if (result) {
                               displayToastWithContext(
                                 TypeMsg.msg,
-                                PhonebookTextConstants.memberReordered,
+                                memberReorderedMsg,
                               );
                             } else {
                               displayToastWithContext(
                                 TypeMsg.error,
-                                PhonebookTextConstants.reorderingError,
+                                reorderingErrorMsg,
                               );
                             }
                           });
@@ -245,23 +251,33 @@ class AssociationEditorPage extends HookConsumerWidget {
                         showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                            title: const Text(
-                              PhonebookTextConstants.newMandate,
+                            title: Text(
+                              AppLocalizations.of(context)!.phonebookNewMandate,
                             ),
-                            content: const Text(
-                              PhonebookTextConstants.changeMandateConfirm,
+                            content: Text(
+                              AppLocalizations.of(
+                                context,
+                              )!.phonebookChangeMandateConfirm,
                             ),
                             actions: [
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: const Text(
-                                  PhonebookTextConstants.cancel,
+                                child: Text(
+                                  AppLocalizations.of(context)!.phonebookCancel,
                                 ),
                               ),
                               TextButton(
                                 onPressed: () async {
+                                  final newMandateConfirmedMsg =
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.phonebookNewMandateConfirmed;
+                                  final mandateChangingErrorMsg =
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.phonebookMandateChangingError;
                                   Navigator.pop(context);
                                   await tokenExpireWrapper(ref, () async {
                                     final value = await associationListNotifier
@@ -274,8 +290,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                                     if (value) {
                                       displayToastWithContext(
                                         TypeMsg.msg,
-                                        PhonebookTextConstants
-                                            .newMandateConfirmed,
+                                        newMandateConfirmedMsg,
                                       );
                                       associationNotifier.setAssociation(
                                         association.copyWith(
@@ -295,14 +310,15 @@ class AssociationEditorPage extends HookConsumerWidget {
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.error,
-                                        PhonebookTextConstants
-                                            .mandateChangingError,
+                                        mandateChangingErrorMsg,
                                       );
                                     }
                                   });
                                 },
-                                child: const Text(
-                                  PhonebookTextConstants.validation,
+                                child: Text(
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.phonebookValidation,
                                 ),
                               ),
                             ],
@@ -311,7 +327,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                       }
                     : () async {},
                 child: Text(
-                  "${PhonebookTextConstants.changeMandate} ${association.mandateYear + 1}",
+                  "${AppLocalizations.of(context)!.phonebookChangeMandate} ${association.mandateYear + 1}",
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,

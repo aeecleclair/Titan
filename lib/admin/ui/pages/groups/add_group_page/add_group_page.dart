@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/simple_group.dart';
 import 'package:titan/admin/providers/group_list_provider.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/components/admin_button.dart';
 import 'package:titan/admin/ui/components/text_editing.dart';
@@ -12,6 +11,7 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddGroupPage extends HookConsumerWidget {
   const AddGroupPage({super.key});
@@ -37,15 +37,24 @@ class AddGroupPage extends HookConsumerWidget {
             key: key,
             child: Column(
               children: [
-                const AlignLeftText(AdminTextConstants.addGroup),
+                AlignLeftText(AppLocalizations.of(context)!.adminAddGroup),
                 const SizedBox(height: 30),
-                TextEditing(controller: name, label: AdminTextConstants.name),
+                TextEditing(
+                  controller: name,
+                  label: AppLocalizations.of(context)!.adminName,
+                ),
                 TextEditing(
                   controller: description,
-                  label: AdminTextConstants.description,
+                  label: AppLocalizations.of(context)!.adminDescription,
                 ),
                 WaitingButton(
                   onTap: () async {
+                    final addedGroupMsg = AppLocalizations.of(
+                      context,
+                    )!.adminAddedGroup;
+                    final addingErrorMsg = AppLocalizations.of(
+                      context,
+                    )!.adminAddingError;
                     await tokenExpireWrapper(ref, () async {
                       final value = await groupListNotifier.createGroup(
                         SimpleGroup(
@@ -56,21 +65,15 @@ class AddGroupPage extends HookConsumerWidget {
                       );
                       if (value) {
                         QR.back();
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          AdminTextConstants.addedGroup,
-                        );
+                        displayToastWithContext(TypeMsg.msg, addedGroupMsg);
                       } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AdminTextConstants.addingError,
-                        );
+                        displayToastWithContext(TypeMsg.error, addingErrorMsg);
                       }
                     });
                   },
                   builder: (child) => AdminButton(child: child),
-                  child: const Text(
-                    AdminTextConstants.add,
+                  child: Text(
+                    AppLocalizations.of(context)!.adminAdd,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

@@ -4,12 +4,12 @@ import 'package:titan/booking/class/booking.dart';
 import 'package:titan/booking/providers/manager_booking_list_provider.dart';
 import 'package:titan/booking/providers/manager_confirmed_booking_list_provider.dart';
 import 'package:titan/service/providers/room_list_provider.dart';
-import 'package:titan/booking/tools/constants.dart';
 import 'package:titan/booking/ui/booking.dart';
 import 'package:titan/booking/ui/calendar/calendar.dart';
 import 'package:titan/booking/ui/pages/manager_page/list_booking.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class ManagerPage extends HookConsumerWidget {
   const ManagerPage({super.key});
@@ -63,10 +63,10 @@ class ManagerPage extends HookConsumerWidget {
             if (pendingBookings.isEmpty &&
                 confirmedBookings.isEmpty &&
                 canceledBookings.isEmpty)
-              const Center(
+              Center(
                 child: Text(
-                  BookingTextConstants.noCurrentBooking,
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.bookingNoCurrentBooking,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -74,16 +74,16 @@ class ManagerPage extends HookConsumerWidget {
                 ),
               ),
             ListBooking(
-              title: BookingTextConstants.pending,
+              title: AppLocalizations.of(context)!.bookingPending,
               bookings: pendingBookings,
               canToggle: false,
             ),
             ListBooking(
-              title: BookingTextConstants.confirmed,
+              title: AppLocalizations.of(context)!.bookingConfirmed,
               bookings: confirmedBookings,
             ),
             ListBooking(
-              title: BookingTextConstants.declined,
+              title: AppLocalizations.of(context)!.bookingDeclined,
               bookings: canceledBookings,
             ),
             const SizedBox(height: 30),

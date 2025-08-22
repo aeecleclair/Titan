@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 
 class DateEntry extends StatelessWidget {
@@ -29,7 +28,7 @@ class DateEntry extends StatelessWidget {
         child: TextEntry(
           label: label,
           controller: controller,
-          noValueError: TextConstants.noDateError,
+          noValueError: "Date is required",
           enabled: enabled,
           color: color,
           enabledColor: enabledColor,

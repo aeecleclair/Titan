@@ -9,6 +9,7 @@ import 'package:titan/raffle/providers/tombola_logos_provider.dart';
 import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/raffle/ui/pages/raffle_page/confirm_payment.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class BuyPackTicket extends HookConsumerWidget {
   final PackTicket packTicket;
@@ -140,7 +141,7 @@ class BuyPackTicket extends HookConsumerWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              "${packTicket.packSize} ${RaffleTextConstants.ticket}${packTicket.packSize > 1 ? "s" : ""}",
+              "${packTicket.packSize} ${AppLocalizations.of(context)!.raffleTicket}${packTicket.packSize > 1 ? "s" : ""}",
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.8),
                 fontSize: 18,
@@ -169,10 +170,10 @@ class BuyPackTicket extends HookConsumerWidget {
                 fit: BoxFit.fitWidth,
                 child: Text(
                   raffle.raffleStatusType == RaffleStatusType.open
-                      ? RaffleTextConstants.buyThisTicket
+                      ? AppLocalizations.of(context)!.raffleBuyThisTicket
                       : raffle.raffleStatusType == RaffleStatusType.lock
-                      ? RaffleTextConstants.lockedRaffle
-                      : RaffleTextConstants.unavailableRaffle,
+                      ? AppLocalizations.of(context)!.raffleLockedRaffle
+                      : AppLocalizations.of(context)!.raffleUnavailableRaffle,
                   style: TextStyle(
                     color: raffle.raffleStatusType != RaffleStatusType.open
                         ? Colors.white

@@ -9,7 +9,6 @@ import 'package:titan/recommendation/providers/recommendation_logo_map_provider.
 import 'package:titan/recommendation/providers/recommendation_logo_provider.dart';
 import 'package:titan/recommendation/providers/recommendation_provider.dart';
 import 'package:titan/recommendation/router.dart';
-import 'package:titan/recommendation/tools/constants.dart';
 import 'package:titan/recommendation/ui/widgets/recommendation_card_layout.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -17,6 +16,7 @@ import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class RecommendationCard extends HookConsumerWidget {
   final Recommendation recommendation;
@@ -95,13 +95,13 @@ class RecommendationCard extends HookConsumerWidget {
                         ),
                         IconButton(
                           onPressed: () async {
+                            final copiedCodeMsg = AppLocalizations.of(
+                              context,
+                            )!.recommendationCopiedCode;
                             await Clipboard.setData(
                               ClipboardData(text: recommendation.code!),
                             );
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              RecommendationTextConstants.copiedCode,
-                            );
+                            displayToastWithContext(TypeMsg.msg, copiedCodeMsg);
                           },
                           icon: const Icon(Icons.copy),
                         ),
@@ -158,9 +158,18 @@ class RecommendationCard extends HookConsumerWidget {
                                     await showDialog(
                                       context: context,
                                       builder: (context) => CustomDialogBox(
-                                        descriptions: RecommendationTextConstants
-                                            .deleteRecommendationConfirmation,
+                                        descriptions: AppLocalizations.of(
+                                          context,
+                                        )!.recommendationDeleteRecommendationConfirmation,
                                         onYes: () async {
+                                          final deletedRecommendationMsg =
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.recommendationDeletedRecommendation;
+                                          final deletedRecommendationErrorMsg =
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.recommendationDeletingRecommendationError;
                                           final value =
                                               await recommendationListNotifier
                                                   .deleteRecommendation(
@@ -169,20 +178,19 @@ class RecommendationCard extends HookConsumerWidget {
                                           if (value) {
                                             displayToastWithContext(
                                               TypeMsg.msg,
-                                              RecommendationTextConstants
-                                                  .deletedRecommendation,
+                                              deletedRecommendationMsg,
                                             );
                                             QR.back();
                                           } else {
                                             displayToastWithContext(
                                               TypeMsg.error,
-                                              RecommendationTextConstants
-                                                  .deletingRecommendationError,
+                                              deletedRecommendationErrorMsg,
                                             );
                                           }
                                         },
-                                        title: RecommendationTextConstants
-                                            .deleteRecommendation,
+                                        title: AppLocalizations.of(
+                                          context,
+                                        )!.recommendationDeleteRecommendation,
                                       ),
                                     );
                                   });

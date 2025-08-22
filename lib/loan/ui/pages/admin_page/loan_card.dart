@@ -8,6 +8,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class LoanCard extends StatelessWidget {
   final Loan loan;
@@ -101,7 +102,7 @@ class LoanCard extends StatelessWidget {
             ),
             const SizedBox(height: 7),
             Text(
-              formatItems(loan.itemsQuantity),
+              formatItems(loan.itemsQuantity, context),
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
@@ -125,10 +126,10 @@ class LoanCard extends StatelessWidget {
               children: [
                 Text(
                   loan.returned
-                      ? LoanTextConstants.returned
+                      ? AppLocalizations.of(context)!.loanReturned
                       : shouldReturn
-                      ? LoanTextConstants.toReturn
-                      : LoanTextConstants.onGoing,
+                      ? AppLocalizations.of(context)!.loanToReturn
+                      : AppLocalizations.of(context)!.loanOnGoing,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -141,7 +142,7 @@ class LoanCard extends StatelessWidget {
                   (loan.returned)
                       ? loan.returnedDate != null
                             ? processDate(loan.returnedDate!)
-                            : LoanTextConstants.noReturnedDate
+                            : AppLocalizations.of(context)!.loanNoReturnedDate
                       : processDate(loan.end),
                   style: TextStyle(
                     fontSize: 13,

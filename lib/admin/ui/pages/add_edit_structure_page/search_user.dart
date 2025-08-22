@@ -3,12 +3,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/structure_manager_provider.dart';
-import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/pages/add_edit_structure_page/results.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
 import 'package:titan/user/class/simple_users.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class SearchUser extends HookConsumerWidget {
   const SearchUser({super.key});
@@ -21,7 +21,7 @@ class SearchUser extends HookConsumerWidget {
     return Column(
       children: [
         StyledSearchBar(
-          label: AdminTextConstants.manager,
+          label: AppLocalizations.of(context)!.adminManager,
           color: ColorConstants.gradient1,
           padding: const EdgeInsets.all(0),
           editingController: useTextEditingController(

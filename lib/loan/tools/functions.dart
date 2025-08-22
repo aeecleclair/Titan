@@ -1,13 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:titan/loan/class/item_quantity.dart';
-import 'package:titan/loan/tools/constants.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
-String formatItems(List<ItemQuantity> itemsQty) {
+String formatItems(List<ItemQuantity> itemsQty, BuildContext context) {
   if (itemsQty.length == 2) {
-    return "${itemsQty[0].quantity} ${itemsQty[0].itemSimple.name} ${LoanTextConstants.and} ${itemsQty[1].quantity} ${itemsQty[1].itemSimple.name}";
+    return "${itemsQty[0].quantity} ${itemsQty[0].itemSimple.name} ${AppLocalizations.of(context)!.loanAnd} ${itemsQty[1].quantity} ${itemsQty[1].itemSimple.name}";
   } else if (itemsQty.length == 3) {
-    return "${itemsQty[0].quantity} ${itemsQty[0].itemSimple.name}, ${itemsQty[1].quantity} ${itemsQty[1].itemSimple.name} ${LoanTextConstants.and} ${itemsQty[2].quantity} ${itemsQty[2].itemSimple.name}";
+    return "${itemsQty[0].quantity} ${itemsQty[0].itemSimple.name}, ${itemsQty[1].quantity} ${itemsQty[1].itemSimple.name} ${AppLocalizations.of(context)!.loanAnd} ${itemsQty[2].quantity} ${itemsQty[2].itemSimple.name}";
   } else if (itemsQty.length > 3) {
-    return "${itemsQty[0].quantity} ${itemsQty[0].itemSimple.name}, ${itemsQty[1].quantity} ${itemsQty[1].itemSimple.name} ${LoanTextConstants.and} ${itemsQty.length - 2} ${LoanTextConstants.others}";
+    return "${itemsQty[0].quantity} ${itemsQty[0].itemSimple.name}, ${itemsQty[1].quantity} ${itemsQty[1].itemSimple.name} ${AppLocalizations.of(context)!.loanAnd} ${itemsQty.length - 2} ${AppLocalizations.of(context)!.loanOthers}";
   } else if (itemsQty.length == 1) {
     return "${itemsQty[0].quantity} ${itemsQty[0].itemSimple.name}";
   } else {
@@ -15,12 +16,12 @@ String formatItems(List<ItemQuantity> itemsQty) {
   }
 }
 
-String formatNumberItems(int n) {
+String formatNumberItems(int n, BuildContext context) {
   if (n >= 2) {
-    return "$n ${LoanTextConstants.itemsSelected}";
+    return "$n ${AppLocalizations.of(context)!.loanItemsSelected}";
   } else if (n == 1) {
-    return "$n ${LoanTextConstants.itemSelected} ";
+    return "$n ${AppLocalizations.of(context)!.loanItemSelected} ";
   } else {
-    return LoanTextConstants.noItemSelected;
+    return AppLocalizations.of(context)!.loanNoItemSelected;
   }
 }

@@ -6,7 +6,6 @@ import 'package:titan/loan/providers/item_list_provider.dart';
 import 'package:titan/loan/providers/item_provider.dart';
 import 'package:titan/loan/providers/loaner_provider.dart';
 import 'package:titan/loan/providers/loaners_items_provider.dart';
-import 'package:titan/loan/tools/constants.dart';
 import 'package:titan/loan/ui/loan.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -15,6 +14,7 @@ import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AddEditItemPage extends HookConsumerWidget {
   const AddEditItemPage({super.key});
@@ -52,8 +52,8 @@ class AddEditItemPage extends HookConsumerWidget {
               const SizedBox(height: 30),
               AlignLeftText(
                 isEdit
-                    ? LoanTextConstants.editItem
-                    : LoanTextConstants.addObject,
+                    ? AppLocalizations.of(context)!.loanEditItem
+                    : AppLocalizations.of(context)!.loanAddObject,
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 color: Colors.grey,
               ),
@@ -62,11 +62,14 @@ class AddEditItemPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 30),
-                    TextEntry(label: LoanTextConstants.name, controller: name),
+                    TextEntry(
+                      label: AppLocalizations.of(context)!.loanName,
+                      controller: name,
+                    ),
                     const SizedBox(height: 30),
                     TextEntry(
                       keyboardType: TextInputType.number,
-                      label: LoanTextConstants.quantity,
+                      label: AppLocalizations.of(context)!.loanQuantity,
                       isInt: true,
                       controller: quantity,
                     ),
@@ -75,7 +78,7 @@ class AddEditItemPage extends HookConsumerWidget {
                       keyboardType: TextInputType.number,
                       controller: caution,
                       isInt: true,
-                      label: LoanTextConstants.caution,
+                      label: AppLocalizations.of(context)!.loanCaution,
                       suffix: '€',
                     ),
                     const SizedBox(height: 30),
@@ -83,8 +86,8 @@ class AddEditItemPage extends HookConsumerWidget {
                       keyboardType: TextInputType.number,
                       controller: lendingDuration,
                       isInt: true,
-                      label: LoanTextConstants.lendingDuration,
-                      suffix: LoanTextConstants.days,
+                      label: AppLocalizations.of(context)!.loanLendingDuration,
+                      suffix: AppLocalizations.of(context)!.loanDays,
                     ),
                     const SizedBox(height: 50),
                     WaitingButton(
@@ -93,6 +96,12 @@ class AddEditItemPage extends HookConsumerWidget {
                         child: child,
                       ),
                       onTap: () async {
+                        final updatedItemMsg = isEdit
+                            ? AppLocalizations.of(context)!.loanUpdatedItem
+                            : AppLocalizations.of(context)!.loanAddedObject;
+                        final updatedItemErrorMsg = isEdit
+                            ? AppLocalizations.of(context)!.loanUpdatingError
+                            : AppLocalizations.of(context)!.loanAddingError;
                         if (key.currentState == null) {
                           return;
                         }
@@ -123,41 +132,31 @@ class AddEditItemPage extends HookConsumerWidget {
                                 loaner,
                                 await itemListNotifier.copy(),
                               );
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  LoanTextConstants.updatedItem,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  LoanTextConstants.addedObject,
-                                );
-                              }
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                updatedItemMsg,
+                              );
                             } else {
-                              if (isEdit) {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  LoanTextConstants.updatingError,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  LoanTextConstants.addingError,
-                                );
-                              }
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                updatedItemErrorMsg,
+                              );
                             }
                           });
                         } else {
                           displayToast(
                             context,
                             TypeMsg.error,
-                            LoanTextConstants.incorrectOrMissingFields,
+                            AppLocalizations.of(
+                              context,
+                            )!.loanIncorrectOrMissingFields,
                           );
                         }
                       },
                       child: Text(
-                        isEdit ? LoanTextConstants.edit : LoanTextConstants.add,
+                        isEdit
+                            ? AppLocalizations.of(context)!.loanEdit
+                            : AppLocalizations.of(context)!.loanAdd,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 25,

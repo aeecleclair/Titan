@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/init_info.dart';
 import 'package:titan/paiement/providers/fund_amount_provider.dart';
 import 'package:titan/paiement/providers/funding_url_provider.dart';
@@ -69,7 +70,10 @@ class ConfirmFundButton extends ConsumerWidget {
               as html.WindowBase?;
 
       if (popupWin == null) {
-        displayToastWithContext(TypeMsg.error, "Veuillez autoriser les popups");
+        displayToastWithContext(
+          TypeMsg.error,
+          AppLocalizations.of(context)!.paiementPleaseAcceptPopup,
+        );
         return;
       }
 
@@ -89,11 +93,17 @@ class ConfirmFundButton extends ConsumerWidget {
         final receivedUri = Uri.parse(data);
         final code = receivedUri.queryParameters["code"];
         if (code == "succeeded") {
-          displayToastWithContext(TypeMsg.msg, "Paiement effectué avec succès");
+          displayToastWithContext(
+            TypeMsg.msg,
+            AppLocalizations.of(context)!.paiementProceedSuccessfully,
+          );
           myWalletNotifier.getMyWallet();
           myHistoryNotifier.getHistory();
         } else {
-          displayToastWithContext(TypeMsg.error, "Paiement annulé");
+          displayToastWithContext(
+            TypeMsg.error,
+            AppLocalizations.of(context)!.paiementCancelledTransaction,
+          );
         }
         popupWin.close();
         Navigator.pop(context, code);
@@ -111,14 +121,14 @@ class ConfirmFundButton extends ConsumerWidget {
         if (!minValidFundAmount) {
           displayToastWithContext(
             TypeMsg.error,
-            "Veuillez entrer un montant supérieur à 1€",
+            AppLocalizations.of(context)!.paiementPleaseEnterMinAmount,
           );
           return;
         }
         if (!maxValidFundAmount) {
           displayToastWithContext(
             TypeMsg.error,
-            "Le montant maximum de votre portefeuille est de ${maxBalanceAmount.toStringAsFixed(2)}€",
+            "${AppLocalizations.of(context)!.paiementMaxAmount} ${maxBalanceAmount.toStringAsFixed(2)}€",
           );
           return;
         }
@@ -181,7 +191,7 @@ class ConfirmFundButton extends ConsumerWidget {
             ),
           ),
           Text(
-            "Payer avec HelloAsso",
+            AppLocalizations.of(context)!.paiementPayWithHA,
             style: TextStyle(
               color: (minValidFundAmount && maxValidFundAmount)
                   ? const Color(0xff2e2f5e)

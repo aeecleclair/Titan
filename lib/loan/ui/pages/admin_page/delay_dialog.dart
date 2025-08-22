@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:titan/loan/tools/constants.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class DelayDialog extends StatefulWidget {
   final void Function(int i) onYes;
@@ -43,9 +43,9 @@ class IntegerExampleState extends State<DelayDialog> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Text(
-                LoanTextConstants.delay,
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.loanDelay,
+                style: const TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w800,
                   color: Colors.black,
@@ -70,9 +70,9 @@ class IntegerExampleState extends State<DelayDialog> {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Text(
-                        LoanTextConstants.cancel,
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)!.loanCancel,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
@@ -84,9 +84,9 @@ class IntegerExampleState extends State<DelayDialog> {
                         Navigator.of(context).pop();
                         widget.onYes(_currentIntValue);
                       },
-                      child: const Text(
-                        LoanTextConstants.confirm,
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)!.loanConfirm,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                           color: Colors.black,

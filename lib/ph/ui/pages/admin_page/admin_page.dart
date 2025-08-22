@@ -7,12 +7,12 @@ import 'package:titan/ph/providers/file_picker_result_provider.dart';
 import 'package:titan/ph/providers/ph_provider.dart';
 import 'package:titan/ph/providers/ph_send_pdf_provider.dart';
 import 'package:titan/ph/router.dart';
-import 'package:titan/ph/tools/constants.dart';
 import 'package:titan/ph/ui/button.dart';
 import 'package:titan/ph/ui/components/year_bar.dart';
 import 'package:titan/ph/ui/pages/admin_page/admin_ph_list.dart';
 import 'package:titan/ph/ui/pages/ph.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});
@@ -35,7 +35,9 @@ class AdminPage extends HookConsumerWidget {
               resultNotifier.setFilePickerResult(null);
               QR.to(PhRouter.root + PhRouter.admin + PhRouter.add_ph);
             },
-            child: const MyButton(text: PhTextConstants.addNewJournal),
+            child: MyButton(
+              text: AppLocalizations.of(context)!.phAddNewJournal,
+            ),
           ),
           const SizedBox(height: 20),
         ],

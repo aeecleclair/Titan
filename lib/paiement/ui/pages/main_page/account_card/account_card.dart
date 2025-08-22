@@ -74,6 +74,23 @@ class AccountCard extends HookConsumerWidget {
       });
     }
 
+    void showNotRegisteredDeviceDialog() async {
+      await showDialog(
+        context: context,
+        builder: (context) {
+          return DeviceDialogBox(
+            title: 'Appareil non enregistré',
+            descriptions:
+                'Votre appareil n\'est pas encore enregistré. \nPour l\'enregistrer, veuillez vous rendre sur la page des appareils.',
+            buttonText: 'Accéder à la page',
+            onClick: () {
+              QR.to(PaymentRouter.root + PaymentRouter.devices);
+            },
+          );
+        },
+      );
+    }
+
     return MainCardTemplate(
       colors: const [
         Color.fromARGB(255, 9, 103, 103),
@@ -108,20 +125,7 @@ class AccountCard extends HookConsumerWidget {
                 }
                 String? keyId = await keyService.getKeyId();
                 if (keyId == null) {
-                  await showDialog(
-                    context: context,
-                    builder: (context) {
-                      return DeviceDialogBox(
-                        title: 'Appareil non enregistré',
-                        descriptions:
-                            'Votre appareil n\'est pas encore enregistré. \nPour l\'enregistrer, veuillez vous rendre sur la page des appareils.',
-                        buttonText: 'Accéder à la page',
-                        onClick: () {
-                          QR.to(PaymentRouter.root + PaymentRouter.devices);
-                        },
-                      );
-                    },
-                  );
+                  showNotRegisteredDeviceDialog();
                   return;
                 }
                 final device = await deviceNotifier.getDevice(keyId);
