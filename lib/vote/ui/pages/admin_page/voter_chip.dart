@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:titan/tools/ui/layouts/item_chip.dart';
+import 'package:titan/tools/ui/styleguide/item_chip.dart';
 
 class VoterChip extends StatelessWidget {
   final bool selected;

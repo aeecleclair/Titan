@@ -22,7 +22,7 @@ class VotersBar extends HookConsumerWidget {
     Status status = Status.open;
     asyncStatus.whenData((value) => status = value);
     return SizedBox(
-      height: 40,
+      height: 50,
       child: groups.when(
         data: (data) => SingleChildScrollView(
           scrollDirection: Axis.horizontal,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:titan/tools/constants.dart';
 
 class SectionChip extends StatelessWidget {
   final bool selected, isAdmin;
@@ -18,11 +19,14 @@ class SectionChip extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10.0),
+        margin: EdgeInsets.symmetric(horizontal: 5.0),
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.0),
-          color: selected ? Colors.black : Colors.grey.shade200,
+          border: Border.all(color: ColorConstants.onTertiary),
+          color: selected
+              ? ColorConstants.onTertiary
+              : ColorConstants.background,
         ),
         child: Row(
           children: [

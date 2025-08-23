@@ -129,7 +129,13 @@ class DetailPage extends HookConsumerWidget {
                                 physics: const BouncingScrollPhysics(),
                                 child: Wrap(
                                   children: contender.members
-                                      .map((e) => MemberCard(member: e))
+                                      .map(
+                                        (e) => MemberCard(
+                                          member: e,
+                                          onEdit: () {},
+                                          onDelete: () {},
+                                        ),
+                                      )
                                       .toList(),
                                 ),
                               )
@@ -152,7 +158,13 @@ class DetailPage extends HookConsumerWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Center(child: ContenderCard(contender: contender)),
+              child: Center(
+                child: ContenderCard(
+                  contender: contender,
+                  onDelete: () async {},
+                  onEdit: () {},
+                ),
+              ),
             ),
           ],
         ),

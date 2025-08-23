@@ -24,10 +24,9 @@ class ListItem extends StatelessWidget {
       title: title,
       subtitle: subtitle,
       icon: icon,
-      trailing: const HeroIcon(
-        HeroIcons.chevronRight,
-        color: ColorConstants.tertiary,
-      ),
+      trailing: onTap != null
+          ? HeroIcon(HeroIcons.chevronRight, color: ColorConstants.tertiary)
+          : SizedBox.shrink(),
     );
   }
 }
