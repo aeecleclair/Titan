@@ -159,6 +159,7 @@ class SettingsMainPage extends HookConsumerWidget {
                                   )
                                 : Container(),
                           ),
+                          const SizedBox(height: 10),
                           ListItemTemplate(
                             title: "🇬🇧 English",
                             onTap: () async {
@@ -220,11 +221,16 @@ class SettingsMainPage extends HookConsumerWidget {
                                   child: Column(
                                     children: [
                                       ...uniqueTopics.map(
-                                        (notificationTopic) => ListItemTemplate(
-                                          title: notificationTopic.name,
-                                          trailing: LoadSwitchTopic(
-                                            notificationTopic:
-                                                notificationTopic,
+                                        (notificationTopic) => Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 8.0,
+                                          ),
+                                          child: ListItemTemplate(
+                                            title: notificationTopic.name,
+                                            trailing: LoadSwitchTopic(
+                                              notificationTopic:
+                                                  notificationTopic,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -239,33 +245,46 @@ class SettingsMainPage extends HookConsumerWidget {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 const SizedBox(height: 20),
-                                                ListItemTemplate(
-                                                  title: moduleRoot,
-                                                  trailing: HeroIcon(
-                                                    expanded
-                                                        ? HeroIcons.chevronDown
-                                                        : HeroIcons
-                                                              .chevronRight,
-                                                    color:
-                                                        ColorConstants.tertiary,
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                        vertical: 8.0,
+                                                      ),
+                                                  child: ListItemTemplate(
+                                                    title: moduleRoot,
+                                                    trailing: HeroIcon(
+                                                      expanded
+                                                          ? HeroIcons
+                                                                .chevronDown
+                                                          : HeroIcons
+                                                                .chevronRight,
+                                                      color: ColorConstants
+                                                          .tertiary,
+                                                    ),
+                                                    onTap: () {
+                                                      setState(() {
+                                                        expanded = !expanded;
+                                                      });
+                                                    },
                                                   ),
-                                                  onTap: () {
-                                                    setState(() {
-                                                      expanded = !expanded;
-                                                    });
-                                                  },
                                                 ),
                                                 const SizedBox(height: 10),
                                                 if (expanded)
                                                   ...topics.map(
                                                     (
                                                       notificationTopic,
-                                                    ) => ListItemTemplate(
-                                                      title: notificationTopic
-                                                          .name,
-                                                      trailing: LoadSwitchTopic(
-                                                        notificationTopic:
-                                                            notificationTopic,
+                                                    ) => Padding(
+                                                      padding:
+                                                          const EdgeInsets.symmetric(
+                                                            vertical: 8.0,
+                                                          ),
+                                                      child: ListItemTemplate(
+                                                        title: notificationTopic
+                                                            .name,
+                                                        trailing: LoadSwitchTopic(
+                                                          notificationTopic:
+                                                              notificationTopic,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
