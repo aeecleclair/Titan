@@ -66,7 +66,7 @@ class SearchUser extends HookConsumerWidget {
                       modal: BottomModalTemplate(
                         title: localizeWithContext.adminAddMember,
                         child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxHeight: 300),
+                          constraints: const BoxConstraints(maxHeight: 350),
                           child: Column(
                             children: [
                               CustomSearchBar(
@@ -81,8 +81,10 @@ class SearchUser extends HookConsumerWidget {
                                   }
                                 },
                               ),
+                              const SizedBox(height: 10),
                               Expanded(
                                 child: SingleChildScrollView(
+                                  physics: const BouncingScrollPhysics(),
                                   child: const MemberResults(),
                                 ),
                               ),
