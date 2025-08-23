@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/structure_manager_provider.dart';
-import 'package:titan/tools/ui/styleguide/list_item_template.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
@@ -16,25 +17,39 @@ class SearchResult extends HookConsumerWidget {
       structureManagerProvider.notifier,
     );
 
-    return users.when(
-      data: (usersData) {
+    return AsyncChild(
+      value: users,
+      builder: (context, usersData) {
         return Column(
           children: usersData
               .map(
-                (user) => ListItemTemplate(
-                  title: user.getName(),
-                  onTap: () {
-                    structureManagerNotifier.setUser(user);
-                    usersNotifier.clear();
-                    Navigator.of(context).pop();
-                  },
+                (user) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          user.getName(),
+                          style: const TextStyle(fontSize: 15),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          structureManagerNotifier.setUser(user);
+                          usersNotifier.clear();
+                          Navigator.of(context).pop();
+                        },
+                        child: const HeroIcon(HeroIcons.plus),
+                      ),
+                    ],
+                  ),
                 ),
               )
               .toList(),
         );
       },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, s) => Text(e.toString()),
     );
   }
 }
