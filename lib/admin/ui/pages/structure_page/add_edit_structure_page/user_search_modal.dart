@@ -23,12 +23,6 @@ class UserSearchModal extends HookConsumerWidget {
       type: BottomModalType.main,
       child: Column(
         children: [
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxHeight: 280),
-            child: SingleChildScrollView(
-              child: SearchResult(queryController: textController),
-            ),
-          ),
           CustomSearchBar(
             autofocus: true,
             onSearch: (value) => tokenExpireWrapper(ref, () async {
@@ -40,6 +34,14 @@ class UserSearchModal extends HookConsumerWidget {
                 textController.clear();
               }
             }),
+          ),
+          const SizedBox(height: 10),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxHeight: 280),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: SearchResult(queryController: textController),
+            ),
           ),
         ],
       ),
