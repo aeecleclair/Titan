@@ -52,7 +52,7 @@ class GroupsPage extends HookConsumerWidget {
             await groupsNotifier.loadGroups();
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
               children: [
                 const SizedBox(height: 20),
@@ -134,7 +134,7 @@ class GroupsPage extends HookConsumerWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 10),
                 AsyncChild(
                   value: groups,
                   builder: (context, g) {
@@ -145,125 +145,127 @@ class GroupsPage extends HookConsumerWidget {
                     return Column(
                       children: [
                         ...g.map(
-                          (group) => ListItem(
-                            title: group.name,
-                            subtitle: group.description,
-                            onTap: () async {
-                              await showCustomBottomModal(
-                                context: context,
-                                ref: ref,
-                                modal: BottomModalTemplate(
-                                  title: group.name,
-                                  child: Column(
-                                    children: [
-                                      Button(
-                                        text: localizeWithContext.adminEdit,
-                                        onPressed: () async {
-                                          nameController.text = group.name;
-                                          descController.text =
-                                              group.description;
-                                          Navigator.pop(context);
-                                          await showCustomBottomModal(
-                                            context: context,
-                                            ref: ref,
-                                            modal: BottomModalTemplate(
-                                              title: localizeWithContext
-                                                  .adminEditGroup,
-                                              child: Column(
-                                                children: [
-                                                  TextEntry(
-                                                    label: localizeWithContext
-                                                        .adminName,
-                                                    controller: nameController,
-                                                  ),
-                                                  const SizedBox(height: 20),
-                                                  TextEntry(
-                                                    label: localizeWithContext
-                                                        .adminDescription,
-                                                    controller: descController,
-                                                  ),
-                                                  const SizedBox(height: 20),
-                                                  Button(
-                                                    text: localizeWithContext
-                                                        .adminEdit,
-                                                    onPressed: () async {
-                                                      final addedGroupMsg =
-                                                          AppLocalizations.of(
-                                                            context,
-                                                          )!.adminAddedGroup;
-                                                      final addingErrorMsg =
-                                                          AppLocalizations.of(
-                                                            context,
-                                                          )!.adminAddingError;
-                                                      await tokenExpireWrapper(
-                                                        ref,
-                                                        () async {
-                                                          final value = await groupListNotifier
-                                                              .updateGroup(
-                                                                SimpleGroup(
-                                                                  name:
-                                                                      nameController
-                                                                          .text,
-                                                                  description:
-                                                                      descController
-                                                                          .text,
-                                                                  id: group.id,
-                                                                ),
-                                                              );
-                                                          if (value) {
-                                                            QR.back();
-                                                            displayToastWithContext(
-                                                              TypeMsg.msg,
-                                                              addedGroupMsg,
-                                                            );
-                                                          } else {
-                                                            displayToastWithContext(
-                                                              TypeMsg.error,
-                                                              addingErrorMsg,
-                                                            );
-                                                          }
-                                                        },
-                                                      );
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Button(
-                                        text: localizeWithContext
-                                            .adminManageMembers,
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          groupIdNotifier.setId(group.id);
-                                          QR.to(
-                                            AdminRouter.root +
-                                                AdminRouter.usersGroups +
-                                                AdminRouter.editGroup,
-                                          );
-                                        },
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Button(
-                                        text: localizeWithContext
-                                            .adminDeleteGroup,
-                                        type: ButtonType.danger,
-                                        onPressed: () async {
-                                          await showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return CustomDialogBox(
+                          (group) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5.0),
+                            child: ListItem(
+                              title: group.name,
+                              subtitle: group.description,
+                              onTap: () async {
+                                await showCustomBottomModal(
+                                  context: context,
+                                  ref: ref,
+                                  modal: BottomModalTemplate(
+                                    title: group.name,
+                                    child: Column(
+                                      children: [
+                                        Button(
+                                          text: localizeWithContext.adminEdit,
+                                          onPressed: () async {
+                                            nameController.text = group.name;
+                                            descController.text =
+                                                group.description;
+                                            Navigator.pop(context);
+                                            await showCustomBottomModal(
+                                              context: context,
+                                              ref: ref,
+                                              modal: BottomModalTemplate(
                                                 title: localizeWithContext
-                                                    .adminDelete,
-                                                descriptions: localizeWithContext
-                                                    .adminDeleteGroupConfirmation,
-                                                onYes: () async {
-                                                  tokenExpireWrapper(
-                                                    ref,
-                                                    () async {
+                                                    .adminEditGroup,
+                                                child: Column(
+                                                  children: [
+                                                    TextEntry(
+                                                      label: localizeWithContext
+                                                          .adminName,
+                                                      controller:
+                                                          nameController,
+                                                    ),
+                                                    const SizedBox(height: 20),
+                                                    TextEntry(
+                                                      label: localizeWithContext
+                                                          .adminDescription,
+                                                      controller:
+                                                          descController,
+                                                    ),
+                                                    const SizedBox(height: 20),
+                                                    Button(
+                                                      text: localizeWithContext
+                                                          .adminEdit,
+                                                      onPressed: () async {
+                                                        final addedGroupMsg =
+                                                            AppLocalizations.of(
+                                                              context,
+                                                            )!.adminAddedGroup;
+                                                        final addingErrorMsg =
+                                                            AppLocalizations.of(
+                                                              context,
+                                                            )!.adminAddingError;
+                                                        await tokenExpireWrapper(
+                                                          ref,
+                                                          () async {
+                                                            final value = await groupListNotifier
+                                                                .updateGroup(
+                                                                  SimpleGroup(
+                                                                    name: nameController
+                                                                        .text,
+                                                                    description:
+                                                                        descController
+                                                                            .text,
+                                                                    id: group
+                                                                        .id,
+                                                                  ),
+                                                                );
+                                                            if (value) {
+                                                              QR.back();
+                                                              displayToastWithContext(
+                                                                TypeMsg.msg,
+                                                                addedGroupMsg,
+                                                              );
+                                                            } else {
+                                                              displayToastWithContext(
+                                                                TypeMsg.error,
+                                                                addingErrorMsg,
+                                                              );
+                                                            }
+                                                          },
+                                                        );
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Button(
+                                          text: localizeWithContext
+                                              .adminManageMembers,
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            groupIdNotifier.setId(group.id);
+                                            QR.to(
+                                              AdminRouter.root +
+                                                  AdminRouter.usersGroups +
+                                                  AdminRouter.editGroup,
+                                            );
+                                          },
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Button(
+                                          text: localizeWithContext
+                                              .adminDeleteGroup,
+                                          type: ButtonType.danger,
+                                          onPressed: () async {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return CustomDialogBox(
+                                                  title: localizeWithContext
+                                                      .adminDelete,
+                                                  descriptions: localizeWithContext
+                                                      .adminDeleteGroupConfirmation,
+                                                  onYes: () async {
+                                                    tokenExpireWrapper(ref, () async {
                                                       final value =
                                                           await groupsNotifier
                                                               .deleteGroup(
@@ -282,20 +284,20 @@ class GroupsPage extends HookConsumerWidget {
                                                               .adminFailedToDeleteGroup,
                                                         );
                                                       }
-                                                    },
-                                                  );
-                                                },
-                                              );
-                                            },
-                                          );
-                                          navigatorWithContext.pop();
-                                        },
-                                      ),
-                                    ],
+                                                    });
+                                                  },
+                                                );
+                                              },
+                                            );
+                                            navigatorWithContext.pop();
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
                         ),
                         const SizedBox(height: 20),
