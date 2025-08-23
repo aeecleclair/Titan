@@ -39,6 +39,7 @@ class SearchUser extends HookConsumerWidget {
       builder: (context, g) {
         return Column(
           children: [
+            const SizedBox(height: 20),
             Row(
               children: [
                 Expanded(
