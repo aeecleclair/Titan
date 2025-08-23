@@ -36,7 +36,7 @@ class GroupNotificationPage extends HookConsumerWidget {
           await groupsNotifier.loadGroups();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             children: [
               const SizedBox(height: 20),
@@ -51,7 +51,7 @@ class GroupNotificationPage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
               AsyncChild(
                 value: groups,
                 builder: (context, g) {
@@ -64,68 +64,73 @@ class GroupNotificationPage extends HookConsumerWidget {
                       Column(
                         children: [
                           ...g.map(
-                            (group) => ListItem(
-                              title: group.name,
-                              subtitle: group.description,
-                              onTap: () async {
-                                await showCustomBottomModal(
-                                  context: context,
-                                  ref: ref,
-                                  modal: BottomModalTemplate(
-                                    title: localizeWithContext.adminNotifyGroup(
-                                      group.name,
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        TextEntry(
-                                          label: localizeWithContext.adminTitle,
-                                          controller: titleController,
-                                        ),
-                                        const SizedBox(height: 20),
-                                        TextEntry(
-                                          label:
-                                              localizeWithContext.adminContent,
-                                          controller: contentController,
-                                          maxLines: 5,
-                                        ),
-                                        const SizedBox(height: 20),
-                                        Button(
-                                          text: localizeWithContext.adminSend,
-                                          onPressed: () {
-                                            notificationRepository
-                                                .sendNotification(
-                                                  group.id,
-                                                  titleController.text,
-                                                  contentController.text,
-                                                )
-                                                .then((value) {
-                                                  if (value) {
-                                                    displayToastWithContext(
-                                                      TypeMsg.msg,
-                                                      localizeWithContext
-                                                          .adminNotificationSent,
-                                                    );
-                                                  } else {
+                            (group) => Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 5.0,
+                              ),
+                              child: ListItem(
+                                title: group.name,
+                                subtitle: group.description,
+                                onTap: () async {
+                                  await showCustomBottomModal(
+                                    context: context,
+                                    ref: ref,
+                                    modal: BottomModalTemplate(
+                                      title: localizeWithContext
+                                          .adminNotifyGroup(group.name),
+                                      child: Column(
+                                        children: [
+                                          TextEntry(
+                                            label:
+                                                localizeWithContext.adminTitle,
+                                            controller: titleController,
+                                          ),
+                                          const SizedBox(height: 20),
+                                          TextEntry(
+                                            label: localizeWithContext
+                                                .adminContent,
+                                            controller: contentController,
+                                            maxLines: 5,
+                                          ),
+                                          const SizedBox(height: 20),
+                                          Button(
+                                            text: localizeWithContext.adminSend,
+                                            onPressed: () {
+                                              notificationRepository
+                                                  .sendNotification(
+                                                    group.id,
+                                                    titleController.text,
+                                                    contentController.text,
+                                                  )
+                                                  .then((value) {
+                                                    if (value) {
+                                                      displayToastWithContext(
+                                                        TypeMsg.msg,
+                                                        localizeWithContext
+                                                            .adminNotificationSent,
+                                                      );
+                                                    } else {
+                                                      displayToastWithContext(
+                                                        TypeMsg.error,
+                                                        localizeWithContext
+                                                            .adminFailedToSendNotification,
+                                                      );
+                                                    }
+                                                  })
+                                                  .catchError((error) {
                                                     displayToastWithContext(
                                                       TypeMsg.error,
-                                                      localizeWithContext
-                                                          .adminFailedToSendNotification,
+                                                      error.toString(),
                                                     );
-                                                  }
-                                                })
-                                                .catchError((error) {
-                                                  displayToastWithContext(
-                                                    TypeMsg.error,
-                                                    error.toString(),
-                                                  );
-                                                });
-                                          },
-                                        ),
-                                      ],
+                                                  });
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
                           ),
                           const SizedBox(height: 20),
