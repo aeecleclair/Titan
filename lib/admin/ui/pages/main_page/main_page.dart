@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/admin/admin.dart';
@@ -22,76 +23,94 @@ class AdminMainPage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Padding(
-        padding: const EdgeInsets.all(40),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              localizeWithContext.adminAdministration,
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              localizeWithContext.adminUsersAndGroups,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            ListItem(
-              title: localizeWithContext.adminUsersManagement,
-              subtitle: localizeWithContext.adminUsersManagementDescription,
-              onTap: () async {
-                await showCustomBottomModal(
-                  context: context,
-                  ref: ref,
-                  modal: BottomModalTemplate(
-                    title: localizeWithContext.adminUsersManagement,
-                    child: UsersManagementPage(),
+        padding: const EdgeInsets.all(20),
+        child: ScrollToHideNavbar(
+          controller: ScrollController(),
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  localizeWithContext.adminAdministration,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  localizeWithContext.adminUsersAndGroups,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 10),
+                ListItem(
+                  title: localizeWithContext.adminUsersManagement,
+                  subtitle: localizeWithContext.adminUsersManagementDescription,
+                  onTap: () async {
+                    await showCustomBottomModal(
+                      context: context,
+                      ref: ref,
+                      modal: BottomModalTemplate(
+                        title: localizeWithContext.adminUsersManagement,
+                        child: UsersManagementPage(),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 10),
+                ListItem(
+                  title: localizeWithContext.adminGroupsManagement,
+                  subtitle: localizeWithContext.adminManageUserGroups,
+                  onTap: () =>
+                      QR.to(AdminRouter.root + AdminRouter.usersGroups),
+                ),
+                const SizedBox(height: 10),
+                ListItem(
+                  title: localizeWithContext.adminGroupNotification,
+                  subtitle: localizeWithContext.adminSendNotificationToGroup,
+                  onTap: () =>
+                      QR.to(AdminRouter.root + AdminRouter.groupNotification),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  localizeWithContext.adminPaiementModule,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 10),
+                ListItem(
+                  title: getPaymentName(),
+                  subtitle: localizeWithContext.adminManagePaiementStructures,
+                  onTap: () => QR.to(AdminRouter.root + AdminRouter.structures),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  localizeWithContext.adminAssociationMembership,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 10),
+                ListItem(
+                  title: localizeWithContext.adminAssociationMembership,
+                  subtitle: localizeWithContext
+                      .adminManageUsersAssociationMemberships,
+                  onTap: () => QR.to(
+                    AdminRouter.root + AdminRouter.associationMemberships,
                   ),
-                );
-              },
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  localizeWithContext.adminAssociations,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 10),
+                ListItem(
+                  title: localizeWithContext.adminAssociations,
+                  subtitle: localizeWithContext.adminManageAssociations,
+                  onTap: () {
+                    QR.to(AdminRouter.root + AdminRouter.association);
+                  },
+                ),
+                const SizedBox(height: 20),
+              ],
             ),
-            ListItem(
-              title: localizeWithContext.adminGroupsManagement,
-              subtitle: localizeWithContext.adminManageUserGroups,
-              onTap: () => QR.to(AdminRouter.root + AdminRouter.usersGroups),
-            ),
-            ListItem(
-              title: localizeWithContext.adminGroupNotification,
-              subtitle: localizeWithContext.adminSendNotificationToGroup,
-              onTap: () =>
-                  QR.to(AdminRouter.root + AdminRouter.groupNotification),
-            ),
-            Text(
-              localizeWithContext.adminPaiementModule,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            ListItem(
-              title: getPaymentName(),
-              subtitle: localizeWithContext.adminManagePaiementStructures,
-              onTap: () => QR.to(AdminRouter.root + AdminRouter.structures),
-            ),
-            Text(
-              localizeWithContext.adminAssociationMembership,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            ListItem(
-              title: localizeWithContext.adminAssociationMembership,
-              subtitle:
-                  localizeWithContext.adminManageUsersAssociationMemberships,
-              onTap: () =>
-                  QR.to(AdminRouter.root + AdminRouter.associationMemberships),
-            ),
-            Text(
-              localizeWithContext.adminAssociations,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            ListItem(
-              title: localizeWithContext.adminAssociations,
-              subtitle: localizeWithContext.adminManageAssociations,
-              onTap: () {
-                QR.to(AdminRouter.root + AdminRouter.association);
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );
