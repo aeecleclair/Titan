@@ -13,10 +13,11 @@ import 'package:titan/phonebook/router.dart';
 import 'package:titan/phonebook/ui/components/association_research_bar.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/editable_association_card.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/tools/ui/styleguide/list_item_template.dart';
+import 'package:titan/tools/ui/styleguide/icon_button.dart';
 import 'package:tuple/tuple.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
@@ -49,44 +50,51 @@ class AdminPage extends HookConsumerWidget {
           await roleNotifier.loadRolesTags();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AssociationResearchBar(),
-              const SizedBox(height: 10),
-              Text(
-                localizeWithContext.phonebookAdmin,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Text(
+                    "Associations",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstants.title,
+                    ),
+                  ),
+                  const Spacer(),
+                  CustomIconButton(
+                    icon: HeroIcon(
+                      HeroIcons.plus,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    onPressed: isPhonebookAdmin
+                        ? () {
+                            associationNotifier.resetAssociation();
+                            associationGroupementNotifier
+                                .resetAssociationGroupement();
+                            QR.to(
+                              PhonebookRouter.root +
+                                  PhonebookRouter.admin +
+                                  PhonebookRouter.addEditAssociation,
+                            );
+                          }
+                        : () {},
+                  ),
+                ],
               ),
+              const SizedBox(height: 20),
+              AssociationResearchBar(),
               const SizedBox(height: 10),
               Async2Children(
                 values: Tuple2(associationList, associationGroupementList),
                 builder: (context, associations, associationGroupements) {
                   return Column(
                     children: [
-                      ListItemTemplate(
-                        title: localizeWithContext.phonebookAddAssociation,
-                        icon: HeroIcon(
-                          HeroIcons.plus,
-                          size: 40,
-                          color: Colors.grey.shade500,
-                        ),
-                        trailing: SizedBox.shrink(),
-                        onTap: isPhonebookAdmin
-                            ? () {
-                                associationNotifier.resetAssociation();
-                                associationGroupementNotifier
-                                    .resetAssociationGroupement();
-                                QR.to(
-                                  PhonebookRouter.root +
-                                      PhonebookRouter.admin +
-                                      PhonebookRouter.addEditAssociation,
-                                );
-                              }
-                            : null,
-                      ),
-                      SizedBox(height: 5),
                       if (associations.isEmpty)
                         Center(
                           child: Text(

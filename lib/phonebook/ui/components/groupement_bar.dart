@@ -67,7 +67,7 @@ class AssociationGroupementBar extends HookConsumerWidget {
               );
             },
           ),
-          SizedBox(height: 30),
+          SizedBox(height: 20),
           Button.danger(
             text: localizeWithContext.phonebookDelete,
             onPressed: () async {
@@ -109,8 +109,9 @@ class AssociationGroupementBar extends HookConsumerWidget {
         width: MediaQuery.of(context).size.width,
         height: scrollDirection == Axis.horizontal
             ? 40
-            : min(associationGroupements.length * 50, 220),
+            : min(associationGroupements.length * 52, 220),
         child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
           scrollDirection: scrollDirection,
           itemCount: editable
               ? associationGroupements.length + 1

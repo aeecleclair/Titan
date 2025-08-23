@@ -34,10 +34,10 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
 
     return PhonebookTemplate(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           children: [
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -51,13 +51,13 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             TextEntry(
               controller: name,
               label: localizeWithContext.phonebookGroupementName,
               canBeEmpty: false,
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 20),
             Button(
               text: associationGroupement.id != ""
                   ? localizeWithContext.phonebookEdit

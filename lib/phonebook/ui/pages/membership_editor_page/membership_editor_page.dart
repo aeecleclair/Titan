@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/phonebook/class/membership.dart';
 import 'package:titan/phonebook/providers/association_member_list_provider.dart';
@@ -10,11 +9,12 @@ import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
 import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 import 'package:titan/phonebook/ui/pages/membership_editor_page/user_search_modal.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
-import 'package:titan/tools/ui/styleguide/list_item_template.dart';
+import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/styleguide/list_item_toggle.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -135,36 +135,43 @@ class MembershipEditorPage extends HookConsumerWidget {
 
     return PhonebookTemplate(
       child: Padding(
-        padding: const EdgeInsets.all(30.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 20),
               if (!isEdit) ...[
                 Text(
                   localizeWithContext.phonebookAddMember,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: ColorConstants.title,
+                  ),
                 ),
-                ListItemTemplate(
-                  icon: const HeroIcon(HeroIcons.magnifyingGlass),
+                const SizedBox(height: 20),
+                ListItem(
                   title: member.member.id == ""
                       ? localizeWithContext.phonebookSearchUser
                       : member.member.getName(),
-                  subtitle: member.member.id == ""
-                      ? null
-                      : localizeWithContext.phonebookSearchUser,
-                  trailing: const HeroIcon(HeroIcons.plus),
-                  onTap: () => showCustomBottomModal(
+                  onTap: () async {showCustomBottomModal(
                     context: context,
                     modal: UserSearchModal(),
                     ref: ref,
-                  ),
+                  );
+                  },
                 ),
               ] else
                 Text(
                   localizeWithContext.phonebookModifyMembership(
                     member.member.nickname ?? member.getName(),
                   ),
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: ColorConstants.title,
+                  ),
                 ),
               const SizedBox(height: 10),
               rolesTagList.maybeWhen(
@@ -199,12 +206,12 @@ class MembershipEditorPage extends HookConsumerWidget {
                   );
                 },
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
               TextEntry(
                 controller: apparentNameController,
                 label: localizeWithContext.phonebookApparentName,
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 30),
               Button(
                 text: isEdit
                     ? localizeWithContext.phonebookEdit
@@ -234,7 +241,7 @@ class MembershipEditorPage extends HookConsumerWidget {
                   });
                 },
               ),
-              const SizedBox(height: 80),
+              const SizedBox(height: 20),
             ],
           ),
         ),

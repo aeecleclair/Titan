@@ -83,7 +83,7 @@ class MemberCard extends HookConsumerWidget {
                 memberNotifier.setCompleteMember(member);
                 QR.to(PhonebookRouter.root + PhonebookRouter.memberDetail);
               },
-        trailing: !editable
+        trailing: editable
             ? const HeroIcon(
                 HeroIcons.chevronRight,
                 color: ColorConstants.tertiary,

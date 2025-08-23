@@ -48,9 +48,10 @@ class PhonebookMainPage extends HookConsumerWidget {
           await associationListNotifier.loadAssociations();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(child: AssociationResearchBar()),
@@ -96,7 +97,7 @@ class PhonebookMainPage extends HookConsumerWidget {
                   );
                 },
               ),
-              SizedBox(height: 80),
+              const SizedBox(height: 20),
             ],
           ),
         ),
