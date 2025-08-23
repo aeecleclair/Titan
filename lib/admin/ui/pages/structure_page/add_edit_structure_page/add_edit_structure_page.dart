@@ -9,6 +9,7 @@ import 'package:titan/admin/providers/structure_manager_provider.dart';
 import 'package:titan/admin/providers/structure_provider.dart';
 import 'package:titan/paiement/class/structure.dart';
 import 'package:titan/paiement/providers/structure_list_provider.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -70,7 +71,7 @@ class AddEditStructurePage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics(),
@@ -231,7 +232,9 @@ class AddEditStructurePage extends HookConsumerWidget {
                         ],
                       )
                     : ListItem(
-                        title: localizeWithContext.adminSelectManager,
+                        title: structureManager.id.isNotEmpty
+                            ? structureManager.getName()
+                            : localizeWithContext.adminSelectManager,
                         subtitle: structureManager.getName(),
                         onTap: () async {
                           await showCustomBottomModal(
