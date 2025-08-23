@@ -9,8 +9,9 @@ import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
-import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/list_item.dart';
 
 class AssociationMembershipInformationEditor extends HookConsumerWidget {
   final scrollKey = GlobalKey();
@@ -35,132 +36,174 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
       allAssociationMembershipListProvider.notifier,
     );
     final key = GlobalKey<FormState>();
+    final localizeWithContext = AppLocalizations.of(context)!;
 
     groups.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
-    return Column(
-      children: [
-        Form(
-          key: key,
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      child: TextFormField(
-                        controller: name,
-                        cursorColor: ColorConstants.main,
-                        decoration: InputDecoration(
-                          labelText: AppLocalizations.of(context)!.adminName,
-                          labelStyle: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          suffixIcon: Container(
-                            padding: const EdgeInsets.all(10),
-                            child: const HeroIcon(HeroIcons.pencil),
-                          ),
-                          enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent),
-                          ),
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: ColorConstants.main),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(
-                              context,
-                            )!.adminEmptyFieldError;
-                          }
-                          return null;
-                        },
+    return Form(
+      key: key,
+      child: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  child: TextFormField(
+                    controller: name,
+                    cursorColor: ColorConstants.tertiary,
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.adminName,
+                      labelStyle: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      suffixIcon: Container(
+                        margin: const EdgeInsets.only(left: 20),
+                        child: const HeroIcon(HeroIcons.pencil),
+                      ),
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.transparent),
+                      ),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: ColorConstants.tertiary),
                       ),
                     ),
-                  ],
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  AppLocalizations.of(context)!.adminGroup,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              DropdownButtonFormField<String>(
-                value: groupIdController.text,
-                onChanged: (String? newValue) {
-                  groupIdController.text = newValue!;
-                },
-                items: groups
-                    .map(
-                      (group) => DropdownMenuItem<String>(
-                        value: group.id,
-                        child: Text(group.name),
-                      ),
-                    )
-                    .toList(),
-                decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.adminGroup,
-                ),
-              ),
-              const SizedBox(height: 20),
-              WaitingButton(
-                builder: (child) => AddEditButtonLayout(
-                  colors: const [ColorConstants.main, ColorConstants.onMain],
-                  child: child,
-                ),
-                onTap: () async {
-                  if (!key.currentState!.validate()) {
-                    return;
-                  }
-
-                  await tokenExpireWrapper(ref, () async {
-                    final updatedAssociationMembershipMsg = AppLocalizations.of(
-                      context,
-                    )!.adminUpdatedAssociationMembership;
-                    final updatingAssociationMembershipErrorMsg =
-                        AppLocalizations.of(context)!.adminUpdatingError;
-                    final value = await associationMembershipListNotifier
-                        .updateAssociationMembership(
-                          associationMembership.copyWith(name: name.text),
-                        );
-                    if (value) {
-                      associationMembershipNotifier.setAssociationMembership(
-                        associationMembership.copyWith(
-                          name: name.text,
-                          managerGroupId: groupIdController.text,
-                        ),
-                      );
-                      displayToastWithContext(
-                        TypeMsg.msg,
-                        updatedAssociationMembershipMsg,
-                      );
-                    } else {
-                      displayToastWithContext(
-                        TypeMsg.msg,
-                        updatingAssociationMembershipErrorMsg,
-                      );
-                    }
-                  });
-                },
-                child: Text(
-                  AppLocalizations.of(context)!.adminEdit,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 255, 255, 255),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppLocalizations.of(
+                          context,
+                        )!.adminEmptyFieldError;
+                      }
+                      return null;
+                    },
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              AppLocalizations.of(context)!.adminGroup,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          ListItem(
+            title: groups
+                .firstWhere((group) => group.id == groupIdController.text)
+                .name,
+            onTap: () async {
+              FocusScope.of(context).unfocus();
+              final ctx = context;
+              await Future.delayed(Duration(milliseconds: 150));
+              if (!ctx.mounted) return;
+
+              await showCustomBottomModal(
+                context: ctx,
+                ref: ref,
+                modal: BottomModalTemplate(
+                  title: localizeWithContext.adminChooseGroupManager,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxHeight: 280),
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          ...groups.map(
+                            (e) => Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8.0,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      e.name,
+                                      style: const TextStyle(fontSize: 15),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      groupIdController.text = e.id;
+                                      Navigator.of(ctx).pop();
+                                    },
+                                    child: const HeroIcon(HeroIcons.plus),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 20),
+          WaitingButton(
+            builder: (child) => Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              decoration: BoxDecoration(
+                color: ColorConstants.tertiary,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: ColorConstants.onTertiary),
+              ),
+              child: Center(child: child),
+            ),
+            onTap: () async {
+              if (!key.currentState!.validate()) {
+                return;
+              }
+
+              await tokenExpireWrapper(ref, () async {
+                final updatedAssociationMembershipMsg = AppLocalizations.of(
+                  context,
+                )!.adminUpdatedAssociationMembership;
+                final updatingAssociationMembershipErrorMsg =
+                    AppLocalizations.of(context)!.adminUpdatingError;
+                final value = await associationMembershipListNotifier
+                    .updateAssociationMembership(
+                      associationMembership.copyWith(name: name.text),
+                    );
+                if (value) {
+                  associationMembershipNotifier.setAssociationMembership(
+                    associationMembership.copyWith(
+                      name: name.text,
+                      managerGroupId: groupIdController.text,
+                    ),
+                  );
+                  displayToastWithContext(
+                    TypeMsg.msg,
+                    updatedAssociationMembershipMsg,
+                  );
+                } else {
+                  displayToastWithContext(
+                    TypeMsg.msg,
+                    updatingAssociationMembershipErrorMsg,
+                  );
+                }
+              });
+            },
+            child: Text(
+              AppLocalizations.of(context)!.adminEdit,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Color.fromARGB(255, 255, 255, 255),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
