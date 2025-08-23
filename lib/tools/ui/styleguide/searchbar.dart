@@ -8,32 +8,49 @@ class CustomSearchBar extends HookWidget {
   final Function()? onFilter;
   final Function(String) onSearch;
   final bool autofocus;
-  final FocusNode? focusNode;
   const CustomSearchBar({
     super.key,
     this.hintText = 'Rechercher',
     this.onFilter,
     required this.onSearch,
     this.autofocus = false,
-    this.focusNode,
   });
 
   @override
   Widget build(BuildContext context) {
     final textController = useTextEditingController();
+    final focusNode = useFocusNode();
 
-    return Material(
-      elevation: 4,
-      borderRadius: BorderRadius.circular(50),
-      color: ColorConstants.background,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50),
+        color: ColorConstants.background,
+        boxShadow: [
+          BoxShadow(
+            color: ColorConstants.onTertiary.withAlpha(30),
+            blurRadius: 6,
+            spreadRadius: 1,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 3.0),
         child: Row(
           children: [
-            HeroIcon(
-              HeroIcons.magnifyingGlass,
-              color: ColorConstants.tertiary,
-              size: 24,
+            GestureDetector(
+              onTap: () {
+                if (textController.text.isEmpty) {
+                  focusNode.requestFocus();
+                } else {
+                  onSearch(textController.text);
+                }
+              },
+              child: HeroIcon(
+                HeroIcons.magnifyingGlass,
+                color: ColorConstants.tertiary,
+                size: 24,
+              ),
             ),
             const SizedBox(width: 8),
             Expanded(
@@ -45,6 +62,7 @@ class CustomSearchBar extends HookWidget {
                   onSearch(value);
                 },
                 style: TextStyle(color: ColorConstants.tertiary, fontSize: 16),
+                cursorColor: ColorConstants.tertiary,
                 decoration: InputDecoration(
                   hintText: hintText,
                   hintStyle: TextStyle(
