@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/paiement/providers/has_accepted_tos_provider.dart';
 import 'package:titan/paiement/providers/my_wallet_provider.dart';
 import 'package:titan/paiement/providers/tos_provider.dart';
@@ -100,33 +101,39 @@ class PaymentMainPage extends HookConsumerWidget {
 
     return PaymentTemplate(
       child: shouldDisplayTosDialog
-          ? SingleChildScrollView(
-              child: TOSDialogBox(
-                descriptions: tos.maybeWhen(
-                  orElse: () => '',
-                  data: (tos) => tos.tosContent,
+          ? ScrollToHideNavbar(
+              controller: ScrollController(),
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: TOSDialogBox(
+                  descriptions: tos.maybeWhen(
+                    orElse: () => '',
+                    data: (tos) => tos.tosContent,
+                  ),
+                  title: AppLocalizations.of(context)!.paiementNewCGU,
+                  onYes: () {
+                    tos.maybeWhen(
+                      orElse: () {},
+                      data: (tos) async {
+                        final value = await tosNotifier.signTOS(
+                          tos.copyWith(
+                            acceptedTosVersion: tos.latestTosVersion,
+                          ),
+                        );
+                        if (value) {
+                          await mySellersNotifier.getMyStores();
+                          await myHistoryNotifier.getHistory();
+                          await myWalletNotifier.getMyWallet();
+                          shouldDisplayTosDialogNotifier.update(false);
+                          hasAcceptedToSNotifier.update(true);
+                        }
+                      },
+                    );
+                  },
+                  onNo: () {
+                    shouldDisplayTosDialogNotifier.update(false);
+                  },
                 ),
-                title: AppLocalizations.of(context)!.paiementNewCGU,
-                onYes: () {
-                  tos.maybeWhen(
-                    orElse: () {},
-                    data: (tos) async {
-                      final value = await tosNotifier.signTOS(
-                        tos.copyWith(acceptedTosVersion: tos.latestTosVersion),
-                      );
-                      if (value) {
-                        await mySellersNotifier.getMyStores();
-                        await myHistoryNotifier.getHistory();
-                        await myWalletNotifier.getMyWallet();
-                        shouldDisplayTosDialogNotifier.update(false);
-                        hasAcceptedToSNotifier.update(true);
-                      }
-                    },
-                  );
-                },
-                onNo: () {
-                  shouldDisplayTosDialogNotifier.update(false);
-                },
               ),
             )
           : LayoutBuilder(
