@@ -208,6 +208,7 @@ class DevicesPage extends HookConsumerWidget {
                         },
                       );
                     }),
+                    SizedBox(height: 80),
                   ],
                 );
               },

@@ -10,6 +10,7 @@ import 'package:titan/paiement/router.dart';
 import 'package:titan/paiement/ui/pages/main_page/main_card_button.dart';
 import 'package:titan/paiement/ui/pages/main_page/main_card_template.dart';
 import 'package:titan/paiement/ui/pages/scan_page/scan_page.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -45,17 +46,20 @@ class StoreCard extends HookConsumerWidget {
             icon: HeroIcons.viewfinderCircle,
             title: AppLocalizations.of(context)!.paiementScan,
             onPressed: () async {
-              showModalBottomSheet(
+              showCustomBottomModal(
                 context: context,
-                enableDrag: false,
-                backgroundColor: Colors.transparent,
-                scrollControlDisabledMaxHeightRatio:
-                    (1 - 80 / MediaQuery.of(context).size.height),
-                builder: (context) => ScanPage(),
-              ).then((_) {
-                ongoingTransactionNotifier.clearOngoingTransaction();
-                barcodeNotifier.clearBarcode();
-              });
+                modal: ScanPage(),
+                ref: ref,
+                onCloseCallback: () {
+                  ongoingTransactionNotifier.clearOngoingTransaction();
+                  barcodeNotifier.clearBarcode();
+                },
+                // enableDrag: false,
+                // backgroundColor: Colors.transparent,
+                // scrollControlDisabledMaxHeightRatio:
+                //     (1 - 80 / MediaQuery.of(context).size.height),
+                // builder: (context) => ScanPage(),
+              );
             },
           ),
         if (store.canManageSellers)

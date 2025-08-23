@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/wallet_device.dart';
 import 'package:titan/paiement/providers/device_list_provider.dart';
 import 'package:titan/paiement/providers/device_provider.dart';
@@ -21,6 +22,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 
 class AccountCard extends HookConsumerWidget {
   final Function? toggle;
@@ -44,34 +46,38 @@ class AccountCard extends HookConsumerWidget {
       const Color.fromARGB(255, 4, 84, 84),
     ];
     final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final localizeWithContext = AppLocalizations.of(context)!;
 
     void displayToastWithContext(TypeMsg type, String message) {
       displayToast(context, type, message);
     }
 
     void showPayModal() {
-      showModalBottomSheet(
+      showCustomBottomModal(
         context: context,
-        backgroundColor: Colors.transparent,
-        scrollControlDisabledMaxHeightRatio:
-            (1 - 80 / MediaQuery.of(context).size.height),
-        builder: (context) => const PayPage(),
-      ).then((_) {
-        payAmountNotifier.setPayAmount("");
-      });
+        // backgroundColor: Colors.transparent,
+        // scrollControlDisabledMaxHeightRatio:
+        //     (1 - 80 / MediaQuery.of(context).size.height),
+        // builder: (context) => const PayPage(),
+        modal: PayPage(),
+        ref: ref,
+        onCloseCallback: () => payAmountNotifier.setPayAmount(""),
+      );
     }
 
     void showFundModal() async {
       resetHandledKeys();
-      await showModalBottomSheet(
+      await showCustomBottomModal(
         context: context,
-        backgroundColor: Colors.transparent,
-        scrollControlDisabledMaxHeightRatio:
-            (1 - 80 / MediaQuery.of(context).size.height),
-        builder: (context) => const FundPage(),
-      ).then((code) {
-        fundAmountNotifier.setFundAmount("");
-      });
+        modal: FundPage(),
+        ref: ref,
+        onCloseCallback: () => fundAmountNotifier.setFundAmount(""),
+
+        // backgroundColor: Colors.transparent,
+        // scrollControlDisabledMaxHeightRatio:
+        //     (1 - 80 / MediaQuery.of(context).size.height),
+        // builder: (context) => const FundPage(),
+      );
     }
 
     void showNotRegisteredDeviceDialog() async {
@@ -79,10 +85,10 @@ class AccountCard extends HookConsumerWidget {
         context: context,
         builder: (context) {
           return DeviceDialogBox(
-            title: 'Appareil non enregistré',
+            title: localizeWithContext.paiementDeviceNotRegistered,
             descriptions:
-                'Votre appareil n\'est pas encore enregistré. \nPour l\'enregistrer, veuillez vous rendre sur la page des appareils.',
-            buttonText: 'Accéder à la page',
+                localizeWithContext.paiementDeviceNotRegisteredDescription,
+            buttonText: localizeWithContext.paiementAccessPage,
             onClick: () {
               QR.to(PaymentRouter.root + PaymentRouter.devices);
             },
@@ -97,13 +103,13 @@ class AccountCard extends HookConsumerWidget {
         Color(0xff017f80),
         Color.fromARGB(255, 4, 84, 84),
       ],
-      title: 'Solde personnel',
+      title: localizeWithContext.paiementPersonalBalance,
       toggle: toggle,
       actionButtons: [
         MainCardButton(
           colors: buttonGradient,
           icon: HeroIcons.devicePhoneMobile,
-          title: "Appareils",
+          title: localizeWithContext.paiementDevices,
           onPressed: () async {
             ref.invalidate(deviceListProvider);
             QR.to(PaymentRouter.root + PaymentRouter.devices);
@@ -113,13 +119,13 @@ class AccountCard extends HookConsumerWidget {
           MainCardButton(
             colors: buttonGradient,
             icon: HeroIcons.qrCode,
-            title: "Payer",
+            title: localizeWithContext.paiementPay,
             onPressed: () async {
               await tokenExpireWrapper(ref, () async {
                 if (!hasAcceptedToS) {
                   displayToastWithContext(
                     TypeMsg.error,
-                    "Veuillez accepter les Conditions Générales d'Utilisation.",
+                    localizeWithContext.paiementPleaseAcceptTOS,
                   );
                   return;
                 }
@@ -138,10 +144,11 @@ class AccountCard extends HookConsumerWidget {
                         context: context,
                         builder: (context) {
                           return DeviceDialogBox(
-                            title: 'Appareil non activé',
-                            descriptions:
-                                'Votre appareil n\'est pas encore activé. \nPour l\'activer, veuillez vous rendre sur la page des appareils.',
-                            buttonText: 'Accéder à la page',
+                            title:
+                                localizeWithContext.paiementDeviceNotActivated,
+                            descriptions: localizeWithContext
+                                .paiementDeviceNotActivatedDescription,
+                            buttonText: localizeWithContext.paiementAccessPage,
                             onClick: () {
                               QR.to(PaymentRouter.root + PaymentRouter.devices);
                             },
@@ -153,10 +160,10 @@ class AccountCard extends HookConsumerWidget {
                         context: context,
                         builder: (context) {
                           return DeviceDialogBox(
-                            title: 'Appareil révoqué',
-                            descriptions:
-                                'Votre appareil a été révoqué. \nPour le réactiver, veuillez vous rendre sur la page des appareils.',
-                            buttonText: 'Accéder à la page',
+                            title: localizeWithContext.paiementDeviceRevoked,
+                            descriptions: localizeWithContext
+                                .paiementReactivateRevokedDeviceDescription,
+                            buttonText: localizeWithContext.paiementAccessPage,
                             onClick: () {
                               QR.to(PaymentRouter.root + PaymentRouter.devices);
                             },
@@ -168,7 +175,7 @@ class AccountCard extends HookConsumerWidget {
                   error: (e, s) {
                     displayToastWithContext(
                       TypeMsg.error,
-                      "Erreur lors de la récupération de l'appareil",
+                      localizeWithContext.paiementDeviceRecoveryError,
                     );
                   },
                   loading: () {},
@@ -179,7 +186,7 @@ class AccountCard extends HookConsumerWidget {
         MainCardButton(
           colors: buttonGradient,
           icon: HeroIcons.chartPie,
-          title: "Stats",
+          title: localizeWithContext.paiementStats,
           onPressed: () async {
             QR.to(PaymentRouter.root + PaymentRouter.stats);
           },
@@ -187,12 +194,12 @@ class AccountCard extends HookConsumerWidget {
         MainCardButton(
           colors: buttonGradient,
           icon: HeroIcons.creditCard,
-          title: "Recharger",
+          title: localizeWithContext.paiementTopUpAction,
           onPressed: () async {
             if (!hasAcceptedToS) {
               displayToastWithContext(
                 TypeMsg.error,
-                "Veuillez accepter les Conditions Générales d'Utilisation.",
+                localizeWithContext.paiementPleaseAcceptTOS,
               );
               return;
             }
@@ -207,7 +214,7 @@ class AccountCard extends HookConsumerWidget {
           style: const TextStyle(color: Colors.white, fontSize: 50),
         ),
         errorBuilder: (error, stackTrace) => Text(
-          'Erreur lors de la récupération du solde : $error',
+          localizeWithContext.paiementGetBalanceError,
           style: const TextStyle(color: Colors.white, fontSize: 50),
         ),
       ),

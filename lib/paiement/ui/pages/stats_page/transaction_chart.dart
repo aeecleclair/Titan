@@ -65,7 +65,7 @@ class TransactionChart extends HookConsumerWidget {
     return chartPart.isEmpty
         ? Center(
             child: Text(
-              AppLocalizations.of(context)!.paiementNoTransactinon,
+              AppLocalizations.of(context)!.paiementNoTransaction,
               style: TextStyle(fontSize: 20, color: Colors.black54),
             ),
           )

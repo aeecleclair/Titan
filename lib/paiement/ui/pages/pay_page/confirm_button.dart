@@ -139,7 +139,7 @@ class ConfirmButton extends ConsumerWidget {
             AndroidAuthMessages(
               signInTitle: AppLocalizations.of(
                 context,
-              )!.paiementAthenticationRequired,
+              )!.paiementAuthenticationRequired,
               cancelButton: AppLocalizations.of(context)!.paiementNoThanks,
             ),
             IOSAuthMessages(

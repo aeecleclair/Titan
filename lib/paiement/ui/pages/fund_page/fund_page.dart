@@ -45,6 +45,7 @@ class FundPage extends ConsumerWidget {
             end: Alignment.bottomRight,
           ),
         ),
+        height: MediaQuery.of(context).size.height * 0.8,
         child: Column(
           children: [
             const SizedBox(height: 20),
@@ -124,6 +125,7 @@ class FundPage extends ConsumerWidget {
               },
             ),
             const Expanded(child: Center(child: ConfirmFundButton())),
+            const SizedBox(height: 10),
           ],
         ),
       ),

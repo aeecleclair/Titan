@@ -182,7 +182,7 @@ class SumUpChart extends HookConsumerWidget {
                 child: Text(
                   AppLocalizations.of(
                     context,
-                  )!.paiementNoTrasactionForThisMonth,
+                  )!.paiementNoTransactionForThisMonth,
                   style: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
               );

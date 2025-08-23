@@ -12,7 +12,7 @@ import 'package:titan/phonebook/router.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
-import 'package:titan/tools/ui/styleguide/custom_dialog_box.dart';
+import 'package:titan/tools/ui/styleguide/confirm_modal.dart';
 
 class AssociationAdminEditionModal extends HookConsumerWidget {
   final Association association;

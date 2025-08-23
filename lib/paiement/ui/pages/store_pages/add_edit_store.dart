@@ -41,7 +41,11 @@ class AddEditStorePage extends HookConsumerWidget {
             children: [
               const SizedBox(height: 10),
               AlignLeftText(
-                "${isEdit ? AppLocalizations.of(context)!.paiementModify : AppLocalizations.of(context)!.paiementAdd}} ${AppLocalizations.of(context)!.paiementAStore} ${structure.name}",
+                isEdit
+                    ? AppLocalizations.of(
+                        context,
+                      )!.paiementEditStore(store.name)
+                    : AppLocalizations.of(context)!.paiementAddStore,
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 color: Colors.grey,
               ),

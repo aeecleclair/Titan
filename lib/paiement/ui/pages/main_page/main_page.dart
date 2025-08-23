@@ -45,7 +45,7 @@ class PaymentMainPage extends HookConsumerWidget {
     final mySellersNotifier = ref.read(myStoresProvider.notifier);
     final myHistoryNotifier = ref.read(myHistoryProvider.notifier);
     final myWalletNotifier = ref.read(myWalletProvider.notifier);
-    final isAdmin = ref.watch(isPaymentAdminProvider);
+    final isAdmin = ref.watch(isStructureAdminProvider);
     final flipped = useState(true);
 
     ref.listen(pathForwardingProvider, (previous, next) async {

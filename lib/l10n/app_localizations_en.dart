@@ -147,7 +147,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminAssociationsMemberships => 'Memberships';
 
   @override
+  String adminBankAccountHolder(String bankAccountHolder) {
+    return 'Bank account holder: $bankAccountHolder';
+  }
+
+  @override
+  String get adminBankAccountHolderModified => 'Bank account holder modified';
+
+  @override
+  String get adminBankDetails => 'Bank details';
+
+  @override
+  String get adminBic => 'BIC';
+
+  @override
+  String get adminBicError => 'BIC must be 11 characters';
+
+  @override
+  String get adminCity => 'City';
+
+  @override
   String get adminClearFilters => 'Clear filters';
+
+  @override
+  String get adminCountry => 'Country';
 
   @override
   String get adminCreateAssociationMembership => 'Create membership';
@@ -160,6 +183,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adminDateError => 'Start date must be before end date';
+
+  @override
+  String get adminDefineAsBankAccountHolder => 'Define as bank account holder';
 
   @override
   String get adminDelete => 'Delete';
@@ -234,6 +260,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminGroups => 'Groups';
 
   @override
+  String get adminIban => 'IBAN';
+
+  @override
+  String get adminIbanError => 'IBAN must be 27 characters';
+
+  @override
   String get adminLoaningGroup => 'Loaning group';
 
   @override
@@ -290,6 +322,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminSchools => 'Schools';
 
   @override
+  String get adminShortId => 'Short ID (3 letters)';
+
+  @override
+  String get adminShortIdError => 'Short ID must be 3 characters';
+
+  @override
+  String get adminSiegeAddress => 'Head office address';
+
+  @override
+  String get adminSiret => 'SIRET';
+
+  @override
+  String get adminSiretError => 'SIRET must be 14 digits';
+
+  @override
+  String get adminStreet => 'Street and number';
+
+  @override
   String get adminStructures => 'Structures';
 
   @override
@@ -300,6 +350,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adminStartDateMinimal => 'Minimum start date';
+
+  @override
+  String get adminUndefinedBankAccountHolder =>
+      'Bank account holder not defined';
 
   @override
   String get adminUpdatedAssociationMembership => 'Membership updated';
@@ -321,6 +375,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adminVisibilities => 'Visibilities';
+
+  @override
+  String get adminZipcode => 'Zip code';
 
   @override
   String get adminGroupNotification => 'Group notifications';
@@ -2112,6 +2169,476 @@ class AppLocalizationsEn extends AppLocalizations {
   String get othersImageError => 'Error adding the image';
 
   @override
+  String get paiementAccept => 'Accept';
+
+  @override
+  String get paiementAccessPage => 'Access the page';
+
+  @override
+  String get paiementAdd => 'Add';
+
+  @override
+  String get paiementAddedSeller => 'Seller added';
+
+  @override
+  String get paiementAddingSellerError => 'Error while adding seller';
+
+  @override
+  String get paiementAddingStoreError => 'Error while adding the store';
+
+  @override
+  String get paiementAddSeller => 'Add seller';
+
+  @override
+  String get paiementAddStore => 'Add store';
+
+  @override
+  String get paiementAddThisDevice => 'Add this device';
+
+  @override
+  String get paiementAdmin => 'Administrator';
+
+  @override
+  String get paiementAmount => 'Amount';
+
+  @override
+  String get paiementAskDeviceActivation => 'Device activation request';
+
+  @override
+  String get paiementAStore => 'a store';
+
+  @override
+  String get paiementAt => 'at';
+
+  @override
+  String get paiementAuthenticationRequired => 'Authentication required to pay';
+
+  @override
+  String get paiementAuthentificationFailed => 'Authentication failed';
+
+  @override
+  String get paiementBalanceAfterTopUp => 'Balance after top-up:';
+
+  @override
+  String get paiementBalanceAfterTransaction => 'Balance after payment: ';
+
+  @override
+  String get paiementBank => 'Collect';
+
+  @override
+  String get paiementBillingSpace => 'Billing page';
+
+  @override
+  String get paiementCameraPermissionRequired => 'Camera permission required';
+
+  @override
+  String get paiementCameraPerssionRequiredDescription =>
+      'To scan a QR Code, you must allow camera access.';
+
+  @override
+  String get paiementCanBank => 'Can collect payments';
+
+  @override
+  String get paiementCanCancelTransaction => 'Can cancel transactions';
+
+  @override
+  String get paiementCancel => 'Cancel';
+
+  @override
+  String get paiementCancelled => 'Cancelled';
+
+  @override
+  String get paiementCancelledTransaction => 'Payment cancelled';
+
+  @override
+  String get paiementCancelTransaction => 'Cancel transaction';
+
+  @override
+  String get paiementCancelTransactions => 'Cancel transactions';
+
+  @override
+  String get paiementCanManageSellers => 'Can manage sellers';
+
+  @override
+  String get paiementCanSeeHistory => 'Can view history';
+
+  @override
+  String get paiementClose => 'Close';
+
+  @override
+  String get paiementCreate => 'Create';
+
+  @override
+  String get paiementCreateInvoice => 'Create new invoice';
+
+  @override
+  String get paiementDecline => 'Decline';
+
+  @override
+  String get paiementDeletedSeller => 'Seller deleted';
+
+  @override
+  String get paiementDeleteInvoice => 'Delete invoice';
+
+  @override
+  String get paiementDeleteSeller => 'Delete seller';
+
+  @override
+  String get paiementDeleteSellerDescription =>
+      'Are you sure you want to delete this seller?';
+
+  @override
+  String get paiementDeleteSuccessfully => 'Successfully deleted';
+
+  @override
+  String get paiementDeleteStore => 'Delete store';
+
+  @override
+  String get paiementDeleteStoreDescription =>
+      'Are you sure you want to delete this store?';
+
+  @override
+  String get paiementDeleteStoreError => 'Unable to delete the store';
+
+  @override
+  String get paiementDeletingSellerError => 'Error while deleting seller';
+
+  @override
+  String get paiementDeviceActivationReceived =>
+      'The activation request has been received, please check your email to finalize the process';
+
+  @override
+  String get paiementDeviceNotActivated => 'Device not activated';
+
+  @override
+  String get paiementDeviceNotActivatedDescription =>
+      'Your device is not yet activated. \nTo activate it, please go to the devices page.';
+
+  @override
+  String get paiementDeviceNotRegistered => 'Device not registered';
+
+  @override
+  String get paiementDeviceNotRegisteredDescription =>
+      'Your device is not registered yet. \nTo register it, please go to the devices page.';
+
+  @override
+  String get paiementDeviceRecoveryError => 'Error while retrieving device';
+
+  @override
+  String get paiementDeviceRevoked => 'Device revoked';
+
+  @override
+  String get paiementDeviceRevokingError => 'Error while revoking device';
+
+  @override
+  String get paiementDevices => 'Devices';
+
+  @override
+  String get paiementDoneTransaction => 'Transaction completed';
+
+  @override
+  String get paiementDownload => 'Download';
+
+  @override
+  String paiementEditStore(String store) {
+    return 'Edit store $store';
+  }
+
+  @override
+  String get paiementErrorDeleting => 'Error while deleting';
+
+  @override
+  String get paiementErrorUpdatingStatus => 'Error while updating the status';
+
+  @override
+  String paiementFromTo(DateTime from, DateTime to) {
+    final intl.DateFormat fromDateFormat = intl.DateFormat.yMd(localeName);
+    final String fromString = fromDateFormat.format(from);
+    final intl.DateFormat toDateFormat = intl.DateFormat.yMd(localeName);
+    final String toString = toDateFormat.format(to);
+
+    return 'From $fromString to $toString';
+  }
+
+  @override
+  String get paiementGetBalanceError => 'Error while retrieving balance: ';
+
+  @override
+  String get paiementGetTransactionsError =>
+      'Error while retrieving transactions: ';
+
+  @override
+  String get paiementHandOver => 'Handover';
+
+  @override
+  String get paiementHistory => 'History';
+
+  @override
+  String get paiementInvoiceCreatedSuccessfully =>
+      'Invoice created successfully';
+
+  @override
+  String get paiementInvoices => 'Invoices';
+
+  @override
+  String paiementInvoicesPerPage(int quantity) {
+    return '$quantity invoices/page';
+  }
+
+  @override
+  String get paiementLastTransactions => 'Latest transactions';
+
+  @override
+  String get paiementLimitedTo => 'Limited to';
+
+  @override
+  String get paiementManagement => 'Management';
+
+  @override
+  String get paiementManageSellers => 'Manage sellers';
+
+  @override
+  String get paiementMarkPaid => 'Mark as paid';
+
+  @override
+  String get paiementMarkReceived => 'Mark as received';
+
+  @override
+  String get paiementMarkUnpaid => 'Mark as unpaid';
+
+  @override
+  String get paiementMaxAmount => 'The maximum wallet amount is';
+
+  @override
+  String get paiementMean => 'Average: ';
+
+  @override
+  String get paiementModify => 'Edit';
+
+  @override
+  String get paiementModifyingStoreError => 'Error while updating the store';
+
+  @override
+  String get paiementModifySuccessfully => 'Successfully modified';
+
+  @override
+  String get paiementNewCGU => 'New Terms of Service';
+
+  @override
+  String get paiementNext => 'Next';
+
+  @override
+  String get paiementNextAccountable => 'Next responsible';
+
+  @override
+  String get paiementNoInvoiceToCreate => 'No invoice to create';
+
+  @override
+  String get paiementNoMembership => 'No membership';
+
+  @override
+  String get paiementNoMembershipDescription =>
+      'This product is not available to non-members. Confirm the payment?';
+
+  @override
+  String get paiementNoThanks => 'No thanks';
+
+  @override
+  String get paiementNoTransaction => 'No transaction';
+
+  @override
+  String get paiementNoTransactionForThisMonth =>
+      'No transactions for this month';
+
+  @override
+  String get paiementOf => 'of';
+
+  @override
+  String get paiementPaid => 'Paid';
+
+  @override
+  String get paiementPay => 'Pay';
+
+  @override
+  String get paiementPayment => 'Payment';
+
+  @override
+  String get paiementPayWithHA => 'Pay with HelloAsso';
+
+  @override
+  String get paiementPending => 'Pending';
+
+  @override
+  String get paiementPersonalBalance => 'Personal balance';
+
+  @override
+  String get paiementPleaseAcceptPopup => 'Please allow popups';
+
+  @override
+  String get paiementPleaseAcceptTOS => 'Please accept the Terms of Service.';
+
+  @override
+  String get paiementPleaseAddDevice => 'Please add this device to pay';
+
+  @override
+  String get paiementPleaseAuthenticate => 'Please authenticate';
+
+  @override
+  String get paiementPleaseEnterMinAmount =>
+      'Please enter an amount greater than 1';
+
+  @override
+  String get paiementPleaseEnterValidAmount => 'Please enter a valid amount';
+
+  @override
+  String get paiementProceedSuccessfully => 'Payment completed successfully';
+
+  @override
+  String get paiementQRCodeAlreadyUsed => 'QR Code already used';
+
+  @override
+  String get paiementReactivateRevokedDeviceDescription =>
+      'Your device has been revoked. \nTo reactivate it, please go to the devices page.';
+
+  @override
+  String get paiementReceived => 'Received';
+
+  @override
+  String get paiementRefund => 'Refund';
+
+  @override
+  String get paiementRefundAction => 'Refund';
+
+  @override
+  String get paiementRefundedThe => 'Refunded on';
+
+  @override
+  String get paiementRevokeDevice => 'Revoke device?';
+
+  @override
+  String get paiementRevokeDeviceDescription =>
+      'You will no longer be able to use this device for payments';
+
+  @override
+  String get paiementRightsOf => 'Rights of';
+
+  @override
+  String get paiementRightsUpdated => 'Rights updated';
+
+  @override
+  String get paiementRightsUpdateError => 'Error while updating rights';
+
+  @override
+  String get paiementScan => 'Scan';
+
+  @override
+  String get paiementScanCode => 'Scan a code';
+
+  @override
+  String get paiementSeeHistory => 'View history';
+
+  @override
+  String get paiementSelectStructure => 'Select a structure';
+
+  @override
+  String get paiementSellerError => 'You are not a seller of this store';
+
+  @override
+  String get paiementSellerRigths => 'Seller rights';
+
+  @override
+  String get paiementSellersOf => 'Sellers of';
+
+  @override
+  String get paiementSettings => 'Settings';
+
+  @override
+  String get paiementSpent => 'Spent';
+
+  @override
+  String get paiementStats => 'Stats';
+
+  @override
+  String get paiementStoreBalance => 'Store balance';
+
+  @override
+  String get paiementStoreDeleted => 'Store deleted';
+
+  @override
+  String paiementStructureManagement(String structure) {
+    return '$structure management';
+  }
+
+  @override
+  String get paiementStoreName => 'Store name';
+
+  @override
+  String get paiementStores => 'Stores';
+
+  @override
+  String get paiementStructureAdmin => 'Structure administrator';
+
+  @override
+  String get paiementSuccededTransaction => 'Successful payment';
+
+  @override
+  String get paiementSuccessfullyAddedStore => 'Store successfully added';
+
+  @override
+  String get paiementSuccessfullyModifiedStore => 'Store successfully updated';
+
+  @override
+  String get paiementThe => 'The';
+
+  @override
+  String get paiementThisDevice => '(this device)';
+
+  @override
+  String get paiementTopUp => 'Top-up';
+
+  @override
+  String get paiementTopUpAction => 'Top-up';
+
+  @override
+  String get paiementTotalDuringPeriod => 'Total during the period';
+
+  @override
+  String get paiementTransaction => 'Transaction';
+
+  @override
+  String get paiementTransactionCancelled => 'Transaction cancelled';
+
+  @override
+  String get paiementTransactionCancelledDescription =>
+      'Are you sure you want to cancel the transaction of';
+
+  @override
+  String get paiementTransactionCancelledError =>
+      'Error while cancelling the transaction';
+
+  @override
+  String get paiementTransferStructure => 'Structure transfer';
+
+  @override
+  String get paiementTransferStructureDescription =>
+      'The new manager will have access to all structure management features. You will receive an email to confirm this transfer. The link will only be active for 20 minutes. This action is irreversible. Are you sure you want to continue?';
+
+  @override
+  String get paiementTransferStructureError =>
+      'Error while transferring structure';
+
+  @override
+  String get paiementTransferStructureSuccess =>
+      'Structure transfer requested successfully';
+
+  @override
+  String get paiementValidUntil => 'Valid until';
+
+  @override
+  String get paiementYouAreTransferingStructureTo =>
+      'You are about to transfer the structure to ';
+
+  @override
   String get phAddNewJournal => 'Add a new journal';
 
   @override
@@ -3894,396 +4421,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get modulePaymentDescription => 'Pay and see your transactions';
-
-  @override
-  String get paiementTopUp => 'Top-up';
-
-  @override
-  String get paiementStoreManagement => 'Association management';
-
-  @override
-  String get paiementDeleteStore => 'Delete association';
-
-  @override
-  String get paiementDeleteStoreDescription =>
-      'Are you sure you want to delete this association?';
-
-  @override
-  String get paiementDeleteStoreError => 'Unable to delete the association';
-
-  @override
-  String get paiementStoreDeleted => 'Association deleted';
-
-  @override
-  String get paiementAddThisDevice => 'Add this device';
-
-  @override
-  String get paiementThisDevice => '(this device)';
-
-  @override
-  String get paiementCancelled => 'Cancelled';
-
-  @override
-  String get paiementThe => 'The';
-
-  @override
-  String get paiementOf => 'of';
-
-  @override
-  String get paiementRefundedThe => 'Refunded on';
-
-  @override
-  String get paiementAt => 'at';
-
-  @override
-  String get paiementPleaseAcceptTOS => 'Please accept the Terms of Service.';
-
-  @override
-  String get paiementAskDeviceActivation => 'Device activation request';
-
-  @override
-  String get paiementDeviceActivationReceived =>
-      'The activation request has been received, please check your email to finalize the process';
-
-  @override
-  String get paiementRevokeDevice => 'Revoke device?';
-
-  @override
-  String get paiementRevokeDeviceDescription =>
-      'You will no longer be able to use this device for payments';
-
-  @override
-  String get paiementDeviceRevoked => 'Device revoked';
-
-  @override
-  String get paiementDeviceRevokingError => 'Error while revoking device';
-
-  @override
-  String get paiementPleaseAcceptPopup => 'Please allow popups';
-
-  @override
-  String get paiementProceedSuccessfully => 'Payment completed successfully';
-
-  @override
-  String get paiementCancelledTransaction => 'Payment cancelled';
-
-  @override
-  String get paiementPleaseEnterMinAmount =>
-      'Please enter an amount greater than 1';
-
-  @override
-  String get paiementMaxAmount => 'The maximum wallet amount is';
-
-  @override
-  String get paiementPayWithHA => 'Pay with HelloAsso';
-
-  @override
-  String get paiementBalanceAfterTopUp => 'Balance after top-up:';
-
-  @override
-  String get paiementPersonalBalance => 'Personal balance';
-
-  @override
-  String get paiementDevices => 'Devices';
-
-  @override
-  String get paiementPay => 'Pay';
-
-  @override
-  String get paiementDeviceNotRegistered => 'Device not registered';
-
-  @override
-  String get paiementDeviceNotRegisteredDescription =>
-      'Your device is not registered yet. \nTo register it, please go to the devices page.';
-
-  @override
-  String get paiementAccessPage => 'Access the page';
-
-  @override
-  String get paiementDeviceNotActivated => 'Device not activated';
-
-  @override
-  String get paiementDeviceNotActivatedDescription =>
-      'Your device is not yet activated. \nTo activate it, please go to the devices page.';
-
-  @override
-  String get paiementReactivateRevokedDeviceDescription =>
-      'Your device has been revoked. \nTo reactivate it, please go to the devices page.';
-
-  @override
-  String get paiementDeviceRecoveryError => 'Error while retrieving device';
-
-  @override
-  String get paiementStats => 'Stats';
-
-  @override
-  String get paimentTopUpAction => 'Top-up';
-
-  @override
-  String get paiementGetBalanceError => 'Error while retrieving balance: ';
-
-  @override
-  String get paiementLastTransactions => 'Latest transactions';
-
-  @override
-  String get paiementGetTransactionsError =>
-      'Error while retrieving transactions: ';
-
-  @override
-  String get paiementStoreBalance => 'Association balance';
-
-  @override
-  String get paiementScan => 'Scan';
-
-  @override
-  String get paiementManagement => 'Management';
-
-  @override
-  String get paiementHistory => 'History';
-
-  @override
-  String get paiementHandOver => 'Handover';
-
-  @override
-  String get paiementStores => 'Associations';
-
-  @override
-  String get paiementAdmin => 'Administrator';
-
-  @override
-  String get paiementSuccededTransaction => 'Successful payment';
-
-  @override
-  String get paiementNewCGU => 'New Terms of Service';
-
-  @override
-  String get paiementDecline => 'Decline';
-
-  @override
-  String get paiementAccept => 'Accept';
-
-  @override
-  String get paiementAmount => 'Amount';
-
-  @override
-  String get paiementValidUntil => 'Valid until';
-
-  @override
-  String get paiementClose => 'Close';
-
-  @override
-  String get paiementPleaseEnterValidAmount => 'Please enter a valid amount';
-
-  @override
-  String get paiementPleaseAuthenticate => 'Please authenticate';
-
-  @override
-  String get paiementAthenticationRequired => 'Authentication required to pay';
-
-  @override
-  String get paiementNoThanks => 'No thanks';
-
-  @override
-  String get paiementAuthentificationFailed => 'Authentication failed';
-
-  @override
-  String get paiementPleaseAddDevice => 'Please add this device to pay';
-
-  @override
-  String get paiementPayment => 'Payment';
-
-  @override
-  String get paiementBalanceAfterTransaction => 'Balance after payment: ';
-
-  @override
-  String get paiementCancel => 'Cancel';
-
-  @override
-  String get paiementLimitedTo => 'Limited to';
-
-  @override
-  String get paiementScanCode => 'Scan a code';
-
-  @override
-  String get paiementNext => 'Next';
-
-  @override
-  String get paiementCancelTransaction => 'Cancel transaction';
-
-  @override
-  String get paiementTransactionCancelled => 'Transaction cancelled';
-
-  @override
-  String get paiementTransactionCancelledDescription =>
-      'Are you sure you want to cancel the transaction of';
-
-  @override
-  String get paiementTransactionCancelledError =>
-      'Error while cancelling the transaction';
-
-  @override
-  String get paiementNoMembership => 'No membership';
-
-  @override
-  String get paiementNoMembershipDescription =>
-      'This product is not available to non-members. Confirm the payment?';
-
-  @override
-  String get paiementQRCodeAlreadyUsed => 'QR Code already used';
-
-  @override
-  String get paiementCameraPermissionRequired => 'Camera permission required';
-
-  @override
-  String get paiementCameraPerssionRequiredDescription =>
-      'To scan a QR Code, you must allow camera access.';
-
-  @override
-  String get paiementSettings => 'Settings';
-
-  @override
-  String get paiementReceived => 'Received';
-
-  @override
-  String get paiementSpent => 'Spent';
-
-  @override
-  String get paiementNoTrasactionForThisMonth =>
-      'No transactions for this month';
-
-  @override
-  String get paiementNoTransactinon => 'No transaction';
-
-  @override
-  String get paiementSellerRigths => 'Seller rights';
-
-  @override
-  String get paiementCanBank => 'Can collect payments';
-
-  @override
-  String get paiementCanSeeHistory => 'Can view history';
-
-  @override
-  String get paiementCanCancelTransaction => 'Can cancel transactions';
-
-  @override
-  String get paiementCanManageSellers => 'Can manage sellers';
-
-  @override
-  String get paiementAddedSeller => 'Seller added';
-
-  @override
-  String get paiementAddingSellerError => 'Error while adding seller';
-
-  @override
-  String get paiementBank => 'Collect';
-
-  @override
-  String get paiementSeeHistory => 'View history';
-
-  @override
-  String get paiementCancelTransactions => 'Cancel transactions';
-
-  @override
-  String get paiementManageSellers => 'Manage sellers';
-
-  @override
-  String get paiementStructureAdmin => 'Structure administrator';
-
-  @override
-  String get paiementRightsOf => 'Rights of';
-
-  @override
-  String get paiementRightsUpdated => 'Rights updated';
-
-  @override
-  String get paiementRightsUpdateError => 'Error while updating rights';
-
-  @override
-  String get paiementDeleteSellerDescription =>
-      'Are you sure you want to delete this seller?';
-
-  @override
-  String get paiementDeletedSeller => 'Seller deleted';
-
-  @override
-  String get paiementDeletingSellerError => 'Error while deleting seller';
-
-  @override
-  String get paiementDeleteSeller => 'Delete seller';
-
-  @override
-  String get paiementAdd => 'Add';
-
-  @override
-  String get paiementAddSeller => 'Add seller';
-
-  @override
-  String get paiementSellerError => 'You are not a seller of this association';
-
-  @override
-  String get paiementSellersOf => 'Sellers of';
-
-  @override
-  String get paiementModify => 'Edit';
-
-  @override
-  String get paiementAStore => 'an association';
-
-  @override
-  String get paiementStoreName => 'Association name';
-
-  @override
-  String get paiementSuccessfullyAddedStore => 'Association successfully added';
-
-  @override
-  String get paiementSuccessfullyModifiedStore =>
-      'Association successfully updated';
-
-  @override
-  String get paiementAddingStoreError => 'Error while adding the association';
-
-  @override
-  String get paiementModifyingStoreError =>
-      'Error while updating the association';
-
-  @override
-  String get paiementRefund => 'Refund';
-
-  @override
-  String get paiementDoneTransaction => 'Transaction completed';
-
-  @override
-  String get paiementRefundAction => 'Refund';
-
-  @override
-  String get paiementTotalDuringPeriod => 'Total during the period';
-
-  @override
-  String get paiementMean => 'Average: ';
-
-  @override
-  String get paiementTransaction => 'Transaction';
-
-  @override
-  String get paiementTransferStructure => 'Structure transfer';
-
-  @override
-  String get paiementYouAreTransferingStructureTo =>
-      'You are about to transfer the structure to ';
-
-  @override
-  String get paiementTransferStructureDescription =>
-      'The new manager will have access to all structure management features. You will receive an email to confirm this transfer. The link will only be active for 20 minutes. This action is irreversible. Are you sure you want to continue?';
-
-  @override
-  String get paiementTransferStructureError =>
-      'Error while transferring structure';
-
-  @override
-  String get paiementTransferStructureSuccess =>
-      'Structure transfer requested successfully';
-
-  @override
-  String get paiementNextAccountable => 'Next responsible';
 }

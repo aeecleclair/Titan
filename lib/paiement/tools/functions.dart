@@ -10,24 +10,6 @@ import 'package:titan/paiement/tools/key_service.dart';
 
 enum TransferType { helloAsso, check, cash, bankTransfer }
 
-String getMonth(int m) {
-  final months = [
-    "Décembre",
-    "Janvier",
-    "Février",
-    "Mars",
-    "Avril",
-    "Mai",
-    "Juin",
-    "Juillet",
-    "Août",
-    "Septembre",
-    "Octobre",
-    "Novembre",
-  ];
-  return months[m];
-}
-
 Widget getStatusTag(WalletDeviceStatus status) {
   switch (status) {
     case WalletDeviceStatus.active:

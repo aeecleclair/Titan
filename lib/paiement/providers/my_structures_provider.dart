@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/paiement/class/structure.dart';
 import 'package:titan/paiement/providers/structure_list_provider.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
@@ -9,7 +10,7 @@ final myStructuresProvider = StateProvider((ref) {
     data: (structures) => structures
         .where((structure) => structure.managerUser.id == user.id)
         .toList(),
-    loading: () => [],
-    error: (error, stack) => [],
+    loading: () => List<Structure>.empty(),
+    error: (error, stack) => List<Structure>.empty(),
   );
 });

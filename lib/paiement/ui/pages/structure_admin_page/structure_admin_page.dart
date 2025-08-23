@@ -3,15 +3,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/providers/selected_structure_provider.dart';
 import 'package:titan/paiement/providers/stores_list_provider.dart';
-import 'package:titan/paiement/ui/pages/admin_page/add_store_card.dart';
-import 'package:titan/paiement/ui/pages/admin_page/admin_store_card.dart';
+import 'package:titan/paiement/ui/pages/structure_admin_page/add_store_card.dart';
+import 'package:titan/paiement/ui/pages/structure_admin_page/admin_store_card.dart';
 import 'package:titan/paiement/ui/paiement.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
-class AdminPage extends ConsumerWidget {
-  const AdminPage({super.key});
+class StructureStoresPage extends ConsumerWidget {
+  const StructureStoresPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,7 +28,9 @@ class AdminPage extends ConsumerWidget {
           children: [
             const SizedBox(height: 10),
             AlignLeftText(
-              "${AppLocalizations.of(context)!} ${structure.name}",
+              AppLocalizations.of(
+                context,
+              )!.paiementStructureManagement(structure.name),
               color: Colors.grey,
               fontSize: 20,
               fontWeight: FontWeight.bold,

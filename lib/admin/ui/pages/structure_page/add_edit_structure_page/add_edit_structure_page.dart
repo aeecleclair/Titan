@@ -14,14 +14,13 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/layouts/item_chip.dart';
-import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';
 import 'package:titan/user/class/simple_users.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/vote/ui/pages/admin_page/admin_button.dart';
 
 class AddEditStructurePage extends HookConsumerWidget {
   const AddEditStructurePage({super.key});
@@ -37,6 +36,26 @@ class AddEditStructurePage extends HookConsumerWidget {
     final structureListNotifier = ref.watch(structureListProvider.notifier);
     final isEdit = structure.id != '';
     final name = useTextEditingController(text: isEdit ? structure.name : null);
+    final shortId = useTextEditingController(
+      text: isEdit ? structure.shortId : null,
+    );
+    final siegeAddressStreet = useTextEditingController(
+      text: isEdit ? structure.siegeAddressStreet : null,
+    );
+    final siegeAddressCity = useTextEditingController(
+      text: isEdit ? structure.siegeAddressCity : null,
+    );
+    final siegeAddressZipcode = useTextEditingController(
+      text: isEdit ? structure.siegeAddressZipcode : null,
+    );
+    final siegeAddressCountry = useTextEditingController(
+      text: isEdit ? structure.siegeAddressCountry : null,
+    );
+    final siret = useTextEditingController(
+      text: isEdit ? structure.siret : null,
+    );
+    final iban = useTextEditingController(text: isEdit ? structure.iban : null);
+    final bic = useTextEditingController(text: isEdit ? structure.bic : null);
     final allAssociationMembershipList = ref.watch(
       allAssociationMembershipListProvider,
     );
@@ -60,13 +79,103 @@ class AddEditStructurePage extends HookConsumerWidget {
             key: key,
             child: Column(
               children: [
+                Text(
+                  isEdit
+                      ? localizeWithContext.adminEditStructure
+                      : localizeWithContext.adminAddStructure,
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
                 const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextEntry(
-                    controller: name,
-                    label: localizeWithContext.adminName,
-                  ),
+                TextEntry(
+                  controller: name,
+                  label: localizeWithContext.adminName,
+                ),
+                const SizedBox(height: 20),
+                TextEntry(
+                  controller: shortId,
+                  label: localizeWithContext.adminShortId,
+                  validator: (value) {
+                    if (value.isNotEmpty && value.length != 3) {
+                      return localizeWithContext.adminShortIdError;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 30),
+                Text(
+                  localizeWithContext.adminSiegeAddress,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                TextEntry(
+                  controller: siegeAddressStreet,
+                  label: localizeWithContext.adminStreet,
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: TextEntry(
+                        controller: siegeAddressCity,
+                        label: localizeWithContext.adminCity,
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextEntry(
+                        controller: siegeAddressZipcode,
+                        label: localizeWithContext.adminZipcode,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                TextEntry(
+                  controller: siegeAddressCountry,
+                  label: localizeWithContext.adminCountry,
+                ),
+                const SizedBox(height: 20),
+                TextEntry(
+                  controller: siret,
+                  label: localizeWithContext.adminSiret,
+                  validator: (value) {
+                    if (value.isNotEmpty &&
+                        value.replaceAll(" ", "").length != 14) {
+                      return localizeWithContext.adminSiretError;
+                    }
+                    return null;
+                  },
+                  canBeEmpty: true,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  localizeWithContext.adminBankDetails,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 20),
+                TextEntry(
+                  controller: iban,
+                  label: localizeWithContext.adminIban,
+                  validator: (value) {
+                    if (value.isNotEmpty &&
+                        value.replaceAll(" ", "").length != 27) {
+                      return localizeWithContext.adminIbanError;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                TextEntry(
+                  controller: bic,
+                  label: localizeWithContext.adminBic,
+                  validator: (value) {
+                    if (value.isNotEmpty &&
+                        value.replaceAll(" ", "").length != 11) {
+                      return localizeWithContext.adminBicError;
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 20),
                 AsyncChild(
@@ -123,6 +232,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                       )
                     : ListItem(
                         title: localizeWithContext.adminSelectManager,
+                        subtitle: structureManager.getName(),
                         onTap: () async {
                           await showCustomBottomModal(
                             context: context,
@@ -132,8 +242,8 @@ class AddEditStructurePage extends HookConsumerWidget {
                         },
                       ),
                 const SizedBox(height: 20),
-                WaitingButton(
-                  onTap: () async {
+                Button(
+                  onPressed: () async {
                     if (key.currentState == null) {
                       return;
                     }
@@ -155,20 +265,36 @@ class AddEditStructurePage extends HookConsumerWidget {
                         final value = isEdit
                             ? await structureListNotifier.updateStructure(
                                 Structure(
+                                  id: structure.id,
+                                  shortId: shortId.text,
                                   name: name.text,
+                                  siegeAddressStreet: siegeAddressStreet.text,
+                                  siegeAddressCity: siegeAddressCity.text,
+                                  siegeAddressZipcode: siegeAddressZipcode.text,
+                                  siegeAddressCountry: siegeAddressCountry.text,
+                                  siret: siret.text,
+                                  iban: iban.text,
+                                  bic: bic.text,
                                   associationMembership:
                                       currentMembership.value,
                                   managerUser: structureManager,
-                                  id: structure.id,
                                 ),
                               )
                             : await structureListNotifier.createStructure(
                                 Structure(
+                                  id: '',
+                                  shortId: shortId.text,
                                   name: name.text,
+                                  siegeAddressStreet: siegeAddressStreet.text,
+                                  siegeAddressCity: siegeAddressCity.text,
+                                  siegeAddressZipcode: siegeAddressZipcode.text,
+                                  siegeAddressCountry: siegeAddressCountry.text,
+                                  siret: siret.text,
+                                  iban: iban.text,
+                                  bic: bic.text,
                                   associationMembership:
                                       currentMembership.value,
                                   managerUser: structureManager,
-                                  id: '',
                                 ),
                               );
                         if (value) {
@@ -187,18 +313,11 @@ class AddEditStructurePage extends HookConsumerWidget {
                       });
                     }
                   },
-                  builder: (child) => AdminButton(child: child),
-                  child: Text(
-                    isEdit
-                        ? localizeWithContext.adminEdit
-                        : localizeWithContext.adminAdd,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
+                  text: isEdit
+                      ? localizeWithContext.adminEdit
+                      : localizeWithContext.adminAdd,
                 ),
+                SizedBox(height: 80),
               ],
             ),
           ),

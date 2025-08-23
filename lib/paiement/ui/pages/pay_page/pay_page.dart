@@ -38,6 +38,7 @@ class PayPage extends ConsumerWidget {
             end: Alignment.bottomRight,
           ),
         ),
+        height: MediaQuery.of(context).size.height * 0.8,
         child: Column(
           children: [
             const SizedBox(height: 20),
