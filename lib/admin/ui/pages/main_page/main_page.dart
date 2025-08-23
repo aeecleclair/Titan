@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/admin/admin.dart';
@@ -33,7 +34,11 @@ class AdminMainPage extends HookConsumerWidget {
               children: [
                 Text(
                   localizeWithContext.adminAdministration,
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: ColorConstants.title,
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Text(
