@@ -43,7 +43,6 @@ class AppSignIn extends HookConsumerWidget {
                         AppLocalizations.of(context)!.loginAppName,
                         style: GoogleFonts.elMessiri(
                           textStyle: const TextStyle(
-                            fontSize: 40,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
