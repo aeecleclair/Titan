@@ -72,7 +72,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feedLocation => 'Location';
 
   @override
-  String get feedSGDate => 'Date';
+  String get feedSGDate => 'SG Date';
 
   @override
   String get feedSGExternalLink => 'SG External link';

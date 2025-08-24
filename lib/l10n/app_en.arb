@@ -21,7 +21,7 @@
   "feedEventManagement": "Event Management",
   "feedTitle": "Title",
   "feedLocation" : "Location",
-  "feedSGDate": "Date",
+  "feedSGDate": "SG Date",
   "feedSGExternalLink": "SG External link",
   "feedCreateEvent": "Create an event",
   "feedPleaseSelectAnAssociation": "Please select an association",
