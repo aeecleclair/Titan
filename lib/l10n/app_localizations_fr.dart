@@ -2071,142 +2071,34 @@ class AppLocalizationsFr extends AppLocalizations {
   String get loanYes => 'Oui';
 
   @override
-  String get loginAccountActivated => 'Compte activé';
-
-  @override
-  String get loginAccountNotActivated => 'Compte non activé';
-
-  @override
-  String get loginActivationCode => 'Code d\'activation';
-
-  @override
-  String get loginBirthday => 'Date de naissance';
-
-  @override
-  String get loginCanBeEmpty => 'Ce champ peut être vide';
-
-  @override
-  String get loginConfirmPassword => 'Confirmer le mot de passe';
-
-  @override
-  String get loginCreate => 'Créer';
+  String get loginAppName => 'MyECL';
 
   @override
   String get loginCreateAccount => 'Créer un compte';
 
   @override
-  String get loginCreateAccountTitle => 'Créer un\ncompte';
-
-  @override
-  String get loginEmail => 'Email';
-
-  @override
-  String get loginEmailEmpty => 'Veuillez entrer une adresse mail';
-
-  @override
-  String get loginEmailInvalid =>
-      'Veuillez entrer une adresse mail de centrale.\nSi vous n\'en possédez pas, veuillez contacter Éclair';
-
-  @override
-  String get loginEmptyFieldError => 'Ce champ ne peut pas être vide';
-
-  @override
-  String get loginEndActivation => 'Finaliser l\'activation';
-
-  @override
-  String get loginEndResetPassword => 'Finaliser la \nréinitialisation';
-
-  @override
-  String get loginErrorResetPassword => 'Erreur lors de la réinitialisation';
-
-  @override
-  String get loginExpectingDate => 'Une date est attendue';
-
-  @override
-  String get loginFillAllFields => 'Veuillez remplir tous les champs';
-
-  @override
-  String get loginFirstname => 'Prénom';
-
-  @override
-  String get loginFloor => 'Étage';
-
-  @override
-  String get loginForgetPassword => 'Mot de passe\noublié';
-
-  @override
   String get loginForgotPassword => 'Mot de passe oublié ?';
 
   @override
-  String get loginInvalidToken => 'Code d\'activation invalide';
+  String get loginFruitVegetableOrders => 'Commandes de fruits et légumes';
+
+  @override
+  String get loginInterfaceCustomization => 'Personnalisation de l\'interface';
 
   @override
   String get loginLoginFailed => 'Échec de la connexion';
 
   @override
-  String get loginMailSendingError => 'Erreur lors de la création du compte';
+  String get loginMadeBy => 'Développé par ProximApp';
 
   @override
-  String get loginMustBeIntError => 'Ce champ doit être un entier';
+  String get loginMaterialLoans => 'Gestion des prêts de matériel';
 
   @override
-  String get loginName => 'Nom';
+  String get loginNewTermsElections => 'L\'élection des nouveaux mandats';
 
   @override
-  String get loginNewPassword => 'Nouveau mot de passe';
-
-  @override
-  String get loginPassword => 'Mot de passe';
-
-  @override
-  String get loginPasswordLengthError =>
-      'Le mot de passe doit faire au moins 6 caractères';
-
-  @override
-  String get loginPasswordUppercaseError =>
-      'Le mot de passe doit contenir au moins une majuscule';
-
-  @override
-  String get loginPasswordLowercaseError =>
-      'Le mot de passe doit contenir au moins une minucule';
-
-  @override
-  String get loginPasswordNumberError =>
-      'Le mot de passe doit contenir au moins un chiffre';
-
-  @override
-  String get loginPasswordSpecialCaracterError =>
-      'Le mot de passe doit contenir au moins un caractère spécial';
-
-  @override
-  String get loginPasswordMustMatch => 'Les mots de passe doivent correspondre';
-
-  @override
-  String get loginPasswordStrengthVeryWeak => 'Très faible';
-
-  @override
-  String get loginPasswordStrengthWeak => 'Faible';
-
-  @override
-  String get loginPasswordStrengthMedium => 'Moyen';
-
-  @override
-  String get loginPasswordStrengthStrong => 'Fort';
-
-  @override
-  String get loginPasswordStrengthVeryStrong => 'Très fort';
-
-  @override
-  String get loginPhone => 'Téléphone';
-
-  @override
-  String get loginPromo => 'Promo entrante (ex : 2023)';
-
-  @override
-  String get loginSendedMail => 'Mail de confirmation envoyé';
-
-  @override
-  String get loginSendedResetMail => 'Mail de réinitialisation envoyé';
+  String get loginRaffles => 'Tombolas';
 
   @override
   String get loginSignIn => 'Se connecter';
@@ -2215,25 +2107,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get loginRegister => 'S\'inscrire';
 
   @override
-  String get loginRecievedMail => 'J\'ai reçu le mail';
+  String get loginUpcomingEvents => 'Les évènements à venir';
 
   @override
-  String get loginRecover => 'Réinitialiser';
-
-  @override
-  String get loginResetedPassword => 'Mot de passe réinitialisé';
-
-  @override
-  String get loginResetPasswordTitle => 'Réinitialiser\nle mot de \npasse';
-
-  @override
-  String get loginNickname => 'Surnom';
-
-  @override
-  String get loginWelcomeBack => 'Bienvenue';
-
-  @override
-  String get loginAppName => 'MyECL';
+  String get loginUpcomingScreenings => 'Les prochaines séances';
 
   @override
   String get othersCheckInternetConnection =>
