@@ -362,6 +362,12 @@ abstract class AppLocalizations {
   /// **'Impossible d\'ouvrir le lien'**
   String get feedCantOpenLink;
 
+  /// No description provided for @feedGetReady.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prépare-toi !'**
+  String get feedGetReady;
+
   /// No description provided for @eventActionCampaign.
   ///
   /// In fr, this message translates to:

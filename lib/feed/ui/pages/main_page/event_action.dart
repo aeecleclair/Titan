@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:timeago_flutter/timeago_flutter.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 
 class EventAction extends HookWidget {
@@ -32,6 +33,7 @@ class EventAction extends HookWidget {
   Widget build(BuildContext context) {
     final now = useState(DateTime.now());
     final locale = Localizations.localeOf(context);
+    final localizeWithContext = AppLocalizations.of(context)!;
 
     useEffect(() {
       final timer = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -55,7 +57,7 @@ class EventAction extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              isWaiting ? 'Prépares-toi' : title,
+              isWaiting ? AppLocalizations.of(context)!.feedGetReady : title,
               style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,

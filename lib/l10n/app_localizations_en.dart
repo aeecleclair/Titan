@@ -146,6 +146,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feedCantOpenLink => 'Impossible d\'ouvrir le lien';
 
   @override
+  String get feedGetReady => 'Get ready!';
+
+  @override
   String get eventActionCampaign => 'You can vote';
 
   @override
@@ -155,7 +158,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventActionCampaignSubtitle => 'Vote now';
 
   @override
-  String get eventActionEventSubtitle => 'Respond to the invitation';
+  String get eventActionEventSubtitle => 'Answer the invitation';
 
   @override
   String get eventActionCampaignButton => 'Vote';

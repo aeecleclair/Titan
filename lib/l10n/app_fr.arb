@@ -60,6 +60,7 @@
     }
   },
   "feedCantOpenLink": "Impossible d'ouvrir le lien",
+  "feedGetReady": "Prépare-toi !",
   "eventActionCampaign": "Tu peux voter",
   "eventActionEvent": "Tu es invité",
   "eventActionCampaignSubtitle": "Votez maintenant",

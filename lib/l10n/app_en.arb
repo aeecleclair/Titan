@@ -57,10 +57,11 @@
       }
     }
   },
+  "feedGetReady": "Get ready!",
   "eventActionCampaign": "You can vote",
   "eventActionEvent": "You are invited",
   "eventActionCampaignSubtitle": "Vote now",
-  "eventActionEventSubtitle": "Respond to the invitation",
+  "eventActionEventSubtitle": "Answer the invitation",
   "eventActionCampaignButton": "Vote",
   "eventActionEventButton": "Participate",
   "eventActionCampaignValidated": "I voted!",

@@ -147,6 +147,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get feedCantOpenLink => 'Impossible d\'ouvrir le lien';
 
   @override
+  String get feedGetReady => 'Prépare-toi !';
+
+  @override
   String get eventActionCampaign => 'Tu peux voter';
 
   @override
