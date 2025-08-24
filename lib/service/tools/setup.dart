@@ -58,8 +58,8 @@ void setUpNotification(WidgetRef ref) {
     );
 
     message_class.Message me = message_class.Message(
-      title: message.notification?.title ?? "No title",
-      content: message.notification?.body ?? "No body",
+      title: message.notification?.title,
+      content: message.notification?.body,
       actionModule: messages.actionModule,
       actionTable: messages.actionTable,
     );
