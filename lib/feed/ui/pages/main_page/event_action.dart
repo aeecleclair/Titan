@@ -33,7 +33,6 @@ class EventAction extends HookWidget {
   Widget build(BuildContext context) {
     final now = useState(DateTime.now());
     final locale = Localizations.localeOf(context);
-    final localizeWithContext = AppLocalizations.of(context)!;
 
     useEffect(() {
       final timer = Timer.periodic(const Duration(seconds: 1), (_) {
