@@ -66,6 +66,90 @@ class AppLocalizationsFr extends AppLocalizations {
   String get feedEventManagement => 'Gestion des événements';
 
   @override
+  String get feedTitle => 'Titre';
+
+  @override
+  String get feedLocation => 'Lieu';
+
+  @override
+  String get feedSGDate => 'Date du SG';
+
+  @override
+  String get feedSGExternalLink => 'Lien externe du SG';
+
+  @override
+  String get feedCreateEvent => 'Créer l\'événement';
+
+  @override
+  String get feedPleaseSelectAnAssociation =>
+      'Veuillez sélectionner une association';
+
+  @override
+  String get feedReject => 'Rejeter';
+
+  @override
+  String get feedApprove => 'Approuver';
+
+  @override
+  String get feedEnded => 'Terminé';
+
+  @override
+  String get feedOngoing => 'En cours';
+
+  @override
+  String get feedFilter => 'Filtrer';
+
+  @override
+  String get feedAssociation => 'Association';
+
+  @override
+  String get feedNewsType => 'Type d\'actualité';
+
+  @override
+  String get feedApply => 'Appliquer';
+
+  @override
+  String get feedNews => 'Actualités';
+
+  @override
+  String get feedAdmin => 'Administration';
+
+  @override
+  String get feedCreateAnEvent => 'Créer un événement';
+
+  @override
+  String get feedManageRequests => 'Demandes de publication';
+
+  @override
+  String get feedNoNewsAvailable => 'Aucune actualité disponible';
+
+  @override
+  String get feedRefresh => 'Actualiser';
+
+  @override
+  String get feedPleaseProvideASGExternalLink =>
+      'Veuillez entrer un lien externe pour le SG';
+
+  @override
+  String get feedPleaseProvideASGDate => 'Veuillez entrer une date de SG';
+
+  @override
+  String feedShotgunIn(String time) {
+    return 'Shotgun $time';
+  }
+
+  @override
+  String feedVoteIn(String time) {
+    return 'Vote $time';
+  }
+
+  @override
+  String get feedCantOpenLink => 'Impossible d\'ouvrir le lien';
+
+  @override
+  String get feedGetReady => 'Prépare-toi !';
+
+  @override
   String get eventActionCampaign => 'Tu peux voter';
 
   @override
@@ -192,6 +276,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get adminDelete => 'Supprimer';
+
+  @override
+  String get adminDeleteAssociationMember => 'Supprimer le membre ?';
+
+  @override
+  String get adminDeleteAssociationMemberConfirmation =>
+      'Êtes-vous sûr de vouloir supprimer ce membre ?';
 
   @override
   String get adminDeleteAssociationMembership => 'Supprimer l\'adhésion ?';
@@ -610,6 +701,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get advertPositiveNumber => 'Veuillez entrer un nombre positif';
+
+  @override
+  String get advertPublishToFeed => 'Publier dans le feed';
 
   @override
   String get advertRemovedAnnouncer => 'Annonceur supprimé';
@@ -2283,6 +2377,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementCanSeeHistory => 'Peut voir l\'historique';
 
   @override
+  String get paiementCantLaunchURL => 'Impossible d\'ouvrir le lien';
+
+  @override
   String get paiementClose => 'Fermer';
 
   @override
@@ -2562,7 +2659,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementScan => 'Scanner';
 
   @override
+  String get paiementScanAlreadyUsedQRCode => 'QR Code déjà utilisé';
+
+  @override
   String get paiementScanCode => 'Scanner un code';
+
+  @override
+  String get paiementScanNoMembership => 'Pas d\'adhésion';
+
+  @override
+  String get paiementScanNoMembershipConfirmation =>
+      'Ce produit n\'est pas disponnible pour les non-adhérents. Confirmer l\'encaissement ?';
 
   @override
   String get paiementSeeHistory => 'Voir l\'historique';
@@ -2661,6 +2768,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get paiementTransferStructureSuccess =>
       'Transfert de structure demandé avec succès';
+
+  @override
+  String get paiementUnknownDevice => 'Appareil inconnu';
 
   @override
   String get paiementValidUntil => 'Valide jusqu\'à';
@@ -4152,6 +4262,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get voteCountVote => 'Dépouiller les votes';
 
   @override
+  String get voteDelete => 'Supprimer';
+
+  @override
   String get voteDeletedAll => 'Tout supprimé';
 
   @override
@@ -4486,4 +4599,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get modulePaymentDescription =>
       'Gérer les paiements, les statistiques et les appareils';
+
+  @override
+  String get toolInvalidNumber => 'Chiffre invalide';
+
+  @override
+  String get toolDateRequired => 'Date requise';
 }

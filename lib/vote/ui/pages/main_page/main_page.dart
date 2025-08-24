@@ -68,7 +68,7 @@ class VoteMainPage extends HookConsumerWidget {
                 children: [
                   if (isAdmin)
                     Text(
-                      "Vote",
+                      AppLocalizations.of(context)!.voteVote,
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -145,7 +145,7 @@ class VoteMainPage extends HookConsumerWidget {
             children: [
               const SizedBox(height: 20),
               Text(
-                "Vote",
+                AppLocalizations.of(context)!.voteVote,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,

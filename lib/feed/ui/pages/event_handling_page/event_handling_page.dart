@@ -22,7 +22,8 @@ class EventHandlingPage extends HookConsumerWidget {
     final newsListAsync = ref.watch(adminNewsListProvider);
     final newsListNotifier = ref.watch(adminNewsListProvider.notifier);
     final selectedFilter = useState(NewsFilterType.pending);
-    newsListNotifier.loadNewsList();
+
+    final localizeWithContext = AppLocalizations.of(context)!;
 
     return FeedTemplate(
       child: Padding(
@@ -38,8 +39,7 @@ class EventHandlingPage extends HookConsumerWidget {
               const SizedBox(height: 16),
 
               Text(
-                AppLocalizations.of(context)?.feedEventManagement ??
-                    'Event Management',
+                localizeWithContext.feedEventManagement,
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -112,16 +112,16 @@ class EventHandlingPage extends HookConsumerWidget {
   }
 
   String _getFilterName(BuildContext context, NewsFilterType filter) {
-    final localizations = AppLocalizations.of(context);
+    final localizeWithContext = AppLocalizations.of(context)!;
     switch (filter) {
       case NewsFilterType.all:
-        return localizations?.feedFilterAll ?? 'All';
+        return localizeWithContext.feedFilterAll;
       case NewsFilterType.pending:
-        return localizations?.feedFilterPending ?? 'Pending';
+        return localizeWithContext.feedFilterPending;
       case NewsFilterType.approved:
-        return localizations?.feedFilterApproved ?? 'Approved';
+        return localizeWithContext.feedFilterApproved;
       case NewsFilterType.rejected:
-        return localizations?.feedFilterRejected ?? 'Rejected';
+        return localizeWithContext.feedFilterRejected;
     }
   }
 
@@ -145,16 +145,16 @@ class EventHandlingPage extends HookConsumerWidget {
   }
 
   String _getEmptyMessage(BuildContext context, NewsFilterType filter) {
-    final localizations = AppLocalizations.of(context);
+    final localizeWithContext = AppLocalizations.of(context)!;
     switch (filter) {
       case NewsFilterType.all:
-        return localizations?.feedEmptyAll ?? 'No events available';
+        return localizeWithContext.feedEmptyAll;
       case NewsFilterType.pending:
-        return localizations?.feedEmptyPending ?? 'No events pending approval';
+        return localizeWithContext.feedEmptyPending;
       case NewsFilterType.approved:
-        return localizations?.feedEmptyApproved ?? 'No approved events';
+        return localizeWithContext.feedEmptyApproved;
       case NewsFilterType.rejected:
-        return localizations?.feedEmptyRejected ?? 'No rejected events';
+        return localizeWithContext.feedEmptyRejected;
     }
   }
 }

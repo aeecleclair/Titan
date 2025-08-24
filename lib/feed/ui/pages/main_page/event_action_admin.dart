@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/feed/class/news.dart';
 import 'package:titan/feed/providers/admin_news_list_provider.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
@@ -11,6 +12,7 @@ class EventActionAdmin extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizeWithContext = AppLocalizations.of(context)!;
     final newsAdminNotifier = ref.watch(adminNewsListProvider.notifier);
     return Align(
       alignment: Alignment.centerRight,
@@ -29,7 +31,7 @@ class EventActionAdmin extends ConsumerWidget {
         waitingColor: ColorConstants.background,
         child: Center(
           child: Text(
-            "Supprimer",
+            localizeWithContext.eventDelete,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,

@@ -48,7 +48,10 @@ class ContenderCard extends HookConsumerWidget {
                         onPressed: onEdit,
                       ),
                       const SizedBox(height: 20),
-                      Button.danger(text: "Supprimer", onPressed: onDelete),
+                      Button.danger(
+                        text: AppLocalizations.of(context)!.voteDelete,
+                        onPressed: onDelete,
+                      ),
                     ],
                   ),
                 ),

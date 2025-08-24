@@ -92,7 +92,7 @@ class AdminPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
-                "Administration",
+                AppLocalizations.of(context)!.adminAdministration,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -102,7 +102,7 @@ class AdminPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 20),
             AlignLeftText(
-              "Association",
+              AppLocalizations.of(context)!.feedAssociation,
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               color: ColorConstants.tertiary,
             ),

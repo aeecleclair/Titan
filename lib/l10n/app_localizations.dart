@@ -212,6 +212,162 @@ abstract class AppLocalizations {
   /// **'Gestion des événements'**
   String get feedEventManagement;
 
+  /// No description provided for @feedTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre'**
+  String get feedTitle;
+
+  /// No description provided for @feedLocation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lieu'**
+  String get feedLocation;
+
+  /// No description provided for @feedSGDate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date du SG'**
+  String get feedSGDate;
+
+  /// No description provided for @feedSGExternalLink.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lien externe du SG'**
+  String get feedSGExternalLink;
+
+  /// No description provided for @feedCreateEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer l\'événement'**
+  String get feedCreateEvent;
+
+  /// No description provided for @feedPleaseSelectAnAssociation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez sélectionner une association'**
+  String get feedPleaseSelectAnAssociation;
+
+  /// No description provided for @feedReject.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejeter'**
+  String get feedReject;
+
+  /// No description provided for @feedApprove.
+  ///
+  /// In fr, this message translates to:
+  /// **'Approuver'**
+  String get feedApprove;
+
+  /// No description provided for @feedEnded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminé'**
+  String get feedEnded;
+
+  /// No description provided for @feedOngoing.
+  ///
+  /// In fr, this message translates to:
+  /// **'En cours'**
+  String get feedOngoing;
+
+  /// No description provided for @feedFilter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer'**
+  String get feedFilter;
+
+  /// No description provided for @feedAssociation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Association'**
+  String get feedAssociation;
+
+  /// No description provided for @feedNewsType.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type d\'actualité'**
+  String get feedNewsType;
+
+  /// No description provided for @feedApply.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appliquer'**
+  String get feedApply;
+
+  /// No description provided for @feedNews.
+  ///
+  /// In fr, this message translates to:
+  /// **'Actualités'**
+  String get feedNews;
+
+  /// No description provided for @feedAdmin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Administration'**
+  String get feedAdmin;
+
+  /// No description provided for @feedCreateAnEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer un événement'**
+  String get feedCreateAnEvent;
+
+  /// No description provided for @feedManageRequests.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demandes de publication'**
+  String get feedManageRequests;
+
+  /// No description provided for @feedNoNewsAvailable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune actualité disponible'**
+  String get feedNoNewsAvailable;
+
+  /// No description provided for @feedRefresh.
+  ///
+  /// In fr, this message translates to:
+  /// **'Actualiser'**
+  String get feedRefresh;
+
+  /// No description provided for @feedPleaseProvideASGExternalLink.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez entrer un lien externe pour le SG'**
+  String get feedPleaseProvideASGExternalLink;
+
+  /// No description provided for @feedPleaseProvideASGDate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez entrer une date de SG'**
+  String get feedPleaseProvideASGDate;
+
+  /// Placeholder pour le temps restant avant le shotgun
+  ///
+  /// In fr, this message translates to:
+  /// **'Shotgun {time}'**
+  String feedShotgunIn(String time);
+
+  /// Temps restant avant le vote
+  ///
+  /// In fr, this message translates to:
+  /// **'Vote {time}'**
+  String feedVoteIn(String time);
+
+  /// No description provided for @feedCantOpenLink.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible d\'ouvrir le lien'**
+  String get feedCantOpenLink;
+
+  /// No description provided for @feedGetReady.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prépare-toi !'**
+  String get feedGetReady;
+
   /// No description provided for @eventActionCampaign.
   ///
   /// In fr, this message translates to:
@@ -457,6 +613,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Supprimer'**
   String get adminDelete;
+
+  /// No description provided for @adminDeleteAssociationMember.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer le membre ?'**
+  String get adminDeleteAssociationMember;
+
+  /// No description provided for @adminDeleteAssociationMemberConfirmation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Êtes-vous sûr de vouloir supprimer ce membre ?'**
+  String get adminDeleteAssociationMemberConfirmation;
 
   /// No description provided for @adminDeleteAssociationMembership.
   ///
@@ -1249,6 +1417,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Veuillez entrer un nombre positif'**
   String get advertPositiveNumber;
+
+  /// No description provided for @advertPublishToFeed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier dans le feed'**
+  String get advertPublishToFeed;
 
   /// No description provided for @advertRemovedAnnouncer.
   ///
@@ -4520,6 +4694,12 @@ abstract class AppLocalizations {
   /// **'Peut voir l\'historique'**
   String get paiementCanSeeHistory;
 
+  /// No description provided for @paiementCantLaunchURL.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible d\'ouvrir le lien'**
+  String get paiementCantLaunchURL;
+
   /// No description provided for @paiementClose.
   ///
   /// In fr, this message translates to:
@@ -5012,11 +5192,29 @@ abstract class AppLocalizations {
   /// **'Scanner'**
   String get paiementScan;
 
+  /// No description provided for @paiementScanAlreadyUsedQRCode.
+  ///
+  /// In fr, this message translates to:
+  /// **'QR Code déjà utilisé'**
+  String get paiementScanAlreadyUsedQRCode;
+
   /// No description provided for @paiementScanCode.
   ///
   /// In fr, this message translates to:
   /// **'Scanner un code'**
   String get paiementScanCode;
+
+  /// No description provided for @paiementScanNoMembership.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas d\'adhésion'**
+  String get paiementScanNoMembership;
+
+  /// No description provided for @paiementScanNoMembershipConfirmation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce produit n\'est pas disponnible pour les non-adhérents. Confirmer l\'encaissement ?'**
+  String get paiementScanNoMembershipConfirmation;
 
   /// No description provided for @paiementSeeHistory.
   ///
@@ -5197,6 +5395,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Transfert de structure demandé avec succès'**
   String get paiementTransferStructureSuccess;
+
+  /// No description provided for @paiementUnknownDevice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appareil inconnu'**
+  String get paiementUnknownDevice;
 
   /// No description provided for @paiementValidUntil.
   ///
@@ -8012,6 +8216,12 @@ abstract class AppLocalizations {
   /// **'Dépouiller les votes'**
   String get voteCountVote;
 
+  /// No description provided for @voteDelete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer'**
+  String get voteDelete;
+
   /// No description provided for @voteDeletedAll.
   ///
   /// In fr, this message translates to:
@@ -8635,6 +8845,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Gérer les paiements, les statistiques et les appareils'**
   String get modulePaymentDescription;
+
+  /// No description provided for @toolInvalidNumber.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chiffre invalide'**
+  String get toolInvalidNumber;
+
+  /// No description provided for @toolDateRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date requise'**
+  String get toolDateRequired;
 }
 
 class _AppLocalizationsDelegate

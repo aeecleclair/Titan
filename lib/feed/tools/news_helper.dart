@@ -44,22 +44,22 @@ String formatUserFriendlyDate(
   final timeFormat = DateFormat('HH:mm');
   final time = timeFormat.format(date);
 
-  final connector = AppLocalizations.of(context)?.dateAt ?? 'à';
+  final connector = AppLocalizations.of(context)!.dateAt;
 
   final difference = dateDay.difference(today).inDays;
 
   if (difference == 0) {
-    return "${_capitalize(AppLocalizations.of(context)?.dateToday ?? 'Aujourd\'hui')} $connector $time";
+    return "${_capitalize(AppLocalizations.of(context)!.dateToday)} $connector $time";
   } else if (difference == -1) {
-    return "${_capitalize(AppLocalizations.of(context)?.dateYesterday ?? 'Hier')} $connector $time";
+    return "${_capitalize(AppLocalizations.of(context)!.dateYesterday)} $connector $time";
   } else if (difference == 1) {
-    return "${_capitalize(AppLocalizations.of(context)?.dateTomorrow ?? 'Demain')} $connector $time";
+    return "${_capitalize(AppLocalizations.of(context)!.dateTomorrow)} $connector $time";
   } else if (difference > 1 && difference < 7) {
     final dayName = _capitalize(DateFormat('EEEE', locale).format(date));
     return "$dayName $connector $time";
   } else if (difference < 0 && difference > -7) {
     final dayName = _capitalize(DateFormat('EEEE', locale).format(date));
-    final prefix = AppLocalizations.of(context)?.dateLast ?? '';
+    final prefix = AppLocalizations.of(context)!.dateLast;
 
     final prefixWithSpace = prefix.isEmpty ? '' : _capitalize('$prefix ');
     return "$prefixWithSpace$dayName $connector $time";
@@ -87,10 +87,7 @@ String getNewsSubtitle(
   final startDate = news.start.toLocal();
 
   if (isNewsOngoing(news) && news.end != null) {
-    final untilText = _capitalize(
-      AppLocalizations.of(context)?.dateUntil ??
-          (locale == 'fr' ? "Jusqu'au" : "Until"),
-    );
+    final untilText = _capitalize(AppLocalizations.of(context)!.dateUntil);
     subtitle =
         "$untilText ${formatUserFriendlyDate(news.end!.toLocal(), locale: locale, context: context)}";
   } else if (news.end == null) {
@@ -107,7 +104,7 @@ String getNewsSubtitle(
         startDate.day == endDate.day;
 
     if (sameDay) {
-      final connector = AppLocalizations.of(context)?.dateAt ?? 'à';
+      final connector = AppLocalizations.of(context)!.dateAt;
 
       String dateStr = formatUserFriendlyDate(
         startDate,
@@ -118,14 +115,12 @@ String getNewsSubtitle(
       final startTime = DateFormat('HH:mm').format(startDate);
       final endTime = DateFormat('HH:mm').format(endDate);
 
-      final fromWord = AppLocalizations.of(context)?.dateFrom ?? 'de';
-      final toWord = AppLocalizations.of(context)?.dateTo ?? 'à';
+      final fromWord = AppLocalizations.of(context)!.dateFrom;
+      final toWord = AppLocalizations.of(context)!.dateTo;
 
       subtitle = '$dateStr $fromWord $startTime $toWord $endTime';
     } else {
-      final fromWord = _capitalize(
-        AppLocalizations.of(context)?.dateFrom ?? 'de',
-      );
+      final fromWord = _capitalize(AppLocalizations.of(context)!.dateFrom);
 
       final now = DateTime.now();
       final today = DateTime(now.year, now.month, now.day);
@@ -133,8 +128,8 @@ String getNewsSubtitle(
       final difference = endDateTime.difference(today).inDays;
 
       final toWord = (difference >= -1 && difference <= 1)
-          ? (AppLocalizations.of(context)?.dateTo ?? 'à')
-          : (AppLocalizations.of(context)?.dateBetweenDays ?? 'au');
+          ? (AppLocalizations.of(context)!.dateTo)
+          : (AppLocalizations.of(context)!.dateBetweenDays);
 
       subtitle =
           '$fromWord ${formatUserFriendlyDate(startDate, locale: locale, context: context)} $toWord ${formatUserFriendlyDate(endDate, locale: locale, context: context)}';
@@ -152,9 +147,9 @@ String getActionTitle(News news, BuildContext context) {
   final module = news.module;
 
   if (module == "campagne") {
-    return AppLocalizations.of(context)?.eventActionCampaign ?? 'Tu peux voter';
+    return AppLocalizations.of(context)!.eventActionCampaign;
   } else if (module == "event") {
-    return AppLocalizations.of(context)?.eventActionEvent ?? 'Tu est invité';
+    return AppLocalizations.of(context)!.eventActionEvent;
   }
   return '';
 }
@@ -165,11 +160,12 @@ String getWaitingTitle(
   required String timeToGo,
 }) {
   final module = news.module;
+  final localizeWithContext = AppLocalizations.of(context)!;
 
   if (module == "campagne") {
-    return 'Vote $timeToGo';
+    return localizeWithContext.feedVoteIn(timeToGo);
   } else if (module == "event") {
-    return 'Shotgun $timeToGo';
+    return localizeWithContext.feedShotgunIn(timeToGo);
   }
   return '';
 }
@@ -178,11 +174,9 @@ String getActionSubtitle(News news, BuildContext context) {
   final module = news.module;
 
   if (module == "campagne") {
-    return AppLocalizations.of(context)?.eventActionCampaignSubtitle ??
-        'Votes maintenant';
+    return AppLocalizations.of(context)!.eventActionCampaignSubtitle;
   } else if (module == "event") {
-    return AppLocalizations.of(context)?.eventActionEventSubtitle ??
-        'Réponds à l\'invitation';
+    return AppLocalizations.of(context)!.eventActionEventSubtitle;
   }
   return '';
 }
@@ -191,22 +185,21 @@ String getActionEnableButtonText(News news, BuildContext context) {
   final module = news.module;
 
   if (module == "campagne") {
-    return AppLocalizations.of(context)?.eventActionCampaignButton ?? 'Voter';
+    return AppLocalizations.of(context)!.eventActionCampaignButton;
   } else if (module == "event") {
-    return AppLocalizations.of(context)?.eventActionEventButton ?? 'Participer';
+    return AppLocalizations.of(context)!.eventActionEventButton;
   }
   return '';
 }
 
 String getActionValidatedButtonText(News news, BuildContext context) {
   final module = news.module;
+  final localizeWithContext = AppLocalizations.of(context)!;
 
   if (module == "campagne") {
-    return AppLocalizations.of(context)?.eventActionCampaignValidated ??
-        'J\'ai voté !';
+    return localizeWithContext.eventActionCampaignValidated;
   } else if (module == "event") {
-    return AppLocalizations.of(context)?.eventActionEventValidated ??
-        'Je viens !';
+    return localizeWithContext.eventActionEventValidated;
   }
   return '';
 }
@@ -217,6 +210,7 @@ void getActionButtonAction(
   WidgetRef ref,
 ) async {
   final module = news.module;
+  final localizeWithContext = AppLocalizations.of(context)!;
 
   if (module == "campagne") {
     QR.to(VoteRouter.root);
@@ -231,7 +225,11 @@ void getActionButtonAction(
             mode: LaunchMode.externalApplication,
           );
         } else {
-          displayToast(context, TypeMsg.error, 'Impossible d\'ouvrir le lien');
+          displayToast(
+            context,
+            TypeMsg.error,
+            localizeWithContext.feedCantOpenLink,
+          );
         }
       },
       error: (e, stackTrace) {

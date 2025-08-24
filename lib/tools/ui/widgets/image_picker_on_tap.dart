@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 
@@ -37,7 +38,7 @@ class ImagePickerOnTap extends StatelessWidget {
           if (size > maxHyperionFileSize) {
             displayToastWithContext(
               TypeMsg.error,
-              "Image size exceeds the maximum limit of 4Mio. Please select a smaller image.",
+              AppLocalizations.of(context)!.othersImageSizeTooBig,
             );
           } else {
             if (kIsWeb) {

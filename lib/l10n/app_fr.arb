@@ -19,6 +19,48 @@
   "feedEmptyApproved": "Aucun événement approuvé",
   "feedEmptyRejected": "Aucun événement rejeté",
   "feedEventManagement": "Gestion des événements",
+  "feedTitle": "Titre",
+  "feedLocation": "Lieu",
+  "feedSGDate": "Date du SG",
+  "feedSGExternalLink": "Lien externe du SG",
+  "feedCreateEvent": "Créer l'événement",
+  "feedPleaseSelectAnAssociation": "Veuillez sélectionner une association",
+  "feedReject": "Rejeter",
+  "feedApprove": "Approuver",
+  "feedEnded": "Terminé",
+  "feedOngoing": "En cours",
+  "feedFilter": "Filtrer",
+  "feedAssociation": "Association",
+  "feedNewsType": "Type d'actualité",
+  "feedApply": "Appliquer",
+  "feedNews": "Actualités",
+  "feedAdmin": "Administration",
+  "feedCreateAnEvent": "Créer un événement",
+  "feedManageRequests": "Demandes de publication",
+  "feedNoNewsAvailable": "Aucune actualité disponible",
+  "feedRefresh": "Actualiser",
+  "feedPleaseProvideASGExternalLink": "Veuillez entrer un lien externe pour le SG",
+  "feedPleaseProvideASGDate": "Veuillez entrer une date de SG",
+  "feedShotgunIn": "Shotgun {time}",
+  "@feedShotgunIn": {
+    "description": "Placeholder pour le temps restant avant le shotgun",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "feedVoteIn": "Vote {time}",
+  "@feedVoteIn": {
+    "description": "Temps restant avant le vote",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "feedCantOpenLink": "Impossible d'ouvrir le lien",
+  "feedGetReady": "Prépare-toi !",
   "eventActionCampaign": "Tu peux voter",
   "eventActionEvent": "Tu es invité",
   "eventActionCampaignSubtitle": "Votez maintenant",
@@ -68,6 +110,8 @@
   "adminDateError": "La date de début doit être avant la date de fin",
   "adminDefineAsBankAccountHolder": "Définir comme titulaire du compte bancaire",
   "adminDelete": "Supprimer",
+  "adminDeleteAssociationMember": "Supprimer le membre ?",
+  "adminDeleteAssociationMemberConfirmation": "Êtes-vous sûr de vouloir supprimer ce membre ?",
   "adminDeleteAssociationMembership": "Supprimer l'adhésion ?",
   "adminDeletedAssociationMembership": "Adhésion supprimée",
   "adminDeleteGroup": "Supprimer le groupe",
@@ -224,6 +268,7 @@
   "advertNoMoreAnnouncer": "Aucun annonceur n'est disponible",
   "advertNoValue": "Veuillez entrer une valeur",
   "advertPositiveNumber": "Veuillez entrer un nombre positif",
+  "advertPublishToFeed": "Publier dans le feed",
   "advertRemovedAnnouncer": "Annonceur supprimé",
   "advertRemovingError": "Erreur lors de la suppression",
   "advertTags": "Tags",
@@ -777,6 +822,7 @@
   "paiementCancelTransactions": "Annuler les transactions",
   "paiementCanManageSellers": "Peut gérer les vendeurs",
   "paiementCanSeeHistory": "Peut voir l'historique",
+  "paiementCantLaunchURL": "Impossible d'ouvrir le lien",
   "paiementClose": "Fermer",
   "paiementCreate": "Créer",
   "paiementCreateInvoice": "Créer une facture",
@@ -888,7 +934,10 @@
   "paiementRightsUpdated": "Droits mis à jour",
   "paiementRightsUpdateError": "Erreur lors de la mise à jour des droits",
   "paiementScan": "Scanner",
+  "paiementScanAlreadyUsedQRCode": "QR Code déjà utilisé",
   "paiementScanCode": "Scanner un code",
+  "paiementScanNoMembership": "Pas d'adhésion",
+  "paiementScanNoMembershipConfirmation": "Ce produit n'est pas disponnible pour les non-adhérents. Confirmer l'encaissement ?",
   "paiementSeeHistory": "Voir l'historique",
   "paiementSelectStructure": "Choisir une structure",
   "paiementSellerError": "Vous n'êtes pas vendeur de ce magasin",
@@ -927,6 +976,7 @@
   "paiementTransferStructureDescription": "Le nouveau responsable aura accès à toutes les fonctionnalités de gestion de la structure. Vous allez recevoir un email pour valider ce transfert. Le lien ne sera actif que pendant 20 minutes. Cette action est irréversible. Êtes-vous sûr de vouloir continuer ?",
   "paiementTransferStructureError": "Erreur lors du transfert de la structure",
   "paiementTransferStructureSuccess": "Transfert de structure demandé avec succès",
+  "paiementUnknownDevice": "Appareil inconnu",
   "paiementValidUntil": "Valide jusqu'à",
   "paiementYouAreTransferingStructureTo": "Vous êtes sur le point de transférer la structure à ",
   "phAddNewJournal": "Ajouter un nouveau journal",
@@ -1479,6 +1529,7 @@
   "voteCloseVote": "Fermer les votes",
   "voteConfirmVote": "Confirmer le vote",
   "voteCountVote": "Dépouiller les votes",
+  "voteDelete": "Supprimer",
   "voteDeletedAll": "Tout supprimé",
   "voteDeletedPipo": "Listes pipos supprimées",
   "voteDeletedSection": "Section supprimée",
@@ -1582,5 +1633,7 @@
   "moduleOthers": "Autres",
   "moduleOthersDescription": "Afficher les autres modules",
   "modulePayment": "Paiement",
-  "modulePaymentDescription": "Gérer les paiements, les statistiques et les appareils"
+  "modulePaymentDescription": "Gérer les paiements, les statistiques et les appareils",
+  "toolInvalidNumber": "Chiffre invalide",
+  "toolDateRequired": "Date requise"
 }
