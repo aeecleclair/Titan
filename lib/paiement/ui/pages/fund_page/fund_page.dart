@@ -8,12 +8,14 @@ import 'package:titan/paiement/providers/tos_provider.dart';
 import 'package:titan/paiement/ui/components/digit_fade_in_animation.dart';
 import 'package:titan/paiement/ui/components/keyboard.dart';
 import 'package:titan/paiement/ui/pages/fund_page/confirm_button.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 
 class FundPage extends ConsumerWidget {
   const FundPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
     final fundAmount = ref.watch(fundAmountProvider);
     final fundAmountNotifier = ref.watch(fundAmountProvider.notifier);
     final myWallet = ref.watch(myWalletProvider);
@@ -26,7 +28,7 @@ class FundPage extends ConsumerWidget {
       orElse: () => 0,
       data: (wallet) => wallet.balance / 100,
     );
-    final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final formatter = NumberFormat.currency(locale: locale.toString(), symbol: "€");
 
     final amountToAdd = double.tryParse(fundAmount.replaceAll(",", ".")) ?? 0;
 
@@ -59,7 +61,7 @@ class FundPage extends ConsumerWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              '${AppLocalizations.of(context)!.paiementBalanceAfterTopUp} ${formatter.format(amountToAdd + currentAmount)} € (max: ${formatter.format(maxBalanceAmount)} €)',
+              '${AppLocalizations.of(context)!.paiementBalanceAfterTopUp} ${formatter.format(amountToAdd + currentAmount)} (max: ${formatter.format(maxBalanceAmount)})',
               style: const TextStyle(color: Colors.white, fontSize: 15),
             ),
             Expanded(

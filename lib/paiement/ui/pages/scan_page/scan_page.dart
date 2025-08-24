@@ -13,6 +13,7 @@ import 'package:titan/paiement/ui/pages/scan_page/cancel_button.dart';
 import 'package:titan/paiement/ui/pages/scan_page/scanner.dart';
 import 'package:titan/tools/exception.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
@@ -25,12 +26,13 @@ class ScanPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
     final bypass = ref.watch(bypassProvider);
     final store = ref.watch(selectedStoreProvider);
     final bypassNotifier = ref.watch(bypassProvider.notifier);
     final barcode = ref.watch(barcodeProvider);
     final barcodeNotifier = ref.watch(barcodeProvider.notifier);
-    final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final formatter = NumberFormat.currency(locale: locale.toString(), symbol: "€");
     final transactionNotifier = ref.watch(transactionProvider.notifier);
     final ongoingTransaction = ref.watch(ongoingTransactionProvider);
     final ongoingTransactionNotifier = ref.watch(
@@ -161,7 +163,7 @@ class ScanPage extends HookConsumerWidget {
                                           ),
                                         ),
                                         Text(
-                                          '${formatter.format(barcode.tot / 100)} €',
+                                          formatter.format(barcode.tot / 100),
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 25,
@@ -297,7 +299,7 @@ class ScanPage extends HookConsumerWidget {
                                           context,
                                         )!.paiementCancelTransaction,
                                         descriptions:
-                                            "${AppLocalizations.of(context)!.paiementTransactionCancelledDescription} ${formatter.format(transaction.total / 100)} € ?",
+                                            "${AppLocalizations.of(context)!.paiementTransactionCancelledDescription} ${formatter.format(transaction.total / 100)} ?",
                                         onYes: () async {
                                           tokenExpireWrapper(ref, () async {
                                             final value =

@@ -19,6 +19,7 @@ import 'package:titan/paiement/ui/pages/main_page/main_card_button.dart';
 import 'package:titan/paiement/ui/pages/main_page/main_card_template.dart';
 import 'package:titan/paiement/ui/pages/pay_page/pay_page.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -35,6 +36,7 @@ class AccountCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
     final myWallet = ref.watch(myWalletProvider);
     final keyService = ref.read(keyServiceProvider);
     final payAmountNotifier = ref.watch(payAmountProvider.notifier);
@@ -45,7 +47,10 @@ class AccountCard extends HookConsumerWidget {
       const Color(0xff017f80),
       const Color.fromARGB(255, 4, 84, 84),
     ];
-    final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final formatter = NumberFormat.currency(
+      locale: locale.toString(),
+      symbol: "€",
+    );
     final localizeWithContext = AppLocalizations.of(context)!;
 
     void displayToastWithContext(TypeMsg type, String message) {
@@ -210,7 +215,7 @@ class AccountCard extends HookConsumerWidget {
       child: AsyncChild(
         value: myWallet,
         builder: (context, wallet) => Text(
-          '${formatter.format(wallet.balance / 100)} €',
+          formatter.format(wallet.balance / 100),
           style: const TextStyle(color: Colors.white, fontSize: 50),
         ),
         errorBuilder: (error, stackTrace) => Text(

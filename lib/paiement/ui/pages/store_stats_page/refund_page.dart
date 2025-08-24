@@ -10,6 +10,7 @@ import 'package:titan/paiement/providers/transaction_provider.dart';
 import 'package:titan/paiement/ui/components/digit_fade_in_animation.dart';
 import 'package:titan/paiement/ui/components/keyboard.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 
@@ -19,10 +20,11 @@ class ReFundPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
     final refundAmount = ref.watch(refundAmountProvider);
     final refundAmountNotifier = ref.watch(refundAmountProvider.notifier);
     final transactionNotifier = ref.watch(transactionProvider.notifier);
-    final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final formatter = NumberFormat.currency(locale: locale.toString(), symbol: "€");
 
     final isValid =
         double.tryParse(refundAmount.replaceAll(",", ".")) != null &&
@@ -58,7 +60,7 @@ class ReFundPage extends ConsumerWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              '${history.otherWalletName} (max: ${formatter.format(history.total / 100)} €)',
+              '${history.otherWalletName} (max: ${formatter.format(history.total / 100)})',
               style: const TextStyle(color: Colors.white, fontSize: 15),
             ),
             Expanded(

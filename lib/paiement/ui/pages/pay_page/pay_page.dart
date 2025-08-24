@@ -7,12 +7,14 @@ import 'package:titan/paiement/providers/pay_amount_provider.dart';
 import 'package:titan/paiement/ui/pages/pay_page/confirm_button.dart';
 import 'package:titan/paiement/ui/components/digit_fade_in_animation.dart';
 import 'package:titan/paiement/ui/components/keyboard.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 
 class PayPage extends ConsumerWidget {
   const PayPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
     final payAmount = ref.watch(payAmountProvider);
     final payAmountNotifier = ref.watch(payAmountProvider.notifier);
     final myWallet = ref.watch(myWalletProvider);
@@ -20,7 +22,7 @@ class PayPage extends ConsumerWidget {
       orElse: () => 0,
       data: (wallet) => wallet.balance / 100,
     );
-    final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final formatter = NumberFormat.currency(locale: locale.toString(), symbol: "€");
 
     final amountToSub = double.tryParse(payAmount.replaceAll(",", ".")) ?? 0;
 
@@ -52,7 +54,7 @@ class PayPage extends ConsumerWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              '${AppLocalizations.of(context)!.paiementBalanceAfterTransaction} ${formatter.format(currentAmount - amountToSub)} €',
+              '${AppLocalizations.of(context)!.paiementBalanceAfterTransaction} ${formatter.format(currentAmount - amountToSub)}',
               style: const TextStyle(color: Colors.white, fontSize: 15),
             ),
             Expanded(

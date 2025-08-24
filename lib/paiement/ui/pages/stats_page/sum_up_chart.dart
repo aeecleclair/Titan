@@ -8,6 +8,7 @@ import 'package:titan/paiement/providers/my_history_provider.dart';
 import 'package:titan/paiement/providers/selected_transactions_provider.dart';
 import 'package:titan/paiement/ui/pages/stats_page/month_section_summary.dart';
 import 'package:titan/paiement/ui/pages/stats_page/transaction_chart.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 
 class SumUpChart extends HookConsumerWidget {
@@ -16,13 +17,14 @@ class SumUpChart extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
     final selected = useState(-1);
     final history = ref.watch(myHistoryProvider);
     final pageController = usePageController();
     final selectedTransactionsNotifier = ref.read(
       selectedTransactionsProvider(currentMonth).notifier,
     );
-    final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final formatter = NumberFormat.currency(locale: locale.toString(), symbol: "€");
     final Map<String, List<History>> transactionPerStore = {};
     final Map<String, List<History>> creditedTransactionPerStore = {};
 
@@ -120,7 +122,7 @@ class SumUpChart extends HookConsumerWidget {
                                   context,
                                 )!.paiementReceived,
                                 amount:
-                                    '${formatter.format(transferTotal / 100)} €',
+                                    formatter.format(transferTotal / 100),
                                 color: const Color.fromARGB(255, 255, 119, 7),
                                 darkColor: const Color.fromARGB(
                                   255,
@@ -153,7 +155,7 @@ class SumUpChart extends HookConsumerWidget {
                                 title: AppLocalizations.of(
                                   context,
                                 )!.paiementSpent,
-                                amount: '${formatter.format(total / 100)} €',
+                                amount: formatter.format(total / 100),
                                 color: const Color.fromARGB(255, 1, 127, 128),
                                 darkColor: const Color.fromARGB(
                                   255,

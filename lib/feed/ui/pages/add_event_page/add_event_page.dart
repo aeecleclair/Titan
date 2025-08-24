@@ -492,11 +492,9 @@ class AddEventPage extends HookConsumerWidget {
                                 associationId: selectedAssociation.value!.id,
                                 ticketUrl: externalLinkController.text,
                               );
-                              print(newEvent);
                               try {
                                 final eventCreated = await eventCreationNotifier
                                     .addEvent(newEvent);
-                                print(eventCreated);
                                 if (poster.value == null) {
                                   QR.back();
                                   displayToastWithContext(
