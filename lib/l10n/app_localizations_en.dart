@@ -66,65 +66,64 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feedEventManagement => 'Event Management';
 
   @override
-  String get feedTitle => 'Titre';
+  String get feedTitle => 'Title';
 
   @override
-  String get feedLocation => 'Lieu';
+  String get feedLocation => 'Location';
 
   @override
-  String get feedSGDate => 'Date du SG';
+  String get feedSGDate => 'Date';
 
   @override
-  String get feedSGExternalLink => 'Lien externe du SG';
+  String get feedSGExternalLink => 'SG External link';
 
   @override
-  String get feedCreateEvent => 'Créer l\'événement';
+  String get feedCreateEvent => 'Create an event';
 
   @override
-  String get feedPleaseSelectAnAssociation =>
-      'Veuillez sélectionner une association';
+  String get feedPleaseSelectAnAssociation => 'Please select an association';
 
   @override
-  String get feedReject => 'Rejeter';
+  String get feedReject => 'Reject';
 
   @override
-  String get feedApprove => 'Approuver';
+  String get feedApprove => 'Approve';
 
   @override
-  String get feedEnded => 'Terminé';
+  String get feedEnded => 'Ended';
 
   @override
-  String get feedOngoing => 'En cours';
+  String get feedOngoing => 'Ongoing';
 
   @override
-  String get feedFilter => 'Filtrer';
+  String get feedFilter => 'Filter';
 
   @override
   String get feedAssociation => 'Association';
 
   @override
-  String get feedNewsType => 'Type d\'actualité';
+  String get feedNewsType => 'News type';
 
   @override
-  String get feedApply => 'Appliquer';
+  String get feedApply => 'Apply';
 
   @override
-  String get feedNews => 'Actualités';
+  String get feedNews => 'News';
 
   @override
   String get feedAdmin => 'Administration';
 
   @override
-  String get feedCreateAnEvent => 'Créer un événement';
+  String get feedCreateAnEvent => 'Create an event';
 
   @override
-  String get feedManageRequests => 'Demandes de publication';
+  String get feedManageRequests => 'Manage requests';
 
   @override
-  String get feedNoNewsAvailable => 'Aucune actualité disponible';
+  String get feedNoNewsAvailable => 'No news available';
 
   @override
-  String get feedRefresh => 'Actualiser';
+  String get feedRefresh => 'Refresh';
 
   @override
   String get eventActionCampaign => 'You can vote';
