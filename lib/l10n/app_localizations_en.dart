@@ -2058,70 +2058,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loanYes => 'Yes';
 
   @override
-  String get loginAccountActivated => 'Account activated';
-
-  @override
-  String get loginAccountNotActivated => 'Account not activated';
-
-  @override
-  String get loginActivationCode => 'Activation code';
-
-  @override
-  String get loginBirthday => 'Date of birth';
-
-  @override
-  String get loginCanBeEmpty => 'This field can be empty';
-
-  @override
-  String get loginConfirmPassword => 'Confirm password';
-
-  @override
-  String get loginCreate => 'Create';
+  String get loginAppName => 'MyECL';
 
   @override
   String get loginCreateAccount => 'Create an account';
 
   @override
-  String get loginCreateAccountTitle => 'Create an\naccount';
-
-  @override
-  String get loginEmail => 'Email';
-
-  @override
-  String get loginEmailEmpty => 'Please enter an email address';
-
-  @override
-  String get loginEmptyFieldError => 'This field cannot be empty';
-
-  @override
-  String get loginEndActivation => 'Complete activation';
-
-  @override
-  String get loginEndResetPassword => 'Complete\npassword reset';
-
-  @override
-  String get loginErrorResetPassword => 'Error during reset';
-
-  @override
-  String get loginExpectingDate => 'A date is expected';
-
-  @override
-  String get loginFillAllFields => 'Please fill all fields';
-
-  @override
-  String get loginFirstname => 'First name';
-
-  @override
-  String get loginFloor => 'Floor';
-
-  @override
-  String get loginForgetPassword => 'Forgot\npassword';
-
-  @override
   String get loginForgotPassword => 'Forgot password?';
 
   @override
-  String get loginInvalidToken => 'Invalid activation code';
+  String get loginFruitVegetableOrders => 'Fruit and vegetable orders';
+
+  @override
+  String get loginInterfaceCustomization => 'Interface customization';
 
   @override
   String get loginLoginFailed => 'Login failed';
@@ -2130,69 +2079,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginMadeBy => 'Developped by ProximApp';
 
   @override
-  String get loginMailSendingError => 'Error during account creation';
+  String get loginMaterialLoans => 'Material loans management';
 
   @override
-  String get loginMustBeIntError => 'This field must be an integer';
+  String get loginNewTermsElections => 'New terms elections';
 
   @override
-  String get loginName => 'Last name';
-
-  @override
-  String get loginNewPassword => 'New password';
-
-  @override
-  String get loginPassword => 'Password';
-
-  @override
-  String get loginPasswordLengthError =>
-      'Password must be at least 6 characters';
-
-  @override
-  String get loginPasswordUppercaseError =>
-      'Password must contain at least one uppercase letter';
-
-  @override
-  String get loginPasswordLowercaseError =>
-      'Password must contain at least one lowercase letter';
-
-  @override
-  String get loginPasswordNumberError =>
-      'Password must contain at least one number';
-
-  @override
-  String get loginPasswordSpecialCaracterError =>
-      'Password must contain at least one special character';
-
-  @override
-  String get loginPasswordMustMatch => 'Passwords must match';
-
-  @override
-  String get loginPasswordStrengthVeryWeak => 'Very weak';
-
-  @override
-  String get loginPasswordStrengthWeak => 'Weak';
-
-  @override
-  String get loginPasswordStrengthMedium => 'Medium';
-
-  @override
-  String get loginPasswordStrengthStrong => 'Strong';
-
-  @override
-  String get loginPasswordStrengthVeryStrong => 'Very strong';
-
-  @override
-  String get loginPhone => 'Phone';
-
-  @override
-  String get loginPromo => 'Incoming class (e.g., 2023)';
-
-  @override
-  String get loginSendedMail => 'Confirmation email sent';
-
-  @override
-  String get loginSendedResetMail => 'Reset email sent';
+  String get loginRaffles => 'Raffles';
 
   @override
   String get loginSignIn => 'Sign in';
@@ -2201,25 +2094,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginRegister => 'Register';
 
   @override
-  String get loginRecievedMail => 'I received the email';
+  String get loginUpcomingEvents => 'Upcoming events';
 
   @override
-  String get loginRecover => 'Reset';
-
-  @override
-  String get loginResetedPassword => 'Password reset';
-
-  @override
-  String get loginResetPasswordTitle => 'Reset\npassword';
-
-  @override
-  String get loginNickname => 'Nickname';
-
-  @override
-  String get loginWelcomeBack => 'Welcome back';
-
-  @override
-  String get loginAppName => 'MyECL';
+  String get loginUpcomingScreenings => 'Upcoming screenings';
 
   @override
   String get othersCheckInternetConnection =>

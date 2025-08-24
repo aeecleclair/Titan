@@ -4112,47 +4112,11 @@ abstract class AppLocalizations {
   /// **'Oui'**
   String get loanYes;
 
-  /// No description provided for @loginAccountActivated.
+  /// No description provided for @loginAppName.
   ///
   /// In fr, this message translates to:
-  /// **'Compte activé'**
-  String get loginAccountActivated;
-
-  /// No description provided for @loginAccountNotActivated.
-  ///
-  /// In fr, this message translates to:
-  /// **'Compte non activé'**
-  String get loginAccountNotActivated;
-
-  /// No description provided for @loginActivationCode.
-  ///
-  /// In fr, this message translates to:
-  /// **'Code d\'activation'**
-  String get loginActivationCode;
-
-  /// No description provided for @loginBirthday.
-  ///
-  /// In fr, this message translates to:
-  /// **'Date de naissance'**
-  String get loginBirthday;
-
-  /// No description provided for @loginCanBeEmpty.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ce champ peut être vide'**
-  String get loginCanBeEmpty;
-
-  /// No description provided for @loginConfirmPassword.
-  ///
-  /// In fr, this message translates to:
-  /// **'Confirmer le mot de passe'**
-  String get loginConfirmPassword;
-
-  /// No description provided for @loginCreate.
-  ///
-  /// In fr, this message translates to:
-  /// **'Créer'**
-  String get loginCreate;
+  /// **'MyECL'**
+  String get loginAppName;
 
   /// No description provided for @loginCreateAccount.
   ///
@@ -4160,89 +4124,23 @@ abstract class AppLocalizations {
   /// **'Créer un compte'**
   String get loginCreateAccount;
 
-  /// No description provided for @loginCreateAccountTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Créer un\ncompte'**
-  String get loginCreateAccountTitle;
-
-  /// No description provided for @loginEmail.
-  ///
-  /// In fr, this message translates to:
-  /// **'Email'**
-  String get loginEmail;
-
-  /// No description provided for @loginEmailEmpty.
-  ///
-  /// In fr, this message translates to:
-  /// **'Veuillez entrer une adresse mail'**
-  String get loginEmailEmpty;
-
-  /// No description provided for @loginEmptyFieldError.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ce champ ne peut pas être vide'**
-  String get loginEmptyFieldError;
-
-  /// No description provided for @loginEndActivation.
-  ///
-  /// In fr, this message translates to:
-  /// **'Finaliser l\'activation'**
-  String get loginEndActivation;
-
-  /// No description provided for @loginEndResetPassword.
-  ///
-  /// In fr, this message translates to:
-  /// **'Finaliser la \nréinitialisation'**
-  String get loginEndResetPassword;
-
-  /// No description provided for @loginErrorResetPassword.
-  ///
-  /// In fr, this message translates to:
-  /// **'Erreur lors de la réinitialisation'**
-  String get loginErrorResetPassword;
-
-  /// No description provided for @loginExpectingDate.
-  ///
-  /// In fr, this message translates to:
-  /// **'Une date est attendue'**
-  String get loginExpectingDate;
-
-  /// No description provided for @loginFillAllFields.
-  ///
-  /// In fr, this message translates to:
-  /// **'Veuillez remplir tous les champs'**
-  String get loginFillAllFields;
-
-  /// No description provided for @loginFirstname.
-  ///
-  /// In fr, this message translates to:
-  /// **'Prénom'**
-  String get loginFirstname;
-
-  /// No description provided for @loginFloor.
-  ///
-  /// In fr, this message translates to:
-  /// **'Étage'**
-  String get loginFloor;
-
-  /// No description provided for @loginForgetPassword.
-  ///
-  /// In fr, this message translates to:
-  /// **'Mot de passe\noublié'**
-  String get loginForgetPassword;
-
   /// No description provided for @loginForgotPassword.
   ///
   /// In fr, this message translates to:
   /// **'Mot de passe oublié ?'**
   String get loginForgotPassword;
 
-  /// No description provided for @loginInvalidToken.
+  /// No description provided for @loginFruitVegetableOrders.
   ///
   /// In fr, this message translates to:
-  /// **'Code d\'activation invalide'**
-  String get loginInvalidToken;
+  /// **'Commandes de fruits et légumes'**
+  String get loginFruitVegetableOrders;
+
+  /// No description provided for @loginInterfaceCustomization.
+  ///
+  /// In fr, this message translates to:
+  /// **'Personnalisation de l\'interface'**
+  String get loginInterfaceCustomization;
 
   /// No description provided for @loginLoginFailed.
   ///
@@ -4256,125 +4154,23 @@ abstract class AppLocalizations {
   /// **'Développé par ProximApp'**
   String get loginMadeBy;
 
-  /// No description provided for @loginMailSendingError.
+  /// No description provided for @loginMaterialLoans.
   ///
   /// In fr, this message translates to:
-  /// **'Erreur lors de la création du compte'**
-  String get loginMailSendingError;
+  /// **'Gestion des prêts de matériel'**
+  String get loginMaterialLoans;
 
-  /// No description provided for @loginMustBeIntError.
+  /// No description provided for @loginNewTermsElections.
   ///
   /// In fr, this message translates to:
-  /// **'Ce champ doit être un entier'**
-  String get loginMustBeIntError;
+  /// **'L\'élection des nouveaux mandats'**
+  String get loginNewTermsElections;
 
-  /// No description provided for @loginName.
+  /// No description provided for @loginRaffles.
   ///
   /// In fr, this message translates to:
-  /// **'Nom'**
-  String get loginName;
-
-  /// No description provided for @loginNewPassword.
-  ///
-  /// In fr, this message translates to:
-  /// **'Nouveau mot de passe'**
-  String get loginNewPassword;
-
-  /// No description provided for @loginPassword.
-  ///
-  /// In fr, this message translates to:
-  /// **'Mot de passe'**
-  String get loginPassword;
-
-  /// No description provided for @loginPasswordLengthError.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le mot de passe doit faire au moins 6 caractères'**
-  String get loginPasswordLengthError;
-
-  /// No description provided for @loginPasswordUppercaseError.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le mot de passe doit contenir au moins une majuscule'**
-  String get loginPasswordUppercaseError;
-
-  /// No description provided for @loginPasswordLowercaseError.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le mot de passe doit contenir au moins une minucule'**
-  String get loginPasswordLowercaseError;
-
-  /// No description provided for @loginPasswordNumberError.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le mot de passe doit contenir au moins un chiffre'**
-  String get loginPasswordNumberError;
-
-  /// No description provided for @loginPasswordSpecialCaracterError.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le mot de passe doit contenir au moins un caractère spécial'**
-  String get loginPasswordSpecialCaracterError;
-
-  /// No description provided for @loginPasswordMustMatch.
-  ///
-  /// In fr, this message translates to:
-  /// **'Les mots de passe doivent correspondre'**
-  String get loginPasswordMustMatch;
-
-  /// No description provided for @loginPasswordStrengthVeryWeak.
-  ///
-  /// In fr, this message translates to:
-  /// **'Très faible'**
-  String get loginPasswordStrengthVeryWeak;
-
-  /// No description provided for @loginPasswordStrengthWeak.
-  ///
-  /// In fr, this message translates to:
-  /// **'Faible'**
-  String get loginPasswordStrengthWeak;
-
-  /// No description provided for @loginPasswordStrengthMedium.
-  ///
-  /// In fr, this message translates to:
-  /// **'Moyen'**
-  String get loginPasswordStrengthMedium;
-
-  /// No description provided for @loginPasswordStrengthStrong.
-  ///
-  /// In fr, this message translates to:
-  /// **'Fort'**
-  String get loginPasswordStrengthStrong;
-
-  /// No description provided for @loginPasswordStrengthVeryStrong.
-  ///
-  /// In fr, this message translates to:
-  /// **'Très fort'**
-  String get loginPasswordStrengthVeryStrong;
-
-  /// No description provided for @loginPhone.
-  ///
-  /// In fr, this message translates to:
-  /// **'Téléphone'**
-  String get loginPhone;
-
-  /// No description provided for @loginPromo.
-  ///
-  /// In fr, this message translates to:
-  /// **'Promo entrante (ex : 2023)'**
-  String get loginPromo;
-
-  /// No description provided for @loginSendedMail.
-  ///
-  /// In fr, this message translates to:
-  /// **'Mail de confirmation envoyé'**
-  String get loginSendedMail;
-
-  /// No description provided for @loginSendedResetMail.
-  ///
-  /// In fr, this message translates to:
-  /// **'Mail de réinitialisation envoyé'**
-  String get loginSendedResetMail;
+  /// **'Tombolas'**
+  String get loginRaffles;
 
   /// No description provided for @loginSignIn.
   ///
@@ -4388,47 +4184,17 @@ abstract class AppLocalizations {
   /// **'S\'inscrire'**
   String get loginRegister;
 
-  /// No description provided for @loginRecievedMail.
+  /// No description provided for @loginUpcomingEvents.
   ///
   /// In fr, this message translates to:
-  /// **'J\'ai reçu le mail'**
-  String get loginRecievedMail;
+  /// **'Les évènements à venir'**
+  String get loginUpcomingEvents;
 
-  /// No description provided for @loginRecover.
+  /// No description provided for @loginUpcomingScreenings.
   ///
   /// In fr, this message translates to:
-  /// **'Réinitialiser'**
-  String get loginRecover;
-
-  /// No description provided for @loginResetedPassword.
-  ///
-  /// In fr, this message translates to:
-  /// **'Mot de passe réinitialisé'**
-  String get loginResetedPassword;
-
-  /// No description provided for @loginResetPasswordTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Réinitialiser\nle mot de \npasse'**
-  String get loginResetPasswordTitle;
-
-  /// No description provided for @loginNickname.
-  ///
-  /// In fr, this message translates to:
-  /// **'Surnom'**
-  String get loginNickname;
-
-  /// No description provided for @loginWelcomeBack.
-  ///
-  /// In fr, this message translates to:
-  /// **'Bienvenue'**
-  String get loginWelcomeBack;
-
-  /// No description provided for @loginAppName.
-  ///
-  /// In fr, this message translates to:
-  /// **'MyECL'**
-  String get loginAppName;
+  /// **'Les prochaines séances'**
+  String get loginUpcomingScreenings;
 
   /// No description provided for @othersCheckInternetConnection.
   ///
