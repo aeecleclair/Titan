@@ -9,6 +9,7 @@ import 'package:titan/phonebook/providers/association_groupement_list_provider.d
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
@@ -24,10 +25,9 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
       associationGroupementListProvider.notifier,
     );
     final name = useTextEditingController(text: associationGroupement.name);
-    void showSnackBarWithContext(String message) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(message)));
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     AppLocalizations localizeWithContext = AppLocalizations.of(context)!;
@@ -64,7 +64,8 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
                   : localizeWithContext.phonebookAdd,
               onPressed: () async {
                 if (name.text.isEmpty) {
-                  showSnackBarWithContext(
+                  displayToastWithContext(
+                    TypeMsg.error,
                     localizeWithContext.phonebookEmptyFieldError,
                   );
                   return;
@@ -79,12 +80,14 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
                           ),
                         );
                     if (value) {
-                      showSnackBarWithContext(
+                      displayToastWithContext(
+                        TypeMsg.msg,
                         localizeWithContext.phonebookAddedAssociation,
                       );
                       QR.back();
                     } else {
-                      showSnackBarWithContext(
+                      displayToastWithContext(
+                        TypeMsg.error,
                         localizeWithContext.phonebookUpdatingError,
                       );
                     }
@@ -95,12 +98,14 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
                         AssociationGroupement(id: "", name: name.text),
                       );
                   if (value) {
-                    showSnackBarWithContext(
+                    displayToastWithContext(
+                      TypeMsg.msg,
                       localizeWithContext.phonebookAddedAssociation,
                     );
                     QR.back();
                   } else {
-                    showSnackBarWithContext(
+                    displayToastWithContext(
+                      TypeMsg.error,
                       localizeWithContext.phonebookAddingError,
                     );
                   }

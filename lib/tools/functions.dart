@@ -1,14 +1,12 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/tools/constants.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:titan/tools/plausible/plausible.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:toastification/toastification.dart';
 
 enum TypeMsg { msg, error }
 
@@ -33,75 +31,59 @@ void displayToast(
   String text, {
   int? duration,
 }) {
-  LinearGradient linearGradient;
-  HeroIcons icon;
+  String title;
+  Color primaryColor, textColor;
+  ToastificationType toastType;
 
   switch (type) {
     case TypeMsg.msg:
-      linearGradient = const LinearGradient(
-        colors: [ColorConstants.gradient1, ColorConstants.gradient2],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      );
-      icon = HeroIcons.check;
-      duration = duration ?? 1500;
+      title = "Succès";
+      primaryColor = ColorConstants.background;
+      textColor = ColorConstants.tertiary;
+      toastType = ToastificationType.success;
       break;
     case TypeMsg.error:
-      linearGradient = const LinearGradient(
-        colors: [ColorConstants.background2, Colors.black],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      );
-      icon = HeroIcons.exclamationTriangle;
-      duration = duration ?? 3000;
+      title = "Erreur";
+      primaryColor = ColorConstants.onMain;
+      textColor = ColorConstants.background;
+      toastType = ToastificationType.error;
       break;
   }
 
-  showFlash(
+  toastification.show(
     context: context,
-    duration: Duration(milliseconds: duration),
-    builder: (context, controller) {
-      return FlashBar(
-        position: FlashPosition.top,
-        controller: controller,
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
-        content: Container(
-          alignment: Alignment.topCenter,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(15)),
-            gradient: linearGradient,
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          height: 50 + text.length / 2,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 40,
-                alignment: Alignment.center,
-                child: HeroIcon(icon, color: Colors.white),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Center(
-                  child: AutoSizeText(
-                    text,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 8,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+    type: toastType,
+    style: ToastificationStyle.fillColored,
+    alignment: Alignment.topCenter,
+    title: Text(
+      title,
+      style: TextStyle(
+        color: textColor,
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    description: Text(
+      text,
+      style: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+        color: textColor,
+      ),
+    ),
+    showIcon: false,
+    primaryColor: primaryColor,
+    showProgressBar: false,
+    closeButton: ToastCloseButton(showType: CloseButtonShowType.none),
+    autoCloseDuration: const Duration(milliseconds: 2500),
+    animationDuration: const Duration(milliseconds: 400),
+    animationBuilder: (context, animation, alignment, child) {
+      return SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(0, -1),
+          end: Offset.zero,
+        ).animate(animation),
+        child: Opacity(opacity: animation.value, child: child),
       );
     },
   );

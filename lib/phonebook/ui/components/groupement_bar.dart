@@ -9,6 +9,7 @@ import 'package:titan/phonebook/class/association_groupement.dart';
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_groupement_list_provider.dart';
 import 'package:titan/phonebook/router.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
@@ -37,10 +38,8 @@ class AssociationGroupementBar extends HookConsumerWidget {
       associationGroupementListProvider.notifier,
     );
 
-    void showSnackBarWithContext(String message) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(message)));
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     void popWithContext() {
@@ -75,12 +74,14 @@ class AssociationGroupementBar extends HookConsumerWidget {
                   .deleteAssociationGroupement(item);
               if (result && context.mounted) {
                 popWithContext();
-                showSnackBarWithContext(
+                displayToastWithContext(
+                  TypeMsg.msg,
                   localizeWithContext.phonebookGroupementDeleted,
                 );
               }
               if (!result && context.mounted) {
-                showSnackBarWithContext(
+                displayToastWithContext(
+                  TypeMsg.error,
                   localizeWithContext.phonebookGroupementDeleteError,
                 );
               }

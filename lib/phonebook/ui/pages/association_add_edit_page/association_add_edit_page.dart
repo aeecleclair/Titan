@@ -13,6 +13,7 @@ import 'package:titan/phonebook/ui/components/groupement_bar.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/settings/ui/pages/main_page/picture_button.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -40,10 +41,8 @@ class AssociationAddEditPage extends HookConsumerWidget {
     final name = useTextEditingController(text: association.name);
     final description = useTextEditingController(text: association.description);
 
-    void showSnackBarWithContext(String message) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(message)));
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
     }
 
     final localizeWithContext = AppLocalizations.of(context)!;
@@ -114,18 +113,21 @@ class AssociationAddEditPage extends HookConsumerWidget {
                                     );
                                 if (value != null) {
                                   if (value) {
-                                    showSnackBarWithContext(
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
                                       localizeWithContext
                                           .settingsUpdatedProfilePicture,
                                     );
                                   } else {
-                                    showSnackBarWithContext(
+                                    displayToastWithContext(
+                                      TypeMsg.error,
                                       localizeWithContext
                                           .settingsTooHeavyProfilePicture,
                                     );
                                   }
                                 } else {
-                                  showSnackBarWithContext(
+                                  displayToastWithContext(
+                                    TypeMsg.error,
                                     localizeWithContext
                                         .settingsErrorProfilePicture,
                                   );
@@ -146,18 +148,21 @@ class AssociationAddEditPage extends HookConsumerWidget {
                                     );
                                 if (value != null) {
                                   if (value) {
-                                    showSnackBarWithContext(
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
                                       localizeWithContext
                                           .settingsUpdatedProfilePicture,
                                     );
                                   } else {
-                                    showSnackBarWithContext(
+                                    displayToastWithContext(
+                                      TypeMsg.error,
                                       localizeWithContext
                                           .settingsTooHeavyProfilePicture,
                                     );
                                   }
                                 } else {
-                                  showSnackBarWithContext(
+                                  displayToastWithContext(
+                                    TypeMsg.error,
                                     localizeWithContext
                                         .settingsErrorProfilePicture,
                                   );
@@ -208,13 +213,15 @@ class AssociationAddEditPage extends HookConsumerWidget {
                 child: Button(
                   onPressed: () async {
                     if (!key.currentState!.validate()) {
-                      showSnackBarWithContext(
+                      displayToastWithContext(
+                        TypeMsg.error,
                         localizeWithContext.phonebookEmptyFieldError,
                       );
                       return;
                     }
                     if (associationGroupement.id == '') {
-                      showSnackBarWithContext(
+                      displayToastWithContext(
+                        TypeMsg.error,
                         localizeWithContext.phonebookEmptyKindError,
                       );
                       return;
@@ -231,7 +238,8 @@ class AssociationAddEditPage extends HookConsumerWidget {
                               ),
                             );
                         if (value) {
-                          showSnackBarWithContext(
+                          displayToastWithContext(
+                            TypeMsg.msg,
                             localizeWithContext.phonebookAddedAssociation,
                           );
                           associations.when(
@@ -243,14 +251,16 @@ class AssociationAddEditPage extends HookConsumerWidget {
                                     PhonebookRouter.addEditAssociation,
                               );
                             },
-                            error: (e, s) => showSnackBarWithContext(
+                            error: (e, s) => displayToastWithContext(
+                              TypeMsg.error,
                               localizeWithContext
                                   .phonebookErrorAssociationLoading,
                             ),
                             loading: () {},
                           );
                         } else {
-                          showSnackBarWithContext(
+                          displayToastWithContext(
+                            TypeMsg.error,
                             localizeWithContext.phonebookAddingError,
                           );
                         }
@@ -264,7 +274,8 @@ class AssociationAddEditPage extends HookConsumerWidget {
                               ),
                             );
                         if (value) {
-                          showSnackBarWithContext(
+                          displayToastWithContext(
+                            TypeMsg.msg,
                             localizeWithContext.phonebookUpdatedAssociation,
                           );
                           associationNotifier.setAssociation(
@@ -278,7 +289,8 @@ class AssociationAddEditPage extends HookConsumerWidget {
                               .resetAssociationGroupement();
                           QR.back();
                         } else {
-                          showSnackBarWithContext(
+                          displayToastWithContext(
+                            TypeMsg.error,
                             localizeWithContext.phonebookUpdatingError,
                           );
                         }

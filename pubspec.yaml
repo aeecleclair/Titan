@@ -24,7 +24,6 @@ dependencies:
   firebase_core: ^3.9.0
   firebase_messaging: ^15.2.2
   fl_chart: ^1.0.0
-  flash: ^3.1.1
   flutter:
     sdk: flutter
   flutter_appauth: ^9.0.0
@@ -68,6 +67,7 @@ dependencies:
   timeago: ^3.7.0
   timeago_flutter: ^3.7.0
   timezone: ^0.10.0
+  toastification: ^3.0.3
   tuple: ^2.0.0
   universal_html: ^2.0.8
   url_launcher: ^6.2.5
