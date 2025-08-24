@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 // import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:titan/admin/class/assocation.dart';
 import 'package:titan/admin/providers/my_association_list_provider.dart';
@@ -65,6 +66,8 @@ class AddEventPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     return FeedTemplate(
       child: Expanded(
         child: Form(
@@ -102,10 +105,13 @@ class AddEventPage extends HookConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    TextEntry(label: "Titre", controller: titleController),
+                    TextEntry(
+                      label: localizeWithContext.feedTitle,
+                      controller: titleController,
+                    ),
                     const SizedBox(height: 10),
                     CheckBoxEntry(
-                      title: AppLocalizations.of(context)!.eventAllDay,
+                      title: localizeWithContext.eventAllDay,
                       valueNotifier: allDay,
                       onChanged: () {
                         allDay.value = !allDay.value;
@@ -117,7 +123,7 @@ class AddEventPage extends HookConsumerWidget {
 
                     // const SizedBox(height: 10),
                     // CheckBoxEntry(
-                    //   title: AppLocalizations.of(context)!.eventRecurrence,
+                    //   title: localizeWithContext.eventRecurrence,
                     //   valueNotifier: recurrentController,
                     //   onChanged: () {
                     //     startDateController.text = "";
@@ -180,7 +186,7 @@ class AddEventPage extends HookConsumerWidget {
                     //               ),
                     //               const SizedBox(height: 20),
                     //               Text(
-                    //                 AppLocalizations.of(context)!.eventInterval,
+                    //                 localizeWithContext.eventInterval,
                     //                 style: const TextStyle(color: Colors.black),
                     //               ),
                     //               const SizedBox(height: 10),
@@ -246,7 +252,7 @@ class AddEventPage extends HookConsumerWidget {
                           ? getOnlyDayDate(context, startDateController)
                           : getFullDate(context, startDateController),
                       controller: startDateController,
-                      label: AppLocalizations.of(context)!.eventStartDate,
+                      label:localizeWithContext.eventStartDate,
                     ),
                     const SizedBox(height: 10),
                     DateEntry(
@@ -254,20 +260,23 @@ class AddEventPage extends HookConsumerWidget {
                           ? getOnlyDayDate(context, endDateController)
                           : getFullDate(context, endDateController),
                       controller: endDateController,
-                      label: AppLocalizations.of(context)!.eventEndDate,
+                      label: localizeWithContext.eventEndDate,
                     ),
                     SizedBox(height: 10),
-                    TextEntry(label: "Lieu", controller: locationController),
+                    TextEntry(
+                      label: localizeWithContext.feedLocation,
+                      controller: locationController,
+                    ),
                     SizedBox(height: 10),
                     DateEntry(
                       onTap: () => getFullDate(context, shotgunDateController),
                       controller: shotgunDateController,
-                      label: "Date du SG ",
+                      label: localizeWithContext.feedSGDate,
                       canBeEmpty: true,
                     ),
                     SizedBox(height: 10),
                     TextEntry(
-                      label: "Lien externe pour le SG",
+                      label: localizeWithContext.feedSGExternalLink,
                       controller: externalLinkController,
                       canBeEmpty: true,
                     ),
@@ -365,7 +374,7 @@ class AddEventPage extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 40),
                     Button(
-                      text: "Créer l'événement",
+                      text: localizeWithContext.feedCreateEvent,
                       onPressed: () async {
                         if (key.currentState == null) {
                           return;
@@ -373,7 +382,7 @@ class AddEventPage extends HookConsumerWidget {
                         if (selectedAssociation.value == null) {
                           displayToastWithContext(
                             TypeMsg.error,
-                            "Veuillez sélectionner une association",
+                            localizeWithContext.feedPleaseSelectAnAssociation,
                           );
                           return;
                         }
@@ -414,14 +423,14 @@ class AddEventPage extends HookConsumerWidget {
                             displayToast(
                               context,
                               TypeMsg.error,
-                              AppLocalizations.of(context)!.eventInvalidDates,
+                              localizeWithContext.eventInvalidDates,
                             );
                             // } else if (recurrentController.value &&
                             //     selectedDays.where((element) => element).isEmpty) {
                             //   displayToast(
                             //     context,
                             //     TypeMsg.error,
-                            //     AppLocalizations.of(context)!.eventNoDaySelected,
+                            //     localizeWithContext.eventNoDaySelected,
                             //   );
                           } else {
                             await tokenExpireWrapper(ref, () async {
@@ -491,10 +500,10 @@ class AddEventPage extends HookConsumerWidget {
                               final eventCreated = await eventCreationNotifier
                                   .addEvent(newEvent);
                               if (poster.value == null) {
-                                Navigator.of(context).pop();
+                                QR.back();
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  addedEventMsg,
+                                  localizeWithContext.eventAddedEvent,
                                 );
                                 newsListNotifier.loadNewsList();
                                 return;
@@ -505,16 +514,16 @@ class AddEventPage extends HookConsumerWidget {
                                     poster.value!,
                                   );
                               if (value) {
-                                Navigator.of(context).pop();
+                                QR.back();
                                 displayToastWithContext(
                                   TypeMsg.msg,
-                                  addedEventMsg,
+                                  localizeWithContext.eventAddedEvent,
                                 );
                                 newsListNotifier.loadNewsList();
                               } else {
                                 displayToastWithContext(
                                   TypeMsg.error,
-                                  addingErrorMsg,
+                                  localizeWithContext.eventAddingError,
                                 );
                               }
                             });

@@ -6,6 +6,7 @@ import 'package:titan/feed/class/news.dart';
 import 'package:titan/feed/providers/news_image_provider.dart';
 import 'package:titan/feed/providers/news_images_provider.dart';
 import 'package:titan/feed/tools/news_helper.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 
@@ -21,6 +22,7 @@ class EventCard extends ConsumerWidget {
     );
     final newsImagesNotifier = ref.watch(newsImagesProvider.notifier);
     final imageNotifier = ref.watch(newsImageProvider.notifier);
+	final localizeWithContext = AppLocalizations.of(context)!
     return GestureDetector(
       onTap: () {
         if (item.module == "advert") {
@@ -118,7 +120,7 @@ class EventCard extends ConsumerWidget {
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
                 child: const Text(
-                  'Terminé',
+                  localizeWithContext.eventEnded,
                   style: TextStyle(
                     color: ColorConstants.background,
                     fontSize: 10,

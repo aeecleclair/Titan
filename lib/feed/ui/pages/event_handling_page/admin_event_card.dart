@@ -6,6 +6,7 @@ import 'package:titan/feed/providers/admin_news_list_provider.dart';
 import 'package:titan/feed/providers/news_list_provider.dart';
 import 'package:titan/feed/tools/function.dart';
 import 'package:titan/feed/tools/news_helper.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
@@ -18,6 +19,8 @@ class AdminEventCard extends ConsumerWidget {
     final locale = Localizations.localeOf(context).languageCode;
     final newsAdminNotifier = ref.watch(adminNewsListProvider.notifier);
     final newsNotifier = ref.watch(newsListProvider.notifier);
+
+    final localizeWithContext = AppLocalizations.of(context)!;
 
     return Container(
       decoration: BoxDecoration(
@@ -144,7 +147,7 @@ class AdminEventCard extends ConsumerWidget {
                     waitingColor: ColorConstants.background,
                     child: Center(
                       child: Text(
-                        "Rejeter",
+                        localizeWithContext.feedReject,
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -183,7 +186,7 @@ class AdminEventCard extends ConsumerWidget {
                     waitingColor: ColorConstants.background,
                     child: Center(
                       child: Text(
-                        "Approuver",
+                        localizeWithContext.feedApprove,
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,

@@ -212,6 +212,54 @@ abstract class AppLocalizations {
   /// **'Gestion des événements'**
   String get feedEventManagement;
 
+  /// No description provided for @feedTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre'**
+  String get feedTitle;
+
+  /// No description provided for @feedLocation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lieu'**
+  String get feedLocation;
+
+  /// No description provided for @feedSGDate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date du SG'**
+  String get feedSGDate;
+
+  /// No description provided for @feedSGExternalLink.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lien externe du SG'**
+  String get feedSGExternalLink;
+
+  /// No description provided for @feedCreateEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer l\'événement'**
+  String get feedCreateEvent;
+
+  /// No description provided for @feedPleaseSelectAnAssociation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez sélectionner une association'**
+  String get feedPleaseSelectAnAssociation;
+
+  /// No description provided for @feedReject.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejeter'**
+  String get feedReject;
+
+  /// No description provided for @feedApprove.
+  ///
+  /// In fr, this message translates to:
+  /// **'Approuver'**
+  String get feedApprove;
+
   /// No description provided for @eventActionCampaign.
   ///
   /// In fr, this message translates to:

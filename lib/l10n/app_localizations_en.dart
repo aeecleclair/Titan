@@ -66,6 +66,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feedEventManagement => 'Event Management';
 
   @override
+  String get feedTitle => 'Titre';
+
+  @override
+  String get feedLocation => 'Lieu';
+
+  @override
+  String get feedSGDate => 'Date du SG';
+
+  @override
+  String get feedSGExternalLink => 'Lien externe du SG';
+
+  @override
+  String get feedCreateEvent => 'Créer l\'événement';
+
+  @override
+  String get feedPleaseSelectAnAssociation =>
+      'Veuillez sélectionner une association';
+
+  @override
+  String get feedReject => 'Rejeter';
+
+  @override
+  String get feedApprove => 'Approuver';
+
+  @override
   String get eventActionCampaign => 'You can vote';
 
   @override
