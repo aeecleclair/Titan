@@ -24,7 +24,10 @@ class SumUpChart extends HookConsumerWidget {
     final selectedTransactionsNotifier = ref.read(
       selectedTransactionsProvider(currentMonth).notifier,
     );
-    final formatter = NumberFormat.currency(locale: locale.toString(), symbol: "€");
+    final formatter = NumberFormat.currency(
+      locale: locale.toString(),
+      symbol: "€",
+    );
     final Map<String, List<History>> transactionPerStore = {};
     final Map<String, List<History>> creditedTransactionPerStore = {};
 
@@ -121,8 +124,7 @@ class SumUpChart extends HookConsumerWidget {
                                 title: AppLocalizations.of(
                                   context,
                                 )!.paiementReceived,
-                                amount:
-                                    formatter.format(transferTotal / 100),
+                                amount: formatter.format(transferTotal / 100),
                                 color: const Color.fromARGB(255, 255, 119, 7),
                                 darkColor: const Color.fromARGB(
                                   255,

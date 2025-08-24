@@ -46,7 +46,10 @@ class ConfirmButton extends ConsumerWidget {
 
     final enabled = amount > 0 && amount * 100 <= myWalletBalance;
 
-    final formatter = NumberFormat.currency(locale: locale.toString(), symbol: "€");
+    final formatter = NumberFormat.currency(
+      locale: locale.toString(),
+      symbol: "€",
+    );
 
     void displayQRModal() {
       showModalBottomSheet(
@@ -71,8 +74,9 @@ class ConfirmButton extends ConsumerWidget {
                     InfoCard(
                       icons: HeroIcons.currencyEuro,
                       title: AppLocalizations.of(context)!.paiementAmount,
-                      value:
-                          formatter.format(double.parse(payAmount.replaceAll(',', '.'))),
+                      value: formatter.format(
+                        double.parse(payAmount.replaceAll(',', '.')),
+                      ),
                     ),
                     const SizedBox(width: 10),
                     InfoCard(

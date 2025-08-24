@@ -24,7 +24,10 @@ class ReFundPage extends ConsumerWidget {
     final refundAmount = ref.watch(refundAmountProvider);
     final refundAmountNotifier = ref.watch(refundAmountProvider.notifier);
     final transactionNotifier = ref.watch(transactionProvider.notifier);
-    final formatter = NumberFormat.currency(locale: locale.toString(), symbol: "€");
+    final formatter = NumberFormat.currency(
+      locale: locale.toString(),
+      symbol: "€",
+    );
 
     final isValid =
         double.tryParse(refundAmount.replaceAll(",", ".")) != null &&

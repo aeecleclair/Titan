@@ -22,7 +22,10 @@ class PayPage extends ConsumerWidget {
       orElse: () => 0,
       data: (wallet) => wallet.balance / 100,
     );
-    final formatter = NumberFormat.currency(locale: locale.toString(), symbol: "€");
+    final formatter = NumberFormat.currency(
+      locale: locale.toString(),
+      symbol: "€",
+    );
 
     final amountToSub = double.tryParse(payAmount.replaceAll(",", ".")) ?? 0;
 

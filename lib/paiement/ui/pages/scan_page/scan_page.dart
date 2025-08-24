@@ -32,7 +32,10 @@ class ScanPage extends HookConsumerWidget {
     final bypassNotifier = ref.watch(bypassProvider.notifier);
     final barcode = ref.watch(barcodeProvider);
     final barcodeNotifier = ref.watch(barcodeProvider.notifier);
-    final formatter = NumberFormat.currency(locale: locale.toString(), symbol: "€");
+    final formatter = NumberFormat.currency(
+      locale: locale.toString(),
+      symbol: "€",
+    );
     final transactionNotifier = ref.watch(transactionProvider.notifier);
     final ongoingTransaction = ref.watch(ongoingTransactionProvider);
     final ongoingTransactionNotifier = ref.watch(

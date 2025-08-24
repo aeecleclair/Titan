@@ -50,7 +50,10 @@ class SummaryCard extends ConsumerWidget {
 
     final mean = total / numberTransactions;
 
-    final formatter = NumberFormat.currency(locale: locale.toString(), symbol: "€");
+    final formatter = NumberFormat.currency(
+      locale: locale.toString(),
+      symbol: "€",
+    );
     return Container(
       height: 75,
       padding: const EdgeInsets.symmetric(horizontal: 20),

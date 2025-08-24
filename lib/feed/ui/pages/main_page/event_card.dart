@@ -96,10 +96,7 @@ class EventCard extends ConsumerWidget {
                   ],
                 ),
                 Text(
-                  getNewsSubtitle(
-                    item,
-                    context: context,
-                  ),
+                  getNewsSubtitle(item, context: context),
                   style: const TextStyle(
                     fontSize: 12,
                     color: ColorConstants.background,

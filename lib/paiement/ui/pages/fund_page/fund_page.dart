@@ -28,7 +28,10 @@ class FundPage extends ConsumerWidget {
       orElse: () => 0,
       data: (wallet) => wallet.balance / 100,
     );
-    final formatter = NumberFormat.currency(locale: locale.toString(), symbol: "€");
+    final formatter = NumberFormat.currency(
+      locale: locale.toString(),
+      symbol: "€",
+    );
 
     final amountToAdd = double.tryParse(fundAmount.replaceAll(",", ".")) ?? 0;
 

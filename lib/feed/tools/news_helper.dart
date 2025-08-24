@@ -32,10 +32,7 @@ bool isNewsOngoing(News news) {
   return false;
 }
 
-String formatUserFriendlyDate(
-  DateTime date, {
-  required BuildContext context,
-}) {
+String formatUserFriendlyDate(DateTime date, {required BuildContext context}) {
   final locale = Localizations.localeOf(context).toString();
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
@@ -68,18 +65,13 @@ String formatUserFriendlyDate(
       final monthDay = _capitalize(DateFormat.MMMd(locale).format(date));
       return "$monthDay $connector $time";
     } else {
-      final monthDayYear = _capitalize(
-        DateFormat.yMMMMd(locale).format(date),
-      );
+      final monthDayYear = _capitalize(DateFormat.yMMMMd(locale).format(date));
       return "$monthDayYear $connector $time";
     }
   }
 }
 
-String getNewsSubtitle(
-  News news, {
-  required BuildContext context,
-}) {
+String getNewsSubtitle(News news, {required BuildContext context}) {
   final locale = Localizations.localeOf(context).toString();
   String subtitle = '';
 
@@ -90,10 +82,7 @@ String getNewsSubtitle(
     subtitle =
         "$untilText ${formatUserFriendlyDate(news.end!.toLocal(), context: context)}";
   } else if (news.end == null) {
-    subtitle = formatUserFriendlyDate(
-      startDate,
-      context: context,
-    );
+    subtitle = formatUserFriendlyDate(startDate, context: context);
   } else {
     final endDate = news.end!.toLocal();
     bool sameDay =

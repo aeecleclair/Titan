@@ -30,7 +30,10 @@ class TransactionChart extends HookConsumerWidget {
     );
     final Map<String, List<History>> mappedHistory = {};
     final List<String> keys = [];
-    final formatter = NumberFormat.currency(locale: locale.toString(), symbol: "€");
+    final formatter = NumberFormat.currency(
+      locale: locale.toString(),
+      symbol: "€",
+    );
 
     for (final (index, wallet) in transactionPerStore.keys.indexed) {
       final l = transactionPerStore[wallet]!;
