@@ -244,7 +244,6 @@
   "adminFailedToUpdateAssociationLogo": "Échec de la mise à jour du logo de l'association",
   "adminChooseGroup": "Choisir un groupe",
   "adminChooseAssociationManagerGroup": "Choisir un groupe gestionnaire pour l'association",
-  "adminConfirm": "Valider",
   "advertAdd": "Ajouter",
   "advertAddedAdvert": "Annonce publiée",
   "advertAddedAnnouncer": "Annonceur ajouté",

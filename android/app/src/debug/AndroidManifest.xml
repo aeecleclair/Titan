@@ -19,8 +19,8 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST -->
-                <data android:scheme="@string/flavor_url_scheme" />
+                <!-- Warning: only url_scheme://payment will work with this configuration -->
+                <data android:scheme="@string/flavor_url_scheme" android:host="payment"/>
             </intent-filter>
         </activity>
     </application>
