@@ -166,7 +166,7 @@ class FeedMainPage extends HookConsumerWidget {
                                           .feedManageRequests,
                                       onPressed: () {
                                         Navigator.of(context).pop();
-                                        newsNotifier.loadNewsList();
+                                        newsListNotifier.loadNewsList();
                                         QR.to(
                                           FeedRouter.root +
                                               FeedRouter.eventHandling,
@@ -194,7 +194,7 @@ class FeedMainPage extends HookConsumerWidget {
                     child: AsyncChild(
                       value: news,
                       builder: (context, news) => news.isEmpty
-                          ? const Center(
+                          ? Center(
                               child: Text(
                                 localizeWithContext.feedNoNewsAvailable,
                                 style: TextStyle(

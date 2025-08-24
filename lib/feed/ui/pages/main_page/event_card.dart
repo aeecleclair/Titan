@@ -22,7 +22,7 @@ class EventCard extends ConsumerWidget {
     );
     final newsImagesNotifier = ref.watch(newsImagesProvider.notifier);
     final imageNotifier = ref.watch(newsImageProvider.notifier);
-	final localizeWithContext = AppLocalizations.of(context)!
+    final localizeWithContext = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: () {
         if (item.module == "advert") {
@@ -119,8 +119,8 @@ class EventCard extends ConsumerWidget {
                   color: ColorConstants.main,
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
-                child: const Text(
-                  localizeWithContext.eventEnded,
+                child: Text(
+                  localizeWithContext.feedEnded,
                   style: TextStyle(
                     color: ColorConstants.background,
                     fontSize: 10,
@@ -138,7 +138,7 @@ class EventCard extends ConsumerWidget {
                   color: ColorConstants.background,
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
-                child: const Text(
+                child: Text(
                   localizeWithContext.feedOngoing,
                   style: TextStyle(color: ColorConstants.main, fontSize: 10),
                 ),
