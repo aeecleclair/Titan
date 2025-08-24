@@ -85,7 +85,8 @@ class GroupNotificationPage extends HookConsumerWidget {
                                             label:
                                                 localizeWithContext.adminTitle,
                                             controller: titleController,
-                                            keyboardType: TextInputType.multiline,
+                                            keyboardType:
+                                                TextInputType.multiline,
                                           ),
                                           const SizedBox(height: 20),
                                           TextEntry(
