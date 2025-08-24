@@ -85,6 +85,7 @@ class GroupNotificationPage extends HookConsumerWidget {
                                             label:
                                                 localizeWithContext.adminTitle,
                                             controller: titleController,
+                                            keyboardType: TextInputType.multiline,
                                           ),
                                           const SizedBox(height: 20),
                                           TextEntry(
@@ -92,6 +93,8 @@ class GroupNotificationPage extends HookConsumerWidget {
                                                 .adminContent,
                                             controller: contentController,
                                             maxLines: 5,
+                                            keyboardType:
+                                                TextInputType.multiline,
                                           ),
                                           const SizedBox(height: 20),
                                           Button(
