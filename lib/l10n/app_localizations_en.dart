@@ -91,6 +91,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feedApprove => 'Approuver';
 
   @override
+  String get feedEnded => 'Terminé';
+
+  @override
+  String get feedOngoing => 'En cours';
+
+  @override
+  String get feedFilter => 'Filtrer';
+
+  @override
+  String get feedAssociation => 'Association';
+
+  @override
+  String get feedNewsType => 'Type d\'actualité';
+
+  @override
+  String get feedApply => 'Appliquer';
+
+  @override
+  String get feedNews => 'Actualités';
+
+  @override
+  String get feedAdmin => 'Administration';
+
+  @override
+  String get feedCreateAnEvent => 'Créer un événement';
+
+  @override
+  String get feedManageRequests => 'Demandes de publication';
+
+  @override
+  String get feedNoNewsAvailable => 'Aucune actualité disponible';
+
+  @override
+  String get feedRefresh => 'Actualiser';
+
+  @override
   String get eventActionCampaign => 'You can vote';
 
   @override

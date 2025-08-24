@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/feed/providers/filter_state_provider.dart';
 import 'package:titan/feed/providers/news_list_provider.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
@@ -19,17 +20,18 @@ class FilterNewsModal extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizeWithContext = AppLocalizations.of(context)!;
     return HookConsumer(
       builder: (context, ref, child) {
         final newsListNotifier = ref.watch(newsListProvider.notifier);
         final filterState = ref.watch(filterStateProvider);
         final filterStateNotifier = ref.watch(filterStateProvider.notifier);
         return BottomModalTemplate(
-          title: 'Filtrer',
+          title: localizeWithContext.feedFilter,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Association'),
+              Text(localizeWithContext.feedAssociation),
               SizedBox(height: 10),
               HorizontalListView(
                 height: 50,
@@ -80,7 +82,7 @@ class FilterNewsModal extends HookWidget {
                     .toList(),
               ),
               SizedBox(height: 30),
-              Text('Type d\'annonce'),
+              Text(localizeWithContext.feedNewsType),
               SizedBox(height: 10),
               HorizontalListView(
                 height: 50,
@@ -128,7 +130,7 @@ class FilterNewsModal extends HookWidget {
               ),
               SizedBox(height: 40),
               Button(
-                text: 'Appliquer',
+                text: localizeWithContext.feedApply,
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

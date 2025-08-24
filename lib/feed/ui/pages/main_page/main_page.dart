@@ -12,6 +12,7 @@ import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/feed/ui/pages/main_page/feed_timeline.dart';
 import 'package:titan/feed/ui/pages/main_page/filter_news.dart';
 import 'package:titan/feed/ui/pages/main_page/scroll_with_refresh_button.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
@@ -30,6 +31,8 @@ class FeedMainPage extends HookConsumerWidget {
     );
     final isFeedAdmin = ref.watch(isFeedAdminProvider);
     final scrollController = useScrollController();
+
+    final localizeWithContext = AppLocalizations.of(context)!;
 
     Future<void> onRefresh() async {
       await newsListNotifier.loadNewsList();
@@ -89,8 +92,8 @@ class FeedMainPage extends HookConsumerWidget {
 
                 Row(
                   children: [
-                    const Text(
-                      "Actualité",
+                    Text(
+                      localizeWithContext.feedNews,
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -143,12 +146,13 @@ class FeedMainPage extends HookConsumerWidget {
                           } else {
                             showCustomBottomModal(
                               modal: BottomModalTemplate(
-                                title: 'Administration',
+                                title: localizeWithContext.feedAdmin,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Button(
-                                      text: 'Créer un événement',
+                                      text:
+                                          localizeWithContext.feedCreateAnEvent,
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                         QR.to(
@@ -158,7 +162,8 @@ class FeedMainPage extends HookConsumerWidget {
                                     ),
                                     const SizedBox(height: 20),
                                     Button(
-                                      text: 'Demandes de publication',
+                                      text: localizeWithContext
+                                          .feedManageRequests,
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                         newsNotifier.loadNewsList();
@@ -191,7 +196,7 @@ class FeedMainPage extends HookConsumerWidget {
                       builder: (context, news) => news.isEmpty
                           ? const Center(
                               child: Text(
-                                'Aucune actualité disponible',
+                                localizeWithContext.feedNoNewsAvailable,
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: ColorConstants.tertiary,

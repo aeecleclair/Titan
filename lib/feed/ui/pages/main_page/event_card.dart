@@ -139,7 +139,7 @@ class EventCard extends ConsumerWidget {
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
                 child: const Text(
-                  'En cours',
+                  localizeWithContext.feedOngoing,
                   style: TextStyle(color: ColorConstants.main, fontSize: 10),
                 ),
               ),

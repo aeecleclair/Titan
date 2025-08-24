@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 import 'package:titan/tools/constants.dart';
 
@@ -23,6 +24,8 @@ class ScrollWithRefreshButton extends HookConsumerWidget {
 
     final lastUserScrollTime = useState(DateTime.now());
     final consecutiveUpwardScrolls = useState(0);
+
+    final localizeWithContext = AppLocalizations.of(context)!;
 
     useEffect(() {
       void scrollListener() {
@@ -130,7 +133,7 @@ class ScrollWithRefreshButton extends HookConsumerWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'Actualiser',
+                    localizeWithContext.feedRefresh,
                     style: TextStyle(
                       color: ColorConstants.background,
                       fontSize: 14,

@@ -260,6 +260,78 @@ abstract class AppLocalizations {
   /// **'Approuver'**
   String get feedApprove;
 
+  /// No description provided for @feedEnded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminé'**
+  String get feedEnded;
+
+  /// No description provided for @feedOngoing.
+  ///
+  /// In fr, this message translates to:
+  /// **'En cours'**
+  String get feedOngoing;
+
+  /// No description provided for @feedFilter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer'**
+  String get feedFilter;
+
+  /// No description provided for @feedAssociation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Association'**
+  String get feedAssociation;
+
+  /// No description provided for @feedNewsType.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type d\'actualité'**
+  String get feedNewsType;
+
+  /// No description provided for @feedApply.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appliquer'**
+  String get feedApply;
+
+  /// No description provided for @feedNews.
+  ///
+  /// In fr, this message translates to:
+  /// **'Actualités'**
+  String get feedNews;
+
+  /// No description provided for @feedAdmin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Administration'**
+  String get feedAdmin;
+
+  /// No description provided for @feedCreateAnEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer un événement'**
+  String get feedCreateAnEvent;
+
+  /// No description provided for @feedManageRequests.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demandes de publication'**
+  String get feedManageRequests;
+
+  /// No description provided for @feedNoNewsAvailable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune actualité disponible'**
+  String get feedNoNewsAvailable;
+
+  /// No description provided for @feedRefresh.
+  ///
+  /// In fr, this message translates to:
+  /// **'Actualiser'**
+  String get feedRefresh;
+
   /// No description provided for @eventActionCampaign.
   ///
   /// In fr, this message translates to:
