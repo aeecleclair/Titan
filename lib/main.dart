@@ -23,6 +23,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:qlevar_router/qlevar_router.dart' as qqr;
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:app_links/app_links.dart';
+import 'others/ui/not_found_page.dart';
 
 void main() async {
   await dotenv.load();
@@ -31,6 +32,10 @@ void main() async {
   // See https://pub.dev/packages/qlevar_router#page-transition
   // We should not use a combination of QMaterialPage and QCupertinoPage
   QR.settings.pagesType = const QMaterialPage();
+  QR.settings.notFoundPage = QRoute(
+    path: '/404',
+    builder: () => NotFoundPage(),
+  );
 
   WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb) {
