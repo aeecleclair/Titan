@@ -126,6 +126,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feedRefresh => 'Refresh';
 
   @override
+  String get feedPleaseProvideASGExternalLink =>
+      'Veuillez entrer un lien externe pour le SG';
+
+  @override
+  String get feedPleaseProvideASGDate => 'Veuillez entrer une date de SG';
+
+  @override
+  String feedShotgunIn(String time) {
+    return 'Shotgun in $time';
+  }
+
+  @override
+  String feedVoteIn(String time) {
+    return 'Vote in $time';
+  }
+
+  @override
+  String get feedCantOpenLink => 'Impossible d\'ouvrir le lien';
+
+  @override
   String get eventActionCampaign => 'You can vote';
 
   @override

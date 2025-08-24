@@ -252,7 +252,7 @@ class AddEventPage extends HookConsumerWidget {
                           ? getOnlyDayDate(context, startDateController)
                           : getFullDate(context, startDateController),
                       controller: startDateController,
-                      label:localizeWithContext.eventStartDate,
+                      label: localizeWithContext.eventStartDate,
                     ),
                     const SizedBox(height: 10),
                     DateEntry(
@@ -390,7 +390,8 @@ class AddEventPage extends HookConsumerWidget {
                             shotgunDateController.text.isNotEmpty) {
                           displayToastWithContext(
                             TypeMsg.error,
-                            "Veuillez fournir un lien externe",
+                            localizeWithContext
+                                .feedPleaseProvideASGExternalLink,
                           );
                           return;
                         }
@@ -398,16 +399,10 @@ class AddEventPage extends HookConsumerWidget {
                             shotgunDateController.text.isEmpty) {
                           displayToastWithContext(
                             TypeMsg.error,
-                            "Veuillez fournir une date",
+                            localizeWithContext.feedPleaseProvideASGDate,
                           );
                           return;
                         }
-                        final addedEventMsg = AppLocalizations.of(
-                          context,
-                        )!.eventAddedEvent;
-                        final addingErrorMsg = AppLocalizations.of(
-                          context,
-                        )!.eventAddingError;
                         if (key.currentState!.validate()) {
                           // if (allDay.value) {
                           //   startDateController.text =

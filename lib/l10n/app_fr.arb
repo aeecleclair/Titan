@@ -39,6 +39,27 @@
   "feedManageRequests": "Demandes de publication",
   "feedNoNewsAvailable": "Aucune actualité disponible",
   "feedRefresh": "Actualiser",
+  "feedPleaseProvideASGExternalLink": "Veuillez entrer un lien externe pour le SG",
+  "feedPleaseProvideASGDate": "Veuillez entrer une date de SG",
+  "feedShotgunIn" : "Shotgun {time}",
+  "@feedShotgunIn": {
+    "description": "Placeholder pour le temps restant avant le shotgun",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "feedVoteIn": "Vote {time}",
+  "@feedVoteIn": {
+    "description": "Temps restant avant le vote",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "feedCantOpenLink": "Impossible d'ouvrir le lien",
   "eventActionCampaign": "Tu peux voter",
   "eventActionEvent": "Tu es invité",
   "eventActionCampaignSubtitle": "Votez maintenant",

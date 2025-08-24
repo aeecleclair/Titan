@@ -332,6 +332,36 @@ abstract class AppLocalizations {
   /// **'Actualiser'**
   String get feedRefresh;
 
+  /// No description provided for @feedPleaseProvideASGExternalLink.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez entrer un lien externe pour le SG'**
+  String get feedPleaseProvideASGExternalLink;
+
+  /// No description provided for @feedPleaseProvideASGDate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez entrer une date de SG'**
+  String get feedPleaseProvideASGDate;
+
+  /// Placeholder pour le temps restant avant le shotgun
+  ///
+  /// In fr, this message translates to:
+  /// **'Shotgun {time}'**
+  String feedShotgunIn(String time);
+
+  /// Temps restant avant le vote
+  ///
+  /// In fr, this message translates to:
+  /// **'Vote {time}'**
+  String feedVoteIn(String time);
+
+  /// No description provided for @feedCantOpenLink.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible d\'ouvrir le lien'**
+  String get feedCantOpenLink;
+
   /// No description provided for @eventActionCampaign.
   ///
   /// In fr, this message translates to:

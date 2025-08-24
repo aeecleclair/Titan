@@ -31,6 +31,7 @@ class EventAction extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final now = useState(DateTime.now());
+    final locale = Localizations.localeOf(context);
 
     useEffect(() {
       final timer = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -68,7 +69,7 @@ class EventAction extends HookWidget {
                     timeOpening!.isAfter(now.value)
                 ? Timeago(
                     date: timeOpening!,
-                    locale: 'fr_short',
+                    locale: '${locale.languageCode}_short',
                     allowFromNow: true,
                     refreshRate: const Duration(seconds: 1),
                     builder: (context, str) => Text(

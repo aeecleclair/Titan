@@ -39,6 +39,24 @@
   "feedManageRequests": "Manage requests",
   "feedNoNewsAvailable": "No news available",
   "feedRefresh": "Refresh",
+  "feedShotgunIn": "Shotgun in {time}",
+  "@feedShotgunIn": {
+    "description": "Shotgun in time",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "feedVoteIn": "Vote in {time}",
+  "@feedVoteIn": {
+    "description": "Vote in time",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "eventActionCampaign": "You can vote",
   "eventActionEvent": "You are invited",
   "eventActionCampaignSubtitle": "Vote now",
