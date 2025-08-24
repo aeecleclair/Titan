@@ -98,7 +98,6 @@ class EventCard extends ConsumerWidget {
                 Text(
                   getNewsSubtitle(
                     item,
-                    locale: Localizations.localeOf(context).languageCode,
                     context: context,
                   ),
                   style: const TextStyle(

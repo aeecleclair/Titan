@@ -1,12 +1,12 @@
 import 'package:intl/intl.dart';
 
-String phFormatDate(DateTime date) {
-  final DateFormat formatter = DateFormat('dd MMMM yyyy', 'fr_FR');
+String phFormatDate(DateTime date, String locale) {
+  final DateFormat formatter = DateFormat.yMMMMd(locale);
   return formatter.format(date);
 }
 
-String phFormatDateEntry(DateTime date) {
-  final DateFormat formatter = DateFormat('dd/MM/yyyy', 'fr_FR');
+String phFormatDateEntry(DateTime date, String locale) {
+  final DateFormat formatter = DateFormat.yMMMd(locale);
   return formatter.format(date);
 }
 

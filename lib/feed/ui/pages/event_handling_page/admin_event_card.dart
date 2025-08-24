@@ -16,7 +16,6 @@ class AdminEventCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final locale = Localizations.localeOf(context).languageCode;
     final newsAdminNotifier = ref.watch(adminNewsListProvider.notifier);
     final newsNotifier = ref.watch(newsListProvider.notifier);
 
@@ -85,7 +84,7 @@ class AdminEventCard extends ConsumerWidget {
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(
-                    getNewsSubtitle(news, locale: locale, context: context),
+                    getNewsSubtitle(news, context: context),
                     style: const TextStyle(
                       fontSize: 14,
                       color: ColorConstants.tertiary,
