@@ -300,12 +300,14 @@ Future<TimeOfDay?> _getTime(BuildContext context) async {
       return Theme(
         data: ThemeData.light().copyWith(
           colorScheme: const ColorScheme.light(
-            primary: ColorConstants.gradient1,
-            onPrimary: Colors.white,
-            surface: Colors.white,
-            onSurface: Colors.black,
+            primary: ColorConstants.main,
+            onPrimary: ColorConstants.background,
+            surface: ColorConstants.background,
+            onSurface: ColorConstants.tertiary,
           ),
-          dialogTheme: DialogThemeData(backgroundColor: Colors.white),
+          dialogTheme: DialogThemeData(
+            backgroundColor: ColorConstants.background,
+          ),
         ),
         child: child!,
       );
@@ -329,12 +331,14 @@ Future<DateTime?> _getDate(
       return Theme(
         data: ThemeData.light().copyWith(
           colorScheme: const ColorScheme.light(
-            primary: ColorConstants.gradient1,
-            onPrimary: Colors.white,
-            surface: Colors.white,
-            onSurface: Colors.black,
+            primary: ColorConstants.main,
+            onPrimary: ColorConstants.background,
+            surface: ColorConstants.background,
+            onSurface: ColorConstants.tertiary,
           ),
-          dialogTheme: DialogThemeData(backgroundColor: Colors.white),
+          dialogTheme: DialogThemeData(
+            backgroundColor: ColorConstants.background,
+          ),
         ),
         child: child!,
       );
