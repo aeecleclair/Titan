@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -35,38 +34,31 @@ class RightPanel extends HookConsumerWidget {
     final screenShots = [
       ScreenShot(
         path: 'assets/web/Calendrier.webp',
-        title: '',
-        description: localizeWithContext.loginUpcomingEvents,
+        title: localizeWithContext.loginUpcomingEvents,
       ),
       ScreenShot(
         path: 'assets/web/AMAP.webp',
-        title: '',
-        description: localizeWithContext.loginFruitVegetableOrders,
+        title: localizeWithContext.loginFruitVegetableOrders,
       ),
       ScreenShot(
         path: 'assets/web/Cine.webp',
-        title: '',
-        description: localizeWithContext.loginUpcomingScreenings,
+        title: localizeWithContext.loginUpcomingScreenings,
       ),
       ScreenShot(
         path: 'assets/web/Parametres.webp',
-        title: '',
-        description: localizeWithContext.loginInterfaceCustomization,
+        title: localizeWithContext.loginInterfaceCustomization,
       ),
       ScreenShot(
         path: 'assets/web/Pret.webp',
-        title: '',
-        description: localizeWithContext.loginMaterialLoans,
+        title: localizeWithContext.loginMaterialLoans,
       ),
       ScreenShot(
         path: 'assets/web/Tombola.webp',
-        title: '',
-        description: localizeWithContext.loginRaffles,
+        title: localizeWithContext.loginRaffles,
       ),
       ScreenShot(
         path: 'assets/web/Vote.webp',
-        title: '',
-        description: localizeWithContext.loginNewTermsElections,
+        title: localizeWithContext.loginNewTermsElections,
       ),
     ];
 
@@ -85,40 +77,13 @@ class RightPanel extends HookConsumerWidget {
               return Column(
                 children: [
                   const SizedBox(height: 50),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(width: 20),
-                      if (screenShot.title.isNotEmpty)
-                        Text(
-                          screenShot.title,
-                          style: const TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      if (screenShot.title.isNotEmpty)
-                        const Text(
-                          " - ",
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      Expanded(
-                        child: AutoSizeText(
-                          screenShot.description,
-                          maxLines: 1,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
+                  Text(
+                    screenShot.title,
+                    style: const TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                   Expanded(
                     child: Container(
