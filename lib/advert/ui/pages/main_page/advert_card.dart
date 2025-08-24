@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
@@ -12,6 +13,7 @@ import 'package:titan/advert/providers/advert_posters_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:url_launcher/url_launcher.dart';
 
 class AdvertCard extends HookConsumerWidget {
   final Advert advert;
@@ -177,42 +179,82 @@ class AdvertCard extends HookConsumerWidget {
 
     final isLong = fullText.length > maxLength;
 
+    String displayContent;
+    if (isLong && !isExpanded.value) {
+      displayContent = content.substring(0, maxLength) + '...';
+    } else {
+      displayContent = content;
+    }
+
+    final words = displayContent.split(' ');
+    final List<InlineSpan> spans = [];
+
+    if (title.isNotEmpty) {
+      spans.add(
+        TextSpan(
+          text: title,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+      );
+      spans.add(const TextSpan(text: '  '));
+    }
+
+    for (int i = 0; i < words.length; i++) {
+      final word = words[i];
+      final isLink = word.startsWith('https://') || word.startsWith('http://');
+
+      if (isLink) {
+        spans.add(
+          TextSpan(
+            text: word,
+            style: const TextStyle(
+              color: ColorConstants.main,
+              decoration: TextDecoration.underline,
+            ),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () async {
+                final uri = Uri.parse(word);
+                if (await canLaunchUrl(uri)) {
+                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+                }
+              },
+          ),
+        );
+      } else {
+        spans.add(TextSpan(text: word));
+      }
+
+      if (i < words.length - 1) {
+        spans.add(const TextSpan(text: ' '));
+      }
+    }
+
+    if (isLong) {
+      spans.add(const TextSpan(text: '  '));
+      spans.add(
+        WidgetSpan(
+          alignment: PlaceholderAlignment.middle,
+          child: GestureDetector(
+            onTap: () {
+              isExpanded.value = !isExpanded.value;
+            },
+            child: Text(
+              isExpanded.value ? 'voir moins' : 'voir plus',
+              style: const TextStyle(
+                color: Colors.grey,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return RichText(
       text: TextSpan(
         style: const TextStyle(color: Colors.black, fontSize: 14, height: 1.4),
-        children: [
-          if (title.isNotEmpty) ...[
-            TextSpan(
-              text: title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const TextSpan(text: '  '),
-          ],
-          TextSpan(
-            text: isLong && !isExpanded.value
-                ? '${content.substring(0, maxLength)}...'
-                : content,
-          ),
-          if (isLong) ...[
-            const TextSpan(text: '  '),
-            WidgetSpan(
-              alignment: PlaceholderAlignment.middle,
-              child: GestureDetector(
-                onTap: () {
-                  isExpanded.value = !isExpanded.value;
-                },
-                child: Text(
-                  isExpanded.value ? 'voir moins' : 'voir plus',
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ],
+        children: spans,
       ),
     );
   }
