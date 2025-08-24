@@ -13,7 +13,7 @@ final isBankAccountHolderProvider = Provider((ref) {
   return bankAccountHolder.maybeWhen(
     data: (bankAccountHolder) {
       return myStructures.any(
-        (structure) => structure.id == bankAccountHolder.holderStructureId,
+        (structure) => structure.id == bankAccountHolder.id,
       );
     },
     orElse: () => false,
