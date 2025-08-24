@@ -114,7 +114,10 @@ class CustomDialogBox extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  noText ?? AppLocalizations.of(context)!.globalCancel,
+                                  noText ??
+                                      AppLocalizations.of(
+                                        context,
+                                      )!.globalCancel,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -149,7 +152,8 @@ class CustomDialogBox extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                yesText ?? AppLocalizations.of(context)!.globalConfirm,
+                                yesText ??
+                                    AppLocalizations.of(context)!.globalConfirm,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),

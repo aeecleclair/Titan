@@ -65,7 +65,9 @@ class CustomSearchBar extends HookWidget {
                 style: TextStyle(color: ColorConstants.tertiary, fontSize: 16),
                 cursorColor: ColorConstants.tertiary,
                 decoration: InputDecoration(
-                  hintText: hintText ?? AppLocalizations.of(context)!.phonebookPhonebookSearch,
+                  hintText:
+                      hintText ??
+                      AppLocalizations.of(context)!.phonebookPhonebookSearch,
                   hintStyle: TextStyle(
                     color: ColorConstants.secondary,
                     fontSize: 16,

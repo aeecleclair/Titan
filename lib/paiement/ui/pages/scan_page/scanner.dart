@@ -45,8 +45,9 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
       builder: (context) {
         return CustomDialogBox(
           title: AppLocalizations.of(context)!.paiementScanNoMembership,
-          descriptions:
-              AppLocalizations.of(context)!.paiementScanNoMembershipConfirmation,
+          descriptions: AppLocalizations.of(
+            context,
+          )!.paiementScanNoMembershipConfirmation,
           onYes: () async {
             tokenExpireWrapper(ref, () async {
               onYes.call();
@@ -88,7 +89,9 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
           showWithoutMembershipDialog(() async {
             final value = await scanNotifier.scan(store.id, data, bypass: true);
             if (value == null) {
-              displayToastWithContext(TypeMsg.error, AppLocalizations.of(context)!.paiementScanAlreadyUsedQRCode,
+              displayToastWithContext(
+                TypeMsg.error,
+                AppLocalizations.of(context)!.paiementScanAlreadyUsedQRCode,
               );
               barcodeNotifier.clearBarcode();
               ongoingTransactionNotifier.clearOngoingTransaction();
@@ -101,7 +104,8 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
       }
       final value = await scanNotifier.scan(store.id, data);
       if (value == null) {
-        displayToastWithContext(TypeMsg.error,
+        displayToastWithContext(
+          TypeMsg.error,
           AppLocalizations.of(context)!.paiementScanAlreadyUsedQRCode,
         );
         barcodeNotifier.clearBarcode();
@@ -121,8 +125,9 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
       context: context,
       builder: (context) => CustomDialogBox(
         title: AppLocalizations.of(context)!.paiementCameraPermissionRequired,
-        descriptions:
-            AppLocalizations.of(context)!.paiementCameraPerssionRequiredDescription,
+        descriptions: AppLocalizations.of(
+          context,
+        )!.paiementCameraPerssionRequiredDescription,
         onYes: () async {
           Navigator.of(context).pop();
           await openAppSettings();

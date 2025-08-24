@@ -29,9 +29,7 @@ class MemberEditableCard extends HookConsumerWidget {
       userAssociationMembershipProvider.notifier,
     );
 
-    final localization = AppLocalizations.of(
-                        context,
-                      )!;
+    final localization = AppLocalizations.of(context)!;
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -111,8 +109,10 @@ class MemberEditableCard extends HookConsumerWidget {
                     descriptions:
                         localization.adminDeleteAssociationMemberConfirmation,
                     onYes: () async {
-                      final deletedMemberMsg = localization.phonebookDeletedMember;
-                      final deleteMemberErrorMsg = localization.phonebookDeletingError;
+                      final deletedMemberMsg =
+                          localization.phonebookDeletedMember;
+                      final deleteMemberErrorMsg =
+                          localization.phonebookDeletingError;
                       await tokenExpireWrapper(ref, () async {
                         final result =
                             await associationMembershipMemberListNotifier
