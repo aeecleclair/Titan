@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
@@ -32,18 +33,27 @@ class AppSignIn extends HookConsumerWidget {
           children: [
             Expanded(
               flex: 3,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  AppLocalizations.of(context)!.loginAppName,
-                  style: GoogleFonts.elMessiri(
-                    textStyle: const TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: AutoSizeText(
+                        AppLocalizations.of(context)!.loginAppName,
+                        maxLines: 1,
+                        style: GoogleFonts.elMessiri(
+                          textStyle: const TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  const Spacer(flex: 3),
+                ],
               ),
             ),
             Expanded(
