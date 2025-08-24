@@ -92,8 +92,8 @@ flutter:
     - assets/images/logo_dev.png
     - assets/images/gift.png
     - assets/images/soli.png
-    - assets/images/eclair.png
-    - assets/images/login.svg
+    - assets/images/proximapp.png
+    - assets/images/login.webp
     - assets/web/back.webp
     - assets/web/AMAP.webp
     - assets/web/Calendrier.webp

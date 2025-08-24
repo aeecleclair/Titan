@@ -2091,10 +2091,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginEmailEmpty => 'Please enter an email address';
 
   @override
-  String get loginEmailInvalid =>
-      'Please enter a Centrale email address.\nIf you don\'t have one, please contact Éclair';
-
-  @override
   String get loginEmptyFieldError => 'This field cannot be empty';
 
   @override
@@ -2129,6 +2125,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loginLoginFailed => 'Login failed';
+
+  @override
+  String get loginMadeBy => 'Developped by ProximApp';
 
   @override
   String get loginMailSendingError => 'Error during account creation';

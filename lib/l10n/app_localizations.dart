@@ -4178,12 +4178,6 @@ abstract class AppLocalizations {
   /// **'Veuillez entrer une adresse mail'**
   String get loginEmailEmpty;
 
-  /// No description provided for @loginEmailInvalid.
-  ///
-  /// In fr, this message translates to:
-  /// **'Veuillez entrer une adresse mail de centrale.\nSi vous n\'en possédez pas, veuillez contacter Éclair'**
-  String get loginEmailInvalid;
-
   /// No description provided for @loginEmptyFieldError.
   ///
   /// In fr, this message translates to:
@@ -4255,6 +4249,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Échec de la connexion'**
   String get loginLoginFailed;
+
+  /// No description provided for @loginMadeBy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Développé par ProximApp'**
+  String get loginMadeBy;
 
   /// No description provided for @loginMailSendingError.
   ///

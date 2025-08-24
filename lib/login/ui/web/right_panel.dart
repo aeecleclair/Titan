@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/login/class/screen_shot.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -221,10 +222,14 @@ class RightPanel extends HookConsumerWidget {
                 ],
               ),
               const Spacer(),
-              Image.asset('assets/images/eclair.png', width: 120, height: 120),
+              Image.asset(
+                'assets/images/proximapp.png',
+                width: 120,
+                height: 120,
+              ),
               const SizedBox(height: 30),
-              const Text(
-                "Développé par ECLAIR",
+              Text(
+                AppLocalizations.of(context)!.loginMadeBy,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 50),
