@@ -155,11 +155,12 @@ class MembershipEditorPage extends HookConsumerWidget {
                   title: member.member.id == ""
                       ? localizeWithContext.phonebookSearchUser
                       : member.member.getName(),
-                  onTap: () async {showCustomBottomModal(
-                    context: context,
-                    modal: UserSearchModal(),
-                    ref: ref,
-                  );
+                  onTap: () async {
+                    showCustomBottomModal(
+                      context: context,
+                      modal: UserSearchModal(),
+                      ref: ref,
+                    );
                   },
                 ),
               ] else

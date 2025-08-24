@@ -104,7 +104,8 @@ class MemberEditableCard extends HookConsumerWidget {
                 builder: (context) {
                   return CustomDialogBox(
                     title: "Supprimer le membre",
-                    descriptions: "Êtes-vous sûr de vouloir supprimer ce membre ?",
+                    descriptions:
+                        "Êtes-vous sûr de vouloir supprimer ce membre ?",
                     onYes: () async {
                       final deletedMemberMsg = AppLocalizations.of(
                         context,
