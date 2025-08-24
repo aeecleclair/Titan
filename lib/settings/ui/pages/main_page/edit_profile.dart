@@ -180,16 +180,13 @@ class EditProfile extends HookConsumerWidget {
             label: localizeWithContext.settingsBirthday,
             controller: birthdayController,
             onTap: () async {
-              final date = await showDatePicker(
-                context: context,
+              await getOnlyDayDate(
+                context,
+                birthdayController,
                 initialDate: DateTime(2004),
                 firstDate: DateTime(1900),
                 lastDate: DateTime.now(),
               );
-              if (date != null) {
-                birthdayController.text =
-                    "${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}";
-              }
             },
           ),
           SizedBox(height: 30),

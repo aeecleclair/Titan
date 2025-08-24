@@ -1,12 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/history.dart';
 import 'package:titan/paiement/tools/functions.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 
-class TransactionCard extends StatelessWidget {
+class TransactionCard extends ConsumerWidget {
   final History transaction;
   final Function()? onTap;
   final bool storeView;
@@ -18,8 +20,12 @@ class TransactionCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final formatter = NumberFormat("#,##0.00", "fr_FR");
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
+    final formatter = NumberFormat.currency(
+      locale: locale.toString(),
+      symbol: "€",
+    );
     final HeroIcons icon;
 
     switch (transaction.type) {
@@ -119,7 +125,7 @@ class TransactionCard extends StatelessWidget {
                   ),
                   if (transaction.refund == null) const SizedBox(height: 5),
                   Text(
-                    "${AppLocalizations.of(context)!.paiementThe} ${DateFormat("EEE dd MMMM yyyy ${AppLocalizations.of(context)!.paiementAt} HH:mm", "fr_FR").format(transaction.creation)}",
+                    "${AppLocalizations.of(context)!.paiementThe} ${DateFormat.yMMMMEEEEd(locale.toString()).format(transaction.creation)} +  ${AppLocalizations.of(context)!.paiementAt} ${DateFormat.Hm(locale.toString()).format(transaction.creation)}",
                     style: const TextStyle(
                       color: Color(0xff204550),
                       fontSize: 12,
@@ -127,7 +133,7 @@ class TransactionCard extends StatelessWidget {
                   ),
                   if (transaction.refund != null)
                     Text(
-                      "${AppLocalizations.of(context)!.paiementRefundedThe} ${DateFormat("EEE dd MMMM yyyy ${AppLocalizations.of(context)!.paiementAt} HH:mm", "fr_FR").format(transaction.refund!.creation)} ${AppLocalizations.of(context)!.paiementOf} ${formatter.format(transaction.refund!.total / 100)} €",
+                      "${AppLocalizations.of(context)!.paiementRefundedThe} ${DateFormat.yMMMMEEEEd(locale.toString()).format(transaction.refund!.creation)} +  ${AppLocalizations.of(context)!.paiementAt} ${DateFormat.Hm(locale.toString()).format(transaction.refund!.creation)} ${AppLocalizations.of(context)!.paiementOf} ${formatter.format(transaction.refund!.total / 100)}",
                       style: const TextStyle(
                         color: Color.fromARGB(255, 16, 46, 55),
                         fontSize: 9,
@@ -138,7 +144,7 @@ class TransactionCard extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             Text(
-              "${transaction.type == HistoryType.given || transaction.type == HistoryType.refundDebited ? " -" : " +"} ${formatter.format(transaction.total / 100)} €",
+              "${transaction.type == HistoryType.given || transaction.type == HistoryType.refundDebited ? " -" : " +"} ${formatter.format(transaction.total / 100)}",
               style: TextStyle(
                 color: const Color(0xff204550),
                 fontSize: 18,

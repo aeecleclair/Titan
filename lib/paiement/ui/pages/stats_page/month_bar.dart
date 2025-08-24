@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/paiement/class/history.dart';
 import 'package:titan/paiement/providers/my_history_provider.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 
 class MonthBar extends HookConsumerWidget {
   final DateTime currentMonth;
@@ -10,7 +11,11 @@ class MonthBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final locale = ref.watch(localeProvider);
+    final formatter = NumberFormat.currency(
+      locale: locale.toString(),
+      symbol: "€",
+    );
     final history = ref.watch(myHistoryProvider);
     int total = 0;
     history.maybeWhen(
@@ -36,7 +41,7 @@ class MonthBar extends HookConsumerWidget {
       },
     );
     return Text(
-      "${DateFormat("MMMM yyyy", "fr_FR").format(currentMonth)} : ${total > 0 ? "+" : ""}${formatter.format(total / 100)} €",
+      "${DateFormat.yMMMM(locale.toString()).format(currentMonth)} : ${total > 0 ? "+" : ""}${formatter.format(total / 100)}",
       style: const TextStyle(
         fontSize: 20,
         color: Colors.black,

@@ -9,6 +9,7 @@ import 'package:titan/admin/providers/user_association_membership_provider.dart'
 import 'package:titan/admin/router.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -22,6 +23,7 @@ class MemberEditableCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
     final associationMembershipMemberListNotifier = ref.watch(
       associationMembershipMembersProvider.notifier,
     );
@@ -66,14 +68,14 @@ class MemberEditableCard extends HookConsumerWidget {
             child: Column(
               children: [
                 Text(
-                  DateFormat(
-                    "dd/MM/yyyy",
+                  DateFormat.yMd(
+                    locale.toString(),
                   ).format(associationMembership.startDate),
                   style: const TextStyle(fontSize: 12),
                 ),
                 Text(
-                  DateFormat(
-                    "dd/MM/yyyy",
+                  DateFormat.yMd(
+                    locale.toString(),
                   ).format(associationMembership.endDate),
                   style: const TextStyle(fontSize: 12),
                 ),

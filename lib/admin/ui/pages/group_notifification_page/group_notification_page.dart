@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/admin/admin.dart';
 import 'package:titan/admin/providers/group_list_provider.dart';
 import 'package:titan/admin/repositories/notification_repository.dart';
@@ -84,6 +85,8 @@ class GroupNotificationPage extends HookConsumerWidget {
                                             label:
                                                 localizeWithContext.adminTitle,
                                             controller: titleController,
+                                            keyboardType:
+                                                TextInputType.multiline,
                                           ),
                                           const SizedBox(height: 20),
                                           TextEntry(
@@ -91,6 +94,8 @@ class GroupNotificationPage extends HookConsumerWidget {
                                                 .adminContent,
                                             controller: contentController,
                                             maxLines: 5,
+                                            keyboardType:
+                                                TextInputType.multiline,
                                           ),
                                           const SizedBox(height: 20),
                                           Button(
@@ -104,6 +109,7 @@ class GroupNotificationPage extends HookConsumerWidget {
                                                   )
                                                   .then((value) {
                                                     if (value) {
+                                                      QR.back();
                                                       displayToastWithContext(
                                                         TypeMsg.msg,
                                                         localizeWithContext

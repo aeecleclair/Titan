@@ -7,6 +7,7 @@ import 'package:titan/feed/ui/pages/main_page/event_action.dart';
 import 'package:titan/feed/ui/pages/main_page/event_card.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/feed/ui/pages/main_page/dotted_vertical_line.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 
 class TimelineItem extends ConsumerWidget {
   final News item;
@@ -16,6 +17,7 @@ class TimelineItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
     return SizedBox(
       height: item.actionStart != null ? 200 : 160,
       child: Stack(
@@ -39,7 +41,7 @@ class TimelineItem extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            DateFormat('d').format(item.start),
+                            DateFormat.d(locale.toString()).format(item.start),
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -47,7 +49,9 @@ class TimelineItem extends ConsumerWidget {
                             ),
                           ),
                           Text(
-                            DateFormat('MMM').format(item.start).toUpperCase(),
+                            DateFormat.MMM(
+                              locale.toString(),
+                            ).format(item.start).toUpperCase(),
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,

@@ -300,12 +300,14 @@ Future<TimeOfDay?> _getTime(BuildContext context) async {
       return Theme(
         data: ThemeData.light().copyWith(
           colorScheme: const ColorScheme.light(
-            primary: ColorConstants.gradient1,
-            onPrimary: Colors.white,
-            surface: Colors.white,
-            onSurface: Colors.black,
+            primary: ColorConstants.main,
+            onPrimary: ColorConstants.background,
+            surface: ColorConstants.background,
+            onSurface: ColorConstants.tertiary,
           ),
-          dialogTheme: DialogThemeData(backgroundColor: Colors.white),
+          dialogTheme: DialogThemeData(
+            backgroundColor: ColorConstants.background,
+          ),
         ),
         child: child!,
       );
@@ -329,12 +331,14 @@ Future<DateTime?> _getDate(
       return Theme(
         data: ThemeData.light().copyWith(
           colorScheme: const ColorScheme.light(
-            primary: ColorConstants.gradient1,
-            onPrimary: Colors.white,
-            surface: Colors.white,
-            onSurface: Colors.black,
+            primary: ColorConstants.main,
+            onPrimary: ColorConstants.background,
+            surface: ColorConstants.background,
+            onSurface: ColorConstants.tertiary,
           ),
-          dialogTheme: DialogThemeData(backgroundColor: Colors.white),
+          dialogTheme: DialogThemeData(
+            backgroundColor: ColorConstants.background,
+          ),
         ),
         child: child!,
       );
@@ -349,6 +353,7 @@ Future getOnlyDayDate(
   DateTime? firstDate,
   DateTime? lastDate,
 }) async {
+  final locale = Localizations.localeOf(context).toString();
   final DateTime now = DateTime.now();
   final DateTime? date = await _getDate(
     context,
@@ -358,8 +363,8 @@ Future getOnlyDayDate(
     lastDate,
   );
 
-  dateController.text = DateFormat(
-    'dd/MM/yyyy',
+  dateController.text = DateFormat.yMMMd(
+    locale,
   ).format(date ?? initialDate ?? now);
 }
 
@@ -370,6 +375,7 @@ Future getOnlyDayDateFunction(
   DateTime? firstDate,
   DateTime? lastDate,
 }) async {
+  final locale = Localizations.localeOf(context).toString();
   final DateTime now = DateTime.now();
   final DateTime? date = await _getDate(
     context,
@@ -379,18 +385,19 @@ Future getOnlyDayDateFunction(
     lastDate,
   );
 
-  setDate(DateFormat('dd/MM/yyyy').format(date ?? initialDate ?? now));
+  setDate(DateFormat.yMMMd(locale).format(date ?? initialDate ?? now));
 }
 
 Future getOnlyHourDate(
   BuildContext context,
   TextEditingController dateController,
 ) async {
+  final locale = Localizations.localeOf(context).toString();
   final DateTime now = DateTime.now();
   final TimeOfDay? time = await _getTime(context);
 
-  dateController.text = DateFormat(
-    'HH:mm',
+  dateController.text = DateFormat.Hm(
+    locale,
   ).format(DateTimeField.combine(now, time));
 }
 
@@ -401,6 +408,7 @@ Future getFullDate(
   DateTime? firstDate,
   DateTime? lastDate,
 }) async {
+  final locale = Localizations.localeOf(context).toString();
   final DateTime now = DateTime.now();
   _getDate(context, now, initialDate, firstDate, lastDate).then((
     DateTime? date,
@@ -408,15 +416,15 @@ Future getFullDate(
     if (date != null && context.mounted) {
       _getTime(context).then((TimeOfDay? time) {
         if (time != null) {
-          dateController.text = DateFormat(
-            'dd/MM/yyyy HH:mm',
-          ).format(DateTimeField.combine(date, time));
+          dateController.text = DateFormat.yMMMd(
+            locale,
+          ).add_Hm().format(DateTimeField.combine(date, time));
         }
       });
     } else {
-      dateController.text = DateFormat(
-        'dd/MM/yyyy HH:mm',
-      ).format(initialDate ?? now);
+      dateController.text = DateFormat.yMMMd(
+        locale,
+      ).add_Hm().format(initialDate ?? now);
     }
   });
 }

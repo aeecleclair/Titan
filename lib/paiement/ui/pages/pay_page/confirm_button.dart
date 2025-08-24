@@ -14,6 +14,7 @@ import 'package:titan/paiement/providers/pay_amount_provider.dart';
 import 'package:titan/paiement/ui/pages/pay_page/info_card.dart';
 import 'package:titan/paiement/ui/pages/pay_page/qr_code.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 
 class ConfirmButton extends ConsumerWidget {
@@ -21,6 +22,7 @@ class ConfirmButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
     final keyService = ref.watch(keyServiceProvider);
     final payAmount = ref.watch(payAmountProvider);
     final payAmountNotifier = ref.watch(payAmountProvider.notifier);
@@ -44,7 +46,10 @@ class ConfirmButton extends ConsumerWidget {
 
     final enabled = amount > 0 && amount * 100 <= myWalletBalance;
 
-    final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final formatter = NumberFormat.currency(
+      locale: locale.toString(),
+      symbol: "€",
+    );
 
     void displayQRModal() {
       showModalBottomSheet(
@@ -69,8 +74,9 @@ class ConfirmButton extends ConsumerWidget {
                     InfoCard(
                       icons: HeroIcons.currencyEuro,
                       title: AppLocalizations.of(context)!.paiementAmount,
-                      value:
-                          '${formatter.format(double.parse(payAmount.replaceAll(',', '.')))} €',
+                      value: formatter.format(
+                        double.parse(payAmount.replaceAll(',', '.')),
+                      ),
                     ),
                     const SizedBox(width: 10),
                     InfoCard(

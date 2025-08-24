@@ -492,30 +492,37 @@ class AddEventPage extends HookConsumerWidget {
                                 associationId: selectedAssociation.value!.id,
                                 ticketUrl: externalLinkController.text,
                               );
-                              final eventCreated = await eventCreationNotifier
-                                  .addEvent(newEvent);
-                              if (poster.value == null) {
-                                QR.back();
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  localizeWithContext.eventAddedEvent,
-                                );
-                                newsListNotifier.loadNewsList();
-                                return;
-                              }
-                              final value = await eventImageNotifier
-                                  .addEventImage(
-                                    eventCreated.id,
-                                    poster.value!,
+                              try {
+                                final eventCreated = await eventCreationNotifier
+                                    .addEvent(newEvent);
+                                if (poster.value == null) {
+                                  QR.back();
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    localizeWithContext.eventAddedEvent,
                                   );
-                              if (value) {
-                                QR.back();
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  localizeWithContext.eventAddedEvent,
-                                );
-                                newsListNotifier.loadNewsList();
-                              } else {
+                                  newsListNotifier.loadNewsList();
+                                  return;
+                                }
+                                final value = await eventImageNotifier
+                                    .addEventImage(
+                                      eventCreated.id,
+                                      poster.value!,
+                                    );
+                                if (value) {
+                                  QR.back();
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    localizeWithContext.eventAddedEvent,
+                                  );
+                                  newsListNotifier.loadNewsList();
+                                } else {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    localizeWithContext.eventAddingError,
+                                  );
+                                }
+                              } catch (e) {
                                 displayToastWithContext(
                                   TypeMsg.error,
                                   localizeWithContext.eventAddingError,

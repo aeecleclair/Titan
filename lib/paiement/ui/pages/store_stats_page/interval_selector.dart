@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:titan/paiement/providers/selected_interval_provider.dart';
 import 'package:titan/paiement/providers/selected_store_history.dart';
 import 'package:titan/paiement/providers/selected_store_provider.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 
 class IntervalSelector extends ConsumerWidget {
   const IntervalSelector({super.key});
@@ -12,6 +13,7 @@ class IntervalSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final now = DateTime.now();
+    final locale = ref.watch(localeProvider);
     final selectedStore = ref.watch(selectedStoreProvider);
     final selectedHistoryNotifier = ref.read(sellerHistoryProvider.notifier);
     final selectedInterval = ref.watch(selectedIntervalProvider);
@@ -81,9 +83,8 @@ class IntervalSelector extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    DateFormat(
-                      "dd MMM yyyy",
-                      "fr_FR",
+                    DateFormat.yMd(
+                      locale.toString(),
                     ).format(selectedInterval.start),
                     style: TextStyle(
                       color: const Color(0xff204550),
@@ -116,7 +117,9 @@ class IntervalSelector extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    DateFormat("HH:mm", "fr_FR").format(selectedInterval.start),
+                    DateFormat.Hm(
+                      locale.toString(),
+                    ).format(selectedInterval.start),
                     style: TextStyle(
                       color: const Color(0xff204550),
                       fontWeight: FontWeight.bold,
@@ -165,9 +168,8 @@ class IntervalSelector extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    DateFormat(
-                      "dd MMM yyyy",
-                      "fr_FR",
+                    DateFormat.yMd(
+                      locale.toString(),
                     ).format(selectedInterval.end),
                     style: TextStyle(
                       color: const Color(0xff204550),
@@ -200,7 +202,9 @@ class IntervalSelector extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    DateFormat("HH:mm", "fr_FR").format(selectedInterval.end),
+                    DateFormat.Hm(
+                      locale.toString(),
+                    ).format(selectedInterval.end),
                     style: TextStyle(
                       color: const Color(0xff204550),
                       fontWeight: FontWeight.bold,

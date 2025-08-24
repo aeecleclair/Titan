@@ -18,6 +18,7 @@ class AdminPhCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).toString();
     return GestureDetector(
       onTap: () {},
       child: CardLayout(
@@ -44,7 +45,7 @@ class AdminPhCard extends StatelessWidget {
                       style: const TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.left,
                     ),
-                    Text(shortenText(phFormatDate(ph.date), 28)),
+                    Text(shortenText(phFormatDate(ph.date, locale), 28)),
                   ],
                 ),
               ],

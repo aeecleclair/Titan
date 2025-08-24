@@ -26,10 +26,11 @@ class PhAddEditPhPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context).toString();
     final ph = ref.watch(phProvider);
     final isEdit = ph.id != Ph.empty().id;
     final dateController = TextEditingController(
-      text: phFormatDateEntry(ph.date),
+      text: phFormatDateEntry(ph.date, locale),
     );
     final key = GlobalKey<FormState>();
     final name = useTextEditingController(text: ph.name);

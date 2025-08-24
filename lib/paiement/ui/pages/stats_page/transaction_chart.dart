@@ -8,6 +8,7 @@ import 'package:titan/paiement/class/history.dart';
 import 'package:titan/paiement/providers/selected_transactions_provider.dart';
 import 'package:titan/paiement/tools/functions.dart';
 import 'package:titan/paiement/ui/pages/stats_page/sum_up_card.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 
 class TransactionChart extends HookConsumerWidget {
   final Map<String, List<History>> transactionPerStore;
@@ -20,6 +21,7 @@ class TransactionChart extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
     final selected = useState(-1);
     final List<PieChartSectionData> chartPart = [];
 
@@ -28,7 +30,10 @@ class TransactionChart extends HookConsumerWidget {
     );
     final Map<String, List<History>> mappedHistory = {};
     final List<String> keys = [];
-    final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final formatter = NumberFormat.currency(
+      locale: locale.toString(),
+      symbol: "€",
+    );
 
     for (final (index, wallet) in transactionPerStore.keys.indexed) {
       final l = transactionPerStore[wallet]!;
@@ -52,7 +57,7 @@ class TransactionChart extends HookConsumerWidget {
           radius: 40 + (keys.indexOf(wallet) == selected.value ? 10 : 0),
           badgePositionPercentageOffset: 0.6,
           badgeWidget: SumUpCard(
-            amount: '${formatter.format(totalAmount / 100)} €',
+            amount: formatter.format(totalAmount / 100),
             color: walletColor[0],
             darkColor: walletColor[1],
             shadowColor: walletColor[2],

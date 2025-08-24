@@ -32,16 +32,13 @@ bool isNewsOngoing(News news) {
   return false;
 }
 
-String formatUserFriendlyDate(
-  DateTime date, {
-  String locale = 'fr',
-  required BuildContext context,
-}) {
+String formatUserFriendlyDate(DateTime date, {required BuildContext context}) {
+  final locale = Localizations.localeOf(context).toString();
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
   final dateDay = DateTime(date.year, date.month, date.day);
 
-  final timeFormat = DateFormat('HH:mm');
+  final timeFormat = DateFormat.Hm(locale);
   final time = timeFormat.format(date);
 
   final connector = AppLocalizations.of(context)!.dateAt;
@@ -55,33 +52,27 @@ String formatUserFriendlyDate(
   } else if (difference == 1) {
     return "${_capitalize(AppLocalizations.of(context)!.dateTomorrow)} $connector $time";
   } else if (difference > 1 && difference < 7) {
-    final dayName = _capitalize(DateFormat('EEEE', locale).format(date));
+    final dayName = _capitalize(DateFormat.EEEE(locale).format(date));
     return "$dayName $connector $time";
   } else if (difference < 0 && difference > -7) {
-    final dayName = _capitalize(DateFormat('EEEE', locale).format(date));
+    final dayName = _capitalize(DateFormat.EEEE(locale).format(date));
     final prefix = AppLocalizations.of(context)!.dateLast;
 
     final prefixWithSpace = prefix.isEmpty ? '' : _capitalize('$prefix ');
     return "$prefixWithSpace$dayName $connector $time";
   } else {
     if (date.year == now.year) {
-      final monthDay = _capitalize(DateFormat('d MMM', locale).format(date));
+      final monthDay = _capitalize(DateFormat.MMMd(locale).format(date));
       return "$monthDay $connector $time";
     } else {
-      final dateFormat = locale == 'fr' ? 'd MMM yyyy' : 'MMM d, yyyy';
-      final monthDayYear = _capitalize(
-        DateFormat(dateFormat, locale).format(date),
-      );
+      final monthDayYear = _capitalize(DateFormat.yMMMMd(locale).format(date));
       return "$monthDayYear $connector $time";
     }
   }
 }
 
-String getNewsSubtitle(
-  News news, {
-  String locale = 'fr',
-  required BuildContext context,
-}) {
+String getNewsSubtitle(News news, {required BuildContext context}) {
+  final locale = Localizations.localeOf(context).toString();
   String subtitle = '';
 
   final startDate = news.start.toLocal();
@@ -89,13 +80,9 @@ String getNewsSubtitle(
   if (isNewsOngoing(news) && news.end != null) {
     final untilText = _capitalize(AppLocalizations.of(context)!.dateUntil);
     subtitle =
-        "$untilText ${formatUserFriendlyDate(news.end!.toLocal(), locale: locale, context: context)}";
+        "$untilText ${formatUserFriendlyDate(news.end!.toLocal(), context: context)}";
   } else if (news.end == null) {
-    subtitle = formatUserFriendlyDate(
-      startDate,
-      locale: locale,
-      context: context,
-    );
+    subtitle = formatUserFriendlyDate(startDate, context: context);
   } else {
     final endDate = news.end!.toLocal();
     bool sameDay =
@@ -108,12 +95,11 @@ String getNewsSubtitle(
 
       String dateStr = formatUserFriendlyDate(
         startDate,
-        locale: locale,
         context: context,
       ).split(' $connector ')[0];
 
-      final startTime = DateFormat('HH:mm').format(startDate);
-      final endTime = DateFormat('HH:mm').format(endDate);
+      final startTime = DateFormat.Hm(locale).format(startDate);
+      final endTime = DateFormat.Hm(locale).format(endDate);
 
       final fromWord = AppLocalizations.of(context)!.dateFrom;
       final toWord = AppLocalizations.of(context)!.dateTo;
@@ -132,7 +118,7 @@ String getNewsSubtitle(
           : (AppLocalizations.of(context)!.dateBetweenDays);
 
       subtitle =
-          '$fromWord ${formatUserFriendlyDate(startDate, locale: locale, context: context)} $toWord ${formatUserFriendlyDate(endDate, locale: locale, context: context)}';
+          '$fromWord ${formatUserFriendlyDate(startDate, context: context)} $toWord ${formatUserFriendlyDate(endDate, context: context)}';
     }
   }
 

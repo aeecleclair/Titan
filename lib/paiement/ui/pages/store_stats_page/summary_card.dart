@@ -1,16 +1,19 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/history.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 
-class SummaryCard extends StatelessWidget {
+class SummaryCard extends ConsumerWidget {
   final List<History> history;
   const SummaryCard({super.key, required this.history});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
     int total = 0;
     int numberTransactions = 0;
 
@@ -47,7 +50,10 @@ class SummaryCard extends StatelessWidget {
 
     final mean = total / numberTransactions;
 
-    final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final formatter = NumberFormat.currency(
+      locale: locale.toString(),
+      symbol: "€",
+    );
     return Container(
       height: 75,
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -80,7 +86,7 @@ class SummaryCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  "${AppLocalizations.of(context)!.paiementMean} ${formatter.format(mean / 100)} € / ${AppLocalizations.of(context)!.paiementTransaction}",
+                  "${AppLocalizations.of(context)!.paiementMean} ${formatter.format(mean / 100)} / ${AppLocalizations.of(context)!.paiementTransaction}",
                   style: const TextStyle(
                     color: Color(0xff204550),
                     fontSize: 12,
@@ -92,7 +98,7 @@ class SummaryCard extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           Text(
-            "${formatter.format(total / 100)} €",
+            formatter.format(total / 100),
             style: TextStyle(
               color: const Color(0xff204550),
               fontSize: 18,

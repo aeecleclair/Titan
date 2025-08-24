@@ -66,25 +66,24 @@ class AdminPage extends HookConsumerWidget {
                     ),
                   ),
                   const Spacer(),
-                  CustomIconButton(
-                    icon: HeroIcon(
-                      HeroIcons.plus,
-                      color: Colors.white,
-                      size: 30,
+                  if (isPhonebookAdmin)
+                    CustomIconButton(
+                      icon: HeroIcon(
+                        HeroIcons.plus,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      onPressed: () {
+                        associationNotifier.resetAssociation();
+                        associationGroupementNotifier
+                            .resetAssociationGroupement();
+                        QR.to(
+                          PhonebookRouter.root +
+                              PhonebookRouter.admin +
+                              PhonebookRouter.addEditAssociation,
+                        );
+                      },
                     ),
-                    onPressed: isPhonebookAdmin
-                        ? () {
-                            associationNotifier.resetAssociation();
-                            associationGroupementNotifier
-                                .resetAssociationGroupement();
-                            QR.to(
-                              PhonebookRouter.root +
-                                  PhonebookRouter.admin +
-                                  PhonebookRouter.addEditAssociation,
-                            );
-                          }
-                        : () {},
-                  ),
                 ],
               ),
               const SizedBox(height: 20),
