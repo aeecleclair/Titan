@@ -97,14 +97,14 @@ class TextEntry extends StatelessWidget {
         if (isInt) {
           final intValue = int.tryParse(value);
           if (intValue == null || (intValue < 0 && !isNegative)) {
-            return "Invalid number";
+            return AppLocalizations.of(context)!.toolInvalidNumber;
           }
         }
 
         if (isDouble) {
           final doubleValue = double.tryParse(value.replaceAll(',', '.'));
           if (doubleValue == null || (doubleValue < 0 && !isNegative)) {
-            return "Invalid number";
+            return AppLocalizations.of(context)!.toolInvalidNumber;
           }
         }
 

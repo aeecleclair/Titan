@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:titan/vote/providers/section_vote_count_provide.dart';
 import 'package:titan/vote/providers/sections_provider.dart';
@@ -28,7 +29,7 @@ class VoteCount extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50),
           child: Center(
             child: Text(
-              '$data votes',
+              '$data ${AppLocalizations.of(context)!.voteVotes}',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,

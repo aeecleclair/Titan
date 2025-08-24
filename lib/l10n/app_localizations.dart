@@ -614,6 +614,18 @@ abstract class AppLocalizations {
   /// **'Supprimer'**
   String get adminDelete;
 
+  /// No description provided for @adminDeleteAssociationMember.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer le membre ?'**
+  String get adminDeleteAssociationMember;
+
+  /// No description provided for @adminDeleteAssociationMemberConfirmation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Êtes-vous sûr de vouloir supprimer ce membre ?'**
+  String get adminDeleteAssociationMemberConfirmation;
+
   /// No description provided for @adminDeleteAssociationMembership.
   ///
   /// In fr, this message translates to:
@@ -1405,6 +1417,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Veuillez entrer un nombre positif'**
   String get advertPositiveNumber;
+
+  /// No description provided for @advertPublishToFeed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier dans le feed'**
+  String get advertPublishToFeed;
 
   /// No description provided for @advertRemovedAnnouncer.
   ///
@@ -4676,6 +4694,12 @@ abstract class AppLocalizations {
   /// **'Peut voir l\'historique'**
   String get paiementCanSeeHistory;
 
+  /// No description provided for @paiementCantLaunchURL.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible d\'ouvrir le lien'**
+  String get paiementCantLaunchURL;
+
   /// No description provided for @paiementClose.
   ///
   /// In fr, this message translates to:
@@ -5168,11 +5192,29 @@ abstract class AppLocalizations {
   /// **'Scanner'**
   String get paiementScan;
 
+  /// No description provided for @paiementScanAlreadyUsedQRCode.
+  ///
+  /// In fr, this message translates to:
+  /// **'QR Code déjà utilisé'**
+  String get paiementScanAlreadyUsedQRCode;
+
   /// No description provided for @paiementScanCode.
   ///
   /// In fr, this message translates to:
   /// **'Scanner un code'**
   String get paiementScanCode;
+
+  /// No description provided for @paiementScanNoMembership.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas d\'adhésion'**
+  String get paiementScanNoMembership;
+
+  /// No description provided for @paiementScanNoMembershipConfirmation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce produit n\'est pas disponnible pour les non-adhérents. Confirmer l\'encaissement ?'**
+  String get paiementScanNoMembershipConfirmation;
 
   /// No description provided for @paiementSeeHistory.
   ///
@@ -5353,6 +5395,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Transfert de structure demandé avec succès'**
   String get paiementTransferStructureSuccess;
+
+  /// No description provided for @paiementUnknownDevice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appareil inconnu'**
+  String get paiementUnknownDevice;
 
   /// No description provided for @paiementValidUntil.
   ///
@@ -8168,6 +8216,12 @@ abstract class AppLocalizations {
   /// **'Dépouiller les votes'**
   String get voteCountVote;
 
+  /// No description provided for @voteDelete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer'**
+  String get voteDelete;
+
   /// No description provided for @voteDeletedAll.
   ///
   /// In fr, this message translates to:
@@ -8791,6 +8845,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Gérer les paiements, les statistiques et les appareils'**
   String get modulePaymentDescription;
+
+  /// No description provided for @toolInvalidNumber.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chiffre invalide'**
+  String get toolInvalidNumber;
+
+  /// No description provided for @toolDateRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date requise'**
+  String get toolDateRequired;
 }
 
 class _AppLocalizationsDelegate

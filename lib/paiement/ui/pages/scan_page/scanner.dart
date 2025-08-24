@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/providers/barcode_provider.dart';
 import 'package:titan/paiement/providers/bypass_provider.dart';
 import 'package:titan/paiement/providers/last_time_scanned.dart';
@@ -43,9 +44,9 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
       context: context,
       builder: (context) {
         return CustomDialogBox(
-          title: "Pas d'adhésion",
+          title: AppLocalizations.of(context)!.paiementScanNoMembership,
           descriptions:
-              "Ce produit n'est pas disponnible pour les non-adhérents. Confirmer l'encaissement ?",
+              AppLocalizations.of(context)!.paiementScanNoMembershipConfirmation,
           onYes: () async {
             tokenExpireWrapper(ref, () async {
               onYes.call();
@@ -87,7 +88,8 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
           showWithoutMembershipDialog(() async {
             final value = await scanNotifier.scan(store.id, data, bypass: true);
             if (value == null) {
-              displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
+              displayToastWithContext(TypeMsg.error, AppLocalizations.of(context)!.paiementScanAlreadyUsedQRCode,
+              );
               barcodeNotifier.clearBarcode();
               ongoingTransactionNotifier.clearOngoingTransaction();
               return;
@@ -99,7 +101,9 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
       }
       final value = await scanNotifier.scan(store.id, data);
       if (value == null) {
-        displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
+        displayToastWithContext(TypeMsg.error,
+          AppLocalizations.of(context)!.paiementScanAlreadyUsedQRCode,
+        );
         barcodeNotifier.clearBarcode();
         ongoingTransactionNotifier.clearOngoingTransaction();
         return;
@@ -116,14 +120,14 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
     await showDialog(
       context: context,
       builder: (context) => CustomDialogBox(
-        title: 'Permission caméra requise',
+        title: AppLocalizations.of(context)!.paiementCameraPermissionRequired,
         descriptions:
-            'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. Veuillez accorder cette permission dans les paramètres de votre appareil.',
+            AppLocalizations.of(context)!.paiementCameraPerssionRequiredDescription,
         onYes: () async {
           Navigator.of(context).pop();
           await openAppSettings();
         },
-        yesText: 'Paramètres',
+        yesText: AppLocalizations.of(context)!.paiementSettings,
       ),
     );
   }

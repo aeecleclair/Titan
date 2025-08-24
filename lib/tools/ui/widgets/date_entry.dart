@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 
 class DateEntry extends StatelessWidget {
@@ -29,7 +30,7 @@ class DateEntry extends StatelessWidget {
         child: TextEntry(
           label: label,
           controller: controller,
-          noValueError: "Date is required",
+          noValueError: AppLocalizations.of(context)!.toolDateRequired,
           enabled: enabled,
           color: color,
           enabledColor: enabledColor,

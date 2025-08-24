@@ -47,7 +47,7 @@ class DevicesPage extends HookConsumerWidget {
       } else if (Theme.of(context).platform == TargetPlatform.iOS) {
         return deviceInfo.iosInfo.then((info) => info.utsname.machine);
       } else {
-        return Future.value("Unknown Device");
+        return Future.value(AppLocalizations.of(context)!.paiementUnknownDevice);
       }
     }
 

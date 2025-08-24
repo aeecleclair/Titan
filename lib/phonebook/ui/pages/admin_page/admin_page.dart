@@ -58,7 +58,7 @@ class AdminPage extends HookConsumerWidget {
               Row(
                 children: [
                   Text(
-                    "Associations",
+                    AppLocalizations.of(context)!.phonebookAssociations,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

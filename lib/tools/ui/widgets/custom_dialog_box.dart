@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class Consts {
@@ -113,7 +114,7 @@ class CustomDialogBox extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  noText ?? "Annuler",
+                                  noText ?? AppLocalizations.of(context)!.globalCancel,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -148,7 +149,7 @@ class CustomDialogBox extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                yesText ?? "Confirmer",
+                                yesText ?? AppLocalizations.of(context)!.globalConfirm,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),

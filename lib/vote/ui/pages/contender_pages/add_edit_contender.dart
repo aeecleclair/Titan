@@ -173,7 +173,11 @@ class AddEditContenderPage extends HookConsumerWidget {
                 ContenderMember(),
                 const SizedBox(height: 10),
                 members.isEmpty
-                    ? const Center(child: Text('No members added yet.'))
+                    ? Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.adminNoMember,
+                        ),
+                      )
                     : Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Column(

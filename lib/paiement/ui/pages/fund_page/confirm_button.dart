@@ -56,7 +56,7 @@ class ConfirmFundButton extends ConsumerWidget {
         Uri.parse(url),
         mode: LaunchMode.externalApplication,
       )) {
-        throw Exception('Could not launch google');
+        throw Exception(AppLocalizations.of(context)!.paiementCantLaunchURL);
       }
     }
 

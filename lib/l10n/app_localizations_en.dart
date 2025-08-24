@@ -127,10 +127,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get feedPleaseProvideASGExternalLink =>
-      'Veuillez entrer un lien externe pour le SG';
+      'Please provide a SG external link';
 
   @override
-  String get feedPleaseProvideASGDate => 'Veuillez entrer une date de SG';
+  String get feedPleaseProvideASGDate => 'Please provide a SG date';
 
   @override
   String feedShotgunIn(String time) {
@@ -143,7 +143,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get feedCantOpenLink => 'Impossible d\'ouvrir le lien';
+  String get feedCantOpenLink => 'Can\'t open link';
 
   @override
   String get feedGetReady => 'Get ready!';
@@ -272,6 +272,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adminDelete => 'Delete';
+
+  @override
+  String get adminDeleteAssociationMember => 'Delete member?';
+
+  @override
+  String get adminDeleteAssociationMemberConfirmation =>
+      'Are you sure you want to delete this member?';
 
   @override
   String get adminDeleteAssociationMembership => 'Delete membership?';
@@ -686,6 +693,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get advertPositiveNumber => 'Please enter a positive number';
+
+  @override
+  String get advertPublishToFeed => 'Publish to feed?';
 
   @override
   String get advertRemovedAnnouncer => 'Announcer removed';
@@ -2349,6 +2359,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementCanSeeHistory => 'Can view history';
 
   @override
+  String get paiementCantLaunchURL => 'Can\'t open link';
+
+  @override
   String get paiementClose => 'Close';
 
   @override
@@ -2618,7 +2631,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementScan => 'Scan';
 
   @override
+  String get paiementScanAlreadyUsedQRCode => 'QR Code already used';
+
+  @override
   String get paiementScanCode => 'Scan a code';
+
+  @override
+  String get paiementScanNoMembership => 'No membership';
+
+  @override
+  String get paiementScanNoMembershipConfirmation =>
+      'This product is not available to non-members. Confirm the payment?';
 
   @override
   String get paiementSeeHistory => 'View history';
@@ -2716,6 +2739,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get paiementTransferStructureSuccess =>
       'Structure transfer requested successfully';
+
+  @override
+  String get paiementUnknownDevice => 'Unknown device';
 
   @override
   String get paiementValidUntil => 'Valid until';
@@ -4190,6 +4216,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get voteCountVote => 'Count votes';
 
   @override
+  String get voteDelete => 'Delete';
+
+  @override
   String get voteDeletedAll => 'All deleted';
 
   @override
@@ -4507,4 +4536,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get modulePaymentDescription => 'Pay and see your transactions';
+
+  @override
+  String get toolInvalidNumber => 'Invalid number';
+
+  @override
+  String get toolDateRequired => 'Date required';
 }

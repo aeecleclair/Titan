@@ -228,7 +228,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: CheckBoxEntry(
-                  title: "Poster dans le feed ?",
+                  title: AppLocalizations.of(context)!.advertPublishToFeed,
                   valueNotifier: postToFeed,
                   onChanged: () {
                     postToFeed.value = !postToFeed.value;
