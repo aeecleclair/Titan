@@ -161,6 +161,7 @@ class FeedMainPage extends HookConsumerWidget {
                                       text: 'Demandes de publication',
                                       onPressed: () {
                                         Navigator.of(context).pop();
+                                        newsNotifier.loadNewsList();
                                         QR.to(
                                           FeedRouter.root +
                                               FeedRouter.eventHandling,

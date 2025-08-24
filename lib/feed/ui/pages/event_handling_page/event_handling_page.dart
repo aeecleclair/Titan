@@ -22,7 +22,6 @@ class EventHandlingPage extends HookConsumerWidget {
     final newsListAsync = ref.watch(adminNewsListProvider);
     final newsListNotifier = ref.watch(adminNewsListProvider.notifier);
     final selectedFilter = useState(NewsFilterType.pending);
-    newsListNotifier.loadNewsList();
 
     return FeedTemplate(
       child: Padding(
