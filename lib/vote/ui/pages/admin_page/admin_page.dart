@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/amap/tools/constants.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/tools/constants.dart';
-import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/tools/ui/styleguide/icon_button.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
@@ -13,13 +13,17 @@ import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 import 'package:titan/vote/class/contender.dart';
 import 'package:titan/vote/providers/contender_list_provider.dart';
+import 'package:titan/vote/providers/contender_members.dart';
+import 'package:titan/vote/providers/contender_provider.dart';
 import 'package:titan/vote/providers/result_provider.dart';
 import 'package:titan/vote/providers/sections_contender_provider.dart';
 import 'package:titan/vote/providers/sections_provider.dart';
 import 'package:titan/vote/providers/show_graph_provider.dart';
 import 'package:titan/vote/providers/status_provider.dart';
 import 'package:titan/vote/repositories/status_repository.dart';
+import 'package:titan/vote/router.dart';
 import 'package:titan/vote/ui/pages/admin_page/admin_button.dart';
+import 'package:titan/vote/ui/pages/admin_page/opening_vote.dart';
 import 'package:titan/vote/ui/pages/admin_page/section_bar.dart';
 import 'package:titan/vote/ui/pages/admin_page/section_contender_items.dart';
 import 'package:titan/vote/ui/pages/admin_page/vote_bars.dart';
@@ -36,6 +40,8 @@ class AdminPage extends HookConsumerWidget {
     final sectionContenderListNotifier = ref.watch(
       sectionContenderProvider.notifier,
     );
+    final membersNotifier = ref.read(contenderMembersProvider.notifier);
+    final contenderNotifier = ref.read(contenderProvider.notifier);
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final contenderList = ref.watch(contenderListProvider);
     final asyncStatus = ref.watch(statusProvider);
@@ -79,542 +85,342 @@ class AdminPage extends HookConsumerWidget {
             }
           });
         },
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              const SectionBar(),
-              const SizedBox(height: 30),
-              AlignLeftText(
-                AppLocalizations.of(context)!.voteVoters,
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                color: const Color.fromARGB(255, 149, 149, 149),
-              ),
-              const SizedBox(height: 30),
-              const VotersBar(),
-              const SizedBox(height: 30),
-              AlignLeftText(
-                AppLocalizations.of(context)!.votePretendance,
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                color: Colors.grey,
-              ),
-              const SizedBox(height: 10),
-              const SectionContenderItems(),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.voteVote,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      if (showVotes && status == Status.counting)
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  showVotesNotifier.toggle(false);
-                                },
-                                child: const HeroIcon(
-                                  HeroIcons.eyeSlash,
-                                  size: 25.0,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              WaitingButton(
-                                builder: (child) => AdminButton(child: child),
-                                onTap: () async {
-                                  await showDialog(
-                                    context: context,
-                                    builder: (context) => CustomDialogBox(
-                                      title: AppLocalizations.of(
-                                        context,
-                                      )!.votePublish,
-                                      descriptions: AppLocalizations.of(
-                                        context,
-                                      )!.votePublishVoteDescription,
-                                      onYes: () {
-                                        statusNotifier.publishVote();
-                                        ref
-                                            .watch(resultProvider.notifier)
-                                            .loadResult();
-                                      },
-                                    ),
-                                  );
-                                },
-                                child: Text(
-                                  AppLocalizations.of(context)!.votePublish,
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      if (status == Status.counting ||
-                          status == Status.published)
-                        WaitingButton(
-                          builder: (child) => AdminButton(child: child),
-                          onTap: () async {
-                            await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return CustomDialogBox(
-                                  title: AppLocalizations.of(
-                                    context,
-                                  )!.voteResetVote,
-                                  descriptions: AppLocalizations.of(
-                                    context,
-                                  )!.voteResetVoteDescription,
-                                  onYes: () async {
-                                    await tokenExpireWrapper(ref, () async {
-                                      final resetedVotesMsg =
-                                          AppLocalizations.of(
-                                            context,
-                                          )!.voteResetedVotes;
-                                      final resetedVotesErrorMsg =
-                                          AppLocalizations.of(
-                                            context,
-                                          )!.voteErrorResetingVotes;
-                                      final value = await statusNotifier
-                                          .resetVote();
-                                      ref
-                                          .watch(contenderListProvider.notifier)
-                                          .loadContenderList();
-                                      if (value) {
-                                        showVotesNotifier.toggle(false);
-                                        displayVoteToastWithContext(
-                                          TypeMsg.msg,
-                                          resetedVotesMsg,
-                                        );
-                                      } else {
-                                        displayVoteToastWithContext(
-                                          TypeMsg.error,
-                                          resetedVotesErrorMsg,
-                                        );
-                                      }
-                                    });
-                                  },
-                                );
-                              },
-                            );
-                          },
-                          child: Text(
-                            AppLocalizations.of(context)!.voteClear,
-                            style: const TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(
+                "Administration",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: ColorConstants.title,
                 ),
               ),
-              const SizedBox(height: 20),
-              SizedBox(
-                height:
-                    MediaQuery.of(context).size.height -
-                    500 +
-                    (status == Status.waiting ? 0 : 50),
-                child: Column(
+            ),
+            const SizedBox(height: 20),
+            AlignLeftText(
+              "Association",
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              color: ColorConstants.tertiary,
+            ),
+            const SizedBox(height: 10),
+            const SectionBar(),
+            const SizedBox(height: 20),
+            AlignLeftText(
+              AppLocalizations.of(context)!.voteVoters,
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              color: ColorConstants.tertiary,
+            ),
+            const SizedBox(height: 10),
+            const VotersBar(),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.votePretendance,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstants.tertiary,
+                    ),
+                  ),
+                  const Spacer(),
+                  if (status == Status.waiting)
+                    CustomIconButton(
+                      icon: HeroIcon(
+                        HeroIcons.plus,
+                        color: ColorConstants.background,
+                      ),
+                      onPressed: () {
+                        contenderNotifier.setId(Contender.empty());
+                        membersNotifier.setMembers([]);
+                        QR.to(
+                          VoteRouter.root +
+                              VoteRouter.admin +
+                              VoteRouter.addEditContender,
+                        );
+                      },
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            const SectionContenderItems(),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    if (status == Status.counting)
-                      showVotes
-                          ? const VoteBars()
-                          : GestureDetector(
-                              onTap: () {
-                                showVotesNotifier.toggle(true);
-                              },
-                              behavior: HitTestBehavior.opaque,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const SizedBox(height: 40),
-                                  const HeroIcon(
-                                    HeroIcons.eye,
-                                    size: 80.0,
-                                    color: Colors.black,
-                                  ),
-                                  const SizedBox(height: 40),
-                                  Text(
-                                    AppLocalizations.of(context)!.voteShowVotes,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                    if (status == Status.published) const VoteBars(),
-                    if (status == Status.closed)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 30.0,
-                          vertical: 50,
-                        ),
-                        child: WaitingButton(
-                          builder: (child) => CardLayout(
-                            padding: const EdgeInsets.only(top: 10, bottom: 12),
-                            width: double.infinity,
-                            colors: [Colors.grey.shade900, Colors.black],
-                            child: child,
-                          ),
-                          onTap: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              final votesCountedMsg = AppLocalizations.of(
-                                context,
-                              )!.voteVotesCounted;
-                              final errorCountingVotesMsg = AppLocalizations.of(
-                                context,
-                              )!.voteErrorCountingVotes;
-                              final value = await statusNotifier.countVote();
-                              if (value) {
-                                displayVoteToastWithContext(
-                                  TypeMsg.msg,
-                                  votesCountedMsg,
-                                );
-                              } else {
-                                displayVoteToastWithContext(
-                                  TypeMsg.error,
-                                  errorCountingVotesMsg,
-                                );
-                              }
-                            });
-                          },
-                          child: Center(
-                            child: Text(
-                              AppLocalizations.of(context)!.voteCountVote,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ),
+                    Text(
+                      AppLocalizations.of(context)!.voteVote,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: ColorConstants.tertiary,
                       ),
-                    if (status == Status.open)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 30.0,
-                          vertical: 50,
-                        ),
-                        child: WaitingButton(
-                          builder: (child) => CardLayout(
-                            padding: const EdgeInsets.only(top: 10, bottom: 12),
-                            width: double.infinity,
-                            colors: const [
-                              ColorConstants.gradient1,
-                              ColorConstants.gradient2,
-                            ],
-                            child: child,
-                          ),
-                          onTap: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              final closeVotesMsg = AppLocalizations.of(
-                                context,
-                              )!.voteVotesClosed;
-                              final errorClosingVotesMsg = AppLocalizations.of(
-                                context,
-                              )!.voteErrorClosingVotes;
-                              final value = await statusNotifier.closeVote();
-                              if (value) {
-                                displayVoteToastWithContext(
-                                  TypeMsg.msg,
-                                  closeVotesMsg,
-                                );
-                              } else {
-                                displayVoteToastWithContext(
-                                  TypeMsg.error,
-                                  errorClosingVotesMsg,
-                                );
-                              }
-                            });
-                          },
-                          child: Center(
-                            child: Text(
-                              AppLocalizations.of(context)!.voteCloseVote,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    if (status == Status.waiting)
+                    ),
+                    if (showVotes && status == Status.counting)
                       Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 30.0,
-                            vertical: 50,
-                          ),
-                          child: Column(
-                            children: [
-                              WaitingButton(
-                                waitingColor: Colors.black,
-                                builder: (child) => CardLayout(
-                                  padding: const EdgeInsets.only(
-                                    top: 10,
-                                    bottom: 12,
-                                  ),
-                                  margin: const EdgeInsets.all(0),
-                                  color: Colors.white,
-                                  borderColor: Colors.black,
-                                  child: child,
-                                ),
-                                onTap: () async {
-                                  await tokenExpireWrapper(ref, () async {
-                                    final openVotesMsg = AppLocalizations.of(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                showVotesNotifier.toggle(false);
+                              },
+                              child: const HeroIcon(
+                                HeroIcons.eyeSlash,
+                                size: 25.0,
+                                color: ColorConstants.tertiary,
+                              ),
+                            ),
+                            WaitingButton(
+                              builder: (child) => AdminButton(child: child),
+                              onTap: () async {
+                                await showDialog(
+                                  context: context,
+                                  builder: (context) => CustomDialogBox(
+                                    title: AppLocalizations.of(
                                       context,
-                                    )!.voteVotesOpened;
-                                    final errorOpeningVotesMsg =
+                                    )!.votePublish,
+                                    descriptions: AppLocalizations.of(
+                                      context,
+                                    )!.votePublishVoteDescription,
+                                    onYes: () {
+                                      statusNotifier.publishVote();
+                                      ref
+                                          .watch(resultProvider.notifier)
+                                          .loadResult();
+                                    },
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                AppLocalizations.of(context)!.votePublish,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorConstants.background,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    if (status == Status.counting || status == Status.published)
+                      WaitingButton(
+                        builder: (child) => AdminButton(child: child),
+                        onTap: () async {
+                          await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return CustomDialogBox(
+                                title: AppLocalizations.of(
+                                  context,
+                                )!.voteResetVote,
+                                descriptions: AppLocalizations.of(
+                                  context,
+                                )!.voteResetVoteDescription,
+                                onYes: () async {
+                                  await tokenExpireWrapper(ref, () async {
+                                    final resetedVotesMsg = AppLocalizations.of(
+                                      context,
+                                    )!.voteResetedVotes;
+                                    final resetedVotesErrorMsg =
                                         AppLocalizations.of(
                                           context,
-                                        )!.voteErrorOpeningVotes;
+                                        )!.voteErrorResetingVotes;
                                     final value = await statusNotifier
-                                        .openVote();
+                                        .resetVote();
                                     ref
                                         .watch(contenderListProvider.notifier)
                                         .loadContenderList();
                                     if (value) {
+                                      showVotesNotifier.toggle(false);
                                       displayVoteToastWithContext(
                                         TypeMsg.msg,
-                                        openVotesMsg,
+                                        resetedVotesMsg,
                                       );
                                     } else {
                                       displayVoteToastWithContext(
                                         TypeMsg.error,
-                                        errorOpeningVotesMsg,
+                                        resetedVotesErrorMsg,
                                       );
                                     }
                                   });
                                 },
-                                child: Center(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.voteOpenVote,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.voteClear,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: ColorConstants.background,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Column(
+              children: [
+                if (status == Status.counting)
+                  showVotes
+                      ? const VoteBars()
+                      : GestureDetector(
+                          onTap: () {
+                            showVotesNotifier.toggle(true);
+                          },
+                          behavior: HitTestBehavior.opaque,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 40),
+                              const HeroIcon(
+                                HeroIcons.eye,
+                                size: 80.0,
+                                color: ColorConstants.tertiary,
                               ),
-                              const SizedBox(height: 50),
-                              SizedBox(
-                                width: double.infinity,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: WaitingButton(
-                                        builder: (child) => CardLayout(
-                                          padding: const EdgeInsets.only(
-                                            top: 10,
-                                            bottom: 12,
-                                          ),
-                                          margin: const EdgeInsets.all(0),
-                                          colors: const [
-                                            AMAPColorConstants.redGradient1,
-                                            AMAPColorConstants.redGradient2,
-                                          ],
-                                          borderColor: Colors.white,
-                                          child: child,
-                                        ),
-                                        onTap: () async {
-                                          await showDialog(
-                                            context: context,
-                                            builder: (context) => CustomDialogBox(
-                                              title: AppLocalizations.of(
-                                                context,
-                                              )!.voteDeleteAll,
-                                              descriptions: AppLocalizations.of(
-                                                context,
-                                              )!.voteDeleteAllDescription,
-                                              onYes: () async {
-                                                final deleteAllVotesMsg =
-                                                    AppLocalizations.of(
-                                                      context,
-                                                    )!.voteDeletedAll;
-                                                final errorDeletingVotesMsg =
-                                                    AppLocalizations.of(
-                                                      context,
-                                                    )!.voteDeletingError;
-                                                await tokenExpireWrapper(
-                                                  ref,
-                                                  () async {
-                                                    final value = await ref
-                                                        .watch(
-                                                          contenderListProvider
-                                                              .notifier,
-                                                        )
-                                                        .deleteContenders();
-                                                    if (value) {
-                                                      displayVoteToastWithContext(
-                                                        TypeMsg.msg,
-                                                        deleteAllVotesMsg,
-                                                      );
-                                                    } else {
-                                                      displayVoteToastWithContext(
-                                                        TypeMsg.error,
-                                                        errorDeletingVotesMsg,
-                                                      );
-                                                    }
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          );
-                                        },
-                                        child: Center(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                AppLocalizations.of(
-                                                  context,
-                                                )!.voteAll,
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 10),
-                                              const HeroIcon(
-                                                HeroIcons.trash,
-                                                color: Colors.white,
-                                                size: 20,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 20),
-                                    Expanded(
-                                      child: WaitingButton(
-                                        builder: (child) => CardLayout(
-                                          padding: const EdgeInsets.only(
-                                            top: 10,
-                                            bottom: 12,
-                                          ),
-                                          margin: const EdgeInsets.all(0),
-                                          colors: const [
-                                            AMAPColorConstants.redGradient1,
-                                            AMAPColorConstants.redGradient2,
-                                          ],
-                                          borderColor: Colors.white,
-                                          child: child,
-                                        ),
-                                        onTap: () async {
-                                          await showDialog(
-                                            context: context,
-                                            builder: (context) => CustomDialogBox(
-                                              title: AppLocalizations.of(
-                                                context,
-                                              )!.voteDeletePipo,
-                                              descriptions: AppLocalizations.of(
-                                                context,
-                                              )!.voteDeletePipoDescription,
-                                              onYes: () async {
-                                                final deletePipoVotesMsg =
-                                                    AppLocalizations.of(
-                                                      context,
-                                                    )!.voteDeletedPipo;
-                                                final errorDeletingPipoVotesMsg =
-                                                    AppLocalizations.of(
-                                                      context,
-                                                    )!.voteDeletingError;
-                                                await tokenExpireWrapper(
-                                                  ref,
-                                                  () async {
-                                                    final value = await ref
-                                                        .watch(
-                                                          contenderListProvider
-                                                              .notifier,
-                                                        )
-                                                        .deleteContenders(
-                                                          type: ListType.fake,
-                                                        );
-                                                    if (value) {
-                                                      displayVoteToastWithContext(
-                                                        TypeMsg.msg,
-                                                        deletePipoVotesMsg,
-                                                      );
-                                                    } else {
-                                                      displayVoteToastWithContext(
-                                                        TypeMsg.error,
-                                                        errorDeletingPipoVotesMsg,
-                                                      );
-                                                    }
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          );
-                                        },
-                                        child: Center(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                AppLocalizations.of(
-                                                  context,
-                                                )!.votePipo,
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 10),
-                                              const HeroIcon(
-                                                HeroIcons.trash,
-                                                color: Colors.white,
-                                                size: 20,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                              const SizedBox(height: 40),
+                              Text(
+                                AppLocalizations.of(context)!.voteShowVotes,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorConstants.tertiary,
                                 ),
                               ),
                             ],
                           ),
                         ),
+                if (status == Status.published) const VoteBars(),
+                if (status == Status.closed)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 30.0,
+                      vertical: 50,
+                    ),
+                    child: WaitingButton(
+                      builder: (child) => Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          color: ColorConstants.tertiary,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: ColorConstants.onTertiary),
+                        ),
+                        child: child,
                       ),
-                    if (status == Status.open) const VoteCount(),
-                  ],
-                ),
-              ),
-            ],
-          ),
+                      onTap: () async {
+                        await tokenExpireWrapper(ref, () async {
+                          final votesCountedMsg = AppLocalizations.of(
+                            context,
+                          )!.voteVotesCounted;
+                          final errorCountingVotesMsg = AppLocalizations.of(
+                            context,
+                          )!.voteErrorCountingVotes;
+                          final value = await statusNotifier.countVote();
+                          if (value) {
+                            displayVoteToastWithContext(
+                              TypeMsg.msg,
+                              votesCountedMsg,
+                            );
+                          } else {
+                            displayVoteToastWithContext(
+                              TypeMsg.error,
+                              errorCountingVotesMsg,
+                            );
+                          }
+                        });
+                      },
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.voteCountVote,
+                          style: const TextStyle(
+                            color: ColorConstants.background,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                if (status == Status.open)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 30.0,
+                      vertical: 50,
+                    ),
+                    child: WaitingButton(
+                      builder: (child) => Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          color: ColorConstants.main,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: ColorConstants.mainBorder),
+                        ),
+                        child: child,
+                      ),
+                      onTap: () async {
+                        await tokenExpireWrapper(ref, () async {
+                          final closeVotesMsg = AppLocalizations.of(
+                            context,
+                          )!.voteVotesClosed;
+                          final errorClosingVotesMsg = AppLocalizations.of(
+                            context,
+                          )!.voteErrorClosingVotes;
+                          final value = await statusNotifier.closeVote();
+                          if (value) {
+                            displayVoteToastWithContext(
+                              TypeMsg.msg,
+                              closeVotesMsg,
+                            );
+                          } else {
+                            displayVoteToastWithContext(
+                              TypeMsg.error,
+                              errorClosingVotesMsg,
+                            );
+                          }
+                        });
+                      },
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.voteCloseVote,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                if (status == Status.waiting) const OpeningVote(),
+                if (status == Status.open) const VoteCount(),
+              ],
+            ),
+          ],
         ),
       ),
     );

@@ -55,13 +55,13 @@ class AssociationAddEditPage extends HookConsumerWidget {
         ),
         child: Form(
           key: key,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 30),
-                Align(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     association.id == ""
@@ -74,128 +74,138 @@ class AssociationAddEditPage extends HookConsumerWidget {
                     ),
                   ),
                 ),
-                if (association.id != "") ...[
-                  const SizedBox(height: 30),
-                  AsyncChild(
-                    value: associationPicture,
-                    builder: (context, image) {
-                      return Center(
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.1),
-                                    spreadRadius: 5,
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 3),
-                                  ),
-                                ],
-                              ),
-                              child: CircleAvatar(
-                                radius: 80,
-                                backgroundColor: Colors.white,
-                                backgroundImage: image.image,
-                              ),
+              ),
+              if (association.id != "") ...[
+                const SizedBox(height: 30),
+                AsyncChild(
+                  value: associationPicture,
+                  builder: (context, image) {
+                    return Center(
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.1),
+                                  spreadRadius: 5,
+                                  blurRadius: 10,
+                                  offset: const Offset(2, 3),
+                                ),
+                              ],
                             ),
-                            Positioned(
-                              bottom: 0,
-                              left: 0,
-                              child: GestureDetector(
-                                onTap: () async {
-                                  final value = await associationPictureNotifier
-                                      .setProfilePicture(
-                                        ImageSource.gallery,
-                                        association.id,
-                                      );
-                                  if (value != null) {
-                                    if (value) {
-                                      showSnackBarWithContext(
-                                        localizeWithContext
-                                            .settingsUpdatedProfilePicture,
-                                      );
-                                    } else {
-                                      showSnackBarWithContext(
-                                        localizeWithContext
-                                            .settingsTooHeavyProfilePicture,
-                                      );
-                                    }
+                            child: CircleAvatar(
+                              radius: 80,
+                              backgroundColor: Colors.white,
+                              backgroundImage: image.image,
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            child: GestureDetector(
+                              onTap: () async {
+                                final value = await associationPictureNotifier
+                                    .setProfilePicture(
+                                      ImageSource.gallery,
+                                      association.id,
+                                    );
+                                if (value != null) {
+                                  if (value) {
+                                    showSnackBarWithContext(
+                                      localizeWithContext
+                                          .settingsUpdatedProfilePicture,
+                                    );
                                   } else {
                                     showSnackBarWithContext(
                                       localizeWithContext
-                                          .settingsErrorProfilePicture,
+                                          .settingsTooHeavyProfilePicture,
                                     );
                                   }
-                                },
-                                child: const PictureButton(
-                                  icon: HeroIcons.photo,
-                                ),
-                              ),
+                                } else {
+                                  showSnackBarWithContext(
+                                    localizeWithContext
+                                        .settingsErrorProfilePicture,
+                                  );
+                                }
+                              },
+                              child: const PictureButton(icon: HeroIcons.photo),
                             ),
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: GestureDetector(
-                                onTap: () async {
-                                  final value = await associationPictureNotifier
-                                      .setProfilePicture(
-                                        ImageSource.camera,
-                                        association.id,
-                                      );
-                                  if (value != null) {
-                                    if (value) {
-                                      showSnackBarWithContext(
-                                        localizeWithContext
-                                            .settingsUpdatedProfilePicture,
-                                      );
-                                    } else {
-                                      showSnackBarWithContext(
-                                        localizeWithContext
-                                            .settingsTooHeavyProfilePicture,
-                                      );
-                                    }
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: GestureDetector(
+                              onTap: () async {
+                                final value = await associationPictureNotifier
+                                    .setProfilePicture(
+                                      ImageSource.camera,
+                                      association.id,
+                                    );
+                                if (value != null) {
+                                  if (value) {
+                                    showSnackBarWithContext(
+                                      localizeWithContext
+                                          .settingsUpdatedProfilePicture,
+                                    );
                                   } else {
                                     showSnackBarWithContext(
                                       localizeWithContext
-                                          .settingsErrorProfilePicture,
+                                          .settingsTooHeavyProfilePicture,
                                     );
                                   }
-                                },
-                                child: const PictureButton(
-                                  icon: HeroIcons.camera,
-                                ),
+                                } else {
+                                  showSnackBarWithContext(
+                                    localizeWithContext
+                                        .settingsErrorProfilePicture,
+                                  );
+                                }
+                              },
+                              child: const PictureButton(
+                                icon: HeroIcons.camera,
                               ),
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ],
-                const SizedBox(height: 20),
-                Text(
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ],
+              const SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
                   localizeWithContext.phonebookAssociationGroupement,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
                 ),
-                const SizedBox(height: 5),
-                AssociationGroupementBar(editable: true),
-                Container(margin: const EdgeInsets.symmetric(vertical: 10)),
-                TextEntry(
+              ),
+              const SizedBox(height: 10),
+              AssociationGroupementBar(editable: true),
+              Container(margin: const EdgeInsets.symmetric(vertical: 10)),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: TextEntry(
                   controller: name,
                   label: localizeWithContext.phonebookAssociationName,
                   canBeEmpty: false,
                 ),
-                const SizedBox(height: 10),
-                TextEntry(
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: TextEntry(
                   controller: description,
                   label: localizeWithContext.phonebookDescription,
                   canBeEmpty: true,
                 ),
-                const SizedBox(height: 50),
-                Button(
+              ),
+              const SizedBox(height: 30),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Button(
                   onPressed: () async {
                     if (!key.currentState!.validate()) {
                       showSnackBarWithContext(
@@ -279,9 +289,9 @@ class AssociationAddEditPage extends HookConsumerWidget {
                       ? localizeWithContext.phonebookEdit
                       : localizeWithContext.phonebookAdd,
                 ),
-                SizedBox(height: 80),
-              ],
-            ),
+              ),
+              SizedBox(height: 80),
+            ],
           ),
         ),
       ),

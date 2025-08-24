@@ -30,11 +30,12 @@ class MemberDetailPage extends HookConsumerWidget {
 
     return PhonebookTemplate(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 20),
               Center(
                 child: Column(
                   children: [
@@ -129,7 +130,7 @@ class MemberDetailPage extends HookConsumerWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 80),
+              const SizedBox(height: 20),
             ],
           ),
         ),

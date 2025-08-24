@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:titan/admin/class/simple_group.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
+import 'package:titan/tools/ui/styleguide/list_item_template.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 
 class AddAssociationModal extends HookWidget {
@@ -59,8 +61,9 @@ class AddAssociationModal extends HookWidget {
                             child: Column(
                               children: [
                                 ...groups.map(
-                                  (e) => ListItem(
+                                  (e) => ListItemTemplate(
                                     title: e.name,
+                                    trailing: const HeroIcon(HeroIcons.plus),
                                     onTap: () {
                                       chosenGroup.value = e;
                                       Navigator.of(ctx).pop();
@@ -91,8 +94,9 @@ class AddAssociationModal extends HookWidget {
                             child: Column(
                               children: [
                                 ...groups.map(
-                                  (e) => ListItem(
+                                  (e) => ListItemTemplate(
                                     title: e.name,
+                                    trailing: const HeroIcon(HeroIcons.plus),
                                     onTap: () {
                                       chosenGroup.value = e;
                                       Navigator.of(ctx).pop();

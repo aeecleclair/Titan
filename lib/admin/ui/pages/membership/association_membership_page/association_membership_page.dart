@@ -58,7 +58,7 @@ class AssociationMembershipsPage extends HookConsumerWidget {
           await associationMembershipsNotifier.loadAssociationMemberships();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             children: [
               const SizedBox(height: 20),
@@ -66,7 +66,11 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                 children: [
                   Text(
                     AppLocalizations.of(context)!.adminAssociationMembership,
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstants.title,
+                    ),
                   ),
                   const Spacer(),
                   CustomIconButton(
@@ -112,7 +116,7 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 10),
               AsyncChild(
                 value: associationsMemberships,
                 builder: (context, g) {
@@ -125,89 +129,96 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                       Column(
                         children: [
                           ...g.map(
-                            (associationMembership) => ListItem(
-                              title: associationMembership.name,
-                              onTap: () async {
-                                await showCustomBottomModal(
-                                  context: context,
-                                  ref: ref,
-                                  modal: BottomModalTemplate(
-                                    title: associationMembership.name,
-                                    child: Column(
-                                      children: [
-                                        Button(
-                                          text: localizeWithContext.adminEdit,
-                                          onPressed: () {
-                                            associationMembershipMembersNotifier
-                                                .loadAssociationMembershipMembers(
-                                                  associationMembership.id,
-                                                );
-                                            associationMembershipNotifier
-                                                .setAssociationMembership(
-                                                  associationMembership,
-                                                );
-                                            QR.to(
-                                              AdminRouter.root +
-                                                  AdminRouter
-                                                      .associationMemberships +
-                                                  AdminRouter
-                                                      .detailAssociationMembership,
-                                            );
-                                          },
-                                        ),
-                                        const SizedBox(height: 20),
-                                        Button(
-                                          text: localizeWithContext.adminDelete,
-                                          type: ButtonType.danger,
-                                          onPressed: () async {
-                                            await showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return CustomDialogBox(
-                                                  title: AppLocalizations.of(
-                                                    context,
-                                                  )!.adminDeleting,
-                                                  descriptions: AppLocalizations.of(
-                                                    context,
-                                                  )!.adminDeleteAssociationMembership,
-                                                  onYes: () async {
-                                                    tokenExpireWrapper(ref, () async {
-                                                      final deletedAssociationMembershipMsg =
-                                                          AppLocalizations.of(
-                                                            context,
-                                                          )!.adminDeletedAssociationMembership;
-                                                      final deletingErrorMsg =
-                                                          AppLocalizations.of(
-                                                            context,
-                                                          )!.adminDeletingError;
-                                                      final value =
-                                                          await associationMembershipsNotifier
-                                                              .deleteAssociationMembership(
-                                                                associationMembership,
-                                                              );
-                                                      if (value) {
-                                                        displayToastWithContext(
-                                                          TypeMsg.msg,
-                                                          deletedAssociationMembershipMsg,
-                                                        );
-                                                      } else {
-                                                        displayToastWithContext(
-                                                          TypeMsg.error,
-                                                          deletingErrorMsg,
-                                                        );
-                                                      }
-                                                    });
-                                                  },
-                                                );
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ],
+                            (associationMembership) => Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 5.0,
+                              ),
+                              child: ListItem(
+                                title: associationMembership.name,
+                                onTap: () async {
+                                  await showCustomBottomModal(
+                                    context: context,
+                                    ref: ref,
+                                    modal: BottomModalTemplate(
+                                      title: associationMembership.name,
+                                      child: Column(
+                                        children: [
+                                          Button(
+                                            text: localizeWithContext.adminEdit,
+                                            onPressed: () {
+                                              associationMembershipMembersNotifier
+                                                  .loadAssociationMembershipMembers(
+                                                    associationMembership.id,
+                                                  );
+                                              associationMembershipNotifier
+                                                  .setAssociationMembership(
+                                                    associationMembership,
+                                                  );
+                                              QR.to(
+                                                AdminRouter.root +
+                                                    AdminRouter
+                                                        .associationMemberships +
+                                                    AdminRouter
+                                                        .detailAssociationMembership,
+                                              );
+                                            },
+                                          ),
+                                          const SizedBox(height: 20),
+                                          Button(
+                                            text:
+                                                localizeWithContext.adminDelete,
+                                            type: ButtonType.danger,
+                                            onPressed: () async {
+                                              await showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return CustomDialogBox(
+                                                    title: AppLocalizations.of(
+                                                      context,
+                                                    )!.adminDeleting,
+                                                    descriptions:
+                                                        AppLocalizations.of(
+                                                          context,
+                                                        )!.adminDeleteAssociationMembership,
+                                                    onYes: () async {
+                                                      tokenExpireWrapper(ref, () async {
+                                                        final deletedAssociationMembershipMsg =
+                                                            AppLocalizations.of(
+                                                              context,
+                                                            )!.adminDeletedAssociationMembership;
+                                                        final deletingErrorMsg =
+                                                            AppLocalizations.of(
+                                                              context,
+                                                            )!.adminDeletingError;
+                                                        final value =
+                                                            await associationMembershipsNotifier
+                                                                .deleteAssociationMembership(
+                                                                  associationMembership,
+                                                                );
+                                                        if (value) {
+                                                          displayToastWithContext(
+                                                            TypeMsg.msg,
+                                                            deletedAssociationMembershipMsg,
+                                                          );
+                                                        } else {
+                                                          displayToastWithContext(
+                                                            TypeMsg.error,
+                                                            deletingErrorMsg,
+                                                          );
+                                                        }
+                                                      });
+                                                    },
+                                                  );
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
                           ),
                           const SizedBox(height: 20),

@@ -8,6 +8,7 @@ import 'package:titan/admin/providers/structure_provider.dart';
 import 'package:titan/paiement/class/structure.dart';
 import 'package:titan/paiement/providers/bank_account_holder_provider.dart';
 import 'package:titan/paiement/providers/structure_list_provider.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
@@ -53,7 +54,7 @@ class StructurePage extends HookConsumerWidget {
           await structuresNotifier.getStructures();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -62,7 +63,11 @@ class StructurePage extends HookConsumerWidget {
                 children: [
                   Text(
                     localizeWithContext.adminStructures,
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstants.title,
+                    ),
                   ),
                   const Spacer(),
                   CustomIconButton(
@@ -83,7 +88,7 @@ class StructurePage extends HookConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
               Async2Children(
                 values: Tuple2(structures, bankAccountHolder),
                 builder: (context, structures, bankAccountHolder) {
@@ -110,7 +115,9 @@ class StructurePage extends HookConsumerWidget {
                           const SizedBox(height: 10),
                           ...structures.map(
                             (structure) => Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 2),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 5.0,
+                              ),
                               child: ListItem(
                                 title: structure.name,
                                 subtitle: structure.managerUser.getName(),

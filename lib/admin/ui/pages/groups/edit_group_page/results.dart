@@ -45,49 +45,43 @@ class MemberResults extends HookConsumerWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    Row(
-                      children: [
-                        WaitingButton(
-                          onTap: () async {
-                            if (!group.value!.members.contains(e)) {
-                              Group newGroup = group.value!.copyWith(
-                                members: group.value!.members + [e],
-                              );
-                              final addedMemberMsg = AppLocalizations.of(
-                                context,
-                              )!.adminAddedMember;
-                              final addingErrorMsg = AppLocalizations.of(
-                                context,
-                              )!.adminAddingError;
-                              await tokenExpireWrapper(ref, () async {
-                                groupNotifier.addMember(newGroup, e).then((
-                                  result,
-                                ) {
-                                  if (result) {
-                                    simpleGroupGroupsNotifier.setTData(
-                                      newGroup.id,
-                                      AsyncData([newGroup]),
-                                    );
-                                    value.remove(e);
-                                    displayToastWithContext(
-                                      TypeMsg.msg,
-                                      addedMemberMsg,
-                                    );
-                                  } else {
-                                    displayToastWithContext(
-                                      TypeMsg.error,
-                                      addingErrorMsg,
-                                    );
-                                  }
-                                });
-                              });
-                            }
-                          },
-                          waitingColor: ColorConstants.main,
-                          builder: (child) => child,
-                          child: const HeroIcon(HeroIcons.plus),
-                        ),
-                      ],
+                    WaitingButton(
+                      onTap: () async {
+                        if (!group.value!.members.contains(e)) {
+                          Group newGroup = group.value!.copyWith(
+                            members: group.value!.members + [e],
+                          );
+                          final addedMemberMsg = AppLocalizations.of(
+                            context,
+                          )!.adminAddedMember;
+                          final addingErrorMsg = AppLocalizations.of(
+                            context,
+                          )!.adminAddingError;
+                          await tokenExpireWrapper(ref, () async {
+                            groupNotifier.addMember(newGroup, e).then((result) {
+                              if (result) {
+                                simpleGroupGroupsNotifier.setTData(
+                                  newGroup.id,
+                                  AsyncData([newGroup]),
+                                );
+                                value.remove(e);
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  addedMemberMsg,
+                                );
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  addingErrorMsg,
+                                );
+                              }
+                            });
+                          });
+                        }
+                      },
+                      waitingColor: ColorConstants.main,
+                      builder: (child) => child,
+                      child: const HeroIcon(HeroIcons.plus),
                     ),
                   ],
                 ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/tools/ui/styleguide/item_chip.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:titan/tools/ui/layouts/item_chip.dart';
 import 'package:titan/vote/providers/section_id_provider.dart';
 import 'package:titan/vote/providers/sections_contender_provider.dart';
 import 'package:titan/vote/providers/sections_provider.dart';
@@ -36,7 +36,7 @@ class SectionBar extends HookConsumerWidget {
     }
 
     return HorizontalListView.builder(
-      height: 40,
+      height: 50,
       items: sectionContender.keys.toList(),
       firstChild: (status == Status.waiting)
           ? ItemChip(

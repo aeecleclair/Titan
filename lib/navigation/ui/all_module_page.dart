@@ -45,60 +45,69 @@ class AllModulePage extends HookConsumerWidget {
                   physics: const BouncingScrollPhysics(),
                   controller: scrollController,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
                         ...modules.map(
-                          (module) => Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  if (preferedModuleRootList.contains(
-                                    module.root,
-                                  )) {
-                                    preferedModuleRootListNotifier
-                                        .removePreferedModulesRoot(module.root);
-                                  } else if (preferedModuleRootList.length <
-                                      2) {
-                                    preferedModuleRootListNotifier
-                                        .addPreferedModulesRoot(module.root);
-                                  }
-                                },
-                                child: HeroIcon(
-                                  HeroIcons.bookmark,
-                                  style:
-                                      preferedModuleRootList.contains(
-                                        module.root,
-                                      )
-                                      ? HeroIconStyle.solid
-                                      : HeroIconStyle.outline,
-                                  size: 20,
-                                  color:
-                                      preferedModuleRootList.contains(
-                                        module.root,
-                                      )
-                                      ? ColorConstants.main
-                                      : ColorConstants.secondary,
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: ListItem(
-                                  title: module.getName(context),
-                                  subtitle: module.getDescription(context),
+                          (module) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5.0),
+                            child: Row(
+                              children: [
+                                GestureDetector(
                                   onTap: () {
-                                    navbarListModuleNotifier.pushModule(module);
-                                    final pathForwardingNotifier = ref.watch(
-                                      pathForwardingProvider.notifier,
-                                    );
-                                    pathForwardingNotifier.forward(module.root);
-
-                                    QR.to(module.root);
-                                    navbarVisibilityNotifier.show();
+                                    if (preferedModuleRootList.contains(
+                                      module.root,
+                                    )) {
+                                      preferedModuleRootListNotifier
+                                          .removePreferedModulesRoot(
+                                            module.root,
+                                          );
+                                    } else if (preferedModuleRootList.length <
+                                        2) {
+                                      preferedModuleRootListNotifier
+                                          .addPreferedModulesRoot(module.root);
+                                    }
                                   },
+                                  child: HeroIcon(
+                                    HeroIcons.bookmark,
+                                    style:
+                                        preferedModuleRootList.contains(
+                                          module.root,
+                                        )
+                                        ? HeroIconStyle.solid
+                                        : HeroIconStyle.outline,
+                                    size: 20,
+                                    color:
+                                        preferedModuleRootList.contains(
+                                          module.root,
+                                        )
+                                        ? ColorConstants.main
+                                        : ColorConstants.tertiary,
+                                  ),
                                 ),
-                              ),
-                            ],
+                                SizedBox(width: 20),
+                                Expanded(
+                                  child: ListItem(
+                                    title: module.getName(context),
+                                    subtitle: module.getDescription(context),
+                                    onTap: () {
+                                      navbarListModuleNotifier.pushModule(
+                                        module,
+                                      );
+                                      final pathForwardingNotifier = ref.watch(
+                                        pathForwardingProvider.notifier,
+                                      );
+                                      pathForwardingNotifier.forward(
+                                        module.root,
+                                      );
+
+                                      QR.to(module.root);
+                                      navbarVisibilityNotifier.show();
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],

@@ -69,7 +69,7 @@ class MemberEditionModal extends HookConsumerWidget {
                 }
               },
             ),
-            SizedBox(height: 5),
+            SizedBox(height: 20),
             Button.danger(
               text: localizeWithContext.phonebookDeleteRole,
               onPressed: () {

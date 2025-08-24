@@ -36,7 +36,14 @@ class UserSearchModal extends HookConsumerWidget {
                 }
               }),
             ),
-            SearchResult(queryController: textController),
+            SizedBox(height: 10),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 280),
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: SearchResult(queryController: textController),
+              ),
+            ),
           ],
         ),
       ),

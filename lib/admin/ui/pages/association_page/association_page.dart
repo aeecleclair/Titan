@@ -8,6 +8,7 @@ import 'package:titan/admin/providers/assocation_list_provider.dart';
 import 'package:titan/admin/ui/pages/association_page/add_association_modal.dart';
 import 'package:titan/admin/ui/pages/association_page/association_item.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -34,84 +35,87 @@ class AssociationPage extends ConsumerWidget {
     final localizeWithContext = AppLocalizations.of(context)!;
 
     return AdminTemplate(
-      child: AsyncChild(
-        value: associationList,
-        builder: (BuildContext context, associationList) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      localizeWithContext.adminAssociations,
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    const Spacer(),
-                    CustomIconButton(
-                      icon: HeroIcon(
-                        HeroIcons.plus,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                      onPressed: () async {
-                        await showCustomBottomModal(
-                          context: context,
-                          ref: ref,
-                          modal: AddAssociationModal(
-                            groups: groups,
-                            onSubmit: (group, name) {
-                              tokenExpireWrapper(ref, () async {
-                                final value = await associationNotifier
-                                    .createAssociation(
-                                      Association.empty().copyWith(
-                                        groupId: group.id,
-                                        name: name,
-                                      ),
-                                    );
-                                if (value) {
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    localizeWithContext.adminAssociationCreated,
-                                  );
-                                } else {
-                                  displayToastWithContext(
-                                    TypeMsg.error,
-                                    localizeWithContext
-                                        .adminAssociationCreationError,
-                                  );
-                                }
-                                popWithContext();
-                              });
-                            },
-                            ref: ref,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Expanded(
-                  child: Refresher(
-                    controller: ScrollController(),
-                    onRefresh: () async {
-                      await associationNotifier.loadAssociations();
-                    },
-                    child: Column(
-                      children: [
-                        ...associationList.map(
-                          (association) =>
-                              AssociationItem(association: association),
-                        ),
-                      ],
+      child: Refresher(
+        controller: ScrollController(),
+        onRefresh: () async {
+          await associationNotifier.loadAssociations();
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Text(
+                    localizeWithContext.adminAssociations,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstants.title,
                     ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
+                  const Spacer(),
+                  CustomIconButton(
+                    icon: HeroIcon(
+                      HeroIcons.plus,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    onPressed: () async {
+                      await showCustomBottomModal(
+                        context: context,
+                        ref: ref,
+                        modal: AddAssociationModal(
+                          groups: groups,
+                          onSubmit: (group, name) {
+                            tokenExpireWrapper(ref, () async {
+                              final value = await associationNotifier
+                                  .createAssociation(
+                                    Association.empty().copyWith(
+                                      groupId: group.id,
+                                      name: name,
+                                    ),
+                                  );
+                              if (value) {
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  localizeWithContext.adminAssociationCreated,
+                                );
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  localizeWithContext
+                                      .adminAssociationCreationError,
+                                );
+                              }
+                              popWithContext();
+                            });
+                          },
+                          ref: ref,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              AsyncChild(
+                value: associationList,
+                builder: (BuildContext context, associationList) {
+                  return Column(
+                    children: [
+                      ...associationList.map(
+                        (association) =>
+                            AssociationItem(association: association),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -13,6 +13,7 @@ import 'package:titan/phonebook/providers/membership_provider.dart';
 import 'package:titan/phonebook/router.dart';
 import 'package:titan/phonebook/ui/components/member_card.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -57,9 +58,14 @@ class AssociationMembersPage extends HookConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 20),
               Text(
                 localizeWithContext.phonebookMembers(association.name),
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: ColorConstants.title,
+                ),
               ),
               if (!association.deactivated) ...[
                 SizedBox(height: 20),
@@ -105,8 +111,12 @@ class AssociationMembersPage extends HookConsumerWidget {
                     ? Text(localizeWithContext.phonebookNoMember)
                     : !association.deactivated
                     ? SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.7,
+                        height: MediaQuery.of(context).size.height - 120,
                         child: ReorderableListView(
+                          physics: const BouncingScrollPhysics(),
+                          proxyDecorator: (child, index, animation) {
+                            return Transform.scale(scale: 1.05, child: child);
+                          },
                           onReorder: (int oldIndex, int newIndex) async {
                             await tokenExpireWrapper(ref, () async {
                               final result = await associationMemberListNotifier
@@ -164,7 +174,7 @@ class AssociationMembersPage extends HookConsumerWidget {
                             .toList(),
                       ),
               ),
-              SizedBox(height: 80),
+              SizedBox(height: 20),
             ],
           ),
         ),

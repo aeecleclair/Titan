@@ -6,16 +6,15 @@ import 'package:titan/admin/class/user_association_membership.dart';
 import 'package:titan/admin/class/user_association_membership_base.dart';
 import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
 import 'package:titan/admin/providers/user_association_membership_provider.dart';
-import 'package:titan/admin/ui/pages/membership/add_edit_user_membership_page/search_result.dart';
+import 'package:titan/admin/ui/pages/membership/add_edit_user_membership_page/user_search_modal.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
-import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
-import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
-import 'package:titan/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
@@ -27,8 +26,6 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
     final associationMembershipMembersNotifier = ref.watch(
       associationMembershipMembersProvider.notifier,
     );
-    final queryController = useTextEditingController(text: '');
-    final usersNotifier = ref.watch(userList.notifier);
     final membership = ref.watch(userAssociationMembershipProvider);
     final isEdit = membership.id != UserAssociationMembership.empty().id;
     final start = useTextEditingController(
@@ -44,7 +41,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Padding(
-        padding: const EdgeInsets.all(30.0),
+        padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -52,24 +49,24 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                 isEdit
                     ? AppLocalizations.of(context)!.adminEditMembership
                     : AppLocalizations.of(context)!.adminAddMember,
+                fontWeight: FontWeight.w900,
+                color: ColorConstants.title,
+                fontSize: 24,
               ),
               const SizedBox(height: 20),
               if (!isEdit) ...[
-                StyledSearchBar(
-                  padding: EdgeInsets.zero,
-                  label: AppLocalizations.of(context)!.adminUser,
-                  editingController: queryController,
-                  onChanged: (value) async {
-                    tokenExpireWrapper(ref, () async {
-                      if (value.isNotEmpty) {
-                        await usersNotifier.filterUsers(value);
-                      } else {
-                        usersNotifier.clear();
-                      }
-                    });
+                ListItem(
+                  title: membership.user.id.isNotEmpty
+                      ? membership.user.getName()
+                      : AppLocalizations.of(context)!.adminUser,
+                  onTap: () async {
+                    await showCustomBottomModal(
+                      context: context,
+                      ref: ref,
+                      modal: UserSearchModal(),
+                    );
                   },
                 ),
-                SearchResult(queryController: queryController),
               ] else
                 Text(
                   membership.user.getName(),
@@ -89,7 +86,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                   lastDate: DateTime(2100),
                 ),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 10),
               DateEntry(
                 label: AppLocalizations.of(context)!.adminEndDate,
                 controller: end,
@@ -100,11 +97,20 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                   lastDate: DateTime(2100),
                 ),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 20),
               WaitingButton(
-                builder: (child) => AddEditButtonLayout(
-                  colors: const [ColorConstants.main, ColorConstants.onMain],
-                  child: child,
+                builder: (child) => Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    color: ColorConstants.tertiary,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: ColorConstants.onTertiary),
+                  ),
+                  child: Center(child: child),
                 ),
                 child: Text(
                   !isEdit

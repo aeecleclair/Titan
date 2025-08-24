@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/service/providers/firebase_token_expiration_provider.dart';
 import 'package:titan/service/providers/messages_provider.dart';
-import 'package:titan/tools/ui/styleguide/custom_dialog_box.dart';
+import 'package:titan/tools/ui/styleguide/confirm_modal.dart';
 import 'package:titan/tools/ui/widgets/vertical_clip_scroll.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/settings/providers/notification_topic_provider.dart';
@@ -159,6 +159,7 @@ class SettingsMainPage extends HookConsumerWidget {
                                   )
                                 : Container(),
                           ),
+                          const SizedBox(height: 10),
                           ListItemTemplate(
                             title: "🇬🇧 English",
                             onTap: () async {
@@ -220,11 +221,16 @@ class SettingsMainPage extends HookConsumerWidget {
                                   child: Column(
                                     children: [
                                       ...uniqueTopics.map(
-                                        (notificationTopic) => ListItemTemplate(
-                                          title: notificationTopic.name,
-                                          trailing: LoadSwitchTopic(
-                                            notificationTopic:
-                                                notificationTopic,
+                                        (notificationTopic) => Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 8.0,
+                                          ),
+                                          child: ListItemTemplate(
+                                            title: notificationTopic.name,
+                                            trailing: LoadSwitchTopic(
+                                              notificationTopic:
+                                                  notificationTopic,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -239,33 +245,46 @@ class SettingsMainPage extends HookConsumerWidget {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 const SizedBox(height: 20),
-                                                ListItemTemplate(
-                                                  title: moduleRoot,
-                                                  trailing: HeroIcon(
-                                                    expanded
-                                                        ? HeroIcons.chevronDown
-                                                        : HeroIcons
-                                                              .chevronRight,
-                                                    color:
-                                                        ColorConstants.tertiary,
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                        vertical: 8.0,
+                                                      ),
+                                                  child: ListItemTemplate(
+                                                    title: moduleRoot,
+                                                    trailing: HeroIcon(
+                                                      expanded
+                                                          ? HeroIcons
+                                                                .chevronDown
+                                                          : HeroIcons
+                                                                .chevronRight,
+                                                      color: ColorConstants
+                                                          .tertiary,
+                                                    ),
+                                                    onTap: () {
+                                                      setState(() {
+                                                        expanded = !expanded;
+                                                      });
+                                                    },
                                                   ),
-                                                  onTap: () {
-                                                    setState(() {
-                                                      expanded = !expanded;
-                                                    });
-                                                  },
                                                 ),
                                                 const SizedBox(height: 10),
                                                 if (expanded)
                                                   ...topics.map(
                                                     (
                                                       notificationTopic,
-                                                    ) => ListItemTemplate(
-                                                      title: notificationTopic
-                                                          .name,
-                                                      trailing: LoadSwitchTopic(
-                                                        notificationTopic:
-                                                            notificationTopic,
+                                                    ) => Padding(
+                                                      padding:
+                                                          const EdgeInsets.symmetric(
+                                                            vertical: 8.0,
+                                                          ),
+                                                      child: ListItemTemplate(
+                                                        title: notificationTopic
+                                                            .name,
+                                                        trailing: LoadSwitchTopic(
+                                                          notificationTopic:
+                                                              notificationTopic,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
