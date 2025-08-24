@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,6 +19,8 @@ class LocaleNotifier extends StateNotifier<Locale?> {
     final localeCode = prefs.getString(_localeKey);
     if (localeCode != null) {
       state = Locale(localeCode);
+    } else {
+      state = Locale(Platform.localeName);
     }
   }
 
