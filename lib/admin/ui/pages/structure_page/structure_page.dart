@@ -101,11 +101,11 @@ class StructurePage extends HookConsumerWidget {
                       Column(
                         children: [
                           Text(
-                            bankAccountHolder.holderStructureId == ""
+                            bankAccountHolder.id == ""
                                 ? localizeWithContext
                                       .adminUndefinedBankAccountHolder
                                 : localizeWithContext.adminBankAccountHolder(
-                                    bankAccountHolder.holderStructure.name,
+                                    bankAccountHolder.name,
                                   ),
                             style: TextStyle(
                               fontSize: 16,
@@ -156,7 +156,7 @@ class StructurePage extends HookConsumerWidget {
                                               final value =
                                                   await bankAccountHolderNotifier
                                                       .updateBankAccountHolder(
-                                                        structure.id,
+                                                        structure,
                                                       );
                                               if (value) {
                                                 displayToastWithContext(
