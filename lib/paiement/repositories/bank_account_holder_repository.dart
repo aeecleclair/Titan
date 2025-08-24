@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/paiement/class/bank_account_holder.dart';
+import 'package:titan/paiement/class/structure.dart';
 import 'package:titan/tools/exception.dart';
 import 'package:titan/tools/repository/repository.dart';
 
@@ -9,20 +9,20 @@ class BankAccountHolderRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'mypayment/bank-account-holder';
 
-  Future<BankAccountHolder> getBankAccountHolder() async {
+  Future<Structure> getBankAccountHolder() async {
     try {
-      return BankAccountHolder.fromJson(await getOne(""));
+      return Structure.fromJson(await getOne(""));
     } on AppException catch (e) {
       if (e.type == ErrorType.tokenExpire) rethrow;
-      return BankAccountHolder.empty();
+      return Structure.empty();
     } catch (e) {
-      return BankAccountHolder.empty();
+      return Structure.empty();
     }
   }
 
-  Future<BankAccountHolder> updateBankAccountHolder(String structureId) async {
-    return BankAccountHolder.fromJson(
-      await create({'holder_structure_id': structureId}),
+  Future<Structure> updateBankAccountHolder(Structure structure) async {
+    return Structure.fromJson(
+      await create({'holder_structure_id': structure.id}),
     );
   }
 }
