@@ -1106,6 +1106,12 @@ abstract class AppLocalizations {
   /// **'Choisir un groupe gestionnaire pour l\'association'**
   String get adminChooseAssociationManagerGroup;
 
+  /// No description provided for @adminConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider'**
+  String get adminConfirm;
+
   /// No description provided for @advertAdd.
   ///
   /// In fr, this message translates to:

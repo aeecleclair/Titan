@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/service/providers/firebase_token_expiration_provider.dart';
 import 'package:titan/service/providers/messages_provider.dart';
-import 'package:titan/tools/ui/styleguide/custom_dialog_box.dart';
+import 'package:titan/tools/ui/styleguide/confirm_modal.dart';
 import 'package:titan/tools/ui/widgets/vertical_clip_scroll.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/settings/providers/notification_topic_provider.dart';

@@ -533,6 +533,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Choose a group to manage this association';
 
   @override
+  String get adminConfirm => 'Confirm';
+
+  @override
   String get advertAdd => 'Add';
 
   @override

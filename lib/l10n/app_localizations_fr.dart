@@ -540,6 +540,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Choisir un groupe gestionnaire pour l\'association';
 
   @override
+  String get adminConfirm => 'Valider';
+
+  @override
   String get advertAdd => 'Ajouter';
 
   @override
