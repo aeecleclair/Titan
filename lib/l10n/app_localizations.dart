@@ -401,7 +401,7 @@ abstract class AppLocalizations {
   /// No description provided for @eventActionEventButton.
   ///
   /// In fr, this message translates to:
-  /// **'Participer'**
+  /// **'Prendre ma place'**
   String get eventActionEventButton;
 
   /// No description provided for @eventActionCampaignValidated.
@@ -1273,12 +1273,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Choisir un groupe gestionnaire pour l\'association'**
   String get adminChooseAssociationManagerGroup;
-
-  /// No description provided for @adminConfirm.
-  ///
-  /// In fr, this message translates to:
-  /// **'Valider'**
-  String get adminConfirm;
 
   /// No description provided for @advertAdd.
   ///

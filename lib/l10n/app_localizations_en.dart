@@ -164,7 +164,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventActionCampaignButton => 'Vote';
 
   @override
-  String get eventActionEventButton => 'Participate';
+  String get eventActionEventButton => 'Take my place';
 
   @override
   String get eventActionCampaignValidated => 'I voted!';
@@ -621,9 +621,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get adminChooseAssociationManagerGroup =>
       'Choose a group to manage this association';
-
-  @override
-  String get adminConfirm => 'Confirm';
 
   @override
   String get advertAdd => 'Add';
