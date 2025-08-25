@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/repository/logo_repository.dart';
 
 class NewsImageRepository extends LogoRepository {
@@ -14,7 +13,7 @@ class NewsImageRepository extends LogoRepository {
   Future<Image> getNewsImage(String id) async {
     final uint8List = await getLogo(id, suffix: "/image");
     if (uint8List.isEmpty) {
-      return Image.asset(getTitanLogo());
+      throw Exception("No image found");
     }
     return Image.memory(uint8List);
   }
