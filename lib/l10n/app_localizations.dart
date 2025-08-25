@@ -8345,7 +8345,7 @@ abstract class AppLocalizations {
   /// No description provided for @moduleAdvert.
   ///
   /// In fr, this message translates to:
-  /// **'Annonce'**
+  /// **'Annonces'**
   String get moduleAdvert;
 
   /// No description provided for @moduleAdvertDescription.

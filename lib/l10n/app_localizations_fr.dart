@@ -4326,7 +4326,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'La sélection ne sera pas sauvegardée.\nVoulez-vous continuer ?';
 
   @override
-  String get moduleAdvert => 'Annonce';
+  String get moduleAdvert => 'Annonces';
 
   @override
   String get moduleAdvertDescription => 'Gérer les annonces';

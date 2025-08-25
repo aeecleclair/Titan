@@ -4279,7 +4279,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Selection will not be saved.\nDo you want to continue?';
 
   @override
-  String get moduleAdvert => 'Advert';
+  String get moduleAdvert => 'Adverts';
 
   @override
   String get moduleAdvertDescription => 'View the latest adverts';
