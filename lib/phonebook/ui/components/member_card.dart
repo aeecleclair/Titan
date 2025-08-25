@@ -85,7 +85,7 @@ class MemberCard extends HookConsumerWidget {
               },
         trailing: editable
             ? const HeroIcon(
-                HeroIcons.chevronRight,
+                HeroIcons.chevronUpDown,
                 color: ColorConstants.tertiary,
               )
             : SizedBox.shrink(),
