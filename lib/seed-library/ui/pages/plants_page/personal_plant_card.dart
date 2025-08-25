@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:titan/seed-library/class/plant_simple.dart';
 import 'package:titan/seed-library/providers/species_list_provider.dart';
 import 'package:titan/seed-library/tools/constants.dart';
-import 'package:titan/tools/functions.dart';
 import 'package:titan/seed-library/tools/functions.dart' as function;
 
 class PersonalPlantCard extends HookConsumerWidget {
@@ -19,6 +19,7 @@ class PersonalPlantCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final species = ref.watch(syncSpeciesListProvider);
     final plantSpecies = species.firstWhere(
       (element) => element.id == plant.speciesId,
@@ -64,7 +65,9 @@ class PersonalPlantCard extends HookConsumerWidget {
                                 ? SeedLibraryTextConstants.deathDate
                                 : SeedLibraryTextConstants.plantingDate,
                           ),
-                          Text(processDate(plant.plantingDate!)),
+                          Text(
+                            DateFormat.yMd(locale).format(plant.plantingDate!),
+                          ),
                           ...plantSpecies.timeMaturation != null &&
                                   plant.state != function.State.consumed
                               ? [

@@ -1,6 +1,7 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:titan/amap/class/delivery.dart';
 import 'package:titan/amap/providers/delivery_list_provider.dart';
 import 'package:titan/amap/providers/delivery_order_list_provider.dart';
@@ -26,11 +27,12 @@ class AddEditDeliveryPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final formKey = GlobalKey<FormState>();
     final delivery = ref.watch(deliveryProvider);
     final isEdit = delivery.id != Delivery.empty().id;
     final dateController = useTextEditingController(
-      text: isEdit ? processDate(delivery.deliveryDate) : '',
+      text: isEdit ? DateFormat.yMd(locale).format(delivery.deliveryDate) : '',
     );
     final productList = ref.watch(productListProvider);
     final sortedProductsList = ref.watch(sortedByCategoryProductsProvider);
@@ -141,7 +143,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                       )
                                       .toList(),
                                   deliveryDate: DateTime.parse(
-                                    processDateBack(date),
+                                    processDateBack(date, locale.toString()),
                                   ),
                                   status: DeliveryStatus.creation,
                                 );

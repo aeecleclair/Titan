@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:titan/amap/class/order.dart';
 import 'package:titan/amap/class/product.dart';
 import 'package:titan/amap/providers/cash_list_provider.dart';
@@ -12,7 +13,6 @@ import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/amap.dart';
 import 'package:titan/amap/ui/pages/detail_delivery_page/order_detail_ui.dart';
 import 'package:titan/amap/ui/pages/detail_delivery_page/product_detail_ui.dart';
-import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/widgets/loader.dart';
@@ -24,6 +24,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final delivery = ref.watch(deliveryProvider);
     final deliveryOrders = ref.watch(adminDeliveryOrderListProvider);
     final orders = deliveryOrders[delivery.id];
@@ -49,7 +50,7 @@ class DetailDeliveryPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   Text(
-                    "${AppLocalizations.of(context)!.amapDeliveryDate} : ${processDate(delivery.deliveryDate)}",
+                    "${AppLocalizations.of(context)!.amapDeliveryDate} : ${DateFormat.yMd(locale).format(delivery.deliveryDate)}",
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

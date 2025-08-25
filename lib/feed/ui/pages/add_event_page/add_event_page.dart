@@ -35,6 +35,7 @@ class AddEventPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final key = GlobalKey<FormState>();
     final myAssociations = ref.watch(myAssociationListProvider);
     final titleController = useTextEditingController();
@@ -376,9 +377,13 @@ class AddEventPage extends HookConsumerWidget {
                     Button(
                       text: localizeWithContext.feedCreateEvent,
                       onPressed: () async {
+                        print('Creating event...');
                         if (key.currentState == null) {
                           return;
                         }
+                        print(
+                          "Selected association: ${selectedAssociation.value}",
+                        );
                         if (selectedAssociation.value == null) {
                           displayToastWithContext(
                             TypeMsg.error,
@@ -386,6 +391,7 @@ class AddEventPage extends HookConsumerWidget {
                           );
                           return;
                         }
+                        print("Form valid: ${key.currentState!.validate()}");
                         if (externalLinkController.text.isEmpty &&
                             shotgunDateController.text.isNotEmpty) {
                           displayToastWithContext(
@@ -395,6 +401,7 @@ class AddEventPage extends HookConsumerWidget {
                           );
                           return;
                         }
+                        print("External link: ${externalLinkController.text}");
                         if (externalLinkController.text.isNotEmpty &&
                             shotgunDateController.text.isEmpty) {
                           displayToastWithContext(
@@ -403,6 +410,7 @@ class AddEventPage extends HookConsumerWidget {
                           );
                           return;
                         }
+                        print("Shotgun date: ${shotgunDateController.text}");
                         if (key.currentState!.validate()) {
                           // if (allDay.value) {
                           //   startDateController.text =
@@ -412,8 +420,8 @@ class AddEventPage extends HookConsumerWidget {
                           // }
                           if (endDateController.text.contains("/") &&
                               isDateBefore(
-                                processDateBack(endDateController.text),
-                                processDateBack(startDateController.text),
+                                processDateBack(endDateController.text, locale.toString()),
+                                processDateBack(startDateController.text, locale.toString()),
                               )) {
                             displayToast(
                               context,
@@ -432,11 +440,11 @@ class AddEventPage extends HookConsumerWidget {
                               // String recurrenceRule = "";
                               // String startString = startDateController.text;
                               // if (!startString.contains("/")) {
-                              //   startString = "${processDate(now)} $startString";
+                              //   startString = "${DateFormat.yMd(locale).format(now)} $startString";
                               // }
                               // String endString = endDateController.text;
                               // if (!endString.contains("/")) {
-                              //   endString = "${processDate(now)} $endString";
+                              //   endString = "${DateFormat.yMd(locale).format(now)} $endString";
                               // }
                               // if (recurrentController.value) {
                               //   RecurrenceProperties recurrence =
@@ -471,10 +479,10 @@ class AddEventPage extends HookConsumerWidget {
                               final newEvent = Event(
                                 id: "",
                                 start: DateTime.parse(
-                                  processDateBack(startDateController.text),
+                                  processDateBack(startDateController.text, locale.toString()),
                                 ),
                                 end: DateTime.parse(
-                                  processDateBack(endDateController.text),
+                                  processDateBack(endDateController.text, locale.toString()),
                                 ),
                                 location: locationController.text,
                                 ticketUrlOpening:
@@ -482,6 +490,7 @@ class AddEventPage extends HookConsumerWidget {
                                     ? DateTime.parse(
                                         processDateBack(
                                           shotgunDateController.text,
+                                          locale.toString(),
                                         ),
                                       )
                                     : null,
@@ -492,6 +501,7 @@ class AddEventPage extends HookConsumerWidget {
                                 associationId: selectedAssociation.value!.id,
                                 ticketUrl: externalLinkController.text,
                               );
+                              print(newEvent);
                               try {
                                 final eventCreated = await eventCreationNotifier
                                     .addEvent(newEvent);
@@ -523,6 +533,7 @@ class AddEventPage extends HookConsumerWidget {
                                   );
                                 }
                               } catch (e) {
+                                print(e.toString());
                                 displayToastWithContext(
                                   TypeMsg.error,
                                   localizeWithContext.eventAddingError,

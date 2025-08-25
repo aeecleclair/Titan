@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:titan/loan/class/item.dart';
 import 'package:titan/tools/functions.dart';
 
@@ -11,9 +12,9 @@ class EndNotifier extends StateNotifier<String> {
     state = end;
   }
 
-  void setEndFromSelected(String start, List<Item> selected) {
-    state = processDate(
-      DateTime.parse(processDateBack(start)).add(
+  void setEndFromSelected(String start, List<Item> selected, String locale) {
+    state = DateFormat.yMd(locale).format(
+      DateTime.parse(processDateBack(start, locale)).add(
         Duration(
           days: selected
               .map((item) => item.suggestedLendingDuration)

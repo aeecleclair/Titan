@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:intl/intl.dart';
 import 'package:titan/loan/class/loan.dart';
 import 'package:titan/loan/tools/constants.dart';
 import 'package:titan/loan/tools/functions.dart';
@@ -29,6 +30,7 @@ class LoanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context);
     final shouldReturn =
         DateTime.now().compareTo(loan.end) > 0 && !loan.returned;
     return GestureDetector(
@@ -141,9 +143,9 @@ class LoanCard extends StatelessWidget {
                 Text(
                   (loan.returned)
                       ? loan.returnedDate != null
-                            ? processDate(loan.returnedDate!)
+                            ? DateFormat.yMd(locale).format(loan.returnedDate!)
                             : AppLocalizations.of(context)!.loanNoReturnedDate
-                      : processDate(loan.end),
+                      : DateFormat.yMd(locale).format(loan.end),
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,

@@ -17,6 +17,7 @@ class CalendarDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context);
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       child: Stack(
@@ -41,6 +42,7 @@ class CalendarDialog extends StatelessWidget {
                   booking.end,
                   booking.recurrenceRule,
                   false,
+                  locale.toString()
                 ),
                 style: TextStyle(
                   fontWeight: FontWeight.w400,

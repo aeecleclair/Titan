@@ -34,8 +34,12 @@ class FeedMainPage extends HookConsumerWidget {
 
     final localizeWithContext = AppLocalizations.of(context)!;
 
+    print('rebuilt');
+
     Future<void> onRefresh() async {
+      print("reloaading");
       await newsListNotifier.loadNewsList();
+      print(news);
     }
 
     useEffect(() {

@@ -21,6 +21,7 @@ class ItemBar extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final loaner = ref.watch(loanerProvider);
     final loanersItems = ref.watch(loanersItemsProvider);
     final selectedItems = ref.watch(editSelectedListProvider);
@@ -116,6 +117,7 @@ class ItemBar extends HookConsumerWidget {
                                       endNotifier.setEndFromSelected(
                                         start,
                                         selected,
+                                        locale.toString(),
                                       );
                                       cautionNotifier.setCautionFromSelected(
                                         selectedItemsWithQuantity,
@@ -181,6 +183,7 @@ class ItemBar extends HookConsumerWidget {
                                       endNotifier.setEndFromSelected(
                                         start,
                                         selected,
+                                        locale.toString(),
                                       );
                                       cautionNotifier.setCautionFromSelected(
                                         selectedItemsWithQuantity,

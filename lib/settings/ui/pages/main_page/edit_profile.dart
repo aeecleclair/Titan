@@ -19,6 +19,7 @@ class EditProfile extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final me = ref.watch(userProvider);
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
     final profilePicture = ref.watch(profilePictureProvider);
@@ -203,7 +204,7 @@ class EditProfile extends HookConsumerWidget {
                   final newMe = me.copyWith(
                     birthday: birthdayController.value.text.isNotEmpty
                         ? DateTime.parse(
-                            processDateBack(birthdayController.value.text),
+                            processDateBack(birthdayController.value.text, locale.toString()),
                           )
                         : null,
                     phone: phoneController.value.text.isEmpty

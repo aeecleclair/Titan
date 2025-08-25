@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:titan/loan/class/item.dart';
 import 'package:titan/loan/class/loan.dart';
 import 'package:titan/loan/providers/admin_loan_list_provider.dart';
@@ -32,6 +33,7 @@ class OnGoingLoan extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final loaner = ref.watch(loanerProvider);
     final loanListNotifier = ref.watch(loanerLoanListProvider.notifier);
     final loanList = ref.watch(loanerLoanListProvider);
@@ -84,7 +86,9 @@ class OnGoingLoan extends HookConsumerWidget {
               firstChild: GestureDetector(
                 onTap: () async {
                   await loanNotifier.setLoan(Loan.empty());
-                  startNotifier.setStart(processDate(DateTime.now()));
+                  startNotifier.setStart(
+                    DateFormat.yMd(locale).format(DateTime.now()),
+                  );
                   endNotifier.setEnd("");
                   QR.to(
                     LoanRouter.root + LoanRouter.admin + LoanRouter.addEditLoan,
@@ -109,8 +113,10 @@ class OnGoingLoan extends HookConsumerWidget {
                 isAdmin: true,
                 onEdit: () async {
                   await loanNotifier.setLoan(e);
-                  startNotifier.setStart(processDate(e.start));
-                  endNotifier.setEnd(processDate(e.end));
+                  startNotifier.setStart(
+                    DateFormat.yMd(locale).format(e.start),
+                  );
+                  endNotifier.setEnd(DateFormat.yMd(locale).format(e.end));
                   QR.to(
                     LoanRouter.root + LoanRouter.admin + LoanRouter.addEditLoan,
                   );

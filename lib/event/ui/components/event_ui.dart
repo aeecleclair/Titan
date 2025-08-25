@@ -34,6 +34,7 @@ class EventUi extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final now = DateTime.now();
     final eventListNotifier = ref.watch(eventEventListProvider.notifier);
     final eventNotifier = ref.watch(eventProvider.notifier);
@@ -127,6 +128,7 @@ class EventUi extends ConsumerWidget {
                         event.end,
                         event.recurrenceRule,
                         event.allDay,
+                        locale.toString()
                       ),
                       style: TextStyle(
                         color: textColor.withValues(alpha: 0.7),
