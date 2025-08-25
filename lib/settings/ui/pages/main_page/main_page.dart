@@ -414,27 +414,27 @@ class SettingsMainPage extends HookConsumerWidget {
                   );
                 },
               ),
-                  const SizedBox(height: 60),
-                  Text(
-                    "${localizeWithContext.othersVersion} $titanVersion",
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  AutoSizeText(
-                    Repository.host,
-                    maxLines: 1,
-                    minFontSize: 10,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
+              const SizedBox(height: 60),
+              Text(
+                "${localizeWithContext.othersVersion} $titanVersion",
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 10),
+              AutoSizeText(
+                Repository.host,
+                maxLines: 1,
+                minFontSize: 10,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
