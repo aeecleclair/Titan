@@ -165,7 +165,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eventActionCampaignButton => 'Voter';
 
   @override
-  String get eventActionEventButton => 'Prendre ma place';
+  String get eventActionEventButton => 'Réserver';
 
   @override
   String get eventActionCampaignValidated => 'J\'ai voté !';

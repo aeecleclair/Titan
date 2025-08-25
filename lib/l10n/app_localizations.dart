@@ -401,7 +401,7 @@ abstract class AppLocalizations {
   /// No description provided for @eventActionEventButton.
   ///
   /// In fr, this message translates to:
-  /// **'Prendre ma place'**
+  /// **'Réserver'**
   String get eventActionEventButton;
 
   /// No description provided for @eventActionCampaignValidated.
