@@ -143,7 +143,11 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                   tokenExpireWrapper(ref, () async {
                     if (DateTime.parse(
                       processDateBack(start.text, locale.toString()),
-                    ).isAfter(DateTime.parse(processDateBack(end.text, locale.toString())))) {
+                    ).isAfter(
+                      DateTime.parse(
+                        processDateBack(end.text, locale.toString()),
+                      ),
+                    )) {
                       displayToastWithContext(
                         TypeMsg.error,
                         AppLocalizations.of(context)!.adminDateError,
@@ -187,8 +191,12 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                         associationMembershipId:
                             membership.associationMembershipId,
                         userId: membership.user.id,
-                        startDate: DateTime.parse(processDateBack(start.text, locale.toString())),
-                        endDate: DateTime.parse(processDateBack(end.text, locale.toString())),
+                        startDate: DateTime.parse(
+                          processDateBack(start.text, locale.toString()),
+                        ),
+                        endDate: DateTime.parse(
+                          processDateBack(end.text, locale.toString()),
+                        ),
                       );
                       final addedMemberMsg = AppLocalizations.of(
                         context,

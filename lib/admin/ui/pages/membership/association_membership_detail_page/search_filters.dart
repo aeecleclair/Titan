@@ -95,16 +95,30 @@ class SearchFilters extends HookConsumerWidget {
                   .loadAssociationMembershipMembers(
                     associationMembership.id,
                     minimalStartDate: startMinimal.text.isNotEmpty
-                        ? DateTime.parse(processDateBack(startMinimal.text, locale.toString()))
+                        ? DateTime.parse(
+                            processDateBack(
+                              startMinimal.text,
+                              locale.toString(),
+                            ),
+                          )
                         : null,
                     minimalEndDate: endMinimal.text.isNotEmpty
-                        ? DateTime.parse(processDateBack(endMinimal.text, locale.toString()))
+                        ? DateTime.parse(
+                            processDateBack(endMinimal.text, locale.toString()),
+                          )
                         : null,
                     maximalStartDate: startMaximal.text.isNotEmpty
-                        ? DateTime.parse(processDateBack(startMaximal.text, locale.toString()))
+                        ? DateTime.parse(
+                            processDateBack(
+                              startMaximal.text,
+                              locale.toString(),
+                            ),
+                          )
                         : null,
                     maximalEndDate: endMaximal.text.isNotEmpty
-                        ? DateTime.parse(processDateBack(endMaximal.text, locale.toString()))
+                        ? DateTime.parse(
+                            processDateBack(endMaximal.text, locale.toString()),
+                          )
                         : null,
                   );
             });

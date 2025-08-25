@@ -40,7 +40,9 @@ class StartDateEntry extends HookConsumerWidget {
             } else {
               endNotifier.setEnd("");
             }
-            initialDateNotifier.setDate(DateTime.parse(processDateBack(date, locale.toString())));
+            initialDateNotifier.setDate(
+              DateTime.parse(processDateBack(date, locale.toString())),
+            );
           });
         },
         initialDate: start.isNotEmpty

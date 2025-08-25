@@ -92,27 +92,27 @@ void main() {
   });
 
   group('Testing processDateBack function', () {
-  //   test('Should return a string', () {
-  //     const date = "01/01/2021";
-  //     const dateWithHour = "01/01/2021 12:00";
-  //     expect(processDateBack(""), "");
-  //     expect(processDateBack(dateWithHour), isA<String>());
-  //     expect(processDateBack(date), isA<String>());
-  //     expect(processDateBack(dateWithHour), "2021-01-01 12:00");
-  //     expect(processDateBack(date), "2021-01-01");
-  //   });
-  // });
+    //   test('Should return a string', () {
+    //     const date = "01/01/2021";
+    //     const dateWithHour = "01/01/2021 12:00";
+    //     expect(processDateBack(""), "");
+    //     expect(processDateBack(dateWithHour), isA<String>());
+    //     expect(processDateBack(date), isA<String>());
+    //     expect(processDateBack(dateWithHour), "2021-01-01 12:00");
+    //     expect(processDateBack(date), "2021-01-01");
+    //   });
+    // });
 
-  // group('Testing processDateBackWithHour function', () {
-  //   test('Should return a string', () {
-  //     const date = "01/01/2021";
-  //     const dateWithHour = "01/01/2021 12:00";
-  //     expect(processDateBackWithHour(""), "");
-  //     expect(processDateBackWithHour(dateWithHour), isA<String>());
-  //     expect(processDateBackWithHour(date), isA<String>());
-  //     expect(processDateBackWithHour(dateWithHour), "2021-01-01 12:00");
-  //     expect(processDateBackWithHour(date), "2021-01-01");
-  //   });
+    // group('Testing processDateBackWithHour function', () {
+    //   test('Should return a string', () {
+    //     const date = "01/01/2021";
+    //     const dateWithHour = "01/01/2021 12:00";
+    //     expect(processDateBackWithHour(""), "");
+    //     expect(processDateBackWithHour(dateWithHour), isA<String>());
+    //     expect(processDateBackWithHour(date), isA<String>());
+    //     expect(processDateBackWithHour(dateWithHour), "2021-01-01 12:00");
+    //     expect(processDateBackWithHour(date), "2021-01-01");
+    //   });
   });
 
   test('Testing getDateInRecurrence', () {

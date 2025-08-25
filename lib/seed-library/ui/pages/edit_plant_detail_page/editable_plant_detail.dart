@@ -235,7 +235,12 @@ class EditablePlantDetail extends HookConsumerWidget {
                 plantNotifier.updatePlant(
                   plant.copyWith(
                     plantingDate: plantationDate.text.isNotEmpty
-                        ? DateTime.parse(processDateBack(plantationDate.text, locale.toString()))
+                        ? DateTime.parse(
+                            processDateBack(
+                              plantationDate.text,
+                              locale.toString(),
+                            ),
+                          )
                         : null,
                   ),
                 );

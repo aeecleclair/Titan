@@ -267,7 +267,10 @@ class AddEditSessionPage extends HookConsumerWidget {
                               ? null
                               : overview.text,
                           start: DateTime.parse(
-                            processDateBackWithHour(start.text, locale.toString()),
+                            processDateBackWithHour(
+                              start.text,
+                              locale.toString(),
+                            ),
                           ),
                           tagline: tagline.text.isEmpty ? null : tagline.text,
                         );

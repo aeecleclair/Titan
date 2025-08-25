@@ -436,8 +436,14 @@ class AddEditEventPage extends HookConsumerWidget {
                               }
                               if (end.text.contains("/") &&
                                   isDateBefore(
-                                    processDateBack(end.text, locale.toString()),
-                                    processDateBack(start.text, locale.toString()),
+                                    processDateBack(
+                                      end.text,
+                                      locale.toString(),
+                                    ),
+                                    processDateBack(
+                                      start.text,
+                                      locale.toString(),
+                                    ),
                                   )) {
                                 displayToast(
                                   context,
@@ -478,7 +484,10 @@ class AddEditEventPage extends HookConsumerWidget {
                                     recurrence.recurrenceRange =
                                         RecurrenceRange.endDate;
                                     recurrence.endDate = DateTime.parse(
-                                      processDateBack(recurrenceEndDate.text, locale.toString()),
+                                      processDateBack(
+                                        recurrenceEndDate.text,
+                                        locale.toString(),
+                                      ),
                                     );
                                     recurrence.weekDays = WeekDays.values
                                         .where(
@@ -495,10 +504,16 @@ class AddEditEventPage extends HookConsumerWidget {
                                     recurrenceRule = SfCalendar.generateRRule(
                                       recurrence,
                                       DateTime.parse(
-                                        processDateBackWithHour(startString, locale.toString()),
+                                        processDateBackWithHour(
+                                          startString,
+                                          locale.toString(),
+                                        ),
                                       ),
                                       DateTime.parse(
-                                        processDateBackWithHour(endString, locale.toString()),
+                                        processDateBackWithHour(
+                                          endString,
+                                          locale.toString(),
+                                        ),
                                       ),
                                     );
                                   }
@@ -506,14 +521,20 @@ class AddEditEventPage extends HookConsumerWidget {
                                     id: isEdit ? event.id : "",
                                     description: description.text,
                                     end: DateTime.parse(
-                                      processDateBack(endString, locale.toString()),
+                                      processDateBack(
+                                        endString,
+                                        locale.toString(),
+                                      ),
                                     ),
                                     name: name.text,
                                     organizer: organizer.text,
                                     allDay: allDay.value,
                                     location: location.text,
                                     start: DateTime.parse(
-                                      processDateBack(startString, locale.toString()),
+                                      processDateBack(
+                                        startString,
+                                        locale.toString(),
+                                      ),
                                     ),
                                     type: eventType.value,
                                     recurrenceRule: recurrenceRule,

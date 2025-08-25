@@ -42,7 +42,7 @@ class CalendarDialog extends StatelessWidget {
                   booking.end,
                   booking.recurrenceRule,
                   false,
-                  locale.toString()
+                  locale.toString(),
                 ),
                 style: TextStyle(
                   fontWeight: FontWeight.w400,

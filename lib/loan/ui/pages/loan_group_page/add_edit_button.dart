@@ -52,7 +52,11 @@ class AddEditButton extends HookConsumerWidget {
       builder: (child) => AddEditButtonLayout(child: child),
       onTap: () async {
         await onAddEdit(() async {
-          if (processDateBack(start, locale.toString()).compareTo(processDateBack(end, locale.toString())) > 0) {
+          if (processDateBack(
+                start,
+                locale.toString(),
+              ).compareTo(processDateBack(end, locale.toString())) >
+              0) {
             displayToast(
               context,
               TypeMsg.error,
@@ -86,10 +90,14 @@ class AddEditButton extends HookConsumerWidget {
                       itemsQuantity: selected,
                       borrower: borrower,
                       caution: caution.text,
-                      end: DateTime.parse(processDateBack(end, locale.toString())),
+                      end: DateTime.parse(
+                        processDateBack(end, locale.toString()),
+                      ),
                       id: isEdit ? loan.id : "",
                       notes: note.text,
-                      start: DateTime.parse(processDateBack(start, locale.toString())),
+                      start: DateTime.parse(
+                        processDateBack(start, locale.toString()),
+                      ),
                       returned: false,
                     );
                     final addedLoanMsg = isEdit

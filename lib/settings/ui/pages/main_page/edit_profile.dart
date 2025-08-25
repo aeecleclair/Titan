@@ -204,7 +204,10 @@ class EditProfile extends HookConsumerWidget {
                   final newMe = me.copyWith(
                     birthday: birthdayController.value.text.isNotEmpty
                         ? DateTime.parse(
-                            processDateBack(birthdayController.value.text, locale.toString()),
+                            processDateBack(
+                              birthdayController.value.text,
+                              locale.toString(),
+                            ),
                           )
                         : null,
                     phone: phoneController.value.text.isEmpty

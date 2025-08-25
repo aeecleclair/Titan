@@ -384,17 +384,26 @@ class AddEditBookingPage extends HookConsumerWidget {
                               recurrence.recurrenceRange =
                                   RecurrenceRange.endDate;
                               recurrence.endDate = DateTime.parse(
-                                processDateBack(recurrenceEndDate.text, locale.toString()),
+                                processDateBack(
+                                  recurrenceEndDate.text,
+                                  locale.toString(),
+                                ),
                               );
                               recurrence.weekDays = selectedDays;
                               recurrence.interval = int.parse(interval.text);
                               recurrenceRule = SfCalendar.generateRRule(
                                 recurrence,
                                 DateTime.parse(
-                                  processDateBackWithHour(startString, locale.toString()),
+                                  processDateBackWithHour(
+                                    startString,
+                                    locale.toString(),
+                                  ),
                                 ),
                                 DateTime.parse(
-                                  processDateBackWithHour(endString, locale.toString()),
+                                  processDateBackWithHour(
+                                    endString,
+                                    locale.toString(),
+                                  ),
                                 ),
                               );
                               try {
@@ -418,10 +427,16 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 id: isEdit ? booking.id : "",
                                 reason: motif.text,
                                 start: DateTime.parse(
-                                  processDateBackWithHour(startString, locale.toString()),
+                                  processDateBackWithHour(
+                                    startString,
+                                    locale.toString(),
+                                  ),
                                 ),
                                 end: DateTime.parse(
-                                  processDateBackWithHour(endString, locale.toString()),
+                                  processDateBackWithHour(
+                                    endString,
+                                    locale.toString(),
+                                  ),
                                 ),
                                 creation: DateTime.now(),
                                 note: note.text.isEmpty ? null : note.text,

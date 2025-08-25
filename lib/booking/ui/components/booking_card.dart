@@ -127,7 +127,7 @@ class BookingCard extends StatelessWidget {
                     booking.end,
                     booking.recurrenceRule,
                     false,
-                    locale.toString()
+                    locale.toString(),
                   ),
                   style: TextStyle(
                     fontSize: 13,

@@ -128,7 +128,7 @@ class EventUi extends ConsumerWidget {
                         event.end,
                         event.recurrenceRule,
                         event.allDay,
-                        locale.toString()
+                        locale.toString(),
                       ),
                       style: TextStyle(
                         color: textColor.withValues(alpha: 0.7),
