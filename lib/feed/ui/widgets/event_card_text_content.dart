@@ -27,24 +27,20 @@ class EventCardTextContent extends StatelessWidget {
           SizedBox(height: 70),
           Row(
             children: [
-              Expanded(
-                child: Text(
-                  item.title,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w900,
-                    color: textColor,
-                  ),
-                  overflow: TextOverflow.ellipsis,
+              Text(
+                item.title,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w900,
+                  color: textColor,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
               if (item.location != null && item.location!.isNotEmpty)
-                Flexible(
-                  child: Text(
-                    ' | ${item.location}',
-                    style: TextStyle(fontSize: 14, color: textColor),
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                Text(
+                  ' | ${item.location}',
+                  style: TextStyle(fontSize: 14, color: textColor),
+                  overflow: TextOverflow.ellipsis,
                 ),
             ],
           ),

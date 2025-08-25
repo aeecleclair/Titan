@@ -38,15 +38,16 @@ Future<Color> getDominantColor(ImageProvider imageProvider) async {
       final int width = image.width;
       final int height = image.height;
       final int startY = (height * 0.6).round(); // Bottom 40% of image
+      final buffer = bytes.buffer.asUint8List();
 
       for (int y = startY; y < height; y += 4) {
         // Sample every 4th pixel for performance
         for (int x = 0; x < width; x += 4) {
           final int pixelIndex = (y * width + x) * 4;
           if (pixelIndex + 2 < bytes.lengthInBytes) {
-            redSum += bytes.buffer.asUint8List()[pixelIndex];
-            greenSum += bytes.buffer.asUint8List()[pixelIndex + 1];
-            blueSum += bytes.buffer.asUint8List()[pixelIndex + 2];
+            redSum += buffer[pixelIndex];
+            greenSum += buffer[pixelIndex + 1];
+            blueSum += buffer[pixelIndex + 2];
             pixelCount++;
           }
         }
