@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/plausible/plausible.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -34,16 +35,17 @@ void displayToast(
   String title;
   Color primaryColor, textColor;
   ToastificationType toastType;
+  final localization = AppLocalizations.of(context)!;
 
   switch (type) {
     case TypeMsg.msg:
-      title = "Succès";
+      title = localization.toolSuccess;
       primaryColor = ColorConstants.background;
       textColor = ColorConstants.tertiary;
       toastType = ToastificationType.success;
       break;
     case TypeMsg.error:
-      title = "Erreur";
+      title = localization.adminError;
       primaryColor = ColorConstants.onMain;
       textColor = ColorConstants.background;
       toastType = ToastificationType.error;

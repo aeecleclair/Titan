@@ -4479,4 +4479,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get toolDateRequired => 'Date requise';
+
+  @override
+  String get toolSuccess => 'Succès';
 }

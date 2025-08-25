@@ -1595,5 +1595,6 @@
   "modulePayment": "Paiement",
   "modulePaymentDescription": "Gérer les paiements, les statistiques et les appareils",
   "toolInvalidNumber": "Chiffre invalide",
-  "toolDateRequired": "Date requise"
+  "toolDateRequired": "Date requise",
+  "toolSuccess": "Succès"
 }

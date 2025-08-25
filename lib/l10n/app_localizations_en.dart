@@ -4416,4 +4416,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get toolDateRequired => 'Date required';
+
+  @override
+  String get toolSuccess => 'Success';
 }

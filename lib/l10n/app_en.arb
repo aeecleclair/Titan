@@ -1588,5 +1588,6 @@
   "moduleOthersDescription": "Other modules",
   "modulePaymentDescription": "Pay and see your transactions",
   "toolInvalidNumber": "Invalid number",
-  "toolDateRequired": "Date required"
+  "toolDateRequired": "Date required",
+  "toolSuccess": "Success"
 }

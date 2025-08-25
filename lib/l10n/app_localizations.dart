@@ -8617,6 +8617,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Date requise'**
   String get toolDateRequired;
+
+  /// No description provided for @toolSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Succès'**
+  String get toolSuccess;
 }
 
 class _AppLocalizationsDelegate
