@@ -4178,6 +4178,12 @@ abstract class AppLocalizations {
   /// **'S\'inscrire'**
   String get loginRegister;
 
+  /// No description provided for @loginShortDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'application de l\'associatif'**
+  String get loginShortDescription;
+
   /// No description provided for @loginUpcomingEvents.
   ///
   /// In fr, this message translates to:

@@ -51,8 +51,8 @@ class LeftPanel extends HookConsumerWidget {
                         ),
                       ),
                       const SizedBox(width: 15),
-                      const Text(
-                        "L'application de l'associatif centralien",
+                      Text(
+                        AppLocalizations.of(context)!.loginShortDescription,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

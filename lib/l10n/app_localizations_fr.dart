@@ -2104,6 +2104,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get loginRegister => 'S\'inscrire';
 
   @override
+  String get loginShortDescription => 'L\'application de l\'associatif';
+
+  @override
   String get loginUpcomingEvents => 'Les évènements à venir';
 
   @override
