@@ -54,6 +54,14 @@ jobs:
       - name: Get Packages
         run: flutter pub get
 
+      - name: Move assets
+        run: |
+          mv $LOGIN_ASSET_PATH assets/images/login.webp
+          mv $BACK_ASSET_PATH assets/web/back.webp*
+        env:
+          LOGIN_ASSET_PATH: ${{ vars.LOGIN_ASSET_PATH }}
+          BACK_ASSET_PATH: ${{ vars.BACK_ASSET_PATH }}
+
       - name: Configure env
         run: |
           echo PROD_HOST=$PROD_HOST >> .env
@@ -61,12 +69,14 @@ jobs:
           echo PAYMENT_NAME=$PAYMENT_NAME >> .env
           echo SCHOOL_NAME=$SCHOOL_NAME >> .env
           echo APP_NAME=$APP_NAME >> .env
+          echo APP_ID_PREFIX=$APP_ID_PREFIX >> .env
         env:
           PROD_HOST: ${{ vars.PROD_HOST }}
           ALPHA_HOST: ${{ vars.ALPHA_HOST }}
           PAYMENT_NAME: ${{ vars.PAYMENT_NAME }}
           SCHOOL_NAME: ${{ vars.SCHOOL_NAME }}
           APP_NAME: ${{ vars.APP_NAME }}
+          APP_ID_PREFIX: ${{ vars.APP_ID_PREFIX }}
 
       - name: Configure Alpha env
         if: needs.extract-version.outputs.isAlpha == 'true'
