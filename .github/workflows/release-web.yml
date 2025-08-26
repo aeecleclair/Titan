@@ -54,13 +54,33 @@ jobs:
       - name: Get Packages
         run: flutter pub get
 
+      - name: Configure web files
+        run: |
+          sed -i 's|{{ APP_NAME }}|'"$APP_NAME"'|g' web/index.html
+          sed -i 's|{{ SCHOOL_NAME }}|'"$SCHOOL_NAME"'|g' web/index.html
+          sed -i 's|{{ ENTITY_NAME }}|'"$ENTITY_NAME"'|g' web/index.html
+        env:
+          APP_NAME: ${{ vars.APP_NAME }}
+          SCHOOL_NAME: ${{ vars.SCHOOL_NAME }}
+          ENTITY_NAME: ${{ vars.ENTITY_NAME }}
+
       - name: Move assets
         run: |
-          mv $LOGIN_ASSET_PATH assets/images/login.webp
-          mv $BACK_ASSET_PATH assets/web/back.webp*
+          cp -f $LOGIN_ASSET_PATH assets/images/login.webp
+          cp -f $BACK_ASSET_PATH assets/web/back.webp
+          cp -f $LOGO_ASSET_PATH assets/images/logo_prod.png
+          cp -f $ICON_ASSET_PATH assets/images/icon_prod.png
+          cp -f $ICON_ANDROID_PATH/* android/app/src/prod/
+          cp -f $ICON_IOS_PATH/* ios/Runner/Assets.xcassets/AppIcon-Prod.appiconset/
+          cp -f $ICON_WEB_PATH/* web/Prod/
         env:
           LOGIN_ASSET_PATH: ${{ vars.LOGIN_ASSET_PATH }}
           BACK_ASSET_PATH: ${{ vars.BACK_ASSET_PATH }}
+          LOGO_ASSET_PATH: ${{ vars.LOGO_ASSET_PATH }}
+          ICON_ASSET_PATH: ${{ vars.ICON_ASSET_PATH }}
+          ICON_ANDROID_PATH: ${{ vars.ICON_ANDROID_PATH }}
+          ICON_IOS_PATH: ${{ vars.ICON_IOS_PATH }}
+          ICON_WEB_PATH: ${{ vars.ICON_WEB_PATH }}
 
       - name: Configure env
         run: |
