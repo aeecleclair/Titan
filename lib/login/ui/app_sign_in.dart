@@ -95,10 +95,10 @@ class AppSignIn extends HookConsumerWidget {
                                   loading: () {},
                                 );
                           },
-                          color: ColorConstants.background2,
+                          color: ColorConstants.tertiary,
                           icon: const HeroIcon(
                             HeroIcons.arrowRight,
-                            color: ColorConstants.background2,
+                            color: ColorConstants.tertiary,
                             size: 35.0,
                           ),
                         ),

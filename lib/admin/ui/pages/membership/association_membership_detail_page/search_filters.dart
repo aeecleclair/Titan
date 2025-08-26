@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
 import 'package:titan/admin/providers/association_membership_provider.dart';
 import 'package:titan/tools/constants.dart';
@@ -16,16 +17,17 @@ class SearchFilters extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final associationMembershipMemberListNotifier = ref.watch(
       associationMembershipMembersProvider.notifier,
     );
     final associationMembership = ref.watch(associationMembershipProvider);
     final startMinimal = useTextEditingController(text: "");
     final startMaximal = useTextEditingController(
-      text: processDate(DateTime.now()),
+      text: DateFormat.yMd(locale).format(DateTime.now()),
     );
     final endMinimal = useTextEditingController(
-      text: processDate(DateTime.now()),
+      text: DateFormat.yMd(locale).format(DateTime.now()),
     );
     final endMaximal = useTextEditingController(text: "");
 
@@ -93,16 +95,30 @@ class SearchFilters extends HookConsumerWidget {
                   .loadAssociationMembershipMembers(
                     associationMembership.id,
                     minimalStartDate: startMinimal.text.isNotEmpty
-                        ? DateTime.parse(processDateBack(startMinimal.text))
+                        ? DateTime.parse(
+                            processDateBack(
+                              startMinimal.text,
+                              locale.toString(),
+                            ),
+                          )
                         : null,
                     minimalEndDate: endMinimal.text.isNotEmpty
-                        ? DateTime.parse(processDateBack(endMinimal.text))
+                        ? DateTime.parse(
+                            processDateBack(endMinimal.text, locale.toString()),
+                          )
                         : null,
                     maximalStartDate: startMaximal.text.isNotEmpty
-                        ? DateTime.parse(processDateBack(startMaximal.text))
+                        ? DateTime.parse(
+                            processDateBack(
+                              startMaximal.text,
+                              locale.toString(),
+                            ),
+                          )
                         : null,
                     maximalEndDate: endMaximal.text.isNotEmpty
-                        ? DateTime.parse(processDateBack(endMaximal.text))
+                        ? DateTime.parse(
+                            processDateBack(endMaximal.text, locale.toString()),
+                          )
                         : null,
                   );
             });

@@ -164,7 +164,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventActionCampaignButton => 'Vote';
 
   @override
-  String get eventActionEventButton => 'Participate';
+  String get eventActionEventButton => 'Reserve';
 
   @override
   String get eventActionCampaignValidated => 'I voted!';
@@ -621,9 +621,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get adminChooseAssociationManagerGroup =>
       'Choose a group to manage this association';
-
-  @override
-  String get adminConfirm => 'Confirm';
 
   @override
   String get advertAdd => 'Add';
@@ -4282,7 +4279,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Selection will not be saved.\nDo you want to continue?';
 
   @override
-  String get moduleAdvert => 'Advert';
+  String get moduleAdvert => 'Adverts';
 
   @override
   String get moduleAdvertDescription => 'View the latest adverts';
@@ -4419,4 +4416,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get toolDateRequired => 'Date required';
+
+  @override
+  String get toolSuccess => 'Success';
 }

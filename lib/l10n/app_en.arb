@@ -66,7 +66,7 @@
   "eventActionCampaignSubtitle": "Vote now",
   "eventActionEventSubtitle": "Answer the invitation",
   "eventActionCampaignButton": "Vote",
-  "eventActionEventButton": "Participate",
+  "eventActionEventButton": "Reserve",
   "eventActionCampaignValidated": "I voted!",
   "eventActionEventValidated": "I'm coming!",
   "adminAccountTypes": "Account types",
@@ -1543,7 +1543,7 @@
   "voteVotesOpened": "Votes opened",
   "voteWarning": "Warning",
   "voteWarningMessage": "Selection will not be saved.\nDo you want to continue?",
-  "moduleAdvert": "Advert",
+  "moduleAdvert": "Adverts",
   "moduleAmap": "AMAP",
   "moduleBooking": "Booking",
   "moduleCalendar": "Calendar",
@@ -1588,5 +1588,6 @@
   "moduleOthersDescription": "Other modules",
   "modulePaymentDescription": "Pay and see your transactions",
   "toolInvalidNumber": "Invalid number",
-  "toolDateRequired": "Date required"
+  "toolDateRequired": "Date required",
+  "toolSuccess": "Success"
 }

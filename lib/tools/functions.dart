@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/plausible/plausible.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -34,16 +35,17 @@ void displayToast(
   String title;
   Color primaryColor, textColor;
   ToastificationType toastType;
+  final localization = AppLocalizations.of(context)!;
 
   switch (type) {
     case TypeMsg.msg:
-      title = "Succès";
+      title = localization.toolSuccess;
       primaryColor = ColorConstants.background;
       textColor = ColorConstants.tertiary;
       toastType = ToastificationType.success;
       break;
     case TypeMsg.error:
-      title = "Erreur";
+      title = localization.adminError;
       primaryColor = ColorConstants.onMain;
       textColor = ColorConstants.background;
       toastType = ToastificationType.error;
@@ -116,14 +118,6 @@ bool isDateBefore(String date1, String date2) {
   return d1.isBefore(d2);
 }
 
-String processDate(DateTime date) {
-  return "${date.day.toString().padLeft(2, "0")}/${date.month.toString().padLeft(2, "0")}/${date.year}";
-}
-
-String processDateWithHour(DateTime date) {
-  return "${processDate(date)} ${date.hour.toString().padLeft(2, "0")}:${date.minute.toString().padLeft(2, "0")}";
-}
-
 String processDatePrint(String d) {
   if (d == "") {
     return "";
@@ -132,26 +126,12 @@ String processDatePrint(String d) {
   return "${e[2].toString().padLeft(2, "0")}/${e[1].toString().padLeft(2, "0")}/${e[0]}";
 }
 
-String processDateBack(String d) {
-  if (d == "") {
-    return "";
-  }
-  List<String> e = d.split("/");
-  if (e[2].contains(" ")) {
-    return "${e[2].split(" ")[0]}-${e[1].toString().padLeft(2, "0")}-${e[0]} ${e[2].split(" ")[1]}";
-  }
-  return "${e[2].toString().padLeft(2, "0")}-${e[1].toString().padLeft(2, "0")}-${e[0]}";
+String processDateBack(String d, String locale) {
+  return DateFormat.yMd(locale).parse(d).toIso8601String().split("T")[0];
 }
 
-String processDateBackWithHour(String d) {
-  if (d == "") {
-    return "";
-  }
-  List<String> e = d.split(" ");
-  if (e.length == 1) {
-    return processDateBack(e[0]);
-  }
-  return "${processDateBack(e[0])} ${e[1]}";
+String processDateBackWithHour(String d, String locale) {
+  return DateFormat.yMd(locale).add_Hm().parse(d).toIso8601String();
 }
 
 List<DateTime> getDateInRecurrence(String recurrenceRule, DateTime start) {
@@ -203,6 +183,7 @@ String formatRecurrenceRule(
   DateTime dateEnd,
   String recurrenceRule,
   bool allDay,
+  String locale,
 ) {
   final start = parseDate(dateStart);
   final end = parseDate(dateEnd);
@@ -250,7 +231,7 @@ String formatRecurrenceRule(
     } else {
       r += "toute la journée";
     }
-    r += " jusqu'au ${processDate(DateTime.parse(endDay))}";
+    r += " jusqu'au ${DateFormat.yMd(locale).format(DateTime.parse(endDay))}";
   } else {
     if (!allDay) {
       r += "de ${start[1]} à ${end[1]}";
@@ -363,7 +344,7 @@ Future getOnlyDayDate(
     lastDate,
   );
 
-  dateController.text = DateFormat.yMMMd(
+  dateController.text = DateFormat.yMd(
     locale,
   ).format(date ?? initialDate ?? now);
 }
@@ -416,13 +397,13 @@ Future getFullDate(
     if (date != null && context.mounted) {
       _getTime(context).then((TimeOfDay? time) {
         if (time != null) {
-          dateController.text = DateFormat.yMMMd(
+          dateController.text = DateFormat.yMd(
             locale,
           ).add_Hm().format(DateTimeField.combine(date, time));
         }
       });
     } else {
-      dateController.text = DateFormat.yMMMd(
+      dateController.text = DateFormat.yMd(
         locale,
       ).add_Hm().format(initialDate ?? now);
     }

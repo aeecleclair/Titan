@@ -181,7 +181,7 @@ class AdvertCard extends HookConsumerWidget {
 
     String displayContent;
     if (isLong && !isExpanded.value) {
-      displayContent = content.substring(0, maxLength) + '...';
+      displayContent = '${content.substring(0, maxLength)}...';
     } else {
       displayContent = content;
     }

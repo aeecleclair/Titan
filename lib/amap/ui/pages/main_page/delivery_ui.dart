@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:titan/amap/class/delivery.dart';
 import 'package:titan/amap/providers/delivery_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
-import 'package:titan/tools/functions.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
 class DeliveryUi extends HookConsumerWidget {
@@ -19,6 +19,7 @@ class DeliveryUi extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final selectedDelivery = ref.watch(deliveryProvider);
     final selected = selectedDelivery.id == delivery.id;
     return GestureDetector(
@@ -56,7 +57,7 @@ class DeliveryUi extends HookConsumerWidget {
             children: [
               const SizedBox(width: 10),
               Text(
-                '${AppLocalizations.of(context)!.amapThe} ${processDate(delivery.deliveryDate)}',
+                '${AppLocalizations.of(context)!.amapThe} ${DateFormat.yMd(locale).format(delivery.deliveryDate)}',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

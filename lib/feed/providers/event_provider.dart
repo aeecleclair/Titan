@@ -6,12 +6,11 @@ import 'package:titan/tools/providers/single_notifier.dart';
 
 class EventNotifier extends SingleNotifier<Event> {
   final EventRepository eventRepository;
-  AsyncValue<List<Event>> allEvent = const AsyncValue.loading();
   EventNotifier({required this.eventRepository})
     : super(const AsyncValue.loading());
 
   Future<Event> addEvent(Event event) async {
-    return eventRepository.createEvent(event);
+    return await eventRepository.createEvent(event);
   }
 
   void fakeLoad() {

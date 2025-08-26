@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:titan/admin/admin.dart';
 import 'package:titan/admin/class/user_association_membership.dart';
 import 'package:titan/admin/class/user_association_membership_base.dart';
@@ -23,16 +24,17 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final associationMembershipMembersNotifier = ref.watch(
       associationMembershipMembersProvider.notifier,
     );
     final membership = ref.watch(userAssociationMembershipProvider);
     final isEdit = membership.id != UserAssociationMembership.empty().id;
     final start = useTextEditingController(
-      text: isEdit ? processDate(membership.startDate) : "",
+      text: isEdit ? DateFormat.yMd(locale).format(membership.startDate) : "",
     );
     final end = useTextEditingController(
-      text: isEdit ? processDate(membership.endDate) : "",
+      text: isEdit ? DateFormat.yMd(locale).format(membership.endDate) : "",
     );
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -140,8 +142,12 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
 
                   tokenExpireWrapper(ref, () async {
                     if (DateTime.parse(
-                      processDateBack(start.text),
-                    ).isAfter(DateTime.parse(processDateBack(end.text)))) {
+                      processDateBack(start.text, locale.toString()),
+                    ).isAfter(
+                      DateTime.parse(
+                        processDateBack(end.text, locale.toString()),
+                      ),
+                    )) {
                       displayToastWithContext(
                         TypeMsg.error,
                         AppLocalizations.of(context)!.adminDateError,
@@ -159,10 +165,10 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                           .updateMember(
                             membership.copyWith(
                               startDate: DateTime.parse(
-                                processDateBack(start.text),
+                                processDateBack(start.text, locale.toString()),
                               ),
                               endDate: DateTime.parse(
-                                processDateBack(end.text),
+                                processDateBack(end.text, locale.toString()),
                               ),
                             ),
                           );
@@ -185,8 +191,12 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                         associationMembershipId:
                             membership.associationMembershipId,
                         userId: membership.user.id,
-                        startDate: DateTime.parse(processDateBack(start.text)),
-                        endDate: DateTime.parse(processDateBack(end.text)),
+                        startDate: DateTime.parse(
+                          processDateBack(start.text, locale.toString()),
+                        ),
+                        endDate: DateTime.parse(
+                          processDateBack(end.text, locale.toString()),
+                        ),
                       );
                       final addedMemberMsg = AppLocalizations.of(
                         context,

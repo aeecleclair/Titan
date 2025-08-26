@@ -119,41 +119,56 @@ class AssociationGroupementBar extends HookConsumerWidget {
               : associationGroupements.length,
           itemBuilder: (context, index) {
             if (editable && index == 0) {
-              return ItemChip(
-                key: Key("add"),
-                scrollDirection: scrollDirection,
-                onTap: () {
-                  associationGroupementNotifier.resetAssociationGroupement();
-                  QR.to(
-                    PhonebookRouter.root +
-                        PhonebookRouter.admin +
-                        PhonebookRouter.addEditAssociation +
-                        PhonebookRouter.addEditGroupement,
-                  );
-                },
-                child: Text("+", style: TextStyle(fontWeight: FontWeight.bold)),
+              return Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: ItemChip(
+                  key: Key("add"),
+                  scrollDirection: scrollDirection,
+                  onTap: () {
+                    associationGroupementNotifier.resetAssociationGroupement();
+                    QR.to(
+                      PhonebookRouter.root +
+                          PhonebookRouter.admin +
+                          PhonebookRouter.addEditAssociation +
+                          PhonebookRouter.addEditGroupement,
+                    );
+                  },
+                  child: Text(
+                    "+",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
               );
             }
             final item = associationGroupements[editable ? index - 1 : index];
             final selected = associationGroupement.id == item.id;
-            return ItemChip(
-              key: selected ? dataKey : null,
-              scrollDirection: scrollDirection,
-              selected: selected,
-              onTap: () {
-                associationGroupement.id != item.id
-                    ? associationGroupementNotifier.setAssociationGroupement(
-                        item,
-                      )
-                    : associationGroupementNotifier
-                          .resetAssociationGroupement();
-              },
-              onLongPress: () => showEditDialog(item),
-              child: Text(
-                item.name,
-                style: TextStyle(
-                  color: selected ? Colors.white : Colors.black,
-                  fontWeight: FontWeight.bold,
+            return Padding(
+              padding: EdgeInsets.only(
+                left: index == 0 ? 15 : 0,
+                right:
+                    index == associationGroupements.length - (editable ? 0 : 1)
+                    ? 15
+                    : 0,
+              ),
+              child: ItemChip(
+                key: selected ? dataKey : null,
+                scrollDirection: scrollDirection,
+                selected: selected,
+                onTap: () {
+                  associationGroupement.id != item.id
+                      ? associationGroupementNotifier.setAssociationGroupement(
+                          item,
+                        )
+                      : associationGroupementNotifier
+                            .resetAssociationGroupement();
+                },
+                onLongPress: () => showEditDialog(item),
+                child: Text(
+                  item.name,
+                  style: TextStyle(
+                    color: selected ? Colors.white : Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             );

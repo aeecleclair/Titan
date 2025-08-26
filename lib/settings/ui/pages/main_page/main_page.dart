@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,6 +27,7 @@ import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/styleguide/list_item_template.dart';
 import 'package:titan/user/providers/profile_picture_provider.dart';
 import 'package:titan/user/providers/user_provider.dart';
+import 'package:titan/version/providers/titan_version_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsMainPage extends HookConsumerWidget {
@@ -33,6 +35,7 @@ class SettingsMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final titanVersion = ref.watch(titanVersionProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -411,7 +414,27 @@ class SettingsMainPage extends HookConsumerWidget {
                   );
                 },
               ),
-              const SizedBox(height: 80),
+              const SizedBox(height: 60),
+              Text(
+                "${localizeWithContext.othersVersion} $titanVersion",
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 10),
+              AutoSizeText(
+                Repository.host,
+                maxLines: 1,
+                minFontSize: 10,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),

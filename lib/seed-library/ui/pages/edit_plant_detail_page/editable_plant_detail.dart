@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:titan/seed-library/class/plant_complete.dart';
 import 'package:titan/seed-library/providers/plant_complete_provider.dart';
 import 'package:titan/seed-library/providers/plants_list_provider.dart';
@@ -20,6 +21,7 @@ class EditablePlantDetail extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final species = ref.watch(syncSpeciesListProvider);
     final plantNotifier = ref.watch(plantProvider.notifier);
     final myPlantsNotifier = ref.watch(myPlantListProvider.notifier);
@@ -28,7 +30,9 @@ class EditablePlantDetail extends HookConsumerWidget {
     );
     final notes = TextEditingController(text: plant.currentNote ?? '');
     final plantationDate = TextEditingController(
-      text: plant.plantingDate != null ? processDate(plant.plantingDate!) : '',
+      text: plant.plantingDate != null
+          ? DateFormat.yMd(locale).format(plant.plantingDate!)
+          : '',
     );
 
     final plantSpecies = species.firstWhere(
@@ -120,7 +124,7 @@ class EditablePlantDetail extends HookConsumerWidget {
               style: const TextStyle(fontSize: 16),
             ),
             Text(
-              '${SeedLibraryTextConstants.borrowingDate} ${processDate(plant.borrowingDate!)}',
+              '${SeedLibraryTextConstants.borrowingDate} ${DateFormat.yMd(locale).format(plant.borrowingDate!)}',
               style: const TextStyle(fontSize: 16),
             ),
             SizedBox(height: 10),
@@ -130,7 +134,9 @@ class EditablePlantDetail extends HookConsumerWidget {
                   plantNotifier.updatePlant(
                     plant.copyWith(plantingDate: DateTime.now()),
                   );
-                  plantationDate.text = processDate(DateTime.now());
+                  plantationDate.text = DateFormat.yMd(
+                    locale,
+                  ).format(DateTime.now());
                   myPlantsNotifier.updatePlantInList(
                     plant
                         .copyWith(plantingDate: DateTime.now())
@@ -183,7 +189,9 @@ class EditablePlantDetail extends HookConsumerWidget {
                                   )
                                   .toPlantSimple(),
                             );
-                            plantationDate.text = processDate(DateTime.now());
+                            plantationDate.text = DateFormat.yMd(
+                              locale,
+                            ).format(DateTime.now());
                           } else {
                             displayToastWithContext(
                               TypeMsg.error,
@@ -227,7 +235,12 @@ class EditablePlantDetail extends HookConsumerWidget {
                 plantNotifier.updatePlant(
                   plant.copyWith(
                     plantingDate: plantationDate.text.isNotEmpty
-                        ? DateTime.parse(processDateBack(plantationDate.text))
+                        ? DateTime.parse(
+                            processDateBack(
+                              plantationDate.text,
+                              locale.toString(),
+                            ),
+                          )
                         : null,
                   ),
                 );

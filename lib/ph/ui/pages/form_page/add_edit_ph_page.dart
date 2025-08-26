@@ -109,7 +109,10 @@ class PhAddEditPhPage extends HookConsumerWidget {
                             Ph newPh = Ph(
                               id: isEdit ? ph.id : '',
                               date: DateTime.parse(
-                                processDateBack(dateController.text),
+                                processDateBack(
+                                  dateController.text,
+                                  locale.toString(),
+                                ),
                               ),
                               name: name.text,
                             );

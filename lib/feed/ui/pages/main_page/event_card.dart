@@ -6,6 +6,8 @@ import 'package:titan/feed/class/news.dart';
 import 'package:titan/feed/providers/news_image_provider.dart';
 import 'package:titan/feed/providers/news_images_provider.dart';
 import 'package:titan/feed/tools/news_helper.dart';
+import 'package:titan/feed/ui/widgets/adaptive_text_card.dart';
+import 'package:titan/feed/ui/widgets/event_card_text_content.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
@@ -48,62 +50,34 @@ class EventCard extends ConsumerWidget {
                 ),
               ),
             ),
-            dataBuilder: (context, value) => Container(
-              width: double.infinity,
-              height: 125,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                image: value.isEmpty
-                    ? null
-                    : DecorationImage(
-                        image: value.first.image,
-                        fit: BoxFit.cover,
-                      ),
-                gradient: value.isNotEmpty
-                    ? null
-                    : const LinearGradient(
-                        colors: [ColorConstants.onMain, ColorConstants.main],
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                      ),
+            dataBuilder: (context, value) => AdaptiveTextCard(
+              hasImage: value.isNotEmpty,
+              imageProvider: value.isNotEmpty ? value.first.image : null,
+              child: Container(
+                width: double.infinity,
+                height: 125,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  image: value.isEmpty
+                      ? null
+                      : DecorationImage(
+                          image: value.first.image,
+                          fit: BoxFit.cover,
+                        ),
+                  gradient: value.isNotEmpty
+                      ? null
+                      : const LinearGradient(
+                          colors: [ColorConstants.onMain, ColorConstants.main],
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                        ),
+                ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 70),
-                Row(
-                  children: [
-                    Text(
-                      item.title,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w900,
-                        color: ColorConstants.background,
-                      ),
-                    ),
-                    if (item.location != null && item.location!.isNotEmpty)
-                      Text(
-                        ' | ${item.location}',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: ColorConstants.background,
-                        ),
-                      ),
-                  ],
-                ),
-                Text(
-                  getNewsSubtitle(item, context: context),
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: ColorConstants.background,
-                  ),
-                ),
-              ],
-            ),
+          EventCardTextContent(
+            item: item,
+            localizeWithContext: localizeWithContext,
           ),
           if (isNewsTerminated(item) && item.module != "advert")
             Positioned(

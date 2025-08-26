@@ -401,7 +401,7 @@ abstract class AppLocalizations {
   /// No description provided for @eventActionEventButton.
   ///
   /// In fr, this message translates to:
-  /// **'Participer'**
+  /// **'Réserver'**
   String get eventActionEventButton;
 
   /// No description provided for @eventActionCampaignValidated.
@@ -1273,12 +1273,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Choisir un groupe gestionnaire pour l\'association'**
   String get adminChooseAssociationManagerGroup;
-
-  /// No description provided for @adminConfirm.
-  ///
-  /// In fr, this message translates to:
-  /// **'Valider'**
-  String get adminConfirm;
 
   /// No description provided for @advertAdd.
   ///
@@ -8351,7 +8345,7 @@ abstract class AppLocalizations {
   /// No description provided for @moduleAdvert.
   ///
   /// In fr, this message translates to:
-  /// **'Annonce'**
+  /// **'Annonces'**
   String get moduleAdvert;
 
   /// No description provided for @moduleAdvertDescription.
@@ -8623,6 +8617,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Date requise'**
   String get toolDateRequired;
+
+  /// No description provided for @toolSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Succès'**
+  String get toolSuccess;
 }
 
 class _AppLocalizationsDelegate

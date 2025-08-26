@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:titan/cinema/class/session.dart';
 import 'package:titan/cinema/providers/session_list_provider.dart';
 import 'package:titan/cinema/providers/session_poster_map_provider.dart';
@@ -28,6 +29,7 @@ class AddEditSessionPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final session = ref.watch(sessionProvider);
     final movieNotifier = ref.watch(theMovieDBMovieProvider.notifier);
     final isEdit = session.id != Session.empty().id;
@@ -42,7 +44,7 @@ class AddEditSessionPage extends HookConsumerWidget {
     final genre = useTextEditingController(text: session.genre ?? '');
     final overview = useTextEditingController(text: session.overview ?? '');
     final start = useTextEditingController(
-      text: isEdit ? processDateWithHour(session.start) : '',
+      text: isEdit ? DateFormat.yMd(locale).add_Hm().format(session.start) : '',
     );
     final tagline = useTextEditingController(text: session.tagline ?? '');
     final sessionPosterMap = ref.watch(sessionPosterMapProvider);
@@ -265,7 +267,10 @@ class AddEditSessionPage extends HookConsumerWidget {
                               ? null
                               : overview.text,
                           start: DateTime.parse(
-                            processDateBackWithHour(start.text),
+                            processDateBackWithHour(
+                              start.text,
+                              locale.toString(),
+                            ),
                           ),
                           tagline: tagline.text.isEmpty ? null : tagline.text,
                         );

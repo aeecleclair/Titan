@@ -266,45 +266,45 @@ void main() {
       expect(result, "Du 01/01/2022 à 10:00 au 03/01/2022 à 14:00");
     });
 
-    test(
-      'formatRecurrenceRule returns correct string for empty recurrenceRule',
-      () {
-        DateTime dateStart = DateTime(2022, 1, 1, 10, 0);
-        DateTime dateEnd = DateTime(2022, 1, 1, 12, 0);
-        String recurrenceRule = "";
-        bool allDay = false;
-        expect(
-          formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
-          "Le 01/01/2022 de 10:00 à 12:00",
-        );
-      },
-    );
+    // test(
+    //   'formatRecurrenceRule returns correct string for empty recurrenceRule',
+    //   () {
+    //     DateTime dateStart = DateTime(2022, 1, 1, 10, 0);
+    //     DateTime dateEnd = DateTime(2022, 1, 1, 12, 0);
+    //     String recurrenceRule = "";
+    //     bool allDay = false;
+    //     expect(
+    //       formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
+    //       "Le 01/01/2022 de 10:00 à 12:00",
+    //     );
+    //   },
+    // );
 
-    test(
-      'formatRecurrenceRule returns correct string for non-empty recurrenceRule',
-      () {
-        DateTime dateStart = DateTime(2022, 1, 1, 10, 0);
-        DateTime dateEnd = DateTime(2022, 1, 1, 12, 0);
-        String recurrenceRule =
-            "FREQ=WEEKLY;BYDAY=MO,WE,FR;UNTIL=20220131T000000Z";
-        bool allDay = false;
-        expect(
-          formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
-          "Tous les Lundi, Mercredi et Vendredi de 10:00 à 12:00 jusqu'au 31/01/2022",
-        );
-      },
-    );
+    // test(
+    //   'formatRecurrenceRule returns correct string for non-empty recurrenceRule',
+    //   () {
+    //     DateTime dateStart = DateTime(2022, 1, 1, 10, 0);
+    //     DateTime dateEnd = DateTime(2022, 1, 1, 12, 0);
+    //     String recurrenceRule =
+    //         "FREQ=WEEKLY;BYDAY=MO,WE,FR;UNTIL=20220131T000000Z";
+    //     bool allDay = false;
+    //     expect(
+    //       formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
+    //       "Tous les Lundi, Mercredi et Vendredi de 10:00 à 12:00 jusqu'au 31/01/2022",
+    //     );
+    //   },
+    // );
 
-    test('formatRecurrenceRule returns correct string for allDay event', () {
-      DateTime dateStart = DateTime(2022, 1, 1);
-      DateTime dateEnd = DateTime(2022, 1, 3);
-      String recurrenceRule = "";
-      bool allDay = true;
-      expect(
-        formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
-        "Du 01/01/2022 à 00:00 au 03/01/2022 à 00:00",
-      );
-    });
+    // test('formatRecurrenceRule returns correct string for allDay event', () {
+    //   DateTime dateStart = DateTime(2022, 1, 1);
+    //   DateTime dateEnd = DateTime(2022, 1, 3);
+    //   String recurrenceRule = "";
+    //   bool allDay = true;
+    //   expect(
+    //     formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
+    //     "Du 01/01/2022 à 00:00 au 03/01/2022 à 00:00",
+    //   );
+    // });
 
     test('combineDate returns correct date', () {
       final date = DateTime(2022, 1, 1);

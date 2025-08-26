@@ -66,7 +66,7 @@
   "eventActionCampaignSubtitle": "Votez maintenant",
   "eventActionEventSubtitle": "Répondez à l'invitation",
   "eventActionCampaignButton": "Voter",
-  "eventActionEventButton": "Participer",
+  "eventActionEventButton": "Réserver",
   "eventActionCampaignValidated": "J'ai voté !",
   "eventActionEventValidated": "Je viens !",
   "adminAccountTypes": "Types de compte",
@@ -1550,7 +1550,7 @@
   "voteVotesOpened": "Votes ouverts",
   "voteWarning": "Attention",
   "voteWarningMessage": "La sélection ne sera pas sauvegardée.\nVoulez-vous continuer ?",
-  "moduleAdvert": "Annonce",
+  "moduleAdvert": "Annonces",
   "moduleAdvertDescription": "Gérer les annonces",
   "moduleAmap": "AMAP",
   "moduleAmapDescription": "Gérer les livraisons et les produits",
@@ -1595,5 +1595,6 @@
   "modulePayment": "Paiement",
   "modulePaymentDescription": "Gérer les paiements, les statistiques et les appareils",
   "toolInvalidNumber": "Chiffre invalide",
-  "toolDateRequired": "Date requise"
+  "toolDateRequired": "Date requise",
+  "toolSuccess": "Succès"
 }

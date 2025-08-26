@@ -29,6 +29,7 @@ class BookingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context);
     final isNotEnded = booking.recurrenceRule.isNotEmpty
         ? SfCalendar.parseRRule(
             booking.recurrenceRule,
@@ -126,6 +127,7 @@ class BookingCard extends StatelessWidget {
                     booking.end,
                     booking.recurrenceRule,
                     false,
+                    locale.toString(),
                   ),
                   style: TextStyle(
                     fontSize: 13,

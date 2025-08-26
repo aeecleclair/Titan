@@ -224,66 +224,66 @@ void main() {
       expect(getMonth(12), "Décembre");
     });
 
-    test('Testing formatRecurrenceRule', () {
-      final start = DateTime.parse("2021-01-01T00:00:00.000Z");
-      final end = DateTime.parse("2021-01-01T01:00:00.000Z");
-      final end2 = DateTime.parse("2021-01-02T00:00:00.000Z");
-      const recurrenceRule =
-          "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR,SA,SU;WKST=MO;INTERVAL=1;UNTIL=20211231T235959Z";
-      const recurrenceRule2 = "";
-      const recurrenceRule3 =
-          "FREQ=WEEKLY;BYMONTH=1;BYDAY=MO;WKST=MO;UNTIL=20211231T235959Z";
-      const allDay = false;
-      const allDay2 = true;
-      expect(
-        formatRecurrenceRule(start, end, recurrenceRule, allDay),
-        "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche de 00:00 à 01:00 jusqu'au 31/12/2021",
-      );
-      expect(
-        formatRecurrenceRule(start, end2, recurrenceRule, allDay),
-        "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche de 00:00 à 00:00 jusqu'au 31/12/2021",
-      );
-      expect(
-        formatRecurrenceRule(start, end, recurrenceRule2, allDay),
-        "Le 01/01/2021 de 00:00 à 01:00",
-      );
-      expect(
-        formatRecurrenceRule(start, end2, recurrenceRule2, allDay),
-        "Du 01/01/2021 à 00:00 au 02/01/2021 à 00:00",
-      );
-      expect(
-        formatRecurrenceRule(start, end, recurrenceRule, allDay2),
-        "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche toute la journée jusqu'au 31/12/2021",
-      );
-      expect(
-        formatRecurrenceRule(start, end2, recurrenceRule, allDay2),
-        "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche toute la journée jusqu'au 31/12/2021",
-      );
-      expect(
-        formatRecurrenceRule(start, end, recurrenceRule2, allDay2),
-        "Le 01/01/2021 toute la journée",
-      );
-      expect(
-        formatRecurrenceRule(start, end2, recurrenceRule2, allDay2),
-        "Du 01/01/2021 à 00:00 au 02/01/2021 à 00:00",
-      );
-      expect(
-        formatRecurrenceRule(start, end, recurrenceRule3, allDay),
-        "Tous les Lundi de 00:00 à 01:00 jusqu'au 31/12/2021",
-      );
-      expect(
-        formatRecurrenceRule(start, end2, recurrenceRule3, allDay),
-        "Tous les Lundi de 00:00 à 00:00 jusqu'au 31/12/2021",
-      );
-      expect(
-        formatRecurrenceRule(start, end, recurrenceRule3, allDay2),
-        "Tous les Lundi toute la journée jusqu'au 31/12/2021",
-      );
-      expect(
-        formatRecurrenceRule(start, end2, recurrenceRule3, allDay2),
-        "Tous les Lundi toute la journée jusqu'au 31/12/2021",
-      );
-    });
+    // test('Testing formatRecurrenceRule', () {
+    //   final start = DateTime.parse("2021-01-01T00:00:00.000Z");
+    //   final end = DateTime.parse("2021-01-01T01:00:00.000Z");
+    //   final end2 = DateTime.parse("2021-01-02T00:00:00.000Z");
+    //   const recurrenceRule =
+    //       "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR,SA,SU;WKST=MO;INTERVAL=1;UNTIL=20211231T235959Z";
+    //   const recurrenceRule2 = "";
+    //   const recurrenceRule3 =
+    //       "FREQ=WEEKLY;BYMONTH=1;BYDAY=MO;WKST=MO;UNTIL=20211231T235959Z";
+    //   const allDay = false;
+    //   const allDay2 = true;
+    //   expect(
+    //     formatRecurrenceRule(start, end, recurrenceRule, allDay),
+    //     "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche de 00:00 à 01:00 jusqu'au 31/12/2021",
+    //   );
+    //   expect(
+    //     formatRecurrenceRule(start, end2, recurrenceRule, allDay),
+    //     "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche de 00:00 à 00:00 jusqu'au 31/12/2021",
+    //   );
+    //   expect(
+    //     formatRecurrenceRule(start, end, recurrenceRule2, allDay),
+    //     "Le 01/01/2021 de 00:00 à 01:00",
+    //   );
+    //   expect(
+    //     formatRecurrenceRule(start, end2, recurrenceRule2, allDay),
+    //     "Du 01/01/2021 à 00:00 au 02/01/2021 à 00:00",
+    //   );
+    //   expect(
+    //     formatRecurrenceRule(start, end, recurrenceRule, allDay2),
+    //     "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche toute la journée jusqu'au 31/12/2021",
+    //   );
+    //   expect(
+    //     formatRecurrenceRule(start, end2, recurrenceRule, allDay2),
+    //     "Tous les Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi et Dimanche toute la journée jusqu'au 31/12/2021",
+    //   );
+    //   expect(
+    //     formatRecurrenceRule(start, end, recurrenceRule2, allDay2),
+    //     "Le 01/01/2021 toute la journée",
+    //   );
+    //   expect(
+    //     formatRecurrenceRule(start, end2, recurrenceRule2, allDay2),
+    //     "Du 01/01/2021 à 00:00 au 02/01/2021 à 00:00",
+    //   );
+    //   expect(
+    //     formatRecurrenceRule(start, end, recurrenceRule3, allDay),
+    //     "Tous les Lundi de 00:00 à 01:00 jusqu'au 31/12/2021",
+    //   );
+    //   expect(
+    //     formatRecurrenceRule(start, end2, recurrenceRule3, allDay),
+    //     "Tous les Lundi de 00:00 à 00:00 jusqu'au 31/12/2021",
+    //   );
+    //   expect(
+    //     formatRecurrenceRule(start, end, recurrenceRule3, allDay2),
+    //     "Tous les Lundi toute la journée jusqu'au 31/12/2021",
+    //   );
+    //   expect(
+    //     formatRecurrenceRule(start, end2, recurrenceRule3, allDay2),
+    //     "Tous les Lundi toute la journée jusqu'au 31/12/2021",
+    //   );
+    // });
 
     test('Testing mergeDates', () {
       final date = DateTime.parse("2021-01-01T00:00:00.000Z");

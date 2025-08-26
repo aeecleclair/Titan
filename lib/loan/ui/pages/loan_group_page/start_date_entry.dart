@@ -15,6 +15,7 @@ class StartDateEntry extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final items = ref.watch(itemListProvider);
     final selectedItems = ref.watch(editSelectedListProvider);
     final endNotifier = ref.watch(endProvider.notifier);
@@ -35,15 +36,17 @@ class StartDateEntry extends HookConsumerWidget {
                 )
                 .toList();
             if (selected.isNotEmpty) {
-              endNotifier.setEndFromSelected(date, selected);
+              endNotifier.setEndFromSelected(date, selected, locale.toString());
             } else {
               endNotifier.setEnd("");
             }
-            initialDateNotifier.setDate(DateTime.parse(processDateBack(date)));
+            initialDateNotifier.setDate(
+              DateTime.parse(processDateBack(date, locale.toString())),
+            );
           });
         },
         initialDate: start.isNotEmpty
-            ? DateTime.parse(processDateBack(start))
+            ? DateTime.parse(processDateBack(start, locale.toString()))
             : now,
         firstDate: DateTime(now.year - 1, now.month, now.day),
       ),

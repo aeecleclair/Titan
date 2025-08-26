@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:titan/booking/class/booking.dart';
 import 'package:titan/service/class/room.dart';
 import 'package:titan/booking/providers/booking_provider.dart';
@@ -39,6 +40,7 @@ class AddEditBookingPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final now = DateTime.now();
     final user = ref.watch(userProvider);
     final key = GlobalKey<FormState>();
@@ -61,14 +63,14 @@ class AddEditBookingPage extends HookConsumerWidget {
       text: isEdit
           ? recurrent.value
                 ? processDateOnlyHour(booking.start)
-                : processDateWithHour(booking.start)
+                : DateFormat.yMd(locale).add_Hm().format(booking.start)
           : "",
     );
     final end = useTextEditingController(
       text: isEdit
           ? recurrent.value
                 ? processDateOnlyHour(booking.end)
-                : processDateWithHour(booking.end)
+                : DateFormat.yMd(locale).add_Hm().format(booking.end)
           : "",
     );
     final motif = useTextEditingController(text: booking.reason);
@@ -84,7 +86,7 @@ class AddEditBookingPage extends HookConsumerWidget {
     );
     final recurrenceEndDate = useTextEditingController(
       text: booking.recurrenceRule != ""
-          ? processDate(
+          ? DateFormat.yMd(locale).format(
               DateTime.parse(
                 booking.recurrenceRule.split(";UNTIL=")[1].split(";")[0],
               ),
@@ -341,8 +343,8 @@ class AddEditBookingPage extends HookConsumerWidget {
                           }
                           if (end.text.contains("/") &&
                               isDateBefore(
-                                processDateBack(end.text),
-                                processDateBack(start.text),
+                                processDateBack(end.text, locale.toString()),
+                                processDateBack(start.text, locale.toString()),
                               )) {
                             displayToast(
                               context,
@@ -367,11 +369,13 @@ class AddEditBookingPage extends HookConsumerWidget {
                             String recurrenceRule = "";
                             String startString = start.text;
                             if (!startString.contains("/")) {
-                              startString = "${processDate(now)} $startString";
+                              startString =
+                                  "${DateFormat.yMd(locale).format(now)} $startString";
                             }
                             String endString = end.text;
                             if (!endString.contains("/")) {
-                              endString = "${processDate(now)} $endString";
+                              endString =
+                                  "${DateFormat.yMd(locale).format(now)} $endString";
                             }
                             if (recurrent.value) {
                               RecurrenceProperties recurrence =
@@ -380,17 +384,26 @@ class AddEditBookingPage extends HookConsumerWidget {
                               recurrence.recurrenceRange =
                                   RecurrenceRange.endDate;
                               recurrence.endDate = DateTime.parse(
-                                processDateBack(recurrenceEndDate.text),
+                                processDateBack(
+                                  recurrenceEndDate.text,
+                                  locale.toString(),
+                                ),
                               );
                               recurrence.weekDays = selectedDays;
                               recurrence.interval = int.parse(interval.text);
                               recurrenceRule = SfCalendar.generateRRule(
                                 recurrence,
                                 DateTime.parse(
-                                  processDateBackWithHour(startString),
+                                  processDateBackWithHour(
+                                    startString,
+                                    locale.toString(),
+                                  ),
                                 ),
                                 DateTime.parse(
-                                  processDateBackWithHour(endString),
+                                  processDateBackWithHour(
+                                    endString,
+                                    locale.toString(),
+                                  ),
                                 ),
                               );
                               try {
@@ -414,10 +427,16 @@ class AddEditBookingPage extends HookConsumerWidget {
                                 id: isEdit ? booking.id : "",
                                 reason: motif.text,
                                 start: DateTime.parse(
-                                  processDateBackWithHour(startString),
+                                  processDateBackWithHour(
+                                    startString,
+                                    locale.toString(),
+                                  ),
                                 ),
                                 end: DateTime.parse(
-                                  processDateBackWithHour(endString),
+                                  processDateBackWithHour(
+                                    endString,
+                                    locale.toString(),
+                                  ),
                                 ),
                                 creation: DateTime.now(),
                                 note: note.text.isEmpty ? null : note.text,

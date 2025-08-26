@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:titan/service/providers/room_list_provider.dart';
 import 'package:titan/event/ui/event.dart';
 import 'package:titan/event/ui/pages/event_pages/checkbox_entry.dart';
@@ -32,6 +33,7 @@ class AddEditEventPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final locale = Localizations.localeOf(context);
     final now = DateTime.now();
     final user = ref.watch(userProvider);
     final event = ref.watch(eventProvider);
@@ -60,8 +62,8 @@ class AddEditEventPage extends HookConsumerWidget {
                       ? ""
                       : processDateOnlyHour(event.start)
                 : allDay.value
-                ? processDate(event.start)
-                : processDateWithHour(event.start)
+                ? DateFormat.yMd(locale).format(event.start)
+                : DateFormat.yMd(locale).add_Hm().format(event.start)
           : "",
     );
     final end = useTextEditingController(
@@ -71,8 +73,8 @@ class AddEditEventPage extends HookConsumerWidget {
                       ? ""
                       : processDateOnlyHour(event.end)
                 : allDay.value
-                ? processDate(event.end)
-                : processDateWithHour(event.end)
+                ? DateFormat.yMd(locale).format(event.end)
+                : DateFormat.yMd(locale).add_Hm().format(event.end)
           : "",
     );
     final interval = useTextEditingController(
@@ -82,7 +84,7 @@ class AddEditEventPage extends HookConsumerWidget {
     );
     final recurrenceEndDate = useTextEditingController(
       text: event.recurrenceRule != ""
-          ? processDate(
+          ? DateFormat.yMd(locale).format(
               DateTime.parse(
                 event.recurrenceRule.split(";UNTIL=")[1].split(";")[0],
               ),
@@ -434,8 +436,14 @@ class AddEditEventPage extends HookConsumerWidget {
                               }
                               if (end.text.contains("/") &&
                                   isDateBefore(
-                                    processDateBack(end.text),
-                                    processDateBack(start.text),
+                                    processDateBack(
+                                      end.text,
+                                      locale.toString(),
+                                    ),
+                                    processDateBack(
+                                      start.text,
+                                      locale.toString(),
+                                    ),
                                   )) {
                                 displayToast(
                                   context,
@@ -461,12 +469,12 @@ class AddEditEventPage extends HookConsumerWidget {
                                   String startString = start.text;
                                   if (!startString.contains("/")) {
                                     startString =
-                                        "${processDate(now)} $startString";
+                                        "${DateFormat.yMd(locale).format(now)} $startString";
                                   }
                                   String endString = end.text;
                                   if (!endString.contains("/")) {
                                     endString =
-                                        "${processDate(now)} $endString";
+                                        "${DateFormat.yMd(locale).format(now)} $endString";
                                   }
                                   if (recurrent.value) {
                                     RecurrenceProperties recurrence =
@@ -476,7 +484,10 @@ class AddEditEventPage extends HookConsumerWidget {
                                     recurrence.recurrenceRange =
                                         RecurrenceRange.endDate;
                                     recurrence.endDate = DateTime.parse(
-                                      processDateBack(recurrenceEndDate.text),
+                                      processDateBack(
+                                        recurrenceEndDate.text,
+                                        locale.toString(),
+                                      ),
                                     );
                                     recurrence.weekDays = WeekDays.values
                                         .where(
@@ -493,10 +504,16 @@ class AddEditEventPage extends HookConsumerWidget {
                                     recurrenceRule = SfCalendar.generateRRule(
                                       recurrence,
                                       DateTime.parse(
-                                        processDateBackWithHour(startString),
+                                        processDateBackWithHour(
+                                          startString,
+                                          locale.toString(),
+                                        ),
                                       ),
                                       DateTime.parse(
-                                        processDateBackWithHour(endString),
+                                        processDateBackWithHour(
+                                          endString,
+                                          locale.toString(),
+                                        ),
                                       ),
                                     );
                                   }
@@ -504,14 +521,20 @@ class AddEditEventPage extends HookConsumerWidget {
                                     id: isEdit ? event.id : "",
                                     description: description.text,
                                     end: DateTime.parse(
-                                      processDateBack(endString),
+                                      processDateBack(
+                                        endString,
+                                        locale.toString(),
+                                      ),
                                     ),
                                     name: name.text,
                                     organizer: organizer.text,
                                     allDay: allDay.value,
                                     location: location.text,
                                     start: DateTime.parse(
-                                      processDateBack(startString),
+                                      processDateBack(
+                                        startString,
+                                        locale.toString(),
+                                      ),
                                     ),
                                     type: eventType.value,
                                     recurrenceRule: recurrenceRule,
