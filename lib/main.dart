@@ -98,7 +98,7 @@ class MyApp extends HookConsumerWidget {
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'MyECL',
+      title: getAppName(),
       scrollBehavior: MyCustomScrollBehavior(),
       locale: ref.watch(localeProvider),
       supportedLocales: const [Locale('en', 'US'), Locale('fr', 'FR')],
