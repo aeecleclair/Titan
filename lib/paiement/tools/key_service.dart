@@ -1,12 +1,13 @@
 import 'package:cryptography_plus/cryptography_plus.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:titan/tools/functions.dart';
 
 class KeyService {
-  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage(
+  final FlutterSecureStorage _secureStorage = FlutterSecureStorage(
     aOptions: AndroidOptions(),
     iOptions: IOSOptions(
       // A service name is required for iOS KeyChain
-      accountName: 'fr.titan.myecl',
+      accountName: getTitanPackageName(),
     ),
   );
   final algorithm = Ed25519();

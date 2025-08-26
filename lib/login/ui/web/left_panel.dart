@@ -35,8 +35,8 @@ class LeftPanel extends HookConsumerWidget {
                     children: [
                       Image.asset(getTitanLogo(), width: 70, height: 70),
                       const SizedBox(width: 20),
-                      const Text(
-                        'MyECL',
+                      Text(
+                        getAppName(),
                         style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
@@ -51,8 +51,8 @@ class LeftPanel extends HookConsumerWidget {
                         ),
                       ),
                       const SizedBox(width: 15),
-                      const Text(
-                        "L'application de l'associatif centralien",
+                      Text(
+                        AppLocalizations.of(context)!.loginShortDescription,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

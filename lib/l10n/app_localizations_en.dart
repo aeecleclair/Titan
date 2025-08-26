@@ -2091,6 +2091,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginRegister => 'Register';
 
   @override
+  String get loginShortDescription => 'The associative application';
+
+  @override
   String get loginUpcomingEvents => 'Upcoming events';
 
   @override

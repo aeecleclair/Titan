@@ -495,7 +495,7 @@ String getTitanURL() {
   }
 }
 
-String getTitanURLScheme() {
+String getTitanPackageSuffix() {
   switch (getAppFlavor()) {
     case "dev":
       return "titan.dev";
@@ -509,7 +509,15 @@ String getTitanURLScheme() {
 }
 
 String getTitanPackageName() {
-  return "fr.myecl.${getTitanURLScheme()}";
+  return "${String.fromEnvironment('APP_ID_PREFIX')}.${getTitanPackageSuffix()}";
+}
+
+String getTitanURLScheme() {
+  return getTitanPackageName();
+}
+
+String getAppName() {
+  return String.fromEnvironment('APP_NAME');
 }
 
 String getTitanLogo() {
