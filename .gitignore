@@ -48,6 +48,8 @@ app.*.map.json
 .env
 
 # Firebase
+google-services.json
+GoogleService-Info.plist
 android/app/src/alpha/google-services.json
 android/app/src/dev/google-services.json
 android/app/src/prod/google-services.json
@@ -66,3 +68,19 @@ coverage/
 
 # Missing translations
 missing.txt
+
+# Fastlane
+android/fastlane/metadata
+android/fastlane/report.xml
+ios/fastlane/report.xml
+android/fastlane-service-account.json
+ios/app-store-connect-api.p8
+
+# Config
+config/
+!config/config-template.json
+
+# Folder to store various keys and secrets
+keys
+
+MainActivity.kt
