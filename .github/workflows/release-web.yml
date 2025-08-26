@@ -60,11 +60,13 @@ jobs:
           echo ALPHA_HOST=$ALPHA_HOST >> .env
           echo PAYMENT_NAME=$PAYMENT_NAME >> .env
           echo SCHOOL_NAME=$SCHOOL_NAME >> .env
+          echo APP_NAME=$APP_NAME >> .env
         env:
           PROD_HOST: ${{ vars.PROD_HOST }}
           ALPHA_HOST: ${{ vars.ALPHA_HOST }}
           PAYMENT_NAME: ${{ vars.PAYMENT_NAME }}
           SCHOOL_NAME: ${{ vars.SCHOOL_NAME }}
+          APP_NAME: ${{ vars.APP_NAME }}
 
       - name: Configure Alpha env
         if: needs.extract-version.outputs.isAlpha == 'true'
