@@ -66,13 +66,13 @@ jobs:
 
       - name: Move assets
         run: |
-          cp -f $LOGIN_ASSET_PATH assets/images/login.webp
-          cp -f $BACK_ASSET_PATH assets/web/back.webp
-          cp -f $LOGO_ASSET_PATH assets/images/logo_prod.png
-          cp -f $ICON_ASSET_PATH assets/images/icon_prod.png
-          cp -f $ICON_ANDROID_PATH/* android/app/src/prod/
-          cp -f $ICON_IOS_PATH/* ios/Runner/Assets.xcassets/AppIcon-Prod.appiconset/
-          cp -f $ICON_WEB_PATH/* web/Prod/
+          cp -r -f $LOGIN_ASSET_PATH assets/images/login.webp
+          cp -r -f $BACK_ASSET_PATH assets/web/back.webp
+          cp -r -f $LOGO_ASSET_PATH assets/images/logo_prod.png
+          cp -r -f $ICON_ASSET_PATH assets/images/icon_prod.png
+          cp -r -f $ICON_ANDROID_PATH/* android/app/src/prod/
+          cp -r -f $ICON_IOS_PATH/* ios/Runner/Assets.xcassets/AppIcon-Prod.appiconset/
+          cp -r -f $ICON_WEB_PATH/* web/Prod/
         env:
           LOGIN_ASSET_PATH: ${{ vars.LOGIN_ASSET_PATH }}
           BACK_ASSET_PATH: ${{ vars.BACK_ASSET_PATH }}
@@ -126,6 +126,7 @@ jobs:
         if: needs.extract-version.outputs.isAlpha == 'false'
         run: |
           cp -f web/Prod/favicon.png web/favicon.png
+          mkdir -p web/icons
           cp -f web/Prod/icons/* web/icons/
 
       - name: Build Alpha 🔧
