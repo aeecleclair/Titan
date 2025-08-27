@@ -6,14 +6,15 @@ import 'package:titan/tools/constants.dart';
 /// Determines if a color is considered dark or light
 bool isColorDark(Color color) {
   // Calculate luminance using the standard formula
-  final luminance =
-      (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
+  final luminance = (0.299 * color.r + 0.587 * color.g + 0.114 * color.b);
   return luminance < 0.5;
 }
 
 /// Gets the appropriate text color based on background color
 Color getTextColor(Color backgroundColor) {
-  return isColorDark(backgroundColor) ? Colors.white : Colors.black;
+  return isColorDark(backgroundColor)
+      ? ColorConstants.background
+      : ColorConstants.onTertiary;
 }
 
 /// Extracts dominant color from an ImageProvider
