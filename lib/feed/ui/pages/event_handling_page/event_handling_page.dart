@@ -26,19 +26,19 @@ class EventHandlingPage extends HookConsumerWidget {
     final localizeWithContext = AppLocalizations.of(context)!;
 
     return FeedTemplate(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Refresher(
-          onRefresh: () {
-            return newsListNotifier.loadNewsList();
-          },
-          controller: ScrollController(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
+      child: Refresher(
+        onRefresh: () {
+          return newsListNotifier.loadNewsList();
+        },
+        controller: ScrollController(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 16),
 
-              Text(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(
                 localizeWithContext.feedEventManagement,
                 style: const TextStyle(
                   fontSize: 24,
@@ -46,37 +46,40 @@ class EventHandlingPage extends HookConsumerWidget {
                   color: ColorConstants.title,
                 ),
               ),
+            ),
 
-              const SizedBox(height: 16),
+            const SizedBox(height: 16),
 
-              SizedBox(
-                height: 40,
-                child: HorizontalMultiSelect<NewsFilterType>(
-                  items: NewsFilterType.values,
-                  selectedItem: selectedFilter.value,
-                  itemBuilder: (context, item, _, selected) {
-                    final filterName = _getFilterName(context, item);
-                    return Text(
-                      filterName,
-                      style: TextStyle(
-                        color: selected
-                            ? ColorConstants.background
-                            : ColorConstants.tertiary,
-                        fontWeight: selected
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                      ),
-                    );
-                  },
-                  onItemSelected: (item) {
-                    selectedFilter.value = item;
-                  },
-                ),
+            SizedBox(
+              height: 40,
+              child: HorizontalMultiSelect<NewsFilterType>(
+                items: NewsFilterType.values,
+                selectedItem: selectedFilter.value,
+                itemBuilder: (context, item, _, selected) {
+                  final filterName = _getFilterName(context, item);
+                  return Text(
+                    filterName,
+                    style: TextStyle(
+                      color: selected
+                          ? ColorConstants.background
+                          : ColorConstants.tertiary,
+                      fontWeight: selected
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
+                  );
+                },
+                onItemSelected: (item) {
+                  selectedFilter.value = item;
+                },
               ),
+            ),
 
-              const SizedBox(height: 16),
+            const SizedBox(height: 16),
 
-              AsyncChild(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: AsyncChild(
                 value: newsListAsync,
                 builder: (context, newsList) {
                   final filteredNews = _getFilteredNews(
@@ -104,8 +107,8 @@ class EventHandlingPage extends HookConsumerWidget {
                   );
                 },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

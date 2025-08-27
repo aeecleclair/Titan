@@ -77,6 +77,10 @@ class EventCard extends ConsumerWidget {
           ),
           EventCardTextContent(
             item: item,
+            imageProvider: images?.maybeWhen(
+              orElse: () => null,
+              data: (data) => data.first.image,
+            ),
             localizeWithContext: localizeWithContext,
           ),
           if (isNewsTerminated(item) && item.module != "advert")

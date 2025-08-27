@@ -1,8 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:titan/feed/tools/image_color_utils.dart' as ImageColorUtils;
-import 'package:titan/tools/constants.dart';
 
-class AdaptiveTextCard extends StatefulWidget {
+// Provider for managing dominant color state
+final dominantColorProvider =
+    StateNotifierProvider.family<
+      DominantColorNotifier,
+      AsyncValue<Color?>,
+      ImageProvider?
+    >((ref, imageProvider) => DominantColorNotifier(imageProvider));
+
+class DominantColorNotifier extends StateNotifier<AsyncValue<Color?>> {
+  final ImageProvider? imageProvider;
+
+  DominantColorNotifier(this.imageProvider)
+    : super(const AsyncValue.loading()) {
+    _analyzeDominantColor();
+  }
+
+  Future<void> _analyzeDominantColor() async {
+    if (imageProvider == null) {
+      state = const AsyncValue.data(null);
+      return;
+    }
+
+    try {
+      state = const AsyncValue.loading();
+      final color = await ImageColorUtils.getDominantColor(imageProvider!);
+      state = AsyncValue.data(color);
+    } catch (error, stackTrace) {
+      state = AsyncValue.error(error, stackTrace);
+    }
+  }
+
+  void refresh() {
+    _analyzeDominantColor();
+  }
+}
+
+class AdaptiveTextCard extends HookConsumerWidget {
   final Widget child;
   final bool hasImage;
   final ImageProvider? imageProvider;
@@ -15,81 +52,28 @@ class AdaptiveTextCard extends StatefulWidget {
   });
 
   @override
-  State<AdaptiveTextCard> createState() => _AdaptiveTextCardState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Use a memoized provider key to avoid unnecessary provider rebuilds
+    final providerKey = useMemoized(() => imageProvider, [imageProvider]);
 
-class _AdaptiveTextCardState extends State<AdaptiveTextCard> {
-  Color? _dominantColor;
-  bool _isAnalyzing = true;
+    // Watch the dominant color state
+    final dominantColorState = ref.watch(dominantColorProvider(providerKey));
 
-  @override
-  void initState() {
-    super.initState();
-    if (widget.hasImage && widget.imageProvider != null) {
-      _analyzeDominantColor();
-    } else {
-      _isAnalyzing = false;
-    }
-  }
-
-  @override
-  void didUpdateWidget(AdaptiveTextCard oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.hasImage != oldWidget.hasImage ||
-        widget.imageProvider != oldWidget.imageProvider) {
-      if (widget.hasImage && widget.imageProvider != null) {
-        _analyzeDominantColor();
-      } else {
-        setState(() {
-          _isAnalyzing = false;
-          _dominantColor = null;
-        });
-      }
-    }
-  }
-
-  Future<void> _analyzeDominantColor() async {
-    if (widget.imageProvider == null) return;
-
-    try {
-      final color = await ImageColorUtils.getDominantColor(
-        widget.imageProvider!,
-      );
-      if (mounted) {
-        setState(() {
-          _dominantColor = color;
-          _isAnalyzing = false;
-        });
-      }
-    } catch (e) {
-      if (mounted) {
-        setState(() {
-          _isAnalyzing = false;
-        });
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return AdaptiveTextProvider(
-      isAnalyzing: _isAnalyzing,
-      dominantColor: _dominantColor,
-      hasImage: widget.hasImage,
-      child: widget.child,
+      isAnalyzing: dominantColorState.isLoading,
+      hasImage: hasImage,
+      child: child,
     );
   }
 }
 
 class AdaptiveTextProvider extends InheritedWidget {
   final bool isAnalyzing;
-  final Color? dominantColor;
   final bool hasImage;
 
   const AdaptiveTextProvider({
     super.key,
     required this.isAnalyzing,
-    required this.dominantColor,
     required this.hasImage,
     required super.child,
   });
@@ -98,17 +82,9 @@ class AdaptiveTextProvider extends InheritedWidget {
     return context.dependOnInheritedWidgetOfExactType<AdaptiveTextProvider>();
   }
 
-  Color getTextColor() {
-    if (!hasImage || isAnalyzing || dominantColor == null) {
-      return ColorConstants.background; // Default white text
-    }
-    return ImageColorUtils.getTextColor(dominantColor!);
-  }
-
   @override
   bool updateShouldNotify(AdaptiveTextProvider oldWidget) {
     return isAnalyzing != oldWidget.isAnalyzing ||
-        dominantColor != oldWidget.dominantColor ||
         hasImage != oldWidget.hasImage;
   }
 }

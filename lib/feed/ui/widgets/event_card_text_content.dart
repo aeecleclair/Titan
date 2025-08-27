@@ -1,23 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/feed/class/news.dart';
+import 'package:titan/feed/tools/image_color_utils.dart' as ImageColorUtils;
 import 'package:titan/feed/tools/news_helper.dart';
 import 'package:titan/feed/ui/widgets/adaptive_text_card.dart';
 import 'package:titan/tools/constants.dart';
 
-class EventCardTextContent extends StatelessWidget {
+class EventCardTextContent extends ConsumerWidget {
   final News item;
   final dynamic localizeWithContext;
+  final ImageProvider? imageProvider;
 
   const EventCardTextContent({
     super.key,
     required this.item,
+    required this.imageProvider,
     required this.localizeWithContext,
   });
 
   @override
-  Widget build(BuildContext context) {
-    final provider = AdaptiveTextProvider.of(context);
-    final textColor = provider?.getTextColor() ?? ColorConstants.background;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final dominantColor = ref.watch(dominantColorProvider(imageProvider));
+    final textColor = dominantColor.maybeWhen(
+      data: (color) => color != null
+          ? ImageColorUtils.getTextColor(color)
+          : ColorConstants.background,
+      orElse: () => ColorConstants.background,
+    );
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),

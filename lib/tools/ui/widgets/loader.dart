@@ -6,6 +6,20 @@ class Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: CircularProgressIndicator(color: color));
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final size = constraints.hasBoundedWidth && constraints.hasBoundedHeight
+            ? constraints.biggest.shortestSide
+            : 24.0;
+
+        return Center(
+          child: SizedBox(
+            width: size,
+            height: size,
+            child: CircularProgressIndicator(color: color),
+          ),
+        );
+      },
+    );
   }
 }
