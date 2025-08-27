@@ -133,6 +133,7 @@ class AdminEventCard extends ConsumerWidget {
                         vertical: 5,
                       ),
                       width: 100,
+                      height: 30,
                       decoration: BoxDecoration(
                         color: ColorConstants.main,
                         borderRadius: BorderRadius.circular(20),
@@ -172,6 +173,7 @@ class AdminEventCard extends ConsumerWidget {
                         vertical: 5,
                       ),
                       width: 100,
+                      height: 30,
                       decoration: BoxDecoration(
                         color: ColorConstants.tertiary,
                         borderRadius: BorderRadius.circular(20),
