@@ -483,16 +483,11 @@ String getBaseSchoolName() {
 }
 
 String getTitanURL() {
-  switch (getAppFlavor()) {
-    case "dev":
-      return "http://localhost:3000";
-    case "alpha":
-      return "https://titan.dev.eclair.ec-lyon.fr";
-    case "prod":
-      return "https://myecl.fr";
-    default:
-      throw StateError("Invalid app flavor");
+  var titanURL = dotenv.env["TITAN_URL"];
+  if (titanURL == null || titanURL.isEmpty) {
+    throw StateError("Could not find TITAN_URL in environment variables");
   }
+  return titanURL;
 }
 
 String getTitanPackageSuffix() {

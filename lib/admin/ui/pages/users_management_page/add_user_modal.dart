@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -18,6 +19,7 @@ class AddUsersModalContent extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedFileName = useState<String?>(null);
     final mailList = useState<List<String>>([]);
+    final userInvitationNotifier = ref.watch(userInvitationProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -31,6 +33,11 @@ class AddUsersModalContent extends HookConsumerWidget {
       title: localizeWithContext.adminInviteUsers,
       child: Column(
         children: [
+          Text(
+            localizeWithContext.adminImportUsersDescription,
+            style: TextStyle(fontSize: 16),
+          ),
+          const SizedBox(height: 20),
           Button(
             text: selectedFileName.value ?? localizeWithContext.adminImportList,
             onPressed: () async {
@@ -44,20 +51,29 @@ class AddUsersModalContent extends HookConsumerWidget {
                 selectedFileName.value = file.name;
 
                 if (file.path != null) {
-                  final fileContent = await File(file.path!).readAsString();
+                  String fileContent = '';
+                  if (kIsWeb) {
+                    fileContent = file.bytes != null
+                        ? String.fromCharCodes(file.bytes!)
+                        : '';
+                  } else {
+                    fileContent = await File(file.path!).readAsString();
+                  }
                   mailList.value = fileContent.split('\n');
                 }
               }
             },
           ),
           const SizedBox(height: 20),
+          Text(
+            localizeWithContext.adminInviteUsersCounter(mailList.value.length),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 20),
           Button(
-            text: localizeWithContext.adminAdd,
+            text: localizeWithContext.adminInvite,
             onPressed: () {
               tokenExpireWrapper(ref, () async {
-                final userInvitationNotifier = ref.watch(
-                  userInvitationProvider.notifier,
-                );
                 final value = await userInvitationNotifier.createUsers(
                   mailList.value,
                 );

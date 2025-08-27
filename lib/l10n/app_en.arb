@@ -198,9 +198,8 @@
   "adminAssociationMembershipsManagement": "Association memberships management",
   "adminChooseGroupManager": "Choose a group to manage this membership",
   "adminSelectManager": "Select a manager",
-  "adminInviteUsers": "Invite users",
   "adminImportList": "Import a list",
-  "adminInvitedUsers": "Invited users",
+  "adminImportUsersDescription": "Import users from a CSV file. The CSV file must contain one email address per line.",
   "adminFailedToInviteUsers": "Failed to invite users",
   "adminDeleteUsers": "Delete users",
   "adminAdmin": "Admin",
@@ -231,6 +230,18 @@
   "adminAssociationUpdated": "Association updated",
   "adminAssociationCreationError": "Error while creating association",
   "adminAssociationUpdateError": "Error while updating association",
+  "adminInvite": "Invite",
+  "adminInvitedUsers": "Invited users",
+  "adminInviteUsers": "Invite users",
+  "adminInviteUsersCounter": "{count, plural, zero {No user} one {{count} user} other {{count} users}} in the CSV file",
+  "@adminInviteUsersCounter": {
+    "description": "Text with the number of users in the CSV file",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "adminUpdatedAssociationLogo": "Association logo updated",
   "adminTooHeavyLogo": "Logo too heavy, maximum size is 4MB",
   "adminFailedToUpdateAssociationLogo": "Failed to update association logo",

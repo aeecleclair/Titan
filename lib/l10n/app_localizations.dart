@@ -1142,23 +1142,17 @@ abstract class AppLocalizations {
   /// **'Sélectionner un gestionnaire'**
   String get adminSelectManager;
 
-  /// No description provided for @adminInviteUsers.
-  ///
-  /// In fr, this message translates to:
-  /// **'Inviter des utilisateurs'**
-  String get adminInviteUsers;
-
   /// No description provided for @adminImportList.
   ///
   /// In fr, this message translates to:
   /// **'Importer une liste'**
   String get adminImportList;
 
-  /// No description provided for @adminInvitedUsers.
+  /// No description provided for @adminImportUsersDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Utilisateurs invités'**
-  String get adminInvitedUsers;
+  /// **'Importer des utilisateurs depuis un fichier CSV. Le fichier CSV doit contenir une adresse email par ligne.'**
+  String get adminImportUsersDescription;
 
   /// No description provided for @adminFailedToInviteUsers.
   ///
@@ -1243,6 +1237,30 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Échec de la mise à jour de l\'association'**
   String get adminAssociationUpdateError;
+
+  /// No description provided for @adminInvite.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inviter'**
+  String get adminInvite;
+
+  /// No description provided for @adminInvitedUsers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Utilisateurs invités'**
+  String get adminInvitedUsers;
+
+  /// No description provided for @adminInviteUsers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inviter des utilisateurs'**
+  String get adminInviteUsers;
+
+  /// Text with the number of users in the CSV file
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, zero {Aucun utilisateur} one {{count} utilisateur} other {{count} utilisateurs}} dans le fichier CSV'**
+  String adminInviteUsersCounter(int count);
 
   /// No description provided for @adminUpdatedAssociationLogo.
   ///

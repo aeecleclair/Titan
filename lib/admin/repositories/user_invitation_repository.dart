@@ -9,7 +9,11 @@ class UserInvitationRepository extends Repository {
 
   Future<bool> createUsers(List<String> mailList) async {
     final json = mailList.map((email) => {'email': email}).toList();
-    return await create(json, suffix: "batch-invitation");
+    final result = (await create(json, suffix: "batch-invitation"))["failed"];
+    for (var entry in result.entries) {
+      if (entry.value != "User already invited") return false;
+    }
+    return true;
   }
 }
 

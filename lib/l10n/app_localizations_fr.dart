@@ -554,13 +554,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminSelectManager => 'Sélectionner un gestionnaire';
 
   @override
-  String get adminInviteUsers => 'Inviter des utilisateurs';
-
-  @override
   String get adminImportList => 'Importer une liste';
 
   @override
-  String get adminInvitedUsers => 'Utilisateurs invités';
+  String get adminImportUsersDescription =>
+      'Importer des utilisateurs depuis un fichier CSV. Le fichier CSV doit contenir une adresse email par ligne.';
 
   @override
   String get adminFailedToInviteUsers =>
@@ -611,6 +609,27 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get adminAssociationUpdateError =>
       'Échec de la mise à jour de l\'association';
+
+  @override
+  String get adminInvite => 'Inviter';
+
+  @override
+  String get adminInvitedUsers => 'Utilisateurs invités';
+
+  @override
+  String get adminInviteUsers => 'Inviter des utilisateurs';
+
+  @override
+  String adminInviteUsersCounter(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count utilisateurs',
+      one: '$count utilisateur',
+      zero: 'Aucun utilisateur',
+    );
+    return '$_temp0 dans le fichier CSV';
+  }
 
   @override
   String get adminUpdatedAssociationLogo => 'Logo de l\'association mis à jour';

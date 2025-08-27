@@ -206,9 +206,8 @@
   "adminAssociationMembershipsManagement": "Gestion des adhésions",
   "adminChooseGroupManager": "Groupe gestionnaire de l'adhésion",
   "adminSelectManager": "Sélectionner un gestionnaire",
-  "adminInviteUsers": "Inviter des utilisateurs",
   "adminImportList": "Importer une liste",
-  "adminInvitedUsers": "Utilisateurs invités",
+  "adminImportUsersDescription": "Importer des utilisateurs depuis un fichier CSV. Le fichier CSV doit contenir une adresse email par ligne.",
   "adminFailedToInviteUsers": "Échec de l'invitation des utilisateurs",
   "adminDeleteUsers": "Supprimer des utilisateurs",
   "adminAdmin": "Admin",
@@ -239,6 +238,18 @@
   "adminAssociationUpdated": "Association mise à jour",
   "adminAssociationCreationError": "Échec de la création de l'association",
   "adminAssociationUpdateError": "Échec de la mise à jour de l'association",
+  "adminInvite": "Inviter",
+  "adminInvitedUsers": "Utilisateurs invités",
+  "adminInviteUsers": "Inviter des utilisateurs",
+  "adminInviteUsersCounter": "{count, plural, zero {Aucun utilisateur} one {{count} utilisateur} other {{count} utilisateurs}} dans le fichier CSV",
+  "@adminInviteUsersCounter": {
+    "description": "Text with the number of users in the CSV file",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "adminUpdatedAssociationLogo": "Logo de l'association mis à jour",
   "adminTooHeavyLogo": "Le logo de l'association est trop lourd, il doit faire moins de 4 Mo",
   "adminFailedToUpdateAssociationLogo": "Échec de la mise à jour du logo de l'association",

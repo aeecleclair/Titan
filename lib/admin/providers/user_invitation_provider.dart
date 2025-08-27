@@ -7,6 +7,8 @@ class UserInvitationNotifier extends StateNotifier {
     : super(null);
 
   Future<bool> createUsers(List<String> mailList) async {
+    print('Creating users with the following emails:');
+    print(mailList);
     return await userInvitationRepository.createUsers(mailList);
   }
 }
