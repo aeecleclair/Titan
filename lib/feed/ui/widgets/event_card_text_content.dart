@@ -22,7 +22,9 @@ class EventCardTextContent extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final dominantColor = ref.watch(dominantColorProvider(imageProvider));
     final textColor = dominantColor.maybeWhen(
-      data: (color) => color != null ? ImageColorUtils.getTextColor(color) : ColorConstants.background,
+      data: (color) => color != null
+          ? ImageColorUtils.getTextColor(color)
+          : ColorConstants.background,
       orElse: () => ColorConstants.background,
     );
 

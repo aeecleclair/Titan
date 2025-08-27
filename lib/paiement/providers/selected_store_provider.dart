@@ -17,7 +17,9 @@ final selectedStoreProvider =
     StateNotifierProvider<SelectedStoreNotifier, UserStore>((ref) {
       final myStores = ref.watch(myStoresProvider);
       final lastUsedStoreId = ref.read(lastUsedStoreIdProvider);
-      final lastUsedStoreIdNotifier = ref.read(lastUsedStoreIdProvider.notifier);
+      final lastUsedStoreIdNotifier = ref.read(
+        lastUsedStoreIdProvider.notifier,
+      );
       final store = myStores.maybeWhen<UserStore>(
         orElse: () => UserStore.empty(),
         data: (value) {
