@@ -710,6 +710,12 @@ abstract class AppLocalizations {
   /// **'Le nom ne peut pas être vide'**
   String get adminEmptyFieldError;
 
+  /// No description provided for @adminEmailFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible d\'envoyer un mail aux adresses suivantes'**
+  String get adminEmailFailed;
+
   /// No description provided for @adminEmailRegex.
   ///
   /// In fr, this message translates to:
@@ -841,6 +847,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Nom'**
   String get adminName;
+
+  /// No description provided for @adminNoGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun groupe'**
+  String get adminNoGroup;
 
   /// No description provided for @adminNoManager.
   ///
@@ -7856,23 +7868,23 @@ abstract class AppLocalizations {
   /// **'Connexion'**
   String get settingsConnexion;
 
-  /// No description provided for @settingsDisconnect.
+  /// No description provided for @settingsLogOut.
   ///
   /// In fr, this message translates to:
   /// **'Se déconnecter'**
-  String get settingsDisconnect;
+  String get settingsLogOut;
 
-  /// No description provided for @settingsDisconnectDescription.
+  /// No description provided for @settingsLogOutDescription.
   ///
   /// In fr, this message translates to:
   /// **'Êtes-vous sûr de vouloir vous déconnecter ?'**
-  String get settingsDisconnectDescription;
+  String get settingsLogOutDescription;
 
-  /// No description provided for @settingsDisconnectionSuccess.
+  /// No description provided for @settingsLogOutSuccess.
   ///
   /// In fr, this message translates to:
   /// **'Déconnexion réussie'**
-  String get settingsDisconnectionSuccess;
+  String get settingsLogOutSuccess;
 
   /// No description provided for @settingsDeleteMyAccount.
   ///

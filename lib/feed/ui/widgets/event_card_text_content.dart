@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/feed/class/news.dart';
-import 'package:titan/feed/tools/image_color_utils.dart' as ImageColorUtils;
+import 'package:titan/feed/tools/image_color_utils.dart' as image_color_utils;
 import 'package:titan/feed/tools/news_helper.dart';
 import 'package:titan/feed/ui/widgets/adaptive_text_card.dart';
 import 'package:titan/tools/constants.dart';
@@ -23,7 +23,7 @@ class EventCardTextContent extends ConsumerWidget {
     final dominantColor = ref.watch(dominantColorProvider(imageProvider));
     final textColor = dominantColor.maybeWhen(
       data: (color) => color != null
-          ? ImageColorUtils.getTextColor(color)
+          ? image_color_utils.getTextColor(color)
           : ColorConstants.background,
       orElse: () => ColorConstants.background,
     );

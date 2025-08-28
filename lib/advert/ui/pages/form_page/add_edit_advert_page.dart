@@ -7,7 +7,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:titan/admin/class/assocation.dart';
-import 'package:titan/admin/providers/my_association_list_provider.dart';
 import 'package:titan/advert/class/advert.dart';
 import 'package:titan/advert/providers/advert_list_provider.dart';
 import 'package:titan/advert/providers/advert_poster_provider.dart';
@@ -43,8 +42,6 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
     final poster = useState<Uint8List?>(null);
     final posterFile = useState<Image?>(null);
 
-    final userAssociations = ref.watch(myAssociationListProvider);
-
     final selectedAssociation = ref.watch(selectedAssociationProvider);
 
     if (advertPosters[advert.id] != null) {
@@ -70,38 +67,37 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
           key: key,
           child: Column(
             children: [
-              if (userAssociations.length > 1)
-                FormField<List<Association>>(
-                  validator: (e) {
-                    if (selectedAssociation.isEmpty) {
-                      return AppLocalizations.of(
-                        context,
-                      )!.advertChoosingAnnouncer;
-                    }
-                    return null;
-                  },
-                  builder: (formFieldState) => Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      boxShadow: formFieldState.hasError
-                          ? [
-                              const BoxShadow(
-                                color: Colors.red,
-                                spreadRadius: 3,
-                                blurRadius: 3,
-                                offset: Offset(2, 2),
-                              ),
-                            ]
-                          : [],
-                    ),
-                    child: AssociationBar(
-                      useUserAssociations: true,
-                      multipleSelect: false,
-                      isNotClickable: isEdit,
-                    ),
+              FormField<List<Association>>(
+                validator: (e) {
+                  if (selectedAssociation.isEmpty) {
+                    return AppLocalizations.of(
+                      context,
+                    )!.advertChoosingAnnouncer;
+                  }
+                  return null;
+                },
+                builder: (formFieldState) => Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    boxShadow: formFieldState.hasError
+                        ? [
+                            const BoxShadow(
+                              color: Colors.red,
+                              spreadRadius: 3,
+                              blurRadius: 3,
+                              offset: Offset(2, 2),
+                            ),
+                          ]
+                        : [],
+                  ),
+                  child: AssociationBar(
+                    useUserAssociations: true,
+                    multipleSelect: false,
+                    isNotClickable: isEdit,
                   ),
                 ),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Column(

@@ -323,6 +323,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminEmptyFieldError => 'Name cannot be empty';
 
   @override
+  String get adminEmailFailed =>
+      'Unable to send email to the following addresses';
+
+  @override
   String get adminEmailRegex => 'Email Regex';
 
   @override
@@ -389,6 +393,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adminName => 'Name';
+
+  @override
+  String get adminNoGroup => 'No group';
 
   @override
   String get adminNoManager => 'No manager selected';
@@ -4036,14 +4043,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsConnexion => 'Connection';
 
   @override
-  String get settingsDisconnect => 'Disconnect';
+  String get settingsLogOut => 'Log out';
 
   @override
-  String get settingsDisconnectDescription =>
-      'Do you really want to disconnect?';
+  String get settingsLogOutDescription => 'Do you really want to log out?';
 
   @override
-  String get settingsDisconnectionSuccess => 'Disconnected successfully';
+  String get settingsLogOutSuccess => 'Logged out successfully';
 
   @override
   String get settingsDeleteMyAccount => 'Delete my account';

@@ -79,6 +79,8 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
     final ongoingTransactionNotifier = ref.read(
       ongoingTransactionProvider.notifier,
     );
+
+    final localizeWithContext = AppLocalizations.of(context)!;
     if (mounted && barcodes.barcodes.isNotEmpty && barcode == null) {
       final data = barcodeNotifier.updateBarcode(
         barcodes.barcodes.firstOrNull!.rawValue!,
@@ -91,7 +93,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
             if (value == null) {
               displayToastWithContext(
                 TypeMsg.error,
-                AppLocalizations.of(context)!.paiementScanAlreadyUsedQRCode,
+                localizeWithContext.paiementScanAlreadyUsedQRCode,
               );
               barcodeNotifier.clearBarcode();
               ongoingTransactionNotifier.clearOngoingTransaction();
@@ -106,7 +108,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
       if (value == null) {
         displayToastWithContext(
           TypeMsg.error,
-          AppLocalizations.of(context)!.paiementScanAlreadyUsedQRCode,
+          localizeWithContext.paiementScanAlreadyUsedQRCode,
         );
         barcodeNotifier.clearBarcode();
         ongoingTransactionNotifier.clearOngoingTransaction();

@@ -211,6 +211,7 @@ void getActionButtonAction(
             mode: LaunchMode.externalApplication,
           );
         } else {
+          if (!context.mounted) return;
           displayToast(
             context,
             TypeMsg.error,

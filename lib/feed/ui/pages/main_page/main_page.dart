@@ -134,7 +134,9 @@ class FeedMainPage extends HookConsumerWidget {
                     if (isUserAMemberOfAnAssociation || isFeedAdmin)
                       CustomIconButton(
                         icon: HeroIcon(
-                          HeroIcons.userGroup,
+                          !isFeedAdmin && isUserAMemberOfAnAssociation
+                              ? HeroIcons.plus
+                              : HeroIcons.userGroup,
                           color: ColorConstants.background,
                         ),
                         onPressed: () {

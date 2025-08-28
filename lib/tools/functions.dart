@@ -9,6 +9,61 @@ import 'package:titan/tools/plausible/plausible.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:toastification/toastification.dart';
 
+/// Parses CSV content with automatic separator detection
+/// Supports common separators: comma, semicolon, tab, pipe
+List<String> parseCsvContent(String content) {
+  if (content.isEmpty) return [];
+
+  final separators = [',', ';', '\t', '|'];
+  final lines = content.split('\n').where((line) => line.trim().isNotEmpty);
+
+  if (lines.isEmpty) return [];
+
+  // Try to detect the best separator by counting occurrences in the first few lines
+  String bestSeparator = ','; // Default to comma
+  int maxFieldCount = 0;
+
+  for (final separator in separators) {
+    int totalFields = 0;
+    int lineCount = 0;
+
+    for (final line in lines.take(3)) {
+      // Check first 3 lines
+      final fields = line
+          .split(separator)
+          .where((field) => field.trim().isNotEmpty);
+      totalFields += fields.length;
+      lineCount++;
+    }
+
+    final avgFields = lineCount > 0 ? totalFields / lineCount : 0;
+    if (avgFields > maxFieldCount) {
+      maxFieldCount = avgFields.round();
+      bestSeparator = separator;
+    }
+  }
+
+  // Parse all lines with the detected separator
+  final result = <String>[];
+  for (final line in lines) {
+    final fields = line
+        .split(bestSeparator)
+        .map((field) => field.trim())
+        .where((field) => field.isNotEmpty && _isValidEmail(field));
+    result.addAll(fields);
+  }
+
+  return result.toSet().toList(); // Remove duplicates
+}
+
+/// Simple email validation helper
+bool _isValidEmail(String email) {
+  final emailRegex = RegExp(
+    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+  );
+  return emailRegex.hasMatch(email.trim());
+}
+
 enum TypeMsg { msg, error }
 
 enum Decision { approved, declined, pending }

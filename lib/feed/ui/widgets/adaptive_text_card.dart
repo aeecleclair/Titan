@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:titan/feed/tools/image_color_utils.dart' as ImageColorUtils;
+import 'package:titan/feed/tools/image_color_utils.dart' as image_color_utils;
 
 // Provider for managing dominant color state
 final dominantColorProvider =
@@ -27,7 +27,7 @@ class DominantColorNotifier extends StateNotifier<AsyncValue<Color?>> {
 
     try {
       state = const AsyncValue.loading();
-      final color = await ImageColorUtils.getDominantColor(imageProvider!);
+      final color = await image_color_utils.getDominantColor(imageProvider!);
       state = AsyncValue.data(color);
     } catch (error, stackTrace) {
       state = AsyncValue.error(error, stackTrace);

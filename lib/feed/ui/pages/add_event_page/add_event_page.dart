@@ -24,7 +24,7 @@ import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
-import 'package:titan/tools/ui/styleguide/button.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/styleguide/horizontal_multi_select.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
@@ -87,29 +87,27 @@ class AddEventPage extends HookConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    if (myAssociations.length > 1) ...[
-                      SizedBox(
-                        height: 50,
-                        child: HorizontalMultiSelect<Association>(
-                          items: myAssociations,
-                          selectedItem: selectedAssociation.value,
-                          onItemSelected: (association) {
-                            selectedAssociation.value = association;
-                          },
-                          itemBuilder:
-                              (context, association, index, selected) => Text(
-                                association.name,
-                                style: TextStyle(
-                                  color: selected
-                                      ? ColorConstants.background
-                                      : ColorConstants.tertiary,
-                                  fontSize: 16,
-                                ),
+                    SizedBox(
+                      height: 50,
+                      child: HorizontalMultiSelect<Association>(
+                        items: myAssociations,
+                        selectedItem: selectedAssociation.value,
+                        onItemSelected: (association) {
+                          selectedAssociation.value = association;
+                        },
+                        itemBuilder: (context, association, index, selected) =>
+                            Text(
+                              association.name,
+                              style: TextStyle(
+                                color: selected
+                                    ? ColorConstants.background
+                                    : ColorConstants.tertiary,
+                                fontSize: 16,
                               ),
-                        ),
+                            ),
                       ),
-                      const SizedBox(height: 10),
-                    ],
+                    ),
+                    const SizedBox(height: 10),
                     TextEntry(
                       label: localizeWithContext.feedTitle,
                       controller: titleController,
@@ -378,9 +376,29 @@ class AddEventPage extends HookConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 40),
-                    Button(
-                      text: localizeWithContext.feedCreateEvent,
-                      onPressed: () async {
+                    WaitingButton(
+                      child: Text(
+                        localizeWithContext.feedCreateEvent,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(255, 255, 255, 255),
+                        ),
+                      ),
+                      builder: (child) => Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          color: ColorConstants.tertiary,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: ColorConstants.onTertiary),
+                        ),
+                        child: Center(child: child),
+                      ),
+                      onTap: () async {
                         if (key.currentState == null) {
                           return;
                         }

@@ -56,7 +56,7 @@ class NavigationTemplate extends HookConsumerWidget {
           body: Stack(
             children: [
               child,
-              if (pathForwarding.isLoggedIn)
+              if (pathForwarding.isLoggedIn && user.id != "")
                 Positioned(
                   left: 0,
                   bottom: 0,

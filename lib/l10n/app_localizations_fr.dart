@@ -327,6 +327,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminEmptyFieldError => 'Le nom ne peut pas être vide';
 
   @override
+  String get adminEmailFailed =>
+      'Impossible d\'envoyer un mail aux adresses suivantes';
+
+  @override
   String get adminEmailRegex => 'Email Regex';
 
   @override
@@ -393,6 +397,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get adminName => 'Nom';
+
+  @override
+  String get adminNoGroup => 'Aucun groupe';
 
   @override
   String get adminNoManager => 'Aucun manager n\'est sélectionné';
@@ -4082,14 +4089,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsConnexion => 'Connexion';
 
   @override
-  String get settingsDisconnect => 'Se déconnecter';
+  String get settingsLogOut => 'Se déconnecter';
 
   @override
-  String get settingsDisconnectDescription =>
+  String get settingsLogOutDescription =>
       'Êtes-vous sûr de vouloir vous déconnecter ?';
 
   @override
-  String get settingsDisconnectionSuccess => 'Déconnexion réussie';
+  String get settingsLogOutSuccess => 'Déconnexion réussie';
 
   @override
   String get settingsDeleteMyAccount => 'Supprimer mon compte';

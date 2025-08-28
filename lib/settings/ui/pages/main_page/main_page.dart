@@ -357,15 +357,15 @@ class SettingsMainPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 10),
               ListItem(
-                title: localizeWithContext.settingsDisconnect,
+                title: localizeWithContext.settingsLogOut,
                 onTap: () async {
                   await showCustomBottomModal(
                     ref: ref,
                     context: context,
                     modal: ConfirmModal(
                       description:
-                          localizeWithContext.settingsDisconnectDescription,
-                      title: localizeWithContext.settingsDisconnect,
+                          localizeWithContext.settingsLogOutDescription,
+                      title: localizeWithContext.settingsLogOut,
                       onYes: () {
                         auth.deleteToken();
                         if (!kIsWeb) {
@@ -378,7 +378,7 @@ class SettingsMainPage extends HookConsumerWidget {
                         displayToast(
                           context,
                           TypeMsg.msg,
-                          localizeWithContext.settingsDisconnectionSuccess,
+                          localizeWithContext.settingsLogOutSuccess,
                         );
                       },
                     ),
