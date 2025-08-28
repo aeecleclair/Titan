@@ -39,6 +39,7 @@ void main() async {
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   }
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   timeago.setLocaleMessages('fr', CustomFrMessages());
   timeago.setLocaleMessages('fr_short', CustomFrShortMessages());
   timeago.setLocaleMessages('en', CustomEnMessages());
