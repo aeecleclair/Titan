@@ -5,7 +5,7 @@ import 'package:titan/phonebook/class/membership.dart';
 import 'package:titan/phonebook/providers/association_member_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/membership_provider.dart';
-import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
+import 'package:titan/phonebook/providers/is_phonebook_admin_provider.dart';
 import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 import 'package:titan/phonebook/ui/pages/membership_editor_page/user_search_modal.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';

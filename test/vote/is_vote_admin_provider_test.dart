@@ -14,7 +14,7 @@ void main() {
             User.empty().copyWith(
               groups: [
                 SimpleGroup.empty().copyWith(
-                  id: '6c6d7e88-fdb8-4e42-b2b5-3d3cfd12e7d6',
+                  id: "2ca57402-605b-4389-a471-f2fea7b27db5",
                 ),
               ],
             ),

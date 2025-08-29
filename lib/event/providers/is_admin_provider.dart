@@ -5,5 +5,5 @@ final isEventAdminProvider = StateProvider<bool>((ref) {
   final me = ref.watch(userProvider);
   return me.groups
       .map((e) => e.id)
-      .contains("53a669d6-84b1-4352-8d7c-421c1fbd9c6a");
+      .contains("b0357687-2211-410a-9e2a-144519eeaafa"); // admin_calendar
 });

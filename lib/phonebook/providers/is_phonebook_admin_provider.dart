@@ -9,15 +9,9 @@ import 'package:titan/user/providers/user_provider.dart';
 
 final isPhonebookAdminProvider = StateProvider<bool>((ref) {
   final user = ref.watch(userProvider);
-  if (user.groups
-          .map((e) => e.id)
-          .contains("53a669d6-84b1-4352-8d7c-421c1fbd9c6a") ||
-      user.groups
-          .map((e) => e.id)
-          .contains("6c6d7e88-fdb8-4e42-b2b5-3d3cfd12e7d6")) {
-    return true;
-  }
-  return false;
+  return user.groups
+      .map((e) => e.id)
+      .contains("d3f91313-d7e5-49c6-b01f-c19932a7e09b"); // admin_phonebook
 });
 
 final hasPhonebookAdminAccessProvider = StateProvider<bool>((ref) {

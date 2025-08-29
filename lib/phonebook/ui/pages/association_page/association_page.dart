@@ -6,7 +6,7 @@ import 'package:titan/phonebook/providers/association_member_sorted_list_provide
 import 'package:titan/phonebook/providers/association_picture_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/association_member_list_provider.dart';
-import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
+import 'package:titan/phonebook/providers/is_phonebook_admin_provider.dart';
 import 'package:titan/phonebook/ui/components/member_card.dart';
 import 'package:titan/phonebook/ui/pages/association_page/association_edition_modal.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';

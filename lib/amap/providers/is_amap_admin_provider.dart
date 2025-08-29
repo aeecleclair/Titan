@@ -5,5 +5,5 @@ final isAmapAdminProvider = StateProvider<bool>((ref) {
   final me = ref.watch(userProvider);
   return me.groups
       .map((e) => e.id)
-      .contains("70db65ee-d533-4f6b-9ffa-a4d70a17b7ef");
+      .contains("70db65ee-d533-4f6b-9ffa-a4d70a17b7ef"); // admin_amap
 });

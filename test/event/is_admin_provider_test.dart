@@ -14,8 +14,8 @@ void main() {
             User.empty().copyWith(
               groups: [
                 SimpleGroup.empty().copyWith(
-                  id: '53a669d6-84b1-4352-8d7c-421c1fbd9c6a',
-                  name: 'Admin',
+                  id: "b0357687-2211-410a-9e2a-144519eeaafa",
+                  name: 'admin_calendar',
                 ),
                 SimpleGroup.empty().copyWith(id: '123', name: 'User'),
               ],

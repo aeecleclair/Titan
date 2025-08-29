@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
-import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
+import 'package:titan/phonebook/providers/is_phonebook_admin_provider.dart';
 import 'package:titan/phonebook/ui/pages/add_edit_groupement_page/groupement_add_edit_page.dart'
     deferred as groupement_add_edit_page;
 import 'package:titan/phonebook/ui/pages/admin_page/admin_page.dart'
