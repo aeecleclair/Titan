@@ -5,8 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/feed/router.dart';
 import 'package:titan/service/providers/firebase_token_expiration_provider.dart';
 import 'package:titan/service/providers/messages_provider.dart';
+import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/styleguide/confirm_modal.dart';
 import 'package:titan/tools/ui/widgets/vertical_clip_scroll.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -39,6 +41,10 @@ class SettingsMainPage extends HookConsumerWidget {
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
+
+    final pathForwardingProviderNotifier = ref.read(
+      pathForwardingProvider.notifier,
+    );
 
     final notificationTopicListNotifier = ref.watch(
       notificationTopicListProvider.notifier,
@@ -375,6 +381,7 @@ class SettingsMainPage extends HookConsumerWidget {
                               .reset();
                         }
                         isCachingNotifier.set(false);
+                        pathForwardingProviderNotifier.forward(FeedRouter.root);
                         displayToast(
                           context,
                           TypeMsg.msg,
