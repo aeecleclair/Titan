@@ -8,7 +8,7 @@ import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
-import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/styleguide/list_item_template.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
@@ -35,55 +35,42 @@ class MemberResults extends HookConsumerWidget {
             .map(
               (e) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        e.getName(),
-                        style: const TextStyle(fontSize: 15),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    WaitingButton(
-                      onTap: () async {
-                        if (!group.value!.members.contains(e)) {
-                          Group newGroup = group.value!.copyWith(
-                            members: group.value!.members + [e],
-                          );
-                          final addedMemberMsg = AppLocalizations.of(
-                            context,
-                          )!.adminAddedMember;
-                          final addingErrorMsg = AppLocalizations.of(
-                            context,
-                          )!.adminAddingError;
-                          await tokenExpireWrapper(ref, () async {
-                            groupNotifier.addMember(newGroup, e).then((result) {
-                              if (result) {
-                                simpleGroupGroupsNotifier.setTData(
-                                  newGroup.id,
-                                  AsyncData([newGroup]),
-                                );
-                                value.remove(e);
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  addedMemberMsg,
-                                );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  addingErrorMsg,
-                                );
-                              }
-                            });
-                          });
-                        }
-                      },
-                      waitingColor: ColorConstants.main,
-                      builder: (child) => child,
-                      child: const HeroIcon(HeroIcons.plus),
-                    ),
-                  ],
+                child: ListItemTemplate(
+                  title: e.getName(),
+                  onTap: () async {
+                    if (!group.value!.members.contains(e)) {
+                      Group newGroup = group.value!.copyWith(
+                        members: group.value!.members + [e],
+                      );
+                      final addedMemberMsg = AppLocalizations.of(
+                        context,
+                      )!.adminAddedMember;
+                      final addingErrorMsg = AppLocalizations.of(
+                        context,
+                      )!.adminAddingError;
+                      await tokenExpireWrapper(ref, () async {
+                        groupNotifier.addMember(newGroup, e).then((result) {
+                          if (result) {
+                            simpleGroupGroupsNotifier.setTData(
+                              newGroup.id,
+                              AsyncData([newGroup]),
+                            );
+                            value.remove(e);
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              addedMemberMsg,
+                            );
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              addingErrorMsg,
+                            );
+                          }
+                        });
+                      });
+                    }
+                  },
+                  trailing: const HeroIcon(HeroIcons.plus),
                 ),
               ),
             )
