@@ -40,6 +40,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   final eq = const DeepCollectionEquality.unordered();
   List<Module> allModules = [
     HomeRouter.module,
+    PaymentRouter.module,
     AdvertRouter.module,
     AmapRouter.module,
     BookingRouter.module,
@@ -47,7 +48,6 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     CinemaRouter.module,
     EventRouter.module,
     LoanRouter.module,
-    PaymentRouter.module,
     PhonebookRouter.module,
     PhRouter.module,
     PurchasesRouter.module,
