@@ -39,7 +39,7 @@ jobs:
     needs: [extract-version]
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
