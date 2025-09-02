@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/settings/ui/pages/change_pass/change_pass.dart'
-    deferred as change_pass;
 import 'package:titan/settings/ui/pages/edit_user_page/edit_user_page.dart'
     deferred as edit_user_page;
 import 'package:titan/settings/ui/pages/log_page/log_page.dart'
@@ -20,7 +18,6 @@ class SettingsRouter {
   final Ref ref;
   static const String root = '/settings';
   static const String editAccount = '/edit_account';
-  static const String changePassword = '/change_password';
   static const String logs = '/logs';
   static const String modules = '/modules';
   static const String notifications = '/notifications';
@@ -39,11 +36,6 @@ class SettingsRouter {
         path: editAccount,
         builder: () => edit_user_page.EditUserPage(),
         middleware: [DeferredLoadingMiddleware(edit_user_page.loadLibrary)],
-      ),
-      QRoute(
-        path: changePassword,
-        builder: () => change_pass.ChangePassPage(),
-        middleware: [DeferredLoadingMiddleware(change_pass.loadLibrary)],
       ),
       if (!kIsWeb)
         QRoute(

@@ -42,26 +42,6 @@ class UserRepository extends Repository {
     return await update(nullTrimmedBody, "me");
   }
 
-  Future<User> createUser(User user) async {
-    return User.fromJson(await create(user));
-  }
-
-  Future<bool> changePassword(
-    String oldPassword,
-    String newPassword,
-    String mail,
-  ) async {
-    try {
-      return (await create({
-        "old_password": oldPassword,
-        "new_password": newPassword,
-        "email": mail,
-      }, suffix: "change-password"))["success"];
-    } catch (e) {
-      return false;
-    }
-  }
-
   Future<bool> deletePersonalData() async {
     try {
       return await create({}, suffix: "me/ask-deletion");
