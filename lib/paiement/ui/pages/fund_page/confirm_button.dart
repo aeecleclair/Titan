@@ -38,7 +38,7 @@ class ConfirmFundButton extends ConsumerWidget {
     );
 
     final redirectUrl = kIsWeb
-        ? "${getTitanURL()}/static.html" // ?
+        ? "${getTitanURL()}/payment"
         : "${getTitanURLScheme()}://payment";
     final amountToAdd = double.tryParse(fundAmount.replaceAll(",", ".")) ?? 0;
 
