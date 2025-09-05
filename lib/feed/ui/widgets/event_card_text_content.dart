@@ -28,12 +28,12 @@ class EventCardTextContent extends ConsumerWidget {
       orElse: () => ColorConstants.background,
     );
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+    return Positioned(
+      bottom: 10,
+      left: 15,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 70),
           Row(
             children: [
               Text(

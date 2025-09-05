@@ -17,108 +17,122 @@ class TimelineItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = Localizations.localeOf(context);
-    return SizedBox(
-      height: item.actionStart != null ? 200 : 160,
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 23),
-            child: DottedVerticalLine(),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final eventCardWidth = constraints.maxWidth - 70;
+        final eventCardHeight = eventCardWidth / (851 / 315);
+
+        final baseHeight = 30 + eventCardHeight + 15;
+
+        final totalHeight = item.actionStart != null
+            ? baseHeight + 55
+            : baseHeight;
+
+        return SizedBox(
+          height: totalHeight,
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 23),
+                child: DottedVerticalLine(),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.only(left: 10, right: 30),
-                      color: ColorConstants.background,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            DateFormat.d(locale.toString()).format(item.start),
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: ColorConstants.main,
-                            ),
-                          ),
-                          Text(
-                            DateFormat.MMM(
-                              locale.toString(),
-                            ).format(item.start).toUpperCase(),
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: ColorConstants.onTertiary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: onTap,
-                        child: EventCard(item: item),
-                      ),
-                    ),
-                  ],
-                ),
-                if (item.actionStart != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Row(
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 14, right: 45),
-                          child: Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: ColorConstants.background,
-                              border: Border.all(
-                                color: ColorConstants.secondary,
-                                width: 2,
+                        Container(
+                          padding: const EdgeInsets.only(left: 10, right: 30),
+                          color: ColorConstants.background,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                DateFormat.d(
+                                  locale.toString(),
+                                ).format(item.start),
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorConstants.main,
+                                ),
                               ),
-                            ),
+                              Text(
+                                DateFormat.MMM(
+                                  locale.toString(),
+                                ).format(item.start).toUpperCase(),
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorConstants.onTertiary,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         Expanded(
-                          child: EventAction(
-                            title: getActionTitle(item, context),
-                            waitingTitle: (timeToGo) => getWaitingTitle(
-                              item,
-                              context,
-                              timeToGo: timeToGo,
-                            ),
-                            subtitle: getActionSubtitle(item, context),
-                            onActionPressed: () =>
-                                getActionButtonAction(item, context, ref),
-                            actionEnableButtonText: getActionEnableButtonText(
-                              item,
-                              context,
-                            ),
-                            actionValidatedButtonText:
-                                getActionValidatedButtonText(item, context),
-                            isActionValidated: false,
-                            eventEnd: item.end,
-                            timeOpening: item.actionStart,
+                          child: GestureDetector(
+                            onTap: onTap,
+                            child: EventCard(item: item),
                           ),
                         ),
                       ],
                     ),
-                  ),
-              ],
-            ),
+                    if (item.actionStart != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 14, right: 45),
+                              child: Container(
+                                width: 20,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: ColorConstants.background,
+                                  border: Border.all(
+                                    color: ColorConstants.secondary,
+                                    width: 2,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: EventAction(
+                                title: getActionTitle(item, context),
+                                waitingTitle: (timeToGo) => getWaitingTitle(
+                                  item,
+                                  context,
+                                  timeToGo: timeToGo,
+                                ),
+                                subtitle: getActionSubtitle(item, context),
+                                onActionPressed: () =>
+                                    getActionButtonAction(item, context, ref),
+                                actionEnableButtonText:
+                                    getActionEnableButtonText(item, context),
+                                actionValidatedButtonText:
+                                    getActionValidatedButtonText(item, context),
+                                isActionValidated: false,
+                                eventEnd: item.end,
+                                timeOpening: item.actionStart,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
