@@ -4355,10 +4355,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'La sélection ne sera pas sauvegardée.\nVoulez-vous continuer ?';
 
   @override
-  String get moduleAdvert => 'Annonces';
+  String get moduleAdvert => 'Feed';
 
   @override
-  String get moduleAdvertDescription => 'Gérer les annonces';
+  String get moduleAdvertDescription => 'Gérer les feeds';
 
   @override
   String get moduleAmap => 'AMAP';
@@ -4470,11 +4470,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Gérer les paramètres de l\'application';
 
   @override
-  String get moduleFeed => 'Feed';
+  String get moduleFeed => 'Événements';
 
   @override
-  String get moduleFeedDescription =>
-      'Consulter les actualités et mises à jour';
+  String get moduleFeedDescription => 'Consulter les événements';
 
   @override
   String get moduleStyleGuide => 'StyleGuide';

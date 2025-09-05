@@ -8381,13 +8381,13 @@ abstract class AppLocalizations {
   /// No description provided for @moduleAdvert.
   ///
   /// In fr, this message translates to:
-  /// **'Annonces'**
+  /// **'Feed'**
   String get moduleAdvert;
 
   /// No description provided for @moduleAdvertDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Gérer les annonces'**
+  /// **'Gérer les feeds'**
   String get moduleAdvertDescription;
 
   /// No description provided for @moduleAmap.
@@ -8585,13 +8585,13 @@ abstract class AppLocalizations {
   /// No description provided for @moduleFeed.
   ///
   /// In fr, this message translates to:
-  /// **'Feed'**
+  /// **'Événements'**
   String get moduleFeed;
 
   /// No description provided for @moduleFeedDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Consulter les actualités et mises à jour'**
+  /// **'Consulter les événements'**
   String get moduleFeedDescription;
 
   /// No description provided for @moduleStyleGuide.
