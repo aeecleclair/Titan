@@ -122,24 +122,21 @@ class AdvertCard extends HookConsumerWidget {
           ),
           const SizedBox(height: 15),
 
-          AutoLoaderChild(
-            group: posters,
-            notifier: advertPostersNotifier,
-            mapKey: advert.id,
-            loader: (advertId) => posterNotifier.getAdvertPoster(advertId),
-            loadingBuilder: (context) => AspectRatio(
-              aspectRatio: 1,
-              child: Container(
+          AspectRatio(
+            aspectRatio: 851 / 315,
+            child: AutoLoaderChild(
+              group: posters,
+              notifier: advertPostersNotifier,
+              mapKey: advert.id,
+              loader: (advertId) => posterNotifier.getAdvertPoster(advertId),
+              loadingBuilder: (context) => Container(
                 decoration: BoxDecoration(
                   color: ColorConstants.onBackground,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Center(child: HeroIcon(HeroIcons.photo, size: 50)),
               ),
-            ),
-            dataBuilder: (context, value) => AspectRatio(
-              aspectRatio: 1,
-              child: Container(
+              dataBuilder: (context, value) => Container(
                 decoration: BoxDecoration(
                   color: ColorConstants.onBackground,
                   borderRadius: BorderRadius.circular(20),
