@@ -189,6 +189,14 @@ String processDateBackWithHour(String d, String locale) {
   return DateFormat.yMd(locale).add_Hm().parse(d).toIso8601String();
 }
 
+String processDateBackWithHourMaybe(String d, String locale) {
+  try {
+    return DateFormat.yMd(locale).add_Hm().parse(d).toIso8601String();
+  } catch (e) {
+    return DateFormat.yMd(locale).parse(d).toIso8601String();
+  }
+}
+
 List<DateTime> getDateInRecurrence(String recurrenceRule, DateTime start) {
   if (recurrenceRule.isEmpty) {
     return [];

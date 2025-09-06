@@ -444,11 +444,11 @@ class AddEventPage extends HookConsumerWidget {
                           // }
                           if (endDateController.text.contains("/") &&
                               isDateBefore(
-                                processDateBack(
+                                processDateBackWithHourMaybe(
                                   endDateController.text,
                                   locale.toString(),
                                 ),
-                                processDateBack(
+                                processDateBackWithHourMaybe(
                                   startDateController.text,
                                   locale.toString(),
                                 ),
@@ -509,13 +509,13 @@ class AddEventPage extends HookConsumerWidget {
                               final newEvent = Event(
                                 id: "",
                                 start: DateTime.parse(
-                                  processDateBackWithHour(
+                                  processDateBackWithHourMaybe(
                                     startDateController.text,
                                     locale.toString(),
                                   ),
                                 ),
                                 end: DateTime.parse(
-                                  processDateBackWithHour(
+                                  processDateBackWithHourMaybe(
                                     endDateController.text,
                                     locale.toString(),
                                   ),
@@ -524,7 +524,7 @@ class AddEventPage extends HookConsumerWidget {
                                 ticketUrlOpening:
                                     shotgunDateController.text != ""
                                     ? DateTime.parse(
-                                        processDateBackWithHour(
+                                        processDateBackWithHourMaybe(
                                           shotgunDateController.text,
                                           locale.toString(),
                                         ),
