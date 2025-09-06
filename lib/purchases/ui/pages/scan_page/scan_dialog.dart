@@ -145,10 +145,29 @@ class ScanDialog extends HookConsumerWidget {
                               ticket.id,
                             );
                             scanner.when(
-                              data: (data) {
+                              data: (data) async {
                                 scannerNotifier.setScanner(
                                   data.copyWith(qrCodeSecret: secret),
                                 );
+                                final value = await ticketListNotifier
+                                    .consumeTicket(
+                                      sellerId,
+                                      data,
+                                      ticket.id,
+                                      tag,
+                                    );
+                                if (value) {
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    "Scan validé",
+                                  );
+                                  scannerNotifier.reset();
+                                } else {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    "Erreur lors de la validation",
+                                  );
+                                }
                               },
                               error: (error, stack) {
                                 displayToastWithContext(
@@ -220,29 +239,7 @@ class ScanDialog extends HookConsumerWidget {
                                 ),
                                 const Spacer(),
                                 GestureDetector(
-                                  onTap: () async {
-                                    await tokenExpireWrapper(ref, () async {
-                                      final value = await ticketListNotifier
-                                          .consumeTicket(
-                                            sellerId,
-                                            data,
-                                            ticket.id,
-                                            tag,
-                                          );
-                                      if (value) {
-                                        displayToastWithContext(
-                                          TypeMsg.msg,
-                                          "Scan validé",
-                                        );
-                                        scannerNotifier.reset();
-                                      } else {
-                                        displayToastWithContext(
-                                          TypeMsg.error,
-                                          "Erreur lors de la validation",
-                                        );
-                                      }
-                                    });
-                                  },
+                                  onTap: () => scannerNotifier.reset(),
                                   child: const SizedBox(
                                     width: 100,
                                     child: AddEditButtonLayout(
