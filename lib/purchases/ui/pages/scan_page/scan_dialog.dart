@@ -248,7 +248,7 @@ class ScanDialog extends HookConsumerWidget {
                                     child: AddEditButtonLayout(
                                       color: Colors.green,
                                       child: Text(
-                                        "Valider",
+                                        "Suivant",
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,

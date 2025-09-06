@@ -10,7 +10,7 @@ class QRCodeScannerScreen extends StatefulWidget {
     required this.scanner,
   });
 
-  final Function onScan;
+  final Function(String) onScan;
   final AsyncValue<Ticket> scanner;
 
   @override
