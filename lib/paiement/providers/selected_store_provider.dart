@@ -9,7 +9,7 @@ class SelectedStoreNotifier extends StateNotifier<UserStore> {
   void updateStore(UserStore store) {
     state = store;
     SharedPreferences.getInstance().then((pref) {
-      pref.setString('selectedStore', store.id);
+      pref.setString('selectedStoreId', store.id);
     });
   }
 }
@@ -19,7 +19,7 @@ class LoadSelectedStoreIdProvider extends StateNotifier<String?> {
 
   void loadSelectedStoreId() {
     SharedPreferences.getInstance().then((pref) {
-      state = pref.getString('selectedStore');
+      state = pref.getString('selectedStoreId');
     });
   }
 }
