@@ -509,13 +509,13 @@ class AddEventPage extends HookConsumerWidget {
                               final newEvent = Event(
                                 id: "",
                                 start: DateTime.parse(
-                                  processDateBack(
+                                  processDateBackWithHour(
                                     startDateController.text,
                                     locale.toString(),
                                   ),
                                 ),
                                 end: DateTime.parse(
-                                  processDateBack(
+                                  processDateBackWithHour(
                                     endDateController.text,
                                     locale.toString(),
                                   ),
@@ -524,7 +524,7 @@ class AddEventPage extends HookConsumerWidget {
                                 ticketUrlOpening:
                                     shotgunDateController.text != ""
                                     ? DateTime.parse(
-                                        processDateBack(
+                                        processDateBackWithHour(
                                           shotgunDateController.text,
                                           locale.toString(),
                                         ),
