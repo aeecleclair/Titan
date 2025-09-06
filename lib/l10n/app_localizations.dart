@@ -242,6 +242,12 @@ abstract class AppLocalizations {
   /// **'Créer l\'événement'**
   String get feedCreateEvent;
 
+  /// No description provided for @feedNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer une notification'**
+  String get feedNotification;
+
   /// No description provided for @feedPleaseSelectAnAssociation.
   ///
   /// In fr, this message translates to:
@@ -1447,6 +1453,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Publier dans le feed'**
   String get advertPublishToFeed;
+
+  /// No description provided for @advertNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer une notification'**
+  String get advertNotification;
 
   /// No description provided for @advertRemovedAnnouncer.
   ///

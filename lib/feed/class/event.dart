@@ -11,6 +11,7 @@ class Event {
   late final DateTime? ticketUrlOpening;
   late final String associationId;
   late final String? ticketUrl;
+  late final bool notification;
 
   Event({
     required this.id,
@@ -23,6 +24,7 @@ class Event {
     this.ticketUrlOpening,
     required this.associationId,
     this.ticketUrl,
+    required this.notification,
   });
 
   Event.fromJson(Map<String, dynamic> json) {
@@ -38,6 +40,7 @@ class Event {
         : null;
     associationId = json['association_id'];
     ticketUrl = json['ticket_url'];
+    notification = json['notification'] ?? true;
   }
 
   Map<String, dynamic> toJson() {
@@ -56,6 +59,7 @@ class Event {
     if (ticketUrl != null) {
       data['ticket_url'] = ticketUrl;
     }
+    data['notification'] = notification;
     return data;
   }
 
@@ -70,6 +74,7 @@ class Event {
     String? associationId,
     String? ticketUrl,
     bool? hasRoom,
+    bool? notification,
   }) {
     return Event(
       id: id,
@@ -82,6 +87,7 @@ class Event {
       ticketUrlOpening: ticketUrlOpening ?? this.ticketUrlOpening,
       associationId: associationId ?? this.associationId,
       ticketUrl: ticketUrl ?? this.ticketUrl,
+      notification: notification ?? this.notification,
     );
   }
 
@@ -96,10 +102,11 @@ class Event {
     ticketUrlOpening = null;
     associationId = '';
     ticketUrl = null;
+    notification = true;
   }
 
   @override
   String toString() {
-    return 'Event{name: $name, start: $start, end: $end, allDay: $allDay, location: $location, recurrenceRule: $recurrenceRule, ticketUrlOpening: $ticketUrlOpening, associationId: $associationId, ticketUrl: $ticketUrl}';
+    return 'Event{name: $name, start: $start, end: $end, allDay: $allDay, location: $location, recurrenceRule: $recurrenceRule, ticketUrlOpening: $ticketUrlOpening, associationId: $associationId, ticketUrl: $ticketUrl, notification: $notification}';
   }
 }

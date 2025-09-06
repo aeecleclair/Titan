@@ -81,6 +81,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feedCreateEvent => 'Create an event';
 
   @override
+  String get feedNotification => 'Send a notification';
+
+  @override
   String get feedPleaseSelectAnAssociation => 'Please select an association';
 
   @override
@@ -719,6 +722,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get advertPublishToFeed => 'Publish to feed?';
+
+  @override
+  String get advertNotification => 'Send a notification';
 
   @override
   String get advertRemovedAnnouncer => 'Announcer removed';

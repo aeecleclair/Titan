@@ -45,6 +45,7 @@ class AddEventPage extends HookConsumerWidget {
     final startDateController = useTextEditingController();
     final endDateController = useTextEditingController();
     final allDay = useState(false);
+    final notification = useState(true);
     // final recurrentController = useState(false);
     // final recurrenceEndDateController = useTextEditingController();
 
@@ -282,6 +283,14 @@ class AddEventPage extends HookConsumerWidget {
                       label: localizeWithContext.feedSGExternalLink,
                       controller: externalLinkController,
                       canBeEmpty: true,
+                    ),
+                    const SizedBox(height: 10),
+                    CheckBoxEntry(
+                      title: localizeWithContext.feedNotification,
+                      valueNotifier: notification,
+                      onChanged: () {
+                        notification.value = !notification.value;
+                      },
                     ),
                     const SizedBox(height: 10),
                     FormField<File>(
@@ -527,6 +536,7 @@ class AddEventPage extends HookConsumerWidget {
                                 recurrenceRule: "",
                                 associationId: selectedAssociation.value!.id,
                                 ticketUrl: externalLinkController.text,
+                                notification: notification.value,
                               );
                               try {
                                 final eventCreated = await eventCreationNotifier
