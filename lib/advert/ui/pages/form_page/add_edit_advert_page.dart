@@ -52,7 +52,8 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
       });
     }
 
-    final postToFeed = useState(false);
+    final postToFeed = useState(isEdit ? advert.postToFeed : false);
+    final notification = useState(isEdit ? advert.notification : true);
 
     final ImagePicker picker = ImagePicker();
 
@@ -231,6 +232,17 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                   },
                 ),
               ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: CheckBoxEntry(
+                  title: AppLocalizations.of(context)!.advertNotification,
+                  valueNotifier: notification,
+                  onChanged: () {
+                    notification.value = !notification.value;
+                  },
+                ),
+              ),
               const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -253,6 +265,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                               date: isEdit ? advert.date : DateTime.now(),
                               title: title.text,
                               postToFeed: postToFeed.value,
+                              notification: notification.value,
                             );
                             final editedAdvertMsg = AppLocalizations.of(
                               context,

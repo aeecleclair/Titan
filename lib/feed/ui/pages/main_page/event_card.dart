@@ -31,94 +31,102 @@ class EventCard extends ConsumerWidget {
           QR.to(AdvertRouter.root);
         }
       },
-      child: Stack(
-        children: [
-          AutoLoaderChild(
-            group: images,
-            notifier: newsImagesNotifier,
-            mapKey: item.id,
-            loader: (itemId) => imageNotifier.getNewsImage(itemId),
-            orElseBuilder: (context, stack) => Container(
-              width: double.infinity,
-              height: 125,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                gradient: const LinearGradient(
-                  colors: [ColorConstants.onMain, ColorConstants.main],
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                ),
-              ),
-            ),
-            dataBuilder: (context, value) => AdaptiveTextCard(
-              hasImage: value.isNotEmpty,
-              imageProvider: value.isNotEmpty ? value.first.image : null,
-              child: Container(
-                width: double.infinity,
-                height: 125,
+      child: AspectRatio(
+        aspectRatio: 851 / 315,
+        child: Stack(
+          children: [
+            AutoLoaderChild(
+              group: images,
+              notifier: newsImagesNotifier,
+              mapKey: item.id,
+              loader: (itemId) => imageNotifier.getNewsImage(itemId),
+              orElseBuilder: (context, stack) => Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  image: value.isEmpty
-                      ? null
-                      : DecorationImage(
-                          image: value.first.image,
-                          fit: BoxFit.cover,
-                        ),
-                  gradient: value.isNotEmpty
-                      ? null
-                      : const LinearGradient(
-                          colors: [ColorConstants.onMain, ColorConstants.main],
-                          begin: Alignment.bottomLeft,
-                          end: Alignment.topRight,
-                        ),
+                  gradient: const LinearGradient(
+                    colors: [ColorConstants.onMain, ColorConstants.main],
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                  ),
                 ),
               ),
-            ),
-          ),
-          EventCardTextContent(
-            item: item,
-            imageProvider: images?.maybeWhen(
-              orElse: () => null,
-              data: (data) => data.first.image,
-            ),
-            localizeWithContext: localizeWithContext,
-          ),
-          if (isNewsTerminated(item) && item.module != "advert")
-            Positioned(
-              bottom: 53,
-              left: 15,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-                decoration: const BoxDecoration(
-                  color: ColorConstants.main,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-                child: Text(
-                  localizeWithContext.feedEnded,
-                  style: TextStyle(
-                    color: ColorConstants.background,
-                    fontSize: 10,
+              dataBuilder: (context, value) => AdaptiveTextCard(
+                hasImage: value.isNotEmpty,
+                imageProvider: value.isNotEmpty ? value.first.image : null,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    image: value.isEmpty
+                        ? null
+                        : DecorationImage(
+                            image: value.first.image,
+                            fit: BoxFit.cover,
+                          ),
+                    gradient: value.isNotEmpty
+                        ? null
+                        : const LinearGradient(
+                            colors: [
+                              ColorConstants.onMain,
+                              ColorConstants.main,
+                            ],
+                            begin: Alignment.bottomLeft,
+                            end: Alignment.topRight,
+                          ),
                   ),
                 ),
               ),
             ),
-          if (isNewsOngoing(item) && item.module != "advert")
-            Positioned(
-              bottom: 53,
-              left: 15,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-                decoration: const BoxDecoration(
-                  color: ColorConstants.background,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-                child: Text(
-                  localizeWithContext.feedOngoing,
-                  style: TextStyle(color: ColorConstants.main, fontSize: 10),
+            EventCardTextContent(
+              item: item,
+              imageProvider: images?.maybeWhen(
+                orElse: () => null,
+                data: (data) => data.first.image,
+              ),
+              localizeWithContext: localizeWithContext,
+            ),
+            if (isNewsTerminated(item) && item.module != "advert")
+              Positioned(
+                bottom: 53,
+                left: 15,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 7,
+                    vertical: 3,
+                  ),
+                  decoration: const BoxDecoration(
+                    color: ColorConstants.main,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  child: Text(
+                    localizeWithContext.feedEnded,
+                    style: TextStyle(
+                      color: ColorConstants.background,
+                      fontSize: 10,
+                    ),
+                  ),
                 ),
               ),
-            ),
-        ],
+            if (isNewsOngoing(item) && item.module != "advert")
+              Positioned(
+                bottom: 53,
+                left: 15,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 7,
+                    vertical: 3,
+                  ),
+                  decoration: const BoxDecoration(
+                    color: ColorConstants.background,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  child: Text(
+                    localizeWithContext.feedOngoing,
+                    style: TextStyle(color: ColorConstants.main, fontSize: 10),
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

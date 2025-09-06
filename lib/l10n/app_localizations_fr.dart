@@ -81,6 +81,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get feedCreateEvent => 'Créer l\'événement';
 
   @override
+  String get feedNotification => 'Envoyer une notification';
+
+  @override
   String get feedPleaseSelectAnAssociation =>
       'Veuillez sélectionner une association';
 
@@ -727,6 +730,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get advertPublishToFeed => 'Publier dans le feed';
+
+  @override
+  String get advertNotification => 'Envoyer une notification';
 
   @override
   String get advertRemovedAnnouncer => 'Annonceur supprimé';
@@ -4355,10 +4361,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'La sélection ne sera pas sauvegardée.\nVoulez-vous continuer ?';
 
   @override
-  String get moduleAdvert => 'Annonces';
+  String get moduleAdvert => 'Feed';
 
   @override
-  String get moduleAdvertDescription => 'Gérer les annonces';
+  String get moduleAdvertDescription => 'Gérer les feeds';
 
   @override
   String get moduleAmap => 'AMAP';
@@ -4470,11 +4476,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Gérer les paramètres de l\'application';
 
   @override
-  String get moduleFeed => 'Feed';
+  String get moduleFeed => 'Events';
 
   @override
-  String get moduleFeedDescription =>
-      'Consulter les actualités et mises à jour';
+  String get moduleFeedDescription => 'Consulter les événements';
 
   @override
   String get moduleStyleGuide => 'StyleGuide';

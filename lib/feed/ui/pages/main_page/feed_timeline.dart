@@ -33,7 +33,7 @@ class FeedTimeline extends StatelessWidget {
             onTap: onItemTap != null ? () => onItemTap!(item) : null,
           ),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 80),
       ],
     );
   }

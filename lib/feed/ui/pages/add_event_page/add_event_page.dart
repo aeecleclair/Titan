@@ -45,6 +45,7 @@ class AddEventPage extends HookConsumerWidget {
     final startDateController = useTextEditingController();
     final endDateController = useTextEditingController();
     final allDay = useState(false);
+    final notification = useState(true);
     // final recurrentController = useState(false);
     // final recurrenceEndDateController = useTextEditingController();
 
@@ -284,6 +285,14 @@ class AddEventPage extends HookConsumerWidget {
                       canBeEmpty: true,
                     ),
                     const SizedBox(height: 10),
+                    CheckBoxEntry(
+                      title: localizeWithContext.feedNotification,
+                      valueNotifier: notification,
+                      onChanged: () {
+                        notification.value = !notification.value;
+                      },
+                    ),
+                    const SizedBox(height: 10),
                     FormField<File>(
                       builder: (formFieldState) => Center(
                         child: Stack(
@@ -435,11 +444,11 @@ class AddEventPage extends HookConsumerWidget {
                           // }
                           if (endDateController.text.contains("/") &&
                               isDateBefore(
-                                processDateBack(
+                                processDateBackWithHourMaybe(
                                   endDateController.text,
                                   locale.toString(),
                                 ),
-                                processDateBack(
+                                processDateBackWithHourMaybe(
                                   startDateController.text,
                                   locale.toString(),
                                 ),
@@ -500,13 +509,13 @@ class AddEventPage extends HookConsumerWidget {
                               final newEvent = Event(
                                 id: "",
                                 start: DateTime.parse(
-                                  processDateBack(
+                                  processDateBackWithHourMaybe(
                                     startDateController.text,
                                     locale.toString(),
                                   ),
                                 ),
                                 end: DateTime.parse(
-                                  processDateBack(
+                                  processDateBackWithHourMaybe(
                                     endDateController.text,
                                     locale.toString(),
                                   ),
@@ -515,7 +524,7 @@ class AddEventPage extends HookConsumerWidget {
                                 ticketUrlOpening:
                                     shotgunDateController.text != ""
                                     ? DateTime.parse(
-                                        processDateBack(
+                                        processDateBackWithHourMaybe(
                                           shotgunDateController.text,
                                           locale.toString(),
                                         ),
@@ -527,6 +536,7 @@ class AddEventPage extends HookConsumerWidget {
                                 recurrenceRule: "",
                                 associationId: selectedAssociation.value!.id,
                                 ticketUrl: externalLinkController.text,
+                                notification: notification.value,
                               );
                               try {
                                 final eventCreated = await eventCreationNotifier

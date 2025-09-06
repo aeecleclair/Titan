@@ -7,6 +7,7 @@ class Advert {
   late final DateTime date;
   late final String associationId;
   late final bool postToFeed;
+  late final bool notification;
 
   Advert({
     required this.id,
@@ -15,6 +16,7 @@ class Advert {
     required this.date,
     required this.associationId,
     required this.postToFeed,
+    required this.notification,
   });
 
   Advert.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,8 @@ class Advert {
     content = json["content"];
     date = processDateFromAPI(json["date"]);
     associationId = json["advertiser_id"];
+    postToFeed = json["post_to_feed"] ?? false;
+    notification = json["notification"] ?? true;
   }
 
   Map<String, dynamic> toJson() {
@@ -33,6 +37,7 @@ class Advert {
     data["date"] = processDateToAPI(date);
     data["advertiser_id"] = associationId;
     data["post_to_feed"] = postToFeed;
+    data["notification"] = notification;
     return data;
   }
 
@@ -43,6 +48,7 @@ class Advert {
     DateTime? date,
     String? associationId,
     bool? postToFeed,
+    bool? notification,
   }) {
     return Advert(
       id: id ?? this.id,
@@ -51,6 +57,7 @@ class Advert {
       date: date ?? this.date,
       associationId: associationId ?? this.associationId,
       postToFeed: postToFeed ?? this.postToFeed,
+      notification: notification ?? this.notification,
     );
   }
 
@@ -62,11 +69,12 @@ class Advert {
       date: DateTime.now(),
       associationId: "",
       postToFeed: false,
+      notification: true,
     );
   }
 
   @override
   String toString() {
-    return 'Advert{id: $id, title: $title, content: $content, date: $date, association_id: $associationId}';
+    return 'Advert{id: $id, title: $title, content: $content, date: $date, association_id: $associationId, postToFeed: $postToFeed, notification: $notification}';
   }
 }

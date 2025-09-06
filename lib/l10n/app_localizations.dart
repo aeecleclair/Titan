@@ -242,6 +242,12 @@ abstract class AppLocalizations {
   /// **'Créer l\'événement'**
   String get feedCreateEvent;
 
+  /// No description provided for @feedNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer une notification'**
+  String get feedNotification;
+
   /// No description provided for @feedPleaseSelectAnAssociation.
   ///
   /// In fr, this message translates to:
@@ -1447,6 +1453,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Publier dans le feed'**
   String get advertPublishToFeed;
+
+  /// No description provided for @advertNotification.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer une notification'**
+  String get advertNotification;
 
   /// No description provided for @advertRemovedAnnouncer.
   ///
@@ -8381,13 +8393,13 @@ abstract class AppLocalizations {
   /// No description provided for @moduleAdvert.
   ///
   /// In fr, this message translates to:
-  /// **'Annonces'**
+  /// **'Feed'**
   String get moduleAdvert;
 
   /// No description provided for @moduleAdvertDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Gérer les annonces'**
+  /// **'Gérer les feeds'**
   String get moduleAdvertDescription;
 
   /// No description provided for @moduleAmap.
@@ -8585,13 +8597,13 @@ abstract class AppLocalizations {
   /// No description provided for @moduleFeed.
   ///
   /// In fr, this message translates to:
-  /// **'Feed'**
+  /// **'Events'**
   String get moduleFeed;
 
   /// No description provided for @moduleFeedDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Consulter les actualités et mises à jour'**
+  /// **'Consulter les événements'**
   String get moduleFeedDescription;
 
   /// No description provided for @moduleStyleGuide.
