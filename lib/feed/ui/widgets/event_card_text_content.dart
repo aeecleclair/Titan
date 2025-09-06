@@ -31,33 +31,42 @@ class EventCardTextContent extends ConsumerWidget {
     return Positioned(
       bottom: 10,
       left: 15,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                item.title,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w900,
-                  color: textColor,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-              if (item.location != null && item.location!.isNotEmpty)
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width - 140,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
                 Text(
-                  ' | ${item.location}',
-                  style: TextStyle(fontSize: 14, color: textColor),
+                  item.title.length > 15
+                      ? '${item.title.substring(0, 15)}...'
+                      : item.title,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w900,
+                    color: textColor,
+                  ),
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-            ],
-          ),
-          Text(
-            getNewsSubtitle(item, context: context),
-            style: TextStyle(fontSize: 12, color: textColor),
-          ),
-        ],
+                if (item.location != null && item.location!.isNotEmpty)
+                  Expanded(
+                    child: Text(
+                      ' | ${item.location}',
+                      style: TextStyle(fontSize: 14, color: textColor),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+              ],
+            ),
+            Text(
+              getNewsSubtitle(item, context: context),
+              style: TextStyle(fontSize: 12, color: textColor),
+            ),
+          ],
+        ),
       ),
     );
   }
