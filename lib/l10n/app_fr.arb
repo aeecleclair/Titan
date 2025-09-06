@@ -1598,7 +1598,7 @@
   "modulePhDescription": "Gérer les PH, les formulaires et les administrateurs",
   "moduleSettings": "Paramètres",
   "moduleSettingsDescription": "Gérer les paramètres de l'application",
-  "moduleFeed": "Événements",
+  "moduleFeed": "Events",
   "moduleFeedDescription": "Consulter les événements",
   "moduleStyleGuide": "StyleGuide",
   "moduleStyleGuideDescription": "Explore the UI components and styles used in Titan",

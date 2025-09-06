@@ -4470,7 +4470,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Gérer les paramètres de l\'application';
 
   @override
-  String get moduleFeed => 'Événements';
+  String get moduleFeed => 'Events';
 
   @override
   String get moduleFeedDescription => 'Consulter les événements';

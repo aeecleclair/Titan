@@ -8585,7 +8585,7 @@ abstract class AppLocalizations {
   /// No description provided for @moduleFeed.
   ///
   /// In fr, this message translates to:
-  /// **'Événements'**
+  /// **'Events'**
   String get moduleFeed;
 
   /// No description provided for @moduleFeedDescription.
