@@ -93,7 +93,7 @@ class AddEditProduct extends HookConsumerWidget {
                     const SizedBox(height: 10),
                     Center(
                       child: DropdownButtonFormField<String>(
-                        initialValue: categoryController,
+                        value: categoryController,
                         decoration: const InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
