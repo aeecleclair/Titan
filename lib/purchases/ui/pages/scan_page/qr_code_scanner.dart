@@ -49,7 +49,7 @@ class QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
         setState(() {
           qrCode = capture.barcodes.first.rawValue;
         });
-        widget.onScan(qrCode!);
+        if (qrCode != null) widget.onScan(qrCode!);
       },
     );
   }
