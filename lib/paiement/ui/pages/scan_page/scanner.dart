@@ -121,7 +121,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
     _subscription = controller.barcodes.listen(_handleBarcode);
     unawaited(() async {
       await controller.start();
-      if (!controller.value.hasCameraPermission) {
+      if (!controller.value.hasCameraPermission && mounted) {
         showDialog(
           context: context,
           builder: (context) => CustomDialogBox(

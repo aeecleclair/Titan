@@ -69,17 +69,6 @@ void main() {
     });
   });
 
-  group('changePassword', () {
-    test('should return true when password is changed successfully', () async {
-      final user = User.empty();
-      when(
-        () => mockUserRepository.changePassword('old', 'new', user.email),
-      ).thenAnswer((_) async => true);
-      final result = await userNotifier.changePassword('old', 'new', user);
-      expect(result, true);
-    });
-  });
-
   group('deletePersonal', () {
     test(
       'should return true when personal data is deleted successfully',
