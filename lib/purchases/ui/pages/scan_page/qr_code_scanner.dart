@@ -19,6 +19,7 @@ class QRCodeScannerScreen extends StatefulWidget {
 
 class QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
   String? qrCode;
+  int scans = 0;
 
   final MobileScannerController controller = MobileScannerController();
 
@@ -46,10 +47,17 @@ class QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
         );
       },
       onDetect: (BarcodeCapture capture) async {
-        setState(() {
-          qrCode = capture.barcodes.first.rawValue;
-        });
-        if (qrCode != null) widget.onScan(qrCode!);
+        var rawValue = capture.barcodes.firstOrNull?.rawValue;
+        if (rawValue != null && (rawValue != qrCode || scans <= 1)) {
+          setState(() {
+            if (rawValue != qrCode) {
+              qrCode = rawValue;
+              scans = qrCode == null ? 0 : -1;
+            }
+            scans++;
+          });
+          widget.onScan(rawValue);
+        }
       },
     );
   }
