@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/feed/providers/is_feed_admin_provider.dart';
+import 'package:titan/feed/providers/is_user_a_member_of_an_association.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/feed/ui/pages/add_event_page/add_event_page.dart'
@@ -47,7 +48,7 @@ class FeedRouter {
         builder: () => add_event_page.AddEventPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
-          AdminMiddleware(ref, isAdminProvider),
+          AdminMiddleware(ref, isUserAMemberOfAnAssociationProvider),
           DeferredLoadingMiddleware(add_event_page.loadLibrary),
         ],
       ),
@@ -56,7 +57,7 @@ class FeedRouter {
         builder: () => event_handling_page.EventHandlingPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
-          AdminMiddleware(ref, isAdminProvider),
+          AdminMiddleware(ref, isFeedAdminProvider),
           DeferredLoadingMiddleware(event_handling_page.loadLibrary),
         ],
       ),
