@@ -222,25 +222,18 @@ class ScanDialog extends HookConsumerWidget {
                                 GestureDetector(
                                   onTap: () async {
                                     await tokenExpireWrapper(ref, () async {
-                                      final value = await ticketListNotifier
-                                          .consumeTicket(
-                                            sellerId,
-                                            data,
-                                            ticket.id,
-                                            tag,
-                                          );
-                                      if (value) {
+                                      await (ticketListNotifier.consumeTicket(
+                                        sellerId,
+                                        data,
+                                        ticket.id,
+                                        tag,
+                                      )).then((_) {
                                         displayToastWithContext(
                                           TypeMsg.msg,
                                           "Scan validé",
                                         );
                                         scannerNotifier.reset();
-                                      } else {
-                                        displayToastWithContext(
-                                          TypeMsg.error,
-                                          "Erreur lors de la validation",
-                                        );
-                                      }
+                                      });
                                     });
                                   },
                                   child: const SizedBox(

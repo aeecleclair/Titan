@@ -47,7 +47,7 @@ class QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
       },
       onDetect: (BarcodeCapture capture) async {
         setState(() {
-          qrCode = capture.barcodes.first.rawValue;
+          qrCode = capture.barcodes.firstOrNull?.rawValue;
         });
         if (qrCode != null) widget.onScan(qrCode!);
       },
