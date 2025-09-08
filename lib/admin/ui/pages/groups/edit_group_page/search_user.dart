@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/group.dart';
-import 'package:myecl/admin/providers/group_id_provider.dart';
-import 'package:myecl/admin/providers/group_provider.dart';
-import 'package:myecl/admin/providers/simple_groups_groups_provider.dart';
-import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/admin/ui/pages/groups/edit_group_page/results.dart';
-import 'package:myecl/admin/ui/components/user_ui.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/widgets/loader.dart';
-import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:titan/admin/class/group.dart';
+import 'package:titan/admin/providers/group_id_provider.dart';
+import 'package:titan/admin/providers/group_provider.dart';
+import 'package:titan/admin/providers/simple_groups_groups_provider.dart';
+import 'package:titan/admin/tools/constants.dart';
+import 'package:titan/admin/ui/pages/groups/edit_group_page/results.dart';
+import 'package:titan/admin/ui/components/user_ui.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/widgets/loader.dart';
+import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
+import 'package:titan/user/providers/user_list_provider.dart';
 
 class SearchUser extends HookConsumerWidget {
   const SearchUser({super.key});
@@ -28,8 +28,9 @@ class SearchUser extends HookConsumerWidget {
     final groupId = ref.watch(groupIdProvider);
     final groupNotifier = ref.watch(groupProvider.notifier);
     final simpleGroupsGroups = ref.watch(simpleGroupsGroupsProvider);
-    final simpleGroupGroupsNotifier =
-        ref.watch(simpleGroupsGroupsProvider.notifier);
+    final simpleGroupGroupsNotifier = ref.watch(
+      simpleGroupsGroupsProvider.notifier,
+    );
     final add = useState(false);
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -103,50 +104,47 @@ class SearchUser extends HookConsumerWidget {
             if (add.value) const MemberResults(),
             if (!add.value)
               ...g[0].members.map(
-                    (x) => UserUi(
-                      user: x,
-                      onDelete: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) => CustomDialogBox(
-                            descriptions: AdminTextConstants.removeGroupMember,
-                            title: AdminTextConstants.deleting,
-                            onYes: () async {
-                              await tokenExpireWrapper(ref, () async {
-                                Group newGroup = g[0].copyWith(
-                                  members: g[0]
-                                      .members
-                                      .where(
-                                        (element) => element.id != x.id,
-                                      )
-                                      .toList(),
-                                );
-                                final value = await groupNotifier.deleteMember(
-                                  newGroup,
-                                  x,
-                                );
-                                if (value) {
-                                  simpleGroupGroupsNotifier.setTData(
-                                    newGroup.id,
-                                    AsyncData([newGroup]),
-                                  );
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    AdminTextConstants.updatedGroup,
-                                  );
-                                } else {
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    AdminTextConstants.updatingError,
-                                  );
-                                }
-                              });
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                (x) => UserUi(
+                  user: x,
+                  onDelete: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => CustomDialogBox(
+                        descriptions: AdminTextConstants.removeGroupMember,
+                        title: AdminTextConstants.deleting,
+                        onYes: () async {
+                          await tokenExpireWrapper(ref, () async {
+                            Group newGroup = g[0].copyWith(
+                              members: g[0].members
+                                  .where((element) => element.id != x.id)
+                                  .toList(),
+                            );
+                            final value = await groupNotifier.deleteMember(
+                              newGroup,
+                              x,
+                            );
+                            if (value) {
+                              simpleGroupGroupsNotifier.setTData(
+                                newGroup.id,
+                                AsyncData([newGroup]),
+                              );
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                AdminTextConstants.updatedGroup,
+                              );
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                AdminTextConstants.updatingError,
+                              );
+                            }
+                          });
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
           ],
         );
       },

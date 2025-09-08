@@ -10,5 +10,5 @@ class AlreadyDisplayedNotifier extends StateNotifier<bool> {
 
 final alreadyDisplayedProvider =
     StateNotifierProvider<AlreadyDisplayedNotifier, bool>((ref) {
-  return AlreadyDisplayedNotifier();
-});
+      return AlreadyDisplayedNotifier();
+    });

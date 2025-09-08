@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/flappybird/providers/pipe_image_provider.dart';
+import 'package:titan/flappybird/providers/pipe_image_provider.dart';
 
 class PipeDisplay extends HookConsumerWidget {
   const PipeDisplay({
@@ -23,8 +23,9 @@ class PipeDisplay extends HookConsumerWidget {
         height: pipeHeight,
         width: 80,
         child: FittedBox(
-          alignment:
-              isBottomPipe ? Alignment.topCenter : Alignment.bottomCenter,
+          alignment: isBottomPipe
+              ? Alignment.topCenter
+              : Alignment.bottomCenter,
           fit: BoxFit.fitWidth,
           clipBehavior: Clip.hardEdge,
           child: Transform.flip(

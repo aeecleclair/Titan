@@ -1,6 +1,6 @@
-import 'package:myecl/raffle/class/prize.dart';
-import 'package:myecl/raffle/class/tickets.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/raffle/class/prize.dart';
+import 'package:titan/raffle/class/tickets.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class LotRepository extends Repository {
   @override
@@ -29,8 +29,10 @@ class LotRepository extends Repository {
 
   Future<List<Ticket>> drawPrize(Prize prize) async {
     return List<Ticket>.from(
-      (await create(prize.toJson(), suffix: "/${prize.id}/draw"))
-          .map((x) => Ticket.fromJson(x)),
+      (await create(
+        prize.toJson(),
+        suffix: "/${prize.id}/draw",
+      )).map((x) => Ticket.fromJson(x)),
     );
   }
 }

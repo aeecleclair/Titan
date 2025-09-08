@@ -2,19 +2,18 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/tools/functions.dart';
-import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/event_provider.dart';
-import 'package:myecl/event/providers/user_event_list_provider.dart';
-import 'package:myecl/event/router.dart';
-import 'package:myecl/event/tools/constants.dart';
-import 'package:myecl/event/ui/components/edit_delete_button.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/event/class/event.dart';
+import 'package:titan/event/providers/event_provider.dart';
+import 'package:titan/event/providers/user_event_list_provider.dart';
+import 'package:titan/event/router.dart';
+import 'package:titan/event/tools/constants.dart';
+import 'package:titan/event/tools/functions.dart';
+import 'package:titan/event/ui/components/edit_delete_button.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/layouts/card_button.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventUi extends ConsumerWidget {
@@ -42,8 +41,9 @@ class EventUi extends ConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final textColor =
-        event.start.compareTo(now) <= 0 ? Colors.white : Colors.black;
+    final textColor = event.start.compareTo(now) <= 0
+        ? Colors.white
+        : Colors.black;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -63,19 +63,10 @@ class EventUi extends ConsumerWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: event.end.compareTo(now) < 0
-                ? [
-                    Colors.grey.shade700,
-                    Colors.grey.shade800,
-                  ]
+                ? [Colors.grey.shade700, Colors.grey.shade800]
                 : event.start.compareTo(now) <= 0
-                    ? [
-                        ColorConstants.gradient1,
-                        ColorConstants.gradient2,
-                      ]
-                    : [
-                        Colors.white,
-                        Colors.white,
-                      ],
+                ? [ColorConstants.gradient1, ColorConstants.gradient2]
+                : [Colors.white, Colors.white],
           ),
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
@@ -83,8 +74,8 @@ class EventUi extends ConsumerWidget {
               color: event.end.compareTo(now) < 0
                   ? Colors.black.withValues(alpha: 0.2)
                   : event.start.compareTo(now) <= 0
-                      ? ColorConstants.gradient2.withValues(alpha: 0.2)
-                      : Colors.grey.withValues(alpha: 0.2),
+                  ? ColorConstants.gradient2.withValues(alpha: 0.2)
+                  : Colors.grey.withValues(alpha: 0.2),
               spreadRadius: 5,
               blurRadius: 10,
               offset: const Offset(3, 3),
@@ -168,7 +159,9 @@ class EventUi extends ConsumerWidget {
                 event.description
                         .split("\n")
                         .sublist(
-                            0, event.description.split("\n").length > 1 ? 2 : 1)
+                          0,
+                          event.description.split("\n").length > 1 ? 2 : 1,
+                        )
                         .join("\n") +
                     (event.description.split("\n").length > 1 ? "..." : ""),
                 maxLines: 2,
@@ -201,21 +194,19 @@ class EventUi extends ConsumerWidget {
                           child: GestureDetector(
                             onTap: () async {
                               eventNotifier.setEvent(event);
-                              QR.to(
-                                EventRouter.root + EventRouter.addEdit,
-                              );
+                              QR.to(EventRouter.root + EventRouter.addEdit);
                             },
                             child: EditDeleteButton(
                               backGroundColor: event.end.compareTo(now) < 0
                                   ? Colors.grey.shade700
                                   : event.start.compareTo(now) <= 0
-                                      ? ColorConstants.gradient1
-                                      : Colors.white,
+                                  ? ColorConstants.gradient1
+                                  : Colors.white,
                               borderColor: event.end.compareTo(now) < 0
                                   ? Colors.grey.shade700
                                   : event.start.compareTo(now) <= 0
-                                      ? ColorConstants.gradient1
-                                      : Colors.grey.shade300,
+                                  ? ColorConstants.gradient1
+                                  : Colors.grey.shade300,
                               child: Center(
                                 child: Text(
                                   EventTextConstants.edit,
@@ -263,13 +254,13 @@ class EventUi extends ConsumerWidget {
                               backGroundColor: event.end.compareTo(now) < 0
                                   ? Colors.grey.shade700
                                   : event.start.compareTo(now) <= 0
-                                      ? ColorConstants.gradient1
-                                      : Colors.white,
+                                  ? ColorConstants.gradient1
+                                  : Colors.white,
                               borderColor: event.end.compareTo(now) < 0
                                   ? Colors.grey.shade700
                                   : event.start.compareTo(now) <= 0
-                                      ? ColorConstants.gradient1
-                                      : Colors.grey.shade300,
+                                  ? ColorConstants.gradient1
+                                  : Colors.grey.shade300,
                               child: child,
                             ),
                             child: Center(
@@ -295,10 +286,7 @@ class EventUi extends ConsumerWidget {
                     GestureDetector(
                       onTap: onEdit,
                       child: const CardButton(
-                        child: HeroIcon(
-                          HeroIcons.pencil,
-                          color: Colors.black,
-                        ),
+                        child: HeroIcon(HeroIcons.pencil, color: Colors.black),
                       ),
                     ),
                     const Spacer(),
@@ -322,8 +310,8 @@ class EventUi extends ConsumerWidget {
                       child: CardButton(
                         borderColor: isAdmin
                             ? event.decision == Decision.approved
-                                ? Colors.black
-                                : Colors.transparent
+                                  ? Colors.black
+                                  : Colors.transparent
                             : Colors.transparent,
                         child: const HeroIcon(
                           HeroIcons.check,
@@ -342,8 +330,8 @@ class EventUi extends ConsumerWidget {
                         color: Colors.black,
                         borderColor: isAdmin
                             ? event.decision == Decision.declined
-                                ? Colors.white
-                                : Colors.transparent
+                                  ? Colors.white
+                                  : Colors.transparent
                             : Colors.transparent,
                         child: const HeroIcon(
                           HeroIcons.xMark,

@@ -2,10 +2,10 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/vote/providers/result_provider.dart';
-import 'package:myecl/vote/providers/sections_contender_provider.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/tools/constants.dart';
+import 'package:titan/vote/providers/result_provider.dart';
+import 'package:titan/vote/providers/sections_contender_provider.dart';
+import 'package:titan/vote/providers/sections_provider.dart';
+import 'package:titan/vote/tools/constants.dart';
 
 class VoteBars extends HookConsumerWidget {
   const VoteBars({super.key});
@@ -24,13 +24,11 @@ class VoteBars extends HookConsumerWidget {
     List<BarChartGroupData> contenderBars = [];
     List<String> sectionNames = [];
     Map<String, int> voteValue = {};
-    results.whenData(
-      (votes) {
-        for (var i = 0; i < votes.length; i++) {
-          voteValue[votes[i].id] = votes[i].count;
-        }
-      },
-    );
+    results.whenData((votes) {
+      for (var i = 0; i < votes.length; i++) {
+        voteValue[votes[i].id] = votes[i].count;
+      }
+    });
 
     final Map<int, String> sectionIds = {};
     int total = 0;
@@ -40,9 +38,10 @@ class VoteBars extends HookConsumerWidget {
         data: ((data) {
           sectionNames = data.map((e) => e.name).toList();
           sectionIds.addAll({for (var e in data) data.indexOf(e): e.id});
-          total = data.map((e) => voteValue[e.id]).reduce(
-                    (value, element) => (value ?? 0) + (element ?? 0),
-                  ) ??
+          total =
+              data
+                  .map((e) => voteValue[e.id])
+                  .reduce((value, element) => (value ?? 0) + (element ?? 0)) ??
               0;
           contenderBars = data
               .map(
@@ -79,7 +78,7 @@ class VoteBars extends HookConsumerWidget {
             gridData: const FlGridData(show: false),
             barTouchData: BarTouchData(
               touchTooltipData: BarTouchTooltipData(
-                tooltipRoundedRadius: 20,
+                tooltipBorderRadius: BorderRadius.circular(20),
                 tooltipPadding: const EdgeInsets.only(
                   left: 10,
                   right: 10,
@@ -113,19 +112,13 @@ class VoteBars extends HookConsumerWidget {
             ),
             titlesData: FlTitlesData(
               leftTitles: const AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: false,
-                ),
+                sideTitles: SideTitles(showTitles: false),
               ),
               topTitles: const AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: false,
-                ),
+                sideTitles: SideTitles(showTitles: false),
               ),
               rightTitles: const AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: false,
-                ),
+                sideTitles: SideTitles(showTitles: false),
               ),
               show: true,
               bottomTitles: AxisTitles(
@@ -169,9 +162,7 @@ class VoteBars extends HookConsumerWidget {
                 ),
               ),
             ),
-            borderData: FlBorderData(
-              show: false,
-            ),
+            borderData: FlBorderData(show: false),
             barGroups: contenderBars,
           ),
           duration: animDuration,

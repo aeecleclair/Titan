@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/repositories/booking_repository.dart';
-import 'package:myecl/booking/providers/user_booking_list_provider.dart';
+import 'package:titan/booking/class/booking.dart';
+import 'package:titan/booking/repositories/booking_repository.dart';
+import 'package:titan/booking/providers/user_booking_list_provider.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockBookingRepository extends Mock implements BookingRepository {}
@@ -26,8 +26,9 @@ void main() {
         Booking.empty().copyWith(id: '1'),
         Booking.empty().copyWith(id: '2'),
       ];
-      when(() => bookingRepository.getUserBookingList())
-          .thenAnswer((_) async => bookings);
+      when(
+        () => bookingRepository.getUserBookingList(),
+      ).thenAnswer((_) async => bookings);
 
       final result = await provider.loadUserBookings();
 
@@ -38,16 +39,15 @@ void main() {
     test('Should add a booking', () async {
       final mockBookingRepository = MockBookingRepository();
       final newBooking = Booking.empty().copyWith(id: "1");
-      when(() => mockBookingRepository.getUserBookingList()).thenAnswer(
-        (_) async => [
-          Booking.empty(),
-          Booking.empty(),
-        ],
+      when(
+        () => mockBookingRepository.getUserBookingList(),
+      ).thenAnswer((_) async => [Booking.empty(), Booking.empty()]);
+      when(
+        () => mockBookingRepository.createBooking(newBooking),
+      ).thenAnswer((_) async => newBooking);
+      final bookingListProvider = UserBookingListProvider(
+        bookingRepository: mockBookingRepository,
       );
-      when(() => mockBookingRepository.createBooking(newBooking))
-          .thenAnswer((_) async => newBooking);
-      final bookingListProvider =
-          UserBookingListProvider(bookingRepository: mockBookingRepository);
       await bookingListProvider.loadUserBookings();
       final booking = await bookingListProvider.addBooking(newBooking);
       expect(booking, true);
@@ -56,12 +56,15 @@ void main() {
     test('Should update a booking', () async {
       final mockBookingRepository = MockBookingRepository();
       final newBooking = Booking.empty().copyWith(id: "1");
-      when(() => mockBookingRepository.getUserBookingList())
-          .thenAnswer((_) async => [Booking.empty(), newBooking]);
-      when(() => mockBookingRepository.updateBooking(newBooking))
-          .thenAnswer((_) async => true);
-      final bookingListProvider =
-          UserBookingListProvider(bookingRepository: mockBookingRepository);
+      when(
+        () => mockBookingRepository.getUserBookingList(),
+      ).thenAnswer((_) async => [Booking.empty(), newBooking]);
+      when(
+        () => mockBookingRepository.updateBooking(newBooking),
+      ).thenAnswer((_) async => true);
+      final bookingListProvider = UserBookingListProvider(
+        bookingRepository: mockBookingRepository,
+      );
       await bookingListProvider.loadUserBookings();
       final booking = await bookingListProvider.updateBooking(newBooking);
       expect(booking, true);
@@ -70,12 +73,15 @@ void main() {
     test('Should delete a booking', () async {
       final mockBookingRepository = MockBookingRepository();
       final newBooking = Booking.empty().copyWith(id: "1");
-      when(() => mockBookingRepository.getUserBookingList())
-          .thenAnswer((_) async => [Booking.empty(), newBooking]);
-      when(() => mockBookingRepository.deleteBooking(newBooking.id))
-          .thenAnswer((_) async => true);
-      final bookingListProvider =
-          UserBookingListProvider(bookingRepository: mockBookingRepository);
+      when(
+        () => mockBookingRepository.getUserBookingList(),
+      ).thenAnswer((_) async => [Booking.empty(), newBooking]);
+      when(
+        () => mockBookingRepository.deleteBooking(newBooking.id),
+      ).thenAnswer((_) async => true);
+      final bookingListProvider = UserBookingListProvider(
+        bookingRepository: mockBookingRepository,
+      );
       await bookingListProvider.loadUserBookings();
       final booking = await bookingListProvider.deleteBooking(newBooking);
       expect(booking, true);

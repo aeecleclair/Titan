@@ -1,5 +1,5 @@
-import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/vote/class/voter.dart';
+import 'package:titan/tools/repository/repository.dart';
+import 'package:titan/vote/class/voter.dart';
 
 class VoterRepository extends Repository {
   @override

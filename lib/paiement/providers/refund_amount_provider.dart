@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final refundAmountProvider =
     StateNotifierProvider<RefundAmountProvider, String>((ref) {
-  return RefundAmountProvider();
-});
+      return RefundAmountProvider();
+    });
 
 class RefundAmountProvider extends StateNotifier<String> {
   RefundAmountProvider() : super('');

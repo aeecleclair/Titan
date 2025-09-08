@@ -3,10 +3,10 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/advert/providers/advert_posters_provider.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/advert/repositories/advert_poster_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:titan/advert/providers/advert_posters_provider.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/advert/repositories/advert_poster_repository.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
 
 class AdvertPosterNotifier extends SingleNotifier<Image> {
   final advertPosterRepository = AdvertPosterRepository();
@@ -34,10 +34,10 @@ class AdvertPosterNotifier extends SingleNotifier<Image> {
 
 final advertPosterProvider =
     StateNotifierProvider<AdvertPosterNotifier, AsyncValue<Image>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
-  return AdvertPosterNotifier(
-    token: token,
-    advertPostersNotifier: advertPostersNotifier,
-  );
-});
+      final token = ref.watch(tokenProvider);
+      final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
+      return AdvertPosterNotifier(
+        token: token,
+        advertPostersNotifier: advertPostersNotifier,
+      );
+    });

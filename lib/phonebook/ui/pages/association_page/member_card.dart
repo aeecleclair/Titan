@@ -1,17 +1,17 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/membership.dart';
-import 'package:myecl/phonebook/providers/member_pictures_provider.dart';
-import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
-import 'package:myecl/phonebook/router.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/providers/complete_member_provider.dart';
-import 'package:myecl/phonebook/tools/function.dart';
-import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:titan/phonebook/class/association.dart';
+import 'package:titan/phonebook/class/complete_member.dart';
+import 'package:titan/phonebook/class/membership.dart';
+import 'package:titan/phonebook/providers/member_pictures_provider.dart';
+import 'package:titan/phonebook/providers/profile_picture_provider.dart';
+import 'package:titan/phonebook/router.dart';
+import 'package:titan/phonebook/tools/constants.dart';
+import 'package:titan/phonebook/providers/complete_member_provider.dart';
+import 'package:titan/phonebook/tools/function.dart';
+import 'package:titan/tools/ui/builders/auto_loader_child.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberCard extends HookConsumerWidget {
@@ -28,8 +28,9 @@ class MemberCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final memberNotifier = ref.watch(completeMemberProvider.notifier);
 
-    final memberPictures =
-        ref.watch(memberPicturesProvider.select((value) => value[member]));
+    final memberPictures = ref.watch(
+      memberPicturesProvider.select((value) => value[member]),
+    );
     final memberPicturesNotifier = ref.watch(memberPicturesProvider.notifier);
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
 
@@ -80,8 +81,9 @@ class MemberCard extends HookConsumerWidget {
                       group: memberPictures,
                       notifier: memberPicturesNotifier,
                       mapKey: member,
-                      loader: (ref) => profilePictureNotifier
-                          .getProfilePicture(member.member.id),
+                      loader: (ref) => profilePictureNotifier.getProfilePicture(
+                        member.member.id,
+                      ),
                       loadingBuilder: (context) => const CircleAvatar(
                         radius: 20,
                         child: CircularProgressIndicator(),

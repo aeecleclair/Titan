@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/providers/winning_ticket_list_provider.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/pages/creation_edit_page/winning_ticket_card.dart';
+import 'package:titan/raffle/providers/winning_ticket_list_provider.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/raffle/ui/pages/creation_edit_page/winning_ticket_card.dart';
 
 class WinningTicketHandler extends HookConsumerWidget {
   const WinningTicketHandler({super.key});
@@ -24,18 +24,13 @@ class WinningTicketHandler extends HookConsumerWidget {
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
           child: Row(
             children: [
-              const SizedBox(
-                width: 15,
-                height: 125,
-              ),
+              const SizedBox(width: 15, height: 125),
               winningTicketList.when(
                 data: (data) {
                   if (data.isEmpty) {
@@ -67,9 +62,7 @@ class WinningTicketHandler extends HookConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 5,
-              ),
+              const SizedBox(width: 5),
             ],
           ),
         ),

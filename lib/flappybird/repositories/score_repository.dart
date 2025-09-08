@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
-import 'package:myecl/flappybird/class/score.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/flappybird/class/score.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class ScoreRepository extends Repository {
   @override
@@ -9,8 +9,9 @@ class ScoreRepository extends Repository {
 
   Future<List<Score>> getLeaderboard() async {
     return List<Score>.from(
-      (await getList(suffix: "scores"))
-          .mapIndexed((index, e) => Score.fromJson(e, index: index + 1)),
+      (await getList(
+        suffix: "scores",
+      )).mapIndexed((index, e) => Score.fromJson(e, index: index + 1)),
     );
   }
 

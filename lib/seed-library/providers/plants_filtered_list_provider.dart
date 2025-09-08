@@ -1,16 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:diacritic/diacritic.dart';
-import 'package:myecl/seed-library/class/plant_simple.dart';
-import 'package:myecl/seed-library/class/species.dart';
-import 'package:myecl/seed-library/class/species_type.dart';
-import 'package:myecl/seed-library/providers/consumed_filter_provider.dart';
-import 'package:myecl/seed-library/providers/difficulty_filter_provider.dart';
-import 'package:myecl/seed-library/providers/plants_list_provider.dart';
-import 'package:myecl/seed-library/providers/species_type_filter_provider.dart';
-import 'package:myecl/seed-library/providers/string_provider.dart';
-import 'package:myecl/seed-library/providers/species_list_provider.dart';
-import 'package:myecl/seed-library/tools/constants.dart';
-import 'package:myecl/seed-library/tools/functions.dart';
+import 'package:titan/seed-library/class/plant_simple.dart';
+import 'package:titan/seed-library/class/species.dart';
+import 'package:titan/seed-library/class/species_type.dart';
+import 'package:titan/seed-library/providers/consumed_filter_provider.dart';
+import 'package:titan/seed-library/providers/difficulty_filter_provider.dart';
+import 'package:titan/seed-library/providers/plants_list_provider.dart';
+import 'package:titan/seed-library/providers/species_type_filter_provider.dart';
+import 'package:titan/seed-library/providers/string_provider.dart';
+import 'package:titan/seed-library/providers/species_list_provider.dart';
+import 'package:titan/seed-library/tools/constants.dart';
+import 'package:titan/seed-library/tools/functions.dart';
 
 List<int> getMonthsBySeason(String season) {
   if (season == SeedLibraryTextConstants.spring) {
@@ -39,8 +39,9 @@ List<Species> filterSpeciesWithFilters(
       .where(
         (species) => searchFilter == ""
             ? true
-            : removeDiacritics(species.name.toLowerCase())
-                .contains(removeDiacritics(searchFilter.toLowerCase())),
+            : removeDiacritics(
+                species.name.toLowerCase(),
+              ).contains(removeDiacritics(searchFilter.toLowerCase())),
       )
       .toList();
   filteredSpecies = filteredSpecies
@@ -48,9 +49,10 @@ List<Species> filterSpeciesWithFilters(
         (species) => seasonsTypeFilter == SeedLibraryTextConstants.all
             ? true
             : species.startSeason == null
-                ? true
-                : getMonthsBySeason(seasonsTypeFilter)
-                    .contains(species.startSeason!.month),
+            ? true
+            : getMonthsBySeason(
+                seasonsTypeFilter,
+              ).contains(species.startSeason!.month),
       )
       .toList();
   filteredSpecies = filteredSpecies
@@ -64,8 +66,8 @@ List<Species> filterSpeciesWithFilters(
       .where(
         (species) =>
             speciesTypeFilter == SpeciesType(name: SeedLibraryTextConstants.all)
-                ? true
-                : species.type == speciesTypeFilter,
+            ? true
+            : species.type == speciesTypeFilter,
       )
       .toList();
   return filteredSpecies;
@@ -95,12 +97,11 @@ final plantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
   return plantsProvider.maybeWhen(
     data: (plants) {
       final filteredPlants = plants
-          .where(
-            (plant) => speciesId.contains(plant.speciesId),
-          )
+          .where((plant) => speciesId.contains(plant.speciesId))
           .toList();
-      filteredPlants
-          .sort((a, b) => a.plantReference.compareTo(b.plantReference));
+      filteredPlants.sort(
+        (a, b) => a.plantReference.compareTo(b.plantReference),
+      );
       return filteredPlants;
     },
     orElse: () => [],
@@ -125,9 +126,7 @@ final myPlantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
   );
   final speciesId = filteredSpecies.map((species) => species.id).toList();
   final filteredPlants = plants
-      .where(
-        (plant) => speciesId.contains(plant.speciesId),
-      )
+      .where((plant) => speciesId.contains(plant.speciesId))
       .toList();
   if (!consummedFilter) {
     filteredPlants.removeWhere((plant) => plant.state == State.consumed);

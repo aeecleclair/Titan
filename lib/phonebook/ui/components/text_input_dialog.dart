@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
+import 'package:titan/phonebook/tools/constants.dart';
 
 class TextInputDialog extends HookConsumerWidget {
   const TextInputDialog({
@@ -38,12 +38,7 @@ class TextInputDialog extends HookConsumerWidget {
             const SizedBox(height: 25),
             Text(text),
             const SizedBox(height: 5),
-            SizedBox(
-              width: 200,
-              child: TextField(
-                controller: controller,
-              ),
-            ),
+            SizedBox(width: 200, child: TextField(controller: controller)),
           ],
         ),
       ),

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/group_list_provider.dart';
-import 'package:myecl/advert/class/announcer.dart';
-import 'package:myecl/advert/providers/all_announcer_list_provider.dart';
-import 'package:myecl/advert/providers/announcer_list_provider.dart';
-import 'package:myecl/advert/tools/constants.dart';
-import 'package:myecl/advert/ui/pages/advert.dart';
-import 'package:myecl/advert/ui/pages/form_page/announcer_card.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/admin/providers/group_list_provider.dart';
+import 'package:titan/advert/class/announcer.dart';
+import 'package:titan/advert/providers/all_announcer_list_provider.dart';
+import 'package:titan/advert/providers/announcer_list_provider.dart';
+import 'package:titan/advert/tools/constants.dart';
+import 'package:titan/advert/ui/pages/advert.dart';
+import 'package:titan/advert/ui/pages/form_page/announcer_card.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 
 class AddRemAnnouncerPage extends HookConsumerWidget {
   const AddRemAnnouncerPage({super.key});
@@ -51,9 +51,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     AsyncChild(
                       value: groups,
                       builder: (context, groupList) {
@@ -65,22 +63,23 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                             .toList();
                         return (canAdd + canRemove).isNotEmpty
                             ? Column(
-                                children: canAdd
+                                children:
+                                    canAdd
                                         .map(
                                           (e) => GestureDetector(
                                             onTap: () {
                                               Announcer newAnnouncer =
                                                   Announcer(
-                                                groupManagerId: e.id,
-                                                id: '',
-                                                name: e.name,
-                                              );
+                                                    groupManagerId: e.id,
+                                                    id: '',
+                                                    name: e.name,
+                                                  );
                                               tokenExpireWrapper(ref, () async {
                                                 final value =
                                                     await announcerListNotifier
                                                         .addAnnouncer(
-                                                  newAnnouncer,
-                                                );
+                                                          newAnnouncer,
+                                                        );
                                                 if (value) {
                                                   displayToastWithContext(
                                                     TypeMsg.msg,
@@ -119,19 +118,17 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                                         AdvertTextConstants
                                                             .deleteAnnouncer,
                                                     onYes: () {
-                                                      tokenExpireWrapper(ref,
-                                                          () async {
-                                                        final value =
-                                                            await announcerListNotifier
-                                                                .deleteAnnouncer(
-                                                          announcers
-                                                              .where(
-                                                                (element) =>
-                                                                    e.id ==
-                                                                    e.id,
-                                                              )
-                                                              .toList()[0],
-                                                        );
+                                                      tokenExpireWrapper(ref, () async {
+                                                        final value = await announcerListNotifier
+                                                            .deleteAnnouncer(
+                                                              announcers
+                                                                  .where(
+                                                                    (element) =>
+                                                                        e.id ==
+                                                                        e.id,
+                                                                  )
+                                                                  .toList()[0],
+                                                            );
                                                         if (value) {
                                                           displayToastWithContext(
                                                             TypeMsg.msg,
@@ -162,8 +159,9 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                         .toList(),
                               )
                             : const Center(
-                                child:
-                                    Text(AdvertTextConstants.noMoreAnnouncer),
+                                child: Text(
+                                  AdvertTextConstants.noMoreAnnouncer,
+                                ),
                               );
                       },
                     ),

@@ -6,10 +6,6 @@ class SettingsTextConstants {
   static const String association = "Association";
   static const String birthday = "Date de naissance";
   static const String bugs = "Bugs";
-  static const String changePassword = "Changer de mot de passe";
-  static const String changingPassword =
-      "Voulez-vous vraiment changer votre mot de passe ?";
-  static const String confirmPassword = "Confirmer le mot de passe";
   static const String copied = "Copié !";
   static const String darkMode = "Mode sombre";
   static const String darkModeOff = "Désactivé";
@@ -41,13 +37,8 @@ class SettingsTextConstants {
   static const String modules = "Modules";
   static const String myIcs = "Mon lien Ical";
   static const String name = "Nom";
-  static const String newPassword = "Nouveau mot de passe";
   static const String nickname = "Surnom";
   static const String notifications = "Notifications";
-  static const String oldPassword = "Ancien mot de passe";
-  static const String passwordChanged = "Mot de passe changé";
-  static const String passwordsNotMatch =
-      "Les mots de passe ne correspondent pas";
   static const String personalData = "Données personnelles";
   static const String personalisation = "Personnalisation";
   static const String phone = "Téléphone";
@@ -66,11 +57,5 @@ class SettingsTextConstants {
   static const String updatingError =
       "Erreur lors de la modification du profil";
   static const String version = "Version";
-
-  static const String passwordStrength = "Force du mot de passe";
-  static const String passwordStrengthVeryWeak = "Très faible";
-  static const String passwordStrengthWeak = "Faible";
-  static const String passwordStrengthMedium = "Moyen";
-  static const String passwordStrengthStrong = "Fort";
-  static const String passwordStrengthVeryStrong = "Très fort";
+  static const String unableToOpen = "Impossible d'ouvrir le lien";
 }

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/providers/end_provider.dart';
-import 'package:myecl/loan/providers/initial_date_provider.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/selected_items_provider.dart';
-import 'package:myecl/loan/providers/start_provider.dart';
-import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/widgets/date_entry.dart';
+import 'package:titan/loan/class/item.dart';
+import 'package:titan/loan/providers/end_provider.dart';
+import 'package:titan/loan/providers/initial_date_provider.dart';
+import 'package:titan/loan/providers/item_list_provider.dart';
+import 'package:titan/loan/providers/selected_items_provider.dart';
+import 'package:titan/loan/providers/start_provider.dart';
+import 'package:titan/loan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/widgets/date_entry.dart';
 
 class StartDateEntry extends HookConsumerWidget {
   const StartDateEntry({super.key});
@@ -42,8 +42,9 @@ class StartDateEntry extends HookConsumerWidget {
             initialDateNotifier.setDate(DateTime.parse(processDateBack(date)));
           });
         },
-        initialDate:
-            start.isNotEmpty ? DateTime.parse(processDateBack(start)) : now,
+        initialDate: start.isNotEmpty
+            ? DateTime.parse(processDateBack(start))
+            : now,
         firstDate: DateTime(now.year - 1, now.month, now.day),
       ),
       label: LoanTextConstants.beginDate,

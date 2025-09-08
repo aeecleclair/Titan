@@ -3,27 +3,27 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/providers/booking_provider.dart';
-import 'package:myecl/booking/providers/confirmed_booking_list_provider.dart';
-import 'package:myecl/booking/providers/is_admin_provider.dart';
-import 'package:myecl/booking/providers/is_manager_provider.dart';
-import 'package:myecl/booking/providers/manager_booking_list_provider.dart';
-import 'package:myecl/booking/providers/selected_days_provider.dart';
-import 'package:myecl/booking/providers/user_booking_list_provider.dart';
-import 'package:myecl/booking/router.dart';
-import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/calendar/calendar.dart';
-import 'package:myecl/booking/ui/components/booking_card.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/widgets/admin_button.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/booking/class/booking.dart';
+import 'package:titan/booking/providers/booking_provider.dart';
+import 'package:titan/booking/providers/confirmed_booking_list_provider.dart';
+import 'package:titan/booking/providers/is_admin_provider.dart';
+import 'package:titan/booking/providers/is_manager_provider.dart';
+import 'package:titan/booking/providers/manager_booking_list_provider.dart';
+import 'package:titan/booking/providers/selected_days_provider.dart';
+import 'package:titan/booking/providers/user_booking_list_provider.dart';
+import 'package:titan/booking/router.dart';
+import 'package:titan/booking/tools/constants.dart';
+import 'package:titan/booking/ui/booking.dart';
+import 'package:titan/booking/ui/calendar/calendar.dart';
+import 'package:titan/booking/ui/components/booking_card.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/widgets/admin_button.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -37,8 +37,9 @@ class BookingMainPage extends HookConsumerWidget {
     final isManager = ref.watch(isManagerProvider);
     final isAdmin = ref.watch(isAdminProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
-    final confirmedBookingsNotifier =
-        ref.watch(confirmedBookingListProvider.notifier);
+    final confirmedBookingsNotifier = ref.watch(
+      confirmedBookingListProvider.notifier,
+    );
     final bookings = ref.watch(userBookingListProvider);
     final bookingNotifier = ref.watch(bookingProvider.notifier);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
@@ -49,8 +50,10 @@ class BookingMainPage extends HookConsumerWidget {
 
     void handleBooking(Booking booking) {
       bookingNotifier.setBooking(booking);
-      final recurrentDays =
-          SfCalendar.parseRRule(booking.recurrenceRule, booking.start).weekDays;
+      final recurrentDays = SfCalendar.parseRRule(
+        booking.recurrenceRule,
+        booking.start,
+      ).weekDays;
       selectedDaysNotifier.setSelectedDays(recurrentDays);
       QR.to(BookingRouter.root + BookingRouter.addEdit);
     }
@@ -108,9 +111,7 @@ class BookingMainPage extends HookConsumerWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 AsyncChild(
                   value: bookings,
                   builder: (context, data) {
@@ -153,8 +154,8 @@ class BookingMainPage extends HookConsumerWidget {
                                 descriptions: BookingTextConstants
                                     .deleteBookingConfirmation,
                                 onYes: () async {
-                                  final value =
-                                      await bookingsNotifier.deleteBooking(e);
+                                  final value = await bookingsNotifier
+                                      .deleteBooking(e);
                                   if (value) {
                                     ref
                                         .read(

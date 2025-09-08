@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/settings/providers/logs_provider.dart';
-import 'package:myecl/settings/tools/constants.dart';
-import 'package:myecl/settings/ui/pages/log_page/log_card.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/settings/providers/logs_provider.dart';
+import 'package:titan/settings/tools/constants.dart';
+import 'package:titan/settings/ui/pages/log_page/log_card.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 
 class LogTab extends HookConsumerWidget {
   const LogTab({super.key});
@@ -33,12 +33,12 @@ class LogTab extends HookConsumerWidget {
                 showDialog(
                   context: context,
                   builder: ((context) => CustomDialogBox(
-                        title: SettingsTextConstants.deleting,
-                        descriptions: SettingsTextConstants.deleteLogs,
-                        onYes: (() async {
-                          logsNotifier.deleteLogs();
-                        }),
-                      )),
+                    title: SettingsTextConstants.deleting,
+                    descriptions: SettingsTextConstants.deleteLogs,
+                    onYes: (() async {
+                      logsNotifier.deleteLogs();
+                    }),
+                  )),
                 );
               },
               child: Container(
@@ -59,11 +59,7 @@ class LogTab extends HookConsumerWidget {
                 ),
                 child: const Row(
                   children: [
-                    HeroIcon(
-                      HeroIcons.trash,
-                      color: Colors.white,
-                      size: 20,
-                    ),
+                    HeroIcon(HeroIcons.trash, color: Colors.white, size: 20),
                   ],
                 ),
               ),
@@ -73,9 +69,8 @@ class LogTab extends HookConsumerWidget {
         const SizedBox(height: 20),
         AsyncChild(
           value: logs,
-          builder: (context, data) => Column(
-            children: data.map((e) => LogCard(log: e)).toList(),
-          ),
+          builder: (context, data) =>
+              Column(children: data.map((e) => LogCard(log: e)).toList()),
         ),
         const SizedBox(height: 20),
       ],

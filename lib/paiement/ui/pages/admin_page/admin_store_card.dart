@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/class/store.dart';
-import 'package:myecl/paiement/providers/store_provider.dart';
-import 'package:myecl/paiement/providers/stores_list_provider.dart';
-import 'package:myecl/paiement/router.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/paiement/class/store.dart';
+import 'package:titan/paiement/providers/store_provider.dart';
+import 'package:titan/paiement/providers/stores_list_provider.dart';
+import 'package:titan/paiement/router.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/layouts/card_button.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminStoreCard extends ConsumerWidget {
@@ -68,10 +68,7 @@ class AdminStoreCard extends ConsumerWidget {
                     Color.fromARGB(255, 6, 75, 75),
                     Color.fromARGB(255, 0, 29, 29),
                   ],
-                  child: HeroIcon(
-                    HeroIcons.pencilSquare,
-                    color: Colors.white,
-                  ),
+                  child: HeroIcon(HeroIcons.pencilSquare, color: Colors.white),
                 ),
               ),
               const SizedBox(width: 10),
@@ -85,8 +82,9 @@ class AdminStoreCard extends ConsumerWidget {
                           "Voulez-vous vraiment supprimer cette association ?",
                       onYes: () {
                         tokenExpireWrapper(ref, () async {
-                          final value =
-                              await storeListNotifier.deleteStore(store);
+                          final value = await storeListNotifier.deleteStore(
+                            store,
+                          );
                           if (value) {
                             displayToastWithContext(
                               TypeMsg.msg,
@@ -104,16 +102,10 @@ class AdminStoreCard extends ConsumerWidget {
                   );
                 },
                 builder: (child) => CardButton(
-                  colors: const [
-                    Color(0xFF9E131F),
-                    Color(0xFF590512),
-                  ],
+                  colors: const [Color(0xFF9E131F), Color(0xFF590512)],
                   child: child,
                 ),
-                child: const HeroIcon(
-                  HeroIcons.trash,
-                  color: Colors.white,
-                ),
+                child: const HeroIcon(HeroIcons.trash, color: Colors.white),
               ),
             ],
           ),

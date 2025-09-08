@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class TOSDialogBox extends StatelessWidget {
   final String title, descriptions;
@@ -60,20 +61,16 @@ class TOSDialogBox extends StatelessWidget {
                     color: titleColor,
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Text(
-                  descriptions,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: descriptionColor,
+                const SizedBox(height: 15),
+                MarkdownBody(
+                  data: descriptions,
+                  selectable: true,
+                  styleSheet: MarkdownStyleSheet(
+                    h2Padding: const EdgeInsets.only(top: 20.0),
+                    textAlign: WrapAlignment.spaceAround,
                   ),
-                  textAlign: TextAlign.center,
                 ),
-                const SizedBox(
-                  height: 22,
-                ),
+                const SizedBox(height: 22),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Row(

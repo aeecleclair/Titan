@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/paiement/class/store.dart';
-import 'package:myecl/paiement/class/structure.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/paiement/class/store.dart';
+import 'package:titan/paiement/class/structure.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class StructuresRepository extends Repository {
   @override
@@ -10,9 +10,7 @@ class StructuresRepository extends Repository {
   final ext = 'myeclpay/structures';
 
   Future<Structure> createStructure(Structure structure) async {
-    return Structure.fromJson(
-      await create(structure.toJson()),
-    );
+    return Structure.fromJson(await create(structure.toJson()));
   }
 
   Future<List<Structure>> getStructures() async {
@@ -33,27 +31,22 @@ class StructuresRepository extends Repository {
     Structure structure,
     String newManagerUserId,
   ) async {
-    return await create(
-      {
-        "new_manager_user_id": newManagerUserId,
-      },
-      suffix: "/${structure.id}/init-manager-transfer",
-    );
+    return await create({
+      "new_manager_user_id": newManagerUserId,
+    }, suffix: "/${structure.id}/init-manager-transfer");
   }
 
   Future<List<Store>> getStructureStores(String structureId) async {
     return List<Store>.from(
-      (await getList(suffix: "/$structureId/stores"))
-          .map((e) => Store.fromJson(e)),
+      (await getList(
+        suffix: "/$structureId/stores",
+      )).map((e) => Store.fromJson(e)),
     );
   }
 
   Future<Store> addStructureStore(Structure structure, Store store) async {
     return Store.fromJson(
-      await create(
-        store.toJson(),
-        suffix: "/${structure.id}/stores",
-      ),
+      await create(store.toJson(), suffix: "/${structure.id}/stores"),
     );
   }
 }

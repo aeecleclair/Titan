@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final payAmountProvider =
-    StateNotifierProvider<PayAmountProvider, String>((ref) {
+final payAmountProvider = StateNotifierProvider<PayAmountProvider, String>((
+  ref,
+) {
   return PayAmountProvider();
 });
 

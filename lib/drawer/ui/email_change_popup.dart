@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/providers/already_displayed_popup.dart';
-import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/providers/should_notify_provider.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:titan/drawer/providers/already_displayed_popup.dart';
+import 'package:titan/loan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/should_notify_provider.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 class Consts {
   Consts._();
@@ -32,8 +32,9 @@ class EmailChangeDialog extends HookConsumerWidget {
     final user = ref.watch(userProvider);
     final shouldBeUser = ref.watch(shouldNotifyProvider);
     final userNotifier = ref.watch(asyncUserProvider.notifier);
-    final alreadyDisplayedNotifier =
-        ref.watch(alreadyDisplayedProvider.notifier);
+    final alreadyDisplayedNotifier = ref.watch(
+      alreadyDisplayedProvider.notifier,
+    );
     final newEmail = shouldBeUser
         ? '${user.firstname.toLowerCase()}.${user.name.toLowerCase()}@etu.ec-lyon.fr'
         : '${user.email.split('@')[0]}@etu.ec-lyon.fr';
@@ -47,19 +48,17 @@ class EmailChangeDialog extends HookConsumerWidget {
       parent: checkAnimationController,
       curve: Curves.bounceOut,
     );
-    final ValueNotifier<AsyncValue> currentState =
-        useState(AsyncError("", StackTrace.current));
+    final ValueNotifier<AsyncValue> currentState = useState(
+      AsyncError("", StackTrace.current),
+    );
     final displayForm = useState(true);
 
-    useEffect(
-      () {
-        if (shouldBeUser) {
-          emailController.text = newEmail;
-        }
-        return () {};
-      },
-      [newEmail],
-    );
+    useEffect(() {
+      if (shouldBeUser) {
+        emailController.text = newEmail;
+      }
+      return () {};
+    }, [newEmail]);
 
     return GestureDetector(
       onTap: alreadyDisplayedNotifier.setAlreadyDisplayed,
@@ -119,9 +118,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                         ? Consts.descriptionMigration
                                         : Consts.description,
                                     textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontSize: 16.0,
-                                    ),
+                                    style: const TextStyle(fontSize: 16.0),
                                   ),
                                   const SizedBox(height: 15.0),
                                   TextFormField(
@@ -165,8 +162,9 @@ class EmailChangeDialog extends HookConsumerWidget {
                                             vertical: 16,
                                           ),
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
                                             gradient: const LinearGradient(
                                               colors: [
                                                 Colors.black87,
@@ -177,8 +175,9 @@ class EmailChangeDialog extends HookConsumerWidget {
                                             ),
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Colors.black
-                                                    .withValues(alpha: 0.3),
+                                                color: Colors.black.withValues(
+                                                  alpha: 0.3,
+                                                ),
                                                 blurRadius: 2.0,
                                                 offset: const Offset(1.0, 2.0),
                                               ),
@@ -203,8 +202,8 @@ class EmailChangeDialog extends HookConsumerWidget {
                                                 const AsyncLoading();
                                             final result = await userNotifier
                                                 .askMailMigration(
-                                              emailController.text,
-                                            );
+                                                  emailController.text,
+                                                );
                                             if (result) {
                                               currentState.value =
                                                   const AsyncData("");
@@ -226,18 +225,17 @@ class EmailChangeDialog extends HookConsumerWidget {
                                             vertical: 16,
                                           ),
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
                                             color: Colors.grey.shade300,
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Colors.grey
-                                                    .withValues(alpha: 0.3),
-                                                blurRadius: 2.0,
-                                                offset: const Offset(
-                                                  1.0,
-                                                  2.0,
+                                                color: Colors.grey.withValues(
+                                                  alpha: 0.3,
                                                 ),
+                                                blurRadius: 2.0,
+                                                offset: const Offset(1.0, 2.0),
                                               ),
                                             ],
                                           ),
@@ -264,9 +262,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                     const Text(
                                       "Un mail de confirmation a été envoyé à l'adresse suivante, pour confirmer le changement :",
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                      ),
+                                      style: TextStyle(fontSize: 16.0),
                                     ),
                                     const SizedBox(height: 16.0),
                                     Text(
@@ -287,13 +283,15 @@ class EmailChangeDialog extends HookConsumerWidget {
                                           vertical: 16,
                                         ),
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
                                           color: Colors.grey.shade300,
                                           boxShadow: [
                                             BoxShadow(
-                                              color: Colors.grey
-                                                  .withValues(alpha: 0.3),
+                                              color: Colors.grey.withValues(
+                                                alpha: 0.3,
+                                              ),
                                               blurRadius: 2.0,
                                               offset: const Offset(1.0, 2.0),
                                             ),
@@ -338,8 +336,9 @@ class EmailChangeDialog extends HookConsumerWidget {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: Consts.greenGradient2
-                                    .withValues(alpha: 0.3),
+                                color: Consts.greenGradient2.withValues(
+                                  alpha: 0.3,
+                                ),
                                 blurRadius: 10.0,
                                 offset: const Offset(0.0, 10.0),
                               ),
@@ -361,10 +360,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         gradient: const LinearGradient(
-                          colors: [
-                            Consts.redGradient1,
-                            Consts.redGradient2,
-                          ],
+                          colors: [Consts.redGradient1, Consts.redGradient2],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
@@ -377,9 +373,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                         ],
                       ),
                       child: const Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
+                        child: CircularProgressIndicator(color: Colors.white),
                       ),
                     ),
                     error: (error, stack) => Container(
@@ -388,10 +382,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         gradient: const LinearGradient(
-                          colors: [
-                            Consts.redGradient1,
-                            Consts.redGradient2,
-                          ],
+                          colors: [Consts.redGradient1, Consts.redGradient2],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),

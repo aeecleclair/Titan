@@ -1,6 +1,19 @@
 import 'dart:math';
 
-import 'package:myecl/event/class/event.dart';
+import 'package:titan/event/class/event.dart';
+import 'package:titan/event/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+
+String decisionToString(Decision d) {
+  switch (d) {
+    case Decision.approved:
+      return EventTextConstants.confirmed;
+    case Decision.declined:
+      return EventTextConstants.declined;
+    case Decision.pending:
+      return EventTextConstants.pending;
+  }
+}
 
 String calendarEventTypeToString(CalendarEventType type) {
   switch (type) {

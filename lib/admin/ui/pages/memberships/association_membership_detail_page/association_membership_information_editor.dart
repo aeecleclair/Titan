@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/all_groups_list_provider.dart';
-import 'package:myecl/admin/providers/association_membership_list_provider.dart';
-import 'package:myecl/admin/providers/association_membership_provider.dart';
-import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/admin/providers/all_groups_list_provider.dart';
+import 'package:titan/admin/providers/association_membership_list_provider.dart';
+import 'package:titan/admin/providers/association_membership_provider.dart';
+import 'package:titan/admin/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 
 class AssociationMembershipInformationEditor extends HookConsumerWidget {
   final scrollKey = GlobalKey();
-  AssociationMembershipInformationEditor({
-    super.key,
-  });
+  AssociationMembershipInformationEditor({super.key});
 
   @override
   Widget build(context, ref) {
@@ -25,14 +23,17 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
     }
 
     final associationMembership = ref.watch(associationMembershipProvider);
-    final associationMembershipNotifier =
-        ref.watch(associationMembershipProvider.notifier);
+    final associationMembershipNotifier = ref.watch(
+      associationMembershipProvider.notifier,
+    );
     final name = useTextEditingController(text: associationMembership.name);
     final groups = ref.watch(allGroupList);
-    final groupIdController =
-        useTextEditingController(text: associationMembership.managerGroupId);
-    final associationMembershipListNotifier =
-        ref.watch(allAssociationMembershipListProvider.notifier);
+    final groupIdController = useTextEditingController(
+      text: associationMembership.managerGroupId,
+    );
+    final associationMembershipListNotifier = ref.watch(
+      allAssociationMembershipListProvider.notifier,
+    );
     final key = GlobalKey<FormState>();
 
     groups.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
@@ -61,14 +62,10 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                           ),
                           suffixIcon: Container(
                             padding: const EdgeInsets.all(10),
-                            child: const HeroIcon(
-                              HeroIcons.pencil,
-                            ),
+                            child: const HeroIcon(HeroIcons.pencil),
                           ),
                           enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                            ),
+                            borderSide: BorderSide(color: Colors.transparent),
                           ),
                           focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -91,9 +88,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   AdminTextConstants.group,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
               DropdownButtonFormField<String>(
@@ -113,9 +108,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                   hintText: AdminTextConstants.group,
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               WaitingButton(
                 builder: (child) => AddEditButtonLayout(
                   colors: const [
@@ -132,10 +125,8 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                   await tokenExpireWrapper(ref, () async {
                     final value = await associationMembershipListNotifier
                         .updateAssociationMembership(
-                      associationMembership.copyWith(
-                        name: name.text,
-                      ),
-                    );
+                          associationMembership.copyWith(name: name.text),
+                        );
                     if (value) {
                       associationMembershipNotifier.setAssociationMembership(
                         associationMembership.copyWith(

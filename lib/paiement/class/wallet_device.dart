@@ -1,4 +1,4 @@
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
 
 enum WalletDeviceStatus { active, inactive, revoked }
 
@@ -18,21 +18,21 @@ class WalletDevice {
   });
 
   WalletDevice.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        name = json['name'],
-        walletId = json['wallet_id'],
-        creation = processDateFromAPI(json['creation']),
-        status = WalletDeviceStatus.values.firstWhere(
-          (e) => e.toString().split('.').last == json['status'],
-        );
+    : id = json['id'],
+      name = json['name'],
+      walletId = json['wallet_id'],
+      creation = processDateFromAPI(json['creation']),
+      status = WalletDeviceStatus.values.firstWhere(
+        (e) => e.toString().split('.').last == json['status'],
+      );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'wallet_id': walletId,
-        'creation': processDateToAPI(creation),
-        'status': status.toString().split('.').last,
-      };
+    'id': id,
+    'name': name,
+    'wallet_id': walletId,
+    'creation': processDateToAPI(creation),
+    'status': status.toString().split('.').last,
+  };
 
   @override
   String toString() {
@@ -40,11 +40,11 @@ class WalletDevice {
   }
 
   WalletDevice.empty()
-      : id = '',
-        name = '',
-        walletId = '',
-        creation = DateTime.now(),
-        status = WalletDeviceStatus.active;
+    : id = '',
+      name = '',
+      walletId = '',
+      creation = DateTime.now(),
+      status = WalletDeviceStatus.active;
 
   WalletDevice copyWith({
     String? id,

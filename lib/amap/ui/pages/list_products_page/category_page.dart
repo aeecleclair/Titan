@@ -3,13 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/providers/scroll_controller_provider.dart';
-import 'package:myecl/amap/providers/scroll_provider.dart';
-import 'package:myecl/amap/providers/sorted_delivery_product.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/pages/list_products_page/product_ui_list.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/amap/providers/scroll_controller_provider.dart';
+import 'package:titan/amap/providers/scroll_provider.dart';
+import 'package:titan/amap/providers/sorted_delivery_product.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/amap/ui/pages/list_products_page/product_ui_list.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
 class CategoryPage extends HookConsumerWidget {
   final String category;
@@ -24,8 +24,9 @@ class CategoryPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sortedDeliveryProductsList =
-        ref.watch(sortedByCategoryDeliveryProductsProvider);
+    final sortedDeliveryProductsList = ref.watch(
+      sortedByCategoryDeliveryProductsProvider,
+    );
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
 
     final scroll = ref.watch(scrollProvider);
@@ -49,16 +50,15 @@ class CategoryPage extends HookConsumerWidget {
       height = maxHeight * (1 - minScale) / 2;
     }
 
-    double h = MediaQuery.of(context).size.height -
+    double h =
+        MediaQuery.of(context).size.height -
         270 -
         50 * (sortedDeliveryProductsList[category]!.length + 1);
     return Container(
       margin: const EdgeInsets.all(10),
       child: Column(
         children: [
-          SizedBox(
-            height: height,
-          ),
+          SizedBox(height: height),
           SizedBox(
             height: maxHeight * scale,
             child: Builder(
@@ -68,8 +68,11 @@ class CategoryPage extends HookConsumerWidget {
                     height: 50,
                     child: AlignLeftText(
                       capitalize(category),
-                      padding:
-                          const EdgeInsets.only(left: 20, top: 20, right: 20),
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        top: 20,
+                        right: 20,
+                      ),
                       color: AMAPColorConstants.textDark,
                       fontSize: 25,
                     ),
@@ -87,8 +90,9 @@ class CategoryPage extends HookConsumerWidget {
                         physics: const BouncingScrollPhysics(),
                         controller: scrollController,
                         child: ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(25)),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(25),
+                          ),
                           child: BackdropFilter(
                             filter: ImageFilter.blur(
                               sigmaX: 10.0,
@@ -99,9 +103,7 @@ class CategoryPage extends HookConsumerWidget {
                                 color: AMAPColorConstants.background2
                                     .withValues(alpha: 0.5),
                               ),
-                              child: Column(
-                                children: listWidgetProduct,
-                              ),
+                              child: Column(children: listWidgetProduct),
                             ),
                           ),
                         ),
@@ -180,8 +182,9 @@ class CategoryPage extends HookConsumerWidget {
                       filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: AMAPColorConstants.background2
-                              .withValues(alpha: 0.5),
+                          color: AMAPColorConstants.background2.withValues(
+                            alpha: 0.5,
+                          ),
                         ),
                         child: Column(children: listWidgetProduct),
                       ),

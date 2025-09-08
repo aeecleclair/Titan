@@ -6,9 +6,9 @@ class Room {
   Room({required this.name, required this.managerId, required this.id});
 
   Room.fromJson(Map<String, dynamic> json)
-      : name = json["name"],
-        managerId = json["manager_id"],
-        id = json["id"];
+    : name = json["name"],
+      managerId = json["manager_id"],
+      id = json["id"];
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

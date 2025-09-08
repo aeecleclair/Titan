@@ -2,12 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/cinema/class/session.dart';
-import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
-import 'package:myecl/cinema/providers/session_poster_provider.dart';
-import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/cinema/class/session.dart';
+import 'package:titan/cinema/providers/session_poster_map_provider.dart';
+import 'package:titan/cinema/providers/session_poster_provider.dart';
+import 'package:titan/tools/ui/builders/auto_loader_child.dart';
+import 'package:titan/tools/ui/layouts/card_button.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class AdminSessionCard extends HookConsumerWidget {
   final Session session;
@@ -23,10 +23,12 @@ class AdminSessionCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sessionPoster = ref
-        .watch(sessionPosterMapProvider.select((value) => value[session.id]));
-    final sessionPosterMapNotifier =
-        ref.read(sessionPosterMapProvider.notifier);
+    final sessionPoster = ref.watch(
+      sessionPosterMapProvider.select((value) => value[session.id]),
+    );
+    final sessionPosterMapNotifier = ref.read(
+      sessionPosterMapProvider.notifier,
+    );
     final sessionPosterNotifier = ref.read(sessionPosterProvider.notifier);
     return GestureDetector(
       onTap: onTap,
@@ -59,18 +61,18 @@ class AdminSessionCard extends HookConsumerWidget {
                   mapKey: session.id,
                   loader: (sessionId) =>
                       sessionPosterNotifier.getLogo(sessionId),
-                  dataBuilder: (context, data) => Image(
-                    image: data.first.image,
-                    fit: BoxFit.cover,
-                  ),
+                  dataBuilder: (context, data) =>
+                      Image(image: data.first.image, fit: BoxFit.cover),
                   errorBuilder: (error, stack) => const Center(
                     child: HeroIcon(HeroIcons.exclamationCircle),
                   ),
                 ),
               ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 7,
+                ),
                 height: 95,
                 child: Column(
                   children: [

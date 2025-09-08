@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tools/ui/widgets/loader.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/widgets/loader.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class SignInUpBar extends StatelessWidget {
   const SignInUpBar({
@@ -30,8 +30,9 @@ class SignInUpBar extends StatelessWidget {
       child: Container(
         height: 50,
         width: double.infinity,
-        alignment:
-            color == Colors.white ? Alignment.centerLeft : Alignment.center,
+        alignment: color == Colors.white
+            ? Alignment.centerLeft
+            : Alignment.center,
         child: WaitingButton(
           onTap: onPressed,
           builder: (child) => Row(

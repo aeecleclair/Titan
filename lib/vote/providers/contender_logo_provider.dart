@@ -2,9 +2,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/vote/providers/contender_logos_provider.dart';
-import 'package:myecl/vote/repositories/contender_logo_repository.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/vote/providers/contender_logos_provider.dart';
+import 'package:titan/vote/repositories/contender_logo_repository.dart';
 
 class ContenderLogoProvider extends SingleNotifier<Image> {
   final ContenderLogoRepository contenderLogoRepository;
@@ -30,10 +30,12 @@ class ContenderLogoProvider extends SingleNotifier<Image> {
 
 final contenderLogoProvider =
     StateNotifierProvider<ContenderLogoProvider, AsyncValue<Image>>((ref) {
-  final contenderLogoRepository = ref.watch(contenderLogoRepositoryProvider);
-  final contenderLogosNotifier = ref.watch(contenderLogosProvider.notifier);
-  return ContenderLogoProvider(
-    contenderLogoRepository: contenderLogoRepository,
-    contenderLogosNotifier: contenderLogosNotifier,
-  );
-});
+      final contenderLogoRepository = ref.watch(
+        contenderLogoRepositoryProvider,
+      );
+      final contenderLogosNotifier = ref.watch(contenderLogosProvider.notifier);
+      return ContenderLogoProvider(
+        contenderLogoRepository: contenderLogoRepository,
+        contenderLogosNotifier: contenderLogosNotifier,
+      );
+    });

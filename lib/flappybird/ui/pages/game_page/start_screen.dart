@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/flappybird/providers/game_state_provider.dart';
+import 'package:titan/flappybird/providers/game_state_provider.dart';
 
 class StartScreen extends HookConsumerWidget {
   const StartScreen({super.key});
@@ -15,10 +15,7 @@ class StartScreen extends HookConsumerWidget {
             child: Text(
               'T A P   T O   P L A Y',
               style: GoogleFonts.silkscreen(
-                textStyle: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
+                textStyle: const TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
           )

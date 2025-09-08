@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
-import 'package:myecl/vote/providers/section_id_provider.dart';
-import 'package:myecl/vote/providers/sections_contender_provider.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
-import 'package:myecl/vote/router.dart';
-import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/pages/admin_page/section_chip.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/tools/ui/layouts/item_chip.dart';
+import 'package:titan/vote/providers/section_id_provider.dart';
+import 'package:titan/vote/providers/sections_contender_provider.dart';
+import 'package:titan/vote/providers/sections_provider.dart';
+import 'package:titan/vote/providers/status_provider.dart';
+import 'package:titan/vote/repositories/status_repository.dart';
+import 'package:titan/vote/router.dart';
+import 'package:titan/vote/tools/constants.dart';
+import 'package:titan/vote/ui/pages/admin_page/section_chip.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SectionBar extends HookConsumerWidget {
@@ -24,8 +24,9 @@ class SectionBar extends HookConsumerWidget {
     final section = ref.watch(sectionProvider);
     final sectionIdNotifier = ref.watch(sectionIdProvider.notifier);
     final sectionContender = ref.watch(sectionContenderProvider);
-    final sectionContenderListNotifier =
-        ref.watch(sectionContenderProvider.notifier);
+    final sectionContenderListNotifier = ref.watch(
+      sectionContenderProvider.notifier,
+    );
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final asyncStatus = ref.watch(statusProvider);
     Status status = Status.open;
@@ -44,10 +45,7 @@ class SectionBar extends HookConsumerWidget {
                   VoteRouter.root + VoteRouter.admin + VoteRouter.addSection,
                 );
               },
-              child: const HeroIcon(
-                HeroIcons.plus,
-                color: Colors.black,
-              ),
+              child: const HeroIcon(HeroIcons.plus, color: Colors.black),
             )
           : null,
       itemBuilder: (context, key, i) => SectionChip(

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/seed-library/class/species.dart';
-import 'package:myecl/seed-library/class/species_type.dart';
-import 'package:myecl/seed-library/providers/difficulty_filter_provider.dart';
-import 'package:myecl/seed-library/providers/species_list_provider.dart';
-import 'package:myecl/seed-library/providers/species_provider.dart';
-import 'package:myecl/seed-library/providers/species_type_provider.dart';
-import 'package:myecl/seed-library/providers/string_provider.dart';
-import 'package:myecl/seed-library/router.dart';
-import 'package:myecl/seed-library/tools/constants.dart';
-import 'package:myecl/seed-library/tools/functions.dart';
-import 'package:myecl/seed-library/ui/pages/species_page/species_card.dart';
-import 'package:myecl/seed-library/ui/seed_library.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/seed-library/class/species.dart';
+import 'package:titan/seed-library/class/species_type.dart';
+import 'package:titan/seed-library/providers/difficulty_filter_provider.dart';
+import 'package:titan/seed-library/providers/species_list_provider.dart';
+import 'package:titan/seed-library/providers/species_provider.dart';
+import 'package:titan/seed-library/providers/species_type_provider.dart';
+import 'package:titan/seed-library/providers/string_provider.dart';
+import 'package:titan/seed-library/router.dart';
+import 'package:titan/seed-library/tools/constants.dart';
+import 'package:titan/seed-library/tools/functions.dart';
+import 'package:titan/seed-library/ui/pages/species_page/species_card.dart';
+import 'package:titan/seed-library/ui/seed_library.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SpeciesPage extends HookConsumerWidget {
@@ -103,8 +103,9 @@ class SpeciesPage extends HookConsumerWidget {
                             (species) => SpeciesCard(
                               species: species,
                               onEdit: () {
-                                difficultyNotifier
-                                    .setFilter(species.difficulty);
+                                difficultyNotifier.setFilter(
+                                  species.difficulty,
+                                );
                                 speciesTypeNotifier.setType(species.type);
                                 speciesNotifier.setSpecies(species);
                                 startMonthNotifier.setString(

@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/seed-library/class/plant_creation.dart';
-import 'package:myecl/seed-library/class/plant_simple.dart';
-import 'package:myecl/seed-library/class/species.dart';
-import 'package:myecl/seed-library/providers/is_seed_library_admin_provider.dart';
-import 'package:myecl/seed-library/providers/plant_complete_provider.dart';
-import 'package:myecl/seed-library/providers/plant_simple_provider.dart';
-import 'package:myecl/seed-library/providers/plants_list_provider.dart';
-import 'package:myecl/seed-library/providers/propagation_method_provider.dart';
-import 'package:myecl/seed-library/providers/species_list_provider.dart';
-import 'package:myecl/seed-library/providers/species_provider.dart';
-import 'package:myecl/seed-library/tools/constants.dart';
-import 'package:myecl/seed-library/tools/functions.dart';
-import 'package:myecl/seed-library/ui/components/radio_chip.dart';
-import 'package:myecl/seed-library/ui/pages/plant_deposit_page/small_plant_card.dart';
-import 'package:myecl/seed-library/ui/pages/plant_deposit_page/small_species_card.dart';
-import 'package:myecl/seed-library/ui/seed_library.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:titan/seed-library/class/plant_creation.dart';
+import 'package:titan/seed-library/class/plant_simple.dart';
+import 'package:titan/seed-library/class/species.dart';
+import 'package:titan/seed-library/providers/is_seed_library_admin_provider.dart';
+import 'package:titan/seed-library/providers/plant_complete_provider.dart';
+import 'package:titan/seed-library/providers/plant_simple_provider.dart';
+import 'package:titan/seed-library/providers/plants_list_provider.dart';
+import 'package:titan/seed-library/providers/propagation_method_provider.dart';
+import 'package:titan/seed-library/providers/species_list_provider.dart';
+import 'package:titan/seed-library/providers/species_provider.dart';
+import 'package:titan/seed-library/tools/constants.dart';
+import 'package:titan/seed-library/tools/functions.dart';
+import 'package:titan/seed-library/ui/components/radio_chip.dart';
+import 'package:titan/seed-library/ui/pages/plant_deposit_page/small_plant_card.dart';
+import 'package:titan/seed-library/ui/pages/plant_deposit_page/small_species_card.dart';
+import 'package:titan/seed-library/ui/seed_library.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 
 class PlantDepositPage extends HookConsumerWidget {
   final scrollKey = GlobalKey();
@@ -43,8 +43,9 @@ class PlantDepositPage extends HookConsumerWidget {
     final selectedSpecies = ref.watch(speciesProvider);
     final selectedSpeciesNotifier = ref.watch(speciesProvider.notifier);
     final propagationMethod = ref.watch(propagationMethodProvider);
-    final propagationMethodNotifier =
-        ref.watch(propagationMethodProvider.notifier);
+    final propagationMethodNotifier = ref.watch(
+      propagationMethodProvider.notifier,
+    );
 
     final seedQuantity = useTextEditingController();
     final notes = useTextEditingController();
@@ -69,10 +70,7 @@ class PlantDepositPage extends HookConsumerWidget {
             ? const Center(
                 child: Text(
                   SeedLibraryTextConstants.depositNotAvailable,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               )
             : Form(
@@ -87,9 +85,7 @@ class PlantDepositPage extends HookConsumerWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     const Text(
                       SeedLibraryTextConstants.ancestor,
                       style: TextStyle(
@@ -107,11 +103,13 @@ class PlantDepositPage extends HookConsumerWidget {
                               species: species,
                               onClicked: () async {
                                 selectedAncestor.id == e.id
-                                    ? selectedAncestorNotifier
-                                        .setPlant(PlantSimple.empty())
+                                    ? selectedAncestorNotifier.setPlant(
+                                        PlantSimple.empty(),
+                                      )
                                     : selectedAncestorNotifier.setPlant(e);
-                                final plant =
-                                    await plantNotifier.loadPlant(e.id);
+                                final plant = await plantNotifier.loadPlant(
+                                  e.id,
+                                );
                                 plant.whenData(
                                   (value) =>
                                       notes.text = value.currentNote ?? '',
@@ -140,8 +138,9 @@ class PlantDepositPage extends HookConsumerWidget {
                                 species: e,
                                 onClicked: () {
                                   selectedSpecies.id == e.id
-                                      ? selectedSpeciesNotifier
-                                          .setSpecies(Species.empty())
+                                      ? selectedSpeciesNotifier.setSpecies(
+                                          Species.empty(),
+                                        )
                                       : selectedSpeciesNotifier.setSpecies(e);
                                 },
                                 selected: selectedSpecies.id == e.id,
@@ -223,31 +222,33 @@ class PlantDepositPage extends HookConsumerWidget {
                                 return;
                               }
                               await tokenExpireWrapper(ref, () async {
-                                final value =
-                                    await plantListNotifier.createPlant(
-                                  PlantCreation(
-                                    ancestorId: selectedAncestor.id == ''
-                                        ? null
-                                        : selectedAncestor.id,
-                                    speciesId: selectedAncestor.id == ''
-                                        ? selectedSpecies.id
-                                        : selectedAncestor.speciesId,
-                                    propagationMethod: propagationMethod,
-                                    nbSeedsEnvelope: propagationMethod ==
-                                            PropagationMethod.graine
-                                        ? int.parse(seedQuantity.text)
-                                        : 1,
-                                    previousNote: notes.text,
-                                  ),
-                                );
+                                final value = await plantListNotifier
+                                    .createPlant(
+                                      PlantCreation(
+                                        ancestorId: selectedAncestor.id == ''
+                                            ? null
+                                            : selectedAncestor.id,
+                                        speciesId: selectedAncestor.id == ''
+                                            ? selectedSpecies.id
+                                            : selectedAncestor.speciesId,
+                                        propagationMethod: propagationMethod,
+                                        nbSeedsEnvelope:
+                                            propagationMethod ==
+                                                PropagationMethod.graine
+                                            ? int.parse(seedQuantity.text)
+                                            : 1,
+                                        previousNote: notes.text,
+                                      ),
+                                    );
                                 if (value) {
                                   displayToastWithContext(
                                     TypeMsg.msg,
                                     SeedLibraryTextConstants.addedPlant,
                                   );
                                   showDialog(
-                                    context:
-                                        context.mounted ? context : context,
+                                    context: context.mounted
+                                        ? context
+                                        : context,
                                     builder: (context) {
                                       return AlertDialog(
                                         title: Text(
@@ -274,10 +275,12 @@ class PlantDepositPage extends HookConsumerWidget {
                                     SeedLibraryTextConstants.addingError,
                                   );
                                 }
-                                selectedSpeciesNotifier
-                                    .setSpecies(Species.empty());
-                                selectedAncestorNotifier
-                                    .setPlant(PlantSimple.empty());
+                                selectedSpeciesNotifier.setSpecies(
+                                  Species.empty(),
+                                );
+                                selectedAncestorNotifier.setPlant(
+                                  PlantSimple.empty(),
+                                );
                                 seedQuantity.clear();
                                 notes.clear();
                               });

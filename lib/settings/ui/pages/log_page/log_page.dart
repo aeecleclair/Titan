@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/settings/providers/logs_provider.dart';
-import 'package:myecl/settings/providers/logs_tab_provider.dart';
-import 'package:myecl/settings/ui/pages/log_page/log_tab.dart';
-import 'package:myecl/settings/ui/pages/log_page/notification_tab.dart';
-import 'package:myecl/settings/ui/settings.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/settings/providers/logs_provider.dart';
+import 'package:titan/settings/providers/logs_tab_provider.dart';
+import 'package:titan/settings/ui/pages/log_page/log_tab.dart';
+import 'package:titan/settings/ui/pages/log_page/notification_tab.dart';
+import 'package:titan/settings/ui/settings.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/tools/ui/layouts/item_chip.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 
 class LogPage extends HookConsumerWidget {
   const LogPage({super.key});
@@ -16,8 +16,9 @@ class LogPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final logsNotifier = ref.watch(logsProvider.notifier);
-    final notificationLogsNotifier =
-        ref.watch(notificationLogsProvider.notifier);
+    final notificationLogsNotifier = ref.watch(
+      notificationLogsProvider.notifier,
+    );
     final logTab = ref.watch(logTabProvider);
     final logTabNotifier = ref.read(logTabProvider.notifier);
 
@@ -40,9 +41,7 @@ class LogPage extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Column(
             children: [
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               HorizontalListView.builder(
                 height: 40,
                 items: LogTabs.values,
@@ -62,9 +61,7 @@ class LogPage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               getTab(logTab),
             ],
           ),

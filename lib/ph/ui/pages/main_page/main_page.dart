@@ -1,15 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/ph/providers/is_ph_admin_provider.dart';
-import 'package:myecl/ph/providers/ph_list_provider.dart';
-import 'package:myecl/ph/providers/ph_pdf_provider.dart';
-import 'package:myecl/ph/router.dart';
-import 'package:myecl/ph/tools/constants.dart';
-import 'package:myecl/ph/ui/button.dart';
-import 'package:myecl/ph/ui/pages/ph.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/admin_button.dart';
+import 'package:titan/ph/providers/is_ph_admin_provider.dart';
+import 'package:titan/ph/providers/ph_list_provider.dart';
+import 'package:titan/ph/providers/ph_pdf_provider.dart';
+import 'package:titan/ph/router.dart';
+import 'package:titan/ph/tools/constants.dart';
+import 'package:titan/ph/ui/button.dart';
+import 'package:titan/ph/ui/pages/ph.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/widgets/admin_button.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -40,9 +40,7 @@ class PhMainPage extends HookConsumerWidget {
               onTap: () {
                 QR.to(PhRouter.root + PhRouter.past_ph_selection);
               },
-              child: const MyButton(
-                text: PhTextConstants.seePreviousJournal,
-              ),
+              child: const MyButton(text: PhTextConstants.seePreviousJournal),
             ),
           ),
           const SizedBox(height: 10),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/ph/class/ph.dart';
-import 'package:myecl/ph/tools/constants.dart';
-import 'package:myecl/ph/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:titan/ph/class/ph.dart';
+import 'package:titan/ph/tools/constants.dart';
+import 'package:titan/ph/tools/functions.dart';
+import 'package:titan/tools/ui/layouts/card_button.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
 
 class AdminPhCard extends StatelessWidget {
   final VoidCallback onEdit, onDelete;
@@ -53,10 +53,7 @@ class AdminPhCard extends StatelessWidget {
             GestureDetector(
               onTap: onEdit,
               child: CardButton(
-                colors: [
-                  Colors.grey.shade100,
-                  Colors.grey.shade400,
-                ],
+                colors: [Colors.grey.shade100, Colors.grey.shade400],
                 shadowColor: Colors.grey.shade300.withValues(alpha: 0.2),
                 child: const HeroIcon(HeroIcons.pencil, color: Colors.black),
               ),
@@ -65,10 +62,7 @@ class AdminPhCard extends StatelessWidget {
             GestureDetector(
               onTap: onDelete,
               child: CardButton(
-                colors: const [
-                  Color(0xFF9E131F),
-                  Color(0xFF590512),
-                ],
+                colors: const [Color(0xFF9E131F), Color(0xFF590512)],
                 shadowColor: const Color(0xFF590512).withValues(alpha: 0.2),
                 child: const HeroIcon(HeroIcons.trash, color: Colors.white),
               ),

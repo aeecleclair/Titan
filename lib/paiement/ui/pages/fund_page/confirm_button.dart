@@ -4,13 +4,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/class/init_info.dart';
-import 'package:myecl/paiement/providers/fund_amount_provider.dart';
-import 'package:myecl/paiement/providers/funding_url_provider.dart';
-import 'package:myecl/paiement/providers/my_wallet_provider.dart';
-import 'package:myecl/paiement/providers/tos_provider.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/paiement/class/init_info.dart';
+import 'package:titan/paiement/providers/fund_amount_provider.dart';
+import 'package:titan/paiement/providers/funding_url_provider.dart';
+import 'package:titan/paiement/providers/my_history_provider.dart';
+import 'package:titan/paiement/providers/my_wallet_provider.dart';
+import 'package:titan/paiement/providers/tos_provider.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,6 +21,9 @@ class ConfirmFundButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final fundAmount = ref.watch(fundAmountProvider);
+    final myWalletNotifier = ref.watch(myWalletProvider.notifier);
+    final myHistoryNotifier = ref.watch(myHistoryProvider.notifier);
+    final fundAmountNotifier = ref.watch(fundAmountProvider.notifier);
     final fundingUrlNotifier = ref.watch(fundingUrlProvider.notifier);
     final myWallet = ref.watch(myWalletProvider);
     final tos = ref.watch(tosProvider);
@@ -32,12 +36,15 @@ class ConfirmFundButton extends ConsumerWidget {
       data: (wallet) => wallet.balance / 100,
     );
 
-    final redirectUrl = "titan.alpha://payment";
+    final redirectUrl = kIsWeb
+        ? "${getTitanURL()}/static.html" // ?
+        : "${getTitanURLScheme()}://payment";
     final amountToAdd = double.tryParse(fundAmount.replaceAll(",", ".")) ?? 0;
 
-    final enabled = fundAmount.isNotEmpty &&
-        double.parse(fundAmount.replaceAll(',', '.')) >= 1 &&
-        amountToAdd + currentAmount <= maxBalanceAmount;
+    final minValidFundAmount =
+        fundAmount.isNotEmpty &&
+        double.parse(fundAmount.replaceAll(',', '.')) >= 1;
+    final maxValidFundAmount = amountToAdd + currentAmount <= maxBalanceAmount;
 
     void displayToastWithContext(TypeMsg type, String message) {
       displayToast(context, type, message);
@@ -53,11 +60,13 @@ class ConfirmFundButton extends ConsumerWidget {
     }
 
     void helloAssoCallback(String fundingUrl) async {
-      html.WindowBase? popupWin = html.window.open(
-        fundingUrl,
-        "HelloAsso",
-        "width=800, height=900, scrollbars=yes",
-      ) as html.WindowBase?;
+      html.WindowBase? popupWin =
+          html.window.open(
+                fundingUrl,
+                "HelloAsso",
+                "width=800, height=900, scrollbars=yes",
+              )
+              as html.WindowBase?;
 
       if (popupWin == null) {
         displayToastWithContext(TypeMsg.error, "Veuillez autoriser les popups");
@@ -69,10 +78,7 @@ class ConfirmFundButton extends ConsumerWidget {
         if (popupWin.closed == true) {
           completer.complete();
         } else {
-          Future.delayed(
-            const Duration(milliseconds: 100),
-            checkWindowClosed,
-          );
+          Future.delayed(const Duration(milliseconds: 100), checkWindowClosed);
         }
       }
 
@@ -82,13 +88,15 @@ class ConfirmFundButton extends ConsumerWidget {
       void login(String data) async {
         final receivedUri = Uri.parse(data);
         final code = receivedUri.queryParameters["code"];
-        popupWin.close();
         if (code == "succeeded") {
           displayToastWithContext(TypeMsg.msg, "Paiement effectué avec succès");
-          ref.watch(myWalletProvider.notifier).getMyWallet();
+          myWalletNotifier.getMyWallet();
+          myHistoryNotifier.getHistory();
         } else {
           displayToastWithContext(TypeMsg.error, "Paiement annulé");
         }
+        popupWin.close();
+        Navigator.pop(context, code);
       }
 
       html.window.onMessage.listen((event) {
@@ -100,20 +108,32 @@ class ConfirmFundButton extends ConsumerWidget {
 
     return WaitingButton(
       onTap: () async {
-        if (!enabled) {
-          displayToastWithContext(TypeMsg.error, "Veuillez entrer un montant");
+        if (!minValidFundAmount) {
+          displayToastWithContext(
+            TypeMsg.error,
+            "Veuillez entrer un montant supérieur à 1€",
+          );
+          return;
+        }
+        if (!maxValidFundAmount) {
+          displayToastWithContext(
+            TypeMsg.error,
+            "Le montant maximum de votre portefeuille est de ${maxBalanceAmount.toStringAsFixed(2)}€",
+          );
           return;
         }
 
         final value = await fundingUrlNotifier.getFundingUrl(
           InitInfo(
-            amount:
-                (double.parse(fundAmount.replaceAll(',', '.')) * 100).toInt(),
+            amount: (double.parse(fundAmount.replaceAll(',', '.')) * 100)
+                .round(),
             redirectUrl: redirectUrl,
           ),
         );
         value.when(
           data: (fundingUrl) {
+            fundAmountNotifier.setFundAmount("");
+            Navigator.pop(context);
             if (kIsWeb) {
               helloAssoCallback(fundingUrl.url);
               return;
@@ -125,9 +145,6 @@ class ConfirmFundButton extends ConsumerWidget {
             displayToastWithContext(TypeMsg.error, error.toString());
           },
         );
-        if (context.mounted) {
-          Navigator.pop(context);
-        }
       },
       waitingColor: const Color(0xff2e2f5e),
       builder: (Widget child) => Container(
@@ -135,7 +152,7 @@ class ConfirmFundButton extends ConsumerWidget {
         width: double.infinity,
         margin: const EdgeInsets.symmetric(horizontal: 30),
         decoration: BoxDecoration(
-          color: enabled
+          color: (minValidFundAmount && maxValidFundAmount)
               ? Colors.white
               : Colors.grey.shade200.withValues(alpha: 0.8),
           boxShadow: [
@@ -166,7 +183,7 @@ class ConfirmFundButton extends ConsumerWidget {
           Text(
             "Payer avec HelloAsso",
             style: TextStyle(
-              color: enabled
+              color: (minValidFundAmount && maxValidFundAmount)
                   ? const Color(0xff2e2f5e)
                   : const Color(0xff2e2f5e).withValues(alpha: 0.5),
               fontSize: 20,

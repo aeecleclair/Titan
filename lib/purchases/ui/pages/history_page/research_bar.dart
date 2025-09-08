@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/providers/research_filter_provider.dart';
-import 'package:myecl/purchases/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:titan/phonebook/providers/research_filter_provider.dart';
+import 'package:titan/purchases/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
 
 class ResearchBar extends HookConsumerWidget {
   const ResearchBar({super.key});
@@ -31,9 +31,7 @@ class ResearchBar extends HookConsumerWidget {
           ),
           label: Text(
             PurchasesTextConstants.research,
-            style: TextStyle(
-              color: PurchasesColorConstants.textDark,
-            ),
+            style: TextStyle(color: PurchasesColorConstants.textDark),
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: ColorConstants.gradient1),

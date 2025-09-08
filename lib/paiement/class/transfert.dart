@@ -1,20 +1,16 @@
-import 'package:myecl/paiement/tools/functions.dart';
+import 'package:titan/paiement/tools/functions.dart';
 
 class Transfer {
   final int amount;
   final TransferType type;
   final String? creditedUserId;
 
-  Transfer({
-    required this.amount,
-    required this.type,
-    this.creditedUserId,
-  });
+  Transfer({required this.amount, required this.type, this.creditedUserId});
 
   Transfer.fromJson(Map<String, dynamic> json)
-      : amount = json['amount'],
-        type = transferTypeFromString(json['transfer_type']),
-        creditedUserId = json['credited_user_id'];
+    : amount = json['amount'],
+      type = transferTypeFromString(json['transfer_type']),
+      creditedUserId = json['credited_user_id'];
 
   Map<String, dynamic> toJson() {
     return {
@@ -29,11 +25,7 @@ class Transfer {
     return 'Transfer{amount: $amount, type: $type, creditedUserId: $creditedUserId}';
   }
 
-  Transfer copyWith({
-    int? amount,
-    TransferType? type,
-    String? creditedUserId,
-  }) {
+  Transfer copyWith({int? amount, TransferType? type, String? creditedUserId}) {
     return Transfer(
       amount: amount ?? this.amount,
       type: type ?? this.type,
@@ -42,5 +34,5 @@ class Transfer {
   }
 
   Transfer.empty()
-      : this(amount: 0, type: TransferType.helloAsso, creditedUserId: '');
+    : this(amount: 0, type: TransferType.helloAsso, creditedUserId: '');
 }

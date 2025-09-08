@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/user_store.dart';
-import 'package:myecl/paiement/providers/is_payment_admin.dart';
-import 'package:myecl/paiement/providers/my_stores_provider.dart';
-import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_admin_card.dart';
-import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_divider.dart';
-import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_seller_card.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:titan/paiement/class/user_store.dart';
+import 'package:titan/paiement/providers/is_payment_admin.dart';
+import 'package:titan/paiement/providers/my_stores_provider.dart';
+import 'package:titan/paiement/ui/pages/main_page/seller_card/store_admin_card.dart';
+import 'package:titan/paiement/ui/pages/main_page/seller_card/store_divider.dart';
+import 'package:titan/paiement/ui/pages/main_page/seller_card/store_seller_card.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 
 class StoreList extends ConsumerWidget {
   final double maxHeight;
@@ -21,9 +21,7 @@ class StoreList extends ConsumerWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: 25,
-            ),
+            const SizedBox(height: 25),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               alignment: Alignment.centerLeft,
@@ -36,9 +34,7 @@ class StoreList extends ConsumerWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             AsyncChild(
               value: stores,
               builder: (context, stores) {
@@ -53,9 +49,7 @@ class StoreList extends ConsumerWidget {
                 return Column(
                   children: [
                     if (isAdmin) ...[
-                      const StoreDivider(
-                        name: "Administrateur",
-                      ),
+                      const StoreDivider(name: "Administrateur"),
                       const StoreAdminCard(),
                     ],
                     ...sortedByMembership.map((membership, stores) {
@@ -65,13 +59,9 @@ class StoreList extends ConsumerWidget {
                         membership,
                         Column(
                           children: [
-                            StoreDivider(
-                              name: membership,
-                            ),
+                            StoreDivider(name: membership),
                             for (var store in alphabeticallyOrderedStores)
-                              StoreSellerCard(
-                                store: store,
-                              ),
+                              StoreSellerCard(store: store),
                           ],
                         ),
                       );
@@ -80,9 +70,7 @@ class StoreList extends ConsumerWidget {
                 );
               },
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
           ],
         ),
       ),

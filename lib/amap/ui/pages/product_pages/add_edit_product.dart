@@ -1,20 +1,20 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/providers/category_list_provider.dart';
-import 'package:myecl/amap/providers/product_provider.dart';
-import 'package:myecl/amap/providers/product_list_provider.dart';
-import 'package:myecl/amap/providers/selected_category_provider.dart';
-import 'package:myecl/amap/providers/selected_list_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/providers/category_list_provider.dart';
+import 'package:titan/amap/providers/product_provider.dart';
+import 'package:titan/amap/providers/product_list_provider.dart';
+import 'package:titan/amap/providers/selected_category_provider.dart';
+import 'package:titan/amap/providers/selected_list_provider.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/amap/ui/amap.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditProduct extends HookConsumerWidget {
@@ -32,11 +32,13 @@ class AddEditProduct extends HookConsumerWidget {
     final priceController = useTextEditingController(
       text: isEdit ? product.price.toStringAsFixed(2).replaceAll('.', ',') : "",
     );
-    final beginState =
-        isEdit ? product.category : AMAPTextConstants.createCategory;
+    final beginState = isEdit
+        ? product.category
+        : AMAPTextConstants.createCategory;
     final categoryController = ref.watch(selectedCategoryProvider(beginState));
-    final categoryNotifier =
-        ref.watch(selectedCategoryProvider(beginState).notifier);
+    final categoryNotifier = ref.watch(
+      selectedCategoryProvider(beginState).notifier,
+    );
     final newCategory = useTextEditingController(text: "");
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -98,8 +100,9 @@ class AddEditProduct extends HookConsumerWidget {
                             ),
                           ),
                           errorBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: AMAPColorConstants.red),
+                            borderSide: BorderSide(
+                              color: AMAPColorConstants.red,
+                            ),
                           ),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -107,15 +110,14 @@ class AddEditProduct extends HookConsumerWidget {
                             ),
                           ),
                         ),
-                        items: [
-                          AMAPTextConstants.createCategory,
-                          ...categories,
-                        ].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+                        items: [AMAPTextConstants.createCategory, ...categories]
+                            .map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            })
+                            .toList(),
                         onChanged: (value) {
                           categoryNotifier.setText(
                             value ?? AMAPTextConstants.createCategory,
@@ -131,14 +133,13 @@ class AddEditProduct extends HookConsumerWidget {
                         child: TextEntry(
                           label: AMAPTextConstants.createCategory,
                           noValueError: AMAPTextConstants.pickChooseCategory,
-                          enabled: categoryController ==
+                          enabled:
+                              categoryController ==
                               AMAPTextConstants.createCategory,
                           onChanged: (value) {
                             newCategory.text = value;
                             newCategory.selection = TextSelection.fromPosition(
-                              TextPosition(
-                                offset: newCategory.text.length,
-                              ),
+                              TextPosition(offset: newCategory.text.length),
                             );
                           },
                           color: AMAPColorConstants.greenGradient2,
@@ -159,7 +160,8 @@ class AddEditProduct extends HookConsumerWidget {
                       ),
                       onTap: () async {
                         if (formKey.currentState!.validate()) {
-                          String cate = categoryController ==
+                          String cate =
+                              categoryController ==
                                   AMAPTextConstants.createCategory
                               ? newCategory.text
                               : categoryController;
@@ -174,8 +176,9 @@ class AddEditProduct extends HookConsumerWidget {
                           );
                           await tokenExpireWrapper(ref, () async {
                             final value = isEdit
-                                ? await productsNotifier
-                                    .updateProduct(newProduct)
+                                ? await productsNotifier.updateProduct(
+                                    newProduct,
+                                  )
                                 : await productsNotifier.addProduct(newProduct);
                             if (value) {
                               if (isEdit) {

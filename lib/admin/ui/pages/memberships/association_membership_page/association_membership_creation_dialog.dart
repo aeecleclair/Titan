@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/admin/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
 
 class MembershipCreationDialogBox extends StatelessWidget {
   static const Color titleColor = ColorConstants.gradient1;
@@ -37,8 +37,9 @@ class MembershipCreationDialogBox extends StatelessWidget {
     groupIdController.text = groups.first.id;
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.circular(MembershipCreationDialogBox._padding),
+        borderRadius: BorderRadius.circular(
+          MembershipCreationDialogBox._padding,
+        ),
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -52,8 +53,9 @@ class MembershipCreationDialogBox extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: MembershipCreationDialogBox.background,
-              borderRadius:
-                  BorderRadius.circular(MembershipCreationDialogBox._padding),
+              borderRadius: BorderRadius.circular(
+                MembershipCreationDialogBox._padding,
+              ),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.shade700,
@@ -73,18 +75,14 @@ class MembershipCreationDialogBox extends StatelessWidget {
                     color: titleColor,
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+                const SizedBox(height: 15),
                 TextField(
                   controller: nameController,
                   decoration: const InputDecoration(
                     hintText: AdminTextConstants.associationMembershipName,
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 DropdownButtonFormField<String>(
                   value: groupIdController.text,
                   onChanged: (String? newValue) {
@@ -102,9 +100,7 @@ class MembershipCreationDialogBox extends StatelessWidget {
                     hintText: AdminTextConstants.group,
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Row(

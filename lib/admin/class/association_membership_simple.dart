@@ -26,16 +26,15 @@ class AssociationMembership {
     String? id,
     String? name,
     String? managerGroupId,
-  }) =>
-      AssociationMembership(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        managerGroupId: managerGroupId ?? this.managerGroupId,
-      );
+  }) => AssociationMembership(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    managerGroupId: managerGroupId ?? this.managerGroupId,
+  );
 
   AssociationMembership.empty() {
     id = '';
-    name = 'Nom';
+    name = "Pas d'adhésion";
     managerGroupId = '';
   }
 

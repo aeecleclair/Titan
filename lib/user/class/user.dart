@@ -1,9 +1,9 @@
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/applicant.dart';
-import 'package:myecl/user/class/simple_users.dart';
-import 'package:myecl/user/class/floors.dart';
+import 'package:titan/admin/class/account_type.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/user/class/applicant.dart';
+import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/user/class/floors.dart';
 
 class User {
   User({
@@ -46,13 +46,16 @@ class User {
         ? processDateFromAPIWithoutHour(json['birthday'])
         : null;
     promo = json['promo'];
-    floor = json['floor'] ??
+    floor =
+        json['floor'] ??
         capitalize(Floors.values.first.toString().split('.').last);
-    phone =
-        (json['phone'] != "" && json["phone"] != null) ? json['phone'] : null;
+    phone = (json['phone'] != "" && json["phone"] != null)
+        ? json['phone']
+        : null;
     createdOn = processDateFromAPI(json['created_on']);
-    groups =
-        List.from(json['groups']).map((e) => SimpleGroup.fromJson(e)).toList();
+    groups = List.from(
+      json['groups'],
+    ).map((e) => SimpleGroup.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -63,8 +66,9 @@ class User {
     data['id'] = id;
     data['email'] = email;
     data['account_type'] = accountType.type;
-    data['birthday'] =
-        birthday != null ? processDateToAPIWithoutHour(birthday!) : null;
+    data['birthday'] = birthday != null
+        ? processDateToAPIWithoutHour(birthday!)
+        : null;
     data['promo'] = promo;
     data['floor'] = floor;
     data['phone'] = phone;

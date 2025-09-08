@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/loan/tools/constants.dart';
+import 'package:titan/loan/tools/constants.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class DelayDialog extends StatefulWidget {
@@ -15,9 +15,7 @@ class IntegerExampleState extends State<DelayDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       elevation: 0,
       backgroundColor: Colors.transparent,
       child: contentBox(context),

@@ -2,9 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/providers/my_structures_provider.dart';
-import 'package:myecl/paiement/providers/selected_structure_provider.dart';
-import 'package:myecl/paiement/router.dart';
+import 'package:titan/paiement/providers/my_structures_provider.dart';
+import 'package:titan/paiement/providers/selected_structure_provider.dart';
+import 'package:titan/paiement/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class StoreAdminCard extends ConsumerWidget {
@@ -13,15 +13,15 @@ class StoreAdminCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final myStructures = ref.watch(myStructuresProvider);
-    final selectedStructureNotifier =
-        ref.read(selectedStructureProvider.notifier);
+    final selectedStructureNotifier = ref.read(
+      selectedStructureProvider.notifier,
+    );
     return Column(
       children: myStructures.map((structure) {
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           child: Container(
             height: 70,
-            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
             padding: const EdgeInsets.symmetric(horizontal: 20),
             width: MediaQuery.of(context).size.width,
             child: Row(
@@ -30,9 +30,7 @@ class StoreAdminCard extends ConsumerWidget {
                   radius: 27,
                   backgroundColor: Color.fromARGB(255, 6, 75, 75),
                 ),
-                SizedBox(
-                  width: 15,
-                ),
+                SizedBox(width: 15),
                 Expanded(
                   child: AutoSizeText(
                     "Gestion des assocations ${structure.name}",
@@ -43,9 +41,7 @@ class StoreAdminCard extends ConsumerWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
+                SizedBox(width: 10),
                 HeroIcon(
                   HeroIcons.arrowRight,
                   color: Color.fromARGB(255, 0, 29, 29),

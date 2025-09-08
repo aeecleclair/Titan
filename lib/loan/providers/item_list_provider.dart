@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/providers/loaner_id_provider.dart';
-import 'package:myecl/loan/repositories/item_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/loan/class/item.dart';
+import 'package:titan/loan/providers/loaner_id_provider.dart';
+import 'package:titan/loan/repositories/item_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class ItemListNotifier extends ListNotifier<Item> {
   final ItemRepository itemrepository;
   ItemListNotifier({required this.itemrepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Item>>> loadItemList(String id) async {
     return await loadList(() async => itemrepository.getItemList(id));
@@ -52,14 +52,15 @@ class ItemListNotifier extends ListNotifier<Item> {
 
 final itemListProvider =
     StateNotifierProvider<ItemListNotifier, AsyncValue<List<Item>>>((ref) {
-  final itemRepository = ref.watch(itemRepositoryProvider);
-  ItemListNotifier itemListNotifier =
-      ItemListNotifier(itemrepository: itemRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    final loanerId = ref.watch(loanerIdProvider);
-    if (loanerId != "") {
-      await itemListNotifier.loadItemList(loanerId);
-    }
-  });
-  return itemListNotifier;
-});
+      final itemRepository = ref.watch(itemRepositoryProvider);
+      ItemListNotifier itemListNotifier = ItemListNotifier(
+        itemrepository: itemRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        final loanerId = ref.watch(loanerIdProvider);
+        if (loanerId != "") {
+          await itemListNotifier.loadItemList(loanerId);
+        }
+      });
+      return itemListNotifier;
+    });

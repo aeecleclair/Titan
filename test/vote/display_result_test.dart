@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/vote/providers/display_results.dart';
+import 'package:titan/vote/providers/display_results.dart';
 
 void main() {
   group('DisplayResult', () {

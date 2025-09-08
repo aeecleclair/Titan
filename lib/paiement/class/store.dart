@@ -1,4 +1,4 @@
-import 'package:myecl/paiement/class/structure.dart';
+import 'package:titan/paiement/class/structure.dart';
 
 class Store {
   final String id;
@@ -51,10 +51,5 @@ class Store {
   }
 
   Store.empty()
-      : this(
-          id: '',
-          name: '',
-          walletId: '',
-          structure: Structure.empty(),
-        );
+    : this(id: '', name: '', walletId: '', structure: Structure.empty());
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
 
 class DeleteButton extends StatelessWidget {
   final void Function() onDelete;
@@ -23,14 +23,8 @@ class DeleteButton extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: !deactivated
-                ? [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
-                  ]
-                : [
-                    ColorConstants.deactivated1,
-                    ColorConstants.deactivated2,
-                  ],
+                ? [ColorConstants.gradient1, ColorConstants.gradient2]
+                : [ColorConstants.deactivated1, ColorConstants.deactivated2],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

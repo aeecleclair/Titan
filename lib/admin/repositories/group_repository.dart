@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/group.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/admin/class/group.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/tools/repository/repository.dart';
+import 'package:titan/user/class/simple_users.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:myecl/tools/exception.dart';
+import 'package:titan/tools/exception.dart';
 
 class GroupRepository extends Repository {
   @override
@@ -36,10 +36,10 @@ class GroupRepository extends Repository {
   }
 
   Future<bool> addMember(Group group, SimpleUser user) async {
-    await create(
-      {"user_id": user.id, "group_id": group.id},
-      suffix: "membership",
-    );
+    await create({
+      "user_id": user.id,
+      "group_id": group.id,
+    }, suffix: "membership");
     return true;
   }
 

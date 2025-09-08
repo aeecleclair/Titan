@@ -4,32 +4,32 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/widgets/image_picker_on_tap.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
-import 'package:myecl/user/class/simple_users.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
-import 'package:myecl/vote/class/members.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/display_results.dart';
-import 'package:myecl/vote/providers/contender_logo_provider.dart';
-import 'package:myecl/vote/providers/contender_logos_provider.dart';
-import 'package:myecl/vote/providers/contender_members.dart';
-import 'package:myecl/vote/providers/contender_list_provider.dart';
-import 'package:myecl/vote/providers/contender_provider.dart';
-import 'package:myecl/vote/providers/sections_contender_provider.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/components/member_card.dart';
-import 'package:myecl/vote/ui/pages/contender_pages/search_result.dart';
-import 'package:myecl/vote/ui/pages/admin_page/section_chip.dart';
-import 'package:myecl/vote/ui/vote.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/layouts/card_button.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/widgets/image_picker_on_tap.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
+import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/user/providers/user_list_provider.dart';
+import 'package:titan/vote/class/members.dart';
+import 'package:titan/vote/class/contender.dart';
+import 'package:titan/vote/providers/display_results.dart';
+import 'package:titan/vote/providers/contender_logo_provider.dart';
+import 'package:titan/vote/providers/contender_logos_provider.dart';
+import 'package:titan/vote/providers/contender_members.dart';
+import 'package:titan/vote/providers/contender_list_provider.dart';
+import 'package:titan/vote/providers/contender_provider.dart';
+import 'package:titan/vote/providers/sections_contender_provider.dart';
+import 'package:titan/vote/providers/sections_provider.dart';
+import 'package:titan/vote/tools/constants.dart';
+import 'package:titan/vote/ui/components/member_card.dart';
+import 'package:titan/vote/ui/pages/contender_pages/search_result.dart';
+import 'package:titan/vote/ui/pages/admin_page/section_chip.dart';
+import 'package:titan/vote/ui/vote.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditContenderPage extends HookConsumerWidget {
@@ -84,8 +84,12 @@ class AddEditContenderPage extends HookConsumerWidget {
             children: [
               const AlignLeftText(
                 VoteTextConstants.addPretendance,
-                padding:
-                    EdgeInsets.only(top: 40, left: 30, right: 30, bottom: 50),
+                padding: EdgeInsets.only(
+                  top: 40,
+                  left: 30,
+                  right: 30,
+                  bottom: 50,
+                ),
                 color: Colors.grey,
               ),
               Center(
@@ -141,10 +145,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                             ColorConstants.gradient1,
                             ColorConstants.gradient2,
                           ],
-                          child: HeroIcon(
-                            HeroIcons.photo,
-                            color: Colors.white,
-                          ),
+                          child: HeroIcon(HeroIcons.photo, color: Colors.white),
                         ),
                       ),
                     ),
@@ -162,8 +163,9 @@ class AddEditContenderPage extends HookConsumerWidget {
               const SizedBox(height: 50),
               HorizontalListView.builder(
                 height: 40,
-                items:
-                    ListType.values.where((e) => e != ListType.blank).toList(),
+                items: ListType.values
+                    .where((e) => e != ListType.blank)
+                    .toList(),
                 itemBuilder: (context, e, i) => SectionChip(
                   label: capitalize(e.toString().split('.').last),
                   selected: listType.value == e,
@@ -224,8 +226,9 @@ class AddEditContenderPage extends HookConsumerWidget {
                                   showNotifier.setId(true);
                                   tokenExpireWrapper(ref, () async {
                                     if (queryController.text.isNotEmpty) {
-                                      await usersNotifier
-                                          .filterUsers(queryController.text);
+                                      await usersNotifier.filterUsers(
+                                        queryController.text,
+                                      );
                                     } else {
                                       usersNotifier.clear();
                                     }
@@ -254,13 +257,13 @@ class AddEditContenderPage extends HookConsumerWidget {
                                     return;
                                   }
                                   if (addMemberKey.currentState!.validate()) {
-                                    final value =
-                                        await membersNotifier.addMember(
-                                      Member.fromSimpleUser(
-                                        member.value,
-                                        role.text,
-                                      ),
-                                    );
+                                    final value = await membersNotifier
+                                        .addMember(
+                                          Member.fromSimpleUser(
+                                            member.value,
+                                            role.text,
+                                          ),
+                                        );
                                     if (value) {
                                       role.text = '';
                                       member.value = SimpleUser.empty();
@@ -275,16 +278,19 @@ class AddEditContenderPage extends HookConsumerWidget {
                                 },
                                 child: Container(
                                   width: double.infinity,
-                                  padding:
-                                      const EdgeInsets.only(top: 8, bottom: 12),
+                                  padding: const EdgeInsets.only(
+                                    top: 8,
+                                    bottom: 12,
+                                  ),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     color: Colors.black,
                                     borderRadius: BorderRadius.circular(10),
                                     boxShadow: [
                                       BoxShadow(
-                                        color:
-                                            Colors.grey.withValues(alpha: 0.5),
+                                        color: Colors.grey.withValues(
+                                          alpha: 0.5,
+                                        ),
                                         spreadRadius: 5,
                                         blurRadius: 10,
                                         offset: const Offset(
@@ -360,10 +366,12 @@ class AddEditContenderPage extends HookConsumerWidget {
                           program: program.text,
                         );
                         final value = isEdit
-                            ? await contenderListNotifier
-                                .updateContender(newContender)
-                            : await contenderListNotifier
-                                .addContender(newContender);
+                            ? await contenderListNotifier.updateContender(
+                                newContender,
+                              )
+                            : await contenderListNotifier.addContender(
+                                newContender,
+                              );
                         if (value) {
                           QR.back();
                           if (isEdit) {

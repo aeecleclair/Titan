@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/event/providers/event_provider.dart';
-import 'package:myecl/event/tools/constants.dart';
-import 'package:myecl/event/ui/event.dart';
-import 'package:myecl/event/ui/components/event_ui.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/event/providers/event_provider.dart';
+import 'package:titan/event/tools/constants.dart';
+import 'package:titan/event/ui/event.dart';
+import 'package:titan/event/ui/components/event_ui.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends HookConsumerWidget {
@@ -135,8 +135,9 @@ class DetailPage extends HookConsumerWidget {
                                               color: Colors.grey.shade50,
                                               boxShadow: [
                                                 BoxShadow(
-                                                  color: Colors.grey
-                                                      .withValues(alpha: 0.2),
+                                                  color: Colors.grey.withValues(
+                                                    alpha: 0.2,
+                                                  ),
                                                   blurRadius: 10,
                                                   offset: const Offset(0, 10),
                                                 ),
@@ -148,9 +149,7 @@ class DetailPage extends HookConsumerWidget {
                                             ),
                                           ),
                                         ),
-                                        const Spacer(
-                                          flex: 5,
-                                        ),
+                                        const Spacer(flex: 5),
                                         GestureDetector(
                                           onTap: () async {
                                             if (event.applicant.phone != null) {
@@ -182,8 +181,9 @@ class DetailPage extends HookConsumerWidget {
                                               color: Colors.grey.shade50,
                                               boxShadow: [
                                                 BoxShadow(
-                                                  color: Colors.grey
-                                                      .withValues(alpha: 0.2),
+                                                  color: Colors.grey.withValues(
+                                                    alpha: 0.2,
+                                                  ),
                                                   blurRadius: 10,
                                                   offset: const Offset(0, 10),
                                                 ),
@@ -213,9 +213,7 @@ class DetailPage extends HookConsumerWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Center(
-                child: EventUi(event: event, isDetailPage: true),
-              ),
+              child: Center(child: EventUi(event: event, isDetailPage: true)),
             ),
           ],
         ),

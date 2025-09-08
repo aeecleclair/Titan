@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/cinema/class/session.dart';
-import 'package:myecl/cinema/repositories/session_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/cinema/class/session.dart';
+import 'package:titan/cinema/repositories/session_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class SessionListNotifier extends ListNotifier<Session> {
   final SessionRepository sessionRepository;
   SessionListNotifier({required this.sessionRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Session>>> loadSessions() async {
     return await loadList(sessionRepository.getAllSessions);
@@ -37,14 +37,15 @@ class SessionListNotifier extends ListNotifier<Session> {
 }
 
 final sessionListProvider =
-    StateNotifierProvider<SessionListNotifier, AsyncValue<List<Session>>>(
-        (ref) {
-  final sessionRepository = ref.watch(sessionRepositoryProvider);
-  SessionListNotifier notifier = SessionListNotifier(
-    sessionRepository: sessionRepository,
-  );
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadSessions();
-  });
-  return notifier;
-});
+    StateNotifierProvider<SessionListNotifier, AsyncValue<List<Session>>>((
+      ref,
+    ) {
+      final sessionRepository = ref.watch(sessionRepositoryProvider);
+      SessionListNotifier notifier = SessionListNotifier(
+        sessionRepository: sessionRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.loadSessions();
+      });
+      return notifier;
+    });

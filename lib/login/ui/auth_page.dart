@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/login/providers/animation_provider.dart';
-import 'package:myecl/login/ui/components/background_painter.dart';
+import 'package:titan/login/providers/animation_provider.dart';
+import 'package:titan/login/ui/components/background_painter.dart';
 
 class LoginTemplate extends HookConsumerWidget {
   final Widget child;
@@ -22,14 +22,10 @@ class LoginTemplate extends HookConsumerWidget {
         children: [
           SizedBox.expand(
             child: CustomPaint(
-              painter: BackgroundPainter(
-                animation: controller,
-              ),
+              painter: BackgroundPainter(animation: controller),
             ),
           ),
-          SafeArea(
-            child: Center(child: child),
-          ),
+          SafeArea(child: Center(child: child)),
         ],
       ),
     );

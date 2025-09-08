@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class IsConnectedProvider extends StateNotifier<bool> {
   IsConnectedProvider() : super(false);
@@ -17,8 +17,9 @@ class IsConnectedProvider extends StateNotifier<bool> {
   }
 }
 
-final isConnectedProvider =
-    StateNotifierProvider<IsConnectedProvider, bool>((ref) {
+final isConnectedProvider = StateNotifierProvider<IsConnectedProvider, bool>((
+  ref,
+) {
   final notifier = IsConnectedProvider();
   notifier.isInternet();
   return notifier;

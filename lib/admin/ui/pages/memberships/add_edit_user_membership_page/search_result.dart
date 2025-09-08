@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/user_association_membership_provider.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:titan/admin/providers/user_association_membership_provider.dart';
+import 'package:titan/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
   final TextEditingController queryController;
@@ -11,8 +11,9 @@ class SearchResult extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
     final usersNotifier = ref.watch(userList.notifier);
-    final membershipNotifier =
-        ref.watch(userAssociationMembershipProvider.notifier);
+    final membershipNotifier = ref.watch(
+      userAssociationMembershipProvider.notifier,
+    );
     final membership = ref.watch(userAssociationMembershipProvider);
 
     return users.when(
@@ -21,6 +22,7 @@ class SearchResult extends HookConsumerWidget {
           children: usersData
               .map(
                 (user) => GestureDetector(
+                  behavior: HitTestBehavior.opaque,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
                     child: Container(
@@ -41,15 +43,11 @@ class SearchResult extends HookConsumerWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              width: 20,
-                            ),
+                            Container(width: 20),
                             Expanded(
                               child: Text(
                                 user.getName(),
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                ),
+                                style: const TextStyle(fontSize: 13),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),

@@ -1,6 +1,6 @@
-import 'package:myecl/purchases/class/ticket.dart';
-import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/purchases/class/ticket.dart';
+import 'package:titan/tools/repository/repository.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class ScannerRepository extends Repository {
   @override
@@ -42,9 +42,7 @@ class ScannerRepository extends Repository {
     String generatorId,
   ) async {
     return List<String>.from(
-      await getList(
-        suffix: "$sellerId/products/$productId/tags/$generatorId/",
-      ),
+      await getList(suffix: "$sellerId/products/$productId/tags/$generatorId/"),
     ).where((tag) => tag.isNotEmpty).toList();
   }
 
@@ -58,8 +56,7 @@ class ScannerRepository extends Repository {
       (await getList(
         suffix:
             "$sellerId/products/$productId/tickets/$generatorId/lists/$tag/",
-      ))
-          .map((x) => SimpleUser.fromJson(x)),
+      )).map((x) => SimpleUser.fromJson(x)),
     );
   }
 }

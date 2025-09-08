@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:myecl/service/class/message.dart' as message_class;
-import 'package:myecl/service/provider_list.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/service/class/message.dart' as message_class;
+import 'package:titan/service/provider_list.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -31,10 +31,10 @@ class LocalNotificationService {
         LinuxInitializationSettings(defaultActionName: 'Open notification');
     final InitializationSettings initializationSettings =
         InitializationSettings(
-      android: initializationSettingsAndroid,
-      iOS: initializationSettingsDarwin,
-      linux: initializationSettingsLinux,
-    );
+          android: initializationSettingsAndroid,
+          iOS: initializationSettingsDarwin,
+          linux: initializationSettingsLinux,
+        );
     _localNotificationService.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
@@ -46,13 +46,13 @@ class LocalNotificationService {
   NotificationDetails getNotificationDetails() {
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
-      getTitanPackageName(),
-      "TitanNotification",
-      channelDescription: "Notifications channel for Titan",
-      importance: Importance.max,
-      priority: Priority.max,
-      playSound: true,
-    );
+          getTitanPackageName(),
+          "TitanNotification",
+          channelDescription: "Notifications channel for Titan",
+          importance: Importance.max,
+          priority: Priority.max,
+          playSound: true,
+        );
     const DarwinNotificationDetails darwinNotificationDetails =
         DarwinNotificationDetails();
 
@@ -102,26 +102,27 @@ class LocalNotificationService {
   ) async {
     final BigPictureStyleInformation bigPictureStyleInformation =
         BigPictureStyleInformation(
-      FilePathAndroidBitmap(imageUrl),
-      largeIcon: FilePathAndroidBitmap(largeIcon),
-      hideExpandedLargeIcon: true,
-      contentTitle: title,
-      htmlFormatContentTitle: true,
-      summaryText: body,
-      htmlFormatSummaryText: true,
-    );
+          FilePathAndroidBitmap(imageUrl),
+          largeIcon: FilePathAndroidBitmap(largeIcon),
+          hideExpandedLargeIcon: true,
+          contentTitle: title,
+          htmlFormatContentTitle: true,
+          summaryText: body,
+          htmlFormatSummaryText: true,
+        );
     final AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
-      getTitanPackageName(),
-      "TitanNotification",
-      channelDescription: "Notifications channel for Titan",
-      importance: Importance.max,
-      priority: Priority.max,
-      styleInformation: bigPictureStyleInformation,
-      playSound: true,
+          getTitanPackageName(),
+          "TitanNotification",
+          channelDescription: "Notifications channel for Titan",
+          importance: Importance.max,
+          priority: Priority.max,
+          styleInformation: bigPictureStyleInformation,
+          playSound: true,
+        );
+    final NotificationDetails platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
     );
-    final NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
     await _localNotificationService.show(
       generateIntFromString(id),
       title,
@@ -134,22 +135,25 @@ class LocalNotificationService {
   Future<void> groupNotifications() async {
     AndroidNotificationChannelGroup channelGroup =
         const AndroidNotificationChannelGroup(
-      'com.my.app.alert1',
-      'mychannel1',
-    );
+          'com.my.app.alert1',
+          'mychannel1',
+        );
     await _localNotificationService
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+          AndroidFlutterLocalNotificationsPlugin
+        >()
         ?.createNotificationChannelGroup(channelGroup);
     List<ActiveNotification>? activeNotifications =
         await _localNotificationService
             .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin>()
+              AndroidFlutterLocalNotificationsPlugin
+            >()
             ?.getActiveNotifications();
 
     if (activeNotifications != null && activeNotifications.isNotEmpty) {
-      List<String> lines =
-          activeNotifications.map((e) => e.title.toString()).toList();
+      List<String> lines = activeNotifications
+          .map((e) => e.title.toString())
+          .toList();
       InboxStyleInformation inboxStyleInformation = InboxStyleInformation(
         lines,
         contentTitle: "${activeNotifications.length - 1} Updates",
@@ -157,14 +161,14 @@ class LocalNotificationService {
       );
       AndroidNotificationDetails groupNotificationDetails =
           AndroidNotificationDetails(
-        channelGroup.id,
-        channelGroup.name,
-        channelDescription: channelGroup.description,
-        styleInformation: inboxStyleInformation,
-        setAsGroupSummary: true,
-        groupKey: channelGroup.id,
-        // onlyAlertOnce: true,
-      );
+            channelGroup.id,
+            channelGroup.name,
+            channelDescription: channelGroup.description,
+            styleInformation: inboxStyleInformation,
+            setAsGroupSummary: true,
+            groupKey: channelGroup.id,
+            // onlyAlertOnce: true,
+          );
       NotificationDetails groupNotificationDetailsPlatformSpecifics =
           NotificationDetails(android: groupNotificationDetails);
       await _localNotificationService.show(
@@ -182,10 +186,11 @@ class LocalNotificationService {
 
   Future<PendingNotificationRequest?> getNotificationDetail(String id) async {
     final notificationId = generateIntFromString(id);
-    final pendingNotificationRequests =
-        await _localNotificationService.pendingNotificationRequests();
-    return pendingNotificationRequests
-        .firstWhereOrNull((element) => element.id == notificationId);
+    final pendingNotificationRequests = await _localNotificationService
+        .pendingNotificationRequests();
+    return pendingNotificationRequests.firstWhereOrNull(
+      (element) => element.id == notificationId,
+    );
   }
 
   Future<void> cancelNotificationById(String id) async {
@@ -220,8 +225,10 @@ class LocalNotificationService {
 
   void onNotificationClickListener(message_class.Message message) async {
     if (message.actionModule != null && message.actionTable != null) {
-      final path =
-          await handleAction(message.actionModule!, message.actionTable!);
+      final path = await handleAction(
+        message.actionModule!,
+        message.actionTable!,
+      );
       QR.to(
         "${getTitanPackageName()}://$path?actionModule=${message.actionModule!}&actionTable=${message.actionTable!}",
       );

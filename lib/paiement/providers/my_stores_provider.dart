@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/user_store.dart';
-import 'package:myecl/paiement/repositories/users_me_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:titan/paiement/class/user_store.dart';
+import 'package:titan/paiement/repositories/users_me_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
 
 class MyStoresNotifier extends ListNotifier<UserStore> {
   final UsersMeRepository usersMeRepository;
   MyStoresNotifier({required this.usersMeRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<UserStore>>> getMyStores() async {
     return await loadList(usersMeRepository.getMyStores);
@@ -15,6 +15,7 @@ class MyStoresNotifier extends ListNotifier<UserStore> {
 
 final myStoresProvider =
     StateNotifierProvider<MyStoresNotifier, AsyncValue<List<UserStore>>>((ref) {
-  final myStoresRepository = ref.watch(usersMeRepositoryProvider);
-  return MyStoresNotifier(usersMeRepository: myStoresRepository)..getMyStores();
-});
+      final myStoresRepository = ref.watch(usersMeRepositoryProvider);
+      return MyStoresNotifier(usersMeRepository: myStoresRepository)
+        ..getMyStores();
+    });

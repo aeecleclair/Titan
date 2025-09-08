@@ -1,11 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/class/transaction.dart';
+import 'package:titan/paiement/class/transaction.dart';
 
 class OngoingTransaction extends StateNotifier<AsyncValue<Transaction>> {
-  OngoingTransaction()
-      : super(
-          const AsyncValue.loading(),
-        );
+  OngoingTransaction() : super(const AsyncValue.loading());
 
   void updateOngoingTransaction(AsyncValue<Transaction> transaction) {
     state = transaction;
@@ -18,5 +15,5 @@ class OngoingTransaction extends StateNotifier<AsyncValue<Transaction>> {
 
 final ongoingTransactionProvider =
     StateNotifierProvider<OngoingTransaction, AsyncValue<Transaction>>((ref) {
-  return OngoingTransaction();
-});
+      return OngoingTransaction();
+    });

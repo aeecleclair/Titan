@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/providers/my_wallet_provider.dart';
-import 'package:myecl/paiement/providers/tos_provider.dart';
-import 'package:myecl/paiement/providers/is_payment_admin.dart';
-import 'package:myecl/paiement/providers/my_history_provider.dart';
-import 'package:myecl/paiement/providers/my_stores_provider.dart';
-import 'package:myecl/paiement/providers/register_provider.dart';
-import 'package:myecl/paiement/providers/should_display_tos_dialog.dart';
-import 'package:myecl/paiement/ui/pages/main_page/account_card/account_card.dart';
-import 'package:myecl/paiement/ui/pages/main_page/tos_dialog.dart';
-import 'package:myecl/paiement/ui/pages/main_page/account_card/last_transactions.dart';
-import 'package:myecl/paiement/ui/pages/main_page/flip_card.dart';
-import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_card.dart';
-import 'package:myecl/paiement/ui/pages/main_page/seller_card/store_list.dart';
-import 'package:myecl/paiement/ui/paiement.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/providers/path_forwarding_provider.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/paiement/providers/has_accepted_tos_provider.dart';
+import 'package:titan/paiement/providers/my_wallet_provider.dart';
+import 'package:titan/paiement/providers/tos_provider.dart';
+import 'package:titan/paiement/providers/is_payment_admin.dart';
+import 'package:titan/paiement/providers/my_history_provider.dart';
+import 'package:titan/paiement/providers/my_stores_provider.dart';
+import 'package:titan/paiement/providers/register_provider.dart';
+import 'package:titan/paiement/providers/should_display_tos_dialog.dart';
+import 'package:titan/paiement/ui/pages/main_page/account_card/account_card.dart';
+import 'package:titan/paiement/ui/pages/main_page/tos_dialog.dart';
+import 'package:titan/paiement/ui/pages/main_page/account_card/last_transactions.dart';
+import 'package:titan/paiement/ui/pages/main_page/flip_card.dart';
+import 'package:titan/paiement/ui/pages/main_page/seller_card/store_card.dart';
+import 'package:titan/paiement/ui/pages/main_page/seller_card/store_list.dart';
+import 'package:titan/paiement/ui/paiement.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/path_forwarding_provider.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 
 class PaymentMainPage extends HookConsumerWidget {
   const PaymentMainPage({super.key});
@@ -32,8 +33,10 @@ class PaymentMainPage extends HookConsumerWidget {
     }
 
     final shouldDisplayTosDialog = ref.watch(shouldDisplayTosDialogProvider);
-    final shouldDisplayTosDialogNotifier =
-        ref.read(shouldDisplayTosDialogProvider.notifier);
+    final shouldDisplayTosDialogNotifier = ref.read(
+      shouldDisplayTosDialogProvider.notifier,
+    );
+    final hasAcceptedToSNotifier = ref.read(hasAcceptedTosProvider.notifier);
     final tos = ref.watch(tosProvider);
     final tosNotifier = ref.read(tosProvider.notifier);
     final registerNotifier = ref.read(registerProvider.notifier);
@@ -68,6 +71,8 @@ class PaymentMainPage extends HookConsumerWidget {
       flipped.value = !flipped.value;
       if (flipped.value) {
         controller.reverse();
+        ref.invalidate(myWalletProvider);
+        ref.invalidate(myHistoryProvider);
       } else {
         controller.forward();
       }
@@ -90,33 +95,34 @@ class PaymentMainPage extends HookConsumerWidget {
 
     return PaymentTemplate(
       child: shouldDisplayTosDialog
-          ? TOSDialogBox(
-              descriptions: tos.maybeWhen(
-                orElse: () => '',
-                data: (tos) => tos.tosContent,
+          ? SingleChildScrollView(
+              child: TOSDialogBox(
+                descriptions: tos.maybeWhen(
+                  orElse: () => '',
+                  data: (tos) => tos.tosContent,
+                ),
+                title: "Nouvelles Conditions Générales d'Utilisation",
+                onYes: () {
+                  tos.maybeWhen(
+                    orElse: () {},
+                    data: (tos) async {
+                      final value = await tosNotifier.signTOS(
+                        tos.copyWith(acceptedTosVersion: tos.latestTosVersion),
+                      );
+                      if (value) {
+                        await mySellersNotifier.getMyStores();
+                        await myHistoryNotifier.getHistory();
+                        await myWalletNotifier.getMyWallet();
+                        shouldDisplayTosDialogNotifier.update(false);
+                        hasAcceptedToSNotifier.update(true);
+                      }
+                    },
+                  );
+                },
+                onNo: () {
+                  shouldDisplayTosDialogNotifier.update(false);
+                },
               ),
-              title: "Nouvelle TOS",
-              onYes: () {
-                tos.maybeWhen(
-                  orElse: () {},
-                  data: (tos) async {
-                    final value = await tosNotifier.signTOS(
-                      tos.copyWith(
-                        acceptedTosVersion: tos.latestTosVersion,
-                      ),
-                    );
-                    if (value) {
-                      await mySellersNotifier.getMyStores();
-                      await myHistoryNotifier.getHistory();
-                      await myWalletNotifier.getMyWallet();
-                      shouldDisplayTosDialogNotifier.update(false);
-                    }
-                  },
-                );
-              },
-              onNo: () {
-                shouldDisplayTosDialogNotifier.update(false);
-              },
             )
           : LayoutBuilder(
               builder: (context, constraints) {
@@ -125,12 +131,11 @@ class PaymentMainPage extends HookConsumerWidget {
                     await mySellersNotifier.getMyStores();
                     await myHistoryNotifier.getHistory();
                     await myWalletNotifier.getMyWallet();
+                    await tosNotifier.getTOS();
                   },
                   child: Column(
                     children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       AsyncChild(
                         value: mySellers,
                         builder: (context, mySellers) {
@@ -148,9 +153,7 @@ class PaymentMainPage extends HookConsumerWidget {
                             height: 250,
                             width: MediaQuery.of(context).size.width,
                             child: FlipCard(
-                              back: StoreCard(
-                                toggle: toggle,
-                              ),
+                              back: StoreCard(toggle: toggle),
                               front: AccountCard(
                                 toggle: toggle,
                                 resetHandledKeys: resetHandledKeys,

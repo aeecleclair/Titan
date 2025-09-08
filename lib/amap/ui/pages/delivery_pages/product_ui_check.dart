@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/tools/constants.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/tools/constants.dart';
 
 class ProductUi extends ConsumerWidget {
   final Product product;

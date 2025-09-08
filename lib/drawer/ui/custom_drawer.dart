@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/providers/is_web_format_provider.dart';
-import 'package:myecl/drawer/tools/constants.dart';
-import 'package:myecl/drawer/ui/bottom_bar.dart';
-import 'package:myecl/drawer/ui/fake_page.dart';
-import 'package:myecl/drawer/ui/list_module.dart';
-import 'package:myecl/drawer/ui/drawer_top_bar.dart';
+import 'package:titan/drawer/providers/is_web_format_provider.dart';
+import 'package:titan/drawer/tools/constants.dart';
+import 'package:titan/drawer/ui/bottom_bar.dart';
+import 'package:titan/drawer/ui/fake_page.dart';
+import 'package:titan/drawer/ui/list_module.dart';
+import 'package:titan/drawer/ui/drawer_top_bar.dart';
 
 class CustomDrawer extends HookConsumerWidget {
   const CustomDrawer({super.key});
@@ -29,10 +29,7 @@ class CustomDrawer extends HookConsumerWidget {
           children: [
             const Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                DrawerTopBar(),
-                BottomBar(),
-              ],
+              children: [DrawerTopBar(), BottomBar()],
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/paiement/class/wallet_device.dart';
-import 'package:myecl/paiement/tools/functions.dart';
+import 'package:titan/paiement/class/wallet_device.dart';
+import 'package:titan/paiement/tools/functions.dart';
 
 class DeviceItem extends ConsumerWidget {
   final WalletDevice device;
@@ -28,38 +28,37 @@ class DeviceItem extends ConsumerWidget {
           child: Container(
             color: Colors.grey.shade200.withValues(alpha: 0.5),
             child: SizedBox(
-              height: 70,
+              height: isActual ? 80 : 70,
               child: Row(
                 children: [
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    device.name,
-                    style: const TextStyle(
-                      color: Color(0xff204550),
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  if (isActual)
-                    const Text(
-                      '(actuel)',
-                      style: TextStyle(
-                        color: Color(0xff204550),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                  const SizedBox(width: 20),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        device.name,
+                        style: const TextStyle(
+                          color: Color(0xff204550),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
+                      if (isActual)
+                        const Text(
+                          '(cet appareil)',
+                          style: TextStyle(
+                            color: Color(0xff204550),
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(width: 10),
                   Spacer(),
                   getStatusTag(device.status),
                   if (device.status != WalletDeviceStatus.revoked) ...[
-                    const SizedBox(
-                      width: 20,
-                    ),
+                    const SizedBox(width: 20),
                     GestureDetector(
                       onTap: onRevoke,
                       child: const HeroIcon(
@@ -69,9 +68,7 @@ class DeviceItem extends ConsumerWidget {
                       ),
                     ),
                   ],
-                  const SizedBox(
-                    width: 20,
-                  ),
+                  const SizedBox(width: 20),
                 ],
               ),
             ),

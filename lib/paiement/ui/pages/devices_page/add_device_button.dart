@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class AddDeviceButton extends StatelessWidget {
   final Future Function() onTap;
@@ -30,9 +30,7 @@ class AddDeviceButton extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      SizedBox(
-                        width: 20,
-                      ),
+                      SizedBox(width: 20),
                       Stack(
                         clipBehavior: Clip.none,
                         children: [
@@ -46,8 +44,9 @@ class AddDeviceButton extends StatelessWidget {
                             top: -3,
                             child: Container(
                               decoration: BoxDecoration(
-                                color:
-                                    Colors.grey.shade200.withValues(alpha: 0.9),
+                                color: Colors.grey.shade200.withValues(
+                                  alpha: 0.9,
+                                ),
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               child: HeroIcon(

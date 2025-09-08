@@ -1,10 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/user_association_membership.dart';
-import 'package:myecl/admin/class/user_association_membership_base.dart';
-import 'package:myecl/admin/repositories/association_membership_repository.dart';
-import 'package:myecl/admin/repositories/association_membership_user_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/admin/class/user_association_membership.dart';
+import 'package:titan/admin/class/user_association_membership_base.dart';
+import 'package:titan/admin/repositories/association_membership_repository.dart';
+import 'package:titan/admin/repositories/association_membership_user_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class AssociationMembershipMembersNotifier
     extends ListNotifier<UserAssociationMembership> {
@@ -16,7 +16,7 @@ class AssociationMembershipMembersNotifier
   }) : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<UserAssociationMembership>>>
-      loadAssociationMembershipMembers(
+  loadAssociationMembershipMembers(
     String associationMembershipId, {
     DateTime? minimalStartDate,
     DateTime? minimalEndDate,
@@ -26,12 +26,12 @@ class AssociationMembershipMembersNotifier
     return await loadList(
       () async =>
           associationMembershipRepository.getAssociationMembershipMembers(
-        associationMembershipId,
-        minimalStartDate,
-        minimalEndDate,
-        maximalStartDate,
-        maximalEndDate,
-      ),
+            associationMembershipId,
+            minimalStartDate,
+            minimalEndDate,
+            maximalStartDate,
+            maximalEndDate,
+          ),
     );
   }
 
@@ -62,8 +62,9 @@ class AssociationMembershipMembersNotifier
           .updateUserMembership(associationMembership),
       (userAssociationMemberships, membership) => userAssociationMemberships
         ..[userAssociationMemberships.indexWhere(
-          (g) => g.id == membership.id,
-        )] = membership,
+              (g) => g.id == membership.id,
+            )] =
+            membership,
       associationMembership,
     );
   }
@@ -82,15 +83,20 @@ class AssociationMembershipMembersNotifier
   }
 }
 
-final associationMembershipMembersProvider = StateNotifierProvider<
-    AssociationMembershipMembersNotifier,
-    AsyncValue<List<UserAssociationMembership>>>((ref) {
-  final associationMembershipUserRepository =
-      ref.watch(associationMembershipUserRepositoryProvider);
-  final associationMembershipRepository =
-      ref.watch(associationMembershipRepositoryProvider);
-  return AssociationMembershipMembersNotifier(
-    associationMembershipRepository: associationMembershipRepository,
-    associationMembershipUserRepository: associationMembershipUserRepository,
-  );
-});
+final associationMembershipMembersProvider =
+    StateNotifierProvider<
+      AssociationMembershipMembersNotifier,
+      AsyncValue<List<UserAssociationMembership>>
+    >((ref) {
+      final associationMembershipUserRepository = ref.watch(
+        associationMembershipUserRepositoryProvider,
+      );
+      final associationMembershipRepository = ref.watch(
+        associationMembershipRepositoryProvider,
+      );
+      return AssociationMembershipMembersNotifier(
+        associationMembershipRepository: associationMembershipRepository,
+        associationMembershipUserRepository:
+            associationMembershipUserRepository,
+      );
+    });

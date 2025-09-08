@@ -1,4 +1,4 @@
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class Cash {
   Cash({required this.balance, required this.user});

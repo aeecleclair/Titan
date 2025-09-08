@@ -1,15 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/admin/repositories/group_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/class/user.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/admin/repositories/group_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/user/class/user.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 class GroupListNotifier extends ListNotifier<SimpleGroup> {
   final GroupRepository groupRepository;
   GroupListNotifier({required this.groupRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<SimpleGroup>>> loadGroups() async {
     return await loadList(groupRepository.getGroupList);
@@ -42,36 +42,39 @@ class GroupListNotifier extends ListNotifier<SimpleGroup> {
   }
 
   void setGroup(SimpleGroup group) {
-    state.whenData(
-      (d) {
-        if (d.indexWhere((g) => g.id == group.id) == -1) return;
-        state =
-            AsyncValue.data(d..[d.indexWhere((g) => g.id == group.id)] = group);
-      },
-    );
+    state.whenData((d) {
+      if (d.indexWhere((g) => g.id == group.id) == -1) return;
+      state = AsyncValue.data(
+        d..[d.indexWhere((g) => g.id == group.id)] = group,
+      );
+    });
   }
 }
 
 final allGroupListProvider =
-    StateNotifierProvider<GroupListNotifier, AsyncValue<List<SimpleGroup>>>(
-        (ref) {
-  final groupRepository = ref.watch(groupRepositoryProvider);
-  GroupListNotifier provider =
-      GroupListNotifier(groupRepository: groupRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadGroups();
-  });
-  return provider;
-});
+    StateNotifierProvider<GroupListNotifier, AsyncValue<List<SimpleGroup>>>((
+      ref,
+    ) {
+      final groupRepository = ref.watch(groupRepositoryProvider);
+      GroupListNotifier provider = GroupListNotifier(
+        groupRepository: groupRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        await provider.loadGroups();
+      });
+      return provider;
+    });
 
 final userGroupListNotifier =
-    StateNotifierProvider<GroupListNotifier, AsyncValue<List<SimpleGroup>>>(
-        (ref) {
-  final groupRepository = ref.watch(groupRepositoryProvider);
-  GroupListNotifier provider =
-      GroupListNotifier(groupRepository: groupRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadGroupsFromUser(ref.watch(userProvider));
-  });
-  return provider;
-});
+    StateNotifierProvider<GroupListNotifier, AsyncValue<List<SimpleGroup>>>((
+      ref,
+    ) {
+      final groupRepository = ref.watch(groupRepositoryProvider);
+      GroupListNotifier provider = GroupListNotifier(
+        groupRepository: groupRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        await provider.loadGroupsFromUser(ref.watch(userProvider));
+      });
+      return provider;
+    });

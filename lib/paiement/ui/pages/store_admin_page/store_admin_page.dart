@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/providers/selected_store_provider.dart';
-import 'package:myecl/paiement/providers/store_sellers_list_provider.dart';
-import 'package:myecl/paiement/ui/pages/store_admin_page/search_result.dart';
-import 'package:myecl/paiement/ui/pages/store_admin_page/seller_right_card.dart';
-import 'package:myecl/paiement/ui/paiement.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:titan/paiement/providers/selected_store_provider.dart';
+import 'package:titan/paiement/providers/store_sellers_list_provider.dart';
+import 'package:titan/paiement/ui/pages/store_admin_page/search_result.dart';
+import 'package:titan/paiement/ui/pages/store_admin_page/seller_right_card.dart';
+import 'package:titan/paiement/ui/paiement.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/card_button.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
+import 'package:titan/user/providers/user_list_provider.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 class StoreAdminPage extends HookConsumerWidget {
   const StoreAdminPage({super.key});
@@ -21,11 +22,15 @@ class StoreAdminPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(selectedStoreProvider);
     final storeSellers = ref.watch(sellerStoreProvider(store.id));
-    final storeSellersNotifier =
-        ref.read(sellerStoreProvider(store.id).notifier);
+    final storeSellersNotifier = ref.read(
+      sellerStoreProvider(store.id).notifier,
+    );
     final usersNotifier = ref.watch(userList.notifier);
     final queryController = useTextEditingController();
     final isSearching = useState(false);
+
+    final me = ref.watch(userProvider);
+
     return PaymentTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -81,13 +86,22 @@ class StoreAdminPage extends HookConsumerWidget {
               AsyncChild(
                 value: storeSellers,
                 builder: (context, storeSellers) {
+                  final mySellers = storeSellers
+                      .where((seller) => seller.user.id == me.id)
+                      .firstOrNull;
+                  if (mySellers == null) {
+                    return const Center(
+                      child: Text('You are not a seller in this store'),
+                    );
+                  }
                   return Column(
                     children: [
-                      ...storeSellers.map(
-                        (storeSeller) {
-                          return SellerRightCard(storeSeller: storeSeller);
-                        },
-                      ),
+                      ...storeSellers.map((storeSeller) {
+                        return SellerRightCard(
+                          me: mySellers,
+                          storeSeller: storeSeller,
+                        );
+                      }),
                     ],
                   );
                 },
@@ -104,8 +118,9 @@ class StoreAdminPage extends HookConsumerWidget {
                         onChanged: (value) {
                           tokenExpireWrapper(ref, () async {
                             if (queryController.text.isNotEmpty) {
-                              await usersNotifier
-                                  .filterUsers(queryController.text);
+                              await usersNotifier.filterUsers(
+                                queryController.text,
+                              );
                             } else {
                               usersNotifier.clear();
                             }
@@ -132,9 +147,15 @@ class StoreAdminPage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              SearchResult(
-                queryController: queryController,
-                onChoose: () => isSearching.value = false,
+              AsyncChild(
+                value: storeSellers,
+                builder: (context, storeSellers) => SearchResult(
+                  sellers: storeSellers
+                      .map((seller) => seller.user.id)
+                      .toList(),
+                  queryController: queryController,
+                  onChoose: () => isSearching.value = false,
+                ),
               ),
             ],
           ],

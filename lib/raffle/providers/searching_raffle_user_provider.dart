@@ -10,5 +10,5 @@ class SearchingAmapUserNotifier extends StateNotifier<bool> {
 
 final searchingAmapUserProvider =
     StateNotifierProvider<SearchingAmapUserNotifier, bool>((ref) {
-  return SearchingAmapUserNotifier();
-});
+      return SearchingAmapUserNotifier();
+    });

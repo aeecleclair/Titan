@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/tools/exception.dart';
+import 'package:titan/tools/functions.dart';
 
 void main() {
   group('Testing AppException class', () {
     test('Should return an AppException', () {
-      final AppException exception =
-          AppException(ErrorType.tokenExpire, "Token Expired");
+      final AppException exception = AppException(
+        ErrorType.tokenExpire,
+        "Token Expired",
+      );
       expect(exception, isA<AppException>());
       expect(exception.type, ErrorType.tokenExpire);
       expect(exception.message, "Token Expired");
     });
 
     test('Should return a string', () {
-      final AppException exception =
-          AppException(ErrorType.tokenExpire, "Token Expired");
+      final AppException exception = AppException(
+        ErrorType.tokenExpire,
+        "Token Expired",
+      );
       expect(exception.toString(), "tokenExpire : Token Expired");
     });
     test('Should return an ErrorType', () {
@@ -140,78 +144,80 @@ void main() {
 
   group('displayToast', () {
     testWidgets(
-        'displays a toast message with the correct duration when the type is "msg"',
-        (WidgetTester tester) async {
-      // Arrange
-      const type = TypeMsg.msg;
-      const text = 'Success!';
-      final scaffoldKey = GlobalKey<ScaffoldState>();
+      'displays a toast message with the correct duration when the type is "msg"',
+      (WidgetTester tester) async {
+        // Arrange
+        const type = TypeMsg.msg;
+        const text = 'Success!';
+        final scaffoldKey = GlobalKey<ScaffoldState>();
 
-      // Act
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            key: scaffoldKey,
-            body: Builder(
-              builder: (context) => ElevatedButton(
-                onPressed: () => displayToast(context, type, text),
-                child: const Text('Show Toast'),
+        // Act
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              key: scaffoldKey,
+              body: Builder(
+                builder: (context) => ElevatedButton(
+                  onPressed: () => displayToast(context, type, text),
+                  child: const Text('Show Toast'),
+                ),
               ),
             ),
           ),
-        ),
-      );
-      await tester.tap(find.byType(ElevatedButton));
-      await tester.pump(const Duration(milliseconds: 500));
+        );
+        await tester.tap(find.byType(ElevatedButton));
+        await tester.pump(const Duration(milliseconds: 500));
 
-      // Assert
-      expect(
-        find.text(text),
-        findsOneWidget,
-      ); // Check that the toast message is still visible
-      await tester.pump(const Duration(milliseconds: 2000));
-      expect(
-        find.text(text),
-        findsNothing,
-      ); // Check that the toast message has disappeared
-    });
+        // Assert
+        expect(
+          find.text(text),
+          findsOneWidget,
+        ); // Check that the toast message is still visible
+        await tester.pump(const Duration(milliseconds: 2000));
+        expect(
+          find.text(text),
+          findsNothing,
+        ); // Check that the toast message has disappeared
+      },
+    );
 
     testWidgets(
-        'displays a toast message with the correct duration when the type is "error"',
-        (WidgetTester tester) async {
-      // Arrange
-      const type = TypeMsg.error;
-      const text = 'Error!';
-      final scaffoldKey = GlobalKey<ScaffoldState>();
+      'displays a toast message with the correct duration when the type is "error"',
+      (WidgetTester tester) async {
+        // Arrange
+        const type = TypeMsg.error;
+        const text = 'Error!';
+        final scaffoldKey = GlobalKey<ScaffoldState>();
 
-      // Act
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            key: scaffoldKey,
-            body: Builder(
-              builder: (context) => ElevatedButton(
-                onPressed: () => displayToast(context, type, text),
-                child: const Text('Show Toast'),
+        // Act
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              key: scaffoldKey,
+              body: Builder(
+                builder: (context) => ElevatedButton(
+                  onPressed: () => displayToast(context, type, text),
+                  child: const Text('Show Toast'),
+                ),
               ),
             ),
           ),
-        ),
-      );
-      await tester.tap(find.byType(ElevatedButton));
-      await tester.pump(const Duration(milliseconds: 500));
+        );
+        await tester.tap(find.byType(ElevatedButton));
+        await tester.pump(const Duration(milliseconds: 500));
 
-      // Assert
-      expect(
-        find.text(text),
-        findsOneWidget,
-      ); // Check that the toast message is still visible
-      await tester.pump(const Duration(milliseconds: 3000));
-      expect(
-        find.text(text),
-        findsNothing,
-      ); // Check that the toast message has disappeared
-    });
+        // Assert
+        expect(
+          find.text(text),
+          findsOneWidget,
+        ); // Check that the toast message is still visible
+        await tester.pump(const Duration(milliseconds: 3000));
+        expect(
+          find.text(text),
+          findsNothing,
+        ); // Check that the toast message has disappeared
+      },
+    );
 
     // testWidgets(
     //     'displays a toast message with the correct background color when the type is "msg"',

@@ -1,5 +1,5 @@
-import 'package:myecl/advert/class/announcer.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/advert/class/announcer.dart';
+import 'package:titan/tools/functions.dart';
 
 class Advert {
   late final String id;
@@ -38,7 +38,14 @@ class Advert {
     return data;
   }
 
-  Advert copyWith({id, title, content, date, author, announcer, tags}) {
+  Advert copyWith({
+    String? id,
+    String? title,
+    String? content,
+    DateTime? date,
+    Announcer? announcer,
+    List<String>? tags,
+  }) {
     return Advert(
       id: id ?? this.id,
       title: title ?? this.title,

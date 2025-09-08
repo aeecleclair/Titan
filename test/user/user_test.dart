@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/user/class/applicant.dart';
-import 'package:myecl/user/class/simple_users.dart';
-import 'package:myecl/user/class/user.dart';
-import 'package:myecl/user/providers/user_provider.dart';
-import 'package:myecl/user/repositories/user_repository.dart';
+import 'package:titan/admin/class/account_type.dart';
+import 'package:titan/user/class/applicant.dart';
+import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/user/class/user.dart';
+import 'package:titan/user/providers/user_provider.dart';
+import 'package:titan/user/repositories/user_repository.dart';
 
 class MockUserRepository extends Mock implements UserRepository {}
 
@@ -246,8 +246,9 @@ void main() {
     test('Should print properly the name', () {
       final simpleUser = SimpleUser.empty();
       expect(simpleUser.getName(), 'Prénom Nom');
-      final simpleUserWithNickName =
-          SimpleUser.empty().copyWith(nickname: 'nickname');
+      final simpleUserWithNickName = SimpleUser.empty().copyWith(
+        nickname: 'nickname',
+      );
       expect(simpleUserWithNickName.getName(), 'nickname (Prénom Nom)');
     });
 
@@ -393,30 +394,6 @@ void main() {
       when(() => mockUser.updateMe(newUser)).thenAnswer((_) async => true);
       final UserNotifier userNotifier = UserNotifier(userRepository: mockUser);
       expect(await userNotifier.updateMe(newUser), false);
-    });
-  });
-
-  group('Testing changePassword', () {
-    test('Should change password', () async {
-      final mockUser = MockUserRepository();
-      final User user = User.empty();
-      when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
-      when(() => mockUser.changePassword('old', 'new', user.email))
-          .thenAnswer((_) async => true);
-      final UserNotifier userNotifier = UserNotifier(userRepository: mockUser);
-      await userNotifier.loadMe();
-      expect(await userNotifier.changePassword('old', 'new', user), true);
-    });
-
-    test('Should catch error when changePassword fail', () async {
-      final mockUser = MockUserRepository();
-      final User user = User.empty();
-      when(() => mockUser.getMe()).thenAnswer((_) async => User.empty());
-      when(() => mockUser.changePassword('old', 'new', user.email))
-          .thenAnswer((_) async => false);
-      final UserNotifier userNotifier = UserNotifier(userRepository: mockUser);
-      await userNotifier.loadMe();
-      expect(await userNotifier.changePassword('old', 'new', user), false);
     });
   });
 }

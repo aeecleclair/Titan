@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
 
 class PictureButton extends StatelessWidget {
   final HeroIcons icon;
@@ -15,10 +15,7 @@ class PictureButton extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: const LinearGradient(
-          colors: [
-            ColorConstants.gradient1,
-            ColorConstants.gradient2,
-          ],
+          colors: [ColorConstants.gradient1, ColorConstants.gradient2],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -31,10 +28,7 @@ class PictureButton extends StatelessWidget {
           ),
         ],
       ),
-      child: HeroIcon(
-        icon,
-        color: Colors.white,
-      ),
+      child: HeroIcon(icon, color: Colors.white),
     );
   }
 }

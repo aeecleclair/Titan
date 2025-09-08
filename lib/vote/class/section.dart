@@ -2,11 +2,7 @@ class Section {
   late String id;
   late String name;
   late String description;
-  Section({
-    required this.id,
-    required this.name,
-    required this.description,
-  });
+  Section({required this.id, required this.name, required this.description});
 
   Section copyWith({
     String? id,
@@ -22,11 +18,7 @@ class Section {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'description': description,
-    };
+    return {'id': id, 'name': name, 'description': description};
   }
 
   factory Section.fromJson(Map<String, dynamic> map) {

@@ -21,8 +21,9 @@ class LoadingPage extends ConsumerWidget {
     final titanVersion = ref.watch(titanVersionProvider);
     final minimalHyperionVersion = ref.watch(minimalHyperionVersionProvider);
     final isLoggedIn = ref.watch(isLoggedInProvider);
-    final check = versionVerifier
-        .whenData((value) => value.minimalTitanVersion <= titanVersion);
+    final check = versionVerifier.whenData(
+      (value) => value.minimalTitanVersion <= titanVersion,
+    );
     final pathForwarding = ref.read(pathForwardingProvider);
     final isHyperionVersionCompatible = versionVerifier.whenData(
       (value) => isVersionCompatible(

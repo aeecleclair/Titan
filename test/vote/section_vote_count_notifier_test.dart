@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/vote/providers/section_vote_count_provide.dart';
-import 'package:myecl/vote/repositories/section_vote_count_repository.dart';
+import 'package:titan/vote/providers/section_vote_count_provide.dart';
+import 'package:titan/vote/repositories/section_vote_count_repository.dart';
 
 class MockSectionVoteCountRepository extends Mock
     implements SectionVoteCountRepository {}
@@ -24,8 +24,9 @@ void main() {
     test('loadCount returns AsyncValue<int>', () async {
       const id = '123';
       const count = 5;
-      when(() => repository.getSectionVoteCount(id))
-          .thenAnswer((_) async => count);
+      when(
+        () => repository.getSectionVoteCount(id),
+      ).thenAnswer((_) async => count);
 
       final result = await notifier.loadCount(id);
 

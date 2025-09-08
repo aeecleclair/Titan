@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/seed-library/class/plant_complete.dart';
-import 'package:myecl/seed-library/class/plant_creation.dart';
-import 'package:myecl/seed-library/class/plant_simple.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/seed-library/class/plant_complete.dart';
+import 'package:titan/seed-library/class/plant_creation.dart';
+import 'package:titan/seed-library/class/plant_simple.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class PlantsRepository extends Repository {
   @override
@@ -26,8 +26,9 @@ class PlantsRepository extends Repository {
 
   Future<List<PlantSimple>> getListPlantSimpleAdmin(String userId) async {
     return List<PlantSimple>.from(
-      (await getList(suffix: "users/$userId"))
-          .map((x) => PlantSimple.fromJson(x)),
+      (await getList(
+        suffix: "users/$userId",
+      )).map((x) => PlantSimple.fromJson(x)),
     );
   }
 

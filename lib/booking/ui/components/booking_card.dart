@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:titan/booking/class/booking.dart';
+import 'package:titan/booking/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/layouts/card_button.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class BookingCard extends StatelessWidget {
@@ -30,9 +30,10 @@ class BookingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isNotEnded = booking.recurrenceRule.isNotEmpty
-        ? SfCalendar.parseRRule(booking.recurrenceRule, booking.start)
-            .endDate!
-            .isAfter(DateTime.now())
+        ? SfCalendar.parseRRule(
+            booking.recurrenceRule,
+            booking.start,
+          ).endDate!.isAfter(DateTime.now())
         : booking.end.isAfter(DateTime.now());
     final showButton =
         (isNotEnded && booking.decision == Decision.pending) || isAdmin;
@@ -47,18 +48,12 @@ class BookingCard extends StatelessWidget {
 
     switch (booking.decision) {
       case Decision.pending:
-        cardColor = [
-          Colors.white,
-          Colors.white,
-        ];
+        cardColor = [Colors.white, Colors.white];
         darkIconBackgroundColor = Colors.black;
 
         break;
       case Decision.approved:
-        cardColor = [
-          const Color(0xff79a400),
-          const Color(0xff387200),
-        ];
+        cardColor = [const Color(0xff79a400), const Color(0xff387200)];
 
         darkIconBackgroundColor = const Color.fromARGB(255, 26, 53, 0);
         break;
@@ -160,8 +155,8 @@ class BookingCard extends StatelessWidget {
                 booking.decision == Decision.pending
                     ? BookingTextConstants.pending
                     : booking.decision == Decision.approved
-                        ? BookingTextConstants.confirmed
-                        : BookingTextConstants.declined,
+                    ? BookingTextConstants.confirmed
+                    : BookingTextConstants.declined,
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
@@ -189,10 +184,7 @@ class BookingCard extends StatelessWidget {
                     child: CardButton(
                       color: lightIconBackgroundColor,
                       shadowColor: Colors.grey.withValues(alpha: 0.2),
-                      child: HeroIcon(
-                        HeroIcons.pencil,
-                        color: lightIconColor,
-                      ),
+                      child: HeroIcon(HeroIcons.pencil, color: lightIconColor),
                     ),
                   ),
                 if (showButton) const Spacer(),
@@ -215,8 +207,8 @@ class BookingCard extends StatelessWidget {
                       color: lightIconBackgroundColor,
                       borderColor: isAdmin
                           ? booking.decision == Decision.approved
-                              ? darkIconBackgroundColor
-                              : Colors.transparent
+                                ? darkIconBackgroundColor
+                                : Colors.transparent
                           : Colors.transparent,
                       shadowColor: Colors.grey.withValues(alpha: 0.2),
                       child: HeroIcon(
@@ -233,13 +225,16 @@ class BookingCard extends StatelessWidget {
                       color: darkIconBackgroundColor,
                       borderColor: isAdmin
                           ? booking.decision == Decision.declined
-                              ? Colors.white
-                              : Colors.transparent
+                                ? Colors.white
+                                : Colors.transparent
                           : Colors.transparent,
-                      shadowColor:
-                          darkIconBackgroundColor.withValues(alpha: 0.2),
-                      child:
-                          const HeroIcon(HeroIcons.xMark, color: Colors.white),
+                      shadowColor: darkIconBackgroundColor.withValues(
+                        alpha: 0.2,
+                      ),
+                      child: const HeroIcon(
+                        HeroIcons.xMark,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 if (!isAdmin) const Spacer(),
@@ -248,8 +243,9 @@ class BookingCard extends StatelessWidget {
                     onTap: onDelete,
                     builder: (child) => CardButton(
                       color: darkIconBackgroundColor,
-                      shadowColor:
-                          darkIconBackgroundColor.withValues(alpha: 0.2),
+                      shadowColor: darkIconBackgroundColor.withValues(
+                        alpha: 0.2,
+                      ),
                       child: child,
                     ),
                     child: const HeroIcon(HeroIcons.trash, color: Colors.white),

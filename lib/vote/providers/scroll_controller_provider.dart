@@ -6,23 +6,25 @@ class ScrollControllerNotifier extends StateNotifier<ScrollController> {
   ScrollControllerNotifier(super.scrollController);
 }
 
-final scrollControllerProvider = StateNotifierProvider.family<
-    ScrollControllerNotifier,
-    ScrollController,
-    AnimationController>((ref, animationController) {
-  ScrollController scrollController = ScrollController();
+final scrollControllerProvider =
+    StateNotifierProvider.family<
+      ScrollControllerNotifier,
+      ScrollController,
+      AnimationController
+    >((ref, animationController) {
+      ScrollController scrollController = ScrollController();
 
-  scrollController.addListener(() {
-    switch (scrollController.position.userScrollDirection) {
-      case ScrollDirection.forward:
-        animationController.forward();
-        break;
-      case ScrollDirection.reverse:
-        animationController.reverse();
-        break;
-      case ScrollDirection.idle:
-        break;
-    }
-  });
-  return ScrollControllerNotifier(scrollController);
-});
+      scrollController.addListener(() {
+        switch (scrollController.position.userScrollDirection) {
+          case ScrollDirection.forward:
+            animationController.forward();
+            break;
+          case ScrollDirection.reverse:
+            animationController.reverse();
+            break;
+          case ScrollDirection.idle:
+            break;
+        }
+      });
+      return ScrollControllerNotifier(scrollController);
+    });

@@ -1,8 +1,6 @@
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/tools/functions.dart';
-import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/applicant.dart';
+import 'package:titan/event/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/user/class/applicant.dart';
 
 enum CalendarEventType {
   eventAE,
@@ -11,7 +9,7 @@ enum CalendarEventType {
   happyHour,
   direction,
   nightParty,
-  other
+  other,
 }
 
 class Event {

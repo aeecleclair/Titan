@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myecl/flappybird/class/score.dart';
+import 'package:titan/flappybird/class/score.dart';
 
 class LeaderBoardItem extends StatelessWidget {
   final Score score;
@@ -16,10 +16,10 @@ class LeaderBoardItem extends StatelessWidget {
         color: score.position == 1
             ? Colors.yellow.shade700
             : score.position == 2
-                ? Colors.grey.shade400
-                : score.position == 3
-                    ? Colors.brown.shade400
-                    : Colors.white,
+            ? Colors.grey.shade400
+            : score.position == 3
+            ? Colors.brown.shade400
+            : Colors.white,
       ),
     );
     return Container(
@@ -31,10 +31,7 @@ class LeaderBoardItem extends StatelessWidget {
           Expanded(
             child: Row(
               children: [
-                Text(
-                  "${score.position}. ",
-                  style: style,
-                ),
+                Text("${score.position}. ", style: style),
                 Expanded(
                   child: AutoSizeText(
                     score.user.nickname ??
@@ -47,10 +44,7 @@ class LeaderBoardItem extends StatelessWidget {
               ],
             ),
           ),
-          Text(
-            "${score.value}",
-            style: style,
-          ),
+          Text("${score.value}", style: style),
         ],
       ),
     );

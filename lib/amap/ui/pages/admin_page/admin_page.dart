@@ -1,13 +1,13 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/amap/providers/cash_list_provider.dart';
-import 'package:myecl/amap/providers/delivery_list_provider.dart';
-import 'package:myecl/amap/providers/product_list_provider.dart';
-import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/amap/ui/pages/admin_page/account_handler.dart';
-import 'package:myecl/amap/ui/pages/admin_page/delivery_handler.dart';
-import 'package:myecl/amap/ui/pages/admin_page/product_handler.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/amap/providers/cash_list_provider.dart';
+import 'package:titan/amap/providers/delivery_list_provider.dart';
+import 'package:titan/amap/providers/product_list_provider.dart';
+import 'package:titan/amap/ui/amap.dart';
+import 'package:titan/amap/ui/pages/admin_page/account_handler.dart';
+import 'package:titan/amap/ui/pages/admin_page/delivery_handler.dart';
+import 'package:titan/amap/ui/pages/admin_page/product_handler.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 
 class AdminPage extends HookConsumerWidget {
   const AdminPage({super.key});

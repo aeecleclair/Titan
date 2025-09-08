@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/loan/providers/loan_provider.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/loan/providers/loan_provider.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class BorrowerNotifier extends StateNotifier<SimpleUser> {
   BorrowerNotifier(super.borrower);
@@ -10,8 +10,9 @@ class BorrowerNotifier extends StateNotifier<SimpleUser> {
   }
 }
 
-final borrowerProvider =
-    StateNotifierProvider<BorrowerNotifier, SimpleUser>((ref) {
+final borrowerProvider = StateNotifierProvider<BorrowerNotifier, SimpleUser>((
+  ref,
+) {
   final loan = ref.watch(loanProvider);
   return BorrowerNotifier(loan.borrower);
 });

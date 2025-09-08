@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/paiement/providers/fund_amount_provider.dart';
-import 'package:myecl/paiement/providers/my_wallet_provider.dart';
-import 'package:myecl/paiement/providers/tos_provider.dart';
-import 'package:myecl/paiement/ui/components/digit_fade_in_animation.dart';
-import 'package:myecl/paiement/ui/components/keyboard.dart';
-import 'package:myecl/paiement/ui/pages/fund_page/confirm_button.dart';
+import 'package:titan/paiement/providers/fund_amount_provider.dart';
+import 'package:titan/paiement/providers/my_wallet_provider.dart';
+import 'package:titan/paiement/providers/tos_provider.dart';
+import 'package:titan/paiement/ui/components/digit_fade_in_animation.dart';
+import 'package:titan/paiement/ui/components/keyboard.dart';
+import 'package:titan/paiement/ui/pages/fund_page/confirm_button.dart';
 
 class FundPage extends ConsumerWidget {
   const FundPage({super.key});
@@ -39,19 +39,14 @@ class FundPage extends ConsumerWidget {
       child: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xff017f80),
-              Color.fromARGB(255, 9, 103, 103),
-            ],
+            colors: [Color(0xff017f80), Color.fromARGB(255, 9, 103, 103)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
         child: Column(
           children: [
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Text(
               'Recharge',
               style: const TextStyle(
@@ -60,15 +55,10 @@ class FundPage extends ConsumerWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(
-              height: 5,
-            ),
+            const SizedBox(height: 5),
             Text(
               'Solde après recharge : ${formatter.format(amountToAdd + currentAmount)} € (max: ${formatter.format(maxBalanceAmount)} €)',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-              ),
+              style: const TextStyle(color: Colors.white, fontSize: 15),
             ),
             Expanded(
               child: Center(
@@ -115,8 +105,9 @@ class FundPage extends ConsumerWidget {
                     if (e == "," && fundAmount.isEmpty) {
                       fundAmountNotifier.setFundAmount("0,");
                     } else {
-                      fundAmountNotifier
-                          .setFundAmount(fundAmount + e.toString());
+                      fundAmountNotifier.setFundAmount(
+                        fundAmount + e.toString(),
+                      );
                     }
                   }
                 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/flappybird/providers/score_list_provider.dart';
-import 'package:myecl/flappybird/providers/user_score_provider.dart';
-import 'package:myecl/flappybird/ui/flappybird_template.dart';
-import 'package:myecl/flappybird/ui/pages/leaderboard_page/leaderboard_item.dart';
+import 'package:titan/flappybird/providers/score_list_provider.dart';
+import 'package:titan/flappybird/providers/user_score_provider.dart';
+import 'package:titan/flappybird/ui/flappybird_template.dart';
+import 'package:titan/flappybird/ui/pages/leaderboard_page/leaderboard_item.dart';
 
 class LeaderBoardPage extends HookConsumerWidget {
   const LeaderBoardPage({super.key});
@@ -59,9 +59,7 @@ class LeaderBoardPage extends HookConsumerWidget {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: bestUserScore.when(
-                  data: (score) => LeaderBoardItem(
-                    score: score,
-                  ),
+                  data: (score) => LeaderBoardItem(score: score),
                   error: (e, s) =>
                       Text(e.toString(), style: GoogleFonts.silkscreen()),
                   loading: () =>

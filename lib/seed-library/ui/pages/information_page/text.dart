@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/seed-library/providers/information_provider.dart';
-import 'package:myecl/seed-library/providers/is_seed_library_admin_provider.dart';
-import 'package:myecl/seed-library/router.dart';
-import 'package:myecl/seed-library/tools/constants.dart';
-import 'package:myecl/seed-library/ui/seed_library.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:titan/seed-library/providers/information_provider.dart';
+import 'package:titan/seed-library/providers/is_seed_library_admin_provider.dart';
+import 'package:titan/seed-library/router.dart';
+import 'package:titan/seed-library/tools/constants.dart';
+import 'package:titan/seed-library/ui/seed_library.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class InformationPage extends HookConsumerWidget {
@@ -58,16 +58,17 @@ class InformationPage extends HookConsumerWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                     foreground: Paint()
-                      ..shader = const RadialGradient(
-                        colors: [
-                          SeedLibraryColorConstants.greenGradient1,
-                          SeedLibraryColorConstants.textDark,
-                        ],
-                        center: Alignment.topLeft,
-                        radius: 10,
-                      ).createShader(
-                        const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
-                      ),
+                      ..shader =
+                          const RadialGradient(
+                            colors: [
+                              SeedLibraryColorConstants.greenGradient1,
+                              SeedLibraryColorConstants.textDark,
+                            ],
+                            center: Alignment.topLeft,
+                            radius: 10,
+                          ).createShader(
+                            const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
+                          ),
                   ),
                 ),
                 Text(

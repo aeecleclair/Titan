@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/repositories/item_repository.dart';
+import 'package:titan/loan/class/item.dart';
+import 'package:titan/loan/providers/item_list_provider.dart';
+import 'package:titan/loan/repositories/item_repository.dart';
 
 class MockItemRepository extends Mock implements ItemRepository {}
 
@@ -23,8 +23,9 @@ void main() {
         Item.empty().copyWith(id: '1', name: 'item1'),
         Item.empty().copyWith(id: '2', name: 'item2'),
       ];
-      when(() => itemRepository.getItemList(loanerId))
-          .thenAnswer((_) async => items);
+      when(
+        () => itemRepository.getItemList(loanerId),
+      ).thenAnswer((_) async => items);
 
       final result = await itemListNotifier.loadItemList(loanerId);
 
@@ -45,8 +46,9 @@ void main() {
         Item.empty().copyWith(id: '2', name: 'item2'),
       ];
       final item = Item.empty().copyWith(id: '1', name: 'item1');
-      when(() => itemRepository.createItem(loanerId, item))
-          .thenAnswer((_) async => item);
+      when(
+        () => itemRepository.createItem(loanerId, item),
+      ).thenAnswer((_) async => item);
       itemListNotifier.state = AsyncValue.data(items);
 
       final result = await itemListNotifier.addItem(item, loanerId);
@@ -61,8 +63,9 @@ void main() {
         Item.empty().copyWith(id: '2', name: 'item2'),
       ];
       final item = Item.empty().copyWith(id: '1', name: 'item1');
-      when(() => itemRepository.updateItem(loanerId, item))
-          .thenAnswer((_) async => true);
+      when(
+        () => itemRepository.updateItem(loanerId, item),
+      ).thenAnswer((_) async => true);
       itemListNotifier.state = AsyncValue.data(items);
 
       final result = await itemListNotifier.updateItem(item, loanerId);
@@ -77,8 +80,9 @@ void main() {
         Item.empty().copyWith(id: '2', name: 'item2'),
       ];
       final item = Item.empty().copyWith(id: '1', name: 'item1');
-      when(() => itemRepository.deleteItem(loanerId, item.id))
-          .thenAnswer((_) async => true);
+      when(
+        () => itemRepository.deleteItem(loanerId, item.id),
+      ).thenAnswer((_) async => true);
       itemListNotifier.state = AsyncValue.data(items);
 
       final result = await itemListNotifier.deleteItem(item, loanerId);
@@ -114,13 +118,15 @@ void main() {
       expect(result.error, error);
     });
 
-    test('copy should return a copy of the current state when loading',
-        () async {
-      itemListNotifier.state = const AsyncValue.loading();
+    test(
+      'copy should return a copy of the current state when loading',
+      () async {
+        itemListNotifier.state = const AsyncValue.loading();
 
-      final result = await itemListNotifier.copy();
+        final result = await itemListNotifier.copy();
 
-      expect(result.isLoading, true);
-    });
+        expect(result.isLoading, true);
+      },
+    );
   });
 }

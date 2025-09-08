@@ -1,5 +1,5 @@
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/admin/class/account_type.dart';
+import 'package:titan/tools/functions.dart';
 
 class SimpleUser {
   SimpleUser({
@@ -36,11 +36,11 @@ class SimpleUser {
   }
 
   SimpleUser.empty()
-      : name = 'Nom',
-        firstname = 'Prénom',
-        nickname = null,
-        id = '',
-        accountType = AccountType.empty();
+    : name = 'Nom',
+      firstname = 'Prénom',
+      nickname = null,
+      id = '',
+      accountType = AccountType.empty();
 
   String getName() {
     if (nickname == null) {

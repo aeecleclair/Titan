@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/history.dart';
-import 'package:myecl/paiement/providers/selected_store_provider.dart';
-import 'package:myecl/paiement/ui/components/transaction_card.dart';
-import 'package:myecl/paiement/ui/pages/store_stats_page/refund_page.dart';
+import 'package:titan/paiement/class/history.dart';
+import 'package:titan/paiement/providers/refund_amount_provider.dart';
+import 'package:titan/paiement/providers/selected_store_provider.dart';
+import 'package:titan/paiement/ui/components/transaction_card.dart';
+import 'package:titan/paiement/ui/pages/store_stats_page/refund_page.dart';
 
 class StoreTransactionsDetail extends ConsumerWidget {
   final List<History> history;
@@ -12,6 +13,7 @@ class StoreTransactionsDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedStore = ref.watch(selectedStoreProvider);
+    final refundAmountNotifier = ref.watch(refundAmountProvider.notifier);
 
     void showCancelModal(History history) {
       showModalBottomSheet(
@@ -20,22 +22,25 @@ class StoreTransactionsDetail extends ConsumerWidget {
         scrollControlDisabledMaxHeightRatio:
             (1 - 80 / MediaQuery.of(context).size.height),
         builder: (context) => ReFundPage(history: history),
-      );
+      ).then((_) {
+        refundAmountNotifier.setRefundAmount("");
+      });
     }
+
+    history.sort((a, b) => b.creation.compareTo(a.creation));
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: history
             .map(
-              (e) => TransactionCard(
-                transaction: e,
+              (t) => TransactionCard(
+                transaction: t,
                 onTap: () => {
                   if (selectedStore.canCancel &&
-                      e.status == TransactionStatus.confirmed)
-                    {
-                      showCancelModal(e),
-                    },
+                      t.status == TransactionStatus.confirmed &&
+                      t.type == HistoryType.received)
+                    {showCancelModal(t)},
                 },
                 storeView: true,
               ),

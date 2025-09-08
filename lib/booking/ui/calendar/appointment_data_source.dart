@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/booking/class/booking.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AppointmentDataSource extends CalendarDataSource<Booking> {
@@ -46,6 +46,5 @@ class AppointmentDataSource extends CalendarDataSource<Booking> {
   Booking? convertAppointmentToObject(
     Booking customData,
     Appointment appointment,
-  ) =>
-      customData;
+  ) => customData;
 }

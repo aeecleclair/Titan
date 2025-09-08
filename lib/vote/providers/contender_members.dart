@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/vote/class/members.dart';
+import 'package:titan/vote/class/members.dart';
 
 class ContenderMembersProvider extends StateNotifier<List<Member>> {
   ContenderMembersProvider() : super([]);
@@ -31,5 +31,5 @@ class ContenderMembersProvider extends StateNotifier<List<Member>> {
 
 final contenderMembersProvider =
     StateNotifierProvider<ContenderMembersProvider, List<Member>>((ref) {
-  return ContenderMembersProvider();
-});
+      return ContenderMembersProvider();
+    });

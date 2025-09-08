@@ -1,5 +1,5 @@
-import 'package:myecl/paiement/class/history.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/paiement/class/history.dart';
+import 'package:titan/tools/functions.dart';
 
 enum TransactionType { direct, request, refund }
 
@@ -25,29 +25,29 @@ class Transaction {
   });
 
   Transaction.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        debitedWalletId = json['debited_wallet_id'],
-        creditedWalletId = json['credited_wallet_id'],
-        transactionType = TransactionType.values.firstWhere(
-          (e) => e.toString().split('.').last == json['transaction_type'],
-        ),
-        sellerUserId = json['seller_user_id'],
-        total = json['total'],
-        creation = processDateFromAPI(json['creation']),
-        status = TransactionStatus.values.firstWhere(
-          (e) => e.toString().split('.').last == json['status'],
-        );
+    : id = json['id'],
+      debitedWalletId = json['debited_wallet_id'],
+      creditedWalletId = json['credited_wallet_id'],
+      transactionType = TransactionType.values.firstWhere(
+        (e) => e.toString().split('.').last == json['transaction_type'],
+      ),
+      sellerUserId = json['seller_user_id'],
+      total = json['total'],
+      creation = processDateFromAPI(json['creation']),
+      status = TransactionStatus.values.firstWhere(
+        (e) => e.toString().split('.').last == json['status'],
+      );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'debited_wallet_id': debitedWalletId,
-        'credited_wallet_id': creditedWalletId,
-        'transaction_type': transactionType.toString().split('.').last,
-        'seller_user_id': sellerUserId,
-        'total': total,
-        'creation': processDateToAPI(creation),
-        'status': status.toString().split('.').last,
-      };
+    'id': id,
+    'debited_wallet_id': debitedWalletId,
+    'credited_wallet_id': creditedWalletId,
+    'transaction_type': transactionType.toString().split('.').last,
+    'seller_user_id': sellerUserId,
+    'total': total,
+    'creation': processDateToAPI(creation),
+    'status': status.toString().split('.').last,
+  };
 
   @override
   String toString() {
@@ -55,12 +55,12 @@ class Transaction {
   }
 
   Transaction.empty()
-      : id = '',
-        debitedWalletId = '',
-        creditedWalletId = '',
-        transactionType = TransactionType.direct,
-        sellerUserId = '',
-        total = 0,
-        creation = DateTime.now(),
-        status = TransactionStatus.confirmed;
+    : id = '',
+      debitedWalletId = '',
+      creditedWalletId = '',
+      transactionType = TransactionType.direct,
+      sellerUserId = '',
+      total = 0,
+      creation = DateTime.now(),
+      status = TransactionStatus.confirmed;
 }

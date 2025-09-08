@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
 
 class EditionButton extends HookConsumerWidget {
   const EditionButton({
@@ -19,8 +19,9 @@ class EditionButton extends HookConsumerWidget {
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color:
-              !deactivated ? Colors.grey.shade200 : ColorConstants.deactivated1,
+          color: !deactivated
+              ? Colors.grey.shade200
+              : ColorConstants.deactivated1,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(

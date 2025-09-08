@@ -1,5 +1,5 @@
-import 'package:myecl/advert/class/advert.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/advert/class/advert.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class AdvertRepository extends Repository {
   @override
@@ -7,9 +7,9 @@ class AdvertRepository extends Repository {
   final ext = 'advert/';
 
   Future<List<Advert>> getAllAdvert() async {
-    return (await getList(suffix: 'adverts'))
-        .map((e) => Advert.fromJson(e))
-        .toList();
+    return (await getList(
+      suffix: 'adverts',
+    )).map((e) => Advert.fromJson(e)).toList();
   }
 
   Future<Advert> getAdvert(String id) async {

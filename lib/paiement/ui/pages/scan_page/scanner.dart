@@ -5,33 +5,40 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:myecl/paiement/providers/barcode_provider.dart';
-import 'package:myecl/paiement/providers/bypass_provider.dart';
-import 'package:myecl/paiement/providers/ongoing_transaction.dart';
-import 'package:myecl/paiement/providers/scan_provider.dart';
-import 'package:myecl/paiement/providers/selected_store_provider.dart';
-import 'package:myecl/paiement/ui/pages/scan_page/scan_overlay_shape.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/paiement/providers/barcode_provider.dart';
+import 'package:titan/paiement/providers/bypass_provider.dart';
+import 'package:titan/paiement/providers/last_time_scanned.dart';
+import 'package:titan/paiement/providers/ongoing_transaction.dart';
+import 'package:titan/paiement/providers/scan_provider.dart';
+import 'package:titan/paiement/providers/selected_store_provider.dart';
+import 'package:titan/paiement/ui/pages/scan_page/scan_overlay_shape.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
-class Scanner extends ConsumerStatefulWidget {
+class Scanner extends StatefulHookConsumerWidget {
   const Scanner({super.key});
 
   @override
-  ConsumerState<Scanner> createState() => _Scanner();
+  ConsumerState<Scanner> createState() => ScannerState();
 }
 
-class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
-  final controller = MobileScannerController(
-    autoStart: false,
-  );
+class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
+  final controller = MobileScannerController(autoStart: false);
+  String? scannedValue;
 
   StreamSubscription<Object?>? _subscription;
 
-  void showWithoutMembershipDialog(
-    Function() onYes,
-  ) async {
+  void resetScanner() {
+    setState(() {
+      scannedValue = null;
+    });
+    controller.start();
+  }
+
+  void showWithoutMembershipDialog(Function() onYes) async {
     await showDialog(
       context: context,
       builder: (context) {
@@ -54,48 +61,52 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
   }
 
   void _handleBarcode(BarcodeCapture barcodes) async {
+    final lastTimeScanned = ref.watch(lastTimeScannedProvider);
+    final lastTimeScannedNotifier = ref.read(lastTimeScannedProvider.notifier);
+    if (lastTimeScanned != null &&
+        DateTime.now().difference(lastTimeScanned) <
+            const Duration(seconds: 5)) {
+      return;
+    }
+    lastTimeScannedNotifier.updateLastTimeScanned(DateTime.now());
     final bypass = ref.watch(bypassProvider);
     final barcode = ref.watch(barcodeProvider);
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
     final store = ref.read(selectedStoreProvider);
     final scanNotifier = ref.read(scanProvider.notifier);
-    final ongoingTransactionNotifier =
-        ref.read(ongoingTransactionProvider.notifier);
+    final ongoingTransactionNotifier = ref.read(
+      ongoingTransactionProvider.notifier,
+    );
     if (mounted && barcodes.barcodes.isNotEmpty && barcode == null) {
-      final data = barcodeNotifier
-          .updateBarcode(barcodes.barcodes.firstOrNull!.rawValue!);
+      final data = barcodeNotifier.updateBarcode(
+        barcodes.barcodes.firstOrNull!.rawValue!,
+      );
       if (!bypass) {
         final canScan = await scanNotifier.canScan(store.id, data);
         if (!canScan) {
-          showWithoutMembershipDialog(
-            () async {
-              final value =
-                  await scanNotifier.scan(store.id, data, bypass: true);
-              if (value == null) {
-                displayToastWithContext(
-                  TypeMsg.error,
-                  "QR Code déjà utilisé",
-                );
-                barcodeNotifier.clearBarcode();
-                ongoingTransactionNotifier.clearOngoingTransaction();
-                return;
-              }
-              ongoingTransactionNotifier.updateOngoingTransaction(value);
-            },
-          );
+          showWithoutMembershipDialog(() async {
+            final value = await scanNotifier.scan(store.id, data, bypass: true);
+            if (value == null) {
+              displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
+              barcodeNotifier.clearBarcode();
+              ongoingTransactionNotifier.clearOngoingTransaction();
+              return;
+            }
+            ongoingTransactionNotifier.updateOngoingTransaction(value);
+          });
           return;
         }
       }
       final value = await scanNotifier.scan(store.id, data);
       if (value == null) {
-        displayToastWithContext(
-          TypeMsg.error,
-          "QR Code déjà utilisé",
-        );
+        displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
         barcodeNotifier.clearBarcode();
         ongoingTransactionNotifier.clearOngoingTransaction();
         return;
       } else {
+        setState(() {
+          scannedValue = barcodes.barcodes.firstOrNull?.rawValue;
+        });
         ongoingTransactionNotifier.updateOngoingTransaction(value);
       }
     }
@@ -104,9 +115,28 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addObserver(this);
+
     _subscription = controller.barcodes.listen(_handleBarcode);
-    unawaited(controller.start());
+    unawaited(() async {
+      await controller.start();
+      if (!controller.value.hasCameraPermission && mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => CustomDialogBox(
+            title: 'Permission caméra requise',
+            descriptions:
+                'Pour scanner des QR codes, l\'application a besoin d\'accéder à votre caméra. Veuillez accorder cette permission dans les paramètres de votre appareil.',
+            onYes: () async {
+              Navigator.of(context).pop();
+              await openAppSettings();
+            },
+            yesText: 'Paramètres',
+          ),
+        );
+      }
+    }());
   }
 
   @override
@@ -139,27 +169,50 @@ class _Scanner extends ConsumerState<Scanner> with WidgetsBindingObserver {
         topLeft: Radius.circular(40),
         topRight: Radius.circular(40),
       ),
-      child: MobileScanner(
-        controller: controller,
-        overlayBuilder: (context, constraints) {
-          return Center(
-            child: Container(
-              decoration: ShapeDecoration(
-                shape: QrScannerOverlayShape(
-                  borderColor: ongoingTransaction.when(
-                    data: (_) => Colors.green,
-                    error: (_, __) => Colors.red,
-                    loading: () => Colors.white,
+      child: Container(
+        color: Colors.black,
+        child: scannedValue != null
+            ? Stack(
+                alignment: Alignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(25)),
+                    child: QrImageView(
+                      data: scannedValue!,
+                      version: QrVersions.auto,
+                      size: MediaQuery.of(context).size.width * 0.8,
+                      backgroundColor: Colors.white,
+                    ),
                   ),
-                  borderRadius: 10,
-                  borderLength: 40,
-                  borderWidth: 7,
-                  cutOutSize: scanArea,
-                ),
+                  CustomPaint(
+                    size: Size.infinite,
+                    painter: ScannerOverlayPainter(
+                      scanArea: MediaQuery.of(context).size.width * 0.8,
+                      borderColor: ongoingTransaction.when(
+                        data: (_) => Color(0xff387200),
+                        error: (_, _) => Color(0xff720000),
+                        loading: () => Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : MobileScanner(
+                controller: controller,
+                overlayBuilder: (context, constraints) {
+                  return CustomPaint(
+                    size: Size.infinite,
+                    painter: ScannerOverlayPainter(
+                      scanArea: scanArea,
+                      borderColor: ongoingTransaction.when(
+                        data: (_) => Color(0xff387200),
+                        error: (_, _) => Color(0xff720000),
+                        loading: () => Colors.white,
+                      ),
+                    ),
+                  );
+                },
               ),
-            ),
-          );
-        },
       ),
     );
   }

@@ -1,13 +1,13 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/cinema/repositories/cinema_topic_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/cinema/repositories/cinema_topic_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class CinemaTopicsProvider extends ListNotifier<String> {
   final CinemaTopicRepository cinemaTopicRepository = CinemaTopicRepository();
   CinemaTopicsProvider({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     cinemaTopicRepository.setToken(token);
   }
 
@@ -45,12 +45,13 @@ class CinemaTopicsProvider extends ListNotifier<String> {
 }
 
 final cinemaTopicsProvider =
-    StateNotifierProvider<CinemaTopicsProvider, AsyncValue<List<String>>>(
-        (ref) {
-  final token = ref.watch(tokenProvider);
-  CinemaTopicsProvider notifier = CinemaTopicsProvider(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    notifier.getTopics();
-  });
-  return notifier;
-});
+    StateNotifierProvider<CinemaTopicsProvider, AsyncValue<List<String>>>((
+      ref,
+    ) {
+      final token = ref.watch(tokenProvider);
+      CinemaTopicsProvider notifier = CinemaTopicsProvider(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        notifier.getTopics();
+      });
+      return notifier;
+    });

@@ -1,4 +1,4 @@
-import 'package:myecl/centralisation/class/module.dart';
+import 'package:titan/centralisation/class/module.dart';
 
 class Section {
   Section({
@@ -10,9 +10,11 @@ class Section {
   late final List<Module> moduleList;
   late final bool? expanded;
 
-  Section.fromJson(k, v) {
+  Section.fromJson(String k, List<dynamic> v) {
     name = k;
-    moduleList = List<Module>.from(v.map((e) => Module.fromJson(e)));
+    moduleList = List<Module>.from(
+      v.map((e) => Module.fromJson(e as Map<String, dynamic>)),
+    );
     expanded = true;
   }
 

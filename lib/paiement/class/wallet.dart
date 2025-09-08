@@ -1,10 +1,7 @@
-import 'package:myecl/paiement/class/store.dart';
-import 'package:myecl/user/class/user.dart';
+import 'package:titan/paiement/class/store.dart';
+import 'package:titan/user/class/user.dart';
 
-enum WalletType {
-  user,
-  store,
-}
+enum WalletType { user, store }
 
 class Wallet {
   final String id;

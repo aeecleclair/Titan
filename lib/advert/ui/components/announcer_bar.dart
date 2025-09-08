@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/advert/providers/announcer_provider.dart';
-import 'package:myecl/advert/providers/announcer_list_provider.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
+import 'package:titan/advert/providers/announcer_provider.dart';
+import 'package:titan/advert/providers/announcer_list_provider.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/tools/ui/layouts/item_chip.dart';
 
 class AnnouncerBar extends HookConsumerWidget {
   final bool useUserAnnouncers;

@@ -1,7 +1,5 @@
 class RolesTags {
-  RolesTags({
-    required this.tags,
-  });
+  RolesTags({required this.tags});
 
   late final List<String> tags;
 
@@ -10,9 +8,7 @@ class RolesTags {
   }
 
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{
-      'tags': tags,
-    };
+    final data = <String, dynamic>{'tags': tags};
     return data;
   }
 

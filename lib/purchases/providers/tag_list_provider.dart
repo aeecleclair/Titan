@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/purchases/repositories/scanner_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/purchases/repositories/scanner_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
 
 class TagListNotifier extends ListNotifier<String> {
   final ScannerRepository scannerRepository = ScannerRepository();
@@ -23,7 +23,7 @@ class TagListNotifier extends ListNotifier<String> {
 
 final tagListProvider =
     StateNotifierProvider<TagListNotifier, AsyncValue<List<String>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  TagListNotifier notifier = TagListNotifier(token: token);
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      TagListNotifier notifier = TagListNotifier(token: token);
+      return notifier;
+    });

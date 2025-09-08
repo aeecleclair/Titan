@@ -16,7 +16,7 @@ class Tag {
     return data;
   }
 
-  Tag copyWith({id, name}) {
+  Tag copyWith({String? id, String? name}) {
     return Tag(id: id ?? this.id, name: name ?? this.name);
   }
 

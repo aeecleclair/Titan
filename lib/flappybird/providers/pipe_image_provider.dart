@@ -11,15 +11,17 @@ class PipeImageNotifier extends StateNotifier<Uint8List> {
 
   Future<void> getPipeImage() async {
     final image = await rootBundle.load("assets/images/pipe.png");
-    external_image.Image? img =
-        external_image.decodeImage(image.buffer.asUint8List());
+    external_image.Image? img = external_image.decodeImage(
+      image.buffer.asUint8List(),
+    );
     external_image.Image resized = external_image.copyResize(img!, width: 80);
     state = Uint8List.fromList(external_image.encodePng(resized));
   }
 }
 
-final pipeImageProvider =
-    StateNotifierProvider<PipeImageNotifier, Uint8List>((ref) {
+final pipeImageProvider = StateNotifierProvider<PipeImageNotifier, Uint8List>((
+  ref,
+) {
   PipeImageNotifier notifier = PipeImageNotifier();
   notifier.getPipeImage();
   return notifier;

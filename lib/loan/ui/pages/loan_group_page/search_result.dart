@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/providers/borrower_provider.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:titan/loan/providers/borrower_provider.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
   final TextEditingController queryController;
@@ -20,6 +20,7 @@ class SearchResult extends HookConsumerWidget {
         children: user
             .map(
               (simpleUser) => GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(

@@ -22,12 +22,7 @@ class Sphere {
     );
     int green = Random().nextInt(100) + 100;
     int red = 60 + Random().nextInt(green - 99);
-    newSphere.paint.color = Color.fromARGB(
-      255,
-      red,
-      green,
-      0,
-    );
+    newSphere.paint.color = Color.fromARGB(255, red, green, 0);
     return newSphere;
   }
 
@@ -40,10 +35,7 @@ class Sphere {
 class AmapBackgroundPainter extends CustomPainter {
   List<Sphere> spheres = [];
   final Animation animation;
-  AmapBackgroundPainter({required this.animation})
-      : super(
-          repaint: animation,
-        );
+  AmapBackgroundPainter({required this.animation}) : super(repaint: animation);
 
   @override
   void paint(Canvas canvas, Size size) {

@@ -1,18 +1,18 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
-import 'package:myecl/raffle/providers/user_amount_provider.dart';
-import 'package:myecl/raffle/providers/prize_list_provider.dart';
-import 'package:myecl/raffle/providers/raffle_provider.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/pages/raffle_page/buy_type_ticket_card.dart';
-import 'package:myecl/raffle/ui/pages/raffle_page/prize_card.dart';
-import 'package:myecl/raffle/ui/raffle.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/raffle/providers/pack_ticket_list_provider.dart';
+import 'package:titan/raffle/providers/user_amount_provider.dart';
+import 'package:titan/raffle/providers/prize_list_provider.dart';
+import 'package:titan/raffle/providers/raffle_provider.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/raffle/ui/pages/raffle_page/buy_type_ticket_card.dart';
+import 'package:titan/raffle/ui/pages/raffle_page/prize_card.dart';
+import 'package:titan/raffle/ui/raffle.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 
 class RaffleInfoPage extends HookConsumerWidget {
   const RaffleInfoPage({super.key});
@@ -161,8 +161,10 @@ class RaffleInfoPage extends HookConsumerWidget {
               },
               orElseBuilder: (context, child) => Container(
                 height: 120,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 30,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

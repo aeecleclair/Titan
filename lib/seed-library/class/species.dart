@@ -1,7 +1,7 @@
 import 'dart:core';
 
-import 'package:myecl/seed-library/class/species_type.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/seed-library/class/species_type.dart';
+import 'package:titan/tools/functions.dart';
 
 class Species {
   final String id; // UUID
@@ -41,8 +41,9 @@ class Species {
       'start_season': startSeason != null
           ? processDateToAPIWithoutHour(startSeason!)
           : null,
-      'end_season':
-          endSeason != null ? processDateToAPIWithoutHour(endSeason!) : null,
+      'end_season': endSeason != null
+          ? processDateToAPIWithoutHour(endSeason!)
+          : null,
       'time_maturation': timeMaturation,
     };
   }
@@ -68,16 +69,16 @@ class Species {
   }
 
   Species.empty()
-      : id = '',
-        prefix = '',
-        name = '',
-        difficulty = 0,
-        type = SpeciesType.empty(),
-        card = null,
-        nbSeedsRecommended = null,
-        startSeason = null,
-        endSeason = null,
-        timeMaturation = null;
+    : id = '',
+      prefix = '',
+      name = '',
+      difficulty = 0,
+      type = SpeciesType.empty(),
+      card = null,
+      nbSeedsRecommended = null,
+      startSeason = null,
+      endSeason = null,
+      timeMaturation = null;
 
   Species copyWith({
     String? id,

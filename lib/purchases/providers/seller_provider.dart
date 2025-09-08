@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/purchases/class/seller.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/purchases/class/seller.dart';
 
 class SellerNotifier extends StateNotifier<Seller> {
   SellerNotifier({required String token}) : super(Seller.empty());

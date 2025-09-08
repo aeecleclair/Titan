@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:myecl/advert/tools/functions.dart';
+import 'package:titan/advert/tools/functions.dart';
 
 class TagChip extends StatelessWidget {
   final String tagName;
@@ -11,8 +11,9 @@ class TagChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color bgColor = generateColor(tagName);
-    Color borderColor =
-        bgColor.computeLuminance() > 0.1 ? bgColor : Colors.white;
+    Color borderColor = bgColor.computeLuminance() > 0.1
+        ? bgColor
+        : Colors.white;
     Color darkerBgColor = Color.from(
       alpha: bgColor.a,
       red: max(bgColor.r - 0.12, 0), // 0.12 = 30/255
@@ -28,10 +29,7 @@ class TagChip extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomLeft,
-          colors: [
-            bgColor,
-            darkerBgColor,
-          ],
+          colors: [bgColor, darkerBgColor],
           stops: const [0.7, 1.0],
         ),
         borderRadius: BorderRadius.circular(20),
@@ -43,10 +41,7 @@ class TagChip extends StatelessWidget {
           tagName,
           textAlign: TextAlign.center,
           maxLines: 1,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 13,
-          ),
+          style: const TextStyle(color: Colors.white, fontSize: 13),
         ),
       ),
     );

@@ -1,11 +1,7 @@
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
 
 class Ph {
-  Ph({
-    required this.id,
-    required this.date,
-    required this.name,
-  });
+  Ph({required this.id, required this.date, required this.name});
   late final String id;
   late final DateTime date;
   late final String name;
@@ -24,8 +20,12 @@ class Ph {
     return data;
   }
 
-  Ph copyWith({id, date, name}) {
-    return Ph(id: id, date: date, name: name);
+  Ph copyWith({String? id, DateTime? date, String? name}) {
+    return Ph(
+      id: id ?? this.id,
+      date: date ?? this.date,
+      name: name ?? this.name,
+    );
   }
 
   Ph.empty() {

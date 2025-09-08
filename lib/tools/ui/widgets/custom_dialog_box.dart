@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class Consts {
   Consts._();
@@ -13,6 +13,7 @@ class Consts {
 
 class CustomDialogBox extends StatelessWidget {
   final String title, descriptions;
+  final String? yesText, noText;
   final Function() onYes;
   final Function()? onNo;
 
@@ -22,6 +23,8 @@ class CustomDialogBox extends StatelessWidget {
     required this.descriptions,
     required this.onYes,
     this.onNo,
+    this.yesText,
+    this.noText,
   });
 
   @override
@@ -78,9 +81,7 @@ class CustomDialogBox extends StatelessWidget {
                       Text(
                         descriptions,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 16.0,
-                        ),
+                        style: const TextStyle(fontSize: 16.0),
                       ),
                       const SizedBox(height: 30.0),
                       Row(
@@ -94,16 +95,11 @@ class CustomDialogBox extends StatelessWidget {
                             },
                             child: Container(
                               width: 100,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 16,
-                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 gradient: const LinearGradient(
-                                  colors: [
-                                    Colors.black87,
-                                    Colors.black,
-                                  ],
+                                  colors: [Colors.black87, Colors.black],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                 ),
@@ -115,9 +111,9 @@ class CustomDialogBox extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              child: const Center(
+                              child: Center(
                                 child: Text(
-                                  "Annuler",
+                                  noText ?? "Annuler",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -136,9 +132,7 @@ class CustomDialogBox extends StatelessWidget {
                             waitingColor: Colors.black,
                             builder: (child) => Container(
                               width: 100,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 16,
-                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.grey.shade300,
@@ -146,21 +140,16 @@ class CustomDialogBox extends StatelessWidget {
                                   BoxShadow(
                                     color: Colors.grey.withValues(alpha: 0.3),
                                     blurRadius: 2.0,
-                                    offset: const Offset(
-                                      1.0,
-                                      2.0,
-                                    ),
+                                    offset: const Offset(1.0, 2.0),
                                   ),
                                 ],
                               ),
                               child: child,
                             ),
-                            child: const Center(
+                            child: Center(
                               child: Text(
-                                "Confirmer",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                yesText ?? "Confirmer",
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
@@ -178,10 +167,7 @@ class CustomDialogBox extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: const LinearGradient(
-                        colors: [
-                          Consts.redGradient1,
-                          Consts.redGradient2,
-                        ],
+                        colors: [Consts.redGradient1, Consts.redGradient2],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),

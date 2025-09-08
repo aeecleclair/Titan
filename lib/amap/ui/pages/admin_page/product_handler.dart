@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/providers/product_list_provider.dart';
-import 'package:myecl/amap/providers/product_provider.dart';
-import 'package:myecl/amap/providers/sorted_by_category_products.dart';
-import 'package:myecl/amap/router.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/components/product_ui.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/providers/product_list_provider.dart';
+import 'package:titan/amap/providers/product_provider.dart';
+import 'package:titan/amap/providers/sorted_by_category_products.dart';
+import 'package:titan/amap/router.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/amap/ui/components/product_ui.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ProductHandler extends HookConsumerWidget {
@@ -22,8 +22,9 @@ class ProductHandler extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productNotifier = ref.read(productProvider.notifier);
-    final sortedByCategoryProducts =
-        ref.watch(sortedByCategoryProductsProvider);
+    final sortedByCategoryProducts = ref.watch(
+      sortedByCategoryProductsProvider,
+    );
     final products = sortedByCategoryProducts.values
         .toList()
         .expand((element) => element)

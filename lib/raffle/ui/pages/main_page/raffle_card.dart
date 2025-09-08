@@ -1,18 +1,18 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/class/stats.dart';
-import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
-import 'package:myecl/raffle/providers/prize_list_provider.dart';
-import 'package:myecl/raffle/providers/raffle_id_provider.dart';
-import 'package:myecl/raffle/providers/raffle_stats_map_provider.dart';
-import 'package:myecl/raffle/providers/raffle_stats_provider.dart';
-import 'package:myecl/raffle/providers/ticket_list_provider.dart';
-import 'package:myecl/raffle/router.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/raffle.dart';
-import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
+import 'package:titan/raffle/class/raffle.dart';
+import 'package:titan/raffle/class/stats.dart';
+import 'package:titan/raffle/providers/pack_ticket_list_provider.dart';
+import 'package:titan/raffle/providers/prize_list_provider.dart';
+import 'package:titan/raffle/providers/raffle_id_provider.dart';
+import 'package:titan/raffle/providers/raffle_stats_map_provider.dart';
+import 'package:titan/raffle/providers/raffle_stats_provider.dart';
+import 'package:titan/raffle/providers/ticket_list_provider.dart';
+import 'package:titan/raffle/router.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/raffle/ui/raffle.dart';
+import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RaffleWidget extends HookConsumerWidget {
@@ -26,8 +26,9 @@ class RaffleWidget extends HookConsumerWidget {
     final ticketListNotifier = ref.watch(ticketsListProvider.notifier);
     final packTicketListNotifier = ref.watch(packTicketListProvider.notifier);
     final singleRaffleStats = ref.watch(raffleStatsProvider.notifier);
-    final raffleStat =
-        ref.watch(raffleStatsMapProvider.select((value) => value[raffle.id]));
+    final raffleStat = ref.watch(
+      raffleStatsMapProvider.select((value) => value[raffle.id]),
+    );
     final rafflesStatsNotifier = ref.watch(raffleStatsMapProvider.notifier);
     return RaffleTemplate(
       child: GestureDetector(
@@ -85,12 +86,13 @@ class RaffleWidget extends HookConsumerWidget {
                   group: raffleStat,
                   notifier: rafflesStatsNotifier,
                   mapKey: raffle.id,
-                  loader: (raffleId) async => (await singleRaffleStats
-                          .loadRaffleStats(customRaffleId: raffleId))
-                      .maybeWhen(
-                    data: (value) => value,
-                    orElse: () => RaffleStats.empty(),
-                  ),
+                  loader: (raffleId) async =>
+                      (await singleRaffleStats.loadRaffleStats(
+                        customRaffleId: raffleId,
+                      )).maybeWhen(
+                        data: (value) => value,
+                        orElse: () => RaffleStats.empty(),
+                      ),
                   dataBuilder: (context, stats) {
                     final stat = stats.first;
                     return Row(

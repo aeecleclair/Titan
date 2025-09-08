@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/centralisation/class/module.dart';
-import 'package:myecl/centralisation/providers/favorites_providers.dart';
-import 'package:myecl/centralisation/tools/constants.dart';
-import 'package:myecl/centralisation/tools/functions.dart';
+import 'package:titan/centralisation/class/module.dart';
+import 'package:titan/centralisation/providers/favorites_providers.dart';
+import 'package:titan/centralisation/tools/constants.dart';
+import 'package:titan/centralisation/tools/functions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ModuleCard extends HookConsumerWidget {
@@ -33,9 +33,7 @@ class ModuleCard extends HookConsumerWidget {
       child: TextButton(
         style: ButtonStyle(
           shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           ),
           overlayColor: WidgetStateProperty.all<Color>(
             const Color.fromARGB(37, 0, 0, 0),
@@ -66,10 +64,7 @@ class ModuleCard extends HookConsumerWidget {
                 children: [
                   Text(
                     module.name,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                    ),
+                    style: const TextStyle(fontSize: 18, color: Colors.black),
                   ),
                 ],
               ),

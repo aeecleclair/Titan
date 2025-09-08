@@ -1,11 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/repositories/event_repository.dart';
-import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/applicant.dart';
+import 'package:titan/event/class/event.dart';
+import 'package:titan/event/repositories/event_repository.dart';
+import 'package:titan/event/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/user/class/applicant.dart';
 
 class MockEventRepository extends Mock implements EventRepository {}
 
@@ -23,17 +22,11 @@ void main() {
 
     test('Should update with new values', () {
       final event = Event.empty();
-      Event newEvent = event.copyWith(
-        id: "1",
-      );
+      Event newEvent = event.copyWith(id: "1");
       expect(newEvent.id, "1");
-      newEvent = event.copyWith(
-        name: "Event 1",
-      );
+      newEvent = event.copyWith(name: "Event 1");
       expect(newEvent.name, "Event 1");
-      newEvent = event.copyWith(
-        organizer: "1",
-      );
+      newEvent = event.copyWith(organizer: "1");
       expect(newEvent.organizer, "1");
       newEvent = event.copyWith(
         start: DateTime.parse("2021-01-01T00:00:00.000Z"),
@@ -43,38 +36,22 @@ void main() {
         end: DateTime.parse("2021-01-01T00:00:00.000Z"),
       );
       expect(newEvent.end, DateTime.parse("2021-01-01T00:00:00.000Z"));
-      newEvent = event.copyWith(
-        location: "Location 1",
-      );
+      newEvent = event.copyWith(location: "Location 1");
       expect(newEvent.location, "Location 1");
-      newEvent = event.copyWith(
-        type: CalendarEventType.eventAE,
-      );
+      newEvent = event.copyWith(type: CalendarEventType.eventAE);
       expect(newEvent.type, CalendarEventType.eventAE);
-      newEvent = event.copyWith(
-        description: "Description 1",
-      );
+      newEvent = event.copyWith(description: "Description 1");
       expect(newEvent.description, "Description 1");
-      newEvent = event.copyWith(
-        allDay: false,
-      );
+      newEvent = event.copyWith(allDay: false);
       expect(newEvent.allDay, false);
-      newEvent = event.copyWith(
-        recurrenceRule: "",
-      );
+      newEvent = event.copyWith(recurrenceRule: "");
       expect(newEvent.recurrenceRule, "");
-      newEvent = event.copyWith(
-        applicantId: "1",
-      );
+      newEvent = event.copyWith(applicantId: "1");
       expect(newEvent.applicantId, "1");
-      newEvent = event.copyWith(
-        applicant: Applicant.empty().copyWith(id: "1"),
-      );
+      newEvent = event.copyWith(applicant: Applicant.empty().copyWith(id: "1"));
       expect(newEvent.applicant, isA<Applicant>());
       expect(newEvent.applicant.id, "1");
-      newEvent = event.copyWith(
-        decision: Decision.approved,
-      );
+      newEvent = event.copyWith(decision: Decision.approved);
     });
 
     test('Should print an event', () {

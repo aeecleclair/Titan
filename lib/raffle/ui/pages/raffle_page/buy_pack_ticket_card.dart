@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/pack_ticket.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
-import 'package:myecl/raffle/providers/tombola_logo_provider.dart';
-import 'package:myecl/raffle/providers/tombola_logos_provider.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/pages/raffle_page/confirm_payment.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/raffle/class/pack_ticket.dart';
+import 'package:titan/raffle/class/raffle.dart';
+import 'package:titan/raffle/class/raffle_status_type.dart';
+import 'package:titan/raffle/providers/tombola_logo_provider.dart';
+import 'package:titan/raffle/providers/tombola_logos_provider.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/raffle/ui/pages/raffle_page/confirm_payment.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class BuyPackTicket extends HookConsumerWidget {
   final PackTicket packTicket;
@@ -93,17 +93,19 @@ class BuyPackTicket extends HookConsumerWidget {
                                   child: data.first,
                                 );
                               } else {
-                                Future.delayed(const Duration(milliseconds: 1),
-                                    () {
-                                  tombolaLogosNotifier.setTData(
-                                    raffle.id,
-                                    const AsyncLoading(),
-                                  );
-                                });
+                                Future.delayed(
+                                  const Duration(milliseconds: 1),
+                                  () {
+                                    tombolaLogosNotifier.setTData(
+                                      raffle.id,
+                                      const AsyncLoading(),
+                                    );
+                                  },
+                                );
                                 tokenExpireWrapper(ref, () async {
-                                  tombolaLogoNotifier
-                                      .getLogo(raffle.id)
-                                      .then((value) {
+                                  tombolaLogoNotifier.getLogo(raffle.id).then((
+                                    value,
+                                  ) {
                                     tombolaLogosNotifier.setTData(
                                       raffle.id,
                                       AsyncData([value]),
@@ -169,8 +171,8 @@ class BuyPackTicket extends HookConsumerWidget {
                   raffle.raffleStatusType == RaffleStatusType.open
                       ? "Acheter ce ticket"
                       : raffle.raffleStatusType == RaffleStatusType.lock
-                          ? "Tombola fermée"
-                          : "Pas encore disponible",
+                      ? "Tombola fermée"
+                      : "Pas encore disponible",
                   style: TextStyle(
                     color: raffle.raffleStatusType != RaffleStatusType.open
                         ? Colors.white

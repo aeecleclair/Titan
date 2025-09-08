@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/flappybird/providers/bird_provider.dart';
+import 'package:titan/flappybird/providers/bird_provider.dart';
 
 class BirdDisplay extends HookConsumerWidget {
-  const BirdDisplay({
-    super.key,
-  });
+  const BirdDisplay({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

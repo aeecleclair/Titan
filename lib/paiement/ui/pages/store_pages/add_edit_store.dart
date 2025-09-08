@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/class/store.dart' as store_class;
-import 'package:myecl/paiement/class/structure.dart';
-import 'package:myecl/paiement/providers/my_stores_provider.dart';
-import 'package:myecl/paiement/providers/selected_structure_provider.dart';
-import 'package:myecl/paiement/providers/store_provider.dart';
-import 'package:myecl/paiement/providers/stores_list_provider.dart';
-import 'package:myecl/paiement/ui/paiement.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:titan/paiement/class/store.dart' as store_class;
+import 'package:titan/paiement/class/structure.dart';
+import 'package:titan/paiement/providers/my_stores_provider.dart';
+import 'package:titan/paiement/providers/selected_structure_provider.dart';
+import 'package:titan/paiement/providers/store_provider.dart';
+import 'package:titan/paiement/providers/stores_list_provider.dart';
+import 'package:titan/paiement/ui/paiement.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditStorePage extends HookConsumerWidget {
@@ -75,8 +75,9 @@ class AddEditStorePage extends HookConsumerWidget {
                                 structure: structure,
                               );
                               final value = isEdit
-                                  ? await storeListNotifier
-                                      .updateStore(newStore)
+                                  ? await storeListNotifier.updateStore(
+                                      newStore,
+                                    )
                                   : await storeListNotifier.createStore(
                                       structure,
                                       newStore,

@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/providers/association_filtered_list_provider.dart';
-import 'package:myecl/phonebook/providers/association_kind_provider.dart';
-import 'package:myecl/phonebook/providers/association_list_provider.dart';
-import 'package:myecl/phonebook/providers/association_provider.dart';
-import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
-import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
-import 'package:myecl/phonebook/router.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
-import 'package:myecl/phonebook/ui/phonebook.dart';
-import 'package:myecl/phonebook/ui/pages/admin_page/association_research_bar.dart';
-import 'package:myecl/phonebook/ui/pages/admin_page/editable_association_card.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/phonebook/providers/association_filtered_list_provider.dart';
+import 'package:titan/phonebook/providers/association_kind_provider.dart';
+import 'package:titan/phonebook/providers/association_list_provider.dart';
+import 'package:titan/phonebook/providers/association_provider.dart';
+import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
+import 'package:titan/phonebook/providers/roles_tags_provider.dart';
+import 'package:titan/phonebook/router.dart';
+import 'package:titan/phonebook/tools/constants.dart';
+import 'package:titan/phonebook/ui/components/kinds_bar.dart';
+import 'package:titan/phonebook/ui/phonebook.dart';
+import 'package:titan/phonebook/ui/pages/admin_page/association_research_bar.dart';
+import 'package:titan/phonebook/ui/pages/admin_page/editable_association_card.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminPage extends HookConsumerWidget {
@@ -122,8 +122,8 @@ class AdminPage extends HookConsumerWidget {
                                             final result =
                                                 await associationListNotifier
                                                     .deleteAssociation(
-                                              association,
-                                            );
+                                                      association,
+                                                    );
                                             if (result) {
                                               displayToastWithContext(
                                                 TypeMsg.msg,
@@ -153,8 +153,8 @@ class AdminPage extends HookConsumerWidget {
                                             final result =
                                                 await associationListNotifier
                                                     .deactivateAssociation(
-                                              association,
-                                            );
+                                                      association,
+                                                    );
                                             if (result) {
                                               displayToastWithContext(
                                                 TypeMsg.msg,

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/providers/scroll_provider.dart';
-import 'package:myecl/amap/providers/sorted_delivery_product.dart';
-import 'package:myecl/amap/providers/page_controller_provider.dart';
-import 'package:myecl/amap/providers/scroll_controller_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/pages/list_products_page/category_page.dart';
-import 'package:myecl/amap/ui/pages/list_products_page/web_page_navigation_button.dart';
-import 'package:myecl/drawer/providers/is_web_format_provider.dart';
+import 'package:titan/amap/providers/scroll_provider.dart';
+import 'package:titan/amap/providers/sorted_delivery_product.dart';
+import 'package:titan/amap/providers/page_controller_provider.dart';
+import 'package:titan/amap/providers/scroll_controller_provider.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/amap/ui/pages/list_products_page/category_page.dart';
+import 'package:titan/amap/ui/pages/list_products_page/web_page_navigation_button.dart';
+import 'package:titan/drawer/providers/is_web_format_provider.dart';
 
 class ListProducts extends HookConsumerWidget {
   const ListProducts({super.key});
@@ -21,8 +21,9 @@ class ListProducts extends HookConsumerWidget {
       initialValue: 1,
     );
     final scrollController = ref.watch(scrollControllerProvider(hideAnimation));
-    final sortedDeliveryProductsList =
-        ref.watch(sortedByCategoryDeliveryProductsProvider);
+    final sortedDeliveryProductsList = ref.watch(
+      sortedByCategoryDeliveryProductsProvider,
+    );
     final scrollNotifier = ref.watch(scrollProvider.notifier);
     final pageController = ref.watch(amapPageControllerProvider);
     final isWebFormat = ref.watch(isWebFormatProvider);
@@ -58,15 +59,16 @@ class ListProducts extends HookConsumerWidget {
                     ),
                   ]
                 : sortedDeliveryProductsList.keys
-                    .map(
-                      (c) => CategoryPage(
-                        index:
-                            sortedDeliveryProductsList.keys.toList().indexOf(c),
-                        hideAnimation: hideAnimation,
-                        category: c,
-                      ),
-                    )
-                    .toList(),
+                      .map(
+                        (c) => CategoryPage(
+                          index: sortedDeliveryProductsList.keys
+                              .toList()
+                              .indexOf(c),
+                          hideAnimation: hideAnimation,
+                          category: c,
+                        ),
+                      )
+                      .toList(),
           ),
         ),
         if (isWebFormat)

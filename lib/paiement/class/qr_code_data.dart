@@ -1,4 +1,4 @@
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
 
 class QrCodeData {
   final String id;
@@ -18,21 +18,21 @@ class QrCodeData {
   });
 
   QrCodeData.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        tot = json['tot'],
-        iat = processDateFromAPI(json['iat']),
-        key = json['key'],
-        store = json['store'],
-        signature = json['signature'];
+    : id = json['id'],
+      tot = json['tot'],
+      iat = processDateFromAPI(json['iat']),
+      key = json['key'],
+      store = json['store'],
+      signature = json['signature'];
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'tot': tot,
-        'iat': processDateToAPI(iat),
-        'key': key,
-        'store': store,
-        'signature': signature,
-      };
+    'id': id,
+    'tot': tot,
+    'iat': processDateToAPI(iat),
+    'key': key,
+    'store': store,
+    'signature': signature,
+  };
 
   @override
   String toString() {
@@ -40,12 +40,12 @@ class QrCodeData {
   }
 
   QrCodeData.empty()
-      : id = '',
-        tot = 0,
-        iat = DateTime.now(),
-        key = '',
-        store = false,
-        signature = '';
+    : id = '',
+      tot = 0,
+      iat = DateTime.now(),
+      key = '',
+      store = false,
+      signature = '';
 
   QrCodeData copyWith({
     String? id,

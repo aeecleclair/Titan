@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
 
 class DayDivider extends StatelessWidget {
   final String date;
@@ -12,10 +12,7 @@ class DayDivider extends StatelessWidget {
       child: Row(
         children: [
           const Expanded(
-            child: Divider(
-              color: Color(0xff204550),
-              thickness: 1,
-            ),
+            child: Divider(color: Color(0xff204550), thickness: 1),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -31,10 +28,7 @@ class DayDivider extends StatelessWidget {
             ),
           ),
           const Expanded(
-            child: Divider(
-              color: Color(0xff204550),
-              thickness: 1,
-            ),
+            child: Divider(color: Color(0xff204550), thickness: 1),
           ),
         ],
       ),

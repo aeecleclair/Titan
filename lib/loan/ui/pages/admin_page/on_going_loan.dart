@@ -2,29 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
-import 'package:myecl/loan/providers/end_provider.dart';
-import 'package:myecl/loan/providers/loan_focus_provider.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/loan_provider.dart';
-import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/providers/loaners_items_provider.dart';
-import 'package:myecl/loan/providers/start_provider.dart';
-import 'package:myecl/loan/router.dart';
-import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/ui/pages/admin_page/loan_card.dart';
-import 'package:myecl/loan/ui/pages/admin_page/delay_dialog.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/widgets/loader.dart';
-import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
+import 'package:titan/loan/class/item.dart';
+import 'package:titan/loan/class/loan.dart';
+import 'package:titan/loan/providers/admin_loan_list_provider.dart';
+import 'package:titan/loan/providers/end_provider.dart';
+import 'package:titan/loan/providers/loan_focus_provider.dart';
+import 'package:titan/loan/providers/item_list_provider.dart';
+import 'package:titan/loan/providers/loan_provider.dart';
+import 'package:titan/loan/providers/loaner_loan_list_provider.dart';
+import 'package:titan/loan/providers/loaner_provider.dart';
+import 'package:titan/loan/providers/loaners_items_provider.dart';
+import 'package:titan/loan/providers/start_provider.dart';
+import 'package:titan/loan/router.dart';
+import 'package:titan/loan/tools/constants.dart';
+import 'package:titan/loan/ui/pages/admin_page/loan_card.dart';
+import 'package:titan/loan/ui/pages/admin_page/delay_dialog.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/tools/ui/widgets/loader.dart';
+import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class OnGoingLoan extends HookConsumerWidget {
@@ -127,8 +127,10 @@ class OnGoingLoan extends HookConsumerWidget {
                           );
                           await loanNotifier.setLoan(newLoan);
                           tokenExpireWrapper(ref, () async {
-                            final value =
-                                await loanListNotifier.extendLoan(newLoan, i);
+                            final value = await loanListNotifier.extendLoan(
+                              newLoan,
+                              i,
+                            );
                             if (value) {
                               adminLoanListNotifier.setTData(
                                 loaner,
@@ -163,22 +165,19 @@ class OnGoingLoan extends HookConsumerWidget {
                               .toList();
                           final updatedItems = loanersItems[loaner]!
                               .maybeWhen<List<Item>>(
-                            data: (items) => items,
-                            orElse: () => [],
-                          )
-                              .map(
-                            (item) {
-                              if (loanItemsId.contains(item.id)) {
-                                return item.copyWith();
-                              }
-                              return item;
-                            },
-                          ).toList();
+                                data: (items) => items,
+                                orElse: () => [],
+                              )
+                              .map((item) {
+                                if (loanItemsId.contains(item.id)) {
+                                  return item.copyWith();
+                                }
+                                return item;
+                              })
+                              .toList();
                           final value = await loanListNotifier.returnLoan(e);
                           if (value) {
-                            QR.to(
-                              LoanRouter.root + LoanRouter.admin,
-                            );
+                            QR.to(LoanRouter.root + LoanRouter.admin);
                             loanersItemsNotifier.setTData(
                               loaner,
                               AsyncData(updatedItems),
@@ -204,9 +203,7 @@ class OnGoingLoan extends HookConsumerWidget {
                 },
                 onInfo: () {
                   loanNotifier.setLoan(e);
-                  QR.to(
-                    LoanRouter.root + LoanRouter.admin + LoanRouter.detail,
-                  );
+                  QR.to(LoanRouter.root + LoanRouter.admin + LoanRouter.detail);
                 },
               ),
             ),

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class CancelButton extends HookWidget {
   final Future Function(bool) onCancel;
@@ -27,9 +27,7 @@ class CancelButton extends HookWidget {
           ),
           child: child,
         ),
-        onTap: () => onCancel(
-          disablingAnimationController.isAnimating,
-        ),
+        onTap: () => onCancel(disablingAnimationController.isAnimating),
         child: Stack(
           children: [
             LayoutBuilder(
@@ -41,25 +39,38 @@ class CancelButton extends HookWidget {
                       return Container();
                     }
                     return Container(
-                      width: constraint.maxWidth *
+                      width:
+                          constraint.maxWidth *
                           (1 - disablingAnimationController.value),
                       height: 50,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         gradient: RadialGradient(
                           colors: [
-                            const Color.fromARGB(255, 138, 38, 5)
-                                .withValues(alpha: 0.8),
-                            const Color.fromARGB(255, 116, 29, 0)
-                                .withValues(alpha: 0.8),
+                            const Color.fromARGB(
+                              255,
+                              138,
+                              38,
+                              5,
+                            ).withValues(alpha: 0.8),
+                            const Color.fromARGB(
+                              255,
+                              116,
+                              29,
+                              0,
+                            ).withValues(alpha: 0.8),
                           ],
                           center: Alignment.topLeft,
                           radius: 1.3,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color.fromARGB(255, 116, 29, 0)
-                                .withValues(alpha: 0.3),
+                            color: const Color.fromARGB(
+                              255,
+                              116,
+                              29,
+                              0,
+                            ).withValues(alpha: 0.3),
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(3, 3),

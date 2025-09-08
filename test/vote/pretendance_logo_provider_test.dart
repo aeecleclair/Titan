@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/vote/providers/contender_logo_provider.dart';
-import 'package:myecl/vote/providers/contender_logos_provider.dart';
-import 'package:myecl/vote/repositories/contender_logo_repository.dart';
+import 'package:titan/vote/providers/contender_logo_provider.dart';
+import 'package:titan/vote/providers/contender_logos_provider.dart';
+import 'package:titan/vote/repositories/contender_logo_repository.dart';
 
 class MockContenderLogoRepository extends Mock
     implements ContenderLogoRepository {}
@@ -35,8 +35,9 @@ void main() {
     test('getLogo returns Image', () async {
       const id = '123';
       final image = Image.network('https://example.com/image.png');
-      when(() => repository.getContenderLogo(id))
-          .thenAnswer((_) async => image);
+      when(
+        () => repository.getContenderLogo(id),
+      ).thenAnswer((_) async => image);
 
       final result = await provider.getLogo(id);
 
@@ -47,8 +48,9 @@ void main() {
       const id = '123';
       Uint8List bytes = Uint8List(0);
       final image = Image.network('https://example.com/image.png');
-      when(() => repository.addContenderLogo(bytes, id))
-          .thenAnswer((_) async => image);
+      when(
+        () => repository.addContenderLogo(bytes, id),
+      ).thenAnswer((_) async => image);
 
       final result = await provider.updateLogo(id, bytes);
 

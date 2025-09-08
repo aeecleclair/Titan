@@ -2,8 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/paiement/class/user_store.dart';
-import 'package:myecl/paiement/providers/selected_store_provider.dart';
+import 'package:titan/paiement/class/user_store.dart';
+import 'package:titan/paiement/providers/selected_store_provider.dart';
 
 class StoreSellerCard extends ConsumerWidget {
   final UserStore store;
@@ -23,7 +23,6 @@ class StoreSellerCard extends ConsumerWidget {
       behavior: HitTestBehavior.opaque,
       child: Container(
         height: 70,
-        margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
         padding: const EdgeInsets.symmetric(horizontal: 20),
         width: MediaQuery.of(context).size.width,
         child: Row(
@@ -41,9 +40,7 @@ class StoreSellerCard extends ConsumerWidget {
                     )
                   : null,
             ),
-            const SizedBox(
-              width: 15,
-            ),
+            const SizedBox(width: 15),
             Expanded(
               child: AutoSizeText(
                 store.name,

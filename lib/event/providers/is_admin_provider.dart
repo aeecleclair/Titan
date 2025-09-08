@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 final isEventAdminProvider = StateProvider<bool>((ref) {
   final me = ref.watch(userProvider);

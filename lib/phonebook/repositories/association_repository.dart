@@ -1,6 +1,6 @@
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/association_kinds.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/phonebook/class/association.dart';
+import 'package:titan/phonebook/class/association_kinds.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class AssociationRepository extends Repository {
   @override
@@ -33,9 +33,7 @@ class AssociationRepository extends Repository {
     return await update(null, association.id, suffix: "/deactivate");
   }
 
-  Future<bool> updateAssociationGroups(
-    Association association,
-  ) async {
+  Future<bool> updateAssociationGroups(Association association) async {
     return await update(
       {"associated_groups": association.associatedGroups},
       association.id,

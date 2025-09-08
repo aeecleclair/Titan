@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/loan/class/loaner.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/loan/class/loaner.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class LoanerRepository extends Repository {
   @override
@@ -16,8 +16,9 @@ class LoanerRepository extends Repository {
 
   Future<List<Loaner>> getMyLoaner() async {
     return List<Loaner>.from(
-      (await getList(suffix: "users/me/loaners"))
-          .map((x) => Loaner.fromJson(x)),
+      (await getList(
+        suffix: "users/me/loaners",
+      )).map((x) => Loaner.fromJson(x)),
     );
   }
 

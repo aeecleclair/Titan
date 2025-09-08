@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/admin/class/group.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/admin/repositories/group_repository.dart';
-import 'package:myecl/user/class/simple_users.dart';
-import 'package:myecl/user/class/user.dart';
+import 'package:titan/admin/class/account_type.dart';
+import 'package:titan/admin/class/group.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/admin/repositories/group_repository.dart';
+import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/user/class/user.dart';
 
 class MockGroupRepository extends Mock implements GroupRepository {}
 
@@ -118,7 +118,7 @@ void main() {
             "firstname": "firstname",
             "nickname": "nickname",
             "account_type": "external",
-          }
+          },
         ],
       });
       expect(group.name, 'name');
@@ -153,7 +153,7 @@ void main() {
             "name": "name",
             "firstname": "firstname",
             "nickname": null,
-          }
+          },
         ],
       });
     });

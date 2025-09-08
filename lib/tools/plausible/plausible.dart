@@ -17,20 +17,18 @@ class Plausible {
   final String domain;
 
   /// Constructor
-  Plausible(serverUrl, this.domain)
-      // Remove trailing slash '/'
-      : serverUrl = serverUrl.endsWith("/")
-            ? serverUrl.substring(0, serverUrl.length - 1)
-            : serverUrl;
+  Plausible(String serverUrl, this.domain)
+    // Remove trailing slash '/'
+    : serverUrl = serverUrl.endsWith("/")
+          ? serverUrl.substring(0, serverUrl.length - 1)
+          : serverUrl;
 
   /// Post event to plausible
   Future<int> event(String page) async {
     // https://plausible.io/docs/events-api#request-body-json-parameters
     page = "app://localhost/$page";
 
-    final Map<String, String> headers = {
-      "Content-Type": "application/json",
-    };
+    final Map<String, String> headers = {"Content-Type": "application/json"};
 
     // browser adds by default the User-Agent header so we should not overwrite it
     if (!kIsWeb) {

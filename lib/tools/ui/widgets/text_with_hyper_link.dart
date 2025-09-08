@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TextWithHyperLink extends StatelessWidget {
@@ -62,7 +62,8 @@ class TextWithHyperLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final hyperLinkStyle = linkStyle ??
+    final hyperLinkStyle =
+        linkStyle ??
         theme.textTheme.bodyMedium?.copyWith(
           color: ColorConstants.gradient1,
           decoration: TextDecoration.underline,

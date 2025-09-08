@@ -1,4 +1,4 @@
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class Seller {
   final String userId;
@@ -69,13 +69,13 @@ class Seller {
   }
 
   Seller.empty()
-      : this(
-          userId: '',
-          user: SimpleUser.empty(),
-          storeId: '',
-          canBank: false,
-          canSeeHistory: false,
-          canCancel: false,
-          canManageSellers: false,
-        );
+    : this(
+        userId: '',
+        user: SimpleUser.empty(),
+        storeId: '',
+        canBank: false,
+        canSeeHistory: false,
+        canCancel: false,
+        canManageSellers: false,
+      );
 }

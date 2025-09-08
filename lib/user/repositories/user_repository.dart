@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/user/class/user.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/tools/repository/repository.dart';
+import 'package:titan/user/class/user.dart';
 
 class UserRepository extends Repository {
   @override
@@ -40,29 +40,6 @@ class UserRepository extends Repository {
       }
     });
     return await update(nullTrimmedBody, "me");
-  }
-
-  Future<User> createUser(User user) async {
-    return User.fromJson(await create(user));
-  }
-
-  Future<bool> changePassword(
-    String oldPassword,
-    String newPassword,
-    String mail,
-  ) async {
-    try {
-      return (await create(
-        {
-          "old_password": oldPassword,
-          "new_password": newPassword,
-          "email": mail,
-        },
-        suffix: "change-password",
-      ))["success"];
-    } catch (e) {
-      return false;
-    }
   }
 
   Future<bool> deletePersonalData() async {

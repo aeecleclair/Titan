@@ -5,15 +5,15 @@ import 'package:intl/intl.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_darwin/local_auth_darwin.dart';
-import 'package:myecl/event/tools/functions.dart';
-import 'package:myecl/paiement/providers/key_service_provider.dart';
-import 'package:myecl/paiement/providers/my_history_provider.dart';
-import 'package:myecl/paiement/providers/my_wallet_provider.dart';
-import 'package:myecl/paiement/providers/pay_amount_provider.dart';
-import 'package:myecl/paiement/ui/pages/pay_page/info_card.dart';
-import 'package:myecl/paiement/ui/pages/pay_page/qr_code.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/event/tools/functions.dart';
+import 'package:titan/paiement/providers/key_service_provider.dart';
+import 'package:titan/paiement/providers/my_history_provider.dart';
+import 'package:titan/paiement/providers/my_wallet_provider.dart';
+import 'package:titan/paiement/providers/pay_amount_provider.dart';
+import 'package:titan/paiement/ui/pages/pay_page/info_card.dart';
+import 'package:titan/paiement/ui/pages/pay_page/qr_code.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 
 class ConfirmButton extends ConsumerWidget {
   const ConfirmButton({super.key});
@@ -22,6 +22,7 @@ class ConfirmButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final keyService = ref.watch(keyServiceProvider);
     final payAmount = ref.watch(payAmountProvider);
+    final payAmountNotifier = ref.watch(payAmountProvider.notifier);
     final myHistoryNotifier = ref.read(myHistoryProvider.notifier);
     final myWallet = ref.watch(myWalletProvider);
     final myWalletNotifier = ref.read(myWalletProvider.notifier);
@@ -31,8 +32,10 @@ class ConfirmButton extends ConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final myWalletBalance =
-        myWallet.maybeWhen(orElse: () => 0, data: (wallet) => wallet.balance);
+    final myWalletBalance = myWallet.maybeWhen(
+      orElse: () => 0,
+      data: (wallet) => wallet.balance,
+    );
 
     final amount = payAmount.isNotEmpty
         ? double.parse(payAmount.replaceAll(',', '.'))
@@ -61,18 +64,14 @@ class ConfirmButton extends ConsumerWidget {
                 const SizedBox(height: 30),
                 Row(
                   children: [
-                    const SizedBox(
-                      width: 20,
-                    ),
+                    const SizedBox(width: 20),
                     InfoCard(
                       icons: HeroIcons.currencyEuro,
                       title: "Montant",
                       value:
                           '${formatter.format(double.parse(payAmount.replaceAll(',', '.')))} €',
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    const SizedBox(width: 10),
                     InfoCard(
                       icons: HeroIcons.clock,
                       title: "Valide jusqu'à",
@@ -80,16 +79,11 @@ class ConfirmButton extends ConsumerWidget {
                         DateTime.now().add(const Duration(minutes: 5)),
                       ),
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
+                    const SizedBox(width: 20),
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: QrCode(),
-                ),
+                const Padding(padding: EdgeInsets.all(10.0), child: QrCode()),
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -117,6 +111,7 @@ class ConfirmButton extends ConsumerWidget {
       ).then((_) async {
         await myHistoryNotifier.getHistory();
         await myWalletNotifier.getMyWallet();
+        payAmountNotifier.setPayAmount("");
       });
     }
 
@@ -136,9 +131,7 @@ class ConfirmButton extends ConsumerWidget {
               signInTitle: 'L\'authentification est requise pour payer',
               cancelButton: 'Non merci',
             ),
-            const IOSAuthMessages(
-              cancelButton: 'Non merci',
-            ),
+            const IOSAuthMessages(cancelButton: 'Non merci'),
           ],
         );
         if (!didAuthenticate) {

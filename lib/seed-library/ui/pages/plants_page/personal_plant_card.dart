@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/seed-library/class/plant_simple.dart';
-import 'package:myecl/seed-library/providers/species_list_provider.dart';
-import 'package:myecl/seed-library/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/seed-library/tools/functions.dart' as function;
+import 'package:titan/seed-library/class/plant_simple.dart';
+import 'package:titan/seed-library/providers/species_list_provider.dart';
+import 'package:titan/seed-library/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/seed-library/tools/functions.dart' as function;
 
 class PersonalPlantCard extends HookConsumerWidget {
   const PersonalPlantCard({
@@ -28,9 +28,7 @@ class PersonalPlantCard extends HookConsumerWidget {
       onTap: onClicked,
       child: Card(
         margin: const EdgeInsets.all(10),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Row(
@@ -66,9 +64,7 @@ class PersonalPlantCard extends HookConsumerWidget {
                                 ? SeedLibraryTextConstants.deathDate
                                 : SeedLibraryTextConstants.plantingDate,
                           ),
-                          Text(
-                            processDate(plant.plantingDate!),
-                          ),
+                          Text(processDate(plant.plantingDate!)),
                           ...plantSpecies.timeMaturation != null &&
                                   plant.state != function.State.consumed
                               ? [
@@ -79,7 +75,8 @@ class PersonalPlantCard extends HookConsumerWidget {
                                   Text(
                                     "${(plantSpecies.timeMaturation! - DateTime.now().difference(plant.plantingDate!).inDays).toString()} ${SeedLibraryTextConstants.days}",
                                     style: TextStyle(
-                                      color: plantSpecies.timeMaturation! -
+                                      color:
+                                          plantSpecies.timeMaturation! -
                                                   DateTime.now()
                                                       .difference(
                                                         plant.plantingDate!,

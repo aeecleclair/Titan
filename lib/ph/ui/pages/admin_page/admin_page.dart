@@ -2,16 +2,16 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/ph/class/ph.dart';
-import 'package:myecl/ph/providers/file_picker_result_provider.dart';
-import 'package:myecl/ph/providers/ph_provider.dart';
-import 'package:myecl/ph/providers/ph_send_pdf_provider.dart';
-import 'package:myecl/ph/router.dart';
-import 'package:myecl/ph/tools/constants.dart';
-import 'package:myecl/ph/ui/button.dart';
-import 'package:myecl/ph/ui/components/year_bar.dart';
-import 'package:myecl/ph/ui/pages/admin_page/admin_ph_list.dart';
-import 'package:myecl/ph/ui/pages/ph.dart';
+import 'package:titan/ph/class/ph.dart';
+import 'package:titan/ph/providers/file_picker_result_provider.dart';
+import 'package:titan/ph/providers/ph_provider.dart';
+import 'package:titan/ph/providers/ph_send_pdf_provider.dart';
+import 'package:titan/ph/router.dart';
+import 'package:titan/ph/tools/constants.dart';
+import 'package:titan/ph/ui/button.dart';
+import 'package:titan/ph/ui/components/year_bar.dart';
+import 'package:titan/ph/ui/pages/admin_page/admin_ph_list.dart';
+import 'package:titan/ph/ui/pages/ph.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminPage extends HookConsumerWidget {
@@ -35,9 +35,7 @@ class AdminPage extends HookConsumerWidget {
               resultNotifier.setFilePickerResult(null);
               QR.to(PhRouter.root + PhRouter.admin + PhRouter.add_ph);
             },
-            child: const MyButton(
-              text: PhTextConstants.addNewJournal,
-            ),
+            child: const MyButton(text: PhTextConstants.addNewJournal),
           ),
           const SizedBox(height: 20),
         ],

@@ -1,17 +1,16 @@
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/association_kinds.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/membership.dart';
-import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/phonebook/class/association.dart';
+import 'package:titan/phonebook/class/association_kinds.dart';
+import 'package:titan/phonebook/class/complete_member.dart';
+import 'package:titan/phonebook/class/membership.dart';
+import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 
-int getPosition(
-  CompleteMember member,
-  String associationId,
-) {
-  Membership membership = member.memberships
-      .firstWhere((element) => element.associationId == associationId);
+int getPosition(CompleteMember member, String associationId) {
+  Membership membership = member.memberships.firstWhere(
+    (element) => element.associationId == associationId,
+  );
   return membership.order;
 }
 
@@ -19,11 +18,10 @@ List<CompleteMember> sortedMembers(
   List<CompleteMember> members,
   String associationId,
 ) {
-  return members
-    ..sort(
-      (a, b) => getPosition(a, associationId)
-          .compareTo(getPosition(b, associationId)),
-    );
+  return members..sort(
+    (a, b) =>
+        getPosition(a, associationId).compareTo(getPosition(b, associationId)),
+  );
 }
 
 List<Association> sortedAssociationByKind(
@@ -31,23 +29,25 @@ List<Association> sortedAssociationByKind(
   AssociationKinds kinds,
 ) {
   List<Association> sorted = [];
-  List<List<Association>> sortedByKind =
-      List.generate(kinds.kinds.length, (index) => []);
+  List<List<Association>> sortedByKind = List.generate(
+    kinds.kinds.length,
+    (index) => [],
+  );
   for (Association association in associations) {
     sortedByKind[kinds.kinds.indexOf(association.kind)].add(association);
   }
   for (List<Association> list in sortedByKind) {
     list.sort(
-      (a, b) => removeDiacritics(a.name)
-          .toLowerCase()
-          .compareTo(removeDiacritics(b.name).toLowerCase()),
+      (a, b) => removeDiacritics(
+        a.name,
+      ).toLowerCase().compareTo(removeDiacritics(b.name).toLowerCase()),
     );
     sorted.addAll(list);
   }
   return sorted;
 }
 
-Color getColorFromTagList(ref, List<String> tags) {
+Color getColorFromTagList(WidgetRef ref, List<String> tags) {
   final rolesTags = ref.watch(rolesTagsProvider).keys.toList();
   int index = 3;
   for (String tag in tags) {

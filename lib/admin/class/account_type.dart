@@ -1,7 +1,5 @@
 class AccountType {
-  AccountType({
-    required this.type,
-  });
+  AccountType({required this.type});
 
   late final String type;
 

@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/paiement/class/history.dart';
+import 'package:titan/paiement/class/history.dart';
 
 class SummaryCard extends StatelessWidget {
   final List<History> history;
@@ -14,15 +14,28 @@ class SummaryCard extends StatelessWidget {
     int numberTransactions = 0;
 
     for (final transaction in history) {
+      if (transaction.status == TransactionStatus.canceled) {
+        continue; // Only consider successful transactions
+      }
       switch (transaction.type) {
         case HistoryType.given:
           total -= transaction.total;
+          numberTransactions++;
           break;
+        case HistoryType.refundDebited:
+          total -= transaction.total;
+          break;
+
         case HistoryType.received:
           total += transaction.total;
           numberTransactions++;
           break;
-        default:
+        case HistoryType.refundCredited:
+          total += transaction.total;
+          break;
+
+        case HistoryType.transfer:
+          total += transaction.total;
           break;
       }
     }
@@ -44,14 +57,12 @@ class SummaryCard extends StatelessWidget {
             radius: 27,
             backgroundColor: Color(0xff017f80),
             child: HeroIcon(
-              HeroIcons.arrowDownRight,
+              HeroIcons.listBullet,
               color: Colors.white,
               size: 25,
             ),
           ),
-          const SizedBox(
-            width: 15,
-          ),
+          const SizedBox(width: 15),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -60,18 +71,13 @@ class SummaryCard extends StatelessWidget {
                 Row(
                   children: [
                     const AutoSizeText(
-                      "Total du mois",
+                      "Total sur la période",
                       maxLines: 2,
-                      style: TextStyle(
-                        color: Color(0xff204550),
-                        fontSize: 14,
-                      ),
+                      style: TextStyle(color: Color(0xff204550), fontSize: 14),
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
+                const SizedBox(height: 5),
                 Text(
                   "Moyenne : ${formatter.format(mean / 100)} € / transaction",
                   style: const TextStyle(
@@ -83,9 +89,7 @@ class SummaryCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(
-            width: 10,
-          ),
+          const SizedBox(width: 10),
           Text(
             "${formatter.format(total / 100)} €",
             style: TextStyle(

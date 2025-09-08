@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/vote/class/votes.dart';
-import 'package:myecl/vote/repositories/votes_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/vote/class/votes.dart';
+import 'package:titan/vote/repositories/votes_repository.dart';
 
 class VotesProvider extends ListNotifier<Votes> {
   final VotesRepository votesRepository;
   VotesProvider({required this.votesRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<bool> addVote(Votes votes) async {
     try {
@@ -33,7 +33,9 @@ class VotesProvider extends ListNotifier<Votes> {
 
 final votesProvider =
     StateNotifierProvider<VotesProvider, AsyncValue<List<Votes>>>((ref) {
-  final votesRepository = ref.watch(votesRepositoryProvider);
-  VotesProvider votesProvider = VotesProvider(votesRepository: votesRepository);
-  return votesProvider;
-});
+      final votesRepository = ref.watch(votesRepositoryProvider);
+      VotesProvider votesProvider = VotesProvider(
+        votesRepository: votesRepository,
+      );
+      return votesProvider;
+    });

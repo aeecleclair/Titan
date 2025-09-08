@@ -1,19 +1,6 @@
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/tools/constants.dart';
+import 'package:titan/booking/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-
-Decision stringToDecision(String s) {
-  switch (s) {
-    case "approved":
-      return Decision.approved;
-    case "declined":
-      return Decision.declined;
-    case "pending":
-      return Decision.pending;
-    default:
-      return Decision.pending;
-  }
-}
 
 String decisionToString(Decision d) {
   switch (d) {

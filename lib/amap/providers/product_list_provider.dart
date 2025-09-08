@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/repositories/product_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/repositories/product_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class ProductListNotifier extends ListNotifier<Product> {
   final ProductListRepository productListRepository;
   ProductListNotifier({required this.productListRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Product>>> loadProductList() async {
     return await loadList(productListRepository.getProductList);
@@ -37,13 +37,15 @@ class ProductListNotifier extends ListNotifier<Product> {
 }
 
 final productListProvider =
-    StateNotifierProvider<ProductListNotifier, AsyncValue<List<Product>>>(
-        (ref) {
-  final productListRepository = ref.watch(productListRepositoryProvider);
-  ProductListNotifier productListNotifier =
-      ProductListNotifier(productListRepository: productListRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    productListNotifier.loadProductList();
-  });
-  return productListNotifier;
-});
+    StateNotifierProvider<ProductListNotifier, AsyncValue<List<Product>>>((
+      ref,
+    ) {
+      final productListRepository = ref.watch(productListRepositoryProvider);
+      ProductListNotifier productListNotifier = ProductListNotifier(
+        productListRepository: productListRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        productListNotifier.loadProductList();
+      });
+      return productListNotifier;
+    });

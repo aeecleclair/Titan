@@ -1,8 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/seed-library/tools/constants.dart';
+import 'package:titan/seed-library/tools/constants.dart';
 
-final searchFilterProvider =
-    StateNotifierProvider<StringNotifier, String>((ref) {
+final searchFilterProvider = StateNotifierProvider<StringNotifier, String>((
+  ref,
+) {
   return StringNotifier();
 });
 
@@ -14,8 +15,9 @@ final endMonthProvider = StateNotifierProvider<StringNotifier, String>((ref) {
   return StringNotifier();
 });
 
-final seasonFilterProvider =
-    StateNotifierProvider<StringNotifier, String>((ref) {
+final seasonFilterProvider = StateNotifierProvider<StringNotifier, String>((
+  ref,
+) {
   return StringNotifier(init: SeedLibraryTextConstants.all);
 });
 

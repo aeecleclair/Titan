@@ -1,29 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/providers/selected_transactions_provider.dart';
-import 'package:myecl/paiement/ui/components/transaction_card.dart';
+import 'package:titan/paiement/providers/selected_transactions_provider.dart';
+import 'package:titan/paiement/ui/components/transaction_card.dart';
 
 class TransactionsDetail extends ConsumerWidget {
-  const TransactionsDetail({super.key});
+  final DateTime currentMonth;
+  const TransactionsDetail({super.key, required this.currentMonth});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedHistory = ref.watch(selectedTransactionsProvider);
+    final selectedHistory = ref.watch(
+      selectedTransactionsProvider(currentMonth),
+    );
     final sortedByDate = selectedHistory
-      ..sort((a, b) => a.creation.compareTo(b.creation));
-    return Expanded(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: sortedByDate
-              .map(
-                (e) => TransactionCard(
-                  transaction: e,
-                ),
-              )
-              .toList(),
-        ),
-      ),
+      ..sort((a, b) => b.creation.compareTo(a.creation));
+    return Column(
+      children: sortedByDate
+          .map((e) => TransactionCard(transaction: e))
+          .toList(),
     );
   }
 }

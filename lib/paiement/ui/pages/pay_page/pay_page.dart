@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/paiement/providers/my_wallet_provider.dart';
-import 'package:myecl/paiement/providers/pay_amount_provider.dart';
-import 'package:myecl/paiement/ui/pages/pay_page/confirm_button.dart';
-import 'package:myecl/paiement/ui/components/digit_fade_in_animation.dart';
-import 'package:myecl/paiement/ui/components/keyboard.dart';
+import 'package:titan/paiement/providers/my_wallet_provider.dart';
+import 'package:titan/paiement/providers/pay_amount_provider.dart';
+import 'package:titan/paiement/ui/pages/pay_page/confirm_button.dart';
+import 'package:titan/paiement/ui/components/digit_fade_in_animation.dart';
+import 'package:titan/paiement/ui/components/keyboard.dart';
 
 class PayPage extends ConsumerWidget {
   const PayPage({super.key});
@@ -32,19 +32,14 @@ class PayPage extends ConsumerWidget {
       child: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xff017f80),
-              Color.fromARGB(255, 9, 103, 103),
-            ],
+            colors: [Color(0xff017f80), Color.fromARGB(255, 9, 103, 103)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
         child: Column(
           children: [
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Text(
               'Paiement',
               style: const TextStyle(
@@ -53,15 +48,10 @@ class PayPage extends ConsumerWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(
-              height: 5,
-            ),
+            const SizedBox(height: 5),
             Text(
               'Solde après paiement : ${formatter.format(currentAmount - amountToSub)} €',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-              ),
+              style: const TextStyle(color: Colors.white, fontSize: 15),
             ),
             Expanded(
               child: Center(

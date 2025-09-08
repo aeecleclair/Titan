@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/seed-library/providers/difficulty_filter_provider.dart';
-import 'package:myecl/seed-library/providers/species_list_provider.dart';
-import 'package:myecl/seed-library/providers/species_provider.dart';
-import 'package:myecl/seed-library/providers/species_type_provider.dart';
-import 'package:myecl/seed-library/providers/string_provider.dart';
-import 'package:myecl/seed-library/tools/constants.dart';
-import 'package:myecl/seed-library/ui/components/types_bar.dart';
-import 'package:myecl/seed-library/ui/seed_library.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:titan/seed-library/providers/difficulty_filter_provider.dart';
+import 'package:titan/seed-library/providers/species_list_provider.dart';
+import 'package:titan/seed-library/providers/species_provider.dart';
+import 'package:titan/seed-library/providers/species_type_provider.dart';
+import 'package:titan/seed-library/providers/string_provider.dart';
+import 'package:titan/seed-library/tools/constants.dart';
+import 'package:titan/seed-library/ui/components/types_bar.dart';
+import 'package:titan/seed-library/ui/seed_library.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditSpeciesPage extends HookConsumerWidget {
@@ -67,9 +67,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
             key: key,
             child: Column(
               children: [
-                const SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
                 isEdit
                     ? Text(
                         SeedLibraryTextConstants.editSpecies,
@@ -87,17 +85,11 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                         ),
                         textAlign: TextAlign.center,
                       ),
-                const SizedBox(
-                  height: 30,
-                ),
+                const SizedBox(height: 30),
                 TypesBar(),
                 Column(
                   children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 10,
-                      ),
-                    ),
+                    Container(margin: const EdgeInsets.symmetric(vertical: 10)),
                     TextEntry(
                       controller: name,
                       label: SeedLibraryTextConstants.name,
@@ -109,16 +101,14 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                       label: SeedLibraryTextConstants.prefix,
                       validator: (p0) => p0.isNotEmpty
                           ? p0.length != 3
-                              ? SeedLibraryTextConstants.prefixLengthError
-                              : prefixes.contains(p0)
-                                  ? SeedLibraryTextConstants.prefixError
-                                  : null
+                                ? SeedLibraryTextConstants.prefixLengthError
+                                : prefixes.contains(p0)
+                                ? SeedLibraryTextConstants.prefixError
+                                : null
                           : null,
                     ),
                     const SizedBox(height: 20),
-                    Text(
-                      SeedLibraryTextConstants.difficulty,
-                    ),
+                    Text(SeedLibraryTextConstants.difficulty),
                     Slider(
                       value: difficulty.toDouble(),
                       min: 0,
@@ -142,11 +132,12 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                       canBeEmpty: true,
                       validator: (p0) => p0.isNotEmpty
                           ? int.tryParse(p0) == null
-                              ? SeedLibraryTextConstants.nbSeedsRecommendedError
-                              : int.tryParse(p0)! < 0
-                                  ? SeedLibraryTextConstants
+                                ? SeedLibraryTextConstants
                                       .nbSeedsRecommendedError
-                                  : null
+                                : int.tryParse(p0)! < 0
+                                ? SeedLibraryTextConstants
+                                      .nbSeedsRecommendedError
+                                : null
                           : null,
                     ),
                     const SizedBox(height: 20),
@@ -165,9 +156,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                                   .map(
                                     (e) => DropdownMenuItem<String>(
                                       value: e,
-                                      child: Text(
-                                        e,
-                                      ),
+                                      child: Text(e),
                                     ),
                                   )
                                   .toList(),
@@ -187,9 +176,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                                   .map(
                                     (e) => DropdownMenuItem<String>(
                                       value: e,
-                                      child: Text(
-                                        e,
-                                      ),
+                                      child: Text(e),
                                     ),
                                   )
                                   .toList(),
@@ -243,38 +230,40 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                         }
                         if (isEdit) {
                           await tokenExpireWrapper(ref, () async {
-                            final value =
-                                await speciesListNotifier.updateSpecies(
-                              species.copyWith(
-                                name: name.text,
-                                prefix: prefix.text,
-                                type: type,
-                                difficulty: difficulty,
-                                card: card.text,
-                                nbSeedsRecommended:
-                                    int.tryParse(nbSeedsRecommended.text),
-                                startSeason: startMonth.isNotEmpty
-                                    ? DateTime(
-                                        2021,
-                                        SeedLibraryTextConstants.months
-                                                .indexOf(startMonth) +
+                            final value = await speciesListNotifier
+                                .updateSpecies(
+                                  species.copyWith(
+                                    name: name.text,
+                                    prefix: prefix.text,
+                                    type: type,
+                                    difficulty: difficulty,
+                                    card: card.text,
+                                    nbSeedsRecommended: int.tryParse(
+                                      nbSeedsRecommended.text,
+                                    ),
+                                    startSeason: startMonth.isNotEmpty
+                                        ? DateTime(
+                                            2021,
+                                            SeedLibraryTextConstants.months
+                                                    .indexOf(startMonth) +
+                                                1,
                                             1,
-                                        1,
-                                      )
-                                    : null,
-                                endSeason: endMonth.isNotEmpty
-                                    ? DateTime(
-                                        2021,
-                                        SeedLibraryTextConstants.months
-                                                .indexOf(endMonth) +
+                                          )
+                                        : null,
+                                    endSeason: endMonth.isNotEmpty
+                                        ? DateTime(
+                                            2021,
+                                            SeedLibraryTextConstants.months
+                                                    .indexOf(endMonth) +
+                                                1,
                                             1,
-                                        1,
-                                      )
-                                    : null,
-                                timeMaturation:
-                                    int.tryParse(maturationTime.text),
-                              ),
-                            );
+                                          )
+                                        : null,
+                                    timeMaturation: int.tryParse(
+                                      maturationTime.text,
+                                    ),
+                                  ),
+                                );
                             if (value) {
                               displayToastWithContext(
                                 TypeMsg.msg,
@@ -298,13 +287,15 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                               type: type,
                               difficulty: difficulty,
                               card: card.text,
-                              nbSeedsRecommended:
-                                  int.tryParse(nbSeedsRecommended.text),
+                              nbSeedsRecommended: int.tryParse(
+                                nbSeedsRecommended.text,
+                              ),
                               startSeason: startMonth.isNotEmpty
                                   ? DateTime(
                                       2021,
-                                      SeedLibraryTextConstants.months
-                                              .indexOf(startMonth) +
+                                      SeedLibraryTextConstants.months.indexOf(
+                                            startMonth,
+                                          ) +
                                           1,
                                       1,
                                     )
@@ -312,8 +303,9 @@ class AddEditSpeciesPage extends HookConsumerWidget {
                               endSeason: endMonth.isNotEmpty
                                   ? DateTime(
                                       2021,
-                                      SeedLibraryTextConstants.months
-                                              .indexOf(endMonth) +
+                                      SeedLibraryTextConstants.months.indexOf(
+                                            endMonth,
+                                          ) +
                                           1,
                                       1,
                                     )

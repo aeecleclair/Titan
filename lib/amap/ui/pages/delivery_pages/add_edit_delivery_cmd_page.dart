@@ -1,23 +1,23 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/amap/class/delivery.dart';
-import 'package:myecl/amap/providers/delivery_list_provider.dart';
-import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
-import 'package:myecl/amap/providers/delivery_provider.dart';
-import 'package:myecl/amap/providers/product_list_provider.dart';
-import 'package:myecl/amap/providers/selected_list_provider.dart';
-import 'package:myecl/amap/providers/sorted_by_category_products.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/amap/ui/pages/delivery_pages/product_ui_check.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/date_entry.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/amap/class/delivery.dart';
+import 'package:titan/amap/providers/delivery_list_provider.dart';
+import 'package:titan/amap/providers/delivery_order_list_provider.dart';
+import 'package:titan/amap/providers/delivery_provider.dart';
+import 'package:titan/amap/providers/product_list_provider.dart';
+import 'package:titan/amap/providers/selected_list_provider.dart';
+import 'package:titan/amap/providers/sorted_by_category_products.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/amap/ui/amap.dart';
+import 'package:titan/amap/ui/pages/delivery_pages/product_ui_check.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/widgets/date_entry.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditDeliveryPage extends HookConsumerWidget {
@@ -98,28 +98,20 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
+                                          const SizedBox(height: 10),
                                           ...value.map(
                                             (e) => ProductUi(
                                               isModification:
-                                                  selected[products.indexOf(
-                                                e,
-                                              )],
+                                                  selected[products.indexOf(e)],
                                               onclick: () {
                                                 selectedNotifier.toggle(
-                                                  products.indexOf(
-                                                    e,
-                                                  ),
+                                                  products.indexOf(e),
                                                 );
                                               },
                                               product: e,
                                             ),
                                           ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
+                                          const SizedBox(height: 20),
                                         ],
                                       ),
                                     ),
@@ -157,8 +149,9 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                     deliveryListProvider.notifier,
                                   );
                                   final value = isEdit
-                                      ? await deliveryNotifier
-                                          .updateDelivery(del)
+                                      ? await deliveryNotifier.updateDelivery(
+                                          del,
+                                        )
                                       : await deliveryNotifier.addDelivery(del);
                                   if (value) {
                                     QR.back();

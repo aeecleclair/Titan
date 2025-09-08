@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/providers/page_controller_provider.dart';
+import 'package:titan/amap/providers/page_controller_provider.dart';
 
 void main() {
   group('AmapPageControllerNotifier', () {
@@ -31,8 +31,9 @@ void main() {
 
     test('can read and update state', () {
       final container = ProviderContainer();
-      final controllerNotifier =
-          container.read(amapPageControllerProvider.notifier);
+      final controllerNotifier = container.read(
+        amapPageControllerProvider.notifier,
+      );
       final newController = PageController(
         viewportFraction: 0.8,
         initialPage: 1,

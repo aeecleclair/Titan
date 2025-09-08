@@ -1,30 +1,30 @@
-import 'package:myecl/amap/providers/delivery_provider.dart';
-import 'package:myecl/amap/providers/available_deliveries.dart';
-import 'package:myecl/amap/router.dart';
-import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/widgets/admin_button.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/amap/providers/delivery_provider.dart';
+import 'package:titan/amap/providers/available_deliveries.dart';
+import 'package:titan/amap/router.dart';
+import 'package:titan/amap/ui/amap.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/widgets/admin_button.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/providers/delivery_list_provider.dart';
-import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
-import 'package:myecl/amap/providers/is_amap_admin_provider.dart';
-import 'package:myecl/amap/providers/user_order_list_provider.dart';
-import 'package:myecl/amap/providers/order_provider.dart';
-import 'package:myecl/amap/providers/user_amount_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/pages/main_page/collection_slot_selector.dart';
-import 'package:myecl/amap/ui/pages/main_page/delivery_section.dart';
-import 'package:myecl/amap/ui/pages/main_page/orders_section.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:titan/amap/class/order.dart';
+import 'package:titan/amap/providers/delivery_list_provider.dart';
+import 'package:titan/amap/providers/delivery_product_list_provider.dart';
+import 'package:titan/amap/providers/is_amap_admin_provider.dart';
+import 'package:titan/amap/providers/user_order_list_provider.dart';
+import 'package:titan/amap/providers/order_provider.dart';
+import 'package:titan/amap/providers/user_amount_provider.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/amap/ui/pages/main_page/collection_slot_selector.dart';
+import 'package:titan/amap/ui/pages/main_page/delivery_section.dart';
+import 'package:titan/amap/ui/pages/main_page/orders_section.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AmapMainPage extends HookConsumerWidget {
@@ -42,8 +42,9 @@ class AmapMainPage extends HookConsumerWidget {
     final balance = ref.watch(userAmountProvider);
     final showPanel = useState(false);
     final me = ref.watch(userProvider);
-    final deliveryProductListNotifier =
-        ref.watch(deliveryProductListProvider.notifier);
+    final deliveryProductListNotifier = ref.watch(
+      deliveryProductListProvider.notifier,
+    );
     final animation = useAnimationController(
       duration: const Duration(milliseconds: 500),
       initialValue: 0,
@@ -119,13 +120,11 @@ class AmapMainPage extends HookConsumerWidget {
                         QR.to(AmapRouter.root + AmapRouter.detailOrder);
                       },
                       addOrder: () {
-                        balance.whenData(
-                          (s) {
-                            orderNotifier.setOrder(Order.empty());
-                            animation.forward();
-                            showPanel.value = true;
-                          },
-                        );
+                        balance.whenData((s) {
+                          orderNotifier.setOrder(Order.empty());
+                          animation.forward();
+                          showPanel.value = true;
+                        });
                       },
                     ),
                     const SizedBox(height: 20),
@@ -165,8 +164,9 @@ class AmapMainPage extends HookConsumerWidget {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: AMAPColorConstants.textDark
-                              .withValues(alpha: 0.3),
+                          color: AMAPColorConstants.textDark.withValues(
+                            alpha: 0.3,
+                          ),
                           spreadRadius: 5,
                           blurRadius: 10,
                           offset: const Offset(3, 3),
@@ -221,9 +221,7 @@ class AmapMainPage extends HookConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 30),
-                        DeliverySection(
-                          editable: order.id == Order.empty().id,
-                        ),
+                        DeliverySection(editable: order.id == Order.empty().id),
                         const SizedBox(height: 20),
                         WaitingButton(
                           onTap: () async {
@@ -232,9 +230,7 @@ class AmapMainPage extends HookConsumerWidget {
                                 await deliveryProductListNotifier
                                     .loadProductList(delivery.products);
                               });
-                              QR.to(
-                                AmapRouter.root + AmapRouter.listProduct,
-                              );
+                              QR.to(AmapRouter.root + AmapRouter.listProduct);
                             } else {
                               displayToastWithoutContext(
                                 TypeMsg.error,
@@ -243,9 +239,7 @@ class AmapMainPage extends HookConsumerWidget {
                             }
                           },
                           builder: (child) => Container(
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 30,
-                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 30),
                             height: 70,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(25),
@@ -259,8 +253,9 @@ class AmapMainPage extends HookConsumerWidget {
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AMAPColorConstants.textDark
-                                      .withValues(alpha: 0.3),
+                                  color: AMAPColorConstants.textDark.withValues(
+                                    alpha: 0.3,
+                                  ),
                                   spreadRadius: 2,
                                   blurRadius: 10,
                                   offset: const Offset(2, 5),

@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/class/store.dart';
+import 'package:titan/paiement/class/store.dart';
 
 class StoreProvider extends StateNotifier<Store> {
   StoreProvider() : super(Store.empty());

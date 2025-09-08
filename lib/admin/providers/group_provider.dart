@@ -1,13 +1,13 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/group.dart';
-import 'package:myecl/admin/repositories/group_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/admin/class/group.dart';
+import 'package:titan/admin/repositories/group_repository.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class GroupNotifier extends SingleNotifier<Group> {
   final GroupRepository groupRepository;
   GroupNotifier({required this.groupRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<Group>> loadGroup(String groupId) async {
     return await load(() async => groupRepository.getGroup(groupId));
@@ -32,8 +32,9 @@ class GroupNotifier extends SingleNotifier<Group> {
   }
 }
 
-final groupProvider =
-    StateNotifierProvider<GroupNotifier, AsyncValue<Group>>((ref) {
+final groupProvider = StateNotifierProvider<GroupNotifier, AsyncValue<Group>>((
+  ref,
+) {
   final groupRepository = ref.watch(groupRepositoryProvider);
   return GroupNotifier(groupRepository: groupRepository);
 });

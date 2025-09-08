@@ -8,7 +8,8 @@ class DisplayQuitNotifier extends StateNotifier<bool> {
   }
 }
 
-final displayQuitProvider =
-    StateNotifierProvider<DisplayQuitNotifier, bool>((ref) {
+final displayQuitProvider = StateNotifierProvider<DisplayQuitNotifier, bool>((
+  ref,
+) {
   return DisplayQuitNotifier();
 });

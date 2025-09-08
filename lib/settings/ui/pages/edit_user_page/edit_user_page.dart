@@ -4,23 +4,23 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:myecl/settings/router.dart';
-import 'package:myecl/settings/tools/constants.dart';
-import 'package:myecl/settings/ui/pages/edit_user_page/picture_button.dart';
-import 'package:myecl/settings/ui/pages/edit_user_page/user_field_modifier.dart';
-import 'package:myecl/settings/ui/settings.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
-import 'package:myecl/user/class/floors.dart';
-import 'package:myecl/user/providers/user_provider.dart';
-import 'package:myecl/user/providers/profile_picture_provider.dart';
+import 'package:titan/settings/router.dart';
+import 'package:titan/settings/tools/constants.dart';
+import 'package:titan/settings/ui/pages/edit_user_page/picture_button.dart';
+import 'package:titan/settings/ui/pages/edit_user_page/user_field_modifier.dart';
+import 'package:titan/settings/ui/settings.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
+import 'package:titan/user/class/floors.dart';
+import 'package:titan/user/providers/user_provider.dart';
+import 'package:titan/user/providers/profile_picture_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EditUserPage extends HookConsumerWidget {
@@ -36,11 +36,13 @@ class EditUserPage extends HookConsumerWidget {
     final dateController = useTextEditingController(
       text: user.birthday != null ? processDate(user.birthday!) : "",
     );
-    final nickNameController =
-        useTextEditingController(text: user.nickname ?? '');
+    final nickNameController = useTextEditingController(
+      text: user.nickname ?? '',
+    );
     final phoneController = useTextEditingController(text: user.phone ?? '');
-    final floorController =
-        useTextEditingController(text: user.floor.toString());
+    final floorController = useTextEditingController(
+      text: user.floor.toString(),
+    );
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -128,9 +130,7 @@ class EditUserPage extends HookConsumerWidget {
                                   );
                                 }
                               },
-                              child: const PictureButton(
-                                icon: HeroIcons.photo,
-                              ),
+                              child: const PictureButton(icon: HeroIcons.photo),
                             ),
                           ),
                           Positioned(
@@ -171,8 +171,8 @@ class EditUserPage extends HookConsumerWidget {
                             right: 60,
                             child: GestureDetector(
                               onTap: () async {
-                                final value =
-                                    await profilePictureNotifier.cropImage();
+                                final value = await profilePictureNotifier
+                                    .cropImage();
                                 if (value != null) {
                                   if (value) {
                                     displayToastWithContext(
@@ -276,8 +276,9 @@ class EditUserPage extends HookConsumerWidget {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: ColorConstants.gradient2
-                                  .withValues(alpha: 0.5),
+                              color: ColorConstants.gradient2.withValues(
+                                alpha: 0.5,
+                              ),
                               spreadRadius: 1,
                               blurRadius: 7,
                               offset: const Offset(0, 3),

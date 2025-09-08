@@ -1,4 +1,4 @@
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
 
 class Recommendation {
   final String? id;
@@ -18,12 +18,12 @@ class Recommendation {
   });
 
   Recommendation.fromJson(Map<String, dynamic> json)
-      : id = json["id"],
-        creation = processDateFromAPI(json["creation"]),
-        title = json["title"],
-        code = json["code"],
-        summary = json["summary"],
-        description = json["description"];
+    : id = json["id"],
+      creation = processDateFromAPI(json["creation"]),
+      title = json["title"],
+      code = json["code"],
+      summary = json["summary"],
+      description = json["description"];
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -34,7 +34,14 @@ class Recommendation {
     return data;
   }
 
-  Recommendation copyWith({id, creation, title, code, summary, description}) {
+  Recommendation copyWith({
+    String? id,
+    DateTime? creation,
+    String? title,
+    String? code,
+    String? summary,
+    String? description,
+  }) {
     return Recommendation(
       id: id ?? this.id,
       creation: creation ?? this.creation,
@@ -46,12 +53,7 @@ class Recommendation {
   }
 
   static Recommendation empty() {
-    return Recommendation(
-      title: "",
-      code: null,
-      summary: "",
-      description: "",
-    );
+    return Recommendation(title: "", code: null, summary: "", description: "");
   }
 
   @override

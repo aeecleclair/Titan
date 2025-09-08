@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/providers/cash_list_provider.dart';
-import 'package:myecl/amap/providers/delivery_list_provider.dart';
-import 'package:myecl/amap/providers/delivery_order_list_provider.dart';
-import 'package:myecl/amap/providers/delivery_product_list_provider.dart';
-import 'package:myecl/amap/providers/delivery_provider.dart';
-import 'package:myecl/amap/providers/sorted_delivery_product.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/amap.dart';
-import 'package:myecl/amap/ui/pages/detail_delivery_page/order_detail_ui.dart';
-import 'package:myecl/amap/ui/pages/detail_delivery_page/product_detail_ui.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/loader.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/amap/class/order.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/providers/cash_list_provider.dart';
+import 'package:titan/amap/providers/delivery_list_provider.dart';
+import 'package:titan/amap/providers/delivery_order_list_provider.dart';
+import 'package:titan/amap/providers/delivery_product_list_provider.dart';
+import 'package:titan/amap/providers/delivery_provider.dart';
+import 'package:titan/amap/providers/sorted_delivery_product.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/amap/ui/amap.dart';
+import 'package:titan/amap/ui/pages/detail_delivery_page/order_detail_ui.dart';
+import 'package:titan/amap/ui/pages/detail_delivery_page/product_detail_ui.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/widgets/loader.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 
 class DetailDeliveryPage extends HookConsumerWidget {
   const DetailDeliveryPage({super.key});
@@ -27,10 +27,12 @@ class DetailDeliveryPage extends HookConsumerWidget {
     final deliveryOrders = ref.watch(adminDeliveryOrderListProvider);
     final orders = deliveryOrders[delivery.id];
     final deliveryListNotifier = ref.read(deliveryListProvider.notifier);
-    final deliveryProductListNotifier =
-        ref.watch(deliveryProductListProvider.notifier);
-    final sortedByCategoryDeliveryProducts =
-        ref.watch(sortedByCategoryDeliveryProductsProvider);
+    final deliveryProductListNotifier = ref.watch(
+      deliveryProductListProvider.notifier,
+    );
+    final sortedByCategoryDeliveryProducts = ref.watch(
+      sortedByCategoryDeliveryProductsProvider,
+    );
     final cash = ref.watch(cashListProvider);
     return AmapTemplate(
       child: Refresher(

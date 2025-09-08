@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:load_switch/load_switch.dart';
-import 'package:myecl/service/class/topic.dart';
-import 'package:myecl/service/providers/topic_provider.dart';
-import 'package:myecl/service/tools/functions.dart';
-import 'package:myecl/settings/tools/constants.dart';
-import 'package:myecl/settings/ui/settings.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/service/class/topic.dart';
+import 'package:titan/service/providers/topic_provider.dart';
+import 'package:titan/service/tools/functions.dart';
+import 'package:titan/settings/tools/constants.dart';
+import 'package:titan/settings/ui/settings.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 
 class NotificationPage extends HookConsumerWidget {
   const NotificationPage({super.key});
@@ -58,20 +58,23 @@ class NotificationPage extends HookConsumerWidget {
                                 width: 60,
                                 curveIn: Curves.easeInBack,
                                 curveOut: Curves.easeOutBack,
-                                animationDuration:
-                                    const Duration(milliseconds: 500),
+                                animationDuration: const Duration(
+                                  milliseconds: 500,
+                                ),
                                 switchDecoration: (value, _) => BoxDecoration(
                                   color: value
-                                      ? ColorConstants.gradient1
-                                          .withValues(alpha: 0.3)
+                                      ? ColorConstants.gradient1.withValues(
+                                          alpha: 0.3,
+                                        )
                                       : Colors.grey.shade200,
                                   borderRadius: BorderRadius.circular(30),
                                   shape: BoxShape.rectangle,
                                   boxShadow: [
                                     BoxShadow(
                                       color: value
-                                          ? ColorConstants.gradient1
-                                              .withValues(alpha: 0.2)
+                                          ? ColorConstants.gradient1.withValues(
+                                              alpha: 0.2,
+                                            )
                                           : Colors.grey.withValues(alpha: 0.2),
                                       spreadRadius: 1,
                                       blurRadius: 3,
@@ -90,10 +93,12 @@ class NotificationPage extends HookConsumerWidget {
                                   boxShadow: [
                                     BoxShadow(
                                       color: value
-                                          ? ColorConstants.gradient1
-                                              .withValues(alpha: 0.2)
-                                          : Colors.grey.shade200
-                                              .withValues(alpha: 0.2),
+                                          ? ColorConstants.gradient1.withValues(
+                                              alpha: 0.2,
+                                            )
+                                          : Colors.grey.shade200.withValues(
+                                              alpha: 0.2,
+                                            ),
                                       spreadRadius: 5,
                                       blurRadius: 7,
                                       offset: const Offset(

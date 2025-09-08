@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/user/class/user.dart';
-import 'package:myecl/user/providers/user_provider.dart';
-import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/user/class/user.dart';
+import 'package:titan/user/providers/user_provider.dart';
+import 'package:titan/vote/providers/is_vote_admin_provider.dart';
 
 void main() {
   group('isVoteAdmin', () {
@@ -13,8 +13,9 @@ void main() {
           userProvider.overrideWithValue(
             User.empty().copyWith(
               groups: [
-                SimpleGroup.empty()
-                    .copyWith(id: '6c6d7e88-fdb8-4e42-b2b5-3d3cfd12e7d6'),
+                SimpleGroup.empty().copyWith(
+                  id: '6c6d7e88-fdb8-4e42-b2b5-3d3cfd12e7d6',
+                ),
               ],
             ),
           ),
@@ -32,8 +33,9 @@ void main() {
           userProvider.overrideWithValue(
             User.empty().copyWith(
               groups: [
-                SimpleGroup.empty()
-                    .copyWith(id: '12345678-1234-1234-1234-123456789012'),
+                SimpleGroup.empty().copyWith(
+                  id: '12345678-1234-1234-1234-123456789012',
+                ),
               ],
             ),
           ),

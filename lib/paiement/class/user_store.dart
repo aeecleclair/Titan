@@ -1,5 +1,5 @@
-import 'package:myecl/paiement/class/store.dart';
-import 'package:myecl/paiement/class/structure.dart';
+import 'package:titan/paiement/class/store.dart';
+import 'package:titan/paiement/class/structure.dart';
 
 class UserStore extends Store {
   final bool canBank;
@@ -75,14 +75,14 @@ class UserStore extends Store {
   }
 
   UserStore.empty()
-      : this(
-          id: '',
-          name: '',
-          walletId: '',
-          structure: Structure.empty(),
-          canBank: false,
-          canSeeHistory: false,
-          canCancel: false,
-          canManageSellers: false,
-        );
+    : this(
+        id: '',
+        name: '',
+        walletId: '',
+        structure: Structure.empty(),
+        canBank: false,
+        canSeeHistory: false,
+        canCancel: false,
+        canManageSellers: false,
+      );
 }

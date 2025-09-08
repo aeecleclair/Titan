@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/user/class/simple_users.dart';
-import 'package:myecl/vote/class/members.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/class/result.dart';
-import 'package:myecl/vote/class/section.dart';
-import 'package:myecl/vote/class/votes.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
-import 'package:myecl/vote/tools/functions.dart';
+import 'package:titan/admin/class/account_type.dart';
+import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/vote/class/members.dart';
+import 'package:titan/vote/class/contender.dart';
+import 'package:titan/vote/class/result.dart';
+import 'package:titan/vote/class/section.dart';
+import 'package:titan/vote/class/votes.dart';
+import 'package:titan/vote/repositories/status_repository.dart';
+import 'package:titan/vote/tools/functions.dart';
 
 void main() {
   group('Testing Member class', () {
@@ -40,25 +40,15 @@ void main() {
 
     test('Should update with new values', () {
       final member = Member.empty();
-      Member newMember = member.copyWith(
-        id: 'id2',
-      );
+      Member newMember = member.copyWith(id: 'id2');
       expect(newMember.id, 'id2');
-      newMember = member.copyWith(
-        name: 'name2',
-      );
+      newMember = member.copyWith(name: 'name2');
       expect(newMember.name, 'name2');
-      newMember = member.copyWith(
-        firstname: 'firstname2',
-      );
+      newMember = member.copyWith(firstname: 'firstname2');
       expect(newMember.firstname, 'firstname2');
-      newMember = member.copyWith(
-        nickname: 'nickname2',
-      );
+      newMember = member.copyWith(nickname: 'nickname2');
       expect(newMember.nickname, 'nickname2');
-      newMember = member.copyWith(
-        role: 'role2',
-      );
+      newMember = member.copyWith(role: 'role2');
       expect(newMember.role, 'role2');
     });
 
@@ -125,10 +115,7 @@ void main() {
         nickname: 'nickname',
         role: 'role',
       );
-      expect(member.toJson(), {
-        "user_id": "id",
-        "role": "role",
-      });
+      expect(member.toJson(), {"user_id": "id", "role": "role"});
     });
   });
 
@@ -155,17 +142,11 @@ void main() {
 
     test('Should update with new values', () {
       final section = Section.empty();
-      Section newSection = section.copyWith(
-        id: 'id2',
-      );
+      Section newSection = section.copyWith(id: 'id2');
       expect(newSection.id, 'id2');
-      newSection = section.copyWith(
-        name: 'name2',
-      );
+      newSection = section.copyWith(name: 'name2');
       expect(newSection.name, 'name2');
-      newSection = section.copyWith(
-        description: 'description2',
-      );
+      newSection = section.copyWith(description: 'description2');
       expect(newSection.description, 'description2');
     });
 
@@ -242,33 +223,19 @@ void main() {
 
     test('Should update with new values', () {
       final contender = Contender.empty();
-      Contender newContender = contender.copyWith(
-        id: 'id2',
-      );
+      Contender newContender = contender.copyWith(id: 'id2');
       expect(newContender.id, 'id2');
-      newContender = contender.copyWith(
-        name: 'name2',
-      );
+      newContender = contender.copyWith(name: 'name2');
       expect(newContender.name, 'name2');
-      newContender = contender.copyWith(
-        description: 'description2',
-      );
+      newContender = contender.copyWith(description: 'description2');
       expect(newContender.description, 'description2');
-      newContender = contender.copyWith(
-        members: [],
-      );
+      newContender = contender.copyWith(members: []);
       expect(newContender.members, []);
-      newContender = contender.copyWith(
-        listType: ListType.fake,
-      );
+      newContender = contender.copyWith(listType: ListType.fake);
       expect(newContender.listType, ListType.fake);
-      newContender = contender.copyWith(
-        section: Section.empty(),
-      );
+      newContender = contender.copyWith(section: Section.empty());
       expect(newContender.section, isA<Section>());
-      newContender = contender.copyWith(
-        program: 'program2',
-      );
+      newContender = contender.copyWith(program: 'program2');
       expect(newContender.program, 'program2');
     });
 
@@ -344,28 +311,19 @@ void main() {
     });
 
     test('Should return a Result', () {
-      final result = Result(
-        id: 'id',
-        count: 1,
-      );
+      final result = Result(id: 'id', count: 1);
       expect(result, isA<Result>());
       expect(result.id, 'id');
       expect(result.count, 1);
     });
 
     test('Should print a Result', () {
-      final result = Result(
-        id: 'id',
-        count: 1,
-      );
+      final result = Result(id: 'id', count: 1);
       expect(result.toString(), 'Result{id: id, count: 1}');
     });
 
     test('Should parse a Result', () {
-      final result = Result.fromJson({
-        "list_id": "id",
-        "count": 1,
-      });
+      final result = Result.fromJson({"list_id": "id", "count": 1});
       expect(result, isA<Result>());
       expect(result.id, 'id');
       expect(result.count, 1);
@@ -373,25 +331,15 @@ void main() {
 
     test('Should update with new value', () {
       final result = Result.empty();
-      Result newResult = result.copyWith(
-        id: 'id2',
-      );
+      Result newResult = result.copyWith(id: 'id2');
       expect(newResult.id, 'id2');
-      newResult = result.copyWith(
-        count: 2,
-      );
+      newResult = result.copyWith(count: 2);
       expect(newResult.count, 2);
     });
 
     test('Should return a correct json', () {
-      final result = Result(
-        id: 'id',
-        count: 1,
-      );
-      expect(result.toJson(), {
-        "list_id": "id",
-        "count": 1,
-      });
+      final result = Result(id: 'id', count: 1);
+      expect(result.toJson(), {"list_id": "id", "count": 1});
     });
   });
 
@@ -403,27 +351,19 @@ void main() {
     });
 
     test('Should return a Votes', () {
-      final votes = Votes(
-        id: 'id',
-      );
+      final votes = Votes(id: 'id');
       expect(votes, isA<Votes>());
       expect(votes.id, 'id');
     });
 
     test('Should print a Votes', () {
-      final votes = Votes(
-        id: 'id',
-      );
+      final votes = Votes(id: 'id');
       expect(votes.toString(), 'Votes{id: id}');
     });
 
     test('Should return a correct json', () {
-      final votes = Votes(
-        id: 'id',
-      );
-      expect(votes.toJson(), {
-        "list_id": "id",
-      });
+      final votes = Votes(id: 'id');
+      expect(votes.toJson(), {"list_id": "id"});
     });
   });
 

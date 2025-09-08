@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/router.dart';
-import 'package:myecl/purchases/tools/constants.dart';
-import 'package:myecl/tools/ui/widgets/top_bar.dart';
+import 'package:titan/purchases/router.dart';
+import 'package:titan/purchases/tools/constants.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 
 class PurchasesTemplate extends HookConsumerWidget {
   final Widget child;

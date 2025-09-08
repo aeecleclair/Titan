@@ -1,6 +1,6 @@
-import 'package:myecl/centralisation/class/section.dart';
+import 'package:titan/centralisation/class/section.dart';
 import 'package:http/http.dart' as http;
-import 'package:myecl/tools/logs/logger.dart';
+import 'package:titan/tools/logs/logger.dart';
 import 'dart:convert';
 
 class SectionRepository {
@@ -20,28 +20,22 @@ class SectionRepository {
       final response = await http.get(Uri.parse(host), headers: headers);
       if (response.statusCode == 200) {
         try {
-          String toDecode = utf8.decode(response.body.runes.toList());
+          String toDecode = utf8.decode(response.bodyBytes);
           final data = jsonDecode(toDecode) as Map<String, dynamic>;
           return data
               .map((key, value) => MapEntry(key, Section.fromJson(key, value)))
               .values
               .toList();
         } catch (e) {
-          logger.error(
-            "GET $host\nError while decoding response",
-          );
+          logger.error("GET $host\nError while decoding response");
           return <Section>[];
         }
       } else {
-        logger.error(
-          "GET $host\n${response.statusCode} ${response.body}",
-        );
+        logger.error("GET $host\n${response.statusCode} ${response.body}");
         return <Section>[];
       }
     } catch (e) {
-      logger.error(
-        "GET $host\nError while fetching response",
-      );
+      logger.error("GET $host\nError while fetching response");
       return <Section>[];
     }
   }

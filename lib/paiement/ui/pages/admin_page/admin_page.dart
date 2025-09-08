@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/providers/selected_structure_provider.dart';
-import 'package:myecl/paiement/providers/stores_list_provider.dart';
-import 'package:myecl/paiement/ui/pages/admin_page/add_store_card.dart';
-import 'package:myecl/paiement/ui/pages/admin_page/admin_store_card.dart';
-import 'package:myecl/paiement/ui/paiement.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/paiement/providers/selected_structure_provider.dart';
+import 'package:titan/paiement/providers/stores_list_provider.dart';
+import 'package:titan/paiement/ui/pages/admin_page/add_store_card.dart';
+import 'package:titan/paiement/ui/pages/admin_page/admin_store_card.dart';
+import 'package:titan/paiement/ui/paiement.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
 class AdminPage extends ConsumerWidget {
   const AdminPage({super.key});
@@ -37,8 +37,9 @@ class AdminPage extends ConsumerWidget {
             AsyncChild(
               value: storeList,
               builder: (context, stores) {
-                final storeFromStructures =
-                    stores.where((store) => store.structure.id == structure.id);
+                final storeFromStructures = stores.where(
+                  (store) => store.structure.id == structure.id,
+                );
                 return Column(
                   children: storeFromStructures
                       .map((store) => AdminStoreCard(store: store))

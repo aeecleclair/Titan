@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/structure_manager_provider.dart';
-import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/admin/ui/pages/add_edit_structure_page/results.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
-import 'package:myecl/user/class/simple_users.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:titan/admin/providers/structure_manager_provider.dart';
+import 'package:titan/admin/tools/constants.dart';
+import 'package:titan/admin/ui/pages/add_edit_structure_page/results.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
+import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/user/providers/user_list_provider.dart';
 
 class SearchUser extends HookConsumerWidget {
   const SearchUser({super.key});
@@ -31,9 +31,7 @@ class SearchUser extends HookConsumerWidget {
           ),
           onChanged: (value) async {
             if (value.isNotEmpty) {
-              await usersNotifier.filterUsers(
-                value,
-              );
+              await usersNotifier.filterUsers(value);
             } else {
               usersNotifier.clear();
             }
@@ -44,10 +42,7 @@ class SearchUser extends HookConsumerWidget {
               padding: const EdgeInsets.all(7),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
-                  ],
+                  colors: [ColorConstants.gradient1, ColorConstants.gradient2],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -60,11 +55,7 @@ class SearchUser extends HookConsumerWidget {
                 ],
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
-              child: HeroIcon(
-                HeroIcons.plus,
-                size: 20,
-                color: Colors.white,
-              ),
+              child: HeroIcon(HeroIcons.plus, size: 20, color: Colors.white),
             ),
           ),
         ),

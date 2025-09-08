@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/raffle/tools/constants.dart';
+import 'package:titan/raffle/tools/constants.dart';
 
 class BlueBtn extends StatelessWidget {
   final Widget child;

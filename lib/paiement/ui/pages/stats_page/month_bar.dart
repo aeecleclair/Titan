@@ -1,80 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/paiement/providers/selected_month_provider.dart';
-import 'package:myecl/paiement/tools/functions.dart';
+import 'package:intl/intl.dart';
+import 'package:titan/paiement/class/history.dart';
+import 'package:titan/paiement/providers/my_history_provider.dart';
 
 class MonthBar extends HookConsumerWidget {
-  const MonthBar({super.key});
+  final DateTime currentMonth;
+  const MonthBar({super.key, required this.currentMonth});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentMonth = ref.watch(selectedMonthProvider);
-    final currentMonthNotifier = ref.watch(selectedMonthProvider.notifier);
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            const SizedBox(
-              width: 30,
-            ),
-            GestureDetector(
-              onTap: () {
-                final isPreviousYear = currentMonth.month == 0;
-                currentMonthNotifier.updateSelectedMonth(
-                  DateTime(
-                    currentMonth.year - (isPreviousYear ? 1 : 0),
-                    (currentMonth.month - 1) % 12,
-                  ),
-                );
-              },
-              child: Text(
-                getMonth((currentMonth.month - 1) % 12),
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 149, 149, 149),
-                ),
-              ),
-            ),
-          ],
-        ),
-        Text(
-          getMonth(currentMonth.month % 12),
-          style: const TextStyle(
-            fontSize: 20,
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Row(
-          children: [
-            GestureDetector(
-              onTap: () {
-                final isNextYear = currentMonth.month == 11;
-                currentMonthNotifier.updateSelectedMonth(
-                  DateTime(
-                    currentMonth.year + (isNextYear ? 1 : 0),
-                    (currentMonth.month + 1) % 12,
-                  ),
-                );
-              },
-              child: Text(
-                getMonth((currentMonth.month + 1) % 12),
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 149, 149, 149),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 30,
-            ),
-          ],
-        ),
-      ],
+    final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final history = ref.watch(myHistoryProvider);
+    int total = 0;
+    history.maybeWhen(
+      orElse: () => total = 0,
+      data: (history) {
+        final confirmedTransaction = history.where(
+          (element) =>
+              (element.status == TransactionStatus.confirmed ||
+                  element.status == TransactionStatus.refunded) &&
+              element.creation.year == currentMonth.year &&
+              element.creation.month == currentMonth.month,
+        );
+        total = confirmedTransaction.fold<int>(
+          0,
+          (previousValue, element) =>
+              previousValue +
+              (element.type == HistoryType.given
+                  ? -element.total
+                  : element.type == HistoryType.refundDebited
+                  ? -element.total + element.refund!.total
+                  : element.total),
+        );
+      },
+    );
+    return Text(
+      "${DateFormat("MMMM yyyy", "fr_FR").format(currentMonth)} : ${total > 0 ? "+" : ""}${formatter.format(total / 100)} €",
+      style: const TextStyle(
+        fontSize: 20,
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }

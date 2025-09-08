@@ -6,18 +6,18 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:myecl/recommendation/class/recommendation.dart';
-import 'package:myecl/recommendation/providers/recommendation_list_provider.dart';
-import 'package:myecl/recommendation/providers/recommendation_logo_map_provider.dart';
-import 'package:myecl/recommendation/providers/recommendation_logo_provider.dart';
-import 'package:myecl/recommendation/providers/recommendation_provider.dart';
-import 'package:myecl/recommendation/tools/constants.dart';
-import 'package:myecl/recommendation/ui/widgets/recommendation_template.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/image_picker_on_tap.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:titan/recommendation/class/recommendation.dart';
+import 'package:titan/recommendation/providers/recommendation_list_provider.dart';
+import 'package:titan/recommendation/providers/recommendation_logo_map_provider.dart';
+import 'package:titan/recommendation/providers/recommendation_logo_provider.dart';
+import 'package:titan/recommendation/providers/recommendation_provider.dart';
+import 'package:titan/recommendation/tools/constants.dart';
+import 'package:titan/recommendation/ui/widgets/recommendation_template.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/widgets/image_picker_on_tap.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditRecommendationPage extends HookConsumerWidget {
@@ -30,10 +30,12 @@ class AddEditRecommendationPage extends HookConsumerWidget {
     final recommendation = ref.watch(recommendationProvider);
     final recommendationNotifier = ref.watch(recommendationProvider.notifier);
     final recommendationList = ref.watch(recommendationListProvider);
-    final recommendationListNotifier =
-        ref.watch(recommendationListProvider.notifier);
-    final recommendationLogoNotifier =
-        ref.watch(recommendationLogoProvider.notifier);
+    final recommendationListNotifier = ref.watch(
+      recommendationListProvider.notifier,
+    );
+    final recommendationLogoNotifier = ref.watch(
+      recommendationLogoProvider.notifier,
+    );
     final logoBytes = useState<Uint8List?>(null);
     final logo = useState<Image?>(null);
     final isEdit = recommendation.id != Recommendation.empty().id;
@@ -41,19 +43,18 @@ class AddEditRecommendationPage extends HookConsumerWidget {
     final title = useTextEditingController(text: recommendation.title);
     final code = useTextEditingController(text: recommendation.code);
     final summary = useTextEditingController(text: recommendation.summary);
-    final description =
-        useTextEditingController(text: recommendation.description);
+    final description = useTextEditingController(
+      text: recommendation.description,
+    );
 
     final recommendationLogoMap = ref.watch(recommendationLogoMapProvider);
 
     if (recommendationLogoMap[recommendation] != null) {
-      recommendationLogoMap[recommendation]!.whenData(
-        (data) {
-          if (data.isNotEmpty) {
-            logo.value = data.first;
-          }
-        },
-      );
+      recommendationLogoMap[recommendation]!.whenData((data) {
+        if (data.isNotEmpty) {
+          logo.value = data.first;
+        }
+      });
     }
 
     void displayAdvertToastWithContext(TypeMsg type, String msg) {
@@ -154,13 +155,15 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                       );
                       final value = isEdit
                           ? await recommendationListNotifier
-                              .updateRecommendation(newRecommendation)
-                          : await recommendationListNotifier
-                              .addRecommendation(newRecommendation);
+                                .updateRecommendation(newRecommendation)
+                          : await recommendationListNotifier.addRecommendation(
+                              newRecommendation,
+                            );
                       if (value) {
                         if (isEdit) {
-                          recommendationNotifier
-                              .setRecommendation(newRecommendation);
+                          recommendationNotifier.setRecommendation(
+                            newRecommendation,
+                          );
                           displayAdvertToastWithContext(
                             TypeMsg.msg,
                             RecommendationTextConstants.editedRecommendation,
@@ -170,9 +173,9 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                               if (logoBytes.value != null) {
                                 recommendationLogoNotifier
                                     .updateRecommendationLogo(
-                                  recommendation.id!,
-                                  logoBytes.value!,
-                                );
+                                      recommendation.id!,
+                                      logoBytes.value!,
+                                    );
                               }
                             },
                             orElse: () {},
@@ -187,9 +190,9 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                               final newRecommendation = list.last;
                               recommendationLogoNotifier
                                   .updateRecommendationLogo(
-                                newRecommendation.id!,
-                                logoBytes.value!,
-                              );
+                                    newRecommendation.id!,
+                                    logoBytes.value!,
+                                  );
                             },
                             orElse: () {},
                           );

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/booking/class/room.dart';
-import 'package:myecl/booking/providers/room_provider.dart';
+import 'package:titan/service/class/room.dart';
+import 'package:titan/booking/providers/room_provider.dart';
 
 void main() {
   group('RoomNotifier', () {
@@ -9,11 +9,7 @@ void main() {
       final container = ProviderContainer();
       final notifier = container.read(roomProvider.notifier);
 
-      final room = Room(
-        id: '1',
-        name: 'Test Room',
-        managerId: '123',
-      );
+      final room = Room(id: '1', name: 'Test Room', managerId: '123');
 
       notifier.setRoom(room);
 

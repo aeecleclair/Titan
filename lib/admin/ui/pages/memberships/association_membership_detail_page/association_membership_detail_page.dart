@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/user_association_membership.dart';
-import 'package:myecl/admin/providers/association_membership_filtered_members_provider.dart';
-import 'package:myecl/admin/providers/association_membership_members_list_provider.dart';
-import 'package:myecl/admin/providers/association_membership_provider.dart';
-import 'package:myecl/admin/providers/user_association_membership_provider.dart';
-import 'package:myecl/admin/router.dart';
-import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/admin/ui/admin.dart';
-import 'package:myecl/admin/ui/pages/memberships/association_membership_detail_page/association_membership_information_editor.dart';
-import 'package:myecl/admin/ui/pages/memberships/association_membership_detail_page/association_membership_member_editable_card.dart';
-import 'package:myecl/admin/ui/pages/memberships/association_membership_detail_page/research_bar.dart';
-import 'package:myecl/admin/ui/pages/memberships/association_membership_detail_page/search_filters.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/admin/class/user_association_membership.dart';
+import 'package:titan/admin/providers/association_membership_filtered_members_provider.dart';
+import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
+import 'package:titan/admin/providers/association_membership_provider.dart';
+import 'package:titan/admin/providers/user_association_membership_provider.dart';
+import 'package:titan/admin/router.dart';
+import 'package:titan/admin/tools/constants.dart';
+import 'package:titan/admin/ui/admin.dart';
+import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/association_membership_information_editor.dart';
+import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/association_membership_member_editable_card.dart';
+import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/research_bar.dart';
+import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/search_filters.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AssociationMembershipEditorPage extends HookConsumerWidget {
@@ -25,28 +25,27 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final associationMembership = ref.watch(associationMembershipProvider);
-    final associationMembershipMemberListNotifier =
-        ref.watch(associationMembershipMembersProvider.notifier);
-    final userAssociationMembershipNotifier =
-        ref.watch(userAssociationMembershipProvider.notifier);
-    final associationMembershipFilteredList =
-        ref.watch(associationMembershipFilteredListProvider);
+    final associationMembershipMemberListNotifier = ref.watch(
+      associationMembershipMembersProvider.notifier,
+    );
+    final userAssociationMembershipNotifier = ref.watch(
+      userAssociationMembershipProvider.notifier,
+    );
+    final associationMembershipFilteredList = ref.watch(
+      associationMembershipFilteredListProvider,
+    );
 
     return AdminTemplate(
       child: Refresher(
         onRefresh: () async {
           await associationMembershipMemberListNotifier
-              .loadAssociationMembershipMembers(
-            associationMembership.id,
-          );
+              .loadAssociationMembershipMembers(associationMembership.id);
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
             children: [
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -59,9 +58,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                 ),
               ),
               AssociationMembershipInformationEditor(),
-              const SizedBox(
-                height: 30,
-              ),
+              const SizedBox(height: 30),
               Row(
                 children: [
                   const Text(
@@ -72,9 +69,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                       color: ColorConstants.gradient1,
                     ),
                   ),
-                  const SizedBox(
-                    width: 10,
-                  ),
+                  const SizedBox(width: 10),
                   Text(
                     "(${associationMembershipFilteredList.length} ${AdminTextConstants.members})",
                     style: const TextStyle(
@@ -97,10 +92,10 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                     onTap: () async {
                       userAssociationMembershipNotifier
                           .setUserAssociationMembership(
-                        UserAssociationMembership.empty().copyWith(
-                          associationMembershipId: associationMembership.id,
-                        ),
-                      );
+                            UserAssociationMembership.empty().copyWith(
+                              associationMembershipId: associationMembership.id,
+                            ),
+                          );
                       QR.to(
                         AdminRouter.root +
                             AdminRouter.associationMemberships +
@@ -116,22 +111,14 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               ExpansionTile(
                 title: const Text(AdminTextConstants.filters),
-                children: const [
-                  SearchFilters(),
-                ],
+                children: const [SearchFilters()],
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               ResearchBar(),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               associationMembershipFilteredList.isEmpty
                   ? const Text(AdminTextConstants.noMember)
                   : SizedBox(
@@ -149,9 +136,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                         },
                       ),
                     ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
             ],
           ),
         ),

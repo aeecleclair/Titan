@@ -23,24 +23,12 @@ class InfoCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            HeroIcon(
-              icons,
-              color: Colors.black,
-              size: 35,
-            ),
+            HeroIcon(icons, color: Colors.black, size: 35),
             const SizedBox(height: 10),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 13,
-              ),
-            ),
+            Text(title, style: const TextStyle(fontSize: 13)),
             Text(
               value,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
           ],
         ),

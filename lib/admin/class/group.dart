@@ -1,5 +1,5 @@
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class Group {
   Group({
@@ -36,13 +36,12 @@ class Group {
     String? description,
     String? id,
     List<SimpleUser>? members,
-  }) =>
-      Group(
-        name: name ?? this.name,
-        description: description ?? this.description,
-        id: id ?? this.id,
-        members: members ?? this.members,
-      );
+  }) => Group(
+    name: name ?? this.name,
+    description: description ?? this.description,
+    id: id ?? this.id,
+    members: members ?? this.members,
+  );
 
   Group.empty() {
     name = 'Nom';
@@ -52,11 +51,7 @@ class Group {
   }
 
   SimpleGroup toSimpleGroup() {
-    return SimpleGroup(
-      name: name,
-      description: description,
-      id: id,
-    );
+    return SimpleGroup(name: name, description: description, id: id);
   }
 
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/class/path_forwarding.dart';
+import 'package:titan/tools/class/path_forwarding.dart';
 
 class PathForwardingProvider extends StateNotifier<PathForwarding> {
   PathForwardingProvider() : super(PathForwarding.empty());
@@ -23,5 +23,5 @@ class PathForwardingProvider extends StateNotifier<PathForwarding> {
 
 final pathForwardingProvider =
     StateNotifierProvider<PathForwardingProvider, PathForwarding>(
-  (ref) => PathForwardingProvider(),
-);
+      (ref) => PathForwardingProvider(),
+    );

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class MembersNotifier extends StateNotifier<List<SimpleUser>> {
   MembersNotifier() : super(const []);
@@ -15,5 +15,5 @@ class MembersNotifier extends StateNotifier<List<SimpleUser>> {
 
 final membersProvider =
     StateNotifierProvider<MembersNotifier, List<SimpleUser>>(
-  (ref) => MembersNotifier(),
-);
+      (ref) => MembersNotifier(),
+    );

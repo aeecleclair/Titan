@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/providers/purchase_list_provider.dart';
-import 'package:myecl/purchases/providers/purchase_provider.dart';
-import 'package:myecl/purchases/router.dart';
-import 'package:myecl/purchases/tools/constants.dart';
-import 'package:myecl/purchases/ui/pages/history_page/purchase_card.dart';
-import 'package:myecl/purchases/ui/purchases.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/purchases/providers/purchase_list_provider.dart';
+import 'package:titan/purchases/providers/purchase_provider.dart';
+import 'package:titan/purchases/router.dart';
+import 'package:titan/purchases/tools/constants.dart';
+import 'package:titan/purchases/ui/pages/history_page/purchase_card.dart';
+import 'package:titan/purchases/ui/purchases.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/tools/ui/layouts/item_chip.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class HistoryPage extends HookConsumerWidget {
@@ -55,9 +55,7 @@ class HistoryPage extends HookConsumerWidget {
 
             if (children.isEmpty) {
               children.add(
-                const Center(
-                  child: Text(PurchasesTextConstants.noPurchases),
-                ),
+                const Center(child: Text(PurchasesTextConstants.noPurchases)),
               );
             }
             return Column(
@@ -88,9 +86,8 @@ class HistoryPage extends HookConsumerWidget {
               ],
             );
           },
-          errorBuilder: (error, stack) => const Center(
-            child: Text(PurchasesTextConstants.purchasesError),
-          ),
+          errorBuilder: (error, stack) =>
+              const Center(child: Text(PurchasesTextConstants.purchasesError)),
         ),
       ),
     );

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/paiement/class/history.dart';
-import 'package:myecl/paiement/providers/my_history_provider.dart';
-import 'package:myecl/paiement/ui/pages/main_page/account_card/day_divider.dart';
-import 'package:myecl/paiement/ui/components/transaction_card.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:titan/paiement/class/history.dart';
+import 'package:titan/paiement/providers/my_history_provider.dart';
+import 'package:titan/paiement/ui/pages/main_page/account_card/day_divider.dart';
+import 'package:titan/paiement/ui/components/transaction_card.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class LastTransactions extends ConsumerWidget {
@@ -19,9 +19,7 @@ class LastTransactions extends ConsumerWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: 25,
-            ),
+            const SizedBox(height: 25),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               alignment: Alignment.centerLeft,
@@ -34,16 +32,15 @@ class LastTransactions extends ConsumerWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            const SizedBox(height: 15),
             AsyncChild(
               value: history,
               builder: (context, history) {
                 final Map<String, List<History>> groupedByDay = {};
                 final Map<String, DateTime> stringDate = {};
-                for (var transaction in history
-                    .where((h) => h.status != TransactionStatus.pending)) {
+                for (var transaction in history.where(
+                  (h) => h.status != TransactionStatus.pending,
+                )) {
                   final date = transaction.creation;
                   final day = timeago.format(date, locale: 'fr_short');
                   if (groupedByDay[day] == null) {
@@ -68,13 +65,9 @@ class LastTransactions extends ConsumerWidget {
                             day,
                             Column(
                               children: [
-                                DayDivider(
-                                  date: day,
-                                ),
+                                DayDivider(date: day),
                                 for (var transaction in dateOrderedTransactions)
-                                  TransactionCard(
-                                    transaction: transaction,
-                                  ),
+                                  TransactionCard(transaction: transaction),
                               ],
                             ),
                           );

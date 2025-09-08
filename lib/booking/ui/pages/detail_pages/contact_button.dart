@@ -12,10 +12,7 @@ class ContactButton extends StatelessWidget {
       padding: const EdgeInsets.all(15.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        border: Border.all(
-          color: Colors.black,
-          width: 2,
-        ),
+        border: Border.all(color: Colors.black, width: 2),
         color: Colors.grey.shade50,
         boxShadow: [
           BoxShadow(

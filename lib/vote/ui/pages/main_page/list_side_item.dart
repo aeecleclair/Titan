@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/class/section.dart';
-import 'package:myecl/vote/providers/section_id_provider.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/providers/selected_contender_provider.dart';
-import 'package:myecl/vote/providers/voted_section_provider.dart';
-import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/pages/main_page/side_item.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/vote/class/contender.dart';
+import 'package:titan/vote/class/section.dart';
+import 'package:titan/vote/providers/section_id_provider.dart';
+import 'package:titan/vote/providers/sections_provider.dart';
+import 'package:titan/vote/providers/selected_contender_provider.dart';
+import 'package:titan/vote/providers/voted_section_provider.dart';
+import 'package:titan/vote/tools/constants.dart';
+import 'package:titan/vote/ui/pages/main_page/side_item.dart';
 
 class ListSideItem extends HookConsumerWidget {
   final List<Section> sectionList;
@@ -23,8 +23,9 @@ class ListSideItem extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sectionIdNotifier = ref.watch(sectionIdProvider.notifier);
     final selectedContender = ref.watch(selectedContenderProvider);
-    final selectedContenderNotifier =
-        ref.watch(selectedContenderProvider.notifier);
+    final selectedContenderNotifier = ref.watch(
+      selectedContenderProvider.notifier,
+    );
     final section = ref.watch(sectionProvider);
     List<String> votedSections = [];
     ref.watch(votedSectionProvider).whenData((value) {

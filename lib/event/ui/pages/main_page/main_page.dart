@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/providers/event_provider.dart';
-import 'package:myecl/event/providers/is_admin_provider.dart';
-import 'package:myecl/event/providers/user_event_list_provider.dart';
-import 'package:myecl/event/router.dart';
-import 'package:myecl/event/tools/constants.dart';
-import 'package:myecl/event/ui/event.dart';
-import 'package:myecl/event/ui/components/event_ui.dart';
-import 'package:myecl/tools/ui/layouts/column_refresher.dart';
-import 'package:myecl/tools/ui/widgets/admin_button.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:titan/event/class/event.dart';
+import 'package:titan/event/providers/event_provider.dart';
+import 'package:titan/event/providers/is_admin_provider.dart';
+import 'package:titan/event/providers/user_event_list_provider.dart';
+import 'package:titan/event/router.dart';
+import 'package:titan/event/tools/constants.dart';
+import 'package:titan/event/ui/event.dart';
+import 'package:titan/event/ui/components/event_ui.dart';
+import 'package:titan/tools/ui/layouts/column_refresher.dart';
+import 'package:titan/tools/ui/widgets/admin_button.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EventMainPage extends HookConsumerWidget {
@@ -87,11 +87,7 @@ class EventMainPage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              ...eventList.map(
-                (event) => EventUi(
-                  event: event,
-                ),
-              ),
+              ...eventList.map((event) => EventUi(event: event)),
               const SizedBox(height: 80),
             ],
           );

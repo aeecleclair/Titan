@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/school.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/admin/class/school.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class SchoolRepository extends Repository {
   @override
@@ -9,9 +9,7 @@ class SchoolRepository extends Repository {
   final ext = "schools/";
 
   Future<List<School>> getSchoolList() async {
-    return List<School>.from(
-      (await getList()).map((x) => School.fromJson(x)),
-    );
+    return List<School>.from((await getList()).map((x) => School.fromJson(x)));
   }
 
   Future<School> getSchool(String schoolId) async {

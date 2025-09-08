@@ -1,15 +1,15 @@
-import 'package:myecl/admin/class/association_membership_simple.dart';
-import 'package:myecl/user/class/simple_users.dart';
+import 'package:titan/admin/class/association_membership_simple.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class Structure {
   final String name;
-  final AssociationMembership? associationMembership;
+  final AssociationMembership associationMembership;
   final String id;
   final SimpleUser managerUser;
 
   Structure({
     required this.name,
-    this.associationMembership,
+    required this.associationMembership,
     required this.id,
     required this.managerUser,
   });
@@ -28,10 +28,11 @@ class Structure {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'association_membership':
-          associationMembership ?? AssociationMembership.empty(),
       'id': id,
       'manager_user_id': managerUser.id,
+      'association_membership_id': associationMembership.id != ''
+          ? associationMembership.id
+          : null,
     };
   }
 
@@ -56,10 +57,10 @@ class Structure {
   }
 
   Structure.empty()
-      : this(
-          name: '',
-          associationMembership: AssociationMembership.empty(),
-          id: '',
-          managerUser: SimpleUser.empty(),
-        );
+    : this(
+        name: '',
+        associationMembership: AssociationMembership.empty(),
+        id: '',
+        managerUser: SimpleUser.empty(),
+      );
 }

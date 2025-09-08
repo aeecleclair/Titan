@@ -1,6 +1,6 @@
-import 'package:myecl/seed-library/class/plant_simple.dart';
-import 'package:myecl/seed-library/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/seed-library/class/plant_simple.dart';
+import 'package:titan/seed-library/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
 
 class PlantComplete extends PlantSimple {
   final String? previousNote;
@@ -49,8 +49,9 @@ class PlantComplete extends PlantSimple {
     return PlantComplete(
       state: getStateByValue(json['state']),
       speciesId: json['species_id'],
-      propagationMethod:
-          getPropagationMethodByValue(json['propagation_method']),
+      propagationMethod: getPropagationMethodByValue(
+        json['propagation_method'],
+      ),
       id: json['id'],
       plantReference: json['reference'],
       borrowerId: json['borrower_id'],

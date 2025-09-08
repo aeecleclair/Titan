@@ -1,17 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/seed-library/class/plant_simple.dart';
-import 'package:myecl/seed-library/providers/species_list_provider.dart';
-import 'package:myecl/seed-library/tools/constants.dart';
-import 'package:myecl/seed-library/tools/functions.dart';
+import 'package:titan/seed-library/class/plant_simple.dart';
+import 'package:titan/seed-library/providers/species_list_provider.dart';
+import 'package:titan/seed-library/tools/constants.dart';
+import 'package:titan/seed-library/tools/functions.dart';
 
 class PlantCard extends HookConsumerWidget {
-  const PlantCard({
-    super.key,
-    required this.plant,
-    required this.onClicked,
-  });
+  const PlantCard({super.key, required this.plant, required this.onClicked});
 
   final PlantSimple plant;
   final VoidCallback onClicked;
@@ -27,9 +23,7 @@ class PlantCard extends HookConsumerWidget {
       onTap: onClicked,
       child: Card(
         margin: const EdgeInsets.all(10),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Row(
@@ -60,17 +54,15 @@ class PlantCard extends HookConsumerWidget {
                 width: 100,
                 child: Column(
                   children: [
-                    Text(
-                      plantSpecies.type.name,
-                      textAlign: TextAlign.center,
-                    ),
+                    Text(plantSpecies.type.name, textAlign: TextAlign.center),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(plantSpecies.difficulty, (index) {
                         return Icon(
                           Icons.star,
-                          color:
-                              getColorFromDifficulty(plantSpecies.difficulty),
+                          color: getColorFromDifficulty(
+                            plantSpecies.difficulty,
+                          ),
                           size: 15,
                         );
                       }),

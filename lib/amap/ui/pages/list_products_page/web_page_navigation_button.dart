@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/amap/tools/constants.dart';
+import 'package:titan/amap/tools/constants.dart';
 
 class WebPageNavigationButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -29,11 +29,7 @@ class WebPageNavigationButton extends StatelessWidget {
       ),
       child: IconButton(
         onPressed: onPressed,
-        icon: HeroIcon(
-          icon,
-          size: 25,
-          color: Colors.white,
-        ),
+        icon: HeroIcon(icon, size: 25, color: Colors.white),
       ),
     );
   }

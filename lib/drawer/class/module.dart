@@ -14,7 +14,7 @@ enum ModuleType {
   vote,
   tombola,
   cinema,
-  paiement
+  paiement,
 }
 
 class Module {
@@ -35,13 +35,12 @@ class Module {
     Either<HeroIcons, String>? icon,
     String? root,
     bool? selected,
-  }) =>
-      Module(
-        name: name ?? this.name,
-        icon: icon ?? this.icon,
-        root: root ?? this.root,
-        selected: selected ?? this.selected,
-      );
+  }) => Module(
+    name: name ?? this.name,
+    icon: icon ?? this.icon,
+    root: root ?? this.root,
+    selected: selected ?? this.selected,
+  );
 
   Widget getIcon(Color color, {double size = 30}) {
     return icon.fold(

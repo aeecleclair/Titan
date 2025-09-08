@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/providers/module_root_list_provider.dart';
+import 'package:titan/admin/providers/module_root_list_provider.dart';
 
 final allMyModuleRootList = Provider<List<String>>((ref) {
   return ref

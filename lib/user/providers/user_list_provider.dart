@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/user/class/simple_users.dart';
-import 'package:myecl/user/repositories/user_list_repository.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/user/repositories/user_list_repository.dart';
 
 class UserListNotifier extends ListNotifier<SimpleUser> {
   final UserListRepository userListRepository;
   UserListNotifier({required this.userListRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<SimpleUser>>> filterUsers(
     String query, {
@@ -30,14 +30,15 @@ class UserListNotifier extends ListNotifier<SimpleUser> {
 }
 
 final userList =
-    StateNotifierProvider<UserListNotifier, AsyncValue<List<SimpleUser>>>(
-  (ref) {
-    final userListRepository = ref.watch(userListRepositoryProvider);
-    UserListNotifier userListNotifier =
-        UserListNotifier(userListRepository: userListRepository);
-    tokenExpireWrapperAuth(ref, () async {
-      userListNotifier.clear();
+    StateNotifierProvider<UserListNotifier, AsyncValue<List<SimpleUser>>>((
+      ref,
+    ) {
+      final userListRepository = ref.watch(userListRepositoryProvider);
+      UserListNotifier userListNotifier = UserListNotifier(
+        userListRepository: userListRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        userListNotifier.clear();
+      });
+      return userListNotifier;
     });
-    return userListNotifier;
-  },
-);

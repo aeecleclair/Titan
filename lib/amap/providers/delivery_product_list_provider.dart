@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/repositories/delivery_product_list_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/repositories/delivery_product_list_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
 
 class DeliveryProductListNotifier extends ListNotifier<Product> {
   final DeliveryProductListRepository productListRepository;
   DeliveryProductListNotifier({required this.productListRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Product>>> loadProductList(
     List<Product> products,
@@ -43,18 +43,23 @@ class DeliveryProductListNotifier extends ListNotifier<Product> {
     return await update(
       (p) async => true,
       (products, product) => products
-        ..[products.indexWhere((p) => p.id == product.id)] =
-            product.copyWith(quantity: i),
+        ..[products.indexWhere((p) => p.id == product.id)] = product.copyWith(
+          quantity: i,
+        ),
       product,
     );
   }
 }
 
-final deliveryProductListProvider = StateNotifierProvider<
-    DeliveryProductListNotifier, AsyncValue<List<Product>>>((ref) {
-  final deliveryProductListRepository =
-      ref.watch(deliveryProductListRepositoryProvider);
-  return DeliveryProductListNotifier(
-    productListRepository: deliveryProductListRepository,
-  );
-});
+final deliveryProductListProvider =
+    StateNotifierProvider<
+      DeliveryProductListNotifier,
+      AsyncValue<List<Product>>
+    >((ref) {
+      final deliveryProductListRepository = ref.watch(
+        deliveryProductListRepositoryProvider,
+      );
+      return DeliveryProductListNotifier(
+        productListRepository: deliveryProductListRepository,
+      );
+    });

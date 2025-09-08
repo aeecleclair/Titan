@@ -1,22 +1,16 @@
-import 'package:myecl/seed-library/tools/constants.dart';
+import 'package:titan/seed-library/tools/constants.dart';
 
 class SpeciesType {
   final String name;
 
-  SpeciesType({
-    required this.name,
-  });
+  SpeciesType({required this.name});
 
   factory SpeciesType.fromString(String name) {
-    return SpeciesType(
-      name: name,
-    );
+    return SpeciesType(name: name);
   }
 
   factory SpeciesType.empty() {
-    return SpeciesType(
-      name: SeedLibraryTextConstants.all,
-    );
+    return SpeciesType(name: SeedLibraryTextConstants.all);
   }
 
   @override

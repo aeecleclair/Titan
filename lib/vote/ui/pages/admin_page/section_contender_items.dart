@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/contender_list_provider.dart';
-import 'package:myecl/vote/providers/contender_members.dart';
-import 'package:myecl/vote/providers/contender_provider.dart';
-import 'package:myecl/vote/providers/sections_contender_provider.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
-import 'package:myecl/vote/router.dart';
-import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/pages/admin_page/contender_card.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/vote/class/contender.dart';
+import 'package:titan/vote/providers/contender_list_provider.dart';
+import 'package:titan/vote/providers/contender_members.dart';
+import 'package:titan/vote/providers/contender_provider.dart';
+import 'package:titan/vote/providers/sections_contender_provider.dart';
+import 'package:titan/vote/providers/sections_provider.dart';
+import 'package:titan/vote/providers/status_provider.dart';
+import 'package:titan/vote/repositories/status_repository.dart';
+import 'package:titan/vote/router.dart';
+import 'package:titan/vote/tools/constants.dart';
+import 'package:titan/vote/ui/pages/admin_page/contender_card.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SectionContenderItems extends HookConsumerWidget {
@@ -29,8 +29,9 @@ class SectionContenderItems extends HookConsumerWidget {
     final membersNotifier = ref.read(contenderMembersProvider.notifier);
     final section = ref.watch(sectionProvider);
     final contenderListNotifier = ref.read(contenderListProvider.notifier);
-    final sectionContenderListNotifier =
-        ref.read(sectionContenderProvider.notifier);
+    final sectionContenderListNotifier = ref.read(
+      sectionContenderProvider.notifier,
+    );
     final contenderNotifier = ref.read(contenderProvider.notifier);
 
     final asyncStatus = ref.watch(statusProvider);
@@ -93,18 +94,16 @@ class SectionContenderItems extends HookConsumerWidget {
                   descriptions: VoteTextConstants.deletePretendanceDesc,
                   onYes: () {
                     tokenExpireWrapper(ref, () async {
-                      final value =
-                          await contenderListNotifier.deleteContender(e);
+                      final value = await contenderListNotifier.deleteContender(
+                        e,
+                      );
                       if (value) {
                         displayVoteToastWithContext(
                           TypeMsg.msg,
                           VoteTextConstants.pretendanceDeleted,
                         );
                         contenderListNotifier.copy().then((value) {
-                          sectionContenderListNotifier.setTData(
-                            section,
-                            value,
-                          );
+                          sectionContenderListNotifier.setTData(section, value);
                         });
                       } else {
                         displayVoteToastWithContext(

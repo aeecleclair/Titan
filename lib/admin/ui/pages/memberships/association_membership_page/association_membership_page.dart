@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/association_membership_simple.dart';
-import 'package:myecl/admin/providers/all_groups_list_provider.dart';
-import 'package:myecl/admin/providers/association_membership_list_provider.dart';
-import 'package:myecl/admin/providers/association_membership_members_list_provider.dart';
-import 'package:myecl/admin/providers/association_membership_provider.dart';
-import 'package:myecl/admin/router.dart';
-import 'package:myecl/admin/ui/admin.dart';
-import 'package:myecl/admin/ui/components/item_card_ui.dart';
-import 'package:myecl/admin/tools/constants.dart';
-import 'package:myecl/admin/ui/pages/memberships/association_membership_page/association_membership_creation_dialog.dart';
-import 'package:myecl/admin/ui/pages/memberships/association_membership_page/association_membership_ui.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/admin/class/association_membership_simple.dart';
+import 'package:titan/admin/providers/all_groups_list_provider.dart';
+import 'package:titan/admin/providers/association_membership_list_provider.dart';
+import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
+import 'package:titan/admin/providers/association_membership_provider.dart';
+import 'package:titan/admin/router.dart';
+import 'package:titan/admin/ui/admin.dart';
+import 'package:titan/admin/ui/components/item_card_ui.dart';
+import 'package:titan/admin/tools/constants.dart';
+import 'package:titan/admin/ui/pages/memberships/association_membership_page/association_membership_creation_dialog.dart';
+import 'package:titan/admin/ui/pages/memberships/association_membership_page/association_membership_ui.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AssociationMembershipsPage extends HookConsumerWidget {
@@ -25,14 +25,18 @@ class AssociationMembershipsPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final associationsMemberships =
-        ref.watch(allAssociationMembershipListProvider);
-    final associationMembershipsNotifier =
-        ref.watch(allAssociationMembershipListProvider.notifier);
-    final associationMembershipNotifier =
-        ref.watch(associationMembershipProvider.notifier);
-    final associationMembershipMembersNotifier =
-        ref.watch(associationMembershipMembersProvider.notifier);
+    final associationsMemberships = ref.watch(
+      allAssociationMembershipListProvider,
+    );
+    final associationMembershipsNotifier = ref.watch(
+      allAssociationMembershipListProvider.notifier,
+    );
+    final associationMembershipNotifier = ref.watch(
+      associationMembershipProvider.notifier,
+    );
+    final associationMembershipMembersNotifier = ref.watch(
+      associationMembershipMembersProvider.notifier,
+    );
     final groups = ref.watch(allGroupList);
 
     final nameController = TextEditingController();
@@ -88,13 +92,15 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                         final value =
                                             await associationMembershipsNotifier
                                                 .createAssociationMembership(
-                                          AssociationMembership.empty()
-                                              .copyWith(
-                                            managerGroupId:
-                                                groupIdController.text,
-                                            name: nameController.text,
-                                          ),
-                                        );
+                                                  AssociationMembership.empty()
+                                                      .copyWith(
+                                                        managerGroupId:
+                                                            groupIdController
+                                                                .text,
+                                                        name:
+                                                            nameController.text,
+                                                      ),
+                                                );
                                         if (value) {
                                           displayToastWithContext(
                                             TypeMsg.msg,
@@ -131,12 +137,12 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                               onEdit: () {
                                 associationMembershipMembersNotifier
                                     .loadAssociationMembershipMembers(
-                                  associationMembership.id,
-                                );
+                                      associationMembership.id,
+                                    );
                                 associationMembershipNotifier
                                     .setAssociationMembership(
-                                  associationMembership,
-                                );
+                                      associationMembership,
+                                    );
                                 QR.to(
                                   AdminRouter.root +
                                       AdminRouter.associationMemberships +
@@ -156,8 +162,8 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                           final value =
                                               await associationMembershipsNotifier
                                                   .deleteAssociationMembership(
-                                            associationMembership,
-                                          );
+                                                    associationMembership,
+                                                  );
                                           if (value) {
                                             displayToastWithContext(
                                               TypeMsg.msg,

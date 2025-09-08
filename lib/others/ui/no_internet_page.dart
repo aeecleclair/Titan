@@ -23,31 +23,20 @@ class NoInternetPage extends HookConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const HeroIcon(
-                HeroIcons.signalSlash,
-                size: 150,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Center(
+              const HeroIcon(HeroIcons.signalSlash, size: 150),
+              const SizedBox(height: 20),
+              const Center(
                 child: Text(
                   "${OthersTextConstants.unableToConnectToServer} ${Repository.host}",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               const Center(
-                child: Text(
-                  OthersTextConstants.checkInternetConnection,
-                ),
+                child: Text(OthersTextConstants.checkInternetConnection),
               ),
-              const SizedBox(
-                height: 40,
-              ),
+              const SizedBox(height: 40),
               GestureDetector(
                 onTap: () async {
                   isConnectedNotifier.isInternet();

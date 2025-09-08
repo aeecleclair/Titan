@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/seed-library/providers/information_provider.dart';
-import 'package:myecl/seed-library/tools/constants.dart';
-import 'package:myecl/seed-library/ui/seed_library.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/add_edit_button_layout.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:titan/seed-library/providers/information_provider.dart';
+import 'package:titan/seed-library/tools/constants.dart';
+import 'package:titan/seed-library/ui/seed_library.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class EditInformationPage extends HookConsumerWidget {
@@ -29,13 +29,16 @@ class EditInformationPage extends HookConsumerWidget {
       child: AsyncChild(
         value: information,
         builder: (context, syncInformation) {
-          final description =
-              TextEditingController(text: syncInformation.description);
+          final description = TextEditingController(
+            text: syncInformation.description,
+          );
           final contact = TextEditingController(text: syncInformation.contact);
-          final facebookUrl =
-              TextEditingController(text: syncInformation.facebookUrl);
-          final forumUrl =
-              TextEditingController(text: syncInformation.forumUrl);
+          final facebookUrl = TextEditingController(
+            text: syncInformation.facebookUrl,
+          );
+          final forumUrl = TextEditingController(
+            text: syncInformation.forumUrl,
+          );
           return SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(
               parent: BouncingScrollPhysics(),
@@ -46,9 +49,7 @@ class EditInformationPage extends HookConsumerWidget {
                 key: key,
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -60,9 +61,7 @@ class EditInformationPage extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     TextEntry(
                       controller: description,
                       label: SeedLibraryTextConstants.description,
@@ -101,15 +100,15 @@ class EditInformationPage extends HookConsumerWidget {
                           return;
                         }
                         await tokenExpireWrapper(ref, () async {
-                          final value =
-                              await informationNotifier.updateInformation(
-                            syncInformation.copyWith(
-                              description: description.text,
-                              contact: contact.text,
-                              facebookUrl: facebookUrl.text,
-                              forumUrl: forumUrl.text,
-                            ),
-                          );
+                          final value = await informationNotifier
+                              .updateInformation(
+                                syncInformation.copyWith(
+                                  description: description.text,
+                                  contact: contact.text,
+                                  facebookUrl: facebookUrl.text,
+                                  forumUrl: forumUrl.text,
+                                ),
+                              );
                           if (value) {
                             displayToastWithContext(
                               TypeMsg.msg,
