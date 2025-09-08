@@ -195,72 +195,68 @@ class ScanDialog extends HookConsumerWidget {
                             ),
                           ),
                           const SizedBox(height: 30),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    scannerNotifier.reset();
-                                  },
-                                  child: const SizedBox(
-                                    width: 100,
-                                    child: AddEditButtonLayout(
-                                      color: Colors.red,
-                                      child: Text(
-                                        "Annuler",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
+                          if (data.qrCodeSecret != "")
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                              ),
+                              child: Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      scannerNotifier.reset();
+                                    },
+                                    child: const SizedBox(
+                                      width: 100,
+                                      child: AddEditButtonLayout(
+                                        color: Colors.red,
+                                        child: Text(
+                                          "Annuler",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                const Spacer(),
-                                GestureDetector(
-                                  onTap: () async {
-                                    await tokenExpireWrapper(ref, () async {
-                                      final value = await ticketListNotifier
-                                          .consumeTicket(
-                                            sellerId,
-                                            data,
-                                            ticket.id,
-                                            tag,
+                                  const Spacer(),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      await tokenExpireWrapper(ref, () async {
+                                        await (ticketListNotifier.consumeTicket(
+                                          sellerId,
+                                          data,
+                                          ticket.id,
+                                          tag == "" ? "no tag" : tag,
+                                        )).then((_) {
+                                          displayToastWithContext(
+                                            TypeMsg.msg,
+                                            "Scan validé",
                                           );
-                                      if (value) {
-                                        displayToastWithContext(
-                                          TypeMsg.msg,
-                                          "Scan validé",
-                                        );
-                                        scannerNotifier.reset();
-                                      } else {
-                                        displayToastWithContext(
-                                          TypeMsg.error,
-                                          "Erreur lors de la validation",
-                                        );
-                                      }
-                                    });
-                                  },
-                                  child: const SizedBox(
-                                    width: 100,
-                                    child: AddEditButtonLayout(
-                                      color: Colors.green,
-                                      child: Text(
-                                        "Valider",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
+                                          scannerNotifier.reset();
+                                        });
+                                      });
+                                    },
+                                    child: const SizedBox(
+                                      width: 100,
+                                      child: AddEditButtonLayout(
+                                        color: Colors.green,
+                                        child: Text(
+                                          "Suivant",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
                         ],
                       );
                     },
