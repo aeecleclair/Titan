@@ -14,19 +14,20 @@ import 'package:titan/login/router.dart';
 import 'package:titan/others/ui/loading_page.dart' deferred as loading_page;
 import 'package:titan/others/ui/no_internet_page.dart'
     deferred as no_internet_page;
-import 'package:titan/others/ui/no_module.dart' deferred as no_module_page;
-import 'package:titan/others/ui/update_page.dart' deferred as update_page;
-import 'package:titan/paiement/router.dart';
-import 'package:titan/phonebook/router.dart';
-import 'package:titan/ph/router.dart';
-import 'package:titan/purchases/router.dart';
-import 'package:titan/recommendation/router.dart';
-import 'package:titan/seed-library/router.dart';
-import 'package:titan/settings/router.dart';
-import 'package:titan/raffle/router.dart';
-import 'package:titan/tools/middlewares/authenticated_middleware.dart';
-import 'package:titan/tools/middlewares/deferred_middleware.dart';
-import 'package:titan/vote/router.dart';
+import 'package:myecl/others/ui/no_module.dart' deferred as no_module_page;
+import 'package:myecl/others/ui/rollback_page.dart' deferred as rollback_page;
+import 'package:myecl/others/ui/update_page.dart' deferred as update_page;
+import 'package:myecl/paiement/router.dart';
+import 'package:myecl/phonebook/router.dart';
+import 'package:myecl/ph/router.dart';
+import 'package:myecl/purchases/router.dart';
+import 'package:myecl/recommendation/router.dart';
+import 'package:myecl/seed-library/router.dart';
+import 'package:myecl/settings/router.dart';
+import 'package:myecl/raffle/router.dart';
+import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
+import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:myecl/vote/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 final appRouterProvider = Provider<AppRouter>((ref) => AppRouter(ref));
@@ -39,6 +40,7 @@ class AppRouter {
   static const String update = '/update';
   static const String noInternet = '/no_internet';
   static const String noModule = '/no_module';
+  static const String rollback = '/rollback';
 
   AppRouter(this.ref) {
     routes = [
@@ -69,6 +71,13 @@ class AppRouter {
         path: noModule,
         builder: () => no_module_page.NoModulePage(),
         middleware: [DeferredLoadingMiddleware(no_module_page.loadLibrary)],
+      ),
+      QRoute(
+        path: rollback,
+        builder: () => rollback_page.RollbackPage(),
+        middleware: [
+          DeferredLoadingMiddleware(rollback_page.loadLibrary),
+        ],
       ),
       AdminRouter(ref).route(),
       AdvertRouter(ref).route(),
