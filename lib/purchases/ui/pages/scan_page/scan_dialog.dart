@@ -137,15 +137,19 @@ class ScanDialog extends HookConsumerWidget {
                       child: QRCodeScannerScreen(
                         scanner: scanner,
                         onScan: (secret) async {
+                          print("1 onScan       : $secret");
                           await tokenExpireWrapper(ref, () async {
+                            print("2 token        : $secret");
                             await scannerNotifier.scanTicket(
                               sellerId,
                               productId,
                               secret,
                               ticket.id,
                             );
+                            print("3 scanTicket   : $secret");
                             scanner.when(
                               data: (data) {
+                                print("4 scanner.when : $secret");
                                 scannerNotifier.setScanner(
                                   data.copyWith(qrCodeSecret: secret),
                                 );
@@ -168,6 +172,7 @@ class ScanDialog extends HookConsumerWidget {
                   ),
                   scanner.when(
                     data: (data) {
+                      print("  Column avant : ${data.qrCodeSecret}");
                       final user = data.user;
                       return Column(
                         children: [
@@ -195,65 +200,68 @@ class ScanDialog extends HookConsumerWidget {
                             ),
                           ),
                           const SizedBox(height: 30),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    scannerNotifier.reset();
-                                  },
-                                  child: const SizedBox(
-                                    width: 100,
-                                    child: AddEditButtonLayout(
-                                      color: Colors.red,
-                                      child: Text(
-                                        "Annuler",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
+                          if (data.qrCodeSecret != "")
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                              ),
+                              child: Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      scannerNotifier.reset();
+                                    },
+                                    child: const SizedBox(
+                                      width: 100,
+                                      child: AddEditButtonLayout(
+                                        color: Colors.red,
+                                        child: Text(
+                                          "Annuler",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                const Spacer(),
-                                GestureDetector(
-                                  onTap: () async {
-                                    await tokenExpireWrapper(ref, () async {
-                                      await (ticketListNotifier.consumeTicket(
-                                        sellerId,
-                                        data,
-                                        ticket.id,
-                                        tag,
-                                      )).then((_) {
-                                        displayToastWithContext(
-                                          TypeMsg.msg,
-                                          "Scan validé",
-                                        );
-                                        scannerNotifier.reset();
+                                  const Spacer(),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      await tokenExpireWrapper(ref, () async {
+                                        await (ticketListNotifier.consumeTicket(
+                                          sellerId,
+                                          data,
+                                          ticket.id,
+                                          tag == "" ? "no tag" : tag,
+                                        )).then((_) {
+                                          displayToastWithContext(
+                                            TypeMsg.msg,
+                                            "Scan validé",
+                                          );
+                                          scannerNotifier.reset();
+                                        });
                                       });
-                                    });
-                                  },
-                                  child: const SizedBox(
-                                    width: 100,
-                                    child: AddEditButtonLayout(
-                                      color: Colors.green,
-                                      child: Text(
-                                        "Suivant",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
+                                    },
+                                    child: const SizedBox(
+                                      width: 100,
+                                      child: AddEditButtonLayout(
+                                        color: Colors.green,
+                                        child: Text(
+                                          "Suivant",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
                         ],
                       );
                     },
