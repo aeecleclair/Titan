@@ -51,7 +51,6 @@ class QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
           qrCode = rawValue;
         });
         if (rawValue != null) {
-          print("onScan : $rawValue");
           widget.onScan(rawValue);
         }
       },

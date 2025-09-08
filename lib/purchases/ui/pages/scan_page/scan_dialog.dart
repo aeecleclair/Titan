@@ -137,19 +137,15 @@ class ScanDialog extends HookConsumerWidget {
                       child: QRCodeScannerScreen(
                         scanner: scanner,
                         onScan: (secret) async {
-                          print("1 onScan       : $secret");
                           await tokenExpireWrapper(ref, () async {
-                            print("2 token        : $secret");
                             await scannerNotifier.scanTicket(
                               sellerId,
                               productId,
                               secret,
                               ticket.id,
                             );
-                            print("3 scanTicket   : $secret");
                             scanner.when(
                               data: (data) {
-                                print("4 scanner.when : $secret");
                                 scannerNotifier.setScanner(
                                   data.copyWith(qrCodeSecret: secret),
                                 );
@@ -172,7 +168,6 @@ class ScanDialog extends HookConsumerWidget {
                   ),
                   scanner.when(
                     data: (data) {
-                      print("  Column avant : ${data.qrCodeSecret}");
                       final user = data.user;
                       return Column(
                         children: [
