@@ -4,8 +4,10 @@ import 'package:titan/feed/providers/is_feed_admin_provider.dart';
 import 'package:titan/feed/providers/is_user_a_member_of_an_association.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
+import 'package:titan/feed/ui/pages/association_events_page/association_events_page.dart'
+    deferred as association_events_page;
 import 'package:titan/feed/ui/pages/add_event_page/add_event_page.dart'
-    deferred as add_event_page;
+    deferred as add_edit_event_page;
 import 'package:titan/feed/ui/pages/event_handling_page/event_handling_page.dart'
     deferred as event_handling_page;
 import 'package:titan/feed/ui/pages/main_page/main_page.dart'
@@ -19,7 +21,8 @@ class FeedRouter {
   final Ref ref;
 
   static const String root = '/feed';
-  static const String addEvent = '/add_event';
+  static const String addEditEvent = '/add_edit_event';
+  static const String associationEvents = '/association_events';
   static const String eventHandling = '/event_handling';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleFeed,
@@ -44,12 +47,12 @@ class FeedRouter {
     ),
     children: [
       QRoute(
-        path: addEvent,
-        builder: () => add_event_page.AddEventPage(),
+        path: addEditEvent,
+        builder: () => add_edit_event_page.AddEditEventPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
           AdminMiddleware(ref, isUserAMemberOfAnAssociationProvider),
-          DeferredLoadingMiddleware(add_event_page.loadLibrary),
+          DeferredLoadingMiddleware(add_edit_event_page.loadLibrary),
         ],
       ),
       QRoute(
@@ -59,6 +62,15 @@ class FeedRouter {
           AuthenticatedMiddleware(ref),
           AdminMiddleware(ref, isFeedAdminProvider),
           DeferredLoadingMiddleware(event_handling_page.loadLibrary),
+        ],
+      ),
+      QRoute(
+        path: associationEvents,
+        builder: () => association_events_page.ManageAssociationEventPage(),
+        middleware: [
+          AuthenticatedMiddleware(ref),
+          AdminMiddleware(ref, isUserAMemberOfAnAssociationProvider),
+          DeferredLoadingMiddleware(association_events_page.loadLibrary),
         ],
       ),
     ],

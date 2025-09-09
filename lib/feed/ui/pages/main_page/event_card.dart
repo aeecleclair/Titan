@@ -31,6 +31,7 @@ class EventCard extends ConsumerWidget {
           QR.to(AdvertRouter.root);
         }
       },
+
       child: AspectRatio(
         aspectRatio: 851 / 315,
         child: Stack(

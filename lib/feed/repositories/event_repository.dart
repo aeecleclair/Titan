@@ -17,8 +17,22 @@ class EventRepository extends Repository {
     return List<Event>.from((await getList()).map((e) => Event.fromJson(e)));
   }
 
+  Future<List<Event>> getAssociationEventList(String id) async {
+    return List<Event>.from(
+      (await getList(suffix: "associations/$id")).map((e) => Event.fromJson(e)),
+    );
+  }
+
   Future<TicketUrl> getTicketUrl(String id) async {
     return TicketUrl.fromJson(await getOne(id, suffix: "/ticket-url"));
+  }
+
+  Future<bool> updateEvent(Event event) async {
+    return await update(event.toJson(), event.id);
+  }
+
+  Future<bool> deleteEvent(String id) async {
+    return await delete(id);
   }
 }
 

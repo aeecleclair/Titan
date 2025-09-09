@@ -14,6 +14,11 @@ class EventImageRepository extends LogoRepository {
     final uint8List = await addLogo(bytes, id, suffix: "/image");
     return Image.memory(uint8List);
   }
+
+  Future<Image> getEventImage(String id) async {
+    final uint8List = await getLogo(id, suffix: "/image");
+    return Image.memory(uint8List);
+  }
 }
 
 final eventImageRepositoryProvider = Provider((ref) {

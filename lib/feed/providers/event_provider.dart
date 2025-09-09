@@ -16,6 +16,10 @@ class EventNotifier extends SingleNotifier<Event> {
   void fakeLoad() {
     state = AsyncValue.data(Event.empty());
   }
+
+  void setEvent(Event event) {
+    state = AsyncValue.data(event);
+  }
 }
 
 final eventProvider = StateNotifierProvider<EventNotifier, AsyncValue<Event>>((

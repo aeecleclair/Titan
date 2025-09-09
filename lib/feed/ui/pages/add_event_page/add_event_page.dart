@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 // import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:titan/admin/class/assocation.dart';
@@ -15,6 +16,7 @@ import 'package:titan/admin/providers/my_association_list_provider.dart';
 // import 'package:titan/event/tools/functions.dart';
 import 'package:titan/event/ui/pages/event_pages/checkbox_entry.dart';
 import 'package:titan/feed/class/event.dart';
+import 'package:titan/feed/providers/association_event_list_provider.dart';
 import 'package:titan/feed/providers/event_image_provider.dart';
 import 'package:titan/feed/providers/event_provider.dart';
 import 'package:titan/feed/providers/news_list_provider.dart';
@@ -30,28 +32,23 @@ import 'package:titan/tools/ui/styleguide/text_entry.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
 import 'package:titan/tools/ui/widgets/image_picker_on_tap.dart';
 
-class AddEventPage extends HookConsumerWidget {
-  const AddEventPage({super.key});
+class AddEditEventPage extends HookConsumerWidget {
+  const AddEditEventPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = Localizations.localeOf(context);
     final key = GlobalKey<FormState>();
-    final myAssociations = ref.watch(myAssociationListProvider);
-    final titleController = useTextEditingController();
-    final locationController = useTextEditingController();
-    final shotgunDateController = useTextEditingController();
-    final externalLinkController = useTextEditingController();
-    final startDateController = useTextEditingController();
-    final endDateController = useTextEditingController();
-    final allDay = useState(false);
-    final notification = useState(true);
     // final recurrentController = useState(false);
     // final recurrenceEndDateController = useTextEditingController();
 
+    final myAssociations = ref.watch(myAssociationListProvider);
+    final event = ref.watch(eventProvider);
     final eventCreationNotifier = ref.watch(eventProvider.notifier);
+    final eventListNotifier = ref.watch(associationEventsListProvider.notifier);
     final eventImageNotifier = ref.watch(eventImageProvider.notifier);
     final newsListNotifier = ref.watch(newsListProvider.notifier);
+    final image = ref.watch(eventImageProvider);
     // final interval = useTextEditingController();
     // final recurrenceEndDate = useTextEditingController();
     // final selectedDays = ref.watch(selectedDaysProvider);
@@ -61,14 +58,58 @@ class AddEventPage extends HookConsumerWidget {
       myAssociations.length == 1 ? myAssociations.first : null,
     );
 
-    final poster = useState<Uint8List?>(null);
-    final posterFile = useState<Image?>(null);
-
     final ImagePicker picker = ImagePicker();
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
+
+    final syncEvent = event.maybeWhen(
+      data: (event) => event,
+      orElse: () => Event.empty(),
+    );
+    final poster = useState<Uint8List?>(null);
+    final posterFile = useState<Image?>(null);
+    final allDay = useState(syncEvent.allDay);
+    final notification = useState(
+      syncEvent.id != "" ? syncEvent.notification : true,
+    );
+    final titleController = useTextEditingController(text: syncEvent.name);
+    final locationController = useTextEditingController(
+      text: syncEvent.location,
+    );
+    final shotgunDateController = useTextEditingController(
+      text: syncEvent.ticketUrlOpening != null
+          ? DateFormat.yMd(
+              locale.toString(),
+            ).add_Hm().format(syncEvent.ticketUrlOpening!)
+          : "",
+    );
+    final externalLinkController = useTextEditingController(
+      text: syncEvent.ticketUrl,
+    );
+    final startDateController = useTextEditingController(
+      text: syncEvent.id != ""
+          ? (allDay.value
+                ? DateFormat.yMd(locale.toString()).format(syncEvent.start)
+                : DateFormat.yMd(
+                    locale.toString(),
+                  ).add_Hm().format(syncEvent.start))
+          : "",
+    );
+    final endDateController = useTextEditingController(
+      text: syncEvent.id != ""
+          ? (allDay.value
+                ? DateFormat.yMd(locale.toString()).format(syncEvent.end)
+                : DateFormat.yMd(
+                    locale.toString(),
+                  ).add_Hm().format(syncEvent.end))
+          : "",
+    );
+    image.maybeWhen(
+      data: (image) => posterFile.value = image,
+      orElse: () => null,
+    );
 
     final localizeWithContext = AppLocalizations.of(context)!;
 
@@ -88,26 +129,38 @@ class AddEventPage extends HookConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SizedBox(
-                      height: 50,
-                      child: HorizontalMultiSelect<Association>(
-                        items: myAssociations,
-                        selectedItem: selectedAssociation.value,
-                        onItemSelected: (association) {
-                          selectedAssociation.value = association;
-                        },
-                        itemBuilder: (context, association, index, selected) =>
-                            Text(
-                              association.name,
-                              style: TextStyle(
-                                color: selected
-                                    ? ColorConstants.background
-                                    : ColorConstants.tertiary,
-                                fontSize: 16,
-                              ),
+                    syncEvent.id == ""
+                        ? SizedBox(
+                            height: 50,
+                            child: HorizontalMultiSelect<Association>(
+                              items: myAssociations,
+                              selectedItem: selectedAssociation.value,
+                              onItemSelected: (association) {
+                                selectedAssociation.value = association;
+                              },
+                              itemBuilder:
+                                  (context, association, index, selected) =>
+                                      Text(
+                                        association.name,
+                                        style: TextStyle(
+                                          color: selected
+                                              ? ColorConstants.background
+                                              : ColorConstants.tertiary,
+                                          fontSize: 16,
+                                        ),
+                                      ),
                             ),
-                      ),
-                    ),
+                          )
+                        : Text(
+                            localizeWithContext.feedAssociationEvent(
+                              myAssociations
+                                  .firstWhere(
+                                    (element) =>
+                                        element.id == syncEvent.associationId,
+                                  )
+                                  .name,
+                            ),
+                          ),
                     const SizedBox(height: 10),
                     TextEntry(
                       label: localizeWithContext.feedTitle,
@@ -387,7 +440,9 @@ class AddEventPage extends HookConsumerWidget {
                     const SizedBox(height: 40),
                     WaitingButton(
                       child: Text(
-                        localizeWithContext.feedCreateEvent,
+                        syncEvent.id == ""
+                            ? localizeWithContext.feedCreateEvent
+                            : localizeWithContext.feedEditEvent,
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -411,7 +466,8 @@ class AddEventPage extends HookConsumerWidget {
                         if (key.currentState == null) {
                           return;
                         }
-                        if (selectedAssociation.value == null) {
+                        if (syncEvent.id == "" &&
+                            selectedAssociation.value == null) {
                           displayToastWithContext(
                             TypeMsg.error,
                             localizeWithContext.feedPleaseSelectAnAssociation,
@@ -507,7 +563,7 @@ class AddEventPage extends HookConsumerWidget {
                               //   );
                               // }
                               final newEvent = Event(
-                                id: "",
+                                id: syncEvent.id,
                                 start: DateTime.parse(
                                   processDateBackWithHourMaybe(
                                     startDateController.text,
@@ -534,39 +590,82 @@ class AddEventPage extends HookConsumerWidget {
                                 allDay: allDay.value,
                                 // recurrenceRule: recurrenceRule,
                                 recurrenceRule: "",
-                                associationId: selectedAssociation.value!.id,
+                                associationId: syncEvent.id != ""
+                                    ? syncEvent.associationId
+                                    : selectedAssociation.value!.id,
                                 ticketUrl: externalLinkController.text,
                                 notification: notification.value,
                               );
                               try {
-                                final eventCreated = await eventCreationNotifier
-                                    .addEvent(newEvent);
-                                if (poster.value == null) {
-                                  QR.back();
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    localizeWithContext.eventAddedEvent,
-                                  );
-                                  newsListNotifier.loadNewsList();
-                                  return;
-                                }
-                                final value = await eventImageNotifier
-                                    .addEventImage(
-                                      eventCreated.id,
-                                      poster.value!,
+                                if (syncEvent.id != "") {
+                                  final value = await eventListNotifier
+                                      .updateEvent(newEvent);
+                                  if (value) {
+                                    if (poster.value == null) {
+                                      QR.back();
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        localizeWithContext.eventModifiedEvent,
+                                      );
+                                      newsListNotifier.loadNewsList();
+                                      return;
+                                    }
+                                    final imageUploaded =
+                                        await eventImageNotifier.addEventImage(
+                                          syncEvent.id,
+                                          poster.value!,
+                                        );
+                                    if (imageUploaded) {
+                                      QR.back();
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        localizeWithContext.eventModifiedEvent,
+                                      );
+                                      newsListNotifier.loadNewsList();
+                                    } else {
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        localizeWithContext.eventModifyingError,
+                                      );
+                                    }
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      localizeWithContext.eventModifyingError,
                                     );
-                                if (value) {
-                                  QR.back();
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    localizeWithContext.eventAddedEvent,
-                                  );
-                                  newsListNotifier.loadNewsList();
+                                  }
                                 } else {
-                                  displayToastWithContext(
-                                    TypeMsg.error,
-                                    localizeWithContext.eventAddingError,
-                                  );
+                                  final eventCreated =
+                                      await eventCreationNotifier.addEvent(
+                                        newEvent,
+                                      );
+                                  if (poster.value == null) {
+                                    QR.back();
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      localizeWithContext.eventAddedEvent,
+                                    );
+                                    newsListNotifier.loadNewsList();
+                                    return;
+                                  }
+                                  final value = await eventImageNotifier
+                                      .addEventImage(
+                                        eventCreated.id,
+                                        poster.value!,
+                                      );
+                                  if (value) {
+                                    QR.back();
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      localizeWithContext.eventAddedEvent,
+                                    );
+                                    newsListNotifier.loadNewsList();
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      localizeWithContext.eventAddingError,
+                                    );
+                                  }
                                 }
                               } catch (e) {
                                 displayToastWithContext(

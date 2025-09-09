@@ -32,9 +32,21 @@
   "feedOngoing": "Ongoing",
   "feedFilter": "Filter",
   "feedAssociation": "Association",
+  "feedAssociationEvent": "{name} event",
+  "@feedAssociationEvent": {
+    "description": "Association event",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feedEditEvent": "Edit event",
+  "feedManageAssociationEvents": "Manage association events",
+  "feedNews": "Calendar",
   "feedNewsType": "News type",
+  "feedNoAssociationEvents": "No association events",
   "feedApply": "Apply",
-  "feedNews": "News",
   "feedAdmin": "Administration",
   "feedCreateAnEvent": "Create an event",
   "feedManageRequests": "Manage requests",
@@ -563,6 +575,15 @@
   "eventDeclineEvent": "Decline the event?",
   "eventDeclined": "Declined",
   "eventDelete": "Delete",
+  "eventDeleteConfirm": "Delete the event {name}?",
+  "@eventDeleteConfirm": {
+    "description": "Delete the event with its name",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "eventDeletedEvent": "Event deleted",
   "eventDeleting": "Deleting",
   "eventDeletingError": "Error while deleting",
@@ -584,6 +605,8 @@
   "eventInvalidDates": "End date must be after start date",
   "eventInvalidIntervalError": "Please enter a valid interval",
   "eventLocation": "Location",
+  "eventModifiedEvent": "Event modified",
+  "eventModifyingError": "Error while modifying",
   "eventMyEvents": "My events",
   "eventName": "Name",
   "eventNext": "Next",

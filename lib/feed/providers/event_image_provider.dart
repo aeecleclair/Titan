@@ -22,6 +22,11 @@ class EventImageNotifier extends SingleNotifier<Image> {
     }
     return false;
   }
+
+  void getEventImage(String id) async {
+    final image = await eventImageRepository.getEventImage(id);
+    state = AsyncData(image);
+  }
 }
 
 final eventImageProvider =

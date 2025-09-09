@@ -32,9 +32,21 @@
   "feedOngoing": "En cours",
   "feedFilter": "Filtrer",
   "feedAssociation": "Association",
+  "feedAssociationEvent": "Event de {name}",
+  "@feedAssociationEvent": {
+    "description": "Association event",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feedEditEvent": "Modifier l'événement",
+  "feedManageAssociationEvents": "Gérer les événements de l'association",
+  "feedNews": "Calendrier",
   "feedNewsType": "Type d'actualité",
+  "feedNoAssociationEvents": "Aucun événement d'association",
   "feedApply": "Appliquer",
-  "feedNews": "Actualités",
   "feedAdmin": "Administration",
   "feedCreateAnEvent": "Créer un événement",
   "feedManageRequests": "Demandes de publication",
@@ -571,6 +583,15 @@
   "eventDeclineEvent": "Refuser l'événement ?",
   "eventDeclined": "Refusé",
   "eventDelete": "Supprimer",
+  "eventDeleteConfirm": "Supprimer l'event {name} ?",
+  "@eventDeleteConfirm": {
+    "description": "Delete the event with its name",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "eventDeletedEvent": "Événement supprimé",
   "eventDeleting": "Suppression",
   "eventDeletingError": "Erreur lors de la suppression",
@@ -592,6 +613,8 @@
   "eventInvalidDates": "La date de fin doit être après la date de début",
   "eventInvalidIntervalError": "Veuillez entrer un intervalle valide",
   "eventLocation": "Lieu",
+  "eventModifiedEvent": "Événement modifié",
+  "eventModifyingError": "Erreur lors de la modification",
   "eventMyEvents": "Mes événements",
   "eventName": "Nom",
   "eventNext": "Suivant",

@@ -105,13 +105,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feedAssociation => 'Association';
 
   @override
+  String feedAssociationEvent(String name) {
+    return '$name event';
+  }
+
+  @override
+  String get feedEditEvent => 'Edit event';
+
+  @override
+  String get feedManageAssociationEvents => 'Manage association events';
+
+  @override
+  String get feedNews => 'Calendar';
+
+  @override
   String get feedNewsType => 'News type';
 
   @override
-  String get feedApply => 'Apply';
+  String get feedNoAssociationEvents => 'No association events';
 
   @override
-  String get feedNews => 'News';
+  String get feedApply => 'Apply';
 
   @override
   String get feedAdmin => 'Administration';
@@ -1603,6 +1617,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventDelete => 'Delete';
 
   @override
+  String eventDeleteConfirm(String name) {
+    return 'Delete the event $name?';
+  }
+
+  @override
   String get eventDeletedEvent => 'Event deleted';
 
   @override
@@ -1665,6 +1684,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventLocation => 'Location';
+
+  @override
+  String get eventModifiedEvent => 'Event modified';
+
+  @override
+  String get eventModifyingError => 'Error while modifying';
 
   @override
   String get eventMyEvents => 'My events';

@@ -290,23 +290,47 @@ abstract class AppLocalizations {
   /// **'Association'**
   String get feedAssociation;
 
+  /// Association event
+  ///
+  /// In fr, this message translates to:
+  /// **'Event de {name}'**
+  String feedAssociationEvent(String name);
+
+  /// No description provided for @feedEditEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier l\'événement'**
+  String get feedEditEvent;
+
+  /// No description provided for @feedManageAssociationEvents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les événements de l\'association'**
+  String get feedManageAssociationEvents;
+
+  /// No description provided for @feedNews.
+  ///
+  /// In fr, this message translates to:
+  /// **'Calendrier'**
+  String get feedNews;
+
   /// No description provided for @feedNewsType.
   ///
   /// In fr, this message translates to:
   /// **'Type d\'actualité'**
   String get feedNewsType;
 
+  /// No description provided for @feedNoAssociationEvents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun événement d\'association'**
+  String get feedNoAssociationEvents;
+
   /// No description provided for @feedApply.
   ///
   /// In fr, this message translates to:
   /// **'Appliquer'**
   String get feedApply;
-
-  /// No description provided for @feedNews.
-  ///
-  /// In fr, this message translates to:
-  /// **'Actualités'**
-  String get feedNews;
 
   /// No description provided for @feedAdmin.
   ///
@@ -3188,6 +3212,12 @@ abstract class AppLocalizations {
   /// **'Supprimer'**
   String get eventDelete;
 
+  /// Delete the event with its name
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer l\'event {name} ?'**
+  String eventDeleteConfirm(String name);
+
   /// No description provided for @eventDeletedEvent.
   ///
   /// In fr, this message translates to:
@@ -3313,6 +3343,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Lieu'**
   String get eventLocation;
+
+  /// No description provided for @eventModifiedEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement modifié'**
+  String get eventModifiedEvent;
+
+  /// No description provided for @eventModifyingError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de la modification'**
+  String get eventModifyingError;
 
   /// No description provided for @eventMyEvents.
   ///
