@@ -235,7 +235,12 @@ class ScanDialog extends HookConsumerWidget {
                                             TypeMsg.msg,
                                             "Scan validé",
                                           );
-                                          scannerNotifier.reset();
+                                          Future.delayed(
+                                            const Duration(seconds: 2),
+                                            () {
+                                              scannerNotifier.reset();
+                                            },
+                                          );
                                         });
                                       });
                                     },
@@ -244,7 +249,7 @@ class ScanDialog extends HookConsumerWidget {
                                       child: AddEditButtonLayout(
                                         color: Colors.green,
                                         child: Text(
-                                          "Suivant",
+                                          "Valider",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
