@@ -224,17 +224,31 @@ class ScanDialog extends HookConsumerWidget {
                                   const Spacer(),
                                   GestureDetector(
                                     onTap: () async {
+                                      if (tag == "") {
+                                        displayToastWithContext(
+                                          TypeMsg.error,
+                                          "Aucun tag ajouté",
+                                        );
+                                      }
                                       await tokenExpireWrapper(ref, () async {
                                         await (ticketListNotifier.consumeTicket(
                                           sellerId,
                                           data,
                                           ticket.id,
-                                          tag == "" ? "no tag" : tag,
-                                        )).then((_) {
-                                          displayToastWithContext(
-                                            TypeMsg.msg,
-                                            "Scan validé",
-                                          );
+                                          tag,
+                                        )).then((value) {
+                                          if (value) {
+                                            displayToastWithContext(
+                                              TypeMsg.msg,
+                                              "Scan validé",
+                                            );
+                                          } else {
+                                            displayToastWithContext(
+                                              TypeMsg.error,
+                                              "Erreur lors du scan",
+                                            );
+                                          }
+
                                           Future.delayed(
                                             const Duration(seconds: 2),
                                             () {
