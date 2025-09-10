@@ -58,19 +58,27 @@ class AddAssociationModal extends HookWidget {
                           ref: ref,
                           modal: BottomModalTemplate(
                             title: localizeWithContext.adminChooseGroup,
-                            child: Column(
-                              children: [
-                                ...groups.map(
-                                  (e) => ListItemTemplate(
-                                    title: e.name,
-                                    trailing: const HeroIcon(HeroIcons.plus),
-                                    onTap: () {
-                                      chosenGroup.value = e;
-                                      Navigator.of(ctx).pop();
-                                    },
-                                  ),
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(maxHeight: 600),
+                              child: SingleChildScrollView(
+                                physics: BouncingScrollPhysics(),
+                                child: Column(
+                                  children: [
+                                    ...groups.map(
+                                      (e) => ListItemTemplate(
+                                        title: e.name,
+                                        trailing: const HeroIcon(
+                                          HeroIcons.plus,
+                                        ),
+                                        onTap: () {
+                                          chosenGroup.value = e;
+                                          Navigator.of(ctx).pop();
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         );
@@ -91,19 +99,26 @@ class AddAssociationModal extends HookWidget {
                           ref: ref,
                           modal: BottomModalTemplate(
                             title: localizeWithContext.adminChooseGroup,
-                            child: Column(
-                              children: [
-                                ...groups.map(
-                                  (e) => ListItemTemplate(
-                                    title: e.name,
-                                    trailing: const HeroIcon(HeroIcons.plus),
-                                    onTap: () {
-                                      chosenGroup.value = e;
-                                      Navigator.of(ctx).pop();
-                                    },
-                                  ),
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(maxHeight: 600),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    ...groups.map(
+                                      (e) => ListItemTemplate(
+                                        title: e.name,
+                                        trailing: const HeroIcon(
+                                          HeroIcons.plus,
+                                        ),
+                                        onTap: () {
+                                          chosenGroup.value = e;
+                                          Navigator.of(ctx).pop();
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         );
