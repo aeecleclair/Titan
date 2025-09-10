@@ -50,6 +50,9 @@ class ManageAssociationEventPage extends HookConsumerWidget {
                 selectedItem: selectedAssociation.value,
                 onItemSelected: (association) {
                   selectedAssociation.value = association;
+                  associationEventsListNotifier.loadAssociationEventList(
+                    association.id,
+                  );
                 },
                 itemBuilder: (context, association, index, selected) => Text(
                   association.name,

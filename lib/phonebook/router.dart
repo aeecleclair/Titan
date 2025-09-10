@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/phonebook/providers/is_phonebook_admin_provider.dart';
@@ -71,6 +72,7 @@ class PhonebookRouter {
             builder: () => association_add_edit_page.AssociationAddEditPage(),
             middleware: [
               DeferredLoadingMiddleware(association_add_edit_page.loadLibrary),
+              AdminMiddleware(ref, isPhonebookAdminProvider),
             ],
             children: [
               QRoute(
@@ -81,16 +83,17 @@ class PhonebookRouter {
                   DeferredLoadingMiddleware(
                     groupement_add_edit_page.loadLibrary,
                   ),
+                  AdminMiddleware(ref, isPhonebookAdminProvider),
                 ],
               ),
             ],
           ),
-
           QRoute(
             path: editAssociationMembers,
             builder: () => association_members_page.AssociationMembersPage(),
             middleware: [
               DeferredLoadingMiddleware(association_members_page.loadLibrary),
+              AdminMiddleware(ref, isPhonebookAdminProvider),
             ],
             children: [
               QRoute(
@@ -107,6 +110,7 @@ class PhonebookRouter {
             builder: () => association_groups_page.AssociationGroupsPage(),
             middleware: [
               DeferredLoadingMiddleware(association_groups_page.loadLibrary),
+              AdminMiddleware(ref, isAdminProvider),
             ],
           ),
         ],
@@ -150,7 +154,6 @@ class PhonebookRouter {
                 builder: () => membership_editor_page.MembershipEditorPage(),
                 middleware: [
                   DeferredLoadingMiddleware(membership_editor_page.loadLibrary),
-                  AdminMiddleware(ref, isAssociationPresidentProvider),
                 ],
               ),
             ],

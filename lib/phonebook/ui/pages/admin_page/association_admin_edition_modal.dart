@@ -49,24 +49,42 @@ class AssociationAdminEditionModal extends HookConsumerWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Button(
-              text: localizeWithContext.phonebookEditAssociationInfo,
-              onPressed: () {
-                associationPictureNotifier.getAssociationPicture(
-                  association.id,
-                );
-                associationGroupementsNotifier.setAssociationGroupement(
-                  groupement,
-                );
-                associationNotifier.setAssociation(association);
-                Navigator.of(context).pop();
-                QR.to(
-                  PhonebookRouter.root +
-                      PhonebookRouter.admin +
-                      PhonebookRouter.addEditAssociation,
-                );
-              },
-            ),
+            if (isPhonebookAdmin) ...[
+              Button(
+                text: localizeWithContext.phonebookEditAssociationInfo,
+                onPressed: () {
+                  associationPictureNotifier.getAssociationPicture(
+                    association.id,
+                  );
+                  associationGroupementsNotifier.setAssociationGroupement(
+                    groupement,
+                  );
+                  associationNotifier.setAssociation(association);
+                  Navigator.of(context).pop();
+                  QR.to(
+                    PhonebookRouter.root +
+                        PhonebookRouter.admin +
+                        PhonebookRouter.addEditAssociation,
+                  );
+                },
+              ),
+              SizedBox(height: 5),
+              Button(
+                text: localizeWithContext.phonebookEditAssociationMembers,
+                onPressed: () {
+                  associationGroupementsNotifier.setAssociationGroupement(
+                    groupement,
+                  );
+                  associationNotifier.setAssociation(association);
+                  Navigator.of(context).pop();
+                  QR.to(
+                    PhonebookRouter.root +
+                        PhonebookRouter.admin +
+                        PhonebookRouter.editAssociationMembers,
+                  );
+                },
+              ),
+            ],
             if (isAdmin) ...[
               SizedBox(height: 5),
               Button(
@@ -85,120 +103,108 @@ class AssociationAdminEditionModal extends HookConsumerWidget {
                 },
               ),
             ],
-            SizedBox(height: 5),
-            Button(
-              text: localizeWithContext.phonebookEditAssociationMembers,
-              onPressed: () {
-                associationGroupementsNotifier.setAssociationGroupement(
-                  groupement,
-                );
-                associationNotifier.setAssociation(association);
-                Navigator.of(context).pop();
-                QR.to(
-                  PhonebookRouter.root +
-                      PhonebookRouter.admin +
-                      PhonebookRouter.editAssociationMembers,
-                );
-              },
-            ),
-            SizedBox(height: 15),
-            Button.danger(
-              text: localizeWithContext.phonebookChangeTermYear(
-                association.mandateYear + 1,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-                showCustomBottomModal(
-                  context: context,
-                  ref: ref,
-                  modal: ConfirmModal.danger(
-                    title: localizeWithContext.phonebookChangeTermYear(
-                      association.mandateYear + 1,
-                    ),
-                    description: localizeWithContext.globalIrreversibleAction,
-                    onYes: () async {
-                      final result = await associationListNotifier
-                          .updateAssociation(
-                            association.copyWith(
-                              mandateYear: association.mandateYear + 1,
-                            ),
-                          );
-                      if (result) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          localizeWithContext.phonebookUpdatedAssociation,
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          localizeWithContext.phonebookUpdatingError,
-                        );
-                      }
-                    },
-                  ),
-                );
-              },
-            ),
-            SizedBox(height: 5),
-            Button.danger(
-              text: association.deactivated
-                  ? localizeWithContext.phonebookDeleteAssociation
-                  : localizeWithContext.phonebookDeactivateAssociation,
-              onPressed: () async {
-                Navigator.of(context).pop();
-                showCustomBottomModal(
-                  context: context,
-                  ref: ref,
-                  modal: ConfirmModal.danger(
-                    title: association.deactivated
-                        ? localizeWithContext
-                              .phonebookDeleteSelectedAssociation(
-                                association.name,
-                              )
-                        : localizeWithContext
-                              .phonebookDeactivateSelectedAssociation(
-                                association.name,
+            if (isPhonebookAdmin) ...[
+              SizedBox(height: 15),
+              Button.danger(
+                text: localizeWithContext.phonebookChangeTermYear(
+                  association.mandateYear + 1,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  showCustomBottomModal(
+                    context: context,
+                    ref: ref,
+                    modal: ConfirmModal.danger(
+                      title: localizeWithContext.phonebookChangeTermYear(
+                        association.mandateYear + 1,
+                      ),
+                      description: localizeWithContext.globalIrreversibleAction,
+                      onYes: () async {
+                        final result = await associationListNotifier
+                            .updateAssociation(
+                              association.copyWith(
+                                mandateYear: association.mandateYear + 1,
                               ),
-                    description: association.deactivated
-                        ? localizeWithContext
-                              .phonebookDeleteAssociationDescription
-                        : localizeWithContext.globalIrreversibleAction,
-                    onYes: association.deactivated
-                        ? () async {
-                            final result = await associationListNotifier
-                                .deactivateAssociation(association);
-                            if (result) {
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                localizeWithContext
-                                    .phonebookDeactivatedAssociation,
-                              );
-                            } else {
-                              displayToastWithContext(
-                                TypeMsg.error,
-                                localizeWithContext.phonebookDeactivatingError,
-                              );
+                            );
+                        if (result) {
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            localizeWithContext.phonebookUpdatedAssociation,
+                          );
+                        } else {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            localizeWithContext.phonebookUpdatingError,
+                          );
+                        }
+                      },
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: 5),
+              Button.danger(
+                text: association.deactivated
+                    ? localizeWithContext.phonebookDeleteAssociation
+                    : localizeWithContext.phonebookDeactivateAssociation,
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  showCustomBottomModal(
+                    context: context,
+                    ref: ref,
+                    modal: ConfirmModal.danger(
+                      title: association.deactivated
+                          ? localizeWithContext
+                                .phonebookDeleteSelectedAssociation(
+                                  association.name,
+                                )
+                          : localizeWithContext
+                                .phonebookDeactivateSelectedAssociation(
+                                  association.name,
+                                ),
+                      description: association.deactivated
+                          ? localizeWithContext
+                                .phonebookDeleteAssociationDescription
+                          : localizeWithContext.globalIrreversibleAction,
+                      onYes: association.deactivated
+                          ? () async {
+                              final result = await associationListNotifier
+                                  .deactivateAssociation(association);
+                              if (result) {
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  localizeWithContext
+                                      .phonebookDeactivatedAssociation,
+                                );
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  localizeWithContext
+                                      .phonebookDeactivatingError,
+                                );
+                              }
                             }
-                          }
-                        : () async {
-                            final result = await associationListNotifier
-                                .deleteAssociation(association);
-                            if (result) {
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                localizeWithContext.phonebookDeletedAssociation,
-                              );
-                            } else {
-                              displayToastWithContext(
-                                TypeMsg.error,
-                                localizeWithContext.phonebookDeletingError,
-                              );
-                            }
-                          },
-                  ),
-                );
-              },
-            ),
+                          : () async {
+                              final result = await associationListNotifier
+                                  .deleteAssociation(association);
+                              if (result) {
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  localizeWithContext
+                                      .phonebookDeletedAssociation,
+                                );
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  localizeWithContext.phonebookDeletingError,
+                                );
+                              }
+                            },
+                    ),
+                  );
+                },
+              ),
+            ],
           ],
         ),
       ),
