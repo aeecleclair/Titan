@@ -92,18 +92,23 @@ class AddUsersModalContent extends HookConsumerWidget {
                 ref: ref,
                 modal: BottomModalTemplate(
                   title: localizeWithContext.adminChooseGroup,
-                  child: Column(
-                    children: [
-                      ...groups.map(
-                        (e) => ListItem(
-                          title: e.name,
-                          onTap: () {
-                            chosenGroup.value = e;
-                            Navigator.of(ctx).pop();
-                          },
-                        ),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: 600),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          ...groups.map(
+                            (e) => ListItem(
+                              title: e.name,
+                              onTap: () {
+                                chosenGroup.value = e;
+                                Navigator.of(ctx).pop();
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               );
