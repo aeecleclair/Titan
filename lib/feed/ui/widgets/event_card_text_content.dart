@@ -26,7 +26,9 @@ class EventCardTextContent extends ConsumerWidget {
             Row(
               children: [
                 Text(
-                  item.title,
+                  item.title.length > 30
+                      ? '${item.title.substring(0, 30)}...'
+                      : item.title,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w900,
