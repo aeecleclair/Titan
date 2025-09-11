@@ -14,7 +14,7 @@ class TextEntry extends StatelessWidget {
   final Widget? suffixIcon;
   final Function(String)? onChanged;
   final String? Function(String)? validator;
-  final int? minLines, maxLines;
+  final int? minLines, maxLines, maxLength;
   final TextInputAction textInputAction;
 
   const TextEntry({
@@ -25,6 +25,7 @@ class TextEntry extends StatelessWidget {
     this.validator,
     this.minLines,
     this.maxLines,
+    this.maxLength,
     this.prefix = '',
     this.suffix = '',
     this.enabled = true,
@@ -49,6 +50,7 @@ class TextEntry extends StatelessWidget {
     return TextFormField(
       minLines: minLines,
       maxLines: maxLines,
+      maxLength: maxLength,
       controller: controller,
       keyboardType: keyboardType,
       textCapitalization: textCapitalization,

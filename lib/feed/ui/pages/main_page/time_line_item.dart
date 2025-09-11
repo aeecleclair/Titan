@@ -5,6 +5,8 @@ import 'package:titan/feed/class/news.dart';
 import 'package:titan/feed/tools/news_helper.dart';
 import 'package:titan/feed/ui/pages/main_page/event_action.dart';
 import 'package:titan/feed/ui/pages/main_page/event_card.dart';
+import 'package:titan/feed/ui/widgets/event_card_text_content.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/feed/ui/pages/main_page/dotted_vertical_line.dart';
 
@@ -17,13 +19,14 @@ class TimelineItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = Localizations.localeOf(context);
+    final localizeWithContext = AppLocalizations.of(context)!;
 
     return LayoutBuilder(
       builder: (context, constraints) {
         final eventCardWidth = constraints.maxWidth - 70;
         final eventCardHeight = eventCardWidth / (851 / 315);
 
-        final baseHeight = 30 + eventCardHeight + 15;
+        final baseHeight = 30 + eventCardHeight + 17;
 
         final totalHeight = item.actionStart != null
             ? baseHeight + 55
@@ -38,7 +41,7 @@ class TimelineItem extends ConsumerWidget {
                 child: DottedVerticalLine(),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15),
+                padding: const EdgeInsets.symmetric(vertical: 5),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -82,6 +85,13 @@ class TimelineItem extends ConsumerWidget {
                         ),
                       ],
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5, left: 45),
+                      child: EventCardTextContent(
+                        item: item,
+                        localizeWithContext: localizeWithContext,
+                      ),
+                    ),
                     if (item.actionStart != null)
                       Padding(
                         padding: const EdgeInsets.only(top: 8),
@@ -89,7 +99,11 @@ class TimelineItem extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(left: 14, right: 45),
+                              padding: EdgeInsets.only(
+                                left: 14,
+                                right: 37,
+                                top: 3,
+                              ),
                               child: Container(
                                 width: 20,
                                 height: 20,

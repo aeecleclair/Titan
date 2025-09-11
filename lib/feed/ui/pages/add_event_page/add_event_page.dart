@@ -165,6 +165,7 @@ class AddEditEventPage extends HookConsumerWidget {
                     TextEntry(
                       label: localizeWithContext.feedTitle,
                       controller: titleController,
+                      maxLength: 30,
                     ),
                     const SizedBox(height: 10),
                     CheckBoxEntry(
