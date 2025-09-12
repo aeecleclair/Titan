@@ -52,14 +52,29 @@ class OrderUI extends HookConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                '${AMAPTextConstants.the} ${processDate(order.deliveryDate)}',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AMAPColorConstants.textDark,
-                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    order.deliveryName,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AMAPColorConstants.textDark,
+                    ),
+                  ),
+                  Text(
+                    '${AMAPTextConstants.the} ${processDate(order.deliveryDate)}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AMAPColorConstants.textDark,
+                    ),
+                  ),
+                ],
               ),
+
               if (!isDetail)
                 GestureDetector(
                   onTap: () {

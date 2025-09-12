@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:titan/amap/class/order.dart';
 import 'package:titan/amap/providers/order_provider.dart';
 import 'package:titan/amap/providers/delivery_id_provider.dart';
+import 'package:titan/amap/providers/delivery_name_provider.dart';
 import 'package:titan/amap/providers/user_order_list_provider.dart';
 import 'package:titan/amap/providers/user_amount_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
@@ -22,6 +23,7 @@ class ProductChoiceButton extends HookConsumerWidget {
     final order = ref.watch(orderProvider);
     final orderNotifier = ref.watch(orderProvider.notifier);
     final deliveryId = ref.watch(deliveryIdProvider);
+    final deliveryName = ref.watch(deliveryNameProvider);
     final orderListNotifier = ref.watch(userOrderListProvider.notifier);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final me = ref.watch(userProvider);
@@ -74,6 +76,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                 } else {
                   Order newOrder = order.copyWith(
                     deliveryId: deliveryId,
+                    deliveryName: deliveryName,
                     user: me.toSimpleUser(),
                     lastAmount: order.amount,
                   );
