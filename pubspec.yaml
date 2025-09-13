@@ -52,7 +52,7 @@ dependencies:
   local_auth: ^2.3.0
   local_auth_android: ^1.0.46
   local_auth_darwin: ^1.4.1
-  mobile_scanner: 6.0.2
+  mobile_scanner: ^7.0.1
   numberpicker: ^2.1.1
   package_info_plus: ^8.3.0
   path: ^1.8.2

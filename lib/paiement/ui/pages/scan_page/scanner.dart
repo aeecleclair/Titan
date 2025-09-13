@@ -35,6 +35,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
     setState(() {
       scannedValue = null;
     });
+    controller.stop();
     controller.start();
   }
 
