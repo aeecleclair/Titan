@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/feed/class/news.dart';
@@ -45,7 +46,9 @@ class EventCardTextContent extends ConsumerWidget {
                 ),
             ],
           ),
-          Text(
+          AutoSizeText(
+            minFontSize: 10,
+            maxLines: 1,
             getNewsSubtitle(item, context: context),
             style: TextStyle(fontSize: 12, color: Colors.black),
           ),

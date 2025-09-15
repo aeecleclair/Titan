@@ -50,7 +50,6 @@ class FeedRouter {
         path: addEditEvent,
         builder: () => add_edit_event_page.AddEditEventPage(),
         middleware: [
-          AuthenticatedMiddleware(ref),
           AdminMiddleware(ref, isUserAMemberOfAnAssociationProvider),
           DeferredLoadingMiddleware(add_edit_event_page.loadLibrary),
         ],
@@ -59,7 +58,6 @@ class FeedRouter {
         path: eventHandling,
         builder: () => event_handling_page.EventHandlingPage(),
         middleware: [
-          AuthenticatedMiddleware(ref),
           AdminMiddleware(ref, isFeedAdminProvider),
           DeferredLoadingMiddleware(event_handling_page.loadLibrary),
         ],
@@ -68,7 +66,6 @@ class FeedRouter {
         path: associationEvents,
         builder: () => association_events_page.ManageAssociationEventPage(),
         middleware: [
-          AuthenticatedMiddleware(ref),
           AdminMiddleware(ref, isUserAMemberOfAnAssociationProvider),
           DeferredLoadingMiddleware(association_events_page.loadLibrary),
         ],

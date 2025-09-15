@@ -11,8 +11,10 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/navigation/providers/navbar_animation.dart';
+import 'package:titan/navigation/providers/navbar_module_list.dart';
 import 'package:titan/router.dart';
 import 'package:titan/service/tools/setup.dart';
+import 'package:titan/settings/providers/module_list_provider.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/plausible/plausible_observer.dart';
 import 'package:titan/tools/providers/locale_notifier.dart';
@@ -21,7 +23,6 @@ import 'package:titan/tools/trads/en_timeago.dart';
 import 'package:titan/tools/trads/fr_timeago.dart';
 import 'package:titan/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:qlevar_router/qlevar_router.dart' as qqr;
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:app_links/app_links.dart';
 
@@ -61,10 +62,10 @@ class MyApp extends HookConsumerWidget {
     final navigatorKey = GlobalKey<NavigatorState>();
     final plausible = getPlausible();
     final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
+
     Future(
       () => navbarAnimationNotifier.setController(navbarAnimationController),
     );
-
     if (!kIsWeb) {
       useEffect(() {
         final appLinks = AppLinks();
@@ -73,14 +74,25 @@ class MyApp extends HookConsumerWidget {
           try {
             appLinks.uriLinkStream.listen((Uri? uri) {
               if (uri != null) {
+                final navbarListModuleNotifier = ref.watch(
+                  navbarListModuleProvider.notifier,
+                );
+                final modulesNotifier = ref.watch(modulesProvider.notifier);
+                final navbarListModule = ref.watch(navbarListModuleProvider);
+                final navbarListModuleRoot = navbarListModule
+                    .map((module) => module.root)
+                    .toList();
                 final Map<String, String> queryParams = uri.queryParameters;
 
                 final newPath = "/${uri.host}";
+                final module = modulesNotifier.getModuleByRoot(newPath);
+                if (!navbarListModuleRoot.contains(newPath)) {
+                  navbarListModuleNotifier.pushModule(module);
+                }
                 pathForwardingNotifier.forward(
                   newPath,
                   queryParameters: queryParams,
                 );
-                QR.toName(newPath);
               }
             });
           } catch (err) {

@@ -67,14 +67,16 @@ class AssociationItem extends ConsumerWidget {
                         : null,
                     color: Colors.grey.shade100,
                   ),
-                  child: Text(
-                    avatarName,
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: selected
-                          ? ColorConstants.onTertiary
-                          : ColorConstants.tertiary,
+                  child: Center(
+                    child: Text(
+                      avatarName,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: selected
+                            ? ColorConstants.onTertiary
+                            : ColorConstants.tertiary,
+                      ),
                     ),
                   ),
                 ),

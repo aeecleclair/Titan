@@ -10,7 +10,8 @@ import 'package:titan/event/router.dart';
 import 'package:titan/feed/router.dart';
 import 'package:titan/flappybird/router.dart';
 import 'package:titan/home/router.dart';
-import 'package:titan/home/ui/home.dart' deferred as home_page;
+import 'package:titan/feed/ui/pages/main_page/main_page.dart'
+    deferred as feed_main_page;
 import 'package:titan/loan/router.dart';
 import 'package:titan/login/router.dart';
 import 'package:titan/others/ui/loading_page.dart' deferred as loading_page;
@@ -52,10 +53,10 @@ class AppRouter {
     routes = [
       QRoute(
         path: root,
-        builder: () => home_page.HomePage(),
+        builder: () => feed_main_page.FeedMainPage(),
         middleware: [
           AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(home_page.loadLibrary),
+          DeferredLoadingMiddleware(feed_main_page.loadLibrary),
         ],
       ),
       QRoute(

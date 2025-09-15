@@ -26,10 +26,10 @@ class TimelineItem extends ConsumerWidget {
         final eventCardWidth = constraints.maxWidth - 70;
         final eventCardHeight = eventCardWidth / (851 / 315);
 
-        final baseHeight = 30 + eventCardHeight + 17;
+        final baseHeight = 30 + eventCardHeight + 20;
 
         final totalHeight = item.actionStart != null
-            ? baseHeight + 55
+            ? baseHeight + 40
             : baseHeight;
 
         return SizedBox(
@@ -37,11 +37,11 @@ class TimelineItem extends ConsumerWidget {
           child: Stack(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 23),
+                padding: const EdgeInsets.only(left: 20),
                 child: DottedVerticalLine(),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
+                padding: const EdgeInsets.only(top: 5),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -100,7 +100,7 @@ class TimelineItem extends ConsumerWidget {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(
-                                left: 14,
+                                left: 11,
                                 right: 37,
                                 top: 3,
                               ),

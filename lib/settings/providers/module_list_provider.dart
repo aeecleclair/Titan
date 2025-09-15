@@ -92,6 +92,14 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     });
   }
 
+  Module getModuleByRoot(String root) {
+    try {
+      return allModules.firstWhere((m) => m.root.toString() == root);
+    } catch (e) {
+      return allModules.first;
+    }
+  }
+
   Future loadModules(List<String> roots) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> modulesName = prefs.getStringList(dbModule) ?? [];

@@ -25,4 +25,7 @@ class Module {
     getDescription: getDescription,
     root: root ?? this.root,
   );
+
+  @override
+  String toString() => root;
 }

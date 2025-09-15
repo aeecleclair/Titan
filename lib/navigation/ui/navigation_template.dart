@@ -98,6 +98,9 @@ class NavigationTemplate extends HookConsumerWidget {
                                       return FloatingNavbarItem(
                                         module: module,
                                         onTap: () {
+                                          pathForwardingNotifier.forward(
+                                            module.root,
+                                          );
                                           QR.to(module.root);
                                         },
                                       );
