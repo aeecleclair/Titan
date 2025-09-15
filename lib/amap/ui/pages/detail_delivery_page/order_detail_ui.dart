@@ -40,7 +40,7 @@ class DetailOrderUI extends HookConsumerWidget {
 
     return CardLayout(
       width: 250,
-      height: 145 + (20.0 * order.products.length),
+      height: 139 + (24.0 * order.products.length),
       colors: const [
         AMAPColorConstants.lightGradient1,
         AMAPColorConstants.greenGradient1,
