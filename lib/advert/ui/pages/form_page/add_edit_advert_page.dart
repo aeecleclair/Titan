@@ -129,81 +129,90 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                               imageNotifier: posterFile,
                               displayToastWithContext:
                                   displayAdvertToastWithContext,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(5),
-                                  ),
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: formFieldState.hasError
-                                          ? Colors.red
-                                          : Colors.black.withValues(alpha: 0.1),
-                                      spreadRadius: 5,
-                                      blurRadius: 10,
-                                      offset: const Offset(2, 3),
+                              child: AspectRatio(
+                                aspectRatio: 851 / 315,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(5),
                                     ),
-                                  ],
-                                ),
-                                child: posterFile.value != null
-                                    ? Stack(
-                                        children: [
-                                          Container(
-                                            width: 285,
-                                            height: 160,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                    Radius.circular(5),
-                                                  ),
-                                              image: DecorationImage(
-                                                image: poster.value != null
-                                                    ? Image.memory(
-                                                        poster.value!,
-                                                        fit: BoxFit.cover,
-                                                      ).image
-                                                    : posterFile.value!.image,
-                                                fit: BoxFit.cover,
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: formFieldState.hasError
+                                            ? Colors.red
+                                            : Colors.black.withValues(
+                                                alpha: 0.1,
                                               ),
-                                            ),
-                                            child: Center(
-                                              child: Container(
-                                                width: 50,
-                                                height: 50,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                        Radius.circular(5),
-                                                      ),
-                                                  color: Colors.white
-                                                      .withValues(alpha: 0.4),
-                                                ),
-                                                child: HeroIcon(
-                                                  HeroIcons.photo,
-                                                  size: 40,
-                                                  color: Colors.black
-                                                      .withValues(alpha: 0.5),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    : Container(
-                                        width: 285,
-                                        height: 160,
-                                        decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(
-                                            Radius.circular(5),
-                                          ),
-                                        ),
-                                        child: const HeroIcon(
-                                          HeroIcons.photo,
-                                          size: 160,
-                                          color: Colors.grey,
-                                        ),
+                                        spreadRadius: 5,
+                                        blurRadius: 10,
+                                        offset: const Offset(2, 3),
                                       ),
+                                    ],
+                                  ),
+                                  child: posterFile.value != null
+                                      ? Stack(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                      Radius.circular(5),
+                                                    ),
+                                                image: DecorationImage(
+                                                  image: poster.value != null
+                                                      ? Image.memory(
+                                                          poster.value!,
+                                                          fit: BoxFit.cover,
+                                                        ).image
+                                                      : posterFile.value!.image,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              child: Center(
+                                                child: Container(
+                                                  width: 50,
+                                                  height: 50,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                          Radius.circular(5),
+                                                        ),
+                                                    color: Colors.white
+                                                        .withValues(alpha: 0.4),
+                                                  ),
+                                                  child: HeroIcon(
+                                                    HeroIcons.photo,
+                                                    size: 40,
+                                                    color: Colors.black
+                                                        .withValues(alpha: 0.5),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                  Radius.circular(5),
+                                                ),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const HeroIcon(
+                                                HeroIcons.photo,
+                                                size: 100,
+                                                color: Colors.grey,
+                                              ),
+                                              Text("(851/315)"),
+                                            ],
+                                          ),
+                                        ),
+                                ),
                               ),
                             ),
                           ],

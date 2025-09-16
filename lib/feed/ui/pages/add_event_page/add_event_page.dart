@@ -430,18 +430,23 @@ class AddEditEventPage extends HookConsumerWidget {
                                           ],
                                         )
                                       : Container(
-                                          width: 285,
-                                          height: 160,
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 const BorderRadius.all(
                                                   Radius.circular(5),
                                                 ),
                                           ),
-                                          child: const HeroIcon(
-                                            HeroIcons.photo,
-                                            size: 160,
-                                            color: Colors.grey,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const HeroIcon(
+                                                HeroIcons.photo,
+                                                size: 100,
+                                                color: Colors.grey,
+                                              ),
+                                              Text("(851/315)"),
+                                            ],
                                           ),
                                         ),
                                 ),
