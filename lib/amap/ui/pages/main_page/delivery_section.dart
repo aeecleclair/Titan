@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/amap/class/delivery.dart';
 import 'package:titan/amap/providers/delivery_id_provider.dart';
 import 'package:titan/amap/providers/delivery_list_provider.dart';
-import 'package:titan/amap/providers/delivery_name_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/pages/main_page/delivery_ui.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
@@ -22,7 +21,6 @@ class DeliverySection extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryIdNotifier = ref.read(deliveryIdProvider.notifier);
     final deliveries = ref.watch(deliveryListProvider);
-    final deliveryName = ref.read(deliveryNameProvider.notifier);
     final availableDeliveries = deliveries.maybeWhen<List<Delivery>>(
       data: (data) => data
           .where((element) => element.status == DeliveryStatus.available)
@@ -59,7 +57,6 @@ class DeliverySection extends HookConsumerWidget {
                               deliveryIdNotifier.setId(
                                 availableDeliveries[i].id,
                               );
-                              deliveryName.setName(availableDeliveries[i].name);
                             }
                           }
                         },
