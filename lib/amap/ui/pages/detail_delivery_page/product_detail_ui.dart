@@ -17,7 +17,7 @@ class ProductDetailCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardLayout(
       width: 130,
-      height: 100,
+      height: 104,
       colors: const [
         AMAPColorConstants.lightGradient1,
         AMAPColorConstants.lightGradient2,
