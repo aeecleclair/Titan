@@ -196,7 +196,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.error,
-                                        AMAPTextConstants.alreadyExistCommand,
+                                        AMAPTextConstants.addingError,
                                       );
                                     }
                                   }
