@@ -148,7 +148,11 @@ class AmapMainPage extends HookConsumerWidget {
                   animation: animation,
                   child: Container(
                     width: double.infinity,
-                    height: MediaQuery.of(context).size.height - 150,
+                    height:
+                        350.0 + 90 * availableDeliveriesIds.length >
+                            MediaQuery.of(context).size.height - 150
+                        ? 350.0 + 90 * availableDeliveriesIds.length
+                        : MediaQuery.of(context).size.height - 150,
                     decoration: BoxDecoration(
                       gradient: const RadialGradient(
                         colors: [
