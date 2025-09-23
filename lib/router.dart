@@ -7,6 +7,7 @@ import 'package:myecl/centralisation/router.dart';
 import 'package:myecl/cinema/router.dart';
 import 'package:myecl/event/router.dart';
 import 'package:myecl/flappybird/router.dart';
+import 'package:myecl/centralassos/router.dart';
 import 'package:myecl/home/router.dart';
 import 'package:myecl/home/ui/home.dart' deferred as home_page;
 import 'package:myecl/loan/router.dart';
@@ -81,6 +82,7 @@ class AppRouter {
       AmapRouter(ref).route(),
       BookingRouter(ref).route(),
       CentralisationRouter(ref).route(),
+      CentralassociationRouter(ref).route(),
       CinemaRouter(ref).route(),
       EventRouter(ref).route(),
       FlappyBirdRouter(ref).route(),

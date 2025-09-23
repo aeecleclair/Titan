@@ -5,6 +5,7 @@ import 'package:myecl/admin/providers/all_my_module_roots_list_provider.dart';
 import 'package:myecl/amap/router.dart';
 import 'package:myecl/booking/router.dart';
 import 'package:myecl/centralisation/router.dart';
+import 'package:myecl/centralassos/router.dart';
 import 'package:myecl/cinema/router.dart';
 import 'package:myecl/drawer/class/module.dart';
 import 'package:collection/collection.dart';
@@ -36,6 +37,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   List<Module> allModules = [
     HomeRouter.module,
     CentralisationRouter.module,
+    CentralassociationRouter.module,
     PhRouter.module,
     CinemaRouter.module,
     AmapRouter.module,
