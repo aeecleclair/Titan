@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/rplace/class/focus.dart';
+import 'package:titan/rplace/class/focus.dart';
 
 class FocusNotifier extends StateNotifier<PixelFocus> {
   FocusNotifier() : super(PixelFocus.empty());

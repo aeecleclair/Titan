@@ -1,5 +1,5 @@
-import 'package:myecl/rplace/class/pixel.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/rplace/class/pixel.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class PixelRepository extends Repository {
   @override

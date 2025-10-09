@@ -1,5 +1,5 @@
-import 'package:myecl/rplace/class/userInfo.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/rplace/class/userInfo.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class UserinfoRepository extends Repository {
   @override

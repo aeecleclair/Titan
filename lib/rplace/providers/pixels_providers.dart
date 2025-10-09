@@ -1,9 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/rplace/class/pixel.dart';
-import 'package:myecl/rplace/repositories/pixels_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/rplace/class/pixel.dart';
+import 'package:titan/rplace/repositories/pixels_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class PixelListNotifier extends ListNotifier<Pixel> {
   final PixelRepository _pixelRepository = PixelRepository();
@@ -20,19 +20,16 @@ class PixelListNotifier extends ListNotifier<Pixel> {
   }
 
   Future<bool> updatePixel(Pixel pixel) async {
-    return await add(
-      (pixel) async => pixel,
-      pixel,
-    );
+    return await add((pixel) async => pixel, pixel);
   }
 }
 
 final pixelListProvider =
     StateNotifierProvider<PixelListNotifier, AsyncValue<List<Pixel>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final notifier = PixelListNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.getPixels();
-  });
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      final notifier = PixelListNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.getPixels();
+      });
+      return notifier;
+    });
