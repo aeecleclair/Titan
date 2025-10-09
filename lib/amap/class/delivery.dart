@@ -1,13 +1,8 @@
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
 
-enum DeliveryStatus {
-  creation,
-  available,
-  locked,
-  delivered,
-}
+enum DeliveryStatus { creation, available, locked, delivered }
 
 class Delivery {
   Delivery({
@@ -25,8 +20,9 @@ class Delivery {
 
   Delivery.fromJson(Map<String, dynamic> json) {
     deliveryDate = processDateFromAPIWithoutHour(json['delivery_date']);
-    products =
-        List<Product>.from(json['products'].map((x) => Product.fromJson(x)));
+    products = List<Product>.from(
+      json['products'].map((x) => Product.fromJson(x)),
+    );
     id = json['id'];
     status = stringToDeliveryStatus(json['status']);
     expanded = false;
@@ -58,12 +54,12 @@ class Delivery {
   }
 
   static Delivery empty() => Delivery(
-        deliveryDate: DateTime.now(),
-        products: [],
-        expanded: false,
-        status: DeliveryStatus.creation,
-        id: '',
-      );
+    deliveryDate: DateTime.now(),
+    products: [],
+    expanded: false,
+    status: DeliveryStatus.creation,
+    id: '',
+  );
 
   @override
   String toString() {

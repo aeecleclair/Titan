@@ -1,20 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/amap/class/cash.dart';
-import 'package:myecl/amap/class/delivery.dart';
-import 'package:myecl/amap/class/information.dart';
-import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/repositories/amap_user_repository.dart';
-import 'package:myecl/amap/repositories/cash_repository.dart';
-import 'package:myecl/amap/repositories/delivery_list_repository.dart';
-import 'package:myecl/amap/repositories/delivery_product_list_repository.dart';
-import 'package:myecl/amap/repositories/information_repository.dart';
-import 'package:myecl/amap/repositories/order_list_repository.dart';
-import 'package:myecl/amap/repositories/product_repository.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/tools/functions.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:titan/amap/class/cash.dart';
+import 'package:titan/amap/class/delivery.dart';
+import 'package:titan/amap/class/information.dart';
+import 'package:titan/amap/class/order.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/repositories/amap_user_repository.dart';
+import 'package:titan/amap/repositories/cash_repository.dart';
+import 'package:titan/amap/repositories/delivery_list_repository.dart';
+import 'package:titan/amap/repositories/delivery_product_list_repository.dart';
+import 'package:titan/amap/repositories/information_repository.dart';
+import 'package:titan/amap/repositories/order_list_repository.dart';
+import 'package:titan/amap/repositories/product_repository.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/amap/tools/functions.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class MockAmapUserRespository extends Mock implements AmapUserRepository {}
 
@@ -96,9 +96,7 @@ void main() {
           "account_type": "external",
         },
       });
-      expect(cash.toJson(), {
-        "balance": 0.0,
-      });
+      expect(cash.toJson(), {"balance": 0.0});
     });
   });
 
@@ -118,7 +116,7 @@ void main() {
             "price": 0.0,
             "category": "category",
             "quantity": 0,
-          }
+          },
         ],
         "id": "id",
         "status": "creation",
@@ -133,30 +131,20 @@ void main() {
         deliveryDate: DateTime.parse('2021-01-01'),
       );
       expect(newDelivery.deliveryDate, DateTime.parse('2021-01-01'));
-      newDelivery = delivery.copyWith(
-        products: [newProduct],
-      );
+      newDelivery = delivery.copyWith(products: [newProduct]);
       expect(newDelivery.products, [newProduct]);
-      newDelivery = delivery.copyWith(
-        id: 'id',
-      );
+      newDelivery = delivery.copyWith(id: 'id');
       expect(newDelivery.id, 'id');
-      newDelivery = delivery.copyWith(
-        status: DeliveryStatus.delivered,
-      );
+      newDelivery = delivery.copyWith(status: DeliveryStatus.delivered);
       expect(newDelivery.status, DeliveryStatus.delivered);
-      newDelivery = delivery.copyWith(
-        expanded: true,
-      );
+      newDelivery = delivery.copyWith(expanded: true);
       expect(newDelivery.expanded, true);
     });
 
     test('Should print properly', () async {
       final delivery = Delivery.empty().copyWith(
         deliveryDate: DateTime.parse('2021-01-01'),
-        products: [
-          Product.empty().copyWith(name: 'Name'),
-        ],
+        products: [Product.empty().copyWith(name: 'Name')],
         id: 'id',
         status: DeliveryStatus.creation,
       );
@@ -176,7 +164,7 @@ void main() {
             "price": 0.0,
             "category": "category",
             "quantity": 0,
-          }
+          },
         ],
         "id": "id",
         "status": "creation",
@@ -199,39 +187,25 @@ void main() {
     test('Should update with new values', () {
       final order = Order.empty();
       final newProduct = Product.empty().copyWith(id: 'id', quantity: 1);
-      Order newOrder = order.copyWith(
-        id: 'id',
-      );
+      Order newOrder = order.copyWith(id: 'id');
       expect(newOrder.id, 'id');
-      newOrder = order.copyWith(
-        deliveryId: 'id',
-      );
+      newOrder = order.copyWith(deliveryId: 'id');
       expect(newOrder.deliveryId, 'id');
-      newOrder = order.copyWith(
-        amount: 1,
-      );
+      newOrder = order.copyWith(amount: 1);
       expect(newOrder.amount, 1);
-      newOrder = order.copyWith(
-        products: [newProduct],
-      );
+      newOrder = order.copyWith(products: [newProduct]);
       expect(newOrder.products, [newProduct]);
       expect(newOrder.productsDetail, ['id']);
       expect(newOrder.productsQuantity, [1]);
-      newOrder = order.copyWith(
-        collectionSlot: CollectionSlot.midDay,
-      );
+      newOrder = order.copyWith(collectionSlot: CollectionSlot.midDay);
       expect(newOrder.collectionSlot, CollectionSlot.midDay);
       newOrder = order.copyWith(
         user: SimpleUser.empty().copyWith(name: 'Name'),
       );
       expect(newOrder.user.name, 'Name');
-      newOrder = order.copyWith(
-        orderingDate: DateTime.parse('2021-01-01'),
-      );
+      newOrder = order.copyWith(orderingDate: DateTime.parse('2021-01-01'));
       expect(newOrder.orderingDate, DateTime.parse('2021-01-01'));
-      newOrder = order.copyWith(
-        deliveryDate: DateTime.parse('2021-01-01'),
-      );
+      newOrder = order.copyWith(deliveryDate: DateTime.parse('2021-01-01'));
       expect(newOrder.deliveryDate, DateTime.parse('2021-01-01'));
     });
 
@@ -241,8 +215,12 @@ void main() {
         deliveryId: 'delivery_id',
         amount: 0,
         products: [
-          Product.empty()
-              .copyWith(id: 'id', name: 'name', price: 0, quantity: 0),
+          Product.empty().copyWith(
+            id: 'id',
+            name: 'name',
+            price: 0,
+            quantity: 0,
+          ),
         ],
         collectionSlot: CollectionSlot.midDay,
         user: SimpleUser.empty().copyWith(name: 'Name'),
@@ -267,7 +245,7 @@ void main() {
             "price": 0.0,
             "category": "category",
             "quantity": 0,
-          }
+          },
         ],
         "collection_slot": "midi",
         "user": {
@@ -296,7 +274,7 @@ void main() {
             "price": 0.0,
             "category": "category",
             "quantity": 0,
-          }
+          },
         ],
         "collection_slot": "midi",
         "user": {
@@ -340,17 +318,11 @@ void main() {
 
     test('Should update with new values', () {
       final information = Information.empty();
-      Information newInformation = information.copyWith(
-        manager: "Manager",
-      );
+      Information newInformation = information.copyWith(manager: "Manager");
       expect(newInformation.manager, "Manager");
-      newInformation = information.copyWith(
-        link: "Link",
-      );
+      newInformation = information.copyWith(link: "Link");
       expect(newInformation.link, "Link");
-      newInformation = information.copyWith(
-        description: "Description",
-      );
+      newInformation = information.copyWith(description: "Description");
       expect(newInformation.description, "Description");
     });
 
@@ -411,25 +383,15 @@ void main() {
 
     test('Should update with new values', () {
       final product = Product.empty();
-      Product newProduct = product.copyWith(
-        id: "id",
-      );
+      Product newProduct = product.copyWith(id: "id");
       expect(newProduct.id, "id");
-      newProduct = product.copyWith(
-        name: "name",
-      );
+      newProduct = product.copyWith(name: "name");
       expect(newProduct.name, "name");
-      newProduct = product.copyWith(
-        price: 0.0,
-      );
+      newProduct = product.copyWith(price: 0.0);
       expect(newProduct.price, 0.0);
-      newProduct = product.copyWith(
-        category: "category",
-      );
+      newProduct = product.copyWith(category: "category");
       expect(newProduct.category, "category");
-      newProduct = product.copyWith(
-        quantity: 0,
-      );
+      newProduct = product.copyWith(quantity: 0);
       expect(newProduct.quantity, 0);
     });
 

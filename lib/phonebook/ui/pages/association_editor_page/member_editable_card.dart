@@ -1,23 +1,23 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/class/membership.dart';
-import 'package:myecl/phonebook/providers/association_member_list_provider.dart';
-import 'package:myecl/phonebook/providers/complete_member_provider.dart';
-import 'package:myecl/phonebook/providers/member_pictures_provider.dart';
-import 'package:myecl/phonebook/providers/member_role_tags_provider.dart';
-import 'package:myecl/phonebook/providers/membership_provider.dart';
-import 'package:myecl/phonebook/providers/profile_picture_provider.dart';
-import 'package:myecl/phonebook/providers/roles_tags_provider.dart';
-import 'package:myecl/phonebook/router.dart';
-import 'package:myecl/phonebook/tools/function.dart';
-import 'package:myecl/phonebook/ui/pages/admin_page/delete_button.dart';
-import 'package:myecl/phonebook/ui/pages/admin_page/edition_button.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
+import 'package:titan/phonebook/class/association.dart';
+import 'package:titan/phonebook/class/complete_member.dart';
+import 'package:titan/phonebook/class/membership.dart';
+import 'package:titan/phonebook/providers/association_member_list_provider.dart';
+import 'package:titan/phonebook/providers/complete_member_provider.dart';
+import 'package:titan/phonebook/providers/member_pictures_provider.dart';
+import 'package:titan/phonebook/providers/member_role_tags_provider.dart';
+import 'package:titan/phonebook/providers/membership_provider.dart';
+import 'package:titan/phonebook/providers/profile_picture_provider.dart';
+import 'package:titan/phonebook/providers/roles_tags_provider.dart';
+import 'package:titan/phonebook/router.dart';
+import 'package:titan/phonebook/tools/function.dart';
+import 'package:titan/phonebook/ui/pages/admin_page/delete_button.dart';
+import 'package:titan/phonebook/ui/pages/admin_page/edition_button.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/phonebook/tools/constants.dart';
+import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class MemberEditableCard extends HookConsumerWidget {
@@ -35,8 +35,9 @@ class MemberEditableCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profilePictureNotifier = ref.watch(profilePictureProvider.notifier);
-    final associationMemberListNotifier =
-        ref.watch(associationMemberListProvider.notifier);
+    final associationMemberListNotifier = ref.watch(
+      associationMemberListProvider.notifier,
+    );
     final roleTagsNotifier = ref.watch(rolesTagsProvider.notifier);
     final membershipNotifier = ref.watch(membershipProvider.notifier);
     final completeMemberNotifier = ref.watch(completeMemberProvider.notifier);
@@ -45,8 +46,9 @@ class MemberEditableCard extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final memberPictures =
-        ref.watch(memberPicturesProvider.select((value) => value[member]));
+    final memberPictures = ref.watch(
+      memberPicturesProvider.select((value) => value[member]),
+    );
     final memberPicturesNotifier = ref.watch(memberPicturesProvider.notifier);
 
     Membership assoMembership = member.memberships.firstWhere(
@@ -108,9 +110,7 @@ class MemberEditableCard extends HookConsumerWidget {
               children: [
                 AutoSizeText(
                   "${(member.member.nickname ?? member.member.firstname)} - ${member.memberships.firstWhere((element) => element.associationId == association.id && element.mandateYear == association.mandateYear).apparentName}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                   minFontSize: 10,
                   maxFontSize: 15,
                 ),

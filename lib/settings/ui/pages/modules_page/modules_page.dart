@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/settings/providers/module_list_provider.dart';
-import 'package:myecl/settings/ui/settings.dart';
+import 'package:titan/settings/providers/module_list_provider.dart';
+import 'package:titan/settings/ui/settings.dart';
 
 class ModulesPage extends HookConsumerWidget {
   const ModulesPage({super.key});
@@ -18,10 +18,7 @@ class ModulesPage extends HookConsumerWidget {
           physics: const BouncingScrollPhysics(),
           proxyDecorator: (child, index, animation) {
             return Material(
-              child: FadeTransition(
-                opacity: animation,
-                child: child,
-              ),
+              child: FadeTransition(opacity: animation, child: child),
             );
           },
           onReorder: (int oldIndex, int newIndex) {
@@ -67,10 +64,7 @@ class ModulesPage extends HookConsumerWidget {
                         modulesNotifier.toggleModule(module);
                       },
                     ),
-                    const HeroIcon(
-                      HeroIcons.chevronUpDown,
-                      size: 30,
-                    ),
+                    const HeroIcon(HeroIcons.chevronUpDown, size: 30),
                   ],
                 ),
               ),

@@ -1,4 +1,4 @@
-import 'package:myecl/admin/class/account_type.dart';
+import 'package:titan/admin/class/account_type.dart';
 
 class ModuleVisibility {
   ModuleVisibility({
@@ -13,9 +13,9 @@ class ModuleVisibility {
   ModuleVisibility.fromJson(Map<String, dynamic> json) {
     root = json['root'];
     allowedGroupIds = List<String>.from(json['allowed_group_ids']);
-    allowedAccountTypes = List.from(json['allowed_account_types'])
-        .map((x) => AccountType(type: x))
-        .toList();
+    allowedAccountTypes = List.from(
+      json['allowed_account_types'],
+    ).map((x) => AccountType(type: x)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -30,12 +30,11 @@ class ModuleVisibility {
     String? root,
     List<String>? allowedGroupIds,
     List<AccountType>? allowedAccountTypes,
-  }) =>
-      ModuleVisibility(
-        root: root ?? this.root,
-        allowedGroupIds: allowedGroupIds ?? this.allowedGroupIds,
-        allowedAccountTypes: allowedAccountTypes ?? this.allowedAccountTypes,
-      );
+  }) => ModuleVisibility(
+    root: root ?? this.root,
+    allowedGroupIds: allowedGroupIds ?? this.allowedGroupIds,
+    allowedAccountTypes: allowedAccountTypes ?? this.allowedAccountTypes,
+  );
 
   ModuleVisibility.empty() {
     root = '';

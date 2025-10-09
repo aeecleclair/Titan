@@ -4,31 +4,31 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
-import 'package:myecl/raffle/providers/cash_provider.dart';
-import 'package:myecl/raffle/providers/prize_list_provider.dart';
-import 'package:myecl/raffle/providers/raffle_list_provider.dart';
-import 'package:myecl/raffle/providers/raffle_provider.dart';
-import 'package:myecl/raffle/providers/raffle_stats_provider.dart';
-import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
-import 'package:myecl/raffle/providers/tombola_logo_provider.dart';
-import 'package:myecl/raffle/providers/tombola_logos_provider.dart';
-import 'package:myecl/raffle/providers/winning_ticket_list_provider.dart';
-import 'package:myecl/raffle/router.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/components/blue_btn.dart';
-import 'package:myecl/raffle/ui/pages/creation_edit_page/prize_handler.dart';
-import 'package:myecl/raffle/ui/pages/creation_edit_page/ticket_handler.dart';
-import 'package:myecl/raffle/ui/pages/creation_edit_page/winning_ticket_handler.dart';
-import 'package:myecl/raffle/ui/raffle.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
-import 'package:myecl/tools/ui/widgets/image_picker_on_tap.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:titan/raffle/class/raffle.dart';
+import 'package:titan/raffle/class/raffle_status_type.dart';
+import 'package:titan/raffle/providers/cash_provider.dart';
+import 'package:titan/raffle/providers/prize_list_provider.dart';
+import 'package:titan/raffle/providers/raffle_list_provider.dart';
+import 'package:titan/raffle/providers/raffle_provider.dart';
+import 'package:titan/raffle/providers/raffle_stats_provider.dart';
+import 'package:titan/raffle/providers/pack_ticket_list_provider.dart';
+import 'package:titan/raffle/providers/tombola_logo_provider.dart';
+import 'package:titan/raffle/providers/tombola_logos_provider.dart';
+import 'package:titan/raffle/providers/winning_ticket_list_provider.dart';
+import 'package:titan/raffle/router.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/raffle/ui/components/blue_btn.dart';
+import 'package:titan/raffle/ui/pages/creation_edit_page/prize_handler.dart';
+import 'package:titan/raffle/ui/pages/creation_edit_page/ticket_handler.dart';
+import 'package:titan/raffle/ui/pages/creation_edit_page/winning_ticket_handler.dart';
+import 'package:titan/raffle/ui/raffle.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/ui/widgets/image_picker_on_tap.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class CreationPage extends HookConsumerWidget {
@@ -46,8 +46,9 @@ class CreationPage extends HookConsumerWidget {
     final packTicketListNotifier = ref.read(packTicketListProvider.notifier);
     final prizeListNotifier = ref.read(prizeListProvider.notifier);
     final prizeList = ref.watch(prizeListProvider);
-    final winningTicketListNotifier =
-        ref.watch(winningTicketListProvider.notifier);
+    final winningTicketListNotifier = ref.watch(
+      winningTicketListProvider.notifier,
+    );
 
     final name = useTextEditingController(text: raffle.name);
     final ImagePicker picker = ImagePicker();
@@ -78,9 +79,7 @@ class CreationPage extends HookConsumerWidget {
         },
         child: Column(
           children: [
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             const Padding(
               padding: EdgeInsets.only(top: 10, left: 30, right: 30),
               child: Align(
@@ -215,10 +214,7 @@ class CreationPage extends HookConsumerWidget {
                     raffleList.when(
                       data: (list) async {
                         if (logo.value != null) {
-                          raffleLogoNotifier.updateLogo(
-                            raffle.id,
-                            logo.value!,
-                          );
+                          raffleLogoNotifier.updateLogo(raffle.id, logo.value!);
                           QR.to(RaffleRouter.root + RaffleRouter.detail);
                         }
                       },
@@ -230,15 +226,11 @@ class CreationPage extends HookConsumerWidget {
                 child: const Text(RaffleTextConstants.edit),
               ),
             ),
-            const SizedBox(
-              height: 40,
-            ),
+            const SizedBox(height: 40),
             raffle.raffleStatusType != RaffleStatusType.lock
                 ? const TicketHandler()
                 : const WinningTicketHandler(),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             const PrizeHandler(),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -265,11 +257,13 @@ class CreationPage extends HookConsumerWidget {
                           await showDialog(
                             context: context,
                             builder: (context) => CustomDialogBox(
-                              title: raffle.raffleStatusType ==
+                              title:
+                                  raffle.raffleStatusType ==
                                       RaffleStatusType.creation
                                   ? RaffleTextConstants.openRaffle
                                   : RaffleTextConstants.closeRaffle,
-                              descriptions: raffle.raffleStatusType ==
+                              descriptions:
+                                  raffle.raffleStatusType ==
                                       RaffleStatusType.creation
                                   ? RaffleTextConstants.openRaffleDescription
                                   : RaffleTextConstants.closeRaffleDescription,
@@ -294,8 +288,9 @@ class CreationPage extends HookConsumerWidget {
                                     prizeList.whenData((prizes) {
                                       for (var prize in prizes) {
                                         if (prize.raffleId == raffle.id) {
-                                          winningTicketListNotifier
-                                              .drawPrize(prize);
+                                          winningTicketListNotifier.drawPrize(
+                                            prize,
+                                          );
                                         }
                                       }
                                     });
@@ -381,9 +376,7 @@ class CreationPage extends HookConsumerWidget {
                       ],
                     ),
                   ),
-            const SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
           ],
         ),
       ),

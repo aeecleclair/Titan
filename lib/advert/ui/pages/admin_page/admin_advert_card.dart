@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/advert/class/advert.dart';
-import 'package:myecl/advert/tools/constants.dart';
-import 'package:myecl/advert/ui/components/advert_card.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
+import 'package:titan/advert/class/advert.dart';
+import 'package:titan/advert/tools/constants.dart';
+import 'package:titan/advert/ui/components/advert_card.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/layouts/card_button.dart';
 
 class AdminAdvertCard extends HookConsumerWidget {
   final VoidCallback onTap, onEdit;
@@ -38,13 +38,12 @@ class AdminAdvertCard extends HookConsumerWidget {
                   GestureDetector(
                     onTap: onEdit,
                     child: CardButton(
-                      colors: [
-                        Colors.grey.shade100,
-                        Colors.grey.shade400,
-                      ],
+                      colors: [Colors.grey.shade100, Colors.grey.shade400],
                       shadowColor: Colors.grey.shade300.withValues(alpha: 0.2),
-                      child:
-                          const HeroIcon(HeroIcons.pencil, color: Colors.black),
+                      child: const HeroIcon(
+                        HeroIcons.pencil,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 20),
@@ -55,8 +54,9 @@ class AdminAdvertCard extends HookConsumerWidget {
                         AdvertColorConstants.redGradient1,
                         AdvertColorConstants.redGradient2,
                       ],
-                      shadowColor: AdvertColorConstants.redGradient2
-                          .withValues(alpha: 0.2),
+                      shadowColor: AdvertColorConstants.redGradient2.withValues(
+                        alpha: 0.2,
+                      ),
                       child: child,
                     ),
                     child: const HeroIcon(HeroIcons.trash, color: Colors.white),

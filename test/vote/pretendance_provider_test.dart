@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/contender_provider.dart';
+import 'package:titan/vote/class/contender.dart';
+import 'package:titan/vote/providers/contender_provider.dart';
 
 void main() {
   group('ContenderNotifier', () {
@@ -9,10 +9,7 @@ void main() {
       final container = ProviderContainer();
       final notifier = container.read(contenderProvider.notifier);
 
-      final contender = Contender.empty().copyWith(
-        id: '123',
-        name: 'John Doe',
-      );
+      final contender = Contender.empty().copyWith(id: '123', name: 'John Doe');
 
       notifier.setId(contender);
 

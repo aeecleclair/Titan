@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
-import 'package:myecl/raffle/providers/raffle_list_provider.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/raffle/class/raffle.dart';
+import 'package:titan/raffle/class/raffle_status_type.dart';
+import 'package:titan/raffle/providers/raffle_list_provider.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class ConfirmCreationDialog extends HookConsumerWidget {
   final SimpleGroup group;
@@ -52,9 +52,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                   RaffleColorConstants.gradient1,
                   RaffleColorConstants.gradient2,
                 ],
-                transform: GradientRotation(
-                  360 * animation.value * pi / 180,
-                ),
+                transform: GradientRotation(360 * animation.value * pi / 180),
                 center: Alignment.topLeft,
                 radius: 1.5,
               ),
@@ -67,10 +65,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                   child: Text(
                     "Voulez vous vraiment créer la tombola : ${group.name}",
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                    ),
+                    style: const TextStyle(color: Colors.white, fontSize: 30),
                   ),
                 ),
                 Row(
@@ -93,8 +88,9 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color:
-                                  Colors.grey.shade300.withValues(alpha: 0.5),
+                              color: Colors.grey.shade300.withValues(
+                                alpha: 0.5,
+                              ),
                               blurRadius: 10,
                               offset: const Offset(2, 3),
                             ),
@@ -125,9 +121,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                         size: 40,
                       ),
                     ),
-                    const Spacer(
-                      flex: 3,
-                    ),
+                    const Spacer(flex: 3),
                     GestureDetector(
                       onTap: () {
                         navigationPop();

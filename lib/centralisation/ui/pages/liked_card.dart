@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/centralisation/class/module.dart';
+import 'package:titan/centralisation/class/module.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myecl/centralisation/tools/constants.dart';
-import 'package:myecl/centralisation/tools/functions.dart';
+import 'package:titan/centralisation/tools/constants.dart';
+import 'package:titan/centralisation/tools/functions.dart';
 
 class LikedCard extends StatelessWidget {
   final Module module;

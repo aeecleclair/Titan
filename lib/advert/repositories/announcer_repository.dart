@@ -1,5 +1,5 @@
-import 'package:myecl/advert/class/announcer.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/advert/class/announcer.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class AnnouncerRepository extends Repository {
   @override
@@ -14,8 +14,9 @@ class AnnouncerRepository extends Repository {
 
   Future<List<Announcer>> getMyAnnouncer() async {
     return List<Announcer>.from(
-      (await getList(suffix: "me/advertisers"))
-          .map((x) => Announcer.fromJson(x)),
+      (await getList(
+        suffix: "me/advertisers",
+      )).map((x) => Announcer.fromJson(x)),
     );
   }
 

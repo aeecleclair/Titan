@@ -427,6 +427,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = D7YW2UB8DQ;
 				ENABLE_BITCODE = NO;
+				FLAVOR_URL_SCHEME = titan;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MyECL;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -508,6 +509,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = D7YW2UB8DQ;
 				ENABLE_BITCODE = NO;
+				FLAVOR_URL_SCHEME = titan.dev;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "MyECL Dev";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -587,6 +589,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = D7YW2UB8DQ;
 				ENABLE_BITCODE = NO;
+				FLAVOR_URL_SCHEME = titan.dev;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "MyECL Dev";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -663,6 +666,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = D7YW2UB8DQ;
 				ENABLE_BITCODE = NO;
+				FLAVOR_URL_SCHEME = titan.dev;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "MyECL Dev";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -744,6 +748,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = D7YW2UB8DQ;
 				ENABLE_BITCODE = NO;
+				FLAVOR_URL_SCHEME = titan.alpha;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "MyECL Alpha";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -823,6 +828,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = D7YW2UB8DQ;
 				ENABLE_BITCODE = NO;
+				FLAVOR_URL_SCHEME = titan.alpha;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "MyECL Alpha";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -899,6 +905,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = D7YW2UB8DQ;
 				ENABLE_BITCODE = NO;
+				FLAVOR_URL_SCHEME = titan.alpha;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "MyECL Alpha";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -1033,6 +1040,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = D7YW2UB8DQ;
 				ENABLE_BITCODE = NO;
+				FLAVOR_URL_SCHEME = titan;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MyECL;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -1059,6 +1067,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = D7YW2UB8DQ;
 				ENABLE_BITCODE = NO;
+				FLAVOR_URL_SCHEME = titan;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = MyECL;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";

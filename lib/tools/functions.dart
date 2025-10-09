@@ -5,16 +5,35 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:myecl/tools/plausible/plausible.dart';
+import 'package:titan/tools/plausible/plausible.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 enum TypeMsg { msg, error }
 
-void displayToast(BuildContext context, TypeMsg type, String text) {
+enum Decision { approved, declined, pending }
+
+Decision stringToDecision(String s) {
+  switch (s) {
+    case "approved":
+      return Decision.approved;
+    case "declined":
+      return Decision.declined;
+    case "pending":
+      return Decision.pending;
+    default:
+      return Decision.pending;
+  }
+}
+
+void displayToast(
+  BuildContext context,
+  TypeMsg type,
+  String text, {
+  int? duration,
+}) {
   LinearGradient linearGradient;
-  int duration;
   HeroIcons icon;
 
   switch (type) {
@@ -25,7 +44,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
         end: Alignment.bottomRight,
       );
       icon = HeroIcons.check;
-      duration = 1500;
+      duration = duration ?? 1500;
       break;
     case TypeMsg.error:
       linearGradient = const LinearGradient(
@@ -34,7 +53,7 @@ void displayToast(BuildContext context, TypeMsg type, String text) {
         end: Alignment.bottomRight,
       );
       icon = HeroIcons.exclamationTriangle;
-      duration = 3000;
+      duration = duration ?? 3000;
       break;
   }
 
@@ -341,7 +360,7 @@ Future<DateTime?> _getDate(
   );
 }
 
-getOnlyDayDate(
+Future getOnlyDayDate(
   BuildContext context,
   TextEditingController dateController, {
   DateTime? initialDate,
@@ -349,14 +368,20 @@ getOnlyDayDate(
   DateTime? lastDate,
 }) async {
   final DateTime now = DateTime.now();
-  final DateTime? date =
-      await _getDate(context, now, initialDate, firstDate, lastDate);
+  final DateTime? date = await _getDate(
+    context,
+    now,
+    initialDate,
+    firstDate,
+    lastDate,
+  );
 
-  dateController.text =
-      DateFormat('dd/MM/yyyy').format(date ?? initialDate ?? now);
+  dateController.text = DateFormat(
+    'dd/MM/yyyy',
+  ).format(date ?? initialDate ?? now);
 }
 
-getOnlyDayDateFunction(
+Future getOnlyDayDateFunction(
   BuildContext context,
   void Function(String) setDate, {
   DateTime? initialDate,
@@ -364,24 +389,30 @@ getOnlyDayDateFunction(
   DateTime? lastDate,
 }) async {
   final DateTime now = DateTime.now();
-  final DateTime? date =
-      await _getDate(context, now, initialDate, firstDate, lastDate);
+  final DateTime? date = await _getDate(
+    context,
+    now,
+    initialDate,
+    firstDate,
+    lastDate,
+  );
 
   setDate(DateFormat('dd/MM/yyyy').format(date ?? initialDate ?? now));
 }
 
-getOnlyHourDate(
+Future getOnlyHourDate(
   BuildContext context,
   TextEditingController dateController,
 ) async {
   final DateTime now = DateTime.now();
   final TimeOfDay? time = await _getTime(context);
 
-  dateController.text =
-      DateFormat('HH:mm').format(DateTimeField.combine(now, time));
+  dateController.text = DateFormat(
+    'HH:mm',
+  ).format(DateTimeField.combine(now, time));
 }
 
-getFullDate(
+Future getFullDate(
   BuildContext context,
   TextEditingController dateController, {
   DateTime? initialDate,
@@ -389,29 +420,27 @@ getFullDate(
   DateTime? lastDate,
 }) async {
   final DateTime now = DateTime.now();
-  _getDate(context, now, initialDate, firstDate, lastDate).then(
-    (DateTime? date) {
-      if (date != null && context.mounted) {
-        _getTime(context).then(
-          (TimeOfDay? time) {
-            if (time != null) {
-              dateController.text = DateFormat('dd/MM/yyyy HH:mm')
-                  .format(DateTimeField.combine(date, time));
-            }
-          },
-        );
-      } else {
-        dateController.text =
-            DateFormat('dd/MM/yyyy HH:mm').format(initialDate ?? now);
-      }
-    },
-  );
+  _getDate(context, now, initialDate, firstDate, lastDate).then((
+    DateTime? date,
+  ) {
+    if (date != null && context.mounted) {
+      _getTime(context).then((TimeOfDay? time) {
+        if (time != null) {
+          dateController.text = DateFormat(
+            'dd/MM/yyyy HH:mm',
+          ).format(DateTimeField.combine(date, time));
+        }
+      });
+    } else {
+      dateController.text = DateFormat(
+        'dd/MM/yyyy HH:mm',
+      ).format(initialDate ?? now);
+    }
+  });
 }
 
 int generateIntFromString(String s) {
-  return s.codeUnits.reduce(
-    (value, element) => value + 100 * element,
-  );
+  return s.codeUnits.reduce((value, element) => value + 100 * element);
 }
 
 bool isEmailInValid(String email) {
@@ -431,7 +460,7 @@ bool isNotStaff(String email) {
 
 String getAppFlavor() {
   if (appFlavor != null) {
-    return appFlavor!;
+    return appFlavor!.toLowerCase();
   }
 
   if (const String.fromEnvironment("flavor") != "") {
@@ -466,17 +495,34 @@ String getTitanHost() {
   return host;
 }
 
-String getTitanPackageName() {
+String getTitanURL() {
   switch (getAppFlavor()) {
     case "dev":
-      return "fr.myecl.titan.dev";
+      return "http://localhost:3000";
     case "alpha":
-      return "fr.myecl.titan.alpha";
+      return "https://titan.dev.eclair.ec-lyon.fr";
     case "prod":
-      return "fr.myecl.titan";
+      return "https://myecl.fr";
     default:
       throw StateError("Invalid app flavor");
   }
+}
+
+String getTitanURLScheme() {
+  switch (getAppFlavor()) {
+    case "dev":
+      return "titan.dev";
+    case "alpha":
+      return "titan.alpha";
+    case "prod":
+      return "titan";
+    default:
+      throw StateError("Invalid app flavor");
+  }
+}
+
+String getTitanPackageName() {
+  return "fr.myecl.${getTitanURLScheme()}";
 }
 
 String getTitanLogo() {

@@ -1,15 +1,15 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/loaner_id_provider.dart';
-import 'package:myecl/loan/repositories/loan_repository.dart';
-import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/loan/class/loan.dart';
+import 'package:titan/loan/providers/loaner_id_provider.dart';
+import 'package:titan/loan/repositories/loan_repository.dart';
+import 'package:titan/tools/exception.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class LoanerLoanListNotifier extends ListNotifier<Loan> {
   final LoanRepository loanrepository;
   LoanerLoanListNotifier({required this.loanrepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Loan>>> loadLoan(String loanerId) async {
     return await loadList(
@@ -80,15 +80,14 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
       (loans) => loans
           .where(
             (loan) =>
-                loan.borrower
-                    .getName()
-                    .toLowerCase()
-                    .contains(query.toLowerCase()) ||
+                loan.borrower.getName().toLowerCase().contains(
+                  query.toLowerCase(),
+                ) ||
                 loan.itemsQuantity
                     .map(
-                      (e) => e.itemSimple.name
-                          .toLowerCase()
-                          .contains(query.toLowerCase()),
+                      (e) => e.itemSimple.name.toLowerCase().contains(
+                        query.toLowerCase(),
+                      ),
                     )
                     .contains(true),
           )
@@ -98,16 +97,18 @@ class LoanerLoanListNotifier extends ListNotifier<Loan> {
 }
 
 final loanerLoanListProvider =
-    StateNotifierProvider<LoanerLoanListNotifier, AsyncValue<List<Loan>>>(
-        (ref) {
-  final loanerRepository = ref.watch(loanRepositoryProvider);
-  LoanerLoanListNotifier loanerLoanListNotifier =
-      LoanerLoanListNotifier(loanrepository: loanerRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    final loanerId = ref.watch(loanerIdProvider);
-    if (loanerId != "") {
-      loanerLoanListNotifier.loadLoan(loanerId);
-    }
-  });
-  return loanerLoanListNotifier;
-});
+    StateNotifierProvider<LoanerLoanListNotifier, AsyncValue<List<Loan>>>((
+      ref,
+    ) {
+      final loanerRepository = ref.watch(loanRepositoryProvider);
+      LoanerLoanListNotifier loanerLoanListNotifier = LoanerLoanListNotifier(
+        loanrepository: loanerRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        final loanerId = ref.watch(loanerIdProvider);
+        if (loanerId != "") {
+          loanerLoanListNotifier.loadLoan(loanerId);
+        }
+      });
+      return loanerLoanListNotifier;
+    });

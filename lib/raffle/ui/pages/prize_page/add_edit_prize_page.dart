@@ -1,19 +1,19 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/raffle/class/prize.dart';
-import 'package:myecl/raffle/providers/prize_list_provider.dart';
-import 'package:myecl/raffle/providers/prize_provider.dart';
-import 'package:myecl/raffle/providers/raffle_provider.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/components/blue_btn.dart';
-import 'package:myecl/raffle/ui/components/section_title.dart';
-import 'package:myecl/raffle/ui/raffle.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
+import 'package:titan/raffle/class/prize.dart';
+import 'package:titan/raffle/providers/prize_list_provider.dart';
+import 'package:titan/raffle/providers/prize_provider.dart';
+import 'package:titan/raffle/providers/raffle_provider.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/raffle/ui/components/blue_btn.dart';
+import 'package:titan/raffle/ui/components/section_title.dart';
+import 'package:titan/raffle/ui/raffle.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditPrizePage extends HookConsumerWidget {
@@ -55,9 +55,7 @@ class AddEditPrizePage extends HookConsumerWidget {
                       color: RaffleColorConstants.gradient1,
                     ),
                     const SizedBox(height: 35),
-                    const SectionTitle(
-                      text: RaffleTextConstants.quantity,
-                    ),
+                    const SectionTitle(text: RaffleTextConstants.quantity),
                     const SizedBox(height: 5),
                     TextEntry(
                       label: RaffleTextConstants.quantity,
@@ -73,9 +71,7 @@ class AddEditPrizePage extends HookConsumerWidget {
                       controller: name,
                     ),
                     const SizedBox(height: 50),
-                    const SectionTitle(
-                      text: RaffleTextConstants.description,
-                    ),
+                    const SectionTitle(text: RaffleTextConstants.description),
                     const SizedBox(height: 5),
                     TextEntry(
                       label: RaffleTextConstants.description,
@@ -94,8 +90,9 @@ class AddEditPrizePage extends HookConsumerWidget {
                               raffleId: isEdit ? prize.raffleId : raffle.id,
                               quantity: int.parse(quantity.text),
                             );
-                            final prizeNotifier =
-                                ref.watch(prizeListProvider.notifier);
+                            final prizeNotifier = ref.watch(
+                              prizeListProvider.notifier,
+                            );
                             final value = isEdit
                                 ? await prizeNotifier.updatePrize(newPrize)
                                 : await prizeNotifier.addPrize(newPrize);

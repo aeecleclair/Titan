@@ -1,9 +1,6 @@
-import 'package:myecl/booking/class/room.dart';
-import 'package:myecl/booking/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/applicant.dart';
-
-enum Decision { approved, declined, pending }
+import 'package:titan/service/class/room.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/user/class/applicant.dart';
 
 class Booking {
   final String id;

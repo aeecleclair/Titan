@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/admin_loan_list_provider.dart';
-import 'package:myecl/loan/providers/is_loan_admin_provider.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/loan_list_provider.dart';
-import 'package:myecl/loan/providers/loan_provider.dart';
-import 'package:myecl/loan/providers/loaner_loan_list_provider.dart';
-import 'package:myecl/loan/router.dart';
-import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/ui/loan.dart';
-import 'package:myecl/loan/ui/pages/admin_page/loan_card.dart';
-import 'package:myecl/tools/ui/widgets/admin_button.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/loan/class/loan.dart';
+import 'package:titan/loan/providers/admin_loan_list_provider.dart';
+import 'package:titan/loan/providers/is_loan_admin_provider.dart';
+import 'package:titan/loan/providers/item_list_provider.dart';
+import 'package:titan/loan/providers/loan_list_provider.dart';
+import 'package:titan/loan/providers/loan_provider.dart';
+import 'package:titan/loan/providers/loaner_loan_list_provider.dart';
+import 'package:titan/loan/router.dart';
+import 'package:titan/loan/tools/constants.dart';
+import 'package:titan/loan/ui/loan.dart';
+import 'package:titan/loan/ui/pages/admin_page/loan_card.dart';
+import 'package:titan/tools/ui/widgets/admin_button.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LoanMainPage extends HookConsumerWidget {
@@ -65,8 +65,9 @@ class LoanMainPage extends HookConsumerWidget {
                         children: [
                           AlignLeftText(
                             '${onGoingLoan.length} ${LoanTextConstants.loan.toLowerCase()}${onGoingLoan.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 30.0),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 30.0,
+                            ),
                             color: Colors.grey,
                           ),
                           const SizedBox(height: 30),
@@ -84,28 +85,28 @@ class LoanMainPage extends HookConsumerWidget {
                         ],
                       )
                     : (returnedLoan.isEmpty)
-                        ? SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.7,
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Center(
-                                    child: Text(
-                                      LoanTextConstants.noLoan,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey.shade300,
-                                      ),
-                                    ),
+                    ? SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Center(
+                                child: Text(
+                                  LoanTextConstants.noLoan,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey.shade300,
                                   ),
                                 ),
-                                const Spacer(),
-                              ],
+                              ),
                             ),
-                          )
-                        : Container(),
+                            const Spacer(),
+                          ],
+                        ),
+                      )
+                    : Container(),
                 if (returnedLoan.isNotEmpty)
                   Column(
                     children: [

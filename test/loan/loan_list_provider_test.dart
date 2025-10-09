@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/loan_list_provider.dart';
-import 'package:myecl/loan/repositories/loan_repository.dart';
+import 'package:titan/loan/class/loan.dart';
+import 'package:titan/loan/providers/loan_list_provider.dart';
+import 'package:titan/loan/repositories/loan_repository.dart';
 
 class MockLoanRepository extends Mock implements LoanRepository {}
 
@@ -56,8 +56,9 @@ void main() {
 
     test('deleteLoan returns true', () async {
       final loan = Loan.empty().copyWith(id: '1');
-      when(() => loanRepository.deleteLoan(loan.id))
-          .thenAnswer((_) async => true);
+      when(
+        () => loanRepository.deleteLoan(loan.id),
+      ).thenAnswer((_) async => true);
       loanListNotifier.state = AsyncValue.data([loan]);
       final result = await loanListNotifier.deleteLoan(loan);
 
@@ -66,8 +67,9 @@ void main() {
 
     test('returnLoan returns true', () async {
       final loan = Loan.empty().copyWith(id: '1');
-      when(() => loanRepository.returnLoan(loan.id))
-          .thenAnswer((_) async => true);
+      when(
+        () => loanRepository.returnLoan(loan.id),
+      ).thenAnswer((_) async => true);
       loanListNotifier.state = AsyncValue.data([loan]);
       final result = await loanListNotifier.returnLoan(loan);
 

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/recommendation/class/recommendation.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/recommendation/class/recommendation.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class RecommendationRepository extends Repository {
   @override
@@ -29,9 +29,9 @@ class RecommendationRepository extends Repository {
   }
 }
 
-final recommendationRepositoryProvider = Provider<RecommendationRepository>(
-  (ref) {
-    final token = ref.watch(tokenProvider);
-    return RecommendationRepository()..setToken(token);
-  },
-);
+final recommendationRepositoryProvider = Provider<RecommendationRepository>((
+  ref,
+) {
+  final token = ref.watch(tokenProvider);
+  return RecommendationRepository()..setToken(token);
+});

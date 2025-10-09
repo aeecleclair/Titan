@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/tools/winning_ticket_background_painter.dart';
-import 'package:myecl/raffle/tools/constants.dart';
+import 'package:titan/raffle/tools/winning_ticket_background_painter.dart';
+import 'package:titan/raffle/tools/constants.dart';
 
 class TicketCardBackground extends HookConsumerWidget {
   final bool isWinningTicket;

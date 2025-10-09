@@ -1,17 +1,17 @@
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/amap/class/order.dart';
-import 'package:myecl/amap/providers/order_provider.dart';
-import 'package:myecl/amap/providers/delivery_id_provider.dart';
-import 'package:myecl/amap/providers/user_order_list_provider.dart';
-import 'package:myecl/amap/providers/user_amount_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:titan/amap/class/order.dart';
+import 'package:titan/amap/providers/order_provider.dart';
+import 'package:titan/amap/providers/delivery_id_provider.dart';
+import 'package:titan/amap/providers/user_order_list_provider.dart';
+import 'package:titan/amap/providers/user_amount_provider.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ProductChoiceButton extends HookConsumerWidget {
@@ -52,8 +52,9 @@ class ProductChoiceButton extends HookConsumerWidget {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: AMAPColorConstants.greenGradient2
-                          .withValues(alpha: 0.4),
+                      color: AMAPColorConstants.greenGradient2.withValues(
+                        alpha: 0.4,
+                      ),
                       offset: const Offset(2, 3),
                       blurRadius: 5,
                     ),
@@ -82,8 +83,9 @@ class ProductChoiceButton extends HookConsumerWidget {
                         : await orderListNotifier.addOrder(newOrder);
                     if (value) {
                       QR.back();
-                      userAmountNotifier
-                          .updateCash(order.lastAmount - order.amount);
+                      userAmountNotifier.updateCash(
+                        order.lastAmount - order.amount,
+                      );
                       if (isEdit) {
                         displayToastWithContext(
                           TypeMsg.msg,
@@ -136,8 +138,9 @@ class ProductChoiceButton extends HookConsumerWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color:
-                        AMAPColorConstants.redGradient2.withValues(alpha: 0.4),
+                    color: AMAPColorConstants.redGradient2.withValues(
+                      alpha: 0.4,
+                    ),
                     offset: const Offset(2, 3),
                     blurRadius: 5,
                   ),

@@ -1,7 +1,1 @@
-enum AccountType {
-  student,
-  formerstudent,
-  staff,
-  admin,
-  association,
-}
+enum AccountType { student, formerstudent, staff, admin, association }

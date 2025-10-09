@@ -12,8 +12,9 @@ class TitanVersionNotifier extends StateNotifier<int> {
   }
 }
 
-final titanVersionProvider =
-    StateNotifierProvider<TitanVersionNotifier, int>((ref) {
+final titanVersionProvider = StateNotifierProvider<TitanVersionNotifier, int>((
+  ref,
+) {
   final notifier = TitanVersionNotifier();
   notifier.loadVersionFromStorage();
   return notifier;

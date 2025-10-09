@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/centralisation/class/section.dart';
-import 'package:myecl/centralisation/ui/pages/module_card.dart';
+import 'package:titan/centralisation/class/section.dart';
+import 'package:titan/centralisation/ui/pages/module_card.dart';
 
 class SectionList extends StatelessWidget {
   final Section section;
@@ -15,14 +15,9 @@ class SectionList extends StatelessWidget {
         children: [
           Text(
             section.name,
-            style: const TextStyle(
-              fontSize: 23,
-              fontWeight: FontWeight.w900,
-            ),
+            style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w900),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: section.moduleList

@@ -8,7 +8,8 @@ class ManagerIdNotifier extends StateNotifier<String> {
   }
 }
 
-final managerIdProvider =
-    StateNotifierProvider<ManagerIdNotifier, String>((ref) {
+final managerIdProvider = StateNotifierProvider<ManagerIdNotifier, String>((
+  ref,
+) {
   return ManagerIdNotifier();
 });

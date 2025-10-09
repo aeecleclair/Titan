@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
+import 'package:titan/loan/class/item.dart';
 
 class CautionNotifier extends StateNotifier<TextEditingController> {
   CautionNotifier() : super(TextEditingController());
@@ -8,8 +8,9 @@ class CautionNotifier extends StateNotifier<TextEditingController> {
   void setCaution(String caution) {
     state.value = state.value.copyWith(
       text: caution,
-      selection:
-          TextSelection.fromPosition(TextPosition(offset: caution.length)),
+      selection: TextSelection.fromPosition(
+        TextPosition(offset: caution.length),
+      ),
     );
   }
 
@@ -21,13 +22,14 @@ class CautionNotifier extends StateNotifier<TextEditingController> {
     final caution = "${total.toStringAsFixed(2)} €";
     state.value = state.value.copyWith(
       text: caution,
-      selection:
-          TextSelection.fromPosition(TextPosition(offset: caution.length)),
+      selection: TextSelection.fromPosition(
+        TextPosition(offset: caution.length),
+      ),
     );
   }
 }
 
 final cautionProvider =
     StateNotifierProvider<CautionNotifier, TextEditingController>((ref) {
-  return CautionNotifier();
-});
+      return CautionNotifier();
+    });

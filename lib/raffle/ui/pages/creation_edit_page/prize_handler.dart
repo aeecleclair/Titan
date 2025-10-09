@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/prize.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
-import 'package:myecl/raffle/class/tickets.dart';
-import 'package:myecl/raffle/providers/prize_list_provider.dart';
-import 'package:myecl/raffle/providers/prize_provider.dart';
-import 'package:myecl/raffle/providers/raffle_provider.dart';
-import 'package:myecl/raffle/providers/winning_ticket_list_provider.dart';
-import 'package:myecl/raffle/router.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/pages/creation_edit_page/prize_card.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:titan/raffle/class/prize.dart';
+import 'package:titan/raffle/class/raffle_status_type.dart';
+import 'package:titan/raffle/class/tickets.dart';
+import 'package:titan/raffle/providers/prize_list_provider.dart';
+import 'package:titan/raffle/providers/prize_provider.dart';
+import 'package:titan/raffle/providers/raffle_provider.dart';
+import 'package:titan/raffle/providers/winning_ticket_list_provider.dart';
+import 'package:titan/raffle/router.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/raffle/ui/pages/creation_edit_page/prize_card.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PrizeHandler extends HookConsumerWidget {
@@ -25,8 +25,9 @@ class PrizeHandler extends HookConsumerWidget {
     final prizeNotifier = ref.watch(prizeProvider.notifier);
     final prizesNotifier = ref.watch(prizeListProvider.notifier);
     final prizeList = ref.watch(prizeListProvider);
-    final winningTicketListNotifier =
-        ref.watch(winningTicketListProvider.notifier);
+    final winningTicketListNotifier = ref.watch(
+      winningTicketListProvider.notifier,
+    );
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -50,9 +51,7 @@ class PrizeHandler extends HookConsumerWidget {
                       color: RaffleColorConstants.textDark,
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   ListView.builder(
                     shrinkWrap: true,
                     itemCount: winningTickets.length,
@@ -94,17 +93,13 @@ class PrizeHandler extends HookConsumerWidget {
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
           child: Row(
             children: [
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               if (raffle.raffleStatusType == RaffleStatusType.creation)
                 GestureDetector(
                   onTap: () {
@@ -124,18 +119,16 @@ class PrizeHandler extends HookConsumerWidget {
                       height: 125,
                       decoration: BoxDecoration(
                         gradient: const RadialGradient(
-                          colors: [
-                            Color(0xff0193a5),
-                            Color(0xff004a59),
-                          ],
+                          colors: [Color(0xff0193a5), Color(0xff004a59)],
                           center: Alignment.topLeft,
                           radius: 1.2,
                         ),
                         borderRadius: BorderRadius.circular(30),
                         boxShadow: [
                           BoxShadow(
-                            color: RaffleColorConstants.textDark
-                                .withValues(alpha: 0.2),
+                            color: RaffleColorConstants.textDark.withValues(
+                              alpha: 0.2,
+                            ),
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(3, 3),
@@ -160,9 +153,7 @@ class PrizeHandler extends HookConsumerWidget {
                   return lots.isEmpty
                       ? const SizedBox(
                           height: 150,
-                          child: Center(
-                            child: Text("Aucun Lot"),
-                          ),
+                          child: Center(child: Text("Aucun Lot")),
                         )
                       : Row(
                           children: lots
@@ -223,10 +214,8 @@ class PrizeHandler extends HookConsumerWidget {
                                               data: (winningTicketList) {
                                                 prizesNotifier
                                                     .setPrizeQuantityToZero(
-                                                  e.copyWith(
-                                                    quantity: 0,
-                                                  ),
-                                                );
+                                                      e.copyWith(quantity: 0),
+                                                    );
                                                 displayWinningsDialog(
                                                   winningTicketList,
                                                 );
@@ -251,25 +240,17 @@ class PrizeHandler extends HookConsumerWidget {
                         );
                 },
                 error: (Object error, StackTrace stackTrace) {
-                  return Center(
-                    child: Text("error : $error"),
-                  );
+                  return Center(child: Text("error : $error"));
                 },
                 loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return const Center(child: CircularProgressIndicator());
                 },
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
             ],
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
       ],
     );
   }

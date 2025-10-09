@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/booking/providers/selected_days_provider.dart';
+import 'package:titan/booking/providers/selected_days_provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 void main() {

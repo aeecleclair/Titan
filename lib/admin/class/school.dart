@@ -1,11 +1,7 @@
-import 'package:myecl/admin/tools/function.dart';
+import 'package:titan/admin/tools/function.dart';
 
 class School {
-  School({
-    required this.name,
-    required this.id,
-    required this.emailRegex,
-  });
+  School({required this.name, required this.id, required this.emailRegex});
   late final String name;
   late final String id;
   late final String emailRegex;
@@ -24,16 +20,11 @@ class School {
     return data;
   }
 
-  School copyWith({
-    String? name,
-    String? id,
-    String? emailRegex,
-  }) =>
-      School(
-        name: name ?? this.name,
-        id: id ?? this.id,
-        emailRegex: emailRegex ?? this.emailRegex,
-      );
+  School copyWith({String? name, String? id, String? emailRegex}) => School(
+    name: name ?? this.name,
+    id: id ?? this.id,
+    emailRegex: emailRegex ?? this.emailRegex,
+  );
 
   School.empty() {
     name = 'Nom';

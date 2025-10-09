@@ -6,19 +6,23 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:myecl/login/providers/animation_provider.dart';
+import 'package:titan/login/providers/animation_provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:myecl/drawer/providers/animation_provider.dart';
-import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/drawer/providers/top_bar_callback_provider.dart';
+import 'package:titan/drawer/providers/animation_provider.dart';
+import 'package:titan/drawer/providers/swipe_provider.dart';
+import 'package:titan/drawer/providers/top_bar_callback_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/router.dart';
-import 'package:myecl/service/tools/setup.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/plausible/plausible_observer.dart';
-import 'package:myecl/tools/ui/layouts/app_template.dart';
+import 'package:titan/router.dart';
+import 'package:titan/service/tools/setup.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/plausible/plausible_observer.dart';
+import 'package:titan/tools/providers/path_forwarding_provider.dart';
+import 'package:titan/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:qlevar_router/qlevar_router.dart' as qqr;
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:app_links/app_links.dart';
 
 void main() async {
   await dotenv.load();
@@ -34,7 +38,9 @@ void main() async {
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   }
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(const ProviderScope(child: MyApp()));
+  timeago.setLocaleMessages('fr', timeago.FrMessages());
+  timeago.setLocaleMessages('fr_short', timeago.FrShortMessages());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends HookConsumerWidget {
@@ -43,12 +49,46 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(appRouterProvider);
-    final animationController =
-        useAnimationController(duration: const Duration(seconds: 2));
+    final animationController = useAnimationController(
+      duration: const Duration(seconds: 2),
+    );
     final animationNotifier = ref.read(backgroundAnimationProvider.notifier);
     final navigatorKey = GlobalKey<NavigatorState>();
     final plausible = getPlausible();
+    final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     Future(() => animationNotifier.setController(animationController));
+
+    if (!kIsWeb) {
+      useEffect(() {
+        final appLinks = AppLinks();
+
+        Future<void> initDeepLinks() async {
+          try {
+            appLinks.uriLinkStream.listen((Uri? uri) {
+              if (uri != null) {
+                final Map<String, String> queryParams = uri.queryParameters;
+
+                final newPath = "/${uri.host}";
+                pathForwardingNotifier.forward(
+                  newPath,
+                  queryParameters: queryParams,
+                );
+                QR.toName(newPath);
+              }
+            });
+          } catch (err) {
+            displayToast(
+              context,
+              TypeMsg.error,
+              "Failed to listen to deep link: $err",
+            );
+          }
+        }
+
+        initDeepLinks();
+        return null;
+      }, []);
+    }
 
     final popScope = PopScope(
       canPop: false,
@@ -61,8 +101,9 @@ class MyApp extends HookConsumerWidget {
             if (controller.isCompleted) {
               SystemChannels.platform.invokeMethod('SystemNavigator.pop');
             } else {
-              final controllerNotifier =
-                  ref.watch(swipeControllerProvider(animation).notifier);
+              final controllerNotifier = ref.watch(
+                swipeControllerProvider(animation).notifier,
+              );
               controllerNotifier.toggle();
               topBarCallBack.onMenu?.call();
             }
@@ -102,15 +143,7 @@ class MyApp extends HookConsumerWidget {
         ),
       ),
     );
-
-    if (kIsWeb) {
-      return popScope;
-    }
-    return MaterialApp(
-      initialRoute: '/',
-      debugShowCheckedModeBanner: false,
-      home: popScope,
-    );
+    return popScope;
   }
 }
 
@@ -118,10 +151,10 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
   // Override behavior methods and getters like dragDevices
   @override
   Set<PointerDeviceKind> get dragDevices => {
-        PointerDeviceKind.touch,
-        PointerDeviceKind.mouse,
-        PointerDeviceKind.trackpad,
-        PointerDeviceKind.stylus,
-        PointerDeviceKind.invertedStylus,
-      };
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.trackpad,
+    PointerDeviceKind.stylus,
+    PointerDeviceKind.invertedStylus,
+  };
 }

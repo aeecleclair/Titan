@@ -1,5 +1,5 @@
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class UserTicket extends SimpleUser {
   UserTicket({
@@ -27,8 +27,9 @@ class UserTicket extends SimpleUser {
     final users = super.toJson();
     users['promo'] = promo;
     users['floor'] = floor;
-    users['created_on'] =
-        createdOn != null ? processDateToAPI(createdOn!) : null;
+    users['created_on'] = createdOn != null
+        ? processDateToAPI(createdOn!)
+        : null;
     return users;
   }
 

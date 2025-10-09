@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/class/item_quantity.dart';
-import 'package:myecl/loan/class/item_simple.dart';
-import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/class/loaner.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:titan/admin/class/account_type.dart';
+import 'package:titan/loan/class/item.dart';
+import 'package:titan/loan/class/item_quantity.dart';
+import 'package:titan/loan/class/item_simple.dart';
+import 'package:titan/loan/class/loan.dart';
+import 'package:titan/loan/class/loaner.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 void main() {
   group('Testing Item class', () {
@@ -33,25 +33,17 @@ void main() {
 
     test('Should update with new values', () {
       final item = Item.empty();
-      Item newItem = item.copyWith(
-        id: '2',
-      );
+      Item newItem = item.copyWith(id: '2');
       expect(newItem.id, '2');
-      newItem = item.copyWith(
-        name: 'name2',
-      );
+      newItem = item.copyWith(name: 'name2');
       expect(newItem.name, 'name2');
-      newItem = item.copyWith(
-        caution: 2,
-      );
+      newItem = item.copyWith(caution: 2);
       expect(newItem.caution, 2);
       newItem = item.copyWith(totalQuantity: 1);
       expect(newItem.totalQuantity, 1);
       newItem = item.copyWith(loanedQuantity: 1);
       expect(newItem.loanedQuantity, 1);
-      newItem = item.copyWith(
-        suggestedLendingDuration: 2,
-      );
+      newItem = item.copyWith(suggestedLendingDuration: 2);
       expect(newItem.suggestedLendingDuration, 2.0);
     });
 
@@ -144,9 +136,7 @@ void main() {
 
     test('Should update with new values', () {
       final loan = Loan.empty();
-      Loan newLoan = loan.copyWith(
-        id: '2',
-      );
+      Loan newLoan = loan.copyWith(id: '2');
       expect(newLoan.id, '2');
       newLoan = loan.copyWith(
         itemsQuantity: [
@@ -167,39 +157,21 @@ void main() {
         ),
       );
       expect(newLoan.borrower.id, '2');
-      newLoan = loan.copyWith(
-        returned: false,
-      );
+      newLoan = loan.copyWith(returned: false);
       expect(newLoan.returned, false);
-      newLoan = loan.copyWith(
-        caution: '2',
-      );
+      newLoan = loan.copyWith(caution: '2');
       expect(newLoan.caution, '2');
-      newLoan = loan.copyWith(
-        end: DateTime.parse('2020-01-01'),
-      );
+      newLoan = loan.copyWith(end: DateTime.parse('2020-01-01'));
       expect(newLoan.end, DateTime.parse('2020-01-01'));
       newLoan = loan.copyWith(
-        loaner: Loaner(
-          id: '2',
-          name: 'name2',
-          groupManagerId: '',
-        ),
+        loaner: Loaner(id: '2', name: 'name2', groupManagerId: ''),
       );
       expect(newLoan.loaner.id, '2');
-      newLoan = loan.copyWith(
-        notes: 'notes',
-      );
+      newLoan = loan.copyWith(notes: 'notes');
       expect(newLoan.notes, 'notes');
-      newLoan = loan.copyWith(
-        start: DateTime.parse('2020-01-01'),
-      );
+      newLoan = loan.copyWith(start: DateTime.parse('2020-01-01'));
       expect(newLoan.start, DateTime.parse('2020-01-01'));
-      newLoan = loan.copyWith(
-        borrower: SimpleUser.empty().copyWith(
-          id: '2',
-        ),
-      );
+      newLoan = loan.copyWith(borrower: SimpleUser.empty().copyWith(id: '2'));
       expect(newLoan.borrower.id, '2');
     });
 
@@ -247,7 +219,7 @@ void main() {
               'suggested_lending_duration': 1.0,
             },
             'quantity': 2,
-          }
+          },
         ],
         'borrower': {
           'id': '1',
@@ -259,11 +231,7 @@ void main() {
         'returned': true,
         'caution': '',
         'end': DateTime.now().toString(),
-        'loaner': {
-          'id': '',
-          'name': '',
-          'group_manager_id': '',
-        },
+        'loaner': {'id': '', 'name': '', 'group_manager_id': ''},
         'notes': '',
         'start': DateTime.now().toString(),
       });
@@ -318,11 +286,7 @@ void main() {
 
   group('Testing Loaner class', () {
     test('Should create a loaner', () {
-      final loaner = Loaner(
-        id: '1',
-        name: 'name',
-        groupManagerId: '1',
-      );
+      final loaner = Loaner(id: '1', name: 'name', groupManagerId: '1');
       expect(loaner.id, '1');
       expect(loaner.name, 'name');
       expect(loaner.groupManagerId, '1');
@@ -337,26 +301,16 @@ void main() {
 
     test('Should update with new values', () {
       final loaner = Loaner.empty();
-      Loaner newLoaner = loaner.copyWith(
-        id: '2',
-      );
+      Loaner newLoaner = loaner.copyWith(id: '2');
       expect(newLoaner.id, '2');
-      newLoaner = loaner.copyWith(
-        name: 'name2',
-      );
+      newLoaner = loaner.copyWith(name: 'name2');
       expect(newLoaner.name, 'name2');
-      newLoaner = loaner.copyWith(
-        groupManagerId: '2',
-      );
+      newLoaner = loaner.copyWith(groupManagerId: '2');
       expect(newLoaner.groupManagerId, '2');
     });
 
     test('Should print properly', () {
-      final loaner = Loaner(
-        id: '1',
-        name: 'name',
-        groupManagerId: '1',
-      );
+      final loaner = Loaner(id: '1', name: 'name', groupManagerId: '1');
       expect(loaner.toString(), 'Loaner(name: name, groupManagerId: 1, id: 1)');
     });
 
@@ -372,11 +326,7 @@ void main() {
     });
 
     test('Should return correct json', () {
-      final loaner = Loaner(
-        id: '1',
-        name: 'name',
-        groupManagerId: '1',
-      );
+      final loaner = Loaner(id: '1', name: 'name', groupManagerId: '1');
       expect(loaner.toJson(), {
         'id': '1',
         'name': 'name',

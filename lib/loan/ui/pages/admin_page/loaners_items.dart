@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/item.dart';
-import 'package:myecl/loan/providers/item_focus_provider.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/item_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/providers/loaners_items_provider.dart';
-import 'package:myecl/loan/router.dart';
-import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/ui/pages/admin_page/item_card.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
+import 'package:titan/loan/class/item.dart';
+import 'package:titan/loan/providers/item_focus_provider.dart';
+import 'package:titan/loan/providers/item_list_provider.dart';
+import 'package:titan/loan/providers/item_provider.dart';
+import 'package:titan/loan/providers/loaner_provider.dart';
+import 'package:titan/loan/providers/loaners_items_provider.dart';
+import 'package:titan/loan/router.dart';
+import 'package:titan/loan/tools/constants.dart';
+import 'package:titan/loan/ui/pages/admin_page/item_card.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LoanersItems extends HookConsumerWidget {
@@ -43,9 +43,7 @@ class LoanersItems extends HookConsumerWidget {
 
     final item = loanersItems[loaner];
     if (item == null) {
-      return const Center(
-        child: Text(LoanTextConstants.noItems),
-      );
+      return const Center(child: Text(LoanTextConstants.noItems));
     }
     return AsyncChild(
       value: item,
@@ -102,14 +100,13 @@ class LoanersItems extends HookConsumerWidget {
                         descriptions: LoanTextConstants.deletingItem,
                         onYes: () {
                           tokenExpireWrapper(ref, () async {
-                            final value =
-                                await itemListNotifier.deleteItem(e, loaner.id);
+                            final value = await itemListNotifier.deleteItem(
+                              e,
+                              loaner.id,
+                            );
                             if (value) {
                               itemListNotifier.copy().then((value) {
-                                loanersItemsNotifier.setTData(
-                                  loaner,
-                                  value,
-                                );
+                                loanersItemsNotifier.setTData(loaner, value);
                               });
                               displayToastWithContext(
                                 TypeMsg.msg,

@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/contender_list_provider.dart';
-import 'package:myecl/vote/repositories/contender_repository.dart';
+import 'package:titan/vote/class/contender.dart';
+import 'package:titan/vote/providers/contender_list_provider.dart';
+import 'package:titan/vote/repositories/contender_repository.dart';
 
 class MockContenderRepository extends Mock implements ContenderRepository {}
 
@@ -19,15 +19,25 @@ void main() {
 
     test('loadContenderList', () async {
       final contenders = [
-        Contender.empty()
-            .copyWith(id: '1', name: 'Contender 1', listType: ListType.fake),
-        Contender.empty()
-            .copyWith(id: '2', name: 'Contender 2', listType: ListType.serious),
-        Contender.empty()
-            .copyWith(id: '3', name: 'Contender 3', listType: ListType.blank),
+        Contender.empty().copyWith(
+          id: '1',
+          name: 'Contender 1',
+          listType: ListType.fake,
+        ),
+        Contender.empty().copyWith(
+          id: '2',
+          name: 'Contender 2',
+          listType: ListType.serious,
+        ),
+        Contender.empty().copyWith(
+          id: '3',
+          name: 'Contender 3',
+          listType: ListType.blank,
+        ),
       ];
-      when(() => contenderListNotifier.contenderRepository.getContenders())
-          .thenAnswer((_) async => contenders);
+      when(
+        () => contenderListNotifier.contenderRepository.getContenders(),
+      ).thenAnswer((_) async => contenders);
       await contenderListNotifier.loadContenderList();
       expect(
         contenderListNotifier.state.when(
@@ -41,18 +51,31 @@ void main() {
 
     test('addContender', () async {
       final contenders = [
-        Contender.empty()
-            .copyWith(id: '1', name: 'Contender 1', listType: ListType.fake),
-        Contender.empty()
-            .copyWith(id: '2', name: 'Contender 2', listType: ListType.serious),
-        Contender.empty()
-            .copyWith(id: '3', name: 'Contender 3', listType: ListType.blank),
+        Contender.empty().copyWith(
+          id: '1',
+          name: 'Contender 1',
+          listType: ListType.fake,
+        ),
+        Contender.empty().copyWith(
+          id: '2',
+          name: 'Contender 2',
+          listType: ListType.serious,
+        ),
+        Contender.empty().copyWith(
+          id: '3',
+          name: 'Contender 3',
+          listType: ListType.blank,
+        ),
       ];
-      final newContender = Contender.empty()
-          .copyWith(id: '4', name: 'Contender 4', listType: ListType.serious);
+      final newContender = Contender.empty().copyWith(
+        id: '4',
+        name: 'Contender 4',
+        listType: ListType.serious,
+      );
       when(
-        () => contenderListNotifier.contenderRepository
-            .createContender(newContender),
+        () => contenderListNotifier.contenderRepository.createContender(
+          newContender,
+        ),
       ).thenAnswer((_) async => newContender);
       contenderListNotifier.state = AsyncValue.data(contenders.sublist(0));
       await contenderListNotifier.addContender(newContender);
@@ -69,12 +92,21 @@ void main() {
 
     test('updateContender', () async {
       final contenders = [
-        Contender.empty()
-            .copyWith(id: '1', name: 'Contender 1', listType: ListType.serious),
-        Contender.empty()
-            .copyWith(id: '2', name: 'Contender 2', listType: ListType.fake),
-        Contender.empty()
-            .copyWith(id: '3', name: 'Contender 3', listType: ListType.blank),
+        Contender.empty().copyWith(
+          id: '1',
+          name: 'Contender 1',
+          listType: ListType.serious,
+        ),
+        Contender.empty().copyWith(
+          id: '2',
+          name: 'Contender 2',
+          listType: ListType.fake,
+        ),
+        Contender.empty().copyWith(
+          id: '3',
+          name: 'Contender 3',
+          listType: ListType.blank,
+        ),
       ];
       final updatedContender = Contender.empty().copyWith(
         id: '2',
@@ -82,8 +114,9 @@ void main() {
         listType: ListType.fake,
       );
       when(
-        () => contenderListNotifier.contenderRepository
-            .updateContender(updatedContender),
+        () => contenderListNotifier.contenderRepository.updateContender(
+          updatedContender,
+        ),
       ).thenAnswer((_) async => true);
       contenderListNotifier.state = AsyncValue.data(contenders);
       await contenderListNotifier.updateContender(updatedContender);
@@ -106,18 +139,31 @@ void main() {
 
     test('deleteContender', () async {
       final contenders = [
-        Contender.empty()
-            .copyWith(id: '1', name: 'Contender 1', listType: ListType.serious),
-        Contender.empty()
-            .copyWith(id: '2', name: 'Contender 2', listType: ListType.fake),
-        Contender.empty()
-            .copyWith(id: '3', name: 'Contender 3', listType: ListType.blank),
+        Contender.empty().copyWith(
+          id: '1',
+          name: 'Contender 1',
+          listType: ListType.serious,
+        ),
+        Contender.empty().copyWith(
+          id: '2',
+          name: 'Contender 2',
+          listType: ListType.fake,
+        ),
+        Contender.empty().copyWith(
+          id: '3',
+          name: 'Contender 3',
+          listType: ListType.blank,
+        ),
       ];
-      final deletedContender = Contender.empty()
-          .copyWith(id: '2', name: 'Contender 2', listType: ListType.fake);
+      final deletedContender = Contender.empty().copyWith(
+        id: '2',
+        name: 'Contender 2',
+        listType: ListType.fake,
+      );
       when(
-        () => contenderListNotifier.contenderRepository
-            .deleteContender(deletedContender.id),
+        () => contenderListNotifier.contenderRepository.deleteContender(
+          deletedContender.id,
+        ),
       ).thenAnswer((_) async => true);
       contenderListNotifier.state = AsyncValue.data(contenders);
       await contenderListNotifier.deleteContender(deletedContender);
@@ -136,12 +182,21 @@ void main() {
 
     test('copy', () async {
       final contenders = [
-        Contender.empty()
-            .copyWith(id: '1', name: 'Contender 1', listType: ListType.serious),
-        Contender.empty()
-            .copyWith(id: '2', name: 'Contender 2', listType: ListType.fake),
-        Contender.empty()
-            .copyWith(id: '3', name: 'Contender 3', listType: ListType.blank),
+        Contender.empty().copyWith(
+          id: '1',
+          name: 'Contender 1',
+          listType: ListType.serious,
+        ),
+        Contender.empty().copyWith(
+          id: '2',
+          name: 'Contender 2',
+          listType: ListType.fake,
+        ),
+        Contender.empty().copyWith(
+          id: '3',
+          name: 'Contender 3',
+          listType: ListType.blank,
+        ),
       ];
       contenderListNotifier.state = AsyncValue.data(contenders);
       final result = await contenderListNotifier.copy();
@@ -158,12 +213,21 @@ void main() {
 
     test('should shuffle serious, fake, and blank lists', () {
       final contenders = [
-        Contender.empty()
-            .copyWith(id: '1', name: 'Contender 1', listType: ListType.serious),
-        Contender.empty()
-            .copyWith(id: '2', name: 'Contender 2', listType: ListType.fake),
-        Contender.empty()
-            .copyWith(id: '3', name: 'Contender 3', listType: ListType.blank),
+        Contender.empty().copyWith(
+          id: '1',
+          name: 'Contender 1',
+          listType: ListType.serious,
+        ),
+        Contender.empty().copyWith(
+          id: '2',
+          name: 'Contender 2',
+          listType: ListType.fake,
+        ),
+        Contender.empty().copyWith(
+          id: '3',
+          name: 'Contender 3',
+          listType: ListType.blank,
+        ),
       ];
 
       contenderListNotifier.state = AsyncValue.data(contenders);

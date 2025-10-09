@@ -6,12 +6,9 @@ class Log {
   final DateTime time;
 
   Log({required this.message, required this.level, DateTime? time})
-      : time = time ?? DateTime.now();
+    : time = time ?? DateTime.now();
 
-  Log.empty()
-      : message = "",
-        level = LogLevel.debug,
-        time = DateTime.now();
+  Log.empty() : message = "", level = LogLevel.debug, time = DateTime.now();
 
   Log copyWith({String? message, LogLevel? level, DateTime? time}) {
     return Log(

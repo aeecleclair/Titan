@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/providers/product_id_provider.dart';
-import 'package:myecl/purchases/providers/scanned_users_list_provider.dart';
-import 'package:myecl/purchases/providers/seller_provider.dart';
-import 'package:myecl/purchases/providers/tag_list_provider.dart';
-import 'package:myecl/purchases/providers/ticket_id_provider.dart';
-import 'package:myecl/purchases/ui/purchases.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/purchases/providers/product_id_provider.dart';
+import 'package:titan/purchases/providers/scanned_users_list_provider.dart';
+import 'package:titan/purchases/providers/seller_provider.dart';
+import 'package:titan/purchases/providers/tag_list_provider.dart';
+import 'package:titan/purchases/providers/ticket_id_provider.dart';
+import 'package:titan/purchases/ui/purchases.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/tools/ui/layouts/item_chip.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 
 class UserListPage extends HookConsumerWidget {
   const UserListPage({super.key});
@@ -24,8 +24,9 @@ class UserListPage extends HookConsumerWidget {
     final tagList = ref.watch(tagListProvider);
     final tagListNotifier = ref.read(tagListProvider.notifier);
     final scannedUsersList = ref.watch(scannedUsersListProvider);
-    final scannedUsersListNotifier =
-        ref.read(scannedUsersListProvider.notifier);
+    final scannedUsersListNotifier = ref.read(
+      scannedUsersListProvider.notifier,
+    );
     final selectedTag = useState<String?>(null);
     return PurchasesTemplate(
       child: Refresher(
@@ -36,11 +37,7 @@ class UserListPage extends HookConsumerWidget {
               ticketId.maybeWhen(
                 orElse: () {},
                 data: (ticketId) {
-                  tagListNotifier.loadTags(
-                    seller.id,
-                    id,
-                    ticketId,
-                  );
+                  tagListNotifier.loadTags(seller.id, id, ticketId);
                 },
               );
             },
@@ -53,9 +50,7 @@ class UserListPage extends HookConsumerWidget {
               value: tagList,
               builder: (context, tags) {
                 if (tags.isEmpty) {
-                  return const Center(
-                    child: Text("Aucun tag disponible"),
-                  );
+                  return const Center(child: Text("Aucun tag disponible"));
                 }
 
                 return HorizontalListView.builder(
@@ -117,9 +112,7 @@ class UserListPage extends HookConsumerWidget {
                                 vertical: 5,
                                 horizontal: 30,
                               ),
-                              child: Text(
-                                user.getName(),
-                              ),
+                              child: Text(user.getName()),
                             ),
                           )
                           .toList(),

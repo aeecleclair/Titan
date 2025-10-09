@@ -1,9 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/service/class/topic.dart';
-import 'package:myecl/service/repositories/notification_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/service/class/topic.dart';
+import 'package:titan/service/repositories/notification_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class TopicsProvider extends ListNotifier<Topic> {
   final NotificationRepository notificationRepository =
@@ -82,10 +82,10 @@ class TopicsProvider extends ListNotifier<Topic> {
 
 final topicsProvider =
     StateNotifierProvider<TopicsProvider, AsyncValue<List<Topic>>>((ref) {
-  final token = ref.watch(tokenProvider);
-  TopicsProvider notifier = TopicsProvider(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    notifier.getTopics();
-  });
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      TopicsProvider notifier = TopicsProvider(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        notifier.getTopics();
+      });
+      return notifier;
+    });

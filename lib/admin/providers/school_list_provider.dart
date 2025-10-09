@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/admin/class/school.dart';
-import 'package:myecl/admin/repositories/school_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/admin/class/school.dart';
+import 'package:titan/admin/repositories/school_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class SchoolListNotifier extends ListNotifier<School> {
   final SchoolRepository schoolRepository;
   SchoolListNotifier({required this.schoolRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<School>>> loadSchools() async {
     return await loadList(schoolRepository.getSchoolList);
@@ -36,24 +36,23 @@ class SchoolListNotifier extends ListNotifier<School> {
   }
 
   void setSchool(School school) {
-    state.whenData(
-      (d) {
-        if (d.indexWhere((g) => g.id == school.id) == -1) return;
-        state = AsyncValue.data(
-          d..[d.indexWhere((g) => g.id == school.id)] = school,
-        );
-      },
-    );
+    state.whenData((d) {
+      if (d.indexWhere((g) => g.id == school.id) == -1) return;
+      state = AsyncValue.data(
+        d..[d.indexWhere((g) => g.id == school.id)] = school,
+      );
+    });
   }
 }
 
 final allSchoolListProvider =
     StateNotifierProvider<SchoolListNotifier, AsyncValue<List<School>>>((ref) {
-  final schoolRepository = ref.watch(schoolRepositoryProvider);
-  SchoolListNotifier provider =
-      SchoolListNotifier(schoolRepository: schoolRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadSchools();
-  });
-  return provider;
-});
+      final schoolRepository = ref.watch(schoolRepositoryProvider);
+      SchoolListNotifier provider = SchoolListNotifier(
+        schoolRepository: schoolRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        await provider.loadSchools();
+      });
+      return provider;
+    });

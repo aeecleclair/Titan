@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/is_connected_provider.dart';
-import 'package:myecl/home/router.dart';
-import 'package:myecl/others/tools/constants.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:titan/auth/providers/is_connected_provider.dart';
+import 'package:titan/home/router.dart';
+import 'package:titan/others/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class NoInternetPage extends HookConsumerWidget {
@@ -22,13 +22,8 @@ class NoInternetPage extends HookConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const HeroIcon(
-                HeroIcons.signalSlash,
-                size: 150,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              const HeroIcon(HeroIcons.signalSlash, size: 150),
+              const SizedBox(height: 20),
               const Center(
                 child: Text(
                   OthersTextConstants.unableToConnectToServer,
@@ -36,17 +31,11 @@ class NoInternetPage extends HookConsumerWidget {
                   style: TextStyle(fontSize: 20),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               const Center(
-                child: Text(
-                  OthersTextConstants.checkInternetConnection,
-                ),
+                child: Text(OthersTextConstants.checkInternetConnection),
               ),
-              const SizedBox(
-                height: 40,
-              ),
+              const SizedBox(height: 40),
               GestureDetector(
                 onTap: () async {
                   isConnectedNotifier.isInternet();

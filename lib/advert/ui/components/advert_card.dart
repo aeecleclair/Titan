@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/advert/class/advert.dart';
-import 'package:myecl/advert/providers/advert_poster_provider.dart';
-import 'package:myecl/advert/providers/advert_posters_provider.dart';
-import 'package:myecl/advert/tools/constants.dart';
-import 'package:myecl/cinema/tools/functions.dart';
-import 'package:myecl/drawer/providers/is_web_format_provider.dart';
-import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
-import 'package:myecl/tools/ui/widgets/text_with_hyper_link.dart';
+import 'package:titan/advert/class/advert.dart';
+import 'package:titan/advert/providers/advert_poster_provider.dart';
+import 'package:titan/advert/providers/advert_posters_provider.dart';
+import 'package:titan/advert/tools/constants.dart';
+import 'package:titan/cinema/tools/functions.dart';
+import 'package:titan/drawer/providers/is_web_format_provider.dart';
+import 'package:titan/tools/ui/builders/auto_loader_child.dart';
+import 'package:titan/tools/ui/widgets/text_with_hyper_link.dart';
 
 class AdvertCard extends HookConsumerWidget {
   final VoidCallback onTap;
@@ -59,10 +59,8 @@ class AdvertCard extends HookConsumerWidget {
                           mapKey: advert.id,
                           loader: (advertId) =>
                               posterNotifier.getAdvertPoster(advertId),
-                          loadingBuilder: (context) => HeroIcon(
-                            HeroIcons.photo,
-                            size: width,
-                          ),
+                          loadingBuilder: (context) =>
+                              HeroIcon(HeroIcons.photo, size: width),
                           dataBuilder: (context, value) => Image(
                             image: value.first.image,
                             fit: BoxFit.cover, // use this
@@ -70,9 +68,7 @@ class AdvertCard extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 50,
-                    ),
+                    const SizedBox(width: 50),
                     Expanded(
                       child: Column(
                         children: [
@@ -86,37 +82,27 @@ class AdvertCard extends HookConsumerWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
+                          const SizedBox(height: 10),
                           AutoSizeText(
                             formatDate(advert.date),
                             maxLines: 1,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
+                            style: const TextStyle(fontSize: 16),
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
+                          const SizedBox(height: 10),
                           Expanded(
                             child: SingleChildScrollView(
                               child: TextWithHyperLink(
                                 advert.content,
                                 textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                ),
+                                style: const TextStyle(fontSize: 16),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      width: 50,
-                    ),
+                    const SizedBox(width: 50),
                   ],
                 ),
               )
@@ -155,10 +141,7 @@ class AdvertCard extends HookConsumerWidget {
                                 topRight: Radius.circular(20),
                               ),
                             ),
-                            child: HeroIcon(
-                              HeroIcons.photo,
-                              size: width,
-                            ),
+                            child: HeroIcon(HeroIcons.photo, size: width),
                           ),
                           dataBuilder: (context, value) => Container(
                             width: width,
@@ -227,8 +210,9 @@ class AdvertCard extends HookConsumerWidget {
                       left: 15,
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(8)),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(8),
+                          ),
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 5,
@@ -239,8 +223,9 @@ class AdvertCard extends HookConsumerWidget {
                           ],
                         ),
                         child: ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(8)),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(8),
+                          ),
                           child: Container(
                             color: Colors.white,
                             height: 50,
@@ -287,8 +272,9 @@ class AdvertCard extends HookConsumerWidget {
                       right: 15,
                       child: Container(
                         decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(8)),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(8),
+                          ),
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 5,
@@ -299,8 +285,9 @@ class AdvertCard extends HookConsumerWidget {
                           ],
                         ),
                         child: ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(8)),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(8),
+                          ),
                           child: Container(
                             color: Colors.white,
                             height: 30,

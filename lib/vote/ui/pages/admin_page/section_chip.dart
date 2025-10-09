@@ -40,11 +40,7 @@ class SectionChip extends StatelessWidget {
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: onDelete,
-                  child: const Icon(
-                    Icons.close,
-                    color: Colors.white,
-                    size: 20,
-                  ),
+                  child: const Icon(Icons.close, color: Colors.white, size: 20),
                 ),
               ),
           ],

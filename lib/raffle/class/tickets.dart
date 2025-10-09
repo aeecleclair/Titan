@@ -1,6 +1,6 @@
-import 'package:myecl/raffle/class/pack_ticket.dart';
-import 'package:myecl/raffle/class/prize.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:titan/raffle/class/pack_ticket.dart';
+import 'package:titan/raffle/class/prize.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class Ticket {
   Ticket({
@@ -35,13 +35,12 @@ class Ticket {
     SimpleUser? user,
     Prize? lot,
     String? id,
-  }) =>
-      Ticket(
-        packTicket: packTicket ?? this.packTicket,
-        user: user ?? this.user,
-        prize: lot,
-        id: id ?? this.id,
-      );
+  }) => Ticket(
+    packTicket: packTicket ?? this.packTicket,
+    user: user ?? this.user,
+    prize: lot,
+    id: id ?? this.id,
+  );
 
   Ticket.empty() {
     packTicket = PackTicket.empty();

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/ui/calendar/calendar_dialog_button.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/booking/class/booking.dart';
+import 'package:titan/booking/tools/constants.dart';
+import 'package:titan/booking/ui/calendar/calendar_dialog_button.dart';
+import 'package:titan/tools/functions.dart';
 
 class CalendarDialog extends StatelessWidget {
   final Booking booking;
@@ -58,9 +58,7 @@ class CalendarDialog extends StatelessWidget {
               ),
               if (isManager) ...[
                 const SizedBox(height: 10),
-                const Divider(
-                  thickness: 3,
-                ),
+                const Divider(thickness: 3),
                 const SizedBox(height: 10),
                 if (booking.note != null)
                   Text(
@@ -79,9 +77,7 @@ class CalendarDialog extends StatelessWidget {
                       uri: 'mailto:${booking.applicant.email}',
                       icon: HeroIcons.atSymbol,
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
+                    const SizedBox(width: 20),
                     Flexible(
                       child: Text(
                         booking.applicant.email.toString(),
@@ -93,9 +89,7 @@ class CalendarDialog extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -105,9 +99,7 @@ class CalendarDialog extends StatelessWidget {
                           : null,
                       icon: HeroIcons.chatBubbleBottomCenterText,
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
+                    const SizedBox(width: 20),
                     Flexible(
                       child: Text(
                         booking.applicant.phone ??
@@ -143,10 +135,7 @@ class CalendarDialog extends StatelessWidget {
                   ],
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: const HeroIcon(
-                  HeroIcons.xMark,
-                  size: 20,
-                ),
+                child: const HeroIcon(HeroIcons.xMark, size: 20),
               ),
             ),
           ),

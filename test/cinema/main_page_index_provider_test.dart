@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/cinema/providers/main_page_index_provider.dart';
+import 'package:titan/cinema/providers/main_page_index_provider.dart';
 
 void main() {
   group('MainPageIndexNotifier', () {

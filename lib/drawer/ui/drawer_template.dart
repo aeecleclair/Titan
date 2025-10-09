@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/drawer/providers/animation_provider.dart';
-import 'package:myecl/drawer/providers/display_notification_popup.dart';
-import 'package:myecl/drawer/providers/display_quit_popup.dart';
-import 'package:myecl/drawer/providers/is_web_format_provider.dart';
-import 'package:myecl/drawer/providers/should_setup_provider.dart';
-import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/drawer/ui/custom_drawer.dart';
-import 'package:myecl/drawer/ui/notification_popup.dart';
-import 'package:myecl/service/tools/setup.dart';
-import 'package:myecl/drawer/providers/already_displayed_popup.dart';
-import 'package:myecl/drawer/ui/quit_dialog.dart';
-import 'package:myecl/drawer/ui/email_change_popup.dart';
-import 'package:myecl/tools/providers/should_notify_provider.dart';
-import 'package:myecl/user/providers/user_provider.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/drawer/providers/animation_provider.dart';
+import 'package:titan/drawer/providers/display_quit_popup.dart';
+import 'package:titan/drawer/providers/is_web_format_provider.dart';
+import 'package:titan/drawer/providers/should_setup_provider.dart';
+import 'package:titan/drawer/providers/swipe_provider.dart';
+import 'package:titan/drawer/ui/custom_drawer.dart';
+import 'package:titan/service/tools/setup.dart';
+import 'package:titan/drawer/providers/already_displayed_popup.dart';
+import 'package:titan/drawer/ui/quit_dialog.dart';
+import 'package:titan/drawer/ui/email_change_popup.dart';
+import 'package:titan/tools/providers/should_notify_provider.dart';
+import 'package:titan/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DrawerTemplate extends HookConsumerWidget {
@@ -33,19 +31,20 @@ class DrawerTemplate extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // We are logged in, so we can set up the notification
     final user = ref.watch(userProvider);
-    final animationController =
-        useAnimationController(duration: duration, initialValue: 1);
+    final animationController = useAnimationController(
+      duration: duration,
+      initialValue: 1,
+    );
     final animationNotifier = ref.read(animationProvider.notifier);
     final controller = ref.watch(swipeControllerProvider(animationController));
-    final controllerNotifier =
-        ref.watch(swipeControllerProvider(animationController).notifier);
+    final controllerNotifier = ref.watch(
+      swipeControllerProvider(animationController).notifier,
+    );
     final isWebFormat = ref.watch(isWebFormatProvider);
     final alreadyDisplayed = ref.watch(alreadyDisplayedProvider);
     final displayQuit = ref.watch(displayQuitProvider);
     final shouldNotify = ref.watch(shouldNotifyProvider);
     final isLoggedIn = ref.watch(isLoggedInProvider);
-    final displayNotificationPopup =
-        ref.watch(displayNotificationPopupProvider);
     final shouldSetup = ref.watch(shouldSetupProvider);
     final shouldSetupNotifier = ref.read(shouldSetupProvider.notifier);
     if (isWebFormat) {
@@ -124,7 +123,6 @@ class DrawerTemplate extends HookConsumerWidget {
               },
             ),
           ),
-          if (displayNotificationPopup) const NotificationPopup(),
           if (isLoggedIn &&
               shouldNotify &&
               QR.context != null &&

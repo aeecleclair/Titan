@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/cinema/providers/scroll_provider.dart';
+import 'package:titan/cinema/providers/scroll_provider.dart';
 
 void main() {
   group('ScrollNotifier', () {

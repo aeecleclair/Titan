@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/phonebook/class/complete_member.dart';
-import 'package:myecl/phonebook/repositories/role_tags_repository.dart';
-import 'package:myecl/tools/providers/map_provider.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/phonebook/class/association.dart';
+import 'package:titan/phonebook/class/complete_member.dart';
+import 'package:titan/phonebook/repositories/role_tags_repository.dart';
+import 'package:titan/tools/providers/map_provider.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class RolesTagsNotifier extends MapNotifier<String, bool> {
   final RolesTagsRepository rolesTagsRepository = RolesTagsRepository();
@@ -34,12 +34,15 @@ class RolesTagsNotifier extends MapNotifier<String, bool> {
   }
 }
 
-final rolesTagsProvider = StateNotifierProvider<RolesTagsNotifier,
-    Map<String, AsyncValue<List<bool>>?>>((ref) {
-  final token = ref.watch(tokenProvider);
-  RolesTagsNotifier notifier = RolesTagsNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.loadRolesTags();
-  });
-  return notifier;
-});
+final rolesTagsProvider =
+    StateNotifierProvider<
+      RolesTagsNotifier,
+      Map<String, AsyncValue<List<bool>>?>
+    >((ref) {
+      final token = ref.watch(tokenProvider);
+      RolesTagsNotifier notifier = RolesTagsNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.loadRolesTags();
+      });
+      return notifier;
+    });

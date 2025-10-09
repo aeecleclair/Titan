@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class MapNotifier<T, E> extends StateNotifier<Map<T, AsyncValue<List<E>>?>> {
   MapNotifier() : super(<T, AsyncValue<List<E>>?>{});

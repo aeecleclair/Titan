@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/vote/class/section.dart';
+import 'package:titan/vote/class/section.dart';
 
 class SideItem extends HookConsumerWidget {
   final Section section;
@@ -45,10 +45,7 @@ class SideItem extends HookConsumerWidget {
                         shape: BoxShape.circle,
                       ),
                     )
-                  : const SizedBox(
-                      width: 8,
-                      height: 8,
-                    ),
+                  : const SizedBox(width: 8, height: 8),
             ],
           ),
         ),

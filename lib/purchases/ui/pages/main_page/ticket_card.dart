@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/class/ticket.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:titan/purchases/class/ticket.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
 
 class TicketCard extends HookConsumerWidget {
-  const TicketCard({
-    super.key,
-    required this.ticket,
-    required this.onClicked,
-  });
+  const TicketCard({super.key, required this.ticket, required this.onClicked});
 
   final Ticket ticket;
   final VoidCallback onClicked;

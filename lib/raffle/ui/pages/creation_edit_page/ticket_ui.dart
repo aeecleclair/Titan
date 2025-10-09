@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/pack_ticket.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/raffle/class/pack_ticket.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class TicketUI extends HookConsumerWidget {
   final PackTicket packTicket;
@@ -51,9 +51,7 @@ class TicketUI extends HookConsumerWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(
-                    height: showButton ? 5 : 10,
-                  ),
+                  SizedBox(height: showButton ? 5 : 10),
                   Text(
                     "${packTicket.packSize} tickets",
                     style: TextStyle(
@@ -87,8 +85,9 @@ class TicketUI extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(15),
                           boxShadow: [
                             BoxShadow(
-                              color:
-                                  Colors.grey.shade300.withValues(alpha: 0.5),
+                              color: Colors.grey.shade300.withValues(
+                                alpha: 0.5,
+                              ),
                               blurRadius: 10,
                               offset: const Offset(2, 3),
                             ),
@@ -127,8 +126,10 @@ class TicketUI extends HookConsumerWidget {
                         child: child,
                       ),
                       onTap: onDelete,
-                      child:
-                          const HeroIcon(HeroIcons.trash, color: Colors.white),
+                      child: const HeroIcon(
+                        HeroIcons.trash,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),

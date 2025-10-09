@@ -1,3 +1,3 @@
-FROM nginx:1.24.0-alpine
+FROM nginx:1.28.0-alpine
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY ./build/web/ /app/html

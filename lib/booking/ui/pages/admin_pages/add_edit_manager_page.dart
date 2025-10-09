@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:myecl/admin/class/simple_group.dart';
-import 'package:myecl/admin/providers/group_id_provider.dart';
-import 'package:myecl/booking/class/manager.dart';
-import 'package:myecl/booking/providers/manager_list_provider.dart';
-import 'package:myecl/booking/providers/manager_provider.dart';
-import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/pages/admin_pages/admin_entry.dart';
-import 'package:myecl/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
-import 'package:myecl/booking/ui/pages/admin_pages/admin_shrink_button.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/admin/providers/group_id_provider.dart';
+import 'package:titan/booking/class/manager.dart';
+import 'package:titan/booking/providers/manager_list_provider.dart';
+import 'package:titan/booking/providers/manager_provider.dart';
+import 'package:titan/booking/tools/constants.dart';
+import 'package:titan/booking/ui/booking.dart';
+import 'package:titan/booking/ui/pages/admin_pages/admin_entry.dart';
+import 'package:titan/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
+import 'package:titan/booking/ui/pages/admin_pages/admin_shrink_button.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/layouts/item_chip.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:myecl/admin/providers/group_list_provider.dart';
+import 'package:titan/admin/providers/group_list_provider.dart';
 
 class AddEditManagerPage extends HookConsumerWidget {
   final GlobalKey dataKey = GlobalKey();
@@ -41,9 +41,7 @@ class AddEditManagerPage extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           children: [
-            const SizedBox(
-              height: 50,
-            ),
+            const SizedBox(height: 50),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -61,16 +59,12 @@ class AddEditManagerPage extends HookConsumerWidget {
               key: key,
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   AdminEntry(
                     name: BookingTextConstants.managerName,
                     nameController: name,
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   groupList.when(
                     data: (List<SimpleGroup> data) => AdminScrollChips(
                       isEdit: isEdit,
@@ -102,9 +96,7 @@ class AddEditManagerPage extends HookConsumerWidget {
                       return const Center(child: CircularProgressIndicator());
                     },
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   AdminShrinkButton(
                     onTap: () async {
                       await tokenExpireWrapper(ref, () async {
@@ -114,8 +106,9 @@ class AddEditManagerPage extends HookConsumerWidget {
                           groupId: groupId,
                         );
                         final value = isEdit
-                            ? await managerListNotifier
-                                .updateManager(newManager)
+                            ? await managerListNotifier.updateManager(
+                                newManager,
+                              )
                             : await managerListNotifier.addManager(newManager);
                         if (value) {
                           QR.back();
@@ -146,9 +139,7 @@ class AddEditManagerPage extends HookConsumerWidget {
                         : BookingTextConstants.add,
                   ),
                   if (isEdit) ...[
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     AdminShrinkButton(
                       onTap: () async {
                         await tokenExpireWrapper(ref, () async {

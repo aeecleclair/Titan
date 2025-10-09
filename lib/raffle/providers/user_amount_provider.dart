@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/raffle/class/cash.dart';
-import 'package:myecl/raffle/repositories/cash_repository.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/raffle/class/cash.dart';
+import 'package:titan/raffle/repositories/cash_repository.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class UserCashNotifier extends SingleNotifier<Cash> {
   final CashRepository _cashRepository = CashRepository();
   UserCashNotifier({required String token})
-      : super(const AsyncValue.loading()) {
+    : super(const AsyncValue.loading()) {
     _cashRepository.setToken(token);
   }
 
@@ -37,13 +37,13 @@ class UserCashNotifier extends SingleNotifier<Cash> {
 
 final userAmountProvider =
     StateNotifierProvider<UserCashNotifier, AsyncValue<Cash>>((ref) {
-  final token = ref.watch(tokenProvider);
-  UserCashNotifier userCashNotifier = UserCashNotifier(token: token);
-  tokenExpireWrapperAuth(ref, () async {
-    final userId = ref.watch(idProvider);
-    userId.whenData(
-      (value) async => await userCashNotifier.loadCashByUser(value),
-    );
-  });
-  return userCashNotifier;
-});
+      final token = ref.watch(tokenProvider);
+      UserCashNotifier userCashNotifier = UserCashNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        final userId = ref.watch(idProvider);
+        userId.whenData(
+          (value) async => await userCashNotifier.loadCashByUser(value),
+        );
+      });
+      return userCashNotifier;
+    });

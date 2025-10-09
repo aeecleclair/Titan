@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/drawer/providers/display_quit_popup.dart';
-import 'package:myecl/drawer/tools/constants.dart';
-import 'package:myecl/service/providers/firebase_token_expiration_provider.dart';
-import 'package:myecl/service/providers/messages_provider.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/drawer/providers/display_quit_popup.dart';
+import 'package:titan/drawer/tools/constants.dart';
+import 'package:titan/service/providers/firebase_token_expiration_provider.dart';
+import 'package:titan/service/providers/messages_provider.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 
 class QuitDialog extends HookConsumerWidget {
   const QuitDialog({super.key});
@@ -35,11 +35,7 @@ class QuitDialog extends HookConsumerWidget {
                 ref.watch(firebaseTokenExpirationProvider.notifier).reset();
               }
               isCachingNotifier.set(false);
-              displayToast(
-                context,
-                TypeMsg.msg,
-                DrawerTextConstants.logOut,
-              );
+              displayToast(context, TypeMsg.msg, DrawerTextConstants.logOut);
               displayQuitNotifier.setDisplay(false);
             },
             onNo: () {

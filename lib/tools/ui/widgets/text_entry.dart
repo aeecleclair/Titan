@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
 
 class TextEntry extends StatelessWidget {
   final String label, suffix, prefix, noValueError;
@@ -74,8 +74,9 @@ class TextEntry extends StatelessWidget {
           color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
-        enabledBorder:
-            UnderlineInputBorder(borderSide: BorderSide(color: enabledColor)),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: enabledColor),
+        ),
         errorBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: errorColor, width: 2.0),
         ),

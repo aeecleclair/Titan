@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/cinema/providers/cinema_topic_provider.dart';
-import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
-import 'package:myecl/cinema/providers/session_poster_provider.dart';
-import 'package:myecl/cinema/providers/session_provider.dart';
-import 'package:myecl/cinema/tools/constants.dart';
-import 'package:myecl/cinema/tools/functions.dart';
-import 'package:myecl/service/class/message.dart';
-import 'package:myecl/service/local_notification_service.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/cinema/providers/cinema_topic_provider.dart';
+import 'package:titan/cinema/providers/session_poster_map_provider.dart';
+import 'package:titan/cinema/providers/session_poster_provider.dart';
+import 'package:titan/cinema/providers/session_provider.dart';
+import 'package:titan/cinema/tools/constants.dart';
+import 'package:titan/cinema/tools/functions.dart';
+import 'package:titan/service/class/message.dart';
+import 'package:titan/service/local_notification_service.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/builders/auto_loader_child.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DetailPage extends HookConsumerWidget {
@@ -24,10 +24,12 @@ class DetailPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final session = ref.watch(sessionProvider);
-    final sessionPoster = ref
-        .watch(sessionPosterMapProvider.select((value) => value[session.id]));
-    final sessionPosterMapNotifier =
-        ref.watch(sessionPosterMapProvider.notifier);
+    final sessionPoster = ref.watch(
+      sessionPosterMapProvider.select((value) => value[session.id]),
+    );
+    final sessionPosterMapNotifier = ref.watch(
+      sessionPosterMapProvider.notifier,
+    );
     final sessionPosterNotifier = ref.watch(sessionPosterProvider.notifier);
     final cinemaTopicsNotifier = ref.watch(cinemaTopicsProvider.notifier);
     final localNotificationService = LocalNotificationService();
@@ -44,8 +46,10 @@ class DetailPage extends HookConsumerWidget {
       duration: const Duration(milliseconds: 500),
       initialValue: selected ? 1 : 0,
     );
-    final curvedAnimation =
-        CurvedAnimation(parent: animation, curve: Curves.easeInOut);
+    final curvedAnimation = CurvedAnimation(
+      parent: animation,
+      curve: Curves.easeInOut,
+    );
     return Stack(
       children: [
         Container(
@@ -65,22 +69,17 @@ class DetailPage extends HookConsumerWidget {
             notifier: sessionPosterMapNotifier,
             mapKey: session.id,
             loader: (sessionId) => sessionPosterNotifier.getLogo(sessionId),
-            dataBuilder: (context, data) => Image(
-              image: data.first.image,
-              fit: BoxFit.fill,
-            ),
-            errorBuilder: (error, stack) => const Center(
-              child: HeroIcon(HeroIcons.exclamationCircle),
-            ),
+            dataBuilder: (context, data) =>
+                Image(image: data.first.image, fit: BoxFit.fill),
+            errorBuilder: (error, stack) =>
+                const Center(child: HeroIcon(HeroIcons.exclamationCircle)),
           ),
         ),
         SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              const SizedBox(
-                height: 220,
-              ),
+              const SizedBox(height: 220),
               Container(
                 width: double.infinity,
                 height: 250,
@@ -121,9 +120,7 @@ class DetailPage extends HookConsumerWidget {
                       alignment: Alignment.center,
                       child: Text(
                         formatDate(session.start),
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
+                        style: const TextStyle(fontSize: 18),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -158,14 +155,10 @@ class DetailPage extends HookConsumerWidget {
                             ? session.overview!
                             : CinemaTextConstants.noOverview,
                         textAlign: TextAlign.left,
-                        style: const TextStyle(
-                          fontSize: 15,
-                        ),
+                        style: const TextStyle(fontSize: 15),
                       ),
                     ),
-                    const SizedBox(
-                      height: 140,
-                    ),
+                    const SizedBox(height: 140),
                   ],
                 ),
               ),
@@ -174,14 +167,10 @@ class DetailPage extends HookConsumerWidget {
         ),
         Column(
           children: [
-            const SizedBox(
-              height: 45,
-            ),
+            const SizedBox(height: 45),
             Row(
               children: [
-                const SizedBox(
-                  width: 20,
-                ),
+                const SizedBox(width: 20),
                 GestureDetector(
                   onTap: QR.back,
                   child: Container(
@@ -198,16 +187,15 @@ class DetailPage extends HookConsumerWidget {
                         ),
                       ],
                     ),
-                    child: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.black,
-                    ),
+                    child: const Icon(Icons.arrow_back, color: Colors.black),
                   ),
                 ),
                 const Spacer(),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 12,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(18),
@@ -222,13 +210,8 @@ class DetailPage extends HookConsumerWidget {
                   ),
                   child: Row(
                     children: [
-                      const HeroIcon(
-                        HeroIcons.clock,
-                        size: 20,
-                      ),
-                      const SizedBox(
-                        width: 7,
-                      ),
+                      const HeroIcon(HeroIcons.clock, size: 20),
+                      const SizedBox(width: 7),
                       Text(
                         formatDuration(session.duration),
                         style: const TextStyle(fontSize: 16),
@@ -236,9 +219,7 @@ class DetailPage extends HookConsumerWidget {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
+                const SizedBox(width: 20),
               ],
             ),
           ],
@@ -295,29 +276,23 @@ class DetailPage extends HookConsumerWidget {
                         }
                         cinemaTopicsNotifier.toggleSubscription(session.id);
                         if (selected) {
-                          localNotificationService
-                              .cancelNotificationById(session.id);
-                          displayToast(
-                            context,
-                            TypeMsg.msg,
-                            "Rappel supprimé",
+                          localNotificationService.cancelNotificationById(
+                            session.id,
                           );
+                          displayToast(context, TypeMsg.msg, "Rappel supprimé");
                         } else {
                           localNotificationService.showNotification(
                             Message(
                               actionModule: '',
                               actionTable: '',
-                              content: 'La séance '
+                              content:
+                                  'La séance '
                                   '${session.name}'
                                   ' commence dans 10 minutes',
                               title: '🎬 Cinéma',
                             ),
                           );
-                          displayToast(
-                            context,
-                            TypeMsg.msg,
-                            "Rappel ajouté",
-                          );
+                          displayToast(context, TypeMsg.msg, "Rappel ajouté");
                         }
                       },
                       child: Row(

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/providers/product_provider.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/providers/product_provider.dart';
 
 void main() {
   group('ProductNotifier', () {
@@ -17,8 +17,10 @@ void main() {
     });
 
     test('setProduct updates state', () {
-      final product =
-          Product.empty().copyWith(name: 'Test Product', price: 10.0);
+      final product = Product.empty().copyWith(
+        name: 'Test Product',
+        price: 10.0,
+      );
       productNotifier.setProduct(product);
       expect(productNotifier.state, product);
     });
@@ -40,8 +42,10 @@ void main() {
 
     test('setProduct updates product', () {
       final container = ProviderContainer();
-      final product =
-          Product.empty().copyWith(name: 'Test Product', price: 10.0);
+      final product = Product.empty().copyWith(
+        name: 'Test Product',
+        price: 10.0,
+      );
       container.read(productProvider.notifier).setProduct(product);
       expect(container.read(productProvider), product);
     });

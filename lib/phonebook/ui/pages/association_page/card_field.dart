@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/phonebook/ui/components/copiabled_text.dart';
+import 'package:titan/phonebook/ui/components/copiabled_text.dart';
 
 class CardField extends StatelessWidget {
   final String label;
@@ -21,13 +21,8 @@ class CardField extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (showLabel) ...[
-              Text(
-                label,
-                style: const TextStyle(fontSize: 16),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
+              Text(label, style: const TextStyle(fontSize: 16)),
+              const SizedBox(width: 5),
             ],
             CopiabledText(
               value,

@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/amap/class/product.dart';
-import 'package:myecl/amap/providers/category_list_provider.dart';
-import 'package:myecl/amap/providers/product_list_provider.dart';
-import 'package:myecl/amap/repositories/product_repository.dart';
+import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/providers/category_list_provider.dart';
+import 'package:titan/amap/providers/product_list_provider.dart';
+import 'package:titan/amap/repositories/product_repository.dart';
 
 class MockProductListRepository extends Mock implements ProductListRepository {}
 
@@ -12,8 +12,9 @@ void main() {
   group('categoryListProvider', () {
     test('returns a list of categories when productListProvider is loaded', () {
       final productListRepository = MockProductListRepository();
-      final productListNotifier =
-          ProductListNotifier(productListRepository: productListRepository);
+      final productListNotifier = ProductListNotifier(
+        productListRepository: productListRepository,
+      );
       productListNotifier.state = AsyncValue.data([
         Product.empty().copyWith(
           id: '1',
@@ -47,8 +48,9 @@ void main() {
 
     test('returns an empty list when productListProvider is loading', () {
       final productListRepository = MockProductListRepository();
-      final productListNotifier =
-          ProductListNotifier(productListRepository: productListRepository);
+      final productListNotifier = ProductListNotifier(
+        productListRepository: productListRepository,
+      );
       productListNotifier.state = const AsyncValue.loading();
       final container = ProviderContainer(
         overrides: [
@@ -63,10 +65,13 @@ void main() {
 
     test('returns an empty list when productListProvider has an error', () {
       final productListRepository = MockProductListRepository();
-      final productListNotifier =
-          ProductListNotifier(productListRepository: productListRepository);
-      productListNotifier.state =
-          const AsyncValue.error("test", StackTrace.empty);
+      final productListNotifier = ProductListNotifier(
+        productListRepository: productListRepository,
+      );
+      productListNotifier.state = const AsyncValue.error(
+        "test",
+        StackTrace.empty,
+      );
       final container = ProviderContainer(
         overrides: [
           productListProvider.overrideWith((ref) => productListNotifier),

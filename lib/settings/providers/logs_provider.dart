@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/logs/log.dart';
-import 'package:myecl/tools/logs/logger.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/tools/logs/log.dart';
+import 'package:titan/tools/logs/logger.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class LogsProvider extends ListNotifier<Log> {
   Logger logger = Repository.logger;
@@ -29,12 +29,13 @@ class LogsProvider extends ListNotifier<Log> {
   }
 }
 
-final logsProvider =
-    StateNotifierProvider<LogsProvider, AsyncValue<List<Log>>>((ref) {
-  LogsProvider notifier = LogsProvider();
-  notifier.getLogs();
-  return notifier;
-});
+final logsProvider = StateNotifierProvider<LogsProvider, AsyncValue<List<Log>>>(
+  (ref) {
+    LogsProvider notifier = LogsProvider();
+    notifier.getLogs();
+    return notifier;
+  },
+);
 
 class NotificationLogsProvider extends ListNotifier<Log> {
   Logger logger = Repository.logger;
@@ -58,9 +59,10 @@ class NotificationLogsProvider extends ListNotifier<Log> {
 }
 
 final notificationLogsProvider =
-    StateNotifierProvider<NotificationLogsProvider, AsyncValue<List<Log>>>(
-        (ref) {
-  NotificationLogsProvider notifier = NotificationLogsProvider();
-  notifier.getLogs();
-  return notifier;
-});
+    StateNotifierProvider<NotificationLogsProvider, AsyncValue<List<Log>>>((
+      ref,
+    ) {
+      NotificationLogsProvider notifier = NotificationLogsProvider();
+      notifier.getLogs();
+      return notifier;
+    });

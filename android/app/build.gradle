@@ -34,17 +34,17 @@ def keystoreProperties = new Properties()
 
 android {
     compileSdkVersion flutter.compileSdkVersion
-    ndkVersion "25.1.8937393"
-    namespace 'fr.myecl.titan'
+    ndkVersion "27.0.12077973"
+    namespace "fr.myecl.titan"
 
     compileOptions {
         coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
 
     sourceSets {
@@ -79,17 +79,20 @@ android {
 		prod {
 			dimension "default"
 			resValue "string", "app_name", "MyECL"
+            resValue "string", "flavor_url_scheme", "titan"
             manifestPlaceholders = ['appAuthRedirectScheme': 'fr.myecl.titan']
 		}
 		alpha {
 			dimension "default"
 			resValue "string", "app_name", "MyECL Alpha"
+            resValue "string", "flavor_url_scheme", "titan.alpha"
 			applicationIdSuffix ".alpha"
             manifestPlaceholders = ['appAuthRedirectScheme': 'fr.myecl.titan.alpha']
 		}
 		dev {
 			dimension "default"
 			resValue "string", "app_name", "MyECL Dev"
+            resValue "string", "flavor_url_scheme", "titan.dev"
 			applicationIdSuffix ".dev"
             manifestPlaceholders = ['appAuthRedirectScheme': 'fr.myecl.titan.dev']
 		}
@@ -101,6 +104,12 @@ flutter {
 }
 
 dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
     implementation platform('com.google.firebase:firebase-bom:32.7.4')
+}
+
+android {
+    defaultConfig {
+        minSdkVersion 23
+    }
 }

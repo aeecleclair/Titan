@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/providers/should_notify_provider.dart';
+import 'package:titan/tools/providers/should_notify_provider.dart';
 
 class NotificationBadge extends HookConsumerWidget {
   final Widget child;

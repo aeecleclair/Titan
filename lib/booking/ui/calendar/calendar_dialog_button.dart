@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CalendarDialogButton extends StatelessWidget {
@@ -22,9 +22,7 @@ class CalendarDialogButton extends StatelessWidget {
       onTap: uri != null
           ? () async {
               try {
-                await launchUrl(
-                  Uri.parse(uri!),
-                );
+                await launchUrl(Uri.parse(uri!));
               } catch (e) {
                 displayToastWithoutContext(TypeMsg.error, e.toString());
               }
@@ -36,10 +34,7 @@ class CalendarDialogButton extends StatelessWidget {
         padding: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
-          border: Border.all(
-            color: Colors.black,
-            width: 2,
-          ),
+          border: Border.all(color: Colors.black, width: 2),
           color: Colors.grey.shade50,
           boxShadow: [
             BoxShadow(
@@ -49,10 +44,7 @@ class CalendarDialogButton extends StatelessWidget {
             ),
           ],
         ),
-        child: HeroIcon(
-          icon,
-          color: Colors.black,
-        ),
+        child: HeroIcon(icon, color: Colors.black),
       ),
     );
   }

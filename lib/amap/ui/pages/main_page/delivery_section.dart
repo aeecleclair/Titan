@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/amap/class/delivery.dart';
-import 'package:myecl/amap/providers/delivery_id_provider.dart';
-import 'package:myecl/amap/providers/delivery_list_provider.dart';
-import 'package:myecl/amap/tools/constants.dart';
-import 'package:myecl/amap/ui/pages/main_page/delivery_ui.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:titan/amap/class/delivery.dart';
+import 'package:titan/amap/providers/delivery_id_provider.dart';
+import 'package:titan/amap/providers/delivery_list_provider.dart';
+import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/amap/ui/pages/main_page/delivery_ui.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 
 class DeliverySection extends HookConsumerWidget {
   final bool showSelected;
@@ -54,8 +54,9 @@ class DeliverySection extends HookConsumerWidget {
                         onTap: () {
                           {
                             if (editable && showSelected) {
-                              deliveryIdNotifier
-                                  .setId(availableDeliveries[i].id);
+                              deliveryIdNotifier.setId(
+                                availableDeliveries[i].id,
+                              );
                             }
                           }
                         },

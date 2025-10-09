@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/ui/widgets/admin_button.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/vote/class/contender.dart';
-import 'package:myecl/vote/providers/can_vote_provider.dart';
-import 'package:myecl/vote/providers/is_vote_admin_provider.dart';
-import 'package:myecl/vote/providers/contender_list_provider.dart';
-import 'package:myecl/vote/providers/contender_logo_provider.dart';
-import 'package:myecl/vote/providers/contender_logos_provider.dart';
-import 'package:myecl/vote/providers/sections_contender_provider.dart';
-import 'package:myecl/vote/providers/sections_provider.dart';
-import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/providers/voted_section_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
-import 'package:myecl/vote/router.dart';
-import 'package:myecl/vote/tools/constants.dart';
-import 'package:myecl/vote/ui/pages/main_page/list_contender_card.dart';
-import 'package:myecl/vote/ui/pages/main_page/list_side_item.dart';
-import 'package:myecl/vote/ui/pages/main_page/section_title.dart';
-import 'package:myecl/vote/ui/pages/main_page/vote_button.dart';
-import 'package:myecl/vote/ui/vote.dart';
+import 'package:titan/tools/ui/widgets/admin_button.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/vote/class/contender.dart';
+import 'package:titan/vote/providers/can_vote_provider.dart';
+import 'package:titan/vote/providers/is_vote_admin_provider.dart';
+import 'package:titan/vote/providers/contender_list_provider.dart';
+import 'package:titan/vote/providers/contender_logo_provider.dart';
+import 'package:titan/vote/providers/contender_logos_provider.dart';
+import 'package:titan/vote/providers/sections_contender_provider.dart';
+import 'package:titan/vote/providers/sections_provider.dart';
+import 'package:titan/vote/providers/status_provider.dart';
+import 'package:titan/vote/providers/voted_section_provider.dart';
+import 'package:titan/vote/repositories/status_repository.dart';
+import 'package:titan/vote/router.dart';
+import 'package:titan/vote/tools/constants.dart';
+import 'package:titan/vote/ui/pages/main_page/list_contender_card.dart';
+import 'package:titan/vote/ui/pages/main_page/list_side_item.dart';
+import 'package:titan/vote/ui/pages/main_page/section_title.dart';
+import 'package:titan/vote/ui/pages/main_page/vote_button.dart';
+import 'package:titan/vote/ui/vote.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class VoteMainPage extends HookConsumerWidget {
@@ -35,14 +35,17 @@ class VoteMainPage extends HookConsumerWidget {
     final sectionsNotifier = ref.watch(sectionsProvider.notifier);
     final contenders = ref.watch(contenderListProvider);
     final contendersNotifier = ref.watch(contenderListProvider.notifier);
-    final sectionContenderNotifier =
-        ref.watch(sectionContenderProvider.notifier);
+    final sectionContenderNotifier = ref.watch(
+      sectionContenderProvider.notifier,
+    );
     final animation = useAnimationController(
       duration: const Duration(milliseconds: 2400),
     );
     final status = ref.watch(statusProvider);
-    final s =
-        status.maybeWhen(data: (value) => value, orElse: () => Status.closed);
+    final s = status.maybeWhen(
+      data: (value) => value,
+      orElse: () => Status.closed,
+    );
     if (s == Status.open) {
       ref.watch(votedSectionProvider.notifier).getVotedSections();
     }
@@ -102,8 +105,9 @@ class VoteMainPage extends HookConsumerWidget {
               list = contender;
             });
             sectionContenderNotifier.loadTList(value);
-            contenderLogosNotifier
-                .loadTList(list.map((contender) => contender.id).toList());
+            contenderLogosNotifier.loadTList(
+              list.map((contender) => contender.id).toList(),
+            );
             for (final l in value) {
               sectionContenderNotifier.setTData(
                 l,
@@ -113,7 +117,9 @@ class VoteMainPage extends HookConsumerWidget {
               );
             }
             for (final contender in list) {
-              logosNotifier.getLogo(contender.id).then(
+              logosNotifier
+                  .getLogo(contender.id)
+                  .then(
                     (value) => contenderLogosNotifier.setTData(
                       contender.id,
                       AsyncValue.data([value]),
@@ -128,22 +134,21 @@ class VoteMainPage extends HookConsumerWidget {
             padding: const EdgeInsets.only(left: 30.0),
             child: Column(
               children: [
-                SizedBox(
-                  height: isAdmin ? 10 : 15,
-                ),
+                SizedBox(height: isAdmin ? 10 : 15),
                 AsyncChild(
                   value: sections,
                   builder: (context, sectionList) => Column(
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height -
+                        height:
+                            MediaQuery.of(context).size.height -
                             (s == Status.open
                                 ? isAdmin
-                                    ? 215
-                                    : 220
+                                      ? 215
+                                      : 220
                                 : isAdmin
-                                    ? 150
-                                    : 155),
+                                ? 150
+                                : 155),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -160,9 +165,7 @@ class VoteMainPage extends HookConsumerWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        SectionTitle(
-                                          sectionList: sectionList,
-                                        ),
+                                        SectionTitle(sectionList: sectionList),
                                         if (isAdmin)
                                           Container(
                                             margin: const EdgeInsets.only(

@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/class/room.dart';
-import 'package:myecl/booking/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/user/class/applicant.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:titan/booking/class/booking.dart';
+import 'package:titan/service/class/room.dart';
+import 'package:titan/booking/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/user/class/applicant.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 void main() {
   group('Testing Room class', () {
@@ -29,11 +29,7 @@ void main() {
     });
 
     test('Should print a room', () {
-      final room = Room(
-        id: "1",
-        managerId: "1",
-        name: "name",
-      );
+      final room = Room(id: "1", managerId: "1", name: "name");
       expect(room.toString(), 'Room{name: name, manager_id: 1, id: 1}');
     });
 
@@ -52,11 +48,7 @@ void main() {
         "id": "1",
         "manager_id": "1",
       });
-      expect(room.toJson(), {
-        "name": "name",
-        "id": "1",
-        "manager_id": "1",
-      });
+      expect(room.toJson(), {"name": "name", "id": "1", "manager_id": "1"});
     });
   });
 
@@ -75,13 +67,9 @@ void main() {
       final booking = Booking.empty();
       final newRoom = Room.empty().copyWith(id: "1");
       final newUser = Applicant.empty().copyWith(id: "1");
-      Booking newBooking = booking.copyWith(
-        id: "1",
-      );
+      Booking newBooking = booking.copyWith(id: "1");
       expect(newBooking.id, "1");
-      newBooking = booking.copyWith(
-        reason: "reason",
-      );
+      newBooking = booking.copyWith(reason: "reason");
       expect(newBooking.reason, "reason");
       newBooking = booking.copyWith(
         start: DateTime.parse("2021-01-01T00:00:00.000Z"),
@@ -91,39 +79,23 @@ void main() {
         end: DateTime.parse("2021-01-01T00:00:00.000Z"),
       );
       expect(newBooking.end, DateTime.parse("2021-01-01T00:00:00.000Z"));
-      newBooking = booking.copyWith(
-        note: "note",
-      );
+      newBooking = booking.copyWith(note: "note");
       expect(newBooking.note, "note");
-      newBooking = booking.copyWith(
-        room: newRoom,
-      );
+      newBooking = booking.copyWith(room: newRoom);
       expect(newBooking.room, isA<Room>());
       expect(newBooking.room.id, "1");
-      newBooking = booking.copyWith(
-        key: true,
-      );
+      newBooking = booking.copyWith(key: true);
       expect(newBooking.key, true);
-      newBooking = booking.copyWith(
-        decision: Decision.approved,
-      );
+      newBooking = booking.copyWith(decision: Decision.approved);
       expect(newBooking.decision, Decision.approved);
-      newBooking = booking.copyWith(
-        recurrenceRule: "",
-      );
+      newBooking = booking.copyWith(recurrenceRule: "");
       expect(newBooking.recurrenceRule, "");
-      newBooking = booking.copyWith(
-        entity: "entity",
-      );
+      newBooking = booking.copyWith(entity: "entity");
       expect(newBooking.entity, "entity");
-      newBooking = booking.copyWith(
-        applicant: newUser,
-      );
+      newBooking = booking.copyWith(applicant: newUser);
       expect(newBooking.applicant, isA<SimpleUser>());
       expect(newBooking.applicant.id, "1");
-      newBooking = booking.copyWith(
-        applicantId: "1",
-      );
+      newBooking = booking.copyWith(applicantId: "1");
       expect(newBooking.applicantId, "1");
     });
 
@@ -158,11 +130,7 @@ void main() {
         "end": datetime.toIso8601String(),
         "creation": datetime.toIso8601String(),
         "note": "note",
-        "room": {
-          "id": "1",
-          "name": "name",
-          "manager_id": "1",
-        },
+        "room": {"id": "1", "name": "name", "manager_id": "1"},
         "key": true,
         "decision": "approved",
         "recurrence_rule": "",
@@ -203,11 +171,7 @@ void main() {
         "end": datetime.toIso8601String(),
         "creation": datetime.toIso8601String(),
         "note": "note",
-        "room": {
-          "id": "1",
-          "name": "name",
-          "manager_id": "1",
-        },
+        "room": {"id": "1", "name": "name", "manager_id": "1"},
         "key": true,
         "decision": "approved",
         "recurrence_rule": "",
@@ -237,11 +201,7 @@ void main() {
         "end": "2021-01-01T00:00:00.000Z",
         "creation": "2021-01-01T00:00:00.000Z",
         "note": "note",
-        "room": {
-          "id": "1",
-          "name": "name",
-          "manager_id": "1",
-        },
+        "room": {"id": "1", "name": "name", "manager_id": "1"},
         "key": true,
         "decision": "approved",
         "recurrence_rule": "",
@@ -313,31 +273,34 @@ void main() {
       expect(result, "Du 01/01/2022 à 10:00 au 03/01/2022 à 14:00");
     });
 
-    test('formatRecurrenceRule returns correct string for empty recurrenceRule',
-        () {
-      DateTime dateStart = DateTime(2022, 1, 1, 10, 0);
-      DateTime dateEnd = DateTime(2022, 1, 1, 12, 0);
-      String recurrenceRule = "";
-      bool allDay = false;
-      expect(
-        formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
-        "Le 01/01/2022 de 10:00 à 12:00",
-      );
-    });
+    test(
+      'formatRecurrenceRule returns correct string for empty recurrenceRule',
+      () {
+        DateTime dateStart = DateTime(2022, 1, 1, 10, 0);
+        DateTime dateEnd = DateTime(2022, 1, 1, 12, 0);
+        String recurrenceRule = "";
+        bool allDay = false;
+        expect(
+          formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
+          "Le 01/01/2022 de 10:00 à 12:00",
+        );
+      },
+    );
 
     test(
-        'formatRecurrenceRule returns correct string for non-empty recurrenceRule',
-        () {
-      DateTime dateStart = DateTime(2022, 1, 1, 10, 0);
-      DateTime dateEnd = DateTime(2022, 1, 1, 12, 0);
-      String recurrenceRule =
-          "FREQ=WEEKLY;BYDAY=MO,WE,FR;UNTIL=20220131T000000Z";
-      bool allDay = false;
-      expect(
-        formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
-        "Tous les Lundi, Mercredi et Vendredi de 10:00 à 12:00 jusqu'au 31/01/2022",
-      );
-    });
+      'formatRecurrenceRule returns correct string for non-empty recurrenceRule',
+      () {
+        DateTime dateStart = DateTime(2022, 1, 1, 10, 0);
+        DateTime dateEnd = DateTime(2022, 1, 1, 12, 0);
+        String recurrenceRule =
+            "FREQ=WEEKLY;BYDAY=MO,WE,FR;UNTIL=20220131T000000Z";
+        bool allDay = false;
+        expect(
+          formatRecurrenceRule(dateStart, dateEnd, recurrenceRule, allDay),
+          "Tous les Lundi, Mercredi et Vendredi de 10:00 à 12:00 jusqu'au 31/01/2022",
+        );
+      },
+    );
 
     test('formatRecurrenceRule returns correct string for allDay event', () {
       DateTime dateStart = DateTime(2022, 1, 1);

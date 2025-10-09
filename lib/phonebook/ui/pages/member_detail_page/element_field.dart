@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/phonebook/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
 
 class ElementField extends StatelessWidget {
   final String label;
@@ -18,12 +18,7 @@ class ElementField extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 5.0),
       child: Column(
         children: [
-          Center(
-            child: Text(
-              label,
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
+          Center(child: Text(label, style: const TextStyle(fontSize: 16))),
           Center(
             child: SelectableText(
               value,

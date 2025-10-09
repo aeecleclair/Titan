@@ -4,7 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/login/class/screen_shot.dart';
+import 'package:titan/login/class/screen_shot.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class RightPanel extends HookConsumerWidget {
@@ -41,7 +41,7 @@ class RightPanel extends HookConsumerWidget {
         description: 'Commande de fruit et légumes',
       ),
       ScreenShot(
-        path: 'assets/web/Ciné.webp',
+        path: 'assets/web/Cine.webp',
         title: 'Club Cinéma',
         description: 'Les projections à venir',
       ),
@@ -75,18 +75,17 @@ class RightPanel extends HookConsumerWidget {
           child: PageView.builder(
             controller: pageController,
             itemBuilder: ((context, index) {
-              final screenShot = screenShots[screenShots.length -
-                  (initialPage - index - 1) % screenShots.length -
-                  1];
+              final screenShot =
+                  screenShots[screenShots.length -
+                      (initialPage - index - 1) % screenShots.length -
+                      1];
               return Column(
                 children: [
                   const SizedBox(height: 50),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(
-                        width: 20,
-                      ),
+                      const SizedBox(width: 20),
                       if (screenShot.title.isNotEmpty)
                         Text(
                           screenShot.title,
@@ -128,7 +127,8 @@ class RightPanel extends HookConsumerWidget {
                         builder: (context, constraints) => MouseRegion(
                           onHover: (event) {
                             if (isHovering.value) {
-                              offset.value = event.localPosition -
+                              offset.value =
+                                  event.localPosition -
                                   Offset(
                                     constraints.maxWidth / 2,
                                     constraints.maxHeight / 2,
@@ -159,12 +159,14 @@ class RightPanel extends HookConsumerWidget {
                                 child: Container(
                                   width: constraints.maxWidth,
                                   decoration: BoxDecoration(
-                                    color: Colors.grey.shade200
-                                        .withValues(alpha: 0.2),
+                                    color: Colors.grey.shade200.withValues(
+                                      alpha: 0.2,
+                                    ),
                                     borderRadius: BorderRadius.circular(20),
                                     border: Border.all(
-                                      color:
-                                          Colors.white.withValues(alpha: 0.2),
+                                      color: Colors.white.withValues(
+                                        alpha: 0.2,
+                                      ),
                                       width: 2,
                                     ),
                                   ),
@@ -220,9 +222,7 @@ class RightPanel extends HookConsumerWidget {
               ),
               const Spacer(),
               Image.asset('assets/images/eclair.png', width: 120, height: 120),
-              const SizedBox(
-                height: 30,
-              ),
+              const SizedBox(height: 30),
               const Text(
                 "Développé par ECLAIR",
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),

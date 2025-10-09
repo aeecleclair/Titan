@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
+import 'package:titan/phonebook/class/association.dart';
 
 class AssociationNotifier extends Notifier<Association> {
   @override
@@ -12,7 +12,8 @@ class AssociationNotifier extends Notifier<Association> {
   }
 }
 
-final associationProvider =
-    NotifierProvider<AssociationNotifier, Association>(() {
-  return AssociationNotifier();
-});
+final associationProvider = NotifierProvider<AssociationNotifier, Association>(
+  () {
+    return AssociationNotifier();
+  },
+);

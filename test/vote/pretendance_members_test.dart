@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myecl/vote/class/members.dart';
-import 'package:myecl/vote/providers/contender_members.dart';
+import 'package:titan/vote/class/members.dart';
+import 'package:titan/vote/providers/contender_members.dart';
 
 void main() {
   group('ContenderMembersProvider', () {
@@ -47,18 +47,20 @@ void main() {
       expect(provider.state.length, 0);
     });
 
-    test('setMembers should set the state to the given list of members',
-        () async {
-      final provider = ContenderMembersProvider();
-      final members = [
-        Member.empty().copyWith(name: 'John Doe', id: '123'),
-        Member.empty().copyWith(name: 'Jane Doe', id: '456'),
-      ];
+    test(
+      'setMembers should set the state to the given list of members',
+      () async {
+        final provider = ContenderMembersProvider();
+        final members = [
+          Member.empty().copyWith(name: 'John Doe', id: '123'),
+          Member.empty().copyWith(name: 'Jane Doe', id: '456'),
+        ];
 
-      provider.setMembers(members);
+        provider.setMembers(members);
 
-      expect(provider.state.length, 2);
-      expect(provider.state, members);
-    });
+        expect(provider.state.length, 2);
+        expect(provider.state, members);
+      },
+    );
   });
 }

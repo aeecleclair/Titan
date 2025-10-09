@@ -1,5 +1,5 @@
-import 'package:myecl/tools/logs/log.dart';
-import 'package:myecl/tools/logs/logger_output.dart';
+import 'package:titan/tools/logs/log.dart';
+import 'package:titan/tools/logs/logger_output.dart';
 
 /// A logger output that writes logs to a file
 class PrintLoggerOutput implements LoggerOutput {

@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/is_admin_provider.dart';
-import 'package:myecl/phonebook/providers/association_filtered_list_provider.dart';
-import 'package:myecl/phonebook/providers/association_kind_provider.dart';
-import 'package:myecl/phonebook/providers/association_kinds_provider.dart';
-import 'package:myecl/phonebook/providers/association_list_provider.dart';
-import 'package:myecl/phonebook/providers/association_provider.dart';
-import 'package:myecl/phonebook/providers/phonebook_admin_provider.dart';
-import 'package:myecl/phonebook/router.dart';
-import 'package:myecl/phonebook/tools/constants.dart';
-import 'package:myecl/phonebook/ui/components/kinds_bar.dart';
-import 'package:myecl/phonebook/ui/pages/main_page/association_card.dart';
-import 'package:myecl/phonebook/ui/phonebook.dart';
-import 'package:myecl/phonebook/ui/pages/main_page/research_bar.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/ui/widgets/admin_button.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/phonebook/providers/association_filtered_list_provider.dart';
+import 'package:titan/phonebook/providers/association_kind_provider.dart';
+import 'package:titan/phonebook/providers/association_kinds_provider.dart';
+import 'package:titan/phonebook/providers/association_list_provider.dart';
+import 'package:titan/phonebook/providers/association_provider.dart';
+import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
+import 'package:titan/phonebook/router.dart';
+import 'package:titan/phonebook/tools/constants.dart';
+import 'package:titan/phonebook/ui/components/kinds_bar.dart';
+import 'package:titan/phonebook/ui/pages/main_page/association_card.dart';
+import 'package:titan/phonebook/ui/phonebook.dart';
+import 'package:titan/phonebook/ui/pages/main_page/research_bar.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/tools/ui/widgets/admin_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PhonebookMainPage extends HookConsumerWidget {
@@ -29,8 +29,9 @@ class PhonebookMainPage extends HookConsumerWidget {
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associationList = ref.watch(associationListProvider);
     final associationFilteredList = ref.watch(associationFilteredListProvider);
-    final associationKindsNotifier =
-        ref.watch(associationKindsProvider.notifier);
+    final associationKindsNotifier = ref.watch(
+      associationKindsProvider.notifier,
+    );
     final kindNotifier = ref.watch(associationKindProvider.notifier);
 
     return PhonebookTemplate(
@@ -77,8 +78,9 @@ class PhonebookMainPage extends HookConsumerWidget {
                             ? AssociationCard(
                                 association: association,
                                 onClicked: () {
-                                  associationNotifier
-                                      .setAssociation(association);
+                                  associationNotifier.setAssociation(
+                                    association,
+                                  );
                                   QR.to(
                                     PhonebookRouter.root +
                                         PhonebookRouter.associationDetail,

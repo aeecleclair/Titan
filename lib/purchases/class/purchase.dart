@@ -1,6 +1,6 @@
-import 'package:myecl/purchases/class/product.dart';
-import 'package:myecl/purchases/class/seller.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/purchases/class/product.dart';
+import 'package:titan/purchases/class/seller.dart';
+import 'package:titan/tools/functions.dart';
 
 class Purchase {
   Purchase({

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/recommendation/class/recommendation.dart';
+import 'package:titan/recommendation/class/recommendation.dart';
 
 class RecommendationNotifier extends StateNotifier<Recommendation> {
   RecommendationNotifier() : super(Recommendation.empty());
@@ -10,8 +10,6 @@ class RecommendationNotifier extends StateNotifier<Recommendation> {
 }
 
 final recommendationProvider =
-    StateNotifierProvider<RecommendationNotifier, Recommendation>(
-  (ref) {
-    return RecommendationNotifier();
-  },
-);
+    StateNotifierProvider<RecommendationNotifier, Recommendation>((ref) {
+      return RecommendationNotifier();
+    });

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/pack_ticket.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
-import 'package:myecl/raffle/providers/pack_ticket_list_provider.dart';
-import 'package:myecl/raffle/providers/pack_ticket_provider.dart';
-import 'package:myecl/raffle/providers/raffle_provider.dart';
-import 'package:myecl/raffle/router.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/ui/pages/creation_edit_page/ticket_ui.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:titan/raffle/class/pack_ticket.dart';
+import 'package:titan/raffle/class/raffle_status_type.dart';
+import 'package:titan/raffle/providers/pack_ticket_list_provider.dart';
+import 'package:titan/raffle/providers/pack_ticket_provider.dart';
+import 'package:titan/raffle/providers/raffle_provider.dart';
+import 'package:titan/raffle/router.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/raffle/ui/pages/creation_edit_page/ticket_ui.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class TicketHandler extends HookConsumerWidget {
@@ -41,18 +41,13 @@ class TicketHandler extends HookConsumerWidget {
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
           child: Row(
             children: [
-              const SizedBox(
-                width: 15,
-                height: 125,
-              ),
+              const SizedBox(width: 15, height: 125),
               if (raffle.raffleStatusType == RaffleStatusType.creation)
                 GestureDetector(
                   onTap: () {
@@ -79,8 +74,9 @@ class TicketHandler extends HookConsumerWidget {
                       color: RaffleColorConstants.ticketBack,
                       boxShadow: [
                         BoxShadow(
-                          color: RaffleColorConstants.ticketBack
-                              .withValues(alpha: 0.3),
+                          color: RaffleColorConstants.ticketBack.withValues(
+                            alpha: 0.3,
+                          ),
                           blurRadius: 8,
                           offset: const Offset(2, 3),
                         ),
@@ -111,7 +107,8 @@ class TicketHandler extends HookConsumerWidget {
                                     RaffleRouter.addEditPackTicket,
                               );
                             },
-                            showButton: raffle.raffleStatusType ==
+                            showButton:
+                                raffle.raffleStatusType ==
                                 RaffleStatusType.creation,
                             onDelete: () async {
                               await showDialog(
@@ -151,9 +148,7 @@ class TicketHandler extends HookConsumerWidget {
                   color: RaffleColorConstants.gradient2,
                 ),
               ),
-              const SizedBox(
-                width: 5,
-              ),
+              const SizedBox(width: 5),
             ],
           ),
         ),

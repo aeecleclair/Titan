@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:diacritic/diacritic.dart';
-import 'package:myecl/purchases/class/purchase.dart';
-import 'package:myecl/purchases/providers/purchase_list_provider.dart';
-import 'package:myecl/purchases/providers/research_filter_provider.dart';
+import 'package:titan/purchases/class/purchase.dart';
+import 'package:titan/purchases/providers/purchase_list_provider.dart';
+import 'package:titan/purchases/providers/research_filter_provider.dart';
 
 final purchaseFilteredListProvider = Provider<List<Purchase>>((ref) {
   final purchasesProvider = ref.watch(purchaseListProvider);
@@ -11,9 +11,9 @@ final purchaseFilteredListProvider = Provider<List<Purchase>>((ref) {
     data: (purchases) {
       return purchases
           .where(
-            (purchase) =>
-                removeDiacritics(purchase.product.nameFR.toLowerCase())
-                    .contains(removeDiacritics(searchFilter.toLowerCase())),
+            (purchase) => removeDiacritics(
+              purchase.product.nameFR.toLowerCase(),
+            ).contains(removeDiacritics(searchFilter.toLowerCase())),
           )
           .toList();
     },

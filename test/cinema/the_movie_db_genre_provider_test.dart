@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/cinema/class/the_movie_db_genre.dart';
-import 'package:myecl/cinema/providers/the_movie_db_genre_provider.dart';
-import 'package:myecl/cinema/repositories/the_movie_db_repository.dart';
-import 'package:myecl/tools/exception.dart';
+import 'package:titan/cinema/class/the_movie_db_genre.dart';
+import 'package:titan/cinema/providers/the_movie_db_genre_provider.dart';
+import 'package:titan/cinema/repositories/the_movie_db_repository.dart';
+import 'package:titan/tools/exception.dart';
 
 class MockTheMovieDBRepository extends Mock implements TheMovieDBRepository {}
 
@@ -14,10 +14,12 @@ void main() {
     late TheMovieDBGenreNotifier notifier;
     test('loadMovie returns AsyncValue with movie data', () async {
       theMovieDBRepository = MockTheMovieDBRepository();
-      when(() => theMovieDBRepository.getMovie(any()))
-          .thenAnswer((_) async => TheMovieDBMovie.empty());
-      notifier =
-          TheMovieDBGenreNotifier(theMoviesDBRepository: theMovieDBRepository);
+      when(
+        () => theMovieDBRepository.getMovie(any()),
+      ).thenAnswer((_) async => TheMovieDBMovie.empty());
+      notifier = TheMovieDBGenreNotifier(
+        theMoviesDBRepository: theMovieDBRepository,
+      );
       const movieId = '123';
       final result = await notifier.loadMovie(movieId);
 
@@ -31,18 +33,21 @@ void main() {
       );
     });
 
-    test('loadMovie returns AsyncValue with error when movie not found',
-        () async {
-      theMovieDBRepository = MockTheMovieDBRepository();
-      when(() => theMovieDBRepository.getMovie(any())).thenThrow(
-        (_) async => AppException(ErrorType.notFound, 'Not found'),
-      );
-      notifier =
-          TheMovieDBGenreNotifier(theMoviesDBRepository: theMovieDBRepository);
-      const movieId = 'invalid_id';
-      final result = await notifier.loadMovie(movieId);
+    test(
+      'loadMovie returns AsyncValue with error when movie not found',
+      () async {
+        theMovieDBRepository = MockTheMovieDBRepository();
+        when(
+          () => theMovieDBRepository.getMovie(any()),
+        ).thenThrow((_) async => AppException(ErrorType.notFound, 'Not found'));
+        notifier = TheMovieDBGenreNotifier(
+          theMoviesDBRepository: theMovieDBRepository,
+        );
+        const movieId = 'invalid_id';
+        final result = await notifier.loadMovie(movieId);
 
-      expect(result, isA<AsyncError>());
-    });
+        expect(result, isA<AsyncError>());
+      },
+    );
   });
 }

@@ -22,11 +22,7 @@ class SimpleGroup {
     return data;
   }
 
-  SimpleGroup copyWith({
-    String? name,
-    String? description,
-    String? id,
-  }) =>
+  SimpleGroup copyWith({String? name, String? description, String? id}) =>
       SimpleGroup(
         name: name ?? this.name,
         description: description ?? this.description,

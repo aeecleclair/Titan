@@ -17,22 +17,20 @@ class HorizontalListView<T> extends StatelessWidget {
     required this.height,
     this.children,
     this.scrollController,
-  })  : assert(children != null),
-        items = null,
-        itemBuilder = null,
-        horizontalSpace = null,
-        length = null,
-        firstChild = null,
-        lastChild = null,
-        childDelegate = SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          clipBehavior: Clip.none,
-          controller: scrollController,
-          physics: const BouncingScrollPhysics(),
-          child: Row(
-            children: children!,
-          ),
-        );
+  }) : assert(children != null),
+       items = null,
+       itemBuilder = null,
+       horizontalSpace = null,
+       length = null,
+       firstChild = null,
+       lastChild = null,
+       childDelegate = SingleChildScrollView(
+         scrollDirection: Axis.horizontal,
+         clipBehavior: Clip.none,
+         controller: scrollController,
+         physics: const BouncingScrollPhysics(),
+         child: Row(children: children!),
+       );
 
   HorizontalListView.builder({
     super.key,
@@ -44,41 +42,42 @@ class HorizontalListView<T> extends StatelessWidget {
     this.lastChild,
     this.scrollController,
     this.horizontalSpace = 15,
-  })  : assert(itemBuilder != null),
-        assert(items != null),
-        children = null,
-        childDelegate = ListView.builder(
-          scrollDirection: Axis.horizontal,
-          clipBehavior: Clip.none,
-          controller: scrollController,
-          physics: const BouncingScrollPhysics(),
-          itemCount: (length ?? items!.length) +
-              2 +
-              (firstChild != null ? 1 : 0) +
-              (lastChild != null ? 1 : 0),
-          itemBuilder: (context, index) {
-            if (index == 0 ||
-                index ==
-                    items!.length +
-                        1 +
-                        (firstChild != null ? 1 : 0) +
-                        (lastChild != null ? 1 : 0)) {
-              return SizedBox(width: horizontalSpace);
-            }
-            if (index == 1 && firstChild != null) {
-              return firstChild;
-            }
-            if (index == items.length + (firstChild != null ? 1 : 0) + 1 &&
-                lastChild != null) {
-              return lastChild;
-            }
-            return itemBuilder?.call(
-              context,
-              items[index - 1 - (firstChild != null ? 1 : 0)],
-              index - 1 - (firstChild != null ? 1 : 0),
-            );
-          },
-        );
+  }) : assert(itemBuilder != null),
+       assert(items != null),
+       children = null,
+       childDelegate = ListView.builder(
+         scrollDirection: Axis.horizontal,
+         clipBehavior: Clip.none,
+         controller: scrollController,
+         physics: const BouncingScrollPhysics(),
+         itemCount:
+             (length ?? items!.length) +
+             2 +
+             (firstChild != null ? 1 : 0) +
+             (lastChild != null ? 1 : 0),
+         itemBuilder: (context, index) {
+           if (index == 0 ||
+               index ==
+                   items!.length +
+                       1 +
+                       (firstChild != null ? 1 : 0) +
+                       (lastChild != null ? 1 : 0)) {
+             return SizedBox(width: horizontalSpace);
+           }
+           if (index == 1 && firstChild != null) {
+             return firstChild;
+           }
+           if (index == items.length + (firstChild != null ? 1 : 0) + 1 &&
+               lastChild != null) {
+             return lastChild;
+           }
+           return itemBuilder?.call(
+             context,
+             items[index - 1 - (firstChild != null ? 1 : 0)],
+             index - 1 - (firstChild != null ? 1 : 0),
+           );
+         },
+       );
 
   @override
   Widget build(BuildContext context) {

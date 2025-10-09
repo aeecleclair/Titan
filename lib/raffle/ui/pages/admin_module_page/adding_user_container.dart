@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/ui/pages/admin_module_page/adding_user_card.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:titan/raffle/ui/pages/admin_module_page/adding_user_card.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/user/providers/user_list_provider.dart';
 
 class AddingUserContainer extends HookConsumerWidget {
   final VoidCallback onAdd;
@@ -14,8 +14,9 @@ class AddingUserContainer extends HookConsumerWidget {
     return AsyncChild(
       value: users,
       builder: (context, users) => Row(
-        children:
-            users.map((e) => AddingUserCard(user: e, onAdd: onAdd)).toList(),
+        children: users
+            .map((e) => AddingUserCard(user: e, onAdd: onAdd))
+            .toList(),
       ),
     );
   }

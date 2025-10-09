@@ -33,7 +33,7 @@ jobs:
           echo versionName=$versionName >> $GITHUB_OUTPUT
           echo dockertag=$dockertag >> $GITHUB_OUTPUT
 
-  build-and-deploy:
+  build-and-deploy-web:
     name: Release Titan ${{ needs.extract-version.outputs.tag }} Web
     runs-on: ubuntu-latest
     needs: [extract-version]
@@ -61,7 +61,7 @@ jobs:
         env:
           PROD_HOST: ${{ vars.PROD_HOST }}
           ALPHA_HOST: ${{ vars.ALPHA_HOST }}
-          
+
       - name: Configure Alpha env
         if: needs.extract-version.outputs.isAlpha == 'true'
         run: |

@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/booking/class/booking.dart';
-import 'package:myecl/booking/repositories/booking_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/booking/class/booking.dart';
+import 'package:titan/booking/repositories/booking_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class ConfirmedBookingListProvider extends ListNotifier<Booking> {
   final BookingRepository bookingRepository;
   ConfirmedBookingListProvider({required this.bookingRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Booking>>> loadConfirmedBooking() async {
     return await loadList(
@@ -39,13 +39,17 @@ class ConfirmedBookingListProvider extends ListNotifier<Booking> {
   }
 }
 
-final confirmedBookingListProvider = StateNotifierProvider<
-    ConfirmedBookingListProvider, AsyncValue<List<Booking>>>((ref) {
-  final bookingRepository = ref.watch(bookingRepositoryProvider);
-  final provider =
-      ConfirmedBookingListProvider(bookingRepository: bookingRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    await provider.loadConfirmedBooking();
-  });
-  return provider;
-});
+final confirmedBookingListProvider =
+    StateNotifierProvider<
+      ConfirmedBookingListProvider,
+      AsyncValue<List<Booking>>
+    >((ref) {
+      final bookingRepository = ref.watch(bookingRepositoryProvider);
+      final provider = ConfirmedBookingListProvider(
+        bookingRepository: bookingRepository,
+      );
+      tokenExpireWrapperAuth(ref, () async {
+        await provider.loadConfirmedBooking();
+      });
+      return provider;
+    });

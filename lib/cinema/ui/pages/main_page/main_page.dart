@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/cinema/providers/cinema_topic_provider.dart';
-import 'package:myecl/cinema/providers/is_cinema_admin.dart';
-import 'package:myecl/cinema/providers/main_page_index_provider.dart';
-import 'package:myecl/cinema/providers/scroll_provider.dart';
-import 'package:myecl/cinema/providers/session_list_page_provider.dart';
-import 'package:myecl/cinema/providers/session_list_provider.dart';
-import 'package:myecl/cinema/providers/session_poster_map_provider.dart';
-import 'package:myecl/cinema/providers/session_provider.dart';
-import 'package:myecl/cinema/router.dart';
-import 'package:myecl/cinema/tools/constants.dart';
-import 'package:myecl/cinema/ui/cinema.dart';
-import 'package:myecl/cinema/ui/pages/main_page/session_card.dart';
-import 'package:myecl/drawer/providers/is_web_format_provider.dart';
-import 'package:myecl/tools/ui/widgets/admin_button.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
+import 'package:titan/cinema/providers/cinema_topic_provider.dart';
+import 'package:titan/cinema/providers/is_cinema_admin.dart';
+import 'package:titan/cinema/providers/main_page_index_provider.dart';
+import 'package:titan/cinema/providers/scroll_provider.dart';
+import 'package:titan/cinema/providers/session_list_page_provider.dart';
+import 'package:titan/cinema/providers/session_list_provider.dart';
+import 'package:titan/cinema/providers/session_poster_map_provider.dart';
+import 'package:titan/cinema/providers/session_provider.dart';
+import 'package:titan/cinema/router.dart';
+import 'package:titan/cinema/tools/constants.dart';
+import 'package:titan/cinema/ui/cinema.dart';
+import 'package:titan/cinema/ui/pages/main_page/session_card.dart';
+import 'package:titan/drawer/providers/is_web_format_provider.dart';
+import 'package:titan/tools/ui/widgets/admin_button.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class CinemaMainPage extends HookConsumerWidget {
@@ -26,13 +26,15 @@ class CinemaMainPage extends HookConsumerWidget {
     final sessionList = ref.watch(sessionListProvider);
     final sessionListNotifier = ref.read(sessionListProvider.notifier);
     final sessionNotifier = ref.watch(sessionProvider.notifier);
-    final sessionPosterMapNotifier =
-        ref.watch(sessionPosterMapProvider.notifier);
+    final sessionPosterMapNotifier = ref.watch(
+      sessionPosterMapProvider.notifier,
+    );
     final initialPageNotifier = ref.watch(mainPageIndexProvider.notifier);
     final initialPage = ref.watch(mainPageIndexProvider);
     int currentPage = initialPage;
-    final pageController =
-        ref.watch(sessionListPageControllerProvider(initialPage));
+    final pageController = ref.watch(
+      sessionListPageControllerProvider(initialPage),
+    );
     final scrollNotifier = ref.watch(scrollProvider.notifier);
     final isAdmin = ref.watch(isCinemaAdminProvider);
     final isWebFormat = ref.watch(isWebFormatProvider);

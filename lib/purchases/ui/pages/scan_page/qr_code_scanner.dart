@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:myecl/purchases/class/ticket.dart';
+import 'package:titan/purchases/class/ticket.dart';
 
 class QRCodeScannerScreen extends StatefulWidget {
   const QRCodeScannerScreen({
@@ -10,7 +10,7 @@ class QRCodeScannerScreen extends StatefulWidget {
     required this.scanner,
   });
 
-  final Function onScan;
+  final Function(String) onScan;
   final AsyncValue<Ticket> scanner;
 
   @override
@@ -46,10 +46,13 @@ class QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
         );
       },
       onDetect: (BarcodeCapture capture) async {
+        final rawValue = capture.barcodes.firstOrNull?.rawValue;
         setState(() {
-          qrCode = capture.barcodes.first.rawValue;
+          qrCode = rawValue;
         });
-        widget.onScan(qrCode!);
+        if (rawValue != null) {
+          widget.onScan(rawValue);
+        }
       },
     );
   }

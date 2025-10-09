@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/admin/providers/is_admin_provider.dart';
-import 'package:myecl/admin/router.dart';
-import 'package:myecl/auth/providers/is_connected_provider.dart';
-import 'package:myecl/drawer/providers/animation_provider.dart';
-import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/drawer/tools/constants.dart';
-import 'package:myecl/home/providers/scrolled_provider.dart';
-import 'package:myecl/settings/router.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/providers/path_forwarding_provider.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/user/providers/user_provider.dart';
-import 'package:myecl/user/providers/profile_picture_provider.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/admin/router.dart';
+import 'package:titan/auth/providers/is_connected_provider.dart';
+import 'package:titan/drawer/providers/animation_provider.dart';
+import 'package:titan/drawer/providers/swipe_provider.dart';
+import 'package:titan/drawer/tools/constants.dart';
+import 'package:titan/home/providers/scrolled_provider.dart';
+import 'package:titan/settings/router.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/path_forwarding_provider.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/user/providers/user_provider.dart';
+import 'package:titan/user/providers/profile_picture_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class DrawerTopBar extends HookConsumerWidget {
@@ -38,8 +38,9 @@ class DrawerTopBar extends HookConsumerWidget {
 
     void onBack(String path) {
       if (animation != null) {
-        final controllerNotifier =
-            ref.watch(swipeControllerProvider(animation).notifier);
+        final controllerNotifier = ref.watch(
+          swipeControllerProvider(animation).notifier,
+        );
         controllerNotifier.toggle();
       }
       QR.to(path);
@@ -49,17 +50,13 @@ class DrawerTopBar extends HookConsumerWidget {
 
     return Column(
       children: [
-        Container(
-          height: 20,
-        ),
+        Container(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
-                Container(
-                  width: 25,
-                ),
+                Container(width: 25),
                 GestureDetector(
                   onTap: () {
                     if (isAdmin) {
@@ -86,8 +83,9 @@ class DrawerTopBar extends HookConsumerWidget {
                                     shape: BoxShape.circle,
                                     boxShadow: [
                                       BoxShadow(
-                                        color:
-                                            Colors.black.withValues(alpha: 0.1),
+                                        color: Colors.black.withValues(
+                                          alpha: 0.1,
+                                        ),
                                         spreadRadius: 5,
                                         blurRadius: 10,
                                         offset: const Offset(0, 3),
@@ -140,9 +138,7 @@ class DrawerTopBar extends HookConsumerWidget {
                                   ),
                               ],
                             ),
-                            const SizedBox(
-                              width: 15,
-                            ),
+                            const SizedBox(width: 15),
                           ],
                         ),
                       ),
@@ -160,9 +156,7 @@ class DrawerTopBar extends HookConsumerWidget {
                               ),
                             ),
                           ),
-                          Container(
-                            height: 3,
-                          ),
+                          Container(height: 3),
                           SizedBox(
                             width: 200,
                             child: Text(
@@ -210,20 +204,22 @@ class DrawerTopBar extends HookConsumerWidget {
                           children: [
                             HeroIcon(
                               HeroIcons.cog,
-                              color: pathForwarding.path
-                                      .startsWith(SettingsRouter.root)
+                              color:
+                                  pathForwarding.path.startsWith(
+                                    SettingsRouter.root,
+                                  )
                                   ? DrawerColorConstants.selectedText
                                   : DrawerColorConstants.lightText,
                               size: 25,
                             ),
-                            Container(
-                              width: 15,
-                            ),
+                            Container(width: 15),
                             Text(
                               DrawerTextConstants.settings,
                               style: TextStyle(
-                                color: pathForwarding.path
-                                        .startsWith(SettingsRouter.root)
+                                color:
+                                    pathForwarding.path.startsWith(
+                                      SettingsRouter.root,
+                                    )
                                     ? DrawerColorConstants.selectedText
                                     : DrawerColorConstants.lightText,
                                 fontSize: 15,
@@ -233,9 +229,7 @@ class DrawerTopBar extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const SizedBox(height: 10),
                     if (isAdmin)
                       Transform.translate(
                         offset: Offset(0, -15 * (1 - dropDownAnimation.value)),
@@ -246,28 +240,28 @@ class DrawerTopBar extends HookConsumerWidget {
                             children: [
                               HeroIcon(
                                 HeroIcons.userGroup,
-                                color: pathForwarding.path
-                                        .startsWith(AdminRouter.root)
+                                color:
+                                    pathForwarding.path.startsWith(
+                                      AdminRouter.root,
+                                    )
                                     ? DrawerColorConstants.selectedText
                                     : DrawerColorConstants.lightText,
                                 size: 25,
                               ),
-                              Container(
-                                width: 15,
-                              ),
+                              Container(width: 15),
                               Text(
                                 DrawerTextConstants.admin,
                                 style: TextStyle(
-                                  color: pathForwarding.path
-                                          .startsWith(AdminRouter.root)
+                                  color:
+                                      pathForwarding.path.startsWith(
+                                        AdminRouter.root,
+                                      )
                                       ? DrawerColorConstants.selectedText
                                       : DrawerColorConstants.lightText,
                                   fontSize: 15,
                                 ),
                               ),
-                              Container(
-                                width: 25,
-                              ),
+                              Container(width: 25),
                             ],
                           ),
                         ),

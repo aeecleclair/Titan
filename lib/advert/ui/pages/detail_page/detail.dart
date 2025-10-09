@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/advert/providers/advert_poster_provider.dart';
-import 'package:myecl/advert/providers/advert_posters_provider.dart';
-import 'package:myecl/advert/providers/advert_provider.dart';
-import 'package:myecl/advert/ui/components/tag_chip.dart';
-import 'package:myecl/cinema/tools/functions.dart';
-import 'package:myecl/tools/ui/builders/auto_loader_child.dart';
-import 'package:myecl/tools/ui/layouts/horizontal_list_view.dart';
-import 'package:myecl/tools/ui/widgets/text_with_hyper_link.dart';
+import 'package:titan/advert/providers/advert_poster_provider.dart';
+import 'package:titan/advert/providers/advert_posters_provider.dart';
+import 'package:titan/advert/providers/advert_provider.dart';
+import 'package:titan/advert/ui/components/tag_chip.dart';
+import 'package:titan/cinema/tools/functions.dart';
+import 'package:titan/tools/ui/builders/auto_loader_child.dart';
+import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
+import 'package:titan/tools/ui/widgets/text_with_hyper_link.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdvertDetailPage extends HookConsumerWidget {
@@ -24,8 +24,9 @@ class AdvertDetailPage extends HookConsumerWidget {
     );
     final advertPostersNotifier = ref.watch(advertPostersProvider.notifier);
     final logoNotifier = ref.watch(advertPosterProvider.notifier);
-    final filteredTagList =
-        advert.tags.where((element) => element != "").toList();
+    final filteredTagList = advert.tags
+        .where((element) => element != "")
+        .toList();
     final inTagChipsList = [advert.announcer.name] + filteredTagList;
 
     return Stack(
@@ -47,19 +48,15 @@ class AdvertDetailPage extends HookConsumerWidget {
             notifier: advertPostersNotifier,
             mapKey: advert,
             loader: (ref) => logoNotifier.getAdvertPoster(advert.id),
-            dataBuilder: (context, value) => Image(
-              image: value.first.image,
-              fit: BoxFit.fill,
-            ),
+            dataBuilder: (context, value) =>
+                Image(image: value.first.image, fit: BoxFit.fill),
           ),
         ),
         SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              const SizedBox(
-                height: 220,
-              ),
+              const SizedBox(height: 220),
               Container(
                 width: double.infinity,
                 height: 50,
@@ -80,9 +77,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                 color: Colors.grey.shade50,
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
+                    const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       alignment: Alignment.center,
@@ -96,22 +91,16 @@ class AdvertDetailPage extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                    const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       alignment: Alignment.center,
                       child: Text(
                         formatDate(advert.date),
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
+                        style: const TextStyle(fontSize: 18),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     HorizontalListView.builder(
                       height: 35,
                       horizontalSpace: 30,
@@ -126,9 +115,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                       child: TextWithHyperLink(
                         advert.content,
                         textAlign: TextAlign.left,
-                        style: const TextStyle(
-                          fontSize: 15,
-                        ),
+                        style: const TextStyle(fontSize: 15),
                       ),
                     ),
                     const SizedBox(height: 140),
@@ -160,16 +147,15 @@ class AdvertDetailPage extends HookConsumerWidget {
                         ),
                       ],
                     ),
-                    child: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.black,
-                    ),
+                    child: const Icon(Icons.arrow_back, color: Colors.black),
                   ),
                 ),
                 const Spacer(),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 12,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(18),

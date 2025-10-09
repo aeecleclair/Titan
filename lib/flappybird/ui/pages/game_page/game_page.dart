@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/flappybird/class/score.dart';
-import 'package:myecl/flappybird/providers/bird_provider.dart';
-import 'package:myecl/flappybird/providers/current_best_score.dart';
-import 'package:myecl/flappybird/providers/game_loop_provider.dart';
-import 'package:myecl/flappybird/providers/game_state_provider.dart';
-import 'package:myecl/flappybird/providers/pipe_list_provider.dart';
-import 'package:myecl/flappybird/providers/score_list_provider.dart';
-import 'package:myecl/flappybird/ui/flappybird_template.dart';
-import 'package:myecl/flappybird/ui/pages/game_page/pipe_handler.dart';
-import 'package:myecl/flappybird/ui/pages/game_page/score.dart';
-import 'package:myecl/flappybird/ui/pages/game_page/start_screen.dart';
+import 'package:titan/flappybird/class/score.dart';
+import 'package:titan/flappybird/providers/bird_provider.dart';
+import 'package:titan/flappybird/providers/current_best_score.dart';
+import 'package:titan/flappybird/providers/game_loop_provider.dart';
+import 'package:titan/flappybird/providers/game_state_provider.dart';
+import 'package:titan/flappybird/providers/pipe_list_provider.dart';
+import 'package:titan/flappybird/providers/score_list_provider.dart';
+import 'package:titan/flappybird/ui/flappybird_template.dart';
+import 'package:titan/flappybird/ui/pages/game_page/pipe_handler.dart';
+import 'package:titan/flappybird/ui/pages/game_page/score.dart';
+import 'package:titan/flappybird/ui/pages/game_page/start_screen.dart';
 
 import 'bird.dart';
 
@@ -66,10 +66,7 @@ class GamePage extends HookConsumerWidget {
                       pipeListNotifier.clearPipe();
                       Navigator.pop(context);
                     },
-                    child: const Icon(
-                      Icons.refresh,
-                      color: Colors.brown,
-                    ),
+                    child: const Icon(Icons.refresh, color: Colors.brown),
                   ),
                 ),
               ],

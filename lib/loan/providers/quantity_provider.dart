@@ -16,5 +16,5 @@ class QuantityNotifier extends StateNotifier<TextEditingController> {
 
 final quantityProvider =
     StateNotifierProvider<QuantityNotifier, TextEditingController>((ref) {
-  return QuantityNotifier();
-});
+      return QuantityNotifier();
+    });

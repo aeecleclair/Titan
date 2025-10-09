@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/settings/providers/module_list_provider.dart';
+import 'package:titan/drawer/class/module.dart';
+import 'package:titan/settings/providers/module_list_provider.dart';
 
 class ModuleListNotifier extends StateNotifier<List<Module>> {
   ModuleListNotifier(super.listModule);
@@ -22,6 +22,6 @@ class ModuleListNotifier extends StateNotifier<List<Module>> {
 
 final listModuleProvider =
     StateNotifierProvider<ModuleListNotifier, List<Module>>((ref) {
-  final modules = ref.watch(modulesProvider);
-  return ModuleListNotifier(modules);
-});
+      final modules = ref.watch(modulesProvider);
+      return ModuleListNotifier(modules);
+    });

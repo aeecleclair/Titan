@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
 
 class ImagePickerOnTap extends StatelessWidget {
   final ImagePicker picker;

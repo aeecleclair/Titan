@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/purchases/providers/purchases_admin_provider.dart';
-import 'package:myecl/purchases/providers/ticket_list_provider.dart';
-import 'package:myecl/purchases/providers/ticket_provider.dart';
-import 'package:myecl/purchases/router.dart';
-import 'package:myecl/purchases/tools/constants.dart';
-import 'package:myecl/purchases/ui/pages/main_page/custom_button.dart';
-import 'package:myecl/purchases/ui/pages/main_page/ticket_card.dart';
-import 'package:myecl/purchases/ui/purchases.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/tools/ui/layouts/refresher.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/purchases/providers/purchases_admin_provider.dart';
+import 'package:titan/purchases/providers/ticket_list_provider.dart';
+import 'package:titan/purchases/providers/ticket_provider.dart';
+import 'package:titan/purchases/router.dart';
+import 'package:titan/purchases/tools/constants.dart';
+import 'package:titan/purchases/ui/pages/main_page/custom_button.dart';
+import 'package:titan/purchases/ui/pages/main_page/ticket_card.dart';
+import 'package:titan/purchases/ui/purchases.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class PurchasesMainPage extends HookConsumerWidget {
@@ -85,8 +85,9 @@ class PurchasesMainPage extends HookConsumerWidget {
                             },
                           ),
                         ),
-                        orElse: () =>
-                            [const Text(PurchasesTextConstants.ticketsError)],
+                        orElse: () => [
+                          const Text(PurchasesTextConstants.ticketsError),
+                        ],
                       ),
                   ],
                 );

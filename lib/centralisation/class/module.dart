@@ -40,14 +40,13 @@ class Module {
     String? icon,
     String? url,
     bool? liked,
-  }) =>
-      Module(
-        name: name ?? this.name,
-        description: description ?? this.name,
-        icon: icon ?? this.icon,
-        url: url ?? this.url,
-        liked: liked,
-      );
+  }) => Module(
+    name: name ?? this.name,
+    description: description ?? this.name,
+    icon: icon ?? this.icon,
+    url: url ?? this.url,
+    liked: liked,
+  );
 
   Module.empty() {
     name = '';

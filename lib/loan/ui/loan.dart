@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/providers/loaners_items_provider.dart';
-import 'package:myecl/loan/router.dart';
-import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/tools/ui/widgets/top_bar.dart';
+import 'package:titan/loan/providers/item_list_provider.dart';
+import 'package:titan/loan/providers/loaner_provider.dart';
+import 'package:titan/loan/providers/loaners_items_provider.dart';
+import 'package:titan/loan/router.dart';
+import 'package:titan/loan/tools/constants.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LoanTemplate extends HookConsumerWidget {
@@ -23,8 +23,9 @@ class LoanTemplate extends HookConsumerWidget {
             onBack: () {
               if (QR.currentPath ==
                   LoanRouter.root + LoanRouter.admin + LoanRouter.addEditLoan) {
-                final loanersItemsNotifier =
-                    ref.watch(loanersItemsProvider.notifier);
+                final loanersItemsNotifier = ref.watch(
+                  loanersItemsProvider.notifier,
+                );
                 final loaner = ref.watch(loanerProvider);
                 final itemList = ref.watch(itemListProvider);
                 loanersItemsNotifier.setTData(loaner, itemList);

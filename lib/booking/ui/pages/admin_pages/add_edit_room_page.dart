@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:myecl/booking/class/manager.dart';
-import 'package:myecl/booking/class/room.dart';
-import 'package:myecl/booking/providers/manager_list_provider.dart';
-import 'package:myecl/booking/providers/manager_id_provider.dart';
-import 'package:myecl/booking/providers/room_list_provider.dart';
-import 'package:myecl/booking/providers/room_provider.dart';
-import 'package:myecl/booking/tools/constants.dart';
-import 'package:myecl/booking/ui/booking.dart';
-import 'package:myecl/booking/ui/pages/admin_pages/admin_entry.dart';
-import 'package:myecl/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
-import 'package:myecl/booking/ui/pages/admin_pages/admin_shrink_button.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/layouts/item_chip.dart';
-import 'package:myecl/tools/ui/widgets/dialog.dart';
+import 'package:titan/booking/class/manager.dart';
+import 'package:titan/service/class/room.dart';
+import 'package:titan/booking/providers/manager_list_provider.dart';
+import 'package:titan/booking/providers/manager_id_provider.dart';
+import 'package:titan/service/providers/room_list_provider.dart';
+import 'package:titan/booking/providers/room_provider.dart';
+import 'package:titan/booking/tools/constants.dart';
+import 'package:titan/booking/ui/booking.dart';
+import 'package:titan/booking/ui/pages/admin_pages/admin_entry.dart';
+import 'package:titan/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
+import 'package:titan/booking/ui/pages/admin_pages/admin_shrink_button.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/layouts/item_chip.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditRoomPage extends HookConsumerWidget {
@@ -41,9 +41,7 @@ class AddEditRoomPage extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           children: [
-            const SizedBox(
-              height: 50,
-            ),
+            const SizedBox(height: 50),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -61,16 +59,12 @@ class AddEditRoomPage extends HookConsumerWidget {
               key: key,
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   AdminEntry(
                     name: BookingTextConstants.roomName,
                     nameController: name,
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   managerList.when(
                     data: (List<Manager> data) => AdminScrollChips(
                       data: data,
@@ -102,55 +96,48 @@ class AddEditRoomPage extends HookConsumerWidget {
                       return const Center(child: CircularProgressIndicator());
                     },
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  const SizedBox(height: 50),
                   AdminShrinkButton(
                     onTap: () async {
-                      await tokenExpireWrapper(
-                        ref,
-                        () async {
-                          Room newRoom = Room(
-                            id: isEdit ? room.id : '',
-                            name: name.text,
-                            managerId: managerId,
-                          );
-                          final value = isEdit
-                              ? await roomListNotifier.updateRoom(newRoom)
-                              : await roomListNotifier.addRoom(newRoom);
-                          if (value) {
-                            QR.back();
-                            isEdit
-                                ? displayToastWithContext(
-                                    TypeMsg.msg,
-                                    BookingTextConstants.editedRoom,
-                                  )
-                                : displayToastWithContext(
-                                    TypeMsg.msg,
-                                    BookingTextConstants.addedRoom,
-                                  );
-                          } else {
-                            isEdit
-                                ? displayToastWithContext(
-                                    TypeMsg.error,
-                                    BookingTextConstants.editionError,
-                                  )
-                                : displayToastWithContext(
-                                    TypeMsg.error,
-                                    BookingTextConstants.addingError,
-                                  );
-                          }
-                        },
-                      );
+                      await tokenExpireWrapper(ref, () async {
+                        Room newRoom = Room(
+                          id: isEdit ? room.id : '',
+                          name: name.text,
+                          managerId: managerId,
+                        );
+                        final value = isEdit
+                            ? await roomListNotifier.updateRoom(newRoom)
+                            : await roomListNotifier.addRoom(newRoom);
+                        if (value) {
+                          QR.back();
+                          isEdit
+                              ? displayToastWithContext(
+                                  TypeMsg.msg,
+                                  BookingTextConstants.editedRoom,
+                                )
+                              : displayToastWithContext(
+                                  TypeMsg.msg,
+                                  BookingTextConstants.addedRoom,
+                                );
+                        } else {
+                          isEdit
+                              ? displayToastWithContext(
+                                  TypeMsg.error,
+                                  BookingTextConstants.editionError,
+                                )
+                              : displayToastWithContext(
+                                  TypeMsg.error,
+                                  BookingTextConstants.addingError,
+                                );
+                        }
+                      });
                     },
                     buttonText: isEdit
                         ? BookingTextConstants.edit
                         : BookingTextConstants.add,
                   ),
                   if (isEdit) ...[
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
                     AdminShrinkButton(
                       onTap: () async {
                         await tokenExpireWrapper(ref, () async {
@@ -160,8 +147,9 @@ class AddEditRoomPage extends HookConsumerWidget {
                               descriptions:
                                   BookingTextConstants.deleteRoomConfirmation,
                               onYes: () async {
-                                final value =
-                                    await roomListNotifier.deleteRoom(room);
+                                final value = await roomListNotifier.deleteRoom(
+                                  room,
+                                );
                                 if (value) {
                                   QR.back();
                                   displayToastWithContext(

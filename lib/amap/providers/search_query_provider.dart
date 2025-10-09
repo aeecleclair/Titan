@@ -12,5 +12,5 @@ class SearchingQueryNotifier extends StateNotifier<TextEditingController> {
 
 final searchingQueryProvider =
     StateNotifierProvider<SearchingQueryNotifier, TextEditingController>((ref) {
-  return SearchingQueryNotifier();
-});
+      return SearchingQueryNotifier();
+    });

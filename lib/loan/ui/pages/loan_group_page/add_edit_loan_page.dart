@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/providers/caution_provider.dart';
-import 'package:myecl/loan/providers/item_focus_provider.dart';
-import 'package:myecl/loan/providers/item_list_provider.dart';
-import 'package:myecl/loan/providers/loan_provider.dart';
-import 'package:myecl/loan/providers/loaner_provider.dart';
-import 'package:myecl/loan/providers/loaners_items_provider.dart';
-import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/ui/loan.dart';
-import 'package:myecl/loan/ui/pages/loan_group_page/add_edit_button.dart';
-import 'package:myecl/loan/ui/pages/loan_group_page/end_date_entry.dart';
-import 'package:myecl/loan/ui/pages/loan_group_page/item_bar.dart';
-import 'package:myecl/loan/ui/pages/loan_group_page/number_selected_text.dart';
-import 'package:myecl/loan/ui/pages/loan_group_page/search_result.dart';
-import 'package:myecl/loan/ui/pages/loan_group_page/start_date_entry.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
-import 'package:myecl/tools/ui/widgets/styled_search_bar.dart';
-import 'package:myecl/tools/ui/widgets/text_entry.dart';
-import 'package:myecl/user/providers/user_list_provider.dart';
+import 'package:titan/loan/class/loan.dart';
+import 'package:titan/loan/providers/caution_provider.dart';
+import 'package:titan/loan/providers/item_focus_provider.dart';
+import 'package:titan/loan/providers/item_list_provider.dart';
+import 'package:titan/loan/providers/loan_provider.dart';
+import 'package:titan/loan/providers/loaner_provider.dart';
+import 'package:titan/loan/providers/loaners_items_provider.dart';
+import 'package:titan/loan/tools/constants.dart';
+import 'package:titan/loan/ui/loan.dart';
+import 'package:titan/loan/ui/pages/loan_group_page/add_edit_button.dart';
+import 'package:titan/loan/ui/pages/loan_group_page/end_date_entry.dart';
+import 'package:titan/loan/ui/pages/loan_group_page/item_bar.dart';
+import 'package:titan/loan/ui/pages/loan_group_page/number_selected_text.dart';
+import 'package:titan/loan/ui/pages/loan_group_page/search_result.dart';
+import 'package:titan/loan/ui/pages/loan_group_page/start_date_entry.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
+import 'package:titan/user/providers/user_list_provider.dart';
 
 class AddEditLoanPage extends HookConsumerWidget {
   const AddEditLoanPage({super.key});
@@ -39,8 +39,9 @@ class AddEditLoanPage extends HookConsumerWidget {
     final loanersItemsNotifier = ref.watch(loanersItemsProvider.notifier);
     final itemList = ref.watch(itemListProvider);
     final itemListNotifier = ref.watch(itemListProvider.notifier);
-    final queryController =
-        useTextEditingController(text: isEdit ? loan.borrower.getName() : "");
+    final queryController = useTextEditingController(
+      text: isEdit ? loan.borrower.getName() : "",
+    );
     final focus = ref.watch(itemFocusProvider);
     final focusNode = useFocusNode();
     if (focus) {
@@ -84,8 +85,9 @@ class AddEditLoanPage extends HookConsumerWidget {
                       onChanged: (value) {
                         tokenExpireWrapper(ref, () async {
                           if (queryController.text.isNotEmpty) {
-                            await usersNotifier
-                                .filterUsers(queryController.text);
+                            await usersNotifier.filterUsers(
+                              queryController.text,
+                            );
                           } else {
                             usersNotifier.clear();
                           }

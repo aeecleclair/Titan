@@ -1,12 +1,12 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/flappybird/ui/pages/game_page/game_page.dart'
+import 'package:titan/drawer/class/module.dart';
+import 'package:titan/flappybird/ui/pages/game_page/game_page.dart'
     deferred as play_page;
-import 'package:myecl/flappybird/ui/pages/leaderboard_page/leaderboard_page.dart'
+import 'package:titan/flappybird/ui/pages/leaderboard_page/leaderboard_page.dart'
     deferred as main_page;
-import 'package:myecl/tools/middlewares/authenticated_middleware.dart';
-import 'package:myecl/tools/middlewares/deferred_middleware.dart';
+import 'package:titan/tools/middlewares/authenticated_middleware.dart';
+import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class FlappyBirdRouter {
@@ -22,21 +22,19 @@ class FlappyBirdRouter {
   FlappyBirdRouter(this.ref);
 
   QRoute route() => QRoute(
-        name: "flappybird",
-        path: FlappyBirdRouter.root,
-        builder: () => play_page.GamePage(),
-        middleware: [
-          AuthenticatedMiddleware(ref),
-          DeferredLoadingMiddleware(play_page.loadLibrary),
-        ],
-        children: [
-          QRoute(
-            path: leaderBoard,
-            builder: () => main_page.LeaderBoardPage(),
-            middleware: [
-              DeferredLoadingMiddleware(main_page.loadLibrary),
-            ],
-          ),
-        ],
-      );
+    name: "flappybird",
+    path: FlappyBirdRouter.root,
+    builder: () => play_page.GamePage(),
+    middleware: [
+      AuthenticatedMiddleware(ref),
+      DeferredLoadingMiddleware(play_page.loadLibrary),
+    ],
+    children: [
+      QRoute(
+        path: leaderBoard,
+        builder: () => main_page.LeaderBoardPage(),
+        middleware: [DeferredLoadingMiddleware(main_page.loadLibrary)],
+      ),
+    ],
+  );
 }

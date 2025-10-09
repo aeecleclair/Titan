@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/phonebook/class/association.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
+import 'package:titan/phonebook/class/association.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
 
 class AssociationCard extends HookConsumerWidget {
   const AssociationCard({

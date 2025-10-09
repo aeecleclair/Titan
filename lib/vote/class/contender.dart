@@ -1,6 +1,6 @@
-import 'package:myecl/vote/class/members.dart';
-import 'package:myecl/vote/class/section.dart';
-import 'package:myecl/vote/tools/functions.dart';
+import 'package:titan/vote/class/members.dart';
+import 'package:titan/vote/class/section.dart';
+import 'package:titan/vote/tools/functions.dart';
 
 enum ListType { serious, fake, blank }
 
@@ -61,8 +61,9 @@ class Contender {
       name: map['name'],
       description: map['description'],
       listType: stringToListType(map['type']),
-      members:
-          List<Member>.from(map['members']?.map((x) => Member.fromJson(x))),
+      members: List<Member>.from(
+        map['members']?.map((x) => Member.fromJson(x)),
+      ),
       section: Section.fromJson(map['section']),
       program: map['program'] ?? '',
     );

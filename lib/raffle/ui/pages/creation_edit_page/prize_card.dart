@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/raffle/class/prize.dart';
-import 'package:myecl/raffle/class/raffle_status_type.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/raffle/class/prize.dart';
+import 'package:titan/raffle/class/raffle_status_type.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class PrizeCard extends StatelessWidget {
   final Prize lot;
@@ -30,10 +30,7 @@ class PrizeCard extends StatelessWidget {
         height: 125,
         decoration: BoxDecoration(
           gradient: const RadialGradient(
-            colors: [
-              Color(0xff0193a5),
-              Color(0xff004a59),
-            ],
+            colors: [Color(0xff0193a5), Color(0xff004a59)],
             center: Alignment.topLeft,
             radius: 1.5,
           ),
@@ -147,68 +144,44 @@ class PrizeCard extends StatelessWidget {
                       ],
                     )
                   : status == RaffleStatusType.lock
-                      ? lot.quantity > 0
-                          ? Center(
-                              child: WaitingButton(
-                                builder: (child) => Container(
-                                  width: 40,
-                                  height: 40,
-                                  padding: const EdgeInsets.all(7),
-                                  decoration: BoxDecoration(
-                                    gradient: const LinearGradient(
-                                      colors: [
-                                        RaffleColorConstants.gradient2,
-                                        RaffleColorConstants.textDark,
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    ),
-                                    borderRadius: BorderRadius.circular(15),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: RaffleColorConstants.textDark
-                                            .withValues(alpha: 0.5),
-                                        blurRadius: 10,
-                                        offset: const Offset(2, 3),
-                                      ),
+                  ? lot.quantity > 0
+                        ? Center(
+                            child: WaitingButton(
+                              builder: (child) => Container(
+                                width: 40,
+                                height: 40,
+                                padding: const EdgeInsets.all(7),
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      RaffleColorConstants.gradient2,
+                                      RaffleColorConstants.textDark,
                                     ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
                                   ),
-                                  child: child,
-                                ),
-                                onTap: onDraw,
-                                child: const Row(
-                                  children: [
-                                    HeroIcon(
-                                      HeroIcons.envelopeOpen,
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(width: 15),
-                                    Text(
-                                      "Tirer",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                  borderRadius: BorderRadius.circular(15),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: RaffleColorConstants.textDark
+                                          .withValues(alpha: 0.5),
+                                      blurRadius: 10,
+                                      offset: const Offset(2, 3),
                                     ),
                                   ],
                                 ),
+                                child: child,
                               ),
-                            )
-                          : Container(
-                              height: 40,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 7,
-                                horizontal: 12,
-                              ),
+                              onTap: onDraw,
                               child: const Row(
                                 children: [
                                   HeroIcon(
-                                    HeroIcons.check,
+                                    HeroIcons.envelopeOpen,
                                     color: Colors.white,
                                   ),
                                   SizedBox(width: 15),
                                   Text(
-                                    "Tiré",
+                                    "Tirer",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -216,23 +189,44 @@ class PrizeCard extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                            )
-                      : const Expanded(
-                          child: Column(
-                            children: [
-                              Center(
-                                child: Text(
-                                  "En Attente",
+                            ),
+                          )
+                        : Container(
+                            height: 40,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 7,
+                              horizontal: 12,
+                            ),
+                            child: const Row(
+                              children: [
+                                HeroIcon(HeroIcons.check, color: Colors.white),
+                                SizedBox(width: 15),
+                                Text(
+                                  "Tiré",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                              ],
+                            ),
+                          )
+                  : const Expanded(
+                      child: Column(
+                        children: [
+                          Center(
+                            child: Text(
+                              "En Attente",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
                               ),
-                              Spacer(),
-                            ],
+                            ),
                           ),
-                        ),
+                          Spacer(),
+                        ],
+                      ),
+                    ),
               const SizedBox(height: 10),
             ],
           ),

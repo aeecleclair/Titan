@@ -9,6 +9,7 @@ on:
 jobs:
   extract-version:
     name: Determine version
+    # On macOS worker `base64 -D -o` should be used instead of `base64 -d >`
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.get-version.outputs.tag }}
@@ -29,47 +30,47 @@ jobs:
           echo isAlpha=$isAlpha >> $GITHUB_OUTPUT
           echo versionCode=$versionCode >> $GITHUB_OUTPUT
           echo versionName=$versionName >> $GITHUB_OUTPUT
-  
-  build:
+
+  build-and-deploy-mobile:
     name: Release Titan ${{ needs.extract-version.outputs.tag }} ${{ matrix.name }}
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     needs: [extract-version]
     strategy:
       fail-fast: false
       matrix:
         include:
-          - target: 'appbundle'
-            name: 'AAB'
+          - target: "appbundle"
+            name: "AAB"
             path: build/app/outputs/bundle/*Release/app-*-release.aab
-          - target: 'ipa --no-codesign'
-            name: 'IPA'
-            path: build/ios/ipa/*.ipa
-    
+          # - target: "ipa --no-codesign"
+          #   name: "IPA"
+          #   path: build/ios/ipa/*.ipa
+
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
-      
+
       - name: Setup Java
         if: matrix.name == 'AAB'
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17.x'
-          cache: 'gradle'
-      
+          distribution: "temurin"
+          java-version: "23.x"
+          cache: "gradle"
+
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          channel: "stable"
           flutter-version-file: pubspec.yaml
           cache: true
-      
+
       - name: Cleanup 🧹
         run: flutter clean
-      
+
       - name: Get Packages
         run: flutter pub get
-      
+
       - name: Configure Alpha env
         if: needs.extract-version.outputs.isAlpha == 'true'
         run: |
@@ -80,7 +81,7 @@ jobs:
           ALPHA_HOST: ${{ vars.ALPHA_HOST }}
           PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_ALPHA_HOST }}
           PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_ALPHA_DOMAIN }}
-      
+
       - name: Configure production env
         if: needs.extract-version.outputs.isAlpha == 'false'
         run: |
@@ -91,30 +92,29 @@ jobs:
           PROD_HOST: ${{ vars.PROD_HOST }}
           PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_HOST }}
           PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_DOMAIN }}
-          
-      
+
       - name: Add Firebase configuration for Alpha
         if: needs.extract-version.outputs.isAlpha == 'true'
         run: |
-          echo $GOOGLE_SERVICES_ALPHA_JSON_BASE64 | base64 -D -o android/app/src/alpha/google-services.json
-          echo $GOOGLE_SERVICE_INFO_ALPHA_PLIST_BASE64 | base64 -D -o ios/config/Alpha/GoogleService-Info.plist
+          echo $GOOGLE_SERVICES_ALPHA_JSON_BASE64 | base64 -d > android/app/src/alpha/google-services.json
+        #echo $GOOGLE_SERVICE_INFO_ALPHA_PLIST_BASE64 | base64 -D -o ios/config/Alpha/GoogleService-Info.plist
         env:
           GOOGLE_SERVICES_ALPHA_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_ALPHA_JSON_BASE64 }}
-          GOOGLE_SERVICE_INFO_ALPHA_PLIST_BASE64: ${{ secrets.GOOGLE_SERVICE_INFO_ALPHA_PLIST_BASE64 }}
-      
+          #GOOGLE_SERVICE_INFO_ALPHA_PLIST_BASE64: ${{ secrets.GOOGLE_SERVICE_INFO_ALPHA_PLIST_BASE64 }}
+
       - name: Add Firebase configuration for production
         if: needs.extract-version.outputs.isAlpha == 'false'
         run: |
-          echo $GOOGLE_SERVICES_JSON_BASE64 | base64 -D -o android/app/src/prod/google-services.json
-          echo $GOOGLE_SERVICE_INFO_PLIST_BASE64 | base64 -D -o ios/config/Prod/GoogleService-Info.plist
+          echo $GOOGLE_SERVICES_JSON_BASE64 | base64 -d > android/app/src/prod/google-services.json
+        #echo $GOOGLE_SERVICE_INFO_PLIST_BASE64 | base64 -D -o ios/config/Prod/GoogleService-Info.plist
         env:
           GOOGLE_SERVICES_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}
-          GOOGLE_SERVICE_INFO_PLIST_BASE64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_BASE64 }}
-      
+          #GOOGLE_SERVICE_INFO_PLIST_BASE64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_BASE64 }}
+
       - name: Create the Keystore
         if: matrix.name == 'AAB'
         run: |
-          echo $KEYSTORE_BASE64 | base64 -D -o $RUNNER_TEMP/myecl.keystore
+          echo $KEYSTORE_BASE64 | base64 -d > $RUNNER_TEMP/myecl.keystore
           echo storePassword=$STORE_PASSWORD >> android/key.properties
           echo keyPassword=$KEY_PASSWORD >> android/key.properties
           echo keyAlias=$KEY_ALIAS >> android/key.properties
@@ -124,15 +124,15 @@ jobs:
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-      
+
       - name: Build Alpha 🔧
         if: needs.extract-version.outputs.isAlpha == 'true'
         run: flutter build ${{ matrix.target }} --flavor=alpha --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
-      
+
       - name: Build production 🔧
         if: needs.extract-version.outputs.isAlpha == 'false'
         run: flutter build ${{ matrix.target }} --flavor=prod --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
-      
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:

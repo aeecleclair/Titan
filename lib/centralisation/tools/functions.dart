@@ -1,6 +1,6 @@
-import 'package:myecl/centralisation/class/module.dart';
+import 'package:titan/centralisation/class/module.dart';
 import 'package:flutter/material.dart';
-import 'package:myecl/centralisation/tools/constants.dart';
+import 'package:titan/centralisation/tools/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void showLinkDetails(BuildContext context, Module module) {

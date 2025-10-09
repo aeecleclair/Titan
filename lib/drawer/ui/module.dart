@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/drawer/class/module.dart';
-import 'package:myecl/drawer/providers/animation_provider.dart';
-import 'package:myecl/drawer/providers/swipe_provider.dart';
-import 'package:myecl/drawer/tools/constants.dart';
-import 'package:myecl/home/providers/scrolled_provider.dart';
-import 'package:myecl/home/router.dart';
-import 'package:myecl/tools/providers/path_forwarding_provider.dart';
+import 'package:titan/drawer/class/module.dart';
+import 'package:titan/drawer/providers/animation_provider.dart';
+import 'package:titan/drawer/providers/swipe_provider.dart';
+import 'package:titan/drawer/tools/constants.dart';
+import 'package:titan/home/providers/scrolled_provider.dart';
+import 'package:titan/home/router.dart';
+import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class ModuleUI extends HookConsumerWidget {
@@ -32,9 +32,7 @@ class ModuleUI extends HookConsumerWidget {
           children: [
             Row(
               children: [
-                Container(
-                  width: 25,
-                ),
+                Container(width: 25),
                 Center(
                   child: module.getIcon(
                     module.root == pathForwarding.path
@@ -42,9 +40,7 @@ class ModuleUI extends HookConsumerWidget {
                         : DrawerColorConstants.lightText,
                   ),
                 ),
-                Container(
-                  width: 20,
-                ),
+                Container(width: 20),
                 SizedBox(
                   height: 50,
                   child: Center(
@@ -68,8 +64,9 @@ class ModuleUI extends HookConsumerWidget {
         QR.to(module.root);
         pathForwardingNotifier.forward(module.root);
         if (animation != null) {
-          final controllerNotifier =
-              ref.watch(swipeControllerProvider(animation).notifier);
+          final controllerNotifier = ref.watch(
+            swipeControllerProvider(animation).notifier,
+          );
           controllerNotifier.toggle();
         }
         if (pathForwarding.path != HomeRouter.root) {

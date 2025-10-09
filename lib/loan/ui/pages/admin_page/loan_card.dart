@@ -1,13 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/loan/tools/constants.dart';
-import 'package:myecl/loan/tools/functions.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/ui/layouts/card_button.dart';
-import 'package:myecl/tools/ui/layouts/card_layout.dart';
-import 'package:myecl/tools/ui/builders/waiting_button.dart';
+import 'package:titan/loan/class/loan.dart';
+import 'package:titan/loan/tools/constants.dart';
+import 'package:titan/loan/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/ui/layouts/card_button.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class LoanCard extends StatelessWidget {
   final Loan loan;
@@ -42,13 +42,10 @@ class LoanCard extends StatelessWidget {
         height: (isAdmin && !isDetail)
             ? 170
             : isHistory
-                ? 120
-                : 180,
+            ? 120
+            : 180,
         colors: shouldReturn
-            ? [
-                LoanColorConstants.redGradient1,
-                LoanColorConstants.redGradient2,
-              ]
+            ? [LoanColorConstants.redGradient1, LoanColorConstants.redGradient2]
             : [Colors.white, Colors.white],
         shadowColor: shouldReturn
             ? LoanColorConstants.redGradient2.withValues(alpha: 0.25)
@@ -80,8 +77,9 @@ class LoanCard extends StatelessWidget {
                               onTap: onInfo,
                               child: HeroIcon(
                                 HeroIcons.informationCircle,
-                                color:
-                                    shouldReturn ? Colors.white : Colors.black,
+                                color: shouldReturn
+                                    ? Colors.white
+                                    : Colors.black,
                                 size: 25,
                               ),
                             )
@@ -129,8 +127,8 @@ class LoanCard extends StatelessWidget {
                   loan.returned
                       ? LoanTextConstants.returned
                       : shouldReturn
-                          ? LoanTextConstants.toReturn
-                          : LoanTextConstants.onGoing,
+                      ? LoanTextConstants.toReturn
+                      : LoanTextConstants.onGoing,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -142,8 +140,8 @@ class LoanCard extends StatelessWidget {
                 Text(
                   (loan.returned)
                       ? loan.returnedDate != null
-                          ? processDate(loan.returnedDate!)
-                          : LoanTextConstants.noReturnedDate
+                            ? processDate(loan.returnedDate!)
+                            : LoanTextConstants.noReturnedDate
                       : processDate(loan.end),
                   style: TextStyle(
                     fontSize: 13,

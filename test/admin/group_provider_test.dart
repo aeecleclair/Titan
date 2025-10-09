@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/admin/class/group.dart';
-import 'package:myecl/admin/providers/group_provider.dart';
-import 'package:myecl/admin/repositories/group_repository.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:titan/admin/class/group.dart';
+import 'package:titan/admin/providers/group_provider.dart';
+import 'package:titan/admin/repositories/group_repository.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class MockGroupRepository extends Mock implements GroupRepository {}
 
@@ -34,8 +34,9 @@ void main() {
       final group = Group.empty().copyWith(id: '1', name: 'Test Group');
       final user = SimpleUser.empty().copyWith(id: '2', name: 'Test User');
       groupNotifier.state = AsyncData(group);
-      when(() => groupRepository.addMember(group, user))
-          .thenAnswer((_) async => true);
+      when(
+        () => groupRepository.addMember(group, user),
+      ).thenAnswer((_) async => true);
 
       final result = await groupNotifier.addMember(group, user);
 
@@ -48,8 +49,9 @@ void main() {
       final group = Group.empty().copyWith(id: '1', name: 'Test Group');
       final user = SimpleUser.empty().copyWith(id: '2', name: 'Test User');
       groupNotifier.state = AsyncData(group);
-      when(() => groupRepository.deleteMember(group, user))
-          .thenAnswer((_) async => true);
+      when(
+        () => groupRepository.deleteMember(group, user),
+      ).thenAnswer((_) async => true);
 
       final result = await groupNotifier.deleteMember(group, user);
 

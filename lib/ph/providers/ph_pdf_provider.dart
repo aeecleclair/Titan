@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/ph/repositories/ph_pdf_repository.dart';
+import 'package:titan/ph/repositories/ph_pdf_repository.dart';
 
 class PhPdf extends FamilyAsyncNotifier<Uint8List, String> {
   @override
@@ -16,5 +16,6 @@ class PhPdf extends FamilyAsyncNotifier<Uint8List, String> {
   }
 }
 
-final phPdfProvider =
-    AsyncNotifierProvider.family<PhPdf, Uint8List, String>(PhPdf.new);
+final phPdfProvider = AsyncNotifierProvider.family<PhPdf, Uint8List, String>(
+  PhPdf.new,
+);

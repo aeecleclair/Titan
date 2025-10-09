@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final selectedDaysProvider =
     StateNotifierProvider<SelectedDaysProvider, List<bool>>((ref) {
-  return SelectedDaysProvider();
-});
+      return SelectedDaysProvider();
+    });
 
 class SelectedDaysProvider extends StateNotifier<List<bool>> {
   SelectedDaysProvider() : super(List.generate(7, (index) => false));

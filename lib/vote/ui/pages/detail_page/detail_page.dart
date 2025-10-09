@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/tools/ui/widgets/align_left_text.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
-import 'package:myecl/vote/providers/contender_logo_provider.dart';
-import 'package:myecl/vote/providers/contender_logos_provider.dart';
-import 'package:myecl/vote/providers/contender_provider.dart';
-import 'package:myecl/vote/ui/components/member_card.dart';
-import 'package:myecl/vote/ui/pages/admin_page/contender_card.dart';
-import 'package:myecl/vote/ui/vote.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/vote/providers/contender_logo_provider.dart';
+import 'package:titan/vote/providers/contender_logos_provider.dart';
+import 'package:titan/vote/providers/contender_provider.dart';
+import 'package:titan/vote/ui/components/member_card.dart';
+import 'package:titan/vote/ui/pages/admin_page/contender_card.dart';
+import 'package:titan/vote/ui/vote.dart';
 
 class DetailPage extends HookConsumerWidget {
   const DetailPage({super.key});
@@ -63,14 +63,14 @@ class DetailPage extends HookConsumerWidget {
                                     value: contenderLogos[contender.id]!,
                                     builder: (context, data) {
                                       if (data.isEmpty) {
-                                        logoNotifier
-                                            .getLogo(contender.id)
-                                            .then((value) {
-                                          contenderLogosNotifier.setTData(
-                                            contender.id,
-                                            AsyncData([value]),
-                                          );
-                                        });
+                                        logoNotifier.getLogo(contender.id).then(
+                                          (value) {
+                                            contenderLogosNotifier.setTData(
+                                              contender.id,
+                                              AsyncData([value]),
+                                            );
+                                          },
+                                        );
                                         return const HeroIcon(
                                           HeroIcons.userCircle,
                                           size: 40,
@@ -86,8 +86,9 @@ class DetailPage extends HookConsumerWidget {
                                           ),
                                           boxShadow: [
                                             BoxShadow(
-                                              color: Colors.grey
-                                                  .withValues(alpha: 0.2),
+                                              color: Colors.grey.withValues(
+                                                alpha: 0.2,
+                                              ),
                                               blurRadius: 10,
                                               spreadRadius: 5,
                                               offset: const Offset(0, 5),
@@ -98,11 +99,11 @@ class DetailPage extends HookConsumerWidget {
                                     },
                                     errorBuilder: (error, stack) =>
                                         const Center(
-                                      child: HeroIcon(
-                                        HeroIcons.exclamationCircle,
-                                        size: 40,
-                                      ),
-                                    ),
+                                          child: HeroIcon(
+                                            HeroIcons.exclamationCircle,
+                                            size: 40,
+                                          ),
+                                        ),
                                   ),
                                 ),
                               const SizedBox(height: 20),
@@ -115,8 +116,10 @@ class DetailPage extends HookConsumerWidget {
                               ),
                               AlignLeftText(
                                 contender.description,
-                                padding:
-                                    const EdgeInsets.only(top: 15, bottom: 20),
+                                padding: const EdgeInsets.only(
+                                  top: 15,
+                                  bottom: 20,
+                                ),
                               ),
                             ],
                           ),
@@ -136,9 +139,7 @@ class DetailPage extends HookConsumerWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           child: Text(
                             contender.program,
-                            style: const TextStyle(
-                              fontSize: 15,
-                            ),
+                            style: const TextStyle(fontSize: 15),
                           ),
                         ),
                         if (contender.program.trim().isNotEmpty)
@@ -151,9 +152,7 @@ class DetailPage extends HookConsumerWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Center(
-                child: ContenderCard(contender: contender),
-              ),
+              child: Center(child: ContenderCard(contender: contender)),
             ),
           ],
         ),

@@ -1,15 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/event/class/event.dart';
-import 'package:myecl/event/repositories/event_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/event/class/event.dart';
+import 'package:titan/event/repositories/event_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class EventEventListProvider extends ListNotifier<Event> {
   final EventRepository eventRepository;
   String userId = "";
   EventEventListProvider({required this.eventRepository})
-      : super(const AsyncValue.loading());
+    : super(const AsyncValue.loading());
   void setId(String id) {
     userId = id;
   }
@@ -42,16 +42,17 @@ class EventEventListProvider extends ListNotifier<Event> {
 }
 
 final eventEventListProvider =
-    StateNotifierProvider<EventEventListProvider, AsyncValue<List<Event>>>(
-        (ref) {
-  final eventRepository = ref.watch(eventRepositoryProvider);
-  final userId = ref.watch(idProvider);
-  final provider = EventEventListProvider(eventRepository: eventRepository);
-  tokenExpireWrapperAuth(ref, () async {
-    userId.whenData((value) async {
-      provider.setId(value);
-      await provider.loadConfirmedEvent();
+    StateNotifierProvider<EventEventListProvider, AsyncValue<List<Event>>>((
+      ref,
+    ) {
+      final eventRepository = ref.watch(eventRepositoryProvider);
+      final userId = ref.watch(idProvider);
+      final provider = EventEventListProvider(eventRepository: eventRepository);
+      tokenExpireWrapperAuth(ref, () async {
+        userId.whenData((value) async {
+          provider.setId(value);
+          await provider.loadConfirmedEvent();
+        });
+      });
+      return provider;
     });
-  });
-  return provider;
-});

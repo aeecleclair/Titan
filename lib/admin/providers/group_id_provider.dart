@@ -8,5 +8,6 @@ class GroupIdNotifier extends StateNotifier<String> {
   }
 }
 
-final groupIdProvider =
-    StateNotifierProvider<GroupIdNotifier, String>((ref) => GroupIdNotifier());
+final groupIdProvider = StateNotifierProvider<GroupIdNotifier, String>(
+  (ref) => GroupIdNotifier(),
+);

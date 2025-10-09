@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/raffle/class/raffle.dart';
-import 'package:myecl/raffle/tools/constants.dart';
-import 'package:myecl/raffle/tools/functions.dart';
+import 'package:titan/raffle/class/raffle.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/raffle/tools/functions.dart';
 
 class TombolaCard extends HookConsumerWidget {
   final Raffle raffle;

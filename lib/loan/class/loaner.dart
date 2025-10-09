@@ -1,9 +1,5 @@
 class Loaner {
-  Loaner({
-    required this.name,
-    required this.groupManagerId,
-    required this.id,
-  });
+  Loaner({required this.name, required this.groupManagerId, required this.id});
   late final String name;
   late final String groupManagerId;
   late final String id;

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/loan/class/loan.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/loan/class/loan.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class LoanRepository extends Repository {
   @override
@@ -10,8 +10,9 @@ class LoanRepository extends Repository {
 
   Future<List<Loan>> getLoanListByLoanerId(String loanerId) async {
     return List<Loan>.from(
-      (await getList(suffix: "loaners/$loanerId/loans?returned=false"))
-          .map((x) => Loan.fromJson(x)),
+      (await getList(
+        suffix: "loaners/$loanerId/loans?returned=false",
+      )).map((x) => Loan.fromJson(x)),
     );
   }
 
@@ -38,10 +39,9 @@ class LoanRepository extends Repository {
   }
 
   Future<bool> extendLoan(Loan loan, int newDate) async {
-    return await create(
-      {"duration": newDate * 24 * 60 * 60},
-      suffix: "${loan.id}/extend",
-    );
+    return await create({
+      "duration": newDate * 24 * 60 * 60,
+    }, suffix: "${loan.id}/extend");
   }
 
   Future<bool> returnLoan(String loanId) async {
@@ -50,8 +50,9 @@ class LoanRepository extends Repository {
 
   Future<List<Loan>> getHistory(String loanerId) async {
     return List<Loan>.from(
-      (await getList(suffix: "loaners/$loanerId/loans?returned=true"))
-          .map((x) => Loan.fromJson(x)),
+      (await getList(
+        suffix: "loaners/$loanerId/loans?returned=true",
+      )).map((x) => Loan.fromJson(x)),
     );
   }
 }

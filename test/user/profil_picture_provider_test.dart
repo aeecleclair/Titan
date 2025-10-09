@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/user/providers/profile_picture_provider.dart';
-import 'package:myecl/user/repositories/profile_picture_repository.dart';
+import 'package:titan/user/providers/profile_picture_provider.dart';
+import 'package:titan/user/repositories/profile_picture_repository.dart';
 
 class MockProfilePictureRepository extends Mock
     implements ProfilePictureRepository {}
@@ -27,8 +27,9 @@ void main() {
     test('getProfilePicture returns AsyncValue<Uint8List>', () async {
       const userId = '123';
       final expected = Uint8List.fromList([1, 2, 3]);
-      when(() => profilePictureRepository.getProfilePicture(userId))
-          .thenAnswer((_) async => expected);
+      when(
+        () => profilePictureRepository.getProfilePicture(userId),
+      ).thenAnswer((_) async => expected);
 
       final result = await profilePictureNotifier.getProfilePicture(userId);
 
@@ -36,7 +37,7 @@ void main() {
         result.when(
           data: (data) => data,
           loading: () => null,
-          error: (_, __) => null,
+          error: (_, _) => null,
         ),
         expected,
       );
@@ -44,8 +45,9 @@ void main() {
 
     test('getMyProfilePicture returns AsyncValue<Uint8List>', () async {
       final expected = Uint8List.fromList([1, 2, 3]);
-      when(() => profilePictureRepository.getProfilePicture('me'))
-          .thenAnswer((_) async => expected);
+      when(
+        () => profilePictureRepository.getProfilePicture('me'),
+      ).thenAnswer((_) async => expected);
 
       final result = await profilePictureNotifier.getMyProfilePicture();
 
@@ -53,7 +55,7 @@ void main() {
         result.when(
           data: (data) => data,
           loading: () => null,
-          error: (_, __) => null,
+          error: (_, _) => null,
         ),
         expected,
       );

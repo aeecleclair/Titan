@@ -56,9 +56,11 @@ class SwipeControllerNotifier extends StateNotifier<AnimationController> {
   }
 }
 
-final swipeControllerProvider = StateNotifierProvider.family<
-    SwipeControllerNotifier,
-    AnimationController,
-    AnimationController>((ref, animationController) {
-  return SwipeControllerNotifier(animationController);
-});
+final swipeControllerProvider =
+    StateNotifierProvider.family<
+      SwipeControllerNotifier,
+      AnimationController,
+      AnimationController
+    >((ref, animationController) {
+      return SwipeControllerNotifier(animationController);
+    });

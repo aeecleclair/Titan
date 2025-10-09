@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/tools/exception.dart';
+import 'package:titan/tools/repository/repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
@@ -14,8 +14,10 @@ abstract class LogoRepository extends Repository {
 
   Future<Uint8List> getLogo(String id, {String suffix = ""}) async {
     try {
-      final response = await http
-          .get(Uri.parse("${Repository.host}$ext$id$suffix"), headers: headers);
+      final response = await http.get(
+        Uri.parse("${Repository.host}$ext$id$suffix"),
+        headers: headers,
+      );
       if (response.statusCode == 200) {
         try {
           return response.bodyBytes;
@@ -45,9 +47,7 @@ abstract class LogoRepository extends Repository {
     } on AppException {
       rethrow;
     } catch (e) {
-      Repository.logger.error(
-        "GET $ext$id$suffix\nCould not load the logo",
-      );
+      Repository.logger.error("GET $ext$id$suffix\nCould not load the logo");
       rethrow;
     }
   }
@@ -57,19 +57,20 @@ abstract class LogoRepository extends Repository {
     String id, {
     String suffix = "",
   }) async {
-    final request = http.MultipartRequest(
-      'POST',
-      Uri.parse("${Repository.host}$ext$id$suffix"),
-    )
-      ..headers.addAll(headers)
-      ..files.add(
-        http.MultipartFile.fromBytes(
-          'image',
-          bytes,
-          filename: 'image',
-          contentType: MediaType('image', 'jpeg'),
-        ),
-      );
+    final request =
+        http.MultipartRequest(
+            'POST',
+            Uri.parse("${Repository.host}$ext$id$suffix"),
+          )
+          ..headers.addAll(headers)
+          ..files.add(
+            http.MultipartFile.fromBytes(
+              'image',
+              bytes,
+              filename: 'image',
+              contentType: MediaType('image', 'jpeg'),
+            ),
+          );
     final response = await request.send();
     response.stream.transform(utf8.decoder).listen((value) async {
       if (response.statusCode == 201) {
@@ -105,9 +106,7 @@ abstract class LogoRepository extends Repository {
         await file.writeAsBytes(response.bodyBytes);
         return file;
       } catch (e) {
-        Repository.logger.error(
-          "GET $path\nError while decoding response",
-        );
+        Repository.logger.error("GET $path\nError while decoding response");
         rethrow;
       }
     } else if (response.statusCode == 403) {

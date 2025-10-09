@@ -1,5 +1,5 @@
-import 'package:myecl/admin/class/account_type.dart';
-import 'package:myecl/user/class/list_users.dart';
+import 'package:titan/admin/class/account_type.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class Member extends SimpleUser {
   Member({
@@ -61,13 +61,13 @@ class Member extends SimpleUser {
   }
 
   Member.fromUser(SimpleUser user)
-      : super(
-          name: user.name,
-          firstname: user.firstname,
-          nickname: user.nickname,
-          id: user.id,
-          accountType: user.accountType,
-        ) {
+    : super(
+        name: user.name,
+        firstname: user.firstname,
+        nickname: user.nickname,
+        id: user.id,
+        accountType: user.accountType,
+      ) {
     email = "";
     phone = "";
     promotion = 0;

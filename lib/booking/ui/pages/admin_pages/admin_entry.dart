@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
 
 class AdminEntry extends StatelessWidget {
   final String name;
@@ -13,9 +13,7 @@ class AdminEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style: const TextStyle(
-        color: ColorConstants.background2,
-      ),
+      style: const TextStyle(color: ColorConstants.background2),
       controller: nameController,
       cursorColor: Colors.black,
       decoration: InputDecoration(

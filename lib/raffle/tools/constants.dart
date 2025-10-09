@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
 
 class RaffleColorConstants extends ColorConstants {
   static const Color darkText = Color.fromARGB(255, 50, 9, 1);

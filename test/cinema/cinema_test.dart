@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/cinema/class/session.dart';
-import 'package:myecl/cinema/class/the_movie_db_genre.dart';
-import 'package:myecl/cinema/class/the_movie_db_search_result.dart';
-import 'package:myecl/cinema/repositories/session_repository.dart';
+import 'package:titan/cinema/class/session.dart';
+import 'package:titan/cinema/class/the_movie_db_genre.dart';
+import 'package:titan/cinema/class/the_movie_db_search_result.dart';
+import 'package:titan/cinema/repositories/session_repository.dart';
 
 class MockSessionRepository extends Mock implements SessionRepository {}
 
@@ -43,14 +43,10 @@ void main() {
 
     test('Should update with new information', () {
       final session = Session.empty();
-      Session newSession = session.copyWith(
-        id: "1",
-      );
+      Session newSession = session.copyWith(id: "1");
       expect(newSession, isA<Session>());
       expect(newSession.id, equals("1"));
-      newSession = session.copyWith(
-        name: "Session 1",
-      );
+      newSession = session.copyWith(name: "Session 1");
       expect(newSession.name, equals("Session 1"));
       newSession = session.copyWith(
         start: DateTime.parse("2021-01-01T00:00:00.000Z"),
@@ -59,21 +55,13 @@ void main() {
         newSession.start,
         equals(DateTime.parse("2021-01-01T00:00:00.000Z")),
       );
-      newSession = session.copyWith(
-        duration: 120,
-      );
+      newSession = session.copyWith(duration: 120);
       expect(newSession.duration, equals(120));
-      newSession = session.copyWith(
-        overview: "Overview",
-      );
+      newSession = session.copyWith(overview: "Overview");
       expect(newSession.overview, equals("Overview"));
-      newSession = session.copyWith(
-        genre: "Genre",
-      );
+      newSession = session.copyWith(genre: "Genre");
       expect(newSession.genre, equals("Genre"));
-      newSession = session.copyWith(
-        tagline: "Tagline",
-      );
+      newSession = session.copyWith(tagline: "Tagline");
       expect(newSession.tagline, equals("Tagline"));
     });
 
@@ -217,25 +205,29 @@ void main() {
     });
 
     test(
-        'TheMovieDBSearchResult.toJson should convert object to json correctly',
-        () {
-      final result = TheMovieDBSearchResult(
-        posterUrl: 'https://image.tmdb.org/t/p/w500/poster.jpg',
-        overview: 'A great movie',
-        genreIds: [1, 2, 3],
-        genreNames: [],
-        id: '123',
-        title: 'The Movie',
-      );
+      'TheMovieDBSearchResult.toJson should convert object to json correctly',
+      () {
+        final result = TheMovieDBSearchResult(
+          posterUrl: 'https://image.tmdb.org/t/p/w500/poster.jpg',
+          overview: 'A great movie',
+          genreIds: [1, 2, 3],
+          genreNames: [],
+          id: '123',
+          title: 'The Movie',
+        );
 
-      final json = result.toJson();
+        final json = result.toJson();
 
-      expect(json['poster_path'], 'https://image.tmdb.org/t/p/w500/poster.jpg');
-      expect(json['overview'], 'A great movie');
-      expect(json['genre_ids'], [1, 2, 3]);
-      expect(json['id'], '123');
-      expect(json['title'], 'The Movie');
-    });
+        expect(
+          json['poster_path'],
+          'https://image.tmdb.org/t/p/w500/poster.jpg',
+        );
+        expect(json['overview'], 'A great movie');
+        expect(json['genre_ids'], [1, 2, 3]);
+        expect(json['id'], '123');
+        expect(json['title'], 'The Movie');
+      },
+    );
 
     test('TheMovieDBSearchResult.empty should return an empty object', () {
       final result = TheMovieDBSearchResult.empty();

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/constants.dart';
+import 'package:titan/tools/constants.dart';
 
 class AMAPColorConstants extends ColorConstants {
   static final Color background = Colors.grey.shade100;
@@ -49,7 +49,7 @@ class AMAPTextConstants {
   static const String commandDate = "Date de la commande";
   static const String commandProducts = "Produits de la commande";
   static const String confirm = "Confirmer";
-  static const String contact = "Contact associatif ";
+  static const String contact = "Contacts associatifs ";
   static const String createCategory = "Créer une catégorie";
   static const String delete = "Supprimer";
   static const String deleteDelivery = "Supprimer la livraison ?";

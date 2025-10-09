@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myecl/vote/providers/status_provider.dart';
-import 'package:myecl/vote/repositories/status_repository.dart';
+import 'package:titan/vote/providers/status_provider.dart';
+import 'package:titan/vote/repositories/status_repository.dart';
 
 class MockStatusRepository extends Mock implements StatusRepository {}
 
@@ -30,7 +30,7 @@ void main() {
         result.when(
           data: (data) => data,
           loading: () => Status.waiting,
-          error: (_, __) => Status.waiting,
+          error: (_, _) => Status.waiting,
         ),
         status,
       );

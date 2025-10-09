@@ -22,10 +22,7 @@ class Result {
   }
 
   Result copyWith({String? id, int? count}) {
-    return Result(
-      id: id ?? this.id,
-      count: count ?? this.count,
-    );
+    return Result(id: id ?? this.id, count: count ?? this.count);
   }
 
   @override

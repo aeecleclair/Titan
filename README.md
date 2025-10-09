@@ -165,3 +165,8 @@ Then, `flutter_launcher_icons` must be updated:
 flutter pub get
 flutter pub run flutter_launcher_icons
 ```
+
+### Upgrade Gradle version
+
+[Guided upgrade using Android Studio](https://docs.flutter.dev/release/breaking-changes/android-java-gradle-migration-guide#solution-1-guided-fix-using-android-studio)
+[Java and Gradle compatibility](https://docs.gradle.org/current/userguide/compatibility.html)
