@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/rplace/class/pixel.dart';
-import 'package:myecl/rplace/providers/pixelinfo_providers.dart';
-import 'package:myecl/rplace/providers/pixels_providers.dart';
+import 'package:titan/rplace/class/pixel.dart';
+import 'package:titan/rplace/providers/pixelinfo_providers.dart';
+import 'package:titan/rplace/providers/pixels_providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/rplace/providers/userinfo_providers.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:titan/rplace/providers/userinfo_providers.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -48,13 +48,7 @@ class ColBouton extends HookConsumerWidget {
           backgroundColor: Color(int.parse(color, radix: 16)),
         ),
         onPressed: () async => {
-          await pixelListNotifier.createPixel(
-            Pixel(
-              x: x,
-              y: y,
-              color: color,
-            ),
-          ),
+          await pixelListNotifier.createPixel(Pixel(x: x, y: y, color: color)),
           Navigator.pop(context),
           userinfoNotifier.getLastPlacedDate(),
         },
@@ -82,40 +76,33 @@ class ColorPicker extends HookConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           AsyncChild(
-              value: pixelinfo_value,
-              builder: (context, pixelinfo_value) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Row(
-                      children: [
-                        AutoSizeText(
-                          pixelinfo_value.user.nickname ??
-                              ("${pixelinfo_value.user.firstname} ${pixelinfo_value.user.name}"),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                    Text(
-                      timeago.format(pixelinfo_value.date, locale: 'fr'),
-                    ),
-                  ],
-                );
-              }),
+            value: pixelinfo_value,
+            builder: (context, pixelinfo_value) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(
+                    children: [
+                      AutoSizeText(
+                        pixelinfo_value.user.nickname ??
+                            ("${pixelinfo_value.user.firstname} ${pixelinfo_value.user.name}"),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                  Text(timeago.format(pixelinfo_value.date, locale: 'fr')),
+                ],
+              );
+            },
+          ),
           Center(
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: listeCouleurs
-                    .map(
-                      (colo) => ColBouton(
-                        x: x,
-                        y: y,
-                        color: colo,
-                      ),
-                    )
+                    .map((colo) => ColBouton(x: x, y: y, color: colo))
                     .toList(),
               ),
             ),

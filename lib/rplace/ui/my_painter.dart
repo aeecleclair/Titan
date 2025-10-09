@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/rplace/class/pixel.dart';
+import 'package:titan/rplace/class/pixel.dart';
 import 'dart:ui';
 
 class MyPainter extends CustomPainter {

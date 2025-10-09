@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/rplace/class/pixelinfo.dart';
-import 'package:myecl/rplace/repositories/pixelinfo_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/rplace/class/pixelinfo.dart';
+import 'package:titan/rplace/repositories/pixelinfo_repository.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
 
 class pixelinfoNotifier extends SingleNotifier<PixelInfo> {
   final PixelInfoRepository _pixelinfoRepository = PixelInfoRepository();
@@ -17,7 +17,7 @@ class pixelinfoNotifier extends SingleNotifier<PixelInfo> {
 
 final pixelInfoProvider =
     StateNotifierProvider<pixelinfoNotifier, AsyncValue<PixelInfo>>((ref) {
-  final token = ref.watch(tokenProvider);
-  final notifier = pixelinfoNotifier(token: token);
-  return notifier;
-});
+      final token = ref.watch(tokenProvider);
+      final notifier = pixelinfoNotifier(token: token);
+      return notifier;
+    });

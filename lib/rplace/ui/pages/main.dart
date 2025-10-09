@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/rplace/class/pixel.dart';
-import 'package:myecl/rplace/providers/pixels_providers.dart';
-import 'package:myecl/rplace/ui/canvas_viewer.dart';
-import 'package:myecl/tools/ui/widgets/top_bar.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/rplace/class/pixel.dart';
+import 'package:titan/rplace/providers/pixels_providers.dart';
+import 'package:titan/rplace/ui/canvas_viewer.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/rplace/router.dart';
+import 'package:titan/rplace/router.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class rPlacePage extends HookConsumerWidget {
@@ -38,10 +38,7 @@ class rPlacePage extends HookConsumerWidget {
     return const SafeArea(
       child: Column(
         children: [
-          TopBar(
-            title: "rPlace",
-            root: rPlaceRouter.root,
-          ),
+          TopBar(title: "rPlace", root: rPlaceRouter.root),
           Expanded(child: CanvasViewer()),
         ],
       ),

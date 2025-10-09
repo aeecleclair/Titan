@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/rplace/providers/pixelfocus_providers.dart';
-import 'package:myecl/rplace/providers/grid_providers.dart';
-import 'package:myecl/rplace/providers/pixelinfo_providers.dart';
-import 'package:myecl/rplace/ui/color_picker.dart';
-import 'package:myecl/tools/ui/builders/async_child.dart';
+import 'package:titan/rplace/providers/pixelfocus_providers.dart';
+import 'package:titan/rplace/providers/grid_providers.dart';
+import 'package:titan/rplace/providers/pixelinfo_providers.dart';
+import 'package:titan/rplace/ui/color_picker.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'my_painter.dart';
-import 'package:myecl/rplace/providers/pixels_providers.dart';
-import 'package:myecl/rplace/providers/userinfo_providers.dart';
+import 'package:titan/rplace/providers/pixels_providers.dart';
+import 'package:titan/rplace/providers/userinfo_providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/rplace/class/focus.dart';
+import 'package:titan/rplace/class/focus.dart';
 
 class CanvasViewer extends HookConsumerWidget {
-  const CanvasViewer({
-    super.key,
-  });
+  const CanvasViewer({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -80,9 +78,7 @@ class CanvasViewer extends HookConsumerWidget {
                     },
                   );
 
-                  future.then(
-                    (void value) => (focusNotifier.unfocus()),
-                  );
+                  future.then((void value) => (focusNotifier.unfocus()));
                 },
                 child: Stack(
                   children: [
@@ -90,7 +86,8 @@ class CanvasViewer extends HookConsumerWidget {
                       width: pixelSize * nbColonne,
                       height: pixelSize * nbLigne,
                       child: DecoratedBox(
-                          decoration: BoxDecoration(color: Color(0xFFC4C4C4))),
+                        decoration: BoxDecoration(color: Color(0xFFC4C4C4)),
+                      ),
                     ),
                     AsyncChild(
                       value: pixels,

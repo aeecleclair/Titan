@@ -1,9 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/rplace/class/gridInfo.dart';
-import 'package:myecl/rplace/repositories/grid_repository.dart';
-import 'package:myecl/tools/providers/single_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/rplace/class/gridInfo.dart';
+import 'package:titan/rplace/repositories/grid_repository.dart';
+import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class gridNotifier extends SingleNotifier<gridInfo> {
   final gridRepository _gridRepository = gridRepository();
@@ -16,8 +16,9 @@ class gridNotifier extends SingleNotifier<gridInfo> {
   }
 }
 
-final gridProvider =
-    StateNotifierProvider<gridNotifier, AsyncValue<gridInfo>>((ref) {
+final gridProvider = StateNotifierProvider<gridNotifier, AsyncValue<gridInfo>>((
+  ref,
+) {
   final token = ref.watch(tokenProvider);
   final notifier = gridNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {

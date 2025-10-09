@@ -1,5 +1,5 @@
-import 'package:myecl/rplace/class/pixelinfo.dart';
-import 'package:myecl/tools/repository/repository.dart';
+import 'package:titan/rplace/class/pixelinfo.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class PixelInfoRepository extends Repository {
   @override
