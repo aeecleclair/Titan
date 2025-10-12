@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/tools/ui/widgets/top_bar.dart';
-import 'package:myecl/centralassos/tools/constants.dart';
-import 'package:myecl/centralassos/router.dart';
+import 'package:titan/tools/ui/widgets/top_bar.dart';
+import 'package:titan/centralassos/tools/constants.dart';
+import 'package:titan/centralassos/router.dart';
 
-class CentralassociationTemplate extends StatelessWidget {
+class CentralassosTemplate extends StatelessWidget {
   final Widget child;
-  const CentralassociationTemplate({super.key, required this.child});
+  const CentralassosTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +17,8 @@ class CentralassociationTemplate extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const TopBar(
-                title: CentralassociationTextConstants.centralassociation,
-                root: CentralassociationRouter.root,
+                title: CentralassosTextConstants.centralassos,
+                root: CentralassosRouter.root,
               ),
               Expanded(child: child),
             ],

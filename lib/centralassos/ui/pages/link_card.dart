@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/centralassos/class/link.dart';
+import 'package:titan/centralassos/class/link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:myecl/centralassos/tools/constants.dart';
-import 'package:myecl/centralassos/tools/functions.dart';
+import 'package:titan/centralassos/tools/constants.dart';
+import 'package:titan/centralassos/tools/functions.dart';
 
 class LinkCard extends HookConsumerWidget {
   final Link link;
@@ -29,9 +29,7 @@ class LinkCard extends HookConsumerWidget {
       child: TextButton(
         style: ButtonStyle(
           shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           ),
           overlayColor: WidgetStateProperty.all<Color>(
             const Color.fromARGB(37, 0, 0, 0),
@@ -45,10 +43,10 @@ class LinkCard extends HookConsumerWidget {
               height: 45,
               child: link.icon.endsWith('.svg')
                   ? SvgPicture.network(
-                      "${CentralassociationTextConstants.imagePath}${link.icon}",
+                      "${CentralassosTextConstants.imagePath}${link.icon}",
                     )
                   : Image.network(
-                      "${CentralassociationTextConstants.imagePath}${link.icon}",
+                      "${CentralassosTextConstants.imagePath}${link.icon}",
                     ),
             ),
             const SizedBox(width: 10),
@@ -59,10 +57,7 @@ class LinkCard extends HookConsumerWidget {
                 children: [
                   Text(
                     link.name,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                    ),
+                    style: const TextStyle(fontSize: 18, color: Colors.black),
                   ),
                 ],
               ),

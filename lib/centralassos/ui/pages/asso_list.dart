@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myecl/centralassos/class/asso.dart';
-import 'package:myecl/centralassos/ui/pages/link_card.dart';
+import 'package:titan/centralassos/class/asso.dart';
+import 'package:titan/centralassos/ui/pages/link_card.dart';
 
 class AssoList extends StatelessWidget {
   final Asso asso;
@@ -15,18 +15,14 @@ class AssoList extends StatelessWidget {
         children: [
           Text(
             asso.name,
-            style: const TextStyle(
-              fontSize: 23,
-              fontWeight: FontWeight.w900,
-            ),
+            style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w900),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children:
-                asso.linkList.map((link) => LinkCard(link: link)).toList(),
+            children: asso.linkList
+                .map((link) => LinkCard(link: link))
+                .toList(),
           ),
         ],
       ),

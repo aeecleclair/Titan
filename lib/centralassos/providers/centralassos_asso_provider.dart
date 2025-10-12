@@ -1,9 +1,9 @@
-import 'package:myecl/centralassos/class/asso.dart';
-import 'package:myecl/centralassos/class/link.dart';
+import 'package:titan/centralassos/class/asso.dart';
+import 'package:titan/centralassos/class/link.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/centralassos/repositories/asso_repository.dart';
-import 'package:myecl/tools/providers/list_notifier.dart';
-import 'package:myecl/tools/token_expire_wrapper.dart';
+import 'package:titan/centralassos/repositories/asso_repository.dart';
+import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 
 class AssoNotifier extends ListNotifier<Asso> {
   AssoRepository assoRepository = AssoRepository();
@@ -12,7 +12,7 @@ class AssoNotifier extends ListNotifier<Asso> {
   late List<Asso> allAssos = [];
   late List<Link> allLinks = [];
 
-  initState() async {
+  Future initState() async {
     allAssos = await assoRepository.getAssoList();
     allLinks = allAssos.expand((element) => element.linkList).toList();
     state = AsyncValue.data(allAssos);
@@ -21,9 +21,9 @@ class AssoNotifier extends ListNotifier<Asso> {
 
 final assoProvider =
     StateNotifierProvider<AssoNotifier, AsyncValue<List<Asso>>>((ref) {
-  AssoNotifier notifier = AssoNotifier();
-  tokenExpireWrapperAuth(ref, () async {
-    await notifier.initState();
-  });
-  return notifier;
-});
+      AssoNotifier notifier = AssoNotifier();
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.initState();
+      });
+      return notifier;
+    });

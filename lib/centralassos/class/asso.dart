@@ -1,11 +1,7 @@
-import 'package:myecl/centralassos/class/link.dart';
+import 'package:titan/centralassos/class/link.dart';
 
 class Asso {
-  Asso({
-    required this.name,
-    required this.description,
-    required this.icon,
-  });
+  Asso({required this.name, required this.description, required this.icon});
   late final String name;
   late final String description;
   late final List<Link> linkList;

@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
-import 'package:myecl/tools/logs/logger.dart';
+import 'package:titan/tools/logs/logger.dart';
 import 'dart:convert';
-import 'package:myecl/centralassos/class/asso.dart';
+import 'package:titan/centralassos/class/asso.dart';
 
 class AssoRepository {
   static const String host = "https://assos.myecl.fr/assos_links.json";
@@ -27,21 +27,15 @@ class AssoRepository {
 
           return test;
         } catch (e) {
-          logger.error(
-            "GET $host\nError while decoding response",
-          );
+          logger.error("GET $host\nError while decoding response");
           return <Asso>[];
         }
       } else {
-        logger.error(
-          "GET $host\n${response.statusCode} ${response.body}",
-        );
+        logger.error("GET $host\n${response.statusCode} ${response.body}");
         return <Asso>[];
       }
     } catch (e) {
-      logger.error(
-        "GET $host\nError while fetching response",
-      );
+      logger.error("GET $host\nError while fetching response");
       return <Asso>[];
     }
   }

@@ -1,9 +1,5 @@
 class Link {
-  Link({
-    required this.name,
-    required this.url,
-    required this.icon,
-  });
+  Link({required this.name, required this.url, required this.icon});
   late final String name;
   late final String url;
   late final String icon;
