@@ -76,7 +76,7 @@ class AppRouter {
       AmapRouter(ref).route(),
       BookingRouter(ref).route(),
       CentralisationRouter(ref).route(),
-      CentralassociationRouter(ref).route(),
+      CentralassosRouter(ref).route(),
       CinemaRouter(ref).route(),
       EventRouter(ref).route(),
       FlappyBirdRouter(ref).route(),

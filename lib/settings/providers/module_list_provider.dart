@@ -45,7 +45,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     AmapRouter.module,
     BookingRouter.module,
     CentralisationRouter.module,
-    CentralassociationRouter.module,
+    CentralassosRouter.module,
     CinemaRouter.module,
     EventRouter.module,
     LoanRouter.module,

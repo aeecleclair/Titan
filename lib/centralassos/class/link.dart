@@ -4,7 +4,7 @@ class Link {
   late final String url;
   late final String icon;
 
-  Link.fromJson(l) {
+  Link.fromJson(Map<String, dynamic> l) {
     name = l["name"];
     icon = l["icon"];
     url = l["url"];
