@@ -20,11 +20,8 @@ class AssoRepository {
       final response = await http.get(Uri.parse(host), headers: headers);
       if (response.statusCode == 200) {
         try {
-          String toDecode = utf8.decode(response.body.runes.toList());
-          final data = jsonDecode(toDecode);
-
+          final data = jsonDecode(response.body);
           final test = data.map<Asso>((asso) => Asso.fromJson(asso)).toList();
-
           return test;
         } catch (e) {
           logger.error("GET $host\nError while decoding response");
