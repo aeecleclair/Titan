@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:titan/centralassos/class/asso.dart';
-import 'package:titan/centralassos/ui/pages/link_card.dart';
+import 'package:titan/centralassociation/class/asso.dart';
+import 'package:titan/centralassociation/ui/pages/link_card.dart';
 
 class AssoList extends StatelessWidget {
   final Asso asso;

@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:titan/tools/logs/logger.dart';
 import 'dart:convert';
-import 'package:titan/centralassos/class/asso.dart';
+import 'package:titan/centralassociation/class/asso.dart';
 
 class AssoRepository {
   static const String host = "https://assos.myecl.fr/assos_links.json";

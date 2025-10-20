@@ -1,4 +1,4 @@
-import 'package:titan/centralassos/class/link.dart';
+import 'package:titan/centralassociation/class/link.dart';
 
 class Asso {
   Asso({required this.name, required this.description, required this.icon});

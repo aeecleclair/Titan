@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/centralassos/class/link.dart';
+import 'package:titan/centralassociation/class/link.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:titan/centralassos/tools/constants.dart';
-import 'package:titan/centralassos/tools/functions.dart';
+import 'package:titan/centralassociation/tools/constants.dart';
+import 'package:titan/centralassociation/tools/functions.dart';
 
 class LinkCard extends HookConsumerWidget {
   final Link link;
@@ -43,10 +43,10 @@ class LinkCard extends HookConsumerWidget {
               height: 45,
               child: link.icon.endsWith('.svg')
                   ? SvgPicture.network(
-                      "${CentralassosTextConstants.imagePath}${link.icon}",
+                      "${CentralassociationTextConstants.imagePath}${link.icon}",
                     )
                   : Image.network(
-                      "${CentralassosTextConstants.imagePath}${link.icon}",
+                      "${CentralassociationTextConstants.imagePath}${link.icon}",
                     ),
             ),
             const SizedBox(width: 10),
