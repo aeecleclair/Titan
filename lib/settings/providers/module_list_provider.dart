@@ -20,6 +20,7 @@ import 'package:titan/recommendation/router.dart';
 import 'package:titan/seed-library/router.dart';
 import 'package:titan/vote/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:titan/centralassociation/router.dart';
 
 final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
   ref,
@@ -44,6 +45,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     AmapRouter.module,
     BookingRouter.module,
     CentralisationRouter.module,
+    CentralassociationRouter.module,
     CinemaRouter.module,
     EventRouter.module,
     LoanRouter.module,

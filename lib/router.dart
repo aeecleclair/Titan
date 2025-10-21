@@ -28,6 +28,7 @@ import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:titan/vote/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/centralassociation/router.dart';
 
 final appRouterProvider = Provider<AppRouter>((ref) => AppRouter(ref));
 
@@ -75,6 +76,7 @@ class AppRouter {
       AmapRouter(ref).route(),
       BookingRouter(ref).route(),
       CentralisationRouter(ref).route(),
+      CentralassociationRouter(ref).route(),
       CinemaRouter(ref).route(),
       EventRouter(ref).route(),
       FlappyBirdRouter(ref).route(),
