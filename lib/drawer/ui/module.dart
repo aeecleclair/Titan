@@ -32,7 +32,7 @@ class ModuleUI extends HookConsumerWidget {
           children: [
             Row(
               children: [
-                Container(width: 25),
+                Container(width: 20),
                 Center(
                   child: module.getIcon(
                     module.root == pathForwarding.path
@@ -40,7 +40,7 @@ class ModuleUI extends HookConsumerWidget {
                         : DrawerColorConstants.lightText,
                   ),
                 ),
-                Container(width: 20),
+                Container(width: 16),
                 SizedBox(
                   height: 50,
                   child: Center(
