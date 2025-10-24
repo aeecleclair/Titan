@@ -6,7 +6,7 @@ import 'package:titan/tools/repository/repository.dart';
 class TosRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = 'myeclpay/users/me/';
+  final ext = 'mypayment/users/me/';
 
   Future<TOS> getTOS() async {
     return TOS.fromJson(await getOne("tos"));

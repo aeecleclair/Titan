@@ -61,7 +61,7 @@ class AdminTextConstants {
       "Erreur lors de la modification (surement dû à une superposition de dates)";
   static const String minimum = "Minimum";
   static const String modifyModuleVisibility = "Visibilité des modules";
-  static const String myEclPay = "MyECLPay";
+  static const String myPayment = "MyECLPay";
   static const String name = "Nom";
   static const String noManager = "Aucun manager n'est sélectionné";
   static const String noMember = "Aucun membre";

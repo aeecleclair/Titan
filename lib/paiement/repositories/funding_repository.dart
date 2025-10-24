@@ -8,7 +8,7 @@ import 'package:titan/tools/repository/repository.dart';
 class FundingRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = 'myeclpay/transfer/';
+  final ext = 'mypayment/transfer/';
 
   Future getAdminPaymentUrl(Transfer transfer) async {
     return await create(transfer.toJson(), suffix: "admin");
