@@ -6,7 +6,7 @@ import 'package:titan/tools/repository/repository.dart';
 class TransactionsRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = 'myeclpay/transactions';
+  final ext = 'mypayment/transactions';
 
   Future<bool> refundTransaction(String transactionId, Refund refund) async {
     return await create(refund.toJson(), suffix: '/$transactionId/refund');

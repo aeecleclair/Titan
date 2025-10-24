@@ -66,7 +66,7 @@ class AdminMainPage extends HookConsumerWidget {
                 QR.to(AdminRouter.root + AdminRouter.structures);
               },
               child: const MenuCardUi(
-                text: AdminTextConstants.myEclPay,
+                text: AdminTextConstants.myPayment,
                 icon: HeroIcons.creditCard,
               ),
             ),

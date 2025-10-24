@@ -7,7 +7,7 @@ import 'package:titan/tools/repository/repository.dart';
 class StructuresRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = 'myeclpay/structures';
+  final ext = 'mypayment/structures';
 
   Future<Structure> createStructure(Structure structure) async {
     return Structure.fromJson(await create(structure.toJson()));

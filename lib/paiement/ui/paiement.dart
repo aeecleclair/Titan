@@ -13,7 +13,7 @@ class PaymentTemplate extends StatelessWidget {
       child: Column(
         children: [
           const TopBar(
-            title: PaiementTextConstants.paiement,
+            title: PaiementTextConstants.myPayment,
             root: PaymentRouter.root,
           ),
           Expanded(child: child),

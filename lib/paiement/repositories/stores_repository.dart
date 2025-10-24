@@ -10,7 +10,7 @@ import 'package:titan/tools/repository/repository.dart';
 class StoresRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = 'myeclpay/stores';
+  final ext = 'mypayment/stores';
 
   Future<bool> updateStore(Store store) async {
     return await update(store.toJson(), "/${store.id}");

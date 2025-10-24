@@ -7,7 +7,7 @@ import 'package:titan/tools/repository/repository.dart';
 class DevicesRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = 'myeclpay/users/me/wallet/devices';
+  final ext = 'mypayment/users/me/wallet/devices';
 
   Future<WalletDevice> registerDevice(CreateDevice body) async {
     return WalletDevice.fromJson(await create(body.toJson()));

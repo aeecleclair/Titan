@@ -1,3 +1,3 @@
 class PaiementTextConstants {
-  static const String paiement = "Paiement";
+  static const String myPayment = "MyECLPay";
 }
