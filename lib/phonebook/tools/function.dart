@@ -62,6 +62,8 @@ Color getColorFromTagList(WidgetRef ref, List<String> tags) {
       return const Color.fromARGB(255, 252, 145, 74);
     case 2:
       return const Color.fromARGB(255, 253, 193, 153);
+    case 3:
+      return const Color.fromARGB(255, 254, 205, 180);
   }
   return Colors.white;
 }
