@@ -17,7 +17,6 @@ import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/styleguide/navbar.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
-// Global navigator key that can be used to ensure bottom sheets appear above the navbar
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class NavigationTemplate extends HookConsumerWidget {
@@ -73,61 +72,64 @@ class NavigationTemplate extends HookConsumerWidget {
                           duration: const Duration(milliseconds: 300),
                           child: AnimatedBuilder(
                             animation: animation!,
-                            builder: (context, child) => Visibility(
-                              visible:
-                                  animation.isCompleted &&
-                                  animation.value == 1.0 &&
-                                  View.of(context).viewInsets.bottom == 0,
-                              child: Opacity(
-                                opacity: animation.value,
-                                child: FloatingNavbar(
-                                  items: [
-                                    FloatingNavbarItem(
-                                      module: FeedRouter.module,
-                                      onTap: () {
-                                        pathForwardingNotifier.forward(
-                                          FeedRouter.root,
-                                        );
-                                        WidgetsBinding.instance
-                                            .addPostFrameCallback((_) {
-                                              QR.to(FeedRouter.root);
-                                            });
-                                      },
-                                    ),
-                                    ...navbarListModule.map((module) {
-                                      return FloatingNavbarItem(
-                                        module: module,
+                            builder: (context, child) => IgnorePointer(
+                              ignoring: animation.value != 1.0,
+                              child: Visibility(
+                                visible:
+                                    animation.isCompleted &&
+                                    animation.value == 1.0 &&
+                                    View.of(context).viewInsets.bottom == 0,
+                                child: Opacity(
+                                  opacity: animation.value,
+                                  child: FloatingNavbar(
+                                    items: [
+                                      FloatingNavbarItem(
+                                        module: FeedRouter.module,
                                         onTap: () {
                                           pathForwardingNotifier.forward(
-                                            module.root,
+                                            FeedRouter.root,
                                           );
-                                          QR.to(module.root);
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback((_) {
+                                                QR.to(FeedRouter.root);
+                                              });
                                         },
-                                      );
-                                    }),
-                                    FloatingNavbarItem(
-                                      module: Module(
-                                        getName: (context) =>
-                                            AppLocalizations.of(
-                                              context,
-                                            )!.moduleOthers,
-                                        getDescription: (context) =>
-                                            AppLocalizations.of(
-                                              context,
-                                            )!.moduleOthersDescription,
-                                        root: AppRouter.allModules,
                                       ),
-                                      onTap: () {
-                                        pathForwardingNotifier.forward(
-                                          AppRouter.allModules,
+                                      ...navbarListModule.map((module) {
+                                        return FloatingNavbarItem(
+                                          module: module,
+                                          onTap: () {
+                                            pathForwardingNotifier.forward(
+                                              module.root,
+                                            );
+                                            QR.to(module.root);
+                                          },
                                         );
-                                        WidgetsBinding.instance
-                                            .addPostFrameCallback((_) {
-                                              QR.to(AppRouter.allModules);
-                                            });
-                                      },
-                                    ),
-                                  ],
+                                      }),
+                                      FloatingNavbarItem(
+                                        module: Module(
+                                          getName: (context) =>
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.moduleOthers,
+                                          getDescription: (context) =>
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.moduleOthersDescription,
+                                          root: AppRouter.allModules,
+                                        ),
+                                        onTap: () {
+                                          pathForwardingNotifier.forward(
+                                            AppRouter.allModules,
+                                          );
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback((_) {
+                                                QR.to(AppRouter.allModules);
+                                              });
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

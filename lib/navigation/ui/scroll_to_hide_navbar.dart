@@ -5,11 +5,15 @@ import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 class ScrollToHideNavbar extends ConsumerStatefulWidget {
   final Widget child;
   final ScrollController controller;
+  final Duration hideDelay;
+  final Duration showDelay;
 
   const ScrollToHideNavbar({
     super.key,
     required this.child,
     required this.controller,
+    this.hideDelay = const Duration(milliseconds: 100),
+    this.showDelay = const Duration(milliseconds: 500),
   });
 
   @override
@@ -18,6 +22,10 @@ class ScrollToHideNavbar extends ConsumerStatefulWidget {
 
 class _ScrollToHideNavbarState extends ConsumerState<ScrollToHideNavbar> {
   double _previousOffset = 0;
+  bool _isScrollingDown = false;
+  bool _isAtTop = true;
+  bool _isAtBottom = false;
+  bool _isOverScrolling = false;
 
   @override
   void initState() {
@@ -28,6 +36,8 @@ class _ScrollToHideNavbarState extends ConsumerState<ScrollToHideNavbar> {
   @override
   void dispose() {
     widget.controller.removeListener(_scrollListener);
+
+    ref.read(navbarVisibilityProvider.notifier).cancelDelayedShow();
     super.dispose();
   }
 
@@ -39,24 +49,43 @@ class _ScrollToHideNavbarState extends ConsumerState<ScrollToHideNavbar> {
 
     final double currentOffset = position.pixels;
     final double maxScrollExtent = position.maxScrollExtent;
+    final double scrollDelta = currentOffset - _previousOffset;
 
-    if (currentOffset <= 0) {
-      navbarVisibilityNotifier.show();
-      _previousOffset = 0;
-      return;
-    }
+    _isAtTop = currentOffset <= 0;
+    _isAtBottom = currentOffset >= maxScrollExtent;
+    _isOverScrolling = currentOffset < 0 || currentOffset > maxScrollExtent;
 
-    if (currentOffset >= maxScrollExtent) {
+    if (currentOffset < 0) {
+      navbarVisibilityNotifier.forceShow();
       _previousOffset = currentOffset;
       return;
     }
 
-    final double scrollDelta = currentOffset - _previousOffset;
+    if (_isAtTop) {
+      navbarVisibilityNotifier.forceShow();
+      _previousOffset = 0;
+      return;
+    }
 
-    if (scrollDelta > 0) {
-      navbarVisibilityNotifier.hide();
-    } else if (scrollDelta < 0) {
-      navbarVisibilityNotifier.show();
+    if (currentOffset > maxScrollExtent) {
+      _previousOffset = currentOffset;
+      return;
+    }
+
+    if (_isAtBottom) {
+      _previousOffset = currentOffset;
+      return;
+    }
+
+    if (!_isOverScrolling && scrollDelta.abs() > 1.0) {
+      _isScrollingDown = scrollDelta > 0;
+
+      if (_isScrollingDown) {
+        navbarVisibilityNotifier.cancelDelayedShow();
+        navbarVisibilityNotifier.hide();
+      } else {
+        navbarVisibilityNotifier.showDelayed(delay: widget.showDelay);
+      }
     }
 
     _previousOffset = currentOffset;
