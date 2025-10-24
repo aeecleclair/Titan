@@ -16,6 +16,7 @@ import 'package:titan/advert/providers/selected_association_provider.dart';
 import 'package:titan/advert/ui/pages/advert.dart';
 import 'package:titan/advert/ui/components/association_bar.dart';
 import 'package:titan/event/ui/pages/event_pages/checkbox_entry.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
@@ -62,8 +63,8 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
     }
 
     return AdvertTemplate(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+      child: ScrollToHideNavbar(
+        controller: ScrollController(),
         child: Form(
           key: key,
           child: Column(
@@ -222,7 +223,6 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                     const SizedBox(height: 20),
                     TextEntry(
                       minLines: 5,
-                      maxLines: 50,
                       keyboardType: TextInputType.multiline,
                       label: AppLocalizations.of(context)!.advertContent,
                       controller: content,

@@ -93,7 +93,6 @@ class GroupNotificationPage extends HookConsumerWidget {
                                             label: localizeWithContext
                                                 .adminContent,
                                             controller: contentController,
-                                            maxLines: 5,
                                             keyboardType:
                                                 TextInputType.multiline,
                                           ),
