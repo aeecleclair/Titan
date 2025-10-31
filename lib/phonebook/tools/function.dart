@@ -49,7 +49,6 @@ List<Association> sortedAssociationByKind(
 
 Color getColorFromTagList(WidgetRef ref, List<String> tags) {
   final rolesTags = ref.watch(rolesTagsProvider).keys.toList();
-  print(tags);
   int index = 4;
   for (String tag in tags) {
     if (rolesTags.indexOf(tag) < index) {
