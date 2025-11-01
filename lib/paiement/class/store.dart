@@ -1,15 +1,37 @@
 import 'package:titan/paiement/class/structure.dart';
 
-class Store {
+class StoreSimple {
   final String id;
   final String name;
   final String walletId;
+
+  StoreSimple({required this.id, required this.name, required this.walletId});
+
+  factory StoreSimple.fromJson(Map<String, dynamic> json) {
+    return StoreSimple(
+      id: json['id'],
+      name: json['name'],
+      walletId: json['wallet_id'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'name': name, 'wallet_id': walletId};
+  }
+
+  @override
+  String toString() {
+    return 'StoreSimple(id: $id, name: $name, walletId: $walletId)';
+  }
+}
+
+class Store extends StoreSimple {
   final Structure structure;
 
   Store({
-    required this.id,
-    required this.name,
-    required this.walletId,
+    required super.id,
+    required super.name,
+    required super.walletId,
     required this.structure,
   });
 
@@ -22,6 +44,7 @@ class Store {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,

@@ -1,12 +1,17 @@
 import 'package:either_dart/either.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:titan/drawer/class/module.dart';
 import 'package:titan/paiement/providers/is_payment_admin.dart';
-import 'package:titan/paiement/ui/pages/admin_page/admin_page.dart'
-    deferred as admin_page;
+import 'package:titan/paiement/ui/pages/structure_admin_page/structure_admin_page.dart'
+    deferred as structure_admin_page;
 import 'package:titan/paiement/ui/pages/fund_page/web_view_modal.dart'
     deferred as fund_page;
+import 'package:titan/paiement/ui/pages/invoices_admin_page/invoices_admin_page.dart'
+    deferred as invoices_admin_page;
+import 'package:titan/paiement/ui/pages/invoices_structure_page/invoices_structure_page.dart'
+    deferred as structure_invoices_page;
 import 'package:titan/paiement/ui/pages/store_pages/add_edit_store.dart'
     deferred as add_edit_page;
 import 'package:titan/paiement/ui/pages/store_admin_page/store_admin_page.dart'
@@ -31,7 +36,9 @@ class PaymentRouter {
   static const String root = '/payment';
   static const String stats = '/stats';
   static const String devices = '/devices';
-  static const String admin = '/admin';
+  static const String structureStores = '/structureStores';
+  static const String invoicesAdmin = '/invoicesAdmin';
+  static const String invoicesStructure = '/invoicesStructure';
   static const String fund = '/fund';
   static const String addEditStore = '/addEditStore';
   static const String transferStructure = '/transferStructure';
@@ -53,6 +60,10 @@ class PaymentRouter {
       AuthenticatedMiddleware(ref),
       DeferredLoadingMiddleware(main_page.loadLibrary),
     ],
+    pageType: QCustomPage(
+      transitionsBuilder: (_, animation, _, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
     children: [
       QRoute(
         path: PaymentRouter.stats,
@@ -70,11 +81,27 @@ class PaymentRouter {
         middleware: [DeferredLoadingMiddleware(store_admin_page.loadLibrary)],
       ),
       QRoute(
-        path: PaymentRouter.admin,
-        builder: () => admin_page.AdminPage(),
+        path: PaymentRouter.invoicesAdmin,
+        builder: () => invoices_admin_page.InvoicesAdminPage(),
         middleware: [
-          DeferredLoadingMiddleware(admin_page.loadLibrary),
-          AdminMiddleware(ref, isPaymentAdminProvider),
+          DeferredLoadingMiddleware(invoices_admin_page.loadLibrary),
+          AdminMiddleware(ref, isBankAccountHolderProvider),
+        ],
+      ),
+      QRoute(
+        path: PaymentRouter.invoicesStructure,
+        builder: () => structure_invoices_page.StructureInvoicesPage(),
+        middleware: [
+          DeferredLoadingMiddleware(structure_invoices_page.loadLibrary),
+          AdminMiddleware(ref, isStructureAdminProvider),
+        ],
+      ),
+      QRoute(
+        path: PaymentRouter.structureStores,
+        builder: () => structure_admin_page.StructureAdminPage(),
+        middleware: [
+          DeferredLoadingMiddleware(structure_admin_page.loadLibrary),
+          AdminMiddleware(ref, isStructureAdminProvider),
         ],
         children: [
           QRoute(

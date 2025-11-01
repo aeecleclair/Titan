@@ -1,8 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/paiement/class/structure.dart';
 import 'package:titan/paiement/providers/structure_list_provider.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
-final myStructuresProvider = StateProvider((ref) {
+final myStructuresProvider = StateProvider<List<Structure>>((ref) {
   final user = ref.watch(userProvider);
   final structures = ref.watch(structureListProvider);
   return structures.when(

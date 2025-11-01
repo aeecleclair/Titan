@@ -7,6 +7,10 @@ class StructureNotifier extends StateNotifier<Structure> {
   void setStructure(Structure structure) {
     state = structure;
   }
+
+  void resetStructure() {
+    state = Structure.empty();
+  }
 }
 
 final structureProvider = StateNotifierProvider<StructureNotifier, Structure>(
