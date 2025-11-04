@@ -59,7 +59,7 @@ class AdminStoreCard extends ConsumerWidget {
                   storeNotifier.updateStore(store);
                   QR.to(
                     PaymentRouter.root +
-                        PaymentRouter.admin +
+                        PaymentRouter.structureStores +
                         PaymentRouter.addEditStore,
                   );
                 },

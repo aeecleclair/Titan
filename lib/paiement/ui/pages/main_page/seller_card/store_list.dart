@@ -3,9 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/paiement/class/user_store.dart';
 import 'package:titan/paiement/providers/is_payment_admin.dart';
 import 'package:titan/paiement/providers/my_stores_provider.dart';
-import 'package:titan/paiement/ui/pages/main_page/seller_card/store_admin_card.dart';
+import 'package:titan/paiement/ui/pages/main_page/seller_card/admin_invoice_card.dart';
 import 'package:titan/paiement/ui/pages/main_page/seller_card/store_divider.dart';
 import 'package:titan/paiement/ui/pages/main_page/seller_card/store_seller_card.dart';
+import 'package:titan/paiement/ui/pages/main_page/seller_card/structure_admin_card.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 
 class StoreList extends ConsumerWidget {
@@ -15,7 +16,8 @@ class StoreList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final stores = ref.watch(myStoresProvider);
-    final isAdmin = ref.watch(isPaymentAdminProvider);
+    final isStructureAdmin = ref.watch(isStructureAdminProvider);
+    final isBankAccountHolder = ref.watch(isBankAccountHolderProvider);
     return SizedBox(
       height: maxHeight,
       child: SingleChildScrollView(
@@ -48,9 +50,10 @@ class StoreList extends ConsumerWidget {
                 }
                 return Column(
                   children: [
-                    if (isAdmin) ...[
+                    if (isStructureAdmin) ...[
+                      if (isBankAccountHolder) const InvoiceAdminCard(),
                       const StoreDivider(name: "Administrateur"),
-                      const StoreAdminCard(),
+                      const StructureAdminCard(),
                     ],
                     ...sortedByMembership.map((membership, stores) {
                       final List<UserStore> alphabeticallyOrderedStores = stores

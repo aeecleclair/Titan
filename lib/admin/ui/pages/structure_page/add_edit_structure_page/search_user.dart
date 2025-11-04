@@ -4,7 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/structure_manager_provider.dart';
 import 'package:titan/admin/tools/constants.dart';
-import 'package:titan/admin/ui/pages/add_edit_structure_page/results.dart';
+import 'package:titan/admin/ui/pages/structure_page/add_edit_structure_page/results.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
 import 'package:titan/user/class/simple_users.dart';

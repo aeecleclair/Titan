@@ -8,18 +8,17 @@ import 'package:titan/admin/providers/structure_provider.dart';
 import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/components/admin_button.dart';
-import 'package:titan/admin/ui/components/text_editing.dart';
-import 'package:titan/admin/ui/pages/add_edit_structure_page/search_user.dart';
+import 'package:titan/admin/ui/pages/structure_page/add_edit_structure_page/search_user.dart';
 import 'package:titan/paiement/class/structure.dart';
 import 'package:titan/paiement/providers/structure_list_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/layouts/item_chip.dart';
-import 'package:titan/tools/ui/widgets/align_left_text.dart';
-import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:titan/user/class/simple_users.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -37,13 +36,31 @@ class AddEditStructurePage extends HookConsumerWidget {
     final structureListNotifier = ref.watch(structureListProvider.notifier);
     final isEdit = structure.id != '';
     final name = useTextEditingController(text: isEdit ? structure.name : null);
+    final shortId = useTextEditingController(
+      text: isEdit ? structure.shortId : null,
+    );
+    final siegeAddressStreet = useTextEditingController(
+      text: isEdit ? structure.siegeAddressStreet : null,
+    );
+    final siegeAddressCity = useTextEditingController(
+      text: isEdit ? structure.siegeAddressCity : null,
+    );
+    final siegeAddressZipcode = useTextEditingController(
+      text: isEdit ? structure.siegeAddressZipcode : null,
+    );
+    final siegeAddressCountry = useTextEditingController(
+      text: isEdit ? structure.siegeAddressCountry : null,
+    );
+    final siret = useTextEditingController(
+      text: isEdit ? structure.siret : null,
+    );
+    final iban = useTextEditingController(text: isEdit ? structure.iban : null);
+    final bic = useTextEditingController(text: isEdit ? structure.bic : null);
     final allAssociationMembershipList = ref.watch(
       allAssociationMembershipListProvider,
     );
     final currentMembership = useState<AssociationMembership>(
-      (isEdit)
-          ? structure.associationMembership
-          : AssociationMembership.empty(),
+      isEdit ? structure.associationMembership : AssociationMembership.empty(),
     );
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -51,7 +68,7 @@ class AddEditStructurePage extends HookConsumerWidget {
 
     return AdminTemplate(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics(),
@@ -60,14 +77,102 @@ class AddEditStructurePage extends HookConsumerWidget {
             key: key,
             child: Column(
               children: [
-                const SizedBox(height: 20),
-                AlignLeftText(
+                Text(
                   isEdit
                       ? AdminTextConstants.editStructure
                       : AdminTextConstants.addStructure,
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20),
-                TextEditing(controller: name, label: AdminTextConstants.name),
+                TextEntry(controller: name, label: AdminTextConstants.name),
+                const SizedBox(height: 20),
+                TextEntry(
+                  controller: shortId,
+                  label: AdminTextConstants.structureShortId,
+                  validator: (value) {
+                    if (value.isNotEmpty && value.length != 3) {
+                      return AdminTextConstants.shortIdError;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 30),
+                Text(
+                  AdminTextConstants.siegeAddress,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                TextEntry(
+                  controller: siegeAddressStreet,
+                  label: AdminTextConstants.structureStreetAddress,
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: TextEntry(
+                        controller: siegeAddressCity,
+                        label: AdminTextConstants.structureCity,
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextEntry(
+                        controller: siegeAddressZipcode,
+                        label: AdminTextConstants.structureZipcode,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                TextEntry(
+                  controller: siegeAddressCountry,
+                  label: AdminTextConstants.structureCountry,
+                ),
+                const SizedBox(height: 20),
+                TextEntry(
+                  controller: siret,
+                  label: AdminTextConstants.structureSiret,
+                  validator: (value) {
+                    if (value.isNotEmpty &&
+                        value.replaceAll(" ", "").length != 14) {
+                      return AdminTextConstants.structureSiretError;
+                    }
+                    return null;
+                  },
+                  canBeEmpty: true,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  AdminTextConstants.structureBankInformation,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 20),
+                TextEntry(
+                  controller: iban,
+                  label: AdminTextConstants.structureIban,
+                  validator: (value) {
+                    if (value.isNotEmpty &&
+                        value.replaceAll(" ", "").length != 27) {
+                      return AdminTextConstants.structureIbanError;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                TextEntry(
+                  controller: bic,
+                  label: AdminTextConstants.structureBic,
+                  validator: (value) {
+                    if (value.isNotEmpty &&
+                        value.replaceAll(" ", "").length != 11) {
+                      return AdminTextConstants.structureBicError;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
                 AsyncChild(
                   value: allAssociationMembershipList,
                   builder: (context, allAssociationMembershipList) {
@@ -132,7 +237,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                     if (structureManager.id.isEmpty && !isEdit) {
                       displayToastWithContext(
                         TypeMsg.error,
-                        AdminTextConstants.noManager,
+                        AdminTextConstants.structureManagerError,
                       );
                       return;
                     }
@@ -141,20 +246,36 @@ class AddEditStructurePage extends HookConsumerWidget {
                         final value = isEdit
                             ? await structureListNotifier.updateStructure(
                                 Structure(
+                                  id: structure.id,
+                                  shortId: shortId.text,
                                   name: name.text,
+                                  siegeAddressStreet: siegeAddressStreet.text,
+                                  siegeAddressCity: siegeAddressCity.text,
+                                  siegeAddressZipcode: siegeAddressZipcode.text,
+                                  siegeAddressCountry: siegeAddressCountry.text,
+                                  siret: siret.text,
+                                  iban: iban.text,
+                                  bic: bic.text,
                                   associationMembership:
                                       currentMembership.value,
                                   managerUser: structureManager,
-                                  id: structure.id,
                                 ),
                               )
                             : await structureListNotifier.createStructure(
                                 Structure(
+                                  id: '',
+                                  shortId: shortId.text,
                                   name: name.text,
+                                  siegeAddressStreet: siegeAddressStreet.text,
+                                  siegeAddressCity: siegeAddressCity.text,
+                                  siegeAddressZipcode: siegeAddressZipcode.text,
+                                  siegeAddressCountry: siegeAddressCountry.text,
+                                  siret: siret.text,
+                                  iban: iban.text,
+                                  bic: bic.text,
                                   associationMembership:
                                       currentMembership.value,
                                   managerUser: structureManager,
-                                  id: '',
                                 ),
                               );
                         if (value) {
@@ -163,13 +284,15 @@ class AddEditStructurePage extends HookConsumerWidget {
                           displayToastWithContext(
                             TypeMsg.msg,
                             isEdit
-                                ? AdminTextConstants.editedStructure
+                                ? AdminTextConstants.updatedStructure
                                 : AdminTextConstants.addedStructure,
                           );
                         } else {
                           displayToastWithContext(
                             TypeMsg.error,
-                            AdminTextConstants.addingError,
+                            isEdit
+                                ? AdminTextConstants.updateStructureError
+                                : AdminTextConstants.addStructureError,
                           );
                         }
                       });
@@ -185,6 +308,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                     ),
                   ),
                 ),
+                SizedBox(height: 80),
               ],
             ),
           ),
