@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/drawer/class/module.dart';
@@ -40,12 +41,17 @@ class ModuleUI extends HookConsumerWidget {
                         : DrawerColorConstants.lightText,
                   ),
                 ),
-                Container(width: 16),
+                Container(width: 20),
                 SizedBox(
                   height: 50,
-                  child: Center(
-                    child: Text(
+                  width: 130,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: AutoSizeText(
                       module.name,
+                      maxLines: 1,
+                      minFontSize: 14,
+                      textAlign: TextAlign.start,
                       style: TextStyle(
                         color: module.root == pathForwarding.path
                             ? DrawerColorConstants.selectedText
