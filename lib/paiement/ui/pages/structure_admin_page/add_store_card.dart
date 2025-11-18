@@ -16,7 +16,9 @@ class AddStoreCard extends ConsumerWidget {
       onTap: () {
         storeNotifier.updateStore(Store.empty());
         QR.to(
-          PaymentRouter.root + PaymentRouter.admin + PaymentRouter.addEditStore,
+          PaymentRouter.root +
+              PaymentRouter.structureStores +
+              PaymentRouter.addEditStore,
         );
       },
       child: Container(

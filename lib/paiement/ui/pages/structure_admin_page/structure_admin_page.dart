@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/paiement/providers/selected_structure_provider.dart';
 import 'package:titan/paiement/providers/stores_list_provider.dart';
-import 'package:titan/paiement/ui/pages/admin_page/add_store_card.dart';
-import 'package:titan/paiement/ui/pages/admin_page/admin_store_card.dart';
+import 'package:titan/paiement/ui/pages/structure_admin_page/add_store_card.dart';
+import 'package:titan/paiement/ui/pages/structure_admin_page/admin_store_card.dart';
 import 'package:titan/paiement/ui/paiement.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
-class AdminPage extends ConsumerWidget {
-  const AdminPage({super.key});
+class StructureAdminPage extends ConsumerWidget {
+  const StructureAdminPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -2,13 +2,17 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/paiement/providers/invoice_list_provider.dart';
 import 'package:titan/paiement/providers/my_structures_provider.dart';
 import 'package:titan/paiement/providers/selected_structure_provider.dart';
 import 'package:titan/paiement/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/layouts/bottom_modal_template.dart';
+import 'package:titan/tools/ui/layouts/button.dart';
 
-class StoreAdminCard extends ConsumerWidget {
-  const StoreAdminCard({super.key});
+class StructureAdminCard extends ConsumerWidget {
+  const StructureAdminCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -16,6 +20,8 @@ class StoreAdminCard extends ConsumerWidget {
     final selectedStructureNotifier = ref.read(
       selectedStructureProvider.notifier,
     );
+    final invoicesNotifier = ref.watch(invoiceListProvider.notifier);
+
     return Column(
       children: myStructures.map((structure) {
         return GestureDetector(
@@ -33,7 +39,7 @@ class StoreAdminCard extends ConsumerWidget {
                 SizedBox(width: 15),
                 Expanded(
                   child: AutoSizeText(
-                    "Gestion des assocations ${structure.name}",
+                    "Gestion de ${structure.name}",
                     maxLines: 2,
                     style: TextStyle(
                       color: Color.fromARGB(255, 0, 29, 29),
@@ -51,8 +57,42 @@ class StoreAdminCard extends ConsumerWidget {
             ),
           ),
           onTap: () {
-            selectedStructureNotifier.setStructure(structure);
-            QR.to(PaymentRouter.root + PaymentRouter.admin);
+            showCustomBottomModal(
+              context: context,
+              modal: BottomModalTemplate(
+                title: "Gestion de ${structure.name}",
+                child: Column(
+                  children: [
+                    Button(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        selectedStructureNotifier.setStructure(structure);
+                        QR.to(
+                          PaymentRouter.root + PaymentRouter.structureStores,
+                        );
+                      },
+                      text: "Magasins",
+                    ),
+                    const SizedBox(height: 10),
+                    Button(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        tokenExpireWrapper(
+                          ref,
+                          () => invoicesNotifier.getStructureInvoices(
+                            structure.id,
+                          ),
+                        );
+                        QR.to(
+                          PaymentRouter.root + PaymentRouter.invoicesStructure,
+                        );
+                      },
+                      text: "Factures",
+                    ),
+                  ],
+                ),
+              ),
+            );
           },
         );
       }).toList(),

@@ -24,7 +24,7 @@ import 'package:titan/admin/ui/pages/schools/edit_school_page/edit_school_page.d
     deferred as edit_school_page;
 import 'package:titan/admin/ui/pages/structure_page/structure_page.dart'
     deferred as structure_page;
-import 'package:titan/admin/ui/pages/add_edit_structure_page/add_edit_structure_page.dart'
+import 'package:titan/admin/ui/pages/structure_page/add_edit_structure_page/add_edit_structure_page.dart'
     deferred as add_edit_structure_page;
 import 'package:titan/admin/ui/pages/main_page/main_page.dart'
     deferred as main_page;

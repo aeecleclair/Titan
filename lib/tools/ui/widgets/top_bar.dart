@@ -77,7 +77,7 @@ class TopBar extends HookConsumerWidget {
                   style:
                       textStyle ??
                       const TextStyle(
-                        fontSize: 40,
+                        fontSize: 30,
                         fontWeight: FontWeight.w700,
                         color: Colors.black,
                       ),
