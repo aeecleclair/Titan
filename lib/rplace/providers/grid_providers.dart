@@ -5,22 +5,22 @@ import 'package:titan/rplace/repositories/grid_repository.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 
-class gridNotifier extends SingleNotifier<gridInfo> {
-  final gridRepository _gridRepository = gridRepository();
-  gridNotifier({required String token}) : super(const AsyncLoading()) {
+class GridNotifier extends SingleNotifier<GridInfo> {
+  final GridRepository _gridRepository = GridRepository();
+  GridNotifier({required String token}) : super(const AsyncLoading()) {
     _gridRepository.setToken(token);
   }
 
-  Future<AsyncValue<gridInfo>> getGridInformation() async {
+  Future<AsyncValue<GridInfo>> getGridInformation() async {
     return await load(_gridRepository.getGridInformation);
   }
 }
 
-final gridProvider = StateNotifierProvider<gridNotifier, AsyncValue<gridInfo>>((
+final gridProvider = StateNotifierProvider<GridNotifier, AsyncValue<GridInfo>>((
   ref,
 ) {
   final token = ref.watch(tokenProvider);
-  final notifier = gridNotifier(token: token);
+  final notifier = GridNotifier(token: token);
   tokenExpireWrapperAuth(ref, () async {
     await notifier.getGridInformation();
   });

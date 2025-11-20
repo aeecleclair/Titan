@@ -10,8 +10,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/rplace/router.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-class rPlacePage extends HookConsumerWidget {
-  const rPlacePage({super.key});
+class RPlacePage extends HookConsumerWidget {
+  const RPlacePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,26 +19,31 @@ class rPlacePage extends HookConsumerWidget {
 
     Future<WebSocketChannel> connect() async {
       final channel = WebSocketChannel.connect(
-        Uri.parse('wss://hyperion-2.dev.eclair.ec-lyon.fr/rplace/ws'),
+        Uri.parse('ws://localhost:8000/rplace/ws'),
       );
       channel.sink.add(jsonEncode({"token": token}));
       return channel;
     }
 
+    print('connection effectuée');
     connect().then((WebSocketChannel channel) {
       channel.stream.listen((event) {
         final decodedJson = jsonDecode(event);
+        print("json");
+        print(decodedJson);
         if (decodedJson["command"] != "NEW_PIXEL") {
+          print("ca n'est pas un new pixel");
           return;
         }
         final pixel = Pixel.fromJson(decodedJson["data"]);
         ref.read(pixelListProvider.notifier).updatePixel(pixel);
       });
     });
-    return const SafeArea(
+    print("Afficher le canva");
+    return SafeArea(
       child: Column(
         children: [
-          TopBar(title: "rPlace", root: rPlaceRouter.root),
+          TopBar(title: "rPlace", root: RPlaceRouter.root),
           Expanded(child: CanvasViewer()),
         ],
       ),
