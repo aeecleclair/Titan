@@ -16,7 +16,7 @@ import 'package:titan/phonebook/router.dart';
 import 'package:titan/ph/router.dart';
 import 'package:titan/purchases/router.dart';
 import 'package:titan/raffle/router.dart';
-import 'package:titan/raffle/router.dart';
+import 'package:titan/rplace/router.dart';
 import 'package:titan/recommendation/router.dart';
 import 'package:titan/seed-library/router.dart';
 import 'package:titan/vote/router.dart';
@@ -55,6 +55,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     PhRouter.module,
     PurchasesRouter.module,
     RaffleRouter.module,
+    RPlaceRouter.module,
     RecommendationRouter.module,
     VoteRouter.module,
     SeedLibraryRouter.module,

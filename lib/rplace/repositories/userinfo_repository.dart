@@ -6,6 +6,7 @@ class UserinfoRepository extends Repository {
   final ext = "rplace/";
 
   Future<UserInfo> getLastPlacedDate() async {
+    print("getlastPixel");
     return UserInfo.fromJson(await getOne("last_pixel_date"));
   }
 }

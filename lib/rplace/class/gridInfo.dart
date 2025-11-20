@@ -1,17 +1,17 @@
-class gridInfo {
+class GridInfo {
   late final int nbLigne;
   late final int nbColonne;
   late final double pixelSize;
   late final Duration cooldown;
 
-  gridInfo({
+  GridInfo({
     required this.nbLigne,
     required this.nbColonne,
     required this.pixelSize,
     required this.cooldown,
   });
 
-  gridInfo.fromJson(Map<String, dynamic> json) {
+  GridInfo.fromJson(Map<String, dynamic> json) {
     nbLigne = json['nbLigne'];
     nbColonne = json['nbColonne'];
     pixelSize = json['pixelSize'];

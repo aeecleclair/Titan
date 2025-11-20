@@ -4,9 +4,9 @@ import 'package:titan/rplace/class/pixelinfo.dart';
 import 'package:titan/rplace/repositories/pixelinfo_repository.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
 
-class pixelinfoNotifier extends SingleNotifier<PixelInfo> {
+class PixelInfoNotifier extends SingleNotifier<PixelInfo> {
   final PixelInfoRepository _pixelinfoRepository = PixelInfoRepository();
-  pixelinfoNotifier({required String token}) : super(const AsyncLoading()) {
+  PixelInfoNotifier({required String token}) : super(const AsyncLoading()) {
     _pixelinfoRepository.setToken(token);
   }
 
@@ -16,8 +16,8 @@ class pixelinfoNotifier extends SingleNotifier<PixelInfo> {
 }
 
 final pixelInfoProvider =
-    StateNotifierProvider<pixelinfoNotifier, AsyncValue<PixelInfo>>((ref) {
+    StateNotifierProvider<PixelInfoNotifier, AsyncValue<PixelInfo>>((ref) {
       final token = ref.watch(tokenProvider);
-      final notifier = pixelinfoNotifier(token: token);
+      final notifier = PixelInfoNotifier(token: token);
       return notifier;
     });

@@ -89,7 +89,7 @@ class AppRouter {
       PhRouter(ref).route(),
       PurchasesRouter(ref).route(),
       RaffleRouter(ref).route(),
-      rPlaceRouter(ref).route(),
+      RPlaceRouter(ref).route(),
       RecommendationRouter(ref).route(),
       SettingsRouter(ref).route(),
       VoteRouter(ref).route(),

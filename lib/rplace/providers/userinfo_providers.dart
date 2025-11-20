@@ -5,9 +5,9 @@ import 'package:titan/rplace/repositories/userinfo_repository.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 
-class userinfoNotifier extends SingleNotifier<UserInfo> {
+class UserinfoNotifier extends SingleNotifier<UserInfo> {
   final UserinfoRepository _userinfoRepository = UserinfoRepository();
-  userinfoNotifier({required String token}) : super(const AsyncLoading()) {
+  UserinfoNotifier({required String token}) : super(const AsyncLoading()) {
     _userinfoRepository.setToken(token);
   }
 
@@ -17,9 +17,9 @@ class userinfoNotifier extends SingleNotifier<UserInfo> {
 }
 
 final userinfoProvider =
-    StateNotifierProvider<userinfoNotifier, AsyncValue<UserInfo>>((ref) {
+    StateNotifierProvider<UserinfoNotifier, AsyncValue<UserInfo>>((ref) {
       final token = ref.watch(tokenProvider);
-      final notifier = userinfoNotifier(token: token);
+      final notifier = UserinfoNotifier(token: token);
       tokenExpireWrapperAuth(ref, () async {
         await notifier.getLastPlacedDate();
       });
