@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -124,16 +125,28 @@ class ConfirmButton extends ConsumerWidget {
           );
           return;
         }
-        final bool didAuthenticate = await auth.authenticate(
-          localizedReason: 'Veuillez vous authentifier pour payer',
-          authMessages: [
-            const AndroidAuthMessages(
-              signInTitle: 'L\'authentification est requise pour payer',
-              cancelButton: 'Non merci',
-            ),
-            const IOSAuthMessages(cancelButton: 'Non merci'),
-          ],
-        );
+        late bool didAuthenticate;
+        try {
+          didAuthenticate = await auth.authenticate(
+            localizedReason: 'Veuillez vous authentifier pour payer',
+            authMessages: [
+              const AndroidAuthMessages(
+                signInTitle: 'L\'authentification est requise pour payer',
+                cancelButton: 'Non merci',
+              ),
+              const IOSAuthMessages(cancelButton: 'Non merci'),
+            ],
+          );
+        } catch (e) {
+          if (kDebugMode) {
+            debugPrint('Authentication failed with error : $e');
+          }
+          displayToastWithContext(
+            TypeMsg.error,
+            'Erreur lors de l\'authentification',
+          );
+          return;
+        }
         if (!didAuthenticate) {
           displayToastWithContext(
             TypeMsg.error,
