@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/paiement/providers/key_service_provider.dart';
@@ -20,31 +21,38 @@ class QrCode extends ConsumerWidget {
     return FutureBuilder(
       future: getQRCodeContent(id, payAmount, keyService, true),
       builder: (context, snapshot) {
-        if (snapshot.data == null) {
-          return SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
-            height: MediaQuery.of(context).size.width * 0.8,
-            child: const Loader(),
-          );
+        switch (snapshot) {
+          case AsyncSnapshot(:final error?):
+            if (kDebugMode) {
+              debugPrint('Could not load QR code: $error');
+            }
+            return Center(child: Text('Erreur lors du chargement du QR code'));
+          case AsyncSnapshot(:final data?):
+            return Center(
+              child: QrImageView(
+                data: data,
+                version: QrVersions.auto,
+                size: min(
+                  MediaQuery.of(context).size.width * 0.8,
+                  MediaQuery.of(context).size.height * 0.8,
+                ),
+                eyeStyle: const QrEyeStyle(
+                  color: Colors.black,
+                  eyeShape: QrEyeShape.square,
+                ),
+                dataModuleStyle: const QrDataModuleStyle(
+                  dataModuleShape: QrDataModuleShape.square,
+                  color: Colors.black,
+                ),
+              ),
+            );
+          case AsyncSnapshot():
+            return SizedBox(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: MediaQuery.of(context).size.width * 0.8,
+              child: const Loader(),
+            );
         }
-        return Center(
-          child: QrImageView(
-            data: snapshot.data!,
-            version: QrVersions.auto,
-            size: min(
-              MediaQuery.of(context).size.width * 0.8,
-              MediaQuery.of(context).size.height * 0.8,
-            ),
-            eyeStyle: const QrEyeStyle(
-              color: Colors.black,
-              eyeShape: QrEyeShape.square,
-            ),
-            dataModuleStyle: const QrDataModuleStyle(
-              dataModuleShape: QrDataModuleShape.square,
-              color: Colors.black,
-            ),
-          ),
-        );
       },
     );
   }
