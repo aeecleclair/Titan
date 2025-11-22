@@ -125,6 +125,11 @@ class OpenIdTokenProvider
   final String redirectURL = "${getTitanURL()}/static.html";
   final String discoveryUrl =
       "${Repository.host}.well-known/openid-configuration";
+  AuthorizationServiceConfiguration get serviceConfiguration =>
+      AuthorizationServiceConfiguration(
+        authorizationEndpoint: "${Repository.host}auth/authorize",
+        tokenEndpoint: "${Repository.host}auth/token",
+      );
   final List<String> scopes = ["API"];
   OpenIdTokenProvider() : super(const AsyncValue.loading());
 
@@ -216,21 +221,44 @@ class OpenIdTokenProvider
           }
         });
       } else {
-        AuthorizationTokenResponse resp = await appAuth
-            .authorizeAndExchangeCode(
-              AuthorizationTokenRequest(
-                clientId,
-                redirectURLScheme,
-                discoveryUrl: discoveryUrl,
-                scopes: scopes,
-                allowInsecureConnections: kDebugMode,
-              ),
+        final AuthorizationResponse? authResponse = await appAuth.authorize(
+          AuthorizationRequest(
+            clientId,
+            redirectURLScheme,
+            serviceConfiguration: serviceConfiguration,
+            scopes: scopes,
+            allowInsecureConnections: kDebugMode,
+          ),
+        );
+
+        if (authResponse != null && authResponse.authorizationCode != null) {
+          final TokenResponse? tokenResponse = await appAuth.token(
+            TokenRequest(
+              clientId,
+              redirectURLScheme,
+              authorizationCode: authResponse.authorizationCode,
+              codeVerifier: authResponse.codeVerifier,
+              serviceConfiguration: serviceConfiguration,
+              scopes: scopes,
+              allowInsecureConnections: kDebugMode,
+            ),
+          );
+
+          if (tokenResponse != null) {
+            await _secureStorage.write(
+              key: tokenName,
+              value: tokenResponse.refreshToken,
             );
-        await _secureStorage.write(key: tokenName, value: resp.refreshToken);
-        state = AsyncValue.data({
-          tokenKey: resp.accessToken!,
-          refreshTokenKey: resp.refreshToken!,
-        });
+            state = AsyncValue.data({
+              tokenKey: tokenResponse.accessToken!,
+              refreshTokenKey: tokenResponse.refreshToken!,
+            });
+          } else {
+            throw Exception('Failed to exchange authorization code');
+          }
+        } else {
+          throw Exception('Authorization cancelled or failed');
+        }
       }
     } catch (e) {
       state = AsyncValue.error("Error $e", StackTrace.empty);
@@ -262,7 +290,7 @@ class OpenIdTokenProvider
               TokenRequest(
                 clientId,
                 redirectURLScheme,
-                discoveryUrl: discoveryUrl,
+                serviceConfiguration: serviceConfiguration,
                 scopes: scopes,
                 refreshToken: token,
                 allowInsecureConnections: kDebugMode,
@@ -289,7 +317,7 @@ class OpenIdTokenProvider
           TokenRequest(
             clientId,
             redirectURLScheme,
-            discoveryUrl: discoveryUrl,
+            serviceConfiguration: serviceConfiguration,
             scopes: scopes,
             authorizationCode: authorizationToken,
             allowInsecureConnections: kDebugMode,
@@ -311,7 +339,7 @@ class OpenIdTokenProvider
             TokenRequest(
               clientId,
               redirectURLScheme,
-              discoveryUrl: discoveryUrl,
+              serviceConfiguration: serviceConfiguration,
               scopes: scopes,
               refreshToken: token[refreshTokenKey] as String,
               allowInsecureConnections: kDebugMode,
@@ -324,7 +352,10 @@ class OpenIdTokenProvider
           storeToken();
           return true;
         }
-        state = const AsyncValue.error(e, StackTrace.empty);
+        state = const AsyncValue.error(
+          "No refresh token available",
+          StackTrace.empty,
+        );
         return false;
       },
       error: (error, stackTrace) {
