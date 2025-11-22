@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/admin/providers/permissions_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:titan/tools/plausible/plausible.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 enum TypeMsg { msg, error }
 
@@ -456,6 +459,17 @@ bool isStudent(String email) {
 bool isNotStaff(String email) {
   final regex = RegExp(previousStaffEmailRegex);
   return !regex.hasMatch(email);
+}
+
+bool hasUserPermission(Ref ref, String permission) {
+  final me = ref.watch(userProvider);
+  final permissions = ref.watch(permissionsProvider);
+  return me.groups.any(
+        (g) => permissions[permission]!.authorizedGroups.contains(g.id),
+      ) ||
+      permissions[permission]!.authorizedAccountTypes.contains(
+        me.accountType.type,
+      );
 }
 
 String getAppFlavor() {

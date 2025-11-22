@@ -84,6 +84,7 @@ class AdminRouter {
             builder: () => add_loaner_page.AddLoanerPage(),
             middleware: [
               DeferredLoadingMiddleware(add_loaner_page.loadLibrary),
+              AdminMiddleware(ref, isLoanAdminProvider),
             ],
           ),
         ],

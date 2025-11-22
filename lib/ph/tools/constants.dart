@@ -21,3 +21,8 @@ class PhTextConstants {
       "Pas encore de PH dans la base de donnée";
   static const String succesDowloading = "Téléchargé avec succès";
 }
+
+class PhPermissionConstants {
+  static const String accessPh = "access_ph";
+  static const String managePh = "manage_ph";
+}

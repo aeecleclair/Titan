@@ -142,3 +142,8 @@ class SeedLibraryColorConstants {
   static const Color greenGradient1 = Color(0xff79a400);
   static const Color textDark = Color(0xff255000);
 }
+
+class SeedLibraryPermissionConstants {
+  static const String accessSeedLibrary = "access_seed_library";
+  static const String manageSeedLibrary = "manage_seed_library";
+}

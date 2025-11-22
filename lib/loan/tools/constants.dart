@@ -97,3 +97,8 @@ class LoanTextConstants {
   static const String updatingError = "Erreur lors de la modification";
   static const String yes = "Oui";
 }
+
+class LoanPermissionConstants {
+  static const String accessLoans = 'access_loan';
+  static const String manageLoaners = 'manage_loaners';
+}

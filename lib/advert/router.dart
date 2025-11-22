@@ -47,7 +47,7 @@ class AdvertRouter {
         path: admin,
         builder: () => admin_page.AdvertAdminPage(),
         middleware: [
-          AdminMiddleware(ref, isAdvertAdminProvider),
+          AdminMiddleware(ref, isAdvertiserProvider),
           DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [

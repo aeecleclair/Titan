@@ -1,12 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/user/providers/user_provider.dart';
+import 'package:titan/ph/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
 
 final isPhAdminProvider = StateProvider<bool>((ref) {
-  final me = ref.watch(userProvider);
-  for (final group in me.groups) {
-    if (group.name == "ph") {
-      return true;
-    }
-  }
-  return false;
+  return hasUserPermission(ref, PhPermissionConstants.managePh);
 });
