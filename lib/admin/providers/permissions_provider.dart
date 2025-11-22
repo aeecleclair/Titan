@@ -89,6 +89,7 @@ final permissionsProvider = Provider<Map<String, Permission>>((ref) {
         data: (names) {
           final permissionsMap = <String, Permission>{};
           for (var name in names) {
+            name = name.split(".")[1];
             permissionsMap[name] = Permission(
               permissionName: name,
               authorizedAccountTypes: permissions.accountTypePermissions
@@ -105,6 +106,28 @@ final permissionsProvider = Provider<Map<String, Permission>>((ref) {
         },
         orElse: () => {},
       );
+    },
+    orElse: () => {},
+  );
+});
+
+final moduleGroupedPermissionsProvider = Provider<Map<String, List<String>>>((
+  ref,
+) {
+  final permissionsNames = ref.watch(permissionsNamesListProvider);
+  return permissionsNames.maybeWhen(
+    data: (names) {
+      final Map<String, List<String>> modulesPermissions = {};
+
+      for (var permissionName in names) {
+        final moduleName = permissionName.split('.').first;
+        if (!modulesPermissions.containsKey(moduleName)) {
+          modulesPermissions[moduleName] = [permissionName.split('.')[1]];
+        } else {
+          modulesPermissions[moduleName]!.add(permissionName.split('.')[1]);
+        }
+      }
+      return modulesPermissions;
     },
     orElse: () => {},
   );

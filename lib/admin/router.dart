@@ -4,7 +4,7 @@ import 'package:titan/admin/ui/pages/groups/add_group_page/add_group_page.dart'
     deferred as add_group_page;
 import 'package:titan/admin/ui/pages/groups/add_loaner_page/add_loaner_page.dart'
     deferred as add_loaner_page;
-import 'package:titan/admin/ui/pages/edit_module_visibility/edit_module_visibility.dart'
+import 'package:titan/admin/ui/pages/permissions/permissions.dart'
     deferred as edit_module_visibility;
 import 'package:titan/admin/ui/pages/groups/edit_group_page/edit_group_page.dart'
     deferred as edit_group_page;
@@ -45,7 +45,7 @@ class AdminRouter {
   static const String editSchool = '/edit_school';
   static const String structures = '/structures';
   static const String addEditStructure = '/add_edit_structure';
-  static const String editModuleVisibility = '/edit_module_visibility';
+  static const String permissions = '/permissions';
   static const String associationMemberships = '/association_memberships';
   static const String detailAssociationMembership =
       '/detail_association_membership';
@@ -90,8 +90,8 @@ class AdminRouter {
         ],
       ),
       QRoute(
-        path: editModuleVisibility,
-        builder: () => edit_module_visibility.EditModulesVisibilityPage(),
+        path: permissions,
+        builder: () => edit_module_visibility.PermissionsPage(),
         middleware: [
           DeferredLoadingMiddleware(edit_module_visibility.loadLibrary),
         ],

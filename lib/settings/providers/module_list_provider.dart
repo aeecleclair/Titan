@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/providers/permission_list_provider.dart';
 import 'package:titan/admin/providers/permissions_provider.dart';
-import 'package:titan/admin/tools/function.dart';
 import 'package:titan/advert/router.dart';
 import 'package:titan/amap/router.dart';
 import 'package:titan/booking/router.dart';
@@ -28,14 +26,8 @@ import 'package:titan/centralassociation/router.dart';
 final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
   ref,
 ) {
-  List<String> permissionsNames = ref
-      .watch(permissionsNamesListProvider)
-      .maybeWhen(data: (data) => data, orElse: () => []);
   final me = ref.watch(userProvider);
-
-  final modulesPermissionNames = groupPermissionsNamesByModule(
-    permissionsNames,
-  );
+  final modulesPermissionNames = ref.watch(moduleGroupedPermissionsProvider);
   final permissions = ref.watch(permissionsProvider);
   List<String> myModulesRoot = [];
   for (String module in modulesPermissionNames.keys) {
@@ -43,15 +35,17 @@ final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
       (p) => p.startsWith("access_"),
       orElse: () => "",
     );
-    final hasAccess =
-        me.groups.any(
-          (g) =>
-              permissions[accessPermissions]!.authorizedGroups.contains(g.id),
-        ) ||
-        permissions[accessPermissions]!.authorizedAccountTypes.contains(
-          me.accountType.type,
-        );
-    if (hasAccess) myModulesRoot.add(module);
+    if (accessPermissions != "") {
+      final hasAccess =
+          me.groups.any(
+            (g) =>
+                permissions[accessPermissions]!.authorizedGroups.contains(g.id),
+          ) ||
+          permissions[accessPermissions]!.authorizedAccountTypes.contains(
+            me.accountType.type,
+          );
+      if (hasAccess) myModulesRoot.add(module);
+    }
   }
 
   ModulesNotifier modulesNotifier = ModulesNotifier();

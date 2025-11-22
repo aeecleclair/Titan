@@ -4,16 +4,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/account_type.dart';
 import 'package:titan/admin/class/permissions.dart';
 import 'package:titan/admin/class/simple_group.dart';
-import 'package:titan/admin/tools/function.dart';
-import 'package:titan/admin/ui/pages/edit_module_visibility/module_expansion_panel.dart';
+import 'package:titan/admin/providers/permissions_provider.dart';
+import 'package:titan/admin/ui/pages/permissions/permission_expansion_panel.dart';
 
-class ModulesPermissionsExpansionPanel extends HookConsumerWidget {
+class ModuleExpansionPanel extends HookConsumerWidget {
   final List<String> permissionsNames;
   final AllPermissions permissions;
   final List<SimpleGroup> groups;
   final List<AccountType> accountTypes;
 
-  const ModulesPermissionsExpansionPanel({
+  const ModuleExpansionPanel({
     super.key,
     required this.permissionsNames,
     required this.permissions,
@@ -26,14 +26,12 @@ class ModulesPermissionsExpansionPanel extends HookConsumerWidget {
     final isExpanded = useState<List<bool>>(
       List.generate(permissionsNames.length, (index) => false),
     );
-
-    final modulesPermissionNames = groupPermissionsNamesByModule(
-      permissionsNames,
-    );
+    final modulesPermissionNames = ref.watch(moduleGroupedPermissionsProvider);
 
     return ExpansionPanelList(
       expansionCallback: (i, isOpen) {
-        isExpanded.value = isExpanded.value..[i] = isOpen;
+        isExpanded.value[i] = isOpen;
+        isExpanded.value = List.from(isExpanded.value);
       },
       children: modulesPermissionNames.keys
           .map(
@@ -53,7 +51,7 @@ class ModulesPermissionsExpansionPanel extends HookConsumerWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              body: ModulePermissionsExpansionPanel(
+              body: PermissionsExpansionPanel(
                 permissionNames: modulesPermissionNames[module]!,
                 accountTypes: accountTypes,
                 groups: groups,
