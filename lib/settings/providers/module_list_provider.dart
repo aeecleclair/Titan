@@ -18,6 +18,7 @@ import 'package:titan/purchases/router.dart';
 import 'package:titan/raffle/router.dart';
 import 'package:titan/recommendation/router.dart';
 import 'package:titan/seed-library/router.dart';
+import 'package:titan/shotgun/router.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:titan/vote/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -76,6 +77,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     RecommendationRouter.module,
     VoteRouter.module,
     SeedLibraryRouter.module,
+    ShotgunRouter.module,
   ];
   ModulesNotifier() : super([]);
 
