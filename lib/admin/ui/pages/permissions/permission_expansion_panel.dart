@@ -9,8 +9,8 @@ import 'package:titan/admin/providers/permissions_provider.dart';
 import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/tools/function.dart';
 
-class ModulePermissionsExpansionPanel extends HookConsumerWidget {
-  const ModulePermissionsExpansionPanel({
+class PermissionsExpansionPanel extends HookConsumerWidget {
+  const PermissionsExpansionPanel({
     super.key,
     required this.permissionNames,
     required this.accountTypes,
@@ -33,7 +33,8 @@ class ModulePermissionsExpansionPanel extends HookConsumerWidget {
 
     return ExpansionPanelList(
       expansionCallback: (i, isOpen) {
-        permissionExpanded.value = permissionExpanded.value..[i] = isOpen;
+        permissionExpanded.value[i] = isOpen;
+        permissionExpanded.value = List.from(permissionExpanded.value);
       },
       children: permissionNames
           .map(

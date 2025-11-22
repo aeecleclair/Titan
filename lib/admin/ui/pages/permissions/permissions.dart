@@ -6,13 +6,13 @@ import 'package:titan/admin/providers/permission_list_provider.dart';
 import 'package:titan/admin/providers/permissions_provider.dart';
 import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
-import 'package:titan/admin/ui/pages/edit_module_visibility/modules_expansion_panel.dart';
+import 'package:titan/admin/ui/pages/permissions/module_expansion_panel.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:tuple/tuple.dart';
 
-class EditModulesVisibilityPage extends HookConsumerWidget {
-  const EditModulesVisibilityPage({super.key});
+class PermissionsPage extends HookConsumerWidget {
+  const PermissionsPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -56,7 +56,7 @@ class EditModulesVisibilityPage extends HookConsumerWidget {
                             permissions,
                             groups,
                             accountTypes,
-                          ) => ModulesPermissionsExpansionPanel(
+                          ) => ModuleExpansionPanel(
                             permissionsNames: permissionsNames,
                             permissions: permissions,
                             groups: groups,

@@ -19,19 +19,3 @@ String capitalizePermissionName(String permissionName) {
       )
       .join(' ');
 }
-
-Map<String, List<String>> groupPermissionsNamesByModule(
-  List<String> permissionNames,
-) {
-  final Map<String, List<String>> modulesPermissions = {};
-
-  for (var permissionName in permissionNames) {
-    final moduleName = permissionName.split('.').first;
-    if (!modulesPermissions.containsKey(moduleName)) {
-      modulesPermissions[moduleName] = [permissionName.split('.')[1]];
-    } else {
-      modulesPermissions[moduleName]!.add(permissionName.split('.')[1]);
-    }
-  }
-  return modulesPermissions;
-}

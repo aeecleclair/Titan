@@ -36,10 +36,10 @@ class AdminMainPage extends HookConsumerWidget {
           children: [
             GestureDetector(
               onTap: () {
-                QR.to(AdminRouter.root + AdminRouter.editModuleVisibility);
+                QR.to(AdminRouter.root + AdminRouter.permissions);
               },
               child: const MenuCardUi(
-                text: AdminTextConstants.visibilities,
+                text: AdminTextConstants.permissions,
                 icon: HeroIcons.eye,
               ),
             ),
