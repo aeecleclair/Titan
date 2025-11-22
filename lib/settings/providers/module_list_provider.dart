@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/admin/providers/permission_list_provider.dart';
+import 'package:titan/admin/providers/permissions_provider.dart';
+import 'package:titan/admin/tools/function.dart';
 import 'package:titan/advert/router.dart';
-import 'package:titan/admin/providers/all_my_module_roots_list_provider.dart';
 import 'package:titan/amap/router.dart';
 import 'package:titan/booking/router.dart';
 import 'package:titan/centralisation/router.dart';
@@ -18,6 +20,7 @@ import 'package:titan/purchases/router.dart';
 import 'package:titan/raffle/router.dart';
 import 'package:titan/recommendation/router.dart';
 import 'package:titan/seed-library/router.dart';
+import 'package:titan/user/providers/user_provider.dart';
 import 'package:titan/vote/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:titan/centralassociation/router.dart';
@@ -25,10 +28,31 @@ import 'package:titan/centralassociation/router.dart';
 final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
   ref,
 ) {
-  final myModulesRoot = ref
-      .watch(allMyModuleRootList)
-      .map((root) => '/$root')
-      .toList();
+  List<String> permissionsNames = ref
+      .watch(permissionsNamesListProvider)
+      .maybeWhen(data: (data) => data, orElse: () => []);
+  final me = ref.watch(userProvider);
+
+  final modulesPermissionNames = groupPermissionsNamesByModule(
+    permissionsNames,
+  );
+  final permissions = ref.watch(permissionsProvider);
+  List<String> myModulesRoot = [];
+  for (String module in modulesPermissionNames.keys) {
+    final accessPermissions = modulesPermissionNames[module]!.firstWhere(
+      (p) => p.startsWith("access_"),
+      orElse: () => "",
+    );
+    final hasAccess =
+        me.groups.any(
+          (g) =>
+              permissions[accessPermissions]!.authorizedGroups.contains(g.id),
+        ) ||
+        permissions[accessPermissions]!.authorizedAccountTypes.contains(
+          me.accountType.type,
+        );
+    if (hasAccess) myModulesRoot.add(module);
+  }
 
   ModulesNotifier modulesNotifier = ModulesNotifier();
   modulesNotifier.loadModules(myModulesRoot);
