@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/phonebook/providers/association_kind_provider.dart';
@@ -13,6 +14,7 @@ import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/pages/association_page/member_card.dart';
 import 'package:titan/phonebook/ui/pages/association_page/web_member_card.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -35,6 +37,10 @@ class AssociationPage extends HookConsumerWidget {
     );
     final isPresident = ref.watch(isAssociationPresidentProvider);
     final kindNotifier = ref.watch(associationKindProvider.notifier);
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
 
     return PhonebookTemplate(
       child: Refresher(
@@ -59,9 +65,59 @@ class AssociationPage extends HookConsumerWidget {
                     style: const TextStyle(fontSize: 40, color: Colors.black),
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    association.kind,
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        association.kind,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Clipboard.setData(
+                            ClipboardData(
+                              text: associationMemberSortedList
+                                  .map(
+                                    (completeMember) =>
+                                        completeMember.member.email,
+                                  )
+                                  .join(","),
+                            ),
+                          ).then((value) {
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              PhonebookTextConstants.emailListCopied,
+                            );
+                          });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: Colors.black),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.shade400.withValues(
+                                  alpha: 0.3,
+                                ),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(2, 3),
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const HeroIcon(
+                            HeroIcons.documentDuplicate,
+                            size: 20,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 10),
                   Text(

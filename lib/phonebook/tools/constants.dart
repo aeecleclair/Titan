@@ -46,6 +46,7 @@ class PhonebookTextConstants {
   static const String editMembership = "Modifier le rôle";
   static const String email = "Email :";
   static const String emailCopied = "Email copié dans le presse-papier";
+  static const String emailListCopied = "Liste d'emails copiée";
   static const String emptyApparentName = "Veuillez entrer un nom de role";
   static const String emptyFieldError = "Un champ n'est pas rempli";
   static const String emptyKindError = "Veuillez choisir un type d'association";
