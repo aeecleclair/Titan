@@ -27,6 +27,8 @@ class ImagePickerOnTap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     return GestureDetector(
       onTap: () async {
         final crossFile = await picker.pickImage(
@@ -38,7 +40,7 @@ class ImagePickerOnTap extends StatelessWidget {
           if (size > maxHyperionFileSize) {
             displayToastWithContext(
               TypeMsg.error,
-              AppLocalizations.of(context)!.othersImageSizeTooBig,
+              localizeWithContext.othersImageSizeTooBig,
             );
           } else {
             if (kIsWeb) {

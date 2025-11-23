@@ -1,4 +1,4 @@
-package fr.myecl.titan
+package __PACKAGE__
 
 import androidx.annotation.NonNull
 import io.flutter.embedding.android.FlutterFragmentActivity

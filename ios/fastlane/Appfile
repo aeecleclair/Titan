@@ -1,0 +1,24 @@
+app_identifier("fr.proximapp.myemapp.titan") # The bundle identifier of your app
+apple_id("pnp@em-lyon.com") # Your Apple Developer Portal username
+
+itc_team_id("121183110") # App Store Connect Team ID
+team_id("25XYVB6GDY") # Developer Portal Team ID
+
+
+for_platform :ios do
+  for_lane :beta do |options|
+    flavor = options[:flavor] # prod, alpha, dev
+    app_id_prefix = options[:prefix] # fr.myecl
+    app_name = options[:name] # MyECL
+
+    if flavor == "prod"
+      app_identifier("#{app_id_prefix}.titan")
+    else
+      app_identifier("#{app_id_prefix}.titan.#{flavor}")
+    end
+
+  end
+end
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile

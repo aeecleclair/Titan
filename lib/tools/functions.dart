@@ -1,7 +1,6 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
@@ -497,18 +496,20 @@ String getAppFlavor() {
     return appFlavor!.toLowerCase();
   }
 
-  if (const String.fromEnvironment("flavor") != "") {
-    return const String.fromEnvironment("flavor");
+  const flavor = String.fromEnvironment("FLAVOR");
+
+  if (flavor.isEmpty) {
+    throw StateError("App flavor not set");
   }
 
-  throw StateError("App flavor not set");
+  return flavor.toLowerCase();
 }
 
 Plausible? getPlausible() {
-  final serverUrl = dotenv.env["PLAUSIBLE_HOST"];
-  final domain = dotenv.env["PLAUSIBLE_DOMAIN"];
+  const serverUrl = String.fromEnvironment("PLAUSIBLE_HOST");
+  const domain = String.fromEnvironment("PLAUSIBLE_DOMAIN");
 
-  if (serverUrl == null || domain == null) {
+  if (serverUrl == "" || domain == "") {
     return null;
   }
 
@@ -520,37 +521,35 @@ Plausible? getPlausible() {
 }
 
 String getTitanHost() {
-  var host = dotenv.env["${getAppFlavor().toUpperCase()}_HOST"];
-
-  if (host == null || host == "") {
-    throw StateError("Could not find host corresponding to flavor");
+  const backendHost = String.fromEnvironment("BACKEND_HOST");
+  if (backendHost.isEmpty) {
+    throw StateError("Could not find BACKEND_HOST in config.json");
+  }
+  if (backendHost[backendHost.length - 1] != "/") {
+    throw StateError("BACKEND_HOST in config.json should end with a /");
   }
 
-  return host;
+  return backendHost;
 }
 
 String getPaymentName() {
-  var paymentName = dotenv.env["PAYMENT_NAME"];
-  if (paymentName == null || paymentName.isEmpty) {
-    paymentName = "Payment";
-  }
-  return paymentName;
+  return const String.fromEnvironment("PAYMENT_NAME", defaultValue: "ProxiPay");
 }
 
 String getBaseSchoolName() {
-  var schoolName = dotenv.env["SCHOOL_NAME"];
-  if (schoolName == null || schoolName.isEmpty) {
-    throw StateError("Could not find school name in environment variables");
+  const schoolName = String.fromEnvironment("SCHOOL_NAME");
+  if (schoolName.isEmpty) {
+    throw StateError("Could not find SCHOOL_NAME in config.json");
   }
   return schoolName;
 }
 
 String getTitanURL() {
-  var titanURL = dotenv.env["TITAN_URL"];
-  if (titanURL == null || titanURL.isEmpty) {
-    throw StateError("Could not find TITAN_URL in environment variables");
+  const titanUrl = String.fromEnvironment("TITAN_URL");
+  if (titanUrl.isEmpty) {
+    throw StateError("Could not find TITAN_URL in config.json");
   }
-  return titanURL;
+  return titanUrl;
 }
 
 String getTitanPackageSuffix() {
@@ -567,9 +566,9 @@ String getTitanPackageSuffix() {
 }
 
 String getTitanPackageName() {
-  var appIdPrefix = dotenv.env['APP_ID_PREFIX'];
-  if (appIdPrefix == null || appIdPrefix.isEmpty) {
-    throw StateError("Could not find APP_ID_PREFIX in environment variables");
+  const appIdPrefix = String.fromEnvironment("APP_ID_PREFIX");
+  if (appIdPrefix.isEmpty) {
+    throw StateError("Could not find APP_ID_PREFIX in config.json");
   }
   return "$appIdPrefix.${getTitanPackageSuffix()}";
 }
@@ -579,9 +578,9 @@ String getTitanURLScheme() {
 }
 
 String getAppName() {
-  var appName = dotenv.env["APP_NAME"];
-  if (appName == null || appName.isEmpty) {
-    throw StateError("Could not find APP_NAME in environment variables");
+  const appName = String.fromEnvironment("APP_NAME");
+  if (appName.isEmpty) {
+    throw StateError("Could not find APP_NAME in config.json");
   }
   return appName;
 }

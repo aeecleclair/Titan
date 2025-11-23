@@ -1,0 +1,33 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+
+  desc "Submit a new Beta Build to Google Play"
+  lane :beta do |options|
+    flavor = options[:flavor] # prod, alpha, dev
+
+    sh "flutter build appbundle --dart-define-from-file=config/config-#{flavor}.json --release --flavor='#{flavor}'"
+
+    upload_to_play_store(
+      track: 'internal',
+      aab: "../build/app/outputs/bundle/#{flavor}Release/app-#{flavor}-release.aab",
+      release_status: 'draft'
+    )
+
+  end
+end

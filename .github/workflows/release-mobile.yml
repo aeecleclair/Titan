@@ -71,35 +71,19 @@ jobs:
       - name: Get Packages
         run: flutter pub get
 
-      - name: Configure general env
-        run: |
-          echo PAYMENT_NAME=$PAYMENT_NAME >> .env
-          echo SCHOOL_NAME=$SCHOOL_NAME >> .env
-        env:
-          PAYMENT_NAME: ${{ vars.PAYMENT_NAME }}
-          SCHOOL_NAME: ${{ vars.SCHOOL_NAME }}
-
-      - name: Configure Alpha env
+      - name: Configure Alpha config.json
         if: needs.extract-version.outputs.isAlpha == 'true'
         run: |
-          echo ALPHA_HOST=$ALPHA_HOST >> .env
-          echo PLAUSIBLE_HOST=$PLAUSIBLE_HOST >> .env
-          echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN >> .env
+          printf "%s" "$CONFIG" > config.json
         env:
-          ALPHA_HOST: ${{ vars.ALPHA_HOST }}
-          PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_ALPHA_HOST }}
-          PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_ALPHA_DOMAIN }}
-
-      - name: Configure production env
+          CONFIG: ${{ vars.ALPHA_CONFIG }}
+          
+      - name: Configure Alpha config.json
         if: needs.extract-version.outputs.isAlpha == 'false'
         run: |
-          echo PROD_HOST=$PROD_HOST >> .env
-          echo PLAUSIBLE_HOST=$PLAUSIBLE_HOST >> .env
-          echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN >> .env
+          printf "%s" "$CONFIG" > config.json
         env:
-          PROD_HOST: ${{ vars.PROD_HOST }}
-          PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_HOST }}
-          PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_DOMAIN }}
+          CONFIG: ${{ vars.PROD_CONFIG }}
 
       - name: Add Firebase configuration for Alpha
         if: needs.extract-version.outputs.isAlpha == 'true'
@@ -135,11 +119,11 @@ jobs:
 
       - name: Build Alpha 🔧
         if: needs.extract-version.outputs.isAlpha == 'true'
-        run: flutter build ${{ matrix.target }} --flavor=alpha --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
+        run: flutter build ${{ matrix.target }} --flavor=alpha --dart-define-from-file=config.json --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
 
       - name: Build production 🔧
         if: needs.extract-version.outputs.isAlpha == 'false'
-        run: flutter build ${{ matrix.target }} --flavor=prod --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
+        run: flutter build ${{ matrix.target }} --flavor=prod --dart-define-from-file=config.json --release --build-name ${{ needs.extract-version.outputs.versionName }} --build-number ${{ needs.extract-version.outputs.versionCode }}
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4

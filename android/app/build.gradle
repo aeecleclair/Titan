@@ -27,15 +27,56 @@ if (flutterVersionName == null) {
 // App bundle signing
 // https://docs.flutter.dev/deployment/android
 def keystoreProperties = new Properties()
-   def keystorePropertiesFile = rootProject.file('key.properties')
-   if (keystorePropertiesFile.exists()) {
-       keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-   }
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+// Extract variables from Dart defines
+// Based on https://medium.com/@mahdi.yami3235/mastering-native-configurations-in-flutter-the-power-of-dart-define-10f2b89922dc
+def dartEnvironmentVariables = [];
+if (project.hasProperty('dart-defines')) {
+    dartEnvironmentVariables = project.property('dart-defines')
+            .split(',')
+            .collectEntries { entry ->
+                def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
+                [(pair.first()): pair.last()]
+            }
+}
+
+def appIdPrefix = dartEnvironmentVariables.APP_ID_PREFIX
+if (appIdPrefix == null) {
+    throw new GradleException("Dart define APP_ID_PREFIX not found.")
+}
+
+def appName = dartEnvironmentVariables.APP_NAME
+if (appName == null) {
+    throw new GradleException("Dart define APP_NAME not found.")
+}
+
+def generateMainActivityTask = tasks.register("generateMainActivity") {
+    doLast {
+        def packageName = "${appIdPrefix}.titan"
+
+        def templateFile = file("$projectDir/MainActivity.template.kt")
+        def packageDir = packageName.replace('.', '/')
+        def outputDir = file("$projectDir/src/main/kotlin/$packageDir")
+        outputDir.mkdirs()
+        def outputFile = new File(outputDir, "MainActivity.kt")
+
+        def content = templateFile.text
+            .replace("__PACKAGE__", packageName)
+
+        outputFile.text = content
+    }
+}
+
+preBuild.dependsOn(generateMainActivityTask)
 
 android {
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion "27.0.12077973"
-    namespace "fr.myecl.titan"
+    namespace "${appIdPrefix}.titan"
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -44,7 +85,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     sourceSets {
@@ -52,7 +93,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "fr.myecl.titan"
+        applicationId "${appIdPrefix}.titan"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
@@ -78,23 +119,23 @@ android {
 	productFlavors {
 		prod {
 			dimension "default"
-			resValue "string", "app_name", "MyECL"
-            resValue "string", "flavor_url_scheme", "titan"
-            manifestPlaceholders = ['appAuthRedirectScheme': 'fr.myecl.titan']
+			resValue "string", "app_name", "${appName}"
+            resValue "string", "flavor_url_scheme", "${appIdPrefix}.titan"
+            manifestPlaceholders = ['appAuthRedirectScheme': "${appIdPrefix}.titan"]
 		}
 		alpha {
 			dimension "default"
-			resValue "string", "app_name", "MyECL Alpha"
-            resValue "string", "flavor_url_scheme", "titan.alpha"
+			resValue "string", "app_name", "${appName} Alpha"
+            resValue "string", "flavor_url_scheme", "${appIdPrefix}.titan.alpha"
 			applicationIdSuffix ".alpha"
-            manifestPlaceholders = ['appAuthRedirectScheme': 'fr.myecl.titan.alpha']
+            manifestPlaceholders = ['appAuthRedirectScheme': "${appIdPrefix}.titan.alpha"]
 		}
 		dev {
 			dimension "default"
-			resValue "string", "app_name", "MyECL Dev"
-            resValue "string", "flavor_url_scheme", "titan.dev"
+			resValue "string", "app_name", "${appName} Dev"
+            resValue "string", "flavor_url_scheme", "${appIdPrefix}.titan.dev"
 			applicationIdSuffix ".dev"
-            manifestPlaceholders = ['appAuthRedirectScheme': 'fr.myecl.titan.dev']
+            manifestPlaceholders = ['appAuthRedirectScheme': "${appIdPrefix}.titan.dev"]
 		}
 	}
 }
@@ -110,6 +151,6 @@ dependencies {
 
 android {
     defaultConfig {
-        minSdkVersion 23
+        minSdkVersion flutter.minSdkVersion
     }
 }

@@ -11,8 +11,7 @@
       "args": [
         "--flavor",
         "dev",
-        "--dart-define",
-        "flavor=dev",
+        "--dart-define-from-file=config/config-dev.json",
         "--web-port",
         "3000"
       ]
@@ -25,8 +24,7 @@
       "args": [
         "--flavor",
         "dev",
-        "--dart-define",
-        "flavor=dev",
+        "--dart-define-from-file=config/config-dev.json",
         "--web-port",
         "3000"
       ]
@@ -38,8 +36,7 @@
       "args": [
         "--flavor",
         "alpha",
-        "--dart-define",
-        "flavor=alpha",
+        "--dart-define-from-file=config/config-alpha.json",
         "--web-port",
         "3000"
       ]
@@ -51,8 +48,7 @@
       "args": [
         "--flavor",
         "prod",
-        "--dart-define",
-        "flavor=prod",
+        "--dart-define-from-file=config/config-prod.json",
         "--web-port",
         "3000"
       ]

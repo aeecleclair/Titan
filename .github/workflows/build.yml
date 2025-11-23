@@ -60,15 +60,11 @@ jobs:
       - name: Get Packages
         run: flutter pub get
 
-      - name: Configure Dev env
+      - name: Configure Dev config.json
         run: |
-          echo DEV_HOST=$DEV_HOST >> .env
-          echo PAYMENT_NAME=$PAYMENT_NAME >> .env
-          echo SCHOOL_NAME=$SCHOOL_NAME >> .env
+          printf "%s" "$CONFIG" > config.json
         env:
-          DEV_HOST: ${{ vars.DEV_HOST }}
-          PAYMENT_NAME: ${{ vars.PAYMENT_NAME }}
-          SCHOOL_NAME: ${{ vars.SCHOOL_NAME }}
+          CONFIG: ${{ vars.DEV_CONFIG }}
 
       - name: Add Firebase configuration for Dev
         run: |
@@ -77,7 +73,7 @@ jobs:
           GOOGLE_SERVICES_DEV_JSON_BASE64: ${{ secrets.GOOGLE_SERVICES_DEV_JSON_BASE64 }}
 
       - name: Build Dev 🔧
-        run: flutter build ${{ matrix.target }}
+        run: flutter build ${{ matrix.target }} --dart-define-from-file=config.json
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4

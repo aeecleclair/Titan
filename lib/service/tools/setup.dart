@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:titan/service/class/message.dart' as message_class;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/service/local_notification_service.dart';
@@ -69,7 +68,6 @@ void setUpNotification(WidgetRef ref) {
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await dotenv.load();
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.getToken();
   await LocalNotificationService().init();

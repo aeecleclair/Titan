@@ -170,3 +170,17 @@ flutter pub run flutter_launcher_icons
 
 [Guided upgrade using Android Studio](https://docs.flutter.dev/release/breaking-changes/android-java-gradle-migration-guide#solution-1-guided-fix-using-android-studio)
 [Java and Gradle compatibility](https://docs.gradle.org/current/userguide/compatibility.html)
+
+# Configuring fastlane
+
+Google service account
+
+```
+android/fastlane-service-account.json
+```
+
+Apple
+
+```
+ios/app-store-connect-api.p8
+```

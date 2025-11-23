@@ -1,0 +1,17 @@
+json_key_file("./fastlane-service-account.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("fr.proximapp.myemapp.titan") # e.g. com.krausefx.app
+
+for_platform :android do
+  for_lane :beta do |options|
+    flavor = options[:flavor] # prod, alpha, dev
+    app_id_prefix = options[:prefix] # fr.myecl
+    app_name = options[:name] # MyECL
+
+    if flavor == "prod"
+      package_name("#{app_id_prefix}.titan")
+    else
+      package_name("#{app_id_prefix}.titan.#{flavor}")
+    end
+
+  end
+end

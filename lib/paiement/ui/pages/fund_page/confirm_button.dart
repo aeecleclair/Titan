@@ -51,12 +51,14 @@ class ConfirmFundButton extends ConsumerWidget {
       displayToast(context, type, message);
     }
 
+    final localizeWithContext = AppLocalizations.of(context)!;
+
     Future<void> tryLaunchUrl(url) async {
       if (!await launchUrl(
         Uri.parse(url),
         mode: LaunchMode.externalApplication,
       )) {
-        throw Exception(AppLocalizations.of(context)!.paiementCantLaunchURL);
+        throw Exception(localizeWithContext.paiementCantLaunchURL);
       }
     }
 
@@ -72,7 +74,7 @@ class ConfirmFundButton extends ConsumerWidget {
       if (popupWin == null) {
         displayToastWithContext(
           TypeMsg.error,
-          AppLocalizations.of(context)!.paiementPleaseAcceptPopup,
+          localizeWithContext.paiementPleaseAcceptPopup,
         );
         return;
       }
@@ -95,14 +97,14 @@ class ConfirmFundButton extends ConsumerWidget {
         if (code == "succeeded") {
           displayToastWithContext(
             TypeMsg.msg,
-            AppLocalizations.of(context)!.paiementProceedSuccessfully,
+            localizeWithContext.paiementProceedSuccessfully,
           );
           myWalletNotifier.getMyWallet();
           myHistoryNotifier.getHistory();
         } else {
           displayToastWithContext(
             TypeMsg.error,
-            AppLocalizations.of(context)!.paiementCancelledTransaction,
+            localizeWithContext.paiementCancelledTransaction,
           );
         }
         popupWin.close();
@@ -121,14 +123,14 @@ class ConfirmFundButton extends ConsumerWidget {
         if (!minValidFundAmount) {
           displayToastWithContext(
             TypeMsg.error,
-            AppLocalizations.of(context)!.paiementPleaseEnterMinAmount,
+            localizeWithContext.paiementPleaseEnterMinAmount,
           );
           return;
         }
         if (!maxValidFundAmount) {
           displayToastWithContext(
             TypeMsg.error,
-            "${AppLocalizations.of(context)!.paiementMaxAmount} ${maxBalanceAmount.toStringAsFixed(2)}€",
+            "${localizeWithContext.paiementMaxAmount} ${maxBalanceAmount.toStringAsFixed(2)}€",
           );
           return;
         }
@@ -191,7 +193,7 @@ class ConfirmFundButton extends ConsumerWidget {
             ),
           ),
           Text(
-            AppLocalizations.of(context)!.paiementPayWithHA,
+            localizeWithContext.paiementPayWithHA,
             style: TextStyle(
               color: (minValidFundAmount && maxValidFundAmount)
                   ? const Color(0xff2e2f5e)
