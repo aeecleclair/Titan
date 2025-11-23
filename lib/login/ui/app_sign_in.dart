@@ -31,8 +31,8 @@ class AppSignIn extends HookConsumerWidget {
       if (isLoggedIn && !versionVerifier.isLoading) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           final currentPath = ref.read(pathForwardingProvider);
-          final targetPath = currentPath.path == "/" || 
-                            currentPath.path == "/login"
+          final targetPath =
+              currentPath.path == "/" || currentPath.path == "/login"
               ? FeedRouter.root
               : currentPath.path;
           if (!currentPath.isLoggedIn) {
