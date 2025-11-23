@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/login/router.dart';
 import 'package:titan/navigation/providers/display_quit_popup.dart';
 import 'package:titan/service/providers/firebase_token_expiration_provider.dart';
 import 'package:titan/service/providers/messages_provider.dart';
@@ -41,6 +43,7 @@ class QuitDialog extends HookConsumerWidget {
                 AppLocalizations.of(context)!.drawerLogOut,
               );
               displayQuitNotifier.setDisplay(false);
+              QR.to(LoginRouter.root);
             },
             onNo: () {
               displayQuitNotifier.setDisplay(false);

@@ -1,14 +1,17 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/feed/router.dart';
 import 'package:titan/login/ui/auth_page.dart';
 import 'package:titan/login/ui/components/sign_in_up_bar.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
+import 'package:titan/version/providers/version_verifier_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,6 +23,26 @@ class AppSignIn extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authNotifier = ref.watch(authTokenProvider.notifier);
     final pathForwarding = ref.read(pathForwardingProvider);
+    final isLoggedIn = ref.watch(isLoggedInProvider);
+    final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
+    final versionVerifier = ref.watch(versionVerifierProvider);
+
+    useEffect(() {
+      if (isLoggedIn && !versionVerifier.isLoading) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          final currentPath = ref.read(pathForwardingProvider);
+          final targetPath = currentPath.path == "/" || 
+                            currentPath.path == "/login"
+              ? FeedRouter.root
+              : currentPath.path;
+          if (!currentPath.isLoggedIn) {
+            pathForwardingNotifier.login();
+          }
+          QR.to(targetPath);
+        });
+      }
+      return null;
+    }, [isLoggedIn, versionVerifier.isLoading]);
 
     return LoginTemplate(
       callback: (AnimationController controller) {
