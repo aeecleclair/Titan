@@ -123,9 +123,7 @@ class OpenIdTokenProvider
   final String refreshTokenKey = "refresh_token";
   final String redirectURLScheme = "${getTitanPackageName()}://authorized";
   final String redirectURL = "${getTitanURL()}/static.html";
-  final String discoveryUrl =
-      "${Repository.host}.well-known/openid-configuration";
-  AuthorizationServiceConfiguration get serviceConfiguration =>
+  final AuthorizationServiceConfiguration authorizationServiceConfiguration =
       AuthorizationServiceConfiguration(
         authorizationEndpoint: "${Repository.host}auth/authorize",
         tokenEndpoint: "${Repository.host}auth/token",
@@ -221,33 +219,15 @@ class OpenIdTokenProvider
           }
         });
       } else {
-        final AuthorizationResponse? authResponse = await appAuth.authorize(
-          AuthorizationRequest(
-            clientId,
-            redirectURLScheme,
-            serviceConfiguration: serviceConfiguration,
-            scopes: scopes,
-            allowInsecureConnections: kDebugMode,
-          ),
-        );
-
-        if (authResponse != null && authResponse.authorizationCode != null) {
-          final TokenResponse? tokenResponse = await appAuth.token(
-            TokenRequest(
-              clientId,
-              redirectURLScheme,
-              authorizationCode: authResponse.authorizationCode,
-              codeVerifier: authResponse.codeVerifier,
-              serviceConfiguration: serviceConfiguration,
-              scopes: scopes,
-              allowInsecureConnections: kDebugMode,
-            ),
-          );
-
-          if (tokenResponse != null) {
-            await _secureStorage.write(
-              key: tokenName,
-              value: tokenResponse.refreshToken,
+        AuthorizationTokenResponse resp = await appAuth
+            .authorizeAndExchangeCode(
+              AuthorizationTokenRequest(
+                clientId,
+                redirectURLScheme,
+                serviceConfiguration: authorizationServiceConfiguration,
+                scopes: scopes,
+                allowInsecureConnections: kDebugMode,
+              ),
             );
             state = AsyncValue.data({
               tokenKey: tokenResponse.accessToken!,
@@ -290,7 +270,7 @@ class OpenIdTokenProvider
               TokenRequest(
                 clientId,
                 redirectURLScheme,
-                serviceConfiguration: serviceConfiguration,
+                serviceConfiguration: authorizationServiceConfiguration,
                 scopes: scopes,
                 refreshToken: token,
                 allowInsecureConnections: kDebugMode,
@@ -317,7 +297,7 @@ class OpenIdTokenProvider
           TokenRequest(
             clientId,
             redirectURLScheme,
-            serviceConfiguration: serviceConfiguration,
+            serviceConfiguration: authorizationServiceConfiguration,
             scopes: scopes,
             authorizationCode: authorizationToken,
             allowInsecureConnections: kDebugMode,
@@ -339,7 +319,7 @@ class OpenIdTokenProvider
             TokenRequest(
               clientId,
               redirectURLScheme,
-              serviceConfiguration: serviceConfiguration,
+              serviceConfiguration: authorizationServiceConfiguration,
               scopes: scopes,
               refreshToken: token[refreshTokenKey] as String,
               allowInsecureConnections: kDebugMode,
