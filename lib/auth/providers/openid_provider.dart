@@ -229,16 +229,11 @@ class OpenIdTokenProvider
                 allowInsecureConnections: kDebugMode,
               ),
             );
-            state = AsyncValue.data({
-              tokenKey: tokenResponse.accessToken!,
-              refreshTokenKey: tokenResponse.refreshToken!,
-            });
-          } else {
-            throw Exception('Failed to exchange authorization code');
-          }
-        } else {
-          throw Exception('Authorization cancelled or failed');
-        }
+        await _secureStorage.write(key: tokenName, value: resp.refreshToken);
+        state = AsyncValue.data({
+          tokenKey: resp.accessToken!,
+          refreshTokenKey: resp.refreshToken!,
+        });
       }
     } catch (e) {
       state = AsyncValue.error("Error $e", StackTrace.empty);
@@ -332,10 +327,7 @@ class OpenIdTokenProvider
           storeToken();
           return true;
         }
-        state = const AsyncValue.error(
-          "No refresh token available",
-          StackTrace.empty,
-        );
+        state = const AsyncValue.error(e, StackTrace.empty);
         return false;
       },
       error: (error, stackTrace) {
