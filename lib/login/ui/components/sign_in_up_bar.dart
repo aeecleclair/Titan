@@ -35,6 +35,7 @@ class SignInUpBar extends StatelessWidget {
             : Alignment.center,
         child: WaitingButton(
           onTap: onPressed,
+          isLoading: isLoading,
           builder: (child) => Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -43,7 +44,7 @@ class SignInUpBar extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w800,
-                  color: color,
+                  color: isLoading ? Colors.grey : color,
                 ),
               ),
               child,
