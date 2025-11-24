@@ -1410,6 +1410,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.7.1"
+  timer_count_down:
+    dependency: "direct main"
+    description:
+      name: timer_count_down
+      sha256: d025d408c2654e497ca0bd4bde014bd7509d4c6397af4ed23a0f9b692bbcf337
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.2"
   timezone:
     dependency: "direct main"
     description:
