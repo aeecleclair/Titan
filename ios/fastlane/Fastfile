@@ -19,8 +19,13 @@ platform :ios do
   desc "Submit a new Beta Build to App Store"
   lane :beta do |options|
     flavor = options[:flavor] # prod, alpha, dev
-    app_id_prefix = options[:prefix] # fr.myecl
-    app_name = options[:name] # MyECL
+
+    config_json = read_json(
+      json_path: "./../config/config-#{flavor}.json"
+    )
+
+    app_id_prefix = config_json[:APP_ID_PREFIX] # fr.myecl
+    app_name = config_json[:APP_NAME] # MyECL
 
     api_key = app_store_connect_api_key(
       key_id: "LJN944T6G6",

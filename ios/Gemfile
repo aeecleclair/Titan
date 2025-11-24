@@ -2,9 +2,15 @@ source "https://rubygems.org"
 
 gem "abbrev"
 
+
 gem "cocoapods", "1.16.2"
 gem "cocoapods-keys"
 gem "benchmark"
 
 gem "fastlane"
 gem "ostruct"
+
+gem "nkf"
+
+plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
+eval_gemfile(plugins_path) if File.exist?(plugins_path)
