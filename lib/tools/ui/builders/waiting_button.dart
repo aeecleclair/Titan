@@ -7,6 +7,7 @@ class WaitingButton extends HookWidget {
   final Widget Function(Widget) builder;
   final Color waitingColor;
   final Future Function()? onTap;
+  final bool isLoading;
 
   const WaitingButton({
     super.key,
@@ -14,6 +15,7 @@ class WaitingButton extends HookWidget {
     required this.onTap,
     required this.builder,
     this.waitingColor = Colors.white,
+    this.isLoading = false,
   });
 
   @override
@@ -31,15 +33,17 @@ class WaitingButton extends HookWidget {
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () async {
-        if (clicked.value) return;
-        clicked.value = true;
-        shrinkButtonSize();
-        onTap?.call().then((_) {
-          restoreButtonSize();
-          clicked.value = false;
-        });
-      },
+      onTap: isLoading || clicked.value
+          ? null
+          : () async {
+              if (clicked.value) return;
+              clicked.value = true;
+              shrinkButtonSize();
+              onTap?.call().then((_) {
+                restoreButtonSize();
+                clicked.value = false;
+              });
+            },
       onTapCancel: restoreButtonSize,
       child: AnimatedBuilder(
         animation: animationController,

@@ -123,8 +123,11 @@ class OpenIdTokenProvider
   final String refreshTokenKey = "refresh_token";
   final String redirectURLScheme = "${getTitanPackageName()}://authorized";
   final String redirectURL = "${getTitanURL()}/static.html";
-  final String discoveryUrl =
-      "${Repository.host}.well-known/openid-configuration";
+  final AuthorizationServiceConfiguration authorizationServiceConfiguration =
+      AuthorizationServiceConfiguration(
+        authorizationEndpoint: "${Repository.host}auth/authorize",
+        tokenEndpoint: "${Repository.host}auth/token",
+      );
   final List<String> scopes = ["API"];
   OpenIdTokenProvider() : super(const AsyncValue.loading());
 
@@ -221,7 +224,7 @@ class OpenIdTokenProvider
               AuthorizationTokenRequest(
                 clientId,
                 redirectURLScheme,
-                discoveryUrl: discoveryUrl,
+                serviceConfiguration: authorizationServiceConfiguration,
                 scopes: scopes,
                 allowInsecureConnections: kDebugMode,
               ),
@@ -262,7 +265,7 @@ class OpenIdTokenProvider
               TokenRequest(
                 clientId,
                 redirectURLScheme,
-                discoveryUrl: discoveryUrl,
+                serviceConfiguration: authorizationServiceConfiguration,
                 scopes: scopes,
                 refreshToken: token,
                 allowInsecureConnections: kDebugMode,
@@ -289,7 +292,7 @@ class OpenIdTokenProvider
           TokenRequest(
             clientId,
             redirectURLScheme,
-            discoveryUrl: discoveryUrl,
+            serviceConfiguration: authorizationServiceConfiguration,
             scopes: scopes,
             authorizationCode: authorizationToken,
             allowInsecureConnections: kDebugMode,
@@ -311,7 +314,7 @@ class OpenIdTokenProvider
             TokenRequest(
               clientId,
               redirectURLScheme,
-              discoveryUrl: discoveryUrl,
+              serviceConfiguration: authorizationServiceConfiguration,
               scopes: scopes,
               refreshToken: token[refreshTokenKey] as String,
               allowInsecureConnections: kDebugMode,

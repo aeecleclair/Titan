@@ -17,6 +17,12 @@ class AuthenticatedMiddleware extends QMiddleware {
 
   @override
   Future<String?> redirectGuard(String path) async {
+    if (path.startsWith(LoginRouter.root)) {
+      return null;
+    }
+    if (path == "/" || path.isEmpty) {
+      return LoginRouter.root;
+    }
     final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     final versionVerifier = ref.watch(versionVerifierProvider);
     final titanVersion = ref.watch(titanVersionProvider);
@@ -33,11 +39,6 @@ class AuthenticatedMiddleware extends QMiddleware {
       data: (value) {
         if (!value) {
           return AppRouter.update;
-        }
-        if (path == LoginRouter.root &&
-            !pathForwardingNotifier.state.isLoggedIn &&
-            !isLoggedIn) {
-          return null;
         }
         if (!isLoggedIn) {
           return LoginRouter.root;
