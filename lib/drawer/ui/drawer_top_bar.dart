@@ -6,6 +6,7 @@ import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/admin/router.dart';
 import 'package:titan/auth/providers/is_connected_provider.dart';
 import 'package:titan/drawer/providers/animation_provider.dart';
+import 'package:titan/drawer/providers/is_email_dialog_open.dart';
 import 'package:titan/drawer/providers/swipe_provider.dart';
 import 'package:titan/drawer/tools/constants.dart';
 import 'package:titan/home/providers/scrolled_provider.dart';
@@ -13,6 +14,7 @@ import 'package:titan/settings/router.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
+import 'package:titan/tools/providers/should_notify_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:titan/user/providers/profile_picture_provider.dart';
@@ -31,6 +33,11 @@ class DrawerTopBar extends HookConsumerWidget {
     final isAdmin = ref.watch(isAdminProvider);
     final isConnected = ref.watch(isConnectedProvider);
     final animation = ref.watch(animationProvider);
+
+    final shouldNotify = ref.watch(shouldNotifyProvider);
+    final isEmailPopupOpenNotifier = ref.watch(
+      isEmailDialogOpenProvider.notifier,
+    );
     final dropDownAnimation = useAnimationController(
       duration: const Duration(milliseconds: 250),
       initialValue: 0.0,
@@ -49,6 +56,7 @@ class DrawerTopBar extends HookConsumerWidget {
     }
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(height: 20),
         Row(
@@ -273,6 +281,37 @@ class DrawerTopBar extends HookConsumerWidget {
           },
           animation: dropDownAnimation,
         ),
+        if (shouldNotify)
+          GestureDetector(
+            onTap: isEmailPopupOpenNotifier.open,
+            child: Container(
+              width: 170,
+              margin: const EdgeInsets.only(left: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [ColorConstants.gradient1, ColorConstants.gradient2],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    DrawerTextConstants.restrictedAccount,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  const Icon(Icons.info_outline, color: Colors.white, size: 20),
+                ],
+              ),
+            ),
+          ),
       ],
     );
   }

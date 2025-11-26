@@ -21,5 +21,6 @@ class DrawerTextConstants {
   static const String loginOut = "Voulez-vous vous déconnecter ?";
   static const String logOut = "Déconnexion";
   static const String or = " ou ";
+  static const String restrictedAccount = "Compte restreint";
   static const String settings = "Paramètres";
 }
