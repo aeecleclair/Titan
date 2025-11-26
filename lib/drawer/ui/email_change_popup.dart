@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/drawer/providers/already_displayed_popup.dart';
+import 'package:titan/drawer/providers/is_email_dialog_open.dart';
 import 'package:titan/loan/tools/constants.dart';
-import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/providers/should_notify_provider.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
@@ -18,10 +16,9 @@ class Consts {
   static const Color greenGradient2 = Color(0xff387200);
   static const Color redGradient1 = Color(0xFF9E131F);
   static const Color redGradient2 = Color(0xFF590512);
-  static const String description =
-      "L'administration a décidé de changer les adresses mails des étudiants.\nPour être sur de recevoir les mails en cas de perte du mot de passe, merci de renseigner la nouvelle (normalement elle est déjà préremplie 😉).";
+  static const String titleMigration = "Accès à l'application restreint";
   static const String descriptionMigration =
-      "Vous avez créé un compte avec une adresse qui n'est pas une adresse centralienne.\nPour pouvoir accéder à cette application, vous devez changer cette adresse (normalement elle est déjà préremplie, on vous laisse vérifier et valider 😉).";
+      "Vous avez créé un compte avec une adresse mail qui n'est pas une adresse centralienne.\n\nPour avoir un accès complet à cette application vous devez changer cette adresse mail.";
 }
 
 class EmailChangeDialog extends HookConsumerWidget {
@@ -30,14 +27,12 @@ class EmailChangeDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
-    final shouldBeUser = ref.watch(shouldNotifyProvider);
     final userNotifier = ref.watch(asyncUserProvider.notifier);
-    final alreadyDisplayedNotifier = ref.watch(
-      alreadyDisplayedProvider.notifier,
+    final isEmailDialogOpenNotifier = ref.watch(
+      isEmailDialogOpenProvider.notifier,
     );
-    final newEmail = shouldBeUser
-        ? '${user.firstname.toLowerCase()}.${user.name.toLowerCase()}@etu.ec-lyon.fr'
-        : '${user.email.split('@')[0]}@etu.ec-lyon.fr';
+    final newEmail =
+        '${user.firstname.toLowerCase()}.${user.name.toLowerCase()}@etu.ec-lyon.fr';
     final emailController = useTextEditingController(text: newEmail);
     final formKey = GlobalKey<FormState>();
     final checkAnimationController = useAnimationController(
@@ -53,15 +48,8 @@ class EmailChangeDialog extends HookConsumerWidget {
     );
     final displayForm = useState(true);
 
-    useEffect(() {
-      if (shouldBeUser) {
-        emailController.text = newEmail;
-      }
-      return () {};
-    }, [newEmail]);
-
     return GestureDetector(
-      onTap: alreadyDisplayedNotifier.setAlreadyDisplayed,
+      onTap: isEmailDialogOpenNotifier.close,
       child: Container(
         color: Colors.black54,
         child: GestureDetector(
@@ -100,7 +88,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                     mainAxisSize: MainAxisSize.min, // To make the card compact
                     children: <Widget>[
                       const Text(
-                        "Changer d'adresse mail",
+                        Consts.titleMigration,
                         style: TextStyle(
                           fontSize: 24.0,
                           fontWeight: FontWeight.w700,
@@ -114,9 +102,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                               child: Column(
                                 children: [
                                   Text(
-                                    shouldBeUser
-                                        ? Consts.descriptionMigration
-                                        : Consts.description,
+                                    Consts.descriptionMigration,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(fontSize: 16.0),
                                   ),
@@ -142,8 +128,11 @@ class EmailChangeDialog extends HookConsumerWidget {
                                         return LoanTextConstants.noValue;
                                       } else if (value.isEmpty) {
                                         return LoanTextConstants.noValue;
-                                      } else if (!isStudent(value)) {
-                                        return "Adresse mail invalide";
+                                      } else if (RegExp(
+                                            r'^[\w\-.]+@etu(-enise)?\.ec-lyon\.fr$',
+                                          ).hasMatch(value) ==
+                                          false) {
+                                        return "Adresse mail centralienne invalide";
                                       }
                                       return null;
                                     },
@@ -154,8 +143,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       GestureDetector(
-                                        onTap: alreadyDisplayedNotifier
-                                            .setAlreadyDisplayed,
+                                        onTap: isEmailDialogOpenNotifier.close,
                                         child: Container(
                                           width: 100,
                                           padding: const EdgeInsets.symmetric(
@@ -255,60 +243,55 @@ class EmailChangeDialog extends HookConsumerWidget {
                                 ],
                               ),
                             )
-                          : Expanded(
-                              child: Center(
-                                child: Column(
-                                  children: [
-                                    const Text(
-                                      "Un mail de confirmation a été envoyé à l'adresse suivante, pour confirmer le changement :",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 16.0),
+                          : Center(
+                              child: Column(
+                                children: [
+                                  const Text(
+                                    "Un mail de confirmation a été envoyé à l'adresse suivante, pour confirmer le changement :",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: 16.0),
+                                  ),
+                                  const SizedBox(height: 16.0),
+                                  Text(
+                                    emailController.text,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    const SizedBox(height: 16.0),
-                                    Text(
-                                      emailController.text,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold,
+                                  ),
+                                  const SizedBox(height: 30.0),
+                                  GestureDetector(
+                                    onTap: isEmailDialogOpenNotifier.close,
+                                    child: Container(
+                                      width: 100,
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 16,
                                       ),
-                                    ),
-                                    const Spacer(),
-                                    GestureDetector(
-                                      onTap: alreadyDisplayedNotifier
-                                          .setAlreadyDisplayed,
-                                      child: Container(
-                                        width: 100,
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 16,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            10,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.grey.shade300,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withValues(
+                                              alpha: 0.3,
+                                            ),
+                                            blurRadius: 2.0,
+                                            offset: const Offset(1.0, 2.0),
                                           ),
-                                          color: Colors.grey.shade300,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withValues(
-                                                alpha: 0.3,
-                                              ),
-                                              blurRadius: 2.0,
-                                              offset: const Offset(1.0, 2.0),
-                                            ),
-                                          ],
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            "Fermer",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                        ],
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          "Fermer",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                     ],

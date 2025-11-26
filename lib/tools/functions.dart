@@ -446,21 +446,6 @@ int generateIntFromString(String s) {
   return s.codeUnits.reduce((value, element) => value + 100 * element);
 }
 
-bool isEmailInValid(String email) {
-  final regex = RegExp(previousEmailRegex);
-  return regex.hasMatch(email);
-}
-
-bool isStudent(String email) {
-  final regex = RegExp(studentRegex);
-  return regex.hasMatch(email);
-}
-
-bool isNotStaff(String email) {
-  final regex = RegExp(previousStaffEmailRegex);
-  return !regex.hasMatch(email);
-}
-
 bool hasUserPermission(Ref ref, String permission) {
   final me = ref.watch(userProvider);
   final permissions = ref.watch(permissionsProvider);
