@@ -4,32 +4,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:titan/advert/providers/announcer_provider.dart';
 import 'package:titan/booking/providers/is_admin_provider.dart';
-import 'package:titan/shotgun/ui/components/shotgun_card.dart';
-import 'package:titan/shotgun/ui/shotgun.dart';
+import 'package:titan/ticketing/ui/components/event_card.dart';
+import 'package:titan/ticketing/ui/ticketing.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/widgets/admin_button.dart';
 import 'package:titan/tools/ui/widgets/top_bar.dart';
 import 'package:titan/tools/ui/layouts/column_refresher.dart';
-import 'package:titan/shotgun/router.dart';
-import 'package:titan/shotgun/providers/is_shotgun_admin_provider.dart';
-import 'package:titan/shotgun/providers/shotgun_list_provider.dart';
-import 'package:titan/shotgun/providers/shotgun_provider.dart';
-import 'package:titan/shotgun/ui/pages/main_page/main_page.dart';
-import 'package:titan/shotgun/ui/components/announcer_bar.dart';
-import 'package:titan/shotgun/tools/constants.dart';
+import 'package:titan/ticketing/router.dart';
+import 'package:titan/ticketing/providers/is_ticketing_admin_provider.dart';
+import 'package:titan/ticketing/providers/event_list_provider.dart';
+import 'package:titan/ticketing/providers/event_provider.dart';
+import 'package:titan/ticketing/ui/pages/main_page/main_page.dart';
+import 'package:titan/ticketing/ui/components/announcer_bar.dart';
+import 'package:titan/ticketing/tools/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class ShotgunMainPage extends HookConsumerWidget {
-  const ShotgunMainPage({super.key});
+class TicketingMainPage extends HookConsumerWidget {
+  const TicketingMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final isShotgunAdmin = ref.watch(isShotgunAdminProvider);
+    // final isEventAdmin = ref.watch(isEventAdminProvider);
     final isAdmin = ref.watch(isAdminProvider);
 
-    final shotgunNotifier = ref.watch(shotgunProvider.notifier);
-    final shotgunList = ref.watch(shotgunListProvider);
-    final shotgunListNotifier = ref.watch(shotgunListProvider.notifier);
+    final eventNotifier = ref.watch(eventProvider.notifier);
+    final eventList = ref.watch(eventListProvider);
+    final eventListNotifier = ref.watch(eventListProvider.notifier);
     final selected = ref.watch(announcerProvider);
     final selectedNotifier = ref.watch(announcerProvider.notifier);
 
@@ -38,25 +38,25 @@ class ShotgunMainPage extends HookConsumerWidget {
     double imageHeight = 175;
     double maxHeight = MediaQuery.of(context).size.height - 344;
 
-    return ShotgunTemplate(
+    return TicketingTemplate(
       child: Stack(
         children: [
           AsyncChild(
-            value: shotgunList,
-            builder: (context, shotgunData) {
-              final sortedShotgunData = shotgunData
+            value: eventList,
+            builder: (context, eventData) {
+              final sortedEventData = eventData
                   .sortedBy((element) => element.date)
                   .reversed;
-              final filteredSortedShotgunData = sortedShotgunData.where(
-                (shotgun) =>
+              final filteredSortedEventData = sortedEventData.where(
+                (event) =>
                     selected
-                        .where((e) => shotgun.announcer.name == e.name)
+                        .where((e) => event.announcer.name == e.name)
                         .isNotEmpty ||
                     selected.isEmpty,
               );
               return ColumnRefresher(
                 onRefresh: () async {
-                  await shotgunListNotifier.loadShotguns();
+                  await eventListNotifier.loadEvents();
                 },
                 children: [
                   SizedBox(
@@ -68,7 +68,9 @@ class ShotgunMainPage extends HookConsumerWidget {
                         if (isAdmin)
                           AdminButton(
                             onTap: () {
-                              QR.to(ShotgunRouter.root + ShotgunRouter.admin);
+                              QR.to(
+                                TicketingRouter.root + TicketingRouter.admin,
+                              );
                             },
                           ),
                       ],
@@ -80,15 +82,15 @@ class ShotgunMainPage extends HookConsumerWidget {
                     multipleSelect: true,
                   ),
                   const SizedBox(height: 20),
-                  ...filteredSortedShotgunData.map(
-                    (shotgun) => Padding(
+                  ...filteredSortedEventData.map(
+                    (event) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: ShotgunCard(
+                      child: EventCard(
                         onTap: () {
-                          shotgunNotifier.setShotgun(shotgun);
-                          QR.to(ShotgunRouter.root + ShotgunRouter.admin);
+                          eventNotifier.setEvent(event);
+                          QR.to(TicketingRouter.root + TicketingRouter.admin);
                         },
-                        shotgun: shotgun,
+                        event: event,
                       ),
                     ),
                   ),
@@ -105,7 +107,7 @@ class ShotgunMainPage extends HookConsumerWidget {
 //       child: Column(
 //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //         children: [
-//           TopBar(title: 'Shotgun', root: ShotgunRouter.root),
+//           TopBar(title: 'Event', root: TicketingRouter.root),
 //           Expanded(
 //             child: SingleChildScrollView(
 //               scrollDirection: Axis.horizontal,
@@ -118,15 +120,15 @@ class ShotgunMainPage extends HookConsumerWidget {
 //                       mainAxisAlignment: MainAxisAlignment.spaceAround,
 //                       children: [
 
-//                         // if (isShotgunAdmin)
+//                         // if (isEventAdmin)
 //                         //   AdminButton(
 //                         //     onTap: () {
 //                         //       QR.to(
-//                         //         ShotgunRouter.root +
-//                         //             ShotgunRouter.addEditMember,
+//                         //         TicketingRouter.root +
+//                         //             TicketingRouter.addEditMember,
 //                         //       );
 //                         //     },
-//                         //     text: ShotgunTextConstants.management,
+//                         //     text: EventTextConstants.management,
 //                         //   ),
 //                       ],
 //                     ),
@@ -139,7 +141,7 @@ class ShotgunMainPage extends HookConsumerWidget {
 //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //                         children: [
 //                           const Text(
-//                             ShotgunTextConstants.news,
+//                             EventTextConstants.news,
 //                             style: TextStyle(
 //                               fontSize: 18,
 //                               fontWeight: FontWeight.bold,

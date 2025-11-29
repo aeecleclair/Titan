@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/shotgun/providers/announcer_provider.dart';
-import 'package:titan/shotgun/providers/announcer_list_provider.dart';
+import 'package:titan/ticketing/providers/announcer_provider.dart';
+import 'package:titan/ticketing/providers/announcer_list_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/layouts/item_chip.dart';

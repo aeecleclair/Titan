@@ -1,7 +1,7 @@
-import 'package:titan/shotgun/class/announcer.dart';
+import 'package:titan/ticketing/class/announcer.dart';
 import 'package:titan/tools/functions.dart';
 
-class Shotgun {
+class Event {
   late final String id;
   late final String title;
   late final String content;
@@ -10,7 +10,7 @@ class Shotgun {
   late final String ticket;
   late final List<String> form;
 
-  Shotgun({
+  Event({
     required this.id,
     required this.title,
     required this.content,
@@ -20,7 +20,7 @@ class Shotgun {
     required this.form,
   });
 
-  Shotgun.fromJson(Map<String, dynamic> json) {
+  Event.fromJson(Map<String, dynamic> json) {
     id = json["id"];
     title = json["title"];
     content = json["content"];
@@ -42,8 +42,8 @@ class Shotgun {
     return data;
   }
 
-  static Shotgun empty() {
-    return Shotgun(
+  static Event empty() {
+    return Event(
       id: "",
       title: "",
       content: "",
