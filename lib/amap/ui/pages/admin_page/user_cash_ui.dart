@@ -158,13 +158,14 @@ class UserCashUi extends HookConsumerWidget {
                                           cash.copyWith(
                                             balance:
                                                 (100 *
-                                                    double.parse(
-                                                      amount.text.replaceAll(
-                                                        ',',
-                                                        '.',
-                                                      ),
-                                                    )) ~/
-                                                1,
+                                                        double.parse(
+                                                          amount.text
+                                                              .replaceAll(
+                                                                ',',
+                                                                '.',
+                                                              ),
+                                                        ))
+                                                    .round(),
                                           ),
                                           cash.balance,
                                         )

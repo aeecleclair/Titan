@@ -172,10 +172,13 @@ class AddEditProduct extends HookConsumerWidget {
                             name: nameController.text,
                             price:
                                 (100 *
-                                    double.parse(
-                                      priceController.text.replaceAll(',', '.'),
-                                    )) ~/
-                                1,
+                                        double.parse(
+                                          priceController.text.replaceAll(
+                                            ',',
+                                            '.',
+                                          ),
+                                        ))
+                                    .round(),
                             category: cate,
                             quantity: 0,
                           );
