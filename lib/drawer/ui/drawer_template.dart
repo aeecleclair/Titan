@@ -4,14 +4,14 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/drawer/providers/animation_provider.dart';
 import 'package:titan/drawer/providers/display_quit_popup.dart';
-import 'package:titan/drawer/providers/is_email_dialog_open.dart';
+import 'package:titan/drawer/providers/email_popup_state_provider.dart';
 import 'package:titan/drawer/providers/is_web_format_provider.dart';
 import 'package:titan/drawer/providers/should_setup_provider.dart';
 import 'package:titan/drawer/providers/swipe_provider.dart';
 import 'package:titan/drawer/ui/custom_drawer.dart';
+import 'package:titan/drawer/ui/email_change_popup.dart';
 import 'package:titan/service/tools/setup.dart';
 import 'package:titan/drawer/ui/quit_dialog.dart';
-import 'package:titan/drawer/ui/email_change_popup.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
 class DrawerTemplate extends HookConsumerWidget {
@@ -39,9 +39,9 @@ class DrawerTemplate extends HookConsumerWidget {
     );
     final isWebFormat = ref.watch(isWebFormatProvider);
     final displayQuit = ref.watch(displayQuitProvider);
-    final isEmailPopupOpen = ref.watch(isEmailDialogOpenProvider);
     final shouldSetup = ref.watch(shouldSetupProvider);
     final shouldSetupNotifier = ref.read(shouldSetupProvider.notifier);
+    final isEmailPopupOpen = ref.watch(emailPopupStateProvider);
     if (isWebFormat) {
       controllerNotifier.close();
     }
@@ -118,8 +118,8 @@ class DrawerTemplate extends HookConsumerWidget {
               },
             ),
           ),
-          if (isEmailPopupOpen) const EmailChangeDialog(),
           if (displayQuit) const QuitDialog(),
+          if (isEmailPopupOpen) const EmailChangeDialog(),
         ],
       ),
     );
