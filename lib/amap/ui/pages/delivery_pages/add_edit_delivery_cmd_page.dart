@@ -94,7 +94,8 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                               style: const TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.w800,
-                                                color: Color.fromARGB(0, 255, 0, 0),
+                                                color: Color.fromARGB(
+                                                    0, 255, 0, 0),
                                               ),
                                             ),
                                           ),
