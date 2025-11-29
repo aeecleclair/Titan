@@ -6,7 +6,7 @@ import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/admin/router.dart';
 import 'package:titan/auth/providers/is_connected_provider.dart';
 import 'package:titan/drawer/providers/animation_provider.dart';
-import 'package:titan/drawer/providers/is_email_dialog_open.dart';
+import 'package:titan/drawer/providers/email_popup_state_provider.dart';
 import 'package:titan/drawer/providers/swipe_provider.dart';
 import 'package:titan/drawer/tools/constants.dart';
 import 'package:titan/home/providers/scrolled_provider.dart';
@@ -33,11 +33,9 @@ class DrawerTopBar extends HookConsumerWidget {
     final isAdmin = ref.watch(isAdminProvider);
     final isConnected = ref.watch(isConnectedProvider);
     final animation = ref.watch(animationProvider);
+    final emailPopupStateNotifier = ref.read(emailPopupStateProvider.notifier);
 
     final shouldNotify = ref.watch(shouldNotifyProvider);
-    final isEmailPopupOpenNotifier = ref.watch(
-      isEmailDialogOpenProvider.notifier,
-    );
     final dropDownAnimation = useAnimationController(
       duration: const Duration(milliseconds: 250),
       initialValue: 0.0,
@@ -283,7 +281,7 @@ class DrawerTopBar extends HookConsumerWidget {
         ),
         if (shouldNotify)
           GestureDetector(
-            onTap: isEmailPopupOpenNotifier.open,
+            onTap: emailPopupStateNotifier.open,
             child: Container(
               width: 170,
               margin: const EdgeInsets.only(left: 15),
