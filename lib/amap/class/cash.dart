@@ -2,7 +2,7 @@ import 'package:titan/user/class/simple_users.dart';
 
 class Cash {
   Cash({required this.balance, required this.user});
-  late final double balance;
+  late final int balance;
   late final SimpleUser user;
 
   Cash.fromJson(Map<String, dynamic> json) {
@@ -16,7 +16,7 @@ class Cash {
     return data;
   }
 
-  Cash copyWith({SimpleUser? user, double? balance}) {
+  Cash copyWith({SimpleUser? user, int? balance}) {
     return Cash(user: user ?? this.user, balance: balance ?? this.balance);
   }
 

@@ -83,7 +83,7 @@ class AmapMainPage extends HookConsumerWidget {
                     child: AsyncChild(
                       value: balance,
                       builder: (context, s) => Text(
-                        "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
+                        "${AMAPTextConstants.amount} : ${(s.balance / 100).toStringAsFixed(2)}€",
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

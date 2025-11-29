@@ -20,7 +20,7 @@ void main() {
   group('loadCashByUser', () {
     test('returns cash for valid user id', () async {
       final user = SimpleUser.empty().copyWith(id: '123');
-      final cash = Cash(balance: 100.0, user: user);
+      final cash = Cash(balance: 100, user: user);
       when(
         () => mockRepository.getCashByUser('123'),
       ).thenAnswer((_) async => cash);
@@ -51,10 +51,10 @@ void main() {
 
   group('updateCash', () {
     test('updates cash balance', () async {
-      final cash = Cash(balance: 100.0, user: SimpleUser.empty());
+      final cash = Cash(balance: 100, user: SimpleUser.empty());
       notifier.state = AsyncValue.data(cash);
 
-      await notifier.updateCash(50.0);
+      await notifier.updateCash(50);
 
       expect(
         notifier.state.when(
@@ -62,14 +62,14 @@ void main() {
           loading: () => 0.0,
           error: (error, stackTrace) => 0.0,
         ),
-        equals(150.0),
+        equals(150),
       );
     });
 
     test('returns error when loading', () async {
       notifier.state = const AsyncValue.loading();
 
-      await notifier.updateCash(50.0);
+      await notifier.updateCash(50);
 
       expect(
         notifier.state,
@@ -84,7 +84,7 @@ void main() {
       const error = 'User not found';
       notifier.state = const AsyncValue.error(error, StackTrace.empty);
 
-      await notifier.updateCash(50.0);
+      await notifier.updateCash(50);
 
       expect(notifier.state.error, equals(error));
     });

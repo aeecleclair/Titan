@@ -14,7 +14,7 @@ class UserCashNotifier extends SingleNotifier<Cash> {
     return await load(() async => amapUserRepository.getCashByUser(userId));
   }
 
-  Future updateCash(double amount) async {
+  Future updateCash(int amount) async {
     state.when(
       data: (cash) {
         final newCash = cash.copyWith(balance: cash.balance + amount);

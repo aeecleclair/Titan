@@ -39,7 +39,7 @@ class OrderUI extends HookConsumerWidget {
     return CardLayout(
       id: order.id,
       width: 195,
-      height: isDetail ? 100 : 150,
+      height: isDetail ? 110 : 150,
       colors: const [
         AMAPColorConstants.lightGradient1,
         AMAPColorConstants.greenGradient1,
@@ -87,7 +87,7 @@ class OrderUI extends HookConsumerWidget {
               ),
               const Spacer(),
               Text(
-                "${order.amount.toStringAsFixed(2)}€",
+                "${(order.amount / 100).toStringAsFixed(2)}€",
                 style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,

@@ -29,7 +29,7 @@ class Order {
   late final List<String> productsDetail;
   late final bool expanded;
   late final List<Product> products;
-  late final double amount, lastAmount;
+  late final int amount, lastAmount;
   late final List<int> productsQuantity;
 
   Order.fromJson(Map<String, dynamic> json) {
@@ -74,8 +74,8 @@ class Order {
     List<Product>? products,
     bool? expanded,
     String? deliveryId,
-    double? amount,
-    double? lastAmount,
+    int? amount,
+    int? lastAmount,
     CollectionSlot? collectionSlot,
     SimpleUser? user,
   }) {
