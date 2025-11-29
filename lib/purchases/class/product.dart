@@ -8,6 +8,7 @@ class Product {
     required this.descriptionFR,
     required this.descriptionEN,
     required this.ticketGenerators,
+    required this.year,
   });
 
   late final String id;
@@ -16,6 +17,7 @@ class Product {
   late final String? descriptionFR;
   late final String? descriptionEN;
   late final List<TicketGenerator> ticketGenerators;
+  late final int year;
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -26,6 +28,7 @@ class Product {
     ticketGenerators = List<TicketGenerator>.from(
       (json['tickets'] as List).map((x) => TicketGenerator.fromJson(x)),
     );
+    year = json['year'];
   }
 
   Map<String, dynamic> toJson() {
@@ -36,6 +39,7 @@ class Product {
       'description_fr': descriptionFR,
       'description_en': descriptionEN,
       'tickets': ticketGenerators.map((x) => x.toJson()).toList(),
+      'year': year,
     };
     return data;
   }
@@ -47,6 +51,7 @@ class Product {
     String? descriptionFR,
     String? descriptionEN,
     List<TicketGenerator>? ticketGenerators,
+    int? year,
   }) {
     return Product(
       id: id ?? this.id,
@@ -55,6 +60,7 @@ class Product {
       descriptionFR: descriptionFR ?? this.descriptionFR,
       descriptionEN: descriptionEN ?? this.descriptionEN,
       ticketGenerators: ticketGenerators ?? this.ticketGenerators,
+      year: year ?? this.year,
     );
   }
 
@@ -65,10 +71,11 @@ class Product {
     descriptionFR = "";
     descriptionEN = "";
     ticketGenerators = [];
+    year = 1970;
   }
 
   @override
   String toString() {
-    return 'Product(id: $id, nameFR: $nameFR, nameEN: $nameEN, descriptionFR: $descriptionFR, descriptionEN: $descriptionEN, ticketGenerators: $ticketGenerators)';
+    return 'Product(id: $id, nameFR: $nameFR, nameEN: $nameEN, descriptionFR: $descriptionFR, descriptionEN: $descriptionEN, ticketGenerators: $ticketGenerators, year: $year)';
   }
 }
