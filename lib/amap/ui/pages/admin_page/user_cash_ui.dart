@@ -156,10 +156,13 @@ class UserCashUi extends HookConsumerWidget {
                                         .read(cashListProvider.notifier)
                                         .updateCash(
                                           cash.copyWith(
-                                            balance: (100 *
+                                            balance:
+                                                (100 *
                                                     double.parse(
-                                                      amount.text
-                                                          .replaceAll(',', '.'),
+                                                      amount.text.replaceAll(
+                                                        ',',
+                                                        '.',
+                                                      ),
                                                     )) ~/
                                                 1,
                                           ),

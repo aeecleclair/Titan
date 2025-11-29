@@ -170,7 +170,8 @@ class AddEditProduct extends HookConsumerWidget {
                           Product newProduct = Product(
                             id: isEdit ? product.id : "",
                             name: nameController.text,
-                            price: (100 *
+                            price:
+                                (100 *
                                     double.parse(
                                       priceController.text.replaceAll(',', '.'),
                                     )) ~/
