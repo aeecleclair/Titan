@@ -1,19 +1,19 @@
-import 'package:titan/shotgun/class/shotgun.dart';
-import 'package:titan/shotgun/class/announcer.dart';
+import 'package:titan/ticketing/class/event.dart';
+import 'package:titan/ticketing/class/announcer.dart';
 import 'package:titan/tools/repository/repository.dart';
 
-class ShotgunRepository extends Repository {
+class EventRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = 'shotgun/';
+  final ext = 'event/';
 
-  Future<List<Shotgun>> getAllShotgun() async {
+  Future<List<Event>> getAllEvent() async {
     // return (await getList(
-    //   suffix: 'shotguns',
-    // )).map((e) => Shotgun.fromJson(e)).toList();
+    //   suffix: 'events',
+    // )).map((e) => Event.fromJson(e)).toList();
     // Liste de test au lieu d'appeler l'API
     return [
-      Shotgun(
+      Event(
         id: "1",
         title: "Soirée Pizza BDE",
         content:
@@ -27,7 +27,7 @@ class ShotgunRepository extends Repository {
         ticket: "Gratuit",
         form: ["Nom", "Prénom", "Email", "Allergies alimentaires"],
       ),
-      Shotgun(
+      Event(
         id: "2",
         title: "Tournoi de Foot Inter-Écoles",
         content:
@@ -41,7 +41,7 @@ class ShotgunRepository extends Repository {
         ticket: "5€ par équipe",
         form: ["Nom équipe", "Capitaine", "Liste joueurs", "Contact"],
       ),
-      Shotgun(
+      Event(
         id: "3",
         title: "Conférence Tech",
         content:
@@ -55,7 +55,7 @@ class ShotgunRepository extends Repository {
         ticket: "Gratuit pour les étudiants",
         form: ["Nom", "Prénom", "Niveau d'étude", "Spécialité"],
       ),
-      Shotgun(
+      Event(
         id: "4",
         title: "Gala de fin d'année",
         content:
@@ -76,7 +76,7 @@ class ShotgunRepository extends Repository {
           "Accompagnant",
         ],
       ),
-      Shotgun(
+      Event(
         id: "5",
         title: "Week-end Ski",
         content:
@@ -100,19 +100,19 @@ class ShotgunRepository extends Repository {
     ];
   }
 
-  Future<Shotgun> getShotgun(String id) async {
-    return Shotgun.fromJson(await getOne(id));
+  Future<Event> getEvent(String id) async {
+    return Event.fromJson(await getOne(id));
   }
 
-  Future<Shotgun> addShotgun(Shotgun shotgun) async {
-    return Shotgun.fromJson(await create(shotgun.toJson(), suffix: 'shotguns'));
+  Future<Event> addEvent(Event event) async {
+    return Event.fromJson(await create(event.toJson(), suffix: 'events'));
   }
 
-  Future<bool> updateShotgun(Shotgun shotgun) async {
-    return await update(shotgun.toJson(), "shotguns/${shotgun.id}");
+  Future<bool> updateEvent(Event event) async {
+    return await update(event.toJson(), "events/${event.id}");
   }
 
-  Future<bool> deleteShotgun(String id) async {
-    return await delete("shotguns/$id");
+  Future<bool> deleteEvent(String id) async {
+    return await delete("events/$id");
   }
 }

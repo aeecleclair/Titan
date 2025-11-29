@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:titan/tools/ui/widgets/top_bar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/shotgun/router.dart';
-import 'package:titan/shotgun/tools/constants.dart';
+import 'package:titan/ticketing/router.dart';
+import 'package:titan/ticketing/tools/constants.dart';
 
-class ShotgunTemplate extends StatelessWidget {
+class TicketingTemplate extends StatelessWidget {
   final Widget child;
-  const ShotgunTemplate({super.key, required this.child});
+  const TicketingTemplate({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +15,12 @@ class ShotgunTemplate extends StatelessWidget {
       child: Column(
         children: [
           TopBar(
-            title: ShotgunTextConstants.shotgun,
-            root: ShotgunRouter.root,
-            rightIcon: QR.currentPath == ShotgunRouter.root
+            title: TicketingTextConstants.ticketing,
+            root: TicketingRouter.root,
+            rightIcon: QR.currentPath == TicketingRouter.root
                 ? IconButton(
                     onPressed: () {
-                      QR.to(ShotgunRouter.root);
+                      QR.to(TicketingRouter.root);
                     },
                     icon: const HeroIcon(
                       HeroIcons.informationCircle,
