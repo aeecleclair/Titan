@@ -7,6 +7,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/chooser/providers/fingers_provider.dart';
 import 'package:titan/chooser/ui/finger_dot.dart';
 
+import 'package:titan/tools/ui/widgets/top_bar.dart';
+import 'package:titan/chooser/router.dart';
+
 class FingerChooserPage extends HookConsumerWidget {
   const FingerChooserPage({super.key});
 
@@ -25,7 +28,7 @@ class FingerChooserPage extends HookConsumerWidget {
     final autoTimerRef = useRef<Timer?>(null);
     final resetTimerRef = useRef<Timer?>(null);
 
-    // 🔥 Timer d'auto-assignation des équipes
+    // Timer d'auto-assignation des équipes
     useEffect(() {
       autoTimerRef.value?.cancel();
 
@@ -56,7 +59,6 @@ class FingerChooserPage extends HookConsumerWidget {
       };
     }, [fingers.length, hasTeams, teamCount]);
 
-    // 🔥 Timer de reset auto après que tout le monde ait retiré ses doigts
     useEffect(() {
       resetTimerRef.value?.cancel();
 
@@ -98,120 +100,72 @@ class FingerChooserPage extends HookConsumerWidget {
       countdownText = 'Reset auto dans ${resetSecondsLeft.value} s';
     }
 
-    // Clé pour pouvoir ouvrir le drawer depuis le leading
-    final scaffoldKey = useMemoized(() => GlobalKey<ScaffoldState>());
-
     return Scaffold(
-      key: scaffoldKey,
-      // Drawer local simple — à adapter si tu veux coller celui de Titan
-      drawer: Drawer(
-        child: Column(
-          children: const [
-            DrawerHeader(
-              child: Text("Menu Titan Chooser", style: TextStyle(fontSize: 20)),
-            ),
-            ListTile(title: Text("Accueil")),
-            ListTile(title: Text("Autre module")),
-          ],
-        ),
-      ),
-      appBar: AppBar(
-        backgroundColor: hasTeams ? Colors.black : null,
-        foregroundColor: hasTeams ? Colors.white : null,
-        // 🔥 Icône menu en haut à gauche
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () => scaffoldKey.currentState?.openDrawer(),
-        ),
-        title: const Text('Finger Chooser'),
-        actions: [
-          // ⚙ Bouton réglages en haut à droite
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              final current = ref.read(numberOfTeamsProvider);
-              final controller = TextEditingController(
-                text: current.toString(),
-              );
-
-              showDialog<void>(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text('Réglages'),
-                    content: TextField(
-                      controller: controller,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Nombre d\'équipes',
-                      ),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text('Annuler'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          final value =
-                              int.tryParse(controller.text.trim()) ?? 2;
-                          final safeValue = value < 1 ? 1 : value;
-                          ref.read(numberOfTeamsProvider.notifier).state =
-                              safeValue;
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('Valider'),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-          ),
-        ],
-      ),
-      body: AnimatedContainer(
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.easeInOut,
-        color: hasTeams ? Colors.black : Colors.white,
-        child: Listener(
-          behavior: HitTestBehavior.opaque,
-          onPointerDown: (e) => ctrl.addFinger(e.pointer, e.localPosition),
-          onPointerMove: (e) => ctrl.updateFinger(e.pointer, e.localPosition),
-          onPointerUp: (e) => ctrl.removeFinger(e.pointer),
-          onPointerCancel: (e) => ctrl.removeFinger(e.pointer),
-          child: Stack(
+      body: Container(
+        color: Colors.white,
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      fingers.isEmpty
-                          ? (hasTeams
-                                ? 'Tout le monde a retiré — reset en cours'
-                                : 'Posez vos doigts')
-                          : '${fingers.length} doigt(s) détecté(s)',
-                      style: TextStyle(fontSize: 20, color: textColor),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Nombre d\'équipes : $teamCount',
-                      style: TextStyle(fontSize: 14, color: secondaryTextColor),
-                    ),
-                    const SizedBox(height: 8),
-                    if (countdownText.isNotEmpty)
-                      Text(
-                        countdownText,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: secondaryTextColor,
+              // 🔹 Barre du haut à la façon CentralisationTemplate
+              const TopBar(title: "Finger Chooser", root: ChooserRouter.root),
+              // 🔹 Le contenu interactif du chooser
+              Expanded(
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeInOut,
+                  color: hasTeams ? Colors.black : Colors.white,
+                  child: Listener(
+                    behavior: HitTestBehavior.opaque,
+                    onPointerDown: (e) =>
+                        ctrl.addFinger(e.pointer, e.localPosition),
+                    onPointerMove: (e) =>
+                        ctrl.updateFinger(e.pointer, e.localPosition),
+                    onPointerUp: (e) => ctrl.removeFinger(e.pointer),
+                    onPointerCancel: (e) => ctrl.removeFinger(e.pointer),
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                fingers.isEmpty
+                                    ? (hasTeams
+                                          ? 'Tout le monde a retiré — reset en cours'
+                                          : 'Posez vos doigts')
+                                    : '${fingers.length} doigt(s) détecté(s)',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: textColor,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Nombre d\'équipes : $teamCount',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: secondaryTextColor,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              if (countdownText.isNotEmpty)
+                                Text(
+                                  countdownText,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: secondaryTextColor,
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
-                      ),
-                  ],
+                        ...fingers.map((f) => FingerDot(finger: f)),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-              ...fingers.map((f) => FingerDot(finger: f)),
             ],
           ),
         ),

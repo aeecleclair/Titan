@@ -23,8 +23,8 @@ class FingerDot extends StatelessWidget {
       top: finger.position.dy - size / 2,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        width: size,
-        height: size,
+        width: size * 1.5,
+        height: size * 1.5,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: baseColor.withOpacity(.35),
