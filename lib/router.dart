@@ -16,7 +16,7 @@ import 'package:titan/others/ui/no_internet_page.dart'
     deferred as no_internet_page;
 import 'package:titan/others/ui/no_module.dart' deferred as no_module_page;
 import 'package:titan/others/ui/update_page.dart' deferred as update_page;
-import 'package:titan/paiement/router.dart';
+import 'package:titan/mypayment/router.dart';
 import 'package:titan/phonebook/router.dart';
 import 'package:titan/ph/router.dart';
 import 'package:titan/purchases/router.dart';
