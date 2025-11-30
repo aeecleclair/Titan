@@ -88,12 +88,13 @@ class DeliveryUi extends HookConsumerWidget {
                           ConstrainedBox(
                             constraints: BoxConstraints(maxWidth: maxTextWidth),
                             child: Text(
-                              '${delivery.name} ',
+                              delivery.name,
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: AMAPColorConstants.textDark,
                               ),
+                              maxLines: 3,
                             ),
                           ),
                           Text(
