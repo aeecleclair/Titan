@@ -37,8 +37,6 @@ class AMAPTextConstants {
   static const String addingProduct = "Ajouter un produit";
   static const String addOrder = "Ajouter une commande";
   static const String admin = "Admin";
-  static const String alreadyExistCommand =
-      "Il existe déjà une commande à cette date";
   static const String amap = "Amap";
   static const String amount = "Solde";
   static const String archive = "Archiver";
