@@ -30,11 +30,11 @@ class EventCard extends HookConsumerWidget {
         }
       },
       child: Container(
-        width: 46,
+        width: width,
         margin: const EdgeInsets.symmetric(vertical: 10),
         padding: EdgeInsets.all(50),
         decoration: BoxDecoration(
-          color: Color.fromARGB(210, 146, 172, 194),
+          color: Color.fromARGB(210, 177, 220, 255),
           borderRadius: BorderRadius.circular(10),
           boxShadow: const [
             BoxShadow(
@@ -47,9 +47,21 @@ class EventCard extends HookConsumerWidget {
         ),
         child: Stack(
           children: [
-            Column(
+            Row(
               children: [
-                AutoSizeText(event.title),
+                AutoSizeText(
+                  event.title,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                ),
+                const VerticalDivider(
+                  width: 20,
+                  thickness: 1,
+                  indent: 20,
+                  endIndent: 0,
+                  color: Colors.black,
+                ),
                 EventCountdown(duration: fifteenAgo),
               ],
             ),
