@@ -14,13 +14,13 @@ class Cash {
   Cash.fromJson(Map<String, dynamic> json) {
     balance = json['balance'];
     user = SimpleUser.fromJson(json['user']);
-    lastOrderDate = processDateFromAPI(json['last_ordering_date']);
+    lastOrderDate = processDateFromAPI(json['last_order_date']);
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['balance'] = balance;
-    data['last_ordering_date'] = processDateToAPI(lastOrderDate);
+    data['last_order_date'] = processDateToAPI(lastOrderDate);
     return data;
   }
 
