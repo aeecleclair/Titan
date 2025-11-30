@@ -20,7 +20,11 @@ void main() {
   group('loadCashByUser', () {
     test('returns cash for valid user id', () async {
       final user = SimpleUser.empty().copyWith(id: '123');
-      final cash = Cash(balance: 100, user: user);
+      final cash = Cash(
+        balance: 100,
+        user: user,
+        lastOrderDate: DateTime(2025),
+      );
       when(
         () => mockRepository.getCashByUser('123'),
       ).thenAnswer((_) async => cash);
@@ -51,7 +55,11 @@ void main() {
 
   group('updateCash', () {
     test('updates cash balance', () async {
-      final cash = Cash(balance: 100, user: SimpleUser.empty());
+      final cash = Cash(
+        balance: 100,
+        user: SimpleUser.empty(),
+        lastOrderDate: DateTime(2025),
+      );
       notifier.state = AsyncValue.data(cash);
 
       await notifier.updateCash(50);

@@ -8,6 +8,7 @@ enum CollectionSlot { midDay, evening }
 class Order {
   Order({
     required this.id,
+    required this.deliveryName,
     required this.deliveryId,
     required this.orderingDate,
     required this.deliveryDate,
@@ -23,6 +24,7 @@ class Order {
   late final SimpleUser user;
   late final CollectionSlot collectionSlot;
   late final String id;
+  late final String deliveryName;
   late final DateTime orderingDate;
   late final DateTime deliveryDate;
   late final String deliveryId;
@@ -34,6 +36,7 @@ class Order {
 
   Order.fromJson(Map<String, dynamic> json) {
     id = json['order_id'];
+    deliveryName = json['delivery_name'];
     deliveryId = json['delivery_id'];
     amount = json['amount'];
     lastAmount = amount;
@@ -56,6 +59,7 @@ class Order {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['order_id'] = id;
+    data['delivery_name'] = deliveryName;
     data['delivery_id'] = deliveryId;
     data['amount'] = amount;
     data['ordering_date'] = processDateToAPI(orderingDate);
@@ -69,6 +73,7 @@ class Order {
 
   Order copyWith({
     String? id,
+    String? deliveryName,
     DateTime? orderingDate,
     DateTime? deliveryDate,
     List<Product>? products,
@@ -81,6 +86,7 @@ class Order {
   }) {
     return Order(
       id: id ?? this.id,
+      deliveryName: deliveryName ?? this.deliveryName,
       orderingDate: orderingDate ?? this.orderingDate,
       deliveryDate: deliveryDate ?? this.deliveryDate,
       productsDetail: products != null
@@ -102,6 +108,7 @@ class Order {
   static Order empty() {
     return Order(
       id: '',
+      deliveryName: '',
       orderingDate: DateTime.now(),
       deliveryDate: DateTime.now(),
       productsDetail: [],
@@ -118,6 +125,6 @@ class Order {
 
   @override
   String toString() {
-    return 'Order{id: $id, orderingDate: $orderingDate, deliveryDate: $deliveryDate, productsDetail: $productsDetail, productsQuantity: $productsQuantity, deliveryId: $deliveryId, products: $products, amount: $amount, lastAmount: $lastAmount, collectionSlot: $collectionSlot, user: $user, expanded: $expanded}';
+    return 'Order{id: $id, deliveryName: $deliveryName, orderingDate: $orderingDate, deliveryDate: $deliveryDate, productsDetail: $productsDetail, productsQuantity: $productsQuantity, deliveryId: $deliveryId, products: $products, amount: $amount, lastAmount: $lastAmount, collectionSlot: $collectionSlot, user: $user, expanded: $expanded}';
   }
 }

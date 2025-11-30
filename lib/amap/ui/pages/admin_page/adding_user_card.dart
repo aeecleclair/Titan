@@ -16,7 +16,9 @@ class AddingUserCard extends HookConsumerWidget {
     final cashNotifier = ref.watch(cashListProvider.notifier);
     return GestureDetector(
       onTap: () {
-        cashNotifier.addCash(Cash(balance: 0, user: user));
+        cashNotifier.addCash(
+          Cash(balance: 0, user: user, lastOrderDate: DateTime.now()),
+        );
         onAdd();
       },
       child: Container(

@@ -31,7 +31,7 @@ class DeliveryHandler extends HookConsumerWidget {
         ),
         const SizedBox(height: 10),
         HorizontalListView(
-          height: 200,
+          height: 233,
           children: [
             const SizedBox(width: 15, height: 195),
             GestureDetector(

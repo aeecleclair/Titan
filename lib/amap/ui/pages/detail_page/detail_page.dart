@@ -38,7 +38,7 @@ class DetailPage extends HookConsumerWidget {
                     ),
                     child: Column(
                       children: [
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 110),
                         const AlignLeftText(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           AMAPTextConstants.products,

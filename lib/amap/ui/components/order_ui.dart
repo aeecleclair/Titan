@@ -36,10 +36,25 @@ class OrderUI extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    final style = TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      color: AMAPColorConstants.textDark,
+    );
+
+    final tp = TextPainter(
+      text: TextSpan(text: order.deliveryName, style: style),
+      textDirection: TextDirection.ltr,
+      maxLines: isDetail ? 3 : 2,
+    );
+    final maxTextWidth = isDetail ? 180.0 : 150.0;
+    tp.layout(maxWidth: maxTextWidth);
+    final lines = tp.computeLineMetrics().length;
+
     return CardLayout(
       id: order.id,
-      width: 195,
-      height: isDetail ? 110 : 150,
+      width: 214,
+      height: isDetail ? 104 + 26.0 * lines : 144 + 26.0 * lines,
       colors: const [
         AMAPColorConstants.lightGradient1,
         AMAPColorConstants.greenGradient1,
@@ -52,14 +67,33 @@ class OrderUI extends HookConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                '${AMAPTextConstants.the} ${processDate(order.deliveryDate)}',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AMAPColorConstants.textDark,
-                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: maxTextWidth),
+                    child: Text(
+                      order.deliveryName,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AMAPColorConstants.textDark,
+                      ),
+                      maxLines: isDetail ? 3 : 2,
+                    ),
+                  ),
+                  Text(
+                    '${AMAPTextConstants.the} ${processDate(order.deliveryDate)}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AMAPColorConstants.textDark,
+                    ),
+                  ),
+                ],
               ),
+
               if (!isDetail)
                 GestureDetector(
                   onTap: () {
