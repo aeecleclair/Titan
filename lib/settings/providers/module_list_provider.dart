@@ -11,7 +11,7 @@ import 'package:collection/collection.dart';
 import 'package:titan/event/router.dart';
 import 'package:titan/home/router.dart';
 import 'package:titan/loan/router.dart';
-import 'package:titan/paiement/router.dart';
+import 'package:titan/mypayment/router.dart';
 import 'package:titan/phonebook/router.dart';
 import 'package:titan/ph/router.dart';
 import 'package:titan/purchases/router.dart';
