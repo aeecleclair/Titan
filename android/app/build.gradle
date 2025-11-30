@@ -34,7 +34,10 @@ def keystoreProperties = new Properties()
 
 android {
     compileSdkVersion flutter.compileSdkVersion
-    ndkVersion "27.0.12077973"
+    // Using a NDK already included in the image used by our CI workflow
+    // should considerably improve build time
+    // See https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md#android
+    ndkVersion "27.2.12479018"
     namespace "fr.myecl.titan"
 
     compileOptions {
