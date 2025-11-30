@@ -10,7 +10,10 @@ class EventCountdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Countdown(
       seconds: 20,
-      build: (BuildContext context, double time) => Text(time.toString()),
+      build: (BuildContext context, double time) => Text(
+        time.toString(),
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      ),
       interval: Duration(milliseconds: 100),
       onFinished: () {
         print('Timer is done!');

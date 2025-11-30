@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -24,14 +25,22 @@ class TicketingMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final isEventAdmin = ref.watch(isEventAdminProvider);
     final isAdmin = ref.watch(isAdminProvider);
-
     final eventNotifier = ref.watch(eventProvider.notifier);
     final eventList = ref.watch(eventListProvider);
     final eventListNotifier = ref.watch(eventListProvider.notifier);
     final selected = ref.watch(announcerProvider);
     final selectedNotifier = ref.watch(announcerProvider.notifier);
+
+    final animation = useAnimationController(
+      duration: const Duration(milliseconds: 500),
+      initialValue: 0,
+    );
+    final popAnimation = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOutCubic));
+    final showPanel = useState(false);
 
     double width = 300;
     double height = 300;
@@ -59,11 +68,11 @@ class TicketingMainPage extends HookConsumerWidget {
                   await eventListNotifier.loadEvents();
                 },
                 children: [
+                  const SizedBox(height: 20),
                   SizedBox(
                     width: 300,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                       children: [
                         if (isAdmin)
                           AdminButton(
@@ -86,78 +95,90 @@ class TicketingMainPage extends HookConsumerWidget {
                     (event) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: EventCard(
-                        onTap: () {
-                          eventNotifier.setEvent(event);
-                          QR.to(TicketingRouter.root + TicketingRouter.admin);
-                        },
                         event: event,
+                        onTap: () {
+                          animation.forward();
+                          showPanel.value = true;
+                          print("Event tapped: ${event.title}");
+                        },
                       ),
                     ),
                   ),
+                  const SizedBox(height: 20),
                 ],
               );
             },
+          ),
+          AnimatedBuilder(
+            builder: (context, child) {
+              return Opacity(
+                opacity: popAnimation.value,
+                child: Transform.translate(
+                  offset: Offset(
+                    0,
+                    (1 - popAnimation.value) *
+                        MediaQuery.of(context).size.height,
+                  ),
+                  child: child,
+                ),
+              );
+            },
+            animation: animation,
+            child: Container(
+              height: MediaQuery.of(context).size.height - 150,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white, // Ajout d'une couleur de fond
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.2),
+                    spreadRadius: 5,
+                    blurRadius: 10,
+                    offset: const Offset(0, -3),
+                  ),
+                ],
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
+                ),
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Liste des Sessions",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const HeroIcon(
+                            HeroIcons.xMark,
+                            color: Colors.black,
+                            size: 30,
+                          ),
+                          onPressed: () {
+                            animation.reverse();
+                            showPanel.value = false;
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  // Contenu du panel ici
+                ],
+              ),
+            ),
           ),
         ],
       ),
     );
   }
 }
-//     SafeArea(
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           TopBar(title: 'Event', root: TicketingRouter.root),
-//           Expanded(
-//             child: SingleChildScrollView(
-//               scrollDirection: Axis.horizontal,
-//               child: Column(
-//                 mainAxisAlignment: MainAxisAlignment.start,
-//                 children: [
-//                   SizedBox(
-//                     width: width,
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                       children: [
-
-//                         // if (isEventAdmin)
-//                         //   AdminButton(
-//                         //     onTap: () {
-//                         //       QR.to(
-//                         //         TicketingRouter.root +
-//                         //             TicketingRouter.addEditMember,
-//                         //       );
-//                         //     },
-//                         //     text: EventTextConstants.management,
-//                         //   ),
-//                       ],
-//                     ),
-//                   ),
-//                   Padding(
-//                     padding: const EdgeInsets.symmetric(horizontal: 30),
-//                     child: Align(
-//                       alignment: Alignment.centerLeft,
-//                       child: Row(
-//                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                         children: [
-//                           const Text(
-//                             EventTextConstants.news,
-//                             style: TextStyle(
-//                               fontSize: 18,
-//                               fontWeight: FontWeight.bold,
-//                               color: Colors.grey,
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
