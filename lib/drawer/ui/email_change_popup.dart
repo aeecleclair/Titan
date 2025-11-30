@@ -6,7 +6,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/drawer/providers/email_popup_state_provider.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
-import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
 class Consts {
@@ -29,24 +28,16 @@ class EmailChangeDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final displayForm = useState(true);
-    final emailController = useTextEditingController();
     final user = ref.watch(userProvider);
     final userNotifier = ref.watch(asyncUserProvider.notifier);
     final emailPopupStateNotifier = ref.read(emailPopupStateProvider.notifier);
+    final newEmail =
+        '${removeDiacritics(user.firstname.toLowerCase())}.${removeDiacritics(user.name.toLowerCase())}@etu.ec-lyon.fr';
+    final emailController = useTextEditingController(text: newEmail);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
-
-    print(emailController.text);
-
-    useEffect(() {
-      return () {
-        final newEmail =
-            '${removeDiacritics(user.firstname.toLowerCase())}.${removeDiacritics(user.name.toLowerCase())}@etu.ec-lyon.fr';
-        emailController.text = newEmail;
-      };
-    }, []);
 
     return GestureDetector(
       onTap: emailPopupStateNotifier.close,
@@ -86,7 +77,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min, // To make the card compact
-                    children: <Widget>[
+                    children: [
                       const Text(
                         Consts.titleMigration,
                         style: TextStyle(
@@ -94,7 +85,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      const SizedBox(height: 12.0),
+                      const SizedBox(height: 20.0),
                       displayForm.value
                           ? Column(
                               children: [
@@ -103,10 +94,30 @@ class EmailChangeDialog extends HookConsumerWidget {
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(fontSize: 16.0),
                                 ),
-                                const SizedBox(height: 15.0),
-                                TextEntry(
+                                const SizedBox(height: 5.0),
+                                TextFormField(
                                   controller: emailController,
-                                  label: "Nouvelle adresse mail",
+                                  decoration: InputDecoration(
+                                    label: Text(
+                                      "Nouvelle adresse mail",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        height: 0.5,
+                                      ),
+                                    ),
+                                    errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.red,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.black,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                                 const SizedBox(height: 30.0),
                                 Row(
