@@ -58,14 +58,21 @@ class DeliveryUi extends HookConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${delivery.name} ',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: (selected && showSelected)
-                          ? Colors.white
-                          : AMAPColorConstants.textDark,
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width - 200,
+                    ),
+                    child: Text(
+                      delivery.name,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: (selected && showSelected)
+                            ? Colors.white
+                            : AMAPColorConstants.textDark,
+                      ),
                     ),
                   ),
                   Text(
