@@ -24,13 +24,13 @@ class PurchaseListNotifier extends ListNotifier<Purchase> {
       orElse: () => [],
       data: (value) {
         for (Purchase purchase in value) {
-          if (!years.contains(purchase.purchasedOn.year)) {
-            years.add(purchase.purchasedOn.year);
+          if (!years.contains(purchase.product.year)) {
+            years.add(purchase.product.year);
           }
         }
       },
     );
-    return years;
+    return years.reversed.toList();
   }
 }
 
