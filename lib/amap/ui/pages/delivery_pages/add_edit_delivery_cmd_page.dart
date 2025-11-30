@@ -56,6 +56,10 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
+                    const AlignLeftText(
+                      AMAPTextConstants.addDelivery,
+                      color: AMAPColorConstants.green2,
+                    ),
                     const SizedBox(height: 20),
                     TextEntry(
                       label: AMAPTextConstants.name,
@@ -63,10 +67,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                       color: AMAPColorConstants.greenGradient2,
                       enabledColor: AMAPColorConstants.enabled,
                     ),
-                    const AlignLeftText(
-                      AMAPTextConstants.addDelivery,
-                      color: AMAPColorConstants.green2,
-                    ),
+
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 30),
                       child: DateEntry(
