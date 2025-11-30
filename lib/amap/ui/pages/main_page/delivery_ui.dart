@@ -25,7 +25,7 @@ class DeliveryUi extends HookConsumerWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
-        height: 50,
+        height: 70,
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -54,15 +54,31 @@ class DeliveryUi extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(width: 10),
-              Text(
-                '${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: (selected && showSelected)
-                      ? Colors.white
-                      : AMAPColorConstants.textDark,
-                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${delivery.name} ',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: (selected && showSelected)
+                          ? Colors.white
+                          : AMAPColorConstants.textDark,
+                    ),
+                  ),
+                  Text(
+                    '${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: (selected && showSelected)
+                          ? Colors.white
+                          : AMAPColorConstants.textDark,
+                    ),
+                  ),
+                ],
               ),
               const Spacer(),
               Text(

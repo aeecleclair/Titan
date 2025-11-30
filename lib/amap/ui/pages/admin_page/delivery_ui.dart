@@ -47,7 +47,7 @@ class DeliveryUi extends HookConsumerWidget {
 
     return CardLayout(
       id: delivery.id,
-      height: 160,
+      height: 181,
       width: 280,
       shadowColor: AMAPColorConstants.textDark.withValues(alpha: 0.2),
       padding: const EdgeInsets.all(10),
@@ -66,13 +66,27 @@ class DeliveryUi extends HookConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: AMAPColorConstants.textDark,
-                        ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            ' ${delivery.name} ',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: AMAPColorConstants.textDark,
+                            ),
+                          ),
+                          Text(
+                            ' ${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: AMAPColorConstants.textDark,
+                            ),
+                          ),
+                        ],
                       ),
                       GestureDetector(
                         onTap: () {

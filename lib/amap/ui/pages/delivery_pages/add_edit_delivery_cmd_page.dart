@@ -18,6 +18,7 @@ import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AddEditDeliveryPage extends HookConsumerWidget {
@@ -31,6 +32,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
     final dateController = useTextEditingController(
       text: isEdit ? processDate(delivery.deliveryDate) : '',
     );
+    final nameController = useTextEditingController();
     final productList = ref.watch(productListProvider);
     final sortedProductsList = ref.watch(sortedByCategoryProductsProvider);
     final selected = ref.watch(selectedListProvider);
@@ -55,6 +57,12 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
+                    TextEntry(
+                      label: AMAPTextConstants.name,
+                      controller: nameController,
+                      color: AMAPColorConstants.greenGradient2,
+                      enabledColor: AMAPColorConstants.enabled,
+                    ),
                     const AlignLeftText(
                       AMAPTextConstants.addDelivery,
                       color: AMAPColorConstants.green2,
@@ -137,6 +145,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                               if (formKey.currentState!.validate()) {
                                 final date = dateController.value.text;
                                 final del = Delivery(
+                                  name: nameController.text,
                                   id: isEdit ? delivery.id : '',
                                   products: products
                                       .where(
