@@ -5,6 +5,7 @@ import 'package:titan/admin/providers/all_my_module_roots_list_provider.dart';
 import 'package:titan/amap/router.dart';
 import 'package:titan/booking/router.dart';
 import 'package:titan/centralisation/router.dart';
+import 'package:titan/chooser/router.dart';
 import 'package:titan/cinema/router.dart';
 import 'package:titan/drawer/class/module.dart';
 import 'package:collection/collection.dart';
@@ -45,6 +46,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     AmapRouter.module,
     BookingRouter.module,
     CentralisationRouter.module,
+    ChooserRouter.module,
     CentralassociationRouter.module,
     CinemaRouter.module,
     EventRouter.module,

@@ -15,6 +15,7 @@ enum ModuleType {
   tombola,
   cinema,
   paiement,
+  chooser,
 }
 
 class Module {

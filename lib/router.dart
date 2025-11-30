@@ -4,6 +4,7 @@ import 'package:titan/advert/router.dart';
 import 'package:titan/amap/router.dart';
 import 'package:titan/booking/router.dart';
 import 'package:titan/centralisation/router.dart';
+import 'package:titan/chooser/router.dart';
 import 'package:titan/cinema/router.dart';
 import 'package:titan/event/router.dart';
 import 'package:titan/flappybird/router.dart';
@@ -76,6 +77,7 @@ class AppRouter {
       AmapRouter(ref).route(),
       BookingRouter(ref).route(),
       CentralisationRouter(ref).route(),
+      ChooserRouter(ref).route(),
       CentralassociationRouter(ref).route(),
       CinemaRouter(ref).route(),
       EventRouter(ref).route(),

@@ -1,0 +1,121 @@
+{
+  "project_info": {
+    "project_number": "111651829257",
+    "project_id": "myecl-eclair",
+    "storage_bucket": "myecl-eclair.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111651829257:android:5b69cca5bdd900223f6ad8",
+        "android_client_info": {
+          "package_name": "fr.myecl.titan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111651829257-gav6ktptsfmomho0bkc4v11bmfr1850u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBYS_WJftJQGLbxnhtQKKLa1ag7MQFOWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111651829257-gav6ktptsfmomho0bkc4v11bmfr1850u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "111651829257-3hnhnqd79blnf8mcvn35g7ugmdhd869c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "fr.myecl.titan",
+                "app_store_id": "6444443430"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111651829257:android:317ee4213b3752473f6ad8",
+        "android_client_info": {
+          "package_name": "fr.myecl.titan.alpha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111651829257-gav6ktptsfmomho0bkc4v11bmfr1850u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBYS_WJftJQGLbxnhtQKKLa1ag7MQFOWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111651829257-gav6ktptsfmomho0bkc4v11bmfr1850u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "111651829257-3hnhnqd79blnf8mcvn35g7ugmdhd869c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "fr.myecl.titan",
+                "app_store_id": "6444443430"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111651829257:android:cb8b6a707799a0ad3f6ad8",
+        "android_client_info": {
+          "package_name": "fr.myecl.titan.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111651829257-gav6ktptsfmomho0bkc4v11bmfr1850u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBYS_WJftJQGLbxnhtQKKLa1ag7MQFOWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111651829257-gav6ktptsfmomho0bkc4v11bmfr1850u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "111651829257-3hnhnqd79blnf8mcvn35g7ugmdhd869c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "fr.myecl.titan",
+                "app_store_id": "6444443430"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
