@@ -47,6 +47,13 @@ class DetailDeliveryPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   Text(
+                    delivery.name,
+                    style: const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
                     "${AMAPTextConstants.deliveryDate} : ${processDate(delivery.deliveryDate)}",
                     style: const TextStyle(
                       fontSize: 20,

@@ -18,7 +18,7 @@ class CashListProvider extends ListNotifier<Cash> {
     return await add(cashRepository.createCash, cash);
   }
 
-  Future<bool> updateCash(Cash addedCash, double previousCashAmount) async {
+  Future<bool> updateCash(Cash addedCash, int previousCashAmount) async {
     return await update(
       cashRepository.updateCash,
       (cashList, c) => cashList

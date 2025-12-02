@@ -8,7 +8,7 @@ class Product {
   });
   late final String id;
   late final String name;
-  late final double price;
+  late final int price;
   late final int quantity;
   late final String category;
 
@@ -31,7 +31,7 @@ class Product {
   Product copyWith({
     String? id,
     String? name,
-    double? price,
+    int? price,
     int? quantity,
     String? category,
   }) => Product(

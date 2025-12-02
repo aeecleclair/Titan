@@ -114,7 +114,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                 }
               },
               child: Text(
-                "${AMAPTextConstants.confirm} (${order.amount.toStringAsFixed(2)}€)",
+                "${AMAPTextConstants.confirm} (${(order.amount / 100).toStringAsFixed(2)}€)",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
