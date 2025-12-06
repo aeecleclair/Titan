@@ -1,9 +1,28 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/user/providers/user_provider.dart';
+import 'package:titan/booking/providers/user_manager_list_provider.dart';
+import 'package:titan/booking/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
 
-final isAdminProvider = StateProvider<bool>((ref) {
-  final me = ref.watch(userProvider);
-  return me.groups
-      .map((e) => e.id)
-      .contains("0a25cb76-4b63-4fd3-b939-da6d9feabf28");
+final isManagersAdminProvider = Provider<bool>((ref) {
+  return hasUserPermission(ref, BookingPermissionConstants.manageManagers);
+});
+
+final isRoomsAdminProvider = Provider<bool>((ref) {
+  return hasUserPermission(ref, BookingPermissionConstants.manageRooms);
+});
+
+final isBookingAdminProvider = Provider<bool>((ref) {
+  final isManagersAdmin = ref.watch(isManagersAdminProvider);
+  final isRoomsAdmin = ref.watch(isRoomsAdminProvider);
+  return isManagersAdmin || isRoomsAdmin;
+});
+
+final isManagerProvider = StateProvider<bool>((ref) {
+  final managers = ref.watch(userManagerListProvider);
+  final managersName = managers.when(
+    data: (managers) => managers.map((e) => e.name).toList(),
+    loading: () => [],
+    error: (error, stackTrace) => [],
+  );
+  return managersName.isNotEmpty;
 });

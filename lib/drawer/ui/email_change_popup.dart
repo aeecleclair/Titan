@@ -1,11 +1,10 @@
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/drawer/providers/already_displayed_popup.dart';
-import 'package:titan/loan/tools/constants.dart';
+import 'package:titan/drawer/providers/email_popup_state_provider.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/providers/should_notify_provider.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
@@ -18,10 +17,9 @@ class Consts {
   static const Color greenGradient2 = Color(0xff387200);
   static const Color redGradient1 = Color(0xFF9E131F);
   static const Color redGradient2 = Color(0xFF590512);
-  static const String description =
-      "L'administration a décidé de changer les adresses mails des étudiants.\nPour être sur de recevoir les mails en cas de perte du mot de passe, merci de renseigner la nouvelle (normalement elle est déjà préremplie 😉).";
+  static const String titleMigration = "Accès à l'application restreint";
   static const String descriptionMigration =
-      "Vous avez créé un compte avec une adresse qui n'est pas une adresse centralienne.\nPour pouvoir accéder à cette application, vous devez changer cette adresse (normalement elle est déjà préremplie, on vous laisse vérifier et valider 😉).";
+      "Vous avez créé un compte avec une adresse mail qui n'est pas une adresse centralienne.\n\nPour avoir un accès complet à cette application vous devez changer cette adresse mail.";
 }
 
 class EmailChangeDialog extends HookConsumerWidget {
@@ -29,50 +27,31 @@ class EmailChangeDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider);
-    final shouldBeUser = ref.watch(shouldNotifyProvider);
-    final userNotifier = ref.watch(asyncUserProvider.notifier);
-    final alreadyDisplayedNotifier = ref.watch(
-      alreadyDisplayedProvider.notifier,
-    );
-    final newEmail = shouldBeUser
-        ? '${user.firstname.toLowerCase()}.${user.name.toLowerCase()}@etu.ec-lyon.fr'
-        : '${user.email.split('@')[0]}@etu.ec-lyon.fr';
-    final emailController = useTextEditingController(text: newEmail);
-    final formKey = GlobalKey<FormState>();
-    final checkAnimationController = useAnimationController(
-      duration: const Duration(milliseconds: 500),
-      initialValue: 0,
-    );
-    final checkAnimation = CurvedAnimation(
-      parent: checkAnimationController,
-      curve: Curves.bounceOut,
-    );
-    final ValueNotifier<AsyncValue> currentState = useState(
-      AsyncError("", StackTrace.current),
-    );
     final displayForm = useState(true);
+    final user = ref.watch(userProvider);
+    final userNotifier = ref.watch(asyncUserProvider.notifier);
+    final emailPopupStateNotifier = ref.read(emailPopupStateProvider.notifier);
+    final newEmail =
+        '${removeDiacritics(user.firstname.toLowerCase())}.${removeDiacritics(user.name.toLowerCase())}@etu.ec-lyon.fr';
+    final emailController = useTextEditingController(text: newEmail);
 
-    useEffect(() {
-      if (shouldBeUser) {
-        emailController.text = newEmail;
-      }
-      return () {};
-    }, [newEmail]);
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
 
     return GestureDetector(
-      onTap: alreadyDisplayedNotifier.setAlreadyDisplayed,
+      onTap: emailPopupStateNotifier.close,
       child: Container(
+        height: double.infinity,
         color: Colors.black54,
         child: GestureDetector(
           onTap: () {},
-          child: Dialog(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+          child: Container(
+            margin: EdgeInsets.only(
+              left: Consts.padding,
+              right: Consts.padding,
+              top: MediaQuery.of(context).size.height * 0.20,
             ),
-            elevation: 0.0,
-            insetPadding: const EdgeInsets.all(20.0),
-            backgroundColor: Colors.transparent,
             child: Stack(
               clipBehavior: Clip.none,
               children: [
@@ -98,186 +77,126 @@ class EmailChangeDialog extends HookConsumerWidget {
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min, // To make the card compact
-                    children: <Widget>[
+                    children: [
                       const Text(
-                        "Changer d'adresse mail",
+                        Consts.titleMigration,
                         style: TextStyle(
                           fontSize: 24.0,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      const SizedBox(height: 12.0),
+                      const SizedBox(height: 20.0),
                       displayForm.value
-                          ? Form(
-                              key: formKey,
-                              autovalidateMode: AutovalidateMode.always,
-                              child: Column(
-                                children: [
-                                  Text(
-                                    shouldBeUser
-                                        ? Consts.descriptionMigration
-                                        : Consts.description,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(fontSize: 16.0),
-                                  ),
-                                  const SizedBox(height: 15.0),
-                                  TextFormField(
-                                    controller: emailController,
-                                    cursorColor: Colors.black,
-                                    decoration: const InputDecoration(
-                                      labelText: "Nouvelle adresse mail",
-                                      floatingLabelStyle: TextStyle(
+                          ? Column(
+                              children: [
+                                Text(
+                                  Consts.descriptionMigration,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(fontSize: 16.0),
+                                ),
+                                const SizedBox(height: 5.0),
+                                TextFormField(
+                                  controller: emailController,
+                                  decoration: InputDecoration(
+                                    label: Text(
+                                      "Nouvelle adresse mail",
+                                      style: TextStyle(
                                         color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.black,
-                                          width: 2.0,
-                                        ),
+                                        height: 0.5,
                                       ),
                                     ),
-                                    validator: (value) {
-                                      if (value == null) {
-                                        return LoanTextConstants.noValue;
-                                      } else if (value.isEmpty) {
-                                        return LoanTextConstants.noValue;
-                                      } else if (!isStudent(value)) {
-                                        return "Adresse mail invalide";
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  const SizedBox(height: 30.0),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: alreadyDisplayedNotifier
-                                            .setAlreadyDisplayed,
-                                        child: Container(
-                                          width: 100,
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 16,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              10,
-                                            ),
-                                            gradient: const LinearGradient(
-                                              colors: [
-                                                Colors.black87,
-                                                Colors.black,
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                            ),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.black.withValues(
-                                                  alpha: 0.3,
-                                                ),
-                                                blurRadius: 2.0,
-                                                offset: const Offset(1.0, 2.0),
-                                              ),
-                                            ],
-                                          ),
-                                          child: const Center(
-                                            child: Text(
-                                              "Annuler",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                    errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.red,
+                                        width: 2.0,
                                       ),
-                                      WaitingButton(
-                                        onTap: () async {
-                                          if (formKey.currentState!
-                                              .validate()) {
-                                            currentState.value =
-                                                const AsyncLoading();
-                                            final result = await userNotifier
-                                                .askMailMigration(
-                                                  emailController.text,
-                                                );
-                                            if (result) {
-                                              currentState.value =
-                                                  const AsyncData("");
-                                              checkAnimationController
-                                                  .forward();
-                                              displayForm.value = false;
-                                            } else {
-                                              currentState.value = AsyncError(
-                                                "Une erreur est survenue",
-                                                StackTrace.current,
-                                              );
-                                            }
-                                          }
-                                        },
-                                        waitingColor: Colors.black,
-                                        builder: (child) => Container(
-                                          width: 100,
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 16,
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.black,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 30.0),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: emailPopupStateNotifier.close,
+                                      child: Container(
+                                        width: 100,
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 16,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
                                           ),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              10,
-                                            ),
-                                            color: Colors.grey.shade300,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey.withValues(
-                                                  alpha: 0.3,
-                                                ),
-                                                blurRadius: 2.0,
-                                                offset: const Offset(1.0, 2.0),
-                                              ),
+                                          gradient: const LinearGradient(
+                                            colors: [
+                                              Colors.black87,
+                                              Colors.black,
                                             ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
                                           ),
-                                          child: child,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withValues(
+                                                alpha: 0.3,
+                                              ),
+                                              blurRadius: 2.0,
+                                              offset: const Offset(1.0, 2.0),
+                                            ),
+                                          ],
                                         ),
                                         child: const Center(
                                           child: Text(
-                                            "Confirmer",
+                                            "Annuler",
                                             style: TextStyle(
+                                              color: Colors.white,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Expanded(
-                              child: Center(
-                                child: Column(
-                                  children: [
-                                    const Text(
-                                      "Un mail de confirmation a été envoyé à l'adresse suivante, pour confirmer le changement :",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 16.0),
                                     ),
-                                    const SizedBox(height: 16.0),
-                                    Text(
-                                      emailController.text,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    GestureDetector(
-                                      onTap: alreadyDisplayedNotifier
-                                          .setAlreadyDisplayed,
-                                      child: Container(
+                                    WaitingButton(
+                                      onTap: () async {
+                                        if (emailController.text.isEmpty) {
+                                          displayToastWithContext(
+                                            TypeMsg.error,
+                                            "L'adresse mail ne peut pas être vide.",
+                                          );
+                                          return;
+                                        } else if (RegExp(
+                                              r'^[\w\-.]+@etu(-enise)?\.ec-lyon\.fr$',
+                                            ).hasMatch(emailController.text) ==
+                                            false) {
+                                          displayToastWithContext(
+                                            TypeMsg.error,
+                                            "L'adresse mail doit être une adresse centralienne valide.",
+                                          );
+                                          return;
+                                        }
+                                        final result = await userNotifier
+                                            .askMailMigration(
+                                              emailController.text,
+                                            );
+                                        if (result) {
+                                          displayForm.value = false;
+                                        } else {
+                                          displayToastWithContext(
+                                            TypeMsg.error,
+                                            "Une erreur est survenue lors de la demande de changement d'adresse mail.",
+                                          );
+                                        }
+                                      },
+                                      waitingColor: Colors.black,
+                                      builder: (child) => Container(
                                         width: 100,
                                         padding: const EdgeInsets.symmetric(
                                           vertical: 16,
@@ -297,18 +216,70 @@ class EmailChangeDialog extends HookConsumerWidget {
                                             ),
                                           ],
                                         ),
-                                        child: const Center(
-                                          child: Text(
-                                            "Fermer",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                        child: child,
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          "Confirmer",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
+                              ],
+                            )
+                          : Center(
+                              child: Column(
+                                children: [
+                                  const Text(
+                                    "Un mail de confirmation a été envoyé à l'adresse suivante, pour confirmer le changement :",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: 16.0),
+                                  ),
+                                  const SizedBox(height: 16.0),
+                                  Text(
+                                    emailController.text,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 30.0),
+                                  GestureDetector(
+                                    onTap: emailPopupStateNotifier.close,
+                                    child: Container(
+                                      width: 100,
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 16,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.grey.shade300,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withValues(
+                                              alpha: 0.3,
+                                            ),
+                                            blurRadius: 2.0,
+                                            offset: const Offset(1.0, 2.0),
+                                          ),
+                                        ],
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          "Fermer",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                     ],
@@ -317,11 +288,8 @@ class EmailChangeDialog extends HookConsumerWidget {
                 Positioned(
                   left: Consts.padding,
                   right: Consts.padding,
-                  child: currentState.value.when(
-                    data: (data) => AnimatedBuilder(
-                      animation: checkAnimationController,
-                      builder: (context, child) {
-                        return Container(
+                  child: !displayForm.value
+                      ? Container(
                           width: Consts.avatarRadius * 2,
                           height: Consts.avatarRadius * 2,
                           decoration: BoxDecoration(
@@ -348,61 +316,41 @@ class EmailChangeDialog extends HookConsumerWidget {
                             child: Icon(
                               Icons.check,
                               color: Colors.white,
-                              size: 60 * checkAnimation.value,
+                              size: 60,
                             ),
                           ),
-                        );
-                      },
-                    ),
-                    loading: () => Container(
-                      width: Consts.avatarRadius * 2,
-                      height: Consts.avatarRadius * 2,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: const LinearGradient(
-                          colors: [Consts.redGradient1, Consts.redGradient2],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Consts.redGradient2.withValues(alpha: 0.3),
-                            blurRadius: 10.0,
-                            offset: const Offset(0.0, 10.0),
+                        )
+                      : Container(
+                          width: Consts.avatarRadius * 2,
+                          height: Consts.avatarRadius * 2,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: const LinearGradient(
+                              colors: [
+                                Consts.redGradient1,
+                                Consts.redGradient2,
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Consts.redGradient2.withValues(
+                                  alpha: 0.3,
+                                ),
+                                blurRadius: 10.0,
+                                offset: const Offset(0.0, 10.0),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: const Center(
-                        child: CircularProgressIndicator(color: Colors.white),
-                      ),
-                    ),
-                    error: (error, stack) => Container(
-                      width: Consts.avatarRadius * 2,
-                      height: Consts.avatarRadius * 2,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: const LinearGradient(
-                          colors: [Consts.redGradient1, Consts.redGradient2],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Consts.redGradient2.withValues(alpha: 0.3),
-                            blurRadius: 10.0,
-                            offset: const Offset(0.0, 10.0),
+                          child: const Center(
+                            child: HeroIcon(
+                              HeroIcons.exclamationCircle,
+                              size: 60,
+                              color: Colors.white,
+                            ),
                           ),
-                        ],
-                      ),
-                      child: const Center(
-                        child: HeroIcon(
-                          HeroIcons.exclamationCircle,
-                          size: 60,
-                          color: Colors.white,
                         ),
-                      ),
-                    ),
-                  ),
                 ),
               ],
             ),

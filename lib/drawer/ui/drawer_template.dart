@@ -2,20 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/drawer/providers/animation_provider.dart';
 import 'package:titan/drawer/providers/display_quit_popup.dart';
+import 'package:titan/drawer/providers/email_popup_state_provider.dart';
 import 'package:titan/drawer/providers/is_web_format_provider.dart';
 import 'package:titan/drawer/providers/should_setup_provider.dart';
 import 'package:titan/drawer/providers/swipe_provider.dart';
 import 'package:titan/drawer/ui/custom_drawer.dart';
-import 'package:titan/service/tools/setup.dart';
-import 'package:titan/drawer/providers/already_displayed_popup.dart';
-import 'package:titan/drawer/ui/quit_dialog.dart';
 import 'package:titan/drawer/ui/email_change_popup.dart';
-import 'package:titan/tools/providers/should_notify_provider.dart';
+import 'package:titan/service/tools/setup.dart';
+import 'package:titan/drawer/ui/quit_dialog.dart';
 import 'package:titan/user/providers/user_provider.dart';
-import 'package:qlevar_router/qlevar_router.dart';
 
 class DrawerTemplate extends HookConsumerWidget {
   static Duration duration = const Duration(milliseconds: 200);
@@ -41,12 +38,10 @@ class DrawerTemplate extends HookConsumerWidget {
       swipeControllerProvider(animationController).notifier,
     );
     final isWebFormat = ref.watch(isWebFormatProvider);
-    final alreadyDisplayed = ref.watch(alreadyDisplayedProvider);
     final displayQuit = ref.watch(displayQuitProvider);
-    final shouldNotify = ref.watch(shouldNotifyProvider);
-    final isLoggedIn = ref.watch(isLoggedInProvider);
     final shouldSetup = ref.watch(shouldSetupProvider);
     final shouldSetupNotifier = ref.read(shouldSetupProvider.notifier);
+    final isEmailPopupOpen = ref.watch(emailPopupStateProvider);
     if (isWebFormat) {
       controllerNotifier.close();
     }
@@ -123,12 +118,8 @@ class DrawerTemplate extends HookConsumerWidget {
               },
             ),
           ),
-          if (isLoggedIn &&
-              shouldNotify &&
-              QR.context != null &&
-              !alreadyDisplayed)
-            const EmailChangeDialog(),
           if (displayQuit) const QuitDialog(),
+          if (isEmailPopupOpen) const EmailChangeDialog(),
         ],
       ),
     );

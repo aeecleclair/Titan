@@ -67,6 +67,7 @@ class AdminTextConstants {
   static const String noMember = "Aucun membre";
   static const String noMoreLoaner = "Aucun prêteur n'est disponible";
   static const String noSchool = "Sans école";
+  static const String permissions = "Permissions";
   static const String removeGroupMember = "Supprimer le membre du groupe ?";
   static const String research = "Recherche";
   static const String schools = "Écoles";
@@ -80,7 +81,6 @@ class AdminTextConstants {
   static const String updatingError = "Erreur lors de la modification";
   static const String user = "Utilisateur";
   static const String validateFilters = "Valider les filtres";
-  static const String visibilities = "Visibilités";
   static const String structureShortId = "Identifiant court";
   static const String shortIdError =
       "L'identifiant court doit faire 3 caractères";

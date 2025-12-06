@@ -37,3 +37,8 @@ class CinemaTextConstants {
   static const String tagline = "Slogan";
   static const String the = "Le";
 }
+
+class CinemaPermissionConstants {
+  static const String accessCinema = 'access_cinema';
+  static const String manageSessions = 'manage_sessions';
+}

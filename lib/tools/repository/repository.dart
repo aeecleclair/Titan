@@ -229,10 +229,11 @@ abstract class Repository {
   }
 
   /// DELETE ext/id/suffix
-  Future<bool> delete(String tId, {String suffix = ""}) async {
+  Future<bool> delete(String tId, {String suffix = "", dynamic body}) async {
     final response = await http.delete(
       Uri.parse(host + ext + tId + suffix),
       headers: headers,
+      body: body != null ? jsonEncode(body) : null,
     );
     if (response.statusCode == 204) {
       return true;
