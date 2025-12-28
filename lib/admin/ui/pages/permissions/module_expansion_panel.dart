@@ -30,32 +30,32 @@ class ModuleExpansionPanel extends HookConsumerWidget {
         isExpanded.value[i] = isOpen;
         isExpanded.value = List.from(isExpanded.value);
       },
-      children: modulesPermissionNames.keys
-          .map(
-            (module) => ExpansionPanel(
-              canTapOnHeader: true,
-              isExpanded: isExpanded
-                  .value[modulesPermissionNames.keys.toList().indexOf(module)],
-              headerBuilder: (context, isOpen) => Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Text(
-                  module,
-                  style: const TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0),
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+      children: modulesPermissionNames.keys.map((module) {
+        final index = modulesPermissionNames.keys.toList().indexOf(module);
+        return ExpansionPanel(
+          canTapOnHeader: true,
+          isExpanded: isExpanded.value[index],
+          headerBuilder: (context, isOpen) => Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              module,
+              style: const TextStyle(
+                color: Color.fromARGB(255, 0, 0, 0),
+                fontSize: 22,
+                fontWeight: FontWeight.w800,
               ),
-              body: PermissionsExpansionPanel(
-                permissionNames: modulesPermissionNames[module]!,
-                accountTypes: accountTypes,
-                groups: groups,
-              ),
+              textAlign: TextAlign.center,
             ),
-          )
-          .toList(),
+          ),
+          body: isExpanded.value[index]
+              ? PermissionsExpansionPanel(
+                  permissionNames: modulesPermissionNames[module]!,
+                  accountTypes: accountTypes,
+                  groups: groups,
+                )
+              : const SizedBox.shrink(),
+        );
+      }).toList(),
     );
   }
 }
