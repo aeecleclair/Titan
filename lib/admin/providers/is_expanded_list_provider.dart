@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/providers/permission_list_provider.dart';
+import 'package:titan/admin/providers/permission_name_list_provider.dart';
 
 class IsExpandedListProvider extends StateNotifier<List<bool>> {
   IsExpandedListProvider(List<String> permissionsNames)

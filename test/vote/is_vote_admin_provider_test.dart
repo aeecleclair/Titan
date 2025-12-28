@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/admin/class/permissions.dart';
 import 'package:titan/admin/class/simple_group.dart';
-import 'package:titan/admin/providers/permissions_provider.dart';
+import 'package:titan/admin/providers/permissions_list_provider.dart';
 import 'package:titan/user/class/user.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:titan/vote/providers/is_vote_admin_provider.dart';
@@ -22,10 +22,10 @@ void main() {
               ],
             ),
           ),
-          permissionsProvider.overrideWithValue({
-            VotePermissionConstants.manageVotes: Permission(
+          mappedPermissionsProvider.overrideWithValue({
+            VotePermissionConstants.manageVotes: CorePermission(
               permissionName: VotePermissionConstants.manageVotes,
-              authorizedGroups: ['6c6d7e88-fdb8-4e42-b2b5-3d3cfd12e7d6'],
+              authorizedGroupIds: ['6c6d7e88-fdb8-4e42-b2b5-3d3cfd12e7d6'],
               authorizedAccountTypes: [],
             ),
           }),
@@ -49,10 +49,10 @@ void main() {
               ],
             ),
           ),
-          permissionsProvider.overrideWithValue({
-            VotePermissionConstants.manageVotes: Permission(
+          mappedPermissionsProvider.overrideWithValue({
+            VotePermissionConstants.manageVotes: CorePermission(
               permissionName: VotePermissionConstants.manageVotes,
-              authorizedGroups: ['6c6d7e88-fdb8-4e42-b2b5-3d3cfd12e7d6'],
+              authorizedGroupIds: ['6c6d7e88-fdb8-4e42-b2b5-3d3cfd12e7d6'],
               authorizedAccountTypes: [],
             ),
           }),

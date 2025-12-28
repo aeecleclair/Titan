@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/account_types_list_provider.dart';
 import 'package:titan/admin/providers/group_list_provider.dart';
-import 'package:titan/admin/providers/permission_list_provider.dart';
-import 'package:titan/admin/providers/permissions_provider.dart';
+import 'package:titan/admin/providers/permission_name_list_provider.dart';
+import 'package:titan/admin/providers/permissions_list_provider.dart';
 import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/pages/permissions/module_expansion_panel.dart';
@@ -17,7 +17,7 @@ class PermissionsPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final permissionsNames = ref.watch(permissionsNamesListProvider);
-    final permissions = ref.watch(allPermissionsProvider);
+    final permissions = ref.watch(permissionsProvider);
     final groups = ref.watch(allGroupListProvider);
     final accountTypes = ref.watch(allAccountTypesListProvider);
     return AdminTemplate(
@@ -58,7 +58,6 @@ class PermissionsPage extends HookConsumerWidget {
                             accountTypes,
                           ) => ModuleExpansionPanel(
                             permissionsNames: permissionsNames,
-                            permissions: permissions,
                             groups: groups,
                             accountTypes: accountTypes,
                           ),

@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/account_type.dart';
 import 'package:titan/admin/class/permissions.dart';
 import 'package:titan/admin/class/simple_group.dart';
-import 'package:titan/admin/providers/permissions_provider.dart';
+import 'package:titan/admin/providers/permissions_list_provider.dart';
 import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/tools/function.dart';
 
@@ -25,11 +25,9 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
     final permissionExpanded = useState<List<bool>>(
       List.generate(permissionNames.length, (index) => false),
     );
-    final permissions = ref.watch(permissionsProvider);
+    final permissions = ref.watch(mappedPermissionsProvider);
 
-    final permissionsProviderNotifier = ref.read(
-      allPermissionsProvider.notifier,
-    );
+    final permissionsProviderNotifier = ref.read(permissionsProvider.notifier);
 
     return ExpansionPanelList(
       expansionCallback: (i, isOpen) {
@@ -141,7 +139,7 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
                             ),
                           ),
                           const Spacer(),
-                          permissions[permissionName]!.authorizedGroups
+                          permissions[permissionName]!.authorizedGroupIds
                                   .contains(group.id)
                               ? GestureDetector(
                                   onTap: () async {

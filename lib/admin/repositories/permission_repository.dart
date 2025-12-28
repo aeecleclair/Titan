@@ -6,8 +6,8 @@ class PermissionRepository extends Repository {
   // ignore: overridden_fields
   final ext = "permissions/";
 
-  Future<AllPermissions> getAllPermissions() async {
-    return AllPermissions.fromJson(await getOne(""));
+  Future<List<CorePermission>> getAllPermissions() async {
+    return List<CorePermission>.from(await getList());
   }
 
   Future<List<String>> getPermissionsNamesList() async {

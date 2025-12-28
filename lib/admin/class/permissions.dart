@@ -64,67 +64,53 @@ class AccountTypePermission {
   int get hashCode => permissionName.hashCode ^ accountType.hashCode;
 }
 
-class Permission {
-  Permission({
+class CorePermission {
+  CorePermission({
     required this.permissionName,
     required this.authorizedAccountTypes,
-    required this.authorizedGroups,
+    required this.authorizedGroupIds,
   });
 
   late final String permissionName;
   late final List<String> authorizedAccountTypes;
-  late final List<String> authorizedGroups;
+  late final List<String> authorizedGroupIds;
 
-  @override
-  String toString() =>
-      'Permission(permissionName: $permissionName, authorizedAccountTypes: $authorizedAccountTypes, authorizedGroups: $authorizedGroups)';
-}
-
-class AllPermissions {
-  AllPermissions({
-    required this.groupPermissions,
-    required this.accountTypePermissions,
-  });
-
-  late final List<GroupPermission> groupPermissions;
-  late final List<AccountTypePermission> accountTypePermissions;
-
-  AllPermissions.fromJson(Map<String, dynamic> json) {
-    groupPermissions = List.from(
-      json['group_permissions'],
-    ).map((e) => GroupPermission.fromJson(e)).toList();
-    accountTypePermissions = List.from(
-      json['account_type_permissions'],
-    ).map((e) => AccountTypePermission.fromJson(e)).toList();
+  CorePermission.fromJson(Map<String, dynamic> json) {
+    permissionName = json['permission_name'];
+    authorizedAccountTypes = List<String>.from(
+      json['authorized_account_types'],
+    );
+    authorizedGroupIds = List<String>.from(json['authorized_group_ids']);
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['group_permissions'] = groupPermissions
-        .map((e) => e.toJson())
-        .toList();
-    data['account_type_permissions'] = accountTypePermissions
-        .map((e) => e.toJson())
-        .toList();
+    data['permission_name'] = permissionName;
+    data['authorized_account_types'] = authorizedAccountTypes;
+    data['authorized_group_ids'] = authorizedGroupIds;
     return data;
   }
 
-  AllPermissions copyWith({
-    List<GroupPermission>? groupPermissions,
-    List<AccountTypePermission>? accountTypePermissions,
-  }) => AllPermissions(
-    groupPermissions: groupPermissions ?? this.groupPermissions,
-    accountTypePermissions:
-        accountTypePermissions ?? this.accountTypePermissions,
-  );
+  CorePermission copyWith({
+    String? permissionName,
+    List<String>? authorizedAccountTypes,
+    List<String>? authorizedGroupIds,
+  }) {
+    return CorePermission(
+      permissionName: permissionName ?? this.permissionName,
+      authorizedAccountTypes:
+          authorizedAccountTypes ?? this.authorizedAccountTypes,
+      authorizedGroupIds: authorizedGroupIds ?? this.authorizedGroupIds,
+    );
+  }
 
-  AllPermissions.empty() {
-    groupPermissions = [];
-    accountTypePermissions = [];
+  CorePermission.empty() {
+    permissionName = '';
+    authorizedAccountTypes = [];
+    authorizedGroupIds = [];
   }
 
   @override
-  String toString() {
-    return 'GroupPermissions(groupPermissions: $groupPermissions, accountTypePermissions: $accountTypePermissions)';
-  }
+  String toString() =>
+      'CorePermission(permissionName: $permissionName, authorizedAccountTypes: $authorizedAccountTypes, authorizedGroupIds: $authorizedGroupIds)';
 }
