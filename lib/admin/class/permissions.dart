@@ -77,17 +77,15 @@ class CorePermission {
 
   CorePermission.fromJson(Map<String, dynamic> json) {
     permissionName = json['permission_name'];
-    authorizedAccountTypes = List<String>.from(
-      json['authorized_account_types'],
-    );
-    authorizedGroupIds = List<String>.from(json['authorized_group_ids']);
+    authorizedAccountTypes = List<String>.from(json['account_types']);
+    authorizedGroupIds = List<String>.from(json['groups']);
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['permission_name'] = permissionName;
-    data['authorized_account_types'] = authorizedAccountTypes;
-    data['authorized_group_ids'] = authorizedGroupIds;
+    data['account_types'] = authorizedAccountTypes;
+    data['groups'] = authorizedGroupIds;
     return data;
   }
 

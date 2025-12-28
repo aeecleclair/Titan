@@ -7,7 +7,9 @@ class PermissionRepository extends Repository {
   final ext = "permissions/";
 
   Future<List<CorePermission>> getAllPermissions() async {
-    return List<CorePermission>.from(await getList());
+    return List<CorePermission>.from(
+      (await getList()).map((e) => CorePermission.fromJson(e)),
+    );
   }
 
   Future<List<String>> getPermissionsNamesList() async {

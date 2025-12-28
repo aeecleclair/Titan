@@ -40,7 +40,7 @@ class AdminMainPage extends HookConsumerWidget {
               },
               child: const MenuCardUi(
                 text: AdminTextConstants.permissions,
-                icon: HeroIcons.eye,
+                icon: HeroIcons.lockOpen,
               ),
             ),
             GestureDetector(
