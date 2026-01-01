@@ -33,7 +33,7 @@ def keystoreProperties = new Properties()
    }
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdk flutter.compileSdk
     ndkVersion "29.0.14206865"
     namespace "fr.myecl.titan.sandbox"
 
@@ -53,8 +53,8 @@ android {
 
     defaultConfig {
         applicationId "fr.myecl.titan"
-        minSdkVersion flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
+        minSdk flutter.minSdk
+        targetSdk flutter.targetSdk
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -110,6 +110,6 @@ dependencies {
 
 android {
     defaultConfig {
-        minSdkVersion 23
+        minSdk 36
     }
 }
