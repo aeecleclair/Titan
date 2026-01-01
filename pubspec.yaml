@@ -6,7 +6,7 @@ version: 1.4.1+157
 
 environment:
   sdk: ^3.8.0
-  flutter: 3.32.0
+  flutter: 3.33.0
 
 dependencies:
   app_links: ^6.4.0
