@@ -121,3 +121,9 @@ class RaffleTextConstants {
 
   static const String addPackTicket = "Ajouter un pack de ticket";
 }
+
+class RafflePermissionConstants {
+  static const String accessRaffle = "access_raffle";
+  static const String manageRaffle = "manage_raffle";
+  static const String manageCash = "manage_cash";
+}

@@ -88,3 +88,9 @@ class VoteTextConstants {
   static const String warningMessage =
       "La sélection ne sera pas sauvegardée.\nVoulez-vous continuer ?";
 }
+
+class VotePermissionConstants {
+  static const String accessVotes = "access_campaign";
+  static const String manageVotes = "manage_campaign";
+  static const String vote = "vote";
+}

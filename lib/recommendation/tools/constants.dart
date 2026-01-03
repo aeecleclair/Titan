@@ -23,3 +23,8 @@ class RecommendationTextConstants {
   static const String addingError = "Échec de l'ajout";
   static const String copiedCode = "Code de réduction copié";
 }
+
+class RecommendationPermissionConstants {
+  static const String accessRecommendations = "access_recommendation";
+  static const String manageRecommendations = "manage_recommendation";
+}

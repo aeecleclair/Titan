@@ -5,7 +5,6 @@ import 'package:titan/tools/ui/widgets/admin_button.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/vote/class/contender.dart';
-import 'package:titan/vote/providers/can_vote_provider.dart';
 import 'package:titan/vote/providers/is_vote_admin_provider.dart';
 import 'package:titan/vote/providers/contender_list_provider.dart';
 import 'package:titan/vote/providers/contender_logo_provider.dart';
