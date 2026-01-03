@@ -19,10 +19,7 @@ final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
       (ref) {
         OpenIdTokenProvider openIdTokenProvider = OpenIdTokenProvider();
-        final isConnected = ref.watch(isConnectedProvider);
-        if (isConnected) {
-          openIdTokenProvider.getTokenFromStorage();
-        }
+        openIdTokenProvider.getTokenFromStorage();
         return openIdTokenProvider;
       },
     );
@@ -242,7 +239,8 @@ class OpenIdTokenProvider
 
   Future getTokenFromStorage() async {
     state = const AsyncValue.loading();
-    _secureStorage.read(key: tokenName).then((token) async {
+    try {
+      final token = await _secureStorage.read(key: tokenName);
       if (token != null) {
         try {
           if (kIsWeb) {
@@ -283,51 +281,62 @@ class OpenIdTokenProvider
       } else {
         state = const AsyncValue.error("No token found", StackTrace.empty);
       }
-    });
+    } catch (e) {
+      state = AsyncValue.error(e, StackTrace.empty);
+    }
   }
 
   Future<void> getAuthToken(String authorizationToken) async {
-    appAuth
-        .token(
-          TokenRequest(
-            clientId,
-            redirectURLScheme,
-            serviceConfiguration: authorizationServiceConfiguration,
-            scopes: scopes,
-            authorizationCode: authorizationToken,
-            allowInsecureConnections: kDebugMode,
-          ),
-        )
-        .then((resp) {
-          state = AsyncValue.data({
-            tokenKey: resp.accessToken!,
-            refreshTokenKey: resp.refreshToken!,
-          });
-        });
+    try {
+      final resp = await appAuth.token(
+        TokenRequest(
+          clientId,
+          redirectURLScheme,
+          serviceConfiguration: authorizationServiceConfiguration,
+          scopes: scopes,
+          authorizationCode: authorizationToken,
+          allowInsecureConnections: kDebugMode,
+        ),
+      );
+      state = AsyncValue.data({
+        tokenKey: resp.accessToken!,
+        refreshTokenKey: resp.refreshToken!,
+      });
+    } catch (e) {
+      state = AsyncValue.error(e, StackTrace.empty);
+    }
   }
 
   Future<bool> refreshToken() async {
     return state.when(
       data: (token) async {
         if (token[refreshTokenKey] != null && token[refreshTokenKey] != "") {
-          TokenResponse? resp = await appAuth.token(
-            TokenRequest(
-              clientId,
-              redirectURLScheme,
-              serviceConfiguration: authorizationServiceConfiguration,
-              scopes: scopes,
-              refreshToken: token[refreshTokenKey] as String,
-              allowInsecureConnections: kDebugMode,
-            ),
-          );
-          state = AsyncValue.data({
-            tokenKey: resp.accessToken!,
-            refreshTokenKey: resp.refreshToken!,
-          });
-          storeToken();
-          return true;
+          try {
+            TokenResponse? resp = await appAuth.token(
+              TokenRequest(
+                clientId,
+                redirectURLScheme,
+                serviceConfiguration: authorizationServiceConfiguration,
+                scopes: scopes,
+                refreshToken: token[refreshTokenKey] as String,
+                allowInsecureConnections: kDebugMode,
+              ),
+            );
+            state = AsyncValue.data({
+              tokenKey: resp.accessToken!,
+              refreshTokenKey: resp.refreshToken!,
+            });
+            storeToken();
+            return true;
+          } catch (e) {
+            state = AsyncValue.error(e, StackTrace.empty);
+            return false;
+          }
         }
-        state = const AsyncValue.error(e, StackTrace.empty);
+        state = const AsyncValue.error(
+          "No refresh token available",
+          StackTrace.empty,
+        );
         return false;
       },
       error: (error, stackTrace) {
