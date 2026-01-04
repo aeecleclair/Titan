@@ -88,5 +88,6 @@ config/
 keys
 
 MainActivity.kt
+android/build/reports/problems/problems-report.html
 
 .env
