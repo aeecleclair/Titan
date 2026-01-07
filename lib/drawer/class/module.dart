@@ -14,7 +14,7 @@ enum ModuleType {
   vote,
   tombola,
   cinema,
-  paiement,
+  mypayment,
 }
 
 class Module {

@@ -1,9 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/user/providers/user_provider.dart';
+import 'package:titan/seed-library/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
 
 final isSeedLibraryAdminProvider = StateProvider<bool>((ref) {
-  final me = ref.watch(userProvider);
-  return me.groups
-      .map((e) => e.id)
-      .contains("09153d2a-14f4-49a4-be57-5d0f265261b9");
+  return hasUserPermission(
+    ref,
+    SeedLibraryPermissionConstants.manageSeedLibrary,
+  );
 });

@@ -61,12 +61,13 @@ class AdminTextConstants {
       "Erreur lors de la modification (surement dû à une superposition de dates)";
   static const String minimum = "Minimum";
   static const String modifyModuleVisibility = "Visibilité des modules";
-  static const String myEclPay = "MyECLPay";
+  static const String myPayment = "MyECLPay";
   static const String name = "Nom";
   static const String noManager = "Aucun manager n'est sélectionné";
   static const String noMember = "Aucun membre";
   static const String noMoreLoaner = "Aucun prêteur n'est disponible";
   static const String noSchool = "Sans école";
+  static const String permissions = "Permissions";
   static const String removeGroupMember = "Supprimer le membre du groupe ?";
   static const String research = "Recherche";
   static const String schools = "Écoles";
@@ -80,7 +81,6 @@ class AdminTextConstants {
   static const String updatingError = "Erreur lors de la modification";
   static const String user = "Utilisateur";
   static const String validateFilters = "Valider les filtres";
-  static const String visibilities = "Visibilités";
   static const String structureShortId = "Identifiant court";
   static const String shortIdError =
       "L'identifiant court doit faire 3 caractères";

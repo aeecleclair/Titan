@@ -2,7 +2,7 @@ import 'package:either_dart/either.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/drawer/class/module.dart';
-import 'package:titan/phonebook/providers/phonebook_admin_provider.dart';
+import 'package:titan/phonebook/providers/is_phonebook_admin_provider.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/admin_page.dart';
 import 'package:titan/phonebook/ui/pages/association_creation_page/association_creation_page.dart';
 import 'package:titan/phonebook/ui/pages/association_editor_page/association_editor_page.dart';

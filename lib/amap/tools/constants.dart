@@ -148,3 +148,8 @@ class AMAPTextConstants {
   static const String usersNotFound = "Aucun utilisateur trouvé";
   static const String waiting = "En attente";
 }
+
+class AMAPPermissionConstants {
+  static const String accessAMAP = 'access_amap';
+  static const String manageAMAP = 'manage_amap';
+}

@@ -127,3 +127,8 @@ class PhonebookTextConstants {
 class PhonebookColorConstants {
   static const Color textDark = Color(0xFF1D1D1D);
 }
+
+class PhonebookPermissionConstants {
+  static const String accessPhonebook = "access_phonebook";
+  static const String managePhonebook = "manage_phonebook";
+}
