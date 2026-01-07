@@ -10,7 +10,7 @@ class UserCashUiLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardLayout(
       width: 150,
-      height: 100,
+      height: 110,
       colors: const [AMAPColorConstants.green1, AMAPColorConstants.textLight],
       shadowColor: AMAPColorConstants.textDark.withValues(alpha: 0.2),
       padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 5),

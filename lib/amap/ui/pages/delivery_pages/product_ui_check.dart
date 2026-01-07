@@ -36,7 +36,7 @@ class ProductUi extends ConsumerWidget {
                 width: 50,
                 alignment: Alignment.centerRight,
                 child: Text(
-                  "${product.price.toStringAsFixed(2)}€",
+                  "${(product.price / 100).toStringAsFixed(2)}€",
                   style: const TextStyle(fontSize: 13),
                 ),
               ),
@@ -44,7 +44,7 @@ class ProductUi extends ConsumerWidget {
               Checkbox(
                 value: isModification,
                 checkColor: AMAPColorConstants.background,
-                activeColor: AMAPColorConstants.green2,
+                activeColor: const Color.fromARGB(223, 121, 164, 0),
                 onChanged: (value) {
                   onclick();
                 },

@@ -51,19 +51,23 @@ void main() {
       expect(newCash.balance, 1);
       newCash = cash.copyWith(user: SimpleUser.empty().copyWith(name: 'Name'));
       expect(newCash.user.name, 'Name');
+      newCash = cash.copyWith(lastOrderDate: DateTime.parse('2025-01-01'));
+      expect(newCash.lastOrderDate, DateTime.parse("2025-01-01"));
     });
 
     test('Should print properly', () async {
-      final cash = Cash.empty();
+      final cash = Cash.empty().copyWith(
+        lastOrderDate: DateTime.parse('2025-01-01'),
+      );
       expect(
         cash.toString(),
-        'Cash{balance: 0.0, user: SimpleUser {name: Nom, firstname: Prénom, nickname: null, id: , accountType: external}}',
+        'Cash{balance: 0, user: SimpleUser {name: Nom, firstname: Prénom, nickname: null, id: , accountType: external}, lastOrderDate: 2025-01-01 00:00:00.000}',
       );
     });
 
     test('Should parse a Cash from json', () async {
       final cash = Cash.fromJson({
-        "balance": 0.0,
+        "balance": 0,
         "user": {
           "name": "Name",
           "firstname": "Firstname",
@@ -78,16 +82,18 @@ void main() {
           "phone": "phone",
           "promo": null,
         },
+        "last_order_date": "2025-01-01 00:00:00.000",
       });
       expect(cash, isA<Cash>());
       expect(cash.balance, 0);
+      expect(cash.lastOrderDate, DateTime.parse('2025-01-01'));
       expect(cash.user.name, 'Name');
       expect(cash.user.nickname, null);
     });
 
     test('Should return correct json', () async {
       final cash = Cash.fromJson({
-        "balance": 0.0,
+        "balance": 0,
         "user": {
           "name": "Name",
           "firstname": "Firstname",
@@ -95,8 +101,12 @@ void main() {
           "id": "id",
           "account_type": "external",
         },
+        "last_order_date": "2025-01-01T00:00:00.000Z",
       });
-      expect(cash.toJson(), {"balance": 0.0});
+      expect(cash.toJson(), {
+        "balance": 0,
+        "last_order_date": "2025-01-01T00:00:00.000Z",
+      });
     });
   });
 
@@ -108,12 +118,13 @@ void main() {
 
     test('Should parse an Delivery from json', () async {
       final delivery = Delivery.fromJson({
+        "name": "Livraison",
         "delivery_date": "2021-01-01",
         "products": [
           {
             "id": "id",
             "name": "name",
-            "price": 0.0,
+            "price": 0,
             "category": "category",
             "quantity": 0,
           },
@@ -139,29 +150,33 @@ void main() {
       expect(newDelivery.status, DeliveryStatus.delivered);
       newDelivery = delivery.copyWith(expanded: true);
       expect(newDelivery.expanded, true);
+      newDelivery = delivery.copyWith(name: "Livraison");
+      expect(newDelivery.name, "Livraison");
     });
 
     test('Should print properly', () async {
       final delivery = Delivery.empty().copyWith(
         deliveryDate: DateTime.parse('2021-01-01'),
+        name: "Livraison",
         products: [Product.empty().copyWith(name: 'Name')],
         id: 'id',
         status: DeliveryStatus.creation,
       );
       expect(
         delivery.toString(),
-        'Delivery{deliveryDate: 2021-01-01 00:00:00.000, products: [Product{id: , name: Name, price: 0.0, quantity: 0, category: }], id: id, status: DeliveryStatus.creation, expanded: false}',
+        'Delivery{name: Livraison, deliveryDate: 2021-01-01 00:00:00.000, products: [Product{id: , name: Name, price: 0, quantity: 0, category: }], id: id, status: DeliveryStatus.creation, expanded: false}',
       );
     });
 
     test('Should return correct json', () async {
       final delivery = Delivery.fromJson({
+        "name": "Livraison",
         "delivery_date": "2021-01-01",
         "products": [
           {
             "id": "id",
             "name": "name",
-            "price": 0.0,
+            "price": 0,
             "category": "category",
             "quantity": 0,
           },
@@ -170,6 +185,7 @@ void main() {
         "status": "creation",
       });
       expect(delivery.toJson(), {
+        "name": "Livraison",
         "delivery_date": "2021-01-01",
         "products_ids": ["id"],
         "id": "id",
@@ -207,11 +223,14 @@ void main() {
       expect(newOrder.orderingDate, DateTime.parse('2021-01-01'));
       newOrder = order.copyWith(deliveryDate: DateTime.parse('2021-01-01'));
       expect(newOrder.deliveryDate, DateTime.parse('2021-01-01'));
+      newOrder = order.copyWith(deliveryName: "Livraison");
+      expect(newOrder.deliveryName, "Livraison");
     });
 
     test('Should print properly', () async {
       final order = Order.empty().copyWith(
         id: 'id',
+        deliveryName: "Livraison",
         deliveryId: 'delivery_id',
         amount: 0,
         products: [
@@ -229,7 +248,7 @@ void main() {
       );
       expect(
         order.toString(),
-        'Order{id: id, orderingDate: 2021-01-01 00:00:00.000, deliveryDate: 2021-01-01 00:00:00.000, productsDetail: [id], productsQuantity: [0], deliveryId: delivery_id, products: [Product{id: id, name: name, price: 0.0, quantity: 0, category: }], amount: 0.0, lastAmount: 0.0, collectionSlot: CollectionSlot.midDay, user: SimpleUser {name: Name, firstname: Prénom, nickname: null, id: , accountType: external}, expanded: false}',
+        'Order{id: id, deliveryName: Livraison, orderingDate: 2021-01-01 00:00:00.000, deliveryDate: 2021-01-01 00:00:00.000, productsDetail: [id], productsQuantity: [0], deliveryId: delivery_id, products: [Product{id: id, name: name, price: 0, quantity: 0, category: }], amount: 0, lastAmount: 0, collectionSlot: CollectionSlot.midDay, user: SimpleUser {name: Name, firstname: Prénom, nickname: null, id: , accountType: external}, expanded: false}',
       );
     });
 
@@ -237,12 +256,13 @@ void main() {
       final order = Order.fromJson({
         "order_id": "id",
         "delivery_id": "delivery_id",
-        "amount": 0.0,
+        "delivery_name": "Livraison",
+        "amount": 0,
         "productsdetail": [
           {
             "id": "id",
             "name": "name",
-            "price": 0.0,
+            "price": 0,
             "category": "category",
             "quantity": 0,
           },
@@ -266,12 +286,13 @@ void main() {
       final order = Order.fromJson({
         "order_id": "id",
         "delivery_id": "delivery_id",
-        "amount": 0.0,
+        "delivery_name": "Livraison",
+        "amount": 0,
         "productsdetail": [
           {
             "id": "id",
             "name": "name",
-            "price": 0.0,
+            "price": 0,
             "category": "category",
             "quantity": 0,
           },
@@ -290,7 +311,8 @@ void main() {
       expect(order.toJson(), {
         "order_id": "id",
         "delivery_id": "delivery_id",
-        "amount": 0.0,
+        "delivery_name": "Livraison",
+        "amount": 0,
         "products_ids": ["id"],
         "products_quantity": [0],
         "collection_slot": "midi",
@@ -362,7 +384,7 @@ void main() {
       final product = Product.fromJson({
         "id": "id",
         "name": "name",
-        "price": 0.0,
+        "price": 0,
         "category": "category",
       });
       expect(product, isA<Product>());
@@ -374,7 +396,7 @@ void main() {
         "product": {
           "id": "id",
           "name": "name",
-          "price": 0.0,
+          "price": 0,
           "category": "category",
         },
       });
@@ -387,7 +409,7 @@ void main() {
       expect(newProduct.id, "id");
       newProduct = product.copyWith(name: "name");
       expect(newProduct.name, "name");
-      newProduct = product.copyWith(price: 0.0);
+      newProduct = product.copyWith(price: 0);
       expect(newProduct.price, 0.0);
       newProduct = product.copyWith(category: "category");
       expect(newProduct.category, "category");
@@ -399,13 +421,13 @@ void main() {
       final product = Product.empty().copyWith(
         id: "id",
         name: "name",
-        price: 0.0,
+        price: 0,
         category: "category",
         quantity: 0,
       );
       expect(
         product.toString(),
-        'Product{id: id, name: name, price: 0.0, quantity: 0, category: category}',
+        'Product{id: id, name: name, price: 0, quantity: 0, category: category}',
       );
     });
 
@@ -413,14 +435,14 @@ void main() {
       final product = Product.fromJson({
         "id": "id",
         "name": "name",
-        "price": 0.0,
+        "price": 0,
         "category": "category",
         "quantity": 0,
       });
       expect(product.toJson(), {
         "id": "id",
         "name": "name",
-        "price": 0.0,
+        "price": 0,
         "category": "category",
         "quantity": 0,
       });
