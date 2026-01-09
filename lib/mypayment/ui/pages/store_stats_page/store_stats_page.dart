@@ -31,12 +31,18 @@ class StoreStatsPage extends ConsumerWidget {
         child: AsyncChild(
           value: selectedHistory,
           builder: (context, history) {
+            print(history);
             final sortedByDate = history.toList()
               ..sort((a, b) => a.creation.compareTo(b.creation));
             return Column(
               children: [
                 const SizedBox(height: 20),
-                const IntervalSelector(),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const IntervalSelector(),
+                  ]
+                ),
                 const SizedBox(height: 20),
                 SummaryCard(history: sortedByDate),
                 const SizedBox(height: 20),
