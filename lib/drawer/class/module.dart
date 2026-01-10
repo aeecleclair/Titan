@@ -53,4 +53,9 @@ class Module {
       ),
     );
   }
+
+  @override
+  String toString() {
+    return 'Module{name: $name, icon: $icon, root: $root, selected: $selected}';
+  }
 }

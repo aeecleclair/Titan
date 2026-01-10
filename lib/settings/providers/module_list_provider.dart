@@ -45,7 +45,7 @@ final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
           permissions[accessPermissions]!.authorizedAccountTypes.contains(
             me.accountType.type,
           );
-      if (hasAccess) myModulesRoot.add(module);
+      if (hasAccess) myModulesRoot.add("/$module");
     }
   }
 
