@@ -33,7 +33,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 class PaymentRouter {
   final Ref ref;
-  static const String root = '/payment';
+  static const String root = '/mypayment';
   static const String stats = '/stats';
   static const String devices = '/devices';
   static const String structureStores = '/structureStores';
