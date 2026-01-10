@@ -2,7 +2,7 @@ name: titan
 description: Titan est le frontend d'une application de gestion de la vie associative
 
 publish_to: "none"
-version: 2.0.2+160
+version: 2.0.3+161
 
 environment:
   sdk: ^3.9.2
