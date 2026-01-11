@@ -3,28 +3,127 @@
 Titan is a cross platform frontend written in Flutter for an open-source project launched by ÉCLAIR, the computer science association of Ecole Centrale de Lyon. This project aims to provide students of business and engineering schools a digital tool to simplify the association process.
 
 Our builds of Titan are called MyECL and can be downloaded from the App Store and from the Google Play Store.
-
-## Setup environment
-
-Install Flutter:
-https://docs.flutter.dev/get-started/install
-
-Setup VS Code for Flutter development:
-https://docs.flutter.dev/get-started/editor?tab=vscode
-
 Titan is designed to be launched on Web, Android and iOS platforms.
 
-## Configure Titan
+## 1. Setup your Flutter environment
 
-Update [`.env`](.env) to match your Hyperion's backend:
+- Install Flutter:
+  https://docs.flutter.dev/get-started/install
 
-`PROD_HOST = "<<Your Production Server Host>>`
+<details>
+<summary>
 
-You can also specify an other host for debuging:
+Windows
 
-`DEV_HOST = "<<Your Debbuging Server Host>>`
+</summary>
 
-NB: a trailing slash is required.
+If you get an error saying roughly:
+
+```
+because the execution of scripts is disabled on this system. Please see "get-help about_signing" for more details.
+```
+
+</details>
+
+- Setup VS Code for Flutter development:
+  https://docs.flutter.dev/get-started/editor?tab=vscode
+
+> [!TIP]
+> Remember, if you have any problem with Flutter, don't hesitate to troubleshoot using:
+
+```bash
+flutter doctor
+```
+
+> [!NOTE]
+> You do not need to have it all green: having Flutter correctly installed, a browser, and VS Code with the extensions is enough, most people don't need more than that!
+
+## 2.Install dependencies
+
+### Upgrade Flutter
+
+Upgrade flutter to the latest stable version:
+
+```bash
+flutter upgrade
+```
+
+Upgrade Pub, which is the package manager of the Dart language, used by the Flutter framework:
+
+```bash
+flutter pub upgrade
+```
+
+### Install dependencies (for real)
+
+Install the dependencies you'll need using Pub (referenced in the [pubspec.yaml](pubspec.yaml) file):
+
+```bash
+flutter pub get
+```
+
+> If you need to remove all modules from your virtual environnement, run:
+>
+> ```bash
+> flutter clean
+> ```
+
+## 3. Complete the dotenv (`.env`)
+
+> [!IMPORTANT]
+> Copy the [`.env.template`](.env.template) file in a new `.env` file.
+
+```bash
+cp .env.template .env
+```
+
+You may update [`.env`](.env) to match your Hyperion backends.
+If you host a Plausible instance, you may set Plausible's URL to get a few analytics.
+
+> [!TIP]
+> NB: a trailing slash is required at the end of every URL.
+
+## 4. Launch the client
+
+> [!WARNING]
+> Beforehand, check that the Hyperion instance you want to connect to is up and running.
+
+The Flutter app needs a host device to run. Below we assume, for development purposes, that you are about to run the **web** version.
+NB: a device is a platform that can run the Flutter app; thus a browser does count as a device!
+
+### Using VS Code
+
+1. In the activity bar (the leftmost part), click the "Run and Debug" icon (the play button).
+2. Click the green play button.
+3. In the terminal, choose your device.
+
+### Using the command-line interface
+
+```bash
+flutter run --flavor <your_flavor> --web-port 3000
+```
+
+- Where the flavor can be any string such that a `<YOUR_FLAVOR>_HOST` key exists in the `.env` file: if you changed the values only, not the keys, the flavor can be any of `dev`, `alpha`, or `prod` (whose policy is to only accept the prod client).
+- Then in the interactive terminal, choose your device.
+  Alternatively you can add a flag `-d` to indicate non-interactively your favorite device, for instance:
+
+```bash
+flutter run --flavor alpha --web-port 3000 -d chrome
+flutter run --flavor dev --web-port 3000 -d web-server
+```
+
+### Check the app is running
+
+Check that your Titan instance is up and running by waiting one minute until a browser window opens, or in the `web-server` case, by visiting yourself http://localhost:3000.
+
+---
+
+<details>
+<summary>
+
+# Beyond initial configuration
+
+</summary>
 
 ## Development
 
@@ -170,3 +269,5 @@ flutter pub run flutter_launcher_icons
 
 [Guided upgrade using Android Studio](https://docs.flutter.dev/release/breaking-changes/android-java-gradle-migration-guide#solution-1-guided-fix-using-android-studio)
 [Java and Gradle compatibility](https://docs.gradle.org/current/userguide/compatibility.html)
+
+</details>
