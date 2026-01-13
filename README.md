@@ -11,16 +11,18 @@ Titan is designed to be launched on Web, Android and iOS platforms.
   https://docs.flutter.dev/get-started/install
 
 <details>
-<summary>
-
-Windows
-
-</summary>
+<summary>Windows</summary>
 
 If you get an error saying roughly:
 
 ```
 because the execution of scripts is disabled on this system. Please see "get-help about_signing" for more details.
+```
+
+Then in a Powershell, run this to allow scripts executions for your user:
+
+```ps1
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser
 ```
 
 </details>
