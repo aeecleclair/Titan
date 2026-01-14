@@ -26,7 +26,7 @@ class NoInternetPage extends HookConsumerWidget {
               const SizedBox(height: 20),
               const Center(
                 child: Text(
-                  OthersTextConstants.unableToConnectToServer,
+                  "${OthersTextConstants.unableToConnectToServer} ${Repository.host}",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20),
                 ),

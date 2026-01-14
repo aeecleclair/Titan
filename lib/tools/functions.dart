@@ -457,6 +457,8 @@ bool hasUserPermission(Ref ref, String permission) {
       );
 }
 
+/// getAppFlavor and functions depending on it
+
 String getAppFlavor() {
   if (appFlavor != null) {
     return appFlavor!.toLowerCase();
@@ -527,3 +529,58 @@ String getTitanPackageName() {
 String getTitanLogo() {
   return "assets/images/logo_${getAppFlavor()}.png";
 }
+
+/// Start of functions to choose back-end
+
+bool isVersionCompatible(String currentVersion, String minimalVersion) {
+  final [major, minor, patch] = currentVersion
+      .split('.')
+      .map(int.parse)
+      .toList();
+  final [minimalMajor, minimalMinor, minimalPatch] = minimalVersion
+      .split('.')
+      .map(int.parse)
+      .toList();
+  if (major < minimalMajor ||
+      (major == minimalMajor && minor < minimalMinor) ||
+      (major == minimalMajor &&
+          minor == minimalMinor &&
+          patch < minimalPatch)) {
+    return false;
+  }
+  return true;
+}
+
+Future<String> getMinimalHyperionVersion() async {
+  final String pubspecString = await rootBundle.loadString("pubspec.yaml");
+  final YamlMap pubspec = loadYaml(pubspecString);
+  final String minimalHyperionVersion = pubspec["minimal_hyperion_version"];
+  return minimalHyperionVersion;
+}
+
+Future<String> setHyperionAndGetVersion(String flavor) async {
+  final String? host = dotenv.env["${flavor.toUpperCase()}_HOST"];
+  if (host == null || host == "") {
+    throw StateError("Could not retrieve the base URL for the $flavor flavor");
+  }
+  Repository.host = host; // set Titan's back-end
+  final String hyperionVersion = await VersionRepository().getVersion().then(
+    (value) => value.version,
+  );
+  return hyperionVersion;
+}
+
+Future<void> setHyperionHost() async {
+  final String flavor = getAppFlavor();
+  final String minimalHyperionVersion = await getMinimalHyperionVersion();
+  if (!isVersionCompatible(
+    await setHyperionAndGetVersion(flavor),
+    minimalHyperionVersion,
+  )) {
+    if (flavor != "alpha") {
+      await setHyperionAndGetVersion("alpha");
+    }
+  }
+}
+
+/// End of functions to choose back-end and functions depending on getAppFlavor

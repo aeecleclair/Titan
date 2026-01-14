@@ -3,6 +3,8 @@ description: Titan est le frontend d'une application de gestion de la vie associ
 
 publish_to: "none"
 version: 2.0.4+162
+# https://dart.dev/tools/pub/pubspec : "Pub ignores all other fields."
+minimal_hyperion_version: 5.0.0
 
 environment:
   sdk: ^3.9.2
@@ -72,6 +74,7 @@ dependencies:
   url_launcher: ^6.2.5
   uuid: ^4.5.1
   webview_flutter: ^4.10.0
+  yaml: ^3.1.3
 
 dev_dependencies:
   dependency_validator: ^5.0.2
@@ -85,6 +88,7 @@ dev_dependencies:
 flutter:
   assets:
     - .env
+    - pubspec.yaml
     - assets/images/logo_prod.png
     - assets/images/logo_alpha.png
     - assets/images/logo_dev.png
