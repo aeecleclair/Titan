@@ -12,6 +12,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:titan/tools/plausible/plausible.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:titan/user/providers/user_provider.dart';
+import 'package:titan/version/repositories/version_repository.dart';
+import 'package:yaml/yaml.dart';
+
+import 'repository/repository.dart';
 
 enum TypeMsg { msg, error }
 

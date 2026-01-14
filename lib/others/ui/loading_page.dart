@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/login/router.dart';
 import 'package:titan/router.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/widgets/loader.dart';
 import 'package:titan/user/providers/user_provider.dart';
+import 'package:titan/version/providers/minimal_hyperion_version_provider.dart';
 import 'package:titan/version/providers/titan_version_provider.dart';
 import 'package:titan/version/providers/version_verifier_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -54,7 +56,7 @@ class LoadingPage extends ConsumerWidget {
           loading: () {},
         );
       },
-      error: (error, stack) => QR.to(AppRouter.noInternet),
+      error: (error, _) => QR.to(AppRouter.noInternet),
       loading: () {},
     );
     return const Scaffold(body: Loader());
