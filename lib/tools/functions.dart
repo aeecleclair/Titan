@@ -489,7 +489,7 @@ Plausible? getPlausible() {
   return null;
 }
 
-String getTitanPackageName() {
+String getTitanURL() {
   switch (getAppFlavor()) {
     case "dev":
       return "http://localhost:3000";

@@ -25,7 +25,7 @@ class NoInternetPage extends HookConsumerWidget {
             children: [
               const HeroIcon(HeroIcons.signalSlash, size: 150),
               const SizedBox(height: 20),
-              const Center(
+              Center(
                 child: Text(
                   "${OthersTextConstants.unableToConnectToServer} ${Repository.host}",
                   textAlign: TextAlign.center,

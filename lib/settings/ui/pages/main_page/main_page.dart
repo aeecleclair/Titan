@@ -191,7 +191,7 @@ class SettingsMainPage extends HookConsumerWidget {
                     icon: HeroIcons.lockClosed,
                     onTap: () {
                       openLink(
-                        "${getTitanHost()}calypsso/change-password/?email=${me.email}",
+                        "${getTitanURL()}/calypsso/change-password/?email=${me.email}",
                       );
                     },
                     child: const Text(
