@@ -57,16 +57,17 @@ class AdminTextConstants {
   static const String membershipAddingError =
       "Erreur lors de l'ajout (surement dû à une superposition de dates)";
   static const String memberships = "Adhésions";
-  static String membershipUpdatingError =
+  static const String membershipUpdatingError =
       "Erreur lors de la modification (surement dû à une superposition de dates)";
   static const String minimum = "Minimum";
   static const String modifyModuleVisibility = "Visibilité des modules";
-  static const String myEclPay = "MyECLPay";
+  static const String myPayment = "MyECLPay";
   static const String name = "Nom";
   static const String noManager = "Aucun manager n'est sélectionné";
   static const String noMember = "Aucun membre";
   static const String noMoreLoaner = "Aucun prêteur n'est disponible";
   static const String noSchool = "Sans école";
+  static const String permissions = "Permissions";
   static const String removeGroupMember = "Supprimer le membre du groupe ?";
   static const String research = "Recherche";
   static const String schools = "Écoles";
@@ -80,7 +81,43 @@ class AdminTextConstants {
   static const String updatingError = "Erreur lors de la modification";
   static const String user = "Utilisateur";
   static const String validateFilters = "Valider les filtres";
-  static const String visibilities = "Visibilités";
+  static const String structureShortId = "Identifiant court";
+  static const String shortIdError =
+      "L'identifiant court doit faire 3 caractères";
+  static const String siegeAddress = "Adresse du siège";
+  static const String structureStreetAddress = "Numéro et rue";
+  static const String structureCity = "Ville";
+  static const String structureZipcode = "Code postal";
+  static const String structureCountry = "Pays";
+  static const String structureSiret = "Numéro SIRET";
+  static const String structureSiretError = "Numéro SIRET invalide";
+  static const String structureBankInformation = "Informations bancaires";
+  static const String structureIban = "IBAN";
+  static const String structureIbanError = "IBAN invalide";
+  static const String structureBic = "BIC";
+  static const String structureBicError = "BIC invalide";
+  static const String structureManagerError =
+      "Un manager doit être sélectionné";
+  static const String updatedStructure = "Structure mise à jour avec succès";
+  static const String updateStructureError =
+      "Erreur lors de la mise à jour de la structure";
+  static const String addStructureError =
+      "Erreur lors de l'ajout de la structure";
+  static const String noBankAccountHolder =
+      "Aucun titulaire de compte bancaire";
+  static const String currentBankAccountHolder =
+      "Titulaire de compte bancaire actuel";
+  static const String setAsBankAccountHolderSuccess =
+      "Défini comme titulaire du compte bancaire avec succès";
+  static const String setAsBankAccountHolderError =
+      "Erreur lors de la définition comme titulaire du compte bancaire";
+  static const String setAsBankAccountHolder =
+      "Définir comme titulaire du compte bancaire";
+  static const String deletingDescription =
+      "Attention, cette action est irréversible";
+  static const String deletedStructure = "Structure supprimée avec succès";
+  static const String deletingStructureError =
+      "Erreur lors de la suppression de la structure";
 }
 
 enum SchoolIdConstant {

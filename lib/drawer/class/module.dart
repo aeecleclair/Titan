@@ -14,7 +14,7 @@ enum ModuleType {
   vote,
   tombola,
   cinema,
-  paiement,
+  mypayment,
 }
 
 class Module {
@@ -52,5 +52,10 @@ class Module {
         colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
       ),
     );
+  }
+
+  @override
+  String toString() {
+    return 'Module{name: $name, icon: $icon, root: $root, selected: $selected}';
   }
 }

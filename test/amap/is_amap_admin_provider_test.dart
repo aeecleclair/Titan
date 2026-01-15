@@ -1,7 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:titan/admin/class/permissions.dart';
 import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/admin/providers/permissions_list_provider.dart';
 import 'package:titan/amap/providers/is_amap_admin_provider.dart';
+import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/user/class/user.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
@@ -21,6 +24,13 @@ void main() {
               ],
             ),
           ),
+          mappedPermissionsProvider.overrideWithValue({
+            AMAPPermissionConstants.manageAMAP: CorePermission(
+              permissionName: AMAPPermissionConstants.manageAMAP,
+              authorizedGroupIds: ['70db65ee-d533-4f6b-9ffa-a4d70a17b7ef'],
+              authorizedAccountTypes: [],
+            ),
+          }),
         ],
       );
 
@@ -39,6 +49,13 @@ void main() {
               ],
             ),
           ),
+          mappedPermissionsProvider.overrideWithValue({
+            AMAPPermissionConstants.manageAMAP: CorePermission(
+              permissionName: AMAPPermissionConstants.manageAMAP,
+              authorizedGroupIds: ['70db65ee-d533-4f6b-9ffa-a4d70a17b7ef'],
+              authorizedAccountTypes: [],
+            ),
+          }),
         ],
       );
 

@@ -36,11 +36,11 @@ class AdminMainPage extends HookConsumerWidget {
           children: [
             GestureDetector(
               onTap: () {
-                QR.to(AdminRouter.root + AdminRouter.editModuleVisibility);
+                QR.to(AdminRouter.root + AdminRouter.permissions);
               },
               child: const MenuCardUi(
-                text: AdminTextConstants.visibilities,
-                icon: HeroIcons.eye,
+                text: AdminTextConstants.permissions,
+                icon: HeroIcons.lockOpen,
               ),
             ),
             GestureDetector(
@@ -66,7 +66,7 @@ class AdminMainPage extends HookConsumerWidget {
                 QR.to(AdminRouter.root + AdminRouter.structures);
               },
               child: const MenuCardUi(
-                text: AdminTextConstants.myEclPay,
+                text: AdminTextConstants.myPayment,
                 icon: HeroIcons.creditCard,
               ),
             ),

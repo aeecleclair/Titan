@@ -45,7 +45,7 @@ class OrderSection extends HookConsumerWidget {
         ),
         const SizedBox(height: 10),
         HorizontalListView(
-          height: 195,
+          height: 196,
           children: [
             const SizedBox(width: 15),
             GestureDetector(

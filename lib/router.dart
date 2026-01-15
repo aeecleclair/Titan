@@ -17,7 +17,7 @@ import 'package:titan/others/ui/no_internet_page.dart'
 import 'package:titan/others/ui/no_module.dart' deferred as no_module_page;
 import 'package:titan/others/ui/rollback_page.dart' deferred as rollback_page;
 import 'package:titan/others/ui/update_page.dart' deferred as update_page;
-import 'package:titan/paiement/router.dart';
+import 'package:titan/mypayment/router.dart';
 import 'package:titan/phonebook/router.dart';
 import 'package:titan/ph/router.dart';
 import 'package:titan/purchases/router.dart';
@@ -29,6 +29,7 @@ import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:titan/vote/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/centralassociation/router.dart';
 
 final appRouterProvider = Provider<AppRouter>((ref) => AppRouter(ref));
 
@@ -82,6 +83,7 @@ class AppRouter {
       AmapRouter(ref).route(),
       BookingRouter(ref).route(),
       CentralisationRouter(ref).route(),
+      CentralassociationRouter(ref).route(),
       CinemaRouter(ref).route(),
       EventRouter(ref).route(),
       FlappyBirdRouter(ref).route(),

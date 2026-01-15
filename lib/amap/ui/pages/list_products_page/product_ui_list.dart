@@ -40,7 +40,7 @@ class ProductUiInList extends ConsumerWidget {
               Container(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  "${p.price.toStringAsFixed(2)}€",
+                  "${(p.price / 100).toStringAsFixed(2)}€",
                   style: const TextStyle(fontSize: 15),
                 ),
               ),

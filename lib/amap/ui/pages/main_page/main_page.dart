@@ -83,7 +83,7 @@ class AmapMainPage extends HookConsumerWidget {
                     child: AsyncChild(
                       value: balance,
                       builder: (context, s) => Text(
-                        "${AMAPTextConstants.amount} : ${s.balance.toStringAsFixed(2)}€",
+                        "${AMAPTextConstants.amount} : ${(s.balance / 100).toStringAsFixed(2)}€",
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -148,7 +148,11 @@ class AmapMainPage extends HookConsumerWidget {
                   animation: animation,
                   child: Container(
                     width: double.infinity,
-                    height: MediaQuery.of(context).size.height - 150,
+                    height:
+                        350.0 + 90 * availableDeliveriesIds.length >
+                            MediaQuery.of(context).size.height - 150
+                        ? 350.0 + 90 * availableDeliveriesIds.length
+                        : MediaQuery.of(context).size.height - 150,
                     decoration: BoxDecoration(
                       gradient: const RadialGradient(
                         colors: [

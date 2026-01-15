@@ -29,7 +29,7 @@ class AdvertMainPage extends HookConsumerWidget {
     final selected = ref.watch(announcerProvider);
     final selectedNotifier = ref.watch(announcerProvider.notifier);
     final isAdmin = ref.watch(isAdminProvider);
-    final isAdvertAdmin = ref.watch(isAdvertAdminProvider);
+    final isAdvertAdmin = ref.watch(isAdvertiserProvider);
     return AdvertTemplate(
       child: Stack(
         children: [

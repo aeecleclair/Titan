@@ -37,8 +37,6 @@ class AMAPTextConstants {
   static const String addingProduct = "Ajouter un produit";
   static const String addOrder = "Ajouter une commande";
   static const String admin = "Admin";
-  static const String alreadyExistCommand =
-      "Il existe déjà une commande à cette date";
   static const String amap = "Amap";
   static const String amount = "Solde";
   static const String archive = "Archiver";
@@ -149,4 +147,9 @@ class AMAPTextConstants {
   static const String updatingError = "Echec de la modification";
   static const String usersNotFound = "Aucun utilisateur trouvé";
   static const String waiting = "En attente";
+}
+
+class AMAPPermissionConstants {
+  static const String accessAMAP = 'access_amap';
+  static const String manageAMAP = 'manage_amap';
 }

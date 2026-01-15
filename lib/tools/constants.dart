@@ -7,6 +7,16 @@ class ColorConstants {
   static const Color background2 = Color(0xFF222643);
   static const Color deactivated1 = Color(0xFF9E9E9E);
   static const Color deactivated2 = Color(0xFFC0C0C0);
+
+  static const Color background = Color(0xFFffffff);
+  static const Color onBackground = Color(0xffb4b4b4);
+  static const Color secondary = Color(0xFFb1b2b5);
+  static const Color tertiary = Color(0xFF424242);
+  static const Color onTertiary = Color(0xFF212121);
+  static const Color title = Color(0xFF000000);
+  static const Color main = Color(0xFFfb6d10);
+  static const Color onMain = Color(0xffeb3e1b);
+  static const Color mainBorder = Color.fromARGB(255, 87, 3, 3);
 }
 
 class TextConstants {
@@ -19,13 +29,6 @@ class TextConstants {
       "La taille de l'image ne doit pas dépasser 4 Mio";
   static const String imageError = "Erreur lors de l'ajout de l'image";
 }
-
-const String previousEmailRegex =
-    r'^[\w\-.]*@((ecl\d{2})|(alternance\d{4})|(master)|(auditeur)).ec-lyon.fr$';
-
-const String previousStaffEmailRegex = r'^[\w\-.]*@ec-lyon.fr$';
-
-const String studentRegex = r'^[\w\-.]*@etu(-enise)?.ec-lyon.fr$';
 
 const String unableToOpen = 'Impossible d\'ouvrir le lien';
 

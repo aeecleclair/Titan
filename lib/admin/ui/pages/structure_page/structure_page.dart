@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/admin/router.dart';
 import 'package:titan/admin/providers/structure_manager_provider.dart';
 import 'package:titan/admin/providers/structure_provider.dart';
-import 'package:titan/admin/router.dart';
+import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/components/item_card_ui.dart';
 import 'package:titan/admin/ui/pages/structure_page/structure_ui.dart';
-import 'package:titan/admin/tools/constants.dart';
-import 'package:titan/paiement/class/structure.dart';
-import 'package:titan/paiement/providers/structure_list_provider.dart';
+import 'package:titan/mypayment/class/structure.dart';
+import 'package:titan/mypayment/providers/bank_account_holder_provider.dart';
+import 'package:titan/mypayment/providers/structure_list_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
-import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/user/class/simple_users.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:tuple/tuple.dart';
 
 class StructurePage extends HookConsumerWidget {
   const StructurePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final bankAccountHolder = ref.watch(bankAccountHolderProvider);
     final structures = ref.watch(structureListProvider);
     final structuresNotifier = ref.watch(structureListProvider.notifier);
     final structureNotifier = ref.watch(structureProvider.notifier);
@@ -33,18 +33,15 @@ class StructurePage extends HookConsumerWidget {
     );
     ref.watch(userList);
 
-    void displayToastWithContext(TypeMsg type, String msg) {
-      displayToast(context, type, msg);
-    }
-
     return AdminTemplate(
       child: Refresher(
         onRefresh: () async {
           await structuresNotifier.getStructures();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
               const Align(
@@ -58,10 +55,10 @@ class StructurePage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
-              AsyncChild(
-                value: structures,
-                builder: (context, structures) {
+
+              Async2Children(
+                values: Tuple2(structures, bankAccountHolder),
+                builder: (context, structures, bankAccountHolder) {
                   structures.sort(
                     (a, b) =>
                         a.name.toLowerCase().compareTo(b.name.toLowerCase()),
@@ -70,6 +67,16 @@ class StructurePage extends HookConsumerWidget {
                     children: [
                       Column(
                         children: [
+                          Text(
+                            bankAccountHolder.id == ""
+                                ? AdminTextConstants.noBankAccountHolder
+                                : "${AdminTextConstants.currentBankAccountHolder}: ${bankAccountHolder.name}",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
                           GestureDetector(
                             onTap: () {
                               structureNotifier.setStructure(Structure.empty());
@@ -94,50 +101,9 @@ class StructurePage extends HookConsumerWidget {
                               ],
                             ),
                           ),
+                          const SizedBox(height: 10),
                           ...structures.map(
-                            (structure) => StructureUi(
-                              group: structure,
-                              onEdit: () {
-                                structureNotifier.setStructure(structure);
-                                structureManagerNotifier.setUser(
-                                  structure.managerUser,
-                                );
-                                QR.to(
-                                  AdminRouter.root +
-                                      AdminRouter.structures +
-                                      AdminRouter.addEditStructure,
-                                );
-                              },
-                              onDelete: () async {
-                                await showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return CustomDialogBox(
-                                      title: AdminTextConstants.deleting,
-                                      descriptions:
-                                          AdminTextConstants.deleteGroup,
-                                      onYes: () async {
-                                        tokenExpireWrapper(ref, () async {
-                                          final value = await structuresNotifier
-                                              .deleteStructure(structure);
-                                          if (value) {
-                                            displayToastWithContext(
-                                              TypeMsg.msg,
-                                              AdminTextConstants.deletedGroup,
-                                            );
-                                          } else {
-                                            displayToastWithContext(
-                                              TypeMsg.error,
-                                              AdminTextConstants.deletingError,
-                                            );
-                                          }
-                                        });
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                            ),
+                            (structure) => StructureUi(structure: structure),
                           ),
                           const SizedBox(height: 20),
                         ],
@@ -145,7 +111,6 @@ class StructurePage extends HookConsumerWidget {
                     ],
                   );
                 },
-                loaderColor: ColorConstants.gradient1,
               ),
             ],
           ),
