@@ -573,13 +573,18 @@ Future<String> setHyperionAndGetVersion(String flavor) async {
 Future<void> setHyperionHost() async {
   final String flavor = getAppFlavor();
   final String minimalHyperionVersion = await getMinimalHyperionVersion();
-  if (!isVersionCompatible(
-    await setHyperionAndGetVersion(flavor),
-    minimalHyperionVersion,
-  )) {
-    if (flavor != "alpha") {
-      await setHyperionAndGetVersion("alpha");
+
+  try {
+    if (!isVersionCompatible(
+      await setHyperionAndGetVersion(flavor),
+      minimalHyperionVersion,
+    )) {
+      if (flavor != "alpha") {
+        await setHyperionAndGetVersion("alpha");
+      }
     }
+  } catch (_) {
+    return;
   }
 }
 
