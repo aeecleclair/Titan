@@ -489,6 +489,16 @@ Plausible? getPlausible() {
   return null;
 }
 
+String getTitanHost() {
+  var host = dotenv.env["${getAppFlavor().toUpperCase()}_HOST"];
+
+  if (host == null || host == "") {
+    throw StateError("Could not find host corresponding to flavor");
+  }
+
+  return host;
+}
+
 String getTitanURL() {
   switch (getAppFlavor()) {
     case "dev":
