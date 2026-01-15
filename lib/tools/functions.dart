@@ -493,23 +493,20 @@ String getTitanHost() {
   var host = dotenv.env["${getAppFlavor().toUpperCase()}_HOST"];
 
   if (host == null || host == "") {
-    throw StateError("Could not find host corresponding to flavor");
+    throw StateError("Could not find back-end host corresponding to flavor");
   }
 
   return host;
 }
 
 String getTitanURL() {
-  switch (getAppFlavor()) {
-    case "dev":
-      return "http://localhost:3000";
-    case "alpha":
-      return "https://titan.dev.eclair.ec-lyon.fr";
-    case "prod":
-      return "https://myecl.fr";
-    default:
-      throw StateError("Invalid app flavor");
+  var clientURL = dotenv.env["${getAppFlavor().toUpperCase()}_URL"];
+
+  if (clientURL == null || clientURL == "") {
+    throw StateError("Could not find client URL corresponding to flavor");
   }
+
+  return clientURL;
 }
 
 String getTitanURLScheme() {
