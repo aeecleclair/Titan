@@ -6,10 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
-import 'package:myecl/tools/constants.dart';
-import 'package:myecl/tools/plausible/plausible.dart';
-import 'package:myecl/tools/repository/repository.dart';
-import 'package:myecl/version/repositories/version_repository.dart';
+import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/plausible/plausible.dart';
+import 'package:titan/tools/repository/repository.dart';
+import 'package:titan/version/repositories/version_repository.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:yaml/yaml.dart';
 
@@ -526,14 +526,15 @@ String getTitanLogo() {
 
 /// Start of functions to choose back-end
 
-bool isVersionCompatible(
-  String currentVersion,
-  String minimalVersion,
-) {
-  final [major, minor, patch] =
-      currentVersion.split('.').map(int.parse).toList();
-  final [minimalMajor, minimalMinor, minimalPatch] =
-      minimalVersion.split('.').map(int.parse).toList();
+bool isVersionCompatible(String currentVersion, String minimalVersion) {
+  final [major, minor, patch] = currentVersion
+      .split('.')
+      .map(int.parse)
+      .toList();
+  final [minimalMajor, minimalMinor, minimalPatch] = minimalVersion
+      .split('.')
+      .map(int.parse)
+      .toList();
   if (major < minimalMajor ||
       (major == minimalMajor && minor < minimalMinor) ||
       (major == minimalMajor &&
@@ -557,8 +558,9 @@ Future<String> setHyperionAndGetVersion(String flavor) async {
     throw StateError("Could not retrieve the base URL for the $flavor flavor");
   }
   Repository.host = host; // set Titan's back-end
-  final String hyperionVersion =
-      await VersionRepository().getVersion().then((value) => value.version);
+  final String hyperionVersion = await VersionRepository().getVersion().then(
+    (value) => value.version,
+  );
   return hyperionVersion;
 }
 

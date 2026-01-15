@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/tools/functions.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class MinimalHyperionVersionNotifier extends StateNotifier<String> {
@@ -14,7 +14,7 @@ class MinimalHyperionVersionNotifier extends StateNotifier<String> {
 
 final minimalHyperionVersionProvider =
     StateNotifierProvider<MinimalHyperionVersionNotifier, String>((ref) {
-  final notifier = MinimalHyperionVersionNotifier();
-  notifier.loadVersionFromStorage();
-  return notifier;
-});
+      final notifier = MinimalHyperionVersionNotifier();
+      notifier.loadVersionFromStorage();
+      return notifier;
+    });

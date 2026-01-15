@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/login/router.dart';
-import 'package:myecl/router.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/tools/providers/path_forwarding_provider.dart';
-import 'package:myecl/tools/ui/widgets/loader.dart';
-import 'package:myecl/user/providers/user_provider.dart';
-import 'package:myecl/version/providers/minimal_hyperion_version_provider.dart';
-import 'package:myecl/version/providers/titan_version_provider.dart';
-import 'package:myecl/version/providers/version_verifier_provider.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/login/router.dart';
+import 'package:titan/router.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/path_forwarding_provider.dart';
+import 'package:titan/tools/ui/widgets/loader.dart';
+import 'package:titan/user/providers/user_provider.dart';
+import 'package:titan/version/providers/minimal_hyperion_version_provider.dart';
+import 'package:titan/version/providers/titan_version_provider.dart';
+import 'package:titan/version/providers/version_verifier_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class LoadingPage extends ConsumerWidget {
@@ -26,10 +26,7 @@ class LoadingPage extends ConsumerWidget {
     );
     final pathForwarding = ref.read(pathForwardingProvider);
     final isHyperionVersionCompatible = versionVerifier.whenData(
-      (value) => isVersionCompatible(
-        value.version,
-        minimalHyperionVersion,
-      ),
+      (value) => isVersionCompatible(value.version, minimalHyperionVersion),
     );
     check.when(
       data: (value) {

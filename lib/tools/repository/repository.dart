@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:myecl/tools/cache/cache_manager.dart';
-import 'package:myecl/tools/exception.dart';
-import 'package:myecl/tools/logs/logger.dart';
+import 'package:titan/tools/cache/cache_manager.dart';
+import 'package:titan/tools/exception.dart';
+import 'package:titan/tools/logs/logger.dart';
 
 abstract class Repository {
   static String host = ""; // see lib/main.dart

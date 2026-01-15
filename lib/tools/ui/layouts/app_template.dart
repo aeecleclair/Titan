@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:myecl/auth/providers/openid_provider.dart';
-import 'package:myecl/drawer/ui/drawer_template.dart';
-import 'package:myecl/tools/functions.dart';
-import 'package:myecl/version/providers/minimal_hyperion_version_provider.dart';
-import 'package:myecl/version/providers/titan_version_provider.dart';
-import 'package:myecl/version/providers/version_verifier_provider.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/drawer/ui/drawer_template.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/version/providers/minimal_hyperion_version_provider.dart';
+import 'package:titan/version/providers/titan_version_provider.dart';
+import 'package:titan/version/providers/version_verifier_provider.dart';
 
 class AppTemplate extends HookConsumerWidget {
   final Widget child;
@@ -17,13 +17,11 @@ class AppTemplate extends HookConsumerWidget {
     final titanVersion = ref.watch(titanVersionProvider);
     final minimalHyperionVersion = ref.watch(minimalHyperionVersionProvider);
     final isLoggedIn = ref.watch(isLoggedInProvider);
-    final check = versionVerifier
-        .whenData((value) => value.minimalTitanVersion <= titanVersion);
+    final check = versionVerifier.whenData(
+      (value) => value.minimalTitanVersion <= titanVersion,
+    );
     final isHyperionVersionCompatible = versionVerifier.whenData(
-      (value) => isVersionCompatible(
-        value.version,
-        minimalHyperionVersion,
-      ),
+      (value) => isVersionCompatible(value.version, minimalHyperionVersion),
     );
 
     return check.maybeWhen(
