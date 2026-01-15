@@ -5,8 +5,8 @@ import 'package:titan/auth/providers/is_connected_provider.dart';
 import 'package:titan/home/router.dart';
 import 'package:titan/others/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
-import 'package:titan/tools/repository/repository.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class NoInternetPage extends HookConsumerWidget {
   const NoInternetPage({super.key});
