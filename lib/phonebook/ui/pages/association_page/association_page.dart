@@ -36,6 +36,7 @@ class AssociationPage extends HookConsumerWidget {
       associationPictureProvider.notifier,
     );
     final isPresident = ref.watch(isAssociationPresidentProvider);
+    final hasPhonebookAdminAccess = ref.watch(hasPhonebookAdminAccessProvider);
     final kindNotifier = ref.watch(associationKindProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -65,59 +66,9 @@ class AssociationPage extends HookConsumerWidget {
                     style: const TextStyle(fontSize: 40, color: Colors.black),
                   ),
                   const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        association.kind,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Clipboard.setData(
-                            ClipboardData(
-                              text: associationMemberSortedList
-                                  .map(
-                                    (completeMember) =>
-                                        completeMember.member.email,
-                                  )
-                                  .join(","),
-                            ),
-                          ).then((value) {
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              PhonebookTextConstants.emailListCopied,
-                            );
-                          });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.black),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.shade400.withValues(
-                                  alpha: 0.3,
-                                ),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                offset: const Offset(2, 3),
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const HeroIcon(
-                            HeroIcons.documentDuplicate,
-                            size: 20,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
+                  Text(
+                    association.kind,
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   const SizedBox(height: 10),
                   Text(
@@ -153,9 +104,69 @@ class AssociationPage extends HookConsumerWidget {
                   ),
                 ],
               ),
-              if (isPresident)
+              if (hasPhonebookAdminAccess)
                 Positioned(
                   top: 20,
+                  right: 20,
+                  child: GestureDetector(
+                    onTap: () {
+                      Clipboard.setData(
+                        ClipboardData(
+                          text: associationMemberSortedList
+                              .map(
+                                (completeMember) => completeMember.member.email,
+                              )
+                              .join(","),
+                        ),
+                      ).then((value) {
+                        displayToastWithContext(
+                          TypeMsg.msg,
+                          PhonebookTextConstants.emailListCopied,
+                        );
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: const RadialGradient(
+                          colors: [
+                            Color.fromARGB(255, 98, 98, 98),
+                            Color.fromARGB(255, 27, 27, 27),
+                          ],
+                          center: Alignment.topLeft,
+                          radius: 1.3,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color.fromARGB(
+                              255,
+                              27,
+                              27,
+                              27,
+                            ).withValues(alpha: 0.3),
+                            spreadRadius: 5,
+                            blurRadius: 10,
+                            offset: const Offset(
+                              3,
+                              3,
+                            ), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: const HeroIcon(
+                        HeroIcons.documentDuplicate,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              if (isPresident)
+                Positioned(
+                  top: 80,
                   right: 20,
                   child: GestureDetector(
                     onTap: () {
