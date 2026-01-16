@@ -1,4 +1,5 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,10 +9,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/admin/providers/permissions_list_provider.dart';
 import 'package:titan/tools/constants.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:titan/tools/plausible/plausible.dart';
+import 'package:titan/tools/repository/repository.dart';
+import 'package:titan/version/repositories/version_repository.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:titan/user/providers/user_provider.dart';
+import 'package:yaml/yaml.dart';
 
 enum TypeMsg { msg, error }
 
@@ -457,6 +460,8 @@ bool hasUserPermission(Ref ref, String permission) {
       );
 }
 
+/// getAppFlavor and functions depending on it
+
 String getAppFlavor() {
   if (appFlavor != null) {
     return appFlavor!.toLowerCase();
@@ -488,23 +493,20 @@ String getTitanHost() {
   var host = dotenv.env["${getAppFlavor().toUpperCase()}_HOST"];
 
   if (host == null || host == "") {
-    throw StateError("Could not find host corresponding to flavor");
+    throw StateError("Could not find back-end host corresponding to flavor");
   }
 
   return host;
 }
 
 String getTitanURL() {
-  switch (getAppFlavor()) {
-    case "dev":
-      return "http://localhost:3000";
-    case "alpha":
-      return "https://titan.dev.eclair.ec-lyon.fr";
-    case "prod":
-      return "https://myecl.fr";
-    default:
-      throw StateError("Invalid app flavor");
+  var clientURL = dotenv.env["${getAppFlavor().toUpperCase()}_URL"];
+
+  if (clientURL == null || clientURL == "") {
+    throw StateError("Could not find client URL corresponding to flavor");
   }
+
+  return clientURL;
 }
 
 String getTitanURLScheme() {
@@ -527,3 +529,63 @@ String getTitanPackageName() {
 String getTitanLogo() {
   return "assets/images/logo_${getAppFlavor()}.png";
 }
+
+/// Start of functions to choose back-end
+
+bool isVersionCompatible(String currentVersion, String minimalVersion) {
+  final [major, minor, patch] = currentVersion
+      .split('.')
+      .map(int.parse)
+      .toList();
+  final [minimalMajor, minimalMinor, minimalPatch] = minimalVersion
+      .split('.')
+      .map(int.parse)
+      .toList();
+  if (major < minimalMajor ||
+      (major == minimalMajor && minor < minimalMinor) ||
+      (major == minimalMajor &&
+          minor == minimalMinor &&
+          patch < minimalPatch)) {
+    return false;
+  }
+  return true;
+}
+
+Future<String> getMinimalHyperionVersion() async {
+  final String pubspecString = await rootBundle.loadString("pubspec.yaml");
+  final YamlMap pubspec = loadYaml(pubspecString);
+  final String minimalHyperionVersion = pubspec["minimal_hyperion_version"];
+  return minimalHyperionVersion;
+}
+
+Future<String> setHyperionAndGetVersion(String flavor) async {
+  final String? host = dotenv.env["${flavor.toUpperCase()}_HOST"];
+  if (host == null || host == "") {
+    throw StateError("Could not retrieve the base URL for the $flavor flavor");
+  }
+  Repository.host = host; // set Titan's back-end
+  final String hyperionVersion = await VersionRepository().getVersion().then(
+    (value) => value.version,
+  );
+  return hyperionVersion;
+}
+
+Future<void> setHyperionHost() async {
+  final String flavor = getAppFlavor();
+  final String minimalHyperionVersion = await getMinimalHyperionVersion();
+
+  try {
+    if (!isVersionCompatible(
+      await setHyperionAndGetVersion(flavor),
+      minimalHyperionVersion,
+    )) {
+      if (flavor != "alpha") {
+        await setHyperionAndGetVersion("alpha");
+      }
+    }
+  } catch (_) {
+    return;
+  }
+}
+
+/// End of functions to choose back-end and functions depending on getAppFlavor

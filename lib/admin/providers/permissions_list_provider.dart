@@ -14,7 +14,6 @@ class PermissionsNotifier extends ListNotifier<CorePermission> {
   }
 
   Future<AsyncValue<List<CorePermission>>> loadPermissions() async {
-    print('Loading permissions');
     return await loadList(repository.getAllPermissions);
   }
 

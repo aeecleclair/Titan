@@ -6,6 +6,7 @@ import 'package:titan/home/router.dart';
 import 'package:titan/others/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class NoInternetPage extends HookConsumerWidget {
   const NoInternetPage({super.key});
@@ -24,9 +25,9 @@ class NoInternetPage extends HookConsumerWidget {
             children: [
               const HeroIcon(HeroIcons.signalSlash, size: 150),
               const SizedBox(height: 20),
-              const Center(
+              Center(
                 child: Text(
-                  OthersTextConstants.unableToConnectToServer,
+                  "${OthersTextConstants.unableToConnectToServer} ${Repository.host}",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20),
                 ),

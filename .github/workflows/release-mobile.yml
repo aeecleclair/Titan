@@ -75,10 +75,12 @@ jobs:
         if: needs.extract-version.outputs.isAlpha == 'true'
         run: |
           echo ALPHA_HOST=$ALPHA_HOST >> .env
+          echo ALPHA_URL=$ALPHA_URL >> .env
           echo PLAUSIBLE_HOST=$PLAUSIBLE_HOST >> .env
           echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN >> .env
         env:
           ALPHA_HOST: ${{ vars.ALPHA_HOST }}
+          ALPHA_URL: ${{ vars.ALPHA_URL }}
           PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_ALPHA_HOST }}
           PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_ALPHA_DOMAIN }}
 
@@ -86,10 +88,12 @@ jobs:
         if: needs.extract-version.outputs.isAlpha == 'false'
         run: |
           echo PROD_HOST=$PROD_HOST >> .env
+          echo PROD_URL=$PROD_URL >> .env
           echo PLAUSIBLE_HOST=$PLAUSIBLE_HOST >> .env
           echo PLAUSIBLE_DOMAIN=$PLAUSIBLE_DOMAIN >> .env
         env:
           PROD_HOST: ${{ vars.PROD_HOST }}
+          PROD_URL: ${{ vars.PROD_URL }}
           PLAUSIBLE_HOST: ${{ secrets.PLAUSIBLE_HOST }}
           PLAUSIBLE_DOMAIN: ${{ secrets.PLAUSIBLE_DOMAIN }}
 

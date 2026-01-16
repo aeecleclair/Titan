@@ -4,11 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:titan/tools/cache/cache_manager.dart';
 import 'package:titan/tools/exception.dart';
-import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/logs/logger.dart';
 
 abstract class Repository {
-  static final String host = getTitanHost();
+  static String host = ""; // see lib/main.dart
   static const String expiredTokenDetail = "Could not validate credentials";
   final String ext = "";
   final Map<String, String> headers = {
