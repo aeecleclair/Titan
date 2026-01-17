@@ -58,9 +58,13 @@ jobs:
         run: |
           echo PROD_HOST=$PROD_HOST >> .env
           echo ALPHA_HOST=$ALPHA_HOST >> .env
+          echo PROD_URL=$PROD_URL >> .env
+          echo ALPHA_URL=$ALPHA_URL >> .env
         env:
           PROD_HOST: ${{ vars.PROD_HOST }}
           ALPHA_HOST: ${{ vars.ALPHA_HOST }}
+          PROD_URL: ${{ vars.PROD_URL }}
+          ALPHA_URL: ${{ vars.ALPHA_URL }}
 
       - name: Configure Alpha env
         if: needs.extract-version.outputs.isAlpha == 'true'

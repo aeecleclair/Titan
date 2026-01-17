@@ -122,7 +122,7 @@ class OpenIdTokenProvider
   final String tokenKey = "token";
   final String refreshTokenKey = "refresh_token";
   final String redirectURLScheme = "${getTitanPackageName()}://authorized";
-  final String redirectURL = "${getTitanURL()}/static.html";
+  final String redirectURL = "${getTitanURL()}static.html";
   final String discoveryUrl =
       "${Repository.host}.well-known/openid-configuration";
   final List<String> scopes = ["API"];

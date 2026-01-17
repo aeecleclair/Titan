@@ -6,7 +6,10 @@
     <meta charset="UTF-8" />
     <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
     <title>MyECL</title>
-    <meta name="description" content="Application associative de Centrale Lyon, développée par ÉCLAIR" />
+    <meta
+      name="description"
+      content="Application associative de Centrale Lyon, développée par ÉCLAIR"
+    />
 
     <!-- iOS meta tags & icons -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -20,7 +23,6 @@
     <title>myecl</title>
     <link rel="manifest" href="manifest.json" />
     <style>
-
       html,
       body {
         display: flex;
@@ -122,14 +124,18 @@
     </style>
   </head>
   <body>
-  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.js" type="text/javascript"></script>
-  <script type="text/javascript">
-    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.worker.min.js";
-    pdfRenderOptions = {
-      cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/cmaps/',
-      cMapPacked: true,
-    }
-  </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.js"
+      type="text/javascript"
+    ></script>
+    <script type="text/javascript">
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.worker.min.js";
+      pdfRenderOptions = {
+        cMapUrl: "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/cmaps/",
+        cMapPacked: true,
+      };
+    </script>
     <div>
       <!-- https://codepen.io/oliverholretz/pen/Rgreaq -->
       <div class="container">
@@ -154,7 +160,7 @@
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
     <script>
-      var serviceWorkerVersion = null;
+      var serviceWorkerVersion = "{{flutter_service_worker_version}}";
       var scriptLoaded = false;
       function loadMainDartJs() {
         if (scriptLoaded) {

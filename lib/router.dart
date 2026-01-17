@@ -15,6 +15,7 @@ import 'package:titan/others/ui/loading_page.dart' deferred as loading_page;
 import 'package:titan/others/ui/no_internet_page.dart'
     deferred as no_internet_page;
 import 'package:titan/others/ui/no_module.dart' deferred as no_module_page;
+import 'package:titan/others/ui/rollback_page.dart' deferred as rollback_page;
 import 'package:titan/others/ui/update_page.dart' deferred as update_page;
 import 'package:titan/mypayment/router.dart';
 import 'package:titan/phonebook/router.dart';
@@ -40,6 +41,7 @@ class AppRouter {
   static const String update = '/update';
   static const String noInternet = '/no_internet';
   static const String noModule = '/no_module';
+  static const String rollback = '/rollback';
 
   AppRouter(this.ref) {
     routes = [
@@ -70,6 +72,11 @@ class AppRouter {
         path: noModule,
         builder: () => no_module_page.NoModulePage(),
         middleware: [DeferredLoadingMiddleware(no_module_page.loadLibrary)],
+      ),
+      QRoute(
+        path: rollback,
+        builder: () => rollback_page.RollbackPage(),
+        middleware: [DeferredLoadingMiddleware(rollback_page.loadLibrary)],
       ),
       AdminRouter(ref).route(),
       AdvertRouter(ref).route(),

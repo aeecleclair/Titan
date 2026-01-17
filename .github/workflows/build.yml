@@ -61,9 +61,12 @@ jobs:
         run: flutter pub get
 
       - name: Configure Dev env
-        run: echo DEV_HOST=$DEV_HOST >> .env
+        run: |
+          echo DEV_HOST=$DEV_HOST >> .env
+          echo DEV_URL=$DEV_URL >> .env
         env:
           DEV_HOST: ${{ vars.DEV_HOST }}
+          DEV_URL: ${{ vars.DEV_URL }}
 
       - name: Add Firebase configuration for Dev
         run: |

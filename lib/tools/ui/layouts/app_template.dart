@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/drawer/ui/drawer_template.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/version/providers/minimal_hyperion_version_provider.dart';
 import 'package:titan/version/providers/titan_version_provider.dart';
 import 'package:titan/version/providers/version_verifier_provider.dart';
 
@@ -13,9 +15,13 @@ class AppTemplate extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final versionVerifier = ref.watch(versionVerifierProvider);
     final titanVersion = ref.watch(titanVersionProvider);
+    final minimalHyperionVersion = ref.watch(minimalHyperionVersionProvider);
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final check = versionVerifier.whenData(
       (value) => value.minimalTitanVersion <= titanVersion,
+    );
+    final isHyperionVersionCompatible = versionVerifier.whenData(
+      (value) => isVersionCompatible(value.version, minimalHyperionVersion),
     );
 
     return check.maybeWhen(
@@ -23,10 +29,18 @@ class AppTemplate extends HookConsumerWidget {
         if (!value) {
           return child;
         }
-        if (!isLoggedIn) {
-          return child;
-        }
-        return DrawerTemplate(child: child);
+        return isHyperionVersionCompatible.maybeWhen(
+          data: (value) {
+            if (!value) {
+              return child;
+            }
+            if (!isLoggedIn) {
+              return child;
+            }
+            return DrawerTemplate(child: child);
+          },
+          orElse: () => child,
+        );
       },
       orElse: () => child,
     );
