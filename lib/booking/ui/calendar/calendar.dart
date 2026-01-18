@@ -27,7 +27,7 @@ class Calendar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookings = isManagerPage
-        ? ref.watch(managerConfirmedBookingListProvider)
+        ? ref.watch(managerBookingListProvider)
         : ref.watch(confirmedBookingListProvider);
     final bookingNotifier = ref.watch(bookingProvider.notifier);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
@@ -144,7 +144,16 @@ class Calendar extends HookConsumerWidget {
             children: [
               SfCalendar(
                 onTap: (details) => calendarTapped(details, context),
-                dataSource: AppointmentDataSource(res),
+                dataSource: AppointmentDataSource(
+                  !isManagerPage
+                      ? res
+                      : res
+                            .where(
+                              (booking) =>
+                                  booking.decision != Decision.declined,
+                            )
+                            .toList(),
+                ),
                 controller: calendarController,
                 view: CalendarView.week,
                 selectionDecoration: BoxDecoration(

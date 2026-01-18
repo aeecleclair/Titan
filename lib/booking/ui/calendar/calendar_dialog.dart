@@ -32,30 +32,6 @@ class CalendarDialog extends StatelessWidget {
         : booking.end.isAfter(DateTime.now());
     final showButton =
         (isNotEnded && booking.decision == Decision.pending) || isManager;
-    final Color darkIconBackgroundColor;
-    final Color lightIconBackgroundColor;
-    final Color lightIconColor;
-
-    switch (booking.decision) {
-      case Decision.pending:
-        darkIconBackgroundColor = Colors.black;
-
-        break;
-      case Decision.approved:
-        darkIconBackgroundColor = const Color.fromARGB(255, 26, 53, 0);
-        break;
-      case Decision.declined:
-        darkIconBackgroundColor = const Color.fromARGB(255, 99, 13, 0);
-        break;
-    }
-
-    lightIconColor = darkIconBackgroundColor;
-
-    if (booking.decision == Decision.pending) {
-      lightIconBackgroundColor = Colors.white;
-    } else {
-      lightIconBackgroundColor = Colors.grey.shade200;
-    }
 
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
@@ -160,11 +136,11 @@ class CalendarDialog extends StatelessWidget {
                       GestureDetector(
                         onTap: onEdit,
                         child: CardButton(
-                          color: lightIconBackgroundColor,
+                          color: Colors.white,
                           shadowColor: Colors.grey.withValues(alpha: 0.2),
                           child: HeroIcon(
                             HeroIcons.pencil,
-                            color: lightIconColor,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -172,11 +148,11 @@ class CalendarDialog extends StatelessWidget {
                     GestureDetector(
                       onTap: onCopy,
                       child: CardButton(
-                        color: lightIconBackgroundColor,
+                        color: Colors.white,
                         shadowColor: Colors.grey.withValues(alpha: 0.2),
                         child: HeroIcon(
                           HeroIcons.documentDuplicate,
-                          color: lightIconColor,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -184,35 +160,23 @@ class CalendarDialog extends StatelessWidget {
                     GestureDetector(
                       onTap: onConfirm,
                       child: CardButton(
-                        color: lightIconBackgroundColor,
-                        borderColor: booking.decision == Decision.approved
-                            ? darkIconBackgroundColor
-                            : Colors.transparent,
+                        color: Colors.white,
                         shadowColor: Colors.grey.withValues(alpha: 0.2),
-                        child: HeroIcon(
-                          HeroIcons.check,
-                          color: darkIconBackgroundColor,
-                        ),
+                        child: HeroIcon(HeroIcons.check, color: Colors.black),
                       ),
                     ),
                     const Spacer(),
                     GestureDetector(
                       onTap: onDecline,
                       child: CardButton(
-                        color: darkIconBackgroundColor,
-                        borderColor: booking.decision == Decision.declined
-                            ? Colors.white
-                            : Colors.transparent,
-                        shadowColor: darkIconBackgroundColor.withValues(
-                          alpha: 0.2,
-                        ),
+                        color: Colors.black,
+                        shadowColor: Colors.black.withValues(alpha: 0.2),
                         child: const HeroIcon(
                           HeroIcons.xMark,
                           color: Colors.white,
                         ),
                       ),
                     ),
-                    const Spacer(),
                   ],
                 ),
               ],
