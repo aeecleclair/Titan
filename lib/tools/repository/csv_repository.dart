@@ -6,7 +6,6 @@ import 'package:titan/tools/logs/log.dart';
 import 'package:titan/tools/repository/repository.dart';
 import 'package:http/http.dart' as http;
 
-
 abstract class CsvRepository extends Repository {
   static const String expiredTokenDetail = "Could not validate credentials";
 
@@ -29,12 +28,13 @@ abstract class CsvRepository extends Repository {
           rethrow;
         }
       } else if (response.statusCode == 403) {
-          Repository.logger.writeLog(
-            Log(
-              message: "GET $ext$id$suffix\n${response.statusCode} ${response.body}",
-              level: LogLevel.error,
-            ),
-          );
+        Repository.logger.writeLog(
+          Log(
+            message:
+                "GET $ext$id$suffix\n${response.statusCode} ${response.body}",
+            level: LogLevel.error,
+          ),
+        );
         String resp = utf8.decode(response.body.runes.toList());
         final decoded = json.decode(resp);
         if (decoded["detail"] == expiredTokenDetail) {

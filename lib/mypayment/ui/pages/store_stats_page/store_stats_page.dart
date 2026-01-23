@@ -38,12 +38,7 @@ class StoreStatsPage extends ConsumerWidget {
             return Column(
               children: [
                 const SizedBox(height: 20),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const IntervalSelector(),
-                  ]
-                ),
+                TopBar(),
                 const SizedBox(height: 20),
                 SummaryCard(history: sortedByDate),
                 SizedBox(height: 20),

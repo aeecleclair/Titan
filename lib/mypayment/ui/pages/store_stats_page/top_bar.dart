@@ -12,8 +12,8 @@ import 'package:titan/mypayment/providers/selected_store_history.dart';
 import 'package:titan/mypayment/providers/selected_store_provider.dart';
 import 'package:titan/tools/functions.dart';
 
-class IntervalSelector extends ConsumerWidget {
-  const IntervalSelector({super.key});
+class TopBar extends ConsumerWidget {
+  const TopBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

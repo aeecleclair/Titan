@@ -21,10 +21,7 @@ class HistoryExportCsvNotifier extends FamilyAsyncNotifier<Uint8List, Store> {
   }
 }
 
-final historyExportCsvProvider = AsyncNotifierProvider.family<
-  HistoryExportCsvNotifier,
-  Uint8List,
-  Store
->(
-  HistoryExportCsvNotifier.new,
-);
+final historyExportCsvProvider =
+    AsyncNotifierProvider.family<HistoryExportCsvNotifier, Uint8List, Store>(
+      HistoryExportCsvNotifier.new,
+    );
