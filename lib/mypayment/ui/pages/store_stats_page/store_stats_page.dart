@@ -32,7 +32,6 @@ class StoreStatsPage extends ConsumerWidget {
         child: AsyncChild(
           value: selectedHistory,
           builder: (context, history) {
-            print(history);
             final sortedByDate = history.toList()
               ..sort((a, b) => a.creation.compareTo(b.creation));
             return Column(
