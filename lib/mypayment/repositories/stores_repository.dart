@@ -42,38 +42,6 @@ class StoresRepository extends Repository {
     );
   }
 
-  Future<void> exportStoreHistory(
-    Store store,
-    DateTime startDate,
-    DateTime endDate,
-  ) async {
-    final queryParams = {
-      'start_date': processDateToAPI(startDate),
-      'end_date': processDateToAPI(endDate),
-    };
-
-    final queryString = Uri(queryParameters: queryParams).query;
-    final url = "/$store.id/history/data-export?$queryString";
-
-    try {
-      final response = await http.get(Uri.parse(url), headers: headers);
-
-      if (response.statusCode == 200) {
-        final Uint8List bytes = response.bodyBytes;
-        final String fileName = "Store_history_${store.name}";
-
-        await FileSaver.instance.saveFile(
-          name: fileName.replaceAll('.csv', ''),
-          bytes: bytes,
-          ext: 'csv',
-          mimeType: MimeType.csv,
-        );
-      }
-    } catch (e) {
-      throw Exception('Erreur: $e');
-    }
-  }
-
   Future<Transaction> scan(String id, QrCodeData data, bool? bypass) async {
     return Transaction.fromJson(
       await create({
