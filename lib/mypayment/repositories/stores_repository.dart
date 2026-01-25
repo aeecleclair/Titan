@@ -1,8 +1,4 @@
-import 'dart:typed_data';
-
-import 'package:file_saver/file_saver.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/mypayment/class/history.dart';
 import 'package:titan/mypayment/class/qr_code_data.dart';
