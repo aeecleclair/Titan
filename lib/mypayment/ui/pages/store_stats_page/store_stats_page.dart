@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/mypayment/providers/selected_interval_provider.dart';
 import 'package:titan/mypayment/providers/selected_store_provider.dart';
-import 'package:titan/mypayment/ui/pages/store_stats_page/top_bar.dart';
+import 'package:titan/mypayment/ui/pages/store_stats_page/tool_bar.dart';
 import 'package:titan/mypayment/ui/pages/store_stats_page/store_transactions_detail.dart';
 import 'package:titan/mypayment/ui/pages/store_stats_page/summary_card.dart';
 import 'package:titan/mypayment/ui/mypayment.dart';
@@ -37,10 +37,10 @@ class StoreStatsPage extends ConsumerWidget {
             return Column(
               children: [
                 const SizedBox(height: 20),
-                TopBar(),
+                ToolBar(),
                 const SizedBox(height: 20),
                 SummaryCard(history: sortedByDate),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 StoreTransactionsDetail(history: sortedByDate),
               ],
             );
