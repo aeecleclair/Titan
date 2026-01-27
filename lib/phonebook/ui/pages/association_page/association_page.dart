@@ -104,7 +104,7 @@ class AssociationPage extends HookConsumerWidget {
                   ),
                 ],
               ),
-              if (hasPhonebookAdminAccess)
+              if (kIsWeb)
                 Positioned(
                   top: 20,
                   right: 20,
@@ -158,7 +158,7 @@ class AssociationPage extends HookConsumerWidget {
                         ],
                       ),
                       child: const HeroIcon(
-                        HeroIcons.documentDuplicate,
+                        HeroIcons.envelope,
                         color: Colors.white,
                       ),
                     ),
