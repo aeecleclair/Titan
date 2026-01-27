@@ -12,8 +12,8 @@ import 'package:titan/mypayment/providers/selected_store_history.dart';
 import 'package:titan/mypayment/providers/selected_store_provider.dart';
 import 'package:titan/tools/functions.dart';
 
-class TopBar extends ConsumerWidget {
-  const TopBar({super.key});
+class ToolBar extends ConsumerWidget {
+  const ToolBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
