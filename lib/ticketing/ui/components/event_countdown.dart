@@ -8,16 +8,21 @@ class EventCountdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Countdown(
-      seconds: 20,
-      build: (BuildContext context, double time) => Text(
-        time.toString(),
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+    return SizedBox(
+      width: 100,
+      child: Center(
+        child: Countdown(
+          seconds: 20,
+          build: (BuildContext context, double time) => Text(
+            time.toString(),
+            style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+          ),
+          interval: Duration(milliseconds: 100),
+          onFinished: () {
+            print('Timer is done!');
+          },
+        ),
       ),
-      interval: Duration(milliseconds: 100),
-      onFinished: () {
-        print('Timer is done!');
-      },
     );
   }
 }
