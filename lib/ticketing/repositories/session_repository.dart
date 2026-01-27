@@ -3,7 +3,7 @@ import 'package:titan/tools/repository/repository.dart';
 
 class SessionRepository extends Repository {
   @override
-  Future<List<Session>> getAllSession() async {
+  Future<List<Session>> getAllSession(String id) async {
     // return (await getList(
     //   suffix: 'events',
     // )).map((e) => Event.fromJson(e)).toList();
@@ -15,15 +15,15 @@ class SessionRepository extends Repository {
     return Session.fromJson(await getOne(id));
   }
 
-  Future<Session> addSession(Session Session) async {
-    return Session.fromJson(await create(Session.toJson(), suffix: 'Sessions'));
+  Future<Session> addSession(Session session) async {
+    return Session.fromJson(await create(session.toJson(), suffix: 'sessions'));
   }
 
-  Future<bool> updateSession(Session Session) async {
-    return await update(Session.toJson(), "Sessions/${Session.id}");
+  Future<bool> updateSession(Session session) async {
+    return await update(session.toJson(), "sessions/${session.id}");
   }
 
   Future<bool> deleteSession(String id) async {
-    return await delete("Sessions/$id");
+    return await delete("sessions/$id");
   }
 }
