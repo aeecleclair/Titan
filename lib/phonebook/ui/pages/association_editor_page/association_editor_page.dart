@@ -183,6 +183,7 @@ class AssociationEditorPage extends HookConsumerWidget {
                           );
                         },
                         onReorder: (int oldIndex, int newIndex) async {
+                          if (newIndex > oldIndex) newIndex -= 1;
                           await tokenExpireWrapper(ref, () async {
                             final result = await associationMemberListNotifier
                                 .reorderMember(
