@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/drawer/providers/is_web_format_provider.dart';
@@ -24,11 +21,7 @@ class EventCard extends HookConsumerWidget {
     final fifteenAgo = DateTime.now().subtract(Duration(minutes: 15));
 
     return GestureDetector(
-      onTap: () {
-        if (!isWebFormat) {
-          onTap();
-        }
-      },
+      onTap: onTap,
       child: Container(
         width: width,
         margin: const EdgeInsets.symmetric(vertical: 10),
@@ -45,26 +38,20 @@ class EventCard extends HookConsumerWidget {
             ),
           ],
         ),
-        child: Stack(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              children: [
-                AutoSizeText(
-                  event.title,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                ),
-                const VerticalDivider(
-                  width: 20,
-                  thickness: 1,
-                  indent: 20,
-                  endIndent: 0,
-                  color: Colors.black,
-                ),
-                EventCountdown(duration: fifteenAgo),
-              ],
+            AutoSizeText(
+              event.title,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              maxLines: 2,
+              textAlign: TextAlign.center,
             ),
+            const SizedBox(height: 20),
+            Divider(thickness: 1, color: Colors.black),
+            const SizedBox(height: 20),
+            EventCountdown(duration: fifteenAgo),
           ],
         ),
       ),
