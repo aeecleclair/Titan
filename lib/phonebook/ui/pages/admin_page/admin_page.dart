@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/phonebook/providers/association_filtered_list_provider.dart';
 import 'package:titan/phonebook/providers/association_groupement_list_provider.dart';
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
@@ -39,7 +40,9 @@ class AdminPage extends HookConsumerWidget {
     final associationList = ref.watch(associationListProvider);
     final associationFilteredList = ref.watch(associationFilteredListProvider);
     final roleNotifier = ref.watch(rolesTagsProvider.notifier);
+    final isAdmin = ref.watch(isAdminProvider);
     final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
+    final isGroupementAdminProvider = ref.watch(groupementAdminProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -69,7 +72,9 @@ class AdminPage extends HookConsumerWidget {
                       children: [
                         GroupementsBar(),
                         GestureDetector(
-                          onTap: isPhonebookAdmin
+                          onTap:
+                              isPhonebookAdmin ||
+                                  isGroupementAdminProvider.isNotEmpty
                               ? () {
                                   QR.to(
                                     PhonebookRouter.root +
@@ -87,7 +92,9 @@ class AdminPage extends HookConsumerWidget {
                             ),
                             width: double.infinity,
                             height: 100,
-                            color: isPhonebookAdmin
+                            color:
+                                isPhonebookAdmin ||
+                                    isGroupementAdminProvider.isNotEmpty
                                 ? Colors.white
                                 : ColorConstants.deactivated2,
                             child: Center(
@@ -121,7 +128,21 @@ class AdminPage extends HookConsumerWidget {
                                           groupement.id ==
                                           association.groupementId,
                                     ),
-                                isPhonebookAdmin: isPhonebookAdmin,
+                                canDelete:
+                                    isPhonebookAdmin ||
+                                    isGroupementAdminProvider.any(
+                                      (groupement) =>
+                                          groupement.id ==
+                                          association.groupementId,
+                                    ),
+                                canEdit:
+                                    isPhonebookAdmin ||
+                                    isGroupementAdminProvider.any(
+                                      (groupement) =>
+                                          groupement.id ==
+                                          association.groupementId,
+                                    ) ||
+                                    isAdmin,
                                 onEdit: () {
                                   associationGroupementsNotifier
                                       .setAssociationGroupement(

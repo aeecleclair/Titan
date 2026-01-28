@@ -8,14 +8,16 @@ import 'package:titan/phonebook/ui/pages/admin_page/edition_button.dart';
 class EditableAssociationCard extends HookConsumerWidget {
   final Association association;
   final AssociationGroupement associationGroupement;
-  final bool isPhonebookAdmin;
+  final bool canDelete;
+  final bool canEdit;
   final void Function() onEdit;
   final Future Function() onDelete;
   const EditableAssociationCard({
     super.key,
     required this.association,
     required this.associationGroupement,
-    required this.isPhonebookAdmin,
+    required this.canDelete,
+    required this.canEdit,
     required this.onEdit,
     required this.onDelete,
   });
@@ -62,11 +64,11 @@ class EditableAssociationCard extends HookConsumerWidget {
           ),
           Row(
             children: [
-              EditionButton(onEdition: onEdit, deactivated: false),
+              EditionButton(onEdition: onEdit, deactivated: !canEdit),
               const SizedBox(width: 5),
               DeleteButton(
                 onDelete: onDelete,
-                deactivated: !isPhonebookAdmin,
+                deactivated: !canDelete,
                 deletion: association.deactivated,
               ),
             ],

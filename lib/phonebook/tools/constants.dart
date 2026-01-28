@@ -4,6 +4,8 @@ class PhonebookTextConstants {
   static const String activeMandate = "Mandat actif :";
   static const String add = "Ajouter";
   static const String addAssociation = "Ajouter une association";
+  static const String addAssociationGroupement =
+      "Ajouter un type d'association";
   static const String addedAssociation = "Association ajoutée";
   static const String addedMember = "Membre ajouté";
   static const String addingError = "Erreur lors de l'ajout";
@@ -43,12 +45,16 @@ class PhonebookTextConstants {
   static const String description = "Description";
 
   static const String edit = "Modifier";
+  static const String editAssociationGroupement =
+      "Modifier un type d'association";
   static const String editMembership = "Modifier le rôle";
   static const String email = "Email :";
   static const String emailCopied = "Email copié dans le presse-papier";
   static const String emptyApparentName = "Veuillez entrer un nom de role";
   static const String emptyFieldError = "Un champ n'est pas rempli";
   static const String emptyKindError = "Veuillez choisir un type d'association";
+  static const String emptyManagerGroupError =
+      "Veuillez choisir un groupe administrateur";
   static const String emptyMember = "Aucun membre sélectionné";
   static const String errorAssociationLoading =
       "Erreur lors du chargement de l'association";

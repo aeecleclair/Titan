@@ -27,7 +27,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final kind = ref.watch(associationGroupementProvider);
+    final groupement = ref.watch(associationGroupementProvider);
     final association = ref.watch(associationProvider);
     final name = useTextEditingController(text: association.name);
     final description = useTextEditingController(text: association.description);
@@ -55,7 +55,11 @@ class AssociationInformationEditor extends HookConsumerWidget {
                 key: key,
                 child: Column(
                   children: [
-                    GroupementsBar(key: scrollKey),
+                    GroupementsBar(
+                      key: scrollKey,
+                      isAdmin: true,
+                      restrictToManaged: !isPhonebookAdmin,
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Column(
@@ -153,7 +157,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                               if (!key.currentState!.validate()) {
                                 return;
                               }
-                              if (kind.id == '') {
+                              if (groupement.id == '') {
                                 displayToastWithContext(
                                   TypeMsg.error,
                                   PhonebookTextConstants.emptyKindError,
@@ -166,7 +170,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                       association.copyWith(
                                         name: name.text,
                                         description: description.text,
-                                        groupementId: kind.id,
+                                        groupementId: groupement.id,
                                       ),
                                     );
                                 if (value) {

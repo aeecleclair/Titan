@@ -6,6 +6,7 @@ import 'package:titan/phonebook/class/association.dart';
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
+import 'package:titan/phonebook/providers/is_phonebook_admin_provider.dart';
 import 'package:titan/phonebook/router.dart';
 import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/components/groupement_bar.dart';
@@ -31,6 +32,7 @@ class AssociationCreationPage extends HookConsumerWidget {
     final associations = ref.watch(associationListProvider);
     final associationNotifier = ref.watch(associationProvider.notifier);
     final associationGroupement = ref.watch(associationGroupementProvider);
+    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -60,7 +62,11 @@ class AssociationCreationPage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              GroupementsBar(key: scrollKey),
+              GroupementsBar(
+                key: scrollKey,
+                isAdmin: true,
+                restrictToManaged: !isPhonebookAdmin,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Column(
