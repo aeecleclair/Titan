@@ -25,7 +25,7 @@ class Event {
     title = json["title"];
     content = json["content"];
     date = processDateFromAPI(json["date"]);
-    announcer = Announcer.fromJson(json["advertiser"]);
+    announcer = Announcer.fromJson(json["announcer"]);
     ticket = json["ticket"];
     form = json["form"];
   }
@@ -36,7 +36,7 @@ class Event {
     data["title"] = title;
     data["content"] = content;
     data["date"] = processDateToAPI(date);
-    data["advertiser_id"] = announcer.id;
+    data["announcer_id"] = announcer.id;
     data["ticket"] = ticket;
     data["form"];
     return data;

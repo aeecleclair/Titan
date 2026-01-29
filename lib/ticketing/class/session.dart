@@ -1,5 +1,6 @@
 class Session {
   late final String id;
+  late final String eventId;
   late final String name;
   late final int quota;
   late final int usedQuota;
@@ -8,6 +9,7 @@ class Session {
 
   Session({
     required this.id,
+    required this.eventId,
     required this.name,
     required this.quota,
     required this.usedQuota,
@@ -17,6 +19,7 @@ class Session {
 
   Session.fromJson(Map<String, dynamic> json) {
     id = json["id"];
+    eventId = json["eventId"];
     name = json["name"];
     quota = json["quota"];
     usedQuota = json["usedQuota"];
@@ -27,6 +30,7 @@ class Session {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data["id"] = id;
+    data["eventId"] = eventId;
     data["name"] = name;
     data["quota"] = quota;
     data["usedQuota"] = usedQuota;
@@ -38,6 +42,7 @@ class Session {
   static Session empty() {
     return Session(
       id: "",
+      eventId: "",
       name: "",
       quota: 0,
       usedQuota: 0,
