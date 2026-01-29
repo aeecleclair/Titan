@@ -17,7 +17,7 @@ class CategoryRepository extends Repository {
         id: '1',
         eventId: '1',
         name: 'Place Standard',
-        linkedSessions: ['soiree'],
+        linkedSessions: ['1'], // Soirée Pizza - 19h00
         requiredMembership: '',
         price: 0.00,
         disabled: false,
@@ -26,7 +26,7 @@ class CategoryRepository extends Repository {
         id: '2',
         eventId: '1',
         name: 'Menu Végétarien',
-        linkedSessions: ['soiree'],
+        linkedSessions: ['1'], // Soirée Pizza - 19h00
         requiredMembership: '',
         price: 0.00,
         disabled: false,
@@ -37,7 +37,7 @@ class CategoryRepository extends Repository {
         id: '3',
         eventId: '2',
         name: 'Équipe Complète (11 joueurs)',
-        linkedSessions: ['tournoi'],
+        linkedSessions: ['2'], // Tournoi - Phase de groupe
         requiredMembership: '',
         price: 5.00,
         disabled: false,
@@ -46,7 +46,7 @@ class CategoryRepository extends Repository {
         id: '4',
         eventId: '2',
         name: 'Spectateur',
-        linkedSessions: ['tournoi'],
+        linkedSessions: ['2', '3', '4'], // Toutes les phases du tournoi
         requiredMembership: '',
         price: 0.00,
         disabled: false,
@@ -57,7 +57,7 @@ class CategoryRepository extends Repository {
         id: '5',
         eventId: '3',
         name: 'Étudiant',
-        linkedSessions: ['conference'],
+        linkedSessions: ['6'], // Conférence principale - 14h00
         requiredMembership: 'student',
         price: 0.00,
         disabled: false,
@@ -66,7 +66,7 @@ class CategoryRepository extends Repository {
         id: '6',
         eventId: '3',
         name: 'Professionnel',
-        linkedSessions: ['conference'],
+        linkedSessions: ['6'], // Conférence principale - 14h00
         requiredMembership: '',
         price: 25.00,
         disabled: false,
@@ -75,7 +75,7 @@ class CategoryRepository extends Repository {
         id: '7',
         eventId: '3',
         name: 'Workshop + Conférence',
-        linkedSessions: ['workshop', 'conference'],
+        linkedSessions: ['5', '6'], // Workshop matin + Conférence
         requiredMembership: '',
         price: 45.00,
         disabled: false,
@@ -86,7 +86,7 @@ class CategoryRepository extends Repository {
         id: '8',
         eventId: '4',
         name: 'Solo',
-        linkedSessions: ['diner', 'spectacle', 'soiree'],
+        linkedSessions: ['7', '8', '9'], // Dîner + Spectacle + Soirée dansante
         requiredMembership: '',
         price: 45.00,
         disabled: false,
@@ -95,7 +95,7 @@ class CategoryRepository extends Repository {
         id: '9',
         eventId: '4',
         name: 'Duo',
-        linkedSessions: ['diner', 'spectacle', 'soiree'],
+        linkedSessions: ['7', '8', '9'], // Dîner + Spectacle + Soirée dansante
         requiredMembership: '',
         price: 80.00,
         disabled: false,
@@ -104,7 +104,7 @@ class CategoryRepository extends Repository {
         id: '10',
         eventId: '4',
         name: 'Table VIP (10 personnes)',
-        linkedSessions: ['diner', 'spectacle', 'soiree'],
+        linkedSessions: ['7', '8', '9'], // Dîner + Spectacle + Soirée dansante
         requiredMembership: 'premium',
         price: 400.00,
         disabled: false,
@@ -113,7 +113,7 @@ class CategoryRepository extends Repository {
         id: '11',
         eventId: '4',
         name: 'Table VIP (10 personnes) - Complet',
-        linkedSessions: ['diner', 'spectacle', 'soiree'],
+        linkedSessions: ['7', '8', '9'], // Dîner + Spectacle + Soirée dansante
         requiredMembership: 'premium',
         price: 400.00,
         disabled: true,
@@ -124,7 +124,7 @@ class CategoryRepository extends Repository {
         id: '12',
         eventId: '5',
         name: 'Pack Complet (Transport + Hébergement + Forfait)',
-        linkedSessions: ['samedi', 'dimanche'],
+        linkedSessions: ['11', '12'], // Ski libre Samedi + Dimanche
         requiredMembership: '',
         price: 180.00,
         disabled: false,
@@ -133,7 +133,7 @@ class CategoryRepository extends Repository {
         id: '13',
         eventId: '5',
         name: 'Sans matériel',
-        linkedSessions: ['samedi', 'dimanche'],
+        linkedSessions: ['11', '12'], // Ski libre Samedi + Dimanche
         requiredMembership: '',
         price: 165.00,
         disabled: false,
@@ -142,7 +142,11 @@ class CategoryRepository extends Repository {
         id: '14',
         eventId: '5',
         name: 'Débutant avec cours',
-        linkedSessions: ['cours_debutant', 'samedi', 'dimanche'],
+        linkedSessions: [
+          '10',
+          '11',
+          '12',
+        ], // Cours + Ski libre Samedi + Dimanche
         requiredMembership: '',
         price: 220.00,
         disabled: false,
@@ -151,7 +155,7 @@ class CategoryRepository extends Repository {
         id: '15',
         eventId: '5',
         name: 'Samedi uniquement',
-        linkedSessions: ['samedi'],
+        linkedSessions: ['11'], // Ski libre - Samedi
         requiredMembership: '',
         price: 95.00,
         disabled: false,

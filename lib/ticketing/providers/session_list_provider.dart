@@ -7,13 +7,13 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 
 class SessionListNotifier extends ListNotifier<Session> {
   SessionRepository repository = SessionRepository();
-  SessionListNotifier({required String token})
+  SessionListNotifier({required String token, required String categoryId})
     : super(const AsyncValue.loading()) {
     repository.setToken(token);
   }
 
-  Future<AsyncValue<List<Session>>> loadSessions() async {
-    return await loadList(repository.getAllSession);
+  Future<AsyncValue<List<Session>>> loadSessions(String categoryId) async {
+    return await loadList(() => repository.getAllSession(categoryId));
   }
 
   Future<bool> addSession(Session session) async {
@@ -44,9 +44,12 @@ final sessionListProvider =
       ref,
     ) {
       final token = ref.watch(tokenProvider);
-      SessionListNotifier notifier = SessionListNotifier(token: token);
+      SessionListNotifier notifier = SessionListNotifier(
+        token: token,
+        categoryId: '',
+      );
       tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadSessions();
+        await notifier.loadSessions('');
       });
       return notifier;
     });

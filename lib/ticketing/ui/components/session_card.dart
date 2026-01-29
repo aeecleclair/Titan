@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CategoryCard extends HookConsumerWidget {
+class SessionCard extends HookConsumerWidget {
   final VoidCallback onTap;
-  final String categoryName;
-  final double categoryPrice;
+  final String sessionName;
 
-  const CategoryCard({
+  const SessionCard({
     super.key,
     required this.onTap,
-    required this.categoryName,
-    required this.categoryPrice,
+    required this.sessionName,
   });
 
   @override
@@ -41,12 +39,12 @@ class CategoryCard extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              categoryName,
+              sessionName,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               textAlign: TextAlign.start,
             ),
             Text(
-              "${categoryPrice.toStringAsFixed(2)} €",
+              "Details",
               style: TextStyle(fontSize: 15),
               textAlign: TextAlign.end,
             ),
