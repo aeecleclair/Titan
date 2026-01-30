@@ -62,23 +62,33 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
             const SizedBox(height: 20),
             AsyncChild(
               value: groups,
-              builder: (context, groupList) => ListView.builder(
-                itemBuilder: (context, index) {
-                  final group = groupList[index];
-                  return ItemChip(
-                    selected: selectedGroup.value == group.id,
-                    onTap: () {
-                      if (selectedGroup.value != group.id) {
-                        selectedGroup.value = group.id;
-                      } else {
-                        selectedGroup.value = "";
-                      }
-                    },
-                    child: Text(group.name),
-                  );
-                },
-                itemCount: groupList.length,
-                shrinkWrap: true,
+              builder: (context, groupList) => SizedBox(
+                height: 40,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    final group = groupList[index];
+                    return ItemChip(
+                      selected: selectedGroup.value == group.id,
+                      onTap: () {
+                        if (selectedGroup.value != group.id) {
+                          selectedGroup.value = group.id;
+                        } else {
+                          selectedGroup.value = "";
+                        }
+                      },
+                      child: Text(
+                        group.name,
+                        style: TextStyle(
+                          color: selectedGroup.value == group.id
+                              ? Colors.white
+                              : Colors.black,
+                        ),
+                      ),
+                    );
+                  },
+                  itemCount: groupList.length,
+                ),
               ),
             ),
             const SizedBox(height: 50),

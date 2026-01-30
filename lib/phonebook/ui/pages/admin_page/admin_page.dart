@@ -70,7 +70,10 @@ class AdminPage extends HookConsumerWidget {
                   ) {
                     return Column(
                       children: [
-                        GroupementsBar(),
+                        GroupementsBar(
+                          isAdmin: isPhonebookAdmin,
+                          restrictToManaged: !isPhonebookAdmin,
+                        ),
                         GestureDetector(
                           onTap:
                               isPhonebookAdmin ||
