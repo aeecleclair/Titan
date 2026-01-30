@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
@@ -13,6 +14,7 @@ import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/pages/association_page/member_card.dart';
 import 'package:titan/phonebook/ui/pages/association_page/web_member_card.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -35,6 +37,10 @@ class AssociationPage extends HookConsumerWidget {
     );
     final isPresident = ref.watch(isAssociationPresidentProvider);
     final associationGroupement = ref.watch(associationGroupementProvider);
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
 
     return PhonebookTemplate(
       child: Refresher(
@@ -97,9 +103,69 @@ class AssociationPage extends HookConsumerWidget {
                   ),
                 ],
               ),
-              if (isPresident)
+              if (kIsWeb)
                 Positioned(
                   top: 20,
+                  right: 20,
+                  child: GestureDetector(
+                    onTap: () {
+                      Clipboard.setData(
+                        ClipboardData(
+                          text: associationMemberSortedList
+                              .map(
+                                (completeMember) => completeMember.member.email,
+                              )
+                              .join(","),
+                        ),
+                      ).then((value) {
+                        displayToastWithContext(
+                          TypeMsg.msg,
+                          PhonebookTextConstants.emailListCopied,
+                        );
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: const RadialGradient(
+                          colors: [
+                            Color.fromARGB(255, 98, 98, 98),
+                            Color.fromARGB(255, 27, 27, 27),
+                          ],
+                          center: Alignment.topLeft,
+                          radius: 1.3,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color.fromARGB(
+                              255,
+                              27,
+                              27,
+                              27,
+                            ).withValues(alpha: 0.3),
+                            spreadRadius: 5,
+                            blurRadius: 10,
+                            offset: const Offset(
+                              3,
+                              3,
+                            ), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: const HeroIcon(
+                        HeroIcons.envelope,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              if (isPresident)
+                Positioned(
+                  top: 80,
                   right: 20,
                   child: GestureDetector(
                     onTap: () {

@@ -7,7 +7,7 @@ import 'package:titan/tools/repository/pdf_repository.dart';
 class InvoicePdfRepository extends PdfRepository {
   @override
   // ignore: overridden_fields
-  final String ext = "mypayment/invoices/";
+  final ext = "mypayment/invoices/";
 
   Future<Uint8List> getInvoicePdf(String invoiceId) async {
     return await getPdf(invoiceId);

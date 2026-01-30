@@ -8,7 +8,7 @@ import 'package:titan/tools/repository/csv_repository.dart';
 class CsvStoresRepository extends CsvRepository {
   @override
   //ignore: overridden_fields
-  final String ext = "mypayment/stores/";
+  final ext = "mypayment/stores/";
 
   Future<Uint8List> exportStoreHistory(
     Store store,
