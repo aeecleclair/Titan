@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/phonebook/providers/association_kind_provider.dart';
+import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_member_sorted_list_provider.dart';
 import 'package:titan/phonebook/providers/association_picture_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
@@ -36,8 +36,7 @@ class AssociationPage extends HookConsumerWidget {
       associationPictureProvider.notifier,
     );
     final isPresident = ref.watch(isAssociationPresidentProvider);
-    final hasPhonebookAdminAccess = ref.watch(hasPhonebookAdminAccessProvider);
-    final kindNotifier = ref.watch(associationKindProvider.notifier);
+    final associationGroupement = ref.watch(associationGroupementProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -67,7 +66,7 @@ class AssociationPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    association.kind,
+                    associationGroupement.name,
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   const SizedBox(height: 10),
@@ -170,7 +169,6 @@ class AssociationPage extends HookConsumerWidget {
                   right: 20,
                   child: GestureDetector(
                     onTap: () {
-                      kindNotifier.setKind(association.kind);
                       QR.to(
                         PhonebookRouter.root +
                             PhonebookRouter.associationDetail +

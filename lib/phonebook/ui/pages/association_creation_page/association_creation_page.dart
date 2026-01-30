@@ -3,12 +3,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/phonebook/class/association.dart';
-import 'package:titan/phonebook/providers/association_kind_provider.dart';
+import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
+import 'package:titan/phonebook/providers/is_phonebook_admin_provider.dart';
 import 'package:titan/phonebook/router.dart';
 import 'package:titan/phonebook/tools/constants.dart';
-import 'package:titan/phonebook/ui/components/kinds_bar.dart';
+import 'package:titan/phonebook/ui/components/groupement_bar.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
@@ -30,7 +31,8 @@ class AssociationCreationPage extends HookConsumerWidget {
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associations = ref.watch(associationListProvider);
     final associationNotifier = ref.watch(associationProvider.notifier);
-    final kind = ref.watch(associationKindProvider);
+    final associationGroupement = ref.watch(associationGroupementProvider);
+    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -60,7 +62,11 @@ class AssociationCreationPage extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              KindsBar(key: scrollKey),
+              GroupementsBar(
+                key: scrollKey,
+                isAdmin: true,
+                restrictToManaged: !isPhonebookAdmin,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Column(
@@ -94,7 +100,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                           );
                           return;
                         }
-                        if (kind == '') {
+                        if (associationGroupement.id == '') {
                           displayToastWithContext(
                             TypeMsg.error,
                             PhonebookTextConstants.emptyKindError,
@@ -107,7 +113,7 @@ class AssociationCreationPage extends HookConsumerWidget {
                                 Association.empty().copyWith(
                                   name: name.text,
                                   description: description.text,
-                                  kind: kind,
+                                  groupementId: associationGroupement.id,
                                   mandateYear: DateTime.now().year,
                                 ),
                               );

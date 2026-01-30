@@ -5,12 +5,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/simple_group.dart';
 import 'package:titan/admin/providers/group_list_provider.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
-import 'package:titan/phonebook/providers/association_kind_provider.dart';
+import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/is_phonebook_admin_provider.dart';
 import 'package:titan/phonebook/tools/constants.dart';
-import 'package:titan/phonebook/ui/components/kinds_bar.dart';
+import 'package:titan/phonebook/ui/components/groupement_bar.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -27,7 +27,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final kind = ref.watch(associationKindProvider);
+    final groupement = ref.watch(associationGroupementProvider);
     final association = ref.watch(associationProvider);
     final name = useTextEditingController(text: association.name);
     final description = useTextEditingController(text: association.description);
@@ -55,7 +55,11 @@ class AssociationInformationEditor extends HookConsumerWidget {
                 key: key,
                 child: Column(
                   children: [
-                    KindsBar(key: scrollKey),
+                    GroupementsBar(
+                      key: scrollKey,
+                      isAdmin: true,
+                      restrictToManaged: !isPhonebookAdmin,
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Column(
@@ -153,7 +157,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                               if (!key.currentState!.validate()) {
                                 return;
                               }
-                              if (kind == '') {
+                              if (groupement.id == '') {
                                 displayToastWithContext(
                                   TypeMsg.error,
                                   PhonebookTextConstants.emptyKindError,
@@ -166,7 +170,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                       association.copyWith(
                                         name: name.text,
                                         description: description.text,
-                                        kind: kind,
+                                        groupementId: groupement.id,
                                       ),
                                     );
                                 if (value) {

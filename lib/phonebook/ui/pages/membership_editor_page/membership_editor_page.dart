@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/phonebook/class/membership.dart';
+import 'package:titan/phonebook/providers/association_groupement_list_provider.dart';
 import 'package:titan/phonebook/providers/association_member_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/member_role_tags_provider.dart';
@@ -48,6 +49,10 @@ class MembershipEditorPage extends HookConsumerWidget {
     );
     final associationMembers = ref.watch(associationMemberListProvider);
     final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
+    final groupementAdminProviderList = ref.watch(groupementAdminProvider);
+    final isGroupementAdmin = groupementAdminProviderList.any(
+      (groupement) => groupement.id == association.groupementId,
+    );
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -113,12 +118,12 @@ class MembershipEditorPage extends HookConsumerWidget {
                             ),
                             fillColor:
                                 rolesTagList.keys.first == tagKey &&
-                                    !isPhonebookAdmin
+                                    (!isPhonebookAdmin && !isGroupementAdmin)
                                 ? WidgetStateProperty.all(Colors.black)
                                 : WidgetStateProperty.all(Colors.grey),
                             onChanged:
                                 rolesTagList.keys.first == tagKey &&
-                                    !isPhonebookAdmin
+                                    (!isPhonebookAdmin && !isGroupementAdmin)
                                 ? null
                                 : (value) {
                                     rolesTagList[tagKey] = AsyncData([value!]);
