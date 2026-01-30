@@ -69,6 +69,9 @@ class PhonebookRouter {
               QRoute(
                 path: addEditMember,
                 builder: () => membership_editor_page.MembershipEditorPage(),
+                middleware: [
+                  DeferredLoadingMiddleware(membership_editor_page.loadLibrary),
+                ],
               ),
             ],
           ),
