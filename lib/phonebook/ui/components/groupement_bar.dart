@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/phonebook/class/association_groupement.dart';
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_groupement_list_provider.dart';
 import 'package:titan/phonebook/router.dart';
+import 'package:titan/phonebook/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/layouts/bottom_modal_template.dart';
+import 'package:titan/tools/ui/layouts/button.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/layouts/item_chip.dart';
 import 'package:titan/user/providers/user_provider.dart';
@@ -29,7 +34,15 @@ class GroupementsBar extends HookConsumerWidget {
     final associationGroupementList = ref.watch(
       associationGroupementListProvider,
     );
+    final associationGroupementListNotifier = ref.watch(
+      associationGroupementListProvider.notifier,
+    );
     final me = ref.watch(userProvider);
+
+    void displayToastWithContext(TypeMsg type, String msg) {
+      displayToast(context, type, msg);
+    }
+
     useEffect(() {
       Future(() {
         if (associationGroupement.id != "") {
@@ -42,6 +55,52 @@ class GroupementsBar extends HookConsumerWidget {
       });
       return;
     }, [dataKey]);
+
+    void showEditDialog(AssociationGroupement item) => showCustomBottomModal(
+      context: context,
+      modal: BottomModalTemplate(
+        title: item.name,
+        actions: [
+          Button(
+            text: PhonebookTextConstants.edit,
+            onPressed: () {
+              associationGroupementNotifier.setAssociationGroupement(item);
+              QR.to(
+                PhonebookRouter.root +
+                    PhonebookRouter.admin +
+                    PhonebookRouter.addEditGroupement,
+              );
+            },
+          ),
+          SizedBox(height: 20),
+          Button.danger(
+            text: PhonebookTextConstants.delete,
+            onPressed: () async {
+              void popWithContext() {
+                Navigator.of(context).pop(); // Close modal
+              }
+
+              final result = await associationGroupementListNotifier
+                  .deleteAssociationGroupement(item);
+              if (result && context.mounted) {
+                popWithContext();
+                displayToastWithContext(
+                  TypeMsg.msg,
+                  PhonebookTextConstants.deletedGroupement,
+                );
+              }
+              if (!result && context.mounted) {
+                displayToastWithContext(
+                  TypeMsg.error,
+                  PhonebookTextConstants.deletingError,
+                );
+              }
+            },
+          ),
+        ],
+        child: SizedBox.shrink(),
+      ),
+    );
 
     return AsyncChild(
       value: associationGroupementList,
@@ -89,6 +148,11 @@ class GroupementsBar extends HookConsumerWidget {
                           : associationGroupementNotifier
                                 .resetAssociationGroupement();
                     },
+                    onLongPress: isAdmin
+                        ? () {
+                            showEditDialog(item);
+                          }
+                        : null,
                     selected: selected,
                     child: Text(
                       item.name,

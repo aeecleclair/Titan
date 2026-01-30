@@ -36,9 +36,11 @@ class PhonebookTextConstants {
   static const String deactivating = "Désactiver l'association ?";
   static const String deactivatingError = "Erreur lors de la désactivation";
   static const String detail = "Détail :";
+  static const String delete = "Supprimer";
   static const String deleteAssociation =
       "Supprimer l'association ?\nCela va effacer tout l'historique de l'association";
   static const String deletedAssociation = "Association supprimée";
+  static const String deletedGroupement = "Gorupement d'association supprimé";
   static const String deletedMember = "Membre supprimé";
   static const String deleting = "Suppression";
   static const String deletingError = "Erreur lors de la suppression";
