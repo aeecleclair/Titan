@@ -57,9 +57,8 @@ class GroupementsBar extends HookConsumerWidget {
             ? HorizontalListView.builder(
                 items: associationGroupements,
                 height: 40,
-                firstChild: restrictToManaged
-                    ? null
-                    : ItemChip(
+                firstChild: !restrictToManaged && isAdmin
+                    ? ItemChip(
                         child: const Text(
                           "+",
                           style: TextStyle(
@@ -76,7 +75,8 @@ class GroupementsBar extends HookConsumerWidget {
                                 PhonebookRouter.addEditGroupement,
                           );
                         },
-                      ),
+                      )
+                    : null,
                 itemBuilder: (context, e, index) {
                   final item = associationGroupements[index];
                   final selected = associationGroupement == item;
