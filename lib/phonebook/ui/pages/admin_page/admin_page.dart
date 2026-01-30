@@ -42,7 +42,7 @@ class AdminPage extends HookConsumerWidget {
     final roleNotifier = ref.watch(rolesTagsProvider.notifier);
     final isAdmin = ref.watch(isAdminProvider);
     final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
-    final isGroupementAdminProvider = ref.watch(groupementAdminProvider);
+    final groupementAdminProviderList = ref.watch(groupementAdminProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -77,7 +77,7 @@ class AdminPage extends HookConsumerWidget {
                         GestureDetector(
                           onTap:
                               isPhonebookAdmin ||
-                                  isGroupementAdminProvider.isNotEmpty
+                                  groupementAdminProviderList.isNotEmpty
                               ? () {
                                   QR.to(
                                     PhonebookRouter.root +
@@ -97,7 +97,7 @@ class AdminPage extends HookConsumerWidget {
                             height: 100,
                             color:
                                 isPhonebookAdmin ||
-                                    isGroupementAdminProvider.isNotEmpty
+                                    groupementAdminProviderList.isNotEmpty
                                 ? Colors.white
                                 : ColorConstants.deactivated2,
                             child: Center(
@@ -118,8 +118,16 @@ class AdminPage extends HookConsumerWidget {
                             ),
                           )
                         else
-                          ...associationFilteredList.map(
-                            (association) => Padding(
+                          ...associationFilteredList.map((association) {
+                            if (!isPhonebookAdmin || !isAdmin) {
+                              if (!groupementAdminProviderList.any(
+                                (groupement) =>
+                                    groupement.id == association.groupementId,
+                              )) {
+                                return const SizedBox.shrink();
+                              }
+                            }
+                            return Padding(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 20,
                               ),
@@ -133,14 +141,14 @@ class AdminPage extends HookConsumerWidget {
                                     ),
                                 canDelete:
                                     isPhonebookAdmin ||
-                                    isGroupementAdminProvider.any(
+                                    groupementAdminProviderList.any(
                                       (groupement) =>
                                           groupement.id ==
                                           association.groupementId,
                                     ),
                                 canEdit:
                                     isPhonebookAdmin ||
-                                    isGroupementAdminProvider.any(
+                                    groupementAdminProviderList.any(
                                       (groupement) =>
                                           groupement.id ==
                                           association.groupementId,
@@ -233,8 +241,8 @@ class AdminPage extends HookConsumerWidget {
                                         );
                                 },
                               ),
-                            ),
-                          ),
+                            );
+                          }),
                       ],
                     );
                   },
