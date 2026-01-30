@@ -15,6 +15,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/button.dart';
 import 'package:titan/tools/ui/layouts/item_chip.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 
 class AssociationGroupementAddEditPage extends HookConsumerWidget {
@@ -60,6 +61,11 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
               canBeEmpty: false,
             ),
             const SizedBox(height: 20),
+            AlignLeftText(
+              PhonebookTextConstants.selectManagerGroup,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
             AsyncChild(
               value: groups,
               builder: (context, groupList) => SizedBox(
@@ -93,7 +99,9 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 50),
             Button(
-              text: AdminTextConstants.add,
+              text: associationGroupement.id.isEmpty
+                  ? AdminTextConstants.add
+                  : AdminTextConstants.edit,
               onPressed: () async {
                 if (name.text.isEmpty) {
                   displayToastWithContext(
@@ -122,7 +130,7 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
                     if (value) {
                       displayToastWithContext(
                         TypeMsg.msg,
-                        PhonebookTextConstants.addedAssociation,
+                        PhonebookTextConstants.updatedAssociationGroupement,
                       );
                       QR.back();
                     } else {
@@ -144,7 +152,7 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
                   if (value) {
                     displayToastWithContext(
                       TypeMsg.msg,
-                      PhonebookTextConstants.addedAssociation,
+                      PhonebookTextConstants.addedAssociationGroupement,
                     );
                     QR.back();
                   } else {

@@ -7,6 +7,8 @@ class PhonebookTextConstants {
   static const String addAssociationGroupement =
       "Ajouter un type d'association";
   static const String addedAssociation = "Association ajoutée";
+  static const String addedAssociationGroupement =
+      "Groupement d'association ajouté";
   static const String addedMember = "Membre ajouté";
   static const String addingError = "Erreur lors de l'ajout";
   static const String addMember = "Ajouter un membre";
@@ -118,11 +120,16 @@ class PhonebookTextConstants {
   static const String research = "Rechercher";
   static const String rolePure = "Rôle";
 
+  static const String selectManagerGroup =
+      "Sélectionner le groupe administrateur";
+
   static const String tooHeavyAssociationPicture =
       "L'image est trop lourde (max 4Mo)";
 
   static const String updateGroups = "Mettre à jour les groupes";
   static const String updatedAssociation = "Association modifiée";
+  static const String updatedAssociationGroupement =
+      "Groupement d'association modifié";
   static const String updatedAssociationPicture =
       "La photo d'association a été changée";
   static const String updatedGroups = "Groupes mis à jour";
