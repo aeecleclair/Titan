@@ -7,9 +7,10 @@ import 'package:titan/phonebook/class/complete_member.dart';
 import 'package:titan/phonebook/class/membership.dart';
 import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 
-int getPosition(CompleteMember member, String associationId) {
+int getPosition(CompleteMember member, String associationId, int year) {
   Membership membership = member.memberships.firstWhere(
-    (element) => element.associationId == associationId,
+    (element) =>
+        element.associationId == associationId && element.mandateYear == year,
   );
   return membership.order;
 }
@@ -17,10 +18,14 @@ int getPosition(CompleteMember member, String associationId) {
 List<CompleteMember> sortedMembers(
   List<CompleteMember> members,
   String associationId,
+  int year,
 ) {
   return members..sort(
-    (a, b) =>
-        getPosition(a, associationId).compareTo(getPosition(b, associationId)),
+    (a, b) => getPosition(
+      a,
+      associationId,
+      year,
+    ).compareTo(getPosition(b, associationId, year)),
   );
 }
 
