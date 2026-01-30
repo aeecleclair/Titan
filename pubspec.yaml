@@ -7,8 +7,8 @@ version: 2.0.4+162
 minimal_hyperion_version: 5.0.0
 
 environment:
-  sdk: ^3.9.2
-  flutter: 3.38.6
+  sdk: ^3.10.0
+  flutter: ^3.38.6
 
 dependencies:
   app_links: ^6.4.0

@@ -58,6 +58,11 @@ jobs:
           java-version: "23.x"
           cache: "gradle"
 
+      # Remove ^ to fix flutter version parsing
+      - name: Fix Flutter Version in Pubspec
+        run: |
+          sed -i 's/flutter: ^/flutter: /' pubspec.yaml
+
       - name: Setup Flutter SDK
         uses: subosito/flutter-action@v2
         with:
