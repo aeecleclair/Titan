@@ -78,8 +78,8 @@ class DrawerTemplate extends HookConsumerWidget {
                     Transform(
                       alignment: Alignment.centerLeft,
                       transform: Matrix4.identity()
-                        ..translate(translateVal)
-                        ..scale(scaleVal),
+                        ..translateByDouble(translateVal, 0, 0, 1)
+                        ..scaleByDouble(scaleVal, scaleVal, scaleVal, 1),
                       child: GestureDetector(
                         onTap: () {
                           if (controller.isCompleted) {

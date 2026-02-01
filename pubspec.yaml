@@ -70,9 +70,9 @@ dependencies:
   timeago: ^3.7.0
   timezone: ^0.10.0
   tuple: ^2.0.0
-  universal_html: ^2.0.8
   url_launcher: ^6.2.5
   uuid: ^4.5.1
+  web: ^1.1.1
   webview_flutter: ^4.10.0
   yaml: ^3.1.3
 

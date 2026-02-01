@@ -13,7 +13,7 @@ import 'package:titan/tools/cache/cache_manager.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/repository/repository.dart';
 import 'dart:convert';
-import 'package:universal_html/html.dart' as html;
+import 'package:web/web.dart' as web;
 
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
@@ -140,7 +140,7 @@ class OpenIdTokenProvider
   }
 
   Future getTokenFromRequest() async {
-    html.WindowBase? popupWin;
+    web.Window? popupWin;
     final codeVerifier = generateRandomString(128);
 
     final authUrl =
@@ -149,7 +149,7 @@ class OpenIdTokenProvider
     state = const AsyncValue.loading();
     try {
       if (kIsWeb) {
-        popupWin = html.window.open(
+        popupWin = web.window.open(
           authUrl,
           "Hyperion",
           "width=800, height=900, scrollbars=yes",
@@ -210,9 +210,9 @@ class OpenIdTokenProvider
           }
         }
 
-        html.window.onMessage.listen((event) {
+        web.window.onMessage.listen((event) {
           if (event.data.toString().contains('code=')) {
-            login(event.data);
+            login(event.data.toString());
           }
         });
       } else {
