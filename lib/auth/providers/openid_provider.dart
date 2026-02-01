@@ -13,7 +13,7 @@ import 'package:titan/tools/cache/cache_manager.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/repository/repository.dart';
 import 'dart:convert';
-import 'package:web/web.dart' as web;
+import 'package:titan/tools/ui/web-window/web_window.dart' as web;
 
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
@@ -140,7 +140,6 @@ class OpenIdTokenProvider
   }
 
   Future getTokenFromRequest() async {
-    web.Window? popupWin;
     final codeVerifier = generateRandomString(128);
 
     final authUrl =
@@ -149,7 +148,7 @@ class OpenIdTokenProvider
     state = const AsyncValue.loading();
     try {
       if (kIsWeb) {
-        popupWin = web.window.open(
+        dynamic popupWin = web.window().open(
           authUrl,
           "Hyperion",
           "width=800, height=900, scrollbars=yes",
@@ -210,7 +209,7 @@ class OpenIdTokenProvider
           }
         }
 
-        web.window.onMessage.listen((event) {
+        web.window().onMessage.listen((event) {
           if (event.data.toString().contains('code=')) {
             login(event.data.toString());
           }

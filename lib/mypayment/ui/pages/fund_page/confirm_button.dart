@@ -12,7 +12,7 @@ import 'package:titan/mypayment/providers/my_wallet_provider.dart';
 import 'package:titan/mypayment/providers/tos_provider.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
-import 'package:web/web.dart' as web;
+import 'package:titan/tools/ui/web-window/web_window.dart' as web;
 import 'package:url_launcher/url_launcher.dart';
 
 class ConfirmFundButton extends ConsumerWidget {
@@ -60,7 +60,7 @@ class ConfirmFundButton extends ConsumerWidget {
     }
 
     void helloAssoCallback(String fundingUrl) async {
-      web.Window? popupWin = web.window.open(
+      dynamic popupWin = web.window().open(
         fundingUrl,
         "HelloAsso",
         "width=800, height=900, scrollbars=yes",
@@ -97,7 +97,7 @@ class ConfirmFundButton extends ConsumerWidget {
         Navigator.pop(context, code);
       }
 
-      web.window.onMessage.listen((event) {
+      web.window().onMessage.listen((event) {
         if (event.data.toString().contains('code=')) {
           login(event.data.toString());
         }
