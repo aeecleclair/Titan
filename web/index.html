@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <base href="$FLUTTER_BASE_HREF" />
@@ -125,6 +125,7 @@
   </head>
   <body>
     <script
+      defer
       src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.js"
       type="text/javascript"
     ></script>
@@ -212,7 +213,7 @@
           setTimeout(() => {
             if (!scriptLoaded) {
               console.warn(
-                "Failed to load app from service worker. Falling back to plain <script> tag."
+                "Failed to load app from service worker. Falling back to plain <script> tag.",
               );
               loadMainDartJs();
             }
