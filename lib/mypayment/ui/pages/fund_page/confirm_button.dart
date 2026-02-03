@@ -60,7 +60,7 @@ class ConfirmFundButton extends ConsumerWidget {
     }
 
     void helloAssoCallback(String fundingUrl) async {
-      dynamic popupWin = web.window().open(
+      web.Window? popupWin = web.open(
         fundingUrl,
         "HelloAsso",
         "width=800, height=900, scrollbars=yes",
@@ -73,7 +73,7 @@ class ConfirmFundButton extends ConsumerWidget {
 
       final completer = Completer();
       void checkWindowClosed() {
-        if (popupWin.closed == true) {
+        if (popupWin.closed() == true) {
           completer.complete();
         } else {
           Future.delayed(const Duration(milliseconds: 100), checkWindowClosed);
@@ -97,7 +97,7 @@ class ConfirmFundButton extends ConsumerWidget {
         Navigator.pop(context, code);
       }
 
-      web.window().onMessage.listen((event) {
+      web.listen((event) {
         if (event.data.toString().contains('code=')) {
           login(event.data.toString());
         }
