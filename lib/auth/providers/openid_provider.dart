@@ -140,7 +140,6 @@ class OpenIdTokenProvider
   }
 
   Future getTokenFromRequest() async {
-    web.Window? popupWin;
     final codeVerifier = generateRandomString(128);
 
     final authUrl =
@@ -149,6 +148,7 @@ class OpenIdTokenProvider
     state = const AsyncValue.loading();
     try {
       if (kIsWeb) {
+        web.Window? popupWin;
         popupWin = web.window.open(
           authUrl,
           "Hyperion",
@@ -157,6 +157,7 @@ class OpenIdTokenProvider
 
         final completer = Completer();
         void checkWindowClosed() {
+          print("A ${popupWin?.closed}");
           if (popupWin != null && popupWin!.closed == true) {
             completer.complete();
           } else {
@@ -181,6 +182,7 @@ class OpenIdTokenProvider
           final receivedUri = Uri.parse(data);
           final token = receivedUri.queryParameters["code"];
           if (popupWin != null) {
+            print("B ${popupWin?.closed}");
             popupWin!.close();
             popupWin = null;
           }
