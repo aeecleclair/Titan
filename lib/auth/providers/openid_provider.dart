@@ -13,7 +13,7 @@ import 'package:titan/tools/cache/cache_manager.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/repository/repository.dart';
 import 'dart:convert';
-import 'package:universal_html/html.dart' as html;
+import 'package:titan/tools/ui/web-window/web_window.dart' as web;
 
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
@@ -140,7 +140,6 @@ class OpenIdTokenProvider
   }
 
   Future getTokenFromRequest() async {
-    html.WindowBase? popupWin;
     final codeVerifier = generateRandomString(128);
 
     final authUrl =
@@ -149,15 +148,23 @@ class OpenIdTokenProvider
     state = const AsyncValue.loading();
     try {
       if (kIsWeb) {
-        popupWin = html.window.open(
+        print("A");
+        web.Window? popupWin = web.open(
           authUrl,
           "Hyperion",
           "width=800, height=900, scrollbars=yes",
         );
+        print("B");
 
         final completer = Completer();
         void checkWindowClosed() {
-          if (popupWin != null && popupWin!.closed == true) {
+          print("H ${popupWin == null}");
+          popupWin != null ? print("I ${popupWin!.closed()}") : print("I null");
+          if (popupWin != null && popupWin!.closed() == true) {
+            popupWin!.close();
+            print("L");
+            print("M ${popupWin!.closed()}");
+            print("N");
             completer.complete();
           } else {
             Future.delayed(
@@ -167,7 +174,10 @@ class OpenIdTokenProvider
           }
         }
 
+        print("C");
+
         checkWindowClosed();
+        print("D");
         completer.future.then((_) {
           state.maybeWhen(
             loading: () {
@@ -176,6 +186,7 @@ class OpenIdTokenProvider
             orElse: () {},
           );
         });
+        print("E");
 
         void login(String data) async {
           final receivedUri = Uri.parse(data);
@@ -210,11 +221,17 @@ class OpenIdTokenProvider
           }
         }
 
-        html.window.onMessage.listen((event) {
+        print("F");
+
+        web.listen((event) {
+          print("J");
+          print(event.data.toString());
+          print("K");
           if (event.data.toString().contains('code=')) {
-            login(event.data);
+            login(event.data.toString());
           }
         });
+        print("G");
       } else {
         AuthorizationTokenResponse resp = await appAuth
             .authorizeAndExchangeCode(

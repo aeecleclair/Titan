@@ -12,7 +12,7 @@ import 'package:titan/mypayment/providers/my_wallet_provider.dart';
 import 'package:titan/mypayment/providers/tos_provider.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
-import 'package:universal_html/html.dart' as html;
+import 'package:titan/tools/ui/web-window/web_window.dart' as web;
 import 'package:url_launcher/url_launcher.dart';
 
 class ConfirmFundButton extends ConsumerWidget {
@@ -60,13 +60,11 @@ class ConfirmFundButton extends ConsumerWidget {
     }
 
     void helloAssoCallback(String fundingUrl) async {
-      html.WindowBase? popupWin =
-          html.window.open(
-                fundingUrl,
-                "HelloAsso",
-                "width=800, height=900, scrollbars=yes",
-              )
-              as html.WindowBase?;
+      web.Window? popupWin = web.open(
+        fundingUrl,
+        "HelloAsso",
+        "width=800, height=900, scrollbars=yes",
+      );
 
       if (popupWin == null) {
         displayToastWithContext(TypeMsg.error, "Veuillez autoriser les popups");
@@ -75,7 +73,7 @@ class ConfirmFundButton extends ConsumerWidget {
 
       final completer = Completer();
       void checkWindowClosed() {
-        if (popupWin.closed == true) {
+        if (popupWin.closed() == true) {
           completer.complete();
         } else {
           Future.delayed(const Duration(milliseconds: 100), checkWindowClosed);
@@ -99,9 +97,9 @@ class ConfirmFundButton extends ConsumerWidget {
         Navigator.pop(context, code);
       }
 
-      html.window.onMessage.listen((event) {
+      web.listen((event) {
         if (event.data.toString().contains('code=')) {
-          login(event.data);
+          login(event.data.toString());
         }
       });
     }
