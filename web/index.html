@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <base href="$FLUTTER_BASE_HREF" />
@@ -160,7 +160,7 @@
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
     <script>
-      var serviceWorkerVersion = "{{flutter_service_worker_version}}";
+      var serviceWorkerVersion = {{flutter_service_worker_version}};
       var scriptLoaded = false;
       function loadMainDartJs() {
         if (scriptLoaded) {
@@ -212,7 +212,7 @@
           setTimeout(() => {
             if (!scriptLoaded) {
               console.warn(
-                "Failed to load app from service worker. Falling back to plain <script> tag."
+                "Failed to load app from service worker. Falling back to plain <script> tag.",
               );
               loadMainDartJs();
             }
