@@ -14,6 +14,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/repository/repository.dart';
 import 'dart:convert';
 import 'package:web/web.dart' as web;
+import 'dart:js_interop';
 
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
@@ -213,8 +214,9 @@ class OpenIdTokenProvider
         }
 
         web.window.onMessage.listen((event) {
-          if (event.data.toString().contains('code=')) {
-            login(event.data.toString());
+          final data = (event.data as JSString).toDart;
+          if (data.contains('code=')) {
+            login(data);
           }
         });
       } else {
