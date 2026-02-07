@@ -2,11 +2,11 @@ name: titan
 description: Titan est le frontend d'une application de gestion de la vie associative
 
 publish_to: "none"
-version: 2.3.0+193
+version: 2.3.2+196
 
 environment:
   sdk: ^3.9.2
-  flutter: 3.35.7
+  flutter: 3.38.9
 
 dependencies:
   app_links: ^6.4.0
@@ -36,7 +36,7 @@ dependencies:
   flutter_riverpod: ^2.1.1
   flutter_secure_storage: ^10.0.0-beta
   flutter_svg: ^2.0.7
-  google_fonts: ^6.2.1
+  google_fonts: ^8.0.1
   heroicons: ^0.11.0
   hooks_riverpod: ^2.1.1
   http: ^1.0.0
