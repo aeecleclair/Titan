@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:flutter/widget_previews.dart';
 
 class AdminButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -16,6 +17,13 @@ class AdminButton extends StatelessWidget {
     this.text = TextConstants.admin,
     this.colors,
   });
+
+  @Preview(name: "Truc", brightness: .light, size: Size(500, 500))
+  static Widget truc() {
+    return Center(
+      child: AdminButton(onTap: () {}, text: "Yo"),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
