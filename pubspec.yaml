@@ -36,7 +36,7 @@ dependencies:
   flutter_local_notifications: ^19.1.0
   flutter_localizations:
     sdk: flutter
-  flutter_markdown: ^0.6.18+3
+  flutter_markdown: ^0.7.7+1
   flutter_riverpod: ^2.1.1
   flutter_secure_storage: ^10.0.0-beta
   flutter_svg: ^2.0.7
