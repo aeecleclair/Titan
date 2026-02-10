@@ -157,13 +157,24 @@ If you host a Plausible instance, you may set Plausible's URL to get a few analy
 The Flutter app needs a host device to run. Below we assume, for development purposes, that you are about to run the **web** version.
 NB: a device is a platform that can run the Flutter app; thus a browser does count as a device!
 
+<details>
+<summary>
+
 ### Using VS Code
+
+</summary>
 
 1. In the activity bar (the leftmost part), click the "Run and Debug" icon (the play button).
 2. Click the green play button.
 3. In the terminal, choose your device.
 
+</details>
+<details>
+<summary>
+
 ### Using the command-line interface
+
+</summary>
 
 ```bash
 flutter run --flavor alpha
@@ -183,6 +194,8 @@ flutter run --flavor <your_flavor> [ -d <your_device> ]
 flutter run --flavor alpha -d chrome
 flutter run --flavor dev -d web-server
 ```
+
+</details>
 
 ### Check the app is running
 
