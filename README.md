@@ -102,16 +102,22 @@ NB: a device is a platform that can run the Flutter app; thus a browser does cou
 ### Using the command-line interface
 
 ```bash
-flutter run --flavor <your_flavor> --web-port 3000
+flutter run --flavor alpha
 ```
 
-- Where the flavor can be any string such that a `<YOUR_FLAVOR>_HOST` key exists in the `.env` file: if you changed the values only, not the keys, the flavor can be any of `dev`, `alpha`, or `prod` (whose policy is to only accept the prod client).
+More generally you can use:
+
+```bash
+flutter run --flavor <your_flavor> [ -d <your_device> ]
+```
+
+- Where the flavor can be any of `dev`, `alpha`, or `prod` (whose policy is to only accept the prod client).
 - Then in the interactive terminal, choose your device.
   Alternatively you can add a flag `-d` to indicate non-interactively your favorite device, for instance:
 
 ```bash
-flutter run --flavor alpha --web-port 3000 -d chrome
-flutter run --flavor dev --web-port 3000 -d web-server
+flutter run --flavor alpha -d chrome
+flutter run --flavor dev -d web-server
 ```
 
 ### Check the app is running
