@@ -5,13 +5,43 @@ Titan is a cross platform frontend written in Flutter for an open-source project
 Our builds of Titan are called MyECL and can be downloaded from the App Store and from the Google Play Store.
 Titan is designed to be launched on Web, Android and iOS platforms.
 
-## 1. Setup your Flutter environment
+## 0. Prerequisites
 
-- Install Flutter:
-  https://docs.flutter.dev/get-started/install
+- Git
+- VS Code
 
 <details>
-<summary>Windows</summary>
+<summary>On Linux...</summary>
+
+Ensure these commmon packages are installed (adapt the command to your distro's package manager):
+
+```bash
+sudo apt-get install -y git curl unzip zip xz-utils libglu1-mesa
+```
+
+</details>
+
+## 1. Setup your Flutter environment
+
+Choose one way of installing Flutter:
+
+<details>
+<summary>
+
+### Using VS Code (recommended, even if you use another text editor)
+
+</summary>
+
+- Open VS Code
+- **Install the recommended official Flutter extension** (id: `dart-code.flutter`)
+- After installation, the extension prompts you to install automatically the Flutter SDK.
+  - Click **"Download SDK"**.
+    To feel organized, you may choose the folder with all your Git repositories.
+  - Then click **"Clone Flutter"**.
+    Wait a couple minutes.
+
+<details>
+<summary>On Windows...</summary>
 
 If you get an error saying roughly:
 
@@ -27,24 +57,57 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser
 
 </details>
 
-- Setup VS Code for Flutter development:
-  https://docs.flutter.dev/get-started/editor?tab=vscode
+- After downloading (this takes a few minutes), click **"Add SDK to PATH"**
 
-> [!TIP]
-> Remember, if you have any problem with Flutter, don't hesitate to troubleshoot using:
+</details>
+
+<details>
+<summary>
+
+### Manually (the old way)
+
+</summary>
+
+Visit [Set up Flutter for your needs](https://docs.flutter.dev/install/custom), with amounts to visiting these two pages:
+
+- [Install Flutter manually](https://docs.flutter.dev/install/manual)
+- [Flutter editor support](https://docs.flutter.dev/tools/editors)
+
+You're on your own.
+
+</details>
+
+### Check your installation:
+
+- Open a terminal (Ctrl + J)
+- Run `flutter doctor`:
 
 ```bash
 flutter doctor
 ```
 
 > [!NOTE]
-> You do not need to have it all green: having Flutter correctly installed, a browser, and VS Code with the extensions is enough, most people don't need more than that!
+> You do not need to have it all green: having **Flutter** correctly installed, a **browser**, and VS Code **with the extensions** is enough, most people don't need more than that!
+
+> [!TIP]
+> Remember, if you ever have any problem with Flutter, don't hesitate to troubleshoot using:
+>
+> ```bash
+> flutter doctor
+> ```
+
+- Install Flutter:
+  https://docs.flutter.dev/get-started/install
+
+- Setup VS Code for Flutter development:
+  https://docs.flutter.dev/get-started/editor?tab=vscode
 
 ## 2.Install dependencies
 
-### Upgrade Flutter
+<details>
+<summary>If you already had Flutter installed...</summary>
 
-Upgrade flutter to the latest stable version:
+Upgrade Flutter to the latest stable version:
 
 ```bash
 flutter upgrade
@@ -56,7 +119,7 @@ Upgrade Pub, which is the package manager of the Dart language, used by the Flut
 flutter pub upgrade
 ```
 
-### Install dependencies (for real)
+</details>
 
 Install the dependencies you'll need using Pub (referenced in the [pubspec.yaml](pubspec.yaml) file):
 
@@ -64,6 +127,7 @@ Install the dependencies you'll need using Pub (referenced in the [pubspec.yaml]
 flutter pub get
 ```
 
+> [!INFO]
 > If you need to remove all modules from your virtual environnement, run:
 >
 > ```bash
