@@ -33,7 +33,7 @@
 
 <!--Anything relevant that does not quite fit in the summary-->
 
-<!--Don't touch thses two tags-->
+<!--Don't touch these two tags-->
 <details>
 <summary>
 

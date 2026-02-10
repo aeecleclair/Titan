@@ -4,7 +4,11 @@ class PhonebookTextConstants {
   static const String activeMandate = "Mandat actif :";
   static const String add = "Ajouter";
   static const String addAssociation = "Ajouter une association";
+  static const String addAssociationGroupement =
+      "Ajouter un type d'association";
   static const String addedAssociation = "Association ajoutée";
+  static const String addedAssociationGroupement =
+      "Groupement d'association ajouté";
   static const String addedMember = "Membre ajouté";
   static const String addingError = "Erreur lors de l'ajout";
   static const String addMember = "Ajouter un membre";
@@ -34,21 +38,28 @@ class PhonebookTextConstants {
   static const String deactivating = "Désactiver l'association ?";
   static const String deactivatingError = "Erreur lors de la désactivation";
   static const String detail = "Détail :";
+  static const String delete = "Supprimer";
   static const String deleteAssociation =
       "Supprimer l'association ?\nCela va effacer tout l'historique de l'association";
   static const String deletedAssociation = "Association supprimée";
+  static const String deletedGroupement = "Gorupement d'association supprimé";
   static const String deletedMember = "Membre supprimé";
   static const String deleting = "Suppression";
   static const String deletingError = "Erreur lors de la suppression";
   static const String description = "Description";
 
   static const String edit = "Modifier";
+  static const String editAssociationGroupement =
+      "Modifier un type d'association";
   static const String editMembership = "Modifier le rôle";
   static const String email = "Email :";
   static const String emailCopied = "Email copié dans le presse-papier";
+  static const String emailListCopied = "Liste d'emails copiée";
   static const String emptyApparentName = "Veuillez entrer un nom de role";
   static const String emptyFieldError = "Un champ n'est pas rempli";
   static const String emptyKindError = "Veuillez choisir un type d'association";
+  static const String emptyManagerGroupError =
+      "Veuillez choisir un groupe administrateur";
   static const String emptyMember = "Aucun membre sélectionné";
   static const String errorAssociationLoading =
       "Erreur lors du chargement de l'association";
@@ -110,11 +121,16 @@ class PhonebookTextConstants {
   static const String research = "Rechercher";
   static const String rolePure = "Rôle";
 
+  static const String selectManagerGroup =
+      "Sélectionner le groupe administrateur";
+
   static const String tooHeavyAssociationPicture =
       "L'image est trop lourde (max 4Mo)";
 
   static const String updateGroups = "Mettre à jour les groupes";
   static const String updatedAssociation = "Association modifiée";
+  static const String updatedAssociationGroupement =
+      "Groupement d'association modifié";
   static const String updatedAssociationPicture =
       "La photo d'association a été changée";
   static const String updatedGroups = "Groupes mis à jour";

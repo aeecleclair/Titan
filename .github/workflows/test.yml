@@ -3,7 +3,7 @@ name: Test
 
 on:
   pull_request:
-    types: [opened, edited, ready_for_review, synchronize]
+    types: [opened, ready_for_review, synchronize]
   push:
     branches:
       - main
@@ -16,6 +16,11 @@ jobs:
     steps:
       - name: Check out the code
         uses: actions/checkout@v4
+
+      # Remove ^ to fix flutter version parsing
+      - name: Fix Flutter Version in Pubspec
+        run: |
+          sed -i 's/flutter: ^/flutter: /' pubspec.yaml
 
       - uses: subosito/flutter-action@v2
         with:

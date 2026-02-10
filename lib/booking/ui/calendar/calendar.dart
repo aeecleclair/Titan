@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/booking/class/booking.dart';
+import 'package:titan/booking/providers/booking_provider.dart';
 import 'package:titan/booking/providers/confirmed_booking_list_provider.dart';
+import 'package:titan/booking/providers/manager_booking_list_provider.dart';
 import 'package:titan/booking/providers/manager_confirmed_booking_list_provider.dart';
+import 'package:titan/booking/providers/selected_days_provider.dart';
+import 'package:titan/booking/providers/user_booking_list_provider.dart';
+import 'package:titan/booking/router.dart';
+import 'package:titan/booking/tools/constants.dart';
 import 'package:titan/booking/ui/calendar/appointment_data_source.dart';
 import 'package:titan/booking/ui/calendar/calendar_dialog.dart';
 import 'package:titan/drawer/providers/is_web_format_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 
 class Calendar extends HookConsumerWidget {
   final bool isManagerPage;
@@ -17,10 +27,29 @@ class Calendar extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookings = isManagerPage
-        ? ref.watch(managerConfirmedBookingListProvider)
+        ? ref.watch(managerBookingListProvider)
         : ref.watch(confirmedBookingListProvider);
+    final bookingNotifier = ref.watch(bookingProvider.notifier);
+    final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
+    final bookingListNotifier = ref.watch(managerBookingListProvider.notifier);
+    final confirmedBookingListNotifier = ref.watch(
+      confirmedBookingListProvider.notifier,
+    );
     final isWebFormat = ref.watch(isWebFormatProvider);
+    final managerConfirmedBookingListNotifier = ref.watch(
+      managerConfirmedBookingListProvider.notifier,
+    );
     final CalendarController calendarController = CalendarController();
+
+    void handleBooking(Booking booking) {
+      bookingNotifier.setBooking(booking);
+      final recurrentDays = SfCalendar.parseRRule(
+        booking.recurrenceRule,
+        booking.start,
+      ).weekDays;
+      selectedDaysNotifier.setSelectedDays(recurrentDays);
+      QR.to(BookingRouter.root + BookingRouter.manager + BookingRouter.addEdit);
+    }
 
     void calendarTapped(CalendarTapDetails details, BuildContext context) {
       if (details.targetElement == CalendarElement.appointment ||
@@ -28,9 +57,81 @@ class Calendar extends HookConsumerWidget {
         final Booking booking = details.appointments![0];
         showDialog(
           context: context,
-          builder: (context) => isManagerPage
-              ? CalendarDialog(booking: booking, isManager: true)
-              : CalendarDialog(booking: booking, isManager: false),
+          builder: (context) => CalendarDialog(
+            booking: booking,
+            isManager: isManagerPage,
+            onEdit: () {
+              handleBooking(booking);
+            },
+            onCopy: () {
+              handleBooking(booking.copyWith(id: ""));
+            },
+            onConfirm: () async {
+              await showDialog(
+                context: context,
+                builder: (context) {
+                  return CustomDialogBox(
+                    title: BookingTextConstants.confirm,
+                    descriptions: BookingTextConstants.confirmBooking,
+                    onYes: () async {
+                      await tokenExpireWrapper(ref, () async {
+                        Booking newBooking = booking.copyWith(
+                          decision: Decision.approved,
+                        );
+                        bookingListNotifier
+                            .toggleConfirmed(newBooking, Decision.approved)
+                            .then((value) {
+                              if (value) {
+                                ref
+                                    .read(userBookingListProvider.notifier)
+                                    .loadUserBookings();
+                                confirmedBookingListNotifier.addBooking(
+                                  newBooking,
+                                );
+                                managerConfirmedBookingListNotifier.addBooking(
+                                  newBooking,
+                                );
+                              }
+                            });
+                      });
+                    },
+                  );
+                },
+              );
+            },
+            onDecline: () async {
+              await showDialog(
+                context: context,
+                builder: (context) {
+                  return CustomDialogBox(
+                    title: BookingTextConstants.decline,
+                    descriptions: BookingTextConstants.declineBooking,
+                    onYes: () async {
+                      await tokenExpireWrapper(ref, () async {
+                        Booking newBooking = booking.copyWith(
+                          decision: Decision.declined,
+                        );
+                        bookingListNotifier
+                            .toggleConfirmed(newBooking, Decision.declined)
+                            .then((value) {
+                              if (value) {
+                                ref
+                                    .read(userBookingListProvider.notifier)
+                                    .loadUserBookings();
+                                confirmedBookingListNotifier.deleteBooking(
+                                  newBooking,
+                                );
+                                managerConfirmedBookingListNotifier
+                                    .deleteBooking(newBooking);
+                              }
+                            });
+                      });
+                    },
+                  );
+                },
+              );
+            },
+          ),
         );
       }
     }
@@ -43,7 +144,16 @@ class Calendar extends HookConsumerWidget {
             children: [
               SfCalendar(
                 onTap: (details) => calendarTapped(details, context),
-                dataSource: AppointmentDataSource(res),
+                dataSource: AppointmentDataSource(
+                  !isManagerPage
+                      ? res
+                      : res
+                            .where(
+                              (booking) =>
+                                  booking.decision != Decision.declined,
+                            )
+                            .toList(),
+                ),
                 controller: calendarController,
                 view: CalendarView.week,
                 selectionDecoration: BoxDecoration(

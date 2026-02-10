@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class ItemChip extends StatelessWidget {
   final bool selected;
   final Function()? onTap;
+  final Function()? onLongPress;
   final Widget child;
   final bool vertical;
   const ItemChip({
     super.key,
     this.selected = false,
     this.onTap,
+    this.onLongPress,
     this.vertical = false,
     required this.child,
   });
@@ -17,6 +19,7 @@ class ItemChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
+      onLongPress: onLongPress,
       child: Container(
         width: vertical ? double.infinity : null,
         margin: EdgeInsets.symmetric(
