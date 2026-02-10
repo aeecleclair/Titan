@@ -1,4 +1,16 @@
 {
-  "editor.formatOnSave": true,
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "indentRainbow.colors": [
+    "rgba(0,0,255,0.15)",
+    "rgba(0,255,0,0.15)",
+    "rgba(255,0,0,0.15)",
+    "rgba(0,255,255,0.15)",
+    "rgba(255,0,255,0.15)",
+    "rgba(255,255,0,0.15)"
+  ],
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.rulers": [80]
+  }
 }

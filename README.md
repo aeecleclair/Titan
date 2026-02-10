@@ -3,28 +3,212 @@
 Titan is a cross platform frontend written in Flutter for an open-source project launched by ÉCLAIR, the computer science association of Ecole Centrale de Lyon. This project aims to provide students of business and engineering schools a digital tool to simplify the association process.
 
 Our builds of Titan are called MyECL and can be downloaded from the App Store and from the Google Play Store.
-
-## Setup environment
-
-Install Flutter:
-https://docs.flutter.dev/get-started/install
-
-Setup VS Code for Flutter development:
-https://docs.flutter.dev/get-started/editor?tab=vscode
-
 Titan is designed to be launched on Web, Android and iOS platforms.
 
-## Configure Titan
+## 0. Prerequisites
 
-Update [`.env`](.env) to match your Hyperion's backend:
+- Git
+- VS Code
 
-`PROD_HOST = "<<Your Production Server Host>>`
+<details>
+<summary>On Linux...</summary>
 
-You can also specify an other host for debuging:
+Ensure these commmon packages are installed (adapt the command to your distro's package manager):
 
-`DEV_HOST = "<<Your Debbuging Server Host>>`
+```bash
+sudo apt-get install -y git curl unzip zip xz-utils libglu1-mesa
+```
 
-NB: a trailing slash is required.
+</details>
+
+## 1. Setup your Flutter environment
+
+Choose one way of installing Flutter:
+
+<details>
+<summary>
+
+### Using VS Code (recommended, even if you use another text editor)
+
+</summary>
+
+- Open VS Code
+- **Install the recommended official Flutter extension** (id: `dart-code.flutter`)
+- After installation, the extension prompts you to install automatically the Flutter SDK.
+  - Click **"Download SDK"**.
+    To feel organized, you may choose the folder with all your Git repositories.
+  - Then click **"Clone Flutter"**.
+    Wait a couple minutes.
+
+<details>
+<summary>On Windows...</summary>
+
+If you get an error saying roughly:
+
+```
+because the execution of scripts is disabled on this system. Please see "get-help about_signing" for more details.
+```
+
+Then in a Powershell, run this to allow scripts executions for your user:
+
+```ps1
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser
+```
+
+</details>
+
+- After downloading (this takes a few minutes), click **"Add SDK to PATH"**
+
+</details>
+
+<details>
+<summary>
+
+### Manually (the old way)
+
+</summary>
+
+Visit [Set up Flutter for your needs](https://docs.flutter.dev/install/custom), with amounts to visiting these two pages:
+
+- [Install Flutter manually](https://docs.flutter.dev/install/manual)
+- [Flutter editor support](https://docs.flutter.dev/tools/editors)
+
+You're on your own.
+
+</details>
+
+### Check your installation:
+
+- Open a terminal (Ctrl + J)
+- Run `flutter doctor`:
+
+```bash
+flutter doctor
+```
+
+> [!NOTE]
+> You do not need to have it all green: having **Flutter** correctly installed, a **browser**, and VS Code **with the extensions** is enough, most people don't need more than that!
+
+> [!TIP]
+> Remember, if you ever have any problem with Flutter, don't hesitate to troubleshoot using:
+>
+> ```bash
+> flutter doctor
+> ```
+
+- Install Flutter:
+  https://docs.flutter.dev/get-started/install
+
+- Setup VS Code for Flutter development:
+  https://docs.flutter.dev/get-started/editor?tab=vscode
+
+## 2.Install dependencies
+
+<details>
+<summary>If you already had Flutter installed...</summary>
+
+Upgrade Flutter to the latest stable version:
+
+```bash
+flutter upgrade
+```
+
+Upgrade Pub, which is the package manager of the Dart language, used by the Flutter framework:
+
+```bash
+flutter pub upgrade
+```
+
+</details>
+
+Install the dependencies you'll need using Pub (referenced in the [pubspec.yaml](pubspec.yaml) file):
+
+```bash
+flutter pub get
+```
+
+> [!INFO]
+> If you need to remove all modules from your virtual environnement, run:
+>
+> ```bash
+> flutter clean
+> ```
+
+## 3. Complete the dotenv (`.env`)
+
+> [!IMPORTANT]
+> Copy the [`.env.template`](.env.template) file in a new `.env` file.
+
+```bash
+cp .env.template .env
+```
+
+You may update [`.env`](.env) to match your Hyperion backends.
+If you host a Plausible instance, you may set Plausible's URL to get a few analytics.
+
+> [!TIP]
+> NB: a trailing slash is required at the end of every URL.
+
+## 4. Launch the client
+
+> [!WARNING]
+> Beforehand, check that the Hyperion instance you want to connect to is up and running.
+
+The Flutter app needs a host device to run. Below we assume, for development purposes, that you are about to run the **web** version.
+NB: a device is a platform that can run the Flutter app; thus a browser does count as a device!
+
+<details>
+<summary>
+
+### Using VS Code
+
+</summary>
+
+1. In the activity bar (the leftmost part), click the "Run and Debug" icon (the play button).
+2. Click the green play button.
+3. In the terminal, choose your device.
+
+</details>
+<details>
+<summary>
+
+### Using the command-line interface
+
+</summary>
+
+```bash
+flutter run --flavor alpha
+```
+
+More generally you can use:
+
+```bash
+flutter run --flavor <your_flavor> [ -d <your_device> ]
+```
+
+- Where the flavor can be any of `dev`, `alpha`, or `prod` (whose policy is to only accept the prod client).
+- Then in the interactive terminal, choose your device.
+  Alternatively you can add a flag `-d` to indicate non-interactively your favorite device, for instance:
+
+```bash
+flutter run --flavor alpha -d chrome
+flutter run --flavor dev -d web-server
+```
+
+</details>
+
+### Check the app is running
+
+Check that your Titan instance is up and running by waiting one minute until a browser window opens, or in the `web-server` case, by visiting yourself http://localhost:3000.
+
+---
+
+<details>
+<summary>
+
+# Beyond initial configuration
+
+</summary>
 
 ## Development
 
@@ -170,3 +354,5 @@ flutter pub run flutter_launcher_icons
 
 [Guided upgrade using Android Studio](https://docs.flutter.dev/release/breaking-changes/android-java-gradle-migration-guide#solution-1-guided-fix-using-android-studio)
 [Java and Gradle compatibility](https://docs.gradle.org/current/userguide/compatibility.html)
+
+</details>
