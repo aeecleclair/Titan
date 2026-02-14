@@ -4928,6 +4928,42 @@ abstract class AppLocalizations {
   /// **'Solde personnel'**
   String get paiementPersonalBalance;
 
+  /// No description provided for @paiementAddFunds.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter des fonds'**
+  String get paiementAddFunds;
+
+  /// No description provided for @paiementInsufficientFunds.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fonds insuffisants'**
+  String get paiementInsufficientFunds;
+
+  /// No description provided for @paiementTimeRemaining.
+  ///
+  /// In fr, this message translates to:
+  /// **'Temps restant'**
+  String get paiementTimeRemaining;
+
+  /// No description provided for @paiementHurryUp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dépêchez-vous !'**
+  String get paiementHurryUp;
+
+  /// No description provided for @paiementCompletePayment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Finaliser le paiement'**
+  String get paiementCompletePayment;
+
+  /// No description provided for @paiementConfirmPayment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer le paiement'**
+  String get paiementConfirmPayment;
+
   /// No description provided for @paiementPleaseAcceptPopup.
   ///
   /// In fr, this message translates to:

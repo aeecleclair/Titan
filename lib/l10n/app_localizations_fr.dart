@@ -2530,6 +2530,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementPersonalBalance => 'Solde personnel';
 
   @override
+  String get paiementAddFunds => 'Ajouter des fonds';
+
+  @override
+  String get paiementInsufficientFunds => 'Fonds insuffisants';
+
+  @override
+  String get paiementTimeRemaining => 'Temps restant';
+
+  @override
+  String get paiementHurryUp => 'Dépêchez-vous !';
+
+  @override
+  String get paiementCompletePayment => 'Finaliser le paiement';
+
+  @override
+  String get paiementConfirmPayment => 'Confirmer le paiement';
+
+  @override
   String get paiementPleaseAcceptPopup => 'Veuillez autoriser les popups';
 
   @override

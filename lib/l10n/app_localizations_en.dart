@@ -2505,6 +2505,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementPersonalBalance => 'Personal balance';
 
   @override
+  String get paiementAddFunds => 'Add Funds';
+
+  @override
+  String get paiementInsufficientFunds => 'Insufficient Funds';
+
+  @override
+  String get paiementTimeRemaining => 'Time Remaining';
+
+  @override
+  String get paiementHurryUp => 'Hurry up!';
+
+  @override
+  String get paiementCompletePayment => 'Complete payment';
+
+  @override
+  String get paiementConfirmPayment => 'Confirm Payment';
+
+  @override
   String get paiementPleaseAcceptPopup => 'Please allow popups';
 
   @override
