@@ -25,6 +25,7 @@ import 'package:titan/recommendation/router.dart';
 import 'package:titan/seed-library/router.dart';
 import 'package:titan/settings/router.dart';
 import 'package:titan/raffle/router.dart';
+import 'package:titan/todo/router.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:titan/vote/router.dart';
@@ -98,6 +99,7 @@ class AppRouter {
       RecommendationRouter(ref).route(),
       SettingsRouter(ref).route(),
       VoteRouter(ref).route(),
+      TodoRouter(ref).route(),
       SeedLibraryRouter(ref).route(),
     ];
   }
