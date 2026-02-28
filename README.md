@@ -32,7 +32,8 @@ Choose one way of installing Flutter:
 
 </summary>
 
-- Open VS Code
+- Clone Titan
+- Open Titan in VS Code
 - **Install the recommended official Flutter extension** (id: `dart-code.flutter`)
 - After installation, the extension prompts you to install automatically the Flutter SDK.
   - Click **"Download SDK"**.
@@ -40,22 +41,22 @@ Choose one way of installing Flutter:
   - Then click **"Clone Flutter"**.
     Wait a couple minutes.
 
-<details>
-<summary>On Windows...</summary>
+- <details>
+  <summary> On Windows...</summary>
 
-If you get an error saying roughly:
+  If you get an error saying roughly:
 
-```
-because the execution of scripts is disabled on this system. Please see "get-help about_signing" for more details.
-```
+  ```
+  because the execution of scripts is disabled on this system. Please see "get-help about_signing" for more details.
+  ```
 
-Then in a Powershell, run this to allow scripts executions for your user:
+  Then in a Powershell, run this to allow scripts executions for your user:
 
-```ps1
-Set-ExecutionPolicy Unrestricted -Scope CurrentUser
-```
+  ```ps1
+  Set-ExecutionPolicy Unrestricted -Scope CurrentUser
+  ```
 
-</details>
+  </details>
 
 - After downloading (this takes a few minutes), click **"Add SDK to PATH"**
 
