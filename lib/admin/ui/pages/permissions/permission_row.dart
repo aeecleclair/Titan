@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:heroicons/heroicons.dart';
 
@@ -31,6 +32,7 @@ class PermissionRow extends StatelessWidget {
             child: HeroIcon(
               isAuthorized ? HeroIcons.eye : HeroIcons.eyeSlash,
               size: 40,
+              color: isAuthorized ? Colors.green : Colors.red
             ),
           ),
         ],
