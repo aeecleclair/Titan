@@ -148,7 +148,7 @@ class GroupsPage extends HookConsumerWidget {
                                     return CustomDialogBox(
                                       title: AdminTextConstants.deleting,
                                       descriptions:
-                                          AdminTextConstants.deleteGroup,
+                                          AdminTextConstants.deleteGroup1 + group.name + AdminTextConstants.deleteGroup2,
                                       onYes: () async {
                                         tokenExpireWrapper(ref, () async {
                                           final value = await groupsNotifier
