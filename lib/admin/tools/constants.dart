@@ -28,10 +28,12 @@ class AdminTextConstants {
   static const String deleteAssociationMembership = "Supprimer l'adhésion ?";
   static const String deletedAssociationMembership = "Adhésion supprimée";
   static const String deleteGroup1 = "Supprimer le groupe : ";
-  static const String deleteGroup2 = " ?"; //En deux fois pour ajouter le groupe après ("Supprimer le groupe : {groupe} ?")
+  static const String deleteGroup2 =
+      " ?"; //En deux fois pour ajouter le groupe après ("Supprimer le groupe : {groupe} ?")
   static const String deletedGroup = "Groupe supprimé";
-  static const String deleteSchool1 = "Supprimer l'école : ";   
-  static const String deleteSchool2 = " ?"; //En deux fois pour ajouter l'école après ("Supprimer l'école : {ecole} ?")
+  static const String deleteSchool1 = "Supprimer l'école : ";
+  static const String deleteSchool2 =
+      " ?"; //En deux fois pour ajouter l'école après ("Supprimer l'école : {ecole} ?")
   static const String deletedSchool = "École supprimée";
   static const String deleting = "Suppression";
   static const String deletingError = "Erreur lors de la suppression";
@@ -71,7 +73,8 @@ class AdminTextConstants {
   static const String noSchool = "Sans école";
   static const String permissions = "Permissions";
   static const String removeGroupMember1 = "Supprimer ";
-  static const String removeGroupMember2 = " du groupe ?";//En deux fois pour ajouter le surnom après ("Supprimer {surnom} du groupe")
+  static const String removeGroupMember2 =
+      " du groupe ?"; //En deux fois pour ajouter le surnom après ("Supprimer {surnom} du groupe")
   static const String research = "Recherche";
   static const String schools = "Écoles";
   static const String structures = "Structures";
