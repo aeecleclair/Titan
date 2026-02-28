@@ -312,7 +312,7 @@ class EditUserPage extends HookConsumerWidget {
                     Expanded(
                       child: DropdownButtonFormField(
                         items: items,
-                        value: floorController.text,
+                        initialValue: floorController.text,
                         hint: Text(
                           SettingsTextConstants.floor,
                           style: TextStyle(

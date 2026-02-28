@@ -84,7 +84,7 @@ class MembershipCreationDialogBox extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 DropdownButtonFormField<String>(
-                  value: groupIdController.text,
+                  initialValue: groupIdController.text,
                   onChanged: (String? newValue) {
                     groupIdController.text = newValue!;
                   },
