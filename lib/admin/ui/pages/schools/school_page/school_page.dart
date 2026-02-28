@@ -101,7 +101,7 @@ class SchoolsPage extends HookConsumerWidget {
                                     return CustomDialogBox(
                                       title: AdminTextConstants.deleting,
                                       descriptions:
-                                          AdminTextConstants.deleteSchool,
+                                          AdminTextConstants.deleteSchool1 + school.name + AdminTextConstants.deleteSchool2,
                                       onYes: () async {
                                         tokenExpireWrapper(ref, () async {
                                           final value = await schoolsNotifier
