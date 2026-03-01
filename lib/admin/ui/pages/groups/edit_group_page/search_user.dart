@@ -110,7 +110,10 @@ class SearchUser extends HookConsumerWidget {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) => CustomDialogBox(
-                        descriptions: AdminTextConstants.removeGroupMember,
+                        descriptions:
+                            AdminTextConstants.removeGroupMember1 +
+                            x.getName() +
+                            AdminTextConstants.removeGroupMember2,
                         title: AdminTextConstants.deleting,
                         onYes: () async {
                           await tokenExpireWrapper(ref, () async {

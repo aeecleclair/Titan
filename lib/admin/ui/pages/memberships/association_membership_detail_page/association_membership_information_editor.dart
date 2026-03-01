@@ -92,7 +92,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                 ),
               ),
               DropdownButtonFormField<String>(
-                value: groupIdController.text,
+                initialValue: groupIdController.text,
                 onChanged: (String? newValue) {
                   groupIdController.text = newValue!;
                 },

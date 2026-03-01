@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 
 class PermissionRow extends StatelessWidget {
@@ -29,8 +29,9 @@ class PermissionRow extends StatelessWidget {
           GestureDetector(
             onTap: isAuthorized ? onUnauthorize : onAuthorize,
             child: HeroIcon(
-              isAuthorized ? HeroIcons.eye : HeroIcons.eyeSlash,
+              isAuthorized ? HeroIcons.check : HeroIcons.xMark,
               size: 40,
+              color: isAuthorized ? Colors.green : Colors.red,
             ),
           ),
         ],
