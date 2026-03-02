@@ -9,6 +9,7 @@ class Event {
   late final Announcer announcer;
   late final String ticket;
   late final List<String> form;
+  final String? imageUrl;
 
   Event({
     required this.id,
@@ -18,9 +19,10 @@ class Event {
     required this.announcer,
     required this.ticket,
     required this.form,
+    this.imageUrl,
   });
 
-  Event.fromJson(Map<String, dynamic> json) {
+  Event.fromJson(Map<String, dynamic> json) : imageUrl = json["imageUrl"] {
     id = json["id"];
     title = json["title"];
     content = json["content"];
@@ -39,6 +41,7 @@ class Event {
     data["announcer_id"] = announcer.id;
     data["ticket"] = ticket;
     data["form"];
+    if (imageUrl != null) data["imageUrl"] = imageUrl;
     return data;
   }
 
@@ -51,6 +54,7 @@ class Event {
       announcer: Announcer.empty(),
       ticket: "",
       form: [""],
+      imageUrl: null,
     );
   }
 }

@@ -24,6 +24,8 @@ import 'package:titan/ticketing/ui/components/announcer_bar.dart';
 import 'package:titan/ticketing/tools/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
+import '../../components/custom_button.dart';
+
 class TicketingMainPage extends HookConsumerWidget {
   const TicketingMainPage({super.key});
 
@@ -71,9 +73,9 @@ class TicketingMainPage extends HookConsumerWidget {
           AsyncChild(
             value: eventList,
             builder: (context, eventData) {
-              final sortedEventData = eventData
-                  .sortedBy((element) => element.date)
-                  .reversed;
+              final sortedEventData = eventData.sortedBy(
+                (element) => element.date,
+              );
               final filteredSortedEventData = sortedEventData.where(
                 (event) =>
                     selectedAnnouncer
@@ -90,9 +92,18 @@ class TicketingMainPage extends HookConsumerWidget {
                   SizedBox(
                     width: 300,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        const SizedBox(width: 40),
+                        CustomButton(
+                          icon: HeroIcons.clock,
+                          text: "Historique",
+                          onTap: () {
+                            print("Navigate to history");
+                            // QR.to(
+                            //   TicketingRouter.root + TicketingRouter.history,
+                            // );
+                          },
+                        ),
                         if (isAdmin)
                           AdminButton(
                             onTap: () {
@@ -184,7 +195,9 @@ class TicketingMainPage extends HookConsumerWidget {
                                 onPressed: () {
                                   showCategories.value = false;
                                 },
-                              ),
+                              )
+                            else
+                              SizedBox(width: 40),
                             Text(
                               showCategories.value
                                   ? "Liste des catégories"
@@ -212,86 +225,118 @@ class TicketingMainPage extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  if (!showCategories.value)
-                    sessionList.when(
-                      data: (sessions) {
-                        final eventSessions = sessions
-                            .where(
-                              (session) =>
-                                  session.eventId == selectedEvent.value,
-                            )
-                            .toList();
-                        if (eventSessions.isEmpty) {
-                          return const Padding(
-                            padding: EdgeInsets.all(20),
-                            child: Text("Aucune session disponible."),
-                          );
-                        }
-                        return Column(
-                          children: eventSessions.map((session) {
-                            return SessionCard(
-                              onTap: () {
-                                selectedSession.value = session.id;
-                                sessionNotifier.setSession(session);
-                                showCategories.value = true;
-                                print("Session tapped: ${session.name}");
-                              },
-                              sessionName: session.name,
-                            );
-                          }).toList(),
-                        );
-                      },
-                      loading: () => const Padding(
-                        padding: EdgeInsets.all(20),
-                        child: CircularProgressIndicator(),
-                      ),
-                      error: (error, stack) => const Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Text("Erreur lors du chargement des sessions."),
-                      ),
-                    ),
-                  if (showCategories.value)
-                    categoryList.when(
-                      data: (categories) {
-                        final filteredCategories = categories
-                            .where(
-                              (category) => category.linkedSessions.contains(
-                                selectedSession.value,
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 400),
+                    transitionBuilder: (child, animation) {
+                      return SlideTransition(
+                        position:
+                            Tween<Offset>(
+                              begin: const Offset(1.0, 0.0),
+                              end: Offset.zero,
+                            ).animate(
+                              CurvedAnimation(
+                                parent: animation,
+                                curve: Curves.easeInOutCubic,
                               ),
-                            )
-                            .toList();
-                        if (filteredCategories.isEmpty) {
-                          return const Padding(
-                            padding: EdgeInsets.all(20),
-                            child: Text(
-                              "Aucune catégorie disponible pour cette session.",
                             ),
-                          );
-                        }
-                        return Column(
-                          children: filteredCategories.map((category) {
-                            return CategoryCard(
-                              onTap: () {
-                                print("Category tapped: ${category.name}");
-                                // TODO: Navigation ou action suivante
+                        child: FadeTransition(opacity: animation, child: child),
+                      );
+                    },
+                    child: showCategories.value
+                        ? SizedBox(
+                            key: const ValueKey('categories'),
+                            child: categoryList.when(
+                              data: (categories) {
+                                final filteredCategories = categories
+                                    .where(
+                                      (category) => category.linkedSessions
+                                          .contains(selectedSession.value),
+                                    )
+                                    .toList();
+                                if (filteredCategories.isEmpty) {
+                                  return const Padding(
+                                    padding: EdgeInsets.all(20),
+                                    child: Text(
+                                      "Aucune catégorie disponible pour cette session.",
+                                    ),
+                                  );
+                                }
+                                return Column(
+                                  children: filteredCategories.map((category) {
+                                    return CategoryCard(
+                                      onTap: () {
+                                        print(
+                                          "Category tapped: ${category.name}",
+                                        );
+                                        QR.to(
+                                          TicketingRouter.root +
+                                              TicketingRouter.form,
+                                        );
+                                      },
+                                      categoryName: category.name,
+                                      categoryPrice: category.price,
+                                    );
+                                  }).toList(),
+                                );
                               },
-                              categoryName: category.name,
-                              categoryPrice: category.price,
-                            );
-                          }).toList(),
-                        );
-                      },
-                      loading: () => const Padding(
-                        padding: EdgeInsets.all(20),
-                        child: CircularProgressIndicator(),
-                      ),
-                      error: (error, stack) => const Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Text(
-                          "Erreur lors du chargement des catégories.",
-                        ),
-                      ),
-                    ),
+                              loading: () => const Padding(
+                                padding: EdgeInsets.all(20),
+                                child: CircularProgressIndicator(),
+                              ),
+                              error: (error, stack) => const Padding(
+                                padding: EdgeInsets.all(20),
+                                child: Text(
+                                  "Erreur lors du chargement des catégories.",
+                                ),
+                              ),
+                            ),
+                          )
+                        : SizedBox(
+                            key: const ValueKey('sessions'),
+                            child: sessionList.when(
+                              data: (sessions) {
+                                final eventSessions = sessions
+                                    .where(
+                                      (session) =>
+                                          session.eventId ==
+                                          selectedEvent.value,
+                                    )
+                                    .toList();
+                                if (eventSessions.isEmpty) {
+                                  return const Padding(
+                                    padding: EdgeInsets.all(20),
+                                    child: Text("Aucune session disponible."),
+                                  );
+                                }
+                                return Column(
+                                  children: eventSessions.map((session) {
+                                    return SessionCard(
+                                      onTap: () {
+                                        selectedSession.value = session.id;
+                                        sessionNotifier.setSession(session);
+                                        showCategories.value = true;
+                                        print(
+                                          "Session tapped: ${session.name}",
+                                        );
+                                      },
+                                      sessionName: session.name,
+                                    );
+                                  }).toList(),
+                                );
+                              },
+                              loading: () => const Padding(
+                                padding: EdgeInsets.all(20),
+                                child: CircularProgressIndicator(),
+                              ),
+                              error: (error, stack) => const Padding(
+                                padding: EdgeInsets.all(20),
+                                child: Text(
+                                  "Erreur lors du chargement des sessions.",
+                                ),
+                              ),
+                            ),
+                          ),
+                  ),
                   const SizedBox(height: 20),
                 ],
               ),

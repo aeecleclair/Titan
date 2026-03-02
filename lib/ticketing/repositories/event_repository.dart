@@ -18,7 +18,7 @@ class EventRepository extends Repository {
         title: "Soirée Pizza BDE",
         content:
             "Venez nombreux pour une soirée pizza organisée par le BDE ! Inscriptions ouvertes dès maintenant.",
-        date: DateTime.now().add(Duration(days: 7)),
+        date: DateTime.now().add(Duration(seconds: 20)),
         announcer: Announcer(
           id: "bde_001",
           name: "Bureau Des Étudiants",
@@ -32,7 +32,7 @@ class EventRepository extends Repository {
         title: "Tournoi de Foot Inter-Écoles",
         content:
             "Grand tournoi de football entre les différentes écoles de la région. Équipes de 11 joueurs.",
-        date: DateTime.now().add(Duration(days: 14)),
+        date: DateTime.now().add(Duration(days: 2)),
         announcer: Announcer(
           id: "sport_001",
           name: "Association Sportive",
