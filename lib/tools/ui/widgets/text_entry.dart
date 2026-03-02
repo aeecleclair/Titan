@@ -14,6 +14,7 @@ class TextEntry extends StatelessWidget {
   final String? Function(String)? validator;
   final int? minLines, maxLines;
   final TextInputAction textInputAction;
+  final InputDecoration? decoration;
 
   const TextEntry({
     super.key,
@@ -37,6 +38,7 @@ class TextEntry extends StatelessWidget {
     this.suffixIcon,
     this.isNegative = false,
     this.textInputAction = TextInputAction.next,
+    this.decoration,
   });
 
   @override
@@ -52,38 +54,41 @@ class TextEntry extends StatelessWidget {
           ? TextInputAction.newline
           : TextInputAction.next,
       enabled: enabled,
-      decoration: InputDecoration(
-        label: Text(
-          canBeEmpty ? '$label (optionnel)' : label,
-          style: TextStyle(color: color, height: 0.5),
-        ),
-        suffix: suffixIcon == null && suffix.isEmpty
-            ? null
-            : Container(
-                padding: const EdgeInsets.only(left: 10),
-                child:
-                    suffixIcon ?? Text(suffix, style: TextStyle(color: color)),
-              ),
-        prefix: prefix.isEmpty
-            ? null
-            : Container(
-                padding: const EdgeInsets.only(right: 10),
-                child: Text(prefix, style: TextStyle(color: color)),
-              ),
-        floatingLabelStyle: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: enabledColor),
-        ),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: errorColor, width: 2.0),
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: color, width: 2.0),
-        ),
-      ),
+      decoration:
+          decoration ??
+          InputDecoration(
+            label: Text(
+              canBeEmpty ? '$label (optionnel)' : label,
+              style: TextStyle(color: color, height: 0.5),
+            ),
+            suffix: suffixIcon == null && suffix.isEmpty
+                ? null
+                : Container(
+                    padding: const EdgeInsets.only(left: 10),
+                    child:
+                        suffixIcon ??
+                        Text(suffix, style: TextStyle(color: color)),
+                  ),
+            prefix: prefix.isEmpty
+                ? null
+                : Container(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Text(prefix, style: TextStyle(color: color)),
+                  ),
+            floatingLabelStyle: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: enabledColor),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: errorColor, width: 2.0),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: color, width: 2.0),
+            ),
+          ),
       validator: (value) {
         if (value == null || value.isEmpty) {
           if (canBeEmpty) {

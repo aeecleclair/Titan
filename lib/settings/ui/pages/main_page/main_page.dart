@@ -200,11 +200,8 @@ class SettingsMainPage extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 50),
+                  const AlignLeftText(SettingsTextConstants.help, fontSize: 25),
                   if (!kIsWeb) ...[
-                    const AlignLeftText(
-                      SettingsTextConstants.help,
-                      fontSize: 25,
-                    ),
                     const SizedBox(height: 30),
                     SettingsItem(
                       icon: HeroIcons.clipboardDocumentList,
@@ -216,8 +213,20 @@ class SettingsMainPage extends HookConsumerWidget {
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ),
-                    const SizedBox(height: 50),
                   ],
+                  const SizedBox(height: 30),
+                  SettingsItem(
+                    icon: HeroIcons.chatBubbleBottomCenterText,
+                    onTap: () {
+                      QR.to(SettingsRouter.root + SettingsRouter.feedback);
+                    },
+                    child: const Text(
+                      SettingsTextConstants.feedback,
+                      style: TextStyle(fontSize: 16, color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(height: 50),
+
                   const AlignLeftText(
                     SettingsTextConstants.personalisation,
                     fontSize: 25,

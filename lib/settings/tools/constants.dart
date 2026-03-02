@@ -34,6 +34,9 @@ class SettingsTextConstants {
   static const String language = "Langue";
   static const String languageFr = "Français";
   static const String logs = "Logs";
+  static const String feedback = "Feedback";
+  static const String unephrasecettefoisci = "Décrivez votre problème ou suggestion";
+  static const String send = "Envoyer";
   static const String modules = "Modules";
   static const String myIcs = "Mon lien Ical";
   static const String name = "Nom";
