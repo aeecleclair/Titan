@@ -3,15 +3,22 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/drawer/class/module.dart';
 import 'package:titan/purchases/providers/purchases_admin_provider.dart';
-import 'package:titan/purchases/ui/pages/history_page/history_page.dart';
-import 'package:titan/purchases/ui/pages/main_page/main_page.dart';
-import 'package:titan/purchases/ui/pages/purchase_page/purchase_page.dart';
-import 'package:titan/purchases/ui/pages/scan_page/scan_page.dart';
-import 'package:titan/purchases/ui/pages/ticket_page/ticket_page.dart';
-import 'package:titan/purchases/ui/pages/user_list_page/user_list_page.dart';
+import 'package:titan/purchases/ui/pages/history_page/history_page.dart'
+    deferred as history_page;
+import 'package:titan/purchases/ui/pages/main_page/main_page.dart'
+    deferred as main_page;
+import 'package:titan/purchases/ui/pages/purchase_page/purchase_page.dart'
+    deferred as purchase_page;
+import 'package:titan/purchases/ui/pages/scan_page/scan_page.dart'
+    deferred as scan_page;
+import 'package:titan/purchases/ui/pages/ticket_page/ticket_page.dart'
+    deferred as ticket_page;
+import 'package:titan/purchases/ui/pages/user_list_page/user_list_page.dart'
+    deferred as user_list_page;
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/tools/middlewares/deferred_middleware.dart';
 
 class PurchasesRouter {
   final Ref ref;
@@ -32,21 +39,45 @@ class PurchasesRouter {
   QRoute route() => QRoute(
     name: "purchases",
     path: PurchasesRouter.root,
-    builder: () => const PurchasesMainPage(),
-    middleware: [AuthenticatedMiddleware(ref)],
+    builder: () => main_page.PurchasesMainPage(),
+    middleware: [
+      AuthenticatedMiddleware(ref),
+      DeferredLoadingMiddleware(main_page.loadLibrary),
+    ],
     children: [
       QRoute(
         path: scan,
-        builder: () => const ScanPage(),
-        middleware: [AdminMiddleware(ref, isPurchasesAdminProvider)],
+        builder: () => scan_page.ScanPage(),
+        middleware: [
+          AdminMiddleware(ref, isPurchasesAdminProvider),
+          DeferredLoadingMiddleware(scan_page.loadLibrary),
+        ],
       ),
       QRoute(
         path: history,
-        builder: () => const HistoryPage(),
-        children: [QRoute(path: purchase, builder: () => const PurchasePage())],
+        builder: () => history_page.HistoryPage(),
+        middleware: [DeferredLoadingMiddleware(history_page.loadLibrary)],
+        children: [
+          QRoute(
+            path: purchase,
+            builder: () => purchase_page.PurchasePage(),
+            middleware: [DeferredLoadingMiddleware(purchase_page.loadLibrary)],
+          ),
+        ],
       ),
-      QRoute(path: ticket, builder: () => const TicketPage()),
-      QRoute(path: userList, builder: () => const UserListPage()),
+      QRoute(
+        path: ticket,
+        builder: () => ticket_page.TicketPage(),
+        middleware: [DeferredLoadingMiddleware(ticket_page.loadLibrary)],
+      ),
+      QRoute(
+        path: userList,
+        builder: () => user_list_page.UserListPage(),
+        middleware: [
+          AdminMiddleware(ref, isPurchasesAdminProvider),
+          DeferredLoadingMiddleware(user_list_page.loadLibrary),
+        ],
+      ),
     ],
   );
 }

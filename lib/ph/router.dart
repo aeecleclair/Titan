@@ -7,7 +7,8 @@ import 'package:titan/drawer/class/module.dart';
 import 'package:titan/ph/providers/is_ph_admin_provider.dart';
 import 'package:titan/ph/ui/pages/form_page/add_edit_ph_page.dart'
     deferred as add_edit_ph_page;
-import 'package:titan/ph/ui/pages/past_ph_selection_page/past_ph_selection_page.dart';
+import 'package:titan/ph/ui/pages/past_ph_selection_page/past_ph_selection_page.dart'
+    deferred as past_ph_selection_page;
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -40,7 +41,10 @@ class PhRouter {
     children: [
       QRoute(
         path: past_ph_selection,
-        builder: () => const PastPhSelectionPage(),
+        builder: () => past_ph_selection_page.PastPhSelectionPage(),
+        middleware: [
+          DeferredLoadingMiddleware(past_ph_selection_page.loadLibrary),
+        ],
         children: [
           QRoute(
             path: view_ph,
