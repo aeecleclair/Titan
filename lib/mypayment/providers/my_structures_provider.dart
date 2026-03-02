@@ -8,7 +8,11 @@ final myStructuresProvider = StateProvider<List<Structure>>((ref) {
   final structures = ref.watch(structureListProvider);
   return structures.when(
     data: (structures) => structures
-        .where((structure) => structure.managerUser.id == user.id)
+        .where(
+          (structure) =>
+              structure.managerUser.id == user.id ||
+              structure.administrators.any((admin) => admin.id == user.id),
+        )
         .toList(),
     loading: () => [],
     error: (error, stack) => [],

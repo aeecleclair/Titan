@@ -32,10 +32,22 @@ class SellerRightCard extends ConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final amIAdmin = me.userId == store.structure.managerUser.id;
+    final amIManager = me.userId == store.structure.managerUser.id;
+    final amIAdmin = store.structure.administrators.any(
+      (admin) => admin.id == me.userId,
+    );
+
+    final isStructureManager =
+        storeSeller.userId == store.structure.managerUser.id;
 
     final isStructureAdmin =
-        storeSeller.userId == store.structure.managerUser.id;
+        isStructureManager ||
+        store.structure.administrators.any(
+          (admin) => admin.id == storeSeller.userId,
+        );
+
+    final canEdit =
+        me.canManageSellers && (amIManager || (amIAdmin && !isStructureAdmin));
 
     final icons =
         [
@@ -102,7 +114,7 @@ class SellerRightCard extends ConsumerWidget {
             context: context,
             backgroundColor: Colors.transparent,
             scrollControlDisabledMaxHeightRatio:
-                (((!amIAdmin || isStructureAdmin) ? 80 : 100) +
+                (((!amIManager || isStructureAdmin) ? 80 : 100) +
                     45 * icons.length) /
                 MediaQuery.of(context).size.height,
             builder: (context) {
@@ -145,7 +157,7 @@ class SellerRightCard extends ConsumerWidget {
                                   ),
                                 ),
                                 const Spacer(),
-                                if (me.canManageSellers && !isStructureAdmin)
+                                if (canEdit)
                                   Checkbox(
                                     value: sellerRights[i],
                                     activeColor: const Color(0xff204550),
@@ -193,13 +205,13 @@ class SellerRightCard extends ConsumerWidget {
                               ],
                             ),
                           ),
-                      if (me.canManageSellers && !isStructureAdmin)
+                      if (canEdit)
                         GestureDetector(
                           onTap: () async {
                             await showDialog(
                               context: context,
                               builder: (context) => CustomDialogBox(
-                                title: "Supprimer l'association",
+                                title: "Supprimer le vendeur",
                                 descriptions:
                                     "Voulez-vous vraiment supprimer ce vendeur ?",
                                 onYes: () {

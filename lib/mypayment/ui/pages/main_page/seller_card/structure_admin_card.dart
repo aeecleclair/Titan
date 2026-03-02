@@ -68,6 +68,17 @@ class StructureAdminCard extends ConsumerWidget {
                         Navigator.of(context).pop();
                         selectedStructureNotifier.setStructure(structure);
                         QR.to(
+                          PaymentRouter.root + PaymentRouter.administrators,
+                        );
+                      },
+                      text: "Administrateurs",
+                    ),
+                    const SizedBox(height: 10),
+                    Button(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        selectedStructureNotifier.setStructure(structure);
+                        QR.to(
                           PaymentRouter.root + PaymentRouter.structureStores,
                         );
                       },

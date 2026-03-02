@@ -6,6 +6,7 @@ class Structure {
   final String name;
   final AssociationMembership associationMembership;
   final SimpleUser managerUser;
+  final List<SimpleUser> administrators;
   final String shortId;
   final String siegeAddressStreet;
   final String siegeAddressCity;
@@ -20,6 +21,7 @@ class Structure {
     required this.name,
     required this.associationMembership,
     required this.managerUser,
+    required this.administrators,
     required this.shortId,
     required this.siegeAddressStreet,
     required this.siegeAddressCity,
@@ -46,6 +48,9 @@ class Structure {
           ? AssociationMembership.fromJson(json['association_membership'])
           : AssociationMembership.empty(),
       managerUser: SimpleUser.fromJson(json['manager_user']),
+      administrators: (json['administrators'] as List<dynamic>)
+          .map((adminJson) => SimpleUser.fromJson(adminJson))
+          .toList(),
     );
   }
 
@@ -81,7 +86,8 @@ class Structure {
         'iban: $iban\n'
         'bic: $bic\n'
         'associationMembership: $associationMembership\n'
-        'managerUser: $managerUser}';
+        'managerUser: $managerUser\n'
+        'administrators: $administrators}';
   }
 
   Structure copyWith({
@@ -90,6 +96,7 @@ class Structure {
     String? name,
     AssociationMembership? associationMembership,
     SimpleUser? managerUser,
+    List<SimpleUser>? administrators,
     String? siegeAddressStreet,
     String? siegeAddressCity,
     String? siegeAddressZipcode,
@@ -112,6 +119,7 @@ class Structure {
       associationMembership:
           associationMembership ?? this.associationMembership,
       managerUser: managerUser ?? this.managerUser,
+      administrators: administrators ?? this.administrators,
     );
   }
 
@@ -129,5 +137,6 @@ class Structure {
         bic: '',
         associationMembership: AssociationMembership.empty(),
         managerUser: SimpleUser.empty(),
+        administrators: [],
       );
 }
