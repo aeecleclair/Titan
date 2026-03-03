@@ -37,6 +37,8 @@ class SettingsTextConstants {
   static const String feedback = "Feedback";
   static const String unephrasecettefoisci = "Décrivez votre problème ou suggestion";
   static const String send = "Envoyer";
+  static const String feedbackSent = "Feedback envoyé";
+  static const String feedbackSendingError = "Erreur lors de l'envoi du feedback";
   static const String modules = "Modules";
   static const String myIcs = "Mon lien Ical";
   static const String name = "Nom";

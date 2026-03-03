@@ -15,6 +15,7 @@ class TextEntry extends StatelessWidget {
   final int? minLines, maxLines;
   final TextInputAction textInputAction;
   final InputDecoration? decoration;
+  final bool autofocus;
 
   const TextEntry({
     super.key,
@@ -39,6 +40,7 @@ class TextEntry extends StatelessWidget {
     this.isNegative = false,
     this.textInputAction = TextInputAction.next,
     this.decoration,
+    this.autofocus = false,
   });
 
   @override
@@ -54,6 +56,7 @@ class TextEntry extends StatelessWidget {
           ? TextInputAction.newline
           : TextInputAction.next,
       enabled: enabled,
+      autofocus: autofocus,
       decoration:
           decoration ??
           InputDecoration(
