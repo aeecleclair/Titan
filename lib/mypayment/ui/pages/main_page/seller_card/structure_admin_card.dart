@@ -10,12 +10,14 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/bottom_modal_template.dart';
 import 'package:titan/tools/ui/layouts/button.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 class StructureAdminCard extends ConsumerWidget {
   const StructureAdminCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final me = ref.watch(userProvider);
     final myStructures = ref.watch(myStructuresProvider);
     final selectedStructureNotifier = ref.read(
       selectedStructureProvider.notifier,
@@ -57,12 +59,26 @@ class StructureAdminCard extends ConsumerWidget {
             ),
           ),
           onTap: () {
+            final isManager = structure.managerUser.id == me.id;
             showCustomBottomModal(
               context: context,
               modal: BottomModalTemplate(
                 title: "Gestion de ${structure.name}",
                 child: Column(
                   children: [
+                    if (isManager) ...[
+                      Button(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          selectedStructureNotifier.setStructure(structure);
+                          QR.to(
+                            PaymentRouter.root + PaymentRouter.administrators,
+                          );
+                        },
+                        text: "Administrateurs",
+                      ),
+                      const SizedBox(height: 10),
+                    ],
                     Button(
                       onPressed: () {
                         Navigator.of(context).pop();

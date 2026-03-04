@@ -124,6 +124,8 @@ class AdminTextConstants {
   static const String deletedStructure = "Structure supprimée avec succès";
   static const String deletingStructureError =
       "Erreur lors de la suppression de la structure";
+
+  static const String deleteStructure = "Supprimer la structure ?";
 }
 
 enum SchoolIdConstant {

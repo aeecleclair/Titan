@@ -24,6 +24,8 @@ import 'package:titan/mypayment/ui/pages/stats_page/stats_page.dart'
     deferred as stats_page;
 import 'package:titan/mypayment/ui/pages/store_stats_page/store_stats_page.dart'
     deferred as store_stats_page;
+import 'package:titan/mypayment/ui/pages/structure_administrators_page/structure_administrator_page.dart'
+    deferred as structure_administrators_page;
 import 'package:titan/mypayment/ui/pages/transfer_structure_page/transfer_structure_page.dart'
     deferred as transfer_structure_page;
 import 'package:titan/tools/middlewares/admin_middleware.dart';
@@ -44,6 +46,7 @@ class PaymentRouter {
   static const String transferStructure = '/transferStructure';
   static const String storeAdmin = '/storeAdmin';
   static const String storeStats = '/storeStats';
+  static const String administrators = '/administrators';
   static final Module module = Module(
     name: "MyECLPay",
     icon: const Left(HeroIcons.creditCard),
@@ -94,6 +97,15 @@ class PaymentRouter {
         middleware: [
           DeferredLoadingMiddleware(structure_invoices_page.loadLibrary),
           AdminMiddleware(ref, isStructureAdminProvider),
+        ],
+      ),
+      QRoute(
+        path: PaymentRouter.administrators,
+        builder: () =>
+            structure_administrators_page.StructureAdministratorsPage(),
+        middleware: [
+          DeferredLoadingMiddleware(structure_administrators_page.loadLibrary),
+          AdminMiddleware(ref, isStructureManagerProvider),
         ],
       ),
       QRoute(
