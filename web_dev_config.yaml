@@ -1,5 +1,11 @@
 server:
   port: 3000
   headers:
+    # Caching
     - name: Cache-Control
       value: no-store, no-cache, must-revalidate
+    # WebAssembly
+    - name: Cross-Origin-Embedder-Policy
+      value: credentialless
+    - name: Cross-Origin-Opener-Policy
+      value: unsafe-none
