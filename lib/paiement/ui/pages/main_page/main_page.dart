@@ -11,6 +11,7 @@ import 'package:titan/paiement/providers/my_history_provider.dart';
 import 'package:titan/paiement/providers/my_stores_provider.dart';
 import 'package:titan/paiement/providers/register_provider.dart';
 import 'package:titan/paiement/providers/should_display_tos_dialog.dart';
+import 'package:titan/paiement/ui/components/paiment_delegate/paiment_delegate_modal.dart';
 import 'package:titan/paiement/ui/pages/main_page/account_card/account_card.dart';
 import 'package:titan/paiement/ui/pages/main_page/tos_dialog.dart';
 import 'package:titan/paiement/ui/pages/main_page/account_card/last_transactions.dart';
@@ -22,6 +23,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 
 class PaymentMainPage extends HookConsumerWidget {
   const PaymentMainPage({super.key});
@@ -175,6 +177,49 @@ class PaymentMainPage extends HookConsumerWidget {
                             ),
                           );
                         },
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          await showCustomBottomModal(
+                            context: context,
+                            ref: ref,
+                            modal: PaimentDelegateModal(
+                              itemTitle: "Premium Subscription",
+                              itemDescription:
+                                  "Monthly access to all premium features\nand exclusive content",
+                              itemPrice: 999,
+                              onConfirm: () {
+                                Navigator.of(context).pop();
+                                displayToast(
+                                  context,
+                                  TypeMsg.msg,
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.paiementSuccededTransaction,
+                                );
+                              },
+                            ),
+                          );
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 20),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            "Test Modal",
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
                       AnimatedBuilder(
                         animation: controller,

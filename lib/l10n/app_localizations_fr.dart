@@ -2672,6 +2672,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementSuccededTransaction => 'Paiement réussi';
 
   @override
+  String get paiementConfirmYourPurchase => 'Confirmer votre achat';
+
+  @override
+  String get paiementYourBalance => 'Votre solde';
+
+  @override
+  String get paiementPaymentSuccessful => 'Paiement réussi !';
+
+  @override
+  String get paiementPaymentCanceled => 'Paiement annulé';
+
+  @override
   String get paiementSuccessfullyAddedStore => 'Magasin ajoutée avec succès';
 
   @override

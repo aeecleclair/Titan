@@ -5192,6 +5192,30 @@ abstract class AppLocalizations {
   /// **'Paiement réussi'**
   String get paiementSuccededTransaction;
 
+  /// No description provided for @paiementConfirmYourPurchase.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer votre achat'**
+  String get paiementConfirmYourPurchase;
+
+  /// No description provided for @paiementYourBalance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre solde'**
+  String get paiementYourBalance;
+
+  /// No description provided for @paiementPaymentSuccessful.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement réussi !'**
+  String get paiementPaymentSuccessful;
+
+  /// No description provided for @paiementPaymentCanceled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement annulé'**
+  String get paiementPaymentCanceled;
+
   /// No description provided for @paiementSuccessfullyAddedStore.
   ///
   /// In fr, this message translates to:

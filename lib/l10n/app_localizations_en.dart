@@ -2643,6 +2643,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementSuccededTransaction => 'Successful payment';
 
   @override
+  String get paiementConfirmYourPurchase => 'Confirm your purchase';
+
+  @override
+  String get paiementYourBalance => 'Your balance';
+
+  @override
+  String get paiementPaymentSuccessful => 'Payment successful!';
+
+  @override
+  String get paiementPaymentCanceled => 'Payment canceled';
+
+  @override
   String get paiementSuccessfullyAddedStore => 'Store successfully added';
 
   @override
