@@ -224,12 +224,6 @@ class ScanDialog extends HookConsumerWidget {
                                   const Spacer(),
                                   GestureDetector(
                                     onTap: () async {
-                                      if (tag == "") {
-                                        displayToastWithContext(
-                                          TypeMsg.error,
-                                          "Aucun tag ajouté",
-                                        );
-                                      }
                                       await tokenExpireWrapper(ref, () async {
                                         await (ticketListNotifier.consumeTicket(
                                           sellerId,
