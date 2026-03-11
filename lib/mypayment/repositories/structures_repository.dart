@@ -15,11 +15,9 @@ class StructuresRepository extends Repository {
   }
 
   Future<List<Structure>> getStructures() async {
-    final value = List<Structure>.from(
+    return List<Structure>.from(
       (await getList()).map((e) => Structure.fromJson(e)),
     );
-    print(value);
-    return value;
   }
 
   Future<bool> updateStructure(Structure structure) async {

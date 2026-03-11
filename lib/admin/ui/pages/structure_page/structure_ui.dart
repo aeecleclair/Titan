@@ -105,7 +105,7 @@ class StructureUi extends HookConsumerWidget {
                     },
                   );
                 },
-                text: AdminTextConstants.deletedStructure,
+                text: AdminTextConstants.deleteStructure,
               ),
             ],
           ),
