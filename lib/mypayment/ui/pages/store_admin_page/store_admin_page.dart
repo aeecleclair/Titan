@@ -30,7 +30,7 @@ class StoreAdminPage extends HookConsumerWidget {
     final isSearching = useState(false);
 
     final me = ref.watch(userProvider);
-
+    print(store);
     return PaymentTemplate(
       child: Refresher(
         onRefresh: () async {

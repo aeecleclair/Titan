@@ -3,6 +3,7 @@ import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/mypayment/class/store.dart';
 import 'package:titan/mypayment/class/structure.dart';
 import 'package:titan/tools/repository/repository.dart';
+import 'package:titan/user/class/simple_users.dart';
 
 class StructuresRepository extends Repository {
   @override
@@ -14,9 +15,11 @@ class StructuresRepository extends Repository {
   }
 
   Future<List<Structure>> getStructures() async {
-    return List<Structure>.from(
+    final value = List<Structure>.from(
       (await getList()).map((e) => Structure.fromJson(e)),
     );
+    print(value);
+    return value;
   }
 
   Future<bool> updateStructure(Structure structure) async {
@@ -48,6 +51,22 @@ class StructuresRepository extends Repository {
     return Store.fromJson(
       await create(store.toJson(), suffix: "/${structure.id}/stores"),
     );
+  }
+
+  Future<SimpleUser> addStructureAdmin(
+    Structure structure,
+    String userId,
+  ) async {
+    return SimpleUser.fromJson(
+      await create(null, suffix: "/${structure.id}/admin/$userId"),
+    );
+  }
+
+  Future<bool> removeStructureAdmin(
+    Structure structure,
+    String adminUserId,
+  ) async {
+    return await delete("/${structure.id}/admin/$adminUserId");
   }
 }
 
