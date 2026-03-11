@@ -259,6 +259,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                                   associationMembership:
                                       currentMembership.value,
                                   managerUser: structureManager,
+                                  administrators: structure.administrators,
                                 ),
                               )
                             : await structureListNotifier.createStructure(
@@ -276,6 +277,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                                   associationMembership:
                                       currentMembership.value,
                                   managerUser: structureManager,
+                                  administrators: [],
                                 ),
                               );
                         if (value) {
