@@ -229,13 +229,26 @@ class ScanDialog extends HookConsumerWidget {
                                           sellerId,
                                           data,
                                           ticket.id,
-                                          tag == "" ? "no tag" : tag,
-                                        )).then((_) {
-                                          displayToastWithContext(
-                                            TypeMsg.msg,
-                                            "Scan validé",
+                                          tag,
+                                        )).then((value) {
+                                          if (value) {
+                                            displayToastWithContext(
+                                              TypeMsg.msg,
+                                              "Scan validé",
+                                            );
+                                          } else {
+                                            displayToastWithContext(
+                                              TypeMsg.error,
+                                              "Erreur lors du scan",
+                                            );
+                                          }
+
+                                          Future.delayed(
+                                            const Duration(seconds: 2),
+                                            () {
+                                              scannerNotifier.reset();
+                                            },
                                           );
-                                          scannerNotifier.reset();
                                         });
                                       });
                                     },
@@ -244,7 +257,7 @@ class ScanDialog extends HookConsumerWidget {
                                       child: AddEditButtonLayout(
                                         color: Colors.green,
                                         child: Text(
-                                          "Suivant",
+                                          "Valider",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
