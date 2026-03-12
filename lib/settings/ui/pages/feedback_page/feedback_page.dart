@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Feedback;
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/settings/class/feedback.dart';
+import 'package:titan/settings/providers/feedback_list_provider.dart';
 import 'package:titan/settings/router.dart';
 import 'package:titan/settings/tools/constants.dart';
 import 'package:titan/settings/ui/settings.dart';
@@ -12,21 +14,18 @@ import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
-import 'package:titan/user/providers/user_provider.dart';
 
 class FeedbackPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncUserNotifier = ref.watch(asyncUserProvider.notifier);
-    final user = ref.watch(userProvider);
+    final feedbackListNotifier = ref.watch(feedbackListProvider.notifier);
+    final provider = ref.watch(feedbackListProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
-    final feedbackController = useTextEditingController(
-      text: user.floor.toString(),
-    );
+    final feedbackController = useTextEditingController(text: "");
 
     return SettingsTemplate(
       child: Padding(
@@ -49,8 +48,8 @@ class FeedbackPage extends HookConsumerWidget {
               SizedBox(height: 20),
               Expanded(
                 child: TextEntry(
-                  label: "",
-                  controller: useTextEditingController(),
+                  label: "contentTextEntry",
+                  controller: feedbackController,
                   keyboardType: TextInputType.multiline,
                   canBeEmpty: false,
                   autofocus: true,
@@ -73,9 +72,9 @@ class FeedbackPage extends HookConsumerWidget {
                 ),
                 onTap: () async {
                   await tokenExpireWrapper(ref, () async {
-                    final value = await asyncUserNotifier.updateMe(
-                      user.copyWith(
-                        feedback: feedbackController.value.text,
+                    final value = await feedbackListNotifier.addFeedback(
+                      Feedback.empty().copyWith(
+                        content: feedbackController.value.text,
                       ),
                     );
 
