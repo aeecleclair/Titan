@@ -151,7 +151,7 @@ class OpenIdTokenProvider
         webWindowWithCallback(
           authUrl,
           "Hyperion",
-          () {
+          completerFutureCallback: () {
             state.maybeWhen(
               loading: () {
                 state = AsyncValue.data({tokenKey: "", refreshTokenKey: ""});
@@ -159,7 +159,7 @@ class OpenIdTokenProvider
               orElse: () {},
             );
           },
-          (String data) async {
+          loginCallback: (String data) async {
             final receivedUri = Uri.parse(data);
             final token = receivedUri.queryParameters["code"];
             try {

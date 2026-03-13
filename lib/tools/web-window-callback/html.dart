@@ -3,10 +3,10 @@ import 'package:universal_html/universal_html.dart';
 
 void webWindowWithCallback(
   String windowUrl,
-  String windowName,
-  void Function() completerFutureCallback,
-  Future<void> Function(String) login,
-) async {
+  String windowName, {
+  required void Function() completerFutureCallback,
+  required Future<void> Function(String) loginCallback,
+}) async {
   WindowBase popupWin = window.open(
     windowUrl,
     windowName,
@@ -28,7 +28,7 @@ void webWindowWithCallback(
   window.onMessage.listen((event) {
     final data = event.data.toString();
     if (data.contains('code=')) {
-      login(data);
+      loginCallback(data);
       popupWin.close();
     }
   });

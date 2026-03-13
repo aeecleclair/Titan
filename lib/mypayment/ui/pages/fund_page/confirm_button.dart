@@ -60,20 +60,26 @@ class ConfirmFundButton extends ConsumerWidget {
     }
 
     void helloAssoCallback2(String fundingUrl) async {
-      webWindowWithCallback(fundingUrl, "HelloAsso", () {}, (
-        String data,
-      ) async {
-        final receivedUri = Uri.parse(data);
-        final code = receivedUri.queryParameters["code"];
-        if (code == "succeeded") {
-          displayToastWithContext(TypeMsg.msg, "Paiement effectué avec succès");
-          myWalletNotifier.getMyWallet();
-          myHistoryNotifier.getHistory();
-        } else {
-          displayToastWithContext(TypeMsg.error, "Paiement annulé");
-        }
-        Navigator.pop(context, code);
-      });
+      webWindowWithCallback(
+        fundingUrl,
+        "HelloAsso",
+        completerFutureCallback: () {},
+        loginCallback: (String data) async {
+          final receivedUri = Uri.parse(data);
+          final code = receivedUri.queryParameters["code"];
+          if (code == "succeeded") {
+            displayToastWithContext(
+              TypeMsg.msg,
+              "Paiement effectué avec succès",
+            );
+            myWalletNotifier.getMyWallet();
+            myHistoryNotifier.getHistory();
+          } else {
+            displayToastWithContext(TypeMsg.error, "Paiement annulé");
+          }
+          Navigator.pop(context, code);
+        },
+      );
     }
 
     // void helloAssoCallback(String fundingUrl) async {

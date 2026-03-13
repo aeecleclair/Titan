@@ -4,10 +4,10 @@ import 'dart:js_interop';
 
 void webWindowWithCallback(
   String windowUrl,
-  String windowName,
-  void Function() completerFutureCallback,
-  Future<void> Function(String) login,
-) async {
+  String windowName, {
+  required void Function() completerFutureCallback,
+  required Future<void> Function(String) loginCallback,
+}) async {
   Window? popupWin = window.open(
     windowUrl,
     windowName,
@@ -29,7 +29,7 @@ void webWindowWithCallback(
   window.onMessage.listen((event) {
     final data = (event.data as JSString).toDart;
     if (data.contains('code=')) {
-      login(data);
+      loginCallback(data);
       popupWin!.close();
     }
   });
