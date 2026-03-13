@@ -82,45 +82,6 @@ class ConfirmFundButton extends ConsumerWidget {
       );
     }
 
-    // void helloAssoCallback(String fundingUrl) async {
-    //   web.Window? popupWin = web.window.open(
-    //     fundingUrl,
-    //     "HelloAsso",
-    //     "width=800, height=900, scrollbars=yes",
-    //   );
-
-    //   final completer = Completer();
-    //   void checkWindowClosed() {
-    //     if (popupWin.closed == true) {
-    //       completer.complete();
-    //     } else {
-    //       Future.delayed(const Duration(milliseconds: 100), checkWindowClosed);
-    //     }
-    //   }
-
-    //   checkWindowClosed();
-    //   completer.future.then((_) {});
-
-    //   void login(String data) async {
-    //     final receivedUri = Uri.parse(data);
-    //     final code = receivedUri.queryParameters["code"];
-    //     if (code == "succeeded") {
-    //       displayToastWithContext(TypeMsg.msg, "Paiement effectué avec succès");
-    //       myWalletNotifier.getMyWallet();
-    //       myHistoryNotifier.getHistory();
-    //     } else {
-    //       displayToastWithContext(TypeMsg.error, "Paiement annulé");
-    //     }
-    //     popupWin.close();
-    //     Navigator.pop(context, code);
-    //   }
-
-    //   web.window.onMessage.listen((event) {
-    //     final data = (event.data as JSString).toDart;
-    //     if (data.contains('code=')) login(data);
-    //   });
-    // }
-
     return WaitingButton(
       onTap: () async {
         if (!minValidFundAmount) {
