@@ -12,9 +12,8 @@ import 'package:titan/mypayment/providers/my_wallet_provider.dart';
 import 'package:titan/mypayment/providers/tos_provider.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
-import 'package:web/web.dart' as web;
-import 'dart:js_interop';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:titan/tools/web-window-callback/web_window_with_callback.dart';
 
 class ConfirmFundButton extends ConsumerWidget {
   const ConfirmFundButton({super.key});
@@ -60,31 +59,10 @@ class ConfirmFundButton extends ConsumerWidget {
       }
     }
 
-    void helloAssoCallback(String fundingUrl) async {
-      web.Window? popupWin = web.window.open(
-        fundingUrl,
-        "HelloAsso",
-        "width=800, height=900, scrollbars=yes",
-      );
-
-      if (popupWin == null) {
-        displayToastWithContext(TypeMsg.error, "Veuillez autoriser les popups");
-        return;
-      }
-
-      final completer = Completer();
-      void checkWindowClosed() {
-        if (popupWin.closed == true) {
-          completer.complete();
-        } else {
-          Future.delayed(const Duration(milliseconds: 100), checkWindowClosed);
-        }
-      }
-
-      checkWindowClosed();
-      completer.future.then((_) {});
-
-      void login(String data) async {
+    void helloAssoCallback2(String fundingUrl) async {
+      webWindowWithCallback(fundingUrl, "HelloAsso", () {}, (
+        String data,
+      ) async {
         final receivedUri = Uri.parse(data);
         final code = receivedUri.queryParameters["code"];
         if (code == "succeeded") {
@@ -94,15 +72,48 @@ class ConfirmFundButton extends ConsumerWidget {
         } else {
           displayToastWithContext(TypeMsg.error, "Paiement annulé");
         }
-        popupWin.close();
         Navigator.pop(context, code);
-      }
-
-      web.window.onMessage.listen((event) {
-        final data = (event.data as JSString).toDart;
-        if (data.contains('code=')) login(data);
       });
     }
+
+    // void helloAssoCallback(String fundingUrl) async {
+    //   web.Window? popupWin = web.window.open(
+    //     fundingUrl,
+    //     "HelloAsso",
+    //     "width=800, height=900, scrollbars=yes",
+    //   );
+
+    //   final completer = Completer();
+    //   void checkWindowClosed() {
+    //     if (popupWin.closed == true) {
+    //       completer.complete();
+    //     } else {
+    //       Future.delayed(const Duration(milliseconds: 100), checkWindowClosed);
+    //     }
+    //   }
+
+    //   checkWindowClosed();
+    //   completer.future.then((_) {});
+
+    //   void login(String data) async {
+    //     final receivedUri = Uri.parse(data);
+    //     final code = receivedUri.queryParameters["code"];
+    //     if (code == "succeeded") {
+    //       displayToastWithContext(TypeMsg.msg, "Paiement effectué avec succès");
+    //       myWalletNotifier.getMyWallet();
+    //       myHistoryNotifier.getHistory();
+    //     } else {
+    //       displayToastWithContext(TypeMsg.error, "Paiement annulé");
+    //     }
+    //     popupWin.close();
+    //     Navigator.pop(context, code);
+    //   }
+
+    //   web.window.onMessage.listen((event) {
+    //     final data = (event.data as JSString).toDart;
+    //     if (data.contains('code=')) login(data);
+    //   });
+    // }
 
     return WaitingButton(
       onTap: () async {
@@ -133,7 +144,7 @@ class ConfirmFundButton extends ConsumerWidget {
             fundAmountNotifier.setFundAmount("");
             Navigator.pop(context);
             if (kIsWeb) {
-              helloAssoCallback(fundingUrl.url);
+              helloAssoCallback2(fundingUrl.url);
               return;
             }
             tryLaunchUrl(fundingUrl.url);
