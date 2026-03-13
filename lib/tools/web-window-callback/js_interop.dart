@@ -16,7 +16,7 @@ void webWindowWithCallback(
 
   final completer = Completer();
   void checkWindowClosed() {
-    if (popupWin!.closed == true) {
+    if (popupWin?.closed == true) {
       completer.complete();
     } else {
       Future.delayed(const Duration(milliseconds: 100), checkWindowClosed);
@@ -27,10 +27,12 @@ void webWindowWithCallback(
   completer.future.then((_) => completerFutureCallback());
 
   window.onMessage.listen((event) {
-    final data = (event.data as JSString).toDart;
-    if (data.contains('code=')) {
-      loginCallback(data);
-      popupWin!.close();
-    }
+    try {
+      final data = (event.data as JSString).toDart;
+      if (data.contains('code=')) {
+        loginCallback(data);
+        popupWin?.close();
+      }
+    } catch (_) {}
   });
 }
