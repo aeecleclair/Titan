@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/settings/class/feedback.dart';
 import 'package:titan/settings/repositories/feedback_repository.dart';
@@ -9,7 +10,11 @@ class FeedbackListNotifier extends ListNotifier<Feedback> {
     : super(const AsyncValue.loading());
 
   Future<bool> addFeedback(Feedback feedback) async {
-    return await add(feedbackRepository.createFeedback, feedback);
+    debugPrint("addfeedback " + feedback.toString());
+    feedbackRepository.createFeedback(feedback);
+    var result = await add(feedbackRepository.createFeedback, feedback);
+    debugPrint("result " + result.toString());
+    return result;
   }
 
   Future<AsyncValue<List<Feedback>>> getFeedbackList() async {

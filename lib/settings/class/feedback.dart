@@ -50,6 +50,6 @@ class Feedback {
 
   @override
   String toString() {
-    return 'Loan(id: $id, content: $content, userId: $userId, creation date: $creation)';
+    return 'Feedback(id: $id, content: $content, userId: $userId, creation date: $creation)';
   }
 }
