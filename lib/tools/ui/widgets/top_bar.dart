@@ -33,8 +33,11 @@ class TopBar extends HookConsumerWidget {
                   }
                   return IconButton(
                     onPressed: () {
-                      QR.back();
-                      onBack?.call();
+                      if (onBack != null) {
+                        onBack!();
+                      } else {
+                        QR.back();
+                      }
                     },
                     icon: HeroIcon(
                       HeroIcons.chevronLeft,

@@ -20,6 +20,7 @@ import 'package:titan/purchases/router.dart';
 import 'package:titan/raffle/router.dart';
 import 'package:titan/recommendation/router.dart';
 import 'package:titan/seed-library/router.dart';
+import 'package:titan/shotgun/router.dart';
 import 'package:titan/settings/router.dart';
 import 'package:titan/super_admin/providers/is_super_admin_provider.dart';
 import 'package:titan/super_admin/router.dart';
@@ -84,6 +85,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     PaymentRouter.module,
     PhonebookRouter.module,
     PhRouter.module,
+    ShotgunRouter.module,
     PurchasesRouter.module,
     RaffleRouter.module,
     RecommendationRouter.module,

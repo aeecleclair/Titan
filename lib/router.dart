@@ -25,6 +25,7 @@ import 'package:titan/others/ui/update_page.dart' deferred as update_page;
 import 'package:titan/mypayment/router.dart';
 import 'package:titan/phonebook/router.dart';
 import 'package:titan/ph/router.dart';
+import 'package:titan/shotgun/router.dart';
 import 'package:titan/purchases/router.dart';
 import 'package:titan/recommendation/router.dart';
 import 'package:titan/seed-library/router.dart';
@@ -115,6 +116,7 @@ class AppRouter {
       PaymentRouter(ref).route(),
       PhonebookRouter(ref).route(),
       PhRouter(ref).route(),
+      ShotgunRouter(ref).route(),
       PurchasesRouter(ref).route(),
       RaffleRouter(ref).route(),
       RecommendationRouter(ref).route(),

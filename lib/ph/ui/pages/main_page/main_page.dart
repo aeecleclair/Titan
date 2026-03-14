@@ -8,6 +8,7 @@ import 'package:titan/ph/router.dart';
 
 import 'package:titan/ph/ui/button.dart';
 import 'package:titan/ph/ui/pages/ph.dart';
+import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/widgets/admin_button.dart';
 import 'package:pdfx/pdfx.dart';
@@ -21,7 +22,7 @@ class PhMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isAdmin = ref.watch(isPhAdminProvider);
     final phList = ref.watch(phListProvider);
-
+    final pathForwarding = ref.watch(pathForwardingProvider);
     return PhTemplate(
       child: Column(
         children: [
@@ -39,6 +40,7 @@ class PhMainPage extends HookConsumerWidget {
             width: 250,
             child: GestureDetector(
               onTap: () {
+                print(pathForwarding.path);
                 QR.to(PhRouter.root + PhRouter.past_ph_selection);
               },
               child: MyButton(
