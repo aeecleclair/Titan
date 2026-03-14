@@ -1,87 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:heroicons/heroicons.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/shotgun/providers/create_shotgun_form_provider.dart';
+import 'package:titan/shotgun/router.dart';
 import 'package:titan/shotgun/ui/shotgun.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
-import 'package:heroicons/heroicons.dart';
 
-class _QuestionEntry {
-  _QuestionEntry() {
-    question = TextEditingController();
-    choices = [TextEditingController(), TextEditingController()];
-  }
-
-  late final TextEditingController question;
-  late final List<TextEditingController> choices;
-
-  void dispose() {
-    question.dispose();
-    for (final c in choices) {
-      c.dispose();
-    }
-  }
-}
-
-class CreateShotgunPage extends StatefulWidget {
+class CreateShotgunPage extends HookConsumerWidget {
   const CreateShotgunPage({super.key});
 
   @override
-  State<CreateShotgunPage> createState() => _CreateShotgunPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final formKey = useMemoized(GlobalKey<FormState>.new);
+    final formState = ref.watch(createShotgunFormProvider);
+    final formNotifier = ref.watch(createShotgunFormProvider.notifier);
+    final titleController = useTextEditingController(text: formState.title);
 
-class _CreateShotgunPageState extends State<CreateShotgunPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _titleController = TextEditingController();
-  final _questions = <_QuestionEntry>[];
-
-  @override
-  void initState() {
-    super.initState();
-    _addQuestion();
-  }
-
-  @override
-  void dispose() {
-    _titleController.dispose();
-    for (final q in _questions) {
-      q.dispose();
-    }
-    super.dispose();
-  }
-
-  void _addQuestion() {
-    setState(() {
-      _questions.add(_QuestionEntry());
-    });
-  }
-
-  void _removeQuestion(int index) {
-    if (_questions.length <= 1) return;
-    setState(() {
-      _questions[index].dispose();
-      _questions.removeAt(index);
-    });
-  }
-
-  void _addChoice(int questionIndex) {
-    setState(() {
-      _questions[questionIndex].choices.add(TextEditingController());
-    });
-  }
-
-  void _removeChoice(int questionIndex, int choiceIndex) {
-    final entry = _questions[questionIndex];
-    if (entry.choices.length <= 2) return;
-    setState(() {
-      entry.choices[choiceIndex].dispose();
-      entry.choices.removeAt(choiceIndex);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return ShotgunTemplate(
       child: Form(
-        key: _formKey,
+        key: formKey,
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -100,23 +40,21 @@ class _CreateShotgunPageState extends State<CreateShotgunPage> {
               TextEntry(
                 maxLines: 1,
                 label: "Titre du shotgun",
-                controller: _titleController,
+                controller: titleController,
+                onChanged: formNotifier.setTitle,
               ),
               const SizedBox(height: 16),
-              ...List.generate(_questions.length, (qIndex) {
-                final entry = _questions[qIndex];
+              ...List.generate(formState.questions.length, (qIndex) {
+                final question = formState.questions[qIndex];
                 return _QcmQuestionCard(
+                  key: ValueKey(question.id),
+                  questionId: question.id,
                   questionIndex: qIndex,
-                  entry: entry,
-                  canRemoveQuestion: _questions.length > 1,
-                  onRemoveQuestion: () => _removeQuestion(qIndex),
-                  onAddChoice: () => _addChoice(qIndex),
-                  onRemoveChoice: (cIndex) => _removeChoice(qIndex, cIndex),
                 );
               }),
               const SizedBox(height: 16),
               OutlinedButton.icon(
-                onPressed: _addQuestion,
+                onPressed: formNotifier.addQuestion,
                 icon: const HeroIcon(HeroIcons.plus, size: 20),
                 label: const Text("Ajouter une question"),
                 style: OutlinedButton.styleFrom(
@@ -125,6 +63,26 @@ class _CreateShotgunPageState extends State<CreateShotgunPage> {
                 ),
               ),
               const SizedBox(height: 40),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: () {
+                    QR.to(
+                      ShotgunRouter.root +
+                          ShotgunRouter.create +
+                          '/' +
+                          ShotgunRouter.createQuotas,
+                    );
+                  },
+                  style: FilledButton.styleFrom(
+                    backgroundColor: ColorConstants.main,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: const Text("Passer aux quotas"),
+                ),
+              ),
+              const SizedBox(height: 80),
             ],
           ),
         ),
@@ -133,25 +91,26 @@ class _CreateShotgunPageState extends State<CreateShotgunPage> {
   }
 }
 
-class _QcmQuestionCard extends StatelessWidget {
+class _QcmQuestionCard extends HookConsumerWidget {
   const _QcmQuestionCard({
+    super.key,
+    required this.questionId,
     required this.questionIndex,
-    required this.entry,
-    required this.canRemoveQuestion,
-    required this.onRemoveQuestion,
-    required this.onAddChoice,
-    required this.onRemoveChoice,
   });
 
+  final String questionId;
   final int questionIndex;
-  final _QuestionEntry entry;
-  final bool canRemoveQuestion;
-  final VoidCallback onRemoveQuestion;
-  final VoidCallback onAddChoice;
-  final void Function(int choiceIndex) onRemoveChoice;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final formState = ref.watch(createShotgunFormProvider);
+    final formNotifier = ref.watch(createShotgunFormProvider.notifier);
+    final question = formState.getQuestion(questionId);
+    if (question == null) return const SizedBox.shrink();
+
+    final questionController = useTextEditingController(text: question.text);
+    final canRemoveQuestion = formState.questions.length > 1;
+
     return Card(
       margin: const EdgeInsets.only(bottom: 20),
       elevation: 0,
@@ -172,12 +131,14 @@ class _QcmQuestionCard extends StatelessWidget {
                   child: TextEntry(
                     maxLines: 1,
                     label: "Question ${questionIndex + 1}",
-                    controller: entry.question,
+                    controller: questionController,
+                    onChanged: (v) =>
+                        formNotifier.updateQuestionText(questionId, v),
                   ),
                 ),
                 if (canRemoveQuestion)
                   IconButton(
-                    onPressed: onRemoveQuestion,
+                    onPressed: () => formNotifier.removeQuestion(questionId),
                     icon: HeroIcon(
                       HeroIcons.trash,
                       size: 22,
@@ -188,43 +149,77 @@ class _QcmQuestionCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            ...List.generate(entry.choices.length, (cIndex) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: TextEntry(
-                        maxLines: 1,
-                        label: "Réponse possible",
-                        controller: entry.choices[cIndex],
-                        canBeEmpty: true,
-                      ),
-                    ),
-                    if (entry.choices.length > 2)
-                      IconButton(
-                        onPressed: () => onRemoveChoice(cIndex),
-                        icon: HeroIcon(
-                          HeroIcons.minusCircle,
-                          size: 22,
-                          color: ColorConstants.error,
-                        ),
-                        tooltip: "Supprimer le choix",
-                      ),
-                  ],
-                ),
+            ...List.generate(question.choices.length, (cIndex) {
+              return _QcmChoiceField(
+                key: ValueKey('$questionId-$cIndex'),
+                questionId: questionId,
+                choiceIndex: cIndex,
               );
             }),
             TextButton.icon(
-              onPressed: onAddChoice,
+              onPressed: () => formNotifier.addChoice(questionId),
               icon: const HeroIcon(HeroIcons.plus, size: 18),
               label: const Text("Ajouter un choix"),
               style: TextButton.styleFrom(foregroundColor: ColorConstants.main),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _QcmChoiceField extends HookConsumerWidget {
+  const _QcmChoiceField({
+    super.key,
+    required this.questionId,
+    required this.choiceIndex,
+  });
+
+  final String questionId;
+  final int choiceIndex;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final formState = ref.watch(createShotgunFormProvider);
+    final formNotifier = ref.watch(createShotgunFormProvider.notifier);
+    final question = formState.getQuestion(questionId);
+    if (question == null || choiceIndex >= question.choices.length) {
+      return const SizedBox.shrink();
+    }
+
+    final choiceText = question.choices[choiceIndex];
+    final choiceController = useTextEditingController(text: choiceText);
+    final canRemoveChoice = question.choices.length > 2;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(width: 8),
+          Expanded(
+            child: TextEntry(
+              maxLines: 1,
+              label: "Réponse possible",
+              controller: choiceController,
+              canBeEmpty: true,
+              onChanged: (v) =>
+                  formNotifier.updateChoice(questionId, choiceIndex, v),
+            ),
+          ),
+          if (canRemoveChoice)
+            IconButton(
+              onPressed: () =>
+                  formNotifier.removeChoice(questionId, choiceIndex),
+              icon: HeroIcon(
+                HeroIcons.minusCircle,
+                size: 22,
+                color: ColorConstants.error,
+              ),
+              tooltip: "Supprimer le choix",
+            ),
+        ],
       ),
     );
   }

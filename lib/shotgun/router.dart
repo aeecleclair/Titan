@@ -12,12 +12,15 @@ import 'package:titan/shotgun/ui/pages/create_shotgun_page.dart'
     deferred as create_shotgun_page;
 import 'package:titan/shotgun/ui/pages/manage_shotgun_page.dart'
     deferred as manage_shotgun_page;
+import 'package:titan/shotgun/ui/pages/create_shotgun_quotas_page.dart'
+    deferred as create_shotgun_quotas_page;
 
 class ShotgunRouter {
   final Ref ref;
   static const String root = '/shotgun';
   static const String book = '/book';
   static const String create = '/create';
+  static const String createQuotas = 'quotas';
   static const String manage = '/manage';
   static final Module module = Module(
     getName: (context) => "Shotgun",
@@ -46,6 +49,17 @@ class ShotgunRouter {
         middleware: [
           AdminMiddleware(ref, isUserAMemberOfAnAssociationProvider),
           DeferredLoadingMiddleware(create_shotgun_page.loadLibrary),
+        ],
+        children: [
+          QRoute(
+            path: createQuotas,
+            builder: () =>
+                create_shotgun_quotas_page.CreateShotgunQuotasPage(),
+            middleware: [
+              DeferredLoadingMiddleware(
+                  create_shotgun_quotas_page.loadLibrary),
+            ],
+          ),
         ],
       ),
       QRoute(
