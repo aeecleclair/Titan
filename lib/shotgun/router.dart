@@ -12,8 +12,6 @@ import 'package:titan/shotgun/ui/pages/create_shotgun_page.dart'
     deferred as create_shotgun_page;
 import 'package:titan/shotgun/ui/pages/manage_shotgun_page.dart'
     deferred as manage_shotgun_page;
-import 'package:titan/shotgun/ui/pages/create_shotgun_quotas_page.dart'
-    deferred as create_shotgun_quotas_page;
 
 class ShotgunRouter {
   final Ref ref;
@@ -49,17 +47,6 @@ class ShotgunRouter {
         middleware: [
           AdminMiddleware(ref, isUserAMemberOfAnAssociationProvider),
           DeferredLoadingMiddleware(create_shotgun_page.loadLibrary),
-        ],
-        children: [
-          QRoute(
-            path: createQuotas,
-            builder: () =>
-                create_shotgun_quotas_page.CreateShotgunQuotasPage(),
-            middleware: [
-              DeferredLoadingMiddleware(
-                  create_shotgun_quotas_page.loadLibrary),
-            ],
-          ),
         ],
       ),
       QRoute(

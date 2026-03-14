@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/admin/class/assocation.dart';
+import 'package:titan/admin/providers/my_association_list_provider.dart';
+import 'package:titan/feed/providers/association_event_list_provider.dart';
 import 'package:titan/shotgun/providers/create_shotgun_form_provider.dart';
-import 'package:titan/shotgun/router.dart';
 import 'package:titan/shotgun/ui/shotgun.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/styleguide/horizontal_multi_select.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 
 class CreateShotgunPage extends HookConsumerWidget {
@@ -18,7 +20,14 @@ class CreateShotgunPage extends HookConsumerWidget {
     final formState = ref.watch(createShotgunFormProvider);
     final formNotifier = ref.watch(createShotgunFormProvider.notifier);
     final titleController = useTextEditingController(text: formState.title);
-
+    final placesController = useTextEditingController();
+    final myAssociations = ref.watch(myAssociationListProvider);
+    final associationEventsListNotifier = ref.watch(
+      associationEventsListProvider.notifier,
+    );
+    final selectedAssociation = useState<Association?>(
+      myAssociations.isNotEmpty ? myAssociations.first : null,
+    );
     return ShotgunTemplate(
       child: Form(
         key: formKey,
@@ -28,19 +37,41 @@ class CreateShotgunPage extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 16),
-              Text(
-                "Créer un shotgun",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: ColorConstants.title,
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 50,
+                child: HorizontalMultiSelect<Association>(
+                  items: myAssociations,
+                  selectedItem: selectedAssociation.value,
+                  onItemSelected: (association) {
+                    selectedAssociation.value = association;
+                    associationEventsListNotifier.loadAssociationEventList(
+                      association.id,
+                    );
+                  },
+                  itemBuilder: (context, association, index, selected) => Text(
+                    association.name,
+                    style: TextStyle(
+                      color: selected
+                          ? ColorConstants.background
+                          : ColorConstants.tertiary,
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               TextEntry(
                 maxLines: 1,
                 label: "Titre du shotgun",
                 controller: titleController,
+                onChanged: formNotifier.setTitle,
+              ),
+              const SizedBox(height: 16),
+              TextEntry(
+                maxLines: 1,
+                label: "Nombre de places disponibles",
+                controller: placesController,
                 onChanged: formNotifier.setTitle,
               ),
               const SizedBox(height: 16),
@@ -66,20 +97,13 @@ class CreateShotgunPage extends HookConsumerWidget {
               SizedBox(
                 width: double.infinity,
                 child: FilledButton(
-                  onPressed: () {
-                    QR.to(
-                      ShotgunRouter.root +
-                          ShotgunRouter.create +
-                          '/' +
-                          ShotgunRouter.createQuotas,
-                    );
-                  },
+                  onPressed: () {},
                   style: FilledButton.styleFrom(
                     backgroundColor: ColorConstants.main,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
-                  child: const Text("Passer aux quotas"),
+                  child: const Text("Enregistrer le shotgun"),
                 ),
               ),
               const SizedBox(height: 80),
