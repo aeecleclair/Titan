@@ -13,7 +13,7 @@ import 'package:titan/tools/cache/cache_manager.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/repository/repository.dart';
 import 'dart:convert';
-import 'package:universal_html/html.dart' as html;
+import 'package:titan/tools/web-window-callback/web_window_with_callback.dart';
 
 final authTokenProvider =
     StateNotifierProvider<OpenIdTokenProvider, AsyncValue<Map<String, String>>>(
@@ -140,7 +140,6 @@ class OpenIdTokenProvider
   }
 
   Future getTokenFromRequest() async {
-    html.WindowBase? popupWin;
     final codeVerifier = generateRandomString(128);
 
     final authUrl =
@@ -149,72 +148,46 @@ class OpenIdTokenProvider
     state = const AsyncValue.loading();
     try {
       if (kIsWeb) {
-        popupWin = html.window.open(
+        webWindowWithCallback(
           authUrl,
           "Hyperion",
-          "width=800, height=900, scrollbars=yes",
-        );
-
-        final completer = Completer();
-        void checkWindowClosed() {
-          if (popupWin != null && popupWin!.closed == true) {
-            completer.complete();
-          } else {
-            Future.delayed(
-              const Duration(milliseconds: 100),
-              checkWindowClosed,
+          completerFutureCallback: () {
+            state.maybeWhen(
+              loading: () {
+                state = AsyncValue.data({tokenKey: "", refreshTokenKey: ""});
+              },
+              orElse: () {},
             );
-          }
-        }
-
-        checkWindowClosed();
-        completer.future.then((_) {
-          state.maybeWhen(
-            loading: () {
-              state = AsyncValue.data({tokenKey: "", refreshTokenKey: ""});
-            },
-            orElse: () {},
-          );
-        });
-
-        void login(String data) async {
-          final receivedUri = Uri.parse(data);
-          final token = receivedUri.queryParameters["code"];
-          if (popupWin != null) {
-            popupWin!.close();
-            popupWin = null;
-          }
-          try {
-            if (token != null && token.isNotEmpty) {
-              final resp = await openIdRepository.getToken(
-                token,
-                clientId,
-                redirectURL.toString(),
-                codeVerifier,
-                "authorization_code",
-              );
-              final accessToken = resp[tokenKey]!;
-              final refreshToken = resp[refreshTokenKey]!;
-              await _secureStorage.write(key: tokenName, value: refreshToken);
-              state = AsyncValue.data({
-                tokenKey: accessToken,
-                refreshTokenKey: refreshToken,
-              });
-            } else {
-              throw Exception('Wrong credentials');
+          },
+          loginCallback: (String data) async {
+            final receivedUri = Uri.parse(data);
+            final token = receivedUri.queryParameters["code"];
+            try {
+              if (token != null && token.isNotEmpty) {
+                final resp = await openIdRepository.getToken(
+                  token,
+                  clientId,
+                  redirectURL.toString(),
+                  codeVerifier,
+                  "authorization_code",
+                );
+                final accessToken = resp[tokenKey]!;
+                final refreshToken = resp[refreshTokenKey]!;
+                await _secureStorage.write(key: tokenName, value: refreshToken);
+                state = AsyncValue.data({
+                  tokenKey: accessToken,
+                  refreshTokenKey: refreshToken,
+                });
+              } else {
+                throw Exception('Wrong credentials');
+              }
+            } on TimeoutException catch (_) {
+              throw Exception('No response from server');
+            } catch (e) {
+              rethrow;
             }
-          } on TimeoutException catch (_) {
-            throw Exception('No response from server');
-          } catch (e) {
-            rethrow;
-          }
-        }
-
-        html.window.onMessage.listen((event) {
-          if (event.data.toString().contains('code=')) {
-            login(event.data);
-          }
-        });
+          },
+        );
       } else {
         AuthorizationTokenResponse resp = await appAuth
             .authorizeAndExchangeCode(

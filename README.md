@@ -184,7 +184,7 @@ flutter run --flavor alpha
 More generally you can use:
 
 ```bash
-flutter run --flavor <your_flavor> [ -d <your_device> ]
+flutter run --flavor <your_flavor> [ -d <your_device> ] [ --wasm --no-cross-origin-isolation ]
 ```
 
 - Where the flavor can be any of `dev`, `alpha`, or `prod` (whose policy is to only accept the prod client).
@@ -195,6 +195,8 @@ flutter run --flavor <your_flavor> [ -d <your_device> ]
 flutter run --flavor alpha -d chrome
 flutter run --flavor dev -d web-server
 ```
+
+- The optional duo `--wasm --no-cross-origin-isolation` runs a version compiled to WebAssembly instead of Javascript.
 
 </details>
 
@@ -280,8 +282,10 @@ flutter build {target} --flavor={flavor}
 Currently flavor are not supported for Flutter for web, you should use:
 
 ```
-flutter build web --dart-define=flavor={flavor}
+flutter build web --dart-define=flavor={flavor} [--wasm]
 ```
+
+The optional `--wasm` flag enables Titan to be also compiled to WebAssembly (besides the Javascript compilation).
 
 ### Notifications setup
 
