@@ -10,6 +10,8 @@ import 'package:titan/shotgun/ui/shotgun.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/styleguide/horizontal_multi_select.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
+import 'package:titan/shotgun/providers/create_shotgun_form_provider.dart'
+    show QuestionType;
 
 class CreateShotgunPage extends HookConsumerWidget {
   const CreateShotgunPage({super.key});
@@ -135,6 +137,8 @@ class _QcmQuestionCard extends HookConsumerWidget {
     final questionController = useTextEditingController(text: question.text);
     final canRemoveQuestion = formState.questions.length > 1;
 
+    final selectedType = useState<QuestionType>(question.type);
+
     return Card(
       margin: const EdgeInsets.only(bottom: 20),
       elevation: 0,
@@ -159,6 +163,14 @@ class _QcmQuestionCard extends HookConsumerWidget {
                     onChanged: (v) =>
                         formNotifier.updateQuestionText(questionId, v),
                   ),
+                ),
+                const SizedBox(width: 12),
+                _TypeSelector(
+                  selectedType: selectedType.value,
+                  onTypeChanged: (type) {
+                    selectedType.value = type;
+                    formNotifier.setQuestionType(questionId, type);
+                  },
                 ),
                 if (canRemoveQuestion)
                   IconButton(
@@ -193,6 +205,81 @@ class _QcmQuestionCard extends HookConsumerWidget {
   }
 }
 
+class _TypeSelector extends StatelessWidget {
+  const _TypeSelector({
+    required this.selectedType,
+    required this.onTypeChanged,
+  });
+
+  final QuestionType selectedType;
+  final Function(QuestionType) onTypeChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: ColorConstants.secondary.withValues(alpha: 0.5),
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _TypeChip(
+            label: "Tarif",
+            type: QuestionType.tariff,
+            selected: selectedType == QuestionType.tariff,
+            onChanged: onTypeChanged,
+          ),
+          _TypeChip(
+            label: "Quota",
+            type: QuestionType.quota,
+            selected: selectedType == QuestionType.quota,
+            onChanged: onTypeChanged,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TypeChip extends StatelessWidget {
+  const _TypeChip({
+    required this.label,
+    required this.type,
+    required this.selected,
+    required this.onChanged,
+  });
+
+  final String label;
+  final QuestionType type;
+  final bool selected;
+  final Function(QuestionType) onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onChanged(type),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: selected ? ColorConstants.main : Colors.transparent,
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: selected ? Colors.white : ColorConstants.tertiary,
+            fontSize: 12,
+            fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _QcmChoiceField extends HookConsumerWidget {
   const _QcmChoiceField({
     super.key,
@@ -212,8 +299,13 @@ class _QcmChoiceField extends HookConsumerWidget {
       return const SizedBox.shrink();
     }
 
-    final choiceText = question.choices[choiceIndex];
-    final choiceController = useTextEditingController(text: choiceText);
+    final choice = question.choices[choiceIndex];
+    final choiceController = useTextEditingController(text: choice.text);
+    final valueController = useTextEditingController(
+      text: choice.value != null
+          ? choice.value!.toStringAsFixed(2).replaceAll('.', ',')
+          : '',
+    );
     final canRemoveChoice = question.choices.length > 2;
 
     return Padding(
@@ -224,12 +316,41 @@ class _QcmChoiceField extends HookConsumerWidget {
           const SizedBox(width: 8),
           Expanded(
             child: TextEntry(
+              displayOptionnal: false,
               maxLines: 1,
               label: "Réponse possible",
               controller: choiceController,
               canBeEmpty: true,
               onChanged: (v) =>
                   formNotifier.updateChoice(questionId, choiceIndex, v),
+            ),
+          ),
+          const SizedBox(width: 12),
+          SizedBox(
+            width: 100,
+            child: TextEntry(
+              displayOptionnal: false,
+              maxLines: 1,
+              label: question.type == QuestionType.tariff
+                  ? "Prix (€)"
+                  : "Quota",
+              controller: valueController,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              isDouble: true,
+              canBeEmpty: true,
+              suffix: question.type == QuestionType.tariff ? "€" : "pers.",
+              onChanged: (v) {
+                final doubleValue = v.isEmpty
+                    ? null
+                    : double.tryParse(v.replaceAll(',', '.'));
+                formNotifier.updateChoiceValue(
+                  questionId,
+                  choiceIndex,
+                  doubleValue,
+                );
+              },
             ),
           ),
           if (canRemoveChoice)

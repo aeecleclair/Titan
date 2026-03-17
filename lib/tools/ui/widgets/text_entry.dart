@@ -15,7 +15,7 @@ class TextEntry extends StatelessWidget {
   final String? Function(String)? validator;
   final int? minLines, maxLines;
   final TextInputAction textInputAction;
-
+  final bool displayOptionnal;
   const TextEntry({
     super.key,
     required this.label,
@@ -38,6 +38,7 @@ class TextEntry extends StatelessWidget {
     this.suffixIcon,
     this.isNegative = false,
     this.textInputAction = TextInputAction.next,
+    this.displayOptionnal = true,
   });
 
   @override
@@ -56,7 +57,9 @@ class TextEntry extends StatelessWidget {
       enabled: enabled,
       decoration: InputDecoration(
         label: Text(
-          canBeEmpty ? localizeWithContext.globalOptionnal(label) : label,
+          displayOptionnal && canBeEmpty
+              ? localizeWithContext.globalOptionnal(label)
+              : label,
           style: TextStyle(color: color, height: 0.5),
         ),
         suffix: suffixIcon == null && suffix.isEmpty

@@ -1,20 +1,62 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+enum QuestionType { tariff, quota }
+
+class QcmChoice {
+  QcmChoice({required this.text, this.value});
+
+  final String text;
+  final double? value;
+
+  QcmChoice copyWith({String? text, double? value}) {
+    return QcmChoice(
+      text: text ?? this.text,
+      value: value ?? this.value,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'text': text,
+      'value': value,
+    };
+  }
+
+  factory QcmChoice.fromMap(Map<String, dynamic> map) {
+    return QcmChoice(
+      text: map['text'] ?? '',
+      value: map['value'] != null ? (map['value'] is double ? map['value'] : map['value'].toDouble()) : null,
+    );
+  }
+}
+
 int _createShotgunFormIdCounter = 0;
 String _nextFormQuestionId() => 'q_${_createShotgunFormIdCounter++}';
 
 class QcmQuestion {
-  QcmQuestion({required this.id, required this.text, required this.choices});
+  QcmQuestion({
+    required this.id,
+    required this.text,
+    required this.choices,
+    this.type = QuestionType.tariff,
+  });
 
   final String id;
   final String text;
-  final List<String> choices;
+  final List<QcmChoice> choices;
+  final QuestionType type;
 
-  QcmQuestion copyWith({String? id, String? text, List<String>? choices}) {
+  QcmQuestion copyWith({
+    String? id,
+    String? text,
+    List<QcmChoice>? choices,
+    QuestionType? type,
+  }) {
     return QcmQuestion(
       id: id ?? this.id,
       text: text ?? this.text,
       choices: choices ?? List.from(this.choices),
+      type: type ?? this.type,
     );
   }
 }
@@ -22,10 +64,15 @@ class QcmQuestion {
 class CreateShotgunFormState {
   CreateShotgunFormState({this.title = '', List<QcmQuestion>? questions})
     : questions =
-          questions ??
-          [
-            QcmQuestion(id: _nextFormQuestionId(), text: '', choices: ['', '']),
-          ];
+        questions ??
+        [
+          QcmQuestion(
+            id: _nextFormQuestionId(),
+            text: '',
+            choices: [QcmChoice(text: ''), QcmChoice(text: '')],
+            type: QuestionType.tariff,
+          ),
+        ];
 
   final String title;
   final List<QcmQuestion> questions;
@@ -60,7 +107,12 @@ class CreateShotgunFormNotifier extends StateNotifier<CreateShotgunFormState> {
     state = state.copyWith(
       questions: [
         ...state.questions,
-        QcmQuestion(id: _nextFormQuestionId(), text: '', choices: ['', '']),
+        QcmQuestion(
+          id: _nextFormQuestionId(),
+          text: '',
+          choices: [QcmChoice(text: ''), QcmChoice(text: '')],
+          type: QuestionType.tariff,
+        ),
       ],
     );
   }
@@ -81,11 +133,20 @@ class CreateShotgunFormNotifier extends StateNotifier<CreateShotgunFormState> {
     );
   }
 
+  void setQuestionType(String questionId, QuestionType type) {
+    state = state.copyWith(
+      questions: state.questions.map((q) {
+        if (q.id != questionId) return q;
+        return q.copyWith(type: type);
+      }).toList(),
+    );
+  }
+
   void addChoice(String questionId) {
     state = state.copyWith(
       questions: state.questions.map((q) {
         if (q.id != questionId) return q;
-        return q.copyWith(choices: [...q.choices, '']);
+        return q.copyWith(choices: [...q.choices, QcmChoice(text: '')]);
       }).toList(),
     );
   }
@@ -95,19 +156,31 @@ class CreateShotgunFormNotifier extends StateNotifier<CreateShotgunFormState> {
       questions: state.questions.map((q) {
         if (q.id != questionId) return q;
         if (q.choices.length <= 2) return q;
-        final newChoices = List<String>.from(q.choices)..removeAt(choiceIndex);
+        final newChoices = List<QcmChoice>.from(q.choices)..removeAt(choiceIndex);
         return q.copyWith(choices: newChoices);
       }).toList(),
     );
   }
 
-  void updateChoice(String questionId, int choiceIndex, String value) {
+  void updateChoice(String questionId, int choiceIndex, String text) {
     state = state.copyWith(
       questions: state.questions.map((q) {
         if (q.id != questionId) return q;
-        final newChoices = List<String>.from(q.choices);
-        if (choiceIndex >= newChoices.length) return q;
-        newChoices[choiceIndex] = value;
+        if (choiceIndex >= q.choices.length) return q;
+        final newChoices = List<QcmChoice>.from(q.choices);
+        newChoices[choiceIndex] = newChoices[choiceIndex].copyWith(text: text);
+        return q.copyWith(choices: newChoices);
+      }).toList(),
+    );
+  }
+
+  void updateChoiceValue(String questionId, int choiceIndex, double? value) {
+    state = state.copyWith(
+      questions: state.questions.map((q) {
+        if (q.id != questionId) return q;
+        if (choiceIndex >= q.choices.length) return q;
+        final newChoices = List<QcmChoice>.from(q.choices);
+        newChoices[choiceIndex] = newChoices[choiceIndex].copyWith(value: value);
         return q.copyWith(choices: newChoices);
       }).toList(),
     );
