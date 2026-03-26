@@ -59,7 +59,7 @@ class ConfirmFundButton extends ConsumerWidget {
       }
     }
 
-    void helloAssoCallback2(String fundingUrl) async {
+    void helloAssoCallback(String fundingUrl) async {
       webWindowWithCallback(
         fundingUrl,
         "HelloAsso",
@@ -111,7 +111,7 @@ class ConfirmFundButton extends ConsumerWidget {
             fundAmountNotifier.setFundAmount("");
             Navigator.pop(context);
             if (kIsWeb) {
-              helloAssoCallback2(fundingUrl.url);
+              helloAssoCallback(fundingUrl.url);
               return;
             }
             tryLaunchUrl(fundingUrl.url);
