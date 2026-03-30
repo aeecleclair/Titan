@@ -1,41 +1,88 @@
+import 'package:titan/shotgun/class/category.dart';
+import 'package:titan/shotgun/class/session.dart';
 import 'package:titan/tools/functions.dart';
 
 class Shotgun {
-  Shotgun({required this.id, required this.date, required this.prices});
+  Shotgun({
+    required this.id,
+    required this.name,
+    required this.storeId,
+    required this.quota,
+    required this.openDatetime,
+    required this.closeDatetime,
+    required this.sessions,
+    required this.categories,
+  });
   late final String id;
-  late final DateTime date;
-  late final Map<String, String> prices;
+  late final String name;
+  late final String storeId;
+  late final int? quota;
+  late final DateTime openDatetime;
+  late final DateTime? closeDatetime;
+  late final List<Session> sessions;
+  late final List<Category> categories;
 
   Shotgun.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    date = processDateFromAPI(json['date']);
-    prices = json['prices'];
+    name = json['name'];
+    storeId = json['store_id'];
+    quota = json['quota'];
+    openDatetime = processDateFromAPI(json['open_datetime']);
+    closeDatetime = json['close_datetime'];
+    sessions = json['sessions'].map((e) => Session.fromJson(e)).toList();
+    categories = json['categories'].map((e) => Category.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['id'] = id;
-    data['date'] = processDateToAPI(date);
-    data['prices'] = prices;
+    data['name'] = name;
+    data['store_id'] = storeId;
+    data['quota'] = quota;
+    data['open_datetime'] = processDateToAPI(openDatetime);
+    data['close_datetime'] = closeDatetime != null
+        ? processDateToAPI(closeDatetime!)
+        : null;
+    data['sessions'] = sessions.map((e) => e.toJson()).toList();
+    data['categories'] = categories.map((e) => e.toJson()).toList();
     return data;
   }
 
-  Shotgun copyWith({String? id, DateTime? date, Map<String, String>? prices}) {
+  Shotgun copyWith({
+    String? id,
+    String? name,
+    String? storeId,
+    int? quota,
+    DateTime? openDatetime,
+    DateTime? closeDatetime,
+    List<Session>? sessions,
+    List<Category>? categories,
+  }) {
     return Shotgun(
       id: id ?? this.id,
-      date: date ?? this.date,
-      prices: prices ?? this.prices,
+      name: name ?? this.name,
+      storeId: storeId ?? this.storeId,
+      quota: quota ?? this.quota,
+      openDatetime: openDatetime ?? this.openDatetime,
+      closeDatetime: closeDatetime ?? this.closeDatetime,
+      sessions: sessions ?? this.sessions,
+      categories: categories ?? this.categories,
     );
   }
 
   Shotgun.empty() {
     id = '';
-    date = DateTime.now();
-    prices = {};
+    name = '';
+    storeId = '';
+    quota = 0;
+    openDatetime = DateTime.now();
+    closeDatetime = null;
+    sessions = [];
+    categories = [];
   }
 
   @override
   String toString() {
-    return 'Shotgun{id : $id, date: $date, prices: $prices}';
+    return 'Shotgun{id : $id, name: $name, storeId: $storeId, quota: $quota, openDatetime: $openDatetime, closeDatetime: $closeDatetime, sessions: $sessions, categories: $categories}';
   }
 }

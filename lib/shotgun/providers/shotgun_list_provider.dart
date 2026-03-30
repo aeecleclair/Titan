@@ -21,8 +21,8 @@ class ShotgunListNotifier extends ListNotifier<Shotgun> {
     return await _shotgunRepository.getShotgunById(id);
   }
 
-  Future<bool> addShotgun(Shotgun shotgun) async {
-    return await add(_shotgunRepository.addShotgun, shotgun);
+  Future<bool> createShotgun(Shotgun shotgun) async {
+    return await add(_shotgunRepository.createShotgun, shotgun);
   }
 
   Future<bool> editShotgun(Shotgun shotgun) async {

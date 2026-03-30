@@ -2,34 +2,49 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/class/assocation.dart';
-import 'package:titan/admin/providers/my_association_list_provider.dart';
 import 'package:titan/feed/providers/association_event_list_provider.dart';
-import 'package:titan/shotgun/providers/create_shotgun_form_provider.dart';
+import 'package:titan/paiement/class/user_store.dart';
+import 'package:titan/paiement/providers/my_stores_provider.dart';
+import 'package:titan/shotgun/class/category.dart';
+import 'package:titan/shotgun/class/session.dart';
+import 'package:titan/shotgun/class/shotgun.dart';
+import 'package:titan/shotgun/ui/components/session_card.dart';
+import 'package:titan/shotgun/ui/components/tarif_card.dart';
 import 'package:titan/shotgun/ui/shotgun.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/styleguide/horizontal_multi_select.dart';
+import 'package:titan/tools/ui/widgets/date_entry.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
-import 'package:titan/shotgun/providers/create_shotgun_form_provider.dart'
-    show QuestionType;
+import 'package:titan/shotgun/providers/shotgun_list_provider.dart';
+
+enum QuestionType { tarif, quota }
 
 class CreateShotgunPage extends HookConsumerWidget {
   const CreateShotgunPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final shotgunListNotifier = ref.watch(shotgunListProvider.notifier);
+    final startDateController = useTextEditingController();
+    final endDateController = useTextEditingController();
     final formKey = useMemoized(GlobalKey<FormState>.new);
-    final formState = ref.watch(createShotgunFormProvider);
-    final formNotifier = ref.watch(createShotgunFormProvider.notifier);
-    final titleController = useTextEditingController(text: formState.title);
+    final titleController = useTextEditingController();
     final placesController = useTextEditingController();
-    final myAssociations = ref.watch(myAssociationListProvider);
+    final myStores = ref.watch(myStoresProvider);
     final associationEventsListNotifier = ref.watch(
       associationEventsListProvider.notifier,
     );
-    final selectedAssociation = useState<Association?>(
-      myAssociations.isNotEmpty ? myAssociations.first : null,
+    final selectedStore = useState<UserStore?>(
+      myStores.valueOrNull?.isNotEmpty ?? false
+          ? myStores.valueOrNull?.first
+          : null,
     );
+    final categories = useState<List<Category>>([]);
+    final sessions = useState<List<Session>>([]);
+
+    final locale = Localizations.localeOf(context);
+
     return ShotgunTemplate(
       child: Form(
         key: formKey,
@@ -39,20 +54,19 @@ class CreateShotgunPage extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 16),
-              const SizedBox(height: 16),
               SizedBox(
                 height: 50,
-                child: HorizontalMultiSelect<Association>(
-                  items: myAssociations,
-                  selectedItem: selectedAssociation.value,
-                  onItemSelected: (association) {
-                    selectedAssociation.value = association;
+                child: HorizontalMultiSelect<UserStore>(
+                  items: myStores.valueOrNull ?? [],
+                  selectedItem: selectedStore.value,
+                  onItemSelected: (store) {
+                    selectedStore.value = store;
                     associationEventsListNotifier.loadAssociationEventList(
-                      association.id,
+                      store.id,
                     );
                   },
-                  itemBuilder: (context, association, index, selected) => Text(
-                    association.name,
+                  itemBuilder: (context, store, index, selected) => Text(
+                    store.name,
                     style: TextStyle(
                       color: selected
                           ? ColorConstants.background
@@ -65,41 +79,111 @@ class CreateShotgunPage extends HookConsumerWidget {
               const SizedBox(height: 16),
               TextEntry(
                 maxLines: 1,
-                label: "Titre du shotgun",
+                label: "Titre du shotgun *",
                 controller: titleController,
-                onChanged: formNotifier.setTitle,
+                onChanged: (_) {},
               ),
               const SizedBox(height: 16),
               TextEntry(
                 maxLines: 1,
-                label: "Nombre de places disponibles",
+                label: "Nombre de places disponibles (optionnel)",
                 controller: placesController,
-                onChanged: formNotifier.setTitle,
+                onChanged: (_) {},
               ),
-              const SizedBox(height: 16),
-              ...List.generate(formState.questions.length, (qIndex) {
-                final question = formState.questions[qIndex];
-                return _QcmQuestionCard(
-                  key: ValueKey(question.id),
-                  questionId: question.id,
-                  questionIndex: qIndex,
-                );
-              }),
-              const SizedBox(height: 16),
-              OutlinedButton.icon(
-                onPressed: formNotifier.addQuestion,
-                icon: const HeroIcon(HeroIcons.plus, size: 20),
-                label: const Text("Ajouter une question"),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: ColorConstants.main,
-                  side: const BorderSide(color: ColorConstants.main),
-                ),
+              const SizedBox(height: 24),
+
+              DateEntry(
+                label: "Date d'ouverture du shotgun *",
+                controller: startDateController,
+                onTap: () => getFullDate(context, startDateController),
               ),
-              const SizedBox(height: 40),
+
+              DateEntry(
+                label: "Date de fermeture du shotgun (optionnel)",
+                controller: endDateController,
+                onTap: () => getFullDate(context, endDateController),
+              ),
+
+              const SizedBox(height: 16),
+
+              TarifCard(onChanged: (value) => categories.value = value),
+              const SizedBox(height: 16),
+
+              SessionCard(onChanged: (value) => sessions.value = value),
+              const SizedBox(height: 16),
+              const _ExtraQuestionsSection(),
+              const SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,
                 child: FilledButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Validation des champs obligatoires
+                    if (titleController.text.trim().isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Le titre est obligatoire"),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+
+                    if (startDateController.text.trim().isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("La date de début est obligatoire"),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+
+                    try {
+                      final openDatetime = DateTime.parse(
+                        processDateBackWithHourMaybe(
+                          startDateController.text,
+                          locale.toString(),
+                        ),
+                      );
+
+                      // Date de fin optionnelle
+                      DateTime? closeDatetime;
+                      if (endDateController.text.trim().isNotEmpty) {
+                        closeDatetime = DateTime.parse(
+                          processDateBackWithHourMaybe(
+                            endDateController.text,
+                            locale.toString(),
+                          ),
+                        );
+                      }
+
+                      // Nombre de places optionnel (0 par défaut)
+                      int quota = 0;
+                      if (placesController.text.trim().isNotEmpty) {
+                        quota = int.parse(placesController.text);
+                      }
+
+                      shotgunListNotifier.createShotgun(
+                        Shotgun(
+                          id: '',
+                          name: titleController.text.trim(),
+                          storeId: selectedStore.value?.id ?? '',
+                          quota: quota,
+                          openDatetime: openDatetime,
+                          closeDatetime: closeDatetime,
+                          categories: categories.value,
+                          sessions: sessions.value,
+                        ),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Erreur: ${e.toString()}"),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  },
                   style: FilledButton.styleFrom(
                     backgroundColor: ColorConstants.main,
                     foregroundColor: Colors.white,
@@ -117,255 +201,64 @@ class CreateShotgunPage extends HookConsumerWidget {
   }
 }
 
-class _QcmQuestionCard extends HookConsumerWidget {
-  const _QcmQuestionCard({
-    super.key,
-    required this.questionId,
-    required this.questionIndex,
-  });
+// ── Extra questions (free-text only) ─────────────────────────────────────────
 
-  final String questionId;
-  final int questionIndex;
+class _ExtraQuestionsSection extends HookWidget {
+  const _ExtraQuestionsSection();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final formState = ref.watch(createShotgunFormProvider);
-    final formNotifier = ref.watch(createShotgunFormProvider.notifier);
-    final question = formState.getQuestion(questionId);
-    if (question == null) return const SizedBox.shrink();
+  Widget build(BuildContext context) {
+    final questions = useState<List<TextEditingController>>([]);
 
-    final questionController = useTextEditingController(text: question.text);
-    final canRemoveQuestion = formState.questions.length > 1;
+    void addQuestion() {
+      questions.value = [...questions.value, TextEditingController()];
+    }
 
-    final selectedType = useState<QuestionType>(question.type);
+    void removeQuestion(int index) {
+      final updated = [...questions.value]..removeAt(index);
+      questions.value = updated;
+    }
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: 20),
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: BorderSide(
-          color: ColorConstants.secondary.withValues(alpha: 0.5),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ...List.generate(questions.value.length, (i) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: TextEntry(
                     maxLines: 1,
-                    label: "Question ${questionIndex + 1}",
-                    controller: questionController,
-                    onChanged: (v) =>
-                        formNotifier.updateQuestionText(questionId, v),
+                    label: "Question ${i + 1}",
+                    controller: questions.value[i],
+                    onChanged: (_) {},
                   ),
                 ),
-                const SizedBox(width: 12),
-                _TypeSelector(
-                  selectedType: selectedType.value,
-                  onTypeChanged: (type) {
-                    selectedType.value = type;
-                    formNotifier.setQuestionType(questionId, type);
-                  },
-                ),
-                if (canRemoveQuestion)
-                  IconButton(
-                    onPressed: () => formNotifier.removeQuestion(questionId),
-                    icon: HeroIcon(
-                      HeroIcons.trash,
-                      size: 22,
-                      color: ColorConstants.error,
-                    ),
-                    tooltip: "Supprimer la question",
+                IconButton(
+                  onPressed: () => removeQuestion(i),
+                  icon: HeroIcon(
+                    HeroIcons.minusCircle,
+                    size: 22,
+                    color: ColorConstants.error,
                   ),
+                  tooltip: "Supprimer la question",
+                ),
               ],
             ),
-            const SizedBox(height: 16),
-            ...List.generate(question.choices.length, (cIndex) {
-              return _QcmChoiceField(
-                key: ValueKey('$questionId-$cIndex'),
-                questionId: questionId,
-                choiceIndex: cIndex,
-              );
-            }),
-            TextButton.icon(
-              onPressed: () => formNotifier.addChoice(questionId),
-              icon: const HeroIcon(HeroIcons.plus, size: 18),
-              label: const Text("Ajouter un choix"),
-              style: TextButton.styleFrom(foregroundColor: ColorConstants.main),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _TypeSelector extends StatelessWidget {
-  const _TypeSelector({
-    required this.selectedType,
-    required this.onTypeChanged,
-  });
-
-  final QuestionType selectedType;
-  final Function(QuestionType) onTypeChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: ColorConstants.secondary.withValues(alpha: 0.5),
-        ),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _TypeChip(
-            label: "Tarif",
-            type: QuestionType.tariff,
-            selected: selectedType == QuestionType.tariff,
-            onChanged: onTypeChanged,
-          ),
-          _TypeChip(
-            label: "Quota",
-            type: QuestionType.quota,
-            selected: selectedType == QuestionType.quota,
-            onChanged: onTypeChanged,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _TypeChip extends StatelessWidget {
-  const _TypeChip({
-    required this.label,
-    required this.type,
-    required this.selected,
-    required this.onChanged,
-  });
-
-  final String label;
-  final QuestionType type;
-  final bool selected;
-  final Function(QuestionType) onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => onChanged(type),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: BoxDecoration(
-          color: selected ? ColorConstants.main : Colors.transparent,
-          borderRadius: BorderRadius.circular(6),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: selected ? Colors.white : ColorConstants.tertiary,
-            fontSize: 12,
-            fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+          );
+        }),
+        OutlinedButton.icon(
+          onPressed: addQuestion,
+          icon: const HeroIcon(HeroIcons.plus, size: 20),
+          label: const Text("Ajouter une question"),
+          style: OutlinedButton.styleFrom(
+            foregroundColor: ColorConstants.main,
+            side: const BorderSide(color: ColorConstants.main),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _QcmChoiceField extends HookConsumerWidget {
-  const _QcmChoiceField({
-    super.key,
-    required this.questionId,
-    required this.choiceIndex,
-  });
-
-  final String questionId;
-  final int choiceIndex;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final formState = ref.watch(createShotgunFormProvider);
-    final formNotifier = ref.watch(createShotgunFormProvider.notifier);
-    final question = formState.getQuestion(questionId);
-    if (question == null || choiceIndex >= question.choices.length) {
-      return const SizedBox.shrink();
-    }
-
-    final choice = question.choices[choiceIndex];
-    final choiceController = useTextEditingController(text: choice.text);
-    final valueController = useTextEditingController(
-      text: choice.value != null
-          ? choice.value!.toStringAsFixed(2).replaceAll('.', ',')
-          : '',
-    );
-    final canRemoveChoice = question.choices.length > 2;
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(width: 8),
-          Expanded(
-            child: TextEntry(
-              displayOptionnal: false,
-              maxLines: 1,
-              label: "Réponse possible",
-              controller: choiceController,
-              canBeEmpty: true,
-              onChanged: (v) =>
-                  formNotifier.updateChoice(questionId, choiceIndex, v),
-            ),
-          ),
-          const SizedBox(width: 12),
-          SizedBox(
-            width: 100,
-            child: TextEntry(
-              displayOptionnal: false,
-              maxLines: 1,
-              label: question.type == QuestionType.tariff
-                  ? "Prix (€)"
-                  : "Quota",
-              controller: valueController,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              isDouble: true,
-              canBeEmpty: true,
-              suffix: question.type == QuestionType.tariff ? "€" : "pers.",
-              onChanged: (v) {
-                final doubleValue = v.isEmpty
-                    ? null
-                    : double.tryParse(v.replaceAll(',', '.'));
-                formNotifier.updateChoiceValue(
-                  questionId,
-                  choiceIndex,
-                  doubleValue,
-                );
-              },
-            ),
-          ),
-          if (canRemoveChoice)
-            IconButton(
-              onPressed: () =>
-                  formNotifier.removeChoice(questionId, choiceIndex),
-              icon: HeroIcon(
-                HeroIcons.minusCircle,
-                size: 22,
-                color: ColorConstants.error,
-              ),
-              tooltip: "Supprimer le choix",
-            ),
-        ],
-      ),
+      ],
     );
   }
 }
