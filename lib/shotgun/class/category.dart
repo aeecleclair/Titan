@@ -1,5 +1,3 @@
-import 'package:titan/tools/functions.dart';
-
 class Category {
   Category({required this.id, required this.name, required this.price});
   late final String id;

@@ -28,9 +28,13 @@ class Shotgun {
     storeId = json['store_id'];
     quota = json['quota'];
     openDatetime = processDateFromAPI(json['open_datetime']);
-    closeDatetime = json['close_datetime'];
-    sessions = json['sessions'].map((e) => Session.fromJson(e)).toList();
-    categories = json['categories'].map((e) => Category.fromJson(e)).toList();
+    closeDatetime = json['close_datetime'] != null
+        ? processDateFromAPI(json['close_datetime'])
+        : null;
+    sessions =
+        json['sessions']?.map((e) => Session.fromJson(e))?.toList() ?? [];
+    categories =
+        json['categories']?.map((e) => Category.fromJson(e))?.toList() ?? [];
   }
 
   Map<String, dynamic> toJson() {

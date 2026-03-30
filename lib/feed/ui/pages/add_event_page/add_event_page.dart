@@ -23,6 +23,8 @@ import 'package:titan/feed/providers/news_list_provider.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
+import 'package:titan/shotgun/class/shotgun.dart';
+import 'package:titan/shotgun/providers/association_shotgun_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -57,6 +59,12 @@ class AddEditEventPage extends HookConsumerWidget {
     final selectedAssociation = useState<Association?>(
       myAssociations.length == 1 ? myAssociations.first : null,
     );
+
+    final shotgunsAsync = ref.watch(
+      selectedAssociationShotgunsProvider(selectedAssociation.value?.id),
+    );
+
+    final useExistingShotgun = useState(false);
 
     final ImagePicker picker = ImagePicker();
 
@@ -137,6 +145,7 @@ class AddEditEventPage extends HookConsumerWidget {
                               selectedItem: selectedAssociation.value,
                               onItemSelected: (association) {
                                 selectedAssociation.value = association;
+                                useExistingShotgun.value = false;
                               },
                               itemBuilder:
                                   (context, association, index, selected) =>
@@ -326,18 +335,62 @@ class AddEditEventPage extends HookConsumerWidget {
                       controller: locationController,
                     ),
                     SizedBox(height: 10),
-                    DateEntry(
-                      onTap: () => getFullDate(context, shotgunDateController),
-                      controller: shotgunDateController,
-                      label: localizeWithContext.feedSGDate,
-                      canBeEmpty: true,
+                    shotgunsAsync.when(
+                      data: (shotguns) => shotguns.isNotEmpty
+                          ? Column(
+                              children: [
+                                const SizedBox(height: 10),
+                                CheckBoxEntry(
+                                  title:
+                                      "Utiliser un shotgun existant", // Ajoute cette clé dans les traductions
+                                  valueNotifier: useExistingShotgun,
+                                  onChanged: () {
+                                    useExistingShotgun.value =
+                                        !useExistingShotgun.value;
+                                  },
+                                ),
+                                // Optionnel : Dropdown pour choisir quel shotgun si la checkbox est cochée
+                                if (useExistingShotgun.value)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: DropdownButtonFormField<Shotgun>(
+                                      decoration: InputDecoration(
+                                        labelText: "Sélectionner un shotgun",
+                                        border: OutlineInputBorder(),
+                                      ),
+                                      items: shotguns.map((shotgun) {
+                                        return DropdownMenuItem(
+                                          value: shotgun,
+                                          child: Text(shotgun.name),
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        // Stocker le shotgun sélectionné pour l'utiliser lors de la création de l'événement
+                                      },
+                                    ),
+                                  ),
+                              ],
+                            )
+                          : const SizedBox.shrink(),
+                      loading: () =>
+                          const SizedBox.shrink(), // Ou un petit indicator
+                      error: (_, __) => const SizedBox.shrink(),
                     ),
-                    SizedBox(height: 10),
-                    TextEntry(
-                      label: localizeWithContext.feedSGExternalLink,
-                      controller: externalLinkController,
-                      canBeEmpty: true,
-                    ),
+                    if (!useExistingShotgun.value) ...[
+                      SizedBox(height: 10),
+                      DateEntry(
+                        onTap: () => getFullDate(context, shotgunDateController),
+                        controller: shotgunDateController,
+                        label: localizeWithContext.feedSGDate,
+                        canBeEmpty: true,
+                      ),
+                      SizedBox(height: 10),
+                      TextEntry(
+                        label: localizeWithContext.feedSGExternalLink,
+                        controller: externalLinkController,
+                        canBeEmpty: true,
+                      ),
+                    ],
                     const SizedBox(height: 10),
                     CheckBoxEntry(
                       title: localizeWithContext.feedNotification,
@@ -493,22 +546,24 @@ class AddEditEventPage extends HookConsumerWidget {
                           );
                           return;
                         }
-                        if (externalLinkController.text.isEmpty &&
-                            shotgunDateController.text.isNotEmpty) {
-                          displayToastWithContext(
-                            TypeMsg.error,
-                            localizeWithContext
-                                .feedPleaseProvideASGExternalLink,
-                          );
-                          return;
-                        }
-                        if (externalLinkController.text.isNotEmpty &&
-                            shotgunDateController.text.isEmpty) {
-                          displayToastWithContext(
-                            TypeMsg.error,
-                            localizeWithContext.feedPleaseProvideASGDate,
-                          );
-                          return;
+                        if (!useExistingShotgun.value) {
+                          if (externalLinkController.text.isEmpty &&
+                              shotgunDateController.text.isNotEmpty) {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              localizeWithContext
+                                  .feedPleaseProvideASGExternalLink,
+                            );
+                            return;
+                          }
+                          if (externalLinkController.text.isNotEmpty &&
+                              shotgunDateController.text.isEmpty) {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              localizeWithContext.feedPleaseProvideASGDate,
+                            );
+                            return;
+                          }
                         }
                         if (key.currentState!.validate()) {
                           // if (allDay.value) {
@@ -596,15 +651,16 @@ class AddEditEventPage extends HookConsumerWidget {
                                   ),
                                 ),
                                 location: locationController.text,
-                                ticketUrlOpening:
-                                    shotgunDateController.text != ""
-                                    ? DateTime.parse(
-                                        processDateBackWithHourMaybe(
-                                          shotgunDateController.text,
-                                          locale.toString(),
-                                        ),
-                                      )
-                                    : null,
+                                ticketUrlOpening: useExistingShotgun.value
+                                    ? null
+                                    : shotgunDateController.text != ""
+                                        ? DateTime.parse(
+                                            processDateBackWithHourMaybe(
+                                              shotgunDateController.text,
+                                              locale.toString(),
+                                            ),
+                                          )
+                                        : null,
                                 name: titleController.text,
                                 allDay: allDay.value,
                                 // recurrenceRule: recurrenceRule,
@@ -612,7 +668,9 @@ class AddEditEventPage extends HookConsumerWidget {
                                 associationId: syncEvent.id != ""
                                     ? syncEvent.associationId
                                     : selectedAssociation.value!.id,
-                                ticketUrl: externalLinkController.text,
+                                ticketUrl: useExistingShotgun.value
+                                    ? null
+                                    : externalLinkController.text,
                                 notification: notification.value,
                               );
                               try {
