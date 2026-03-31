@@ -16,6 +16,7 @@ class PaimentDelegateModal extends HookWidget {
   final int itemPrice;
   final DateTime? itemExpirationDate;
   final VoidCallback onConfirm;
+  final VoidCallback? onRefuse;
   const PaimentDelegateModal({
     super.key,
     required this.itemTitle,
@@ -23,6 +24,7 @@ class PaimentDelegateModal extends HookWidget {
     required this.itemPrice,
     this.itemExpirationDate,
     required this.onConfirm,
+    this.onRefuse,
   });
 
   @override
@@ -63,6 +65,11 @@ class PaimentDelegateModal extends HookWidget {
 
     Future<void> onCancel() async {
       if (state.value != _ModalState.idle) return;
+      if (onRefuse != null) {
+        state.value = _ModalState.loading;
+        onRefuse!();
+        return;
+      }
       state.value = _ModalState.canceled;
       await Future.delayed(const Duration(milliseconds: 1500));
       if (context.mounted) Navigator.of(context).pop();
