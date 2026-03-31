@@ -5216,6 +5216,36 @@ abstract class AppLocalizations {
   /// **'Paiement annulé'**
   String get paiementPaymentCanceled;
 
+  /// No description provided for @paiementPaymentRequest.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande de paiement'**
+  String get paiementPaymentRequest;
+
+  /// No description provided for @paiementPaymentRequestAccepted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande de paiement acceptée'**
+  String get paiementPaymentRequestAccepted;
+
+  /// No description provided for @paiementPaymentRequestRefused.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande de paiement refusée'**
+  String get paiementPaymentRequestRefused;
+
+  /// No description provided for @paiementPaymentRequestError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors du traitement de la demande'**
+  String get paiementPaymentRequestError;
+
+  /// No description provided for @paiementRefuse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refuser'**
+  String get paiementRefuse;
+
   /// No description provided for @paiementSuccessfullyAddedStore.
   ///
   /// In fr, this message translates to:

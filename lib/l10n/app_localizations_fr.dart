@@ -2684,6 +2684,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementPaymentCanceled => 'Paiement annulé';
 
   @override
+  String get paiementPaymentRequest => 'Demande de paiement';
+
+  @override
+  String get paiementPaymentRequestAccepted => 'Demande de paiement acceptée';
+
+  @override
+  String get paiementPaymentRequestRefused => 'Demande de paiement refusée';
+
+  @override
+  String get paiementPaymentRequestError =>
+      'Erreur lors du traitement de la demande';
+
+  @override
+  String get paiementRefuse => 'Refuser';
+
+  @override
   String get paiementSuccessfullyAddedStore => 'Magasin ajoutée avec succès';
 
   @override

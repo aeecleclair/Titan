@@ -2655,6 +2655,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementPaymentCanceled => 'Payment canceled';
 
   @override
+  String get paiementPaymentRequest => 'Payment request';
+
+  @override
+  String get paiementPaymentRequestAccepted => 'Payment request accepted';
+
+  @override
+  String get paiementPaymentRequestRefused => 'Payment request refused';
+
+  @override
+  String get paiementPaymentRequestError => 'Error processing payment request';
+
+  @override
+  String get paiementRefuse => 'Refuse';
+
+  @override
   String get paiementSuccessfullyAddedStore => 'Store successfully added';
 
   @override
