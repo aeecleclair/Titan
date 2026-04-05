@@ -1,3 +1,4 @@
+import 'package:flutter/widget_previews.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -5,6 +6,36 @@ import 'package:intl/intl.dart';
 import 'package:titan/ticketing/class/event.dart';
 import 'package:titan/ticketing/ui/components/event_countdown_live.dart';
 import 'package:titan/ticketing/ui/components/event_status_badge.dart';
+
+@Preview(name: 'Event Card')
+Widget eventCardPreview() {
+  final now = DateTime.now();
+
+  return ProviderScope(
+    child: MaterialApp(
+      home: Scaffold(
+        backgroundColor: const Color(0xFFF4F5F7),
+        body: Center(
+          child: EventCard(
+            onTap: () {},
+            event: Event(
+              id: 'preview-event',
+              name: 'Soiree Inge x ECL',
+              openDate: now.add(const Duration(days: 2, hours: 3)),
+              closeDate: now.add(const Duration(days: 3)),
+              quota: 300,
+              userQuota: 2,
+              usedQuota: 120,
+              disabled: false,
+              sessions: const [],
+              categories: const [],
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
 
 class EventCard extends HookConsumerWidget {
   final VoidCallback onTap;
@@ -53,25 +84,14 @@ class EventCard extends HookConsumerWidget {
                       width: double.infinity,
                       height: imageHeight,
                       color: Colors.grey.shade200,
-                      child:
-                          event.imageUrl != null && event.imageUrl!.isNotEmpty
-                          ? Image.network(
-                              event.imageUrl!,
-                              width: double.infinity,
-                              height: imageHeight,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return _buildPlaceholderImage();
-                              },
-                            )
-                          : _buildPlaceholderImage(),
+                      child: _buildPlaceholderImage(),
                     ),
                   ),
                   // Status badge in top-right
                   Positioned(
                     top: 8,
                     right: 8,
-                    child: EventStatusBadge(eventDate: event.date),
+                    child: EventStatusBadge(eventDate: event.openDate),
                   ),
                 ],
               ),
@@ -86,7 +106,7 @@ class EventCard extends HookConsumerWidget {
                   children: [
                     // Title
                     AutoSizeText(
-                      event.title,
+                      event.name,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -106,7 +126,9 @@ class EventCard extends HookConsumerWidget {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          DateFormat('dd MMM yyyy • HH:mm').format(event.date),
+                          DateFormat(
+                            'dd MMM yyyy • HH:mm',
+                          ).format(event.openDate),
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey.shade700,
@@ -116,29 +138,29 @@ class EventCard extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 6),
                     // Announcer
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.person_outline,
-                          size: 14,
-                          color: Colors.grey.shade600,
-                        ),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Text(
-                            event.announcer.name,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey.shade700,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     Icon(
+                    //       Icons.person_outline,
+                    //       size: 14,
+                    //       color: Colors.grey.shade600,
+                    //     ),
+                    //     const SizedBox(width: 6),
+                    //     Expanded(
+                    //       child: Text(
+                    //         event.announcer.name,
+                    //         style: TextStyle(
+                    //           fontSize: 12,
+                    //           color: Colors.grey.shade700,
+                    //         ),
+                    //         overflow: TextOverflow.ellipsis,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     const SizedBox(height: 8),
                     // Countdown
-                    EventCountdownLive(eventDate: event.date),
+                    EventCountdownLive(eventDate: event.openDate),
                   ],
                 ),
               ),

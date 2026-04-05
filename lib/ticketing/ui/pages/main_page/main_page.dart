@@ -33,13 +33,16 @@ class TicketingMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isAdmin = true; //ref.watch(isAdminProvider);
 
+    final event = ref.watch(eventProvider);
     final eventNotifier = ref.watch(eventProvider.notifier);
+
     final eventList = ref.watch(eventListProvider);
     final eventListNotifier = ref.watch(eventListProvider.notifier);
 
     final categoryList = ref.watch(categoryListProvider);
     final categoryListNotifier = ref.watch(categoryListProvider.notifier);
 
+    final session = ref.watch(sessionProvider);
     final sessionNotifier = ref.watch(sessionProvider.notifier);
 
     final sessionList = ref.watch(sessionListProvider);
@@ -59,7 +62,6 @@ class TicketingMainPage extends HookConsumerWidget {
 
     final showPanel = useState(false);
     final showCategories = useState(false);
-    final selectedEvent = useState('');
     final selectedSession = useState('');
 
     double width = 300;
@@ -74,15 +76,15 @@ class TicketingMainPage extends HookConsumerWidget {
             value: eventList,
             builder: (context, eventData) {
               final sortedEventData = eventData.sortedBy(
-                (element) => element.date,
+                (element) => element.openDate,
               );
-              final filteredSortedEventData = sortedEventData.where(
-                (event) =>
-                    selectedAnnouncer
-                        .where((e) => event.announcer.name == e.name)
-                        .isNotEmpty ||
-                    selectedAnnouncer.isEmpty,
-              );
+              // final filteredSortedEventData = sortedEventData.where(
+              //   (event) =>
+              //       selectedAnnouncer
+              //           .where((e) => event.announcer.name == e.name)
+              //           .isNotEmpty ||
+              //       selectedAnnouncer.isEmpty,
+              // );
               return ColumnRefresher(
                 onRefresh: () async {
                   await eventListNotifier.loadEvents();
@@ -121,7 +123,7 @@ class TicketingMainPage extends HookConsumerWidget {
                     multipleSelect: true,
                   ),
                   const SizedBox(height: 20),
-                  ...filteredSortedEventData.map(
+                  ...sortedEventData.map(
                     (event) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: EventCard(
@@ -129,8 +131,7 @@ class TicketingMainPage extends HookConsumerWidget {
                         onTap: () {
                           animation.forward();
                           showPanel.value = true;
-                          print("Event tapped: ${event.title}");
-                          selectedEvent.value = event.id;
+                          print("Event tapped: ${event.name}");
                           eventNotifier.setEvent(event);
                           categoryListNotifier.loadCategories(event.id);
                         },
@@ -249,8 +250,9 @@ class TicketingMainPage extends HookConsumerWidget {
                               data: (categories) {
                                 final filteredCategories = categories
                                     .where(
-                                      (category) => category.linkedSessions
-                                          .contains(selectedSession.value),
+                                      (category) => category.sessions.contains(
+                                        session.id,
+                                      ),
                                     )
                                     .toList();
                                 if (filteredCategories.isEmpty) {
@@ -283,12 +285,17 @@ class TicketingMainPage extends HookConsumerWidget {
                                 padding: EdgeInsets.all(20),
                                 child: CircularProgressIndicator(),
                               ),
-                              error: (error, stack) => const Padding(
-                                padding: EdgeInsets.all(20),
-                                child: Text(
-                                  "Erreur lors du chargement des catégories.",
-                                ),
-                              ),
+                              error: (error, stack) {
+                                debugPrint(
+                                  "Erreur lors du chargement des catégories: $error\n$stack",
+                                );
+                                return const Padding(
+                                  padding: EdgeInsets.all(20),
+                                  child: Text(
+                                    "Erreur lors du chargement des catégories.",
+                                  ),
+                                );
+                              },
                             ),
                           )
                         : SizedBox(
@@ -297,9 +304,7 @@ class TicketingMainPage extends HookConsumerWidget {
                               data: (sessions) {
                                 final eventSessions = sessions
                                     .where(
-                                      (session) =>
-                                          session.eventId ==
-                                          selectedEvent.value,
+                                      (session) => session.eventId == event.id,
                                     )
                                     .toList();
                                 if (eventSessions.isEmpty) {
@@ -312,7 +317,6 @@ class TicketingMainPage extends HookConsumerWidget {
                                   children: eventSessions.map((session) {
                                     return SessionCard(
                                       onTap: () {
-                                        selectedSession.value = session.id;
                                         sessionNotifier.setSession(session);
                                         showCategories.value = true;
                                         print(
@@ -328,12 +332,17 @@ class TicketingMainPage extends HookConsumerWidget {
                                 padding: EdgeInsets.all(20),
                                 child: CircularProgressIndicator(),
                               ),
-                              error: (error, stack) => const Padding(
-                                padding: EdgeInsets.all(20),
-                                child: Text(
-                                  "Erreur lors du chargement des sessions.",
-                                ),
-                              ),
+                              error: (error, stack) {
+                                debugPrint(
+                                  "Erreur lors du chargement des sessions: $error\n$stack",
+                                );
+                                return const Padding(
+                                  padding: EdgeInsets.all(20),
+                                  child: Text(
+                                    "Erreur lors du chargement des sessions.",
+                                  ),
+                                );
+                              },
                             ),
                           ),
                   ),

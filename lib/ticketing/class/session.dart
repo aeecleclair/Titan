@@ -19,22 +19,22 @@ class Session {
 
   Session.fromJson(Map<String, dynamic> json) {
     id = json["id"];
-    eventId = json["eventId"];
+    eventId = json["event_id"];
     name = json["name"];
     quota = json["quota"];
-    usedQuota = json["usedQuota"];
-    userQuota = json["userQuota"];
+    usedQuota = json["used_quota"];
+    userQuota = json["user_quota"];
     disabled = json["disabled"];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data["id"] = id;
-    data["eventId"] = eventId;
+    data["event_id"] = eventId;
     data["name"] = name;
     data["quota"] = quota;
-    data["usedQuota"] = usedQuota;
-    data["userQuota"] = userQuota;
+    data["used_quota"] = usedQuota;
+    data["user_quota"] = userQuota;
     data["disabled"] = disabled;
     return data;
   }

@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/ticketing/providers/event_provider.dart';
 import 'package:titan/ticketing/class/session.dart';
 import 'package:titan/ticketing/repositories/session_repository.dart';
 import 'package:titan/tools/providers/list_notifier.dart';
@@ -7,35 +8,14 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 
 class SessionListNotifier extends ListNotifier<Session> {
   SessionRepository repository = SessionRepository();
-  SessionListNotifier({required String token, required String categoryId})
+  SessionListNotifier({required String token, required String eventId})
     : super(const AsyncValue.loading()) {
     repository.setToken(token);
   }
 
-  Future<AsyncValue<List<Session>>> loadSessions(String categoryId) async {
-    return await loadList(() => repository.getAllSession(categoryId));
-  }
-
-  Future<bool> addSession(Session session) async {
-    return await add(repository.addSession, session);
-  }
-
-  Future<bool> updateSession(Session session) async {
-    return await update(
-      repository.updateSession,
-      (sessions, session) =>
-          sessions..[sessions.indexWhere((b) => b.id == session.id)] = session,
-      session,
-    );
-  }
-
-  Future<bool> deleteSession(Session session) async {
-    return await delete(
-      repository.deleteSession,
-      (sessions, session) => sessions..removeWhere((b) => b.id == session.id),
-      session.id,
-      session,
-    );
+  Future<AsyncValue<List<Session>>> loadSessions(String eventId) async {
+    state = const AsyncLoading();
+    return await loadList(() => repository.getAllSession(eventId));
   }
 }
 
@@ -44,12 +24,13 @@ final sessionListProvider =
       ref,
     ) {
       final token = ref.watch(tokenProvider);
+      final eventId = ref.watch(eventProvider).id;
       SessionListNotifier notifier = SessionListNotifier(
         token: token,
-        categoryId: '',
+        eventId: eventId,
       );
       tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadSessions('');
+        await notifier.loadSessions(eventId);
       });
       return notifier;
     });

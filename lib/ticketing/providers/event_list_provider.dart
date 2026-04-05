@@ -15,28 +15,6 @@ class EventListNotifier extends ListNotifier<Event> {
   Future<AsyncValue<List<Event>>> loadEvents() async {
     return await loadList(repository.getAllEvent);
   }
-
-  Future<bool> addEvent(Event event) async {
-    return await add(repository.addEvent, event);
-  }
-
-  Future<bool> updateEvent(Event event) async {
-    return await update(
-      repository.updateEvent,
-      (events, event) =>
-          events..[events.indexWhere((b) => b.id == event.id)] = event,
-      event,
-    );
-  }
-
-  Future<bool> deleteEvent(Event event) async {
-    return await delete(
-      repository.deleteEvent,
-      (events, event) => events..removeWhere((b) => b.id == event.id),
-      event.id,
-      event,
-    );
-  }
 }
 
 final eventListProvider =

@@ -1,60 +1,82 @@
-import 'package:titan/ticketing/class/announcer.dart';
+import 'package:titan/ticketing/class/session.dart';
+import 'package:titan/ticketing/class/category.dart';
 import 'package:titan/tools/functions.dart';
 
 class Event {
   late final String id;
-  late final String title;
-  late final String content;
-  late final DateTime date;
-  late final Announcer announcer;
-  late final String ticket;
-  late final List<String> form;
-  final String? imageUrl;
+  late final String name;
+  late final DateTime openDate;
+  late final DateTime closeDate;
+  late final int quota;
+  late final int userQuota;
+  late final int usedQuota;
+  late final bool disabled;
+  late final List<Session> sessions;
+  late final List<Category> categories;
 
   Event({
     required this.id,
-    required this.title,
-    required this.content,
-    required this.date,
-    required this.announcer,
-    required this.ticket,
-    required this.form,
-    this.imageUrl,
+    required this.name,
+    required this.openDate,
+    required this.closeDate,
+    required this.quota,
+    required this.userQuota,
+    required this.usedQuota,
+    required this.disabled,
+    required this.sessions,
+    required this.categories,
   });
 
-  Event.fromJson(Map<String, dynamic> json) : imageUrl = json["imageUrl"] {
+  Event.fromJson(Map<String, dynamic> json) {
     id = json["id"];
-    title = json["title"];
-    content = json["content"];
-    date = processDateFromAPI(json["date"]);
-    announcer = Announcer.fromJson(json["announcer"]);
-    ticket = json["ticket"];
-    form = json["form"];
+    name = json["name"];
+    openDate = json["open_date"] != null
+        ? processDateFromAPI(json["open_date"])
+        : DateTime.now();
+    closeDate = json["close_date"] != null
+        ? processDateFromAPI(json["close_date"])
+        : DateTime.now();
+    quota = json["quota"];
+    userQuota = json["user_quota"];
+    usedQuota = json["used_quota"];
+    disabled = json["disabled"];
+    sessions = json["sessions"] != null
+        ? List<Session>.from(json["sessions"].map((x) => Session.fromJson(x)))
+        : [];
+    categories = json["categories"] != null
+        ? List<Category>.from(
+            json["categories"].map((x) => Category.fromJson(x)),
+          )
+        : [];
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data["id"] = id;
-    data["title"] = title;
-    data["content"] = content;
-    data["date"] = processDateToAPI(date);
-    data["announcer_id"] = announcer.id;
-    data["ticket"] = ticket;
-    data["form"];
-    if (imageUrl != null) data["imageUrl"] = imageUrl;
+    data["name"] = name;
+    data["open_date"] = processDateToAPI(openDate);
+    data["close_date"] = processDateToAPI(closeDate);
+    data["quota"] = quota;
+    data["user_quota"] = userQuota;
+    data["used_quota"] = usedQuota;
+    data["disabled"] = disabled;
+    data["sessions"] = sessions.map((s) => s.toJson()).toList();
+    data["categories"] = categories.map((c) => c.toJson()).toList();
     return data;
   }
 
   static Event empty() {
     return Event(
       id: "",
-      title: "",
-      content: "",
-      date: DateTime.now(),
-      announcer: Announcer.empty(),
-      ticket: "",
-      form: [""],
-      imageUrl: null,
+      name: "",
+      openDate: DateTime.now(),
+      closeDate: DateTime.now().add(Duration(days: 1)),
+      quota: 0,
+      userQuota: 0,
+      usedQuota: 0,
+      disabled: false,
+      sessions: [],
+      categories: [],
     );
   }
 }
