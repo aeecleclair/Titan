@@ -24,6 +24,8 @@ class TarifCard extends HookWidget {
               id: '',
               name: e['label']!.text,
               price: int.tryParse(e['value']!.text) ?? 0,
+              quota: int.tryParse(e['quota']!.text),
+              requiredMembership: e['requiredMembership']!.text,
             ),
           )
           .toList(),

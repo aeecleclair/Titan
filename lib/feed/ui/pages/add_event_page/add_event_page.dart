@@ -65,6 +65,7 @@ class AddEditEventPage extends HookConsumerWidget {
     );
 
     final useExistingShotgun = useState(false);
+    final selectedShotgun = useState<Shotgun?>(null);
 
     final ImagePicker picker = ImagePicker();
 
@@ -354,6 +355,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: DropdownButtonFormField<Shotgun>(
+                                      value: selectedShotgun.value,
                                       decoration: InputDecoration(
                                         labelText: "Sélectionner un shotgun",
                                         border: OutlineInputBorder(),
@@ -365,7 +367,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                         );
                                       }).toList(),
                                       onChanged: (value) {
-                                        // Stocker le shotgun sélectionné pour l'utiliser lors de la création de l'événement
+                                        selectedShotgun.value = value;
                                       },
                                     ),
                                   ),
@@ -379,7 +381,8 @@ class AddEditEventPage extends HookConsumerWidget {
                     if (!useExistingShotgun.value) ...[
                       SizedBox(height: 10),
                       DateEntry(
-                        onTap: () => getFullDate(context, shotgunDateController),
+                        onTap: () =>
+                            getFullDate(context, shotgunDateController),
                         controller: shotgunDateController,
                         label: localizeWithContext.feedSGDate,
                         canBeEmpty: true,
@@ -565,6 +568,14 @@ class AddEditEventPage extends HookConsumerWidget {
                             return;
                           }
                         }
+                        if (useExistingShotgun.value &&
+                            selectedShotgun.value == null) {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            "Veuillez sélectionner un shotgun existant",
+                          );
+                          return;
+                        }
                         if (key.currentState!.validate()) {
                           // if (allDay.value) {
                           //   startDateController.text =
@@ -654,13 +665,13 @@ class AddEditEventPage extends HookConsumerWidget {
                                 ticketUrlOpening: useExistingShotgun.value
                                     ? null
                                     : shotgunDateController.text != ""
-                                        ? DateTime.parse(
-                                            processDateBackWithHourMaybe(
-                                              shotgunDateController.text,
-                                              locale.toString(),
-                                            ),
-                                          )
-                                        : null,
+                                    ? DateTime.parse(
+                                        processDateBackWithHourMaybe(
+                                          shotgunDateController.text,
+                                          locale.toString(),
+                                        ),
+                                      )
+                                    : null,
                                 name: titleController.text,
                                 allDay: allDay.value,
                                 // recurrenceRule: recurrenceRule,
@@ -672,6 +683,9 @@ class AddEditEventPage extends HookConsumerWidget {
                                     ? null
                                     : externalLinkController.text,
                                 notification: notification.value,
+                                ticketEventId: useExistingShotgun.value
+                                    ? selectedShotgun.value?.id
+                                    : null,
                               );
                               try {
                                 if (syncEvent.id != "") {

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/shotgun/class/category.dart';
+import 'package:titan/shotgun/class/checkout.dart';
 import 'package:titan/shotgun/class/session.dart';
 import 'package:titan/shotgun/class/shotgun.dart';
+import 'package:titan/shotgun/providers/checkout_provider.dart';
 import 'package:titan/shotgun/providers/shotgun_provider.dart';
 import 'package:titan/shotgun/ui/shotgun.dart';
 import 'package:titan/tools/constants.dart';
@@ -18,7 +22,6 @@ class BookTicketPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pathForwarding = ref.watch(pathForwardingProvider);
     final shotgunId = pathForwarding.queryParameters?['shotgunId'];
-    print(shotgunId);
 
     if (shotgunId == null || shotgunId.isEmpty) {
       return ShotgunTemplate(
@@ -49,11 +52,13 @@ class _ShotgunContent extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dateFormatted = DateFormat.yMMMd('fr').format(shotgun.openDatetime);
     final timeFormat = DateFormat.Hm('fr');
 
     final selectedCategory = useState<Category?>(null);
     final selectedSession = useState<Session?>(null);
+    final selectedPaymentProvider = useState<String?>('helloasso');
+    final checkoutNotifier = ref.watch(checkoutProvider.notifier);
+    final checkout = useState<Checkout>(Checkout.empty());
 
     final validCategories = shotgun.categories
         .where((c) => c.name.trim().isNotEmpty)
@@ -71,7 +76,7 @@ class _ShotgunContent extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Réservation',
+                  'Réserver un billet',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     color: ColorConstants.title,
                     fontWeight: FontWeight.bold,
@@ -94,14 +99,14 @@ class _ShotgunContent extends HookConsumerWidget {
                       children: [
                         Row(
                           children: [
-                            Icon(
-                              Icons.calendar_today_outlined,
+                            HeroIcon(
+                              HeroIcons.ticket,
                               size: 20,
                               color: ColorConstants.main,
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              dateFormatted,
+                              shotgun.name,
                               style: Theme.of(context).textTheme.titleMedium
                                   ?.copyWith(color: ColorConstants.onTertiary),
                             ),
@@ -316,16 +321,141 @@ class _ShotgunContent extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                 ],
+                Text(
+                  'Moyen de paiement',
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: ColorConstants.secondary,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: () =>
+                            selectedPaymentProvider.value = 'helloasso',
+                        borderRadius: BorderRadius.circular(12),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          decoration: BoxDecoration(
+                            color: selectedPaymentProvider.value == 'helloasso'
+                                ? ColorConstants.main.withValues(alpha: 0.1)
+                                : ColorConstants.background2.withValues(
+                                    alpha: 0.05,
+                                  ),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color:
+                                  selectedPaymentProvider.value == 'helloasso'
+                                  ? ColorConstants.main
+                                  : ColorConstants.mainBorder.withValues(
+                                      alpha: 0.3,
+                                    ),
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                height: 28,
+                                child: SvgPicture.asset(
+                                  'assets/images/helloasso.svg',
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                'HelloAsso',
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(
+                                      color:
+                                          selectedPaymentProvider.value ==
+                                              'helloasso'
+                                          ? ColorConstants.main
+                                          : ColorConstants.tertiary,
+                                      fontWeight:
+                                          selectedPaymentProvider.value ==
+                                              'helloasso'
+                                          ? FontWeight.w600
+                                          : FontWeight.normal,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () => selectedPaymentProvider.value = 'myempay',
+                        borderRadius: BorderRadius.circular(12),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          decoration: BoxDecoration(
+                            color: selectedPaymentProvider.value == 'myempay'
+                                ? ColorConstants.main.withValues(alpha: 0.1)
+                                : ColorConstants.background2.withValues(
+                                    alpha: 0.05,
+                                  ),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: selectedPaymentProvider.value == 'myempay'
+                                  ? ColorConstants.main
+                                  : ColorConstants.mainBorder.withValues(
+                                      alpha: 0.3,
+                                    ),
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                height: 28,
+                                child: Image.asset(
+                                  'assets/images/logo_prod.png',
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                'myempay',
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(
+                                      color:
+                                          selectedPaymentProvider.value ==
+                                              'myempay'
+                                          ? ColorConstants.main
+                                          : ColorConstants.tertiary,
+                                      fontWeight:
+                                          selectedPaymentProvider.value ==
+                                              'myempay'
+                                          ? FontWeight.w600
+                                          : FontWeight.normal,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed:
-                        (selectedCategory.value != null &&
-                            selectedSession.value != null)
-                        ? () {
-                            // TODO: Implement payment
-                          }
-                        : null,
+                    onPressed: () async {
+                      print("hello there");
+                      try {
+                        await checkoutNotifier.createCheckout(
+                          checkout.value,
+                          shotgun,
+                        );
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: ColorConstants.main,
                       foregroundColor: Colors.white,
@@ -338,7 +468,7 @@ class _ShotgunContent extends HookConsumerWidget {
                       ),
                     ),
                     child: const Text(
-                      'Payer',
+                      'Réserver',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

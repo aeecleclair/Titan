@@ -32,9 +32,17 @@ class Shotgun {
         ? processDateFromAPI(json['close_datetime'])
         : null;
     sessions =
-        json['sessions']?.map((e) => Session.fromJson(e))?.toList() ?? [];
+        (json['sessions'] as List<dynamic>?)
+            ?.map((e) => Session.fromJson(e))
+            .whereType<Session>()
+            .toList() ??
+        [];
     categories =
-        json['categories']?.map((e) => Category.fromJson(e))?.toList() ?? [];
+        (json['categories'] as List<dynamic>?)
+            ?.map((e) => Category.fromJson(e))
+            .whereType<Category>()
+            .toList() ??
+        [];
   }
 
   Map<String, dynamic> toJson() {

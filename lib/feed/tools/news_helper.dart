@@ -242,7 +242,7 @@ void getActionButtonAction(
   } else if (module == "advert") {
     // TODO : set id
     QR.to(AdvertRouter.root);
-  } else if (module == "shotgun") {
+  } else if (module == "tickets") {
     ref.read(shotgunOnBackProvider.notifier).state = () {
       pathForwardingNotifier.forward(FeedRouter.root);
       QR.to(FeedRouter.root);
