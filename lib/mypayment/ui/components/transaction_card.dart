@@ -125,7 +125,7 @@ class TransactionCard extends ConsumerWidget {
                   ),
                   if (transaction.refund == null) const SizedBox(height: 5),
                   Text(
-                    "${AppLocalizations.of(context)!.paiementThe} ${DateFormat.yMMMMEEEEd(locale.toString()).format(transaction.creation)} +  ${AppLocalizations.of(context)!.paiementAt} ${DateFormat.Hm(locale.toString()).format(transaction.creation)}",
+                    "${AppLocalizations.of(context)!.paiementThe} ${DateFormat.yMMMMEEEEd(Localizations.localeOf(context).toString()).format(transaction.creation)} ${AppLocalizations.of(context)!.paiementAt} ${DateFormat.Hm(Localizations.localeOf(context).toString()).format(transaction.creation)}",
                     style: const TextStyle(
                       color: Color(0xff204550),
                       fontSize: 12,

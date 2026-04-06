@@ -9,10 +9,11 @@ class RequestsRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'mypayment/';
 
-  Future<List<PaymentRequest>> getRequests() async {
+  Future<List<PaymentRequest>> getRequests({bool? used}) async {
+    final query = used != null ? '?used=$used' : '';
     return List<PaymentRequest>.from(
       (await getList(
-        suffix: 'requests',
+        suffix: 'requests$query',
       )).map((e) => PaymentRequest.fromJson(e)),
     );
   }

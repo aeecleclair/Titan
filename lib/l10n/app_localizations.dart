@@ -5258,6 +5258,48 @@ abstract class AppLocalizations {
   /// **'Refuser'**
   String get paiementRefuse;
 
+  /// No description provided for @paiementRequestHistory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Activités'**
+  String get paiementRequestHistory;
+
+  /// No description provided for @paiementRequestStatusPending.
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente'**
+  String get paiementRequestStatusPending;
+
+  /// No description provided for @paiementRequestStatusRefused.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refusée'**
+  String get paiementRequestStatusRefused;
+
+  /// No description provided for @paiementRequestStatusExpired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Expirée'**
+  String get paiementRequestStatusExpired;
+
+  /// No description provided for @paiementRequestStatusAccepted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Acceptée'**
+  String get paiementRequestStatusAccepted;
+
+  /// No description provided for @paiementRequestDetails.
+  ///
+  /// In fr, this message translates to:
+  /// **'Détails de la demande'**
+  String get paiementRequestDetails;
+
+  /// No description provided for @paiementNoRequests.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune demande de paiement'**
+  String get paiementNoRequests;
+
   /// No description provided for @paiementSuccessfullyAddedStore.
   ///
   /// In fr, this message translates to:

@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/mypayment/class/payment_request.dart';
-import 'package:titan/mypayment/class/secured_content_data.dart';
 import 'package:titan/mypayment/providers/has_accepted_tos_provider.dart';
 import 'package:titan/mypayment/providers/my_wallet_provider.dart';
 import 'package:titan/mypayment/providers/payment_requests_provider.dart';
@@ -14,8 +13,7 @@ import 'package:titan/mypayment/providers/my_history_provider.dart';
 import 'package:titan/mypayment/providers/my_stores_provider.dart';
 import 'package:titan/mypayment/providers/register_provider.dart';
 import 'package:titan/mypayment/providers/should_display_tos_dialog.dart';
-import 'package:titan/mypayment/tools/key_service.dart';
-import 'package:titan/mypayment/ui/components/paiment_delegate/paiment_delegate_modal.dart';
+import 'package:titan/mypayment/ui/components/show_request_modal.dart';
 import 'package:titan/mypayment/ui/pages/main_page/account_card/account_card.dart';
 import 'package:titan/mypayment/ui/pages/main_page/tos_dialog.dart';
 import 'package:titan/mypayment/ui/pages/main_page/account_card/last_transactions.dart';
@@ -27,7 +25,6 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
-import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 
 class PaymentMainPage extends HookConsumerWidget {
   const PaymentMainPage({super.key});
@@ -93,74 +90,15 @@ class PaymentMainPage extends HookConsumerWidget {
       }
     }
 
-    Future<void> showRequestModal(PaymentRequest request) async {
-      final keyService = KeyService();
-      await showCustomBottomModal(
+    Future<void> onShowRequestModal(PaymentRequest request) async {
+      await showRequestModal(
         context: context,
         ref: ref,
-        modal: PaimentDelegateModal(
-          itemTitle: request.name,
-          itemDescription: request.storeNote ?? '',
-          itemPrice: request.total,
-          onConfirm: () async {
-            final content = SecuredContentData(
-              id: request.id,
-              tot: request.total,
-              iat: DateTime.now(),
-              key: (await keyService.getKeyId()) ?? '',
-              store: false,
-            );
-            final validation = await keyService.signContent(content);
-            if (validation == null) {
-              if (context.mounted) {
-                Navigator.of(context).pop();
-                displayToast(
-                  context,
-                  TypeMsg.error,
-                  AppLocalizations.of(context)!.paiementPaymentRequestError,
-                );
-              }
-              return;
-            }
-            final success = await paymentRequestsNotifier.acceptRequest(
-              request,
-              validation,
-            );
-            if (context.mounted) {
-              Navigator.of(context).pop();
-              displayToast(
-                context,
-                success ? TypeMsg.msg : TypeMsg.error,
-                success
-                    ? AppLocalizations.of(
-                        context,
-                      )!.paiementPaymentRequestAccepted
-                    : AppLocalizations.of(context)!.paiementPaymentRequestError,
-              );
-              if (success) {
-                await myHistoryNotifier.getHistory();
-                await myWalletNotifier.getMyWallet();
-              }
-            }
-          },
-          onRefuse: () async {
-            final success = await paymentRequestsNotifier.refuseRequest(
-              request,
-            );
-            if (context.mounted) {
-              Navigator.of(context).pop();
-              displayToast(
-                context,
-                success ? TypeMsg.msg : TypeMsg.error,
-                success
-                    ? AppLocalizations.of(
-                        context,
-                      )!.paiementPaymentRequestRefused
-                    : AppLocalizations.of(context)!.paiementPaymentRequestError,
-              );
-            }
-          },
-        ),
+        request: request,
+        onSuccess: () async {
+          await myHistoryNotifier.getHistory();
+          await myWalletNotifier.getMyWallet();
+        },
       );
     }
 
@@ -172,7 +110,7 @@ class PaymentMainPage extends HookConsumerWidget {
         if (pendingRequests.isNotEmpty && !hasShownRequestModal.value) {
           hasShownRequestModal.value = true;
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            showRequestModal(pendingRequests.first);
+            onShowRequestModal(pendingRequests.first);
           });
         }
       });

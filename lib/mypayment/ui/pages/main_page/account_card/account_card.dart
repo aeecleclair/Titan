@@ -198,6 +198,14 @@ class AccountCard extends HookConsumerWidget {
         ),
         MainCardButton(
           colors: buttonGradient,
+          icon: HeroIcons.listBullet,
+          title: localizeWithContext.paiementRequestHistory,
+          onPressed: () async {
+            QR.to(PaymentRouter.root + PaymentRouter.requestHistory);
+          },
+        ),
+        MainCardButton(
+          colors: buttonGradient,
           icon: HeroIcons.creditCard,
           title: localizeWithContext.paiementTopUpAction,
           onPressed: () async {
