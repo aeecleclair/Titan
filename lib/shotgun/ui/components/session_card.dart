@@ -60,29 +60,42 @@ class SessionCard extends HookWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: TextEntry(
-                        label: "Session ${i + 1}",
-                        controller: entries.value[i]['label']!,
-                        onChanged: (_) => notify(),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    SizedBox(
-                      width: 130,
-                      child: DateEntry(
-                        label: "Date",
-                        controller: entries.value[i]['date']!,
-                        onTap: () =>
-                            getFullDate(context, entries.value[i]['date']!),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    SizedBox(
-                      width: 80,
-                      child: TextEntry(
-                        label: "Quota",
-                        controller: entries.value[i]['quota']!,
-                        onChanged: (_) => notify(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Ligne 1: Nom de la session
+                          TextEntry(
+                            label: "Session ${i + 1}",
+                            controller: entries.value[i]['label']!,
+                            onChanged: (_) => notify(),
+                          ),
+                          const SizedBox(height: 8),
+                          // Ligne 2: Date et Quota
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: DateEntry(
+                                  label: "Date",
+                                  controller: entries.value[i]['date']!,
+                                  onTap: () => getFullDate(
+                                    context,
+                                    entries.value[i]['date']!,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                flex: 1,
+                                child: TextEntry(
+                                  label: "Quota",
+                                  controller: entries.value[i]['quota']!,
+                                  onChanged: (_) => notify(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                     if (entries.value.length > 2)
