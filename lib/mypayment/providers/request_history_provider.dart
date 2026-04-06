@@ -13,11 +13,12 @@ class RequestHistoryNotifier extends ListNotifier<PaymentRequest> {
   }
 }
 
-final requestHistoryProvider = StateNotifierProvider<
-  RequestHistoryNotifier,
-  AsyncValue<List<PaymentRequest>>
->((ref) {
-  final requestsRepository = ref.watch(requestsRepositoryProvider);
-  return RequestHistoryNotifier(requestsRepository: requestsRepository)
-    ..getRequestHistory();
-});
+final requestHistoryProvider =
+    StateNotifierProvider<
+      RequestHistoryNotifier,
+      AsyncValue<List<PaymentRequest>>
+    >((ref) {
+      final requestsRepository = ref.watch(requestsRepositoryProvider);
+      return RequestHistoryNotifier(requestsRepository: requestsRepository)
+        ..getRequestHistory();
+    });

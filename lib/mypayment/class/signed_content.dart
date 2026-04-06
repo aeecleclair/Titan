@@ -24,9 +24,7 @@ class SignedContent extends SecuredContentData {
     return 'SignedContent {id: $id, tot: $tot, iat: $iat, key: $key, store: $store, signature: $signature}';
   }
 
-  SignedContent.empty()
-    : signature = '',
-      super.empty();
+  SignedContent.empty() : signature = '', super.empty();
 
   @override
   SignedContent copyWith({

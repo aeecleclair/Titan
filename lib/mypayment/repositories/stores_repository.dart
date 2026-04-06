@@ -45,10 +45,7 @@ class StoresRepository extends Repository {
   }
 
   Future<bool> canScan(String id, ScanInfo data) async {
-    final response = await create(
-      data.toJson(),
-      suffix: "/$id/scan/check",
-    );
+    final response = await create(data.toJson(), suffix: "/$id/scan/check");
     return response["success"] == true;
   }
 }

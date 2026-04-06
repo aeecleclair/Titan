@@ -9,10 +9,7 @@ class ScanNotifier extends SingleNotifier<Transaction> {
   ScanNotifier({required this.storesRepository})
     : super(const AsyncValue.loading());
 
-  Future<AsyncValue<Transaction>?> scan(
-    String storeId,
-    ScanInfo data,
-  ) async {
+  Future<AsyncValue<Transaction>?> scan(String storeId, ScanInfo data) async {
     return await load(() => storesRepository.scan(storeId, data));
   }
 

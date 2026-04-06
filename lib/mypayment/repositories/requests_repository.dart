@@ -18,10 +18,7 @@ class RequestsRepository extends Repository {
     );
   }
 
-  Future<bool> acceptRequest(
-    String requestId,
-    SignedContent validation,
-  ) async {
+  Future<bool> acceptRequest(String requestId, SignedContent validation) async {
     await create(validation.toJson(), suffix: 'requests/$requestId/accept');
     return true;
   }

@@ -88,9 +88,8 @@ class RequestHistoryPage extends HookConsumerWidget {
                           ),
                         );
                       }
-                      final sortedRequests = List<PaymentRequest>.from(
-                        requests,
-                      )..sort((a, b) => b.creation.compareTo(a.creation));
+                      final sortedRequests = List<PaymentRequest>.from(requests)
+                        ..sort((a, b) => b.creation.compareTo(a.creation));
 
                       final Map<String, List<PaymentRequest>> groupedByDay = {};
                       final Map<String, DateTime> stringDate = {};
@@ -128,12 +127,12 @@ class RequestHistoryPage extends HookConsumerWidget {
                                             .getRequestHistory();
                                       }
                                     : () => showCustomBottomModal(
-                                          context: context,
-                                          ref: ref,
-                                          modal: RequestDetailModal(
-                                            request: request,
-                                          ),
+                                        context: context,
+                                        ref: ref,
+                                        modal: RequestDetailModal(
+                                          request: request,
                                         ),
+                                      ),
                               ),
                           ],
                         ],
