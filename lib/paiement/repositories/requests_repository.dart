@@ -11,9 +11,9 @@ class RequestsRepository extends Repository {
 
   Future<List<PaymentRequest>> getRequests() async {
     return List<PaymentRequest>.from(
-      (await getList(suffix: 'requests')).map(
-        (e) => PaymentRequest.fromJson(e),
-      ),
+      (await getList(
+        suffix: 'requests',
+      )).map((e) => PaymentRequest.fromJson(e)),
     );
   }
 

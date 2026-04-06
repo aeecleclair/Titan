@@ -38,10 +38,7 @@ class RequestValidation extends RequestValidationData {
   });
 
   @override
-  Map<String, dynamic> toJson() => {
-    ...super.toJson(),
-    'signature': signature,
-  };
+  Map<String, dynamic> toJson() => {...super.toJson(), 'signature': signature};
 
   @override
   String toString() {

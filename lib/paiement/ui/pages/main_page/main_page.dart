@@ -57,9 +57,7 @@ class PaymentMainPage extends HookConsumerWidget {
     final isAdmin = ref.watch(isStructureAdminProvider);
     final flipped = useState(true);
     final paymentRequests = ref.watch(paymentRequestsProvider);
-    final paymentRequestsNotifier = ref.read(
-      paymentRequestsProvider.notifier,
-    );
+    final paymentRequestsNotifier = ref.read(paymentRequestsProvider.notifier);
     final hasShownRequestModal = useState(false);
 
     ref.listen(pathForwardingProvider, (previous, next) async {
@@ -152,9 +150,7 @@ class PaymentMainPage extends HookConsumerWidget {
                     ? AppLocalizations.of(
                         context,
                       )!.paiementPaymentRequestAccepted
-                    : AppLocalizations.of(
-                        context,
-                      )!.paiementPaymentRequestError,
+                    : AppLocalizations.of(context)!.paiementPaymentRequestError,
               );
               if (success) {
                 await myHistoryNotifier.getHistory();
@@ -175,9 +171,7 @@ class PaymentMainPage extends HookConsumerWidget {
                     ? AppLocalizations.of(
                         context,
                       )!.paiementPaymentRequestRefused
-                    : AppLocalizations.of(
-                        context,
-                      )!.paiementPaymentRequestError,
+                    : AppLocalizations.of(context)!.paiementPaymentRequestError,
               );
             }
           },

@@ -20,8 +20,7 @@ class PaymentRequestsNotifier extends ListNotifier<PaymentRequest> {
     return await update(
       (_) => requestsRepository.acceptRequest(request.id, validation),
       (requests, request) =>
-          requests
-            ..[requests.indexWhere((r) => r.id == request.id)] = request,
+          requests..[requests.indexWhere((r) => r.id == request.id)] = request,
       request.copyWith(status: RequestStatus.accepted),
     );
   }
@@ -30,18 +29,18 @@ class PaymentRequestsNotifier extends ListNotifier<PaymentRequest> {
     return await update(
       (_) => requestsRepository.refuseRequest(request.id),
       (requests, request) =>
-          requests
-            ..[requests.indexWhere((r) => r.id == request.id)] = request,
+          requests..[requests.indexWhere((r) => r.id == request.id)] = request,
       request.copyWith(status: RequestStatus.refused),
     );
   }
 }
 
-final paymentRequestsProvider = StateNotifierProvider<
-  PaymentRequestsNotifier,
-  AsyncValue<List<PaymentRequest>>
->((ref) {
-  final requestsRepository = ref.watch(requestsRepositoryProvider);
-  return PaymentRequestsNotifier(requestsRepository: requestsRepository)
-    ..getRequests();
-});
+final paymentRequestsProvider =
+    StateNotifierProvider<
+      PaymentRequestsNotifier,
+      AsyncValue<List<PaymentRequest>>
+    >((ref) {
+      final requestsRepository = ref.watch(requestsRepositoryProvider);
+      return PaymentRequestsNotifier(requestsRepository: requestsRepository)
+        ..getRequests();
+    });
