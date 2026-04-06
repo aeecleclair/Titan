@@ -4928,6 +4928,42 @@ abstract class AppLocalizations {
   /// **'Solde personnel'**
   String get paiementPersonalBalance;
 
+  /// No description provided for @paiementAddFunds.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter des fonds'**
+  String get paiementAddFunds;
+
+  /// No description provided for @paiementInsufficientFunds.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fonds insuffisants'**
+  String get paiementInsufficientFunds;
+
+  /// No description provided for @paiementTimeRemaining.
+  ///
+  /// In fr, this message translates to:
+  /// **'Temps restant'**
+  String get paiementTimeRemaining;
+
+  /// No description provided for @paiementHurryUp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dépêchez-vous !'**
+  String get paiementHurryUp;
+
+  /// No description provided for @paiementCompletePayment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Finaliser le paiement'**
+  String get paiementCompletePayment;
+
+  /// No description provided for @paiementConfirmPayment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer le paiement'**
+  String get paiementConfirmPayment;
+
   /// No description provided for @paiementPleaseAcceptPopup.
   ///
   /// In fr, this message translates to:
@@ -5155,6 +5191,60 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Paiement réussi'**
   String get paiementSuccededTransaction;
+
+  /// No description provided for @paiementConfirmYourPurchase.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer votre achat'**
+  String get paiementConfirmYourPurchase;
+
+  /// No description provided for @paiementYourBalance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre solde'**
+  String get paiementYourBalance;
+
+  /// No description provided for @paiementPaymentSuccessful.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement réussi !'**
+  String get paiementPaymentSuccessful;
+
+  /// No description provided for @paiementPaymentCanceled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement annulé'**
+  String get paiementPaymentCanceled;
+
+  /// No description provided for @paiementPaymentRequest.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande de paiement'**
+  String get paiementPaymentRequest;
+
+  /// No description provided for @paiementPaymentRequestAccepted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande de paiement acceptée'**
+  String get paiementPaymentRequestAccepted;
+
+  /// No description provided for @paiementPaymentRequestRefused.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande de paiement refusée'**
+  String get paiementPaymentRequestRefused;
+
+  /// No description provided for @paiementPaymentRequestError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors du traitement de la demande'**
+  String get paiementPaymentRequestError;
+
+  /// No description provided for @paiementRefuse.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refuser'**
+  String get paiementRefuse;
 
   /// No description provided for @paiementSuccessfullyAddedStore.
   ///

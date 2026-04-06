@@ -2530,6 +2530,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementPersonalBalance => 'Solde personnel';
 
   @override
+  String get paiementAddFunds => 'Ajouter des fonds';
+
+  @override
+  String get paiementInsufficientFunds => 'Fonds insuffisants';
+
+  @override
+  String get paiementTimeRemaining => 'Temps restant';
+
+  @override
+  String get paiementHurryUp => 'Dépêchez-vous !';
+
+  @override
+  String get paiementCompletePayment => 'Finaliser le paiement';
+
+  @override
+  String get paiementConfirmPayment => 'Confirmer le paiement';
+
+  @override
   String get paiementPleaseAcceptPopup => 'Veuillez autoriser les popups';
 
   @override
@@ -2652,6 +2670,34 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get paiementSuccededTransaction => 'Paiement réussi';
+
+  @override
+  String get paiementConfirmYourPurchase => 'Confirmer votre achat';
+
+  @override
+  String get paiementYourBalance => 'Votre solde';
+
+  @override
+  String get paiementPaymentSuccessful => 'Paiement réussi !';
+
+  @override
+  String get paiementPaymentCanceled => 'Paiement annulé';
+
+  @override
+  String get paiementPaymentRequest => 'Demande de paiement';
+
+  @override
+  String get paiementPaymentRequestAccepted => 'Demande de paiement acceptée';
+
+  @override
+  String get paiementPaymentRequestRefused => 'Demande de paiement refusée';
+
+  @override
+  String get paiementPaymentRequestError =>
+      'Erreur lors du traitement de la demande';
+
+  @override
+  String get paiementRefuse => 'Refuser';
 
   @override
   String get paiementSuccessfullyAddedStore => 'Magasin ajoutée avec succès';

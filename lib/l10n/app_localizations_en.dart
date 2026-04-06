@@ -2505,6 +2505,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementPersonalBalance => 'Personal balance';
 
   @override
+  String get paiementAddFunds => 'Add Funds';
+
+  @override
+  String get paiementInsufficientFunds => 'Insufficient Funds';
+
+  @override
+  String get paiementTimeRemaining => 'Time Remaining';
+
+  @override
+  String get paiementHurryUp => 'Hurry up!';
+
+  @override
+  String get paiementCompletePayment => 'Complete payment';
+
+  @override
+  String get paiementConfirmPayment => 'Confirm Payment';
+
+  @override
   String get paiementPleaseAcceptPopup => 'Please allow popups';
 
   @override
@@ -2623,6 +2641,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paiementSuccededTransaction => 'Successful payment';
+
+  @override
+  String get paiementConfirmYourPurchase => 'Confirm your purchase';
+
+  @override
+  String get paiementYourBalance => 'Your balance';
+
+  @override
+  String get paiementPaymentSuccessful => 'Payment successful!';
+
+  @override
+  String get paiementPaymentCanceled => 'Payment canceled';
+
+  @override
+  String get paiementPaymentRequest => 'Payment request';
+
+  @override
+  String get paiementPaymentRequestAccepted => 'Payment request accepted';
+
+  @override
+  String get paiementPaymentRequestRefused => 'Payment request refused';
+
+  @override
+  String get paiementPaymentRequestError => 'Error processing payment request';
+
+  @override
+  String get paiementRefuse => 'Refuse';
 
   @override
   String get paiementSuccessfullyAddedStore => 'Store successfully added';
