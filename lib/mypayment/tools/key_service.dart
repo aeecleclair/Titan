@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:cryptography_plus/cryptography_plus.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:titan/paiement/class/secured_content_data.dart';
+import 'package:titan/paiement/class/signed_content.dart';
 import 'package:titan/tools/functions.dart';
 
 class KeyService {
@@ -86,5 +88,21 @@ class KeyService {
     List<int> message,
   ) async {
     return await algorithm.sign(message, keyPair: keyPair);
+  }
+
+  Future<SignedContent?> signContent(SecuredContentData content) async {
+    final keyId = await getKeyId();
+    final keyPair = await getKeyPair();
+    if (keyId == null || keyPair == null) return null;
+    final data = jsonEncode(content.toJson());
+    final signature = await signMessage(keyPair, data.codeUnits);
+    return SignedContent(
+      id: content.id,
+      tot: content.tot,
+      iat: content.iat,
+      key: keyId,
+      store: content.store,
+      signature: base64.encode(signature.bytes),
+    );
   }
 }

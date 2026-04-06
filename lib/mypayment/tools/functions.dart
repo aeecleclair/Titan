@@ -3,8 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:titan/mypayment/class/history.dart';
-import 'package:titan/mypayment/class/qr_code_data.dart';
-import 'package:titan/mypayment/class/qr_code_signature_data.dart';
+import 'package:titan/mypayment/class/secured_content_data.dart';
 import 'package:titan/mypayment/class/wallet_device.dart';
 import 'package:titan/mypayment/tools/key_service.dart';
 
@@ -69,31 +68,16 @@ Future<String> getQRCodeContent(
   KeyService keyService,
   bool store,
 ) async {
-  final keyId = await keyService.getKeyId();
-  final keyPair = await keyService.getKeyPair();
-  final now = DateTime.now();
   final total = (double.parse(payAmount.replaceAll(',', '.')) * 100).round();
-  final data = jsonEncode(
-    QrCodeSignatureData(
-      id: id,
-      tot: total,
-      iat: now,
-      key: keyId!,
-      store: store,
-    ).toJson(),
+  final content = SecuredContentData(
+    id: id,
+    tot: total,
+    iat: DateTime.now(),
+    key: (await keyService.getKeyId())!,
+    store: store,
   );
-  return jsonEncode(
-    QrCodeData(
-      id: id,
-      tot: total,
-      iat: now,
-      key: keyId,
-      store: store,
-      signature: base64Encode(
-        (await keyService.signMessage(keyPair!, data.codeUnits)).bytes,
-      ),
-    ).toJson(),
-  );
+  final signed = await keyService.signContent(content);
+  return jsonEncode(signed!.toJson());
 }
 
 String transferTypeToString(TransferType type) {

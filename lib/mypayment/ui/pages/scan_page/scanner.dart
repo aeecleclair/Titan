@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/mypayment/class/scan_info.dart';
 import 'package:titan/mypayment/providers/barcode_provider.dart';
 import 'package:titan/mypayment/providers/bypass_provider.dart';
 import 'package:titan/mypayment/providers/last_time_scanned.dart';
@@ -87,10 +88,16 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
         barcodes.barcodes.firstOrNull!.rawValue!,
       );
       if (!bypass) {
-        final canScan = await scanNotifier.canScan(store.id, data);
+        final canScan = await scanNotifier.canScan(
+          store.id,
+          ScanInfo.fromSignedContent(data),
+        );
         if (!canScan) {
           showWithoutMembershipDialog(() async {
-            final value = await scanNotifier.scan(store.id, data, bypass: true);
+            final value = await scanNotifier.scan(
+              store.id,
+              ScanInfo.fromSignedContent(data, bypassMembership: true),
+            );
             if (value == null) {
               displayToastWithContext(
                 TypeMsg.error,
@@ -105,7 +112,10 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
           return;
         }
       }
-      final value = await scanNotifier.scan(store.id, data);
+      final value = await scanNotifier.scan(
+        store.id,
+        ScanInfo.fromSignedContent(data),
+      );
       if (value == null) {
         displayToastWithContext(
           TypeMsg.error,

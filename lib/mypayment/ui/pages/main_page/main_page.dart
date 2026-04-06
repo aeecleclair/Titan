@@ -1,30 +1,28 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/mypayment/class/payment_request.dart';
-import 'package:titan/mypayment/class/request_validation.dart';
-import 'package:titan/mypayment/providers/payment_requests_provider.dart';
-import 'package:titan/mypayment/tools/key_service.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
-import 'package:titan/mypayment/providers/is_payment_admin.dart';
+import 'package:titan/mypayment/class/payment_request.dart';
+import 'package:titan/mypayment/class/secured_content_data.dart';
 import 'package:titan/mypayment/providers/has_accepted_tos_provider.dart';
 import 'package:titan/mypayment/providers/my_wallet_provider.dart';
+import 'package:titan/mypayment/providers/payment_requests_provider.dart';
 import 'package:titan/mypayment/providers/tos_provider.dart';
+import 'package:titan/mypayment/providers/is_payment_admin.dart';
 import 'package:titan/mypayment/providers/my_history_provider.dart';
 import 'package:titan/mypayment/providers/my_stores_provider.dart';
 import 'package:titan/mypayment/providers/register_provider.dart';
 import 'package:titan/mypayment/providers/should_display_tos_dialog.dart';
+import 'package:titan/mypayment/tools/key_service.dart';
+import 'package:titan/mypayment/ui/components/paiment_delegate/paiment_delegate_modal.dart';
 import 'package:titan/mypayment/ui/pages/main_page/account_card/account_card.dart';
 import 'package:titan/mypayment/ui/pages/main_page/tos_dialog.dart';
 import 'package:titan/mypayment/ui/pages/main_page/account_card/last_transactions.dart';
 import 'package:titan/mypayment/ui/pages/main_page/flip_card.dart';
 import 'package:titan/mypayment/ui/pages/main_page/seller_card/store_card.dart';
 import 'package:titan/mypayment/ui/pages/main_page/seller_card/store_list.dart';
-import 'package:titan/mypayment/ui/mypayment.dart';
-import 'package:titan/mypayment/ui/components/components/paiment_delegate/paiment_delegate_modal.dart';
+import 'package:titan/mypayment/ui/paiement.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -54,7 +52,7 @@ class PaymentMainPage extends HookConsumerWidget {
     final mySellersNotifier = ref.read(myStoresProvider.notifier);
     final myHistoryNotifier = ref.read(myHistoryProvider.notifier);
     final myWalletNotifier = ref.read(myWalletProvider.notifier);
-    final isStructureAdmin = ref.watch(isStructureAdminProvider);
+    final isAdmin = ref.watch(isStructureAdminProvider);
     final flipped = useState(true);
     final paymentRequests = ref.watch(paymentRequestsProvider);
     final paymentRequestsNotifier = ref.read(paymentRequestsProvider.notifier);
@@ -105,9 +103,15 @@ class PaymentMainPage extends HookConsumerWidget {
           itemDescription: request.storeNote ?? '',
           itemPrice: request.total,
           onConfirm: () async {
-            final keyId = await keyService.getKeyId();
-            final keyPair = await keyService.getKeyPair();
-            if (keyId == null || keyPair == null) {
+            final content = SecuredContentData(
+              id: request.id,
+              tot: request.total,
+              iat: DateTime.now(),
+              key: (await keyService.getKeyId()) ?? '',
+              store: false,
+            );
+            final validation = await keyService.signContent(content);
+            if (validation == null) {
               if (context.mounted) {
                 Navigator.of(context).pop();
                 displayToast(
@@ -118,25 +122,6 @@ class PaymentMainPage extends HookConsumerWidget {
               }
               return;
             }
-            final now = DateTime.now();
-            final validationData = RequestValidationData(
-              requestId: request.id,
-              key: keyId,
-              iat: now,
-              tot: request.total,
-            );
-            final dataToSign = jsonEncode(validationData.toJson());
-            final signature = await keyService.signMessage(
-              keyPair,
-              dataToSign.codeUnits,
-            );
-            final validation = RequestValidation(
-              requestId: request.id,
-              key: keyId,
-              iat: now,
-              tot: request.total,
-              signature: base64Encode(signature.bytes),
-            );
             final success = await paymentRequestsNotifier.acceptRequest(
               request,
               validation,
@@ -264,7 +249,7 @@ class PaymentMainPage extends HookConsumerWidget {
                       AsyncChild(
                         value: mySellers,
                         builder: (context, mySellers) {
-                          if (mySellers.isEmpty && !isStructureAdmin) {
+                          if (mySellers.isEmpty && !isAdmin) {
                             return SizedBox(
                               height: 250,
                               width: MediaQuery.of(context).size.width,

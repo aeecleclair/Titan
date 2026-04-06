@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/mypayment/class/history.dart';
-import 'package:titan/mypayment/class/qr_code_data.dart';
+import 'package:titan/mypayment/class/scan_info.dart';
 import 'package:titan/mypayment/class/store.dart';
 import 'package:titan/mypayment/class/transaction.dart';
 import 'package:titan/tools/functions.dart';
@@ -38,20 +38,17 @@ class StoresRepository extends Repository {
     );
   }
 
-  Future<Transaction> scan(String id, QrCodeData data, bool? bypass) async {
+  Future<Transaction> scan(String id, ScanInfo data) async {
     return Transaction.fromJson(
-      await create({
-        ...data.toJson(),
-        "bypass_membership": bypass ?? false,
-      }, suffix: "/$id/scan"),
+      await create(data.toJson(), suffix: "/$id/scan"),
     );
   }
 
-  Future<bool> canScan(String id, QrCodeData data, bool? bypass) async {
-    final response = await create({
-      ...data.toJson(),
-      "bypass_membership": bypass ?? false,
-    }, suffix: "/$id/scan/check");
+  Future<bool> canScan(String id, ScanInfo data) async {
+    final response = await create(
+      data.toJson(),
+      suffix: "/$id/scan/check",
+    );
     return response["success"] == true;
   }
 }

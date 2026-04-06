@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/mypayment/class/qr_code_data.dart';
+import 'package:titan/mypayment/class/scan_info.dart';
 import 'package:titan/mypayment/class/transaction.dart';
 import 'package:titan/mypayment/repositories/stores_repository.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
@@ -11,14 +11,13 @@ class ScanNotifier extends SingleNotifier<Transaction> {
 
   Future<AsyncValue<Transaction>?> scan(
     String storeId,
-    QrCodeData data, {
-    bool? bypass,
-  }) async {
-    return await load(() => storesRepository.scan(storeId, data, bypass));
+    ScanInfo data,
+  ) async {
+    return await load(() => storesRepository.scan(storeId, data));
   }
 
-  Future<bool> canScan(String storeId, QrCodeData data, {bool? bypass}) async {
-    return storesRepository.canScan(storeId, data, bypass);
+  Future<bool> canScan(String storeId, ScanInfo data) async {
+    return storesRepository.canScan(storeId, data);
   }
 
   void reset() {
