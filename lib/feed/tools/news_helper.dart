@@ -141,7 +141,7 @@ String getActionTitle(News news, BuildContext context) {
     return AppLocalizations.of(context)!.eventActionCampaign;
   } else if (module == "event") {
     return AppLocalizations.of(context)!.eventActionEvent;
-  } else if (module == "shotgun") {
+  } else if (module == "tickets") {
     return "Shotgun";
   }
   return '';
@@ -159,7 +159,7 @@ String getWaitingTitle(
     return localizeWithContext.feedVoteIn(timeToGo);
   } else if (module == "event") {
     return localizeWithContext.feedShotgunIn(timeToGo);
-  } else if (module == "shotgun") {
+  } else if (module == "tickets") {
     return localizeWithContext.feedShotgunIn(timeToGo);
   }
   return '';
@@ -172,8 +172,8 @@ String getActionSubtitle(News news, BuildContext context) {
     return AppLocalizations.of(context)!.eventActionCampaignSubtitle;
   } else if (module == "event") {
     return AppLocalizations.of(context)!.eventActionEventSubtitle;
-  } else if (module == "shotgun") {
-    return "Places restantes : 7/10";
+  } else if (module == "tickets") {
+    return "Réserver votre place";
   }
   return '';
 }
@@ -185,7 +185,7 @@ String getActionEnableButtonText(News news, BuildContext context) {
     return AppLocalizations.of(context)!.eventActionCampaignButton;
   } else if (module == "event") {
     return AppLocalizations.of(context)!.eventActionEventButton;
-  } else if (module == "shotgun") {
+  } else if (module == "tickets") {
     return "Réserver";
   }
   return '';
