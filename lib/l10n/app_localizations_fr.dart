@@ -4755,4 +4755,7 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get shotgunNoTicketsSubtitle =>
       'Réservez votre place pour un événement !';
+
+  @override
+  String get shotgunViewResults => 'Voir les résultats';
 }

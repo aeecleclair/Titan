@@ -51,11 +51,7 @@ class ShotgunRepository extends Repository {
   }
 
   Future<bool> editShotgun(Shotgun shotgun) async {
-    return await update(
-      shotgun.toJson(),
-      shotgun.id,
-      suffix: 'admin/events',
-    );
+    return await update(shotgun.toJson(), shotgun.id, suffix: 'admin/events');
   }
 
   Future<bool> updateSession(String eventId, Session session) async {
@@ -91,9 +87,10 @@ class ShotgunRepository extends Repository {
   }
 
   Future<List<UserTicket>> getUserTickets() async {
-    return (await getList(
-      suffix: 'user/me/tickets',
-    )).map((e) => UserTicket.fromJson(e)).toList();
+    final List<dynamic> response = await getList(suffix: 'user/me/tickets');
+    return response.map((e) {
+      return UserTicket.fromJson(e);
+    }).toList();
   }
 }
 

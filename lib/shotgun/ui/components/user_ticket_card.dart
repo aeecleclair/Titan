@@ -23,14 +23,14 @@ class UserTicketCard extends ConsumerWidget {
             width: 60,
             height: 60,
             decoration: BoxDecoration(
-              color: _getStatusColor(ticket.status).withValues(alpha: 0.15),
+              color: _getStatusColor(ticket.scanned).withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Center(
               child: HeroIcon(
-                _getStatusIcon(ticket.status),
+                _getStatusIcon(ticket.scanned),
                 size: 32,
-                color: _getStatusColor(ticket.status),
+                color: _getStatusColor(ticket.scanned),
               ),
             ),
           ),
@@ -47,16 +47,24 @@ class UserTicketCard extends ConsumerWidget {
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
                   ),
-                  maxLines: 2,
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  ticket.categoryName,
+                  ticket.category.name,
                   style: TextStyle(
                     fontSize: 14,
                     color: ColorConstants.tertiary,
                     fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  ticket.session.name,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: ColorConstants.onTertiary,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -70,7 +78,7 @@ class UserTicketCard extends ConsumerWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      dateOnlyFormatter.format(ticket.sessionDate),
+                      dateOnlyFormatter.format(ticket.session.startDatetime),
                       style: TextStyle(
                         fontSize: 12,
                         color: ColorConstants.onTertiary,
@@ -84,7 +92,7 @@ class UserTicketCard extends ConsumerWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      timeOnlyFormatter.format(ticket.sessionDate),
+                      timeOnlyFormatter.format(ticket.session.startDatetime),
                       style: TextStyle(
                         fontSize: 12,
                         color: ColorConstants.onTertiary,
@@ -95,16 +103,30 @@ class UserTicketCard extends ConsumerWidget {
               ],
             ),
           ),
-          // Status badge
-          _buildStatusBadge(context, ticket.status),
+          // Price and status
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '${ticket.price}€',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: ColorConstants.gradient1,
+                ),
+              ),
+              const SizedBox(height: 8),
+              _buildStatusBadge(context, ticket.scanned),
+            ],
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildStatusBadge(BuildContext context, String status) {
-    final color = _getStatusColor(status);
-    final text = _getStatusText(status);
+  Widget _buildStatusBadge(BuildContext context, bool scanned) {
+    final color = _getStatusColor(scanned);
+    final text = _getStatusText(scanned);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -123,53 +145,24 @@ class UserTicketCard extends ConsumerWidget {
     );
   }
 
-  Color _getStatusColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'paid':
-      case 'confirmed':
-        return Colors.green.shade600;
-      case 'pending':
-      case 'unpaid':
-        return Colors.orange.shade600;
-      case 'cancelled':
-      case 'refunded':
-        return Colors.red.shade600;
-      default:
-        return Colors.grey.shade600;
+  Color _getStatusColor(bool scanned) {
+    if (scanned) {
+      return Colors.grey.shade600;
     }
+    return Colors.green.shade600;
   }
 
-  String _getStatusText(String status) {
-    switch (status.toLowerCase()) {
-      case 'paid':
-      case 'confirmed':
-        return 'Confirmé';
-      case 'pending':
-      case 'unpaid':
-        return 'En attente';
-      case 'cancelled':
-        return 'Annulé';
-      case 'refunded':
-        return 'Remboursé';
-      default:
-        return status;
+  String _getStatusText(bool scanned) {
+    if (scanned) {
+      return 'Utilisé';
     }
+    return 'Valide';
   }
 
-  HeroIcons _getStatusIcon(String status) {
-    switch (status.toLowerCase()) {
-      case 'paid':
-      case 'confirmed':
-        return HeroIcons.checkCircle;
-      case 'pending':
-      case 'unpaid':
-        return HeroIcons.clock;
-      case 'cancelled':
-        return HeroIcons.xCircle;
-      case 'refunded':
-        return HeroIcons.arrowUturnLeft;
-      default:
-        return HeroIcons.ticket;
+  HeroIcons _getStatusIcon(bool scanned) {
+    if (scanned) {
+      return HeroIcons.checkCircle;
     }
-    }
+    return HeroIcons.ticket;
+  }
 }

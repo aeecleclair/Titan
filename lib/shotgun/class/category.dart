@@ -13,13 +13,12 @@ class Category {
   late final String? requiredMembership;
 
   Category.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    // Price is stored in cents in the backend, convert to euros for the app
+    id = json['id']?.toString() ?? '';
+    name = json['name']?.toString() ?? '';
     final priceInCents = (json['price'] as num?)?.toInt() ?? 0;
     price = priceInCents ~/ 100;
     quota = json['quota'];
-    requiredMembership = json['required_membership'];
+    requiredMembership = json['required_membership']?.toString();
   }
 
   Map<String, dynamic> toJson() {

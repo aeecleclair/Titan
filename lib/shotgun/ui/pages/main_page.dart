@@ -29,7 +29,7 @@ class ShotgunMainPage extends ConsumerWidget {
         children: [
           // Header
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             child: Row(
               children: [
                 Text(
@@ -123,7 +123,9 @@ class ShotgunMainPage extends ConsumerWidget {
                   return Column(
                     children: [
                       const SizedBox(height: 8),
-                      ...tickets.map((ticket) => UserTicketCard(ticket: ticket)),
+                      ...tickets.map(
+                        (ticket) => UserTicketCard(ticket: ticket),
+                      ),
                       const SizedBox(height: 20),
                     ],
                   );
@@ -161,10 +163,7 @@ class ShotgunMainPage extends ConsumerWidget {
             const SizedBox(height: 8),
             Text(
               l10n.shotgunNoTicketsSubtitle,
-              style: TextStyle(
-                color: ColorConstants.onTertiary,
-                fontSize: 14,
-              ),
+              style: TextStyle(color: ColorConstants.onTertiary, fontSize: 14),
               textAlign: TextAlign.center,
             ),
           ],

@@ -1,101 +1,113 @@
-import 'package:titan/shotgun/class/answer.dart';
-import 'package:titan/tools/functions.dart';
+import 'dart:developer';
+
+import 'package:titan/shotgun/class/category.dart';
+import 'package:titan/shotgun/class/session.dart';
 
 class UserTicket {
   UserTicket({
     required this.id,
+    required this.price,
+    required this.userId,
     required this.eventId,
-    required this.categoryId,
-    required this.sessionId,
-    required this.status,
-    required this.paymentType,
-    required this.answers,
-    required this.ticketDate,
+    required this.scanned,
+    required this.category,
+    required this.session,
     required this.eventName,
-    required this.categoryName,
-    required this.sessionDate,
   });
 
   late final String id;
+  late final int price;
+  late final String userId;
   late final String eventId;
-  late final String categoryId;
-  late final String sessionId;
-  late final String status;
-  late final String paymentType;
-  late final List<Answer> answers;
-  late final DateTime ticketDate;
+  late final bool scanned;
+  late final Category category;
+  late final Session session;
   late final String eventName;
-  late final String categoryName;
-  late final DateTime sessionDate;
 
   UserTicket.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? '';
-    eventId = json['event_id'] ?? '';
-    categoryId = json['category_id'] ?? '';
-    sessionId = json['session_id'] ?? '';
-    status = json['status'] ?? '';
-    paymentType = json['payment_type'] ?? '';
-    answers = (json['answers'] as List<dynamic>?)
-            ?.map((e) => Answer.fromJson(e))
-            .whereType<Answer>()
-            .toList() ??
-        [];
-    ticketDate = json['ticket_date'] != null
-        ? processDateFromAPI(json['ticket_date'])
-        : DateTime.now();
-    eventName = json['event_name'] ?? '';
-    categoryName = json['category_name'] ?? '';
-    sessionDate = json['session_date'] != null
-        ? processDateFromAPI(json['session_date'])
-        : DateTime.now();
+    log('Parsing UserTicket from JSON: $json', name: 'UserTicket');
+    
+    id = json['id']?.toString() ?? '';
+    
+    // Price is stored in cents in the backend, convert to euros for the app
+    final priceInCents = (json['price'] as num?)?.toInt() ?? 0;
+    price = priceInCents ~/ 100;
+    
+    userId = json['user_id']?.toString() ?? '';
+    eventId = json['event_id']?.toString() ?? '';
+    scanned = json['scanned'] ?? false;
+    
+    // Parse category with null safety
+    final categoryJson = json['category'];
+    if (categoryJson != null && categoryJson is Map<String, dynamic>) {
+      try {
+        category = Category.fromJson(categoryJson);
+      } catch (e) {
+        log('Error parsing category: $e', name: 'UserTicket');
+        category = Category.empty();
+      }
+    } else {
+      log('Category is null or invalid, using empty', name: 'UserTicket');
+      category = Category.empty();
+    }
+    
+    // Parse session with null safety
+    final sessionJson = json['session'];
+    if (sessionJson != null && sessionJson is Map<String, dynamic>) {
+      try {
+        session = Session.fromJson(sessionJson);
+      } catch (e) {
+        log('Error parsing session: $e', name: 'UserTicket');
+        session = Session.empty();
+      }
+    } else {
+      log('Session is null or invalid, using empty', name: 'UserTicket');
+      session = Session.empty();
+    }
+    
+    eventName = json['event_name']?.toString() ?? '';
+    
+    log('Parsed UserTicket: id=$id, eventName=$eventName, price=$price, scanned=$scanned', name: 'UserTicket');
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['id'] = id;
+    // Convert euros back to cents for the backend
+    data['price'] = price * 100;
+    data['user_id'] = userId;
     data['event_id'] = eventId;
-    data['category_id'] = categoryId;
-    data['session_id'] = sessionId;
-    data['status'] = status;
-    data['payment_type'] = paymentType;
-    data['answers'] = answers.map((e) => e.toJson()).toList();
-    data['ticket_date'] = processDateToAPI(ticketDate);
+    data['scanned'] = scanned;
+    data['category'] = category.toJson();
+    data['session'] = session.toJson();
     data['event_name'] = eventName;
-    data['category_name'] = categoryName;
-    data['session_date'] = processDateToAPI(sessionDate);
     return data;
   }
 
   UserTicket copyWith({
     String? id,
+    int? price,
+    String? userId,
     String? eventId,
-    String? categoryId,
-    String? sessionId,
-    String? status,
-    String? paymentType,
-    List<Answer>? answers,
-    DateTime? ticketDate,
+    bool? scanned,
+    Category? category,
+    Session? session,
     String? eventName,
-    String? categoryName,
-    DateTime? sessionDate,
   }) {
     return UserTicket(
       id: id ?? this.id,
+      price: price ?? this.price,
+      userId: userId ?? this.userId,
       eventId: eventId ?? this.eventId,
-      categoryId: categoryId ?? this.categoryId,
-      sessionId: sessionId ?? this.sessionId,
-      status: status ?? this.status,
-      paymentType: paymentType ?? this.paymentType,
-      answers: answers ?? this.answers,
-      ticketDate: ticketDate ?? this.ticketDate,
+      scanned: scanned ?? this.scanned,
+      category: category ?? this.category,
+      session: session ?? this.session,
       eventName: eventName ?? this.eventName,
-      categoryName: categoryName ?? this.categoryName,
-      sessionDate: sessionDate ?? this.sessionDate,
     );
   }
 
   @override
   String toString() {
-    return 'UserTicket{id: $id, eventId: $eventId, categoryId: $categoryId, sessionId: $sessionId, status: $status, eventName: $eventName}';
+    return 'UserTicket{id: $id, eventName: $eventName, price: $price, scanned: $scanned}';
   }
 }

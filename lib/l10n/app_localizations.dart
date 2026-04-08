@@ -9121,6 +9121,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Réservez votre place pour un événement !'**
   String get shotgunNoTicketsSubtitle;
+
+  /// No description provided for @shotgunViewResults.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir les résultats'**
+  String get shotgunViewResults;
 }
 
 class _AppLocalizationsDelegate

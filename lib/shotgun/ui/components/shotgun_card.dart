@@ -6,6 +6,8 @@ import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/shotgun/class/shotgun.dart';
 import 'package:titan/shotgun/providers/selected_shotgun_provider.dart';
 import 'package:titan/shotgun/router.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
 
 class ShotgunCard extends ConsumerWidget {
@@ -20,11 +22,33 @@ class ShotgunCard extends ConsumerWidget {
     return ListItem(
       title: shotgun.name,
       subtitle: '${l10n.shotgunOpeningLabel}: ${dateFormatter.format(shotgun.openDatetime)}',
-      onTap: () {
-        // Stocker le shotgun sélectionné et naviguer vers la page d'édition
-        ref.read(selectedShotgunProvider.notifier).state = shotgun;
-        QR.to(ShotgunRouter.root + ShotgunRouter.edit);
-      },
+      onTap: () => showCustomBottomModal(
+        context: context,
+        modal: BottomModalTemplate(
+          title: shotgun.name,
+          child: Column(
+            children: [
+              Button(
+                text: l10n.shotgunViewResults,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  // TODO: Implémenter voir les résultats
+                },
+              ),
+              const SizedBox(height: 10),
+              Button(
+                text: l10n.shotgunEditTitle,
+                onPressed: () {
+                  ref.read(selectedShotgunProvider.notifier).state = shotgun;
+                  QR.to(ShotgunRouter.root + ShotgunRouter.edit);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        ),
+        ref: ref,
+      ),
     );
   }
 }

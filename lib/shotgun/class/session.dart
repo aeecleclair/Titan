@@ -13,10 +13,10 @@ class Session {
   late final int quota;
 
   Session.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    startDatetime = processDateFromAPI(json['start_datetime']);
-    quota = json['quota'];
+    id = json['id']?.toString() ?? '';
+    name = json['name']?.toString() ?? '';
+    startDatetime = processDateFromAPI(json['start_datetime'] ?? '');
+    quota = json['quota'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {

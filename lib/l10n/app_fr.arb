@@ -1868,5 +1868,6 @@
   "shotgunReservationSuccess": "Réservation créée avec succès !",
   "shotgunMyTickets": "Mes billets",
   "shotgunNoTickets": "Vous n'avez pas encore de billets",
-  "shotgunNoTicketsSubtitle": "Réservez votre place pour un événement !"
+  "shotgunNoTicketsSubtitle": "Réservez votre place pour un événement !",
+  "shotgunViewResults": "Voir les résultats"
 }

@@ -4688,4 +4688,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shotgunNoTicketsSubtitle => 'Book your seat for an event!';
+
+  @override
+  String get shotgunViewResults => 'View results';
 }

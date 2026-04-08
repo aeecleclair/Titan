@@ -1861,5 +1861,6 @@
   "shotgunReservationSuccess": "Reservation created successfully!",
   "shotgunMyTickets": "My tickets",
   "shotgunNoTickets": "You don't have any tickets yet",
-  "shotgunNoTicketsSubtitle": "Book your seat for an event!"
+  "shotgunNoTicketsSubtitle": "Book your seat for an event!",
+  "shotgunViewResults": "View results"
 }
