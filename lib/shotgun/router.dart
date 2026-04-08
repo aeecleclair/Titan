@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/feed/providers/is_user_a_member_of_an_association.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
@@ -24,8 +26,9 @@ class ShotgunRouter {
   static const String manage = '/manage';
   static const String edit = '/edit';
   static final Module module = Module(
-    getName: (context) => "Shotgun",
-    getDescription: (context) => "Shotgun",
+    getName: (context) => AppLocalizations.of(context)!.shotgunShotgun,
+    getDescription: (context) =>
+        AppLocalizations.of(context)!.shotgunShotgunDescription,
     root: ShotgunRouter.root,
   );
   ShotgunRouter(this.ref);
@@ -38,6 +41,10 @@ class ShotgunRouter {
       AuthenticatedMiddleware(ref),
       DeferredLoadingMiddleware(main_page.loadLibrary),
     ],
+    pageType: QCustomPage(
+      transitionsBuilder: (_, animation, _, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
     children: [
       QRoute(
         path: book,

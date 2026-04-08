@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/shotgun/class/session.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
@@ -14,8 +15,8 @@ class SessionCard extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final entries = useState<List<Map<String, TextEditingController>>>([
-      _newEntry(),
       _newEntry(),
     ]);
 
@@ -47,9 +48,9 @@ class SessionCard extends HookWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Sessions",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            Text(
+              l10n.shotgunSessions,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             ...List.generate(
@@ -65,7 +66,7 @@ class SessionCard extends HookWidget {
                         children: [
                           // Ligne 1: Nom de la session
                           TextEntry(
-                            label: "Session ${i + 1}",
+                            label: l10n.shotgunSessionLabelNumbered(i + 1),
                             controller: entries.value[i]['label']!,
                             onChanged: (_) => notify(),
                           ),
@@ -76,7 +77,7 @@ class SessionCard extends HookWidget {
                               Expanded(
                                 flex: 2,
                                 child: DateEntry(
-                                  label: "Date",
+                                  label: l10n.shotgunDateLabel,
                                   controller: entries.value[i]['date']!,
                                   onTap: () => getFullDate(
                                     context,
@@ -88,7 +89,7 @@ class SessionCard extends HookWidget {
                               Expanded(
                                 flex: 1,
                                 child: TextEntry(
-                                  label: "Quota",
+                                  label: l10n.shotgunQuotaLabel,
                                   controller: entries.value[i]['quota']!,
                                   onChanged: (_) => notify(),
                                 ),
@@ -98,7 +99,7 @@ class SessionCard extends HookWidget {
                         ],
                       ),
                     ),
-                    if (entries.value.length > 2)
+                    if (entries.value.length > 1)
                       IconButton(
                         icon: HeroIcon(
                           HeroIcons.minusCircle,
@@ -122,7 +123,7 @@ class SessionCard extends HookWidget {
                 notify();
               },
               icon: const HeroIcon(HeroIcons.plus, size: 18),
-              label: const Text("Ajouter une session"),
+              label: Text(l10n.shotgunAddSession),
               style: TextButton.styleFrom(foregroundColor: ColorConstants.main),
             ),
           ],

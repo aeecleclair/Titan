@@ -1,4 +1,5 @@
 import 'package:titan/shotgun/class/category.dart';
+import 'package:titan/shotgun/class/question.dart';
 import 'package:titan/shotgun/class/session.dart';
 import 'package:titan/tools/functions.dart';
 
@@ -22,7 +23,7 @@ class Shotgun {
   late final DateTime? closeDatetime;
   late final List<Session> sessions;
   late final List<Category> categories;
-  late final List<String> questions;
+  late final List<Question> questions;
 
   Shotgun.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -47,8 +48,8 @@ class Shotgun {
         [];
     questions =
         (json['questions'] as List<dynamic>?)
-            ?.map((e) => e.toString())
-            .whereType<String>()
+            ?.map((e) => Question.fromJson(e))
+            .whereType<Question>()
             .toList() ??
         [];
   }
@@ -65,7 +66,7 @@ class Shotgun {
         : null;
     data['sessions'] = sessions.map((e) => e.toJson()).toList();
     data['categories'] = categories.map((e) => e.toJson()).toList();
-    data['questions'] = questions;
+    data['questions'] = questions.map((e) => e.toJson()).toList();
     return data;
   }
 
@@ -78,6 +79,7 @@ class Shotgun {
     DateTime? closeDatetime,
     List<Session>? sessions,
     List<Category>? categories,
+    List<Question>? questions,
   }) {
     return Shotgun(
       id: id ?? this.id,
@@ -88,7 +90,7 @@ class Shotgun {
       closeDatetime: closeDatetime ?? this.closeDatetime,
       sessions: sessions ?? this.sessions,
       categories: categories ?? this.categories,
-      questions: questions,
+      questions: questions ?? this.questions,
     );
   }
 

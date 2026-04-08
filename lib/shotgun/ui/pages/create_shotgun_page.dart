@@ -3,9 +3,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/feed/providers/association_event_list_provider.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/user_store.dart';
 import 'package:titan/paiement/providers/my_stores_provider.dart';
+import 'package:titan/shotgun/class/answer_type.dart';
 import 'package:titan/shotgun/class/category.dart';
+import 'package:titan/shotgun/class/question.dart';
 import 'package:titan/shotgun/class/session.dart';
 import 'package:titan/shotgun/class/shotgun.dart';
 import 'package:titan/shotgun/ui/components/session_card.dart';
@@ -25,6 +28,7 @@ class CreateShotgunPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final shotgunListNotifier = ref.watch(shotgunListProvider.notifier);
     final startDateController = useTextEditingController();
     final endDateController = useTextEditingController();
@@ -80,27 +84,27 @@ class CreateShotgunPage extends HookConsumerWidget {
               const SizedBox(height: 16),
               TextEntry(
                 maxLines: 1,
-                label: "Titre du shotgun *",
+                label: l10n.shotgunTitleLabel,
                 controller: titleController,
                 onChanged: (_) {},
               ),
               const SizedBox(height: 16),
               TextEntry(
                 maxLines: 1,
-                label: "Nombre de places disponibles (optionnel)",
+                label: l10n.shotgunPlacesLabel,
                 controller: placesController,
                 onChanged: (_) {},
               ),
               const SizedBox(height: 24),
 
               DateEntry(
-                label: "Date d'ouverture du shotgun *",
+                label: l10n.shotgunStartDateLabel,
                 controller: startDateController,
                 onTap: () => getFullDate(context, startDateController),
               ),
 
               DateEntry(
-                label: "Date de fermeture du shotgun (optionnel)",
+                label: l10n.shotgunEndDateLabel,
                 controller: endDateController,
                 onTap: () => getFullDate(context, endDateController),
               ),
@@ -124,8 +128,8 @@ class CreateShotgunPage extends HookConsumerWidget {
                     // Validation des champs obligatoires
                     if (titleController.text.trim().isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Le titre est obligatoire"),
+                        SnackBar(
+                          content: Text(l10n.shotgunTitleRequired),
                           backgroundColor: Colors.red,
                         ),
                       );
@@ -134,8 +138,8 @@ class CreateShotgunPage extends HookConsumerWidget {
 
                     if (startDateController.text.trim().isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("La date de début est obligatoire"),
+                        SnackBar(
+                          content: Text(l10n.shotgunStartDateRequired),
                           backgroundColor: Colors.red,
                         ),
                       );
@@ -178,15 +182,25 @@ class CreateShotgunPage extends HookConsumerWidget {
                           categories: categories.value,
                           sessions: sessions.value,
                           questions: questions.value
-                              .map((c) => c.text.trim())
-                              .where((t) => t.isNotEmpty)
+                              .where((controller) => controller.text.trim().isNotEmpty)
+                              .map(
+                                (controller) => Question(
+                                  id: '',
+                                  eventId: '',
+                                  question: controller.text.trim(),
+                                  answerType: AnswerType.text,
+                                  price: null,
+                                  required: false,
+                                  disabled: false,
+                                ),
+                              )
                               .toList(),
                         ),
                       );
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Erreur: ${e.toString()}"),
+                          content: Text("${l10n.othersError}: ${e.toString()}"),
                           backgroundColor: Colors.red,
                         ),
                       );
@@ -197,7 +211,7 @@ class CreateShotgunPage extends HookConsumerWidget {
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
-                  child: const Text("Enregistrer le shotgun"),
+                  child: Text(l10n.shotgunSave),
                 ),
               ),
               const SizedBox(height: 80),
@@ -231,6 +245,7 @@ class _ExtraQuestionsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -243,7 +258,7 @@ class _ExtraQuestionsSection extends StatelessWidget {
                 Expanded(
                   child: TextEntry(
                     maxLines: 1,
-                    label: "Question ${i + 1}",
+                    label: l10n.shotgunQuestionLabel(i + 1),
                     controller: questions[i],
                     onChanged: (_) {},
                   ),
@@ -255,7 +270,7 @@ class _ExtraQuestionsSection extends StatelessWidget {
                     size: 22,
                     color: ColorConstants.error,
                   ),
-                  tooltip: "Supprimer la question",
+                  tooltip: l10n.shotgunDeleteQuestionTooltip,
                 ),
               ],
             ),
@@ -264,7 +279,7 @@ class _ExtraQuestionsSection extends StatelessWidget {
         OutlinedButton.icon(
           onPressed: addQuestion,
           icon: const HeroIcon(HeroIcons.plus, size: 20),
-          label: const Text("Ajouter une question"),
+          label: Text(l10n.shotgunAddQuestion),
           style: OutlinedButton.styleFrom(
             foregroundColor: ColorConstants.main,
             side: const BorderSide(color: ColorConstants.main),

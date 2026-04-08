@@ -4,6 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/shotgun/class/category.dart';
 import 'package:titan/shotgun/class/session.dart';
 import 'package:titan/shotgun/providers/selected_shotgun_provider.dart';
@@ -19,6 +20,7 @@ class EditShotgunPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final shotgun = ref.watch(selectedShotgunProvider);
     final shotgunEditNotifier = ref.watch(shotgunEditProvider.notifier);
     final locale = Localizations.localeOf(context);
@@ -50,7 +52,7 @@ class EditShotgunPage extends HookConsumerWidget {
     final categories = useState<List<Category>>(shotgun.categories);
     final sessions = useState<List<Session>>(shotgun.sessions);
     final questions = useState<List<TextEditingController>>(
-      shotgun.questions.map((q) => TextEditingController(text: q)).toList(),
+      shotgun.questions.map((q) => TextEditingController(text: q.question)).toList(),
     );
 
     return ShotgunTemplate(
@@ -61,7 +63,7 @@ class EditShotgunPage extends HookConsumerWidget {
           children: [
             const SizedBox(height: 16),
             Text(
-              "Modifier le shotgun",
+              l10n.shotgunEditTitle,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -71,25 +73,25 @@ class EditShotgunPage extends HookConsumerWidget {
             const SizedBox(height: 24),
             TextEntry(
               maxLines: 1,
-              label: "Titre du shotgun *",
+              label: l10n.shotgunTitleLabel,
               controller: titleController,
               onChanged: (_) {},
             ),
             const SizedBox(height: 16),
             TextEntry(
               maxLines: 1,
-              label: "Nombre de places disponibles (optionnel)",
+              label: l10n.shotgunPlacesLabel,
               controller: placesController,
               onChanged: (_) {},
             ),
             const SizedBox(height: 24),
             DateEntry(
-              label: "Date d'ouverture du shotgun *",
+              label: l10n.shotgunStartDateLabel,
               controller: startDateController,
               onTap: () => getFullDate(context, startDateController),
             ),
             DateEntry(
-              label: "Date de fermeture du shotgun (optionnel)",
+              label: l10n.shotgunEndDateLabel,
               controller: endDateController,
               onTap: () => getFullDate(context, endDateController),
             ),
@@ -116,8 +118,8 @@ class EditShotgunPage extends HookConsumerWidget {
                   // Validation
                   if (titleController.text.trim().isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Le titre est obligatoire"),
+                      SnackBar(
+                        content: Text(l10n.shotgunTitleRequired),
                         backgroundColor: Colors.red,
                       ),
                     );
@@ -126,8 +128,8 @@ class EditShotgunPage extends HookConsumerWidget {
 
                   if (startDateController.text.trim().isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("La date de début est obligatoire"),
+                      SnackBar(
+                        content: Text(l10n.shotgunStartDateRequired),
                         backgroundColor: Colors.red,
                       ),
                     );
@@ -175,10 +177,10 @@ class EditShotgunPage extends HookConsumerWidget {
                       for (int i = 0; i < questions.value.length; i++) {
                         if (i < shotgun.questions.length) {
                           // Mise à jour d'une question existante
-                          if (questions.value[i].text != shotgun.questions[i]) {
+                          if (questions.value[i].text != shotgun.questions[i].question) {
                             await shotgunEditNotifier.updateQuestion(
                               shotgun.id,
-                              shotgun.id, // TODO: utiliser l'ID réel de la question
+                              shotgun.questions[i].id,
                               questions.value[i].text,
                             );
                           }
@@ -186,8 +188,8 @@ class EditShotgunPage extends HookConsumerWidget {
                       }
 
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Shotgun modifié avec succès"),
+                        SnackBar(
+                          content: Text(l10n.shotgunEditSuccess),
                           backgroundColor: Colors.green,
                         ),
                       );
@@ -196,7 +198,7 @@ class EditShotgunPage extends HookConsumerWidget {
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text("Erreur: ${e.toString()}"),
+                        content: Text("${l10n.othersError}: ${e.toString()}"),
                         backgroundColor: Colors.red,
                       ),
                     );
@@ -207,7 +209,7 @@ class EditShotgunPage extends HookConsumerWidget {
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: const Text("Enregistrer les modifications"),
+                child: Text(l10n.shotgunSaveChanges),
               ),
             ),
             const SizedBox(height: 80),
@@ -231,6 +233,7 @@ class _EditCategoriesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       margin: EdgeInsets.zero,
       elevation: 0,
@@ -245,9 +248,9 @@ class _EditCategoriesSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Tarifs",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            Text(
+              l10n.shotgunTariffs,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             ...List.generate(categories.length, (i) {
@@ -259,7 +262,7 @@ class _EditCategoriesSection extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextEntry(
-                        label: "Tarif ${i + 1}",
+                        label: l10n.shotgunTariffLabel(i + 1),
                         controller: TextEditingController(text: category.name),
                         onChanged: (value) {
                           final updated = [...categories];
@@ -272,7 +275,7 @@ class _EditCategoriesSection extends StatelessWidget {
                     SizedBox(
                       width: 100,
                       child: TextEntry(
-                        label: "Prix (€)",
+                        label: l10n.shotgunPriceLabel,
                         controller: TextEditingController(
                           text: category.price.toString(),
                         ),
@@ -309,6 +312,7 @@ class _EditSessionsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final locale = Localizations.localeOf(context);
     final dateFormatter = DateFormat('dd/MM/yyyy HH:mm', locale.toString());
 
@@ -326,9 +330,9 @@ class _EditSessionsSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Sessions",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            Text(
+              l10n.shotgunSessions,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             ...List.generate(sessions.length, (i) {
@@ -343,7 +347,7 @@ class _EditSessionsSection extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextEntry(
-                            label: "Session ${i + 1}",
+                            label: l10n.shotgunSessionLabelNumbered(i + 1),
                             controller: TextEditingController(text: session.name),
                             onChanged: (value) {
                               final updated = [...sessions];
@@ -357,7 +361,7 @@ class _EditSessionsSection extends StatelessWidget {
                               Expanded(
                                 flex: 2,
                                 child: DateEntry(
-                                  label: "Date",
+                                  label: l10n.shotgunDateLabel,
                                   controller: TextEditingController(
                                     text: dateFormatter.format(session.startDatetime),
                                   ),
@@ -385,7 +389,7 @@ class _EditSessionsSection extends StatelessWidget {
                               Expanded(
                                 flex: 1,
                                 child: TextEntry(
-                                  label: "Quota",
+                                  label: l10n.shotgunQuotaLabel,
                                   controller: TextEditingController(
                                     text: session.quota.toString(),
                                   ),
@@ -436,6 +440,7 @@ class _EditQuestionsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       margin: EdgeInsets.zero,
       elevation: 0,
@@ -450,9 +455,9 @@ class _EditQuestionsSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Questions",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            Text(
+              l10n.shotgunQuestions,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             ...List.generate(questions.length, (i) {
@@ -464,7 +469,7 @@ class _EditQuestionsSection extends StatelessWidget {
                     Expanded(
                       child: TextEntry(
                         maxLines: 1,
-                        label: "Question ${i + 1}",
+                        label: l10n.shotgunQuestionLabel(i + 1),
                         controller: questions[i],
                         onChanged: (_) {},
                       ),
@@ -476,7 +481,7 @@ class _EditQuestionsSection extends StatelessWidget {
                         size: 22,
                         color: ColorConstants.error,
                       ),
-                      tooltip: "Supprimer la question",
+                      tooltip: l10n.shotgunDeleteQuestionTooltip,
                     ),
                   ],
                 ),
@@ -485,7 +490,7 @@ class _EditQuestionsSection extends StatelessWidget {
             OutlinedButton.icon(
               onPressed: addQuestion,
               icon: const HeroIcon(HeroIcons.plus, size: 20),
-              label: const Text("Ajouter une question"),
+              label: Text(l10n.shotgunAddQuestion),
               style: OutlinedButton.styleFrom(
                 foregroundColor: ColorConstants.main,
                 side: const BorderSide(color: ColorConstants.main),

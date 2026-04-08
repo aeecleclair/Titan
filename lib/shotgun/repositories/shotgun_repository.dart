@@ -4,6 +4,7 @@ import 'package:titan/shotgun/class/category.dart';
 import 'package:titan/shotgun/class/checkout.dart';
 import 'package:titan/shotgun/class/session.dart';
 import 'package:titan/shotgun/class/shotgun.dart';
+import 'package:titan/shotgun/class/user_ticket.dart';
 import 'package:titan/shotgun/tools/functions.dart';
 import 'package:titan/tools/repository/repository.dart';
 
@@ -87,6 +88,12 @@ class ShotgunRepository extends Repository {
 
   Future<bool> deleteShotgun(String id) async {
     return await delete(id);
+  }
+
+  Future<List<UserTicket>> getUserTickets() async {
+    return (await getList(
+      suffix: 'user/me/tickets',
+    )).map((e) => UserTicket.fromJson(e)).toList();
   }
 }
 

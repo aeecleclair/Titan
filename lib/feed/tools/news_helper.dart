@@ -173,7 +173,7 @@ String getActionSubtitle(News news, BuildContext context) {
   } else if (module == "event") {
     return AppLocalizations.of(context)!.eventActionEventSubtitle;
   } else if (module == "tickets") {
-    return "Réserver votre place";
+    return AppLocalizations.of(context)!.eventActionTicketsSubtitle;
   }
   return '';
 }
@@ -186,7 +186,7 @@ String getActionEnableButtonText(News news, BuildContext context) {
   } else if (module == "event") {
     return AppLocalizations.of(context)!.eventActionEventButton;
   } else if (module == "tickets") {
-    return "Réserver";
+    return AppLocalizations.of(context)!.eventActionTicketsButton;
   }
   return '';
 }

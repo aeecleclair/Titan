@@ -1,19 +1,31 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/navigation/providers/navbar_module_list.dart';
+import 'package:titan/paiement/router.dart';
 import 'package:titan/shotgun/class/category.dart';
 import 'package:titan/shotgun/class/checkout.dart';
+import 'package:titan/shotgun/class/my_payment_call_type.dart';
 import 'package:titan/shotgun/class/session.dart';
 import 'package:titan/shotgun/class/shotgun.dart';
 import 'package:titan/shotgun/providers/checkout_provider.dart';
 import 'package:titan/shotgun/providers/shotgun_provider.dart';
+import 'package:titan/shotgun/router.dart';
 import 'package:titan/shotgun/ui/shotgun.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:qlevar_router/qlevar_router.dart';
+import 'package:universal_html/html.dart' as html;
+import 'package:url_launcher/url_launcher.dart';
 
 class BookTicketPage extends HookConsumerWidget {
   const BookTicketPage({super.key});
@@ -22,12 +34,12 @@ class BookTicketPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pathForwarding = ref.watch(pathForwardingProvider);
     final shotgunId = pathForwarding.queryParameters?['shotgunId'];
-
+    final l10n = AppLocalizations.of(context)!;
     if (shotgunId == null || shotgunId.isEmpty) {
       return ShotgunTemplate(
         child: Center(
           child: Text(
-            'Shotgun non trouvé',
+            l10n.shotgunNotFound,
             style: TextStyle(color: ColorConstants.tertiary),
           ),
         ),
@@ -58,48 +70,150 @@ class _ShotgunContent extends HookConsumerWidget {
     final selectedSession = useState<Session?>(null);
     final selectedPaymentProvider = useState<String?>('helloasso');
     final checkoutState = ref.watch(checkoutProvider);
+    final l10n = AppLocalizations.of(context)!;
+    final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
+    final navbarListModuleNotifier = ref.watch(
+      navbarListModuleProvider.notifier,
+    );
 
-    // Debug prints
-    debugPrint('DEBUG: checkoutState.isCreating = ${checkoutState.isCreating}');
-    debugPrint('DEBUG: selectedCategory.value = ${selectedCategory.value}');
-    debugPrint('DEBUG: selectedCategory.value?.id = ${selectedCategory.value?.id}');
-    debugPrint('DEBUG: Button disabled = ${checkoutState.isCreating || selectedCategory.value == null}');
+    // Helper to get payment method from provider value
+    MyPaymentCallType getPaymentMethod(String? provider) {
+      return provider == 'helloasso'
+          ? MyPaymentCallType.transfer
+          : MyPaymentCallType.request;
+    }
+
+    // Helper to get redirect URL
+    String getRedirectUrl() {
+      return kIsWeb
+          ? "${getTitanURL()}/shotgun"
+          : "${getTitanURLScheme()}://shotgun";
+    }
 
     // Update checkout when category or session changes
     final checkout = useState<Checkout>(
       Checkout(
         categoryId: selectedCategory.value?.id ?? '',
         sessionId: selectedSession.value?.id ?? '',
+        answers: [],
+        myPaymentRequestMethod: getPaymentMethod(selectedPaymentProvider.value),
+        myPaymentTransferRedirectUrl: getRedirectUrl(),
       ),
     );
 
     // Sync checkout with selection changes
-    useEffect(() {
-      checkout.value = Checkout(
-        categoryId: selectedCategory.value?.id ?? '',
-        sessionId: selectedSession.value?.id ?? '',
-      );
-      return null;
-    }, [selectedCategory.value, selectedSession.value]);
+    useEffect(
+      () {
+        checkout.value = Checkout(
+          categoryId: selectedCategory.value?.id ?? '',
+          sessionId: selectedSession.value?.id ?? '',
+          answers: [],
+          myPaymentRequestMethod: getPaymentMethod(
+            selectedPaymentProvider.value,
+          ),
+          myPaymentTransferRedirectUrl: getRedirectUrl(),
+        );
+        return null;
+      },
+      [
+        selectedCategory.value,
+        selectedSession.value,
+        selectedPaymentProvider.value,
+      ],
+    );
+
+    // Helper functions for payment
+    Future<void> tryLaunchUrl(String url) async {
+      if (!await launchUrl(
+        Uri.parse(url),
+        mode: LaunchMode.externalApplication,
+      )) {
+        throw Exception(l10n.paiementCantLaunchURL);
+      }
+    }
+
+    void helloAssoCallback(String paymentUrl) async {
+      html.WindowBase? popupWin =
+          html.window.open(
+                paymentUrl,
+                "HelloAsso",
+                "width=800, height=900, scrollbars=yes",
+              )
+              as html.WindowBase?;
+
+      if (popupWin == null) {
+        displayToast(context, TypeMsg.error, l10n.paiementPleaseAcceptPopup);
+        return;
+      }
+
+      final completer = Completer();
+      final win = popupWin; // capture non-null value
+      void checkWindowClosed() {
+        if (win.closed == true) {
+          completer.complete();
+        } else {
+          Future.delayed(const Duration(milliseconds: 100), checkWindowClosed);
+        }
+      }
+
+      checkWindowClosed();
+      completer.future.then((_) {
+        // Clear checkout and redirect to /shotgun when popup is closed
+        ref.read(checkoutProvider.notifier).reset();
+        QR.to('/shotgun');
+      });
+
+      void handlePaymentResult(String data) async {
+        final receivedUri = Uri.parse(data);
+        final code = receivedUri.queryParameters["code"];
+        if (code == "succeeded") {
+          displayToast(context, TypeMsg.msg, l10n.shotgunReservationSuccess);
+        } else {
+          displayToast(
+            context,
+            TypeMsg.error,
+            l10n.paiementCancelledTransaction,
+          );
+        }
+        popupWin.close();
+      }
+
+      html.window.onMessage.listen((event) {
+        if (event.data.toString().contains('code=')) {
+          handlePaymentResult(event.data);
+        }
+      });
+    }
 
     // Handle success/error states
     useEffect(() {
       if (checkoutState.isSuccess && checkoutState.checkout != null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Réservation créée avec succès !'),
-              backgroundColor: Colors.green,
-            ),
-          );
-          // Reset after showing success
-          ref.read(checkoutProvider.notifier).reset();
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          final checkout = checkoutState.checkout!;
+          if (checkout.paymentUrl != null && checkout.paymentUrl!.isNotEmpty) {
+            ref.read(checkoutProvider.notifier).reset();
+            QR.to(ShotgunRouter.root);
+            if (kIsWeb) {
+              helloAssoCallback(checkout.paymentUrl!);
+            } else {
+              try {
+                await tryLaunchUrl(checkout.paymentUrl!);
+              } catch (e) {
+                displayToast(context, TypeMsg.error, e.toString());
+              }
+            }
+          } else {
+            ref.read(checkoutProvider.notifier).reset();
+            pathForwardingNotifier.forward(PaymentRouter.root);
+            navbarListModuleNotifier.pushModule(PaymentRouter.module);
+            QR.to(PaymentRouter.root);
+          }
         });
       } else if (checkoutState.error != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Erreur: ${checkoutState.error}'),
+              content: Text('${l10n.othersError}: ${checkoutState.error}'),
               backgroundColor: Colors.red,
             ),
           );
@@ -117,13 +231,6 @@ class _ShotgunContent extends HookConsumerWidget {
         .where((s) => s.name.trim().isNotEmpty)
         .toList();
 
-    // Debug categories
-    debugPrint('DEBUG: shotgun.categories.length = ${shotgun.categories.length}');
-    debugPrint('DEBUG: validCategories.length = ${validCategories.length}');
-    for (final c in shotgun.categories) {
-      debugPrint('DEBUG: category id=${c.id} name="${c.name}" price=${c.price}');
-    }
-
     return Column(
       children: [
         Expanded(
@@ -133,7 +240,7 @@ class _ShotgunContent extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Réserver un billet',
+                  l10n.shotgunBookTicket,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     color: ColorConstants.title,
                     fontWeight: FontWeight.bold,
@@ -172,7 +279,7 @@ class _ShotgunContent extends HookConsumerWidget {
                         if (validCategories.isNotEmpty) ...[
                           const SizedBox(height: 24),
                           Text(
-                            'Catégorie (tarif)',
+                            l10n.shotgunCategoryLabel,
                             style: Theme.of(context).textTheme.labelLarge
                                 ?.copyWith(color: ColorConstants.secondary),
                           ),
@@ -253,7 +360,7 @@ class _ShotgunContent extends HookConsumerWidget {
                         if (validSessions.isNotEmpty) ...[
                           const SizedBox(height: 24),
                           Text(
-                            'Session (horaire)',
+                            l10n.shotgunSessionLabel,
                             style: Theme.of(context).textTheme.labelLarge
                                 ?.copyWith(color: ColorConstants.secondary),
                           ),
@@ -319,7 +426,7 @@ class _ShotgunContent extends HookConsumerWidget {
                                       ),
                                       if (session.quota > 0)
                                         Text(
-                                          '${session.quota} places',
+                                          '${session.quota} ${l10n.shotgunPlaces}',
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodySmall
@@ -362,7 +469,7 @@ class _ShotgunContent extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Total',
+                        l10n.shotgunTotal,
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: ColorConstants.onTertiary,
                         ),
@@ -379,7 +486,7 @@ class _ShotgunContent extends HookConsumerWidget {
                   const SizedBox(height: 16),
                 ],
                 Text(
-                  'Moyen de paiement',
+                  l10n.shotgunPaymentMethod,
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                     color: ColorConstants.secondary,
                   ),
@@ -504,17 +611,19 @@ class _ShotgunContent extends HookConsumerWidget {
                   child: ElevatedButton(
                     onPressed:
                         checkoutState.isCreating ||
-                                selectedCategory.value == null
-                            ? null
-                            : () async {
-                              final notifier = ref.read(
-                                checkoutProvider.notifier,
-                              );
-                              await notifier.createCheckout(
-                                checkout.value,
-                                shotgun,
-                              );
-                            },
+                            selectedCategory.value == null ||
+                            (validSessions.isNotEmpty &&
+                                selectedSession.value == null)
+                        ? null
+                        : () async {
+                            final notifier = ref.read(
+                              checkoutProvider.notifier,
+                            );
+                            await notifier.createCheckout(
+                              checkout.value,
+                              shotgun,
+                            );
+                          },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: ColorConstants.main,
                       foregroundColor: Colors.white,
@@ -526,25 +635,24 @@ class _ShotgunContent extends HookConsumerWidget {
                         alpha: 0.3,
                       ),
                     ),
-                    child:
-                        checkoutState.isCreating
-                            ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Colors.white,
-                                ),
-                              ),
-                            )
-                            : const Text(
-                              'Réserver',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                    child: checkoutState.isCreating
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.white,
                               ),
                             ),
+                          )
+                        : Text(
+                            l10n.shotgunReserve,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
                 const SizedBox(height: 50),

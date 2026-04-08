@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/user_store.dart';
 import 'package:titan/paiement/providers/my_stores_provider.dart';
 import 'package:titan/shotgun/providers/store_shotgun_list_provider.dart';
@@ -16,6 +17,7 @@ class ManageShotgunPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final myStores = ref.watch(myStoresProvider);
     final storeShotgunList = ref.watch(storeShotgunListProvider);
     final storeShotgunListNotifier = ref.watch(
@@ -42,7 +44,7 @@ class ManageShotgunPage extends HookConsumerWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              "Gérer les shotgun de l'association",
+              l10n.shotgunManageTitle,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -89,10 +91,10 @@ class ManageShotgunPage extends HookConsumerWidget {
                   value: storeShotgunList,
                   builder: (context, shotgunList) {
                     if (shotgunList.isEmpty) {
-                      return const Center(
+                      return Center(
                         child: Text(
-                          "Aucun shotgun pour ce store",
-                          style: TextStyle(color: ColorConstants.tertiary),
+                          l10n.shotgunNoShotgun,
+                          style: const TextStyle(color: ColorConstants.tertiary),
                         ),
                       );
                     }

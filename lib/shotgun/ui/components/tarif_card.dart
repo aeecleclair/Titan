@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/shotgun/class/category.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
@@ -12,8 +13,8 @@ class TarifCard extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final entries = useState<List<Map<String, TextEditingController>>>([
-      _newEntry(),
       _newEntry(),
     ]);
 
@@ -46,10 +47,9 @@ class TarifCard extends HookWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              // ← const
-              "Tarifs",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            Text(
+              l10n.shotgunTariffs,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             ...List.generate(
@@ -60,24 +60,22 @@ class TarifCard extends HookWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      // ← ajout
                       child: TextEntry(
-                        label: "Tarif ${i + 1}",
+                        label: l10n.shotgunTariffLabel(i + 1),
                         controller: entries.value[i]['label']!,
                         onChanged: (_) => notify(),
                       ),
                     ),
                     const SizedBox(width: 12),
                     SizedBox(
-                      // ← largeur fixe comme l'original
                       width: 100,
                       child: TextEntry(
-                        label: "Prix (€)",
+                        label: l10n.shotgunPriceLabel,
                         controller: entries.value[i]['value']!,
                         onChanged: (_) => notify(),
                       ),
                     ),
-                    if (entries.value.length > 2)
+                    if (entries.value.length > 1)
                       IconButton(
                         icon: HeroIcon(
                           HeroIcons.minusCircle,
@@ -101,7 +99,7 @@ class TarifCard extends HookWidget {
                 notify();
               },
               icon: const HeroIcon(HeroIcons.plus, size: 18),
-              label: const Text("Ajouter un tarif"),
+              label: Text(l10n.shotgunAddTariff),
               style: TextButton.styleFrom(foregroundColor: ColorConstants.main),
             ),
           ],

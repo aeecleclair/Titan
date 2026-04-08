@@ -15,7 +15,9 @@ class Category {
   Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    price = json['price'];
+    // Price is stored in cents in the backend, convert to euros for the app
+    final priceInCents = (json['price'] as num?)?.toInt() ?? 0;
+    price = priceInCents ~/ 100;
     quota = json['quota'];
     requiredMembership = json['required_membership'];
   }
@@ -24,7 +26,8 @@ class Category {
     final data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
-    data['price'] = price;
+    // Convert euros back to cents for the backend
+    data['price'] = price * 100;
     data['quota'] = quota;
     data['required_membership'] = requiredMembership;
     return data;

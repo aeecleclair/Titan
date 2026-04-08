@@ -1,4 +1,89 @@
 {
+  "@@locale": "en",
+  "dateToday": "Today",
+  "dateYesterday": "Yesterday",
+  "dateTomorrow": "Tomorrow",
+  "dateAt": "at",
+  "dateFrom": "from",
+  "dateTo": "to",
+  "dateBetweenDays": "to",
+  "dateStarting": "Starting",
+  "dateLast": "Last",
+  "dateUntil": "Until",
+  "feedFilterAll": "All",
+  "feedFilterPending": "Pending",
+  "feedFilterApproved": "Approved",
+  "feedFilterRejected": "Rejected",
+  "feedEmptyAll": "No events available",
+  "feedEmptyPending": "No events pending approval",
+  "feedEmptyApproved": "No approved events",
+  "feedEmptyRejected": "No rejected events",
+  "feedEventManagement": "Event Management",
+  "feedTitle": "Title",
+  "feedLocation": "Location",
+  "feedSGDate": "SG Date",
+  "feedSGExternalLink": "SG External link",
+  "feedCreateEvent": "Create an event",
+  "feedNotification": "Send a notification",
+  "feedPleaseSelectAnAssociation": "Please select an association",
+  "feedReject": "Reject",
+  "feedApprove": "Approve",
+  "feedEnded": "Ended",
+  "feedOngoing": "Ongoing",
+  "feedFilter": "Filter",
+  "feedAssociation": "Association",
+  "feedAssociationEvent": "{name} event",
+  "@feedAssociationEvent": {
+    "description": "Association event",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feedEditEvent": "Edit event",
+  "feedManageAssociationEvents": "Manage association events",
+  "feedNews": "Calendar",
+  "feedNewsType": "News type",
+  "feedNoAssociationEvents": "No association events",
+  "feedApply": "Apply",
+  "feedAdmin": "Administration",
+  "feedCreateAnEvent": "Create an event",
+  "feedManageRequests": "Manage requests",
+  "feedNoNewsAvailable": "No news available",
+  "feedRefresh": "Refresh",
+  "feedPleaseProvideASGExternalLink": "Please provide a SG external link",
+  "feedPleaseProvideASGDate": "Please provide a SG date",
+  "feedShotgunIn": "Shotgun in {time}",
+  "@feedShotgunIn": {
+    "description": "Shotgun in time",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "feedVoteIn": "Vote in {time}",
+  "@feedVoteIn": {
+    "description": "Vote in time",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "feedCantOpenLink": "Can't open link",
+  "feedGetReady": "Get ready!",
+  "eventActionCampaign": "You can vote",
+  "eventActionEvent": "You are invited",
+  "eventActionCampaignSubtitle": "Vote now",
+  "eventActionEventSubtitle": "Answer the invitation",
+  "eventActionTicketsSubtitle": "Book your seat",
+  "eventActionTicketsButton": "Book",
+  "eventActionCampaignButton": "Vote",
+  "eventActionEventButton": "Reserve",
+  "eventActionCampaignValidated": "I voted!",
+  "eventActionEventValidated": "I'm coming!",
   "moduleCentralassociation": "Centralassociation",
   "moduleCentralassociationDescription": "Aggregator of association links",
   "adminAccountTypes": "Account types",
@@ -1654,5 +1739,120 @@
   "voteVotesOpened": "Votes opened",
   "voteVoteSuccess": "Vote recorded",
   "voteWarning": "Warning",
-  "voteWarningMessage": "Selection will not be saved.\nDo you want to continue?"
+  "voteWarningMessage": "Selection will not be saved.\nDo you want to continue?",
+  "moduleAdvert": "Feed",
+  "moduleAmap": "AMAP",
+  "moduleBooking": "Booking",
+  "moduleCalendar": "Calendar",
+  "moduleCentralisation": "Centralisation",
+  "moduleCinema": "Cinema",
+  "moduleEvent": "Event",
+  "moduleFlappyBird": "Flappy Bird",
+  "moduleLoan": "Loan",
+  "modulePhonebook": "Phonebook",
+  "modulePurchases": "Purchases",
+  "moduleRaffle": "Raffle",
+  "moduleRecommendation": "Recommendation",
+  "moduleSeedLibrary": "Seed Library",
+  "moduleVote": "Vote",
+  "modulePh": "PH",
+  "moduleSettings": "Settings",
+  "moduleFeed": "Events",
+  "moduleStyleGuide": "StyleGuide",
+  "moduleAdmin": "Admin",
+  "moduleOthers": "Others",
+  "modulePayment": "Payment",
+  "moduleAdvertDescription": "View the latest feed",
+  "moduleAmapDescription": "Order your AMAP basket",
+  "moduleBookingDescription": "Book a room",
+  "moduleCalendarDescription": "View the calendar of events",
+  "moduleCentralisationDescription": "Viw all links",
+  "moduleCinemaDescription": "View the cinema schedule",
+  "moduleEventDescription": "View events",
+  "moduleFlappyBirdDescription": "Play Flappy Bird",
+  "moduleLoanDescription": "See your loans",
+  "modulePhonebookDescription": "View the phonebook",
+  "modulePurchasesDescription": "View your purchases",
+  "moduleRaffleDescription": "View the raffle",
+  "moduleRecommendationDescription": "View the recommendations",
+  "moduleSeedLibraryDescription": "View the seed library",
+  "moduleVoteDescription": "Vote for the campaigns",
+  "modulePhDescription": "View the PH",
+  "moduleSettingsDescription": "Manage your settings",
+  "moduleFeedDescription": "View the latest events",
+  "moduleStyleGuideDescription": "Style guide for developers",
+  "moduleAdminDescription": "Administration module for administrators",
+  "moduleOthersDescription": "Other modules",
+  "modulePaymentDescription": "Pay and see your transactions",
+  "toolInvalidNumber": "Invalid number",
+  "toolDateRequired": "Date required",
+  "toolSuccess": "Success",
+  "shotgunShotgun": "Shotgun",
+  "shotgunShotgunDescription": "Book your seats for events",
+  "shotgunTitle": "Shotgun",
+  "shotgunAdmin": "Admin",
+  "shotgunCreate": "Create a shotgun",
+  "shotgunManageAssociation": "Manage association shotguns",
+  "shotgunTitleLabel": "Shotgun title *",
+  "shotgunPlacesLabel": "Number of available seats (optional)",
+  "shotgunStartDateLabel": "Shotgun opening date *",
+  "shotgunEndDateLabel": "Shotgun closing date (optional)",
+  "shotgunTitleRequired": "Title is required",
+  "shotgunStartDateRequired": "Start date is required",
+  "shotgunSave": "Save shotgun",
+  "shotgunAddQuestion": "Add a question",
+  "shotgunQuestionLabel": "Question {number}",
+  "@shotgunQuestionLabel": {
+    "description": "Label for a question in the shotgun form",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "shotgunDeleteQuestionTooltip": "Delete question",
+  "shotgunEditTitle": "Edit shotgun",
+  "shotgunTariffs": "Pricing",
+  "shotgunPriceLabel": "Price (€)",
+  "shotgunSessions": "Sessions",
+  "shotgunDateLabel": "Date",
+  "shotgunQuotaLabel": "Quota",
+  "shotgunQuestions": "Questions",
+  "shotgunEditSuccess": "Shotgun updated successfully",
+  "shotgunSaveChanges": "Save changes",
+  "shotgunManageTitle": "Manage association shotguns",
+  "shotgunNoShotgun": "No shotgun for this store",
+  "shotgunNotFound": "Shotgun not found",
+  "shotgunBookTicket": "Book a ticket",
+  "shotgunCategoryLabel": "Category (pricing)",
+  "shotgunSessionLabel": "Session (time)",
+  "shotgunPlaces": "seats",
+  "shotgunTotal": "Total",
+  "shotgunPaymentMethod": "Payment method",
+  "shotgunReserve": "Book",
+  "shotgunOpeningLabel": "Opening",
+  "shotgunAddTariff": "Add pricing",
+  "shotgunAddSession": "Add session",
+  "shotgunTariffLabel": "Pricing {number}",
+  "@shotgunTariffLabel": {
+    "description": "Label for a pricing tier in the shotgun form",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "shotgunSessionLabelNumbered": "Session {number}",
+  "@shotgunSessionLabelNumbered": {
+    "description": "Label for a session in the shotgun form",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "shotgunReservationSuccess": "Reservation created successfully!",
+  "shotgunMyTickets": "My tickets",
+  "shotgunNoTickets": "You don't have any tickets yet",
+  "shotgunNoTicketsSubtitle": "Book your seat for an event!"
 }
