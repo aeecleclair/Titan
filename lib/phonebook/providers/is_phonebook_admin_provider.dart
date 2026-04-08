@@ -22,7 +22,9 @@ final isAssociationPresidentProvider = Provider<bool>((ref) {
           .firstWhere((completeMember) => completeMember.member.id == me.id)
           .memberships
           .firstWhere(
-            (membership) => membership.associationId == association.id,
+            (membership) =>
+                membership.associationId == association.id &&
+                membership.mandateYear == association.mandateYear,
           )
           .rolesTags
           .contains(PhonebookTextConstants.presidentRoleTag)) {
