@@ -42,6 +42,7 @@ class CreateShotgunPage extends HookConsumerWidget {
     );
     final categories = useState<List<Category>>([]);
     final sessions = useState<List<Session>>([]);
+    final questions = useState<List<TextEditingController>>([]);
 
     final locale = Localizations.localeOf(context);
 
@@ -111,7 +112,10 @@ class CreateShotgunPage extends HookConsumerWidget {
 
               SessionCard(onChanged: (value) => sessions.value = value),
               const SizedBox(height: 16),
-              const _ExtraQuestionsSection(),
+              _ExtraQuestionsSection(
+                questions: questions.value,
+                onChanged: (value) => questions.value = value,
+              ),
               const SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,
@@ -173,6 +177,10 @@ class CreateShotgunPage extends HookConsumerWidget {
                           closeDatetime: closeDatetime,
                           categories: categories.value,
                           sessions: sessions.value,
+                          questions: questions.value
+                              .map((c) => c.text.trim())
+                              .where((t) => t.isNotEmpty)
+                              .toList(),
                         ),
                       );
                     } catch (e) {
@@ -203,26 +211,30 @@ class CreateShotgunPage extends HookConsumerWidget {
 
 // ── Extra questions (free-text only) ─────────────────────────────────────────
 
-class _ExtraQuestionsSection extends HookWidget {
-  const _ExtraQuestionsSection();
+class _ExtraQuestionsSection extends StatelessWidget {
+  final List<TextEditingController> questions;
+  final ValueChanged<List<TextEditingController>> onChanged;
+
+  const _ExtraQuestionsSection({
+    required this.questions,
+    required this.onChanged,
+  });
+
+  void addQuestion() {
+    onChanged([...questions, TextEditingController()]);
+  }
+
+  void removeQuestion(int index) {
+    final updated = [...questions]..removeAt(index);
+    onChanged(updated);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final questions = useState<List<TextEditingController>>([]);
-
-    void addQuestion() {
-      questions.value = [...questions.value, TextEditingController()];
-    }
-
-    void removeQuestion(int index) {
-      final updated = [...questions.value]..removeAt(index);
-      questions.value = updated;
-    }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ...List.generate(questions.value.length, (i) {
+        ...List.generate(questions.length, (i) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: Row(
@@ -232,7 +244,7 @@ class _ExtraQuestionsSection extends HookWidget {
                   child: TextEntry(
                     maxLines: 1,
                     label: "Question ${i + 1}",
-                    controller: questions.value[i],
+                    controller: questions[i],
                     onChanged: (_) {},
                   ),
                 ),

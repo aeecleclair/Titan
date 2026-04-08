@@ -25,7 +25,7 @@ class TarifCard extends HookWidget {
               name: e['label']!.text,
               price: int.tryParse(e['value']!.text) ?? 0,
               quota: int.tryParse(e['quota']!.text),
-              requiredMembership: e['requiredMembership']!.text,
+              requiredMembership: null,
             ),
           )
           .toList(),
@@ -98,6 +98,7 @@ class TarifCard extends HookWidget {
             TextButton.icon(
               onPressed: () {
                 entries.value = [...entries.value, _newEntry()];
+                notify();
               },
               icon: const HeroIcon(HeroIcons.plus, size: 18),
               label: const Text("Ajouter un tarif"),
@@ -112,5 +113,7 @@ class TarifCard extends HookWidget {
   Map<String, TextEditingController> _newEntry() => {
     'label': TextEditingController(),
     'value': TextEditingController(),
+    'quota': TextEditingController(),
+    'requiredMembership': TextEditingController(),
   };
 }

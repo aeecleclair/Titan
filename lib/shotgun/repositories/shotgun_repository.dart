@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/shotgun/class/category.dart';
 import 'package:titan/shotgun/class/checkout.dart';
+import 'package:titan/shotgun/class/session.dart';
 import 'package:titan/shotgun/class/shotgun.dart';
 import 'package:titan/shotgun/tools/functions.dart';
 import 'package:titan/tools/repository/repository.dart';
@@ -26,6 +28,12 @@ class ShotgunRepository extends Repository {
     )).map((e) => Shotgun.fromJson(e)).toList();
   }
 
+  Future<List<Shotgun>> getShotgunListByStoreId(String id) async {
+    return (await getList(
+      suffix: 'admin/store/$id/events',
+    )).map((e) => Shotgun.fromJson(e)).toList();
+  }
+
   Future<Shotgun> createShotgun(Shotgun shotgun) async {
     return Shotgun.fromJson(
       await create(shotgun.toJson(), suffix: 'admin/events'),
@@ -42,7 +50,39 @@ class ShotgunRepository extends Repository {
   }
 
   Future<bool> editShotgun(Shotgun shotgun) async {
-    return await update(shotgun.toJson(), shotgun.id);
+    return await update(
+      shotgun.toJson(),
+      shotgun.id,
+      suffix: 'admin/events',
+    );
+  }
+
+  Future<bool> updateSession(String eventId, Session session) async {
+    return await update(
+      session.toJson(),
+      session.id,
+      suffix: 'admin/events/$eventId/sessions',
+    );
+  }
+
+  Future<bool> updateCategory(String eventId, Category category) async {
+    return await update(
+      category.toJson(),
+      category.id,
+      suffix: 'admin/events/$eventId/categories',
+    );
+  }
+
+  Future<bool> updateQuestion(
+    String eventId,
+    String questionId,
+    String questionText,
+  ) async {
+    return await update(
+      {'question': questionText},
+      questionId,
+      suffix: 'admin/events/$eventId/questions',
+    );
   }
 
   Future<bool> deleteShotgun(String id) async {

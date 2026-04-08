@@ -57,8 +57,58 @@ class _ShotgunContent extends HookConsumerWidget {
     final selectedCategory = useState<Category?>(null);
     final selectedSession = useState<Session?>(null);
     final selectedPaymentProvider = useState<String?>('helloasso');
-    final checkoutNotifier = ref.watch(checkoutProvider.notifier);
-    final checkout = useState<Checkout>(Checkout.empty());
+    final checkoutState = ref.watch(checkoutProvider);
+
+    // Debug prints
+    debugPrint('DEBUG: checkoutState.isCreating = ${checkoutState.isCreating}');
+    debugPrint('DEBUG: selectedCategory.value = ${selectedCategory.value}');
+    debugPrint('DEBUG: selectedCategory.value?.id = ${selectedCategory.value?.id}');
+    debugPrint('DEBUG: Button disabled = ${checkoutState.isCreating || selectedCategory.value == null}');
+
+    // Update checkout when category or session changes
+    final checkout = useState<Checkout>(
+      Checkout(
+        categoryId: selectedCategory.value?.id ?? '',
+        sessionId: selectedSession.value?.id ?? '',
+      ),
+    );
+
+    // Sync checkout with selection changes
+    useEffect(() {
+      checkout.value = Checkout(
+        categoryId: selectedCategory.value?.id ?? '',
+        sessionId: selectedSession.value?.id ?? '',
+      );
+      return null;
+    }, [selectedCategory.value, selectedSession.value]);
+
+    // Handle success/error states
+    useEffect(() {
+      if (checkoutState.isSuccess && checkoutState.checkout != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Réservation créée avec succès !'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          // Reset after showing success
+          ref.read(checkoutProvider.notifier).reset();
+        });
+      } else if (checkoutState.error != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Erreur: ${checkoutState.error}'),
+              backgroundColor: Colors.red,
+            ),
+          );
+          // Reset after showing error
+          ref.read(checkoutProvider.notifier).reset();
+        });
+      }
+      return null;
+    }, [checkoutState.isSuccess, checkoutState.error]);
 
     final validCategories = shotgun.categories
         .where((c) => c.name.trim().isNotEmpty)
@@ -66,6 +116,13 @@ class _ShotgunContent extends HookConsumerWidget {
     final validSessions = shotgun.sessions
         .where((s) => s.name.trim().isNotEmpty)
         .toList();
+
+    // Debug categories
+    debugPrint('DEBUG: shotgun.categories.length = ${shotgun.categories.length}');
+    debugPrint('DEBUG: validCategories.length = ${validCategories.length}');
+    for (final c in shotgun.categories) {
+      debugPrint('DEBUG: category id=${c.id} name="${c.name}" price=${c.price}');
+    }
 
     return Column(
       children: [
@@ -445,17 +502,19 @@ class _ShotgunContent extends HookConsumerWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () async {
-                      print("hello there");
-                      try {
-                        await checkoutNotifier.createCheckout(
-                          checkout.value,
-                          shotgun,
-                        );
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
+                    onPressed:
+                        checkoutState.isCreating ||
+                                selectedCategory.value == null
+                            ? null
+                            : () async {
+                              final notifier = ref.read(
+                                checkoutProvider.notifier,
+                              );
+                              await notifier.createCheckout(
+                                checkout.value,
+                                shotgun,
+                              );
+                            },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: ColorConstants.main,
                       foregroundColor: Colors.white,
@@ -467,13 +526,25 @@ class _ShotgunContent extends HookConsumerWidget {
                         alpha: 0.3,
                       ),
                     ),
-                    child: const Text(
-                      'Réserver',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    child:
+                        checkoutState.isCreating
+                            ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white,
+                                ),
+                              ),
+                            )
+                            : const Text(
+                              'Réserver',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                   ),
                 ),
                 const SizedBox(height: 50),

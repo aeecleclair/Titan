@@ -117,7 +117,10 @@ class SessionCard extends HookWidget {
               ),
             ),
             TextButton.icon(
-              onPressed: () => entries.value = [...entries.value, _newEntry()],
+              onPressed: () {
+                entries.value = [...entries.value, _newEntry()];
+                notify();
+              },
               icon: const HeroIcon(HeroIcons.plus, size: 18),
               label: const Text("Ajouter une session"),
               style: TextButton.styleFrom(foregroundColor: ColorConstants.main),

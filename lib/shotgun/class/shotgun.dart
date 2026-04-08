@@ -12,6 +12,7 @@ class Shotgun {
     required this.closeDatetime,
     required this.sessions,
     required this.categories,
+    required this.questions,
   });
   late final String id;
   late final String name;
@@ -21,6 +22,7 @@ class Shotgun {
   late final DateTime? closeDatetime;
   late final List<Session> sessions;
   late final List<Category> categories;
+  late final List<String> questions;
 
   Shotgun.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -43,6 +45,12 @@ class Shotgun {
             .whereType<Category>()
             .toList() ??
         [];
+    questions =
+        (json['questions'] as List<dynamic>?)
+            ?.map((e) => e.toString())
+            .whereType<String>()
+            .toList() ??
+        [];
   }
 
   Map<String, dynamic> toJson() {
@@ -57,6 +65,7 @@ class Shotgun {
         : null;
     data['sessions'] = sessions.map((e) => e.toJson()).toList();
     data['categories'] = categories.map((e) => e.toJson()).toList();
+    data['questions'] = questions;
     return data;
   }
 
@@ -79,6 +88,7 @@ class Shotgun {
       closeDatetime: closeDatetime ?? this.closeDatetime,
       sessions: sessions ?? this.sessions,
       categories: categories ?? this.categories,
+      questions: questions,
     );
   }
 
@@ -91,10 +101,11 @@ class Shotgun {
     closeDatetime = null;
     sessions = [];
     categories = [];
+    questions = [];
   }
 
   @override
   String toString() {
-    return 'Shotgun{id : $id, name: $name, storeId: $storeId, quota: $quota, openDatetime: $openDatetime, closeDatetime: $closeDatetime, sessions: $sessions, categories: $categories}';
+    return 'Shotgun{id : $id, name: $name, storeId: $storeId, quota: $quota, openDatetime: $openDatetime, closeDatetime: $closeDatetime, sessions: $sessions, categories: $categories, questions: $questions}';
   }
 }
