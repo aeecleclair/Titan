@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/advert/providers/selected_association_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/advert/router.dart';
@@ -24,6 +25,7 @@ class AdvertTemplate extends HookConsumerWidget {
                 root: AdvertRouter.root,
                 onBack: () {
                   selectedAssociationsNotifier.clearAssociation();
+                  QR.back();
                 },
               ),
               Expanded(child: child),
