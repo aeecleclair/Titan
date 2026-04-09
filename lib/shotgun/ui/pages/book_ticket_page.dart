@@ -424,7 +424,7 @@ class _ShotgunContent extends HookConsumerWidget {
                                               ),
                                         ),
                                       ),
-                                      if (session.quota > 0)
+                                      if (session.quota != null && session.quota! > 0)
                                         Text(
                                           '${session.quota} ${l10n.shotgunPlaces}',
                                           style: Theme.of(context)
