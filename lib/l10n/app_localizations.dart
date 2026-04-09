@@ -9127,6 +9127,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Voir les résultats'**
   String get shotgunViewResults;
+
+  /// No description provided for @shotgunMinPriceError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le prix minimum est 1€'**
+  String get shotgunMinPriceError;
 }
 
 class _AppLocalizationsDelegate

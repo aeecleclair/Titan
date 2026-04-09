@@ -4691,4 +4691,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shotgunViewResults => 'View results';
+
+  @override
+  String get shotgunMinPriceError => 'Minimum price is 1€';
 }

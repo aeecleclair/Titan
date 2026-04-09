@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/feed/providers/association_event_list_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/paiement/class/user_store.dart';
@@ -50,172 +51,181 @@ class CreateShotgunPage extends HookConsumerWidget {
 
     final locale = Localizations.localeOf(context);
 
-    return ShotgunTemplate(
-      child: Form(
-        key: formKey,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              SizedBox(
-                height: 50,
-                child: HorizontalMultiSelect<UserStore>(
-                  items: myStores.valueOrNull ?? [],
-                  selectedItem: selectedStore.value,
-                  onItemSelected: (store) {
-                    selectedStore.value = store;
-                    associationEventsListNotifier.loadAssociationEventList(
-                      store.id,
-                    );
-                  },
-                  itemBuilder: (context, store, index, selected) => Text(
-                    store.name,
-                    style: TextStyle(
-                      color: selected
-                          ? ColorConstants.background
-                          : ColorConstants.tertiary,
-                      fontSize: 16,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: ShotgunTemplate(
+        child: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 16),
+                SizedBox(
+                  height: 50,
+                  child: HorizontalMultiSelect<UserStore>(
+                    items: myStores.valueOrNull ?? [],
+                    selectedItem: selectedStore.value,
+                    onItemSelected: (store) {
+                      selectedStore.value = store;
+                      associationEventsListNotifier.loadAssociationEventList(
+                        store.id,
+                      );
+                    },
+                    itemBuilder: (context, store, index, selected) => Text(
+                      store.name,
+                      style: TextStyle(
+                        color: selected
+                            ? ColorConstants.background
+                            : ColorConstants.tertiary,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              TextEntry(
-                maxLines: 1,
-                label: l10n.shotgunTitleLabel,
-                controller: titleController,
-                onChanged: (_) {},
-              ),
-              const SizedBox(height: 16),
-              TextEntry(
-                maxLines: 1,
-                label: l10n.shotgunPlacesLabel,
-                controller: placesController,
-                onChanged: (_) {},
-              ),
-              const SizedBox(height: 24),
+                const SizedBox(height: 16),
+                TextEntry(
+                  maxLines: 1,
+                  label: l10n.shotgunTitleLabel,
+                  controller: titleController,
+                  onChanged: (_) {},
+                ),
+                const SizedBox(height: 16),
+                TextEntry(
+                  maxLines: 1,
+                  label: l10n.shotgunPlacesLabel,
+                  controller: placesController,
+                  onChanged: (_) {},
+                ),
+                const SizedBox(height: 24),
 
-              DateEntry(
-                label: l10n.shotgunStartDateLabel,
-                controller: startDateController,
-                onTap: () => getFullDate(context, startDateController),
-              ),
+                DateEntry(
+                  label: l10n.shotgunStartDateLabel,
+                  controller: startDateController,
+                  onTap: () => getFullDate(context, startDateController),
+                ),
 
-              DateEntry(
-                label: l10n.shotgunEndDateLabel,
-                controller: endDateController,
-                onTap: () => getFullDate(context, endDateController),
-              ),
+                DateEntry(
+                  label: l10n.shotgunEndDateLabel,
+                  controller: endDateController,
+                  onTap: () => getFullDate(context, endDateController),
+                ),
 
-              const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-              TarifCard(onChanged: (value) => categories.value = value),
-              const SizedBox(height: 16),
+                TarifCard(onChanged: (value) => categories.value = value),
+                const SizedBox(height: 16),
 
-              SessionCard(onChanged: (value) => sessions.value = value),
-              const SizedBox(height: 16),
-              _ExtraQuestionsSection(
-                questions: questions.value,
-                onChanged: (value) => questions.value = value,
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton(
-                  onPressed: () {
-                    // Validation des champs obligatoires
-                    if (titleController.text.trim().isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(l10n.shotgunTitleRequired),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                      return;
-                    }
+                SessionCard(onChanged: (value) => sessions.value = value),
+                const SizedBox(height: 16),
+                _ExtraQuestionsSection(
+                  questions: questions.value,
+                  onChanged: (value) => questions.value = value,
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: () async {
+                      // Validation des champs obligatoires
+                      if (titleController.text.trim().isEmpty) {
+                        displayToast(
+                          context,
+                          TypeMsg.error,
+                          l10n.shotgunTitleRequired,
+                        );
+                        return;
+                      }
 
-                    if (startDateController.text.trim().isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(l10n.shotgunStartDateRequired),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                      return;
-                    }
+                      if (startDateController.text.trim().isEmpty) {
+                        displayToast(
+                        context,
+                          TypeMsg.error,
+                          l10n.shotgunStartDateRequired,
+                        );
+                        return;
+                      }
 
-                    try {
-                      final openDatetime = DateTime.parse(
-                        processDateBackWithHourMaybe(
-                          startDateController.text,
-                          locale.toString(),
-                        ),
-                      );
-
-                      // Date de fin optionnelle
-                      DateTime? closeDatetime;
-                      if (endDateController.text.trim().isNotEmpty) {
-                        closeDatetime = DateTime.parse(
+                      try {
+                        final openDatetime = DateTime.parse(
                           processDateBackWithHourMaybe(
-                            endDateController.text,
+                            startDateController.text,
                             locale.toString(),
                           ),
                         );
-                      }
 
-                      // Nombre de places optionnel (0 par défaut)
-                      int quota = 0;
-                      if (placesController.text.trim().isNotEmpty) {
-                        quota = int.parse(placesController.text);
-                      }
+                        // Date de fin optionnelle
+                        DateTime? closeDatetime;
+                        if (endDateController.text.trim().isNotEmpty) {
+                          closeDatetime = DateTime.parse(
+                            processDateBackWithHourMaybe(
+                              endDateController.text,
+                              locale.toString(),
+                            ),
+                          );
+                        }
 
-                      shotgunListNotifier.createShotgun(
-                        Shotgun(
-                          id: '',
-                          name: titleController.text.trim(),
-                          storeId: selectedStore.value?.id ?? '',
-                          quota: quota,
-                          openDatetime: openDatetime,
-                          closeDatetime: closeDatetime,
-                          categories: categories.value,
-                          sessions: sessions.value,
-                          questions: questions.value
-                              .where((controller) => controller.text.trim().isNotEmpty)
-                              .map(
-                                (controller) => Question(
-                                  id: '',
-                                  eventId: '',
-                                  question: controller.text.trim(),
-                                  answerType: AnswerType.text,
-                                  price: null,
-                                  required: false,
-                                  disabled: false,
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      );
-                    } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("${l10n.othersError}: ${e.toString()}"),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    }
-                  },
-                  style: FilledButton.styleFrom(
-                    backgroundColor: ColorConstants.main,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                        // Nombre de places optionnel (null si vide)
+                        int? quota;
+                        if (placesController.text.trim().isNotEmpty) {
+                          quota = int.parse(placesController.text);
+                        }
+
+                        final success = await shotgunListNotifier.createShotgun(
+                          Shotgun(
+                            id: '',
+                            name: titleController.text.trim(),
+                            storeId: selectedStore.value?.id ?? '',
+                            quota: quota,
+                            openDatetime: openDatetime,
+                            closeDatetime: closeDatetime,
+                            categories: categories.value,
+                            sessions: sessions.value,
+                            questions: questions.value
+                                .where((controller) => controller.text.trim().isNotEmpty)
+                                .map(
+                                  (controller) => Question(
+                                    id: '',
+                                    eventId: '',
+                                    question: controller.text.trim(),
+                                    answerType: AnswerType.text,
+                                    price: null,
+                                    required: false,
+                                    disabled: false,
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        );
+
+                        if (success && context.mounted) {
+                          displayToast(
+                            context,
+                            TypeMsg.msg,
+                            l10n.shotgunReservationSuccess,
+                          );
+                          QR.back();
+                        }
+                      } catch (e) {
+                        displayToast(
+                          context,
+                          TypeMsg.error,
+                          "${l10n.othersError}: ${e.toString()}",
+                        );
+                      }
+                    },
+                    style: FilledButton.styleFrom(
+                      backgroundColor: ColorConstants.main,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                    ),
+                    child: Text(l10n.shotgunSave),
                   ),
-                  child: Text(l10n.shotgunSave),
                 ),
-              ),
-              const SizedBox(height: 80),
-            ],
+                const SizedBox(height: 80),
+              ],
+            ),
           ),
         ),
       ),

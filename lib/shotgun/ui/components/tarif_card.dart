@@ -72,7 +72,17 @@ class TarifCard extends HookWidget {
                       child: TextEntry(
                         label: l10n.shotgunPriceLabel,
                         controller: entries.value[i]['value']!,
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        isDouble: true,
                         onChanged: (_) => notify(),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) return null;
+                          final price = double.tryParse(value.replaceAll(',', '.'));
+                          if (price == null || price < 1) {
+                            return l10n.shotgunMinPriceError;
+                          }
+                          return null;
+                        },
                       ),
                     ),
                     if (entries.value.length > 1)

@@ -28,7 +28,7 @@ class SessionCard extends HookWidget {
               name: e['label']!.text,
               startDatetime:
                   DateTime.tryParse(e['date']!.text) ?? DateTime.now(),
-              quota: int.tryParse(e['quota']!.text) ?? 0,
+              quota: int.tryParse(e['quota']!.text),
             ),
           )
           .toList(),
@@ -91,6 +91,8 @@ class SessionCard extends HookWidget {
                                 child: TextEntry(
                                   label: l10n.shotgunQuotaLabel,
                                   controller: entries.value[i]['quota']!,
+                                  keyboardType: TextInputType.number,
+                                  isInt: true,
                                   onChanged: (_) => notify(),
                                 ),
                               ),
