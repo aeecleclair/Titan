@@ -5,18 +5,18 @@ class Session {
     required this.id,
     required this.name,
     required this.startDatetime,
-    required this.quota,
+    this.quota,
   });
   late final String id;
   late final String name;
   late final DateTime startDatetime;
-  late final int quota;
+  late final int? quota;
 
   Session.fromJson(Map<String, dynamic> json) {
     id = json['id']?.toString() ?? '';
     name = json['name']?.toString() ?? '';
     startDatetime = processDateFromAPI(json['start_datetime'] ?? '');
-    quota = json['quota'] ?? 0;
+    quota = json['quota'];
   }
 
   Map<String, dynamic> toJson() {
@@ -46,7 +46,7 @@ class Session {
     id = '';
     name = '';
     startDatetime = DateTime.now();
-    quota = 0;
+    quota = null;
   }
 
   @override
