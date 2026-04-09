@@ -4668,6 +4668,21 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shotgunDeleteQuestionTooltip => 'Supprimer la question';
 
   @override
+  String get shotgunQuestionTypeLabel => 'Type de réponse';
+
+  @override
+  String get shotgunAnswerTypeText => 'Texte';
+
+  @override
+  String get shotgunAnswerTypeNumber => 'Nombre';
+
+  @override
+  String get shotgunAnswerTypeBoolean => 'Oui/Non';
+
+  @override
+  String get shotgunQuestionRequiredLabel => 'Obligatoire';
+
+  @override
   String get shotgunEditTitle => 'Modifier le shotgun';
 
   @override

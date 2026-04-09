@@ -8954,6 +8954,36 @@ abstract class AppLocalizations {
   /// **'Supprimer la question'**
   String get shotgunDeleteQuestionTooltip;
 
+  /// No description provided for @shotgunQuestionTypeLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type de réponse'**
+  String get shotgunQuestionTypeLabel;
+
+  /// No description provided for @shotgunAnswerTypeText.
+  ///
+  /// In fr, this message translates to:
+  /// **'Texte'**
+  String get shotgunAnswerTypeText;
+
+  /// No description provided for @shotgunAnswerTypeNumber.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nombre'**
+  String get shotgunAnswerTypeNumber;
+
+  /// No description provided for @shotgunAnswerTypeBoolean.
+  ///
+  /// In fr, this message translates to:
+  /// **'Oui/Non'**
+  String get shotgunAnswerTypeBoolean;
+
+  /// No description provided for @shotgunQuestionRequiredLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Obligatoire'**
+  String get shotgunQuestionRequiredLabel;
+
   /// No description provided for @shotgunEditTitle.
   ///
   /// In fr, this message translates to:

@@ -8,21 +8,21 @@ extension AnswerTypeExtension on AnswerType {
   String get value {
     switch (this) {
       case AnswerType.text:
-        return 'TEXT';
+        return 'text';
       case AnswerType.number:
-        return 'NUMBER';
+        return 'number';
       case AnswerType.boolean:
-        return 'BOOLEAN';
+        return 'boolean';
     }
   }
 
   static AnswerType fromString(String value) {
-    switch (value) {
-      case 'TEXT':
+    switch (value.toLowerCase()) {
+      case 'text':
         return AnswerType.text;
-      case 'NUMBER':
+      case 'number':
         return AnswerType.number;
-      case 'BOOLEAN':
+      case 'boolean':
         return AnswerType.boolean;
       default:
         throw ArgumentError('Unknown AnswerType: $value');

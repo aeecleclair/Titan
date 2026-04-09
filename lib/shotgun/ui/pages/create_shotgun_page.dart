@@ -47,7 +47,7 @@ class CreateShotgunPage extends HookConsumerWidget {
     );
     final categories = useState<List<Category>>([]);
     final sessions = useState<List<Session>>([]);
-    final questions = useState<List<TextEditingController>>([]);
+    final questions = useState<List<_QuestionFormData>>([]);
 
     final locale = Localizations.localeOf(context);
 
@@ -183,15 +183,15 @@ class CreateShotgunPage extends HookConsumerWidget {
                             categories: categories.value,
                             sessions: sessions.value,
                             questions: questions.value
-                                .where((controller) => controller.text.trim().isNotEmpty)
+                                .where((q) => q.controller.text.trim().isNotEmpty)
                                 .map(
-                                  (controller) => Question(
+                                  (q) => Question(
                                     id: '',
                                     eventId: '',
-                                    question: controller.text.trim(),
-                                    answerType: AnswerType.text,
+                                    question: q.controller.text.trim(),
+                                    answerType: q.answerType,
                                     price: null,
-                                    required: false,
+                                    required: q.required,
                                     disabled: false,
                                   ),
                                 )
@@ -233,11 +233,25 @@ class CreateShotgunPage extends HookConsumerWidget {
   }
 }
 
-// ── Extra questions (free-text only) ─────────────────────────────────────────
+// ── Helper class for question form data ──────────────────────────────────────
+
+class _QuestionFormData {
+  final TextEditingController controller;
+  AnswerType answerType;
+  bool required;
+
+  _QuestionFormData({
+    required this.controller,
+    this.answerType = AnswerType.text,
+    this.required = false,
+  });
+}
+
+// ── Extra questions section with type and required options ───────────────────
 
 class _ExtraQuestionsSection extends StatelessWidget {
-  final List<TextEditingController> questions;
-  final ValueChanged<List<TextEditingController>> onChanged;
+  final List<_QuestionFormData> questions;
+  final ValueChanged<List<_QuestionFormData>> onChanged;
 
   const _ExtraQuestionsSection({
     required this.questions,
@@ -245,12 +259,18 @@ class _ExtraQuestionsSection extends StatelessWidget {
   });
 
   void addQuestion() {
-    onChanged([...questions, TextEditingController()]);
+    onChanged([...questions, _QuestionFormData(controller: TextEditingController())]);
   }
 
   void removeQuestion(int index) {
     final updated = [...questions]..removeAt(index);
     onChanged(updated);
+  }
+
+  void updateQuestion(int index, _QuestionFormData updated) {
+    final updatedList = [...questions];
+    updatedList[index] = updated;
+    onChanged(updatedList);
   }
 
   @override
@@ -260,29 +280,108 @@ class _ExtraQuestionsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ...List.generate(questions.length, (i) {
+          final question = questions[i];
           return Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: TextEntry(
-                    maxLines: 1,
-                    label: l10n.shotgunQuestionLabel(i + 1),
-                    controller: questions[i],
-                    onChanged: (_) {},
-                  ),
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Card(
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(color: ColorConstants.secondary.withOpacity(0.3)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: TextEntry(
+                            maxLines: 1,
+                            label: l10n.shotgunQuestionLabel(i + 1),
+                            controller: question.controller,
+                            onChanged: (_) {},
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () => removeQuestion(i),
+                          icon: HeroIcon(
+                            HeroIcons.minusCircle,
+                            size: 22,
+                            color: ColorConstants.error,
+                          ),
+                          tooltip: l10n.shotgunDeleteQuestionTooltip,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DropdownButtonFormField<AnswerType>(
+                            value: question.answerType,
+                            decoration: InputDecoration(
+                              labelText: l10n.shotgunQuestionTypeLabel,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            ),
+                            items: [
+                              DropdownMenuItem(
+                                value: AnswerType.text,
+                                child: Text(l10n.shotgunAnswerTypeText),
+                              ),
+                              DropdownMenuItem(
+                                value: AnswerType.number,
+                                child: Text(l10n.shotgunAnswerTypeNumber),
+                              ),
+                              DropdownMenuItem(
+                                value: AnswerType.boolean,
+                                child: Text(l10n.shotgunAnswerTypeBoolean),
+                              ),
+                            ],
+                            onChanged: (value) {
+                              if (value != null) {
+                                updateQuestion(
+                                  i,
+                                  _QuestionFormData(
+                                    controller: question.controller,
+                                    answerType: value,
+                                    required: question.required,
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: question.required,
+                              onChanged: (value) {
+                                updateQuestion(
+                                  i,
+                                  _QuestionFormData(
+                                    controller: question.controller,
+                                    answerType: question.answerType,
+                                    required: value ?? false,
+                                  ),
+                                );
+                              },
+                              activeColor: ColorConstants.main,
+                            ),
+                            Text(l10n.shotgunQuestionRequiredLabel),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                IconButton(
-                  onPressed: () => removeQuestion(i),
-                  icon: HeroIcon(
-                    HeroIcons.minusCircle,
-                    size: 22,
-                    color: ColorConstants.error,
-                  ),
-                  tooltip: l10n.shotgunDeleteQuestionTooltip,
-                ),
-              ],
+              ),
             ),
           );
         }),

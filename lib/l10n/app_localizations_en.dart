@@ -4602,6 +4602,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shotgunDeleteQuestionTooltip => 'Delete question';
 
   @override
+  String get shotgunQuestionTypeLabel => 'Answer type';
+
+  @override
+  String get shotgunAnswerTypeText => 'Text';
+
+  @override
+  String get shotgunAnswerTypeNumber => 'Number';
+
+  @override
+  String get shotgunAnswerTypeBoolean => 'Yes/No';
+
+  @override
+  String get shotgunQuestionRequiredLabel => 'Required';
+
+  @override
   String get shotgunEditTitle => 'Edit shotgun';
 
   @override

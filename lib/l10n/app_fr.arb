@@ -1825,6 +1825,11 @@
     }
   },
   "shotgunDeleteQuestionTooltip": "Supprimer la question",
+  "shotgunQuestionTypeLabel": "Type de réponse",
+  "shotgunAnswerTypeText": "Texte",
+  "shotgunAnswerTypeNumber": "Nombre",
+  "shotgunAnswerTypeBoolean": "Oui/Non",
+  "shotgunQuestionRequiredLabel": "Obligatoire",
   "shotgunEditTitle": "Modifier le shotgun",
   "shotgunTariffs": "Tarifs",
   "shotgunPriceLabel": "Prix (€)",

@@ -9,11 +9,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/providers/navbar_module_list.dart';
+import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 import 'package:titan/paiement/providers/my_wallet_provider.dart';
 import 'package:titan/paiement/router.dart';
+import 'package:titan/shotgun/class/answer.dart';
+import 'package:titan/shotgun/class/answer_type.dart';
 import 'package:titan/shotgun/class/category.dart';
 import 'package:titan/shotgun/class/checkout.dart';
 import 'package:titan/shotgun/class/my_payment_call_type.dart';
+import 'package:titan/shotgun/class/question.dart';
 import 'package:titan/shotgun/class/session.dart';
 import 'package:titan/shotgun/class/shotgun.dart';
 import 'package:titan/shotgun/providers/checkout_provider.dart';
@@ -70,6 +74,7 @@ class _ShotgunContent extends HookConsumerWidget {
     final selectedCategory = useState<Category?>(null);
     final selectedSession = useState<Session?>(null);
     final selectedPaymentProvider = useState<String?>('helloasso');
+    final answersMap = useState<Map<String, dynamic>>({});
     final checkoutState = ref.watch(checkoutProvider);
     final walletAsync = ref.watch(myWalletProvider);
     final l10n = AppLocalizations.of(context)!;
@@ -77,6 +82,18 @@ class _ShotgunContent extends HookConsumerWidget {
     final navbarListModuleNotifier = ref.watch(
       navbarListModuleProvider.notifier,
     );
+
+    // Hide navbar when page loads
+    useEffect(() {
+      // Use a microtask to avoid modifying provider during build
+      Future.microtask(() {
+        ref.read(navbarVisibilityProvider.notifier).hide();
+      });
+      return () {
+        // Show navbar again when leaving the page
+        ref.read(navbarVisibilityProvider.notifier).show();
+      };
+    }, []);
 
     // Helper to get payment method from provider value
     MyPaymentCallType getPaymentMethod(String? provider) {
@@ -90,6 +107,32 @@ class _ShotgunContent extends HookConsumerWidget {
       return kIsWeb
           ? "${getTitanURL()}/shotgun"
           : "${getTitanURLScheme()}://shotgun";
+    }
+
+    // Helper to build answers list from answersMap
+    List<Answer> buildAnswersList() {
+      return shotgun.questions
+          .where((q) => answersMap.value.containsKey(q.id))
+          .map((q) => Answer(
+                questionId: q.id,
+                answerType: q.answerType,
+                answer: answersMap.value[q.id],
+              ))
+          .toList();
+    }
+
+    // Check if all required questions are answered
+    bool areAllRequiredQuestionsAnswered() {
+      final requiredQuestions = shotgun.questions.where((q) => q.required);
+      for (final question in requiredQuestions) {
+        final answer = answersMap.value[question.id];
+        if (answer == null ||
+            (answer is String && answer.trim().isEmpty) ||
+            answer == false) {
+          return false;
+        }
+      }
+      return true;
     }
 
     // Update checkout when category or session changes
@@ -109,7 +152,7 @@ class _ShotgunContent extends HookConsumerWidget {
         checkout.value = Checkout(
           categoryId: selectedCategory.value?.id ?? '',
           sessionId: selectedSession.value?.id ?? '',
-          answers: [],
+          answers: buildAnswersList(),
           myPaymentRequestMethod: getPaymentMethod(
             selectedPaymentProvider.value,
           ),
@@ -121,6 +164,7 @@ class _ShotgunContent extends HookConsumerWidget {
         selectedCategory.value,
         selectedSession.value,
         selectedPaymentProvider.value,
+        answersMap.value,
       ],
     );
 
@@ -247,262 +291,271 @@ class _ShotgunContent extends HookConsumerWidget {
       [validCategories, validSessions],
     );
 
-    return Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  l10n.shotgunBookTicket,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: ColorConstants.title,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Card(
-                  elevation: 0,
-                  color: ColorConstants.background2.withValues(alpha: 0.06),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    side: BorderSide(
-                      color: ColorConstants.mainBorder.withValues(alpha: 0.3),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            HeroIcon(
-                              HeroIcons.ticket,
-                              size: 20,
-                              color: ColorConstants.main,
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              shotgun.name,
-                              style: Theme.of(context).textTheme.titleMedium
-                                  ?.copyWith(color: ColorConstants.onTertiary),
-                            ),
-                          ],
-                        ),
-                        if (validCategories.isNotEmpty) ...[
-                          const SizedBox(height: 24),
-                          Text(
-                            l10n.shotgunCategoryLabel,
-                            style: Theme.of(context).textTheme.labelLarge
-                                ?.copyWith(color: ColorConstants.secondary),
-                          ),
-                          const SizedBox(height: 8),
-                          ...validCategories.map((category) {
-                            final isSelected =
-                                selectedCategory.value?.id == category.id;
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 8),
-                              child: InkWell(
-                                onTap: () => selectedCategory.value = category,
-                                borderRadius: BorderRadius.circular(8),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 12,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: isSelected
-                                        ? ColorConstants.main.withValues(
-                                            alpha: 0.1,
-                                          )
-                                        : ColorConstants.background2.withValues(
-                                            alpha: 0.05,
-                                          ),
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                      color: isSelected
-                                          ? ColorConstants.main
-                                          : ColorConstants.mainBorder
-                                                .withValues(alpha: 0.3),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        isSelected
-                                            ? Icons.radio_button_checked
-                                            : Icons.radio_button_unchecked,
-                                        size: 20,
-                                        color: isSelected
-                                            ? ColorConstants.main
-                                            : ColorConstants.tertiary,
-                                      ),
-                                      const SizedBox(width: 12),
-                                      Expanded(
-                                        child: Text(
-                                          category.name.trim(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium
-                                              ?.copyWith(
-                                                color:
-                                                    ColorConstants.onTertiary,
-                                                fontWeight: isSelected
-                                                    ? FontWeight.w600
-                                                    : FontWeight.normal,
-                                              ),
-                                        ),
-                                      ),
-                                      Text(
-                                        '${category.price}€',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                              color: ColorConstants.main,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
-                        ],
-                        if (validSessions.isNotEmpty) ...[
-                          const SizedBox(height: 24),
-                          Text(
-                            l10n.shotgunSessionLabel,
-                            style: Theme.of(context).textTheme.labelLarge
-                                ?.copyWith(color: ColorConstants.secondary),
-                          ),
-                          const SizedBox(height: 8),
-                          ...validSessions.map((session) {
-                            final isSelected =
-                                selectedSession.value?.id == session.id;
-                            final sessionTime = timeFormat.format(
-                              session.startDatetime,
-                            );
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 8),
-                              child: InkWell(
-                                onTap: () => selectedSession.value = session,
-                                borderRadius: BorderRadius.circular(8),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 12,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: isSelected
-                                        ? ColorConstants.main.withValues(
-                                            alpha: 0.1,
-                                          )
-                                        : ColorConstants.background2.withValues(
-                                            alpha: 0.05,
-                                          ),
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                      color: isSelected
-                                          ? ColorConstants.main
-                                          : ColorConstants.mainBorder
-                                                .withValues(alpha: 0.3),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        isSelected
-                                            ? Icons.radio_button_checked
-                                            : Icons.radio_button_unchecked,
-                                        size: 20,
-                                        color: isSelected
-                                            ? ColorConstants.main
-                                            : ColorConstants.tertiary,
-                                      ),
-                                      const SizedBox(width: 12),
-                                      Expanded(
-                                        child: Text(
-                                          '${session.name.trim()} - $sessionTime',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium
-                                              ?.copyWith(
-                                                color:
-                                                    ColorConstants.onTertiary,
-                                                fontWeight: isSelected
-                                                    ? FontWeight.w600
-                                                    : FontWeight.normal,
-                                              ),
-                                        ),
-                                      ),
-                                      if (session.quota != null && session.quota! > 0)
-                                        Text(
-                                          '${session.quota} ${l10n.shotgunPlaces}',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall
-                                              ?.copyWith(
-                                                color: ColorConstants.tertiary,
-                                              ),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
-                        ],
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            color: ColorConstants.background,
-            border: Border(
-              top: BorderSide(
-                color: ColorConstants.mainBorder.withValues(alpha: 0.3),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n.shotgunBookTicket,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: ColorConstants.title,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-          child: SafeArea(
-            top: false,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (selectedCategory.value != null) ...[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        l10n.shotgunTotal,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: ColorConstants.onTertiary,
-                        ),
-                      ),
-                      Text(
-                        '${selectedCategory.value!.price}€',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            const SizedBox(height: 16),
+            Card(
+              elevation: 0,
+              color: ColorConstants.background2.withValues(alpha: 0.06),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(
+                  color: ColorConstants.mainBorder.withValues(alpha: 0.3),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        HeroIcon(
+                          HeroIcons.ticket,
+                          size: 20,
                           color: ColorConstants.main,
-                          fontWeight: FontWeight.bold,
                         ),
+                        const SizedBox(width: 8),
+                        Text(
+                          shotgun.name,
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(color: ColorConstants.onTertiary),
+                        ),
+                      ],
+                    ),
+                    if (validCategories.isNotEmpty) ...[
+                      const SizedBox(height: 24),
+                      Text(
+                        l10n.shotgunCategoryLabel,
+                        style: Theme.of(context).textTheme.labelLarge
+                            ?.copyWith(color: ColorConstants.secondary),
                       ),
+                      const SizedBox(height: 8),
+                      ...validCategories.map((category) {
+                        final isSelected =
+                            selectedCategory.value?.id == category.id;
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: InkWell(
+                            onTap: () => selectedCategory.value = category,
+                            borderRadius: BorderRadius.circular(8),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? ColorConstants.main.withValues(
+                                        alpha: 0.1,
+                                      )
+                                    : ColorConstants.background2.withValues(
+                                        alpha: 0.05,
+                                      ),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: isSelected
+                                      ? ColorConstants.main
+                                      : ColorConstants.mainBorder
+                                            .withValues(alpha: 0.3),
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    isSelected
+                                        ? Icons.radio_button_checked
+                                        : Icons.radio_button_unchecked,
+                                    size: 20,
+                                    color: isSelected
+                                        ? ColorConstants.main
+                                        : ColorConstants.tertiary,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Text(
+                                      category.name.trim(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            color:
+                                                ColorConstants.onTertiary,
+                                            fontWeight: isSelected
+                                                ? FontWeight.w600
+                                                : FontWeight.normal,
+                                          ),
+                                    ),
+                                  ),
+                                  Text(
+                                    '${category.price}€',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                          color: ColorConstants.main,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
                     ],
+                    if (validSessions.isNotEmpty) ...[
+                      const SizedBox(height: 24),
+                      Text(
+                        l10n.shotgunSessionLabel,
+                        style: Theme.of(context).textTheme.labelLarge
+                            ?.copyWith(color: ColorConstants.secondary),
+                      ),
+                      const SizedBox(height: 8),
+                      ...validSessions.map((session) {
+                        final isSelected =
+                            selectedSession.value?.id == session.id;
+                        final sessionTime = timeFormat.format(
+                          session.startDatetime,
+                        );
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: InkWell(
+                            onTap: () => selectedSession.value = session,
+                            borderRadius: BorderRadius.circular(8),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? ColorConstants.main.withValues(
+                                        alpha: 0.1,
+                                      )
+                                    : ColorConstants.background2.withValues(
+                                        alpha: 0.05,
+                                      ),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: isSelected
+                                      ? ColorConstants.main
+                                      : ColorConstants.mainBorder
+                                            .withValues(alpha: 0.3),
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    isSelected
+                                        ? Icons.radio_button_checked
+                                        : Icons.radio_button_unchecked,
+                                    size: 20,
+                                    color: isSelected
+                                        ? ColorConstants.main
+                                        : ColorConstants.tertiary,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Text(
+                                      '${session.name.trim()} - $sessionTime',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            color:
+                                                ColorConstants.onTertiary,
+                                            fontWeight: isSelected
+                                                ? FontWeight.w600
+                                                : FontWeight.normal,
+                                          ),
+                                    ),
+                                  ),
+                                  if (session.quota != null && session.quota! > 0)
+                                    Text(
+                                      '${session.quota} ${l10n.shotgunPlaces}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            color: ColorConstants.tertiary,
+                                          ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    ],
+                    // Questions section
+                    if (shotgun.questions.where((q) => !q.disabled).isNotEmpty) ...[
+                      const SizedBox(height: 24),
+                      Text(
+                        l10n.shotgunQuestions,
+                        style: Theme.of(context).textTheme.labelLarge
+                            ?.copyWith(color: ColorConstants.secondary),
+                      ),
+                      const SizedBox(height: 8),
+                      ...shotgun.questions
+                          .where((q) => !q.disabled)
+                          .map((question) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: _QuestionAnswerField(
+                            question: question,
+                            value: answersMap.value[question.id],
+                            onChanged: (value) {
+                              answersMap.value = {
+                                ...answersMap.value,
+                                question.id: value,
+                              };
+                            },
+                          ),
+                        );
+                      }),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            // Payment section - now scrollable
+            if (selectedCategory.value != null) ...[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    l10n.shotgunTotal,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: ColorConstants.onTertiary,
+                    ),
                   ),
-                  const SizedBox(height: 16),
+                  Text(
+                    '${selectedCategory.value!.price}€',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: ColorConstants.main,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
-                Text(
-                  l10n.shotgunPaymentMethod,
+              ),
+              const SizedBox(height: 16),
+            ],
+            Text(
+              l10n.shotgunPaymentMethod,
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                     color: ColorConstants.secondary,
                   ),
@@ -775,9 +828,12 @@ class _ShotgunContent extends HookConsumerWidget {
                         checkoutState.isCreating ||
                             selectedCategory.value == null ||
                             (validSessions.isNotEmpty &&
-                                selectedSession.value == null)
+                                selectedSession.value == null) ||
+                            !areAllRequiredQuestionsAnswered()
                         ? null
                         : () async {
+                            // Show navbar before navigating to payment
+                            ref.read(navbarVisibilityProvider.notifier).show();
                             final notifier = ref.read(
                               checkoutProvider.notifier,
                             );
@@ -817,12 +873,210 @@ class _ShotgunContent extends HookConsumerWidget {
                           ),
                   ),
                 ),
-                const SizedBox(height: 50),
-              ],
+            const SizedBox(height: 24),
+            // Bottom safe area padding
+            SafeArea(
+              top: false,
+              child: const SizedBox(),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Widget for displaying a question and its answer input field
+class _QuestionAnswerField extends StatelessWidget {
+  final Question question;
+  final dynamic value;
+  final ValueChanged<dynamic> onChanged;
+
+  const _QuestionAnswerField({
+    required this.question,
+    required this.value,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final isRequired = question.required;
+    final hasError = isRequired &&
+        (value == null || (value is String && value.trim().isEmpty));
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '${question.question}${isRequired ? ' *' : ''}',
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: hasError ? ColorConstants.error : ColorConstants.onTertiary,
+            fontWeight: isRequired ? FontWeight.w500 : FontWeight.normal,
           ),
         ),
+        const SizedBox(height: 8),
+        _buildAnswerInput(context, l10n),
       ],
     );
+  }
+
+  Widget _buildAnswerInput(BuildContext context, AppLocalizations l10n) {
+    switch (question.answerType) {
+      case AnswerType.boolean:
+        return Row(
+          children: [
+            Expanded(
+              child: InkWell(
+                onTap: () => onChanged(true),
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: value == true
+                        ? ColorConstants.main.withValues(alpha: 0.1)
+                        : ColorConstants.background2.withValues(alpha: 0.05),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: value == true
+                          ? ColorConstants.main
+                          : ColorConstants.mainBorder.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        value == true
+                            ? Icons.radio_button_checked
+                            : Icons.radio_button_unchecked,
+                        size: 20,
+                        color: value == true
+                            ? ColorConstants.main
+                            : ColorConstants.tertiary,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        l10n.shotgunAnswerTypeBoolean.split('/').first.trim(),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: value == true
+                              ? ColorConstants.main
+                              : ColorConstants.onTertiary,
+                          fontWeight: value == true
+                              ? FontWeight.w600
+                              : FontWeight.normal,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: InkWell(
+                onTap: () => onChanged(false),
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: value == false
+                        ? ColorConstants.main.withValues(alpha: 0.1)
+                        : ColorConstants.background2.withValues(alpha: 0.05),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: value == false
+                          ? ColorConstants.main
+                          : ColorConstants.mainBorder.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        value == false
+                            ? Icons.radio_button_checked
+                            : Icons.radio_button_unchecked,
+                        size: 20,
+                        color: value == false
+                            ? ColorConstants.main
+                            : ColorConstants.tertiary,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        l10n.shotgunAnswerTypeBoolean.split('/').last.trim(),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: value == false
+                              ? ColorConstants.main
+                              : ColorConstants.onTertiary,
+                          fontWeight: value == false
+                              ? FontWeight.w600
+                              : FontWeight.normal,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+
+      case AnswerType.number:
+        return TextFormField(
+          initialValue: value?.toString() ?? '',
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            hintText: l10n.shotgunAnswerTypeNumber,
+            filled: true,
+            fillColor: ColorConstants.background2.withValues(alpha: 0.05),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                color: ColorConstants.mainBorder.withValues(alpha: 0.3),
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                color: ColorConstants.mainBorder.withValues(alpha: 0.3),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: ColorConstants.main),
+            ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          ),
+          onChanged: (val) => onChanged(val.isEmpty ? null : num.tryParse(val)),
+        );
+
+      case AnswerType.text:
+        return TextFormField(
+          initialValue: value?.toString() ?? '',
+          maxLines: 2,
+          decoration: InputDecoration(
+            hintText: l10n.shotgunAnswerTypeText,
+            filled: true,
+            fillColor: ColorConstants.background2.withValues(alpha: 0.05),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                color: ColorConstants.mainBorder.withValues(alpha: 0.3),
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                color: ColorConstants.mainBorder.withValues(alpha: 0.3),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: ColorConstants.main),
+            ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          ),
+          onChanged: onChanged,
+        );
+    }
   }
 }
