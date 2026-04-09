@@ -1,9 +1,13 @@
+import 'dart:typed_data';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/shotgun/class/category.dart';
 import 'package:titan/shotgun/class/checkout.dart';
 import 'package:titan/shotgun/class/session.dart';
 import 'package:titan/shotgun/class/shotgun.dart';
+import 'package:titan/shotgun/class/ticket.dart';
 import 'package:titan/shotgun/class/user_ticket.dart';
 import 'package:titan/shotgun/tools/functions.dart';
 import 'package:titan/tools/repository/repository.dart';
@@ -91,6 +95,27 @@ class ShotgunRepository extends Repository {
     return response.map((e) {
       return UserTicket.fromJson(e);
     }).toList();
+  }
+
+  Future<List<Ticket>> getTicketsByEventId(String eventId) async {
+    final List<dynamic> response = await getList(
+      suffix: 'admin/events/$eventId/tickets',
+    );
+    return response.map((e) {
+      return Ticket.fromJson(e);
+    }).toList();
+  }
+
+  Future<Uint8List> downloadTicketsCsv(String eventId) async {
+    final response = await http.get(
+      Uri.parse(Repository.host + ext + 'admin/events/$eventId/tickets/csv'),
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      return response.bodyBytes;
+    } else {
+      throw Exception('Failed to download CSV: ${response.statusCode}');
+    }
   }
 }
 

@@ -16,6 +16,8 @@ import 'package:titan/shotgun/ui/pages/manage_shotgun_page.dart'
     deferred as manage_shotgun_page;
 import 'package:titan/shotgun/ui/pages/edit_shotgun_page.dart'
     deferred as edit_shotgun_page;
+import 'package:titan/shotgun/ui/pages/ticket_results_page.dart'
+    deferred as ticket_results_page;
 
 class ShotgunRouter {
   final Ref ref;
@@ -25,6 +27,7 @@ class ShotgunRouter {
   static const String createQuotas = 'quotas';
   static const String manage = '/manage';
   static const String edit = '/edit';
+  static const String results = '/results';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.shotgunShotgun,
     getDescription: (context) =>
@@ -73,6 +76,14 @@ class ShotgunRouter {
         middleware: [
           AdminMiddleware(ref, isUserAMemberOfAnAssociationProvider),
           DeferredLoadingMiddleware(edit_shotgun_page.loadLibrary),
+        ],
+      ),
+      QRoute(
+        path: results,
+        builder: () => ticket_results_page.TicketResultsPage(),
+        middleware: [
+          AdminMiddleware(ref, isUserAMemberOfAnAssociationProvider),
+          DeferredLoadingMiddleware(ticket_results_page.loadLibrary),
         ],
       ),
     ],

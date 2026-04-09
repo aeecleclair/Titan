@@ -9,6 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/providers/navbar_module_list.dart';
+import 'package:titan/paiement/providers/my_wallet_provider.dart';
 import 'package:titan/paiement/router.dart';
 import 'package:titan/shotgun/class/category.dart';
 import 'package:titan/shotgun/class/checkout.dart';
@@ -70,6 +71,7 @@ class _ShotgunContent extends HookConsumerWidget {
     final selectedSession = useState<Session?>(null);
     final selectedPaymentProvider = useState<String?>('helloasso');
     final checkoutState = ref.watch(checkoutProvider);
+    final walletAsync = ref.watch(myWalletProvider);
     final l10n = AppLocalizations.of(context)!;
     final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     final navbarListModuleNotifier = ref.watch(
@@ -230,6 +232,20 @@ class _ShotgunContent extends HookConsumerWidget {
     final validSessions = shotgun.sessions
         .where((s) => s.name.trim().isNotEmpty)
         .toList();
+
+    // Auto-select category or session if there's only one
+    useEffect(
+      () {
+        if (validCategories.length == 1 && selectedCategory.value == null) {
+          selectedCategory.value = validCategories.first;
+        }
+        if (validSessions.length == 1 && selectedSession.value == null) {
+          selectedSession.value = validSessions.first;
+        }
+        return null;
+      },
+      [validCategories, validSessions],
+    );
 
     return Column(
       children: [
@@ -550,46 +566,88 @@ class _ShotgunContent extends HookConsumerWidget {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    Expanded(
-                      child: InkWell(
-                        onTap: () => selectedPaymentProvider.value = 'myempay',
-                        borderRadius: BorderRadius.circular(12),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          decoration: BoxDecoration(
-                            color: selectedPaymentProvider.value == 'myempay'
-                                ? ColorConstants.main.withValues(alpha: 0.1)
-                                : ColorConstants.background2.withValues(
-                                    alpha: 0.05,
-                                  ),
+                    walletAsync.when(
+                      data: (wallet) {
+                        final balanceInEuros = wallet.balance / 100;
+                        final categoryPrice =
+                            selectedCategory.value?.price ?? 0;
+                        final hasInsufficientBalance =
+                            balanceInEuros < categoryPrice;
+
+                        // Auto-switch to helloasso if myempay is selected but balance is insufficient
+                        if (hasInsufficientBalance &&
+                            selectedPaymentProvider.value == 'myempay') {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            selectedPaymentProvider.value = 'helloasso';
+                          });
+                        }
+
+                        return Expanded(
+                          child: InkWell(
+                            onTap:
+                                hasInsufficientBalance
+                                    ? null
+                                    : () => selectedPaymentProvider.value =
+                                        'myempay',
                             borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: selectedPaymentProvider.value == 'myempay'
-                                  ? ColorConstants.main
-                                  : ColorConstants.mainBorder.withValues(
-                                      alpha: 0.3,
-                                    ),
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(
-                                height: 28,
-                                child: Image.asset(
-                                  'assets/images/logo_prod.png',
-                                  fit: BoxFit.contain,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              decoration: BoxDecoration(
+                                color:
+                                    selectedPaymentProvider.value == 'myempay'
+                                        ? ColorConstants.main.withValues(
+                                          alpha: 0.1,
+                                        )
+                                        : hasInsufficientBalance
+                                        ? ColorConstants.background2.withValues(
+                                          alpha: 0.02,
+                                        )
+                                        : ColorConstants.background2.withValues(
+                                          alpha: 0.05,
+                                        ),
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color:
+                                      selectedPaymentProvider.value == 'myempay'
+                                          ? ColorConstants.main
+                                          : hasInsufficientBalance
+                                          ? ColorConstants.mainBorder.withValues(
+                                            alpha: 0.1,
+                                          )
+                                          : ColorConstants.mainBorder.withValues(
+                                            alpha: 0.3,
+                                          ),
                                 ),
                               ),
-                              const SizedBox(height: 6),
-                              Text(
-                                'myempay',
-                                style: Theme.of(context).textTheme.bodySmall
-                                    ?.copyWith(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(
+                                    height: 28,
+                                    child: Image.asset(
+                                      'assets/images/logo_prod.png',
+                                      fit: BoxFit.contain,
+                                      color:
+                                          hasInsufficientBalance
+                                              ? ColorConstants.tertiary
+                                                  .withValues(alpha: 0.5)
+                                              : null,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    'myempay',
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.bodySmall?.copyWith(
                                       color:
                                           selectedPaymentProvider.value ==
                                               'myempay'
                                           ? ColorConstants.main
+                                          : hasInsufficientBalance
+                                          ? ColorConstants.tertiary.withValues(
+                                            alpha: 0.5,
+                                          )
                                           : ColorConstants.tertiary,
                                       fontWeight:
                                           selectedPaymentProvider.value ==
@@ -597,11 +655,115 @@ class _ShotgunContent extends HookConsumerWidget {
                                           ? FontWeight.w600
                                           : FontWeight.normal,
                                     ),
+                                  ),
+                                  if (hasInsufficientBalance)
+                                    Text(
+                                      l10n.paiementInsufficientFunds,
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodySmall?.copyWith(
+                                        color: ColorConstants.error,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
+                      loading:
+                          () => Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              decoration: BoxDecoration(
+                                color: ColorConstants.background2.withValues(
+                                  alpha: 0.05,
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: ColorConstants.mainBorder.withValues(
+                                    alpha: 0.3,
+                                  ),
+                                ),
+                              ),
+                              child: const Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(
+                                    height: 28,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                      error:
+                          (_, __) => Expanded(
+                            child: InkWell(
+                              onTap:
+                                  () => selectedPaymentProvider.value =
+                                      'myempay',
+                              borderRadius: BorderRadius.circular(12),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 16,
+                                ),
+                                decoration: BoxDecoration(
+                                  color:
+                                      selectedPaymentProvider.value == 'myempay'
+                                          ? ColorConstants.main.withValues(
+                                            alpha: 0.1,
+                                          )
+                                          : ColorConstants.background2.withValues(
+                                            alpha: 0.05,
+                                          ),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color:
+                                        selectedPaymentProvider.value ==
+                                            'myempay'
+                                            ? ColorConstants.main
+                                            : ColorConstants.mainBorder.withValues(
+                                              alpha: 0.3,
+                                            ),
+                                  ),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                      height: 28,
+                                      child: Image.asset(
+                                        'assets/images/logo_prod.png',
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Text(
+                                      'myempay',
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodySmall?.copyWith(
+                                        color:
+                                            selectedPaymentProvider.value ==
+                                                'myempay'
+                                            ? ColorConstants.main
+                                            : ColorConstants.tertiary,
+                                        fontWeight:
+                                            selectedPaymentProvider.value ==
+                                                'myempay'
+                                            ? FontWeight.w600
+                                            : FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                     ),
                   ],
                 ),

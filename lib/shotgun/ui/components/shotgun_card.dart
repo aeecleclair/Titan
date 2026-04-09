@@ -31,8 +31,9 @@ class ShotgunCard extends ConsumerWidget {
               Button(
                 text: l10n.shotgunViewResults,
                 onPressed: () {
+                  ref.read(selectedShotgunProvider.notifier).state = shotgun;
+                  QR.to(ShotgunRouter.root + ShotgunRouter.results);
                   Navigator.of(context).pop();
-                  // TODO: Implémenter voir les résultats
                 },
               ),
               const SizedBox(height: 10),

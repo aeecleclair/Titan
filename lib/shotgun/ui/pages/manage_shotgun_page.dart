@@ -29,6 +29,16 @@ class ManageShotgunPage extends HookConsumerWidget {
           : null,
     );
 
+    // Sélectionner automatiquement le premier store quand la liste charge
+    useEffect(() {
+      if (selectedStore.value == null &&
+          myStores.hasValue &&
+          (myStores.valueOrNull?.isNotEmpty ?? false)) {
+        selectedStore.value = myStores.valueOrNull?.first;
+      }
+      return null;
+    }, [myStores]);
+
     // Charger les shotguns du store sélectionné au démarrage
     useEffect(() {
       if (selectedStore.value != null) {
