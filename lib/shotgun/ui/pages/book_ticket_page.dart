@@ -113,11 +113,13 @@ class _ShotgunContent extends HookConsumerWidget {
     List<Answer> buildAnswersList() {
       return shotgun.questions
           .where((q) => answersMap.value.containsKey(q.id))
-          .map((q) => Answer(
-                questionId: q.id,
-                answerType: q.answerType,
-                answer: answersMap.value[q.id],
-              ))
+          .map(
+            (q) => Answer(
+              questionId: q.id,
+              answerType: q.answerType,
+              answer: answersMap.value[q.id],
+            ),
+          )
           .toList();
     }
 
@@ -278,18 +280,15 @@ class _ShotgunContent extends HookConsumerWidget {
         .toList();
 
     // Auto-select category or session if there's only one
-    useEffect(
-      () {
-        if (validCategories.length == 1 && selectedCategory.value == null) {
-          selectedCategory.value = validCategories.first;
-        }
-        if (validSessions.length == 1 && selectedSession.value == null) {
-          selectedSession.value = validSessions.first;
-        }
-        return null;
-      },
-      [validCategories, validSessions],
-    );
+    useEffect(() {
+      if (validCategories.length == 1 && selectedCategory.value == null) {
+        selectedCategory.value = validCategories.first;
+      }
+      if (validSessions.length == 1 && selectedSession.value == null) {
+        selectedSession.value = validSessions.first;
+      }
+      return null;
+    }, [validCategories, validSessions]);
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -339,8 +338,9 @@ class _ShotgunContent extends HookConsumerWidget {
                       const SizedBox(height: 24),
                       Text(
                         l10n.shotgunCategoryLabel,
-                        style: Theme.of(context).textTheme.labelLarge
-                            ?.copyWith(color: ColorConstants.secondary),
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: ColorConstants.secondary,
+                        ),
                       ),
                       const SizedBox(height: 8),
                       ...validCategories.map((category) {
@@ -358,9 +358,7 @@ class _ShotgunContent extends HookConsumerWidget {
                               ),
                               decoration: BoxDecoration(
                                 color: isSelected
-                                    ? ColorConstants.main.withValues(
-                                        alpha: 0.1,
-                                      )
+                                    ? ColorConstants.main.withValues(alpha: 0.1)
                                     : ColorConstants.background2.withValues(
                                         alpha: 0.05,
                                       ),
@@ -368,8 +366,9 @@ class _ShotgunContent extends HookConsumerWidget {
                                 border: Border.all(
                                   color: isSelected
                                       ? ColorConstants.main
-                                      : ColorConstants.mainBorder
-                                            .withValues(alpha: 0.3),
+                                      : ColorConstants.mainBorder.withValues(
+                                          alpha: 0.3,
+                                        ),
                                 ),
                               ),
                               child: Row(
@@ -391,8 +390,7 @@ class _ShotgunContent extends HookConsumerWidget {
                                           .textTheme
                                           .bodyMedium
                                           ?.copyWith(
-                                            color:
-                                                ColorConstants.onTertiary,
+                                            color: ColorConstants.onTertiary,
                                             fontWeight: isSelected
                                                 ? FontWeight.w600
                                                 : FontWeight.normal,
@@ -420,8 +418,9 @@ class _ShotgunContent extends HookConsumerWidget {
                       const SizedBox(height: 24),
                       Text(
                         l10n.shotgunSessionLabel,
-                        style: Theme.of(context).textTheme.labelLarge
-                            ?.copyWith(color: ColorConstants.secondary),
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: ColorConstants.secondary,
+                        ),
                       ),
                       const SizedBox(height: 8),
                       ...validSessions.map((session) {
@@ -442,9 +441,7 @@ class _ShotgunContent extends HookConsumerWidget {
                               ),
                               decoration: BoxDecoration(
                                 color: isSelected
-                                    ? ColorConstants.main.withValues(
-                                        alpha: 0.1,
-                                      )
+                                    ? ColorConstants.main.withValues(alpha: 0.1)
                                     : ColorConstants.background2.withValues(
                                         alpha: 0.05,
                                       ),
@@ -452,8 +449,9 @@ class _ShotgunContent extends HookConsumerWidget {
                                 border: Border.all(
                                   color: isSelected
                                       ? ColorConstants.main
-                                      : ColorConstants.mainBorder
-                                            .withValues(alpha: 0.3),
+                                      : ColorConstants.mainBorder.withValues(
+                                          alpha: 0.3,
+                                        ),
                                 ),
                               ),
                               child: Row(
@@ -475,15 +473,15 @@ class _ShotgunContent extends HookConsumerWidget {
                                           .textTheme
                                           .bodyMedium
                                           ?.copyWith(
-                                            color:
-                                                ColorConstants.onTertiary,
+                                            color: ColorConstants.onTertiary,
                                             fontWeight: isSelected
                                                 ? FontWeight.w600
                                                 : FontWeight.normal,
                                           ),
                                     ),
                                   ),
-                                  if (session.quota != null && session.quota! > 0)
+                                  if (session.quota != null &&
+                                      session.quota! > 0)
                                     Text(
                                       '${session.quota} ${l10n.shotgunPlaces}',
                                       style: Theme.of(context)
@@ -501,17 +499,20 @@ class _ShotgunContent extends HookConsumerWidget {
                       }),
                     ],
                     // Questions section
-                    if (shotgun.questions.where((q) => !q.disabled).isNotEmpty) ...[
+                    if (shotgun.questions
+                        .where((q) => !q.disabled)
+                        .isNotEmpty) ...[
                       const SizedBox(height: 24),
                       Text(
                         l10n.shotgunQuestions,
-                        style: Theme.of(context).textTheme.labelLarge
-                            ?.copyWith(color: ColorConstants.secondary),
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: ColorConstants.secondary,
+                        ),
                       ),
                       const SizedBox(height: 8),
-                      ...shotgun.questions
-                          .where((q) => !q.disabled)
-                          .map((question) {
+                      ...shotgun.questions.where((q) => !q.disabled).map((
+                        question,
+                      ) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 12),
                           child: _QuestionAnswerField(
@@ -556,31 +557,108 @@ class _ShotgunContent extends HookConsumerWidget {
             ],
             Text(
               l10n.shotgunPaymentMethod,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: ColorConstants.secondary,
+              style: Theme.of(
+                context,
+              ).textTheme.labelLarge?.copyWith(color: ColorConstants.secondary),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () => selectedPaymentProvider.value = 'helloasso',
+                    borderRadius: BorderRadius.circular(12),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      decoration: BoxDecoration(
+                        color: selectedPaymentProvider.value == 'helloasso'
+                            ? ColorConstants.main.withValues(alpha: 0.1)
+                            : ColorConstants.background2.withValues(
+                                alpha: 0.05,
+                              ),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: selectedPaymentProvider.value == 'helloasso'
+                              ? ColorConstants.main
+                              : ColorConstants.mainBorder.withValues(
+                                  alpha: 0.3,
+                                ),
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            height: 28,
+                            child: SvgPicture.asset(
+                              'assets/images/helloasso.svg',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            'HelloAsso',
+                            style: Theme.of(context).textTheme.bodySmall
+                                ?.copyWith(
+                                  color:
+                                      selectedPaymentProvider.value ==
+                                          'helloasso'
+                                      ? ColorConstants.main
+                                      : ColorConstants.tertiary,
+                                  fontWeight:
+                                      selectedPaymentProvider.value ==
+                                          'helloasso'
+                                      ? FontWeight.w600
+                                      : FontWeight.normal,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(
+                const SizedBox(width: 12),
+                walletAsync.when(
+                  data: (wallet) {
+                    final balanceInEuros = wallet.balance / 100;
+                    final categoryPrice = selectedCategory.value?.price ?? 0;
+                    final hasInsufficientBalance =
+                        balanceInEuros < categoryPrice;
+
+                    // Auto-switch to helloasso if myempay is selected but balance is insufficient
+                    if (hasInsufficientBalance &&
+                        selectedPaymentProvider.value == 'myempay') {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        selectedPaymentProvider.value = 'helloasso';
+                      });
+                    }
+
+                    return Expanded(
                       child: InkWell(
-                        onTap: () =>
-                            selectedPaymentProvider.value = 'helloasso',
+                        onTap: hasInsufficientBalance
+                            ? null
+                            : () => selectedPaymentProvider.value = 'myempay',
                         borderRadius: BorderRadius.circular(12),
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           decoration: BoxDecoration(
-                            color: selectedPaymentProvider.value == 'helloasso'
+                            color: selectedPaymentProvider.value == 'myempay'
                                 ? ColorConstants.main.withValues(alpha: 0.1)
+                                : hasInsufficientBalance
+                                ? ColorConstants.background2.withValues(
+                                    alpha: 0.02,
+                                  )
                                 : ColorConstants.background2.withValues(
                                     alpha: 0.05,
                                   ),
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color:
-                                  selectedPaymentProvider.value == 'helloasso'
+                              color: selectedPaymentProvider.value == 'myempay'
                                   ? ColorConstants.main
+                                  : hasInsufficientBalance
+                                  ? ColorConstants.mainBorder.withValues(
+                                      alpha: 0.1,
+                                    )
                                   : ColorConstants.mainBorder.withValues(
                                       alpha: 0.3,
                                     ),
@@ -591,116 +669,29 @@ class _ShotgunContent extends HookConsumerWidget {
                             children: [
                               SizedBox(
                                 height: 28,
-                                child: SvgPicture.asset(
-                                  'assets/images/helloasso.svg',
+                                child: Image.asset(
+                                  'assets/images/logo_prod.png',
                                   fit: BoxFit.contain,
+                                  color: hasInsufficientBalance
+                                      ? ColorConstants.tertiary.withValues(
+                                          alpha: 0.5,
+                                        )
+                                      : null,
                                 ),
                               ),
                               const SizedBox(height: 6),
                               Text(
-                                'HelloAsso',
+                                'myempay',
                                 style: Theme.of(context).textTheme.bodySmall
                                     ?.copyWith(
-                                      color:
-                                          selectedPaymentProvider.value ==
-                                              'helloasso'
-                                          ? ColorConstants.main
-                                          : ColorConstants.tertiary,
-                                      fontWeight:
-                                          selectedPaymentProvider.value ==
-                                              'helloasso'
-                                          ? FontWeight.w600
-                                          : FontWeight.normal,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    walletAsync.when(
-                      data: (wallet) {
-                        final balanceInEuros = wallet.balance / 100;
-                        final categoryPrice =
-                            selectedCategory.value?.price ?? 0;
-                        final hasInsufficientBalance =
-                            balanceInEuros < categoryPrice;
-
-                        // Auto-switch to helloasso if myempay is selected but balance is insufficient
-                        if (hasInsufficientBalance &&
-                            selectedPaymentProvider.value == 'myempay') {
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            selectedPaymentProvider.value = 'helloasso';
-                          });
-                        }
-
-                        return Expanded(
-                          child: InkWell(
-                            onTap:
-                                hasInsufficientBalance
-                                    ? null
-                                    : () => selectedPaymentProvider.value =
-                                        'myempay',
-                            borderRadius: BorderRadius.circular(12),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              decoration: BoxDecoration(
-                                color:
-                                    selectedPaymentProvider.value == 'myempay'
-                                        ? ColorConstants.main.withValues(
-                                          alpha: 0.1,
-                                        )
-                                        : hasInsufficientBalance
-                                        ? ColorConstants.background2.withValues(
-                                          alpha: 0.02,
-                                        )
-                                        : ColorConstants.background2.withValues(
-                                          alpha: 0.05,
-                                        ),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color:
-                                      selectedPaymentProvider.value == 'myempay'
-                                          ? ColorConstants.main
-                                          : hasInsufficientBalance
-                                          ? ColorConstants.mainBorder.withValues(
-                                            alpha: 0.1,
-                                          )
-                                          : ColorConstants.mainBorder.withValues(
-                                            alpha: 0.3,
-                                          ),
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SizedBox(
-                                    height: 28,
-                                    child: Image.asset(
-                                      'assets/images/logo_prod.png',
-                                      fit: BoxFit.contain,
-                                      color:
-                                          hasInsufficientBalance
-                                              ? ColorConstants.tertiary
-                                                  .withValues(alpha: 0.5)
-                                              : null,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 6),
-                                  Text(
-                                    'myempay',
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.bodySmall?.copyWith(
                                       color:
                                           selectedPaymentProvider.value ==
                                               'myempay'
                                           ? ColorConstants.main
                                           : hasInsufficientBalance
                                           ? ColorConstants.tertiary.withValues(
-                                            alpha: 0.5,
-                                          )
+                                              alpha: 0.5,
+                                            )
                                           : ColorConstants.tertiary,
                                       fontWeight:
                                           selectedPaymentProvider.value ==
@@ -708,177 +699,154 @@ class _ShotgunContent extends HookConsumerWidget {
                                           ? FontWeight.w600
                                           : FontWeight.normal,
                                     ),
-                                  ),
-                                  if (hasInsufficientBalance)
-                                    Text(
-                                      l10n.paiementInsufficientFunds,
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.bodySmall?.copyWith(
+                              ),
+                              if (hasInsufficientBalance)
+                                Text(
+                                  l10n.paiementInsufficientFunds,
+                                  style: Theme.of(context).textTheme.bodySmall
+                                      ?.copyWith(
                                         color: ColorConstants.error,
                                         fontSize: 10,
                                       ),
-                                    ),
-                                ],
-                              ),
-                            ),
+                                ),
+                            ],
                           ),
-                        );
-                      },
-                      loading:
-                          () => Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              decoration: BoxDecoration(
-                                color: ColorConstants.background2.withValues(
+                        ),
+                      ),
+                    );
+                  },
+                  loading: () => Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      decoration: BoxDecoration(
+                        color: ColorConstants.background2.withValues(
+                          alpha: 0.05,
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: ColorConstants.mainBorder.withValues(
+                            alpha: 0.3,
+                          ),
+                        ),
+                      ),
+                      child: const Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            height: 28,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  error: (_, __) => Expanded(
+                    child: InkWell(
+                      onTap: () => selectedPaymentProvider.value = 'myempay',
+                      borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        decoration: BoxDecoration(
+                          color: selectedPaymentProvider.value == 'myempay'
+                              ? ColorConstants.main.withValues(alpha: 0.1)
+                              : ColorConstants.background2.withValues(
                                   alpha: 0.05,
                                 ),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: ColorConstants.mainBorder.withValues(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: selectedPaymentProvider.value == 'myempay'
+                                ? ColorConstants.main
+                                : ColorConstants.mainBorder.withValues(
                                     alpha: 0.3,
                                   ),
-                                ),
-                              ),
-                              child: const Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SizedBox(
-                                    height: 28,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  ),
-                                ],
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              height: 28,
+                              child: Image.asset(
+                                'assets/images/logo_prod.png',
+                                fit: BoxFit.contain,
                               ),
                             ),
-                          ),
-                      error:
-                          (_, __) => Expanded(
-                            child: InkWell(
-                              onTap:
-                                  () => selectedPaymentProvider.value =
-                                      'myempay',
-                              borderRadius: BorderRadius.circular(12),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                ),
-                                decoration: BoxDecoration(
-                                  color:
-                                      selectedPaymentProvider.value == 'myempay'
-                                          ? ColorConstants.main.withValues(
-                                            alpha: 0.1,
-                                          )
-                                          : ColorConstants.background2.withValues(
-                                            alpha: 0.05,
-                                          ),
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
+                            const SizedBox(height: 6),
+                            Text(
+                              'myempay',
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(
                                     color:
                                         selectedPaymentProvider.value ==
                                             'myempay'
-                                            ? ColorConstants.main
-                                            : ColorConstants.mainBorder.withValues(
-                                              alpha: 0.3,
-                                            ),
+                                        ? ColorConstants.main
+                                        : ColorConstants.tertiary,
+                                    fontWeight:
+                                        selectedPaymentProvider.value ==
+                                            'myempay'
+                                        ? FontWeight.w600
+                                        : FontWeight.normal,
                                   ),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SizedBox(
-                                      height: 28,
-                                      child: Image.asset(
-                                        'assets/images/logo_prod.png',
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 6),
-                                    Text(
-                                      'myempay',
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.bodySmall?.copyWith(
-                                        color:
-                                            selectedPaymentProvider.value ==
-                                                'myempay'
-                                            ? ColorConstants.main
-                                            : ColorConstants.tertiary,
-                                        fontWeight:
-                                            selectedPaymentProvider.value ==
-                                                'myempay'
-                                            ? FontWeight.w600
-                                            : FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
                             ),
-                          ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed:
-                        checkoutState.isCreating ||
-                            selectedCategory.value == null ||
-                            (validSessions.isNotEmpty &&
-                                selectedSession.value == null) ||
-                            !areAllRequiredQuestionsAnswered()
-                        ? null
-                        : () async {
-                            // Show navbar before navigating to payment
-                            ref.read(navbarVisibilityProvider.notifier).show();
-                            final notifier = ref.read(
-                              checkoutProvider.notifier,
-                            );
-                            await notifier.createCheckout(
-                              checkout.value,
-                              shotgun,
-                            );
-                          },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: ColorConstants.main,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      disabledBackgroundColor: ColorConstants.main.withValues(
-                        alpha: 0.3,
+                          ],
+                        ),
                       ),
                     ),
-                    child: checkoutState.isCreating
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.white,
-                              ),
-                            ),
-                          )
-                        : Text(
-                            l10n.shotgunReserve,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
                   ),
                 ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed:
+                    checkoutState.isCreating ||
+                        selectedCategory.value == null ||
+                        (validSessions.isNotEmpty &&
+                            selectedSession.value == null) ||
+                        !areAllRequiredQuestionsAnswered()
+                    ? null
+                    : () async {
+                        // Show navbar before navigating to payment
+                        ref.read(navbarVisibilityProvider.notifier).show();
+                        final notifier = ref.read(checkoutProvider.notifier);
+                        await notifier.createCheckout(checkout.value, shotgun);
+                      },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorConstants.main,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  disabledBackgroundColor: ColorConstants.main.withValues(
+                    alpha: 0.3,
+                  ),
+                ),
+                child: checkoutState.isCreating
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white,
+                          ),
+                        ),
+                      )
+                    : Text(
+                        l10n.shotgunReserve,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+              ),
+            ),
             const SizedBox(height: 24),
             // Bottom safe area padding
-            SafeArea(
-              top: false,
-              child: const SizedBox(),
-            ),
+            SafeArea(top: false, child: const SizedBox()),
           ],
         ),
       ),
@@ -902,7 +870,8 @@ class _QuestionAnswerField extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isRequired = question.required;
-    final hasError = isRequired &&
+    final hasError =
+        isRequired &&
         (value == null || (value is String && value.trim().isEmpty));
 
     return Column(
@@ -931,7 +900,10 @@ class _QuestionAnswerField extends StatelessWidget {
                 onTap: () => onChanged(true),
                 borderRadius: BorderRadius.circular(8),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   decoration: BoxDecoration(
                     color: value == true
                         ? ColorConstants.main.withValues(alpha: 0.1)
@@ -977,7 +949,10 @@ class _QuestionAnswerField extends StatelessWidget {
                 onTap: () => onChanged(false),
                 borderRadius: BorderRadius.circular(8),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   decoration: BoxDecoration(
                     color: value == false
                         ? ColorConstants.main.withValues(alpha: 0.1)
@@ -1044,7 +1019,10 @@ class _QuestionAnswerField extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: ColorConstants.main),
             ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
           ),
           onChanged: (val) => onChanged(val.isEmpty ? null : num.tryParse(val)),
         );
@@ -1073,7 +1051,10 @@ class _QuestionAnswerField extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: ColorConstants.main),
             ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
           ),
           onChanged: onChanged,
         );

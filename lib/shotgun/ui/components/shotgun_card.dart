@@ -21,7 +21,8 @@ class ShotgunCard extends ConsumerWidget {
 
     return ListItem(
       title: shotgun.name,
-      subtitle: '${l10n.shotgunOpeningLabel}: ${dateFormatter.format(shotgun.openDatetime)}',
+      subtitle:
+          '${l10n.shotgunOpeningLabel}: ${dateFormatter.format(shotgun.openDatetime)}',
       onTap: () => showCustomBottomModal(
         context: context,
         modal: BottomModalTemplate(

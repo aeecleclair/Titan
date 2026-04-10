@@ -26,17 +26,17 @@ class UserTicket {
 
   UserTicket.fromJson(Map<String, dynamic> json) {
     log('Parsing UserTicket from JSON: $json', name: 'UserTicket');
-    
+
     id = json['id']?.toString() ?? '';
-    
+
     // Price is stored in cents in the backend, convert to euros for the app
     final priceInCents = (json['price'] as num?)?.toInt() ?? 0;
     price = priceInCents ~/ 100;
-    
+
     userId = json['user_id']?.toString() ?? '';
     eventId = json['event_id']?.toString() ?? '';
     scanned = json['scanned'] ?? false;
-    
+
     // Parse category with null safety
     final categoryJson = json['category'];
     if (categoryJson != null && categoryJson is Map<String, dynamic>) {
@@ -50,7 +50,7 @@ class UserTicket {
       log('Category is null or invalid, using empty', name: 'UserTicket');
       category = Category.empty();
     }
-    
+
     // Parse session with null safety
     final sessionJson = json['session'];
     if (sessionJson != null && sessionJson is Map<String, dynamic>) {
@@ -64,7 +64,7 @@ class UserTicket {
       log('Session is null or invalid, using empty', name: 'UserTicket');
       session = Session.empty();
     }
-    
+
     // Parse event name from event object
     final eventJson = json['event'];
     if (eventJson != null && eventJson is Map<String, dynamic>) {
@@ -72,8 +72,11 @@ class UserTicket {
     } else {
       eventName = '';
     }
-    
-    log('Parsed UserTicket: id=$id, eventName=$eventName, price=$price, scanned=$scanned', name: 'UserTicket');
+
+    log(
+      'Parsed UserTicket: id=$id, eventName=$eventName, price=$price, scanned=$scanned',
+      name: 'UserTicket',
+    );
   }
 
   Map<String, dynamic> toJson() {

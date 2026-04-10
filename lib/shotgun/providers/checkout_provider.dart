@@ -38,15 +38,24 @@ class CheckoutCreationState {
 class CheckoutNotifier extends StateNotifier<CheckoutCreationState> {
   final CheckoutRepository _checkoutRepository = CheckoutRepository();
 
-  CheckoutNotifier({required String token}) : super(CheckoutCreationState.initial()) {
+  CheckoutNotifier({required String token})
+    : super(CheckoutCreationState.initial()) {
     _checkoutRepository.setToken(token);
   }
 
   Future<void> createCheckout(Checkout checkout, Shotgun shotgun) async {
-    state = state.copyWith(isCreating: true, error: null, isSuccess: false, checkout: null);
+    state = state.copyWith(
+      isCreating: true,
+      error: null,
+      isSuccess: false,
+      checkout: null,
+    );
 
     try {
-      final createdCheckout = await _checkoutRepository.createCheckout(checkout, shotgun);
+      final createdCheckout = await _checkoutRepository.createCheckout(
+        checkout,
+        shotgun,
+      );
       state = state.copyWith(
         isCreating: false,
         checkout: createdCheckout,

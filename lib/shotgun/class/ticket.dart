@@ -77,7 +77,8 @@ class Ticket {
     final userJson = json['user'];
     if (userJson != null && userJson is Map<String, dynamic>) {
       userFirstname = userJson['firstname']?.toString() ?? '';
-      userName = userJson['name']?.toString() ??
+      userName =
+          userJson['name']?.toString() ??
           userJson['nickname']?.toString() ??
           'Unknown';
     } else {

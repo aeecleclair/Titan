@@ -140,7 +140,7 @@ class CreateShotgunPage extends HookConsumerWidget {
 
                       if (startDateController.text.trim().isEmpty) {
                         displayToast(
-                        context,
+                          context,
                           TypeMsg.error,
                           l10n.shotgunStartDateRequired,
                         );
@@ -183,7 +183,9 @@ class CreateShotgunPage extends HookConsumerWidget {
                             categories: categories.value,
                             sessions: sessions.value,
                             questions: questions.value
-                                .where((q) => q.controller.text.trim().isNotEmpty)
+                                .where(
+                                  (q) => q.controller.text.trim().isNotEmpty,
+                                )
                                 .map(
                                   (q) => Question(
                                     id: '',
@@ -259,7 +261,10 @@ class _ExtraQuestionsSection extends StatelessWidget {
   });
 
   void addQuestion() {
-    onChanged([...questions, _QuestionFormData(controller: TextEditingController())]);
+    onChanged([
+      ...questions,
+      _QuestionFormData(controller: TextEditingController()),
+    ]);
   }
 
   void removeQuestion(int index) {
@@ -287,7 +292,9 @@ class _ExtraQuestionsSection extends StatelessWidget {
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
-                side: BorderSide(color: ColorConstants.secondary.withOpacity(0.3)),
+                side: BorderSide(
+                  color: ColorConstants.secondary.withOpacity(0.3),
+                ),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(12),
@@ -327,7 +334,10 @@ class _ExtraQuestionsSection extends StatelessWidget {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 8,
+                              ),
                             ),
                             items: [
                               DropdownMenuItem(

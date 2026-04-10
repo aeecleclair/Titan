@@ -52,7 +52,9 @@ class EditShotgunPage extends HookConsumerWidget {
     final categories = useState<List<Category>>(shotgun.categories);
     final sessions = useState<List<Session>>(shotgun.sessions);
     final questions = useState<List<TextEditingController>>(
-      shotgun.questions.map((q) => TextEditingController(text: q.question)).toList(),
+      shotgun.questions
+          .map((q) => TextEditingController(text: q.question))
+          .toList(),
     );
 
     return ShotgunTemplate(
@@ -177,7 +179,8 @@ class EditShotgunPage extends HookConsumerWidget {
                       for (int i = 0; i < questions.value.length; i++) {
                         if (i < shotgun.questions.length) {
                           // Mise à jour d'une question existante
-                          if (questions.value[i].text != shotgun.questions[i].question) {
+                          if (questions.value[i].text !=
+                              shotgun.questions[i].question) {
                             await shotgunEditNotifier.updateQuestion(
                               shotgun.id,
                               shotgun.questions[i].id,
@@ -305,10 +308,7 @@ class _EditSessionsSection extends StatelessWidget {
   final List<Session> sessions;
   final ValueChanged<List<Session>> onChanged;
 
-  const _EditSessionsSection({
-    required this.sessions,
-    required this.onChanged,
-  });
+  const _EditSessionsSection({required this.sessions, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -348,7 +348,9 @@ class _EditSessionsSection extends StatelessWidget {
                         children: [
                           TextEntry(
                             label: l10n.shotgunSessionLabelNumbered(i + 1),
-                            controller: TextEditingController(text: session.name),
+                            controller: TextEditingController(
+                              text: session.name,
+                            ),
                             onChanged: (value) {
                               final updated = [...sessions];
                               updated[i] = session.copyWith(name: value);
@@ -363,11 +365,15 @@ class _EditSessionsSection extends StatelessWidget {
                                 child: DateEntry(
                                   label: l10n.shotgunDateLabel,
                                   controller: TextEditingController(
-                                    text: dateFormatter.format(session.startDatetime),
+                                    text: dateFormatter.format(
+                                      session.startDatetime,
+                                    ),
                                   ),
                                   onTap: () async {
                                     final controller = TextEditingController(
-                                      text: dateFormatter.format(session.startDatetime),
+                                      text: dateFormatter.format(
+                                        session.startDatetime,
+                                      ),
                                     );
                                     await getFullDate(context, controller);
                                     if (controller.text.isNotEmpty) {
@@ -396,7 +402,8 @@ class _EditSessionsSection extends StatelessWidget {
                                   onChanged: (value) {
                                     final updated = [...sessions];
                                     updated[i] = session.copyWith(
-                                      quota: int.tryParse(value) ?? session.quota,
+                                      quota:
+                                          int.tryParse(value) ?? session.quota,
                                     );
                                     onChanged(updated);
                                   },

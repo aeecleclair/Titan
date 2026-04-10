@@ -111,7 +111,9 @@ class TicketResultsPage extends HookConsumerWidget {
           Expanded(
             child: Refresher(
               onRefresh: () {
-                return eventTicketsNotifier.loadEventTickets(selectedShotgun.id);
+                return eventTicketsNotifier.loadEventTickets(
+                  selectedShotgun.id,
+                );
               },
               controller: ScrollController(),
               child: Padding(
@@ -123,7 +125,9 @@ class TicketResultsPage extends HookConsumerWidget {
                       return Center(
                         child: Text(
                           l10n.shotgunNoTickets,
-                          style: const TextStyle(color: ColorConstants.tertiary),
+                          style: const TextStyle(
+                            color: ColorConstants.tertiary,
+                          ),
                         ),
                       );
                     }
@@ -134,8 +138,7 @@ class TicketResultsPage extends HookConsumerWidget {
                       itemBuilder: (context, index) {
                         final ticket = tickets[index];
                         return ListItemTemplate(
-                          title:
-                              '${ticket.userFirstname} ${ticket.userName}',
+                          title: '${ticket.userFirstname} ${ticket.userName}',
                           subtitle:
                               '${ticket.category.name} - ${ticket.session.name}',
                           trailing: const SizedBox.shrink(),

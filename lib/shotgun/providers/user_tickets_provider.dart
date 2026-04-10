@@ -19,13 +19,13 @@ class UserTicketsNotifier extends ListNotifier<UserTicket> {
 }
 
 final userTicketsProvider =
-    StateNotifierProvider<UserTicketsNotifier, AsyncValue<List<UserTicket>>>(
-      (ref) {
-        final token = ref.watch(tokenProvider);
-        final notifier = UserTicketsNotifier(token: token);
-        tokenExpireWrapperAuth(ref, () async {
-          await notifier.loadUserTickets();
-        });
-        return notifier;
-      },
-    );
+    StateNotifierProvider<UserTicketsNotifier, AsyncValue<List<UserTicket>>>((
+      ref,
+    ) {
+      final token = ref.watch(tokenProvider);
+      final notifier = UserTicketsNotifier(token: token);
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.loadUserTickets();
+      });
+      return notifier;
+    });

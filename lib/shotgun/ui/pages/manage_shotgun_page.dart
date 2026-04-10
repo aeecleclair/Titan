@@ -104,7 +104,9 @@ class ManageShotgunPage extends HookConsumerWidget {
                       return Center(
                         child: Text(
                           l10n.shotgunNoShotgun,
-                          style: const TextStyle(color: ColorConstants.tertiary),
+                          style: const TextStyle(
+                            color: ColorConstants.tertiary,
+                          ),
                         ),
                       );
                     }

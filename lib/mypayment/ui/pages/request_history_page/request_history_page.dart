@@ -46,103 +46,85 @@ class RequestHistoryPage extends HookConsumerWidget {
       };
     }, [requestHistory]);
 
+    final scrollController = useMemoized(() => ScrollController(), []);
+
     return PaymentTemplate(
-      child: LayoutBuilder(
-        builder: (context, constraints) => Refresher(
-          controller: ScrollController(),
-          onRefresh: () async {
-            await requestHistoryNotifier.getRequestHistory();
-          },
-          child: SizedBox(
-            height: constraints.maxHeight,
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  const SizedBox(height: 25),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      localizeWithContext.paiementRequestHistory,
-                      style: const TextStyle(
-                        color: Color(0xff204550),
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+      child: Refresher(
+        controller: scrollController,
+        onRefresh: () async {
+          await requestHistoryNotifier.getRequestHistory();
+        },
+        child: AsyncChild(
+          value: requestHistory,
+          builder: (context, requests) {
+            if (requests.isEmpty) {
+              return Padding(
+                padding: const EdgeInsets.all(40),
+                child: Text(
+                  localizeWithContext.paiementNoRequests,
+                  style: const TextStyle(
+                    color: Color(0xff204550),
+                    fontSize: 16,
+                  ),
+                ),
+              );
+            }
+            final sortedRequests = List<PaymentRequest>.from(requests)
+              ..sort((a, b) => b.creation.compareTo(a.creation));
+
+            final Map<String, List<PaymentRequest>> groupedByDay = {};
+            final Map<String, DateTime> stringDate = {};
+            for (var request in sortedRequests) {
+              final day = timeago.format(request.creation, locale: 'fr_short');
+              if (groupedByDay[day] == null) {
+                groupedByDay[day] = [];
+                stringDate[day] = request.creation;
+              }
+              groupedByDay[day]!.add(request);
+            }
+            final sortedKeys = stringDate.keys.toList()
+              ..sort((a, b) => stringDate[b]!.compareTo(stringDate[a]!));
+
+            return Column(
+              children: [
+                const SizedBox(height: 25),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    localizeWithContext.paiementRequestHistory,
+                    style: const TextStyle(
+                      color: Color(0xff204550),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 15),
-                  AsyncChild(
-                    value: requestHistory,
-                    builder: (context, requests) {
-                      if (requests.isEmpty) {
-                        return Padding(
-                          padding: const EdgeInsets.all(40),
-                          child: Text(
-                            localizeWithContext.paiementNoRequests,
-                            style: const TextStyle(
-                              color: Color(0xff204550),
-                              fontSize: 16,
-                            ),
-                          ),
-                        );
-                      }
-                      final sortedRequests = List<PaymentRequest>.from(requests)
-                        ..sort((a, b) => b.creation.compareTo(a.creation));
-
-                      final Map<String, List<PaymentRequest>> groupedByDay = {};
-                      final Map<String, DateTime> stringDate = {};
-                      for (var request in sortedRequests) {
-                        final day = timeago.format(
-                          request.creation,
-                          locale: 'fr_short',
-                        );
-                        if (groupedByDay[day] == null) {
-                          groupedByDay[day] = [];
-                          stringDate[day] = request.creation;
-                        }
-                        groupedByDay[day]!.add(request);
-                      }
-                      final sortedKeys = stringDate.keys.toList()
-                        ..sort(
-                          (a, b) => stringDate[b]!.compareTo(stringDate[a]!),
-                        );
-
-                      return Column(
-                        children: [
-                          for (var day in sortedKeys) ...[
-                            DayDivider(date: day),
-                            for (var request in groupedByDay[day]!)
-                              RequestCard(
+                ),
+                const SizedBox(height: 15),
+                for (var day in sortedKeys) ...[
+                  DayDivider(date: day),
+                  for (var request in groupedByDay[day]!)
+                    RequestCard(
+                      request: request,
+                      onTap: request.status == RequestStatus.proposed
+                          ? () async {
+                              await showRequestModal(
+                                context: context,
+                                ref: ref,
                                 request: request,
-                                onTap: request.status == RequestStatus.proposed
-                                    ? () async {
-                                        await showRequestModal(
-                                          context: context,
-                                          ref: ref,
-                                          request: request,
-                                        );
-                                        await requestHistoryNotifier
-                                            .getRequestHistory();
-                                      }
-                                    : () => showCustomBottomModal(
-                                        context: context,
-                                        ref: ref,
-                                        modal: RequestDetailModal(
-                                          request: request,
-                                        ),
-                                      ),
-                              ),
-                          ],
-                        ],
-                      );
-                    },
-                  ),
+                              );
+                              await requestHistoryNotifier.getRequestHistory();
+                            }
+                          : () => showCustomBottomModal(
+                              context: context,
+                              ref: ref,
+                              modal: RequestDetailModal(request: request),
+                            ),
+                    ),
                 ],
-              ),
-            ),
-          ),
+              ],
+            );
+          },
         ),
       ),
     );

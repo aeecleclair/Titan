@@ -25,15 +25,19 @@ class Checkout {
   Checkout.fromJson(Map<String, dynamic> json) {
     categoryId = json['category_id'] ?? '';
     sessionId = json['session_id'] ?? '';
-    answers = (json['answers'] as List<dynamic>?)
+    answers =
+        (json['answers'] as List<dynamic>?)
             ?.map((e) => Answer.fromJson(e))
             .whereType<Answer>()
             .toList() ??
         [];
     myPaymentRequestMethod = json['mypayment_request_method'] != null
-        ? MyPaymentCallTypeExtension.fromString(json['mypayment_request_method'])
+        ? MyPaymentCallTypeExtension.fromString(
+            json['mypayment_request_method'],
+          )
         : MyPaymentCallType.request;
-    myPaymentTransferRedirectUrl = json['mypayment_transfer_redirect_url'] ?? '';
+    myPaymentTransferRedirectUrl =
+        json['mypayment_transfer_redirect_url'] ?? '';
 
     // Response fields
     // Price is stored in cents in the backend, convert to euros for the app
@@ -66,12 +70,14 @@ class Checkout {
     String? paymentUrl,
   }) {
     return Checkout(
-      categoryId: categoryId ?? this.categoryId,
-      sessionId: sessionId ?? this.sessionId,
-      answers: answers ?? this.answers,
-      myPaymentRequestMethod: myPaymentRequestMethod ?? this.myPaymentRequestMethod,
-      myPaymentTransferRedirectUrl: myPaymentTransferRedirectUrl ?? this.myPaymentTransferRedirectUrl,
-    )
+        categoryId: categoryId ?? this.categoryId,
+        sessionId: sessionId ?? this.sessionId,
+        answers: answers ?? this.answers,
+        myPaymentRequestMethod:
+            myPaymentRequestMethod ?? this.myPaymentRequestMethod,
+        myPaymentTransferRedirectUrl:
+            myPaymentTransferRedirectUrl ?? this.myPaymentTransferRedirectUrl,
+      )
       ..price = price ?? this.price
       ..expiration = expiration ?? this.expiration
       ..paymentUrl = paymentUrl ?? this.paymentUrl;

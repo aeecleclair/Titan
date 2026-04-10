@@ -11,17 +11,15 @@ class EventTicketsNotifier extends ListNotifier<Ticket> {
     : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<Ticket>>> loadEventTickets(String eventId) async {
-    return await loadList(
-      () => shotgunRepository.getTicketsByEventId(eventId),
-    );
+    return await loadList(() => shotgunRepository.getTicketsByEventId(eventId));
   }
 }
 
 final eventTicketsProvider =
-    StateNotifierProvider<EventTicketsNotifier, AsyncValue<List<Ticket>>>(
-      (ref) {
-        final token = ref.watch(tokenProvider);
-        final shotgunRepository = ShotgunRepository()..setToken(token);
-        return EventTicketsNotifier(shotgunRepository: shotgunRepository);
-      },
-    );
+    StateNotifierProvider<EventTicketsNotifier, AsyncValue<List<Ticket>>>((
+      ref,
+    ) {
+      final token = ref.watch(tokenProvider);
+      final shotgunRepository = ShotgunRepository()..setToken(token);
+      return EventTicketsNotifier(shotgunRepository: shotgunRepository);
+    });

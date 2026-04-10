@@ -24,10 +24,8 @@ class CsvDownloadNotifier extends StateNotifier<AsyncValue<void>> {
 }
 
 final csvDownloadProvider =
-    StateNotifierProvider<CsvDownloadNotifier, AsyncValue<void>>(
-      (ref) {
-        final token = ref.watch(tokenProvider);
-        final shotgunRepository = ShotgunRepository()..setToken(token);
-        return CsvDownloadNotifier(shotgunRepository: shotgunRepository);
-      },
-    );
+    StateNotifierProvider<CsvDownloadNotifier, AsyncValue<void>>((ref) {
+      final token = ref.watch(tokenProvider);
+      final shotgunRepository = ShotgunRepository()..setToken(token);
+      return CsvDownloadNotifier(shotgunRepository: shotgunRepository);
+    });

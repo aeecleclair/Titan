@@ -1,8 +1,4 @@
-enum AnswerType {
-  text,
-  number,
-  boolean,
-}
+enum AnswerType { text, number, boolean }
 
 extension AnswerTypeExtension on AnswerType {
   String get value {
