@@ -25,6 +25,7 @@ Future<void> showRequestModal({
       itemTitle: request.name,
       itemDescription: request.storeNote ?? '',
       itemPrice: request.total,
+      itemExpirationDate: request.creation.add(const Duration(minutes: 15)),
       onConfirm: () async {
         final keyId = await keyService.getKeyId();
         final keyPair = await keyService.getKeyPair();
