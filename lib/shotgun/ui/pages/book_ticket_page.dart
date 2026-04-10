@@ -247,7 +247,9 @@ class _ShotgunContent extends HookConsumerWidget {
               try {
                 await tryLaunchUrl(checkout.paymentUrl!);
               } catch (e) {
-                displayToast(context, TypeMsg.error, e.toString());
+                if (context.mounted) {
+                  displayToast(context, TypeMsg.error, e.toString());
+                }
               }
             }
           } else {
@@ -740,7 +742,7 @@ class _ShotgunContent extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  error: (_, __) => Expanded(
+                  error: (e, st) => Expanded(
                     child: InkWell(
                       onTap: () => selectedPaymentProvider.value = 'myempay',
                       borderRadius: BorderRadius.circular(12),

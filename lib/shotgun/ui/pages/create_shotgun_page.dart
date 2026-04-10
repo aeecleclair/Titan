@@ -210,11 +210,13 @@ class CreateShotgunPage extends HookConsumerWidget {
                           QR.back();
                         }
                       } catch (e) {
-                        displayToast(
-                          context,
-                          TypeMsg.error,
-                          "${l10n.othersError}: ${e.toString()}",
-                        );
+                        if (context.mounted) {
+                          displayToast(
+                            context,
+                            TypeMsg.error,
+                            "${l10n.othersError}: ${e.toString()}",
+                          );
+                        }
                       }
                     },
                     style: FilledButton.styleFrom(
@@ -293,7 +295,7 @@ class _ExtraQuestionsSection extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
                 side: BorderSide(
-                  color: ColorConstants.secondary.withOpacity(0.3),
+                  color: ColorConstants.secondary.withValues(alpha: 0.3),
                 ),
               ),
               child: Padding(
@@ -328,7 +330,7 @@ class _ExtraQuestionsSection extends StatelessWidget {
                       children: [
                         Expanded(
                           child: DropdownButtonFormField<AnswerType>(
-                            value: question.answerType,
+                            initialValue: question.answerType,
                             decoration: InputDecoration(
                               labelText: l10n.shotgunQuestionTypeLabel,
                               border: OutlineInputBorder(

@@ -174,31 +174,33 @@ class EditShotgunPage extends HookConsumerWidget {
                       updatedShotgun,
                     );
 
-                    if (success && context.mounted) {
-                      // Mettre à jour les questions séparément
-                      for (int i = 0; i < questions.value.length; i++) {
-                        if (i < shotgun.questions.length) {
-                          // Mise à jour d'une question existante
-                          if (questions.value[i].text !=
-                              shotgun.questions[i].question) {
-                            await shotgunEditNotifier.updateQuestion(
-                              shotgun.id,
-                              shotgun.questions[i].id,
-                              questions.value[i].text,
-                            );
+                      if (success && context.mounted) {
+                        // Mettre à jour les questions séparément
+                        for (int i = 0; i < questions.value.length; i++) {
+                          if (i < shotgun.questions.length) {
+                            // Mise à jour d'une question existante
+                            if (questions.value[i].text !=
+                                shotgun.questions[i].question) {
+                              await shotgunEditNotifier.updateQuestion(
+                                shotgun.id,
+                                shotgun.questions[i].id,
+                                questions.value[i].text,
+                              );
+                            }
                           }
                         }
-                      }
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(l10n.shotgunEditSuccess),
-                          backgroundColor: Colors.green,
-                        ),
-                      );
-                      Navigator.of(context).pop();
-                    }
+                        if (!context.mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(l10n.shotgunEditSuccess),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                        Navigator.of(context).pop();
+                      }
                   } catch (e) {
+                    if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text("${l10n.othersError}: ${e.toString()}"),

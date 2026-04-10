@@ -112,7 +112,7 @@ class ShotgunRepository extends Repository {
 
   Future<Uint8List> downloadTicketsCsv(String eventId) async {
     final response = await http.get(
-      Uri.parse(Repository.host + ext + 'admin/events/$eventId/tickets/csv'),
+      Uri.parse('${Repository.host}${ext}admin/events/$eventId/tickets/csv'),
       headers: headers,
     );
     if (response.statusCode == 200) {

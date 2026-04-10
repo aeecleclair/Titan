@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -50,14 +48,14 @@ class CountdownTimer extends HookWidget {
       colorScheme.error,
       urgencyRatio,
     )!;
-    final backgroundColor = progressColor.withOpacity(0.1);
+    final backgroundColor = progressColor.withValues(alpha: 0.1);
 
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: progressColor.withOpacity(0.3), width: 2),
+        border: Border.all(color: progressColor.withValues(alpha: 0.3), width: 2),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +69,7 @@ class CountdownTimer extends HookWidget {
                 child: CircularProgressIndicator(
                   value: 1 - progress,
                   strokeWidth: 6,
-                  backgroundColor: progressColor.withOpacity(0.2),
+                  backgroundColor: progressColor.withValues(alpha: 0.2),
                   valueColor: AlwaysStoppedAnimation<Color>(progressColor),
                   strokeCap: StrokeCap.round,
                 ),
@@ -107,7 +105,7 @@ class CountdownTimer extends HookWidget {
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
-                  color: progressColor.withOpacity(0.7),
+                  color: progressColor.withValues(alpha: 0.7),
                 ),
               ),
               const SizedBox(height: 4),

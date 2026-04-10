@@ -355,7 +355,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: DropdownButtonFormField<Shotgun>(
-                                      value: selectedShotgun.value,
+                                      initialValue: selectedShotgun.value,
                                       decoration: InputDecoration(
                                         labelText: "Sélectionner un shotgun",
                                         border: OutlineInputBorder(),
@@ -376,7 +376,7 @@ class AddEditEventPage extends HookConsumerWidget {
                           : const SizedBox.shrink(),
                       loading: () =>
                           const SizedBox.shrink(), // Ou un petit indicator
-                      error: (_, __) => const SizedBox.shrink(),
+                      error: (e, st) => const SizedBox.shrink(),
                     ),
                     if (!useExistingShotgun.value) ...[
                       SizedBox(height: 10),

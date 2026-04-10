@@ -78,7 +78,7 @@ class TarifCard extends HookWidget {
                         isDouble: true,
                         onChanged: (_) => notify(),
                         validator: (value) {
-                          if (value == null || value.isEmpty) return null;
+                          if (value.isEmpty) return null;
                           final price = double.tryParse(
                             value.replaceAll(',', '.'),
                           );
