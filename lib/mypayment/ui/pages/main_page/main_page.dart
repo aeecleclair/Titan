@@ -103,9 +103,20 @@ class PaymentMainPage extends HookConsumerWidget {
     }
 
     useEffect(() {
+      paymentRequestsNotifier.getRequests();
+      return null;
+    }, []);
+
+    useEffect(() {
       paymentRequests.whenData((requests) {
         final pendingRequests = requests
-            .where((r) => r.status == RequestStatus.proposed)
+            .where(
+              (r) =>
+                  r.status == RequestStatus.proposed &&
+                  r.creation
+                      .add(const Duration(minutes: 15))
+                      .isAfter(DateTime.now()),
+            )
             .toList();
         if (pendingRequests.isNotEmpty && !hasShownRequestModal.value) {
           hasShownRequestModal.value = true;
