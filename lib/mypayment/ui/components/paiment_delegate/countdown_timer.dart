@@ -55,7 +55,10 @@ class CountdownTimer extends HookWidget {
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: progressColor.withValues(alpha: 0.3), width: 2),
+        border: Border.all(
+          color: progressColor.withValues(alpha: 0.3),
+          width: 2,
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
