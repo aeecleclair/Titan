@@ -51,7 +51,7 @@ class BookTicketPage extends HookConsumerWidget {
       );
     }
 
-    final shotgunAsync = ref.watch(shotgunByIdProvider(shotgunId));
+    final shotgunAsync = ref.watch(publicShotgunByIdProvider(shotgunId));
 
     return ShotgunTemplate(
       child: AsyncChild<Shotgun>(

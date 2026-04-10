@@ -27,6 +27,10 @@ class ShotgunRepository extends Repository {
     return Shotgun.fromJson(await getOne("admin/events/$id"));
   }
 
+  Future<Shotgun> getPublicShotgunById(String id) async {
+    return Shotgun.fromJson(await getOne("events/$id"));
+  }
+
   Future<List<Shotgun>> getShotgunListByAssociationId(String id) async {
     return (await getList(
       suffix: 'admin/association/$id/events',

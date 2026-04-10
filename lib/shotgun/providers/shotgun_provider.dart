@@ -38,3 +38,38 @@ final shotgunByIdProvider =
       });
       return notifier;
     });
+
+class PublicShotgunByIdNotifier extends StateNotifier<AsyncValue<Shotgun>> {
+  PublicShotgunByIdNotifier({required String token, required String id})
+    : _id = id,
+      super(const AsyncValue.loading()) {
+    _repository = ShotgunRepository()..setToken(token);
+  }
+
+  final String _id;
+  late final ShotgunRepository _repository;
+
+  Future<void> load() async {
+    state = const AsyncValue.loading();
+    try {
+      final shotgun = await _repository.getPublicShotgunById(_id);
+      state = AsyncValue.data(shotgun);
+    } catch (e, st) {
+      state = AsyncValue.error(e, st);
+    }
+  }
+}
+
+final publicShotgunByIdProvider =
+    StateNotifierProvider.family<
+      PublicShotgunByIdNotifier,
+      AsyncValue<Shotgun>,
+      String
+    >((ref, id) {
+      final token = ref.watch(tokenProvider);
+      final notifier = PublicShotgunByIdNotifier(token: token, id: id);
+      tokenExpireWrapperAuth(ref, () async {
+        await notifier.load();
+      });
+      return notifier;
+    });

@@ -17,7 +17,7 @@ class Shotgun {
   });
   late final String id;
   late final String name;
-  late final String storeId;
+  late final String? storeId;
   late final int? quota;
   late final DateTime openDatetime;
   late final DateTime? closeDatetime;
@@ -28,7 +28,7 @@ class Shotgun {
   Shotgun.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    storeId = json['store_id'];
+    storeId = json['store_id'] as String?;
     quota = json['quota'];
     openDatetime = processDateFromAPI(json['open_datetime']);
     closeDatetime = json['close_datetime'] != null
@@ -58,7 +58,9 @@ class Shotgun {
     final data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
-    data['store_id'] = storeId;
+    if (storeId != null) {
+      data['store_id'] = storeId;
+    }
     data['quota'] = quota;
     data['open_datetime'] = processDateToAPI(openDatetime);
     data['close_datetime'] = closeDatetime != null
