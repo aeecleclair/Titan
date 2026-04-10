@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/feed/providers/is_user_a_member_of_an_association.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
+import 'package:titan/shotgun/providers/is_user_a_member_of_a_store.dart';
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
@@ -58,7 +58,7 @@ class ShotgunRouter {
         path: create,
         builder: () => create_shotgun_page.CreateShotgunPage(),
         middleware: [
-          AdminMiddleware(ref, isUserAMemberOfAnAssociationProvider),
+          AdminMiddleware(ref, isUserAMemberOfAStoreProvider),
           DeferredLoadingMiddleware(create_shotgun_page.loadLibrary),
         ],
       ),
@@ -66,7 +66,7 @@ class ShotgunRouter {
         path: manage,
         builder: () => manage_shotgun_page.ManageShotgunPage(),
         middleware: [
-          AdminMiddleware(ref, isUserAMemberOfAnAssociationProvider),
+          AdminMiddleware(ref, isUserAMemberOfAStoreProvider),
           DeferredLoadingMiddleware(manage_shotgun_page.loadLibrary),
         ],
       ),
@@ -74,7 +74,7 @@ class ShotgunRouter {
         path: edit,
         builder: () => edit_shotgun_page.EditShotgunPage(),
         middleware: [
-          AdminMiddleware(ref, isUserAMemberOfAnAssociationProvider),
+          AdminMiddleware(ref, isUserAMemberOfAStoreProvider),
           DeferredLoadingMiddleware(edit_shotgun_page.loadLibrary),
         ],
       ),
@@ -82,7 +82,7 @@ class ShotgunRouter {
         path: results,
         builder: () => ticket_results_page.TicketResultsPage(),
         middleware: [
-          AdminMiddleware(ref, isUserAMemberOfAnAssociationProvider),
+          AdminMiddleware(ref, isUserAMemberOfAStoreProvider),
           DeferredLoadingMiddleware(ticket_results_page.loadLibrary),
         ],
       ),

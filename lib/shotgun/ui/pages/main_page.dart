@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/advert/ui/components/special_action_button.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/shotgun/providers/is_user_a_member_of_a_store.dart';
 import 'package:titan/shotgun/providers/user_tickets_provider.dart';
 import 'package:titan/shotgun/router.dart';
 import 'package:titan/shotgun/ui/components/user_ticket_card.dart';
@@ -22,6 +23,7 @@ class ShotgunMainPage extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final userTicketsAsync = ref.watch(userTicketsProvider);
     final userTicketsNotifier = ref.watch(userTicketsProvider.notifier);
+    final isUserAMemberOfAStore = ref.watch(isUserAMemberOfAStoreProvider);
     final scrollController = ScrollController();
 
     return ShotgunTemplate(
@@ -41,7 +43,7 @@ class ShotgunMainPage extends ConsumerWidget {
                   ),
                 ),
                 const Spacer(),
-                if (true) ...[
+                if (isUserAMemberOfAStore) ...[
                   const SizedBox(width: 10),
                   SpecialActionButton(
                     icon: HeroIcon(HeroIcons.userGroup, color: Colors.white),
