@@ -74,9 +74,9 @@ def generateMainActivityTask = tasks.register("generateMainActivity") {
 preBuild.dependsOn(generateMainActivityTask)
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
-    ndkVersion "27.0.12077973"
+    ndkVersion "29.0.14206865"
     namespace "${appIdPrefix}.titan"
+    compileSdk flutter.compileSdkVersion
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -95,7 +95,8 @@ android {
     defaultConfig {
         applicationId "${appIdPrefix}.titan"
         minSdkVersion flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
+        minSdk flutter.minSdkVersion
+        targetSdk flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -151,6 +152,6 @@ dependencies {
 
 android {
     defaultConfig {
-        minSdkVersion flutter.minSdkVersion
+        minSdk flutter.minSdkVersion
     }
 }

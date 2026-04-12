@@ -176,7 +176,12 @@ class Async4Children<P, Q, R, S> extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    List<AsyncValue> listValues = [values.item1, values.item2, values.item3];
+    List<AsyncValue> listValues = [
+      values.item1,
+      values.item2,
+      values.item3,
+      values.item4,
+    ];
     if (listValues.any((value) => value.hasError || value.isLoading)) {
       return handleLoadingAndError(
         listValues,

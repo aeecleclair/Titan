@@ -20,3 +20,8 @@ class AMAPColorConstants extends ColorConstants {
   static const Color redGradient1 = Color(0xFF9E131F);
   static const Color redGradient2 = Color(0xFF590512);
 }
+
+class AMAPPermissionConstants {
+  static const String manageAMAP = 'manage_amap';
+  static const String accessAMAP = 'access_amap';
+}

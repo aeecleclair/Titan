@@ -20,8 +20,9 @@ import 'package:titan/others/ui/no_internet_page.dart'
 import 'package:titan/navigation/ui/all_module_page.dart'
     deferred as all_module_page;
 import 'package:titan/others/ui/no_module.dart' deferred as no_module_page;
+import 'package:titan/others/ui/rollback_page.dart' deferred as rollback_page;
 import 'package:titan/others/ui/update_page.dart' deferred as update_page;
-import 'package:titan/paiement/router.dart';
+import 'package:titan/mypayment/router.dart';
 import 'package:titan/phonebook/router.dart';
 import 'package:titan/ph/router.dart';
 import 'package:titan/purchases/router.dart';
@@ -36,6 +37,7 @@ import 'package:titan/tools/ui/styleguide/router.dart';
 
 import 'package:titan/vote/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/centralassociation/router.dart';
 
 final appRouterProvider = Provider<AppRouter>((ref) => AppRouter(ref));
 
@@ -48,6 +50,7 @@ class AppRouter {
   static const String noInternet = '/no_internet';
   static const String noModule = '/no_module';
   static const String allModules = '/all_modules';
+  static const String rollback = '/rollback';
 
   AppRouter(this.ref) {
     routes = [
@@ -91,10 +94,17 @@ class AppRouter {
               FadeTransition(opacity: animation, child: child),
         ),
       ),
+      QRoute(
+        path: rollback,
+        builder: () => rollback_page.RollbackPage(),
+        middleware: [DeferredLoadingMiddleware(rollback_page.loadLibrary)],
+      ),
+      AdminRouter(ref).route(),
       AdvertRouter(ref).route(),
       AmapRouter(ref).route(),
       BookingRouter(ref).route(),
       CentralisationRouter(ref).route(),
+      CentralassociationRouter(ref).route(),
       CinemaRouter(ref).route(),
       EventRouter(ref).route(),
       FlappyBirdRouter(ref).route(),
@@ -112,7 +122,6 @@ class AppRouter {
       StyleGuideRouter(ref).route(),
       VoteRouter(ref).route(),
       SeedLibraryRouter(ref).route(),
-      AdminRouter(ref).route(),
       SuperAdminRouter(ref).route(),
     ];
   }

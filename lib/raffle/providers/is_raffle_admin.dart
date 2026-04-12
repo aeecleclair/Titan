@@ -1,9 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/user/providers/user_provider.dart';
+import 'package:titan/raffle/tools/constants.dart';
+import 'package:titan/tools/functions.dart';
 
-final isRaffleAdminProvider = StateProvider<bool>((ref) {
-  final me = ref.watch(userProvider);
-  return me.groups
-      .map((e) => e.id)
-      .contains("0a25cb76-4b63-4fd3-b939-da6d9feabf28");
+final isRaffleAdminProvider = Provider<bool>((ref) {
+  return hasUserPermission(ref, RafflePermissionConstants.manageRaffle);
+});
+
+final isRaffleCashManagerProvider = Provider<bool>((ref) {
+  return hasUserPermission(ref, RafflePermissionConstants.manageCash);
+});
+
+final hasRaffleAdminAccessProvider = Provider<bool>((ref) {
+  final isRaffleAdmin = ref.watch(isRaffleAdminProvider);
+  final isRaffleCashManager = ref.watch(isRaffleCashManagerProvider);
+  return isRaffleAdmin || isRaffleCashManager;
 });

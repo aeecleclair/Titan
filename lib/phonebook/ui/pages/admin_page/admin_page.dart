@@ -37,8 +37,8 @@ class AdminPage extends HookConsumerWidget {
     );
     final associationFilteredList = ref.watch(associationFilteredListProvider);
     final roleNotifier = ref.watch(rolesTagsProvider.notifier);
-    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
     final isAdmin = ref.watch(isAdminProvider);
+    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
 
     final localizeWithContext = AppLocalizations.of(context)!;
 

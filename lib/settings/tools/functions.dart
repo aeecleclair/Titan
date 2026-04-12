@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/settings/class/notification_topic.dart';
 import 'package:titan/settings/providers/module_list_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Map<String, List<NotificationTopic>> groupNotificationTopicsByModuleRoot(
   List<NotificationTopic> topics,
@@ -36,4 +37,12 @@ Map<String, List<NotificationTopic>> groupNotificationTopicsByModuleRoot(
   }
 
   return result;
+}
+
+void openLink(String url) async {
+  if (await canLaunchUrl(Uri.parse(url))) {
+    await launchUrl(Uri.parse(url), mode: LaunchMode.inAppBrowserView);
+  } else {
+    throw 'Unable to open: $url';
+  }
 }

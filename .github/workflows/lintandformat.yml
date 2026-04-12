@@ -14,6 +14,11 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v4
 
+      # Remove ^ to fix flutter version parsing
+      - name: Fix Flutter Version in Pubspec
+        run: |
+          sed -i 's/flutter: ^/flutter: /' pubspec.yaml
+
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"

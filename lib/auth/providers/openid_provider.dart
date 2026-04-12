@@ -119,7 +119,7 @@ class OpenIdTokenProvider
   final String tokenKey = "token";
   final String refreshTokenKey = "refresh_token";
   final String redirectURLScheme = "${getTitanPackageName()}://authorized";
-  final String redirectURL = "${getTitanURL()}/static.html";
+  final String redirectURL = "${getTitanURL()}static.html";
   final AuthorizationServiceConfiguration authorizationServiceConfiguration =
       AuthorizationServiceConfiguration(
         authorizationEndpoint: "${Repository.host}auth/authorize",

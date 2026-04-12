@@ -10,6 +10,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 class LoginRouter {
   final Ref ref;
   static const String root = '/login';
+  static const String mailReceived = '/mail_received';
   LoginRouter(this.ref);
 
   QRoute route() => QRoute(

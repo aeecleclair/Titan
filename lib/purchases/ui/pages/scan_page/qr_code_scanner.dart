@@ -10,7 +10,7 @@ class QRCodeScannerScreen extends StatefulWidget {
     required this.scanner,
   });
 
-  final Function onScan;
+  final Function(String) onScan;
   final AsyncValue<Ticket> scanner;
 
   @override
@@ -46,10 +46,13 @@ class QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
         );
       },
       onDetect: (BarcodeCapture capture) async {
+        final rawValue = capture.barcodes.firstOrNull?.rawValue;
         setState(() {
-          qrCode = capture.barcodes.first.rawValue;
+          qrCode = rawValue;
         });
-        widget.onScan(qrCode!);
+        if (rawValue != null) {
+          widget.onScan(rawValue);
+        }
       },
     );
   }

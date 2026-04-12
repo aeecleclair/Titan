@@ -36,9 +36,7 @@ class SuperAdminMainPage extends HookConsumerWidget {
           children: [
             GestureDetector(
               onTap: () {
-                QR.to(
-                  SuperAdminRouter.root + SuperAdminRouter.editModuleVisibility,
-                );
+                QR.to(SuperAdminRouter.root + SuperAdminRouter.editPermissions);
               },
               child: MenuCardUi(
                 text: AppLocalizations.of(context)!.adminVisibilities,

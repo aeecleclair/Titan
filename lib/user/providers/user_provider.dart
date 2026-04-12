@@ -31,18 +31,6 @@ class UserNotifier extends SingleNotifier<User> {
     return await update(userRepository.updateMe, user);
   }
 
-  Future<bool> changePassword(
-    String oldPassword,
-    String newPassword,
-    User user,
-  ) async {
-    return await userRepository.changePassword(
-      oldPassword,
-      newPassword,
-      user.email,
-    );
-  }
-
   Future<bool> deletePersonal() async {
     return await userRepository.deletePersonalData();
   }

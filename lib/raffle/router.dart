@@ -52,7 +52,7 @@ class RaffleRouter {
         path: admin,
         builder: () => admin_module_page.AdminModulePage(),
         middleware: [
-          AdminMiddleware(ref, isRaffleAdminProvider),
+          AdminMiddleware(ref, hasRaffleAdminAccessProvider),
           DeferredLoadingMiddleware(admin_module_page.loadLibrary),
         ],
       ),

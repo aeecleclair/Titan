@@ -50,6 +50,13 @@ class DetailDeliveryPage extends HookConsumerWidget {
               child: Column(
                 children: [
                   Text(
+                    delivery.name,
+                    style: const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
                     "${AppLocalizations.of(context)!.amapDeliveryDate} : ${DateFormat.yMd(locale).format(delivery.deliveryDate)}",
                     style: const TextStyle(
                       fontSize: 20,

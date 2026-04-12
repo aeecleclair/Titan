@@ -7,7 +7,6 @@ import 'package:titan/booking/class/booking.dart';
 import 'package:titan/booking/providers/booking_provider.dart';
 import 'package:titan/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:titan/booking/providers/is_admin_provider.dart';
-import 'package:titan/booking/providers/is_manager_provider.dart';
 import 'package:titan/booking/providers/manager_booking_list_provider.dart';
 import 'package:titan/booking/providers/selected_days_provider.dart';
 import 'package:titan/booking/providers/user_booking_list_provider.dart';
@@ -35,7 +34,7 @@ class BookingMainPage extends HookConsumerWidget {
     const double minCalendarHeight = 400;
     const double sumOfHeightOfOthersWidgets = 361;
     final isManager = ref.watch(isManagerProvider);
-    final isAdmin = ref.watch(isAdminProvider);
+    final isAdmin = ref.watch(isBookingAdminProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final confirmedBookingsNotifier = ref.watch(
       confirmedBookingListProvider.notifier,

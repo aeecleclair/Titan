@@ -4,6 +4,7 @@ import 'package:titan/phonebook/class/association_groupement.dart';
 import 'package:titan/phonebook/repositories/association_groupement_repository.dart';
 import 'package:titan/tools/providers/list_notifier.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 class AssociationGroupementListNotifier
     extends ListNotifier<AssociationGroupement> {
@@ -71,3 +72,18 @@ final associationGroupementListProvider =
       });
       return notifier;
     });
+
+final groupementAdminProvider = Provider<List<AssociationGroupement>>((ref) {
+  final associationGroupements = ref.watch(associationGroupementListProvider);
+  final me = ref.watch(userProvider);
+  return associationGroupements.maybeWhen(
+    data: (groupements) {
+      return groupements.where((groupement) {
+        return me.groups.any(
+          (userGroup) => userGroup.id == groupement.managerGroupId,
+        );
+      }).toList();
+    },
+    orElse: () => <AssociationGroupement>[],
+  );
+});

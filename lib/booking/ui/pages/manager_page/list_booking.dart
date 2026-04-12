@@ -192,12 +192,7 @@ class ListBooking extends HookConsumerWidget {
                     );
                   },
                   onCopy: () {
-                    bookingNotifier.setBooking(e.copyWith(id: ""));
-                    QR.to(
-                      BookingRouter.root +
-                          BookingRouter.manager +
-                          BookingRouter.addEdit,
-                    );
+                    handleBooking(e.copyWith(id: ""));
                   },
                   onDelete: () async {},
                 ),

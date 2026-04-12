@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/amap/providers/cash_list_provider.dart';
@@ -13,8 +14,12 @@ class CashContainer extends HookConsumerWidget {
     final cash = ref.watch(cashListProvider);
     return AsyncChild(
       value: cash,
-      builder: (context, cash) =>
-          Row(children: cash.map((e) => UserCashUi(cash: e)).toList()),
+      builder: (context, cash) => Row(
+        children: cash
+            .sorted((a, b) => b.lastOrderDate.isAfter(a.lastOrderDate) ? 1 : -1)
+            .map((e) => UserCashUi(cash: e))
+            .toList(),
+      ),
       loaderColor: AMAPColorConstants.greenGradient2,
     );
   }

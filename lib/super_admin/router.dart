@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/super_admin/providers/is_super_admin_provider.dart';
+import 'package:titan/super_admin/ui/pages/permissions/permissions.dart'
+    deferred as permissions;
 
-import 'package:titan/super_admin/ui/pages/edit_module_visibility/edit_module_visibility.dart'
-    deferred as edit_module_visibility;
 import 'package:titan/super_admin/ui/pages/schools/school_page/school_page.dart'
     deferred as school_page;
 import 'package:titan/super_admin/ui/pages/schools/add_school_page/add_school_page.dart'
@@ -30,7 +30,7 @@ class SuperAdminRouter {
   static const String editSchool = '/edit_school';
   static const String structures = '/structures';
   static const String addEditStructure = '/add_edit_structure';
-  static const String editModuleVisibility = '/edit_module_visibility';
+  static const String editPermissions = '/edit_permissions';
   static const String associationMemberships = '/association_memberships';
   static const String detailAssociationMembership =
       '/detail_association_membership';
@@ -57,11 +57,9 @@ class SuperAdminRouter {
     ),
     children: [
       QRoute(
-        path: editModuleVisibility,
-        builder: () => edit_module_visibility.EditModulesVisibilityPage(),
-        middleware: [
-          DeferredLoadingMiddleware(edit_module_visibility.loadLibrary),
-        ],
+        path: editPermissions,
+        builder: () => permissions.PermissionsPage(),
+        middleware: [DeferredLoadingMiddleware(permissions.loadLibrary)],
       ),
       QRoute(
         path: schools,

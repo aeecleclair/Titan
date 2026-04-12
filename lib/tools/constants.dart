@@ -19,13 +19,6 @@ class ColorConstants {
   static const Color mainBorder = Color(0xFF950303);
 }
 
-const String previousEmailRegex =
-    r'^[\w\-.]*@((ecl\d{2})|(alternance\d{4})|(master)|(auditeur)).ec-lyon.fr$';
-
-const String previousStaffEmailRegex = r'^[\w\-.]*@ec-lyon.fr$';
-
-const String studentRegex = r'^[\w\-.]*@etu(-enise)?.ec-lyon.fr$';
-
 const String unableToOpen = 'Impossible d\'ouvrir le lien';
 
 const int maxHyperionFileSize = 4194304;

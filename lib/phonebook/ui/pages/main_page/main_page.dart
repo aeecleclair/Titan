@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/advert/ui/components/special_action_button.dart';
 import 'package:titan/phonebook/providers/association_filtered_list_provider.dart';
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
@@ -23,8 +22,7 @@ class PhonebookMainPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
-    final isAdmin = ref.watch(isAdminProvider);
+    final adminAcces = ref.watch(hasPhonebookAdminAccessProvider);
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final associationList = ref.watch(associationListProvider);
     final associationGroupementList = ref.watch(
@@ -55,7 +53,7 @@ class PhonebookMainPage extends HookConsumerWidget {
               Row(
                 children: [
                   Expanded(child: AssociationResearchBar()),
-                  if (isPhonebookAdmin || isAdmin) ...[
+                  if (adminAcces) ...[
                     SizedBox(width: 10),
                     SpecialActionButton(
                       icon: HeroIcon(HeroIcons.userGroup, color: Colors.white),

@@ -9,185 +9,11 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get dateToday => 'Today';
+  String get moduleCentralassociation => 'Centralassociation';
 
   @override
-  String get dateYesterday => 'Yesterday';
-
-  @override
-  String get dateTomorrow => 'Tomorrow';
-
-  @override
-  String get dateAt => 'at';
-
-  @override
-  String get dateFrom => 'from';
-
-  @override
-  String get dateTo => 'to';
-
-  @override
-  String get dateBetweenDays => 'to';
-
-  @override
-  String get dateStarting => 'Starting';
-
-  @override
-  String get dateLast => 'Last';
-
-  @override
-  String get dateUntil => 'Until';
-
-  @override
-  String get feedFilterAll => 'All';
-
-  @override
-  String get feedFilterPending => 'Pending';
-
-  @override
-  String get feedFilterApproved => 'Approved';
-
-  @override
-  String get feedFilterRejected => 'Rejected';
-
-  @override
-  String get feedEmptyAll => 'No events available';
-
-  @override
-  String get feedEmptyPending => 'No events pending approval';
-
-  @override
-  String get feedEmptyApproved => 'No approved events';
-
-  @override
-  String get feedEmptyRejected => 'No rejected events';
-
-  @override
-  String get feedEventManagement => 'Event Management';
-
-  @override
-  String get feedTitle => 'Title';
-
-  @override
-  String get feedLocation => 'Location';
-
-  @override
-  String get feedSGDate => 'SG Date';
-
-  @override
-  String get feedSGExternalLink => 'SG External link';
-
-  @override
-  String get feedCreateEvent => 'Create an event';
-
-  @override
-  String get feedNotification => 'Send a notification';
-
-  @override
-  String get feedPleaseSelectAnAssociation => 'Please select an association';
-
-  @override
-  String get feedReject => 'Reject';
-
-  @override
-  String get feedApprove => 'Approve';
-
-  @override
-  String get feedEnded => 'Ended';
-
-  @override
-  String get feedOngoing => 'Ongoing';
-
-  @override
-  String get feedFilter => 'Filter';
-
-  @override
-  String get feedAssociation => 'Association';
-
-  @override
-  String feedAssociationEvent(String name) {
-    return '$name event';
-  }
-
-  @override
-  String get feedEditEvent => 'Edit event';
-
-  @override
-  String get feedManageAssociationEvents => 'Manage association events';
-
-  @override
-  String get feedNews => 'Calendar';
-
-  @override
-  String get feedNewsType => 'News type';
-
-  @override
-  String get feedNoAssociationEvents => 'No association events';
-
-  @override
-  String get feedApply => 'Apply';
-
-  @override
-  String get feedAdmin => 'Administration';
-
-  @override
-  String get feedCreateAnEvent => 'Create an event';
-
-  @override
-  String get feedManageRequests => 'Manage requests';
-
-  @override
-  String get feedNoNewsAvailable => 'No news available';
-
-  @override
-  String get feedRefresh => 'Refresh';
-
-  @override
-  String get feedPleaseProvideASGExternalLink =>
-      'Please provide a SG external link';
-
-  @override
-  String get feedPleaseProvideASGDate => 'Please provide a SG date';
-
-  @override
-  String feedShotgunIn(String time) {
-    return 'Shotgun in $time';
-  }
-
-  @override
-  String feedVoteIn(String time) {
-    return 'Vote in $time';
-  }
-
-  @override
-  String get feedCantOpenLink => 'Can\'t open link';
-
-  @override
-  String get feedGetReady => 'Get ready!';
-
-  @override
-  String get eventActionCampaign => 'You can vote';
-
-  @override
-  String get eventActionEvent => 'You are invited';
-
-  @override
-  String get eventActionCampaignSubtitle => 'Vote now';
-
-  @override
-  String get eventActionEventSubtitle => 'Answer the invitation';
-
-  @override
-  String get eventActionCampaignButton => 'Vote';
-
-  @override
-  String get eventActionEventButton => 'Reserve';
-
-  @override
-  String get eventActionCampaignValidated => 'I voted!';
-
-  @override
-  String get eventActionEventValidated => 'I\'m coming!';
+  String get moduleCentralassociationDescription =>
+      'Aggregator of association links';
 
   @override
   String get adminAccountTypes => 'Account types';
@@ -196,10 +22,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminAdd => 'Add';
 
   @override
-  String get adminAddGroup => 'Add group';
-
-  @override
-  String get adminAddMember => 'Add member';
+  String get adminAddAssociation => 'Add association';
 
   @override
   String get adminAddedGroup => 'Group created';
@@ -211,6 +34,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminAddedMember => 'Member added';
 
   @override
+  String get adminAddedSchool => 'School created';
+
+  @override
+  String get adminAddedStructure => 'Structure added';
+
+  @override
+  String get adminAddGroup => 'Add group';
+
+  @override
   String get adminAddingError => 'Error while adding';
 
   @override
@@ -220,22 +52,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminAddLoaningGroup => 'Add loaning group';
 
   @override
+  String get adminAddMember => 'Add member';
+
+  @override
   String get adminAddSchool => 'Add school';
 
   @override
   String get adminAddStructure => 'Add structure';
 
   @override
-  String get adminAddedSchool => 'School created';
-
-  @override
-  String get adminAddedStructure => 'Structure added';
-
-  @override
-  String get adminEditedStructure => 'Structure edited';
+  String get adminAdmin => 'Admin';
 
   @override
   String get adminAdministration => 'Administration';
+
+  @override
+  String get adminAssociationCreated => 'Association created';
+
+  @override
+  String get adminAssociationCreationError =>
+      'Error while creating association';
 
   @override
   String get adminAssociationMembership => 'Membership';
@@ -244,7 +80,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminAssociationMembershipName => 'Membership name';
 
   @override
+  String get adminAssociationMembershipsManagement =>
+      'Association memberships management';
+
+  @override
+  String get adminAssociationName => 'Association name';
+
+  @override
+  String get adminAssociations => 'Associations';
+
+  @override
   String get adminAssociationsMemberships => 'Memberships';
+
+  @override
+  String get adminAssociationUpdated => 'Association updated';
+
+  @override
+  String get adminAssociationUpdateError => 'Error while updating association';
 
   @override
   String adminBankAccountHolder(String bankAccountHolder) {
@@ -264,10 +116,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminBicError => 'BIC must be 11 characters';
 
   @override
+  String get adminChooseAssociationManagerGroup =>
+      'Choose a group to manage this association';
+
+  @override
+  String get adminChooseGroup => 'Choose a group';
+
+  @override
+  String get adminChooseGroupManager =>
+      'Choose a group to manage this membership';
+
+  @override
   String get adminCity => 'City';
 
   @override
   String get adminClearFilters => 'Clear filters';
+
+  @override
+  String get adminContent => 'Content';
 
   @override
   String get adminCountry => 'Country';
@@ -304,16 +170,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminDeletedAssociationMembership => 'Membership deleted';
 
   @override
+  String get adminDeletedGroup => 'Group deleted';
+
+  @override
+  String get adminDeletedSchool => 'School deleted';
+
+  @override
   String get adminDeleteGroup => 'Delete group?';
 
   @override
-  String get adminDeletedGroup => 'Group deleted';
+  String get adminDeleteGroupConfirmation =>
+      'Are you sure you want to delete this group?';
 
   @override
   String get adminDeleteSchool => 'Delete school?';
 
   @override
-  String get adminDeletedSchool => 'School deleted';
+  String get adminDeleteUsers => 'Delete users';
 
   @override
   String get adminDeleting => 'Deleting';
@@ -328,16 +201,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminEdit => 'Edit';
 
   @override
-  String get adminEditStructure => 'Edit structure';
+  String adminEditAssociation(String associationName) {
+    return 'Edit association : $associationName';
+  }
+
+  @override
+  String get adminEditedStructure => 'Structure edited';
+
+  @override
+  String get adminEditGroup => 'Edit group';
 
   @override
   String get adminEditMembership => 'Edit membership';
 
   @override
-  String get adminEmptyDate => 'Empty date';
-
-  @override
-  String get adminEmptyFieldError => 'Name cannot be empty';
+  String get adminEditStructure => 'Edit structure';
 
   @override
   String get adminEmailFailed =>
@@ -345,6 +223,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adminEmailRegex => 'Email Regex';
+
+  @override
+  String get adminEmptyDate => 'Empty date';
+
+  @override
+  String get adminEmptyFieldError => 'Name cannot be empty';
 
   @override
   String get adminEmptyUser => 'Empty user';
@@ -362,13 +246,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminError => 'Error';
 
   @override
+  String get adminFailedToDeleteGroup => 'Failed to delete group';
+
+  @override
+  String get adminFailedToInviteUsers => 'Failed to invite users';
+
+  @override
+  String get adminFailedToSendNotification => 'Failed to send notification';
+
+  @override
+  String get adminFailedToUpdateAssociationLogo =>
+      'Failed to update association logo';
+
+  @override
   String get adminFilters => 'Filters';
 
   @override
   String get adminGroup => 'Group';
 
   @override
+  String get adminGroupNotification => 'Group notifications';
+
+  @override
   String get adminGroups => 'Groups';
+
+  @override
+  String get adminGroupsManagement => 'Groups management';
 
   @override
   String get adminIban => 'IBAN';
@@ -377,255 +280,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminIbanError => 'IBAN must be 27 characters';
 
   @override
-  String get adminLoaningGroup => 'Loaning group';
-
-  @override
-  String get adminLooking => 'Searching';
-
-  @override
-  String get adminManager => 'Structure administrator';
-
-  @override
-  String get adminMaximum => 'Maximum';
-
-  @override
-  String get adminMembers => 'Members';
-
-  @override
-  String get adminMembershipAddingError =>
-      'Error while adding (likely due to overlapping dates)';
-
-  @override
-  String get adminMemberships => 'Memberships';
-
-  @override
-  String get adminMembershipUpdatingError =>
-      'Error while updating (likely due to overlapping dates)';
-
-  @override
-  String get adminMinimum => 'Minimum';
-
-  @override
-  String get adminModifyModuleVisibility => 'Module visibility';
-
-  @override
-  String get adminName => 'Name';
-
-  @override
-  String get adminNoGroup => 'No group';
-
-  @override
-  String get adminNoManager => 'No manager selected';
-
-  @override
-  String get adminNoMember => 'No member';
-
-  @override
-  String get adminNoMoreLoaner => 'No lender available';
-
-  @override
-  String get adminNoSchool => 'No school';
-
-  @override
-  String get adminRemoveGroupMember => 'Remove member from group?';
-
-  @override
-  String get adminResearch => 'Search';
-
-  @override
-  String get adminSchools => 'Schools';
-
-  @override
-  String get adminShortId => 'Short ID (3 letters)';
-
-  @override
-  String get adminShortIdError => 'Short ID must be 3 characters';
-
-  @override
-  String get adminSiegeAddress => 'Head office address';
-
-  @override
-  String get adminSiret => 'SIRET';
-
-  @override
-  String get adminSiretError => 'SIRET must be 14 digits';
-
-  @override
-  String get adminStreet => 'Street and number';
-
-  @override
-  String get adminStructures => 'Structures';
-
-  @override
-  String get adminStartDate => 'Start date';
-
-  @override
-  String get adminStartDateMaximal => 'Maximum start date';
-
-  @override
-  String get adminStartDateMinimal => 'Minimum start date';
-
-  @override
-  String get adminUndefinedBankAccountHolder =>
-      'Bank account holder not defined';
-
-  @override
-  String get adminUpdatedAssociationMembership => 'Membership updated';
-
-  @override
-  String get adminUpdatedGroup => 'Group updated';
-
-  @override
-  String get adminUpdatedMembership => 'Membership updated';
-
-  @override
-  String get adminUpdatingError => 'Error while updating';
-
-  @override
-  String get adminUser => 'User';
-
-  @override
-  String get adminValidateFilters => 'Apply filters';
-
-  @override
-  String get adminVisibilities => 'Visibilities';
-
-  @override
-  String get adminZipcode => 'Zip code';
-
-  @override
-  String get adminGroupNotification => 'Group notifications';
-
-  @override
-  String adminNotifyGroup(String groupName) {
-    return 'Send a notification';
-  }
-
-  @override
-  String get adminTitle => 'Title';
-
-  @override
-  String get adminContent => 'Content';
-
-  @override
-  String get adminSend => 'Send';
-
-  @override
-  String get adminNotificationSent => 'Notification sent';
-
-  @override
-  String get adminFailedToSendNotification => 'Failed to send notification';
-
-  @override
-  String get adminGroupsManagement => 'Groups management';
-
-  @override
-  String get adminEditGroup => 'Edit group';
-
-  @override
-  String get adminManageMembers => 'Manage members';
-
-  @override
-  String get adminDeleteGroupConfirmation =>
-      'Are you sure you want to delete this group?';
-
-  @override
-  String get adminFailedToDeleteGroup => 'Failed to delete group';
-
-  @override
-  String get adminUsersAndGroups => 'Users and groups';
-
-  @override
-  String get adminUsersManagement => 'Users management';
-
-  @override
-  String get adminUsersManagementDescription =>
-      'Manage users, groups, and associations';
-
-  @override
-  String get adminManageUserGroups => 'Manage user groups';
-
-  @override
-  String get adminSendNotificationToGroup => 'Send notification to group';
-
-  @override
-  String get adminPaiementModule => 'Payment module';
-
-  @override
-  String get adminPaiement => 'Payment';
-
-  @override
-  String get adminManagePaiementStructures => 'Manage payment structures';
-
-  @override
-  String get adminManageUsersAssociationMemberships =>
-      'Manage users\' association memberships';
-
-  @override
-  String get adminAssociationMembershipsManagement =>
-      'Association memberships management';
-
-  @override
-  String get adminChooseGroupManager =>
-      'Choose a group to manage this membership';
-
-  @override
-  String get adminSelectManager => 'Select a manager';
-
-  @override
   String get adminImportList => 'Import a list';
 
   @override
   String get adminImportUsersDescription =>
       'Import users from a CSV file. The CSV file must contain one email address per line.';
-
-  @override
-  String get adminFailedToInviteUsers => 'Failed to invite users';
-
-  @override
-  String get adminDeleteUsers => 'Delete users';
-
-  @override
-  String get adminAdmin => 'Admin';
-
-  @override
-  String get adminAssociations => 'Associations';
-
-  @override
-  String get adminManageAssociations => 'Manage associations';
-
-  @override
-  String get adminAddAssociation => 'Add association';
-
-  @override
-  String get adminAssociationName => 'Association name';
-
-  @override
-  String get adminSelectGroupAssociationManager =>
-      'Select a group to manage this association';
-
-  @override
-  String adminEditAssociation(String associationName) {
-    return 'Edit association : $associationName';
-  }
-
-  @override
-  String adminManagerGroup(String groupName) {
-    return 'Manager group : $groupName';
-  }
-
-  @override
-  String get adminAssociationCreated => 'Association created';
-
-  @override
-  String get adminAssociationUpdated => 'Association updated';
-
-  @override
-  String get adminAssociationCreationError =>
-      'Error while creating association';
-
-  @override
-  String get adminAssociationUpdateError => 'Error while updating association';
 
   @override
   String get adminInvite => 'Invite';
@@ -649,21 +308,188 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get adminUpdatedAssociationLogo => 'Association logo updated';
+  String get adminLoaningGroup => 'Loaning group';
+
+  @override
+  String get adminLooking => 'Searching';
+
+  @override
+  String get adminManageAssociations => 'Manage associations';
+
+  @override
+  String get adminManageMembers => 'Manage members';
+
+  @override
+  String get adminManagePaiementStructures => 'Manage payment structures';
+
+  @override
+  String get adminManager => 'Structure administrator';
+
+  @override
+  String adminManagerGroup(String groupName) {
+    return 'Manager group : $groupName';
+  }
+
+  @override
+  String get adminManageUserGroups => 'Manage user groups';
+
+  @override
+  String get adminManageUsersAssociationMemberships =>
+      'Manage users\' association memberships';
+
+  @override
+  String get adminMaximum => 'Maximum';
+
+  @override
+  String get adminMembers => 'Members';
+
+  @override
+  String get adminMembershipAddingError =>
+      'Error while adding (likely due to overlapping dates)';
+
+  @override
+  String get adminMemberships => 'Memberships';
+
+  @override
+  String get adminMembershipUpdatingError =>
+      'Error while updating (likely due to overlapping dates)';
+
+  @override
+  String get adminMinimum => 'Minimum';
+
+  @override
+  String get adminModifyPermissions => 'Modify permissions';
+
+  @override
+  String get adminName => 'Name';
+
+  @override
+  String get adminNoGroup => 'No group';
+
+  @override
+  String get adminNoManager => 'No manager selected';
+
+  @override
+  String get adminNoMember => 'No member';
+
+  @override
+  String get adminNoMoreLoaner => 'No lender available';
+
+  @override
+  String get adminNoSchool => 'No school';
+
+  @override
+  String get adminNotificationSent => 'Notification sent';
+
+  @override
+  String adminNotifyGroup(String groupName) {
+    return 'Send a notification';
+  }
+
+  @override
+  String get adminPaiement => 'Payment';
+
+  @override
+  String get adminPaiementModule => 'Payment module';
+
+  @override
+  String get adminRemoveGroupMember => 'Remove member from group?';
+
+  @override
+  String get adminResearch => 'Search';
+
+  @override
+  String get adminSchools => 'Schools';
+
+  @override
+  String get adminSelectGroupAssociationManager =>
+      'Select a group to manage this association';
+
+  @override
+  String get adminSelectManager => 'Select a manager';
+
+  @override
+  String get adminSend => 'Send';
+
+  @override
+  String get adminSendNotificationToGroup => 'Send notification to group';
+
+  @override
+  String get adminShortId => 'Short ID (3 letters)';
+
+  @override
+  String get adminShortIdError => 'Short ID must be 3 characters';
+
+  @override
+  String get adminSiegeAddress => 'Head office address';
+
+  @override
+  String get adminSiret => 'SIRET';
+
+  @override
+  String get adminSiretError => 'SIRET must be 14 digits';
+
+  @override
+  String get adminStartDate => 'Start date';
+
+  @override
+  String get adminStartDateMaximal => 'Maximum start date';
+
+  @override
+  String get adminStartDateMinimal => 'Minimum start date';
+
+  @override
+  String get adminStreet => 'Street and number';
+
+  @override
+  String get adminStructures => 'Structures';
+
+  @override
+  String get adminTitle => 'Title';
 
   @override
   String get adminTooHeavyLogo => 'Logo too heavy, maximum size is 4MB';
 
   @override
-  String get adminFailedToUpdateAssociationLogo =>
-      'Failed to update association logo';
+  String get adminUndefinedBankAccountHolder =>
+      'Bank account holder not defined';
 
   @override
-  String get adminChooseGroup => 'Choose a group';
+  String get adminUpdatedAssociationLogo => 'Association logo updated';
 
   @override
-  String get adminChooseAssociationManagerGroup =>
-      'Choose a group to manage this association';
+  String get adminUpdatedAssociationMembership => 'Membership updated';
+
+  @override
+  String get adminUpdatedGroup => 'Group updated';
+
+  @override
+  String get adminUpdatedMembership => 'Membership updated';
+
+  @override
+  String get adminUpdatingError => 'Error while updating';
+
+  @override
+  String get adminUser => 'User';
+
+  @override
+  String get adminUsersAndGroups => 'Users and groups';
+
+  @override
+  String get adminUsersManagement => 'Users management';
+
+  @override
+  String get adminUsersManagementDescription =>
+      'Manage users, groups, and associations';
+
+  @override
+  String get adminValidateFilters => 'Apply filters';
+
+  @override
+  String get adminVisibilities => 'Visibilities';
+
+  @override
+  String get adminZipcode => 'Zip code';
 
   @override
   String get advertAdd => 'Add';
@@ -726,7 +552,46 @@ class AppLocalizationsEn extends AppLocalizations {
   String get advertModifyAnnouncingGroup => 'Edit announcement group';
 
   @override
+  String get advertMonthApr => 'Apr';
+
+  @override
+  String get advertMonthAug => 'Aug';
+
+  @override
+  String get advertMonthDec => 'Dec';
+
+  @override
+  String get advertMonthFeb => 'Feb';
+
+  @override
+  String get advertMonthJan => 'Jan';
+
+  @override
+  String get advertMonthJul => 'Jul';
+
+  @override
+  String get advertMonthJun => 'Jun';
+
+  @override
+  String get advertMonthMar => 'Mar';
+
+  @override
+  String get advertMonthMay => 'May';
+
+  @override
+  String get advertMonthNov => 'Nov';
+
+  @override
+  String get advertMonthOct => 'Oct';
+
+  @override
+  String get advertMonthSep => 'Sep';
+
+  @override
   String get advertNoMoreAnnouncer => 'No more announcers available';
+
+  @override
+  String get advertNotification => 'Send a notification';
 
   @override
   String get advertNoValue => 'Please enter a value';
@@ -736,9 +601,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get advertPublishToFeed => 'Publish to feed?';
-
-  @override
-  String get advertNotification => 'Send a notification';
 
   @override
   String get advertRemovedAnnouncer => 'Announcer removed';
@@ -751,42 +613,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get advertTitle => 'Title';
-
-  @override
-  String get advertMonthJan => 'Jan';
-
-  @override
-  String get advertMonthFeb => 'Feb';
-
-  @override
-  String get advertMonthMar => 'Mar';
-
-  @override
-  String get advertMonthApr => 'Apr';
-
-  @override
-  String get advertMonthMay => 'May';
-
-  @override
-  String get advertMonthJun => 'Jun';
-
-  @override
-  String get advertMonthJul => 'Jul';
-
-  @override
-  String get advertMonthAug => 'Aug';
-
-  @override
-  String get advertMonthSep => 'Sep';
-
-  @override
-  String get advertMonthOct => 'Oct';
-
-  @override
-  String get advertMonthNov => 'Nov';
-
-  @override
-  String get advertMonthDec => 'Dec';
 
   @override
   String get amapAccounts => 'Accounts';
@@ -810,12 +636,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get amapAddedUser => 'User added';
 
   @override
-  String get amapAddProduct => 'Add product';
-
-  @override
-  String get amapAddUser => 'Add user';
-
-  @override
   String get amapAddingACommand => 'Add an order';
 
   @override
@@ -829,6 +649,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get amapAddOrder => 'Add an order';
+
+  @override
+  String get amapAddProduct => 'Add product';
+
+  @override
+  String get amapAddUser => 'Add user';
 
   @override
   String get amapAdmin => 'Admin';
@@ -861,6 +687,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get amapCommandDate => 'Order date';
 
   @override
+  String get amapCommandName => 'Order name';
+
+  @override
   String get amapCommandProducts => 'Order products';
 
   @override
@@ -876,14 +705,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get amapDelete => 'Delete';
 
   @override
+  String get amapDeletedDelivery => 'Delivery deleted';
+
+  @override
   String get amapDeleteDelivery => 'Delete delivery?';
 
   @override
   String get amapDeleteDeliveryDescription =>
       'Are you sure you want to delete this delivery?';
-
-  @override
-  String get amapDeletedDelivery => 'Delivery deleted';
 
   @override
   String get amapDeletedOrder => 'Order deleted';
@@ -944,22 +773,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get amapDeliveryLocked => 'Delivery locked';
 
   @override
-  String get amapDeliveryOn => 'Delivery on';
-
-  @override
-  String get amapDeliveryOpened => 'Delivery opened';
-
-  @override
   String get amapDeliveryNotArchived => 'Delivery not archived';
-
-  @override
-  String get amapDeliveryNotLocked => 'Delivery not locked';
 
   @override
   String get amapDeliveryNotDelivered => 'Delivery not completed';
 
   @override
+  String get amapDeliveryNotLocked => 'Delivery not locked';
+
+  @override
   String get amapDeliveryNotOpened => 'Delivery not opened';
+
+  @override
+  String get amapDeliveryOn => 'Delivery on';
+
+  @override
+  String get amapDeliveryOpened => 'Delivery opened';
 
   @override
   String get amapEditDelivery => 'Edit delivery';
@@ -998,6 +827,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get amapHandlingAccount => 'Manage accounts';
 
   @override
+  String get amapIncorrectlyFilledForm => 'Form incorrectly filled';
+
+  @override
   String get amapLoading => 'Loading...';
 
   @override
@@ -1016,10 +848,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get amapLockedOrder => 'Order locked';
 
   @override
-  String get amapLooking => 'Search';
+  String get amapLockingDelivery => 'Lock delivery?';
 
   @override
-  String get amapLockingDelivery => 'Lock delivery?';
+  String get amapLooking => 'Search';
 
   @override
   String get amapMidDay => 'Midday';
@@ -1034,9 +866,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get amapNextStep => 'Next step';
 
   @override
-  String get amapNoProduct => 'No product';
-
-  @override
   String get amapNoCurrentOrder => 'No current order';
 
   @override
@@ -1047,6 +876,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get amapNoOrder => 'No order';
+
+  @override
+  String get amapNoProduct => 'No product';
 
   @override
   String get amapNoSelectedDelivery => 'No delivery selected';
@@ -1100,10 +932,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get amapProduct => 'product';
 
   @override
-  String get amapProducts => 'Products';
+  String get amapProductInDelivery => 'Product in an unfinished delivery';
 
   @override
-  String get amapProductInDelivery => 'Product in an unfinished delivery';
+  String get amapProducts => 'Products';
 
   @override
   String get amapQuantity => 'Quantity';
@@ -1151,28 +983,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingAdd => 'Add';
 
   @override
-  String get bookingAddBookingPage => 'Request';
-
-  @override
-  String get bookingAddRoom => 'Add room';
-
-  @override
   String get bookingAddBooking => 'Add booking';
+
+  @override
+  String get bookingAddBookingPage => 'Request';
 
   @override
   String get bookingAddedBooking => 'Request added';
 
   @override
-  String get bookingAddedRoom => 'Room added';
+  String get bookingAddedManager => 'Manager added';
 
   @override
-  String get bookingAddedManager => 'Manager added';
+  String get bookingAddedRoom => 'Room added';
 
   @override
   String get bookingAddingError => 'Error while adding';
 
   @override
   String get bookingAddManager => 'Add manager';
+
+  @override
+  String get bookingAddRoom => 'Add room';
 
   @override
   String get bookingAdminPage => 'Admin';
@@ -1232,9 +1064,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingDelete => 'Delete';
 
   @override
-  String get bookingDeleting => 'Deleting';
-
-  @override
   String get bookingDeleteBooking => 'Deleting';
 
   @override
@@ -1245,18 +1074,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingDeletedBooking => 'Booking deleted';
 
   @override
+  String get bookingDeletedManager => 'Manager deleted';
+
+  @override
   String get bookingDeletedRoom => 'Room deleted';
 
   @override
-  String get bookingDeletedManager => 'Manager deleted';
+  String get bookingDeleteManagerConfirmation =>
+      'Are you sure you want to delete this manager?\n\nThe manager must not be associated with any room to be deleted';
 
   @override
   String get bookingDeleteRoomConfirmation =>
       'Are you sure you want to delete this room?\n\nThe room must have no current or upcoming bookings to be deleted';
 
   @override
-  String get bookingDeleteManagerConfirmation =>
-      'Are you sure you want to delete this manager?\n\nThe manager must not be associated with any room to be deleted';
+  String get bookingDeleting => 'Deleting';
 
   @override
   String get bookingDeletingBooking => 'Delete the booking?';
@@ -1274,16 +1106,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingEditBooking => 'Edit a booking';
 
   @override
-  String get bookingEditionError => 'Error while editing';
+  String get bookingEditedBooking => 'Booking edited';
 
   @override
-  String get bookingEditedBooking => 'Booking edited';
+  String get bookingEditedManager => 'Manager edited';
 
   @override
   String get bookingEditedRoom => 'Room edited';
 
   @override
-  String get bookingEditedManager => 'Manager edited';
+  String get bookingEditionError => 'Error while editing';
 
   @override
   String get bookingEditManager => 'Edit or delete a manager';
@@ -1316,10 +1148,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingInterval => 'Interval';
 
   @override
-  String get bookingInvalidIntervalError => 'Invalid interval';
+  String get bookingInvalidDates => 'Invalid dates';
 
   @override
-  String get bookingInvalidDates => 'Invalid dates';
+  String get bookingInvalidIntervalError => 'Invalid interval';
 
   @override
   String get bookingInvalidRoom => 'Invalid room';
@@ -1352,14 +1184,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingNo => 'No';
 
   @override
+  String get bookingNoAppointmentInReccurence =>
+      'No slot exists with these recurrence settings';
+
+  @override
   String get bookingNoCurrentBooking => 'No current booking';
 
   @override
   String get bookingNoDateError => 'Please choose a date';
-
-  @override
-  String get bookingNoAppointmentInReccurence =>
-      'No slot exists with these recurrence settings';
 
   @override
   String get bookingNoDaySelected => 'No day selected';
@@ -1380,10 +1212,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingNoReasonError => 'Please enter a reason';
 
   @override
-  String get bookingNoRoomFoundError => 'No room registered';
+  String get bookingNoRoomFound => 'No room found';
 
   @override
-  String get bookingNoRoomFound => 'No room found';
+  String get bookingNoRoomFoundError => 'No room registered';
 
   @override
   String get bookingNote => 'Note';
@@ -1428,13 +1260,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingStartHour => 'Start hour';
 
   @override
-  String get bookingWeeks => 'Weeks';
-
-  @override
-  String get bookingYes => 'Yes';
+  String get bookingWeekDayFri => 'Friday';
 
   @override
   String get bookingWeekDayMon => 'Monday';
+
+  @override
+  String get bookingWeekDaySat => 'Saturday';
+
+  @override
+  String get bookingWeekDaySun => 'Sunday';
+
+  @override
+  String get bookingWeekDayThu => 'Thursday';
 
   @override
   String get bookingWeekDayTue => 'Tuesday';
@@ -1443,16 +1281,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingWeekDayWed => 'Wednesday';
 
   @override
-  String get bookingWeekDayThu => 'Thursday';
+  String get bookingWeeks => 'Weeks';
 
   @override
-  String get bookingWeekDayFri => 'Friday';
-
-  @override
-  String get bookingWeekDaySat => 'Saturday';
-
-  @override
-  String get bookingWeekDaySun => 'Sunday';
+  String get bookingYes => 'Yes';
 
   @override
   String get cinemaAdd => 'Add';
@@ -1494,6 +1326,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cinemaEmptyUrl => 'Please enter a URL';
 
   @override
+  String get cinemaGenre => 'Genre';
+
+  @override
   String get cinemaImportFromTMDB => 'Import from TMDB';
 
   @override
@@ -1504,9 +1339,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cinemaInvalidUrl => 'Invalid URL';
-
-  @override
-  String get cinemaGenre => 'Genre';
 
   @override
   String get cinemaName => 'Name';
@@ -1545,6 +1377,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cinemaThe => 'The';
 
   @override
+  String get dateAt => 'at';
+
+  @override
+  String get dateBetweenDays => 'to';
+
+  @override
+  String get dateFrom => 'from';
+
+  @override
+  String get dateLast => 'Last';
+
+  @override
+  String get dateStarting => 'Starting';
+
+  @override
+  String get dateTo => 'to';
+
+  @override
+  String get dateToday => 'Today';
+
+  @override
+  String get dateTomorrow => 'Tomorrow';
+
+  @override
+  String get dateUntil => 'Until';
+
+  @override
+  String get dateYesterday => 'Yesterday';
+
+  @override
   String get drawerAdmin => 'Administration';
 
   @override
@@ -1575,13 +1437,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get drawerSettings => 'Settings';
 
   @override
+  String get eventActionCampaign => 'You can vote';
+
+  @override
+  String get eventActionCampaignButton => 'Vote';
+
+  @override
+  String get eventActionCampaignSubtitle => 'Vote now';
+
+  @override
+  String get eventActionCampaignValidated => 'I voted!';
+
+  @override
+  String get eventActionEvent => 'You are invited';
+
+  @override
+  String get eventActionEventButton => 'Reserve';
+
+  @override
+  String get eventActionEventSubtitle => 'Answer the invitation';
+
+  @override
+  String get eventActionEventValidated => 'I\'m coming!';
+
+  @override
   String get eventAdd => 'Add';
 
   @override
-  String get eventAddEvent => 'Add an event';
+  String get eventAddedEvent => 'Event added';
 
   @override
-  String get eventAddedEvent => 'Event added';
+  String get eventAddEvent => 'Add an event';
 
   @override
   String get eventAddingError => 'Error while adding';
@@ -1593,25 +1479,46 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventConfirm => 'Confirm';
 
   @override
-  String get eventConfirmEvent => 'Confirm the event?';
-
-  @override
   String get eventConfirmation => 'Confirmation';
 
   @override
   String get eventConfirmed => 'Confirmed';
 
   @override
+  String get eventConfirmEvent => 'Confirm the event?';
+
+  @override
   String get eventDates => 'Dates';
+
+  @override
+  String get eventDayFri => 'Friday';
+
+  @override
+  String get eventDayMon => 'Monday';
+
+  @override
+  String get eventDaySat => 'Saturday';
+
+  @override
+  String get eventDaySun => 'Sunday';
+
+  @override
+  String get eventDayThu => 'Thursday';
+
+  @override
+  String get eventDayTue => 'Tuesday';
+
+  @override
+  String get eventDayWed => 'Wednesday';
 
   @override
   String get eventDecline => 'Decline';
 
   @override
-  String get eventDeclineEvent => 'Decline the event?';
+  String get eventDeclined => 'Declined';
 
   @override
-  String get eventDeclined => 'Declined';
+  String get eventDeclineEvent => 'Decline the event?';
 
   @override
   String get eventDelete => 'Delete';
@@ -1640,10 +1547,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventEdit => 'Edit';
 
   @override
-  String get eventEditEvent => 'Edit an event';
+  String get eventEditedEvent => 'Event edited';
 
   @override
-  String get eventEditedEvent => 'Event edited';
+  String get eventEditEvent => 'Edit an event';
 
   @override
   String get eventEditingError => 'Error while editing';
@@ -1656,6 +1563,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventError => 'Error';
+
+  @override
+  String get eventEventEvery => 'Every';
 
   @override
   String get eventEventList => 'Event list';
@@ -1725,10 +1635,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventNoOrganizerError => 'Please enter an organizer';
 
   @override
-  String get eventNoPlaceError => 'Please enter a location';
+  String get eventNoPhoneRegistered => 'Number not provided';
 
   @override
-  String get eventNoPhoneRegistered => 'Number not provided';
+  String get eventNoPlaceError => 'Please enter a location';
 
   @override
   String get eventNoRuleError => 'Please enter a recurrence rule';
@@ -1770,40 +1680,143 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventTitle => 'Events';
 
   @override
-  String get eventYes => 'Yes';
-
-  @override
-  String get eventEventEvery => 'Every';
-
-  @override
   String get eventWeeks => 'weeks';
 
   @override
-  String get eventDayMon => 'Monday';
+  String get eventYes => 'Yes';
 
   @override
-  String get eventDayTue => 'Tuesday';
+  String get feedAdmin => 'Administration';
 
   @override
-  String get eventDayWed => 'Wednesday';
+  String get feedApply => 'Apply';
 
   @override
-  String get eventDayThu => 'Thursday';
+  String get feedApprove => 'Approve';
 
   @override
-  String get eventDayFri => 'Friday';
+  String get feedAssociation => 'Association';
 
   @override
-  String get eventDaySat => 'Saturday';
+  String feedAssociationEvent(String name) {
+    return '$name event';
+  }
 
   @override
-  String get eventDaySun => 'Sunday';
+  String get feedCantOpenLink => 'Can\'t open link';
 
   @override
-  String get globalConfirm => 'Confirm';
+  String get feedCreateAnEvent => 'Create an event';
+
+  @override
+  String get feedCreateEvent => 'Create an event';
+
+  @override
+  String get feedEditEvent => 'Edit event';
+
+  @override
+  String get feedEmptyAll => 'No events available';
+
+  @override
+  String get feedEmptyApproved => 'No approved events';
+
+  @override
+  String get feedEmptyPending => 'No events pending approval';
+
+  @override
+  String get feedEmptyRejected => 'No rejected events';
+
+  @override
+  String get feedEnded => 'Ended';
+
+  @override
+  String get feedEventManagement => 'Event Management';
+
+  @override
+  String get feedFilter => 'Filter';
+
+  @override
+  String get feedFilterAll => 'All';
+
+  @override
+  String get feedFilterApproved => 'Approved';
+
+  @override
+  String get feedFilterPending => 'Pending';
+
+  @override
+  String get feedFilterRejected => 'Rejected';
+
+  @override
+  String get feedGetReady => 'Get ready!';
+
+  @override
+  String get feedLocation => 'Location';
+
+  @override
+  String get feedManageAssociationEvents => 'Manage association events';
+
+  @override
+  String get feedManageRequests => 'Manage requests';
+
+  @override
+  String get feedNews => 'Calendar';
+
+  @override
+  String get feedNewsType => 'News type';
+
+  @override
+  String get feedNoAssociationEvents => 'No association events';
+
+  @override
+  String get feedNoNewsAvailable => 'No news available';
+
+  @override
+  String get feedNotification => 'Send a notification';
+
+  @override
+  String get feedOngoing => 'Ongoing';
+
+  @override
+  String get feedPleaseProvideASGDate => 'Please provide a SG date';
+
+  @override
+  String get feedPleaseProvideASGExternalLink =>
+      'Please provide a SG external link';
+
+  @override
+  String get feedPleaseSelectAnAssociation => 'Please select an association';
+
+  @override
+  String get feedRefresh => 'Refresh';
+
+  @override
+  String get feedReject => 'Reject';
+
+  @override
+  String get feedSGDate => 'SG Date';
+
+  @override
+  String get feedSGExternalLink => 'SG External link';
+
+  @override
+  String feedShotgunIn(String time) {
+    return 'Shotgun in $time';
+  }
+
+  @override
+  String get feedTitle => 'Title';
+
+  @override
+  String feedVoteIn(String time) {
+    return 'Vote in $time';
+  }
 
   @override
   String get globalCancel => 'Cancel';
+
+  @override
+  String get globalConfirm => 'Confirm';
 
   @override
   String get globalIrreversibleAction => 'This action is irreversible';
@@ -1829,19 +1842,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeNoEvents => 'No events';
 
   @override
-  String get homeTranslateDayShortMon => 'Mon';
-
-  @override
-  String get homeTranslateDayShortTue => 'Tue';
-
-  @override
-  String get homeTranslateDayShortWed => 'Wed';
-
-  @override
-  String get homeTranslateDayShortThu => 'Thu';
-
-  @override
   String get homeTranslateDayShortFri => 'Fri';
+
+  @override
+  String get homeTranslateDayShortMon => 'Mon';
 
   @override
   String get homeTranslateDayShortSat => 'Sat';
@@ -1850,13 +1854,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeTranslateDayShortSun => 'Sun';
 
   @override
+  String get homeTranslateDayShortThu => 'Thu';
+
+  @override
+  String get homeTranslateDayShortTue => 'Tue';
+
+  @override
+  String get homeTranslateDayShortWed => 'Wed';
+
+  @override
   String get loanAdd => 'Add';
-
-  @override
-  String get loanAddLoan => 'Add a loan';
-
-  @override
-  String get loanAddObject => 'Add an object';
 
   @override
   String get loanAddedLoan => 'Loan added';
@@ -1871,19 +1878,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loanAddingError => 'Error while adding';
 
   @override
+  String get loanAddLoan => 'Add a loan';
+
+  @override
+  String get loanAddObject => 'Add an object';
+
+  @override
   String get loanAdmin => 'Administrator';
-
-  @override
-  String get loanAvailable => 'Available';
-
-  @override
-  String get loanAvailableMultiple => 'Available';
-
-  @override
-  String get loanBorrowed => 'Borrowed';
-
-  @override
-  String get loanBorrowedMultiple => 'Borrowed';
 
   @override
   String get loanAnd => 'and';
@@ -1892,19 +1893,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loanAssociation => 'Association';
 
   @override
+  String get loanAvailable => 'Available';
+
+  @override
   String get loanAvailableItems => 'Available items';
+
+  @override
+  String get loanAvailableMultiple => 'Available';
 
   @override
   String get loanBeginDate => 'Loan start date';
 
   @override
+  String get loanBorrowed => 'Borrowed';
+
+  @override
+  String get loanBorrowedMultiple => 'Borrowed';
+
+  @override
   String get loanBorrower => 'Borrower';
 
   @override
-  String get loanCaution => 'Deposit';
+  String get loanCancel => 'Cancel';
 
   @override
-  String get loanCancel => 'Cancel';
+  String get loanCaution => 'Deposit';
 
   @override
   String get loanConfirm => 'Confirm';
@@ -1925,9 +1938,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loanDelete => 'Delete';
 
   @override
-  String get loanDeletingLoan => 'Delete the loan?';
-
-  @override
   String get loanDeletedItem => 'Object deleted';
 
   @override
@@ -1943,19 +1953,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loanDeletingItem => 'Delete the object?';
 
   @override
+  String get loanDeletingLoan => 'Delete the loan?';
+
+  @override
   String get loanDuration => 'Duration';
 
   @override
   String get loanEdit => 'Edit';
 
   @override
+  String get loanEditedRoom => 'Room edited';
+
+  @override
   String get loanEditItem => 'Edit the object';
 
   @override
   String get loanEditLoan => 'Edit the loan';
-
-  @override
-  String get loanEditedRoom => 'Room edited';
 
   @override
   String get loanEndDate => 'Loan end date';
@@ -1980,19 +1993,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'Some fields are missing or incorrect';
 
   @override
-  String get loanInvalidNumber => 'Please enter a number';
+  String get loanInvalidDates => 'Dates are not valid';
 
   @override
-  String get loanInvalidDates => 'Dates are not valid';
+  String get loanInvalidNumber => 'Please enter a number';
 
   @override
   String get loanItem => 'Item';
 
   @override
-  String get loanItems => 'Items';
+  String get loanItemHandling => 'Item management';
 
   @override
-  String get loanItemHandling => 'Item management';
+  String get loanItems => 'Items';
 
   @override
   String get loanItemSelected => 'selected item';
@@ -2040,13 +2053,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loanNoLoan => 'No loan';
 
   @override
-  String get loanNoReturnedDate => 'No return date';
-
-  @override
-  String get loanQuantity => 'Quantity';
-
-  @override
   String get loanNone => 'None';
+
+  @override
+  String get loanNoReturnedDate => 'No return date';
 
   @override
   String get loanNote => 'Note';
@@ -2071,6 +2081,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loanPrevious => 'Previous';
+
+  @override
+  String get loanQuantity => 'Quantity';
 
   @override
   String get loanReturned => 'Returned';
@@ -2142,13 +2155,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginRaffles => 'Raffles';
 
   @override
-  String get loginSignIn => 'Sign in';
-
-  @override
   String get loginRegister => 'Register';
 
   @override
   String get loginShortDescription => 'The associative application';
+
+  @override
+  String get loginSignIn => 'Sign in';
 
   @override
   String get loginUpcomingEvents => 'Upcoming events';
@@ -2157,8 +2170,166 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginUpcomingScreenings => 'Upcoming screenings';
 
   @override
+  String get moduleAdmin => 'Admin';
+
+  @override
+  String get moduleAdminDescription =>
+      'Administration module for administrators';
+
+  @override
+  String get moduleAdvert => 'Feed';
+
+  @override
+  String get moduleAdvertDescription => 'View the latest feed';
+
+  @override
+  String get moduleAmap => 'AMAP';
+
+  @override
+  String get moduleAmapDescription => 'Order your AMAP basket';
+
+  @override
+  String get moduleBooking => 'Booking';
+
+  @override
+  String get moduleBookingDescription => 'Book a room';
+
+  @override
+  String get moduleCalendar => 'Calendar';
+
+  @override
+  String get moduleCalendarDescription => 'View the calendar of events';
+
+  @override
+  String get moduleCentralisation => 'Centralisation';
+
+  @override
+  String get moduleCentralisationDescription => 'Viw all links';
+
+  @override
+  String get moduleCinema => 'Cinema';
+
+  @override
+  String get moduleCinemaDescription => 'View the cinema schedule';
+
+  @override
+  String get moduleEvent => 'Event';
+
+  @override
+  String get moduleEventDescription => 'View events';
+
+  @override
+  String get moduleFeed => 'Events';
+
+  @override
+  String get moduleFeedDescription => 'View the latest events';
+
+  @override
+  String get moduleFlappyBird => 'Flappy Bird';
+
+  @override
+  String get moduleFlappyBirdDescription => 'Play Flappy Bird';
+
+  @override
+  String get moduleLoan => 'Loan';
+
+  @override
+  String get moduleLoanDescription => 'See your loans';
+
+  @override
+  String get moduleOthers => 'Others';
+
+  @override
+  String get moduleOthersDescription => 'Other modules';
+
+  @override
+  String get modulePayment => 'Payment';
+
+  @override
+  String get modulePaymentDescription => 'Pay and see your transactions';
+
+  @override
+  String get modulePh => 'PH';
+
+  @override
+  String get modulePhDescription => 'View the PH';
+
+  @override
+  String get modulePhonebook => 'Phonebook';
+
+  @override
+  String get modulePhonebookDescription => 'View the phonebook';
+
+  @override
+  String get modulePurchases => 'Purchases';
+
+  @override
+  String get modulePurchasesDescription => 'View your purchases';
+
+  @override
+  String get moduleRaffle => 'Raffle';
+
+  @override
+  String get moduleRaffleDescription => 'View the raffle';
+
+  @override
+  String get moduleRecommendation => 'Recommendation';
+
+  @override
+  String get moduleRecommendationDescription => 'View the recommendations';
+
+  @override
+  String get moduleSeedLibrary => 'Seed Library';
+
+  @override
+  String get moduleSeedLibraryDescription => 'View the seed library';
+
+  @override
+  String get moduleSettings => 'Settings';
+
+  @override
+  String get moduleSettingsDescription => 'Manage your settings';
+
+  @override
+  String get moduleStyleGuide => 'StyleGuide';
+
+  @override
+  String get moduleStyleGuideDescription => 'Style guide for developers';
+
+  @override
+  String get moduleVote => 'Vote';
+
+  @override
+  String get moduleVoteDescription => 'Vote for the campaigns';
+
+  @override
+  String get othersAdmin => 'Admin';
+
+  @override
   String get othersCheckInternetConnection =>
       'Please check your internet connection';
+
+  @override
+  String get othersError => 'An error occurred';
+
+  @override
+  String get othersImageError => 'Error adding the image';
+
+  @override
+  String get othersImageSizeTooBig => 'Image size must not exceed 4 MB';
+
+  @override
+  String get othersInvalidNumber => 'Please enter a number';
+
+  @override
+  String get othersNoDateError => 'Please enter a date';
+
+  @override
+  String get othersNoModule =>
+      'No modules available, please try again later 😢😢';
+
+  @override
+  String get othersNoValue => 'Please enter a value';
 
   @override
   String get othersRetry => 'Retry';
@@ -2168,35 +2339,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your app version is too old.\n\nPlease update the app.';
 
   @override
-  String get othersUnableToConnectToServer => 'Unable to connect to the server';
+  String othersUnableToConnectToServer(String url) {
+    return 'Unable to connect to the server: $url';
+  }
 
   @override
   String get othersVersion => 'Version';
-
-  @override
-  String get othersNoModule =>
-      'No modules available, please try again later 😢😢';
-
-  @override
-  String get othersAdmin => 'Admin';
-
-  @override
-  String get othersError => 'An error occurred';
-
-  @override
-  String get othersNoValue => 'Please enter a value';
-
-  @override
-  String get othersInvalidNumber => 'Please enter a number';
-
-  @override
-  String get othersNoDateError => 'Please enter a date';
-
-  @override
-  String get othersImageSizeTooBig => 'Image size must not exceed 4 MB';
-
-  @override
-  String get othersImageError => 'Error adding the image';
 
   @override
   String get paiementAccept => 'Accept';
@@ -2321,9 +2469,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Are you sure you want to delete this seller?';
 
   @override
-  String get paiementDeleteSuccessfully => 'Successfully deleted';
-
-  @override
   String get paiementDeleteStore => 'Delete store';
 
   @override
@@ -2332,6 +2477,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paiementDeleteStoreError => 'Unable to delete the store';
+
+  @override
+  String get paiementDeleteSuccessfully => 'Successfully deleted';
 
   @override
   String get paiementDeletingSellerError => 'Error while deleting seller';
@@ -2626,11 +2774,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementStoreDeleted => 'Store deleted';
 
   @override
-  String paiementStructureManagement(String structure) {
-    return '$structure management';
-  }
-
-  @override
   String get paiementStoreName => 'Store name';
 
   @override
@@ -2638,6 +2781,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paiementStructureAdmin => 'Structure administrator';
+
+  @override
+  String paiementStructureManagement(String structure) {
+    return '$structure management';
+  }
 
   @override
   String get paiementSuccededTransaction => 'Successful payment';
@@ -2730,10 +2878,22 @@ class AppLocalizationsEn extends AppLocalizations {
       'You are about to transfer the structure to ';
 
   @override
+  String get phAdd => 'Add';
+
+  @override
+  String get phAdded => 'Added';
+
+  @override
+  String get phAddingFileError => 'Add error';
+
+  @override
   String get phAddNewJournal => 'Add a new journal';
 
   @override
-  String get phNameField => 'Name: ';
+  String get phAddPdfFile => 'Add a PDF file';
+
+  @override
+  String get phDate => 'Date';
 
   @override
   String get phDateField => 'Date: ';
@@ -2742,49 +2902,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phDelete => 'Are you sure you want to delete this journal?';
 
   @override
-  String get phIrreversibleAction => 'This action is irreversible';
-
-  @override
-  String get phToHeavyFile => 'File too large';
-
-  @override
-  String get phAddPdfFile => 'Add a PDF file';
-
-  @override
-  String get phEditPdfFile => 'Edit PDF file';
-
-  @override
-  String get phPhName => 'PH name';
-
-  @override
-  String get phDate => 'Date';
-
-  @override
-  String get phAdded => 'Added';
+  String get phEdit => 'Edit';
 
   @override
   String get phEdited => 'Edited';
 
   @override
-  String get phAddingFileError => 'Add error';
+  String get phEditPdfFile => 'Edit PDF file';
+
+  @override
+  String get phIrreversibleAction => 'This action is irreversible';
 
   @override
   String get phMissingInformatonsOrPdf => 'Missing information or PDF file';
 
   @override
-  String get phAdd => 'Add';
-
-  @override
-  String get phEdit => 'Edit';
-
-  @override
-  String get phSeePreviousJournal => 'See previous journals';
+  String get phNameField => 'Name: ';
 
   @override
   String get phNoJournalInDatabase => 'No PH yet in database';
-
-  @override
-  String get phSuccesDowloading => 'Successfully downloaded';
 
   @override
   String get phonebookAdd => 'Add';
@@ -2842,13 +2978,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phonebookCancel => 'Cancel';
 
   @override
+  String get phonebookChangeTermConfirm =>
+      'Are you sure you want to change the entire term?\nThis action is irreversible!';
+
+  @override
   String phonebookChangeTermYear(int year) {
     return 'Switch to $year term';
   }
-
-  @override
-  String get phonebookChangeTermConfirm =>
-      'Are you sure you want to change the entire term?\nThis action is irreversible!';
 
   @override
   String get phonebookClose => 'Close';
@@ -2875,21 +3011,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get phonebookDeactivatingError => 'Error during deactivation';
+  String get phonebookDeactivating => 'Deactivate the association?';
 
   @override
-  String get phonebookDetail => 'Details:';
+  String get phonebookDeactivatingError => 'Error during deactivation';
 
   @override
   String get phonebookDelete => 'Delete';
 
   @override
   String get phonebookDeleteAssociation => 'Delete association';
-
-  @override
-  String phonebookDeleteSelectedAssociation(String association) {
-    return 'Delete the association $association?';
-  }
 
   @override
   String get phonebookDeleteAssociationDescription =>
@@ -2905,12 +3036,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phonebookDeleteRole => 'Delete role';
 
   @override
-  String phonebookDeleteUserRole(String name) {
-    return 'Delete the role of $name?';
+  String phonebookDeleteSelectedAssociation(String association) {
+    return 'Delete the association $association?';
   }
 
   @override
-  String get phonebookDeactivating => 'Deactivate the association?';
+  String phonebookDeleteUserRole(String name) {
+    return 'Delete the role of $name?';
+  }
 
   @override
   String get phonebookDeleting => 'Deleting';
@@ -2920,6 +3053,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get phonebookDescription => 'Description';
+
+  @override
+  String get phonebookDetail => 'Details:';
 
   @override
   String get phonebookEdit => 'Edit';
@@ -2938,10 +3074,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phonebookEditAssociationMembers => 'Manage members';
 
   @override
-  String get phonebookEditRole => 'Edit role';
+  String get phonebookEditMembership => 'Edit role';
 
   @override
-  String get phonebookEditMembership => 'Edit role';
+  String get phonebookEditRole => 'Edit role';
 
   @override
   String get phonebookEmail => 'Email:';
@@ -3021,14 +3157,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String phonebookGroups(String association) {
     return 'Manage $association groups';
   }
-
-  @override
-  String phonebookTerm(int year) {
-    return '$year term';
-  }
-
-  @override
-  String get phonebookTermChangingError => 'Error changing term';
 
   @override
   String get phonebookMember => 'Member';
@@ -3134,11 +3262,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phonebookSearchUser => 'Search a user';
 
   @override
-  String get phonebookTooHeavyAssociationPicture =>
-      'Image is too large (max 4MB)';
+  String get phonebookSelectManagerGroup => 'Select the manager group';
 
   @override
-  String get phonebookUpdateGroups => 'Update groups';
+  String phonebookTerm(int year) {
+    return '$year term';
+  }
+
+  @override
+  String get phonebookTermChangingError => 'Error changing term';
+
+  @override
+  String get phonebookTooHeavyAssociationPicture =>
+      'Image is too large (max 4MB)';
 
   @override
   String get phonebookUpdatedAssociation => 'Association updated';
@@ -3154,37 +3290,55 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phonebookUpdatedMember => 'Member updated';
 
   @override
+  String get phonebookUpdateGroups => 'Update groups';
+
+  @override
   String get phonebookUpdatingError => 'Error during update';
 
   @override
   String get phonebookValidation => 'Validate';
 
   @override
-  String get purchasesPurchases => 'Purchases';
+  String get phPhName => 'PH name';
 
   @override
-  String get purchasesResearch => 'Search';
+  String get phSeePreviousJournal => 'See previous journals';
 
   @override
-  String get purchasesNoPurchasesFound => 'No purchases found';
+  String get phSuccesDowloading => 'Successfully downloaded';
 
   @override
-  String get purchasesNoTickets => 'No tickets';
+  String get phToHeavyFile => 'File too large';
 
   @override
-  String get purchasesTicketsError => 'Error loading tickets';
+  String get purchasesAlreadyUsed => 'Already used';
 
   @override
-  String get purchasesPurchasesError => 'Error loading purchases';
+  String get purchasesCancel => 'Cancel';
+
+  @override
+  String get purchasesHistory => 'History';
+
+  @override
+  String get purchasesLeftScan => 'Scans remaining';
+
+  @override
+  String get purchasesLoading => 'Waiting for scan';
 
   @override
   String get purchasesNoPurchases => 'No purchase';
 
   @override
-  String get purchasesTimes => 'times';
+  String get purchasesNoPurchasesFound => 'No purchases found';
 
   @override
-  String get purchasesAlreadyUsed => 'Already used';
+  String get purchasesNoScannableProducts => 'No scannable products';
+
+  @override
+  String get purchasesNoTagGiven => 'Warning, no tag entered';
+
+  @override
+  String get purchasesNoTickets => 'No tickets';
 
   @override
   String get purchasesNotPaid => 'Not validated';
@@ -3193,217 +3347,98 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesPleaseSelectProduct => 'Please select a product';
 
   @override
-  String get purchasesProducts => 'Products';
-
-  @override
-  String get purchasesCancel => 'Cancel';
-
-  @override
-  String get purchasesValidate => 'Validate';
-
-  @override
-  String get purchasesLeftScan => 'Scans remaining';
-
-  @override
-  String get purchasesTag => 'Tag';
-
-  @override
-  String get purchasesHistory => 'History';
-
-  @override
   String get purchasesPleaseSelectSeller => 'Please select a seller';
 
   @override
-  String get purchasesNoTagGiven => 'Warning, no tag entered';
+  String get purchasesProducts => 'Products';
 
   @override
-  String get purchasesTickets => 'Tickets';
+  String get purchasesPurchases => 'Purchases';
 
   @override
-  String get purchasesNoScannableProducts => 'No scannable products';
+  String get purchasesPurchasesError => 'Error loading purchases';
 
   @override
-  String get purchasesLoading => 'Waiting for scan';
+  String get purchasesResearch => 'Search';
 
   @override
   String get purchasesScan => 'Scan';
 
   @override
-  String get raffleRaffle => 'Raffle';
+  String get purchasesTag => 'Tag';
 
   @override
-  String get rafflePrize => 'Prize';
+  String get purchasesTickets => 'Tickets';
 
   @override
-  String get rafflePrizes => 'Prizes';
+  String get purchasesTicketsError => 'Error loading tickets';
 
   @override
-  String get raffleActualRaffles => 'Current raffles';
+  String get purchasesTimes => 'times';
 
   @override
-  String get rafflePastRaffles => 'Past raffles';
-
-  @override
-  String get raffleYourTickets => 'All your tickets';
-
-  @override
-  String get raffleCreateMenu => 'Creation menu';
-
-  @override
-  String get raffleNextRaffles => 'Upcoming raffles';
-
-  @override
-  String get raffleNoTicket => 'You have no ticket';
-
-  @override
-  String get raffleSeeRaffleDetail => 'View prizes/tickets';
-
-  @override
-  String get raffleActualPrize => 'Current prizes';
-
-  @override
-  String get raffleMajorPrize => 'Major prizes';
-
-  @override
-  String get raffleTakeTickets => 'Take your tickets';
-
-  @override
-  String get raffleNoTicketBuyable => 'You cannot buy tickets right now';
-
-  @override
-  String get raffleNoCurrentPrize => 'There are no prizes currently';
-
-  @override
-  String get raffleModifTombola =>
-      'You can modify your raffles or create new ones, all decisions must then be approved by admins';
-
-  @override
-  String get raffleCreateYourRaffle => 'Your raffle creation menu';
-
-  @override
-  String get rafflePossiblePrice => 'Possible prize';
-
-  @override
-  String get raffleInformation => 'Information and statistics';
+  String get purchasesValidate => 'Validate';
 
   @override
   String get raffleAccounts => 'Accounts';
 
   @override
+  String get raffleActualPrize => 'Current prizes';
+
+  @override
+  String get raffleActualRaffles => 'Current raffles';
+
+  @override
   String get raffleAdd => 'Add';
-
-  @override
-  String get raffleUpdatedAmount => 'Amount updated';
-
-  @override
-  String get raffleUpdatingError => 'Error during update';
-
-  @override
-  String get raffleDeletedPrize => 'Prize deleted';
-
-  @override
-  String get raffleDeletingError => 'Error during deletion';
-
-  @override
-  String get raffleQuantity => 'Quantity';
-
-  @override
-  String get raffleClose => 'Close';
-
-  @override
-  String get raffleOpen => 'Open';
-
-  @override
-  String get raffleAddTypeTicketSimple => 'Add';
-
-  @override
-  String get raffleAddingError => 'Error during addition';
-
-  @override
-  String get raffleEditTypeTicketSimple => 'Edit';
-
-  @override
-  String get raffleFillField => 'Field cannot be empty';
-
-  @override
-  String get raffleWaiting => 'Loading';
-
-  @override
-  String get raffleEditingError => 'Error during editing';
 
   @override
   String get raffleAddedTicket => 'Ticket added';
 
   @override
-  String get raffleEditedTicket => 'Ticket edited';
+  String get raffleAddingError => 'Error during addition';
 
   @override
-  String get raffleAlreadyExistTicket => 'Ticket already exists';
-
-  @override
-  String get raffleNumberExpected => 'An integer is expected';
-
-  @override
-  String get raffleDeletedTicket => 'Ticket deleted';
+  String get raffleAddPackTicket => 'Add ticket pack';
 
   @override
   String get raffleAddPrize => 'Add';
 
   @override
-  String get raffleEditPrize => 'Edit';
+  String get raffleAddTypeTicketSimple => 'Add';
 
   @override
-  String get raffleOpenRaffle => 'Open raffle';
+  String get raffleAlreadyExistTicket => 'Ticket already exists';
+
+  @override
+  String get raffleAmount => 'Balance';
+
+  @override
+  String get raffleBoughtTicket => 'Ticket purchased';
+
+  @override
+  String get raffleBuyThisTicket => 'Buy this ticket';
+
+  @override
+  String get raffleClose => 'Close';
 
   @override
   String get raffleCloseRaffle => 'Close raffle';
-
-  @override
-  String get raffleOpenRaffleDescription =>
-      'You are going to open the raffle, users will be able to buy tickets. You will no longer be able to modify the raffle. Are you sure you want to continue?';
 
   @override
   String get raffleCloseRaffleDescription =>
       'You are going to close the raffle, users will no longer be able to buy tickets. Are you sure you want to continue?';
 
   @override
-  String get raffleNoCurrentRaffle => 'There is no ongoing raffle';
+  String get raffleCreateMenu => 'Creation menu';
 
   @override
-  String get raffleBoughtTicket => 'Ticket purchased';
+  String get raffleCreateYourRaffle => 'Your raffle creation menu';
 
   @override
-  String get raffleDrawingError => 'Error during drawing';
+  String get raffleDeletedPrize => 'Prize deleted';
 
   @override
-  String get raffleInvalidPrice => 'Price must be greater than 0';
-
-  @override
-  String get raffleMustBePositive => 'Number must be strictly positive';
-
-  @override
-  String get raffleDraw => 'Draw';
-
-  @override
-  String get raffleDrawn => 'Drawn';
-
-  @override
-  String get raffleError => 'Error';
-
-  @override
-  String get raffleGathered => 'Collected';
-
-  @override
-  String get raffleTickets => 'Tickets';
-
-  @override
-  String get raffleTicket => 'ticket';
-
-  @override
-  String get raffleWinner => 'Winner';
-
-  @override
-  String get raffleNoPrize => 'No prize';
+  String get raffleDeletedTicket => 'Ticket deleted';
 
   @override
   String get raffleDeletePrize => 'Delete prize';
@@ -3413,12 +3448,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'You are going to delete the prize, are you sure you want to continue?';
 
   @override
-  String get raffleDrawing => 'Drawing';
-
-  @override
-  String get raffleDrawingDescription => 'Draw the prize winner?';
-
-  @override
   String get raffleDeleteTicket => 'Delete ticket';
 
   @override
@@ -3426,119 +3455,241 @@ class AppLocalizationsEn extends AppLocalizations {
       'You are going to delete the ticket, are you sure you want to continue?';
 
   @override
-  String get raffleWinningTickets => 'Winning tickets';
+  String get raffleDeletingError => 'Error during deletion';
+
+  @override
+  String get raffleDescription => 'Description';
+
+  @override
+  String get raffleDraw => 'Draw';
+
+  @override
+  String get raffleDrawing => 'Drawing';
+
+  @override
+  String get raffleDrawingDescription => 'Draw the prize winner?';
+
+  @override
+  String get raffleDrawingError => 'Error during drawing';
+
+  @override
+  String get raffleDrawn => 'Drawn';
+
+  @override
+  String get raffleEdit => 'Edit';
+
+  @override
+  String get raffleEditedTicket => 'Ticket edited';
+
+  @override
+  String get raffleEditingError => 'Error during editing';
+
+  @override
+  String get raffleEditPrize => 'Edit';
+
+  @override
+  String get raffleEditRaffle => 'Edit raffle';
+
+  @override
+  String get raffleEditTypeTicketSimple => 'Edit';
+
+  @override
+  String get raffleError => 'Error';
+
+  @override
+  String get raffleFillField => 'Field cannot be empty';
+
+  @override
+  String get raffleGathered => 'Collected';
+
+  @override
+  String get raffleInformation => 'Information and statistics';
+
+  @override
+  String get raffleInvalidPrice => 'Price must be greater than 0';
+
+  @override
+  String get raffleLoading => 'Loading';
+
+  @override
+  String get raffleLockedRaffle => 'Locked raffle';
+
+  @override
+  String get raffleMajorPrize => 'Major prizes';
+
+  @override
+  String get raffleModifTombola =>
+      'You can modify your raffles or create new ones, all decisions must then be approved by admins';
+
+  @override
+  String get raffleMustBePositive => 'Number must be strictly positive';
+
+  @override
+  String get raffleName => 'Name';
+
+  @override
+  String get raffleNextRaffles => 'Upcoming raffles';
+
+  @override
+  String get raffleNoCurrentPrize => 'There are no prizes currently';
+
+  @override
+  String get raffleNoCurrentRaffle => 'There is no ongoing raffle';
+
+  @override
+  String get raffleNoDescription => 'No description';
+
+  @override
+  String get raffleNoPrize => 'No prize';
+
+  @override
+  String get raffleNotEnoughMoney => 'You don\'t have enough money';
+
+  @override
+  String get raffleNoTicket => 'You have no ticket';
+
+  @override
+  String get raffleNoTicketBuyable => 'You cannot buy tickets right now';
 
   @override
   String get raffleNoWinningTicketYet =>
       'Winning tickets will be displayed here';
 
   @override
-  String get raffleName => 'Name';
+  String get raffleNumberExpected => 'An integer is expected';
 
   @override
-  String get raffleDescription => 'Description';
+  String get raffleOpen => 'Open';
 
   @override
-  String get raffleBuyThisTicket => 'Buy this ticket';
+  String get raffleOpenRaffle => 'Open raffle';
 
   @override
-  String get raffleLockedRaffle => 'Locked raffle';
+  String get raffleOpenRaffleDescription =>
+      'You are going to open the raffle, users will be able to buy tickets. You will no longer be able to modify the raffle. Are you sure you want to continue?';
 
   @override
-  String get raffleUnavailableRaffle => 'Unavailable raffle';
+  String get rafflePastRaffles => 'Past raffles';
 
   @override
-  String get raffleNotEnoughMoney => 'You don\'t have enough money';
-
-  @override
-  String get raffleWinnable => 'winnable';
-
-  @override
-  String get raffleNoDescription => 'No description';
-
-  @override
-  String get raffleAmount => 'Balance';
-
-  @override
-  String get raffleLoading => 'Loading';
-
-  @override
-  String get raffleTicketNumber => 'Number of tickets';
+  String get rafflePossiblePrice => 'Possible prize';
 
   @override
   String get rafflePrice => 'Price';
 
   @override
-  String get raffleEditRaffle => 'Edit raffle';
+  String get rafflePrize => 'Prize';
 
   @override
-  String get raffleEdit => 'Edit';
+  String get rafflePrizes => 'Prizes';
 
   @override
-  String get raffleAddPackTicket => 'Add ticket pack';
+  String get raffleQuantity => 'Quantity';
 
   @override
-  String get recommendationRecommendation => 'Recommendation';
+  String get raffleRaffle => 'Raffle';
 
   @override
-  String get recommendationTitle => 'Title';
+  String get raffleSeeRaffleDetail => 'View prizes/tickets';
 
   @override
-  String get recommendationLogo => 'Logo';
+  String get raffleTakeTickets => 'Take your tickets';
 
   @override
-  String get recommendationCode => 'Code';
+  String get raffleTicket => 'ticket';
 
   @override
-  String get recommendationSummary => 'Short summary';
+  String get raffleTicketNumber => 'Number of tickets';
 
   @override
-  String get recommendationDescription => 'Description';
+  String get raffleTickets => 'Tickets';
+
+  @override
+  String get raffleUnavailableRaffle => 'Unavailable raffle';
+
+  @override
+  String get raffleUpdatedAmount => 'Amount updated';
+
+  @override
+  String get raffleUpdatingError => 'Error during update';
+
+  @override
+  String get raffleWaiting => 'Loading';
+
+  @override
+  String get raffleWinnable => 'winnable';
+
+  @override
+  String get raffleWinner => 'Winner';
+
+  @override
+  String get raffleWinningTickets => 'Winning tickets';
+
+  @override
+  String get raffleYourTickets => 'All your tickets';
 
   @override
   String get recommendationAdd => 'Add';
 
   @override
-  String get recommendationEdit => 'Edit';
-
-  @override
-  String get recommendationDelete => 'Delete';
+  String get recommendationAddedRecommendation => 'Deal added';
 
   @override
   String get recommendationAddImage => 'Please add an image';
 
   @override
-  String get recommendationAddedRecommendation => 'Deal added';
+  String get recommendationAddingError => 'Add failed';
 
   @override
-  String get recommendationEditedRecommendation => 'Deal updated';
+  String get recommendationCode => 'Code';
+
+  @override
+  String get recommendationCopiedCode => 'Discount code copied';
+
+  @override
+  String get recommendationDelete => 'Delete';
+
+  @override
+  String get recommendationDeletedRecommendation => 'Deal deleted';
+
+  @override
+  String get recommendationDeleteRecommendation => 'Delete';
 
   @override
   String get recommendationDeleteRecommendationConfirmation =>
       'Are you sure you want to delete this deal?';
 
   @override
-  String get recommendationDeleteRecommendation => 'Delete';
-
-  @override
   String get recommendationDeletingRecommendationError =>
       'Error during deletion';
 
   @override
-  String get recommendationDeletedRecommendation => 'Deal deleted';
+  String get recommendationDescription => 'Description';
+
+  @override
+  String get recommendationEdit => 'Edit';
+
+  @override
+  String get recommendationEditedRecommendation => 'Deal updated';
+
+  @override
+  String get recommendationEditingError => 'Edit failed';
 
   @override
   String get recommendationIncorrectOrMissingFields =>
       'Incorrect or missing fields';
 
   @override
-  String get recommendationEditingError => 'Edit failed';
+  String get recommendationLogo => 'Logo';
 
   @override
-  String get recommendationAddingError => 'Add failed';
+  String get recommendationRecommendation => 'Recommendation';
 
   @override
-  String get recommendationCopiedCode => 'Discount code copied';
+  String get recommendationSummary => 'Short summary';
+
+  @override
+  String get recommendationTitle => 'Title';
 
   @override
   String get seedLibraryAdd => 'Add';
@@ -3678,40 +3829,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get seedLibraryMaturationTime => 'Maturation time';
 
   @override
-  String get seedLibraryMonthJan => 'January';
-
-  @override
-  String get seedLibraryMonthFeb => 'February';
-
-  @override
-  String get seedLibraryMonthMar => 'March';
-
-  @override
   String get seedLibraryMonthApr => 'April';
-
-  @override
-  String get seedLibraryMonthMay => 'May';
-
-  @override
-  String get seedLibraryMonthJun => 'June';
-
-  @override
-  String get seedLibraryMonthJul => 'July';
 
   @override
   String get seedLibraryMonthAug => 'August';
 
   @override
-  String get seedLibraryMonthSep => 'September';
+  String get seedLibraryMonthDec => 'December';
 
   @override
-  String get seedLibraryMonthOct => 'October';
+  String get seedLibraryMonthFeb => 'February';
+
+  @override
+  String get seedLibraryMonthJan => 'January';
+
+  @override
+  String get seedLibraryMonthJul => 'July';
+
+  @override
+  String get seedLibraryMonthJun => 'June';
+
+  @override
+  String get seedLibraryMonthMar => 'March';
+
+  @override
+  String get seedLibraryMonthMay => 'May';
 
   @override
   String get seedLibraryMonthNov => 'November';
 
   @override
-  String get seedLibraryMonthDec => 'December';
+  String get seedLibraryMonthOct => 'October';
+
+  @override
+  String get seedLibraryMonthSep => 'September';
 
   @override
   String get seedLibraryMyPlants => 'My plants';
@@ -3801,19 +3952,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get seedLibrarySeed => 'Seed';
 
   @override
-  String get seedLibrarySeeds => 'seeds';
-
-  @override
   String get seedLibrarySeedDeposit => 'Plant deposit';
 
   @override
   String get seedLibrarySeedLibrary => 'Seed library';
 
   @override
+  String get seedLibrarySeedQuantity => 'Seed quantity:';
+
+  @override
   String get seedLibrarySeedQuantitySimple => 'Seed quantity';
 
   @override
-  String get seedLibrarySeedQuantity => 'Seed quantity:';
+  String get seedLibrarySeeds => 'seeds';
 
   @override
   String get seedLibraryShowDeadPlants => 'Show dead plants';
@@ -3843,10 +3994,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get seedLibraryStock => 'Available stock';
 
   @override
-  String get seedLibrarySummer => 'Summer';
+  String get seedLibraryStocks => 'Stocks';
 
   @override
-  String get seedLibraryStocks => 'Stocks';
+  String get seedLibrarySummer => 'Summer';
 
   @override
   String get seedLibraryTimeUntilMaturation => 'Time until maturation:';
@@ -3864,10 +4015,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get seedLibraryUpdatedInformation => 'Information updated';
 
   @override
-  String get seedLibraryUpdatedSpecies => 'Species updated';
+  String get seedLibraryUpdatedPlant => 'Plant updated';
 
   @override
-  String get seedLibraryUpdatedPlant => 'Plant updated';
+  String get seedLibraryUpdatedSpecies => 'Species updated';
 
   @override
   String get seedLibraryUpdatingError => 'Error updating';
@@ -3908,7 +4059,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Do you really want to change your password?';
 
   @override
+  String get settingsChooseLanguage => 'Choose a language';
+
+  @override
   String get settingsConfirmPassword => 'Confirm password';
+
+  @override
+  String get settingsConnexion => 'Connection';
 
   @override
   String get settingsCopied => 'Copied!';
@@ -3923,7 +4080,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsDeleteLogs => 'Delete logs?';
 
   @override
+  String get settingsDeleteMyAccount => 'Delete my account';
+
+  @override
+  String get settingsDeleteMyAccountDescription =>
+      'This action will send a request to the administrator to delete your account.';
+
+  @override
+  String get settingsDeleteMyAccountError =>
+      'Error sending account deletion request';
+
+  @override
   String get settingsDeleteNotificationLogs => 'Delete notification logs?';
+
+  @override
+  String get settingsDeleting => 'Deleting';
+
+  @override
+  String get settingsDeletionAsked =>
+      'Your account deletion request has been sent to the administrator.';
 
   @override
   String get settingsDetelePersonalData => 'Delete my personal data';
@@ -3933,13 +4108,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'This action notifies the administrator that you want to delete your personal data.';
 
   @override
-  String get settingsDeleting => 'Deleting';
-
-  @override
   String get settingsEdit => 'Edit';
 
   @override
   String get settingsEditAccount => 'Edit account';
+
+  @override
+  String get settingsEditedAccount => 'Account edited';
 
   @override
   String get settingsEmail => 'Email';
@@ -3954,10 +4129,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsErrorSendingDemand => 'Error sending request';
 
   @override
+  String get settingsEvent => 'Event';
+
+  @override
   String get settingsEventsIcal => 'Ical link for events';
 
   @override
   String get settingsExpectingDate => 'Expected birth date';
+
+  @override
+  String get settingsFailedToEditAccount => 'Failed to edit account';
 
   @override
   String get settingsFirstname => 'First name';
@@ -3969,7 +4150,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsHelp => 'Help';
 
   @override
+  String get settingsHyperionVersion => 'Hyperion version';
+
+  @override
+  String get settingsIcal => 'Ical link';
+
+  @override
   String get settingsIcalCopied => 'Ical link copied!';
+
+  @override
+  String get settingsIcalLinkCopied => 'Ical link copied';
 
   @override
   String get settingsLanguage => 'Language';
@@ -3978,7 +4168,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsLanguageVar => 'English 🇬🇧';
 
   @override
+  String get settingsLogOut => 'Log out';
+
+  @override
+  String get settingsLogOutDescription => 'Do you really want to log out?';
+
+  @override
+  String get settingsLogOutSuccess => 'Logged out successfully';
+
+  @override
   String get settingsLogs => 'Logs';
+
+  @override
+  String get settingsMinimalHyperionVersion => 'Minimal Hyperion version';
 
   @override
   String get settingsModules => 'Modules';
@@ -3994,6 +4196,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsNickname => 'Nickname';
+
+  @override
+  String settingsNotificationCounter(int active, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      active,
+      locale: localeName,
+      other: 'notifications',
+      one: 'notification',
+      zero: 'notification',
+    );
+    return '$active/$total active $_temp0';
+  }
 
   @override
   String get settingsNotifications => 'Notifications';
@@ -4017,6 +4231,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsPhone => 'Phone';
 
   @override
+  String get settingsPhoneNumber => 'Phone number';
+
+  @override
+  String get settingsProfile => 'Profile';
+
+  @override
   String get settingsProfilePicture => 'Profile picture';
 
   @override
@@ -4038,7 +4258,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsSettings => 'Settings';
 
   @override
+  String get settingsSynncWithCalendar => 'Sync with calendar';
+
+  @override
   String get settingsTooHeavyProfilePicture => 'Image is too large (max 4MB)';
+
+  @override
+  String get settingsTooRecentVersion =>
+      'Your version of the app is too recent, please contact the administrator to fix this issue';
 
   @override
   String get settingsUpdatedProfile => 'Profile updated';
@@ -4053,100 +4280,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsUpdatingError => 'Error updating profile';
 
   @override
-  String get settingsVersion => 'Version';
-
-  @override
-  String get settingsPasswordStrength => 'Password strength';
-
-  @override
-  String get settingsPasswordStrengthVeryWeak => 'Very weak';
-
-  @override
-  String get settingsPasswordStrengthWeak => 'Weak';
-
-  @override
-  String get settingsPasswordStrengthMedium => 'Medium';
-
-  @override
-  String get settingsPasswordStrengthStrong => 'Strong';
-
-  @override
-  String get settingsPasswordStrengthVeryStrong => 'Very strong';
-
-  @override
-  String get settingsPhoneNumber => 'Phone number';
-
-  @override
   String get settingsValidate => 'Confirm';
 
   @override
-  String get settingsEditedAccount => 'Account edited';
+  String get settingsVersion => 'Version';
 
   @override
-  String get settingsFailedToEditAccount => 'Failed to edit account';
+  String get toolDateRequired => 'Date required';
 
   @override
-  String get settingsChooseLanguage => 'Choose a language';
+  String get toolInvalidNumber => 'Invalid number';
 
   @override
-  String settingsNotificationCounter(int active, int total) {
-    String _temp0 = intl.Intl.pluralLogic(
-      active,
-      locale: localeName,
-      other: 'notifications',
-      one: 'notification',
-      zero: 'notification',
-    );
-    return '$active/$total active $_temp0';
-  }
-
-  @override
-  String get settingsEvent => 'Event';
-
-  @override
-  String get settingsIcal => 'Ical link';
-
-  @override
-  String get settingsSynncWithCalendar => 'Sync with calendar';
-
-  @override
-  String get settingsIcalLinkCopied => 'Ical link copied';
-
-  @override
-  String get settingsProfile => 'Profile';
-
-  @override
-  String get settingsConnexion => 'Connection';
-
-  @override
-  String get settingsLogOut => 'Log out';
-
-  @override
-  String get settingsLogOutDescription => 'Do you really want to log out?';
-
-  @override
-  String get settingsLogOutSuccess => 'Logged out successfully';
-
-  @override
-  String get settingsDeleteMyAccount => 'Delete my account';
-
-  @override
-  String get settingsDeleteMyAccountDescription =>
-      'This action will send a request to the administrator to delete your account.';
-
-  @override
-  String get settingsDeletionAsked =>
-      'Your account deletion request has been sent to the administrator.';
-
-  @override
-  String get settingsDeleteMyAccountError =>
-      'Error sending account deletion request';
+  String get toolSuccess => 'Success';
 
   @override
   String get voteAdd => 'Add';
-
-  @override
-  String get voteAddMember => 'Add a member';
 
   @override
   String get voteAddedPretendance => 'List added';
@@ -4156,6 +4305,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get voteAddingError => 'Error adding';
+
+  @override
+  String get voteAddMember => 'Add a member';
 
   @override
   String get voteAddPretendance => 'Add a list';
@@ -4171,6 +4323,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get voteAlreadyVoted => 'Vote recorded';
+
+  @override
+  String get voteCanNotVote => 'You cannot vote';
 
   @override
   String get voteChooseList => 'Choose a list';
@@ -4197,6 +4352,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get voteDelete => 'Delete';
 
   @override
+  String get voteDeleteAll => 'Delete all';
+
+  @override
+  String get voteDeleteAllDescription =>
+      'Do you really want to delete everything?';
+
+  @override
   String get voteDeletedAll => 'All deleted';
 
   @override
@@ -4204,13 +4366,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get voteDeletedSection => 'Section deleted';
-
-  @override
-  String get voteDeleteAll => 'Delete all';
-
-  @override
-  String get voteDeleteAllDescription =>
-      'Do you really want to delete everything?';
 
   @override
   String get voteDeletePipo => 'Delete fake lists';
@@ -4258,10 +4413,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get voteErrorCountingVotes => 'Error counting votes';
 
   @override
-  String get voteErrorResetingVotes => 'Error resetting votes';
+  String get voteErrorOpeningVotes => 'Error opening votes';
 
   @override
-  String get voteErrorOpeningVotes => 'Error opening votes';
+  String get voteErrorResetingVotes => 'Error resetting votes';
 
   @override
   String get voteIncorrectOrMissingFields => 'Incorrect or missing fields';
@@ -4277,9 +4432,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get voteNoSection => 'No section';
-
-  @override
-  String get voteCanNotVote => 'You cannot vote';
 
   @override
   String get voteNoSectionList => 'No section';
@@ -4328,10 +4480,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get voteRole => 'Role';
 
   @override
-  String get voteSectionDescription => 'Section description';
+  String get voteSection => 'Section';
 
   @override
-  String get voteSection => 'Section';
+  String get voteSectionDescription => 'Section description';
 
   @override
   String get voteSectionName => 'Section name';
@@ -4361,9 +4513,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get voteVoters => 'Voting groups';
 
   @override
-  String get voteVoteSuccess => 'Vote recorded';
-
-  @override
   String get voteVotes => 'Votes';
 
   @override
@@ -4376,151 +4525,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get voteVotesOpened => 'Votes opened';
 
   @override
+  String get voteVoteSuccess => 'Vote recorded';
+
+  @override
   String get voteWarning => 'Warning';
 
   @override
   String get voteWarningMessage =>
       'Selection will not be saved.\nDo you want to continue?';
-
-  @override
-  String get moduleAdvert => 'Feed';
-
-  @override
-  String get moduleAdvertDescription => 'View the latest feed';
-
-  @override
-  String get moduleAmap => 'AMAP';
-
-  @override
-  String get moduleAmapDescription => 'Order your AMAP basket';
-
-  @override
-  String get moduleBooking => 'Booking';
-
-  @override
-  String get moduleBookingDescription => 'Book a room';
-
-  @override
-  String get moduleCalendar => 'Calendar';
-
-  @override
-  String get moduleCalendarDescription => 'View the calendar of events';
-
-  @override
-  String get moduleCentralisation => 'Centralisation';
-
-  @override
-  String get moduleCentralisationDescription => 'Viw all links';
-
-  @override
-  String get moduleCinema => 'Cinema';
-
-  @override
-  String get moduleCinemaDescription => 'View the cinema schedule';
-
-  @override
-  String get moduleEvent => 'Event';
-
-  @override
-  String get moduleEventDescription => 'View events';
-
-  @override
-  String get moduleFlappyBird => 'Flappy Bird';
-
-  @override
-  String get moduleFlappyBirdDescription => 'Play Flappy Bird';
-
-  @override
-  String get moduleLoan => 'Loan';
-
-  @override
-  String get moduleLoanDescription => 'See your loans';
-
-  @override
-  String get modulePhonebook => 'Phonebook';
-
-  @override
-  String get modulePhonebookDescription => 'View the phonebook';
-
-  @override
-  String get modulePurchases => 'Purchases';
-
-  @override
-  String get modulePurchasesDescription => 'View your purchases';
-
-  @override
-  String get moduleRaffle => 'Raffle';
-
-  @override
-  String get moduleRaffleDescription => 'View the raffle';
-
-  @override
-  String get moduleRecommendation => 'Recommendation';
-
-  @override
-  String get moduleRecommendationDescription => 'View the recommendations';
-
-  @override
-  String get moduleSeedLibrary => 'Seed Library';
-
-  @override
-  String get moduleSeedLibraryDescription => 'View the seed library';
-
-  @override
-  String get moduleVote => 'Vote';
-
-  @override
-  String get moduleVoteDescription => 'Vote for the campaigns';
-
-  @override
-  String get modulePh => 'PH';
-
-  @override
-  String get modulePhDescription => 'View the PH';
-
-  @override
-  String get moduleSettings => 'Settings';
-
-  @override
-  String get moduleSettingsDescription => 'Manage your settings';
-
-  @override
-  String get moduleFeed => 'Events';
-
-  @override
-  String get moduleFeedDescription => 'View the latest events';
-
-  @override
-  String get moduleStyleGuide => 'StyleGuide';
-
-  @override
-  String get moduleStyleGuideDescription => 'Style guide for developers';
-
-  @override
-  String get moduleAdmin => 'Admin';
-
-  @override
-  String get moduleAdminDescription =>
-      'Administration module for administrators';
-
-  @override
-  String get moduleOthers => 'Others';
-
-  @override
-  String get moduleOthersDescription => 'Other modules';
-
-  @override
-  String get modulePayment => 'Payment';
-
-  @override
-  String get modulePaymentDescription => 'Pay and see your transactions';
-
-  @override
-  String get toolInvalidNumber => 'Invalid number';
-
-  @override
-  String get toolDateRequired => 'Date required';
-
-  @override
-  String get toolSuccess => 'Success';
 }

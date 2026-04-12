@@ -15,3 +15,9 @@ class RaffleColorConstants extends ColorConstants {
   static const Color redGradient3 = Color.fromARGB(255, 255, 34, 34);
   static const Color ticketBack = Color(0xff000031);
 }
+
+class RafflePermissionConstants {
+  static const String accessRaffle = "access_raffle";
+  static const String manageRaffle = "manage_raffle";
+  static const String manageCash = "manage_cash";
+}

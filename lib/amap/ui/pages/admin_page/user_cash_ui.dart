@@ -101,7 +101,7 @@ class UserCashUi extends HookConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             AutoSizeText(
-                              '${cash.balance.toStringAsFixed(2)} €',
+                              '${(cash.balance / 100).toStringAsFixed(2)} €',
                               maxLines: 1,
                               minFontSize: 10,
                               overflow: TextOverflow.ellipsis,
@@ -163,9 +163,16 @@ class UserCashUi extends HookConsumerWidget {
                                         .read(cashListProvider.notifier)
                                         .updateCash(
                                           cash.copyWith(
-                                            balance: double.parse(
-                                              amount.text.replaceAll(',', '.'),
-                                            ),
+                                            balance:
+                                                (100 *
+                                                        double.parse(
+                                                          amount.text
+                                                              .replaceAll(
+                                                                ',',
+                                                                '.',
+                                                              ),
+                                                        ))
+                                                    .round(),
                                           ),
                                           cash.balance,
                                         )

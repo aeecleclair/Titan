@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/super_admin/providers/module_root_list_provider.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/super_admin/providers/permission_name_list_provider.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -12,9 +12,9 @@ class NoModulePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final moduleVisibilityList = ref.watch(moduleRootListProvider);
+    final permissionsNamesList = ref.watch(permissionsNamesListProvider);
     final pathForwarding = ref.read(pathForwardingProvider);
-    moduleVisibilityList.maybeWhen(
+    permissionsNamesList.maybeWhen(
       data: (data) {
         QR.to(pathForwarding.path);
       },

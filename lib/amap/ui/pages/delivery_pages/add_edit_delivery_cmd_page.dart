@@ -19,6 +19,7 @@ import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
@@ -34,14 +35,18 @@ class AddEditDeliveryPage extends HookConsumerWidget {
     final dateController = useTextEditingController(
       text: isEdit ? DateFormat.yMd(locale).format(delivery.deliveryDate) : '',
     );
+    final nameController = useTextEditingController();
     final productList = ref.watch(productListProvider);
     final sortedProductsList = ref.watch(sortedByCategoryProductsProvider);
     final selected = ref.watch(selectedListProvider);
     final selectedNotifier = ref.watch(selectedListProvider.notifier);
+    final deliveryNotifier = ref.watch(deliveryListProvider.notifier);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
+
+    final localizeWithContext = AppLocalizations.of(context)!;
 
     return AmapTemplate(
       child: SingleChildScrollView(
@@ -62,6 +67,14 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                       AppLocalizations.of(context)!.amapAddDelivery,
                       color: AMAPColorConstants.green2,
                     ),
+                    const SizedBox(height: 20),
+                    TextEntry(
+                      label: AppLocalizations.of(context)!.amapCommandName,
+                      controller: nameController,
+                      color: AMAPColorConstants.greenGradient2,
+                      enabledColor: AMAPColorConstants.enabled,
+                    ),
+
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 30),
                       child: DateEntry(
@@ -97,7 +110,12 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                               style: const TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.w800,
-                                                color: Colors.black,
+                                                color: Color.fromARGB(
+                                                  0,
+                                                  255,
+                                                  0,
+                                                  0,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -135,6 +153,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                               if (formKey.currentState!.validate()) {
                                 final date = dateController.value.text;
                                 final del = Delivery(
+                                  name: nameController.text,
                                   id: isEdit ? delivery.id : '',
                                   products: products
                                       .where(
@@ -148,22 +167,6 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                   status: DeliveryStatus.creation,
                                 );
                                 await tokenExpireWrapper(ref, () async {
-                                  final deliveryNotifier = ref.watch(
-                                    deliveryListProvider.notifier,
-                                  );
-                                  final editedCommandMsg = AppLocalizations.of(
-                                    context,
-                                  )!.amapEditedCommand;
-                                  final addedCommandMsg = AppLocalizations.of(
-                                    context,
-                                  )!.amapAddedCommand;
-                                  final editingErrorMsg = AppLocalizations.of(
-                                    context,
-                                  )!.amapEditingError;
-                                  final alreadyExistCommandMsg =
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.amapAlreadyExistCommand;
                                   final value = isEdit
                                       ? await deliveryNotifier.updateDelivery(
                                           del,
@@ -174,7 +177,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                     if (isEdit) {
                                       displayToastWithContext(
                                         TypeMsg.msg,
-                                        editedCommandMsg,
+                                        localizeWithContext.amapEditedCommand,
                                       );
                                     } else {
                                       final deliveryOrdersNotifier = ref.watch(
@@ -190,19 +193,19 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                       });
                                       displayToastWithContext(
                                         TypeMsg.msg,
-                                        addedCommandMsg,
+                                        localizeWithContext.amapAddedCommand,
                                       );
                                     }
                                   } else {
                                     if (isEdit) {
                                       displayToastWithContext(
                                         TypeMsg.error,
-                                        editingErrorMsg,
+                                        localizeWithContext.amapEditingError,
                                       );
                                     } else {
                                       displayToastWithContext(
                                         TypeMsg.error,
-                                        alreadyExistCommandMsg,
+                                        localizeWithContext.amapAddingError,
                                       );
                                     }
                                   }
@@ -211,7 +214,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                 displayToast(
                                   context,
                                   TypeMsg.error,
-                                  AppLocalizations.of(context)!.amapAddingError,
+                                  localizeWithContext.amapIncorrectlyFilledForm,
                                 );
                               }
                             },

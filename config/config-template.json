@@ -1,5 +1,6 @@
 {
   "flavor": "<flavor>",
+  // A trailing slash is required for the TITAN_URL
   "TITAN_URL": "http://localhost:3000",
   // A trailing slash is required for the BACKEND_HOST
   "BACKEND_HOST": "<backend_host>",

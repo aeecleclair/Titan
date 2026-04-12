@@ -6,14 +6,14 @@ import 'package:titan/navigation/class/module.dart';
 import 'package:titan/phonebook/providers/is_phonebook_admin_provider.dart';
 import 'package:titan/phonebook/ui/pages/add_edit_groupement_page/groupement_add_edit_page.dart'
     deferred as groupement_add_edit_page;
-import 'package:titan/phonebook/ui/pages/admin_page/admin_page.dart'
-    deferred as admin_page;
 import 'package:titan/phonebook/ui/pages/association_add_edit_page/association_add_edit_page.dart'
     deferred as association_add_edit_page;
 import 'package:titan/phonebook/ui/pages/association_groups_page/association_groups_page.dart'
     deferred as association_groups_page;
 import 'package:titan/phonebook/ui/pages/association_members_page/association_members_page.dart'
     deferred as association_members_page;
+import 'package:titan/phonebook/ui/pages/admin_page/admin_page.dart'
+    deferred as admin_page;
 import 'package:titan/phonebook/ui/pages/association_page/association_page.dart'
     deferred as association_page;
 import 'package:titan/phonebook/ui/pages/main_page/main_page.dart'

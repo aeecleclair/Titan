@@ -6,3 +6,8 @@ class LoanColorConstants {
   static const Color redGradient2 = Color.fromARGB(255, 172, 32, 10);
   static const Color urgentRed = Color.fromARGB(255, 99, 13, 0);
 }
+
+class LoanPermissionConstants {
+  static const String accessLoans = 'access_loan';
+  static const String manageLoaners = 'manage_loaners';
+}

@@ -8,7 +8,7 @@ class UserPurchaseRepository extends Repository {
 
   Future<List<Purchase>> getPurchaseList() async {
     return List<Purchase>.from(
-      (await getList(suffix: "purchases/")).map((x) => Purchase.fromJson(x)),
+      (await getList(suffix: "purchases/all")).map((x) => Purchase.fromJson(x)),
     );
   }
 }

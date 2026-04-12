@@ -26,13 +26,13 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:app_links/app_links.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setHyperionHost();
   QR.setUrlStrategy();
   // We set the default page type to QMaterialPage
   // See https://pub.dev/packages/qlevar_router#page-transition
   // We should not use a combination of QMaterialPage and QCupertinoPage
   QR.settings.pagesType = const QMaterialPage();
-
-  WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb) {
     await Firebase.initializeApp();
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);

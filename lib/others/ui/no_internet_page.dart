@@ -6,6 +6,7 @@ import 'package:titan/home/router.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class NoInternetPage extends HookConsumerWidget {
   const NoInternetPage({super.key});
@@ -27,7 +28,9 @@ class NoInternetPage extends HookConsumerWidget {
               const SizedBox(height: 20),
               Center(
                 child: Text(
-                  AppLocalizations.of(context)!.othersUnableToConnectToServer,
+                  AppLocalizations.of(
+                    context,
+                  )!.othersUnableToConnectToServer(Repository.host),
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 20),
                 ),

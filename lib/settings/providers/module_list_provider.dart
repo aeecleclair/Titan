@@ -1,38 +1,58 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/router.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/super_admin/providers/permissions_list_provider.dart';
+import 'package:titan/admin/router.dart';
 import 'package:titan/advert/router.dart';
-import 'package:titan/super_admin/providers/all_my_module_roots_list_provider.dart';
 import 'package:titan/amap/router.dart';
 import 'package:titan/booking/router.dart';
 import 'package:titan/centralisation/router.dart';
 import 'package:titan/cinema/router.dart';
 import 'package:titan/event/router.dart';
+import 'package:titan/feed/router.dart';
 import 'package:titan/loan/router.dart';
+import 'package:titan/mypayment/router.dart';
 import 'package:titan/navigation/class/module.dart';
-import 'package:collection/collection.dart';
-import 'package:titan/home/router.dart';
-import 'package:titan/paiement/router.dart';
-import 'package:titan/ph/router.dart';
 import 'package:titan/phonebook/router.dart';
+import 'package:titan/ph/router.dart';
 import 'package:titan/purchases/router.dart';
 import 'package:titan/raffle/router.dart';
 import 'package:titan/recommendation/router.dart';
 import 'package:titan/seed-library/router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:titan/settings/router.dart';
 import 'package:titan/super_admin/providers/is_super_admin_provider.dart';
 import 'package:titan/super_admin/router.dart';
+import 'package:titan/user/providers/user_provider.dart';
 import 'package:titan/vote/router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:titan/centralassociation/router.dart';
 
 final modulesProvider = StateNotifierProvider<ModulesNotifier, List<Module>>((
   ref,
 ) {
-  final myModulesRoot = ref
-      .watch(allMyModuleRootList)
-      .map((root) => '/$root')
-      .toList();
+  final me = ref.watch(userProvider);
+  final modulesPermissionNames = ref.watch(moduleGroupedPermissionsProvider);
+  final permissions = ref.watch(mappedPermissionsProvider);
+  List<String> myModulesRoot = [];
+  for (String module in modulesPermissionNames.keys) {
+    final accessPermissions = modulesPermissionNames[module]!.firstWhere(
+      (p) => p.startsWith("access_"),
+      orElse: () => "",
+    );
+    if (accessPermissions != "") {
+      final hasAccess =
+          me.groups.any(
+            (g) => permissions[accessPermissions]!.authorizedGroupIds.contains(
+              g.id,
+            ),
+          ) ||
+          permissions[accessPermissions]!.authorizedAccountTypes.contains(
+            me.accountType.type,
+          );
+      if (hasAccess) myModulesRoot.add("/$module");
+    }
+  }
 
   final isAdmin = ref.watch(isAdminProvider);
   final isSuperAdmin = ref.watch(isSuperAdminProvider);
@@ -52,11 +72,12 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
   final bool isSuperAdmin;
   final eq = const DeepCollectionEquality.unordered();
   List<Module> allModules = [
-    HomeRouter.module,
+    FeedRouter.module,
     AdvertRouter.module,
     AmapRouter.module,
     BookingRouter.module,
     CentralisationRouter.module,
+    CentralassociationRouter.module,
     CinemaRouter.module,
     EventRouter.module,
     LoanRouter.module,
@@ -102,6 +123,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
 
   Future loadModules(List<String> roots) async {
     final prefs = await SharedPreferences.getInstance();
+    await prefs.reload();
     List<String> modulesName = prefs.getStringList(dbModule) ?? [];
     List<String> allSavedModulesName = prefs.getStringList(dbAllModules) ?? [];
     final allModulesName = allModules.map((e) => e.root.toString()).toList();
