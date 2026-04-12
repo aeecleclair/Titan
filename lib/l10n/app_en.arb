@@ -1114,6 +1114,7 @@
   "paiementRequestStatusRefused": "Refused",
   "paiementRequestStatusExpired": "Expired",
   "paiementRequestStatusAccepted": "Accepted",
+  "paiementInsufficientBalance": "Insufficient balance",
   "paiementRequestDetails": "Request details",
   "paiementNoRequests": "No payment requests",
   "paiementSuccessfullyAddedStore": "Store successfully added",

@@ -2721,6 +2721,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementRequestStatusAccepted => 'Acceptée';
 
   @override
+  String get paiementInsufficientBalance => 'Solde insuffisant';
+
+  @override
   String get paiementRequestDetails => 'Détails de la demande';
 
   @override

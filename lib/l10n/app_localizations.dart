@@ -5288,6 +5288,12 @@ abstract class AppLocalizations {
   /// **'Acceptée'**
   String get paiementRequestStatusAccepted;
 
+  /// No description provided for @paiementInsufficientBalance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Solde insuffisant'**
+  String get paiementInsufficientBalance;
+
   /// No description provided for @paiementRequestDetails.
   ///
   /// In fr, this message translates to:

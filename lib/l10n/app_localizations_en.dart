@@ -2691,6 +2691,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementRequestStatusAccepted => 'Accepted';
 
   @override
+  String get paiementInsufficientBalance => 'Insufficient balance';
+
+  @override
   String get paiementRequestDetails => 'Request details';
 
   @override

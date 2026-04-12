@@ -1122,6 +1122,7 @@
   "paiementRequestStatusRefused": "Refusée",
   "paiementRequestStatusExpired": "Expirée",
   "paiementRequestStatusAccepted": "Acceptée",
+  "paiementInsufficientBalance": "Solde insuffisant",
   "paiementRequestDetails": "Détails de la demande",
   "paiementNoRequests": "Aucune demande de paiement",
   "paiementSuccessfullyAddedStore": "Magasin ajoutée avec succès",

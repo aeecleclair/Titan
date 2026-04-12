@@ -12,6 +12,7 @@ import 'package:titan/navigation/providers/navbar_module_list.dart';
 import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 import 'package:titan/paiement/providers/my_wallet_provider.dart';
 import 'package:titan/paiement/router.dart';
+import 'package:titan/mypayment/tools/can_pay.dart';
 import 'package:titan/shotgun/class/answer.dart';
 import 'package:titan/shotgun/class/answer_type.dart';
 import 'package:titan/shotgun/class/category.dart';
@@ -77,6 +78,17 @@ class _ShotgunContent extends HookConsumerWidget {
     final answersMap = useState<Map<String, dynamic>>({});
     final checkoutState = ref.watch(checkoutProvider);
     final walletAsync = ref.watch(myWalletProvider);
+    final canPayResult = useState<CanPayResult?>(null);
+
+    useEffect(() {
+      Future<void> check() async {
+        final result = await canPay(ref: ref);
+        canPayResult.value = result;
+      }
+
+      check();
+      return null;
+    }, []);
     final l10n = AppLocalizations.of(context)!;
     final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     final navbarListModuleNotifier = ref.watch(
@@ -620,33 +632,56 @@ class _ShotgunContent extends HookConsumerWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                walletAsync.when(
-                  data: (wallet) {
-                    final balanceInEuros = wallet.balance / 100;
-                    final categoryPrice = selectedCategory.value?.price ?? 0;
+                Builder(
+                  builder: (context) {
+                    final canPayOk = canPayResult.value?.success ?? false;
+                    final balanceInCents =
+                        walletAsync.valueOrNull?.balance ?? 0;
+                    final categoryPriceCents =
+                        ((selectedCategory.value?.price ?? 0) * 100).round();
                     final hasInsufficientBalance =
-                        balanceInEuros < categoryPrice;
+                        canPayOk && balanceInCents < categoryPriceCents;
+                    final isDisabled = !canPayOk || hasInsufficientBalance;
+                    final isSelected =
+                        selectedPaymentProvider.value == 'myempay';
 
-                    // Auto-switch to helloasso if myempay is selected but balance is insufficient
-                    if (hasInsufficientBalance &&
-                        selectedPaymentProvider.value == 'myempay') {
+                    // Auto-switch to helloasso if myempay is selected but can't pay
+                    if (isDisabled && isSelected) {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         selectedPaymentProvider.value = 'helloasso';
                       });
                     }
 
+                    String? disabledReason;
+                    if (!canPayOk && canPayResult.value != null) {
+                      switch (canPayResult.value!.error!) {
+                        case CanPayError.tosNotAccepted:
+                          disabledReason = l10n.paiementPleaseAcceptTOS;
+                        case CanPayError.noDevice:
+                          disabledReason = l10n.paiementDeviceNotRegistered;
+                        case CanPayError.deviceInactive:
+                          disabledReason = l10n.paiementDeviceNotActivated;
+                        case CanPayError.deviceRevoked:
+                          disabledReason = l10n.paiementDeviceRevoked;
+                        case CanPayError.insufficientBalance:
+                          disabledReason = l10n.paiementInsufficientFunds;
+                      }
+                    } else if (hasInsufficientBalance) {
+                      disabledReason = l10n.paiementInsufficientFunds;
+                    }
+
                     return Expanded(
                       child: InkWell(
-                        onTap: hasInsufficientBalance
+                        onTap: isDisabled
                             ? null
                             : () => selectedPaymentProvider.value = 'myempay',
                         borderRadius: BorderRadius.circular(12),
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           decoration: BoxDecoration(
-                            color: selectedPaymentProvider.value == 'myempay'
+                            color: isSelected
                                 ? ColorConstants.main.withValues(alpha: 0.1)
-                                : hasInsufficientBalance
+                                : isDisabled
                                 ? ColorConstants.background2.withValues(
                                     alpha: 0.02,
                                   )
@@ -655,9 +690,9 @@ class _ShotgunContent extends HookConsumerWidget {
                                   ),
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: selectedPaymentProvider.value == 'myempay'
+                              color: isSelected
                                   ? ColorConstants.main
-                                  : hasInsufficientBalance
+                                  : isDisabled
                                   ? ColorConstants.mainBorder.withValues(
                                       alpha: 0.1,
                                     )
@@ -674,7 +709,7 @@ class _ShotgunContent extends HookConsumerWidget {
                                 child: Image.asset(
                                   'assets/images/logo_prod.png',
                                   fit: BoxFit.contain,
-                                  color: hasInsufficientBalance
+                                  color: isDisabled
                                       ? ColorConstants.tertiary.withValues(
                                           alpha: 0.5,
                                         )
@@ -686,30 +721,27 @@ class _ShotgunContent extends HookConsumerWidget {
                                 'myempay',
                                 style: Theme.of(context).textTheme.bodySmall
                                     ?.copyWith(
-                                      color:
-                                          selectedPaymentProvider.value ==
-                                              'myempay'
+                                      color: isSelected
                                           ? ColorConstants.main
-                                          : hasInsufficientBalance
+                                          : isDisabled
                                           ? ColorConstants.tertiary.withValues(
                                               alpha: 0.5,
                                             )
                                           : ColorConstants.tertiary,
-                                      fontWeight:
-                                          selectedPaymentProvider.value ==
-                                              'myempay'
+                                      fontWeight: isSelected
                                           ? FontWeight.w600
                                           : FontWeight.normal,
                                     ),
                               ),
-                              if (hasInsufficientBalance)
+                              if (disabledReason != null)
                                 Text(
-                                  l10n.paiementInsufficientFunds,
+                                  disabledReason,
                                   style: Theme.of(context).textTheme.bodySmall
                                       ?.copyWith(
                                         color: ColorConstants.error,
                                         fontSize: 10,
                                       ),
+                                  textAlign: TextAlign.center,
                                 ),
                             ],
                           ),
@@ -717,84 +749,6 @@ class _ShotgunContent extends HookConsumerWidget {
                       ),
                     );
                   },
-                  loading: () => Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      decoration: BoxDecoration(
-                        color: ColorConstants.background2.withValues(
-                          alpha: 0.05,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: ColorConstants.mainBorder.withValues(
-                            alpha: 0.3,
-                          ),
-                        ),
-                      ),
-                      child: const Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SizedBox(
-                            height: 28,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  error: (e, st) => Expanded(
-                    child: InkWell(
-                      onTap: () => selectedPaymentProvider.value = 'myempay',
-                      borderRadius: BorderRadius.circular(12),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        decoration: BoxDecoration(
-                          color: selectedPaymentProvider.value == 'myempay'
-                              ? ColorConstants.main.withValues(alpha: 0.1)
-                              : ColorConstants.background2.withValues(
-                                  alpha: 0.05,
-                                ),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: selectedPaymentProvider.value == 'myempay'
-                                ? ColorConstants.main
-                                : ColorConstants.mainBorder.withValues(
-                                    alpha: 0.3,
-                                  ),
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SizedBox(
-                              height: 28,
-                              child: Image.asset(
-                                'assets/images/logo_prod.png',
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              'myempay',
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(
-                                    color:
-                                        selectedPaymentProvider.value ==
-                                            'myempay'
-                                        ? ColorConstants.main
-                                        : ColorConstants.tertiary,
-                                    fontWeight:
-                                        selectedPaymentProvider.value ==
-                                            'myempay'
-                                        ? FontWeight.w600
-                                        : FontWeight.normal,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
                 ),
               ],
             ),
