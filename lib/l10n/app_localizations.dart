@@ -4802,35 +4802,35 @@ abstract class AppLocalizations {
   /// **'Peut annuler des transactions'**
   String get paiementCanCancelTransaction;
 
-  /// No description provided for @paiementCancel.
+  /// No description provided for @paiementRefuse.
   ///
   /// In fr, this message translates to:
-  /// **'Annuler'**
-  String get paiementCancel;
+  /// **'Refuser'**
+  String get paiementRefuse;
 
-  /// No description provided for @paiementCancelled.
+  /// No description provided for @paiementRefused.
   ///
   /// In fr, this message translates to:
-  /// **'Annulé'**
-  String get paiementCancelled;
+  /// **'Refusé'**
+  String get paiementRefused;
 
-  /// No description provided for @paiementCancelledTransaction.
+  /// No description provided for @paiementRefusedTransaction.
   ///
   /// In fr, this message translates to:
-  /// **'Paiement annulé'**
-  String get paiementCancelledTransaction;
+  /// **'Paiement refusé'**
+  String get paiementRefusedTransaction;
 
-  /// No description provided for @paiementCancelTransaction.
+  /// No description provided for @paiementRefuseTransaction.
   ///
   /// In fr, this message translates to:
-  /// **'Annuler la transaction'**
-  String get paiementCancelTransaction;
+  /// **'Refuser la transaction'**
+  String get paiementRefuseTransaction;
 
-  /// No description provided for @paiementCancelTransactions.
+  /// No description provided for @paiementRefuseTransactions.
   ///
   /// In fr, this message translates to:
-  /// **'Annuler les transactions'**
-  String get paiementCancelTransactions;
+  /// **'Refuser les transactions'**
+  String get paiementRefuseTransactions;
 
   /// No description provided for @paiementCanManageSellers.
   ///
@@ -5539,12 +5539,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Erreur lors du traitement de la demande'**
   String get paiementPaymentRequestError;
-
-  /// No description provided for @paiementRefuse.
-  ///
-  /// In fr, this message translates to:
-  /// **'Refuser'**
-  String get paiementRefuse;
 
   /// No description provided for @paiementRequestHistory.
   ///

@@ -2426,19 +2426,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementCanCancelTransaction => 'Can cancel transactions';
 
   @override
-  String get paiementCancel => 'Cancel';
+  String get paiementRefuse => 'Refuse';
 
   @override
-  String get paiementCancelled => 'Cancelled';
+  String get paiementRefused => 'Refused';
 
   @override
-  String get paiementCancelledTransaction => 'Payment cancelled';
+  String get paiementRefusedTransaction => 'Payment refused';
 
   @override
-  String get paiementCancelTransaction => 'Cancel transaction';
+  String get paiementRefuseTransaction => 'Refuse transaction';
 
   @override
-  String get paiementCancelTransactions => 'Cancel transactions';
+  String get paiementRefuseTransactions => 'Refuse transactions';
 
   @override
   String get paiementCanManageSellers => 'Can manage sellers';
@@ -2819,9 +2819,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paiementPaymentRequestError => 'Error processing payment request';
-
-  @override
-  String get paiementRefuse => 'Refuse';
 
   @override
   String get paiementRequestHistory => 'Activities';
