@@ -1878,5 +1878,5 @@
   "shotgunNoTickets": "Vous n'avez pas encore de billets",
   "shotgunNoTicketsSubtitle": "Réservez votre place pour un événement !",
   "shotgunViewResults": "Voir les résultats",
-  "shotgunMinPriceError": "Le prix minimum est 1€"
+  "shotgunMinPriceError": "Le prix doit être 0€ ou supérieur à 1€"
 }

@@ -83,7 +83,7 @@ class TarifCard extends HookWidget {
                           final price = double.tryParse(
                             value.replaceAll(',', '.'),
                           );
-                          if (price == null || price < 1) {
+                          if (price == null || (price != 0 && price < 1)) {
                             return l10n.shotgunMinPriceError;
                           }
                           return null;

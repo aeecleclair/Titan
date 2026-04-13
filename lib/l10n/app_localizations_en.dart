@@ -4727,5 +4727,5 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shotgunViewResults => 'View results';
 
   @override
-  String get shotgunMinPriceError => 'Minimum price is 1€';
+  String get shotgunMinPriceError => 'Price must be 0€ or greater than 1€';
 }

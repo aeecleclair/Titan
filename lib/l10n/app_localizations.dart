@@ -9191,7 +9191,7 @@ abstract class AppLocalizations {
   /// No description provided for @shotgunMinPriceError.
   ///
   /// In fr, this message translates to:
-  /// **'Le prix minimum est 1€'**
+  /// **'Le prix doit être 0€ ou supérieur à 1€'**
   String get shotgunMinPriceError;
 }
 
