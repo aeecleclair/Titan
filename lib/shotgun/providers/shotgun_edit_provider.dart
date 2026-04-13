@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/shotgun/class/category.dart';
+import 'package:titan/shotgun/class/session.dart';
 import 'package:titan/shotgun/class/shotgun.dart';
 import 'package:titan/shotgun/repositories/shotgun_repository.dart';
 
@@ -22,7 +24,7 @@ class ShotgunEditNotifier extends StateNotifier<AsyncValue<void>> {
     }
   }
 
-  Future<bool> updateSession(String eventId, session) async {
+  Future<bool> updateSession(String eventId, Session session) async {
     try {
       return await repository.updateSession(eventId, session);
     } catch (e, st) {
@@ -31,7 +33,7 @@ class ShotgunEditNotifier extends StateNotifier<AsyncValue<void>> {
     }
   }
 
-  Future<bool> updateCategory(String eventId, category) async {
+  Future<bool> updateCategory(String eventId, Category category) async {
     try {
       return await repository.updateCategory(eventId, category);
     } catch (e, st) {

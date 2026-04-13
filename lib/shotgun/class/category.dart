@@ -32,13 +32,19 @@ class Category {
     return data;
   }
 
-  Category copyWith({String? id, String? name, int? price}) {
+  Category copyWith({
+    String? id,
+    String? name,
+    int? price,
+    int? quota,
+    String? requiredMembership,
+  }) {
     return Category(
       id: id ?? this.id,
       name: name ?? this.name,
       price: price ?? this.price,
-      quota: quota,
-      requiredMembership: requiredMembership,
+      quota: quota ?? this.quota,
+      requiredMembership: requiredMembership ?? this.requiredMembership,
     );
   }
 

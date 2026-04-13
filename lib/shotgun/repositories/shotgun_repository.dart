@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -63,19 +64,29 @@ class ShotgunRepository extends Repository {
   }
 
   Future<bool> updateSession(String eventId, Session session) async {
-    return await update(
-      session.toJson(),
-      session.id,
-      suffix: 'admin/events/$eventId/sessions',
+    final response = await http.patch(
+      Uri.parse('${Repository.host}${ext}admin/events/$eventId/sessions/${session.id}'),
+      headers: headers,
+      body: jsonEncode(session.toJson()),
     );
+    if (response.statusCode == 204 || response.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('Failed to update session: ${response.statusCode} ${response.body}');
+    }
   }
 
   Future<bool> updateCategory(String eventId, Category category) async {
-    return await update(
-      category.toJson(),
-      category.id,
-      suffix: 'admin/events/$eventId/categories',
+    final response = await http.patch(
+      Uri.parse('${Repository.host}${ext}admin/events/$eventId/categories/${category.id}'),
+      headers: headers,
+      body: jsonEncode(category.toJson()),
     );
+    if (response.statusCode == 204 || response.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('Failed to update category: ${response.statusCode} ${response.body}');
+    }
   }
 
   Future<bool> updateQuestion(
