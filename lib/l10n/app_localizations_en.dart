@@ -9,200 +9,6 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get dateToday => 'Today';
-
-  @override
-  String get dateYesterday => 'Yesterday';
-
-  @override
-  String get dateTomorrow => 'Tomorrow';
-
-  @override
-  String get dateAt => 'at';
-
-  @override
-  String get dateFrom => 'from';
-
-  @override
-  String get dateTo => 'to';
-
-  @override
-  String get dateBetweenDays => 'to';
-
-  @override
-  String get dateStarting => 'Starting';
-
-  @override
-  String get dateLast => 'Last';
-
-  @override
-  String get dateUntil => 'Until';
-
-  @override
-  String get feedFilterAll => 'All';
-
-  @override
-  String get feedFilterPending => 'Pending';
-
-  @override
-  String get feedFilterApproved => 'Approved';
-
-  @override
-  String get feedFilterRejected => 'Rejected';
-
-  @override
-  String get feedEmptyAll => 'No events available';
-
-  @override
-  String get feedEmptyPending => 'No events pending approval';
-
-  @override
-  String get feedEmptyApproved => 'No approved events';
-
-  @override
-  String get feedEmptyRejected => 'No rejected events';
-
-  @override
-  String get feedEventManagement => 'Event Management';
-
-  @override
-  String get feedTitle => 'Title';
-
-  @override
-  String get feedLocation => 'Location';
-
-  @override
-  String get feedSGDate => 'SG Date';
-
-  @override
-  String get feedSGExternalLink => 'SG External link';
-
-  @override
-  String get feedCreateEvent => 'Create an event';
-
-  @override
-  String get feedNotification => 'Send a notification';
-
-  @override
-  String get feedPleaseSelectAnAssociation => 'Please select an association';
-
-  @override
-  String get feedReject => 'Reject';
-
-  @override
-  String get feedApprove => 'Approve';
-
-  @override
-  String get feedEnded => 'Ended';
-
-  @override
-  String get feedOngoing => 'Ongoing';
-
-  @override
-  String get feedFilter => 'Filter';
-
-  @override
-  String get feedAssociation => 'Association';
-
-  @override
-  String feedAssociationEvent(String name) {
-    return '$name event';
-  }
-
-  @override
-  String get feedEditEvent => 'Edit event';
-
-  @override
-  String get feedManageAssociationEvents => 'Manage association events';
-
-  @override
-  String get feedNews => 'Calendar';
-
-  @override
-  String get feedNewsType => 'News type';
-
-  @override
-  String get feedNoAssociationEvents => 'No association events';
-
-  @override
-  String get feedApply => 'Apply';
-
-  @override
-  String get feedAdmin => 'Administration';
-
-  @override
-  String get feedCreateAnEvent => 'Create an event';
-
-  @override
-  String get feedManageRequests => 'Manage requests';
-
-  @override
-  String get feedNoNewsAvailable => 'No news available';
-
-  @override
-  String get feedRefresh => 'Refresh';
-
-  @override
-  String get feedPleaseProvideASGExternalLink =>
-      'Please provide a SG external link';
-
-  @override
-  String get feedPleaseProvideASGDate => 'Please provide a SG date';
-
-  @override
-  String feedShotgunIn(String time) {
-    return 'Shotgun in $time';
-  }
-
-  @override
-  String feedVoteIn(String time) {
-    return 'Vote in $time';
-  }
-
-  @override
-  String get feedCantOpenLink => 'Can\'t open link';
-
-  @override
-  String get feedGetReady => 'Get ready!';
-
-  @override
-  String get eventActionCampaign => 'You can vote';
-
-  @override
-  String get eventActionEvent => 'You are invited';
-
-  @override
-  String get eventActionCampaignSubtitle => 'Vote now';
-
-  @override
-  String get eventActionEventSubtitle => 'Answer the invitation';
-
-  @override
-  String get eventActionTicketsSubtitle => 'Book your seat';
-
-  @override
-  String get eventActionTicketsButton => 'Book';
-
-  @override
-  String get eventActionCampaignButton => 'Vote';
-
-  @override
-  String get eventActionEventButton => 'Reserve';
-
-  @override
-  String get eventActionCampaignValidated => 'I voted!';
-
-  @override
-  String get eventActionEventValidated => 'I\'m coming!';
-
-  @override
-  String get moduleCentralassociation => 'Centralassociation';
-
-  @override
-  String get moduleCentralassociationDescription =>
-      'Aggregator of association links';
-
-  @override
   String get adminAccountTypes => 'Account types';
 
   @override
@@ -1564,6 +1370,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cinemaThe => 'The';
 
   @override
+  String get dateAt => 'at';
+
+  @override
+  String get dateBetweenDays => 'to';
+
+  @override
+  String get dateFrom => 'from';
+
+  @override
+  String get dateLast => 'Last';
+
+  @override
+  String get dateStarting => 'Starting';
+
+  @override
+  String get dateTo => 'to';
+
+  @override
+  String get dateToday => 'Today';
+
+  @override
+  String get dateTomorrow => 'Tomorrow';
+
+  @override
+  String get dateUntil => 'Until';
+
+  @override
+  String get dateYesterday => 'Yesterday';
+
+  @override
   String get drawerAdmin => 'Administration';
 
   @override
@@ -1592,6 +1428,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get drawerSettings => 'Settings';
+
+  @override
+  String get eventActionCampaign => 'You can vote';
+
+  @override
+  String get eventActionCampaignButton => 'Vote';
+
+  @override
+  String get eventActionCampaignSubtitle => 'Vote now';
+
+  @override
+  String get eventActionCampaignValidated => 'I voted!';
+
+  @override
+  String get eventActionEvent => 'You are invited';
+
+  @override
+  String get eventActionEventButton => 'Reserve';
+
+  @override
+  String get eventActionEventSubtitle => 'Answer the invitation';
+
+  @override
+  String get eventActionEventValidated => 'I\'m coming!';
+
+  @override
+  String get eventActionTicketsButton => 'Book';
+
+  @override
+  String get eventActionTicketsSubtitle => 'Book your seat';
 
   @override
   String get eventAdd => 'Add';
@@ -1817,6 +1683,133 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventYes => 'Yes';
+
+  @override
+  String get feedAdmin => 'Administration';
+
+  @override
+  String get feedApply => 'Apply';
+
+  @override
+  String get feedApprove => 'Approve';
+
+  @override
+  String get feedAssociation => 'Association';
+
+  @override
+  String feedAssociationEvent(String name) {
+    return '$name event';
+  }
+
+  @override
+  String get feedCantOpenLink => 'Can\'t open link';
+
+  @override
+  String get feedCreateAnEvent => 'Create an event';
+
+  @override
+  String get feedCreateEvent => 'Create an event';
+
+  @override
+  String get feedEditEvent => 'Edit event';
+
+  @override
+  String get feedEmptyAll => 'No events available';
+
+  @override
+  String get feedEmptyApproved => 'No approved events';
+
+  @override
+  String get feedEmptyPending => 'No events pending approval';
+
+  @override
+  String get feedEmptyRejected => 'No rejected events';
+
+  @override
+  String get feedEnded => 'Ended';
+
+  @override
+  String get feedEventManagement => 'Event Management';
+
+  @override
+  String get feedFilter => 'Filter';
+
+  @override
+  String get feedFilterAll => 'All';
+
+  @override
+  String get feedFilterApproved => 'Approved';
+
+  @override
+  String get feedFilterPending => 'Pending';
+
+  @override
+  String get feedFilterRejected => 'Rejected';
+
+  @override
+  String get feedGetReady => 'Get ready!';
+
+  @override
+  String get feedLocation => 'Location';
+
+  @override
+  String get feedManageAssociationEvents => 'Manage association events';
+
+  @override
+  String get feedManageRequests => 'Manage requests';
+
+  @override
+  String get feedNews => 'Calendar';
+
+  @override
+  String get feedNewsType => 'News type';
+
+  @override
+  String get feedNoAssociationEvents => 'No association events';
+
+  @override
+  String get feedNoNewsAvailable => 'No news available';
+
+  @override
+  String get feedNotification => 'Send a notification';
+
+  @override
+  String get feedOngoing => 'Ongoing';
+
+  @override
+  String get feedPleaseProvideASGDate => 'Please provide a SG date';
+
+  @override
+  String get feedPleaseProvideASGExternalLink =>
+      'Please provide a SG external link';
+
+  @override
+  String get feedPleaseSelectAnAssociation => 'Please select an association';
+
+  @override
+  String get feedRefresh => 'Refresh';
+
+  @override
+  String get feedReject => 'Reject';
+
+  @override
+  String get feedSGDate => 'SG Date';
+
+  @override
+  String get feedSGExternalLink => 'SG External link';
+
+  @override
+  String feedShotgunIn(String time) {
+    return 'Shotgun in $time';
+  }
+
+  @override
+  String get feedTitle => 'Title';
+
+  @override
+  String feedVoteIn(String time) {
+    return 'Vote in $time';
+  }
 
   @override
   String get globalCancel => 'Cancel';
@@ -2207,6 +2200,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moduleCalendarDescription => 'View the calendar of events';
 
   @override
+  String get moduleCentralassociation => 'Centralassociation';
+
+  @override
+  String get moduleCentralassociationDescription =>
+      'Aggregator of association links';
+
+  @override
   String get moduleCentralisation => 'Centralisation';
 
   @override
@@ -2365,6 +2365,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementAddedSeller => 'Seller added';
 
   @override
+  String get paiementAddFunds => 'Add Funds';
+
+  @override
   String get paiementAddingSellerError => 'Error while adding seller';
 
   @override
@@ -2426,21 +2429,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementCanCancelTransaction => 'Can cancel transactions';
 
   @override
-  String get paiementRefuse => 'Refuse';
-
-  @override
-  String get paiementRefused => 'Refused';
-
-  @override
-  String get paiementRefusedTransaction => 'Payment refused';
-
-  @override
-  String get paiementRefuseTransaction => 'Refuse transaction';
-
-  @override
-  String get paiementRefuseTransactions => 'Refuse transactions';
-
-  @override
   String get paiementCanManageSellers => 'Can manage sellers';
 
   @override
@@ -2451,6 +2439,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paiementClose => 'Close';
+
+  @override
+  String get paiementCompletePayment => 'Complete payment';
+
+  @override
+  String get paiementConfirmPayment => 'Confirm Payment';
+
+  @override
+  String get paiementConfirmYourPurchase => 'Confirm your purchase';
 
   @override
   String get paiementCreate => 'Create';
@@ -2561,6 +2558,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementHistory => 'History';
 
   @override
+  String get paiementHurryUp => 'Hurry up!';
+
+  @override
+  String get paiementInsufficientBalance => 'Insufficient balance';
+
+  @override
+  String get paiementInsufficientFunds => 'Insufficient Funds';
+
+  @override
   String get paiementInvoiceCreatedSuccessfully =>
       'Invoice created successfully';
 
@@ -2628,6 +2634,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'This product is not available to non-members. Confirm the payment?';
 
   @override
+  String get paiementNoRequests => 'No payment requests';
+
+  @override
   String get paiementNoThanks => 'No thanks';
 
   @override
@@ -2650,6 +2659,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementPayment => 'Payment';
 
   @override
+  String get paiementPaymentCanceled => 'Payment canceled';
+
+  @override
+  String get paiementPaymentRequest => 'Payment request';
+
+  @override
+  String get paiementPaymentRequestAccepted => 'Payment request accepted';
+
+  @override
+  String get paiementPaymentRequestError => 'Error processing payment request';
+
+  @override
+  String get paiementPaymentRequestRefused => 'Payment request refused';
+
+  @override
+  String get paiementPaymentSuccessful => 'Payment successful!';
+
+  @override
   String get paiementPayWithHA => 'Pay with HelloAsso';
 
   @override
@@ -2657,24 +2684,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paiementPersonalBalance => 'Personal balance';
-
-  @override
-  String get paiementAddFunds => 'Add Funds';
-
-  @override
-  String get paiementInsufficientFunds => 'Insufficient Funds';
-
-  @override
-  String get paiementTimeRemaining => 'Time Remaining';
-
-  @override
-  String get paiementHurryUp => 'Hurry up!';
-
-  @override
-  String get paiementCompletePayment => 'Complete payment';
-
-  @override
-  String get paiementConfirmPayment => 'Confirm Payment';
 
   @override
   String get paiementPleaseAcceptPopup => 'Please allow popups';
@@ -2716,6 +2725,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paiementRefundedThe => 'Refunded on';
+
+  @override
+  String get paiementRefuse => 'Refuse';
+
+  @override
+  String get paiementRefused => 'Refused';
+
+  @override
+  String get paiementRefusedTransaction => 'Payment refused';
+
+  @override
+  String get paiementRefuseTransaction => 'Refuse transaction';
+
+  @override
+  String get paiementRefuseTransactions => 'Refuse transactions';
+
+  @override
+  String get paiementRequestDetails => 'Request details';
+
+  @override
+  String get paiementRequestHistory => 'Activities';
+
+  @override
+  String get paiementRequestStatusAccepted => 'Accepted';
+
+  @override
+  String get paiementRequestStatusExpired => 'Expired';
+
+  @override
+  String get paiementRequestStatusPending => 'Pending';
+
+  @override
+  String get paiementRequestStatusRefused => 'Refused';
 
   @override
   String get paiementRevokeDevice => 'Revoke device?';
@@ -2797,54 +2839,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementSuccededTransaction => 'Successful payment';
 
   @override
-  String get paiementConfirmYourPurchase => 'Confirm your purchase';
-
-  @override
-  String get paiementYourBalance => 'Your balance';
-
-  @override
-  String get paiementPaymentSuccessful => 'Payment successful!';
-
-  @override
-  String get paiementPaymentCanceled => 'Payment canceled';
-
-  @override
-  String get paiementPaymentRequest => 'Payment request';
-
-  @override
-  String get paiementPaymentRequestAccepted => 'Payment request accepted';
-
-  @override
-  String get paiementPaymentRequestRefused => 'Payment request refused';
-
-  @override
-  String get paiementPaymentRequestError => 'Error processing payment request';
-
-  @override
-  String get paiementRequestHistory => 'Activities';
-
-  @override
-  String get paiementRequestStatusPending => 'Pending';
-
-  @override
-  String get paiementRequestStatusRefused => 'Refused';
-
-  @override
-  String get paiementRequestStatusExpired => 'Expired';
-
-  @override
-  String get paiementRequestStatusAccepted => 'Accepted';
-
-  @override
-  String get paiementInsufficientBalance => 'Insufficient balance';
-
-  @override
-  String get paiementRequestDetails => 'Request details';
-
-  @override
-  String get paiementNoRequests => 'No payment requests';
-
-  @override
   String get paiementSuccessfullyAddedStore => 'Store successfully added';
 
   @override
@@ -2855,6 +2849,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paiementThisDevice => '(this device)';
+
+  @override
+  String get paiementTimeRemaining => 'Time Remaining';
 
   @override
   String get paiementTopUp => 'Top-up';
@@ -2903,6 +2900,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get paiementYouAreTransferingStructureTo =>
       'You are about to transfer the structure to ';
+
+  @override
+  String get paiementYourBalance => 'Your balance';
 
   @override
   String get phAdd => 'Add';
@@ -4313,6 +4313,165 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsVersion => 'Version';
 
   @override
+  String get shotgunAddQuestion => 'Add a question';
+
+  @override
+  String get shotgunAddSession => 'Add session';
+
+  @override
+  String get shotgunAddTariff => 'Add pricing';
+
+  @override
+  String get shotgunAdmin => 'Admin';
+
+  @override
+  String get shotgunAnswerTypeBoolean => 'Yes/No';
+
+  @override
+  String get shotgunAnswerTypeNumber => 'Number';
+
+  @override
+  String get shotgunAnswerTypeText => 'Text';
+
+  @override
+  String get shotgunBookTicket => 'Book a ticket';
+
+  @override
+  String get shotgunCategoryLabel => 'Category (pricing)';
+
+  @override
+  String get shotgunCreate => 'Create a shotgun';
+
+  @override
+  String get shotgunDateLabel => 'Date';
+
+  @override
+  String get shotgunDeleteQuestionTooltip => 'Delete question';
+
+  @override
+  String get shotgunEditSuccess => 'Shotgun updated successfully';
+
+  @override
+  String get shotgunEditTitle => 'Edit shotgun';
+
+  @override
+  String get shotgunEndDateLabel => 'Shotgun closing date (optional)';
+
+  @override
+  String get shotgunManageAssociation => 'Manage association shotguns';
+
+  @override
+  String get shotgunManageTitle => 'Manage association shotguns';
+
+  @override
+  String get shotgunMinPriceError => 'Minimum price is 1€';
+
+  @override
+  String get shotgunMyTickets => 'My tickets';
+
+  @override
+  String get shotgunNoShotgun => 'No shotgun for this store';
+
+  @override
+  String get shotgunNotFound => 'Shotgun not found';
+
+  @override
+  String get shotgunNoTickets => 'You don\'t have any tickets yet';
+
+  @override
+  String get shotgunNoTicketsSubtitle => 'Book your seat for an event!';
+
+  @override
+  String get shotgunOpeningLabel => 'Opening';
+
+  @override
+  String get shotgunPaymentMethod => 'Payment method';
+
+  @override
+  String get shotgunPlaces => 'seats';
+
+  @override
+  String get shotgunPlacesLabel => 'Number of available seats (optional)';
+
+  @override
+  String get shotgunPriceLabel => 'Price (€)';
+
+  @override
+  String shotgunQuestionLabel(int number) {
+    return 'Question $number';
+  }
+
+  @override
+  String get shotgunQuestionRequiredLabel => 'Required';
+
+  @override
+  String get shotgunQuestions => 'Questions';
+
+  @override
+  String get shotgunQuestionTypeLabel => 'Answer type';
+
+  @override
+  String get shotgunQuotaLabel => 'Quota';
+
+  @override
+  String get shotgunReservationSuccess => 'Reservation created successfully!';
+
+  @override
+  String get shotgunReserve => 'Book';
+
+  @override
+  String get shotgunSave => 'Save shotgun';
+
+  @override
+  String get shotgunSaveChanges => 'Save changes';
+
+  @override
+  String get shotgunSessionLabel => 'Session (time)';
+
+  @override
+  String shotgunSessionLabelNumbered(int number) {
+    return 'Session $number';
+  }
+
+  @override
+  String get shotgunSessions => 'Sessions';
+
+  @override
+  String get shotgunShotgun => 'Shotgun';
+
+  @override
+  String get shotgunShotgunDescription => 'Book your seats for events';
+
+  @override
+  String get shotgunStartDateLabel => 'Shotgun opening date *';
+
+  @override
+  String get shotgunStartDateRequired => 'Start date is required';
+
+  @override
+  String shotgunTariffLabel(int number) {
+    return 'Pricing $number';
+  }
+
+  @override
+  String get shotgunTariffs => 'Pricing';
+
+  @override
+  String get shotgunTitle => 'Shotgun';
+
+  @override
+  String get shotgunTitleLabel => 'Shotgun title *';
+
+  @override
+  String get shotgunTitleRequired => 'Title is required';
+
+  @override
+  String get shotgunTotal => 'Total';
+
+  @override
+  String get shotgunViewResults => 'View results';
+
+  @override
   String get toolDateRequired => 'Date required';
 
   @override
@@ -4443,6 +4602,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get voteErrorOpeningVotes => 'Error opening votes';
 
   @override
+  String get shotgunCategoriesRequired => 'At least one category is required';
+
+  @override
+  String get shotgunSessionsRequired => 'At least one session is required';
+
+  @override
   String get voteErrorResetingVotes => 'Error resetting votes';
 
   @override
@@ -4560,169 +4725,4 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get voteWarningMessage =>
       'Selection will not be saved.\nDo you want to continue?';
-
-  @override
-  String get shotgunShotgun => 'Shotgun';
-
-  @override
-  String get shotgunShotgunDescription => 'Book your seats for events';
-
-  @override
-  String get shotgunTitle => 'Shotgun';
-
-  @override
-  String get shotgunAdmin => 'Admin';
-
-  @override
-  String get shotgunCreate => 'Create a shotgun';
-
-  @override
-  String get shotgunManageAssociation => 'Manage association shotguns';
-
-  @override
-  String get shotgunTitleLabel => 'Shotgun title *';
-
-  @override
-  String get shotgunPlacesLabel => 'Number of available seats (optional)';
-
-  @override
-  String get shotgunStartDateLabel => 'Shotgun opening date *';
-
-  @override
-  String get shotgunEndDateLabel => 'Shotgun closing date (optional)';
-
-  @override
-  String get shotgunTitleRequired => 'Title is required';
-
-  @override
-  String get shotgunStartDateRequired => 'Start date is required';
-
-  @override
-  String get shotgunCategoriesRequired => 'At least one category is required';
-
-  @override
-  String get shotgunSessionsRequired => 'At least one session is required';
-
-  @override
-  String get shotgunSave => 'Save shotgun';
-
-  @override
-  String get shotgunAddQuestion => 'Add a question';
-
-  @override
-  String shotgunQuestionLabel(int number) {
-    return 'Question $number';
-  }
-
-  @override
-  String get shotgunDeleteQuestionTooltip => 'Delete question';
-
-  @override
-  String get shotgunQuestionTypeLabel => 'Answer type';
-
-  @override
-  String get shotgunAnswerTypeText => 'Text';
-
-  @override
-  String get shotgunAnswerTypeNumber => 'Number';
-
-  @override
-  String get shotgunAnswerTypeBoolean => 'Yes/No';
-
-  @override
-  String get shotgunQuestionRequiredLabel => 'Required';
-
-  @override
-  String get shotgunEditTitle => 'Edit shotgun';
-
-  @override
-  String get shotgunTariffs => 'Pricing';
-
-  @override
-  String get shotgunPriceLabel => 'Price (€)';
-
-  @override
-  String get shotgunSessions => 'Sessions';
-
-  @override
-  String get shotgunDateLabel => 'Date';
-
-  @override
-  String get shotgunQuotaLabel => 'Quota';
-
-  @override
-  String get shotgunQuestions => 'Questions';
-
-  @override
-  String get shotgunEditSuccess => 'Shotgun updated successfully';
-
-  @override
-  String get shotgunSaveChanges => 'Save changes';
-
-  @override
-  String get shotgunManageTitle => 'Manage association shotguns';
-
-  @override
-  String get shotgunNoShotgun => 'No shotgun for this store';
-
-  @override
-  String get shotgunNotFound => 'Shotgun not found';
-
-  @override
-  String get shotgunBookTicket => 'Book a ticket';
-
-  @override
-  String get shotgunCategoryLabel => 'Category (pricing)';
-
-  @override
-  String get shotgunSessionLabel => 'Session (time)';
-
-  @override
-  String get shotgunPlaces => 'seats';
-
-  @override
-  String get shotgunTotal => 'Total';
-
-  @override
-  String get shotgunPaymentMethod => 'Payment method';
-
-  @override
-  String get shotgunReserve => 'Book';
-
-  @override
-  String get shotgunOpeningLabel => 'Opening';
-
-  @override
-  String get shotgunAddTariff => 'Add pricing';
-
-  @override
-  String get shotgunAddSession => 'Add session';
-
-  @override
-  String shotgunTariffLabel(int number) {
-    return 'Pricing $number';
-  }
-
-  @override
-  String shotgunSessionLabelNumbered(int number) {
-    return 'Session $number';
-  }
-
-  @override
-  String get shotgunReservationSuccess => 'Reservation created successfully!';
-
-  @override
-  String get shotgunMyTickets => 'My tickets';
-
-  @override
-  String get shotgunNoTickets => 'You don\'t have any tickets yet';
-
-  @override
-  String get shotgunNoTicketsSubtitle => 'Book your seat for an event!';
-
-  @override
-  String get shotgunViewResults => 'View results';
-
-  @override
-  String get shotgunMinPriceError => 'Price must be 0€ or greater than 1€';
 }
