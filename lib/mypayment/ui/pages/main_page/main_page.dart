@@ -20,7 +20,7 @@ import 'package:titan/mypayment/ui/pages/main_page/account_card/last_transaction
 import 'package:titan/mypayment/ui/pages/main_page/flip_card.dart';
 import 'package:titan/mypayment/ui/pages/main_page/seller_card/store_card.dart';
 import 'package:titan/mypayment/ui/pages/main_page/seller_card/store_list.dart';
-import 'package:titan/mypayment/ui/paiement.dart';
+import 'package:titan/mypayment/ui/mypayment.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';

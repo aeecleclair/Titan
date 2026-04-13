@@ -10,8 +10,8 @@ import 'package:intl/intl.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/providers/navbar_module_list.dart';
 import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
-import 'package:titan/paiement/providers/my_wallet_provider.dart';
-import 'package:titan/paiement/router.dart';
+import 'package:titan/mypayment/providers/my_wallet_provider.dart';
+import 'package:titan/mypayment/router.dart';
 import 'package:titan/mypayment/tools/can_pay.dart';
 import 'package:titan/shotgun/class/answer.dart';
 import 'package:titan/shotgun/class/answer_type.dart';
@@ -140,9 +140,7 @@ class _ShotgunContent extends HookConsumerWidget {
       final requiredQuestions = shotgun.questions.where((q) => q.required);
       for (final question in requiredQuestions) {
         final answer = answersMap.value[question.id];
-        if (answer == null ||
-            (answer is String && answer.trim().isEmpty) ||
-            answer == false) {
+        if (answer == null || (answer is String && answer.trim().isEmpty)) {
           return false;
         }
       }
@@ -841,12 +839,16 @@ class _QuestionAnswerField extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        _buildAnswerInput(context, l10n),
+        _buildAnswerInput(context, l10n, isRequired),
       ],
     );
   }
 
-  Widget _buildAnswerInput(BuildContext context, AppLocalizations l10n) {
+  Widget _buildAnswerInput(
+    BuildContext context,
+    AppLocalizations l10n,
+    bool isRequired,
+  ) {
     switch (question.answerType) {
       case AnswerType.boolean:
         return Row(
@@ -955,6 +957,16 @@ class _QuestionAnswerField extends StatelessWidget {
         return TextFormField(
           initialValue: value?.toString() ?? '',
           keyboardType: TextInputType.number,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (val) {
+            if (isRequired && (val == null || val.trim().isEmpty)) {
+              return l10n.shotgunQuestionRequiredLabel;
+            }
+            if (val != null && val.isNotEmpty && num.tryParse(val) == null) {
+              return l10n.toolInvalidNumber;
+            }
+            return null;
+          },
           decoration: InputDecoration(
             hintText: l10n.shotgunAnswerTypeNumber,
             filled: true,
@@ -975,6 +987,10 @@ class _QuestionAnswerField extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: ColorConstants.main),
             ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: ColorConstants.error),
+            ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 12,
@@ -987,6 +1003,13 @@ class _QuestionAnswerField extends StatelessWidget {
         return TextFormField(
           initialValue: value?.toString() ?? '',
           maxLines: 2,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (val) {
+            if (isRequired && (val == null || val.trim().isEmpty)) {
+              return l10n.shotgunQuestionRequiredLabel;
+            }
+            return null;
+          },
           decoration: InputDecoration(
             hintText: l10n.shotgunAnswerTypeText,
             filled: true,
@@ -1006,6 +1029,10 @@ class _QuestionAnswerField extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: ColorConstants.main),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: ColorConstants.error),
             ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,

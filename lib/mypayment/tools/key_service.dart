@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:cryptography_plus/cryptography_plus.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:titan/paiement/class/secured_content_data.dart';
-import 'package:titan/paiement/class/signed_content.dart';
+import 'package:titan/mypayment/class/secured_content_data.dart';
+import 'package:titan/mypayment/class/signed_content.dart';
 import 'package:titan/tools/functions.dart';
 
 class KeyService {

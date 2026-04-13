@@ -11,7 +11,7 @@ import 'package:titan/mypayment/ui/components/request_detail_modal.dart';
 import 'package:titan/mypayment/ui/components/show_request_modal.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/mypayment/ui/pages/main_page/account_card/day_divider.dart';
-import 'package:titan/mypayment/ui/paiement.dart';
+import 'package:titan/mypayment/ui/mypayment.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:timeago/timeago.dart' as timeago;
