@@ -15,6 +15,7 @@ class TextEntry extends StatelessWidget {
   final String? Function(String)? validator;
   final int? minLines, maxLines;
   final TextInputAction textInputAction;
+  final TextCapitalization textCapitalization;
   final bool displayOptionnal;
   const TextEntry({
     super.key,
@@ -38,6 +39,7 @@ class TextEntry extends StatelessWidget {
     this.suffixIcon,
     this.isNegative = false,
     this.textInputAction = TextInputAction.next,
+    this.textCapitalization = TextCapitalization.none,
     this.displayOptionnal = true,
   });
 
@@ -51,6 +53,7 @@ class TextEntry extends StatelessWidget {
       keyboardType: keyboardType,
       cursorColor: color,
       onChanged: onChanged,
+      textCapitalization: textCapitalization,
       textInputAction: (keyboardType == TextInputType.multiline)
           ? TextInputAction.newline
           : TextInputAction.next,

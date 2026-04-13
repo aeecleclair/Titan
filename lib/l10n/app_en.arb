@@ -1807,6 +1807,8 @@
   "shotgunEndDateLabel": "Shotgun closing date (optional)",
   "shotgunTitleRequired": "Title is required",
   "shotgunStartDateRequired": "Start date is required",
+  "shotgunCategoriesRequired": "At least one category is required",
+  "shotgunSessionsRequired": "At least one session is required",
   "shotgunSave": "Save shotgun",
   "shotgunAddQuestion": "Add a question",
   "shotgunQuestionLabel": "Question {number}",

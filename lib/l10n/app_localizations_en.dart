@@ -4601,6 +4601,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shotgunStartDateRequired => 'Start date is required';
 
   @override
+  String get shotgunCategoriesRequired => 'At least one category is required';
+
+  @override
+  String get shotgunSessionsRequired => 'At least one session is required';
+
+  @override
   String get shotgunSave => 'Save shotgun';
 
   @override

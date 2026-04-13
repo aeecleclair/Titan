@@ -1814,6 +1814,8 @@
   "shotgunEndDateLabel": "Date de fermeture du shotgun (optionnel)",
   "shotgunTitleRequired": "Le titre est obligatoire",
   "shotgunStartDateRequired": "La date de début est obligatoire",
+  "shotgunCategoriesRequired": "Au moins une catégorie est obligatoire",
+  "shotgunSessionsRequired": "Au moins une session est obligatoire",
   "shotgunSave": "Enregistrer le shotgun",
   "shotgunAddQuestion": "Ajouter une question",
   "shotgunQuestionLabel": "Question {number}",

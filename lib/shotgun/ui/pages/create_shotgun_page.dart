@@ -89,6 +89,7 @@ class CreateShotgunPage extends HookConsumerWidget {
                   maxLines: 1,
                   label: l10n.shotgunTitleLabel,
                   controller: titleController,
+                  textCapitalization: TextCapitalization.sentences,
                   onChanged: (_) {},
                 ),
                 const SizedBox(height: 16),
@@ -96,6 +97,9 @@ class CreateShotgunPage extends HookConsumerWidget {
                   maxLines: 1,
                   label: l10n.shotgunPlacesLabel,
                   controller: placesController,
+                  keyboardType: TextInputType.number,
+                  isInt: true,
+                  canBeEmpty: true,
                   onChanged: (_) {},
                 ),
                 const SizedBox(height: 24),
@@ -143,6 +147,24 @@ class CreateShotgunPage extends HookConsumerWidget {
                           context,
                           TypeMsg.error,
                           l10n.shotgunStartDateRequired,
+                        );
+                        return;
+                      }
+
+                      if (categories.value.isEmpty) {
+                        displayToast(
+                          context,
+                          TypeMsg.error,
+                          l10n.shotgunCategoriesRequired,
+                        );
+                        return;
+                      }
+
+                      if (sessions.value.isEmpty) {
+                        displayToast(
+                          context,
+                          TypeMsg.error,
+                          l10n.shotgunSessionsRequired,
                         );
                         return;
                       }

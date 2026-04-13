@@ -68,6 +68,7 @@ class SessionCard extends HookWidget {
                           TextEntry(
                             label: l10n.shotgunSessionLabelNumbered(i + 1),
                             controller: entries.value[i]['label']!,
+                            textCapitalization: TextCapitalization.sentences,
                             onChanged: (_) => notify(),
                           ),
                           const SizedBox(height: 8),

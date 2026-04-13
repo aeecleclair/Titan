@@ -8948,6 +8948,18 @@ abstract class AppLocalizations {
   /// **'La date de début est obligatoire'**
   String get shotgunStartDateRequired;
 
+  /// No description provided for @shotgunCategoriesRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Au moins une catégorie est obligatoire'**
+  String get shotgunCategoriesRequired;
+
+  /// No description provided for @shotgunSessionsRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Au moins une session est obligatoire'**
+  String get shotgunSessionsRequired;
+
   /// No description provided for @shotgunSave.
   ///
   /// In fr, this message translates to:

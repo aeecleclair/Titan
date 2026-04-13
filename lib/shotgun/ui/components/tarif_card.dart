@@ -63,6 +63,7 @@ class TarifCard extends HookWidget {
                       child: TextEntry(
                         label: l10n.shotgunTariffLabel(i + 1),
                         controller: entries.value[i]['label']!,
+                        textCapitalization: TextCapitalization.sentences,
                         onChanged: (_) => notify(),
                       ),
                     ),
