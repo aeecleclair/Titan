@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -15,7 +16,7 @@ import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 
-class ShotgunMainPage extends ConsumerWidget {
+class ShotgunMainPage extends HookConsumerWidget {
   const ShotgunMainPage({super.key});
 
   @override
@@ -24,7 +25,13 @@ class ShotgunMainPage extends ConsumerWidget {
     final userTicketsAsync = ref.watch(userTicketsProvider);
     final userTicketsNotifier = ref.watch(userTicketsProvider.notifier);
     final isUserAMemberOfAStore = ref.watch(isUserAMemberOfAStoreProvider);
-    final scrollController = ScrollController();
+    final scrollController = useScrollController();
+
+    // Rafraîchir la liste des tickets à l'arrivée sur la page
+    useEffect(() {
+      userTicketsNotifier.loadUserTickets();
+      return null;
+    }, []);
 
     return ShotgunTemplate(
       child: Column(
