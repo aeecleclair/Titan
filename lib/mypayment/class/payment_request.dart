@@ -6,6 +6,7 @@ class PaymentRequest {
   final String id;
   final String walletId;
   final DateTime creation;
+  final DateTime endDate;
   final int total;
   final String storeId;
   final String name;
@@ -19,6 +20,7 @@ class PaymentRequest {
     required this.id,
     required this.walletId,
     required this.creation,
+    required this.endDate,
     required this.total,
     required this.storeId,
     required this.name,
@@ -33,6 +35,7 @@ class PaymentRequest {
     : id = json['id'],
       walletId = json['wallet_id'],
       creation = processDateFromAPI(json['creation']),
+      endDate = processDateFromAPI(json['end_date']),
       total = json['total'],
       storeId = json['store_id'],
       name = json['name'],
@@ -48,6 +51,7 @@ class PaymentRequest {
     'id': id,
     'wallet_id': walletId,
     'creation': processDateToAPI(creation),
+    'end_date': processDateToAPI(endDate),
     'total': total,
     'store_id': storeId,
     'name': name,
@@ -60,13 +64,14 @@ class PaymentRequest {
 
   @override
   String toString() {
-    return 'PaymentRequest {id: $id, walletId: $walletId, creation: $creation, total: $total, storeId: $storeId, name: $name, status: $status}';
+    return 'PaymentRequest {id: $id, walletId: $walletId, creation: $creation, endDate: $endDate, total: $total, storeId: $storeId, name: $name, status: $status}';
   }
 
   PaymentRequest.empty()
     : id = '',
       walletId = '',
       creation = DateTime.now(),
+      endDate = DateTime.now(),
       total = 0,
       storeId = '',
       name = '',
@@ -80,6 +85,7 @@ class PaymentRequest {
     String? id,
     String? walletId,
     DateTime? creation,
+    DateTime? endDate,
     int? total,
     String? storeId,
     String? name,
@@ -93,6 +99,7 @@ class PaymentRequest {
       id: id ?? this.id,
       walletId: walletId ?? this.walletId,
       creation: creation ?? this.creation,
+      endDate: endDate ?? this.endDate,
       total: total ?? this.total,
       storeId: storeId ?? this.storeId,
       name: name ?? this.name,

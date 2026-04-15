@@ -31,8 +31,7 @@ class RequestHistoryPage extends HookConsumerWidget {
         final now = DateTime.now();
         for (final request in requests) {
           if (request.status != RequestStatus.proposed) continue;
-          final expiresAt = request.creation.add(const Duration(minutes: 15));
-          final remaining = expiresAt.difference(now);
+          final remaining = request.endDate.difference(now);
           if (remaining.isNegative) continue;
           timers.add(
             Timer(remaining, () => requestHistoryNotifier.getRequestHistory()),
