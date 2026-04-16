@@ -1,3 +1,4 @@
+import 'package:titan/admin/class/assocation.dart';
 import 'package:titan/mypayment/class/structure.dart';
 
 class StoreSimple {
@@ -27,12 +28,14 @@ class StoreSimple {
 
 class Store extends StoreSimple {
   final Structure structure;
+  final Association association;
 
   Store({
     required super.id,
     required super.name,
     required super.walletId,
     required this.structure,
+    required this.association,
   });
 
   factory Store.fromJson(Map<String, dynamic> json) {
@@ -41,6 +44,9 @@ class Store extends StoreSimple {
       name: json['name'],
       walletId: json['wallet_id'],
       structure: Structure.fromJson(json['structure']),
+      association: json['association'] != null
+          ? Association.fromJson(json['association'])
+          : Association.empty(),
     );
   }
 
@@ -51,6 +57,7 @@ class Store extends StoreSimple {
       'name': name,
       'wallet_id': walletId,
       'structure': structure.toJson(),
+      'association_id': association.id.isNotEmpty ? association.id : null,
     };
   }
 
@@ -59,20 +66,28 @@ class Store extends StoreSimple {
     String? name,
     String? walletId,
     Structure? structure,
+    Association? association,
   }) {
     return Store(
       id: id ?? this.id,
       name: name ?? this.name,
       walletId: walletId ?? this.walletId,
       structure: structure ?? this.structure,
+      association: association ?? this.association,
     );
   }
 
   @override
   String toString() {
-    return 'Store(id: $id, name: $name, walletId: $walletId, structure: $structure)';
+    return 'Store(id: $id, name: $name, walletId: $walletId, structure: $structure, association: $association)';
   }
 
   Store.empty()
-    : this(id: '', name: '', walletId: '', structure: Structure.empty());
+    : this(
+        id: '',
+        name: '',
+        walletId: '',
+        structure: Structure.empty(),
+        association: Association.empty(),
+      );
 }
