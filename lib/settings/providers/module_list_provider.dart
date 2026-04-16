@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/super_admin/providers/permissions_list_provider.dart';
@@ -158,7 +157,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
         Module module = allModules[allSavedModulesName.indexOf(name)];
         if (roots.contains(module.root)) {
           modules.add(module);
-        } else if (!kDebugMode) {
+        } else {
           toDelete.add(module);
         }
       }
