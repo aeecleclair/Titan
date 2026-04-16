@@ -1,17 +1,22 @@
-import 'package:titan/mypayment/class/store.dart';
 import 'package:titan/mypayment/class/structure.dart';
 
-class UserStore extends Store {
+class UserStore {
+  final String id;
+  final String name;
+  final String walletId;
+  final Structure structure;
+  final String? associationId;
   final bool canBank;
   final bool canSeeHistory;
   final bool canCancel;
   final bool canManageSellers;
 
   UserStore({
-    required super.id,
-    required super.name,
-    required super.walletId,
-    required super.structure,
+    required this.id,
+    required this.name,
+    required this.walletId,
+    required this.structure,
+    this.associationId,
     required this.canBank,
     required this.canSeeHistory,
     required this.canCancel,
@@ -24,6 +29,7 @@ class UserStore extends Store {
       name: json['name'],
       walletId: json['wallet_id'],
       structure: Structure.fromJson(json['structure']),
+      associationId: json['association_id'],
       canBank: json['can_bank'],
       canSeeHistory: json['can_see_history'],
       canCancel: json['can_cancel'],
@@ -31,13 +37,13 @@ class UserStore extends Store {
     );
   }
 
-  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'name': name,
       'wallet_id': walletId,
       'structure': structure.toJson(),
+      'association_id': associationId,
       'can_bank': canBank,
       'can_see_history': canSeeHistory,
       'can_cancel': canCancel,
@@ -45,23 +51,23 @@ class UserStore extends Store {
     };
   }
 
-  @override
   UserStore copyWith({
     String? id,
     String? name,
     String? walletId,
     Structure? structure,
+    String? associationId,
     bool? canBank,
     bool? canSeeHistory,
     bool? canCancel,
     bool? canManageSellers,
-    bool? storeAdmin,
   }) {
     return UserStore(
       id: id ?? this.id,
       name: name ?? this.name,
       walletId: walletId ?? this.walletId,
       structure: structure ?? this.structure,
+      associationId: associationId ?? this.associationId,
       canBank: canBank ?? this.canBank,
       canSeeHistory: canSeeHistory ?? this.canSeeHistory,
       canCancel: canCancel ?? this.canCancel,
@@ -71,7 +77,7 @@ class UserStore extends Store {
 
   @override
   String toString() {
-    return 'UserStore(id: $id, name: $name, walletId: $walletId, structure: $structure, canBank: $canBank, canSeeHistory: $canSeeHistory, canCancel: $canCancel, canManageSellers: $canManageSellers)';
+    return 'UserStore(id: $id, name: $name, walletId: $walletId, structure: $structure, associationId: $associationId, canBank: $canBank, canSeeHistory: $canSeeHistory, canCancel: $canCancel, canManageSellers: $canManageSellers)';
   }
 
   UserStore.empty()
