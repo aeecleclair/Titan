@@ -153,7 +153,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String feedTicketsIn(String time) {
-    return 'TicketEvent $time';
+    return 'Billets disponibles dans $time';
   }
 
   @override
@@ -3702,7 +3702,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get raffleWinner => 'Gagnant';
 
   @override
-  String get raffleWinningTickets => 'TicketEvent gagnants';
+  String get raffleWinningTickets => 'Ticket gagnants';
 
   @override
   String get raffleYourTickets => 'Tous vos tickets';
@@ -4882,7 +4882,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsQuestions => 'Questions';
 
   @override
-  String get ticketsEditSuccess => 'TicketEvent modifié avec succès';
+  String get ticketsEditSuccess => 'Billeterie modifiée avec succès';
 
   @override
   String get ticketsSaveChanges => 'Enregistrer les modifications';
@@ -4894,7 +4894,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsNoTickets => 'Vous n\'avez pas encore de billets';
 
   @override
-  String get ticketsNotFound => 'TicketEvent non trouvé';
+  String get ticketsNotFound => 'Billeterie non trouvée';
 
   @override
   String get ticketsBookTicket => 'Réserver un billet';

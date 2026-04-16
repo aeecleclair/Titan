@@ -151,7 +151,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String feedTicketsIn(String time) {
-    return 'TicketEvent in $time';
+    return 'Ticketing in $time';
   }
 
   @override
@@ -4739,16 +4739,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsManageAssociation => 'Manage association shotguns';
 
   @override
-  String get ticketsTitleLabel => 'TicketEvent title *';
+  String get ticketsTitleLabel => 'Ticketing title *';
 
   @override
   String get ticketsPlacesLabel => 'Number of available seats (optional)';
 
   @override
-  String get ticketsStartDateLabel => 'TicketEvent opening date *';
+  String get ticketsStartDateLabel => 'Ticket opening date *';
 
   @override
-  String get ticketsEndDateLabel => 'TicketEvent closing date (optional)';
+  String get ticketsEndDateLabel => 'Ticketing closing date (optional)';
 
   @override
   String get ticketsTitleRequired => 'Title is required';
@@ -4813,7 +4813,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsQuestions => 'Questions';
 
   @override
-  String get ticketsEditSuccess => 'TicketEvent updated successfully';
+  String get ticketsEditSuccess => 'Ticketing updated successfully';
 
   @override
   String get ticketsSaveChanges => 'Save changes';
@@ -4825,7 +4825,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsNoTickets => 'You don\'t have any tickets yet';
 
   @override
-  String get ticketsNotFound => 'TicketEvent not found';
+  String get ticketsNotFound => 'Ticketing not found';
 
   @override
   String get ticketsBookTicket => 'Book a ticket';

@@ -377,7 +377,7 @@ abstract class AppLocalizations {
   /// Placeholder pour le temps restant avant le tickets
   ///
   /// In fr, this message translates to:
-  /// **'TicketEvent {time}'**
+  /// **'Billets disponibles dans {time}'**
   String feedTicketsIn(String time);
 
   /// Temps restant avant le vote
@@ -7109,7 +7109,7 @@ abstract class AppLocalizations {
   /// No description provided for @raffleWinningTickets.
   ///
   /// In fr, this message translates to:
-  /// **'TicketEvent gagnants'**
+  /// **'Ticket gagnants'**
   String get raffleWinningTickets;
 
   /// No description provided for @raffleYourTickets.
@@ -9359,7 +9359,7 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsEditSuccess.
   ///
   /// In fr, this message translates to:
-  /// **'TicketEvent modifié avec succès'**
+  /// **'Billeterie modifiée avec succès'**
   String get ticketsEditSuccess;
 
   /// No description provided for @ticketsSaveChanges.
@@ -9383,7 +9383,7 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsNotFound.
   ///
   /// In fr, this message translates to:
-  /// **'TicketEvent non trouvé'**
+  /// **'Billeterie non trouvée'**
   String get ticketsNotFound;
 
   /// No description provided for @ticketsBookTicket.
