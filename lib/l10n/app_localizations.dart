@@ -242,6 +242,12 @@ abstract class AppLocalizations {
   /// **'Créer l\'événement'**
   String get feedCreateEvent;
 
+  /// No description provided for @feedUseExistingTicketing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Utiliser une billetterie existante'**
+  String get feedUseExistingTicketing;
+
   /// No description provided for @feedNotification.
   ///
   /// In fr, this message translates to:
@@ -9203,19 +9209,19 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsCreate.
   ///
   /// In fr, this message translates to:
-  /// **'Créer un tickets'**
+  /// **'Créer une billetterie'**
   String get ticketsCreate;
 
   /// No description provided for @ticketsManageAssociation.
   ///
   /// In fr, this message translates to:
-  /// **'Gérer les tickets de l\'association'**
+  /// **'Gérer les billeteries de l\'association'**
   String get ticketsManageAssociation;
 
   /// No description provided for @ticketsTitleLabel.
   ///
   /// In fr, this message translates to:
-  /// **'Titre du tickets *'**
+  /// **'Titre de la billetterie *'**
   String get ticketsTitleLabel;
 
   /// No description provided for @ticketsPlacesLabel.
@@ -9227,13 +9233,13 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsStartDateLabel.
   ///
   /// In fr, this message translates to:
-  /// **'Date d\'ouverture du tickets *'**
+  /// **'Date d\'ouverture de la billetterie *'**
   String get ticketsStartDateLabel;
 
   /// No description provided for @ticketsEndDateLabel.
   ///
   /// In fr, this message translates to:
-  /// **'Date de fermeture du tickets (optionnel)'**
+  /// **'Date de fermeture de la billetterie (optionnel)'**
   String get ticketsEndDateLabel;
 
   /// No description provided for @ticketsTitleRequired.
@@ -9263,7 +9269,7 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsSave.
   ///
   /// In fr, this message translates to:
-  /// **'Enregistrer le tickets'**
+  /// **'Enregistrer la billetterie'**
   String get ticketsSave;
 
   /// No description provided for @ticketsAddQuestion.
@@ -9272,7 +9278,7 @@ abstract class AppLocalizations {
   /// **'Ajouter une question'**
   String get ticketsAddQuestion;
 
-  /// Label pour une question dans le formulaire tickets
+  /// Label pour une question dans le formulaire de la billetterie
   ///
   /// In fr, this message translates to:
   /// **'Question {number}'**

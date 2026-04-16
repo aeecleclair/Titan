@@ -544,7 +544,7 @@ class _TicketEventContent extends HookConsumerWidget {
               ),
             ),
             const SizedBox(height: 24),
-            // Payment section - now scrollable
+            // Payment section - only show if price > 0
             if (selectedCategory.value != null) ...[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -565,134 +565,35 @@ class _TicketEventContent extends HookConsumerWidget {
                 ],
               ),
               const SizedBox(height: 16),
-            ],
-            Text(
-              l10n.ticketsPaymentMethod,
-              style: Theme.of(
-                context,
-              ).textTheme.labelLarge?.copyWith(color: ColorConstants.secondary),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () => selectedPaymentProvider.value = 'helloasso',
-                    borderRadius: BorderRadius.circular(12),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      decoration: BoxDecoration(
-                        color: selectedPaymentProvider.value == 'helloasso'
-                            ? ColorConstants.main.withValues(alpha: 0.1)
-                            : ColorConstants.background2.withValues(
-                                alpha: 0.05,
-                              ),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: selectedPaymentProvider.value == 'helloasso'
-                              ? ColorConstants.main
-                              : ColorConstants.mainBorder.withValues(
-                                  alpha: 0.3,
-                                ),
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SizedBox(
-                            height: 28,
-                            child: SvgPicture.asset(
-                              'assets/images/helloasso.svg',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            'HelloAsso',
-                            style: Theme.of(context).textTheme.bodySmall
-                                ?.copyWith(
-                                  color:
-                                      selectedPaymentProvider.value ==
-                                          'helloasso'
-                                      ? ColorConstants.main
-                                      : ColorConstants.tertiary,
-                                  fontWeight:
-                                      selectedPaymentProvider.value ==
-                                          'helloasso'
-                                      ? FontWeight.w600
-                                      : FontWeight.normal,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
+              // Only show payment method if price > 0
+              if (selectedCategory.value!.price > 0) ...[
+                Text(
+                  l10n.ticketsPaymentMethod,
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: ColorConstants.secondary,
                   ),
                 ),
-                const SizedBox(width: 12),
-                Builder(
-                  builder: (context) {
-                    final canPayOk = canPayResult.value?.success ?? false;
-                    final balanceInCents =
-                        walletAsync.valueOrNull?.balance ?? 0;
-                    final categoryPriceCents =
-                        ((selectedCategory.value?.price ?? 0) * 100).round();
-                    final hasInsufficientBalance =
-                        canPayOk && balanceInCents < categoryPriceCents;
-                    final isDisabled = !canPayOk || hasInsufficientBalance;
-                    final isSelected =
-                        selectedPaymentProvider.value == 'myempay';
-
-                    // Auto-switch to helloasso if myempay is selected but can't pay
-                    if (isDisabled && isSelected) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        selectedPaymentProvider.value = 'helloasso';
-                      });
-                    }
-
-                    String? disabledReason;
-                    if (!canPayOk && canPayResult.value != null) {
-                      switch (canPayResult.value!.error!) {
-                        case CanPayError.tosNotAccepted:
-                          disabledReason = l10n.paiementPleaseAcceptTOS;
-                        case CanPayError.noDevice:
-                          disabledReason = l10n.paiementDeviceNotRegistered;
-                        case CanPayError.deviceInactive:
-                          disabledReason = l10n.paiementDeviceNotActivated;
-                        case CanPayError.deviceRevoked:
-                          disabledReason = l10n.paiementDeviceRevoked;
-                        case CanPayError.insufficientBalance:
-                          disabledReason = l10n.paiementInsufficientFunds;
-                      }
-                    } else if (hasInsufficientBalance) {
-                      disabledReason = l10n.paiementInsufficientFunds;
-                    }
-
-                    return Expanded(
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
                       child: InkWell(
-                        onTap: isDisabled
-                            ? null
-                            : () => selectedPaymentProvider.value = 'myempay',
+                        onTap: () =>
+                            selectedPaymentProvider.value = 'helloasso',
                         borderRadius: BorderRadius.circular(12),
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           decoration: BoxDecoration(
-                            color: isSelected
+                            color: selectedPaymentProvider.value == 'helloasso'
                                 ? ColorConstants.main.withValues(alpha: 0.1)
-                                : isDisabled
-                                ? ColorConstants.background2.withValues(
-                                    alpha: 0.02,
-                                  )
                                 : ColorConstants.background2.withValues(
                                     alpha: 0.05,
                                   ),
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: isSelected
+                              color:
+                                  selectedPaymentProvider.value == 'helloasso'
                                   ? ColorConstants.main
-                                  : isDisabled
-                                  ? ColorConstants.mainBorder.withValues(
-                                      alpha: 0.1,
-                                    )
                                   : ColorConstants.mainBorder.withValues(
                                       alpha: 0.3,
                                     ),
@@ -703,52 +604,159 @@ class _TicketEventContent extends HookConsumerWidget {
                             children: [
                               SizedBox(
                                 height: 28,
-                                child: Image.asset(
-                                  'assets/images/logo_prod.png',
+                                child: SvgPicture.asset(
+                                  'assets/images/helloasso.svg',
                                   fit: BoxFit.contain,
-                                  color: isDisabled
-                                      ? ColorConstants.tertiary.withValues(
-                                          alpha: 0.5,
-                                        )
-                                      : null,
                                 ),
                               ),
                               const SizedBox(height: 6),
                               Text(
-                                'myempay',
+                                'HelloAsso',
                                 style: Theme.of(context).textTheme.bodySmall
                                     ?.copyWith(
-                                      color: isSelected
+                                      color:
+                                          selectedPaymentProvider.value ==
+                                              'helloasso'
                                           ? ColorConstants.main
-                                          : isDisabled
-                                          ? ColorConstants.tertiary.withValues(
-                                              alpha: 0.5,
-                                            )
                                           : ColorConstants.tertiary,
-                                      fontWeight: isSelected
+                                      fontWeight:
+                                          selectedPaymentProvider.value ==
+                                              'helloasso'
                                           ? FontWeight.w600
                                           : FontWeight.normal,
                                     ),
                               ),
-                              if (disabledReason != null)
-                                Text(
-                                  disabledReason,
-                                  style: Theme.of(context).textTheme.bodySmall
-                                      ?.copyWith(
-                                        color: ColorConstants.error,
-                                        fontSize: 10,
-                                      ),
-                                  textAlign: TextAlign.center,
-                                ),
                             ],
                           ),
                         ),
                       ),
-                    );
-                  },
+                    ),
+                    const SizedBox(width: 12),
+                    Builder(
+                      builder: (context) {
+                        final canPayOk = canPayResult.value?.success ?? false;
+                        final balanceInCents =
+                            walletAsync.valueOrNull?.balance ?? 0;
+                        final categoryPriceCents =
+                            ((selectedCategory.value?.price ?? 0) * 100)
+                                .round();
+                        final hasInsufficientBalance =
+                            canPayOk && balanceInCents < categoryPriceCents;
+                        final isDisabled = !canPayOk || hasInsufficientBalance;
+                        final isSelected =
+                            selectedPaymentProvider.value == 'myempay';
+
+                        // Auto-switch to helloasso if myempay is selected but can't pay
+                        if (isDisabled && isSelected) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            selectedPaymentProvider.value = 'helloasso';
+                          });
+                        }
+
+                        String? disabledReason;
+                        if (!canPayOk && canPayResult.value != null) {
+                          switch (canPayResult.value!.error!) {
+                            case CanPayError.tosNotAccepted:
+                              disabledReason = l10n.paiementPleaseAcceptTOS;
+                            case CanPayError.noDevice:
+                              disabledReason = l10n.paiementDeviceNotRegistered;
+                            case CanPayError.deviceInactive:
+                              disabledReason = l10n.paiementDeviceNotActivated;
+                            case CanPayError.deviceRevoked:
+                              disabledReason = l10n.paiementDeviceRevoked;
+                            case CanPayError.insufficientBalance:
+                              disabledReason = l10n.paiementInsufficientFunds;
+                          }
+                        } else if (hasInsufficientBalance) {
+                          disabledReason = l10n.paiementInsufficientFunds;
+                        }
+
+                        return Expanded(
+                          child: InkWell(
+                            onTap: isDisabled
+                                ? null
+                                : () =>
+                                      selectedPaymentProvider.value = 'myempay',
+                            borderRadius: BorderRadius.circular(12),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? ColorConstants.main.withValues(alpha: 0.1)
+                                    : isDisabled
+                                    ? ColorConstants.background2.withValues(
+                                        alpha: 0.02,
+                                      )
+                                    : ColorConstants.background2.withValues(
+                                        alpha: 0.05,
+                                      ),
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: isSelected
+                                      ? ColorConstants.main
+                                      : isDisabled
+                                      ? ColorConstants.mainBorder.withValues(
+                                          alpha: 0.1,
+                                        )
+                                      : ColorConstants.mainBorder.withValues(
+                                          alpha: 0.3,
+                                        ),
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(
+                                    height: 28,
+                                    child: Image.asset(
+                                      'assets/images/logo_prod.png',
+                                      fit: BoxFit.contain,
+                                      color: isDisabled
+                                          ? ColorConstants.tertiary.withValues(
+                                              alpha: 0.5,
+                                            )
+                                          : null,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    'myempay',
+                                    style: Theme.of(context).textTheme.bodySmall
+                                        ?.copyWith(
+                                          color: isSelected
+                                              ? ColorConstants.main
+                                              : isDisabled
+                                              ? ColorConstants.tertiary
+                                                    .withValues(alpha: 0.5)
+                                              : ColorConstants.tertiary,
+                                          fontWeight: isSelected
+                                              ? FontWeight.w600
+                                              : FontWeight.normal,
+                                        ),
+                                  ),
+                                  if (disabledReason != null)
+                                    Text(
+                                      disabledReason,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                            color: ColorConstants.error,
+                                            fontSize: 10,
+                                          ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ],
-            ),
+            ],
             const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,

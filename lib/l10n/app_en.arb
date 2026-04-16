@@ -24,6 +24,7 @@
   "feedSGDate": "SG Date",
   "feedSGExternalLink": "SG External link",
   "feedCreateEvent": "Create an event",
+  "feedUseExistingTicketing": "Use an existing ticketing",
   "feedNotification": "Send a notification",
   "feedPleaseSelectAnAssociation": "Please select an association",
   "feedReject": "Reject",

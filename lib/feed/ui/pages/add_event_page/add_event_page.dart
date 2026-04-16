@@ -342,8 +342,7 @@ class AddEditEventPage extends HookConsumerWidget {
                               children: [
                                 const SizedBox(height: 10),
                                 CheckBoxEntry(
-                                  title:
-                                      "Utiliser un ticketEvent existant", // Ajoute cette clé dans les traductions
+                                  title: localizeWithContext.feedUseExistingTicketing,
                                   valueNotifier: useExistingTicketEvent,
                                   onChanged: () {
                                     useExistingTicketEvent.value =

@@ -81,6 +81,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feedCreateEvent => 'Create an event';
 
   @override
+  String get feedUseExistingTicketing => 'Use an existing ticketing';
+
+  @override
   String get feedNotification => 'Send a notification';
 
   @override

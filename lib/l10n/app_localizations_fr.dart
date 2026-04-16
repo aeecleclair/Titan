@@ -81,6 +81,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get feedCreateEvent => 'Créer l\'événement';
 
   @override
+  String get feedUseExistingTicketing => 'Utiliser une billetterie existante';
+
+  @override
   String get feedNotification => 'Envoyer une notification';
 
   @override
@@ -4801,22 +4804,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsAdmin => 'Admin';
 
   @override
-  String get ticketsCreate => 'Créer un tickets';
+  String get ticketsCreate => 'Créer une billetterie';
 
   @override
-  String get ticketsManageAssociation => 'Gérer les tickets de l\'association';
+  String get ticketsManageAssociation =>
+      'Gérer les billeteries de l\'association';
 
   @override
-  String get ticketsTitleLabel => 'Titre du tickets *';
+  String get ticketsTitleLabel => 'Titre de la billetterie *';
 
   @override
   String get ticketsPlacesLabel => 'Nombre de places disponibles (optionnel)';
 
   @override
-  String get ticketsStartDateLabel => 'Date d\'ouverture du tickets *';
+  String get ticketsStartDateLabel => 'Date d\'ouverture de la billetterie *';
 
   @override
-  String get ticketsEndDateLabel => 'Date de fermeture du tickets (optionnel)';
+  String get ticketsEndDateLabel =>
+      'Date de fermeture de la billetterie (optionnel)';
 
   @override
   String get ticketsTitleRequired => 'Le titre est obligatoire';
@@ -4832,7 +4837,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsSessionsRequired => 'Au moins une session est obligatoire';
 
   @override
-  String get ticketsSave => 'Enregistrer le tickets';
+  String get ticketsSave => 'Enregistrer la billetterie';
 
   @override
   String get ticketsAddQuestion => 'Ajouter une question';
