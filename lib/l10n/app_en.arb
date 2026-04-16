@@ -1,4 +1,91 @@
 {
+  "@@locale": "en",
+  "dateToday": "Today",
+  "dateYesterday": "Yesterday",
+  "dateTomorrow": "Tomorrow",
+  "dateAt": "at",
+  "dateFrom": "from",
+  "dateTo": "to",
+  "dateBetweenDays": "to",
+  "dateStarting": "Starting",
+  "dateLast": "Last",
+  "dateUntil": "Until",
+  "feedFilterAll": "All",
+  "feedFilterPending": "Pending",
+  "feedFilterApproved": "Approved",
+  "feedFilterRejected": "Rejected",
+  "feedEmptyAll": "No events available",
+  "feedEmptyPending": "No events pending approval",
+  "feedEmptyApproved": "No approved events",
+  "feedEmptyRejected": "No rejected events",
+  "feedEventManagement": "Event Management",
+  "feedTitle": "Title",
+  "feedLocation": "Location",
+  "feedSGDate": "SG Date",
+  "feedSGExternalLink": "SG External link",
+  "feedCreateEvent": "Create an event",
+  "feedNotification": "Send a notification",
+  "feedPleaseSelectAnAssociation": "Please select an association",
+  "feedReject": "Reject",
+  "feedApprove": "Approve",
+  "feedEnded": "Ended",
+  "feedOngoing": "Ongoing",
+  "feedFilter": "Filter",
+  "feedAssociation": "Association",
+  "feedAssociationEvent": "{name} event",
+  "@feedAssociationEvent": {
+    "description": "Association event",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feedEditEvent": "Edit event",
+  "feedManageAssociationEvents": "Manage association events",
+  "feedNews": "Calendar",
+  "feedNewsType": "News type",
+  "feedNoAssociationEvents": "No association events",
+  "feedApply": "Apply",
+  "feedAdmin": "Administration",
+  "feedCreateAnEvent": "Create an event",
+  "feedManageRequests": "Manage requests",
+  "feedNoNewsAvailable": "No news available",
+  "feedRefresh": "Refresh",
+  "feedPleaseProvideASGExternalLink": "Please provide a SG external link",
+  "feedPleaseProvideASGDate": "Please provide a SG date",
+  "feedTicketsIn": "TicketEvent in {time}",
+  "@feedTicketsIn": {
+    "description": "TicketEvent in time",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "feedVoteIn": "Vote in {time}",
+  "@feedVoteIn": {
+    "description": "Vote in time",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "feedCantOpenLink": "Can't open link",
+  "feedGetReady": "Get ready!",
+  "eventActionCampaign": "You can vote",
+  "eventActionEvent": "You are invited",
+  "eventActionCampaignSubtitle": "Vote now",
+  "eventActionEventSubtitle": "Answer the invitation",
+  "eventActionTicketsSubtitle": "Book your seat",
+  "eventActionTicketsButton": "Book",
+  "eventActionCampaignButton": "Vote",
+  "eventActionEventButton": "Reserve",
+  "eventActionCampaignValidated": "I voted!",
+  "eventActionEventValidated": "I'm coming!",
+  "moduleCentralassociation": "Centralassociation",
+  "moduleCentralassociationDescription": "Aggregator of association links",
   "adminAccountTypes": "Account types",
   "adminAdd": "Add",
   "adminAddAssociation": "Add association",
@@ -471,16 +558,6 @@
   "cinemaStartHour": "Start hour",
   "cinemaTagline": "Tagline",
   "cinemaThe": "The",
-  "dateAt": "at",
-  "dateBetweenDays": "to",
-  "dateFrom": "from",
-  "dateLast": "Last",
-  "dateStarting": "Starting",
-  "dateTo": "to",
-  "dateToday": "Today",
-  "dateTomorrow": "Tomorrow",
-  "dateUntil": "Until",
-  "dateYesterday": "Yesterday",
   "drawerAdmin": "Administration",
   "drawerAndroidAppLink": "https://play.google.com/store/apps/details?id=fr.myecl.titan",
   "drawerCopied": "Copied!",
@@ -490,16 +567,6 @@
   "drawerLogOut": "Log out",
   "drawerOr": " or ",
   "drawerSettings": "Settings",
-  "eventActionCampaign": "You can vote",
-  "eventActionCampaignButton": "Vote",
-  "eventActionCampaignSubtitle": "Vote now",
-  "eventActionCampaignValidated": "I voted!",
-  "eventActionEvent": "You are invited",
-  "eventActionEventButton": "Reserve",
-  "eventActionEventSubtitle": "Answer the invitation",
-  "eventActionEventValidated": "I'm coming!",
-  "eventActionTicketsButton": "Book",
-  "eventActionTicketsSubtitle": "Book your seat",
   "eventAdd": "Add",
   "eventAddedEvent": "Event added",
   "eventAddEvent": "Add an event",
@@ -582,70 +649,6 @@
   "eventTitle": "Events",
   "eventWeeks": "weeks",
   "eventYes": "Yes",
-  "feedAdmin": "Administration",
-  "feedApply": "Apply",
-  "feedApprove": "Approve",
-  "feedAssociation": "Association",
-  "feedAssociationEvent": "{name} event",
-  "@feedAssociationEvent": {
-    "description": "Association event",
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "feedCantOpenLink": "Can't open link",
-  "feedCreateAnEvent": "Create an event",
-  "feedCreateEvent": "Create an event",
-  "feedEditEvent": "Edit event",
-  "feedEmptyAll": "No events available",
-  "feedEmptyApproved": "No approved events",
-  "feedEmptyPending": "No events pending approval",
-  "feedEmptyRejected": "No rejected events",
-  "feedEnded": "Ended",
-  "feedEventManagement": "Event Management",
-  "feedFilter": "Filter",
-  "feedFilterAll": "All",
-  "feedFilterApproved": "Approved",
-  "feedFilterPending": "Pending",
-  "feedFilterRejected": "Rejected",
-  "feedGetReady": "Get ready!",
-  "feedLocation": "Location",
-  "feedManageAssociationEvents": "Manage association events",
-  "feedManageRequests": "Manage requests",
-  "feedNews": "Calendar",
-  "feedNewsType": "News type",
-  "feedNoAssociationEvents": "No association events",
-  "feedNoNewsAvailable": "No news available",
-  "feedNotification": "Send a notification",
-  "feedOngoing": "Ongoing",
-  "feedPleaseProvideASGDate": "Please provide a SG date",
-  "feedPleaseProvideASGExternalLink": "Please provide a SG external link",
-  "feedPleaseSelectAnAssociation": "Please select an association",
-  "feedRefresh": "Refresh",
-  "feedReject": "Reject",
-  "feedSGDate": "SG Date",
-  "feedSGExternalLink": "SG External link",
-  "feedShotgunIn": "Shotgun in {time}",
-  "@feedShotgunIn": {
-    "description": "Shotgun in time",
-    "placeholders": {
-      "time": {
-        "type": "String"
-      }
-    }
-  },
-  "feedTitle": "Title",
-  "feedVoteIn": "Vote in {time}",
-  "@feedVoteIn": {
-    "description": "Vote in time",
-    "placeholders": {
-      "time": {
-        "type": "String"
-      }
-    }
-  },
   "globalCancel": "Cancel",
   "globalConfirm": "Confirm",
   "globalIrreversibleAction": "This action is irreversible",
@@ -757,7 +760,6 @@
   "loanUpdatedLoan": "Loan updated",
   "loanUpdatingError": "Error while updating",
   "loanYes": "Yes",
-  "@@locale": "en",
   "loginAppName": "MyECL",
   "loginCreateAccount": "Create an account",
   "loginForgotPassword": "Forgot password?",
@@ -783,8 +785,6 @@
   "moduleBookingDescription": "Book a room",
   "moduleCalendar": "Calendar",
   "moduleCalendarDescription": "View the calendar of events",
-  "moduleCentralassociation": "Centralassociation",
-  "moduleCentralassociationDescription": "Aggregator of association links",
   "moduleCentralisation": "Centralisation",
   "moduleCentralisationDescription": "Viw all links",
   "moduleCinema": "Cinema",
@@ -1274,7 +1274,7 @@
   "purchasesResearch": "Search",
   "purchasesScan": "Scan",
   "purchasesTag": "Tag",
-  "purchasesTickets": "Tickets",
+  "purchasesTickets": "TicketEvent",
   "purchasesTicketsError": "Error loading tickets",
   "purchasesTimes": "times",
   "purchasesValidate": "Validate",
@@ -1350,7 +1350,7 @@
   "raffleTakeTickets": "Take your tickets",
   "raffleTicket": "ticket",
   "raffleTicketNumber": "Number of tickets",
-  "raffleTickets": "Tickets",
+  "raffleTickets": "TicketEvent",
   "raffleUnavailableRaffle": "Unavailable raffle",
   "raffleUpdatedAmount": "Amount updated",
   "raffleUpdatingError": "Error during update",
@@ -1737,5 +1737,81 @@
   "voteVotesOpened": "Votes opened",
   "voteVoteSuccess": "Vote recorded",
   "voteWarning": "Warning",
-  "voteWarningMessage": "Selection will not be saved.\nDo you want to continue?"
+  "voteWarningMessage": "Selection will not be saved.\nDo you want to continue?",
+  "ticketsTickets": "TicketEvent",
+  "ticketsTicketsDescription": "Book your seats for events",
+  "ticketsTitle": "TicketEvent",
+  "ticketsAdmin": "Admin",
+  "ticketsCreate": "Create a tickets",
+  "ticketsManageAssociation": "Manage association shotguns",
+  "ticketsTitleLabel": "TicketEvent title *",
+  "ticketsPlacesLabel": "Number of available seats (optional)",
+  "ticketsStartDateLabel": "TicketEvent opening date *",
+  "ticketsEndDateLabel": "TicketEvent closing date (optional)",
+  "ticketsTitleRequired": "Title is required",
+  "ticketsStartDateRequired": "Start date is required",
+  "ticketsCategoriesRequired": "At least one category is required",
+  "ticketsSessionsRequired": "At least one session is required",
+  "ticketsSave": "Save tickets",
+  "ticketsAddQuestion": "Add a question",
+  "ticketsQuestionLabel": "Question {number}",
+  "@ticketsQuestionLabel": {
+    "description": "Label for a question in the tickets form",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "ticketsDeleteQuestionTooltip": "Delete question",
+  "ticketsQuestionTypeLabel": "Answer type",
+  "ticketsAnswerTypeText": "Text",
+  "ticketsAnswerTypeNumber": "Number",
+  "ticketsAnswerTypeBoolean": "Yes/No",
+  "ticketsQuestionRequiredLabel": "Required",
+  "ticketsEditTitle": "Edit tickets",
+  "ticketsTariffs": "Pricing",
+  "ticketsPriceLabel": "Price (€)",
+  "ticketsSessions": "Sessions",
+  "ticketsDateLabel": "Date",
+  "ticketsQuotaLabel": "Quota",
+  "ticketsQuestions": "Questions",
+  "ticketsEditSuccess": "TicketEvent updated successfully",
+  "ticketsSaveChanges": "Save changes",
+  "ticketsManageTitle": "Manage association shotguns",
+  "ticketsNoTickets": "You don't have any tickets yet",
+  "ticketsNotFound": "TicketEvent not found",
+  "ticketsBookTicket": "Book a ticket",
+  "ticketsCategoryLabel": "Category (pricing)",
+  "ticketsSessionLabel": "Session (time)",
+  "ticketsPlaces": "seats",
+  "ticketsTotal": "Total",
+  "ticketsPaymentMethod": "Payment method",
+  "ticketsReserve": "Book",
+  "ticketsOpeningLabel": "Opening",
+  "ticketsAddTariff": "Add pricing",
+  "ticketsAddSession": "Add session",
+  "ticketsTariffLabel": "Pricing {number}",
+  "@ticketsTariffLabel": {
+    "description": "Label for a pricing tier in the tickets form",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "ticketsSessionLabelNumbered": "Session {number}",
+  "@ticketsSessionLabelNumbered": {
+    "description": "Label for a session in the tickets form",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "ticketsReservationSuccess": "Reservation created successfully!",
+  "ticketsMyTickets": "My tickets",
+  "ticketsNoTicketsSubtitle": "Book your seat for an event!",
+  "ticketsViewResults": "View results",
+  "ticketsMinPriceError": "Price must be 0€ or greater than 1€"
 }

@@ -338,7 +338,7 @@ class CreationPage extends HookConsumerWidget {
                                 ),
                               ),
                               const Text(
-                                "Tickets",
+                                "TicketEvent",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: RaffleColorConstants.textDark,

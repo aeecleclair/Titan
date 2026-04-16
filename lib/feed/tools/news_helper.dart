@@ -8,8 +8,8 @@ import 'package:titan/feed/providers/event_ticket_url_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/feed/router.dart';
 import 'package:titan/navigation/providers/navbar_module_list.dart';
-import 'package:titan/shotgun/providers/shotgun_on_back_provider.dart';
-import 'package:titan/shotgun/router.dart';
+import 'package:titan/tickets/providers/tickets_on_back_provider.dart';
+import 'package:titan/tickets/router.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/vote/router.dart';
@@ -142,7 +142,7 @@ String getActionTitle(News news, BuildContext context) {
   } else if (module == "event") {
     return AppLocalizations.of(context)!.eventActionEvent;
   } else if (module == "tickets") {
-    return "Shotgun";
+    return "Ticket";
   }
   return '';
 }
@@ -158,9 +158,9 @@ String getWaitingTitle(
   if (module == "campagne") {
     return localizeWithContext.feedVoteIn(timeToGo);
   } else if (module == "event") {
-    return localizeWithContext.feedShotgunIn(timeToGo);
+    return localizeWithContext.feedTicketsIn(timeToGo);
   } else if (module == "tickets") {
-    return localizeWithContext.feedShotgunIn(timeToGo);
+    return localizeWithContext.feedTicketsIn(timeToGo);
   }
   return '';
 }
@@ -243,16 +243,16 @@ void getActionButtonAction(
     // TODO : set id
     QR.to(AdvertRouter.root);
   } else if (module == "tickets") {
-    ref.read(shotgunOnBackProvider.notifier).state = () {
+    ref.read(ticketsOnBackProvider.notifier).state = () {
       pathForwardingNotifier.forward(FeedRouter.root);
       QR.to(FeedRouter.root);
     };
     pathForwardingNotifier.forward(
-      ShotgunRouter.root + ShotgunRouter.book,
-      queryParameters: {"shotgunId": news.moduleObjectId},
+      TicketsRouter.root + TicketsRouter.book,
+      queryParameters: {"ticketEventId": news.moduleObjectId},
     );
-    navbarListModuleNotifier.pushModule(ShotgunRouter.module);
-    QR.to(ShotgunRouter.root + ShotgunRouter.book);
+    navbarListModuleNotifier.pushModule(TicketsRouter.module);
+    QR.to(TicketsRouter.root + TicketsRouter.book);
   }
   return;
 }
