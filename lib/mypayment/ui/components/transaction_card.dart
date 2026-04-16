@@ -113,7 +113,7 @@ class TransactionCard extends ConsumerWidget {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: Text(
-                            AppLocalizations.of(context)!.paiementCancelled,
+                            AppLocalizations.of(context)!.paiementRefused,
                             style: TextStyle(
                               color: const Color.fromARGB(255, 204, 70, 25),
                               fontSize: 12,
