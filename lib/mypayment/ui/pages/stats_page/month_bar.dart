@@ -32,10 +32,8 @@ class MonthBar extends HookConsumerWidget {
           0,
           (previousValue, element) =>
               previousValue +
-              (element.type == HistoryType.given
+              (element.direction == HistoryDirection.debited
                   ? -element.total
-                  : element.type == HistoryType.refundDebited
-                  ? -element.total + element.refund!.total
                   : element.total),
         );
       },

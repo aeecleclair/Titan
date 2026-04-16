@@ -39,7 +39,8 @@ class StoreTransactionsDetail extends ConsumerWidget {
                 onTap: () => {
                   if (selectedStore.canCancel &&
                       t.status == TransactionStatus.confirmed &&
-                      t.type == HistoryType.received)
+                      t.type == HistoryType.directTransaction &&
+                      t.direction == HistoryDirection.credited)
                     {showCancelModal(t)},
                 },
                 storeView: true,

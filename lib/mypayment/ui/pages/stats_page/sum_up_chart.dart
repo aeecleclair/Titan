@@ -42,11 +42,12 @@ class SumUpChart extends HookConsumerWidget {
               element.creation.month == currentMonth.month,
         );
         for (final transaction in confirmedTransaction) {
-          if (transaction.type == HistoryType.transfer ||
-              transaction.type == HistoryType.refundCredited) {
-            final transactionName = transaction.type != HistoryType.transfer
-                ? transaction.otherWalletName
-                : AppLocalizations.of(context)!.paiementTopUp;
+          if (transaction.direction == HistoryDirection.credited) {
+            final transactionName =
+                transaction.type == HistoryType.transfer ||
+                    transaction.type == HistoryType.requestTransfer
+                ? AppLocalizations.of(context)!.paiementTopUp
+                : transaction.otherWalletName;
             creditedTransactionPerStore[transactionName] = [
               ...?creditedTransactionPerStore[transactionName],
               transaction,

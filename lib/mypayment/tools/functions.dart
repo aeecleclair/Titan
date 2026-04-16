@@ -223,19 +223,7 @@ int _generateSeedFromString(String input) {
 
 List<Color> getTransactionColors(History transaction) {
   switch (transaction.type) {
-    case HistoryType.given:
-      return [
-        const Color.fromARGB(255, 1, 127, 128),
-        const Color.fromARGB(255, 0, 102, 103),
-        const Color.fromARGB(255, 0, 44, 45).withValues(alpha: 0.3),
-      ];
-    case HistoryType.refundDebited:
-      return [
-        const Color.fromARGB(255, 4, 84, 84),
-        const Color.fromARGB(255, 0, 68, 68),
-        const Color.fromARGB(255, 0, 29, 29).withValues(alpha: 0.4),
-      ];
-    case HistoryType.refundCredited:
+    case HistoryType.refund:
       return [
         const Color.fromARGB(255, 4, 84, 84),
         const Color.fromARGB(255, 0, 68, 68),
@@ -247,11 +235,23 @@ List<Color> getTransactionColors(History transaction) {
         const Color.fromARGB(255, 230, 103, 0),
         const Color.fromARGB(255, 97, 44, 0).withValues(alpha: 0.2),
       ];
-    case HistoryType.received:
+    case HistoryType.requestTransfer:
+      return [
+        const Color.fromARGB(255, 255, 119, 7),
+        const Color.fromARGB(255, 230, 103, 0),
+        const Color.fromARGB(255, 97, 44, 0).withValues(alpha: 0.2),
+      ];
+    case HistoryType.directTransaction:
       return [
         const Color.fromARGB(255, 1, 127, 128),
         const Color.fromARGB(255, 0, 102, 103),
         const Color.fromARGB(255, 0, 44, 45).withValues(alpha: 0.3),
+      ];
+    case HistoryType.requestTransaction:
+      return [
+        const Color.fromARGB(255, 124, 58, 237),
+        const Color.fromARGB(255, 99, 46, 190),
+        const Color.fromARGB(255, 42, 20, 80).withValues(alpha: 0.3),
       ];
   }
 }

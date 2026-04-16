@@ -26,29 +26,42 @@ class TransactionCard extends ConsumerWidget {
       locale: locale.toString(),
       symbol: "€",
     );
+    final isDebited = transaction.direction == HistoryDirection.debited;
     final HeroIcons icon;
 
     switch (transaction.type) {
-      case HistoryType.given:
-        icon = HeroIcons.qrCode;
-        break;
-      case HistoryType.received:
-        icon = HeroIcons.arrowDownRight;
-        break;
-      case HistoryType.refundCredited:
-        icon = HeroIcons.arrowUturnLeft;
-        break;
-      case HistoryType.refundDebited:
-        icon = HeroIcons.arrowUturnRight;
+      case HistoryType.refund:
+        icon = isDebited ? HeroIcons.arrowUturnRight : HeroIcons.arrowUturnLeft;
         break;
       case HistoryType.transfer:
         icon = HeroIcons.creditCard;
         break;
+      case HistoryType.requestTransfer:
+        icon = HeroIcons.creditCard;
+        break;
+      case HistoryType.directTransaction:
+        icon = isDebited ? HeroIcons.qrCode : HeroIcons.arrowDownRight;
+        break;
+      case HistoryType.requestTransaction:
+        icon = HeroIcons.ticket;
+        break;
     }
 
-    final transactionName = transaction.type != HistoryType.transfer
-        ? transaction.otherWalletName
-        : AppLocalizations.of(context)!.paiementTopUp;
+    final String transactionName;
+    switch (transaction.type) {
+      case HistoryType.transfer:
+      case HistoryType.requestTransfer:
+        transactionName = AppLocalizations.of(context)!.paiementTopUp;
+        break;
+      case HistoryType.requestTransaction:
+        transactionName =
+            "${AppLocalizations.of(context)!.paiementPaymentRequest} - ${transaction.otherWalletName}";
+        break;
+      case HistoryType.refund:
+      case HistoryType.directTransaction:
+        transactionName = transaction.otherWalletName;
+        break;
+    }
 
     final colors = getTransactionColors(transaction);
 
@@ -86,7 +99,7 @@ class TransactionCard extends ConsumerWidget {
                         child: AutoSizeText(
                           storeView
                               ? transactionName
-                              : "${transaction.type == HistoryType.refundCredited || transaction.type == HistoryType.refundDebited ? "${AppLocalizations.of(context)!.paiementRefund} - " : ""}$transactionName",
+                              : "${transaction.type == HistoryType.refund ? "${AppLocalizations.of(context)!.paiementRefund} - " : ""}$transactionName",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -144,7 +157,7 @@ class TransactionCard extends ConsumerWidget {
             ),
             const SizedBox(width: 10),
             Text(
-              "${transaction.type == HistoryType.given || transaction.type == HistoryType.refundDebited ? " -" : " +"} ${formatter.format(transaction.total / 100)}",
+              "${isDebited ? " -" : " +"} ${formatter.format(transaction.total / 100)}",
               style: TextStyle(
                 color: const Color(0xff204550),
                 fontSize: 18,
