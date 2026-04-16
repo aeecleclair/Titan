@@ -38,9 +38,8 @@ class StoreListNotifier extends ListNotifier<Store> {
 
   Future<AsyncValue<List<Store>>> getStores() async {
     return await loadList(
-      () async => (await usersMeRepository.getMyStores())
-          .map(_toStore)
-          .toList(),
+      () async =>
+          (await usersMeRepository.getMyStores()).map(_toStore).toList(),
     );
   }
 
