@@ -1,17 +1,20 @@
-import 'package:titan/mypayment/class/store.dart';
 import 'package:titan/mypayment/class/structure.dart';
 
-class UserStore extends Store {
+class UserStore {
+  final String id;
+  final String name;
+  final String walletId;
+  final Structure structure;
   final bool canBank;
   final bool canSeeHistory;
   final bool canCancel;
   final bool canManageSellers;
 
   UserStore({
-    required super.id,
-    required super.name,
-    required super.walletId,
-    required super.structure,
+    required this.id,
+    required this.name,
+    required this.walletId,
+    required this.structure,
     required this.canBank,
     required this.canSeeHistory,
     required this.canCancel,
@@ -31,7 +34,6 @@ class UserStore extends Store {
     );
   }
 
-  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -45,7 +47,6 @@ class UserStore extends Store {
     };
   }
 
-  @override
   UserStore copyWith({
     String? id,
     String? name,
@@ -55,7 +56,6 @@ class UserStore extends Store {
     bool? canSeeHistory,
     bool? canCancel,
     bool? canManageSellers,
-    bool? storeAdmin,
   }) {
     return UserStore(
       id: id ?? this.id,
