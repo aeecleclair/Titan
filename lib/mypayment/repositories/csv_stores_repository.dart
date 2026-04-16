@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/mypayment/class/store.dart';
+import 'package:titan/mypayment/class/user_store.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/repository/csv_repository.dart';
 
@@ -11,7 +11,7 @@ class CsvStoresRepository extends CsvRepository {
   final ext = "mypayment/stores/";
 
   Future<Uint8List> exportStoreHistory(
-    Store store,
+    UserStore store,
     DateTime startDate,
     DateTime endDate,
   ) async {
