@@ -70,7 +70,7 @@ class SellerRightCard extends ConsumerWidget {
     final labels = [
       AppLocalizations.of(context)!.paiementBank,
       AppLocalizations.of(context)!.paiementSeeHistory,
-      AppLocalizations.of(context)!.paiementCancelTransactions,
+      AppLocalizations.of(context)!.paiementRefuseTransactions,
       AppLocalizations.of(context)!.paiementManageSellers,
       AppLocalizations.of(context)!.paiementStructureAdmin,
     ];

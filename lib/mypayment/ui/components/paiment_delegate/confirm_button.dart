@@ -134,7 +134,7 @@ class ConfirmButton extends HookWidget {
         ),
         const SizedBox(height: 10),
         Button.secondary(
-          text: localizeWithContext.paiementCancel,
+          text: localizeWithContext.paiementRefuse,
           onPressed: onCancel,
         ),
       ],

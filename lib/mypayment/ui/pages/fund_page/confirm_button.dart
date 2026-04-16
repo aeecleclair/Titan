@@ -104,7 +104,7 @@ class ConfirmFundButton extends ConsumerWidget {
         } else {
           displayToastWithContext(
             TypeMsg.error,
-            localizeWithContext.paiementCancelledTransaction,
+            localizeWithContext.paiementRefusedTransaction,
           );
         }
         popupWin.close();

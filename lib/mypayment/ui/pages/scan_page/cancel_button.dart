@@ -91,7 +91,7 @@ class CancelButton extends HookWidget {
                   height: 50,
                   alignment: Alignment.center,
                   child: Text(
-                    '${AppLocalizations.of(context)!.paiementCancel} (${((1 - disablingAnimationController.value) * 30).toStringAsFixed(0)}s)',
+                    '${AppLocalizations.of(context)!.paiementRefuse} (${((1 - disablingAnimationController.value) * 30).toStringAsFixed(0)}s)',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

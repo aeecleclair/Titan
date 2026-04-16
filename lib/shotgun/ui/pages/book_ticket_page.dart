@@ -230,7 +230,7 @@ class _ShotgunContent extends HookConsumerWidget {
           displayToast(
             context,
             TypeMsg.error,
-            l10n.paiementCancelledTransaction,
+            l10n.paiementRefusedTransaction,
           );
         }
         popupWin.close();
