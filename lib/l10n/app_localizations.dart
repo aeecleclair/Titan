@@ -5090,6 +5090,12 @@ abstract class AppLocalizations {
   /// **'Limité à'**
   String get paiementLimitedTo;
 
+  /// No description provided for @paiementLinkedAssociation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Association liée'**
+  String get paiementLinkedAssociation;
+
   /// No description provided for @paiementManagement.
   ///
   /// In fr, this message translates to:
@@ -5167,6 +5173,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Prochain responsable'**
   String get paiementNextAccountable;
+
+  /// No description provided for @paiementNoAssociation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune association'**
+  String get paiementNoAssociation;
 
   /// No description provided for @paiementNoInvoiceToCreate.
   ///
@@ -5497,6 +5509,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Voir l\'historique'**
   String get paiementSeeHistory;
+
+  /// No description provided for @paiementSelectAssociation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir une association'**
+  String get paiementSelectAssociation;
+
+  /// No description provided for @paiementSelected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sélectionné'**
+  String get paiementSelected;
 
   /// No description provided for @paiementSelectStructure.
   ///

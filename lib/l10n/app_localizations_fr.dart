@@ -2625,6 +2625,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementLimitedTo => 'Limité à';
 
   @override
+  String get paiementLinkedAssociation => 'Association liée';
+
+  @override
   String get paiementManagement => 'Gestion';
 
   @override
@@ -2664,6 +2667,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get paiementNextAccountable => 'Prochain responsable';
+
+  @override
+  String get paiementNoAssociation => 'Aucune association';
 
   @override
   String get paiementNoInvoiceToCreate => 'Aucune facture à créer';
@@ -2840,6 +2846,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get paiementSeeHistory => 'Voir l\'historique';
+
+  @override
+  String get paiementSelectAssociation => 'Choisir une association';
+
+  @override
+  String get paiementSelected => 'Sélectionné';
 
   @override
   String get paiementSelectStructure => 'Choisir une structure';
