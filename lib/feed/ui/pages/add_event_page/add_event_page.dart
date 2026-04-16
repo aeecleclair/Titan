@@ -23,8 +23,9 @@ import 'package:titan/feed/providers/news_list_provider.dart';
 import 'package:titan/feed/ui/feed.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
-import 'package:titan/shotgun/class/shotgun.dart';
-import 'package:titan/shotgun/providers/association_shotgun_provider.dart';
+import 'package:titan/tickets/class/ticket_event.dart';
+import 'package:titan/tickets/providers/association_tickets_provider.dart';
+import 'package:titan/tickets/providers/store_tickets_list_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -60,12 +61,12 @@ class AddEditEventPage extends HookConsumerWidget {
       myAssociations.length == 1 ? myAssociations.first : null,
     );
 
-    final shotgunsAsync = ref.watch(
-      selectedAssociationShotgunsProvider(selectedAssociation.value?.id),
+    final ticketEventsAsync = ref.watch(
+      selectedAssociationTicketEventListProvider(selectedAssociation.value?.id),
     );
 
-    final useExistingShotgun = useState(false);
-    final selectedShotgun = useState<Shotgun?>(null);
+    final useExistingTicketEvent = useState(false);
+    final selectedTicketEvent = useState<TicketEvent?>(null);
 
     final ImagePicker picker = ImagePicker();
 
@@ -87,7 +88,7 @@ class AddEditEventPage extends HookConsumerWidget {
     final locationController = useTextEditingController(
       text: syncEvent.location,
     );
-    final shotgunDateController = useTextEditingController(
+    final ticketEventDateController = useTextEditingController(
       text: syncEvent.ticketUrlOpening != null
           ? DateFormat.yMd(
               locale.toString(),
@@ -146,7 +147,7 @@ class AddEditEventPage extends HookConsumerWidget {
                               selectedItem: selectedAssociation.value,
                               onItemSelected: (association) {
                                 selectedAssociation.value = association;
-                                useExistingShotgun.value = false;
+                                useExistingTicketEvent.value = false;
                               },
                               itemBuilder:
                                   (context, association, index, selected) =>
@@ -336,38 +337,39 @@ class AddEditEventPage extends HookConsumerWidget {
                       controller: locationController,
                     ),
                     SizedBox(height: 10),
-                    shotgunsAsync.when(
-                      data: (shotguns) => shotguns.isNotEmpty
+                    ticketEventsAsync.when(
+                      data: (ticketEvents) => ticketEvents.isNotEmpty
                           ? Column(
                               children: [
                                 const SizedBox(height: 10),
                                 CheckBoxEntry(
                                   title:
-                                      "Utiliser un shotgun existant", // Ajoute cette clé dans les traductions
-                                  valueNotifier: useExistingShotgun,
+                                      "Utiliser un ticketEvent existant", // Ajoute cette clé dans les traductions
+                                  valueNotifier: useExistingTicketEvent,
                                   onChanged: () {
-                                    useExistingShotgun.value =
-                                        !useExistingShotgun.value;
+                                    useExistingTicketEvent.value =
+                                        !useExistingTicketEvent.value;
                                   },
                                 ),
-                                // Optionnel : Dropdown pour choisir quel shotgun si la checkbox est cochée
-                                if (useExistingShotgun.value)
+                                // Optionnel : Dropdown pour choisir quel ticketEvent si la checkbox est cochée
+                                if (useExistingTicketEvent.value)
                                   Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
-                                    child: DropdownButtonFormField<Shotgun>(
-                                      initialValue: selectedShotgun.value,
+                                    child: DropdownButtonFormField<TicketEvent>(
+                                      initialValue: selectedTicketEvent.value,
                                       decoration: InputDecoration(
-                                        labelText: "Sélectionner un shotgun",
+                                        labelText:
+                                            "Sélectionner un ticketEvent",
                                         border: OutlineInputBorder(),
                                       ),
-                                      items: shotguns.map((shotgun) {
+                                      items: ticketEvents.map((ticketEvent) {
                                         return DropdownMenuItem(
-                                          value: shotgun,
-                                          child: Text(shotgun.name),
+                                          value: ticketEvent,
+                                          child: Text(ticketEvent.name),
                                         );
                                       }).toList(),
                                       onChanged: (value) {
-                                        selectedShotgun.value = value;
+                                        selectedTicketEvent.value = value;
                                       },
                                     ),
                                   ),
@@ -378,12 +380,12 @@ class AddEditEventPage extends HookConsumerWidget {
                           const SizedBox.shrink(), // Ou un petit indicator
                       error: (e, st) => const SizedBox.shrink(),
                     ),
-                    if (!useExistingShotgun.value) ...[
+                    if (!useExistingTicketEvent.value) ...[
                       SizedBox(height: 10),
                       DateEntry(
                         onTap: () =>
-                            getFullDate(context, shotgunDateController),
-                        controller: shotgunDateController,
+                            getFullDate(context, ticketEventDateController),
+                        controller: ticketEventDateController,
                         label: localizeWithContext.feedSGDate,
                         canBeEmpty: true,
                       ),
@@ -549,9 +551,9 @@ class AddEditEventPage extends HookConsumerWidget {
                           );
                           return;
                         }
-                        if (!useExistingShotgun.value) {
+                        if (!useExistingTicketEvent.value) {
                           if (externalLinkController.text.isEmpty &&
-                              shotgunDateController.text.isNotEmpty) {
+                              ticketEventDateController.text.isNotEmpty) {
                             displayToastWithContext(
                               TypeMsg.error,
                               localizeWithContext
@@ -560,7 +562,7 @@ class AddEditEventPage extends HookConsumerWidget {
                             return;
                           }
                           if (externalLinkController.text.isNotEmpty &&
-                              shotgunDateController.text.isEmpty) {
+                              ticketEventDateController.text.isEmpty) {
                             displayToastWithContext(
                               TypeMsg.error,
                               localizeWithContext.feedPleaseProvideASGDate,
@@ -568,11 +570,11 @@ class AddEditEventPage extends HookConsumerWidget {
                             return;
                           }
                         }
-                        if (useExistingShotgun.value &&
-                            selectedShotgun.value == null) {
+                        if (useExistingTicketEvent.value &&
+                            selectedTicketEvent.value == null) {
                           displayToastWithContext(
                             TypeMsg.error,
-                            "Veuillez sélectionner un shotgun existant",
+                            "Veuillez sélectionner un ticketEvent existant",
                           );
                           return;
                         }
@@ -662,12 +664,12 @@ class AddEditEventPage extends HookConsumerWidget {
                                   ),
                                 ),
                                 location: locationController.text,
-                                ticketUrlOpening: useExistingShotgun.value
+                                ticketUrlOpening: useExistingTicketEvent.value
                                     ? null
-                                    : shotgunDateController.text != ""
+                                    : ticketEventDateController.text != ""
                                     ? DateTime.parse(
                                         processDateBackWithHourMaybe(
-                                          shotgunDateController.text,
+                                          ticketEventDateController.text,
                                           locale.toString(),
                                         ),
                                       )
@@ -679,12 +681,12 @@ class AddEditEventPage extends HookConsumerWidget {
                                 associationId: syncEvent.id != ""
                                     ? syncEvent.associationId
                                     : selectedAssociation.value!.id,
-                                ticketUrl: useExistingShotgun.value
+                                ticketUrl: useExistingTicketEvent.value
                                     ? null
                                     : externalLinkController.text,
                                 notification: notification.value,
-                                ticketEventId: useExistingShotgun.value
-                                    ? selectedShotgun.value?.id
+                                ticketEventId: useExistingTicketEvent.value
+                                    ? selectedTicketEvent.value?.id
                                     : null,
                               );
                               try {
