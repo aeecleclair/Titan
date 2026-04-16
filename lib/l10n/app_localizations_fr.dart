@@ -2911,7 +2911,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementTotalDuringPeriod => 'Total sur la période';
 
   @override
-  String get paiementTransaction => 'ransaction';
+  String get paiementTransaction => 'transaction';
 
   @override
   String get paiementTransactionCancelled => 'Transaction annulée';

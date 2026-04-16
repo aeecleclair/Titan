@@ -5633,7 +5633,7 @@ abstract class AppLocalizations {
   /// No description provided for @paiementTransaction.
   ///
   /// In fr, this message translates to:
-  /// **'ransaction'**
+  /// **'transaction'**
   String get paiementTransaction;
 
   /// No description provided for @paiementTransactionCancelled.

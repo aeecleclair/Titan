@@ -1047,7 +1047,7 @@
   "paiementTopUp": "Recharge",
   "paiementTopUpAction": "Recharger",
   "paiementTotalDuringPeriod": "Total sur la période",
-  "paiementTransaction": "ransaction",
+  "paiementTransaction": "transaction",
   "paiementTransactionCancelled": "Transaction annulée",
   "paiementTransactionCancelledDescription": "Voulez-vous vraiment annuler la transaction de",
   "paiementTransactionCancelledError": "Erreur lors de l'annulation de la transaction",
