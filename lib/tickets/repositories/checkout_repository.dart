@@ -9,9 +9,15 @@ class CheckoutRepository extends Repository {
   // ignore: overridden_fields
   final ext = "tickets/";
 
-  Future<Checkout> createCheckout(Checkout checkout, TicketEvent ticketEvent) async {
+  Future<Checkout> createCheckout(
+    Checkout checkout,
+    TicketEvent ticketEvent,
+  ) async {
     return Checkout.fromJson(
-      await create(checkout.toJson(), suffix: 'events/${ticketEvent.id}/checkout'),
+      await create(
+        checkout.toJson(),
+        suffix: 'events/${ticketEvent.id}/checkout',
+      ),
     );
   }
 }

@@ -25,7 +25,6 @@ import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tickets/providers/association_tickets_provider.dart';
-import 'package:titan/tickets/providers/store_tickets_list_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';

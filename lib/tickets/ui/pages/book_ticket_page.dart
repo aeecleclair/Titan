@@ -230,11 +230,7 @@ class _TicketEventContent extends HookConsumerWidget {
         if (code == "succeeded") {
           displayToast(context, TypeMsg.msg, l10n.ticketsReservationSuccess);
         } else {
-          displayToast(
-            context,
-            TypeMsg.error,
-            l10n.paiementRefusedTransaction,
-          );
+          displayToast(context, TypeMsg.error, l10n.paiementRefusedTransaction);
         }
         popupWin.close();
       }

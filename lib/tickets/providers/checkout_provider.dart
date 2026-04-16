@@ -43,7 +43,10 @@ class CheckoutNotifier extends StateNotifier<CheckoutCreationState> {
     _checkoutRepository.setToken(token);
   }
 
-  Future<void> createCheckout(Checkout checkout, TicketEvent ticketEvent) async {
+  Future<void> createCheckout(
+    Checkout checkout,
+    TicketEvent ticketEvent,
+  ) async {
     state = state.copyWith(
       isCreating: true,
       error: null,

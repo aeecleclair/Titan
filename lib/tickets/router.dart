@@ -7,7 +7,8 @@ import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/tickets/ui/pages/tickets_main_page.dart' deferred as main_page;
+import 'package:titan/tickets/ui/pages/tickets_main_page.dart'
+    deferred as main_page;
 import 'package:titan/tickets/ui/pages/book_ticket_page.dart'
     deferred as book_ticket_page;
 import 'package:titan/tickets/ui/pages/create_ticket_event_page.dart'

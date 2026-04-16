@@ -376,8 +376,12 @@ class _EditCategoriesSection extends HookWidget {
     // Dispose controllers
     useEffect(() {
       return () {
-        for (final c in nameControllers) c.dispose();
-        for (final c in priceControllers) c.dispose();
+        for (final c in nameControllers) {
+          c.dispose();
+        }
+        for (final c in priceControllers) {
+          c.dispose();
+        }
       };
     }, []);
 
@@ -505,9 +509,15 @@ class _EditSessionsSection extends HookWidget {
     // Dispose controllers
     useEffect(() {
       return () {
-        for (final c in nameControllers) c.dispose();
-        for (final c in dateControllers) c.dispose();
-        for (final c in quotaControllers) c.dispose();
+        for (final c in nameControllers) {
+          c.dispose();
+        }
+        for (final c in dateControllers) {
+          c.dispose();
+        }
+        for (final c in quotaControllers) {
+          c.dispose();
+        }
       };
     }, []);
 

@@ -34,7 +34,8 @@ class TicketEventCard extends ConsumerWidget {
               Button(
                 text: l10n.ticketsViewResults,
                 onPressed: () {
-                  ref.read(selectedTicketEventProvider.notifier).state = ticketEvent;
+                  ref.read(selectedTicketEventProvider.notifier).state =
+                      ticketEvent;
                   QR.to(TicketsRouter.root + TicketsRouter.results);
                   Navigator.of(context).pop();
                 },
@@ -47,19 +48,21 @@ class TicketEventCard extends ConsumerWidget {
                   showDialog(
                     context: context,
                     barrierDismissible: false,
-                    builder: (context) => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    builder: (context) =>
+                        const Center(child: CircularProgressIndicator()),
                   );
 
                   try {
                     final token = ref.read(tokenProvider);
                     final repository = TicketsRepository()..setToken(token);
-                    final detailedShotgun = await repository.getTicketEventById(ticketEvent.id);
+                    final detailedShotgun = await repository.getTicketEventById(
+                      ticketEvent.id,
+                    );
 
                     if (context.mounted) {
                       Navigator.of(context).pop(); // Ferme le loader
-                      ref.read(selectedTicketEventProvider.notifier).state = detailedShotgun;
+                      ref.read(selectedTicketEventProvider.notifier).state =
+                          detailedShotgun;
                       QR.to(TicketsRouter.root + TicketsRouter.edit);
                       Navigator.of(context).pop(); // Ferme le modal
                     }
