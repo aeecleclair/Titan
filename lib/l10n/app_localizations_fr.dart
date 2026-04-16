@@ -3446,7 +3446,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesTag => 'Tag';
 
   @override
-  String get purchasesTickets => 'TicketEvent';
+  String get purchasesTickets => 'Tickets';
 
   @override
   String get purchasesTicketsError => 'Erreur lors du chargement des tickets';
@@ -3681,7 +3681,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get raffleTicketNumber => 'Nombre de ticket';
 
   @override
-  String get raffleTickets => 'TicketEvent';
+  String get raffleTickets => 'Ticket de tombola';
 
   @override
   String get raffleUnavailableRaffle => 'Tombola indisponible';
@@ -4788,14 +4788,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'La sélection ne sera pas sauvegardée.\nVoulez-vous continuer ?';
 
   @override
-  String get ticketsTickets => 'TicketEvent';
+  String get ticketsTickets => 'Billets';
 
   @override
   String get ticketsTicketsDescription =>
       'Réserver vos places pour des événements';
 
   @override
-  String get ticketsTitle => 'TicketEvent';
+  String get ticketsTitle => 'Billets';
 
   @override
   String get ticketsAdmin => 'Admin';

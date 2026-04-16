@@ -6611,7 +6611,7 @@ abstract class AppLocalizations {
   /// No description provided for @purchasesTickets.
   ///
   /// In fr, this message translates to:
-  /// **'TicketEvent'**
+  /// **'Tickets'**
   String get purchasesTickets;
 
   /// No description provided for @purchasesTicketsError.
@@ -7067,7 +7067,7 @@ abstract class AppLocalizations {
   /// No description provided for @raffleTickets.
   ///
   /// In fr, this message translates to:
-  /// **'TicketEvent'**
+  /// **'Ticket de tombola'**
   String get raffleTickets;
 
   /// No description provided for @raffleUnavailableRaffle.
@@ -9179,7 +9179,7 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsTickets.
   ///
   /// In fr, this message translates to:
-  /// **'TicketEvent'**
+  /// **'Billets'**
   String get ticketsTickets;
 
   /// No description provided for @ticketsTicketsDescription.
@@ -9191,7 +9191,7 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsTitle.
   ///
   /// In fr, this message translates to:
-  /// **'TicketEvent'**
+  /// **'Billets'**
   String get ticketsTitle;
 
   /// No description provided for @ticketsAdmin.

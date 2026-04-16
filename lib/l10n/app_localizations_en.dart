@@ -3395,7 +3395,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesTag => 'Tag';
 
   @override
-  String get purchasesTickets => 'TicketEvent';
+  String get purchasesTickets => 'Tickets';
 
   @override
   String get purchasesTicketsError => 'Error loading tickets';
@@ -3629,7 +3629,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get raffleTicketNumber => 'Number of tickets';
 
   @override
-  String get raffleTickets => 'TicketEvent';
+  String get raffleTickets => 'Tickets';
 
   @override
   String get raffleUnavailableRaffle => 'Unavailable raffle';
@@ -4721,13 +4721,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Selection will not be saved.\nDo you want to continue?';
 
   @override
-  String get ticketsTickets => 'TicketEvent';
+  String get ticketsTickets => 'Tickets';
 
   @override
   String get ticketsTicketsDescription => 'Book your seats for events';
 
   @override
-  String get ticketsTitle => 'TicketEvent';
+  String get ticketsTitle => 'Tickets';
 
   @override
   String get ticketsAdmin => 'Admin';
