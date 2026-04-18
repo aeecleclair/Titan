@@ -10,9 +10,10 @@ import 'package:intl/intl.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/providers/navbar_module_list.dart';
 import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
+import 'package:titan/mypayment/providers/can_pay_provider.dart';
 import 'package:titan/mypayment/providers/my_wallet_provider.dart';
 import 'package:titan/mypayment/router.dart';
-import 'package:titan/mypayment/tools/can_pay.dart';
+import 'package:titan/mypayment/tools/can_pay.dart' show CanPayError;
 import 'package:titan/tickets/class/answer.dart';
 import 'package:titan/tickets/class/answer_type.dart';
 import 'package:titan/tickets/class/category.dart';
@@ -81,17 +82,7 @@ class _TicketEventContent extends HookConsumerWidget {
     final answersMap = useState<Map<String, dynamic>>({});
     final checkoutState = ref.watch(checkoutProvider);
     final walletAsync = ref.watch(myWalletProvider);
-    final canPayResult = useState<CanPayResult?>(null);
-
-    useEffect(() {
-      Future<void> check() async {
-        final result = await canPay(ref: ref);
-        canPayResult.value = result;
-      }
-
-      check();
-      return null;
-    }, []);
+    final canPayAsync = ref.watch(canPayProvider);
     final l10n = AppLocalizations.of(context)!;
     final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     final navbarListModuleNotifier = ref.watch(
@@ -634,7 +625,11 @@ class _TicketEventContent extends HookConsumerWidget {
                     const SizedBox(width: 12),
                     Builder(
                       builder: (context) {
-                        final canPayOk = canPayResult.value?.success ?? false;
+                        final canPayResult = canPayAsync.maybeWhen(
+                          data: (result) => result,
+                          orElse: () => null,
+                        );
+                        final canPayOk = canPayResult?.success ?? false;
                         final balanceInCents =
                             walletAsync.valueOrNull?.balance ?? 0;
                         final categoryPriceCents =
@@ -654,8 +649,8 @@ class _TicketEventContent extends HookConsumerWidget {
                         }
 
                         String? disabledReason;
-                        if (!canPayOk && canPayResult.value != null) {
-                          switch (canPayResult.value!.error!) {
+                        if (!canPayOk && canPayResult != null) {
+                          switch (canPayResult.error!) {
                             case CanPayError.tosNotAccepted:
                               disabledReason = l10n.paiementPleaseAcceptTOS;
                             case CanPayError.noDevice:
