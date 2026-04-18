@@ -39,7 +39,7 @@ class ManageTicketEventPage extends HookConsumerWidget {
       return null;
     }, [myStores]);
 
-    // Charger les (ticketEvent)s du store sélectionné au démarrage
+    // Charger les ticketEvents du store sélectionné au démarrage
     useEffect(() {
       if (selectedStore.value != null) {
         storeTicketEventListNotifier.loadStoreTicketEventList(

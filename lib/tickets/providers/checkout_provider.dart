@@ -57,7 +57,7 @@ class CheckoutNotifier extends StateNotifier<CheckoutCreationState> {
     try {
       final createdCheckout = await _checkoutRepository.createCheckout(
         checkout,
-        (ticketEvent),
+        ticketEvent,
       );
       state = state.copyWith(
         isCreating: false,

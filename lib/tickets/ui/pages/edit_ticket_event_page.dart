@@ -26,7 +26,7 @@ class EditTicketEventPage extends HookConsumerWidget {
     final locale = Localizations.localeOf(context);
     final dateFormatter = DateFormat('dd/MM/yyyy HH:mm', locale.toString());
 
-    // Si aucun (ticketEvent) n'est sélectionné, rediriger
+    // If no ticketEvent is selected, redirect
     if (ticketEvent == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         QR.back();

@@ -111,8 +111,8 @@ class _TicketEventContent extends HookConsumerWidget {
     // Helper to get redirect URL
     String getRedirectUrl() {
       return kIsWeb
-          ? "${getTitanURL()}/(ticketEvent)"
-          : "${getTitanURLScheme()}://(ticketEvent)";
+          ? "${getTitanURL()}/tickets"
+          : "${getTitanURLScheme()}://tickets";
     }
 
     // Helper to build answers list from answersMap
@@ -210,9 +210,9 @@ class _TicketEventContent extends HookConsumerWidget {
 
       checkWindowClosed();
       completer.future.then((_) {
-        // Clear checkout and redirect to /(ticketEvent) when popup is closed
+        // Clear checkout and redirect to /tickets when popup is closed
         ref.read(checkoutProvider.notifier).reset();
-        QR.to('/(ticketEvent)');
+        QR.to('/tickets');
       });
 
       void handlePaymentResult(String data) async {

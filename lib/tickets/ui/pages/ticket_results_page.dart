@@ -69,7 +69,7 @@ class TicketResultsPage extends HookConsumerWidget {
       return null;
     }, [selectedTicketEvent]);
 
-    // Handle case where no (ticketEvent) is selected
+    // Handle case where no ticketEvent is selected
     if (selectedTicketEvent == null) {
       return TicketTemplate(
         child: Center(
