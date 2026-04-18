@@ -27,27 +27,27 @@ class AuthenticatedMiddleware extends QMiddleware {
     final titanVersion = ref.watch(titanVersionProvider);
     final minimalHyperionVersion = ref.watch(minimalHyperionVersionProvider);
     final modules = ref.watch(modulesProvider);
-    
+
     if (path.startsWith(LoginRouter.root)) {
       return null;
     }
     if (path == "/" || path.isEmpty) {
       return LoginRouter.root;
     }
-    
+
     if (!pathForwardingState.isLoggedIn &&
         path != LoginRouter.root &&
         path != "/") {
       pathForwardingNotifier.forward(path);
     }
-    
+
     final check = versionVerifier.whenData(
       (value) => value.minimalTitanVersion <= titanVersion,
     );
     final isHyperionVersionCompatible = versionVerifier.whenData(
       (value) => isVersionCompatible(value.version, minimalHyperionVersion),
     );
-    
+
     return check.when(
       data: (value) {
         if (!value) {

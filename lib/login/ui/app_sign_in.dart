@@ -37,28 +37,33 @@ class AppSignIn extends HookConsumerWidget {
     final isUserLoaded = !asyncUser.isLoading && asyncUser.hasValue;
     final isPermissionsLoaded = !permissions.isLoading && permissions.hasValue;
     final isModulesLoaded = modules.isNotEmpty;
-    final isWaitingForData = isLoggedIn && (!isUserLoaded || !isPermissionsLoaded || !isModulesLoaded);
+    final isWaitingForData =
+        isLoggedIn &&
+        (!isUserLoaded || !isPermissionsLoaded || !isModulesLoaded);
 
-    useEffect(() {
-      if (isLoggedIn && 
-          !versionVerifier.isLoading && 
-          isUserLoaded && 
-          isPermissionsLoaded &&
-          isModulesLoaded) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          final currentPath = ref.read(pathForwardingProvider);
-          final targetPath =
-              currentPath.path == "/" || currentPath.path == "/login"
-              ? FeedRouter.root
-              : currentPath.path;
-          if (!currentPath.isLoggedIn) {
-            pathForwardingNotifier.login();
-          }
-          QR.to(targetPath);
-        });
-      }
-      return null;
-    }, [isLoggedIn, versionVerifier.isLoading, asyncUser, permissions, modules]);
+    useEffect(
+      () {
+        if (isLoggedIn &&
+            !versionVerifier.isLoading &&
+            isUserLoaded &&
+            isPermissionsLoaded &&
+            isModulesLoaded) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            final currentPath = ref.read(pathForwardingProvider);
+            final targetPath =
+                currentPath.path == "/" || currentPath.path == "/login"
+                ? FeedRouter.root
+                : currentPath.path;
+            if (!currentPath.isLoggedIn) {
+              pathForwardingNotifier.login();
+            }
+            QR.to(targetPath);
+          });
+        }
+        return null;
+      },
+      [isLoggedIn, versionVerifier.isLoading, asyncUser, permissions, modules],
+    );
 
     return LoginTemplate(
       callback: (AnimationController controller) {
