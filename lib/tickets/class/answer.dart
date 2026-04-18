@@ -22,8 +22,10 @@ class Answer {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['question_id'] = questionId;
-    data['answer_type'] = answerType.value;
-    data['answer'] = answer;
+    data['answer'] = {
+      'answer_type': answerType.value,
+      'answer': answer,
+    };
     return data;
   }
 
