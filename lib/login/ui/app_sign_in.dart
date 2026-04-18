@@ -8,9 +8,12 @@ import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/feed/router.dart';
 import 'package:titan/login/ui/auth_page.dart';
 import 'package:titan/login/ui/components/sign_in_up_bar.dart';
+import 'package:titan/settings/providers/module_list_provider.dart';
+import 'package:titan/super_admin/providers/permissions_list_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
+import 'package:titan/user/providers/user_provider.dart';
 import 'package:titan/version/providers/version_verifier_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -26,9 +29,22 @@ class AppSignIn extends HookConsumerWidget {
     final isLoggedIn = ref.watch(isLoggedInProvider);
     final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     final versionVerifier = ref.watch(versionVerifierProvider);
+    final asyncUser = ref.watch(asyncUserProvider);
+    final permissions = ref.watch(permissionsProvider);
+    final modules = ref.watch(modulesProvider);
+
+    // Check if we're waiting for user/permissions/modules after login
+    final isUserLoaded = !asyncUser.isLoading && asyncUser.hasValue;
+    final isPermissionsLoaded = !permissions.isLoading && permissions.hasValue;
+    final isModulesLoaded = modules.isNotEmpty;
+    final isWaitingForData = isLoggedIn && (!isUserLoaded || !isPermissionsLoaded || !isModulesLoaded);
 
     useEffect(() {
-      if (isLoggedIn && !versionVerifier.isLoading) {
+      if (isLoggedIn && 
+          !versionVerifier.isLoading && 
+          isUserLoaded && 
+          isPermissionsLoaded &&
+          isModulesLoaded) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           final currentPath = ref.read(pathForwardingProvider);
           final targetPath =
@@ -42,7 +58,7 @@ class AppSignIn extends HookConsumerWidget {
         });
       }
       return null;
-    }, [isLoggedIn, versionVerifier.isLoading]);
+    }, [isLoggedIn, versionVerifier.isLoading, asyncUser, permissions, modules]);
 
     return LoginTemplate(
       callback: (AnimationController controller) {
@@ -94,8 +110,8 @@ class AppSignIn extends HookConsumerWidget {
                           isLoading: ref
                               .watch(loadingProvider)
                               .maybeWhen(
-                                data: (data) => data,
-                                orElse: () => false,
+                                data: (data) => data || isWaitingForData,
+                                orElse: () => isWaitingForData,
                               ),
                           label: AppLocalizations.of(context)!.loginSignIn,
                           onPressed: () async {
