@@ -15,15 +15,26 @@ class Answer {
 
   Answer.fromJson(Map<String, dynamic> json) {
     questionId = json['question_id'];
-    answerType = AnswerTypeExtension.fromString(json['answer_type']);
-    answer = json['answer'];
+    // Handle nested answer object from backend
+    final answerObj = json['answer'];
+    if (answerObj is Map<String, dynamic>) {
+      answerType = AnswerTypeExtension.fromString(answerObj['answer_type']);
+      answer = answerObj['answer'];
+    } else {
+      // Fallback for flat structure if needed
+      answerType = AnswerTypeExtension.fromString(json['answer_type']);
+      answer = answerObj;
+    }
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['question_id'] = questionId;
-    data['answer_type'] = answerType.value;
-    data['answer'] = answer;
+    // Backend expects nested structure for answer
+    data['answer'] = {
+      'answer_type': answerType.value,
+      'answer': answer,
+    };
     return data;
   }
 
