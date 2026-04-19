@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:titan/tickets/class/checkout.dart';
-import 'package:titan/tickets/class/my_payment_call_type.dart';
+import 'package:titan/tickets/class/request_type.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tools/functions.dart';
 
@@ -12,7 +12,7 @@ Checkout checkoutFromShotgun(TicketEvent ticketEvent) {
     categoryId: ticketEvent.categories.first.id,
     sessionId: ticketEvent.sessions.first.id,
     answers: [],
-    myPaymentRequestMethod: MyPaymentCallType.request,
+    myPaymentRequestMethod: RequestType.transactionRequest,
     myPaymentTransferRedirectUrl: redirectUrl,
   );
 }

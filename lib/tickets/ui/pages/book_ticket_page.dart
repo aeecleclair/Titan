@@ -18,7 +18,7 @@ import 'package:titan/tickets/class/answer.dart';
 import 'package:titan/tickets/class/answer_type.dart';
 import 'package:titan/tickets/class/category.dart';
 import 'package:titan/tickets/class/checkout.dart';
-import 'package:titan/tickets/class/my_payment_call_type.dart';
+import 'package:titan/tickets/class/request_type.dart';
 import 'package:titan/tickets/class/question.dart';
 import 'package:titan/tickets/class/session.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
@@ -102,10 +102,10 @@ class _TicketEventContent extends HookConsumerWidget {
     }, []);
 
     // Helper to get payment method from provider value
-    MyPaymentCallType getPaymentMethod(String? provider) {
+    RequestType getPaymentMethod(String? provider) {
       return provider == 'helloasso'
-          ? MyPaymentCallType.transfer
-          : MyPaymentCallType.request;
+          ? RequestType.transferRequest
+          : RequestType.transactionRequest;
     }
 
     // Helper to get redirect URL

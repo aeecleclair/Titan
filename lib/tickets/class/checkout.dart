@@ -1,5 +1,5 @@
 import 'package:titan/tickets/class/answer.dart';
-import 'package:titan/tickets/class/my_payment_call_type.dart';
+import 'package:titan/tickets/class/request_type.dart';
 import 'package:titan/tools/functions.dart';
 
 class Checkout {
@@ -14,7 +14,7 @@ class Checkout {
   late final String categoryId;
   late final String sessionId;
   late final List<Answer> answers;
-  late final MyPaymentCallType myPaymentRequestMethod;
+  late final RequestType myPaymentRequestMethod;
   late final String myPaymentTransferRedirectUrl;
 
   // Response fields (not part of the request schema)
@@ -32,10 +32,8 @@ class Checkout {
             .toList() ??
         [];
     myPaymentRequestMethod = json['mypayment_request_method'] != null
-        ? MyPaymentCallTypeExtension.fromString(
-            json['mypayment_request_method'],
-          )
-        : MyPaymentCallType.request;
+        ? RequestTypeExtension.fromString(json['mypayment_request_method'])
+        : RequestType.transactionRequest;
     myPaymentTransferRedirectUrl =
         json['mypayment_transfer_redirect_url'] ?? '';
 
@@ -63,7 +61,7 @@ class Checkout {
     String? categoryId,
     String? sessionId,
     List<Answer>? answers,
-    MyPaymentCallType? myPaymentRequestMethod,
+    RequestType? myPaymentRequestMethod,
     String? myPaymentTransferRedirectUrl,
     int? price,
     DateTime? expiration,
@@ -87,7 +85,7 @@ class Checkout {
     categoryId = '';
     sessionId = '';
     answers = [];
-    myPaymentRequestMethod = MyPaymentCallType.request;
+    myPaymentRequestMethod = RequestType.transactionRequest;
     myPaymentTransferRedirectUrl = '';
     price = null;
     expiration = null;
