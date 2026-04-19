@@ -2,7 +2,7 @@ name: titan
 description: Titan est le frontend d'une application de gestion de la vie associative
 
 publish_to: "none"
-version: 3.0.0+197
+version: 3.0.0+211
 
 minimal_hyperion_version: 6.0.0
 
