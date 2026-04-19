@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/class/module.dart';
-import 'package:titan/tickets/providers/is_user_a_member_of_a_store.dart';
+import 'package:titan/tickets/providers/can_manage_ticket_events_provider.dart';
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';
@@ -59,7 +59,7 @@ class TicketsRouter {
         path: create,
         builder: () => create_ticket_page.CreateTicketEventPage(),
         middleware: [
-          AdminMiddleware(ref, isUserAMemberOfAStoreProvider),
+          AdminMiddleware(ref, canManageTicketEventsProvider),
           DeferredLoadingMiddleware(create_ticket_page.loadLibrary),
         ],
       ),
@@ -67,7 +67,7 @@ class TicketsRouter {
         path: manage,
         builder: () => manage_ticket_page.ManageTicketEventPage(),
         middleware: [
-          AdminMiddleware(ref, isUserAMemberOfAStoreProvider),
+          AdminMiddleware(ref, canManageTicketEventsProvider),
           DeferredLoadingMiddleware(manage_ticket_page.loadLibrary),
         ],
       ),
@@ -75,7 +75,7 @@ class TicketsRouter {
         path: edit,
         builder: () => edit_ticket_page.EditTicketEventPage(),
         middleware: [
-          AdminMiddleware(ref, isUserAMemberOfAStoreProvider),
+          AdminMiddleware(ref, canManageTicketEventsProvider),
           DeferredLoadingMiddleware(edit_ticket_page.loadLibrary),
         ],
       ),
@@ -83,7 +83,7 @@ class TicketsRouter {
         path: results,
         builder: () => ticket_results_page.TicketResultsPage(),
         middleware: [
-          AdminMiddleware(ref, isUserAMemberOfAStoreProvider),
+          AdminMiddleware(ref, canManageTicketEventsProvider),
           DeferredLoadingMiddleware(ticket_results_page.loadLibrary),
         ],
       ),

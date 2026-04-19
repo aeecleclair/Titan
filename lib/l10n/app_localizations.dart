@@ -4814,6 +4814,12 @@ abstract class AppLocalizations {
   /// **'Peut annuler des transactions'**
   String get paiementCanCancelTransaction;
 
+  /// No description provided for @paiementCanManageEvents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Peut gérer les billeteries'**
+  String get paiementCanManageEvents;
+
   /// No description provided for @paiementCanManageSellers.
   ///
   /// In fr, this message translates to:
@@ -5101,6 +5107,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Gestion'**
   String get paiementManagement;
+
+  /// No description provided for @paiementManageEvents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer les billeteries'**
+  String get paiementManageEvents;
 
   /// No description provided for @paiementManageSellers.
   ///

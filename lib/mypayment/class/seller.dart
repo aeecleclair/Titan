@@ -8,6 +8,7 @@ class Seller {
   final bool canSeeHistory;
   final bool canCancel;
   final bool canManageSellers;
+  final bool canManageEvent;
 
   Seller({
     required this.userId,
@@ -17,6 +18,7 @@ class Seller {
     required this.canSeeHistory,
     required this.canCancel,
     required this.canManageSellers,
+    required this.canManageEvent,
   });
 
   factory Seller.fromJson(Map<String, dynamic> json) {
@@ -28,6 +30,7 @@ class Seller {
       canSeeHistory: json['can_see_history'],
       canCancel: json['can_cancel'],
       canManageSellers: json['can_manage_sellers'],
+      canManageEvent: json['can_manage_event'] ?? false,
     );
   }
 
@@ -40,6 +43,7 @@ class Seller {
       'can_see_history': canSeeHistory,
       'can_cancel': canCancel,
       'can_manage_sellers': canManageSellers,
+      'can_manage_event': canManageEvent,
     };
   }
 
@@ -51,6 +55,7 @@ class Seller {
     bool? canSeeHistory,
     bool? canCancel,
     bool? canManageSellers,
+    bool? canManageEvent,
   }) {
     return Seller(
       userId: userId ?? this.userId,
@@ -60,12 +65,13 @@ class Seller {
       canSeeHistory: canSeeHistory ?? this.canSeeHistory,
       canCancel: canCancel ?? this.canCancel,
       canManageSellers: canManageSellers ?? this.canManageSellers,
+      canManageEvent: canManageEvent ?? this.canManageEvent,
     );
   }
 
   @override
   String toString() {
-    return 'Seller(userId: $userId, user: $user, storeId: $storeId, canBank: $canBank, canSeeHistory: $canSeeHistory, canCancel: $canCancel, canManageSellers: $canManageSellers)';
+    return 'Seller(userId: $userId, user: $user, storeId: $storeId, canBank: $canBank, canSeeHistory: $canSeeHistory, canCancel: $canCancel, canManageSellers: $canManageSellers, canManageEvent: $canManageEvent)';
   }
 
   Seller.empty()
@@ -77,5 +83,6 @@ class Seller {
         canSeeHistory: false,
         canCancel: false,
         canManageSellers: false,
+        canManageEvent: false,
       );
 }

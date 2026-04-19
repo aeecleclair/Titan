@@ -2432,6 +2432,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paiementCanCancelTransaction => 'Can cancel transactions';
 
   @override
+  String get paiementCanManageEvents => 'Can manage ticket events';
+
+  @override
   String get paiementCanManageSellers => 'Can manage sellers';
 
   @override
@@ -2592,6 +2595,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paiementManagement => 'Management';
+
+  @override
+  String get paiementManageEvents => 'Manage ticket events';
 
   @override
   String get paiementManageSellers => 'Manage sellers';

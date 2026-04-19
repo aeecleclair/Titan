@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/advert/ui/components/special_action_button.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/tickets/providers/is_user_a_member_of_a_store.dart';
+import 'package:titan/tickets/providers/can_manage_ticket_events_provider.dart';
 import 'package:titan/tickets/providers/user_tickets_provider.dart';
 import 'package:titan/tickets/router.dart';
 import 'package:titan/tickets/ui/components/user_ticket_card.dart';
@@ -24,7 +24,7 @@ class TicketsMainPage extends HookConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final userTicketsAsync = ref.watch(userTicketsProvider);
     final userTicketsNotifier = ref.watch(userTicketsProvider.notifier);
-    final isUserAMemberOfAStore = ref.watch(isUserAMemberOfAStoreProvider);
+    final canManageTicketEvents = ref.watch(canManageTicketEventsProvider);
     final scrollController = useScrollController();
 
     // Rafraîchir la liste des tickets à l'arrivée sur la page
@@ -50,7 +50,7 @@ class TicketsMainPage extends HookConsumerWidget {
                   ),
                 ),
                 const Spacer(),
-                if (isUserAMemberOfAStore) ...[
+                if (canManageTicketEvents) ...[
                   const SizedBox(width: 10),
                   SpecialActionButton(
                     icon: HeroIcon(HeroIcons.userGroup, color: Colors.white),

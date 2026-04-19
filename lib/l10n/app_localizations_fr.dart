@@ -2465,6 +2465,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementCanCancelTransaction => 'Peut annuler des transactions';
 
   @override
+  String get paiementCanManageEvents => 'Peut gérer les billeteries';
+
+  @override
   String get paiementCanManageSellers => 'Peut gérer les vendeurs';
 
   @override
@@ -2629,6 +2632,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get paiementManagement => 'Gestion';
+
+  @override
+  String get paiementManageEvents => 'Gérer les billeteries';
 
   @override
   String get paiementManageSellers => 'Gérer les vendeurs';
