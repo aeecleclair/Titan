@@ -333,12 +333,16 @@ class _TicketEventContent extends HookConsumerWidget {
       if ((validCategories.length == 1 || validSessions.length == 1) &&
           (selectedCategory.value == null || selectedSession.value == null)) {
         checkout.value = Checkout(
-          categoryId: selectedCategory.value?.id ??
+          categoryId:
+              selectedCategory.value?.id ??
               (validCategories.length == 1 ? validCategories.first.id : ''),
-          sessionId: selectedSession.value?.id ??
+          sessionId:
+              selectedSession.value?.id ??
               (validSessions.length == 1 ? validSessions.first.id : ''),
           answers: buildAnswersList(),
-          myPaymentRequestMethod: getPaymentMethod(selectedPaymentProvider.value),
+          myPaymentRequestMethod: getPaymentMethod(
+            selectedPaymentProvider.value,
+          ),
           myPaymentTransferRedirectUrl: getRedirectUrl(),
         );
       }
