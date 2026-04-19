@@ -10,6 +10,7 @@ import 'package:titan/phonebook/providers/is_phonebook_admin_provider.dart';
 import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 import 'package:titan/phonebook/ui/pages/membership_editor_page/user_search_modal.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -138,10 +139,15 @@ class MembershipEditorPage extends HookConsumerWidget {
       }
     }
 
+    final scrollController = useScrollController();
+
     return PhonebookTemplate(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: SingleChildScrollView(
+        child: ScrollToHideNavbar(
+          controller: scrollController,
+          child: SingleChildScrollView(
+          controller: scrollController,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -253,6 +259,7 @@ class MembershipEditorPage extends HookConsumerWidget {
               const SizedBox(height: 20),
             ],
           ),
+        ),
         ),
       ),
     );

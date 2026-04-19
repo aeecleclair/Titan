@@ -8,12 +8,11 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/navigation/providers/navbar_module_list.dart';
 import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 import 'package:titan/mypayment/providers/can_pay_provider.dart';
 import 'package:titan/mypayment/providers/my_wallet_provider.dart';
-import 'package:titan/mypayment/router.dart';
 import 'package:titan/mypayment/tools/can_pay.dart' show CanPayError;
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tickets/class/answer.dart';
 import 'package:titan/tickets/class/answer_type.dart';
 import 'package:titan/tickets/class/category.dart';
@@ -84,10 +83,6 @@ class _TicketEventContent extends HookConsumerWidget {
     final walletAsync = ref.watch(myWalletProvider);
     final canPayAsync = ref.watch(canPayProvider);
     final l10n = AppLocalizations.of(context)!;
-    final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
-    final navbarListModuleNotifier = ref.watch(
-      navbarListModuleProvider.notifier,
-    );
 
     // Hide navbar when page loads
     useEffect(() {
@@ -298,521 +293,537 @@ class _TicketEventContent extends HookConsumerWidget {
       return null;
     }, [validCategories, validSessions]);
 
+    final scrollController = useScrollController();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              l10n.ticketsBookTicket,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: ColorConstants.title,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Card(
-              elevation: 0,
-              color: ColorConstants.background2.withValues(alpha: 0.06),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-                side: BorderSide(
-                  color: ColorConstants.mainBorder.withValues(alpha: 0.3),
+      child: ScrollToHideNavbar(
+        controller: scrollController,
+        child: SingleChildScrollView(
+          controller: scrollController,
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                l10n.ticketsBookTicket,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: ColorConstants.title,
+                  fontWeight: FontWeight.bold,
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        HeroIcon(
-                          HeroIcons.ticket,
-                          size: 20,
-                          color: ColorConstants.main,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          ticketEvent.name,
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(color: ColorConstants.onTertiary),
-                        ),
-                      ],
-                    ),
-                    if (validCategories.isNotEmpty) ...[
-                      const SizedBox(height: 24),
-                      Text(
-                        l10n.ticketsCategoryLabel,
-                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: ColorConstants.secondary,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      ...validCategories.map((category) {
-                        final isSelected =
-                            selectedCategory.value?.id == category.id;
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: InkWell(
-                            onTap: () => selectedCategory.value = category,
-                            borderRadius: BorderRadius.circular(8),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 12,
-                              ),
-                              decoration: BoxDecoration(
-                                color: isSelected
-                                    ? ColorConstants.main.withValues(alpha: 0.1)
-                                    : ColorConstants.background2.withValues(
-                                        alpha: 0.05,
-                                      ),
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: isSelected
-                                      ? ColorConstants.main
-                                      : ColorConstants.mainBorder.withValues(
-                                          alpha: 0.3,
-                                        ),
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    isSelected
-                                        ? Icons.radio_button_checked
-                                        : Icons.radio_button_unchecked,
-                                    size: 20,
-                                    color: isSelected
-                                        ? ColorConstants.main
-                                        : ColorConstants.tertiary,
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Text(
-                                      category.name.trim(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                            color: ColorConstants.onTertiary,
-                                            fontWeight: isSelected
-                                                ? FontWeight.w600
-                                                : FontWeight.normal,
-                                          ),
-                                    ),
-                                  ),
-                                  Text(
-                                    '${category.price}€',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(
-                                          color: ColorConstants.main,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                    ],
-                    if (validSessions.isNotEmpty) ...[
-                      const SizedBox(height: 24),
-                      Text(
-                        l10n.ticketsSessionLabel,
-                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: ColorConstants.secondary,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      ...validSessions.map((session) {
-                        final isSelected =
-                            selectedSession.value?.id == session.id;
-                        final sessionTime = timeFormat.format(
-                          session.startDatetime,
-                        );
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: InkWell(
-                            onTap: () => selectedSession.value = session,
-                            borderRadius: BorderRadius.circular(8),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 12,
-                              ),
-                              decoration: BoxDecoration(
-                                color: isSelected
-                                    ? ColorConstants.main.withValues(alpha: 0.1)
-                                    : ColorConstants.background2.withValues(
-                                        alpha: 0.05,
-                                      ),
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: isSelected
-                                      ? ColorConstants.main
-                                      : ColorConstants.mainBorder.withValues(
-                                          alpha: 0.3,
-                                        ),
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    isSelected
-                                        ? Icons.radio_button_checked
-                                        : Icons.radio_button_unchecked,
-                                    size: 20,
-                                    color: isSelected
-                                        ? ColorConstants.main
-                                        : ColorConstants.tertiary,
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Text(
-                                      '${session.name.trim()} - $sessionTime',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                            color: ColorConstants.onTertiary,
-                                            fontWeight: isSelected
-                                                ? FontWeight.w600
-                                                : FontWeight.normal,
-                                          ),
-                                    ),
-                                  ),
-                                  if (session.quota != null &&
-                                      session.quota! > 0)
-                                    Text(
-                                      '${session.quota} ${l10n.ticketsPlaces}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.copyWith(
-                                            color: ColorConstants.tertiary,
-                                          ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                    ],
-                    // Questions section
-                    if (ticketEvent.questions
-                        .where((q) => !q.disabled)
-                        .isNotEmpty) ...[
-                      const SizedBox(height: 24),
-                      Text(
-                        l10n.ticketsQuestions,
-                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: ColorConstants.secondary,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      ...ticketEvent.questions.where((q) => !q.disabled).map((
-                        question,
-                      ) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 12),
-                          child: _QuestionAnswerField(
-                            question: question,
-                            value: answersMap.value[question.id],
-                            onChanged: (value) {
-                              answersMap.value = {
-                                ...answersMap.value,
-                                question.id: value,
-                              };
-                            },
-                          ),
-                        );
-                      }),
-                    ],
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            // Payment section - only show if price > 0
-            if (selectedCategory.value != null) ...[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    l10n.ticketsTotal,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: ColorConstants.onTertiary,
-                    ),
-                  ),
-                  Text(
-                    '${selectedCategory.value!.price}€',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: ColorConstants.main,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
               ),
               const SizedBox(height: 16),
-              // Only show payment method if price > 0
-              if (selectedCategory.value!.price > 0) ...[
-                Text(
-                  l10n.ticketsPaymentMethod,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: ColorConstants.secondary,
+              Card(
+                elevation: 0,
+                color: ColorConstants.background2.withValues(alpha: 0.06),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  side: BorderSide(
+                    color: ColorConstants.mainBorder.withValues(alpha: 0.3),
                   ),
                 ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () =>
-                            selectedPaymentProvider.value = 'helloasso',
-                        borderRadius: BorderRadius.circular(12),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          decoration: BoxDecoration(
-                            color: selectedPaymentProvider.value == 'helloasso'
-                                ? ColorConstants.main.withValues(alpha: 0.1)
-                                : ColorConstants.background2.withValues(
-                                    alpha: 0.05,
-                                  ),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color:
-                                  selectedPaymentProvider.value == 'helloasso'
-                                  ? ColorConstants.main
-                                  : ColorConstants.mainBorder.withValues(
-                                      alpha: 0.3,
-                                    ),
-                            ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          HeroIcon(
+                            HeroIcons.ticket,
+                            size: 20,
+                            color: ColorConstants.main,
                           ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(
-                                height: 28,
-                                child: SvgPicture.asset(
-                                  'assets/images/helloasso.svg',
-                                  fit: BoxFit.contain,
+                          const SizedBox(width: 8),
+                          Text(
+                            ticketEvent.name,
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(color: ColorConstants.onTertiary),
+                          ),
+                        ],
+                      ),
+                      if (validCategories.isNotEmpty) ...[
+                        const SizedBox(height: 24),
+                        Text(
+                          l10n.ticketsCategoryLabel,
+                          style: Theme.of(context).textTheme.labelLarge
+                              ?.copyWith(color: ColorConstants.secondary),
+                        ),
+                        const SizedBox(height: 8),
+                        ...validCategories.map((category) {
+                          final isSelected =
+                              selectedCategory.value?.id == category.id;
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: InkWell(
+                              onTap: () => selectedCategory.value = category,
+                              borderRadius: BorderRadius.circular(8),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 12,
                                 ),
-                              ),
-                              const SizedBox(height: 6),
-                              Text(
-                                'HelloAsso',
-                                style: Theme.of(context).textTheme.bodySmall
-                                    ?.copyWith(
-                                      color:
-                                          selectedPaymentProvider.value ==
-                                              'helloasso'
+                                decoration: BoxDecoration(
+                                  color: isSelected
+                                      ? ColorConstants.main.withValues(
+                                          alpha: 0.1,
+                                        )
+                                      : ColorConstants.background2.withValues(
+                                          alpha: 0.05,
+                                        ),
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: isSelected
+                                        ? ColorConstants.main
+                                        : ColorConstants.mainBorder.withValues(
+                                            alpha: 0.3,
+                                          ),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      isSelected
+                                          ? Icons.radio_button_checked
+                                          : Icons.radio_button_unchecked,
+                                      size: 20,
+                                      color: isSelected
                                           ? ColorConstants.main
                                           : ColorConstants.tertiary,
-                                      fontWeight:
-                                          selectedPaymentProvider.value ==
-                                              'helloasso'
-                                          ? FontWeight.w600
-                                          : FontWeight.normal,
                                     ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Text(
+                                        category.name.trim(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              color: ColorConstants.onTertiary,
+                                              fontWeight: isSelected
+                                                  ? FontWeight.w600
+                                                  : FontWeight.normal,
+                                            ),
+                                      ),
+                                    ),
+                                    Text(
+                                      '${category.price}€',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            color: ColorConstants.main,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
+                            ),
+                          );
+                        }),
+                      ],
+                      if (validSessions.isNotEmpty) ...[
+                        const SizedBox(height: 24),
+                        Text(
+                          l10n.ticketsSessionLabel,
+                          style: Theme.of(context).textTheme.labelLarge
+                              ?.copyWith(color: ColorConstants.secondary),
+                        ),
+                        const SizedBox(height: 8),
+                        ...validSessions.map((session) {
+                          final isSelected =
+                              selectedSession.value?.id == session.id;
+                          final sessionTime = timeFormat.format(
+                            session.startDatetime,
+                          );
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: InkWell(
+                              onTap: () => selectedSession.value = session,
+                              borderRadius: BorderRadius.circular(8),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 12,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: isSelected
+                                      ? ColorConstants.main.withValues(
+                                          alpha: 0.1,
+                                        )
+                                      : ColorConstants.background2.withValues(
+                                          alpha: 0.05,
+                                        ),
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: isSelected
+                                        ? ColorConstants.main
+                                        : ColorConstants.mainBorder.withValues(
+                                            alpha: 0.3,
+                                          ),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      isSelected
+                                          ? Icons.radio_button_checked
+                                          : Icons.radio_button_unchecked,
+                                      size: 20,
+                                      color: isSelected
+                                          ? ColorConstants.main
+                                          : ColorConstants.tertiary,
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Text(
+                                        '${session.name.trim()} - $sessionTime',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              color: ColorConstants.onTertiary,
+                                              fontWeight: isSelected
+                                                  ? FontWeight.w600
+                                                  : FontWeight.normal,
+                                            ),
+                                      ),
+                                    ),
+                                    if (session.quota != null &&
+                                        session.quota! > 0)
+                                      Text(
+                                        '${session.quota} ${l10n.ticketsPlaces}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(
+                                              color: ColorConstants.tertiary,
+                                            ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                      ],
+                      // Questions section
+                      if (ticketEvent.questions
+                          .where((q) => !q.disabled)
+                          .isNotEmpty) ...[
+                        const SizedBox(height: 24),
+                        Text(
+                          l10n.ticketsQuestions,
+                          style: Theme.of(context).textTheme.labelLarge
+                              ?.copyWith(color: ColorConstants.secondary),
+                        ),
+                        const SizedBox(height: 8),
+                        ...ticketEvent.questions.where((q) => !q.disabled).map((
+                          question,
+                        ) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: _QuestionAnswerField(
+                              question: question,
+                              value: answersMap.value[question.id],
+                              onChanged: (value) {
+                                answersMap.value = {
+                                  ...answersMap.value,
+                                  question.id: value,
+                                };
+                              },
+                            ),
+                          );
+                        }),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              // Payment section - only show if price > 0
+              if (selectedCategory.value != null) ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      l10n.ticketsTotal,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: ColorConstants.onTertiary,
+                      ),
+                    ),
+                    Text(
+                      '${selectedCategory.value!.price}€',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: ColorConstants.main,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                // Only show payment method if price > 0
+                if (selectedCategory.value!.price > 0) ...[
+                  Text(
+                    l10n.ticketsPaymentMethod,
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: ColorConstants.secondary,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () =>
+                              selectedPaymentProvider.value = 'helloasso',
+                          borderRadius: BorderRadius.circular(12),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            decoration: BoxDecoration(
+                              color:
+                                  selectedPaymentProvider.value == 'helloasso'
+                                  ? ColorConstants.main.withValues(alpha: 0.1)
+                                  : ColorConstants.background2.withValues(
+                                      alpha: 0.05,
+                                    ),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color:
+                                    selectedPaymentProvider.value == 'helloasso'
+                                    ? ColorConstants.main
+                                    : ColorConstants.mainBorder.withValues(
+                                        alpha: 0.3,
+                                      ),
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(
+                                  height: 28,
+                                  child: SvgPicture.asset(
+                                    'assets/images/helloasso.svg',
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  'HelloAsso',
+                                  style: Theme.of(context).textTheme.bodySmall
+                                      ?.copyWith(
+                                        color:
+                                            selectedPaymentProvider.value ==
+                                                'helloasso'
+                                            ? ColorConstants.main
+                                            : ColorConstants.tertiary,
+                                        fontWeight:
+                                            selectedPaymentProvider.value ==
+                                                'helloasso'
+                                            ? FontWeight.w600
+                                            : FontWeight.normal,
+                                      ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Builder(
-                      builder: (context) {
-                        final canPayResult = canPayAsync.maybeWhen(
-                          data: (result) => result,
-                          orElse: () => null,
-                        );
-                        final canPayOk = canPayResult?.success ?? false;
-                        final balanceInCents =
-                            walletAsync.valueOrNull?.balance ?? 0;
-                        final categoryPriceCents =
-                            ((selectedCategory.value?.price ?? 0) * 100)
-                                .round();
-                        final hasInsufficientBalance =
-                            canPayOk && balanceInCents < categoryPriceCents;
-                        final isDisabled = !canPayOk || hasInsufficientBalance;
-                        final isSelected =
-                            selectedPaymentProvider.value == 'myempay';
+                      const SizedBox(width: 12),
+                      Builder(
+                        builder: (context) {
+                          final canPayResult = canPayAsync.maybeWhen(
+                            data: (result) => result,
+                            orElse: () => null,
+                          );
+                          final canPayOk = canPayResult?.success ?? false;
+                          final balanceInCents =
+                              walletAsync.valueOrNull?.balance ?? 0;
+                          final categoryPriceCents =
+                              ((selectedCategory.value?.price ?? 0) * 100)
+                                  .round();
+                          final hasInsufficientBalance =
+                              canPayOk && balanceInCents < categoryPriceCents;
+                          final isDisabled =
+                              !canPayOk || hasInsufficientBalance;
+                          final isSelected =
+                              selectedPaymentProvider.value == 'myempay';
 
-                        // Auto-switch to helloasso if myempay is selected but can't pay
-                        if (isDisabled && isSelected) {
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            selectedPaymentProvider.value = 'helloasso';
-                          });
-                        }
-
-                        String? disabledReason;
-                        if (!canPayOk && canPayResult != null) {
-                          switch (canPayResult.error!) {
-                            case CanPayError.tosNotAccepted:
-                              disabledReason = l10n.paiementPleaseAcceptTOS;
-                            case CanPayError.noDevice:
-                              disabledReason = l10n.paiementDeviceNotRegistered;
-                            case CanPayError.deviceInactive:
-                              disabledReason = l10n.paiementDeviceNotActivated;
-                            case CanPayError.deviceRevoked:
-                              disabledReason = l10n.paiementDeviceRevoked;
-                            case CanPayError.insufficientBalance:
-                              disabledReason = l10n.paiementInsufficientFunds;
+                          // Auto-switch to helloasso if myempay is selected but can't pay
+                          if (isDisabled && isSelected) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              selectedPaymentProvider.value = 'helloasso';
+                            });
                           }
-                        } else if (hasInsufficientBalance) {
-                          disabledReason = l10n.paiementInsufficientFunds;
-                        }
 
-                        return Expanded(
-                          child: InkWell(
-                            onTap: isDisabled
-                                ? null
-                                : () =>
-                                      selectedPaymentProvider.value = 'myempay',
-                            borderRadius: BorderRadius.circular(12),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              decoration: BoxDecoration(
-                                color: isSelected
-                                    ? ColorConstants.main.withValues(alpha: 0.1)
-                                    : isDisabled
-                                    ? ColorConstants.background2.withValues(
-                                        alpha: 0.02,
-                                      )
-                                    : ColorConstants.background2.withValues(
-                                        alpha: 0.05,
-                                      ),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
+                          String? disabledReason;
+                          if (!canPayOk && canPayResult != null) {
+                            switch (canPayResult.error!) {
+                              case CanPayError.tosNotAccepted:
+                                disabledReason = l10n.paiementPleaseAcceptTOS;
+                              case CanPayError.noDevice:
+                                disabledReason =
+                                    l10n.paiementDeviceNotRegistered;
+                              case CanPayError.deviceInactive:
+                                disabledReason =
+                                    l10n.paiementDeviceNotActivated;
+                              case CanPayError.deviceRevoked:
+                                disabledReason = l10n.paiementDeviceRevoked;
+                              case CanPayError.insufficientBalance:
+                                disabledReason = l10n.paiementInsufficientFunds;
+                            }
+                          } else if (hasInsufficientBalance) {
+                            disabledReason = l10n.paiementInsufficientFunds;
+                          }
+
+                          return Expanded(
+                            child: InkWell(
+                              onTap: isDisabled
+                                  ? null
+                                  : () => selectedPaymentProvider.value =
+                                        'myempay',
+                              borderRadius: BorderRadius.circular(12),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 16,
+                                ),
+                                decoration: BoxDecoration(
                                   color: isSelected
-                                      ? ColorConstants.main
-                                      : isDisabled
-                                      ? ColorConstants.mainBorder.withValues(
+                                      ? ColorConstants.main.withValues(
                                           alpha: 0.1,
                                         )
-                                      : ColorConstants.mainBorder.withValues(
-                                          alpha: 0.3,
+                                      : isDisabled
+                                      ? ColorConstants.background2.withValues(
+                                          alpha: 0.02,
+                                        )
+                                      : ColorConstants.background2.withValues(
+                                          alpha: 0.05,
                                         ),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: isSelected
+                                        ? ColorConstants.main
+                                        : isDisabled
+                                        ? ColorConstants.mainBorder.withValues(
+                                            alpha: 0.1,
+                                          )
+                                        : ColorConstants.mainBorder.withValues(
+                                            alpha: 0.3,
+                                          ),
+                                  ),
                                 ),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SizedBox(
-                                    height: 28,
-                                    child: Image.asset(
-                                      'assets/images/logo_prod.png',
-                                      fit: BoxFit.contain,
-                                      color: isDisabled
-                                          ? ColorConstants.tertiary.withValues(
-                                              alpha: 0.5,
-                                            )
-                                          : null,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                      height: 28,
+                                      child: Image.asset(
+                                        'assets/images/logo_prod.png',
+                                        fit: BoxFit.contain,
+                                        color: isDisabled
+                                            ? ColorConstants.tertiary
+                                                  .withValues(alpha: 0.5)
+                                            : null,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 6),
-                                  Text(
-                                    'myempay',
-                                    style: Theme.of(context).textTheme.bodySmall
-                                        ?.copyWith(
-                                          color: isSelected
-                                              ? ColorConstants.main
-                                              : isDisabled
-                                              ? ColorConstants.tertiary
-                                                    .withValues(alpha: 0.5)
-                                              : ColorConstants.tertiary,
-                                          fontWeight: isSelected
-                                              ? FontWeight.w600
-                                              : FontWeight.normal,
-                                        ),
-                                  ),
-                                  if (disabledReason != null)
+                                    const SizedBox(height: 6),
                                     Text(
-                                      disabledReason,
+                                      'myempay',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall
                                           ?.copyWith(
-                                            color: ColorConstants.error,
-                                            fontSize: 10,
+                                            color: isSelected
+                                                ? ColorConstants.main
+                                                : isDisabled
+                                                ? ColorConstants.tertiary
+                                                      .withValues(alpha: 0.5)
+                                                : ColorConstants.tertiary,
+                                            fontWeight: isSelected
+                                                ? FontWeight.w600
+                                                : FontWeight.normal,
                                           ),
-                                      textAlign: TextAlign.center,
                                     ),
-                                ],
+                                    if (disabledReason != null)
+                                      Text(
+                                        disabledReason,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(
+                                              color: ColorConstants.error,
+                                              fontSize: 10,
+                                            ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ],
-            const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed:
-                    checkoutState.isCreating ||
-                        selectedCategory.value == null ||
-                        (validSessions.isNotEmpty &&
-                            selectedSession.value == null) ||
-                        !areAllRequiredQuestionsAnswered()
-                    ? null
-                    : () async {
-                        // Show navbar before navigating to payment
-                        ref.read(navbarVisibilityProvider.notifier).show();
-                        final notifier = ref.read(checkoutProvider.notifier);
-                        await notifier.createCheckout(
-                          checkout.value,
-                          ticketEvent,
-                        );
-                      },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorConstants.main,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  disabledBackgroundColor: ColorConstants.main.withValues(
-                    alpha: 0.3,
-                  ),
-                ),
-                child: checkoutState.isCreating
-                    ? const SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.white,
-                          ),
-                        ),
-                      )
-                    : Text(
-                        l10n.ticketsReserve,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                          );
+                        },
                       ),
+                    ],
+                  ),
+                ],
+              ],
+              const SizedBox(height: 24),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed:
+                      checkoutState.isCreating ||
+                          selectedCategory.value == null ||
+                          (validSessions.isNotEmpty &&
+                              selectedSession.value == null) ||
+                          !areAllRequiredQuestionsAnswered()
+                      ? null
+                      : () async {
+                          // Show navbar before navigating to payment
+                          ref.read(navbarVisibilityProvider.notifier).show();
+                          final notifier = ref.read(checkoutProvider.notifier);
+                          await notifier.createCheckout(
+                            checkout.value,
+                            ticketEvent,
+                          );
+                        },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorConstants.main,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    disabledBackgroundColor: ColorConstants.main.withValues(
+                      alpha: 0.3,
+                    ),
+                  ),
+                  child: checkoutState.isCreating
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          l10n.ticketsReserve,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                ),
               ),
-            ),
-            const SizedBox(height: 24),
-            // Bottom safe area padding
-            SafeArea(top: false, child: const SizedBox()),
-          ],
+              const SizedBox(height: 24),
+              // Bottom safe area padding
+              SafeArea(top: false, child: const SizedBox()),
+            ],
+          ),
         ),
       ),
     );

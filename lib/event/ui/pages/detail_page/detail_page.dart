@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/event/providers/event_provider.dart';
 import 'package:titan/event/ui/event.dart';
 import 'package:titan/event/ui/components/event_ui.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -15,14 +17,18 @@ class DetailPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final event = ref.watch(eventProvider);
+    final scrollController = useScrollController();
 
     void displayToastWithoutContext(TypeMsg type, String message) {
       displayToast(context, type, message);
     }
 
     return EventTemplate(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+      child: ScrollToHideNavbar(
+        controller: scrollController,
+        child: SingleChildScrollView(
+          controller: scrollController,
+          physics: const BouncingScrollPhysics(),
         child: Stack(
           children: [
             Padding(
@@ -218,6 +224,7 @@ class DetailPage extends HookConsumerWidget {
               child: Center(child: EventUi(event: event, isDetailPage: true)),
             ),
           ],
+        ),
         ),
       ),
     );

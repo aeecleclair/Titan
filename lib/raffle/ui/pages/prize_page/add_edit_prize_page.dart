@@ -5,6 +5,7 @@ import 'package:titan/raffle/class/prize.dart';
 import 'package:titan/raffle/providers/prize_list_provider.dart';
 import 'package:titan/raffle/providers/prize_provider.dart';
 import 'package:titan/raffle/providers/raffle_provider.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/raffle/ui/components/blue_btn.dart';
 import 'package:titan/raffle/ui/components/section_title.dart';
@@ -36,10 +37,15 @@ class AddEditPrizePage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    final scrollController = useScrollController();
+
     return RaffleTemplate(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 30),
-        child: SingleChildScrollView(
+        child: ScrollToHideNavbar(
+          controller: scrollController,
+          child: SingleChildScrollView(
+          controller: scrollController,
           physics: const BouncingScrollPhysics(),
           child: Form(
             key: formKey,
@@ -155,6 +161,7 @@ class AddEditPrizePage extends HookConsumerWidget {
               ),
             ),
           ),
+        ),
         ),
       ),
     );

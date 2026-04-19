@@ -8,6 +8,7 @@ import 'package:titan/admin/class/user_association_membership_base.dart';
 import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
 import 'package:titan/admin/providers/user_association_membership_provider.dart';
 import 'package:titan/admin/ui/pages/membership/add_edit_user_membership_page/user_search_modal.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -41,10 +42,15 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    final scrollController = useScrollController();
+
     return AdminTemplate(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
+        child: ScrollToHideNavbar(
+          controller: scrollController,
+          child: SingleChildScrollView(
+          controller: scrollController,
           child: Column(
             children: [
               AlignLeftText(
@@ -218,6 +224,7 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
               ),
             ],
           ),
+        ),
         ),
       ),
     );

@@ -10,6 +10,7 @@ import 'package:titan/recommendation/class/recommendation.dart';
 import 'package:titan/recommendation/providers/recommendation_list_provider.dart';
 import 'package:titan/recommendation/providers/recommendation_logo_map_provider.dart';
 import 'package:titan/recommendation/providers/recommendation_logo_provider.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/recommendation/providers/recommendation_provider.dart';
 import 'package:titan/recommendation/ui/widgets/recommendation_template.dart';
 import 'package:titan/tools/functions.dart';
@@ -61,12 +62,17 @@ class AddEditRecommendationPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    final scrollController = useScrollController();
+
     return RecommendationTemplate(
       child: Form(
         key: formKey,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: SingleChildScrollView(
+          child: ScrollToHideNavbar(
+            controller: scrollController,
+            child: SingleChildScrollView(
+            controller: scrollController,
             child: Column(
               children: [
                 TextEntry(
@@ -233,6 +239,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                 const SizedBox(height: 20),
               ],
             ),
+          ),
           ),
         ),
       ),

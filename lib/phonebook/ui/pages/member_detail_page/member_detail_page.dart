@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/complete_member_provider.dart';
 import 'package:titan/phonebook/providers/member_pictures_provider.dart';
@@ -28,10 +30,15 @@ class MemberDetailPage extends HookConsumerWidget {
     final sortedMemberships = [...member.memberships];
     sortedMemberships.sort((a, b) => a.mandateYear.compareTo(b.mandateYear));
 
+    final scrollController = useScrollController();
+
     return PhonebookTemplate(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: SingleChildScrollView(
+        child: ScrollToHideNavbar(
+          controller: scrollController,
+          child: SingleChildScrollView(
+          controller: scrollController,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -133,6 +140,7 @@ class MemberDetailPage extends HookConsumerWidget {
               const SizedBox(height: 20),
             ],
           ),
+        ),
         ),
       ),
     );

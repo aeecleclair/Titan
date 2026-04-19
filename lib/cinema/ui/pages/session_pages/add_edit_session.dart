@@ -14,6 +14,7 @@ import 'package:titan/cinema/providers/the_movie_db_genre_provider.dart';
 import 'package:titan/cinema/tools/functions.dart';
 import 'package:titan/cinema/ui/cinema.dart';
 import 'package:titan/cinema/ui/pages/session_pages/tmdb_button.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
@@ -65,8 +66,13 @@ class AddEditSessionPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
+    final scrollController = useScrollController();
+
     return CinemaTemplate(
-      child: SingleChildScrollView(
+      child: ScrollToHideNavbar(
+        controller: scrollController,
+        child: SingleChildScrollView(
+        controller: scrollController,
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -366,6 +372,7 @@ class AddEditSessionPage extends HookConsumerWidget {
               ],
             ),
           ),
+        ),
         ),
       ),
     );

@@ -11,6 +11,7 @@ import 'package:titan/event/providers/selected_days_provider.dart';
 import 'package:titan/event/providers/user_event_list_provider.dart';
 import 'package:titan/event/tools/constants.dart';
 import 'package:titan/event/tools/functions.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
@@ -93,14 +94,18 @@ class AddEditEventPage extends HookConsumerWidget {
     );
     final selectedDays = ref.watch(selectedDaysProvider);
     final selectedDaysNotifier = ref.watch(selectedDaysProvider.notifier);
+    final scrollController = useScrollController();
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
 
     return EventTemplate(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+      child: ScrollToHideNavbar(
+        controller: scrollController,
+        child: SingleChildScrollView(
+          controller: scrollController,
+          physics: const BouncingScrollPhysics(),
         child: Form(
           key: key,
           child: Column(
@@ -598,6 +603,7 @@ class AddEditEventPage extends HookConsumerWidget {
               ),
             ],
           ),
+        ),
         ),
       ),
     );

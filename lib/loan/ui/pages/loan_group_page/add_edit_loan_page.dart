@@ -15,6 +15,7 @@ import 'package:titan/loan/ui/pages/loan_group_page/item_bar.dart';
 import 'package:titan/loan/ui/pages/loan_group_page/number_selected_text.dart';
 import 'package:titan/loan/ui/pages/loan_group_page/search_result.dart';
 import 'package:titan/loan/ui/pages/loan_group_page/start_date_entry.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
@@ -47,9 +48,13 @@ class AddEditLoanPage extends HookConsumerWidget {
     if (focus) {
       focusNode.requestFocus();
     }
+    final scrollController = useScrollController();
 
     return LoanTemplate(
-      child: SingleChildScrollView(
+      child: ScrollToHideNavbar(
+        controller: scrollController,
+        child: SingleChildScrollView(
+        controller: scrollController,
         physics: const BouncingScrollPhysics(),
         child: Form(
           key: key,
@@ -141,6 +146,7 @@ class AddEditLoanPage extends HookConsumerWidget {
               ),
             ],
           ),
+        ),
         ),
       ),
     );

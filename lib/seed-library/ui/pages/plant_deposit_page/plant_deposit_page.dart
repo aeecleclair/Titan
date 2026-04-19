@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/seed-library/class/plant_creation.dart';
 import 'package:titan/seed-library/class/plant_simple.dart';
 import 'package:titan/seed-library/class/species.dart';
@@ -61,7 +62,9 @@ class PlantDepositPage extends HookConsumerWidget {
     }
 
     return SeedLibraryTemplate(
-      child: SingleChildScrollView(
+      child: ScrollToHideNavbar(
+        controller: scrollController,
+        child: SingleChildScrollView(
         controller: scrollController,
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),
@@ -300,6 +303,7 @@ class PlantDepositPage extends HookConsumerWidget {
                   ],
                 ),
               ),
+      ),
       ),
     );
   }

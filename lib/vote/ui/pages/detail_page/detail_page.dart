@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/vote/providers/contender_logo_provider.dart';
@@ -19,8 +21,12 @@ class DetailPage extends HookConsumerWidget {
     final contender = ref.watch(contenderProvider);
     final contenderLogosNotifier = ref.watch(contenderLogosProvider.notifier);
     final logoNotifier = ref.watch(contenderLogoProvider.notifier);
+    final scrollController = useScrollController();
     return VoteTemplate(
-      child: SingleChildScrollView(
+      child: ScrollToHideNavbar(
+        controller: scrollController,
+        child: SingleChildScrollView(
+        controller: scrollController,
         physics: const BouncingScrollPhysics(),
         child: Stack(
           children: [
@@ -167,6 +173,7 @@ class DetailPage extends HookConsumerWidget {
               ),
             ),
           ],
+        ),
         ),
       ),
     );

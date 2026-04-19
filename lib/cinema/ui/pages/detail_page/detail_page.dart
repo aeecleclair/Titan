@@ -10,6 +10,7 @@ import 'package:titan/cinema/providers/session_poster_map_provider.dart';
 import 'package:titan/cinema/providers/session_poster_provider.dart';
 import 'package:titan/cinema/providers/session_provider.dart';
 import 'package:titan/cinema/tools/functions.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/service/class/message.dart';
 import 'package:titan/service/local_notification_service.dart';
 import 'package:titan/tools/functions.dart';
@@ -50,6 +51,7 @@ class DetailPage extends HookConsumerWidget {
       parent: animation,
       curve: Curves.easeInOut,
     );
+    final scrollController = useScrollController();
     return Stack(
       children: [
         Container(
@@ -75,7 +77,10 @@ class DetailPage extends HookConsumerWidget {
                 const Center(child: HeroIcon(HeroIcons.exclamationCircle)),
           ),
         ),
-        SingleChildScrollView(
+        ScrollToHideNavbar(
+          controller: scrollController,
+          child: SingleChildScrollView(
+          controller: scrollController,
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
@@ -164,6 +169,7 @@ class DetailPage extends HookConsumerWidget {
               ),
             ],
           ),
+        ),
         ),
         Column(
           children: [

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/seed-library/providers/difficulty_filter_provider.dart';
 import 'package:titan/seed-library/providers/species_list_provider.dart';
 import 'package:titan/seed-library/providers/species_provider.dart';
@@ -56,8 +57,13 @@ class AddEditSpeciesPage extends HookConsumerWidget {
     List<String> prefixes = speciesList.map((e) => e.prefix).toList();
     prefixes.removeWhere((element) => element == species.prefix);
 
+    final scrollController = useScrollController();
+
     return SeedLibraryTemplate(
-      child: SingleChildScrollView(
+      child: ScrollToHideNavbar(
+        controller: scrollController,
+        child: SingleChildScrollView(
+        controller: scrollController,
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),
         ),
@@ -343,6 +349,7 @@ class AddEditSpeciesPage extends HookConsumerWidget {
               ],
             ),
           ),
+        ),
         ),
       ),
     );

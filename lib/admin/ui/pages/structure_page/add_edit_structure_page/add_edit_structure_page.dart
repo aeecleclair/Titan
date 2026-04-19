@@ -9,6 +9,7 @@ import 'package:titan/admin/providers/structure_manager_provider.dart';
 import 'package:titan/admin/providers/structure_provider.dart';
 import 'package:titan/mypayment/class/structure.dart';
 import 'package:titan/mypayment/providers/structure_list_provider.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -68,10 +69,15 @@ class AddEditStructurePage extends HookConsumerWidget {
 
     final localizeWithContext = AppLocalizations.of(context)!;
 
+    final scrollController = useScrollController();
+
     return AdminTemplate(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: SingleChildScrollView(
+        child: ScrollToHideNavbar(
+          controller: scrollController,
+          child: SingleChildScrollView(
+          controller: scrollController,
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics(),
           ),
@@ -323,6 +329,7 @@ class AddEditStructurePage extends HookConsumerWidget {
               ],
             ),
           ),
+        ),
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/super_admin/router.dart';
 import 'package:titan/super_admin/ui/admin.dart';
 import 'package:titan/super_admin/ui/pages/main_page/menu_card_ui.dart';
@@ -21,7 +22,9 @@ class SuperAdminMainPage extends HookConsumerWidget {
     return SuperAdminTemplate(
       child: Padding(
         padding: const EdgeInsets.all(40),
-        child: GridView(
+        child: ScrollToHideNavbar(
+          controller: controller,
+          child: GridView(
           controller: controller,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -53,6 +56,7 @@ class SuperAdminMainPage extends HookConsumerWidget {
               ),
             ),
           ],
+        ),
         ),
       ),
     );

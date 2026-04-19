@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tickets/class/answer_type.dart';
 import 'package:titan/tickets/class/category.dart';
 import 'package:titan/tickets/class/question.dart';
@@ -78,8 +79,13 @@ class EditTicketEventPage extends HookConsumerWidget {
       };
     }, []);
 
+    final scrollController = useScrollController();
+
     return TicketTemplate(
-      child: SingleChildScrollView(
+      child: ScrollToHideNavbar(
+        controller: scrollController,
+        child: SingleChildScrollView(
+        controller: scrollController,
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -355,6 +361,7 @@ class EditTicketEventPage extends HookConsumerWidget {
             const SizedBox(height: 80),
           ],
         ),
+      ),
       ),
     );
   }

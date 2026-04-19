@@ -9,6 +9,7 @@ import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/association_picture_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/router.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/phonebook/ui/components/groupement_bar.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/settings/ui/pages/main_page/picture_button.dart';
@@ -46,9 +47,13 @@ class AssociationAddEditPage extends HookConsumerWidget {
     }
 
     final localizeWithContext = AppLocalizations.of(context)!;
+    final scrollController = useScrollController();
 
     return PhonebookTemplate(
-      child: SingleChildScrollView(
+      child: ScrollToHideNavbar(
+        controller: scrollController,
+        child: SingleChildScrollView(
+        controller: scrollController,
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),
         ),
@@ -305,6 +310,7 @@ class AssociationAddEditPage extends HookConsumerWidget {
               SizedBox(height: 80),
             ],
           ),
+        ),
         ),
       ),
     );

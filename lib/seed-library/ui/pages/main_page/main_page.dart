@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/centralisation/tools/functions.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/seed-library/class/species.dart';
 import 'package:titan/seed-library/class/species_type.dart';
 import 'package:titan/seed-library/providers/difficulty_filter_provider.dart';
@@ -43,7 +44,9 @@ class SeedLibraryMainPage extends HookConsumerWidget {
     return SeedLibraryTemplate(
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: GridView(
+        child: ScrollToHideNavbar(
+          controller: controller,
+          child: GridView(
           controller: controller,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -116,6 +119,7 @@ class SeedLibraryMainPage extends HookConsumerWidget {
               ),
             ),
           ],
+        ),
         ),
       ),
     );

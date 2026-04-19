@@ -7,6 +7,7 @@ import 'package:titan/feed/providers/association_event_list_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/mypayment/class/user_store.dart';
 import 'package:titan/mypayment/providers/my_stores_provider.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tickets/class/answer_type.dart';
 import 'package:titan/tickets/class/category.dart';
 import 'package:titan/tickets/class/question.dart';
@@ -48,6 +49,7 @@ class CreateTicketEventPage extends HookConsumerWidget {
     final categories = useState<List<Category>>([]);
     final sessions = useState<List<Session>>([]);
     final questions = useState<List<_QuestionFormData>>([]);
+    final scrollController = useScrollController();
 
     final locale = Localizations.localeOf(context);
 
@@ -56,7 +58,10 @@ class CreateTicketEventPage extends HookConsumerWidget {
       child: TicketTemplate(
         child: Form(
           key: formKey,
-          child: SingleChildScrollView(
+          child: ScrollToHideNavbar(
+            controller: scrollController,
+            child: SingleChildScrollView(
+            controller: scrollController,
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,6 +259,7 @@ class CreateTicketEventPage extends HookConsumerWidget {
                 const SizedBox(height: 80),
               ],
             ),
+          ),
           ),
         ),
       ),

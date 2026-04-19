@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/seed-library/providers/information_provider.dart';
 import 'package:titan/seed-library/tools/constants.dart';
 import 'package:titan/seed-library/ui/seed_library.dart';
@@ -20,6 +22,7 @@ class EditInformationPage extends HookConsumerWidget {
     final informationNotifier = ref.watch(informationProvider.notifier);
     final information = ref.watch(informationProvider);
     final key = GlobalKey<FormState>();
+    final scrollController = useScrollController();
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -39,7 +42,10 @@ class EditInformationPage extends HookConsumerWidget {
           final forumUrl = TextEditingController(
             text: syncInformation.forumUrl,
           );
-          return SingleChildScrollView(
+          return ScrollToHideNavbar(
+            controller: scrollController,
+            child: SingleChildScrollView(
+            controller: scrollController,
             physics: const AlwaysScrollableScrollPhysics(
               parent: BouncingScrollPhysics(),
             ),
@@ -136,6 +142,7 @@ class EditInformationPage extends HookConsumerWidget {
                 ),
               ),
             ),
+          ),
           );
         },
       ),

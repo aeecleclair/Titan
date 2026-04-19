@@ -12,6 +12,7 @@ import 'package:titan/amap/providers/sorted_by_category_products.dart';
 import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/amap.dart';
 import 'package:titan/amap/ui/pages/delivery_pages/product_ui_check.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
@@ -47,9 +48,13 @@ class AddEditDeliveryPage extends HookConsumerWidget {
     }
 
     final localizeWithContext = AppLocalizations.of(context)!;
+    final scrollController = useScrollController();
 
     return AmapTemplate(
-      child: SingleChildScrollView(
+      child: ScrollToHideNavbar(
+        controller: scrollController,
+        child: SingleChildScrollView(
+        controller: scrollController,
         physics: const BouncingScrollPhysics(),
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -243,6 +248,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
               ),
             ),
           ),
+        ),
         ),
       ),
     );
