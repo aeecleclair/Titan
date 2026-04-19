@@ -4813,7 +4813,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsQuestionRequiredLabel => 'Required';
 
   @override
-  String get ticketsEditTitle => 'Edit tickets';
+  String get ticketsEditTitle => 'Edit ticketing';
 
   @override
   String get ticketsTariffs => 'Pricing';

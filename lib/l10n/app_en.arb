@@ -1776,7 +1776,7 @@
   "ticketsAnswerTypeNumber": "Number",
   "ticketsAnswerTypeBoolean": "Yes/No",
   "ticketsQuestionRequiredLabel": "Required",
-  "ticketsEditTitle": "Edit tickets",
+  "ticketsEditTitle": "Edit ticketing",
   "ticketsTariffs": "Pricing",
   "ticketsPriceLabel": "Price (€)",
   "ticketsSessions": "Sessions",
