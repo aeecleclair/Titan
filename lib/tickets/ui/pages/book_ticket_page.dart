@@ -96,6 +96,14 @@ class _TicketEventContent extends HookConsumerWidget {
       };
     }, []);
 
+    // Pre-calculate valid categories and sessions
+    final validCategories = ticketEvent.categories
+        .where((c) => c.name.trim().isNotEmpty)
+        .toList();
+    final validSessions = ticketEvent.sessions
+        .where((s) => s.name.trim().isNotEmpty)
+        .toList();
+
     // Helper to get payment method from provider value
     RequestType getPaymentMethod(String? provider) {
       return provider == 'helloasso'
@@ -136,11 +144,33 @@ class _TicketEventContent extends HookConsumerWidget {
       return true;
     }
 
+    // Helper to get the effective category ID (handles auto-selection)
+    String getEffectiveCategoryId() {
+      if (selectedCategory.value != null) {
+        return selectedCategory.value!.id;
+      }
+      if (validCategories.length == 1) {
+        return validCategories.first.id;
+      }
+      return '';
+    }
+
+    // Helper to get the effective session ID (handles auto-selection)
+    String getEffectiveSessionId() {
+      if (selectedSession.value != null) {
+        return selectedSession.value!.id;
+      }
+      if (validSessions.length == 1) {
+        return validSessions.first.id;
+      }
+      return '';
+    }
+
     // Update checkout when category or session changes
     final checkout = useState<Checkout>(
       Checkout(
-        categoryId: selectedCategory.value?.id ?? '',
-        sessionId: selectedSession.value?.id ?? '',
+        categoryId: getEffectiveCategoryId(),
+        sessionId: getEffectiveSessionId(),
         answers: [],
         myPaymentRequestMethod: getPaymentMethod(selectedPaymentProvider.value),
         myPaymentTransferRedirectUrl: getRedirectUrl(),
@@ -151,8 +181,8 @@ class _TicketEventContent extends HookConsumerWidget {
     useEffect(
       () {
         checkout.value = Checkout(
-          categoryId: selectedCategory.value?.id ?? '',
-          sessionId: selectedSession.value?.id ?? '',
+          categoryId: getEffectiveCategoryId(),
+          sessionId: getEffectiveSessionId(),
           answers: buildAnswersList(),
           myPaymentRequestMethod: getPaymentMethod(
             selectedPaymentProvider.value,
@@ -166,6 +196,8 @@ class _TicketEventContent extends HookConsumerWidget {
         selectedSession.value,
         selectedPaymentProvider.value,
         answersMap.value,
+        validCategories,
+        validSessions,
       ],
     );
 
@@ -275,13 +307,6 @@ class _TicketEventContent extends HookConsumerWidget {
       return null;
     }, [checkoutState.isSuccess, checkoutState.error]);
 
-    final validCategories = ticketEvent.categories
-        .where((c) => c.name.trim().isNotEmpty)
-        .toList();
-    final validSessions = ticketEvent.sessions
-        .where((s) => s.name.trim().isNotEmpty)
-        .toList();
-
     // Auto-select category or session if there's only one
     useEffect(() {
       if (validCategories.length == 1 && selectedCategory.value == null) {
@@ -289,6 +314,19 @@ class _TicketEventContent extends HookConsumerWidget {
       }
       if (validSessions.length == 1 && selectedSession.value == null) {
         selectedSession.value = validSessions.first;
+      }
+      // Also update checkout immediately when auto-selection happens
+      if ((validCategories.length == 1 || validSessions.length == 1) &&
+          (selectedCategory.value == null || selectedSession.value == null)) {
+        checkout.value = Checkout(
+          categoryId: selectedCategory.value?.id ??
+              (validCategories.length == 1 ? validCategories.first.id : ''),
+          sessionId: selectedSession.value?.id ??
+              (validSessions.length == 1 ? validSessions.first.id : ''),
+          answers: buildAnswersList(),
+          myPaymentRequestMethod: getPaymentMethod(selectedPaymentProvider.value),
+          myPaymentTransferRedirectUrl: getRedirectUrl(),
+        );
       }
       return null;
     }, [validCategories, validSessions]);
