@@ -4,8 +4,13 @@ package_name("fr.proximapp.myemapp.titan") # e.g. com.krausefx.app
 for_platform :android do
   for_lane :beta do |options|
     flavor = options[:flavor] # prod, alpha, dev
-    app_id_prefix = options[:prefix] # fr.myecl
-    app_name = options[:name] # MyECL
+    
+    config_json = read_json(
+      json_path: "./../config/config-#{flavor}.json"
+    )
+
+    app_id_prefix = config_json[:APP_ID_PREFIX] # fr.myecl
+    app_name = config_json[:APP_NAME] # MyECL
 
     if flavor == "prod"
       package_name("#{app_id_prefix}.titan")

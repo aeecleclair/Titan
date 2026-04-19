@@ -9,7 +9,6 @@ for_platform :ios do
   for_lane :beta do |options|
     flavor = options[:flavor] # prod, alpha, dev
     
-
     config_json = read_json(
       json_path: "./../config/config-#{flavor}.json"
     )
