@@ -11,6 +11,7 @@ import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 import 'package:titan/mypayment/providers/can_pay_provider.dart';
 import 'package:titan/mypayment/providers/my_wallet_provider.dart';
+import 'package:titan/mypayment/router.dart';
 import 'package:titan/mypayment/tools/can_pay.dart' show CanPayError;
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tickets/class/answer.dart';
@@ -111,11 +112,11 @@ class _TicketEventContent extends HookConsumerWidget {
           : RequestType.transactionRequest;
     }
 
-    // Helper to get redirect URL
-    String getRedirectUrl() {
-      return kIsWeb
-          ? "${getTitanURL()}/tickets"
-          : "${getTitanURLScheme()}://tickets";
+    String getRedirectUrl(String? provider) {
+      final path = provider == 'helloasso'
+          ? TicketsRouter.root
+          : PaymentRouter.root;
+      return kIsWeb ? "${getTitanURL()}$path" : "${getTitanURLScheme()}:/$path";
     }
 
     // Helper to build answers list from answersMap
@@ -173,7 +174,9 @@ class _TicketEventContent extends HookConsumerWidget {
         sessionId: getEffectiveSessionId(),
         answers: [],
         myPaymentRequestMethod: getPaymentMethod(selectedPaymentProvider.value),
-        myPaymentTransferRedirectUrl: getRedirectUrl(),
+        myPaymentTransferRedirectUrl: getRedirectUrl(
+          selectedPaymentProvider.value,
+        ),
       ),
     );
 
@@ -187,7 +190,9 @@ class _TicketEventContent extends HookConsumerWidget {
           myPaymentRequestMethod: getPaymentMethod(
             selectedPaymentProvider.value,
           ),
-          myPaymentTransferRedirectUrl: getRedirectUrl(),
+          myPaymentTransferRedirectUrl: getRedirectUrl(
+            selectedPaymentProvider.value,
+          ),
         );
         return null;
       },
@@ -319,13 +324,19 @@ class _TicketEventContent extends HookConsumerWidget {
       if ((validCategories.length == 1 || validSessions.length == 1) &&
           (selectedCategory.value == null || selectedSession.value == null)) {
         checkout.value = Checkout(
-          categoryId: selectedCategory.value?.id ??
+          categoryId:
+              selectedCategory.value?.id ??
               (validCategories.length == 1 ? validCategories.first.id : ''),
-          sessionId: selectedSession.value?.id ??
+          sessionId:
+              selectedSession.value?.id ??
               (validSessions.length == 1 ? validSessions.first.id : ''),
           answers: buildAnswersList(),
-          myPaymentRequestMethod: getPaymentMethod(selectedPaymentProvider.value),
-          myPaymentTransferRedirectUrl: getRedirectUrl(),
+          myPaymentRequestMethod: getPaymentMethod(
+            selectedPaymentProvider.value,
+          ),
+          myPaymentTransferRedirectUrl: getRedirectUrl(
+            selectedPaymentProvider.value,
+          ),
         );
       }
       return null;
