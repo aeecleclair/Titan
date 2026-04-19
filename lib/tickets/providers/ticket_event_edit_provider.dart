@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/tickets/class/answer_type.dart';
 import 'package:titan/tickets/class/category.dart';
 import 'package:titan/tickets/class/session.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
@@ -46,9 +47,36 @@ class ShotgunEditNotifier extends StateNotifier<AsyncValue<void>> {
     String eventId,
     String questionId,
     String questionText,
+    AnswerType answerType,
+    bool required,
   ) async {
     try {
-      return await repository.updateQuestion(eventId, questionId, questionText);
+      return await repository.updateQuestion(
+        eventId,
+        questionId,
+        questionText,
+        answerType,
+        required,
+      );
+    } catch (e, st) {
+      state = AsyncValue.error(e, st);
+      return false;
+    }
+  }
+
+  Future<bool> createQuestion(
+    String eventId,
+    String questionText,
+    AnswerType answerType,
+    bool required,
+  ) async {
+    try {
+      return await repository.createQuestion(
+        eventId,
+        questionText,
+        answerType,
+        required,
+      );
     } catch (e, st) {
       state = AsyncValue.error(e, st);
       return false;

@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/tickets/class/answer_type.dart';
 import 'package:titan/tickets/class/category.dart';
 import 'package:titan/tickets/class/checkout.dart';
 import 'package:titan/tickets/class/session.dart';
@@ -105,12 +106,53 @@ class TicketsRepository extends Repository {
     String eventId,
     String questionId,
     String questionText,
+    AnswerType answerType,
+    bool required,
   ) async {
-    return await update(
-      {'question': questionText},
-      questionId,
-      suffix: 'admin/events/$eventId/questions',
+    final response = await http.patch(
+      Uri.parse(
+        '${Repository.host}${ext}admin/events/$eventId/questions/$questionId',
+      ),
+      headers: headers,
+      body: jsonEncode({
+        'question': questionText,
+        'answer_type': answerType.value,
+        'required': required,
+      }),
     );
+    if (response.statusCode == 204 || response.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception(
+        'Failed to update question: ${response.statusCode} ${response.body}',
+      );
+    }
+  }
+
+  Future<bool> createQuestion(
+    String eventId,
+    String questionText,
+    AnswerType answerType,
+    bool required,
+  ) async {
+    final response = await http.post(
+      Uri.parse(
+        '${Repository.host}${ext}admin/events/$eventId/questions',
+      ),
+      headers: headers,
+      body: jsonEncode({
+        'question': questionText,
+        'answer_type': answerType.value,
+        'required': required,
+      }),
+    );
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception(
+        'Failed to create question: ${response.statusCode} ${response.body}',
+      );
+    }
   }
 
   Future<bool> deleteTicketEvent(String id) async {

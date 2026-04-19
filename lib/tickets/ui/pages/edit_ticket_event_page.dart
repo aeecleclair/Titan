@@ -5,7 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/tickets/class/answer_type.dart';
 import 'package:titan/tickets/class/category.dart';
+import 'package:titan/tickets/class/question.dart';
 import 'package:titan/tickets/class/session.dart';
 import 'package:titan/tickets/providers/selected_ticket_event_provider.dart';
 import 'package:titan/tickets/providers/ticket_event_edit_provider.dart';
@@ -61,11 +63,18 @@ class EditTicketEventPage extends HookConsumerWidget {
     // État pour les catégories, sessions et questions
     final categories = useState<List<Category>>(ticketEvent.categories);
     final sessions = useState<List<Session>>(ticketEvent.sessions);
-    final questions = useState<List<TextEditingController>>(
-      ticketEvent.questions
-          .map((q) => TextEditingController(text: q.question))
-          .toList(),
+    final questions = useState<List<_QuestionEditFormData>>(
+      ticketEvent.questions.map((q) => _QuestionEditFormData.fromQuestion(q)).toList(),
     );
+
+    // Dispose question controllers when widget is disposed
+    useEffect(() {
+      return () {
+        for (final question in questions.value) {
+          question.dispose();
+        }
+      };
+    }, []);
 
     return TicketTemplate(
       child: SingleChildScrollView(
@@ -283,17 +292,33 @@ class EditTicketEventPage extends HookConsumerWidget {
 
                     if (!context.mounted) return;
 
-                    // Mettre à jour les questions modifiées
+                    // Mettre à jour ou créer les questions
                     for (int i = 0; i < questions.value.length; i++) {
-                      if (i < ticketEvent.questions.length) {
-                        if (questions.value[i].text !=
-                            ticketEvent.questions[i].question) {
+                      final questionData = questions.value[i];
+                      if (questionData.id != null) {
+                        // Question existante - vérifier si elle a changé
+                        final originalQuestion = ticketEvent.questions.firstWhere(
+                          (q) => q.id == questionData.id,
+                        );
+                        if (questionData.controller.text != originalQuestion.question ||
+                            questionData.answerType != originalQuestion.answerType ||
+                            questionData.required != originalQuestion.required) {
                           await ticketEventEditNotifier.updateQuestion(
                             ticketEvent.id,
-                            ticketEvent.questions[i].id,
-                            questions.value[i].text,
+                            questionData.id!,
+                            questionData.controller.text,
+                            questionData.answerType,
+                            questionData.required,
                           );
                         }
+                      } else {
+                        // Nouvelle question - la créer
+                        await ticketEventEditNotifier.createQuestion(
+                          ticketEvent.id,
+                          questionData.controller.text,
+                          questionData.answerType,
+                          questionData.required,
+                        );
                       }
                     }
 
@@ -623,11 +648,40 @@ class _EditSessionsSection extends HookWidget {
   }
 }
 
+// ── Question Edit Form Data ────────────────────────────────────────────────
+
+class _QuestionEditFormData {
+  final TextEditingController controller;
+  AnswerType answerType;
+  bool required;
+  String? id;
+
+  _QuestionEditFormData({
+    required this.controller,
+    this.answerType = AnswerType.text,
+    this.required = false,
+    this.id,
+  });
+
+  factory _QuestionEditFormData.fromQuestion(Question question) {
+    return _QuestionEditFormData(
+      controller: TextEditingController(text: question.question),
+      answerType: question.answerType,
+      required: question.required,
+      id: question.id,
+    );
+  }
+
+  void dispose() {
+    controller.dispose();
+  }
+}
+
 // ── Edit Questions Section ──────────────────────────────────────────────────
 
 class _EditQuestionsSection extends StatelessWidget {
-  final List<TextEditingController> questions;
-  final ValueChanged<List<TextEditingController>> onChanged;
+  final List<_QuestionEditFormData> questions;
+  final ValueChanged<List<_QuestionEditFormData>> onChanged;
 
   const _EditQuestionsSection({
     required this.questions,
@@ -635,12 +689,26 @@ class _EditQuestionsSection extends StatelessWidget {
   });
 
   void addQuestion() {
-    onChanged([...questions, TextEditingController()]);
+    onChanged([
+      ...questions,
+      _QuestionEditFormData(
+        controller: TextEditingController(),
+        answerType: AnswerType.text,
+        required: false,
+      ),
+    ]);
   }
 
   void removeQuestion(int index) {
     final updated = [...questions]..removeAt(index);
+    questions[index].dispose();
     onChanged(updated);
+  }
+
+  void updateQuestion(int index, _QuestionEditFormData updated) {
+    final updatedList = [...questions];
+    updatedList[index] = updated;
+    onChanged(updatedList);
   }
 
   @override
@@ -666,29 +734,116 @@ class _EditQuestionsSection extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             ...List.generate(questions.length, (i) {
+              final question = questions[i];
               return Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: TextEntry(
-                        maxLines: 1,
-                        label: l10n.ticketsQuestionLabel(i + 1),
-                        controller: questions[i],
-                        onChanged: (_) {},
-                      ),
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Card(
+                  margin: EdgeInsets.zero,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(
+                      color: ColorConstants.secondary.withValues(alpha: 0.3),
                     ),
-                    IconButton(
-                      onPressed: () => removeQuestion(i),
-                      icon: HeroIcon(
-                        HeroIcons.minusCircle,
-                        size: 22,
-                        color: ColorConstants.error,
-                      ),
-                      tooltip: l10n.ticketsDeleteQuestionTooltip,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: TextEntry(
+                                maxLines: 1,
+                                label: l10n.ticketsQuestionLabel(i + 1),
+                                controller: question.controller,
+                                onChanged: (_) {},
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () => removeQuestion(i),
+                              icon: HeroIcon(
+                                HeroIcons.minusCircle,
+                                size: 22,
+                                color: ColorConstants.error,
+                              ),
+                              tooltip: l10n.ticketsDeleteQuestionTooltip,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: DropdownButtonFormField<AnswerType>(
+                                value: question.answerType,
+                                decoration: InputDecoration(
+                                  labelText: l10n.ticketsQuestionTypeLabel,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 8,
+                                  ),
+                                ),
+                                items: [
+                                  DropdownMenuItem(
+                                    value: AnswerType.text,
+                                    child: Text(l10n.ticketsAnswerTypeText),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: AnswerType.number,
+                                    child: Text(l10n.ticketsAnswerTypeNumber),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: AnswerType.boolean,
+                                    child: Text(l10n.ticketsAnswerTypeBoolean),
+                                  ),
+                                ],
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    updateQuestion(
+                                      i,
+                                      _QuestionEditFormData(
+                                        controller: question.controller,
+                                        answerType: value,
+                                        required: question.required,
+                                        id: question.id,
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            Row(
+                              children: [
+                                Checkbox(
+                                  value: question.required,
+                                  onChanged: (value) {
+                                    updateQuestion(
+                                      i,
+                                      _QuestionEditFormData(
+                                        controller: question.controller,
+                                        answerType: question.answerType,
+                                        required: value ?? false,
+                                        id: question.id,
+                                      ),
+                                    );
+                                  },
+                                  activeColor: ColorConstants.main,
+                                ),
+                                Text(l10n.ticketsQuestionRequiredLabel),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               );
             }),
