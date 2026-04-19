@@ -21,7 +21,6 @@ class AuthenticatedMiddleware extends QMiddleware {
   Future<String?> redirectGuard(String path) async {
     // Watch all providers at the beginning (Riverpod requirement)
     final isLoggedIn = ref.watch(isLoggedInProvider);
-    final pathForwardingState = ref.watch(pathForwardingProvider);
     final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     final versionVerifier = ref.watch(versionVerifierProvider);
     final titanVersion = ref.watch(titanVersionProvider);
@@ -35,7 +34,7 @@ class AuthenticatedMiddleware extends QMiddleware {
       return LoginRouter.root;
     }
 
-    if (!pathForwardingState.isLoggedIn &&
+    if (!pathForwardingNotifier.state.isLoggedIn &&
         path != LoginRouter.root &&
         path != "/") {
       pathForwardingNotifier.forward(path);
@@ -59,25 +58,25 @@ class AuthenticatedMiddleware extends QMiddleware {
               return AppRouter.rollback;
             }
             if (path == LoginRouter.root &&
-                !pathForwardingState.isLoggedIn &&
+                !pathForwardingNotifier.state.isLoggedIn &&
                 !isLoggedIn) {
               return null;
             }
             if (!isLoggedIn) {
               return LoginRouter.root;
             }
-            if (!pathForwardingState.isLoggedIn) {
+            if (!pathForwardingNotifier.state.isLoggedIn) {
               pathForwardingNotifier.login();
             }
-            if (pathForwardingState.path == "/") {
+            if (pathForwardingNotifier.state.path == "/") {
               if (modules.isEmpty) {
                 return AppRouter.noModule;
               }
               pathForwardingNotifier.forward(modules.first.root);
               return modules.first.root;
             }
-            if (pathForwardingState.path != path) {
-              return pathForwardingState.path;
+            if (pathForwardingNotifier.state.path != path) {
+              return pathForwardingNotifier.state.path;
             }
             return null;
           },
