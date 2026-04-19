@@ -9529,6 +9529,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Le prix doit être 0€ ou supérieur à 1€'**
   String get ticketsMinPriceError;
+
+  /// No description provided for @ticketsSessionSoldOut.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette session est complète'**
+  String get ticketsSessionSoldOut;
 }
 
 class _AppLocalizationsDelegate

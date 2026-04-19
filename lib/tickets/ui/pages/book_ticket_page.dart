@@ -264,6 +264,8 @@ class _TicketEventContent extends HookConsumerWidget {
     useEffect(() {
       if (checkoutState.isSuccess && checkoutState.checkout != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) async {
+          // Show navbar before navigating to payment or success page
+          ref.read(navbarVisibilityProvider.notifier).show();
           final checkout = checkoutState.checkout!;
           if (checkout.paymentUrl != null && checkout.paymentUrl!.isNotEmpty) {
             ref.read(checkoutProvider.notifier).reset();
@@ -294,12 +296,18 @@ class _TicketEventContent extends HookConsumerWidget {
         });
       } else if (checkoutState.error != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('${l10n.othersError}: ${checkoutState.error}'),
-              backgroundColor: Colors.red,
-            ),
-          );
+          if (context.mounted) {
+            // Map translation keys to localized messages
+            String errorMessage;
+            switch (checkoutState.error) {
+              case 'ticketsSessionSoldOut':
+                errorMessage = l10n.ticketsSessionSoldOut;
+                break;
+              default:
+                errorMessage = checkoutState.error!;
+            }
+            displayToast(context, TypeMsg.error, errorMessage);
+          }
           // Reset after showing error
           ref.read(checkoutProvider.notifier).reset();
         });
@@ -319,12 +327,16 @@ class _TicketEventContent extends HookConsumerWidget {
       if ((validCategories.length == 1 || validSessions.length == 1) &&
           (selectedCategory.value == null || selectedSession.value == null)) {
         checkout.value = Checkout(
-          categoryId: selectedCategory.value?.id ??
+          categoryId:
+              selectedCategory.value?.id ??
               (validCategories.length == 1 ? validCategories.first.id : ''),
-          sessionId: selectedSession.value?.id ??
+          sessionId:
+              selectedSession.value?.id ??
               (validSessions.length == 1 ? validSessions.first.id : ''),
           answers: buildAnswersList(),
-          myPaymentRequestMethod: getPaymentMethod(selectedPaymentProvider.value),
+          myPaymentRequestMethod: getPaymentMethod(
+            selectedPaymentProvider.value,
+          ),
           myPaymentTransferRedirectUrl: getRedirectUrl(),
         );
       }
@@ -818,8 +830,6 @@ class _TicketEventContent extends HookConsumerWidget {
                           !areAllRequiredQuestionsAnswered()
                       ? null
                       : () async {
-                          // Show navbar before navigating to payment
-                          ref.read(navbarVisibilityProvider.notifier).show();
                           final notifier = ref.read(checkoutProvider.notifier);
                           await notifier.createCheckout(
                             checkout.value,

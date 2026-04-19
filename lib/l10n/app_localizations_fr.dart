@@ -4975,4 +4975,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get ticketsMinPriceError => 'Le prix doit être 0€ ou supérieur à 1€';
+
+  @override
+  String get ticketsSessionSoldOut => 'Cette session est complète';
 }

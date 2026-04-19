@@ -65,9 +65,17 @@ class CheckoutNotifier extends StateNotifier<CheckoutCreationState> {
         isSuccess: true,
       );
     } catch (e) {
+      final errorString = e.toString();
+      // Map backend errors to translation keys
+      String errorKey;
+      if (errorString.contains('Session is sold out')) {
+        errorKey = 'ticketsSessionSoldOut';
+      } else {
+        errorKey = errorString;
+      }
       state = state.copyWith(
         isCreating: false,
-        error: e.toString(),
+        error: errorKey,
         isSuccess: false,
       );
     }
