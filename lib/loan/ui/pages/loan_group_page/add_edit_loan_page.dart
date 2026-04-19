@@ -15,6 +15,7 @@ import 'package:titan/loan/ui/pages/loan_group_page/item_bar.dart';
 import 'package:titan/loan/ui/pages/loan_group_page/number_selected_text.dart';
 import 'package:titan/loan/ui/pages/loan_group_page/search_result.dart';
 import 'package:titan/loan/ui/pages/loan_group_page/start_date_entry.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/styled_search_bar.dart';
@@ -47,99 +48,104 @@ class AddEditLoanPage extends HookConsumerWidget {
     if (focus) {
       focusNode.requestFocus();
     }
+    final scrollController = useScrollController();
 
     return LoanTemplate(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Form(
-          key: key,
-          child: Column(
-            children: [
-              const SizedBox(height: 30),
-              StyledSearchBar(
-                label: isEdit
-                    ? AppLocalizations.of(context)!.loanEditLoan
-                    : AppLocalizations.of(context)!.loanAddLoan,
-                onChanged: (value) async {
-                  if (value.isNotEmpty) {
-                    loanersItemsNotifier.setTData(
-                      loaner,
-                      await itemListNotifier.filterItems(value),
-                    );
-                  } else {
-                    loanersItemsNotifier.setTData(loaner, itemList);
-                  }
-                },
-              ),
-              const SizedBox(height: 10),
-              ItemBar(isEdit: isEdit),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 20),
-                    const NumberSelectedText(),
-                    const SizedBox(height: 20),
-                    TextEntry(
-                      label: AppLocalizations.of(context)!.loanBorrower,
-                      onChanged: (value) {
-                        tokenExpireWrapper(ref, () async {
-                          if (queryController.text.isNotEmpty) {
-                            await usersNotifier.filterUsers(
-                              queryController.text,
-                            );
-                          } else {
-                            usersNotifier.clear();
-                          }
-                        });
-                      },
-                      canBeEmpty: false,
-                      controller: queryController,
-                    ),
-                    const SizedBox(height: 10),
-                    SearchResult(queryController: queryController),
-                    const SizedBox(height: 30),
-                    const StartDateEntry(),
-                    const SizedBox(height: 30),
-                    const EndDateEntry(),
-                    const SizedBox(height: 30),
-                    TextEntry(
-                      label: AppLocalizations.of(context)!.loanNote,
-                      controller: note,
-                      canBeEmpty: true,
-                    ),
-                    const SizedBox(height: 30),
-                    TextEntry(
-                      label: AppLocalizations.of(context)!.loanCaution,
-                      controller: caution,
-                      canBeEmpty: true,
-                    ),
-                    const SizedBox(height: 50),
-                    AddEditButton(
-                      isEdit: isEdit,
-                      note: note,
-                      onAddEdit: (processingData) async {
-                        if (key.currentState == null) {
-                          return;
-                        }
-                        if (key.currentState!.validate()) {
-                          processingData();
-                        } else {
-                          displayToast(
-                            context,
-                            TypeMsg.error,
-                            AppLocalizations.of(
-                              context,
-                            )!.loanIncorrectOrMissingFields,
-                          );
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 30),
-                  ],
+      child: ScrollToHideNavbar(
+        controller: scrollController,
+        child: SingleChildScrollView(
+          controller: scrollController,
+          physics: const BouncingScrollPhysics(),
+          child: Form(
+            key: key,
+            child: Column(
+              children: [
+                const SizedBox(height: 30),
+                StyledSearchBar(
+                  label: isEdit
+                      ? AppLocalizations.of(context)!.loanEditLoan
+                      : AppLocalizations.of(context)!.loanAddLoan,
+                  onChanged: (value) async {
+                    if (value.isNotEmpty) {
+                      loanersItemsNotifier.setTData(
+                        loaner,
+                        await itemListNotifier.filterItems(value),
+                      );
+                    } else {
+                      loanersItemsNotifier.setTData(loaner, itemList);
+                    }
+                  },
                 ),
-              ),
-            ],
+                const SizedBox(height: 10),
+                ItemBar(isEdit: isEdit),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      const NumberSelectedText(),
+                      const SizedBox(height: 20),
+                      TextEntry(
+                        label: AppLocalizations.of(context)!.loanBorrower,
+                        onChanged: (value) {
+                          tokenExpireWrapper(ref, () async {
+                            if (queryController.text.isNotEmpty) {
+                              await usersNotifier.filterUsers(
+                                queryController.text,
+                              );
+                            } else {
+                              usersNotifier.clear();
+                            }
+                          });
+                        },
+                        canBeEmpty: false,
+                        controller: queryController,
+                      ),
+                      const SizedBox(height: 10),
+                      SearchResult(queryController: queryController),
+                      const SizedBox(height: 30),
+                      const StartDateEntry(),
+                      const SizedBox(height: 30),
+                      const EndDateEntry(),
+                      const SizedBox(height: 30),
+                      TextEntry(
+                        label: AppLocalizations.of(context)!.loanNote,
+                        controller: note,
+                        canBeEmpty: true,
+                      ),
+                      const SizedBox(height: 30),
+                      TextEntry(
+                        label: AppLocalizations.of(context)!.loanCaution,
+                        controller: caution,
+                        canBeEmpty: true,
+                      ),
+                      const SizedBox(height: 50),
+                      AddEditButton(
+                        isEdit: isEdit,
+                        note: note,
+                        onAddEdit: (processingData) async {
+                          if (key.currentState == null) {
+                            return;
+                          }
+                          if (key.currentState!.validate()) {
+                            processingData();
+                          } else {
+                            displayToast(
+                              context,
+                              TypeMsg.error,
+                              AppLocalizations.of(
+                                context,
+                              )!.loanIncorrectOrMissingFields,
+                            );
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 30),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

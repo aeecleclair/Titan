@@ -19,29 +19,34 @@ class AuthenticatedMiddleware extends QMiddleware {
 
   @override
   Future<String?> redirectGuard(String path) async {
+    // Use ref.read instead of ref.watch in async functions to avoid Riverpod errors
+    final isLoggedIn = ref.read(isLoggedInProvider);
+    final pathForwardingNotifier = ref.read(pathForwardingProvider.notifier);
+    final versionVerifier = ref.read(versionVerifierProvider);
+    final titanVersion = ref.read(titanVersionProvider);
+    final minimalHyperionVersion = ref.read(minimalHyperionVersionProvider);
+    final modules = ref.read(modulesProvider);
+
     if (path.startsWith(LoginRouter.root)) {
       return null;
     }
     if (path == "/" || path.isEmpty) {
       return LoginRouter.root;
     }
-    final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
-    final versionVerifier = ref.watch(versionVerifierProvider);
-    final titanVersion = ref.watch(titanVersionProvider);
-    final minimalHyperionVersion = ref.watch(minimalHyperionVersionProvider);
-    final isLoggedIn = ref.watch(isLoggedInProvider);
-    final check = versionVerifier.whenData(
-      (value) => value.minimalTitanVersion <= titanVersion,
-    );
-    final modules = ref.watch(modulesProvider);
+
     if (!pathForwardingNotifier.state.isLoggedIn &&
         path != LoginRouter.root &&
         path != "/") {
       pathForwardingNotifier.forward(path);
     }
+
+    final check = versionVerifier.whenData(
+      (value) => value.minimalTitanVersion <= titanVersion,
+    );
     final isHyperionVersionCompatible = versionVerifier.whenData(
       (value) => isVersionCompatible(value.version, minimalHyperionVersion),
     );
+
     return check.when(
       data: (value) {
         if (!value) {

@@ -41,6 +41,7 @@ class PhonebookTemplate extends HookConsumerWidget {
                 if (pathGroupementClearing.contains(QR.currentPath)) {
                   associationGroupementNotifer.resetAssociationGroupement();
                 }
+                QR.back();
               },
             ),
             Expanded(child: child),

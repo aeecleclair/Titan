@@ -29,7 +29,7 @@ class TimelineItem extends ConsumerWidget {
         final baseHeight = 30 + eventCardHeight + 20;
 
         final totalHeight = item.actionStart != null
-            ? baseHeight + 40
+            ? baseHeight + 42
             : baseHeight;
 
         return SizedBox(

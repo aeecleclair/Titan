@@ -10,6 +10,7 @@ import 'package:titan/phonebook/providers/is_phonebook_admin_provider.dart';
 import 'package:titan/phonebook/providers/roles_tags_provider.dart';
 import 'package:titan/phonebook/ui/pages/membership_editor_page/user_search_modal.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -138,120 +139,126 @@ class MembershipEditorPage extends HookConsumerWidget {
       }
     }
 
+    final scrollController = useScrollController();
+
     return PhonebookTemplate(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
-              if (!isEdit) ...[
-                Text(
-                  localizeWithContext.phonebookAddMember,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: ColorConstants.title,
-                  ),
-                ),
+        child: ScrollToHideNavbar(
+          controller: scrollController,
+          child: SingleChildScrollView(
+            controller: scrollController,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 const SizedBox(height: 20),
-                ListItem(
-                  title: member.member.id == ""
-                      ? localizeWithContext.phonebookSearchUser
-                      : member.member.getName(),
-                  onTap: () async {
-                    showCustomBottomModal(
-                      context: context,
-                      modal: UserSearchModal(),
-                      ref: ref,
+                if (!isEdit) ...[
+                  Text(
+                    localizeWithContext.phonebookAddMember,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstants.title,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ListItem(
+                    title: member.member.id == ""
+                        ? localizeWithContext.phonebookSearchUser
+                        : member.member.getName(),
+                    onTap: () async {
+                      showCustomBottomModal(
+                        context: context,
+                        modal: UserSearchModal(),
+                        ref: ref,
+                      );
+                    },
+                  ),
+                ] else
+                  Text(
+                    localizeWithContext.phonebookModifyMembership(
+                      member.member.nickname ?? member.getName(),
+                    ),
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstants.title,
+                    ),
+                  ),
+                const SizedBox(height: 10),
+                rolesTagList.maybeWhen(
+                  orElse: () => Text(localizeWithContext.phonebookNoRoleTags),
+                  data: (tagList) {
+                    return Column(
+                      children: tagList
+                          .map(
+                            (tag) => ToggleListItem(
+                              title: tag,
+                              onTap:
+                                  tagList.first == tag &&
+                                      !isPhonebookAdmin &&
+                                      !isGroupementAdmin
+                                  ? () {}
+                                  : () {
+                                      final tags = [...selectedTags.value];
+                                      final changeApparentName =
+                                          apparentNameController.text ==
+                                          tags.join(", ");
+                                      tags.contains(tag)
+                                          ? tags.remove(tag)
+                                          : tags.add(tag);
+                                      if (changeApparentName) {
+                                        apparentNameController.text = tags.join(
+                                          ", ",
+                                        );
+                                      }
+                                      selectedTags.value = tags;
+                                    },
+                              selected: selectedTags.value.contains(tag),
+                            ),
+                          )
+                          .toList(),
                     );
                   },
                 ),
-              ] else
-                Text(
-                  localizeWithContext.phonebookModifyMembership(
-                    member.member.nickname ?? member.getName(),
-                  ),
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: ColorConstants.title,
-                  ),
+                const SizedBox(height: 20),
+                TextEntry(
+                  controller: apparentNameController,
+                  label: localizeWithContext.phonebookApparentName,
                 ),
-              const SizedBox(height: 10),
-              rolesTagList.maybeWhen(
-                orElse: () => Text(localizeWithContext.phonebookNoRoleTags),
-                data: (tagList) {
-                  return Column(
-                    children: tagList
-                        .map(
-                          (tag) => ToggleListItem(
-                            title: tag,
-                            onTap:
-                                tagList.first == tag &&
-                                    !isPhonebookAdmin &&
-                                    !isGroupementAdmin
-                                ? () {}
-                                : () {
-                                    final tags = [...selectedTags.value];
-                                    final changeApparentName =
-                                        apparentNameController.text ==
-                                        tags.join(", ");
-                                    tags.contains(tag)
-                                        ? tags.remove(tag)
-                                        : tags.add(tag);
-                                    if (changeApparentName) {
-                                      apparentNameController.text = tags.join(
-                                        ", ",
-                                      );
-                                    }
-                                    selectedTags.value = tags;
-                                  },
-                            selected: selectedTags.value.contains(tag),
-                          ),
-                        )
-                        .toList(),
-                  );
-                },
-              ),
-              const SizedBox(height: 20),
-              TextEntry(
-                controller: apparentNameController,
-                label: localizeWithContext.phonebookApparentName,
-              ),
-              const SizedBox(height: 30),
-              Button(
-                text: isEdit
-                    ? localizeWithContext.phonebookEdit
-                    : localizeWithContext.phonebookAdd,
-                onPressed: () async {
-                  if (member.member.id == "") {
-                    displayToastWithContext(
-                      TypeMsg.msg,
-                      localizeWithContext.phonebookEmptyMember,
-                    );
-                    return;
-                  }
-                  if (apparentNameController.text == "") {
-                    displayToastWithContext(
-                      TypeMsg.msg,
-                      localizeWithContext.phonebookEmptyApparentName,
-                    );
-                    return;
-                  }
-
-                  tokenExpireWrapper(ref, () async {
-                    if (isEdit) {
-                      await updateMember();
-                    } else {
-                      await addMember();
+                const SizedBox(height: 30),
+                Button(
+                  text: isEdit
+                      ? localizeWithContext.phonebookEdit
+                      : localizeWithContext.phonebookAdd,
+                  onPressed: () async {
+                    if (member.member.id == "") {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        localizeWithContext.phonebookEmptyMember,
+                      );
+                      return;
                     }
-                  });
-                },
-              ),
-              const SizedBox(height: 20),
-            ],
+                    if (apparentNameController.text == "") {
+                      displayToastWithContext(
+                        TypeMsg.msg,
+                        localizeWithContext.phonebookEmptyApparentName,
+                      );
+                      return;
+                    }
+
+                    tokenExpireWrapper(ref, () async {
+                      if (isEdit) {
+                        await updateMember();
+                      } else {
+                        await addMember();
+                      }
+                    });
+                  },
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),

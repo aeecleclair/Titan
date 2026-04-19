@@ -10,6 +10,7 @@ import 'package:titan/cinema/providers/session_poster_map_provider.dart';
 import 'package:titan/cinema/providers/session_poster_provider.dart';
 import 'package:titan/cinema/providers/session_provider.dart';
 import 'package:titan/cinema/tools/functions.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/service/class/message.dart';
 import 'package:titan/service/local_notification_service.dart';
 import 'package:titan/tools/functions.dart';
@@ -50,6 +51,7 @@ class DetailPage extends HookConsumerWidget {
       parent: animation,
       curve: Curves.easeInOut,
     );
+    final scrollController = useScrollController();
     return Stack(
       children: [
         Container(
@@ -75,94 +77,98 @@ class DetailPage extends HookConsumerWidget {
                 const Center(child: HeroIcon(HeroIcons.exclamationCircle)),
           ),
         ),
-        SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              const SizedBox(height: 220),
-              Container(
-                width: double.infinity,
-                height: 250,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.transparent,
-                      Colors.grey.shade50.withValues(alpha: 0.85),
-                      Colors.grey.shade50,
-                    ],
-                    stops: const [0.0, 0.65, 1.0],
+        ScrollToHideNavbar(
+          controller: scrollController,
+          child: SingleChildScrollView(
+            controller: scrollController,
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                const SizedBox(height: 220),
+                Container(
+                  width: double.infinity,
+                  height: 250,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.grey.shade50.withValues(alpha: 0.85),
+                        Colors.grey.shade50,
+                      ],
+                      stops: const [0.0, 0.65, 1.0],
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                color: Colors.grey.shade50,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 15),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      alignment: Alignment.center,
-                      child: AutoSizeText(
-                        session.name,
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        formatDate(session.start),
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    HorizontalListView.builder(
-                      height: 35,
-                      items: genres,
-                      horizontalSpace: 20,
-                      itemBuilder: (context, genre, index) => Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade900,
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        child: Text(
-                          genre,
+                Container(
+                  color: Colors.grey.shade50,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 15),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        alignment: Alignment.center,
+                        child: AutoSizeText(
+                          session.name,
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
                           style: const TextStyle(
-                            color: Colors.white,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 15),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Text(
-                        session.overview != null
-                            ? session.overview!
-                            : AppLocalizations.of(context)!.cinemaNoOverview,
-                        textAlign: TextAlign.left,
-                        style: const TextStyle(fontSize: 15),
+                      const SizedBox(height: 15),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        alignment: Alignment.center,
+                        child: Text(
+                          formatDate(session.start),
+                          style: const TextStyle(fontSize: 18),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 140),
-                  ],
+                      const SizedBox(height: 20),
+                      HorizontalListView.builder(
+                        height: 35,
+                        items: genres,
+                        horizontalSpace: 20,
+                        itemBuilder: (context, genre, index) => Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade900,
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          child: Text(
+                            genre,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Text(
+                          session.overview != null
+                              ? session.overview!
+                              : AppLocalizations.of(context)!.cinemaNoOverview,
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                      ),
+                      const SizedBox(height: 140),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         Column(

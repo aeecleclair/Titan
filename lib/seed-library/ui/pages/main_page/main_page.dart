@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/centralisation/tools/functions.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/seed-library/class/species.dart';
 import 'package:titan/seed-library/class/species_type.dart';
 import 'package:titan/seed-library/providers/difficulty_filter_provider.dart';
@@ -43,79 +44,82 @@ class SeedLibraryMainPage extends HookConsumerWidget {
     return SeedLibraryTemplate(
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: GridView(
+        child: ScrollToHideNavbar(
           controller: controller,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 20,
-            childAspectRatio:
-                MediaQuery.of(context).size.width <
-                    MediaQuery.of(context).size.height
-                ? 0.75
-                : 1.5,
-          ),
-          children: [
-            if (isSeedLibraryAdmin)
+          child: GridView(
+            controller: controller,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 20,
+              childAspectRatio:
+                  MediaQuery.of(context).size.width <
+                      MediaQuery.of(context).size.height
+                  ? 0.75
+                  : 1.5,
+            ),
+            children: [
+              if (isSeedLibraryAdmin)
+                GestureDetector(
+                  onTap: () {
+                    resetNotifier();
+                    QR.to(SeedLibraryRouter.root + SeedLibraryRouter.species);
+                  },
+                  child: const MenuCardUi(
+                    text: SeedLibraryTextConstants.speciesSimple,
+                    icon: HeroIcons.wallet,
+                  ),
+                ),
               GestureDetector(
                 onTap: () {
                   resetNotifier();
-                  QR.to(SeedLibraryRouter.root + SeedLibraryRouter.species);
+                  QR.to(SeedLibraryRouter.root + SeedLibraryRouter.plants);
                 },
                 child: const MenuCardUi(
-                  text: SeedLibraryTextConstants.speciesSimple,
-                  icon: HeroIcons.wallet,
+                  text: SeedLibraryTextConstants.myPlants,
+                  icon: HeroIcons.magnifyingGlass,
                 ),
               ),
-            GestureDetector(
-              onTap: () {
-                resetNotifier();
-                QR.to(SeedLibraryRouter.root + SeedLibraryRouter.plants);
-              },
-              child: const MenuCardUi(
-                text: SeedLibraryTextConstants.myPlants,
-                icon: HeroIcons.magnifyingGlass,
+              GestureDetector(
+                onTap: () {
+                  resetNotifier();
+                  QR.to(SeedLibraryRouter.root + SeedLibraryRouter.stock);
+                },
+                child: const MenuCardUi(
+                  text: SeedLibraryTextConstants.stock,
+                  icon: HeroIcons.inboxStack,
+                ),
               ),
-            ),
-            GestureDetector(
-              onTap: () {
-                resetNotifier();
-                QR.to(SeedLibraryRouter.root + SeedLibraryRouter.stock);
-              },
-              child: const MenuCardUi(
-                text: SeedLibraryTextConstants.stock,
-                icon: HeroIcons.inboxStack,
+              GestureDetector(
+                onTap: () {
+                  resetNotifier();
+                  QR.to(SeedLibraryRouter.root + SeedLibraryRouter.seedDeposit);
+                },
+                child: const MenuCardUi(
+                  text: SeedLibraryTextConstants.seedDeposit,
+                  icon: HeroIcons.inboxArrowDown,
+                ),
               ),
-            ),
-            GestureDetector(
-              onTap: () {
-                resetNotifier();
-                QR.to(SeedLibraryRouter.root + SeedLibraryRouter.seedDeposit);
-              },
-              child: const MenuCardUi(
-                text: SeedLibraryTextConstants.seedDeposit,
-                icon: HeroIcons.inboxArrowDown,
+              GestureDetector(
+                onTap: () {
+                  openLink(information.facebookUrl);
+                },
+                child: const MenuCardUi(
+                  text: SeedLibraryTextConstants.helpSheets,
+                  icon: HeroIcons.documentMagnifyingGlass,
+                ),
               ),
-            ),
-            GestureDetector(
-              onTap: () {
-                openLink(information.facebookUrl);
-              },
-              child: const MenuCardUi(
-                text: SeedLibraryTextConstants.helpSheets,
-                icon: HeroIcons.documentMagnifyingGlass,
+              GestureDetector(
+                onTap: () {
+                  openLink(information.forumUrl);
+                },
+                child: const MenuCardUi(
+                  text: SeedLibraryTextConstants.forum,
+                  icon: HeroIcons.fire,
+                ),
               ),
-            ),
-            GestureDetector(
-              onTap: () {
-                openLink(information.forumUrl);
-              },
-              child: const MenuCardUi(
-                text: SeedLibraryTextConstants.forum,
-                icon: HeroIcons.fire,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

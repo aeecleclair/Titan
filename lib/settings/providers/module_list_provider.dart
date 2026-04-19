@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/super_admin/providers/permissions_list_provider.dart';
@@ -20,6 +19,7 @@ import 'package:titan/purchases/router.dart';
 import 'package:titan/raffle/router.dart';
 import 'package:titan/recommendation/router.dart';
 import 'package:titan/seed-library/router.dart';
+import 'package:titan/tickets/router.dart';
 import 'package:titan/settings/router.dart';
 import 'package:titan/super_admin/providers/is_super_admin_provider.dart';
 import 'package:titan/super_admin/router.dart';
@@ -84,6 +84,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
     PaymentRouter.module,
     PhonebookRouter.module,
     PhRouter.module,
+    TicketsRouter.module,
     PurchasesRouter.module,
     RaffleRouter.module,
     RecommendationRouter.module,
@@ -156,7 +157,7 @@ class ModulesNotifier extends StateNotifier<List<Module>> {
         Module module = allModules[allSavedModulesName.indexOf(name)];
         if (roots.contains(module.root)) {
           modules.add(module);
-        } else if (!kDebugMode) {
+        } else {
           toDelete.add(module);
         }
       }

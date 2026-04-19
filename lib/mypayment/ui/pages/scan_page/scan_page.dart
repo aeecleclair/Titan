@@ -300,7 +300,7 @@ class ScanPage extends HookConsumerWidget {
                                       return CustomDialogBox(
                                         title: AppLocalizations.of(
                                           context,
-                                        )!.paiementCancelTransaction,
+                                        )!.paiementRefuseTransaction,
                                         descriptions:
                                             "${AppLocalizations.of(context)!.paiementTransactionCancelledDescription} ${formatter.format(transaction.total / 100)} ?",
                                         onYes: () async {

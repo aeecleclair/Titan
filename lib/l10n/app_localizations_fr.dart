@@ -9,6 +9,198 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
+  String get dateToday => 'Aujourd\'hui';
+
+  @override
+  String get dateYesterday => 'Hier';
+
+  @override
+  String get dateTomorrow => 'Demain';
+
+  @override
+  String get dateAt => 'à';
+
+  @override
+  String get dateFrom => 'de';
+
+  @override
+  String get dateTo => 'à';
+
+  @override
+  String get dateBetweenDays => 'au';
+
+  @override
+  String get dateStarting => 'Commence';
+
+  @override
+  String get dateLast => '';
+
+  @override
+  String get dateUntil => 'Jusqu\'au';
+
+  @override
+  String get feedFilterAll => 'Tous';
+
+  @override
+  String get feedFilterPending => 'En attente';
+
+  @override
+  String get feedFilterApproved => 'Approuvés';
+
+  @override
+  String get feedFilterRejected => 'Rejetés';
+
+  @override
+  String get feedEmptyAll => 'Aucun événement disponible';
+
+  @override
+  String get feedEmptyPending => 'Aucun événement en attente de validation';
+
+  @override
+  String get feedEmptyApproved => 'Aucun événement approuvé';
+
+  @override
+  String get feedEmptyRejected => 'Aucun événement rejeté';
+
+  @override
+  String get feedEventManagement => 'Gestion des événements';
+
+  @override
+  String get feedTitle => 'Titre';
+
+  @override
+  String get feedLocation => 'Lieu';
+
+  @override
+  String get feedSGDate => 'Date du SG';
+
+  @override
+  String get feedSGExternalLink => 'Lien externe du SG';
+
+  @override
+  String get feedCreateEvent => 'Créer l\'événement';
+
+  @override
+  String get feedUseExistingTicketing => 'Utiliser une billetterie existante';
+
+  @override
+  String get feedNotification => 'Envoyer une notification';
+
+  @override
+  String get feedPleaseSelectAnAssociation =>
+      'Veuillez sélectionner une association';
+
+  @override
+  String get feedReject => 'Rejeter';
+
+  @override
+  String get feedApprove => 'Approuver';
+
+  @override
+  String get feedEnded => 'Terminé';
+
+  @override
+  String get feedOngoing => 'En cours';
+
+  @override
+  String get feedFilter => 'Filtrer';
+
+  @override
+  String get feedAssociation => 'Association';
+
+  @override
+  String feedAssociationEvent(String name) {
+    return 'Event de $name';
+  }
+
+  @override
+  String get feedEditEvent => 'Modifier l\'événement';
+
+  @override
+  String get feedManageAssociationEvents =>
+      'Gérer les événements de l\'association';
+
+  @override
+  String get feedNews => 'Calendrier';
+
+  @override
+  String get feedNewsType => 'Type d\'actualité';
+
+  @override
+  String get feedNoAssociationEvents => 'Aucun événement d\'association';
+
+  @override
+  String get feedApply => 'Appliquer';
+
+  @override
+  String get feedAdmin => 'Administration';
+
+  @override
+  String get feedCreateAnEvent => 'Créer un événement';
+
+  @override
+  String get feedManageRequests => 'Demandes de publication';
+
+  @override
+  String get feedNoNewsAvailable => 'Aucune actualité disponible';
+
+  @override
+  String get feedRefresh => 'Actualiser';
+
+  @override
+  String get feedPleaseProvideASGExternalLink =>
+      'Veuillez entrer un lien externe pour le SG';
+
+  @override
+  String get feedPleaseProvideASGDate => 'Veuillez entrer une date de SG';
+
+  @override
+  String feedTicketsIn(String time) {
+    return 'Billets disponibles dans $time';
+  }
+
+  @override
+  String feedVoteIn(String time) {
+    return 'Vote $time';
+  }
+
+  @override
+  String get feedCantOpenLink => 'Impossible d\'ouvrir le lien';
+
+  @override
+  String get feedGetReady => 'Prépare-toi !';
+
+  @override
+  String get eventActionCampaign => 'Tu peux voter';
+
+  @override
+  String get eventActionEvent => 'Tu es invité';
+
+  @override
+  String get eventActionCampaignSubtitle => 'Votez maintenant';
+
+  @override
+  String get eventActionEventSubtitle => 'Répondez à l\'invitation';
+
+  @override
+  String get eventActionTicketsSubtitle => 'Réservez votre place';
+
+  @override
+  String get eventActionTicketsButton => 'Réserver';
+
+  @override
+  String get eventActionCampaignButton => 'Voter';
+
+  @override
+  String get eventActionEventButton => 'Réserver';
+
+  @override
+  String get eventActionCampaignValidated => 'J\'ai voté !';
+
+  @override
+  String get eventActionEventValidated => 'Je viens !';
+
+  @override
   String get moduleCentralassociation => 'Centralassociation';
 
   @override
@@ -1387,36 +1579,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get cinemaThe => 'Le';
 
   @override
-  String get dateAt => 'à';
-
-  @override
-  String get dateBetweenDays => 'au';
-
-  @override
-  String get dateFrom => 'de';
-
-  @override
-  String get dateLast => '';
-
-  @override
-  String get dateStarting => 'Commence';
-
-  @override
-  String get dateTo => 'à';
-
-  @override
-  String get dateToday => 'Aujourd\'hui';
-
-  @override
-  String get dateTomorrow => 'Demain';
-
-  @override
-  String get dateUntil => 'Jusqu\'au';
-
-  @override
-  String get dateYesterday => 'Hier';
-
-  @override
   String get drawerAdmin => 'Administration';
 
   @override
@@ -1445,30 +1607,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get drawerSettings => 'Paramètres';
-
-  @override
-  String get eventActionCampaign => 'Tu peux voter';
-
-  @override
-  String get eventActionCampaignButton => 'Voter';
-
-  @override
-  String get eventActionCampaignSubtitle => 'Votez maintenant';
-
-  @override
-  String get eventActionCampaignValidated => 'J\'ai voté !';
-
-  @override
-  String get eventActionEvent => 'Tu es invité';
-
-  @override
-  String get eventActionEventButton => 'Réserver';
-
-  @override
-  String get eventActionEventSubtitle => 'Répondez à l\'invitation';
-
-  @override
-  String get eventActionEventValidated => 'Je viens !';
 
   @override
   String get eventAdd => 'Ajouter';
@@ -1696,135 +1834,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventYes => 'Oui';
-
-  @override
-  String get feedAdmin => 'Administration';
-
-  @override
-  String get feedApply => 'Appliquer';
-
-  @override
-  String get feedApprove => 'Approuver';
-
-  @override
-  String get feedAssociation => 'Association';
-
-  @override
-  String feedAssociationEvent(String name) {
-    return 'Event de $name';
-  }
-
-  @override
-  String get feedCantOpenLink => 'Impossible d\'ouvrir le lien';
-
-  @override
-  String get feedCreateAnEvent => 'Créer un événement';
-
-  @override
-  String get feedCreateEvent => 'Créer l\'événement';
-
-  @override
-  String get feedEditEvent => 'Modifier l\'événement';
-
-  @override
-  String get feedEmptyAll => 'Aucun événement disponible';
-
-  @override
-  String get feedEmptyApproved => 'Aucun événement approuvé';
-
-  @override
-  String get feedEmptyPending => 'Aucun événement en attente de validation';
-
-  @override
-  String get feedEmptyRejected => 'Aucun événement rejeté';
-
-  @override
-  String get feedEnded => 'Terminé';
-
-  @override
-  String get feedEventManagement => 'Gestion des événements';
-
-  @override
-  String get feedFilter => 'Filtrer';
-
-  @override
-  String get feedFilterAll => 'Tous';
-
-  @override
-  String get feedFilterApproved => 'Approuvés';
-
-  @override
-  String get feedFilterPending => 'En attente';
-
-  @override
-  String get feedFilterRejected => 'Rejetés';
-
-  @override
-  String get feedGetReady => 'Prépare-toi !';
-
-  @override
-  String get feedLocation => 'Lieu';
-
-  @override
-  String get feedManageAssociationEvents =>
-      'Gérer les événements de l\'association';
-
-  @override
-  String get feedManageRequests => 'Demandes de publication';
-
-  @override
-  String get feedNews => 'Calendrier';
-
-  @override
-  String get feedNewsType => 'Type d\'actualité';
-
-  @override
-  String get feedNoAssociationEvents => 'Aucun événement d\'association';
-
-  @override
-  String get feedNoNewsAvailable => 'Aucune actualité disponible';
-
-  @override
-  String get feedNotification => 'Envoyer une notification';
-
-  @override
-  String get feedOngoing => 'En cours';
-
-  @override
-  String get feedPleaseProvideASGDate => 'Veuillez entrer une date de SG';
-
-  @override
-  String get feedPleaseProvideASGExternalLink =>
-      'Veuillez entrer un lien externe pour le SG';
-
-  @override
-  String get feedPleaseSelectAnAssociation =>
-      'Veuillez sélectionner une association';
-
-  @override
-  String get feedRefresh => 'Actualiser';
-
-  @override
-  String get feedReject => 'Rejeter';
-
-  @override
-  String get feedSGDate => 'Date du SG';
-
-  @override
-  String get feedSGExternalLink => 'Lien externe du SG';
-
-  @override
-  String feedShotgunIn(String time) {
-    return 'Shotgun $time';
-  }
-
-  @override
-  String get feedTitle => 'Titre';
-
-  @override
-  String feedVoteIn(String time) {
-    return 'Vote $time';
-  }
 
   @override
   String get globalCancel => 'Annuler';
@@ -2389,6 +2398,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementAddedSeller => 'Vendeur ajouté';
 
   @override
+  String get paiementAddFunds => 'Ajouter des fonds';
+
+  @override
   String get paiementAddingSellerError => 'Erreur lors de l\'ajout du vendeur';
 
   @override
@@ -2453,19 +2465,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementCanCancelTransaction => 'Peut annuler des transactions';
 
   @override
-  String get paiementCancel => 'Annuler';
-
-  @override
-  String get paiementCancelled => 'Annulé';
-
-  @override
-  String get paiementCancelledTransaction => 'Paiement annulé';
-
-  @override
-  String get paiementCancelTransaction => 'Annuler la transaction';
-
-  @override
-  String get paiementCancelTransactions => 'Annuler les transactions';
+  String get paiementCanManageEvents => 'Peut gérer les billeteries';
 
   @override
   String get paiementCanManageSellers => 'Peut gérer les vendeurs';
@@ -2478,6 +2478,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get paiementClose => 'Fermer';
+
+  @override
+  String get paiementCompletePayment => 'Finaliser le paiement';
+
+  @override
+  String get paiementConfirmPayment => 'Confirmer le paiement';
+
+  @override
+  String get paiementConfirmYourPurchase => 'Confirmer votre achat';
 
   @override
   String get paiementCreate => 'Créer';
@@ -2593,6 +2602,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementHistory => 'Historique';
 
   @override
+  String get paiementHurryUp => 'Dépêchez-vous !';
+
+  @override
+  String get paiementInsufficientBalance => 'Solde insuffisant';
+
+  @override
+  String get paiementInsufficientFunds => 'Fonds insuffisants';
+
+  @override
   String get paiementInvoiceCreatedSuccessfully => 'Facture créée avec succès';
 
   @override
@@ -2610,7 +2628,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementLimitedTo => 'Limité à';
 
   @override
+  String get paiementLinkedAssociation => 'Association liée';
+
+  @override
   String get paiementManagement => 'Gestion';
+
+  @override
+  String get paiementManageEvents => 'Gérer les billeteries';
 
   @override
   String get paiementManageSellers => 'Gérer les vendeurs';
@@ -2651,6 +2675,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementNextAccountable => 'Prochain responsable';
 
   @override
+  String get paiementNoAssociation => 'Aucune association';
+
+  @override
   String get paiementNoInvoiceToCreate => 'Aucune facture à créer';
 
   @override
@@ -2659,6 +2686,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get paiementNoMembershipDescription =>
       'Ce produit n\'est pas disponnible pour les non-adhérents. Confirmer l\'encaissement ?';
+
+  @override
+  String get paiementNoRequests => 'Aucune demande de paiement';
 
   @override
   String get paiementNoThanks => 'Non merci';
@@ -2683,6 +2713,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementPayment => 'Paiement';
 
   @override
+  String get paiementPaymentCanceled => 'Paiement annulé';
+
+  @override
+  String get paiementPaymentRequest => 'Demande de paiement';
+
+  @override
+  String get paiementPaymentRequestAccepted => 'Demande de paiement acceptée';
+
+  @override
+  String get paiementPaymentRequestError =>
+      'Erreur lors du traitement de la demande';
+
+  @override
+  String get paiementPaymentRequestRefused => 'Demande de paiement refusée';
+
+  @override
+  String get paiementPaymentSuccessful => 'Paiement réussi !';
+
+  @override
   String get paiementPayWithHA => 'Payer avec HelloAsso';
 
   @override
@@ -2690,24 +2739,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get paiementPersonalBalance => 'Solde personnel';
-
-  @override
-  String get paiementAddFunds => 'Ajouter des fonds';
-
-  @override
-  String get paiementInsufficientFunds => 'Fonds insuffisants';
-
-  @override
-  String get paiementTimeRemaining => 'Temps restant';
-
-  @override
-  String get paiementHurryUp => 'Dépêchez-vous !';
-
-  @override
-  String get paiementCompletePayment => 'Finaliser le paiement';
-
-  @override
-  String get paiementConfirmPayment => 'Confirmer le paiement';
 
   @override
   String get paiementPleaseAcceptPopup => 'Veuillez autoriser les popups';
@@ -2754,6 +2785,39 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementRefundedThe => 'Remboursé le';
 
   @override
+  String get paiementRefuse => 'Refuser';
+
+  @override
+  String get paiementRefused => 'Refusé';
+
+  @override
+  String get paiementRefusedTransaction => 'Paiement refusé';
+
+  @override
+  String get paiementRefuseTransaction => 'Refuser la transaction';
+
+  @override
+  String get paiementRefuseTransactions => 'Refuser les transactions';
+
+  @override
+  String get paiementRequestDetails => 'Détails de la demande';
+
+  @override
+  String get paiementRequestHistory => 'Activités';
+
+  @override
+  String get paiementRequestStatusAccepted => 'Acceptée';
+
+  @override
+  String get paiementRequestStatusExpired => 'Expirée';
+
+  @override
+  String get paiementRequestStatusPending => 'En attente';
+
+  @override
+  String get paiementRequestStatusRefused => 'Refusée';
+
+  @override
   String get paiementRevokeDevice => 'Révoquer l\'appareil ?';
 
   @override
@@ -2788,6 +2852,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get paiementSeeHistory => 'Voir l\'historique';
+
+  @override
+  String get paiementSelectAssociation => 'Choisir une association';
+
+  @override
+  String get paiementSelected => 'Sélectionné';
 
   @override
   String get paiementSelectStructure => 'Choisir une structure';
@@ -2834,34 +2904,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementSuccededTransaction => 'Paiement réussi';
 
   @override
-  String get paiementConfirmYourPurchase => 'Confirmer votre achat';
-
-  @override
-  String get paiementYourBalance => 'Votre solde';
-
-  @override
-  String get paiementPaymentSuccessful => 'Paiement réussi !';
-
-  @override
-  String get paiementPaymentCanceled => 'Paiement annulé';
-
-  @override
-  String get paiementPaymentRequest => 'Demande de paiement';
-
-  @override
-  String get paiementPaymentRequestAccepted => 'Demande de paiement acceptée';
-
-  @override
-  String get paiementPaymentRequestRefused => 'Demande de paiement refusée';
-
-  @override
-  String get paiementPaymentRequestError =>
-      'Erreur lors du traitement de la demande';
-
-  @override
-  String get paiementRefuse => 'Refuser';
-
-  @override
   String get paiementSuccessfullyAddedStore => 'Magasin ajoutée avec succès';
 
   @override
@@ -2875,6 +2917,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementThisDevice => '(cet appareil)';
 
   @override
+  String get paiementTimeRemaining => 'Temps restant';
+
+  @override
   String get paiementTopUp => 'Recharge';
 
   @override
@@ -2884,7 +2929,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get paiementTotalDuringPeriod => 'Total sur la période';
 
   @override
-  String get paiementTransaction => 'ransaction';
+  String get paiementTransaction => 'transaction';
 
   @override
   String get paiementTransactionCancelled => 'Transaction annulée';
@@ -2921,6 +2966,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get paiementYouAreTransferingStructureTo =>
       'Vous êtes sur le point de transférer la structure à ';
+
+  @override
+  String get paiementYourBalance => 'Votre solde';
 
   @override
   String get phAdd => 'Ajouter';
@@ -3654,7 +3702,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get raffleTicketNumber => 'Nombre de ticket';
 
   @override
-  String get raffleTickets => 'Tickets';
+  String get raffleTickets => 'Ticket de tombola';
 
   @override
   String get raffleUnavailableRaffle => 'Tombola indisponible';
@@ -3675,7 +3723,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get raffleWinner => 'Gagnant';
 
   @override
-  String get raffleWinningTickets => 'Tickets gagnants';
+  String get raffleWinningTickets => 'Ticket gagnants';
 
   @override
   String get raffleYourTickets => 'Tous vos tickets';
@@ -4350,6 +4398,169 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsVersion => 'Version';
 
   @override
+  String get shotgunAddQuestion => 'Ajouter une question';
+
+  @override
+  String get shotgunAddSession => 'Ajouter une session';
+
+  @override
+  String get shotgunAddTariff => 'Ajouter un tarif';
+
+  @override
+  String get shotgunAdmin => 'Admin';
+
+  @override
+  String get shotgunAnswerTypeBoolean => 'Oui/Non';
+
+  @override
+  String get shotgunAnswerTypeNumber => 'Nombre';
+
+  @override
+  String get shotgunAnswerTypeText => 'Texte';
+
+  @override
+  String get shotgunBookTicket => 'Réserver un billet';
+
+  @override
+  String get shotgunCategoryLabel => 'Catégorie (tarif)';
+
+  @override
+  String get shotgunCreate => 'Créer une billetterie';
+
+  @override
+  String get shotgunDateLabel => 'Date';
+
+  @override
+  String get shotgunDeleteQuestionTooltip => 'Supprimer la question';
+
+  @override
+  String get shotgunEditSuccess => 'Billetterie modifié avec succès';
+
+  @override
+  String get shotgunEditTitle => 'Modifier la billetterie';
+
+  @override
+  String get shotgunEndDateLabel =>
+      'Date de fermeture de la billetterie (optionnel)';
+
+  @override
+  String get shotgunManageAssociation =>
+      'Gérer les billetteries de l\'association';
+
+  @override
+  String get shotgunManageTitle => 'Gérer les billetteries de l\'association';
+
+  @override
+  String get shotgunMinPriceError => 'Le prix minimum est 1€';
+
+  @override
+  String get shotgunMyTickets => 'Mes billets';
+
+  @override
+  String get shotgunNoShotgun => 'Aucune billetterie pour ce store';
+
+  @override
+  String get shotgunNotFound => 'Billetterie non trouvé';
+
+  @override
+  String get shotgunNoTickets => 'Vous n\'avez pas encore de billets';
+
+  @override
+  String get shotgunNoTicketsSubtitle =>
+      'Réservez votre place pour un événement !';
+
+  @override
+  String get shotgunOpeningLabel => 'Ouverture';
+
+  @override
+  String get shotgunPaymentMethod => 'Moyen de paiement';
+
+  @override
+  String get shotgunPlaces => 'places';
+
+  @override
+  String get shotgunPlacesLabel => 'Nombre de places disponibles (optionnel)';
+
+  @override
+  String get shotgunPriceLabel => 'Prix (€)';
+
+  @override
+  String shotgunQuestionLabel(int number) {
+    return 'Question $number';
+  }
+
+  @override
+  String get shotgunQuestionRequiredLabel => 'Obligatoire';
+
+  @override
+  String get shotgunQuestions => 'Questions';
+
+  @override
+  String get shotgunQuestionTypeLabel => 'Type de réponse';
+
+  @override
+  String get shotgunQuotaLabel => 'Quota';
+
+  @override
+  String get shotgunReservationSuccess => 'Réservation créée avec succès !';
+
+  @override
+  String get shotgunReserve => 'Réserver';
+
+  @override
+  String get shotgunSave => 'Enregistrer la billetterie';
+
+  @override
+  String get shotgunSaveChanges => 'Enregistrer les modifications';
+
+  @override
+  String get shotgunSessionLabel => 'Session (horaire)';
+
+  @override
+  String shotgunSessionLabelNumbered(int number) {
+    return 'Session $number';
+  }
+
+  @override
+  String get shotgunSessions => 'Sessions';
+
+  @override
+  String get shotgunShotgun => 'Billetterie';
+
+  @override
+  String get shotgunShotgunDescription =>
+      'Réserver vos places pour des événements';
+
+  @override
+  String get shotgunStartDateLabel => 'Date d\'ouverture de la billetterie *';
+
+  @override
+  String get shotgunStartDateRequired => 'La date de début est obligatoire';
+
+  @override
+  String shotgunTariffLabel(int number) {
+    return 'Tarif $number';
+  }
+
+  @override
+  String get shotgunTariffs => 'Tarifs';
+
+  @override
+  String get shotgunTitle => 'Billetterie';
+
+  @override
+  String get shotgunTitleLabel => 'Titre de la billetterie *';
+
+  @override
+  String get shotgunTitleRequired => 'Le titre est obligatoire';
+
+  @override
+  String get shotgunTotal => 'Total';
+
+  @override
+  String get shotgunViewResults => 'Voir les résultats';
+
+  @override
   String get toolDateRequired => 'Date requise';
 
   @override
@@ -4598,4 +4809,173 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get voteWarningMessage =>
       'La sélection ne sera pas sauvegardée.\nVoulez-vous continuer ?';
+
+  @override
+  String get ticketsTickets => 'Billets';
+
+  @override
+  String get ticketsTicketsDescription =>
+      'Réserver vos places pour des événements';
+
+  @override
+  String get ticketsTitle => 'Billets';
+
+  @override
+  String get ticketsAdmin => 'Admin';
+
+  @override
+  String get ticketsCreate => 'Créer une billetterie';
+
+  @override
+  String get ticketsManageAssociation =>
+      'Gérer les billeteries de l\'association';
+
+  @override
+  String get ticketsTitleLabel => 'Titre de la billetterie *';
+
+  @override
+  String get ticketsPlacesLabel => 'Quota';
+
+  @override
+  String get ticketsStartDateLabel => 'Date d\'ouverture de la billetterie *';
+
+  @override
+  String get ticketsEndDateLabel =>
+      'Date de fermeture de la billetterie (optionnel)';
+
+  @override
+  String get ticketsTitleRequired => 'Le titre est obligatoire';
+
+  @override
+  String get ticketsStartDateRequired => 'La date de début est obligatoire';
+
+  @override
+  String get ticketsCategoriesRequired => 'Au moins un tarif est obligatoire';
+
+  @override
+  String get ticketsSessionsRequired => 'Au moins une session est obligatoire';
+
+  @override
+  String get ticketsSave => 'Enregistrer la billetterie';
+
+  @override
+  String get ticketsAddQuestion => 'Ajouter une question';
+
+  @override
+  String ticketsQuestionLabel(int number) {
+    return 'Question $number';
+  }
+
+  @override
+  String get ticketsDeleteQuestionTooltip => 'Supprimer la question';
+
+  @override
+  String get ticketsQuestionTypeLabel => 'Type de réponse';
+
+  @override
+  String get ticketsAnswerTypeText => 'Texte';
+
+  @override
+  String get ticketsAnswerTypeNumber => 'Nombre';
+
+  @override
+  String get ticketsAnswerTypeBoolean => 'Oui/Non';
+
+  @override
+  String get ticketsQuestionRequiredLabel => 'Obligatoire';
+
+  @override
+  String get ticketsEditTitle => 'Modifier le tickets';
+
+  @override
+  String get ticketsTariffs => 'Tarifs';
+
+  @override
+  String get ticketsPriceLabel => 'Prix (€)';
+
+  @override
+  String get ticketsSessions => 'Sessions';
+
+  @override
+  String get ticketsDateLabel => 'Date';
+
+  @override
+  String get ticketsQuotaLabel => 'Quota';
+
+  @override
+  String get ticketsQuestions => 'Questions';
+
+  @override
+  String get ticketsEditSuccess => 'Billeterie modifiée avec succès';
+
+  @override
+  String get ticketsSaveChanges => 'Enregistrer les modifications';
+
+  @override
+  String get ticketsManageTitle => 'Gérer les tickets de l\'association';
+
+  @override
+  String get ticketsNoTickets => 'Vous n\'avez pas encore de billets';
+
+  @override
+  String get ticketsNotFound => 'Billeterie non trouvée';
+
+  @override
+  String get ticketsBookTicket => 'Réserver un billet';
+
+  @override
+  String get ticketsCategoryLabel => 'Catégorie (tarif)';
+
+  @override
+  String get ticketsSessionLabel => 'Session (horaire)';
+
+  @override
+  String get ticketsPlaces => 'places';
+
+  @override
+  String get ticketsTotal => 'Total';
+
+  @override
+  String get ticketsPaymentMethod => 'Moyen de paiement';
+
+  @override
+  String get ticketsReserve => 'Réserver';
+
+  @override
+  String get ticketsOpeningLabel => 'Ouverture';
+
+  @override
+  String get ticketsAddTariff => 'Ajouter un tarif';
+
+  @override
+  String get ticketsAddSession => 'Ajouter une session';
+
+  @override
+  String ticketsTariffLabel(int number) {
+    return 'Tarif $number';
+  }
+
+  @override
+  String ticketsSessionLabelNumbered(int number) {
+    return 'Session $number';
+  }
+
+  @override
+  String get ticketsReservationSuccess => 'Réservation créée avec succès !';
+
+  @override
+  String get ticketsMyTickets => 'Mes billets';
+
+  @override
+  String get ticketsNoTicketsSubtitle =>
+      'Réservez votre place pour un événement !';
+
+  @override
+  String get ticketsViewResults => 'Voir les résultats';
+
+  @override
+  String get ticketsMinPriceError => 'Le prix doit être 0€ ou supérieur à 1€';
+
+  @override
+  String get ticketsSessionSoldOut => 'Cette session est complète';
 }

@@ -3,8 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:titan/mypayment/class/history.dart';
-import 'package:titan/mypayment/class/qr_code_data.dart';
-import 'package:titan/mypayment/class/qr_code_signature_data.dart';
+import 'package:titan/mypayment/class/secured_content_data.dart';
 import 'package:titan/mypayment/class/wallet_device.dart';
 import 'package:titan/mypayment/tools/key_service.dart';
 
@@ -69,31 +68,16 @@ Future<String> getQRCodeContent(
   KeyService keyService,
   bool store,
 ) async {
-  final keyId = await keyService.getKeyId();
-  final keyPair = await keyService.getKeyPair();
-  final now = DateTime.now();
   final total = (double.parse(payAmount.replaceAll(',', '.')) * 100).round();
-  final data = jsonEncode(
-    QrCodeSignatureData(
-      id: id,
-      tot: total,
-      iat: now,
-      key: keyId!,
-      store: store,
-    ).toJson(),
+  final content = SecuredContentData(
+    id: id,
+    tot: total,
+    iat: DateTime.now(),
+    key: (await keyService.getKeyId())!,
+    store: store,
   );
-  return jsonEncode(
-    QrCodeData(
-      id: id,
-      tot: total,
-      iat: now,
-      key: keyId,
-      store: store,
-      signature: base64Encode(
-        (await keyService.signMessage(keyPair!, data.codeUnits)).bytes,
-      ),
-    ).toJson(),
-  );
+  final signed = await keyService.signContent(content);
+  return jsonEncode(signed!.toJson());
 }
 
 String transferTypeToString(TransferType type) {
@@ -239,35 +223,35 @@ int _generateSeedFromString(String input) {
 
 List<Color> getTransactionColors(History transaction) {
   switch (transaction.type) {
-    case HistoryType.given:
-      return [
-        const Color.fromARGB(255, 1, 127, 128),
-        const Color.fromARGB(255, 0, 102, 103),
-        const Color.fromARGB(255, 0, 44, 45).withValues(alpha: 0.3),
-      ];
-    case HistoryType.refundDebited:
+    case HistoryType.refund:
       return [
         const Color.fromARGB(255, 4, 84, 84),
         const Color.fromARGB(255, 0, 68, 68),
         const Color.fromARGB(255, 0, 29, 29).withValues(alpha: 0.4),
       ];
-    case HistoryType.refundCredited:
-      return [
-        const Color.fromARGB(255, 4, 84, 84),
-        const Color.fromARGB(255, 0, 68, 68),
-        const Color.fromARGB(255, 0, 29, 29).withValues(alpha: 0.4),
-      ];
-    case HistoryType.transfer:
+    case HistoryType.directTransfer:
       return [
         const Color.fromARGB(255, 255, 119, 7),
         const Color.fromARGB(255, 230, 103, 0),
         const Color.fromARGB(255, 97, 44, 0).withValues(alpha: 0.2),
       ];
-    case HistoryType.received:
+    case HistoryType.requestTransfer:
+      return [
+        const Color.fromARGB(255, 255, 119, 7),
+        const Color.fromARGB(255, 230, 103, 0),
+        const Color.fromARGB(255, 97, 44, 0).withValues(alpha: 0.2),
+      ];
+    case HistoryType.directTransaction:
       return [
         const Color.fromARGB(255, 1, 127, 128),
         const Color.fromARGB(255, 0, 102, 103),
         const Color.fromARGB(255, 0, 44, 45).withValues(alpha: 0.3),
+      ];
+    case HistoryType.requestTransaction:
+      return [
+        const Color.fromARGB(255, 124, 58, 237),
+        const Color.fromARGB(255, 99, 46, 190),
+        const Color.fromARGB(255, 42, 20, 80).withValues(alpha: 0.3),
       ];
   }
 }

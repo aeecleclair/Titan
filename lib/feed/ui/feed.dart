@@ -26,6 +26,7 @@ class FeedTemplate extends ConsumerWidget {
                   final newsListNotifier = ref.watch(newsListProvider.notifier);
                   newsListNotifier.loadNewsList();
                 }
+                QR.back();
               },
             ),
             Expanded(child: child),

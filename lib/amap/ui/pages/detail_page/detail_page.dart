@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/amap/providers/order_provider.dart';
 import 'package:titan/amap/ui/amap.dart';
 import 'package:titan/amap/ui/components/order_ui.dart';
 import 'package:titan/amap/ui/components/product_ui.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
@@ -13,63 +15,72 @@ class DetailPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final order = ref.watch(orderProvider);
+    final scrollController = useScrollController();
     return AmapTemplate(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 60),
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.grey.shade50,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withValues(alpha: 0.2),
-                          blurRadius: 10,
-                          offset: const Offset(0, 10),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 110),
-                        AlignLeftText(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          AppLocalizations.of(context)!.amapProducts,
-                          fontSize: 25,
-                        ),
-                        const SizedBox(height: 10),
-                        if (order.products.isNotEmpty)
-                          Wrap(
-                            children: order.products
-                                .map(
-                                  (product) => ProductCard(
-                                    product: product,
-                                    showButton: false,
-                                  ),
-                                )
-                                .toList(),
+      child: ScrollToHideNavbar(
+        controller: scrollController,
+        child: SingleChildScrollView(
+          controller: scrollController,
+          physics: const BouncingScrollPhysics(),
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 60),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.grey.shade50,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withValues(alpha: 0.2),
+                            blurRadius: 10,
+                            offset: const Offset(0, 10),
                           ),
-                        const SizedBox(height: 20),
-                      ],
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 110),
+                          AlignLeftText(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            AppLocalizations.of(context)!.amapProducts,
+                            fontSize: 25,
+                          ),
+                          const SizedBox(height: 10),
+                          if (order.products.isNotEmpty)
+                            Wrap(
+                              children: order.products
+                                  .map(
+                                    (product) => ProductCard(
+                                      product: product,
+                                      showButton: false,
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          const SizedBox(height: 20),
+                        ],
+                      ),
                     ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Center(
+                  child: OrderUI(
+                    order: order,
+                    showButton: false,
+                    isDetail: true,
                   ),
-                ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Center(
-                child: OrderUI(order: order, showButton: false, isDetail: true),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

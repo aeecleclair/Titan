@@ -4,11 +4,13 @@ import 'package:titan/l10n/app_localizations.dart';
 
 class CountdownTimer extends HookWidget {
   final int totalSeconds;
+  final int? fullDurationSeconds;
   final VoidCallback? onFinished;
 
   const CountdownTimer({
     super.key,
     required this.totalSeconds,
+    this.fullDurationSeconds,
     this.onFinished,
   });
 
@@ -31,8 +33,11 @@ class CountdownTimer extends HookWidget {
       return () => controller.removeStatusListener(listener);
     }, [controller]);
 
-    final progress = useAnimation(controller);
-    final remainingSeconds = (totalSeconds * (1 - progress)).round();
+    final animationValue = useAnimation(controller);
+    final remainingSeconds = (totalSeconds * (1 - animationValue)).round();
+    final fullDuration = fullDurationSeconds ?? totalSeconds;
+    final elapsedFromFull = fullDuration - remainingSeconds;
+    final progress = (elapsedFromFull / fullDuration).clamp(0.0, 1.0);
     final minutes = (remainingSeconds ~/ 60).toString().padLeft(2, '0');
     final seconds = (remainingSeconds % 60).toString().padLeft(2, '0');
 

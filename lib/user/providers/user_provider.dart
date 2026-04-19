@@ -52,6 +52,8 @@ final asyncUserProvider = StateNotifierProvider<UserNotifier, AsyncValue<User>>(
           .maybeWhen(data: (value) => value, orElse: () => "");
       if (isLoggedIn && id != "" && token != "") {
         return userNotifier..loadMe();
+      } else {
+        userNotifier.setUser(User.empty());
       }
     });
     return userNotifier;

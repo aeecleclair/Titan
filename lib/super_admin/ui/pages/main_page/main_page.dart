@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/super_admin/router.dart';
 import 'package:titan/super_admin/ui/admin.dart';
 import 'package:titan/super_admin/ui/pages/main_page/menu_card_ui.dart';
@@ -21,38 +22,43 @@ class SuperAdminMainPage extends HookConsumerWidget {
     return SuperAdminTemplate(
       child: Padding(
         padding: const EdgeInsets.all(40),
-        child: GridView(
+        child: ScrollToHideNavbar(
           controller: controller,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 20,
-            childAspectRatio:
-                MediaQuery.of(context).size.width <
-                    MediaQuery.of(context).size.height
-                ? 0.75
-                : 1.5,
+          child: GridView(
+            controller: controller,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 20,
+              childAspectRatio:
+                  MediaQuery.of(context).size.width <
+                      MediaQuery.of(context).size.height
+                  ? 0.75
+                  : 1.5,
+            ),
+            children: [
+              GestureDetector(
+                onTap: () {
+                  QR.to(
+                    SuperAdminRouter.root + SuperAdminRouter.editPermissions,
+                  );
+                },
+                child: MenuCardUi(
+                  text: AppLocalizations.of(context)!.adminVisibilities,
+                  icon: HeroIcons.eye,
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  QR.to(SuperAdminRouter.root + SuperAdminRouter.schools);
+                },
+                child: MenuCardUi(
+                  text: AppLocalizations.of(context)!.adminSchools,
+                  icon: HeroIcons.academicCap,
+                ),
+              ),
+            ],
           ),
-          children: [
-            GestureDetector(
-              onTap: () {
-                QR.to(SuperAdminRouter.root + SuperAdminRouter.editPermissions);
-              },
-              child: MenuCardUi(
-                text: AppLocalizations.of(context)!.adminVisibilities,
-                icon: HeroIcons.eye,
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                QR.to(SuperAdminRouter.root + SuperAdminRouter.schools);
-              },
-              child: MenuCardUi(
-                text: AppLocalizations.of(context)!.adminSchools,
-                icon: HeroIcons.academicCap,
-              ),
-            ),
-          ],
         ),
       ),
     );

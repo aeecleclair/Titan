@@ -22,6 +22,8 @@ import 'package:titan/mypayment/ui/pages/stats_page/stats_page.dart'
     deferred as stats_page;
 import 'package:titan/mypayment/ui/pages/store_stats_page/store_stats_page.dart'
     deferred as store_stats_page;
+import 'package:titan/mypayment/ui/pages/request_history_page/request_history_page.dart'
+    deferred as request_history_page;
 import 'package:titan/mypayment/ui/pages/transfer_structure_page/transfer_structure_page.dart'
     deferred as transfer_structure_page;
 import 'package:titan/navigation/class/module.dart';
@@ -44,6 +46,7 @@ class PaymentRouter {
   static const String transferStructure = '/transferStructure';
   static const String storeAdmin = '/storeAdmin';
   static const String storeStats = '/storeStats';
+  static const String requestHistory = '/requestHistory';
   static final Module module = Module(
     getName: (context) => getPaymentName(),
     getDescription: (context) =>
@@ -115,6 +118,13 @@ class PaymentRouter {
         path: PaymentRouter.storeStats,
         builder: () => store_stats_page.StoreStatsPage(),
         middleware: [DeferredLoadingMiddleware(store_stats_page.loadLibrary)],
+      ),
+      QRoute(
+        path: PaymentRouter.requestHistory,
+        builder: () => request_history_page.RequestHistoryPage(),
+        middleware: [
+          DeferredLoadingMiddleware(request_history_page.loadLibrary),
+        ],
       ),
       QRoute(
         path: PaymentRouter.fund,

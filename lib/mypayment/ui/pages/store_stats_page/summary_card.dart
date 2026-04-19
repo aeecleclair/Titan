@@ -21,26 +21,13 @@ class SummaryCard extends ConsumerWidget {
       if (transaction.status == TransactionStatus.canceled) {
         continue; // Only consider successful transactions
       }
-      switch (transaction.type) {
-        case HistoryType.given:
-          total -= transaction.total;
-          numberTransactions++;
-          break;
-        case HistoryType.refundDebited:
-          total -= transaction.total;
-          break;
-
-        case HistoryType.received:
-          total += transaction.total;
-          numberTransactions++;
-          break;
-        case HistoryType.refundCredited:
-          total += transaction.total;
-          break;
-
-        case HistoryType.transfer:
-          total += transaction.total;
-          break;
+      final signed = transaction.direction == HistoryDirection.debited
+          ? -transaction.total
+          : transaction.total;
+      total += signed;
+      if (transaction.type == HistoryType.directTransaction ||
+          transaction.type == HistoryType.requestTransaction) {
+        numberTransactions++;
       }
     }
 

@@ -11,6 +11,7 @@ class Event {
   late final DateTime? ticketUrlOpening;
   late final String associationId;
   late final String? ticketUrl;
+  late final String? ticketEventId;
   late final bool notification;
 
   Event({
@@ -24,6 +25,7 @@ class Event {
     this.ticketUrlOpening,
     required this.associationId,
     this.ticketUrl,
+    this.ticketEventId,
     required this.notification,
   });
 
@@ -41,6 +43,7 @@ class Event {
     associationId = json['association_id'];
     ticketUrl = json['ticket_url'];
     notification = json['notification'] ?? true;
+    ticketEventId = json['ticket_event_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -60,6 +63,9 @@ class Event {
       data['ticket_url'] = ticketUrl;
     }
     data['notification'] = notification;
+    if (ticketEventId != null) {
+      data['ticket_event_id'] = ticketEventId;
+    }
     return data;
   }
 
@@ -75,6 +81,7 @@ class Event {
     String? ticketUrl,
     bool? hasRoom,
     bool? notification,
+    String? ticketEventId,
   }) {
     return Event(
       id: id,
@@ -88,6 +95,7 @@ class Event {
       associationId: associationId ?? this.associationId,
       ticketUrl: ticketUrl ?? this.ticketUrl,
       notification: notification ?? this.notification,
+      ticketEventId: ticketEventId ?? this.ticketEventId,
     );
   }
 
@@ -103,10 +111,11 @@ class Event {
     associationId = '';
     ticketUrl = null;
     notification = true;
+    ticketEventId = null;
   }
 
   @override
   String toString() {
-    return 'Event{name: $name, start: $start, end: $end, allDay: $allDay, location: $location, recurrenceRule: $recurrenceRule, ticketUrlOpening: $ticketUrlOpening, associationId: $associationId, ticketUrl: $ticketUrl, notification: $notification}';
+    return 'Event{name: $name, start: $start, end: $end, allDay: $allDay, location: $location, recurrenceRule: $recurrenceRule, ticketUrlOpening: $ticketUrlOpening, associationId: $associationId, ticketUrl: $ticketUrl, notification: $notification, ticketEventId: $ticketEventId}';
   }
 }

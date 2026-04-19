@@ -6,7 +6,12 @@ import 'package:titan/feed/class/news.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/feed/providers/event_ticket_url_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/feed/router.dart';
+import 'package:titan/navigation/providers/navbar_module_list.dart';
+import 'package:titan/tickets/providers/tickets_on_back_provider.dart';
+import 'package:titan/tickets/router.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/vote/router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -136,6 +141,8 @@ String getActionTitle(News news, BuildContext context) {
     return AppLocalizations.of(context)!.eventActionCampaign;
   } else if (module == "event") {
     return AppLocalizations.of(context)!.eventActionEvent;
+  } else if (module == "tickets") {
+    return "Ticket";
   }
   return '';
 }
@@ -151,7 +158,9 @@ String getWaitingTitle(
   if (module == "campagne") {
     return localizeWithContext.feedVoteIn(timeToGo);
   } else if (module == "event") {
-    return localizeWithContext.feedShotgunIn(timeToGo);
+    return localizeWithContext.feedTicketsIn(timeToGo);
+  } else if (module == "tickets") {
+    return localizeWithContext.feedTicketsIn(timeToGo);
   }
   return '';
 }
@@ -163,6 +172,8 @@ String getActionSubtitle(News news, BuildContext context) {
     return AppLocalizations.of(context)!.eventActionCampaignSubtitle;
   } else if (module == "event") {
     return AppLocalizations.of(context)!.eventActionEventSubtitle;
+  } else if (module == "tickets") {
+    return AppLocalizations.of(context)!.eventActionTicketsSubtitle;
   }
   return '';
 }
@@ -174,6 +185,8 @@ String getActionEnableButtonText(News news, BuildContext context) {
     return AppLocalizations.of(context)!.eventActionCampaignButton;
   } else if (module == "event") {
     return AppLocalizations.of(context)!.eventActionEventButton;
+  } else if (module == "tickets") {
+    return AppLocalizations.of(context)!.eventActionTicketsButton;
   }
   return '';
 }
@@ -197,6 +210,8 @@ void getActionButtonAction(
 ) async {
   final module = news.module;
   final localizeWithContext = AppLocalizations.of(context)!;
+  final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
+  final navbarListModuleNotifier = ref.watch(navbarListModuleProvider.notifier);
 
   if (module == "campagne") {
     QR.to(VoteRouter.root);
@@ -227,6 +242,17 @@ void getActionButtonAction(
   } else if (module == "advert") {
     // TODO : set id
     QR.to(AdvertRouter.root);
+  } else if (module == "tickets") {
+    ref.read(ticketsOnBackProvider.notifier).state = () {
+      pathForwardingNotifier.forward(FeedRouter.root);
+      QR.to(FeedRouter.root);
+    };
+    pathForwardingNotifier.forward(
+      TicketsRouter.root + TicketsRouter.book,
+      queryParameters: {"ticketEventId": news.moduleObjectId},
+    );
+    navbarListModuleNotifier.pushModule(TicketsRouter.module);
+    QR.to(TicketsRouter.root + TicketsRouter.book);
   }
   return;
 }

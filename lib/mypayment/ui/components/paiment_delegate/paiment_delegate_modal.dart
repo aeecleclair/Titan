@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/mypayment/ui/components/components/paiment_delegate/confirm_button.dart';
-import 'package:titan/mypayment/ui/components/components/paiment_delegate/countdown_timer.dart';
-import 'package:titan/mypayment/ui/components/components/paiment_delegate/feedback_overlay.dart';
-import 'package:titan/mypayment/ui/components/components/paiment_delegate/product_card.dart';
-import 'package:titan/mypayment/ui/components/components/paiment_delegate/wallet_balance_card.dart';
+import 'package:titan/mypayment/ui/components/paiment_delegate/confirm_button.dart';
+import 'package:titan/mypayment/ui/components/paiment_delegate/countdown_timer.dart';
+import 'package:titan/mypayment/ui/components/paiment_delegate/feedback_overlay.dart';
+import 'package:titan/mypayment/ui/components/paiment_delegate/product_card.dart';
+import 'package:titan/mypayment/ui/components/paiment_delegate/wallet_balance_card.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 
 enum _ModalState { idle, loading, success, canceled }
@@ -34,7 +34,8 @@ class PaimentDelegateModal extends HookWidget {
     final idleHeight = useState<double?>(null);
     final idleKey = useMemoized(() => GlobalKey());
     final expirationDate = useMemoized(
-      () => DateTime.now().add(const Duration(minutes: 2)),
+      () =>
+          itemExpirationDate ?? DateTime.now().add(const Duration(minutes: 8)),
     );
     final secondsLeft = useMemoized(
       () => expirationDate.difference(DateTime.now()).inSeconds,
@@ -105,6 +106,9 @@ class PaimentDelegateModal extends HookWidget {
                         const SizedBox(height: 20),
                         CountdownTimer(
                           totalSeconds: secondsLeft,
+                          fullDurationSeconds: itemExpirationDate != null
+                              ? 8 * 60
+                              : null,
                           onFinished: () => isExpired.value = true,
                         ),
                       ],
