@@ -9,17 +9,17 @@ extension RequestTypeExtension on RequestType {
   String get value {
     switch (this) {
       case RequestType.transferRequest:
-        return 'transfer';
+        return 'transfer_request';
       case RequestType.transactionRequest:
-        return 'request';
+        return 'transaction_request';
     }
   }
 
   static RequestType fromString(String value) {
     switch (value) {
-      case 'transfer':
+      case 'transfer_request':
         return RequestType.transferRequest;
-      case 'request':
+      case 'transaction_request':
         return RequestType.transactionRequest;
       default:
         throw ArgumentError('Unknown RequestType: $value');
