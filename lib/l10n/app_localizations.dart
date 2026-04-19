@@ -8471,7 +8471,7 @@ abstract class AppLocalizations {
   /// No description provided for @shotgunCreate.
   ///
   /// In fr, this message translates to:
-  /// **'Créer un shotgun'**
+  /// **'Créer une billetterie'**
   String get shotgunCreate;
 
   /// No description provided for @shotgunDateLabel.
@@ -8489,31 +8489,31 @@ abstract class AppLocalizations {
   /// No description provided for @shotgunEditSuccess.
   ///
   /// In fr, this message translates to:
-  /// **'Shotgun modifié avec succès'**
+  /// **'Billetterie modifié avec succès'**
   String get shotgunEditSuccess;
 
   /// No description provided for @shotgunEditTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Modifier le shotgun'**
+  /// **'Modifier la billetterie'**
   String get shotgunEditTitle;
 
   /// No description provided for @shotgunEndDateLabel.
   ///
   /// In fr, this message translates to:
-  /// **'Date de fermeture du shotgun (optionnel)'**
+  /// **'Date de fermeture de la billetterie (optionnel)'**
   String get shotgunEndDateLabel;
 
   /// No description provided for @shotgunManageAssociation.
   ///
   /// In fr, this message translates to:
-  /// **'Gérer les shotgun de l\'association'**
+  /// **'Gérer les billetteries de l\'association'**
   String get shotgunManageAssociation;
 
   /// No description provided for @shotgunManageTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Gérer les shotgun de l\'association'**
+  /// **'Gérer les billetteries de l\'association'**
   String get shotgunManageTitle;
 
   /// No description provided for @shotgunMinPriceError.
@@ -8531,13 +8531,13 @@ abstract class AppLocalizations {
   /// No description provided for @shotgunNoShotgun.
   ///
   /// In fr, this message translates to:
-  /// **'Aucun shotgun pour ce store'**
+  /// **'Aucune billetterie pour ce store'**
   String get shotgunNoShotgun;
 
   /// No description provided for @shotgunNotFound.
   ///
   /// In fr, this message translates to:
-  /// **'Shotgun non trouvé'**
+  /// **'Billetterie non trouvé'**
   String get shotgunNotFound;
 
   /// No description provided for @shotgunNoTickets.
@@ -8627,7 +8627,7 @@ abstract class AppLocalizations {
   /// No description provided for @shotgunSave.
   ///
   /// In fr, this message translates to:
-  /// **'Enregistrer le shotgun'**
+  /// **'Enregistrer la billetterie'**
   String get shotgunSave;
 
   /// No description provided for @shotgunSaveChanges.
@@ -8657,7 +8657,7 @@ abstract class AppLocalizations {
   /// No description provided for @shotgunShotgun.
   ///
   /// In fr, this message translates to:
-  /// **'Shotgun'**
+  /// **'Billetterie'**
   String get shotgunShotgun;
 
   /// No description provided for @shotgunShotgunDescription.
@@ -8669,7 +8669,7 @@ abstract class AppLocalizations {
   /// No description provided for @shotgunStartDateLabel.
   ///
   /// In fr, this message translates to:
-  /// **'Date d\'ouverture du shotgun *'**
+  /// **'Date d\'ouverture de la billetterie *'**
   String get shotgunStartDateLabel;
 
   /// No description provided for @shotgunStartDateRequired.
@@ -8693,13 +8693,13 @@ abstract class AppLocalizations {
   /// No description provided for @shotgunTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Shotgun'**
+  /// **'Billetterie'**
   String get shotgunTitle;
 
   /// No description provided for @shotgunTitleLabel.
   ///
   /// In fr, this message translates to:
-  /// **'Titre du shotgun *'**
+  /// **'Titre de la billetterie *'**
   String get shotgunTitleLabel;
 
   /// No description provided for @shotgunTitleRequired.

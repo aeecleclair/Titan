@@ -4419,7 +4419,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shotgunCategoryLabel => 'Catégorie (tarif)';
 
   @override
-  String get shotgunCreate => 'Créer un shotgun';
+  String get shotgunCreate => 'Créer une billetterie';
 
   @override
   String get shotgunDateLabel => 'Date';
@@ -4428,19 +4428,21 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shotgunDeleteQuestionTooltip => 'Supprimer la question';
 
   @override
-  String get shotgunEditSuccess => 'Shotgun modifié avec succès';
+  String get shotgunEditSuccess => 'Billetterie modifié avec succès';
 
   @override
-  String get shotgunEditTitle => 'Modifier le shotgun';
+  String get shotgunEditTitle => 'Modifier la billetterie';
 
   @override
-  String get shotgunEndDateLabel => 'Date de fermeture du shotgun (optionnel)';
+  String get shotgunEndDateLabel =>
+      'Date de fermeture de la billetterie (optionnel)';
 
   @override
-  String get shotgunManageAssociation => 'Gérer les shotgun de l\'association';
+  String get shotgunManageAssociation =>
+      'Gérer les billetteries de l\'association';
 
   @override
-  String get shotgunManageTitle => 'Gérer les shotgun de l\'association';
+  String get shotgunManageTitle => 'Gérer les billetteries de l\'association';
 
   @override
   String get shotgunMinPriceError => 'Le prix minimum est 1€';
@@ -4449,10 +4451,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shotgunMyTickets => 'Mes billets';
 
   @override
-  String get shotgunNoShotgun => 'Aucun shotgun pour ce store';
+  String get shotgunNoShotgun => 'Aucune billetterie pour ce store';
 
   @override
-  String get shotgunNotFound => 'Shotgun non trouvé';
+  String get shotgunNotFound => 'Billetterie non trouvé';
 
   @override
   String get shotgunNoTickets => 'Vous n\'avez pas encore de billets';
@@ -4500,7 +4502,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shotgunReserve => 'Réserver';
 
   @override
-  String get shotgunSave => 'Enregistrer le shotgun';
+  String get shotgunSave => 'Enregistrer la billetterie';
 
   @override
   String get shotgunSaveChanges => 'Enregistrer les modifications';
@@ -4517,14 +4519,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shotgunSessions => 'Sessions';
 
   @override
-  String get shotgunShotgun => 'Shotgun';
+  String get shotgunShotgun => 'Billetterie';
 
   @override
   String get shotgunShotgunDescription =>
       'Réserver vos places pour des événements';
 
   @override
-  String get shotgunStartDateLabel => 'Date d\'ouverture du shotgun *';
+  String get shotgunStartDateLabel => 'Date d\'ouverture de la billetterie *';
 
   @override
   String get shotgunStartDateRequired => 'La date de début est obligatoire';
@@ -4538,10 +4540,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shotgunTariffs => 'Tarifs';
 
   @override
-  String get shotgunTitle => 'Shotgun';
+  String get shotgunTitle => 'Billetterie';
 
   @override
-  String get shotgunTitleLabel => 'Titre du shotgun *';
+  String get shotgunTitleLabel => 'Titre de la billetterie *';
 
   @override
   String get shotgunTitleRequired => 'Le titre est obligatoire';

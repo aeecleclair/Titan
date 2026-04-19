@@ -6,6 +6,7 @@ import 'package:titan/mypayment/class/secured_content_data.dart';
 import 'package:titan/mypayment/providers/payment_requests_provider.dart';
 import 'package:titan/mypayment/tools/key_service.dart';
 import 'package:titan/mypayment/ui/components/paiment_delegate/paiment_delegate_modal.dart';
+import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 
@@ -21,6 +22,9 @@ Future<void> showRequestModal({
   await showCustomBottomModal(
     context: context,
     ref: ref,
+    onCloseCallback: () {
+      ref.read(navbarVisibilityProvider.notifier).show();
+    },
     modal: PaimentDelegateModal(
       itemTitle: request.name,
       itemDescription: request.storeNote ?? '',
@@ -74,6 +78,7 @@ Future<void> showRequestModal({
                 : AppLocalizations.of(context)!.paiementPaymentRequestError,
           );
           if (success) onSuccess?.call();
+          ref.read(navbarVisibilityProvider.notifier).show();
         }
       },
       onRefuse: () async {
@@ -87,6 +92,7 @@ Future<void> showRequestModal({
                 ? AppLocalizations.of(context)!.paiementPaymentRequestRefused
                 : AppLocalizations.of(context)!.paiementPaymentRequestError,
           );
+          ref.read(navbarVisibilityProvider.notifier).show();
         }
       },
     ),

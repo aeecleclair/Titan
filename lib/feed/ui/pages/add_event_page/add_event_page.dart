@@ -64,6 +64,18 @@ class AddEditEventPage extends HookConsumerWidget {
       selectedAssociationTicketEventListProvider(selectedAssociation.value?.id),
     );
 
+    final ticketEventsNotifier = ref.watch(
+      selectedAssociationTicketEventListProvider(
+        selectedAssociation.value?.id,
+      ).notifier,
+    );
+
+    // Rafraîchir la liste des shotguns quand l'association change ou quand la page s'ouvre
+    useEffect(() {
+      ticketEventsNotifier.loadTicketEvents(selectedAssociation.value?.id);
+      return null;
+    }, [selectedAssociation.value?.id]);
+
     final useExistingTicketEvent = useState(false);
     final selectedTicketEvent = useState<TicketEvent?>(null);
 
@@ -692,6 +704,8 @@ class AddEditEventPage extends HookConsumerWidget {
                                 if (syncEvent.id != "") {
                                   final value = await eventListNotifier
                                       .updateEvent(newEvent);
+                                  // Rafraîchir la liste des shotguns
+                                  await ticketEventsNotifier.refresh();
                                   if (value) {
                                     if (poster.value == null) {
                                       QR.back();
@@ -731,6 +745,8 @@ class AddEditEventPage extends HookConsumerWidget {
                                       await eventCreationNotifier.addEvent(
                                         newEvent,
                                       );
+                                  // Rafraîchir la liste des shotguns pour inclure les nouveaux
+                                  await ticketEventsNotifier.refresh();
                                   if (poster.value == null) {
                                     QR.back();
                                     displayToastWithContext(

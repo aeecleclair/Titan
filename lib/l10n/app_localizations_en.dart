@@ -4355,7 +4355,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shotgunCategoryLabel => 'Category (pricing)';
 
   @override
-  String get shotgunCreate => 'Create a shotgun';
+  String get shotgunCreate => 'Create a ticketing';
 
   @override
   String get shotgunDateLabel => 'Date';
@@ -4364,19 +4364,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shotgunDeleteQuestionTooltip => 'Delete question';
 
   @override
-  String get shotgunEditSuccess => 'Shotgun updated successfully';
+  String get shotgunEditSuccess => 'Ticketing updated successfully';
 
   @override
-  String get shotgunEditTitle => 'Edit shotgun';
+  String get shotgunEditTitle => 'Edit ticketing';
 
   @override
-  String get shotgunEndDateLabel => 'Shotgun closing date (optional)';
+  String get shotgunEndDateLabel => 'Ticketing closing date (optional)';
 
   @override
-  String get shotgunManageAssociation => 'Manage association shotguns';
+  String get shotgunManageAssociation => 'Manage association ticketings';
 
   @override
-  String get shotgunManageTitle => 'Manage association shotguns';
+  String get shotgunManageTitle => 'Manage association ticketings';
 
   @override
   String get shotgunMinPriceError => 'Minimum price is 1€';
@@ -4385,10 +4385,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shotgunMyTickets => 'My tickets';
 
   @override
-  String get shotgunNoShotgun => 'No shotgun for this store';
+  String get shotgunNoShotgun => 'No ticketing for this store';
 
   @override
-  String get shotgunNotFound => 'Shotgun not found';
+  String get shotgunNotFound => 'Ticketing not found';
 
   @override
   String get shotgunNoTickets => 'You don\'t have any tickets yet';
@@ -4435,7 +4435,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shotgunReserve => 'Book';
 
   @override
-  String get shotgunSave => 'Save shotgun';
+  String get shotgunSave => 'Save ticketing';
 
   @override
   String get shotgunSaveChanges => 'Save changes';
@@ -4452,13 +4452,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shotgunSessions => 'Sessions';
 
   @override
-  String get shotgunShotgun => 'Shotgun';
+  String get shotgunShotgun => 'Ticketing';
 
   @override
   String get shotgunShotgunDescription => 'Book your seats for events';
 
   @override
-  String get shotgunStartDateLabel => 'Shotgun opening date *';
+  String get shotgunStartDateLabel => 'Ticketing opening date *';
 
   @override
   String get shotgunStartDateRequired => 'Start date is required';
@@ -4748,10 +4748,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsAdmin => 'Admin';
 
   @override
-  String get ticketsCreate => 'Create a tickets';
+  String get ticketsCreate => 'Create a ticketing';
 
   @override
-  String get ticketsManageAssociation => 'Manage association shotguns';
+  String get ticketsManageAssociation => 'Manage association ticketings';
 
   @override
   String get ticketsTitleLabel => 'Ticketing title *';
@@ -4834,7 +4834,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsSaveChanges => 'Save changes';
 
   @override
-  String get ticketsManageTitle => 'Manage association shotguns';
+  String get ticketsManageTitle => 'Manage association ticketings';
 
   @override
   String get ticketsNoTickets => 'You don\'t have any tickets yet';
