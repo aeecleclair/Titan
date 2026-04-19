@@ -299,13 +299,13 @@ class _TicketEventContent extends HookConsumerWidget {
         });
       } else if (checkoutState.error != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('${l10n.othersError}: ${checkoutState.error}'),
-              backgroundColor: Colors.red,
-            ),
-          );
-          // Reset after showing error
+          if (context.mounted) {
+            displayToast(
+              context,
+              TypeMsg.error,
+              '${l10n.othersError}: ${checkoutState.error}',
+            );
+          }
           ref.read(checkoutProvider.notifier).reset();
         });
       }
