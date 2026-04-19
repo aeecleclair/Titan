@@ -106,504 +106,514 @@ class AddEditEventPage extends HookConsumerWidget {
         child: SingleChildScrollView(
           controller: scrollController,
           physics: const BouncingScrollPhysics(),
-        child: Form(
-          key: key,
-          child: Column(
-            children: [
-              const SizedBox(height: 40),
-              AlignLeftText(
-                isEdit
-                    ? AppLocalizations.of(context)!.eventEditEvent
-                    : AppLocalizations.of(context)!.eventAddEvent,
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                color: Colors.grey,
-              ),
-              const SizedBox(height: 30),
-              HorizontalListView.builder(
-                key: eventTypeScrollKey,
-                height: 40,
-                items: CalendarEventType.values,
-                itemBuilder: (context, value, index) {
-                  final selected = eventType.value == value;
-                  return ItemChip(
-                    selected: selected,
-                    onTap: () async {
-                      eventType.value = value;
-                    },
-                    child: Text(
-                      calendarEventTypeToString(value),
-                      style: TextStyle(
-                        color: selected ? Colors.white : Colors.black,
-                        fontWeight: FontWeight.bold,
+          child: Form(
+            key: key,
+            child: Column(
+              children: [
+                const SizedBox(height: 40),
+                AlignLeftText(
+                  isEdit
+                      ? AppLocalizations.of(context)!.eventEditEvent
+                      : AppLocalizations.of(context)!.eventAddEvent,
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  color: Colors.grey,
+                ),
+                const SizedBox(height: 30),
+                HorizontalListView.builder(
+                  key: eventTypeScrollKey,
+                  height: 40,
+                  items: CalendarEventType.values,
+                  itemBuilder: (context, value, index) {
+                    final selected = eventType.value == value;
+                    return ItemChip(
+                      selected: selected,
+                      onTap: () async {
+                        eventType.value = value;
+                      },
+                      child: Text(
+                        calendarEventTypeToString(value),
+                        style: TextStyle(
+                          color: selected ? Colors.white : Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
-              Column(
-                children: [
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Column(
-                      children: [
-                        TextEntry(
-                          controller: name,
-                          label: AppLocalizations.of(context)!.eventName,
-                        ),
-                        const SizedBox(height: 30),
-                        TextEntry(
-                          controller: organizer,
-                          label: AppLocalizations.of(context)!.eventOrganizer,
-                        ),
-                        const SizedBox(height: 30),
-                        CheckBoxEntry(
-                          title: AppLocalizations.of(context)!.eventRecurrence,
-                          valueNotifier: recurrent,
-                          onChanged: () {
-                            start.text = "";
-                            end.text = "";
-                            recurrenceEndDate.text = "";
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        CheckBoxEntry(
-                          title: AppLocalizations.of(context)!.eventAllDay,
-                          valueNotifier: allDay,
-                          onChanged: () {
-                            start.text = "";
-                            end.text = "";
-                            recurrenceEndDate.text = "";
-                          },
-                        ),
-                        const SizedBox(height: 30),
-                        recurrent.value
-                            ? Column(
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.eventRecurrenceDays,
-                                        style: const TextStyle(
-                                          color: Colors.black,
+                    );
+                  },
+                ),
+                Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Column(
+                        children: [
+                          TextEntry(
+                            controller: name,
+                            label: AppLocalizations.of(context)!.eventName,
+                          ),
+                          const SizedBox(height: 30),
+                          TextEntry(
+                            controller: organizer,
+                            label: AppLocalizations.of(context)!.eventOrganizer,
+                          ),
+                          const SizedBox(height: 30),
+                          CheckBoxEntry(
+                            title: AppLocalizations.of(
+                              context,
+                            )!.eventRecurrence,
+                            valueNotifier: recurrent,
+                            onChanged: () {
+                              start.text = "";
+                              end.text = "";
+                              recurrenceEndDate.text = "";
+                            },
+                          ),
+                          const SizedBox(height: 20),
+                          CheckBoxEntry(
+                            title: AppLocalizations.of(context)!.eventAllDay,
+                            valueNotifier: allDay,
+                            onChanged: () {
+                              start.text = "";
+                              end.text = "";
+                              recurrenceEndDate.text = "";
+                            },
+                          ),
+                          const SizedBox(height: 30),
+                          recurrent.value
+                              ? Column(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.eventRecurrenceDays,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Column(
-                                        children: eventDayKeys
-                                            .asMap()
-                                            .entries
-                                            .map((entry) {
-                                              final index = entry.key;
-                                              final key = entry.value;
-                                              final localizedLabel =
-                                                  getLocalizedEventDay(
-                                                    context,
-                                                    key,
-                                                  );
-
-                                              return GestureDetector(
-                                                onTap: () =>
-                                                    selectedDaysNotifier.toggle(
-                                                      index,
-                                                    ),
-                                                behavior:
-                                                    HitTestBehavior.opaque,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      localizedLabel,
-                                                      style: TextStyle(
-                                                        color: Colors
-                                                            .grey
-                                                            .shade700,
-                                                        fontSize: 16,
-                                                      ),
-                                                    ),
-                                                    Checkbox(
-                                                      checkColor: Colors.white,
-                                                      activeColor: Colors.black,
-                                                      value:
-                                                          selectedDays[index],
-                                                      onChanged: (_) =>
-                                                          selectedDaysNotifier
-                                                              .toggle(index),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            })
-                                            .toList(),
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.eventInterval,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      TextEntry(
-                                        label: AppLocalizations.of(
-                                          context,
-                                        )!.eventInterval,
-                                        controller: interval,
-                                        prefix: AppLocalizations.of(
-                                          context,
-                                        )!.eventEventEvery,
-                                        suffix: AppLocalizations.of(
-                                          context,
-                                        )!.eventWeeks,
-                                        isInt: true,
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                      const SizedBox(height: 30),
-                                      if (!allDay.value)
+                                        const SizedBox(height: 10),
                                         Column(
-                                          children: [
-                                            DateEntry(
-                                              onTap: () => getOnlyHourDate(
-                                                context,
-                                                start,
+                                          children: eventDayKeys
+                                              .asMap()
+                                              .entries
+                                              .map((entry) {
+                                                final index = entry.key;
+                                                final key = entry.value;
+                                                final localizedLabel =
+                                                    getLocalizedEventDay(
+                                                      context,
+                                                      key,
+                                                    );
+
+                                                return GestureDetector(
+                                                  onTap: () =>
+                                                      selectedDaysNotifier
+                                                          .toggle(index),
+                                                  behavior:
+                                                      HitTestBehavior.opaque,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        localizedLabel,
+                                                        style: TextStyle(
+                                                          color: Colors
+                                                              .grey
+                                                              .shade700,
+                                                          fontSize: 16,
+                                                        ),
+                                                      ),
+                                                      Checkbox(
+                                                        checkColor:
+                                                            Colors.white,
+                                                        activeColor:
+                                                            Colors.black,
+                                                        value:
+                                                            selectedDays[index],
+                                                        onChanged: (_) =>
+                                                            selectedDaysNotifier
+                                                                .toggle(index),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              })
+                                              .toList(),
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Text(
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.eventInterval,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        TextEntry(
+                                          label: AppLocalizations.of(
+                                            context,
+                                          )!.eventInterval,
+                                          controller: interval,
+                                          prefix: AppLocalizations.of(
+                                            context,
+                                          )!.eventEventEvery,
+                                          suffix: AppLocalizations.of(
+                                            context,
+                                          )!.eventWeeks,
+                                          isInt: true,
+                                          keyboardType: TextInputType.number,
+                                        ),
+                                        const SizedBox(height: 30),
+                                        if (!allDay.value)
+                                          Column(
+                                            children: [
+                                              DateEntry(
+                                                onTap: () => getOnlyHourDate(
+                                                  context,
+                                                  start,
+                                                ),
+                                                controller: start,
+                                                label: AppLocalizations.of(
+                                                  context,
+                                                )!.eventStartHour,
                                               ),
-                                              controller: start,
-                                              label: AppLocalizations.of(
-                                                context,
-                                              )!.eventStartHour,
-                                            ),
-                                            const SizedBox(height: 30),
-                                            DateEntry(
-                                              onTap: () =>
-                                                  getOnlyHourDate(context, end),
-                                              controller: end,
-                                              label: AppLocalizations.of(
-                                                context,
-                                              )!.eventEndHour,
-                                            ),
-                                            const SizedBox(height: 30),
-                                          ],
+                                              const SizedBox(height: 30),
+                                              DateEntry(
+                                                onTap: () => getOnlyHourDate(
+                                                  context,
+                                                  end,
+                                                ),
+                                                controller: end,
+                                                label: AppLocalizations.of(
+                                                  context,
+                                                )!.eventEndHour,
+                                              ),
+                                              const SizedBox(height: 30),
+                                            ],
+                                          ),
+                                        DateEntry(
+                                          onTap: () => getOnlyDayDate(
+                                            context,
+                                            recurrenceEndDate,
+                                          ),
+                                          controller: recurrenceEndDate,
+                                          label: AppLocalizations.of(
+                                            context,
+                                          )!.eventRecurrenceEndDate,
                                         ),
-                                      DateEntry(
-                                        onTap: () => getOnlyDayDate(
-                                          context,
-                                          recurrenceEndDate,
-                                        ),
-                                        controller: recurrenceEndDate,
-                                        label: AppLocalizations.of(
-                                          context,
-                                        )!.eventRecurrenceEndDate,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )
-                            : Column(
-                                children: [
-                                  DateEntry(
-                                    onTap: () => allDay.value
-                                        ? getOnlyDayDate(context, start)
-                                        : getFullDate(context, start),
-                                    controller: start,
-                                    label: AppLocalizations.of(
-                                      context,
-                                    )!.eventStartDate,
-                                  ),
-                                  const SizedBox(height: 30),
-                                  DateEntry(
-                                    onTap: () => allDay.value
-                                        ? getOnlyDayDate(context, end)
-                                        : getFullDate(context, end),
-                                    controller: end,
-                                    label: AppLocalizations.of(
-                                      context,
-                                    )!.eventEndDate,
-                                  ),
-                                ],
-                              ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ItemChip(
-                        onTap: () {
-                          isRoom.value = true;
-                        },
-                        selected: isRoom.value,
-                        child: Text(
-                          AppLocalizations.of(context)!.eventRoom,
-                          style: TextStyle(
-                            color: isRoom.value ? Colors.white : Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      ItemChip(
-                        onTap: () {
-                          isRoom.value = false;
-                        },
-                        selected: !isRoom.value,
-                        child: Text(
-                          AppLocalizations.of(context)!.eventOther,
-                          style: TextStyle(
-                            color: isRoom.value ? Colors.black : Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  isRoom.value
-                      ? SizedBox(
-                          height: 59,
-                          child: AsyncChild(
-                            value: rooms,
-                            builder: (context, rooms) =>
-                                HorizontalListView.builder(
-                                  key: eventRoomScrollKey,
-                                  height: 40,
-                                  items: rooms,
-                                  itemBuilder: (context, room, index) {
-                                    final selected =
-                                        room.name == event.location;
-                                    return ItemChip(
-                                      onTap: () {
-                                        eventNotifier.setRoom(room.name);
-                                        location.text = room.name;
-                                      },
-                                      selected: selected,
-                                      child: Text(
-                                        room.name,
-                                        style: TextStyle(
-                                          color: selected
-                                              ? Colors.white
-                                              : Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    );
-                                  },
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              : Column(
+                                  children: [
+                                    DateEntry(
+                                      onTap: () => allDay.value
+                                          ? getOnlyDayDate(context, start)
+                                          : getFullDate(context, start),
+                                      controller: start,
+                                      label: AppLocalizations.of(
+                                        context,
+                                      )!.eventStartDate,
+                                    ),
+                                    const SizedBox(height: 30),
+                                    DateEntry(
+                                      onTap: () => allDay.value
+                                          ? getOnlyDayDate(context, end)
+                                          : getFullDate(context, end),
+                                      controller: end,
+                                      label: AppLocalizations.of(
+                                        context,
+                                      )!.eventEndDate,
+                                    ),
+                                  ],
                                 ),
-                          ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
-                          child: TextEntry(
-                            controller: location,
-                            label: AppLocalizations.of(context)!.eventLocation,
-                          ),
-                        ),
-                  const SizedBox(height: 30),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Column(
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        TextEntry(
-                          controller: description,
-                          label: AppLocalizations.of(context)!.eventDescription,
-                          keyboardType: TextInputType.multiline,
-                        ),
-                        const SizedBox(height: 50),
-                        WaitingButton(
-                          builder: (child) => AddEditButtonLayout(child: child),
-                          onTap: () async {
-                            if (key.currentState == null) {
-                              return;
-                            }
-                            final editedEventMsg = AppLocalizations.of(
-                              context,
-                            )!.eventEditedEvent;
-                            final addedEventMsg = AppLocalizations.of(
-                              context,
-                            )!.eventAddedEvent;
-                            final editingErrorMsg = AppLocalizations.of(
-                              context,
-                            )!.eventEditingError;
-                            final addingErrorMsg = AppLocalizations.of(
-                              context,
-                            )!.eventAddingError;
-                            if (key.currentState!.validate()) {
-                              if (allDay.value) {
-                                start.text =
-                                    "${!recurrent.value ? "${start.text} " : ""}00:00";
-                                end.text =
-                                    "${!recurrent.value ? "${end.text} " : ""}23:59";
-                              }
-                              if (end.text.contains("/") &&
-                                  isDateBefore(
-                                    processDateBack(
-                                      end.text,
-                                      locale.toString(),
-                                    ),
-                                    processDateBack(
-                                      start.text,
-                                      locale.toString(),
-                                    ),
-                                  )) {
-                                displayToast(
-                                  context,
-                                  TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.eventInvalidDates,
-                                );
-                              } else if (recurrent.value &&
-                                  selectedDays
-                                      .where((element) => element)
-                                      .isEmpty) {
-                                displayToast(
-                                  context,
-                                  TypeMsg.error,
-                                  AppLocalizations.of(
-                                    context,
-                                  )!.eventNoDaySelected,
-                                );
-                              } else {
-                                await tokenExpireWrapper(ref, () async {
-                                  String recurrenceRule = "";
-                                  String startString = start.text;
-                                  if (!startString.contains("/")) {
-                                    startString =
-                                        "${DateFormat.yMd(locale).format(now)} $startString";
-                                  }
-                                  String endString = end.text;
-                                  if (!endString.contains("/")) {
-                                    endString =
-                                        "${DateFormat.yMd(locale).format(now)} $endString";
-                                  }
-                                  if (recurrent.value) {
-                                    RecurrenceProperties recurrence =
-                                        RecurrenceProperties(startDate: now);
-                                    recurrence.recurrenceType =
-                                        RecurrenceType.weekly;
-                                    recurrence.recurrenceRange =
-                                        RecurrenceRange.endDate;
-                                    recurrence.endDate = DateTime.parse(
-                                      processDateBack(
-                                        recurrenceEndDate.text,
-                                        locale.toString(),
-                                      ),
-                                    );
-                                    recurrence.weekDays = WeekDays.values
-                                        .where(
-                                          (element) =>
-                                              selectedDays[(WeekDays.values
-                                                          .indexOf(element) -
-                                                      1) %
-                                                  7],
-                                        )
-                                        .toList();
-                                    recurrence.interval = int.parse(
-                                      interval.text,
-                                    );
-                                    recurrenceRule = SfCalendar.generateRRule(
-                                      recurrence,
-                                      DateTime.parse(
-                                        processDateBackWithHour(
-                                          startString,
-                                          locale.toString(),
-                                        ),
-                                      ),
-                                      DateTime.parse(
-                                        processDateBackWithHour(
-                                          endString,
-                                          locale.toString(),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  Event newEvent = Event(
-                                    id: isEdit ? event.id : "",
-                                    description: description.text,
-                                    end: DateTime.parse(
-                                      processDateBack(
-                                        endString,
-                                        locale.toString(),
-                                      ),
-                                    ),
-                                    name: name.text,
-                                    organizer: organizer.text,
-                                    allDay: allDay.value,
-                                    location: location.text,
-                                    start: DateTime.parse(
-                                      processDateBack(
-                                        startString,
-                                        locale.toString(),
-                                      ),
-                                    ),
-                                    type: eventType.value,
-                                    recurrenceRule: recurrenceRule,
-                                    applicantId: user.id,
-                                    applicant: user.toApplicant(),
-                                    decision: Decision.pending,
-                                  );
-                                  final value = isEdit
-                                      ? await eventListNotifier.updateEvent(
-                                          newEvent,
-                                        )
-                                      : await eventListNotifier.addEvent(
-                                          newEvent,
-                                        );
-                                  if (value) {
-                                    QR.back();
-                                    if (isEdit) {
-                                      displayToastWithContext(
-                                        TypeMsg.msg,
-                                        editedEventMsg,
-                                      );
-                                    } else {
-                                      displayToastWithContext(
-                                        TypeMsg.msg,
-                                        addedEventMsg,
-                                      );
-                                    }
-                                  } else {
-                                    if (isEdit) {
-                                      displayToastWithContext(
-                                        TypeMsg.error,
-                                        editingErrorMsg,
-                                      );
-                                    } else {
-                                      displayToastWithContext(
-                                        TypeMsg.error,
-                                        addingErrorMsg,
-                                      );
-                                    }
-                                  }
-                                });
-                              }
-                            }
+                        ItemChip(
+                          onTap: () {
+                            isRoom.value = true;
                           },
+                          selected: isRoom.value,
                           child: Text(
-                            isEdit
-                                ? AppLocalizations.of(context)!.eventEdit
-                                : AppLocalizations.of(context)!.eventAdd,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
+                            AppLocalizations.of(context)!.eventRoom,
+                            style: TextStyle(
+                              color: isRoom.value ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        ItemChip(
+                          onTap: () {
+                            isRoom.value = false;
+                          },
+                          selected: !isRoom.value,
+                          child: Text(
+                            AppLocalizations.of(context)!.eventOther,
+                            style: TextStyle(
+                              color: isRoom.value ? Colors.black : Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 30),
-                ],
-              ),
-            ],
+                    const SizedBox(height: 20),
+                    isRoom.value
+                        ? SizedBox(
+                            height: 59,
+                            child: AsyncChild(
+                              value: rooms,
+                              builder: (context, rooms) =>
+                                  HorizontalListView.builder(
+                                    key: eventRoomScrollKey,
+                                    height: 40,
+                                    items: rooms,
+                                    itemBuilder: (context, room, index) {
+                                      final selected =
+                                          room.name == event.location;
+                                      return ItemChip(
+                                        onTap: () {
+                                          eventNotifier.setRoom(room.name);
+                                          location.text = room.name;
+                                        },
+                                        selected: selected,
+                                        child: Text(
+                                          room.name,
+                                          style: TextStyle(
+                                            color: selected
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: TextEntry(
+                              controller: location,
+                              label: AppLocalizations.of(
+                                context,
+                              )!.eventLocation,
+                            ),
+                          ),
+                    const SizedBox(height: 30),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Column(
+                        children: [
+                          TextEntry(
+                            controller: description,
+                            label: AppLocalizations.of(
+                              context,
+                            )!.eventDescription,
+                            keyboardType: TextInputType.multiline,
+                          ),
+                          const SizedBox(height: 50),
+                          WaitingButton(
+                            builder: (child) =>
+                                AddEditButtonLayout(child: child),
+                            onTap: () async {
+                              if (key.currentState == null) {
+                                return;
+                              }
+                              final editedEventMsg = AppLocalizations.of(
+                                context,
+                              )!.eventEditedEvent;
+                              final addedEventMsg = AppLocalizations.of(
+                                context,
+                              )!.eventAddedEvent;
+                              final editingErrorMsg = AppLocalizations.of(
+                                context,
+                              )!.eventEditingError;
+                              final addingErrorMsg = AppLocalizations.of(
+                                context,
+                              )!.eventAddingError;
+                              if (key.currentState!.validate()) {
+                                if (allDay.value) {
+                                  start.text =
+                                      "${!recurrent.value ? "${start.text} " : ""}00:00";
+                                  end.text =
+                                      "${!recurrent.value ? "${end.text} " : ""}23:59";
+                                }
+                                if (end.text.contains("/") &&
+                                    isDateBefore(
+                                      processDateBack(
+                                        end.text,
+                                        locale.toString(),
+                                      ),
+                                      processDateBack(
+                                        start.text,
+                                        locale.toString(),
+                                      ),
+                                    )) {
+                                  displayToast(
+                                    context,
+                                    TypeMsg.error,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.eventInvalidDates,
+                                  );
+                                } else if (recurrent.value &&
+                                    selectedDays
+                                        .where((element) => element)
+                                        .isEmpty) {
+                                  displayToast(
+                                    context,
+                                    TypeMsg.error,
+                                    AppLocalizations.of(
+                                      context,
+                                    )!.eventNoDaySelected,
+                                  );
+                                } else {
+                                  await tokenExpireWrapper(ref, () async {
+                                    String recurrenceRule = "";
+                                    String startString = start.text;
+                                    if (!startString.contains("/")) {
+                                      startString =
+                                          "${DateFormat.yMd(locale).format(now)} $startString";
+                                    }
+                                    String endString = end.text;
+                                    if (!endString.contains("/")) {
+                                      endString =
+                                          "${DateFormat.yMd(locale).format(now)} $endString";
+                                    }
+                                    if (recurrent.value) {
+                                      RecurrenceProperties recurrence =
+                                          RecurrenceProperties(startDate: now);
+                                      recurrence.recurrenceType =
+                                          RecurrenceType.weekly;
+                                      recurrence.recurrenceRange =
+                                          RecurrenceRange.endDate;
+                                      recurrence.endDate = DateTime.parse(
+                                        processDateBack(
+                                          recurrenceEndDate.text,
+                                          locale.toString(),
+                                        ),
+                                      );
+                                      recurrence.weekDays = WeekDays.values
+                                          .where(
+                                            (element) =>
+                                                selectedDays[(WeekDays.values
+                                                            .indexOf(element) -
+                                                        1) %
+                                                    7],
+                                          )
+                                          .toList();
+                                      recurrence.interval = int.parse(
+                                        interval.text,
+                                      );
+                                      recurrenceRule = SfCalendar.generateRRule(
+                                        recurrence,
+                                        DateTime.parse(
+                                          processDateBackWithHour(
+                                            startString,
+                                            locale.toString(),
+                                          ),
+                                        ),
+                                        DateTime.parse(
+                                          processDateBackWithHour(
+                                            endString,
+                                            locale.toString(),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    Event newEvent = Event(
+                                      id: isEdit ? event.id : "",
+                                      description: description.text,
+                                      end: DateTime.parse(
+                                        processDateBack(
+                                          endString,
+                                          locale.toString(),
+                                        ),
+                                      ),
+                                      name: name.text,
+                                      organizer: organizer.text,
+                                      allDay: allDay.value,
+                                      location: location.text,
+                                      start: DateTime.parse(
+                                        processDateBack(
+                                          startString,
+                                          locale.toString(),
+                                        ),
+                                      ),
+                                      type: eventType.value,
+                                      recurrenceRule: recurrenceRule,
+                                      applicantId: user.id,
+                                      applicant: user.toApplicant(),
+                                      decision: Decision.pending,
+                                    );
+                                    final value = isEdit
+                                        ? await eventListNotifier.updateEvent(
+                                            newEvent,
+                                          )
+                                        : await eventListNotifier.addEvent(
+                                            newEvent,
+                                          );
+                                    if (value) {
+                                      QR.back();
+                                      if (isEdit) {
+                                        displayToastWithContext(
+                                          TypeMsg.msg,
+                                          editedEventMsg,
+                                        );
+                                      } else {
+                                        displayToastWithContext(
+                                          TypeMsg.msg,
+                                          addedEventMsg,
+                                        );
+                                      }
+                                    } else {
+                                      if (isEdit) {
+                                        displayToastWithContext(
+                                          TypeMsg.error,
+                                          editingErrorMsg,
+                                        );
+                                      } else {
+                                        displayToastWithContext(
+                                          TypeMsg.error,
+                                          addingErrorMsg,
+                                        );
+                                      }
+                                    }
+                                  });
+                                }
+                              }
+                            },
+                            child: Text(
+                              isEdit
+                                  ? AppLocalizations.of(context)!.eventEdit
+                                  : AppLocalizations.of(context)!.eventAdd,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
         ),
       ),
     );

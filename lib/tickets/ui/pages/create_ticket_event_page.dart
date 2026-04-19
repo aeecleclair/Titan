@@ -61,205 +61,205 @@ class CreateTicketEventPage extends HookConsumerWidget {
           child: ScrollToHideNavbar(
             controller: scrollController,
             child: SingleChildScrollView(
-            controller: scrollController,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 16),
-                SizedBox(
-                  height: 50,
-                  child: HorizontalMultiSelect<UserStore>(
-                    items: myStores.valueOrNull ?? [],
-                    selectedItem: selectedStore.value,
-                    onItemSelected: (store) {
-                      selectedStore.value = store;
-                      associationEventsListNotifier.loadAssociationEventList(
-                        store.id,
-                      );
-                    },
-                    itemBuilder: (context, store, index, selected) => Text(
-                      store.name,
-                      style: TextStyle(
-                        color: selected
-                            ? ColorConstants.background
-                            : ColorConstants.tertiary,
-                        fontSize: 16,
+              controller: scrollController,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: 50,
+                    child: HorizontalMultiSelect<UserStore>(
+                      items: myStores.valueOrNull ?? [],
+                      selectedItem: selectedStore.value,
+                      onItemSelected: (store) {
+                        selectedStore.value = store;
+                        associationEventsListNotifier.loadAssociationEventList(
+                          store.id,
+                        );
+                      },
+                      itemBuilder: (context, store, index, selected) => Text(
+                        store.name,
+                        style: TextStyle(
+                          color: selected
+                              ? ColorConstants.background
+                              : ColorConstants.tertiary,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                TextEntry(
-                  maxLines: 1,
-                  label: l10n.ticketsTitleLabel,
-                  controller: titleController,
-                  textCapitalization: TextCapitalization.sentences,
-                  onChanged: (_) {},
-                ),
-                const SizedBox(height: 16),
-                TextEntry(
-                  maxLines: 1,
-                  label: l10n.ticketsPlacesLabel,
-                  controller: placesController,
-                  keyboardType: TextInputType.number,
-                  isInt: true,
-                  canBeEmpty: true,
-                  onChanged: (_) {},
-                ),
-                const SizedBox(height: 24),
+                  const SizedBox(height: 16),
+                  TextEntry(
+                    maxLines: 1,
+                    label: l10n.ticketsTitleLabel,
+                    controller: titleController,
+                    textCapitalization: TextCapitalization.sentences,
+                    onChanged: (_) {},
+                  ),
+                  const SizedBox(height: 16),
+                  TextEntry(
+                    maxLines: 1,
+                    label: l10n.ticketsPlacesLabel,
+                    controller: placesController,
+                    keyboardType: TextInputType.number,
+                    isInt: true,
+                    canBeEmpty: true,
+                    onChanged: (_) {},
+                  ),
+                  const SizedBox(height: 24),
 
-                DateEntry(
-                  label: l10n.ticketsStartDateLabel,
-                  controller: startDateController,
-                  onTap: () => getFullDate(context, startDateController),
-                ),
+                  DateEntry(
+                    label: l10n.ticketsStartDateLabel,
+                    controller: startDateController,
+                    onTap: () => getFullDate(context, startDateController),
+                  ),
 
-                DateEntry(
-                  label: l10n.ticketsEndDateLabel,
-                  controller: endDateController,
-                  onTap: () => getFullDate(context, endDateController),
-                ),
+                  DateEntry(
+                    label: l10n.ticketsEndDateLabel,
+                    controller: endDateController,
+                    onTap: () => getFullDate(context, endDateController),
+                  ),
 
-                const SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
-                TarifCard(onChanged: (value) => categories.value = value),
-                const SizedBox(height: 16),
+                  TarifCard(onChanged: (value) => categories.value = value),
+                  const SizedBox(height: 16),
 
-                SessionCard(onChanged: (value) => sessions.value = value),
-                const SizedBox(height: 16),
-                _ExtraQuestionsSection(
-                  questions: questions.value,
-                  onChanged: (value) => questions.value = value,
-                ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton(
-                    onPressed: () async {
-                      // Validation des champs obligatoires
-                      if (titleController.text.trim().isEmpty) {
-                        displayToast(
-                          context,
-                          TypeMsg.error,
-                          l10n.ticketsTitleRequired,
-                        );
-                        return;
-                      }
-
-                      if (startDateController.text.trim().isEmpty) {
-                        displayToast(
-                          context,
-                          TypeMsg.error,
-                          l10n.ticketsStartDateRequired,
-                        );
-                        return;
-                      }
-
-                      if (categories.value.isEmpty) {
-                        displayToast(
-                          context,
-                          TypeMsg.error,
-                          l10n.ticketsCategoriesRequired,
-                        );
-                        return;
-                      }
-
-                      if (sessions.value.isEmpty) {
-                        displayToast(
-                          context,
-                          TypeMsg.error,
-                          l10n.ticketsSessionsRequired,
-                        );
-                        return;
-                      }
-
-                      try {
-                        final openDatetime = DateTime.parse(
-                          processDateBackWithHourMaybe(
-                            startDateController.text,
-                            locale.toString(),
-                          ),
-                        );
-
-                        // Date de fin optionnelle
-                        DateTime? closeDatetime;
-                        if (endDateController.text.trim().isNotEmpty) {
-                          closeDatetime = DateTime.parse(
-                            processDateBackWithHourMaybe(
-                              endDateController.text,
-                              locale.toString(),
-                            ),
-                          );
-                        }
-
-                        // Nombre de places optionnel (null si vide)
-                        int? quota;
-                        if (placesController.text.trim().isNotEmpty) {
-                          quota = int.parse(placesController.text);
-                        }
-
-                        final success = await ticketEventListNotifier
-                            .createTicketEvent(
-                              TicketEvent(
-                                id: '',
-                                name: titleController.text.trim(),
-                                storeId: selectedStore.value?.id ?? '',
-                                quota: quota,
-                                openDatetime: openDatetime,
-                                closeDatetime: closeDatetime,
-                                categories: categories.value,
-                                sessions: sessions.value,
-                                questions: questions.value
-                                    .where(
-                                      (q) =>
-                                          q.controller.text.trim().isNotEmpty,
-                                    )
-                                    .map(
-                                      (q) => Question(
-                                        id: '',
-                                        eventId: '',
-                                        question: q.controller.text.trim(),
-                                        answerType: q.answerType,
-                                        price: null,
-                                        required: q.required,
-                                        disabled: false,
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
-                            );
-
-                        if (success && context.mounted) {
-                          displayToast(
-                            context,
-                            TypeMsg.msg,
-                            l10n.ticketsReservationSuccess,
-                          );
-                          QR.back();
-                        }
-                      } catch (e) {
-                        if (context.mounted) {
+                  SessionCard(onChanged: (value) => sessions.value = value),
+                  const SizedBox(height: 16),
+                  _ExtraQuestionsSection(
+                    questions: questions.value,
+                    onChanged: (value) => questions.value = value,
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton(
+                      onPressed: () async {
+                        // Validation des champs obligatoires
+                        if (titleController.text.trim().isEmpty) {
                           displayToast(
                             context,
                             TypeMsg.error,
-                            "${l10n.othersError}: ${e.toString()}",
+                            l10n.ticketsTitleRequired,
                           );
+                          return;
                         }
-                      }
-                    },
-                    style: FilledButton.styleFrom(
-                      backgroundColor: ColorConstants.main,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+
+                        if (startDateController.text.trim().isEmpty) {
+                          displayToast(
+                            context,
+                            TypeMsg.error,
+                            l10n.ticketsStartDateRequired,
+                          );
+                          return;
+                        }
+
+                        if (categories.value.isEmpty) {
+                          displayToast(
+                            context,
+                            TypeMsg.error,
+                            l10n.ticketsCategoriesRequired,
+                          );
+                          return;
+                        }
+
+                        if (sessions.value.isEmpty) {
+                          displayToast(
+                            context,
+                            TypeMsg.error,
+                            l10n.ticketsSessionsRequired,
+                          );
+                          return;
+                        }
+
+                        try {
+                          final openDatetime = DateTime.parse(
+                            processDateBackWithHourMaybe(
+                              startDateController.text,
+                              locale.toString(),
+                            ),
+                          );
+
+                          // Date de fin optionnelle
+                          DateTime? closeDatetime;
+                          if (endDateController.text.trim().isNotEmpty) {
+                            closeDatetime = DateTime.parse(
+                              processDateBackWithHourMaybe(
+                                endDateController.text,
+                                locale.toString(),
+                              ),
+                            );
+                          }
+
+                          // Nombre de places optionnel (null si vide)
+                          int? quota;
+                          if (placesController.text.trim().isNotEmpty) {
+                            quota = int.parse(placesController.text);
+                          }
+
+                          final success = await ticketEventListNotifier
+                              .createTicketEvent(
+                                TicketEvent(
+                                  id: '',
+                                  name: titleController.text.trim(),
+                                  storeId: selectedStore.value?.id ?? '',
+                                  quota: quota,
+                                  openDatetime: openDatetime,
+                                  closeDatetime: closeDatetime,
+                                  categories: categories.value,
+                                  sessions: sessions.value,
+                                  questions: questions.value
+                                      .where(
+                                        (q) =>
+                                            q.controller.text.trim().isNotEmpty,
+                                      )
+                                      .map(
+                                        (q) => Question(
+                                          id: '',
+                                          eventId: '',
+                                          question: q.controller.text.trim(),
+                                          answerType: q.answerType,
+                                          price: null,
+                                          required: q.required,
+                                          disabled: false,
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                              );
+
+                          if (success && context.mounted) {
+                            displayToast(
+                              context,
+                              TypeMsg.msg,
+                              l10n.ticketsReservationSuccess,
+                            );
+                            QR.back();
+                          }
+                        } catch (e) {
+                          if (context.mounted) {
+                            displayToast(
+                              context,
+                              TypeMsg.error,
+                              "${l10n.othersError}: ${e.toString()}",
+                            );
+                          }
+                        }
+                      },
+                      style: FilledButton.styleFrom(
+                        backgroundColor: ColorConstants.main,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                      ),
+                      child: Text(l10n.ticketsSave),
                     ),
-                    child: Text(l10n.ticketsSave),
                   ),
-                ),
-                const SizedBox(height: 80),
-              ],
+                  const SizedBox(height: 80),
+                ],
+              ),
             ),
-          ),
           ),
         ),
       ),

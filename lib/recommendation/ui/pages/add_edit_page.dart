@@ -72,174 +72,173 @@ class AddEditRecommendationPage extends HookConsumerWidget {
           child: ScrollToHideNavbar(
             controller: scrollController,
             child: SingleChildScrollView(
-            controller: scrollController,
-            child: Column(
-              children: [
-                TextEntry(
-                  maxLines: 1,
-                  label: AppLocalizations.of(context)!.recommendationTitle,
-                  controller: title,
-                ),
-                const SizedBox(height: 30),
-                FormField<File>(
-                  validator: (e) {
-                    if (logoBytes.value == null && !isEdit) {
-                      return AppLocalizations.of(
-                        context,
-                      )!.recommendationAddImage;
-                    }
-                    return null;
-                  },
-                  builder: (formFieldState) => Center(
-                    child: ImagePickerOnTap(
-                      imageBytesNotifier: logoBytes,
-                      imageNotifier: logo,
-                      displayToastWithContext: displayAdvertToastWithContext,
-                      picker: picker,
-                      child: logo.value != null
-                          ? Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50.0),
-                                image: DecorationImage(
-                                  image: logoBytes.value != null
-                                      ? Image.memory(logoBytes.value!).image
-                                      : logo.value!.image,
+              controller: scrollController,
+              child: Column(
+                children: [
+                  TextEntry(
+                    maxLines: 1,
+                    label: AppLocalizations.of(context)!.recommendationTitle,
+                    controller: title,
+                  ),
+                  const SizedBox(height: 30),
+                  FormField<File>(
+                    validator: (e) {
+                      if (logoBytes.value == null && !isEdit) {
+                        return AppLocalizations.of(
+                          context,
+                        )!.recommendationAddImage;
+                      }
+                      return null;
+                    },
+                    builder: (formFieldState) => Center(
+                      child: ImagePickerOnTap(
+                        imageBytesNotifier: logoBytes,
+                        imageNotifier: logo,
+                        displayToastWithContext: displayAdvertToastWithContext,
+                        picker: picker,
+                        child: logo.value != null
+                            ? Container(
+                                height: 100,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  image: DecorationImage(
+                                    image: logoBytes.value != null
+                                        ? Image.memory(logoBytes.value!).image
+                                        : logo.value!.image,
+                                  ),
                                 ),
+                              )
+                            : const HeroIcon(
+                                HeroIcons.photo,
+                                size: 100,
+                                color: Colors.grey,
                               ),
-                            )
-                          : const HeroIcon(
-                              HeroIcons.photo,
-                              size: 100,
-                              color: Colors.grey,
-                            ),
+                      ),
                     ),
                   ),
-                ),
-                TextEntry(
-                  maxLines: 1,
-                  label: AppLocalizations.of(context)!.recommendationCode,
-                  controller: code,
-                  canBeEmpty: true,
-                ),
-                const SizedBox(height: 30),
-                TextEntry(
-                  minLines: 1,
-                  maxLines: 2,
-                  keyboardType: TextInputType.multiline,
-                  label: AppLocalizations.of(context)!.recommendationSummary,
-                  controller: summary,
-                ),
-                const SizedBox(height: 30),
-                TextEntry(
-                  minLines: 5,
-                  maxLines: 50,
-                  keyboardType: TextInputType.multiline,
-                  label: AppLocalizations.of(
-                    context,
-                  )!.recommendationDescription,
-                  controller: description,
-                ),
-                const SizedBox(height: 50),
-                WaitingButton(
-                  child: Text(
-                    isEdit
-                        ? AppLocalizations.of(context)!.recommendationEdit
-                        : AppLocalizations.of(context)!.recommendationAdd,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  TextEntry(
+                    maxLines: 1,
+                    label: AppLocalizations.of(context)!.recommendationCode,
+                    controller: code,
+                    canBeEmpty: true,
                   ),
-                  onTap: () async {
-                    if (formKey.currentState!.validate()) {
-                      Recommendation newRecommendation = Recommendation(
-                        id: recommendation.id,
-                        creation: recommendation.creation,
-                        title: title.text,
-                        code: code.text == "" ? null : code.text,
-                        summary: summary.text,
-                        description: description.text,
-                      );
-                      final editedRecommendationMsg = isEdit
-                          ? AppLocalizations.of(
-                              context,
-                            )!.recommendationEditedRecommendation
-                          : AppLocalizations.of(
-                              context,
-                            )!.recommendationAddedRecommendation;
-                      final editingErrorMsg = isEdit
-                          ? AppLocalizations.of(
-                              context,
-                            )!.recommendationEditingError
-                          : AppLocalizations.of(
-                              context,
-                            )!.recommendationAddingError;
-                      final value = isEdit
-                          ? await recommendationListNotifier
-                                .updateRecommendation(newRecommendation)
-                          : await recommendationListNotifier.addRecommendation(
+                  const SizedBox(height: 30),
+                  TextEntry(
+                    minLines: 1,
+                    maxLines: 2,
+                    keyboardType: TextInputType.multiline,
+                    label: AppLocalizations.of(context)!.recommendationSummary,
+                    controller: summary,
+                  ),
+                  const SizedBox(height: 30),
+                  TextEntry(
+                    minLines: 5,
+                    maxLines: 50,
+                    keyboardType: TextInputType.multiline,
+                    label: AppLocalizations.of(
+                      context,
+                    )!.recommendationDescription,
+                    controller: description,
+                  ),
+                  const SizedBox(height: 50),
+                  WaitingButton(
+                    child: Text(
+                      isEdit
+                          ? AppLocalizations.of(context)!.recommendationEdit
+                          : AppLocalizations.of(context)!.recommendationAdd,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onTap: () async {
+                      if (formKey.currentState!.validate()) {
+                        Recommendation newRecommendation = Recommendation(
+                          id: recommendation.id,
+                          creation: recommendation.creation,
+                          title: title.text,
+                          code: code.text == "" ? null : code.text,
+                          summary: summary.text,
+                          description: description.text,
+                        );
+                        final editedRecommendationMsg = isEdit
+                            ? AppLocalizations.of(
+                                context,
+                              )!.recommendationEditedRecommendation
+                            : AppLocalizations.of(
+                                context,
+                              )!.recommendationAddedRecommendation;
+                        final editingErrorMsg = isEdit
+                            ? AppLocalizations.of(
+                                context,
+                              )!.recommendationEditingError
+                            : AppLocalizations.of(
+                                context,
+                              )!.recommendationAddingError;
+                        final value = isEdit
+                            ? await recommendationListNotifier
+                                  .updateRecommendation(newRecommendation)
+                            : await recommendationListNotifier
+                                  .addRecommendation(newRecommendation);
+                        if (value) {
+                          displayAdvertToastWithContext(
+                            TypeMsg.msg,
+                            editedRecommendationMsg,
+                          );
+                          if (isEdit) {
+                            recommendationNotifier.setRecommendation(
                               newRecommendation,
                             );
-                      if (value) {
-                        displayAdvertToastWithContext(
-                          TypeMsg.msg,
-                          editedRecommendationMsg,
-                        );
-                        if (isEdit) {
-                          recommendationNotifier.setRecommendation(
-                            newRecommendation,
-                          );
-                          recommendationList.maybeWhen(
-                            data: (list) {
-                              if (logoBytes.value != null) {
+                            recommendationList.maybeWhen(
+                              data: (list) {
+                                if (logoBytes.value != null) {
+                                  recommendationLogoNotifier
+                                      .updateRecommendationLogo(
+                                        recommendation.id!,
+                                        logoBytes.value!,
+                                      );
+                                }
+                              },
+                              orElse: () {},
+                            );
+                          } else {
+                            recommendationList.maybeWhen(
+                              data: (list) {
+                                final newRecommendation = list.last;
                                 recommendationLogoNotifier
                                     .updateRecommendationLogo(
-                                      recommendation.id!,
+                                      newRecommendation.id!,
                                       logoBytes.value!,
                                     );
-                              }
-                            },
-                            orElse: () {},
-                          );
+                              },
+                              orElse: () {},
+                            );
+                          }
+                          QR.back();
                         } else {
-                          recommendationList.maybeWhen(
-                            data: (list) {
-                              final newRecommendation = list.last;
-                              recommendationLogoNotifier
-                                  .updateRecommendationLogo(
-                                    newRecommendation.id!,
-                                    logoBytes.value!,
-                                  );
-                            },
-                            orElse: () {},
+                          displayAdvertToastWithContext(
+                            TypeMsg.error,
+                            editingErrorMsg,
                           );
                         }
-                        QR.back();
                       } else {
-                        displayAdvertToastWithContext(
+                        displayToast(
+                          context,
                           TypeMsg.error,
-                          editingErrorMsg,
+                          AppLocalizations.of(
+                            context,
+                          )!.recommendationIncorrectOrMissingFields,
                         );
                       }
-                    } else {
-                      displayToast(
-                        context,
-                        TypeMsg.error,
-                        AppLocalizations.of(
-                          context,
-                        )!.recommendationIncorrectOrMissingFields,
-                      );
-                    }
-                  },
-                  builder: (child) => AddEditButtonLayout(child: child),
-                ),
-                const SizedBox(height: 20),
-              ],
+                    },
+                    builder: (child) => AddEditButtonLayout(child: child),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
-          ),
           ),
         ),
       ),

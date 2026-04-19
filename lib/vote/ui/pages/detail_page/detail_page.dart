@@ -26,154 +26,158 @@ class DetailPage extends HookConsumerWidget {
       child: ScrollToHideNavbar(
         controller: scrollController,
         child: SingleChildScrollView(
-        controller: scrollController,
-        physics: const BouncingScrollPhysics(),
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 80),
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.grey.shade50,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withValues(alpha: 0.2),
-                          blurRadius: 10,
-                          offset: const Offset(0, 10),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 50),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          alignment: Alignment.center,
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const SizedBox(height: 30),
-                              if (contenderLogos[contender.id] == null)
-                                const SizedBox.shrink()
-                              else
-                                SizedBox(
-                                  height: 140,
-                                  width: 140,
-                                  child: AsyncChild(
-                                    value: contenderLogos[contender.id]!,
-                                    builder: (context, data) {
-                                      if (data.isEmpty) {
-                                        logoNotifier.getLogo(contender.id).then(
-                                          (value) {
-                                            contenderLogosNotifier.setTData(
-                                              contender.id,
-                                              AsyncData([value]),
-                                            );
-                                          },
-                                        );
-                                        return const HeroIcon(
-                                          HeroIcons.userCircle,
-                                          size: 40,
-                                        );
-                                      }
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.grey.shade50,
-                                          image: DecorationImage(
-                                            image: data.first.image,
-                                            fit: BoxFit.cover,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withValues(
-                                                alpha: 0.2,
-                                              ),
-                                              blurRadius: 10,
-                                              spreadRadius: 5,
-                                              offset: const Offset(0, 5),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                    errorBuilder: (error, stack) =>
-                                        const Center(
-                                          child: HeroIcon(
-                                            HeroIcons.exclamationCircle,
+          controller: scrollController,
+          physics: const BouncingScrollPhysics(),
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 80),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.grey.shade50,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withValues(alpha: 0.2),
+                            blurRadius: 10,
+                            offset: const Offset(0, 10),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 50),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 30.0,
+                            ),
+                            alignment: Alignment.center,
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const SizedBox(height: 30),
+                                if (contenderLogos[contender.id] == null)
+                                  const SizedBox.shrink()
+                                else
+                                  SizedBox(
+                                    height: 140,
+                                    width: 140,
+                                    child: AsyncChild(
+                                      value: contenderLogos[contender.id]!,
+                                      builder: (context, data) {
+                                        if (data.isEmpty) {
+                                          logoNotifier
+                                              .getLogo(contender.id)
+                                              .then((value) {
+                                                contenderLogosNotifier.setTData(
+                                                  contender.id,
+                                                  AsyncData([value]),
+                                                );
+                                              });
+                                          return const HeroIcon(
+                                            HeroIcons.userCircle,
                                             size: 40,
+                                          );
+                                        }
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.grey.shade50,
+                                            image: DecorationImage(
+                                              image: data.first.image,
+                                              fit: BoxFit.cover,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey.withValues(
+                                                  alpha: 0.2,
+                                                ),
+                                                blurRadius: 10,
+                                                spreadRadius: 5,
+                                                offset: const Offset(0, 5),
+                                              ),
+                                            ],
                                           ),
-                                        ),
+                                        );
+                                      },
+                                      errorBuilder: (error, stack) =>
+                                          const Center(
+                                            child: HeroIcon(
+                                              HeroIcons.exclamationCircle,
+                                              size: 40,
+                                            ),
+                                          ),
+                                    ),
+                                  ),
+                                const SizedBox(height: 20),
+                                Text(
+                                  contender.section.name,
+                                  style: const TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              const SizedBox(height: 20),
-                              Text(
-                                contender.section.name,
-                                style: const TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
+                                AlignLeftText(
+                                  contender.description,
+                                  padding: const EdgeInsets.only(
+                                    top: 15,
+                                    bottom: 20,
+                                  ),
                                 ),
-                              ),
-                              AlignLeftText(
-                                contender.description,
-                                padding: const EdgeInsets.only(
-                                  top: 15,
-                                  bottom: 20,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        contender.members.isNotEmpty
-                            ? SingleChildScrollView(
-                                physics: const BouncingScrollPhysics(),
-                                child: Wrap(
-                                  children: contender.members
-                                      .map(
-                                        (e) => MemberCard(
-                                          member: e,
-                                          onEdit: () {},
-                                          onDelete: () {},
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                              )
-                            : const SizedBox(),
-                        const SizedBox(height: 20),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          child: Text(
-                            contender.program,
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                        ),
-                        if (contender.program.trim().isNotEmpty)
+                          contender.members.isNotEmpty
+                              ? SingleChildScrollView(
+                                  physics: const BouncingScrollPhysics(),
+                                  child: Wrap(
+                                    children: contender.members
+                                        .map(
+                                          (e) => MemberCard(
+                                            member: e,
+                                            onEdit: () {},
+                                            onDelete: () {},
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                                )
+                              : const SizedBox(),
                           const SizedBox(height: 20),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 30.0,
+                            ),
+                            child: Text(
+                              contender.program,
+                              style: const TextStyle(fontSize: 15),
+                            ),
+                          ),
+                          if (contender.program.trim().isNotEmpty)
+                            const SizedBox(height: 20),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Center(
-                child: ContenderCard(
-                  contender: contender,
-                  onDelete: () async {},
-                  onEdit: () {},
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Center(
+                  child: ContenderCard(
+                    contender: contender,
+                    onDelete: () async {},
+                    onEdit: () {},
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

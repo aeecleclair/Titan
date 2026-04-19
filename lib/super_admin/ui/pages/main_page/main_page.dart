@@ -25,38 +25,40 @@ class SuperAdminMainPage extends HookConsumerWidget {
         child: ScrollToHideNavbar(
           controller: controller,
           child: GridView(
-          controller: controller,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 20,
-            childAspectRatio:
-                MediaQuery.of(context).size.width <
-                    MediaQuery.of(context).size.height
-                ? 0.75
-                : 1.5,
+            controller: controller,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 20,
+              childAspectRatio:
+                  MediaQuery.of(context).size.width <
+                      MediaQuery.of(context).size.height
+                  ? 0.75
+                  : 1.5,
+            ),
+            children: [
+              GestureDetector(
+                onTap: () {
+                  QR.to(
+                    SuperAdminRouter.root + SuperAdminRouter.editPermissions,
+                  );
+                },
+                child: MenuCardUi(
+                  text: AppLocalizations.of(context)!.adminVisibilities,
+                  icon: HeroIcons.eye,
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  QR.to(SuperAdminRouter.root + SuperAdminRouter.schools);
+                },
+                child: MenuCardUi(
+                  text: AppLocalizations.of(context)!.adminSchools,
+                  icon: HeroIcons.academicCap,
+                ),
+              ),
+            ],
           ),
-          children: [
-            GestureDetector(
-              onTap: () {
-                QR.to(SuperAdminRouter.root + SuperAdminRouter.editPermissions);
-              },
-              child: MenuCardUi(
-                text: AppLocalizations.of(context)!.adminVisibilities,
-                icon: HeroIcons.eye,
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                QR.to(SuperAdminRouter.root + SuperAdminRouter.schools);
-              },
-              child: MenuCardUi(
-                text: AppLocalizations.of(context)!.adminSchools,
-                icon: HeroIcons.academicCap,
-              ),
-            ),
-          ],
-        ),
         ),
       ),
     );

@@ -45,104 +45,104 @@ class EditInformationPage extends HookConsumerWidget {
           return ScrollToHideNavbar(
             controller: scrollController,
             child: SingleChildScrollView(
-            controller: scrollController,
-            physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics(),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Form(
-                key: key,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 30),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        SeedLibraryTextConstants.editInformation,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: ColorConstants.gradient1,
+              controller: scrollController,
+              physics: const AlwaysScrollableScrollPhysics(
+                parent: BouncingScrollPhysics(),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Form(
+                  key: key,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 30),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          SeedLibraryTextConstants.editInformation,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: ColorConstants.gradient1,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 30),
-                    TextEntry(
-                      controller: description,
-                      label: SeedLibraryTextConstants.description,
-                      keyboardType: TextInputType.multiline,
-                    ),
-                    const SizedBox(height: 20),
-                    TextEntry(
-                      controller: contact,
-                      label: SeedLibraryTextConstants.contact,
-                    ),
-                    const SizedBox(height: 20),
-                    TextEntry(
-                      controller: facebookUrl,
-                      label: SeedLibraryTextConstants.facebookUrl,
-                    ),
-                    const SizedBox(height: 20),
-                    TextEntry(
-                      controller: forumUrl,
-                      label: SeedLibraryTextConstants.forumUrl,
-                    ),
-                    const SizedBox(height: 20),
-                    WaitingButton(
-                      builder: (child) => AddEditButtonLayout(
-                        colors: const [
-                          ColorConstants.gradient1,
-                          ColorConstants.gradient2,
-                        ],
-                        child: child,
+                      const SizedBox(height: 30),
+                      TextEntry(
+                        controller: description,
+                        label: SeedLibraryTextConstants.description,
+                        keyboardType: TextInputType.multiline,
                       ),
-                      onTap: () async {
-                        if (!key.currentState!.validate()) {
-                          displayToastWithContext(
-                            TypeMsg.error,
-                            SeedLibraryTextConstants.emptyFieldError,
-                          );
-                          return;
-                        }
-                        await tokenExpireWrapper(ref, () async {
-                          final value = await informationNotifier
-                              .updateInformation(
-                                syncInformation.copyWith(
-                                  description: description.text,
-                                  contact: contact.text,
-                                  facebookUrl: facebookUrl.text,
-                                  forumUrl: forumUrl.text,
-                                ),
-                              );
-                          if (value) {
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              SeedLibraryTextConstants.updatedInformation,
-                            );
-                          } else {
+                      const SizedBox(height: 20),
+                      TextEntry(
+                        controller: contact,
+                        label: SeedLibraryTextConstants.contact,
+                      ),
+                      const SizedBox(height: 20),
+                      TextEntry(
+                        controller: facebookUrl,
+                        label: SeedLibraryTextConstants.facebookUrl,
+                      ),
+                      const SizedBox(height: 20),
+                      TextEntry(
+                        controller: forumUrl,
+                        label: SeedLibraryTextConstants.forumUrl,
+                      ),
+                      const SizedBox(height: 20),
+                      WaitingButton(
+                        builder: (child) => AddEditButtonLayout(
+                          colors: const [
+                            ColorConstants.gradient1,
+                            ColorConstants.gradient2,
+                          ],
+                          child: child,
+                        ),
+                        onTap: () async {
+                          if (!key.currentState!.validate()) {
                             displayToastWithContext(
                               TypeMsg.error,
-                              SeedLibraryTextConstants.updatingError,
+                              SeedLibraryTextConstants.emptyFieldError,
                             );
+                            return;
                           }
-                          QR.back();
-                        });
-                      },
-                      child: Text(
-                        SeedLibraryTextConstants.update,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                          await tokenExpireWrapper(ref, () async {
+                            final value = await informationNotifier
+                                .updateInformation(
+                                  syncInformation.copyWith(
+                                    description: description.text,
+                                    contact: contact.text,
+                                    facebookUrl: facebookUrl.text,
+                                    forumUrl: forumUrl.text,
+                                  ),
+                                );
+                            if (value) {
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                SeedLibraryTextConstants.updatedInformation,
+                              );
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                SeedLibraryTextConstants.updatingError,
+                              );
+                            }
+                            QR.back();
+                          });
+                        },
+                        child: Text(
+                          SeedLibraryTextConstants.update,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
           );
         },
       ),

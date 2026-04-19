@@ -77,259 +77,265 @@ class AddEditStructurePage extends HookConsumerWidget {
         child: ScrollToHideNavbar(
           controller: scrollController,
           child: SingleChildScrollView(
-          controller: scrollController,
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics(),
-          ),
-          child: Form(
-            key: key,
-            child: Column(
-              children: [
-                Text(
-                  isEdit
-                      ? localizeWithContext.adminEditStructure
-                      : localizeWithContext.adminAddStructure,
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 20),
-                TextEntry(
-                  controller: name,
-                  label: localizeWithContext.adminName,
-                ),
-                const SizedBox(height: 20),
-                TextEntry(
-                  controller: shortId,
-                  label: localizeWithContext.adminShortId,
-                  validator: (value) {
-                    if (value.isNotEmpty && value.length != 3) {
-                      return localizeWithContext.adminShortIdError;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 30),
-                Text(
-                  localizeWithContext.adminSiegeAddress,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 10),
-                TextEntry(
-                  controller: siegeAddressStreet,
-                  label: localizeWithContext.adminStreet,
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: TextEntry(
-                        controller: siegeAddressCity,
-                        label: localizeWithContext.adminCity,
+            controller: scrollController,
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics(),
+            ),
+            child: Form(
+              key: key,
+              child: Column(
+                children: [
+                  Text(
+                    isEdit
+                        ? localizeWithContext.adminEditStructure
+                        : localizeWithContext.adminAddStructure,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 20),
+                  TextEntry(
+                    controller: name,
+                    label: localizeWithContext.adminName,
+                  ),
+                  const SizedBox(height: 20),
+                  TextEntry(
+                    controller: shortId,
+                    label: localizeWithContext.adminShortId,
+                    validator: (value) {
+                      if (value.isNotEmpty && value.length != 3) {
+                        return localizeWithContext.adminShortIdError;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 30),
+                  Text(
+                    localizeWithContext.adminSiegeAddress,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 10),
+                  TextEntry(
+                    controller: siegeAddressStreet,
+                    label: localizeWithContext.adminStreet,
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: TextEntry(
+                          controller: siegeAddressCity,
+                          label: localizeWithContext.adminCity,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: TextEntry(
-                        controller: siegeAddressZipcode,
-                        label: localizeWithContext.adminZipcode,
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: TextEntry(
+                          controller: siegeAddressZipcode,
+                          label: localizeWithContext.adminZipcode,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                TextEntry(
-                  controller: siegeAddressCountry,
-                  label: localizeWithContext.adminCountry,
-                ),
-                const SizedBox(height: 20),
-                TextEntry(
-                  controller: siret,
-                  label: localizeWithContext.adminSiret,
-                  validator: (value) {
-                    if (value.isNotEmpty &&
-                        value.replaceAll(" ", "").length != 14) {
-                      return localizeWithContext.adminSiretError;
-                    }
-                    return null;
-                  },
-                  canBeEmpty: true,
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  localizeWithContext.adminBankDetails,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 20),
-                TextEntry(
-                  controller: iban,
-                  label: localizeWithContext.adminIban,
-                  validator: (value) {
-                    if (value.isNotEmpty &&
-                        value.replaceAll(" ", "").length != 27) {
-                      return localizeWithContext.adminIbanError;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
-                TextEntry(
-                  controller: bic,
-                  label: localizeWithContext.adminBic,
-                  validator: (value) {
-                    if (value.isNotEmpty &&
-                        value.replaceAll(" ", "").length != 11) {
-                      return localizeWithContext.adminBicError;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
-                AsyncChild(
-                  value: allAssociationMembershipList,
-                  builder: (context, allAssociationMembershipList) {
-                    return HorizontalListView.builder(
-                      height: 40,
-                      items: [
-                        ...allAssociationMembershipList,
-                        AssociationMembership.empty(),
-                      ],
-                      itemBuilder: (context, associationMembership, index) {
-                        final selected =
-                            currentMembership.value.id ==
-                            associationMembership.id;
-                        return ItemChip(
-                          selected: selected,
-                          onTap: () async {
-                            currentMembership.value = associationMembership;
-                          },
-                          child: Text(
-                            associationMembership.name.toUpperCase(),
-                            style: TextStyle(
-                              color: selected ? Colors.white : Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                isEdit
-                    ? Column(
-                        children: [
-                          Text(
-                            localizeWithContext.adminManager,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            structureManager.getName(),
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  TextEntry(
+                    controller: siegeAddressCountry,
+                    label: localizeWithContext.adminCountry,
+                  ),
+                  const SizedBox(height: 20),
+                  TextEntry(
+                    controller: siret,
+                    label: localizeWithContext.adminSiret,
+                    validator: (value) {
+                      if (value.isNotEmpty &&
+                          value.replaceAll(" ", "").length != 14) {
+                        return localizeWithContext.adminSiretError;
+                      }
+                      return null;
+                    },
+                    canBeEmpty: true,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    localizeWithContext.adminBankDetails,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 20),
+                  TextEntry(
+                    controller: iban,
+                    label: localizeWithContext.adminIban,
+                    validator: (value) {
+                      if (value.isNotEmpty &&
+                          value.replaceAll(" ", "").length != 27) {
+                        return localizeWithContext.adminIbanError;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextEntry(
+                    controller: bic,
+                    label: localizeWithContext.adminBic,
+                    validator: (value) {
+                      if (value.isNotEmpty &&
+                          value.replaceAll(" ", "").length != 11) {
+                        return localizeWithContext.adminBicError;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  AsyncChild(
+                    value: allAssociationMembershipList,
+                    builder: (context, allAssociationMembershipList) {
+                      return HorizontalListView.builder(
+                        height: 40,
+                        items: [
+                          ...allAssociationMembershipList,
+                          AssociationMembership.empty(),
                         ],
-                      )
-                    : ListItem(
-                        title: structureManager.id.isNotEmpty
-                            ? structureManager.getName()
-                            : localizeWithContext.adminSelectManager,
-                        subtitle: structureManager.getName(),
-                        onTap: () async {
-                          await showCustomBottomModal(
-                            context: context,
-                            ref: ref,
-                            modal: UserSearchModal(),
+                        itemBuilder: (context, associationMembership, index) {
+                          final selected =
+                              currentMembership.value.id ==
+                              associationMembership.id;
+                          return ItemChip(
+                            selected: selected,
+                            onTap: () async {
+                              currentMembership.value = associationMembership;
+                            },
+                            child: Text(
+                              associationMembership.name.toUpperCase(),
+                              style: TextStyle(
+                                color: selected ? Colors.white : Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           );
                         },
-                      ),
-                const SizedBox(height: 20),
-                Button(
-                  onPressed: () async {
-                    if (key.currentState == null) {
-                      return;
-                    }
-                    if (structureManager.id.isEmpty && !isEdit) {
-                      displayToastWithContext(
-                        TypeMsg.error,
-                        localizeWithContext.adminNoManager,
                       );
-                      return;
-                    }
-                    if (key.currentState!.validate()) {
-                      await tokenExpireWrapper(ref, () async {
-                        final editedStructureMsg = isEdit
-                            ? localizeWithContext.adminEditedStructure
-                            : localizeWithContext.adminAddedStructure;
-                        final addedStructureErrorMsg = AppLocalizations.of(
-                          context,
-                        )!.adminAddingError;
-                        final value = isEdit
-                            ? await structureListNotifier.updateStructure(
-                                Structure(
-                                  id: structure.id,
-                                  shortId: shortId.text,
-                                  name: name.text,
-                                  siegeAddressStreet: siegeAddressStreet.text,
-                                  siegeAddressCity: siegeAddressCity.text,
-                                  siegeAddressZipcode: siegeAddressZipcode.text,
-                                  siegeAddressCountry: siegeAddressCountry.text,
-                                  siret: siret.text,
-                                  iban: iban.text,
-                                  bic: bic.text,
-                                  associationMembership:
-                                      currentMembership.value,
-                                  managerUser: structureManager,
-                                ),
-                              )
-                            : await structureListNotifier.createStructure(
-                                Structure(
-                                  id: '',
-                                  shortId: shortId.text,
-                                  name: name.text,
-                                  siegeAddressStreet: siegeAddressStreet.text,
-                                  siegeAddressCity: siegeAddressCity.text,
-                                  siegeAddressZipcode: siegeAddressZipcode.text,
-                                  siegeAddressCountry: siegeAddressCountry.text,
-                                  siret: siret.text,
-                                  iban: iban.text,
-                                  bic: bic.text,
-                                  associationMembership:
-                                      currentMembership.value,
-                                  managerUser: structureManager,
-                                ),
-                              );
-                        if (value) {
-                          QR.back();
-                          structureManagerNotifier.setUser(SimpleUser.empty());
-                          displayToastWithContext(
-                            TypeMsg.msg,
-                            editedStructureMsg,
-                          );
-                        } else {
-                          displayToastWithContext(
-                            TypeMsg.error,
-                            addedStructureErrorMsg,
-                          );
-                        }
-                      });
-                    }
-                  },
-                  text: isEdit
-                      ? localizeWithContext.adminEdit
-                      : localizeWithContext.adminAdd,
-                ),
-                SizedBox(height: 80),
-              ],
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  isEdit
+                      ? Column(
+                          children: [
+                            Text(
+                              localizeWithContext.adminManager,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              structureManager.getName(),
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                        )
+                      : ListItem(
+                          title: structureManager.id.isNotEmpty
+                              ? structureManager.getName()
+                              : localizeWithContext.adminSelectManager,
+                          subtitle: structureManager.getName(),
+                          onTap: () async {
+                            await showCustomBottomModal(
+                              context: context,
+                              ref: ref,
+                              modal: UserSearchModal(),
+                            );
+                          },
+                        ),
+                  const SizedBox(height: 20),
+                  Button(
+                    onPressed: () async {
+                      if (key.currentState == null) {
+                        return;
+                      }
+                      if (structureManager.id.isEmpty && !isEdit) {
+                        displayToastWithContext(
+                          TypeMsg.error,
+                          localizeWithContext.adminNoManager,
+                        );
+                        return;
+                      }
+                      if (key.currentState!.validate()) {
+                        await tokenExpireWrapper(ref, () async {
+                          final editedStructureMsg = isEdit
+                              ? localizeWithContext.adminEditedStructure
+                              : localizeWithContext.adminAddedStructure;
+                          final addedStructureErrorMsg = AppLocalizations.of(
+                            context,
+                          )!.adminAddingError;
+                          final value = isEdit
+                              ? await structureListNotifier.updateStructure(
+                                  Structure(
+                                    id: structure.id,
+                                    shortId: shortId.text,
+                                    name: name.text,
+                                    siegeAddressStreet: siegeAddressStreet.text,
+                                    siegeAddressCity: siegeAddressCity.text,
+                                    siegeAddressZipcode:
+                                        siegeAddressZipcode.text,
+                                    siegeAddressCountry:
+                                        siegeAddressCountry.text,
+                                    siret: siret.text,
+                                    iban: iban.text,
+                                    bic: bic.text,
+                                    associationMembership:
+                                        currentMembership.value,
+                                    managerUser: structureManager,
+                                  ),
+                                )
+                              : await structureListNotifier.createStructure(
+                                  Structure(
+                                    id: '',
+                                    shortId: shortId.text,
+                                    name: name.text,
+                                    siegeAddressStreet: siegeAddressStreet.text,
+                                    siegeAddressCity: siegeAddressCity.text,
+                                    siegeAddressZipcode:
+                                        siegeAddressZipcode.text,
+                                    siegeAddressCountry:
+                                        siegeAddressCountry.text,
+                                    siret: siret.text,
+                                    iban: iban.text,
+                                    bic: bic.text,
+                                    associationMembership:
+                                        currentMembership.value,
+                                    managerUser: structureManager,
+                                  ),
+                                );
+                          if (value) {
+                            QR.back();
+                            structureManagerNotifier.setUser(
+                              SimpleUser.empty(),
+                            );
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              editedStructureMsg,
+                            );
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              addedStructureErrorMsg,
+                            );
+                          }
+                        });
+                      }
+                    },
+                    text: isEdit
+                        ? localizeWithContext.adminEdit
+                        : localizeWithContext.adminAdd,
+                  ),
+                  SizedBox(height: 80),
+                ],
+              ),
             ),
           ),
-        ),
         ),
       ),
     );

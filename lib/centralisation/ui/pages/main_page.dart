@@ -49,11 +49,10 @@ class CentralisationMainPage extends HookConsumerWidget {
                     child: ReorderableListView(
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
-                      proxyDecorator: (widget, _, animation) =>
-                          Transform.scale(
-                            scale: 1 + .05 * animation.value,
-                            child: widget,
-                          ),
+                      proxyDecorator: (widget, _, animation) => Transform.scale(
+                        scale: 1 + .05 * animation.value,
+                        child: widget,
+                      ),
                       header: const SizedBox(width: 15),
                       footer: const SizedBox(width: 15),
                       onReorder: favoritesNameNotifier.reorderFavorites,

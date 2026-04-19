@@ -85,283 +85,283 @@ class EditTicketEventPage extends HookConsumerWidget {
       child: ScrollToHideNavbar(
         controller: scrollController,
         child: SingleChildScrollView(
-        controller: scrollController,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 16),
-            Text(
-              l10n.ticketsEditTitle,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: ColorConstants.title,
-              ),
-            ),
-            const SizedBox(height: 24),
-            TextEntry(
-              maxLines: 1,
-              label: l10n.ticketsTitleLabel,
-              controller: titleController,
-              onChanged: (_) {},
-            ),
-            const SizedBox(height: 16),
-            TextEntry(
-              maxLines: 1,
-              label: l10n.ticketsPlacesLabel,
-              controller: placesController,
-              onChanged: (_) {},
-            ),
-            const SizedBox(height: 24),
-            DateEntry(
-              label: l10n.ticketsStartDateLabel,
-              controller: startDateController,
-              onTap: () => getFullDate(context, startDateController),
-            ),
-            DateEntry(
-              label: l10n.ticketsEndDateLabel,
-              controller: endDateController,
-              onTap: () => getFullDate(context, endDateController),
-            ),
-            const SizedBox(height: 16),
-            if (categories.value.isEmpty)
-              Card(
-                margin: EdgeInsets.zero,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  side: BorderSide(
-                    color: ColorConstants.secondary.withValues(alpha: 0.5),
-                  ),
+          controller: scrollController,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 16),
+              Text(
+                l10n.ticketsEditTitle,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: ColorConstants.title,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.ticketsTariffs,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+              ),
+              const SizedBox(height: 24),
+              TextEntry(
+                maxLines: 1,
+                label: l10n.ticketsTitleLabel,
+                controller: titleController,
+                onChanged: (_) {},
+              ),
+              const SizedBox(height: 16),
+              TextEntry(
+                maxLines: 1,
+                label: l10n.ticketsPlacesLabel,
+                controller: placesController,
+                onChanged: (_) {},
+              ),
+              const SizedBox(height: 24),
+              DateEntry(
+                label: l10n.ticketsStartDateLabel,
+                controller: startDateController,
+                onTap: () => getFullDate(context, startDateController),
+              ),
+              DateEntry(
+                label: l10n.ticketsEndDateLabel,
+                controller: endDateController,
+                onTap: () => getFullDate(context, endDateController),
+              ),
+              const SizedBox(height: 16),
+              if (categories.value.isEmpty)
+                Card(
+                  margin: EdgeInsets.zero,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(
+                      color: ColorConstants.secondary.withValues(alpha: 0.5),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.ticketsTariffs,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'DEBUG: Aucune catégorie trouvée',
-                        style: TextStyle(color: ColorConstants.error),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            else
-              _EditCategoriesSection(
-                categories: categories.value,
-                onChanged: (value) => categories.value = value,
-              ),
-            const SizedBox(height: 16),
-            if (sessions.value.isEmpty)
-              Card(
-                margin: EdgeInsets.zero,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  side: BorderSide(
-                    color: ColorConstants.secondary.withValues(alpha: 0.5),
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.ticketsSessions,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                        const SizedBox(height: 16),
+                        Text(
+                          'DEBUG: Aucune catégorie trouvée',
+                          style: TextStyle(color: ColorConstants.error),
                         ),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'DEBUG: Aucune session trouvée',
-                        style: TextStyle(color: ColorConstants.error),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
+                )
+              else
+                _EditCategoriesSection(
+                  categories: categories.value,
+                  onChanged: (value) => categories.value = value,
                 ),
-              )
-            else
-              _EditSessionsSection(
-                sessions: sessions.value,
-                onChanged: (value) => sessions.value = value,
+              const SizedBox(height: 16),
+              if (sessions.value.isEmpty)
+                Card(
+                  margin: EdgeInsets.zero,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(
+                      color: ColorConstants.secondary.withValues(alpha: 0.5),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.ticketsSessions,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'DEBUG: Aucune session trouvée',
+                          style: TextStyle(color: ColorConstants.error),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              else
+                _EditSessionsSection(
+                  sessions: sessions.value,
+                  onChanged: (value) => sessions.value = value,
+                ),
+              const SizedBox(height: 16),
+              _EditQuestionsSection(
+                questions: questions.value,
+                onChanged: (value) => questions.value = value,
               ),
-            const SizedBox(height: 16),
-            _EditQuestionsSection(
-              questions: questions.value,
-              onChanged: (value) => questions.value = value,
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: () async {
-                  // Validation
-                  if (titleController.text.trim().isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(l10n.ticketsTitleRequired),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                    return;
-                  }
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: () async {
+                    // Validation
+                    if (titleController.text.trim().isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(l10n.ticketsTitleRequired),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
 
-                  if (startDateController.text.trim().isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(l10n.ticketsStartDateRequired),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                    return;
-                  }
+                    if (startDateController.text.trim().isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(l10n.ticketsStartDateRequired),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
 
-                  try {
-                    final openDatetime = DateTime.parse(
-                      processDateBackWithHourMaybe(
-                        startDateController.text,
-                        locale.toString(),
-                      ),
-                    );
-
-                    DateTime? closeDatetime;
-                    if (endDateController.text.trim().isNotEmpty) {
-                      closeDatetime = DateTime.parse(
+                    try {
+                      final openDatetime = DateTime.parse(
                         processDateBackWithHourMaybe(
-                          endDateController.text,
+                          startDateController.text,
                           locale.toString(),
                         ),
                       );
-                    }
 
-                    int quota = 0;
-                    if (placesController.text.trim().isNotEmpty) {
-                      quota = int.parse(placesController.text);
-                    }
-
-                    // Mettre à jour l'événement principal
-                    final success = await ticketEventEditNotifier
-                        .editTicketEvent(
-                          ticketEvent.copyWith(
-                            name: titleController.text.trim(),
-                            quota: quota,
-                            openDatetime: openDatetime,
-                            closeDatetime: closeDatetime,
+                      DateTime? closeDatetime;
+                      if (endDateController.text.trim().isNotEmpty) {
+                        closeDatetime = DateTime.parse(
+                          processDateBackWithHourMaybe(
+                            endDateController.text,
+                            locale.toString(),
                           ),
                         );
+                      }
 
-                    if (!success || !context.mounted) return;
+                      int quota = 0;
+                      if (placesController.text.trim().isNotEmpty) {
+                        quota = int.parse(placesController.text);
+                      }
 
-                    // Mettre à jour les catégories modifiées
-                    for (int i = 0; i < categories.value.length; i++) {
-                      if (i < ticketEvent.categories.length) {
-                        final original = ticketEvent.categories[i];
-                        final updated = categories.value[i];
-                        if (original.name != updated.name ||
-                            original.price != updated.price) {
-                          await ticketEventEditNotifier.updateCategory(
-                            ticketEvent.id,
-                            updated,
+                      // Mettre à jour l'événement principal
+                      final success = await ticketEventEditNotifier
+                          .editTicketEvent(
+                            ticketEvent.copyWith(
+                              name: titleController.text.trim(),
+                              quota: quota,
+                              openDatetime: openDatetime,
+                              closeDatetime: closeDatetime,
+                            ),
                           );
+
+                      if (!success || !context.mounted) return;
+
+                      // Mettre à jour les catégories modifiées
+                      for (int i = 0; i < categories.value.length; i++) {
+                        if (i < ticketEvent.categories.length) {
+                          final original = ticketEvent.categories[i];
+                          final updated = categories.value[i];
+                          if (original.name != updated.name ||
+                              original.price != updated.price) {
+                            await ticketEventEditNotifier.updateCategory(
+                              ticketEvent.id,
+                              updated,
+                            );
+                          }
                         }
                       }
-                    }
 
-                    if (!context.mounted) return;
+                      if (!context.mounted) return;
 
-                    // Mettre à jour les sessions modifiées
-                    for (int i = 0; i < sessions.value.length; i++) {
-                      if (i < ticketEvent.sessions.length) {
-                        final original = ticketEvent.sessions[i];
-                        final updated = sessions.value[i];
-                        if (original.name != updated.name ||
-                            original.startDatetime != updated.startDatetime ||
-                            original.quota != updated.quota) {
-                          await ticketEventEditNotifier.updateSession(
-                            ticketEvent.id,
-                            updated,
-                          );
+                      // Mettre à jour les sessions modifiées
+                      for (int i = 0; i < sessions.value.length; i++) {
+                        if (i < ticketEvent.sessions.length) {
+                          final original = ticketEvent.sessions[i];
+                          final updated = sessions.value[i];
+                          if (original.name != updated.name ||
+                              original.startDatetime != updated.startDatetime ||
+                              original.quota != updated.quota) {
+                            await ticketEventEditNotifier.updateSession(
+                              ticketEvent.id,
+                              updated,
+                            );
+                          }
                         }
                       }
-                    }
 
-                    if (!context.mounted) return;
+                      if (!context.mounted) return;
 
-                    // Mettre à jour ou créer les questions
-                    for (int i = 0; i < questions.value.length; i++) {
-                      final questionData = questions.value[i];
-                      if (questionData.id != null) {
-                        // Question existante - vérifier si elle a changé
-                        final originalQuestion = ticketEvent.questions
-                            .firstWhere((q) => q.id == questionData.id);
-                        if (questionData.controller.text !=
-                                originalQuestion.question ||
-                            questionData.answerType !=
-                                originalQuestion.answerType ||
-                            questionData.required !=
-                                originalQuestion.required) {
-                          await ticketEventEditNotifier.updateQuestion(
+                      // Mettre à jour ou créer les questions
+                      for (int i = 0; i < questions.value.length; i++) {
+                        final questionData = questions.value[i];
+                        if (questionData.id != null) {
+                          // Question existante - vérifier si elle a changé
+                          final originalQuestion = ticketEvent.questions
+                              .firstWhere((q) => q.id == questionData.id);
+                          if (questionData.controller.text !=
+                                  originalQuestion.question ||
+                              questionData.answerType !=
+                                  originalQuestion.answerType ||
+                              questionData.required !=
+                                  originalQuestion.required) {
+                            await ticketEventEditNotifier.updateQuestion(
+                              ticketEvent.id,
+                              questionData.id!,
+                              questionData.controller.text,
+                              questionData.answerType,
+                              questionData.required,
+                            );
+                          }
+                        } else {
+                          // Nouvelle question - la créer
+                          await ticketEventEditNotifier.createQuestion(
                             ticketEvent.id,
-                            questionData.id!,
                             questionData.controller.text,
                             questionData.answerType,
                             questionData.required,
                           );
                         }
-                      } else {
-                        // Nouvelle question - la créer
-                        await ticketEventEditNotifier.createQuestion(
-                          ticketEvent.id,
-                          questionData.controller.text,
-                          questionData.answerType,
-                          questionData.required,
-                        );
                       }
-                    }
 
-                    if (!context.mounted) return;
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(l10n.ticketsEditSuccess),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
-                    Navigator.of(context).pop();
-                  } catch (e) {
-                    if (!context.mounted) return;
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("${l10n.othersError}: ${e.toString()}"),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  }
-                },
-                style: FilledButton.styleFrom(
-                  backgroundColor: ColorConstants.main,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                      if (!context.mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(l10n.ticketsEditSuccess),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                      Navigator.of(context).pop();
+                    } catch (e) {
+                      if (!context.mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("${l10n.othersError}: ${e.toString()}"),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  },
+                  style: FilledButton.styleFrom(
+                    backgroundColor: ColorConstants.main,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: Text(l10n.ticketsSaveChanges),
                 ),
-                child: Text(l10n.ticketsSaveChanges),
               ),
-            ),
-            const SizedBox(height: 80),
-          ],
+              const SizedBox(height: 80),
+            ],
+          ),
         ),
-      ),
       ),
     );
   }

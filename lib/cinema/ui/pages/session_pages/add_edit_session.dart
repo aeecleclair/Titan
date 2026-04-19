@@ -72,307 +72,309 @@ class AddEditSessionPage extends HookConsumerWidget {
       child: ScrollToHideNavbar(
         controller: scrollController,
         child: SingleChildScrollView(
-        controller: scrollController,
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Form(
-            key: key,
-            child: Column(
-              children: [
-                AlignLeftText(
-                  isEdit
-                      ? AppLocalizations.of(context)!.cinemaEditSession
-                      : AppLocalizations.of(context)!.cinemaAddSession,
-                  color: Colors.grey,
-                ),
-                const SizedBox(height: 30),
-                TextField(
-                  controller: tmdbUrl,
-                  cursorColor: Colors.black,
-                  decoration: InputDecoration(
-                    labelText: AppLocalizations.of(
-                      context,
-                    )!.cinemaImportFromTMDB,
-                    labelStyle: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
-                    suffixIcon: Container(
-                      padding: const EdgeInsets.all(10),
-                      child: WaitingButton(
-                        onTap: () async {
-                          if (tmdbUrl.text.isEmpty) {
-                            displayToastWithContext(
-                              TypeMsg.error,
-                              AppLocalizations.of(context)!.cinemaEmptyUrl,
-                            );
-                            return;
-                          }
-                          try {
-                            final url = Uri.parse(tmdbUrl.text);
-                            final movieId = switch (url.host) {
-                              "www.themoviedb.org" => url.pathSegments[1],
-                              "www.imdb.com" => url.pathSegments[1],
-                              _ => throw const FormatException(),
-                            };
-                            tokenExpireWrapper(ref, () async {
-                              movieNotifier.loadMovie(movieId).then((value) {
-                                value.when(
-                                  data: (data) async {
-                                    name.text = data.title;
-                                    overview.text = data.overview;
-                                    posterUrl.text = data.posterUrl;
-                                    genre.text = data.genres.join(', ');
-                                    tagline.text = data.tagline;
-                                    duration.text = parseDurationBack(
-                                      data.runtime,
-                                    );
-                                    logo.value = await getFromUrl(
-                                      data.posterUrl,
-                                    );
-                                  },
-                                  loading: () {},
-                                  error: (e, s) {
-                                    displayToastWithContext(
-                                      TypeMsg.error,
-                                      e.toString(),
-                                    );
-                                  },
-                                );
+          controller: scrollController,
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Form(
+              key: key,
+              child: Column(
+                children: [
+                  AlignLeftText(
+                    isEdit
+                        ? AppLocalizations.of(context)!.cinemaEditSession
+                        : AppLocalizations.of(context)!.cinemaAddSession,
+                    color: Colors.grey,
+                  ),
+                  const SizedBox(height: 30),
+                  TextField(
+                    controller: tmdbUrl,
+                    cursorColor: Colors.black,
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(
+                        context,
+                      )!.cinemaImportFromTMDB,
+                      labelStyle: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                      ),
+                      suffixIcon: Container(
+                        padding: const EdgeInsets.all(10),
+                        child: WaitingButton(
+                          onTap: () async {
+                            if (tmdbUrl.text.isEmpty) {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                AppLocalizations.of(context)!.cinemaEmptyUrl,
+                              );
+                              return;
+                            }
+                            try {
+                              final url = Uri.parse(tmdbUrl.text);
+                              final movieId = switch (url.host) {
+                                "www.themoviedb.org" => url.pathSegments[1],
+                                "www.imdb.com" => url.pathSegments[1],
+                                _ => throw const FormatException(),
+                              };
+                              tokenExpireWrapper(ref, () async {
+                                movieNotifier.loadMovie(movieId).then((value) {
+                                  value.when(
+                                    data: (data) async {
+                                      name.text = data.title;
+                                      overview.text = data.overview;
+                                      posterUrl.text = data.posterUrl;
+                                      genre.text = data.genres.join(', ');
+                                      tagline.text = data.tagline;
+                                      duration.text = parseDurationBack(
+                                        data.runtime,
+                                      );
+                                      logo.value = await getFromUrl(
+                                        data.posterUrl,
+                                      );
+                                    },
+                                    loading: () {},
+                                    error: (e, s) {
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        e.toString(),
+                                      );
+                                    },
+                                  );
+                                });
                               });
-                            });
-                          } on FormatException catch (_) {
-                            displayToastWithContext(
-                              TypeMsg.error,
-                              AppLocalizations.of(context)!.cinemaInvalidUrl,
-                            );
-                            return;
-                          }
-                        },
-                        builder: (child) => TmdbButton(child: child),
-                        child: const HeroIcon(
-                          HeroIcons.arrowRight,
-                          size: 22,
-                          color: Colors.black,
+                            } on FormatException catch (_) {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                AppLocalizations.of(context)!.cinemaInvalidUrl,
+                              );
+                              return;
+                            }
+                          },
+                          builder: (child) => TmdbButton(child: child),
+                          child: const HeroIcon(
+                            HeroIcons.arrowRight,
+                            size: 22,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
-                    ),
-                    border: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 2.0),
-                    ),
-                    enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 2.0),
-                    ),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 2.0),
+                      border: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 2.0),
+                      ),
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 2.0),
+                      ),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black, width: 2.0),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 30),
-                (logo.value == null)
-                    ? logoFile.value == null
-                          ? Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 50,
-                                horizontal: 30,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: HeroIcon(
-                                HeroIcons.camera,
-                                size: 100,
-                                color: Colors.grey.shade500,
-                              ),
-                            )
-                          : Image(
-                              image: logoFile.value!.image,
-                              fit: BoxFit.cover,
-                            )
-                    : Image.memory(logo.value!, fit: BoxFit.cover),
-                const SizedBox(height: 30),
-                TextEntry(
-                  label: AppLocalizations.of(context)!.cinemaName,
-                  controller: name,
-                ),
-                const SizedBox(height: 30),
-                TextEntry(
-                  label: AppLocalizations.of(context)!.cinemaPosterUrl,
-                  controller: posterUrl,
-                  onChanged: (value) async {
-                    logo.value = await getFromUrl(posterUrl.text);
-                  },
-                  canBeEmpty: true,
-                ),
-                const SizedBox(height: 30),
-                DateEntry(
-                  onTap: () => getFullDate(context, start),
-                  label: AppLocalizations.of(context)!.cinemaSessionDate,
-                  controller: start,
-                ),
-                const SizedBox(height: 30),
-                DateEntry(
-                  onTap: () => getOnlyHourDate(context, duration),
-                  label: AppLocalizations.of(context)!.cinemaDuration,
-                  controller: duration,
-                ),
-                const SizedBox(height: 30),
-                TextEntry(
-                  label: AppLocalizations.of(context)!.cinemaGenre,
-                  controller: genre,
-                  canBeEmpty: true,
-                ),
-                const SizedBox(height: 30),
-                TextEntry(
-                  label: AppLocalizations.of(context)!.cinemaOverview,
-                  controller: overview,
-                  canBeEmpty: true,
-                ),
-                const SizedBox(height: 30),
-                TextEntry(
-                  label: AppLocalizations.of(context)!.cinemaTagline,
-                  controller: tagline,
-                  canBeEmpty: true,
-                ),
-                const SizedBox(height: 50),
-                WaitingButton(
-                  builder: (child) => AddEditButtonLayout(child: child),
-                  onTap: () async {
-                    if (key.currentState == null) {
-                      return;
-                    }
-                    final editedSessionMsg = AppLocalizations.of(
-                      context,
-                    )!.cinemaEditedSession;
-                    final addedSessionMsg = AppLocalizations.of(
-                      context,
-                    )!.cinemaAddedSession;
-                    final editingErrorMsg = AppLocalizations.of(
-                      context,
-                    )!.cinemaEditingError;
-                    final addingErrorMsg = AppLocalizations.of(
-                      context,
-                    )!.cinemaAddingError;
-                    if (key.currentState!.validate()) {
-                      if (logo.value == null && logoFile.value == null) {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          AppLocalizations.of(context)!.cinemaNoPoster,
-                        );
+                  const SizedBox(height: 30),
+                  (logo.value == null)
+                      ? logoFile.value == null
+                            ? Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 50,
+                                  horizontal: 30,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: HeroIcon(
+                                  HeroIcons.camera,
+                                  size: 100,
+                                  color: Colors.grey.shade500,
+                                ),
+                              )
+                            : Image(
+                                image: logoFile.value!.image,
+                                fit: BoxFit.cover,
+                              )
+                      : Image.memory(logo.value!, fit: BoxFit.cover),
+                  const SizedBox(height: 30),
+                  TextEntry(
+                    label: AppLocalizations.of(context)!.cinemaName,
+                    controller: name,
+                  ),
+                  const SizedBox(height: 30),
+                  TextEntry(
+                    label: AppLocalizations.of(context)!.cinemaPosterUrl,
+                    controller: posterUrl,
+                    onChanged: (value) async {
+                      logo.value = await getFromUrl(posterUrl.text);
+                    },
+                    canBeEmpty: true,
+                  ),
+                  const SizedBox(height: 30),
+                  DateEntry(
+                    onTap: () => getFullDate(context, start),
+                    label: AppLocalizations.of(context)!.cinemaSessionDate,
+                    controller: start,
+                  ),
+                  const SizedBox(height: 30),
+                  DateEntry(
+                    onTap: () => getOnlyHourDate(context, duration),
+                    label: AppLocalizations.of(context)!.cinemaDuration,
+                    controller: duration,
+                  ),
+                  const SizedBox(height: 30),
+                  TextEntry(
+                    label: AppLocalizations.of(context)!.cinemaGenre,
+                    controller: genre,
+                    canBeEmpty: true,
+                  ),
+                  const SizedBox(height: 30),
+                  TextEntry(
+                    label: AppLocalizations.of(context)!.cinemaOverview,
+                    controller: overview,
+                    canBeEmpty: true,
+                  ),
+                  const SizedBox(height: 30),
+                  TextEntry(
+                    label: AppLocalizations.of(context)!.cinemaTagline,
+                    controller: tagline,
+                    canBeEmpty: true,
+                  ),
+                  const SizedBox(height: 50),
+                  WaitingButton(
+                    builder: (child) => AddEditButtonLayout(child: child),
+                    onTap: () async {
+                      if (key.currentState == null) {
                         return;
                       }
-                      await tokenExpireWrapper(ref, () async {
-                        Session newSession = Session(
-                          name: name.text,
-                          duration: parseDuration(duration.text),
-                          genre: genre.text.isEmpty ? null : genre.text,
-                          id: isEdit ? session.id : '',
-                          overview: overview.text.isEmpty
-                              ? null
-                              : overview.text,
-                          start: DateTime.parse(
-                            processDateBackWithHour(
-                              start.text,
-                              locale.toString(),
-                            ),
-                          ),
-                          tagline: tagline.text.isEmpty ? null : tagline.text,
-                        );
-                        final value = isEdit
-                            ? await sessionListNotifier.updateSession(
-                                newSession,
-                              )
-                            : await sessionListNotifier.addSession(newSession);
-                        if (value) {
-                          QR.back();
-                          if (isEdit) {
-                            sessionList.maybeWhen(
-                              data: (list) async {
-                                final logoBytes = logo.value;
-                                if (logoBytes != null) {
-                                  final sessionPosterMapNotifier = ref.read(
-                                    sessionPosterMapProvider.notifier,
-                                  );
-                                  sessionPosterMapNotifier.autoLoad(
-                                    ref,
-                                    session.id,
-                                    (sessionId) => sessionPosterNotifier
-                                        .updateLogo(sessionId, logoBytes),
-                                  );
-                                }
-                              },
-                              orElse: () {},
-                            );
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              editedSessionMsg,
-                            );
-                          } else {
-                            sessionList.maybeWhen(
-                              data: (list) async {
-                                final newSession = list.last;
-                                final logoBytes = logo.value;
-                                if (logoBytes != null) {
-                                  final sessionPosterMapNotifier = ref.read(
-                                    sessionPosterMapProvider.notifier,
-                                  );
-                                  sessionPosterMapNotifier.autoLoad(
-                                    ref,
-                                    newSession.id,
-                                    (sessionId) => sessionPosterNotifier
-                                        .updateLogo(sessionId, logoBytes),
-                                  );
-                                }
-                              },
-                              orElse: () {},
-                            );
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              addedSessionMsg,
-                            );
-                          }
-                        } else {
-                          if (isEdit) {
-                            displayToastWithContext(
-                              TypeMsg.error,
-                              editingErrorMsg,
-                            );
-                          } else {
-                            displayToastWithContext(
-                              TypeMsg.error,
-                              addingErrorMsg,
-                            );
-                          }
-                        }
-                      });
-                    } else {
-                      displayToast(
+                      final editedSessionMsg = AppLocalizations.of(
                         context,
-                        TypeMsg.error,
-                        AppLocalizations.of(
+                      )!.cinemaEditedSession;
+                      final addedSessionMsg = AppLocalizations.of(
+                        context,
+                      )!.cinemaAddedSession;
+                      final editingErrorMsg = AppLocalizations.of(
+                        context,
+                      )!.cinemaEditingError;
+                      final addingErrorMsg = AppLocalizations.of(
+                        context,
+                      )!.cinemaAddingError;
+                      if (key.currentState!.validate()) {
+                        if (logo.value == null && logoFile.value == null) {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            AppLocalizations.of(context)!.cinemaNoPoster,
+                          );
+                          return;
+                        }
+                        await tokenExpireWrapper(ref, () async {
+                          Session newSession = Session(
+                            name: name.text,
+                            duration: parseDuration(duration.text),
+                            genre: genre.text.isEmpty ? null : genre.text,
+                            id: isEdit ? session.id : '',
+                            overview: overview.text.isEmpty
+                                ? null
+                                : overview.text,
+                            start: DateTime.parse(
+                              processDateBackWithHour(
+                                start.text,
+                                locale.toString(),
+                              ),
+                            ),
+                            tagline: tagline.text.isEmpty ? null : tagline.text,
+                          );
+                          final value = isEdit
+                              ? await sessionListNotifier.updateSession(
+                                  newSession,
+                                )
+                              : await sessionListNotifier.addSession(
+                                  newSession,
+                                );
+                          if (value) {
+                            QR.back();
+                            if (isEdit) {
+                              sessionList.maybeWhen(
+                                data: (list) async {
+                                  final logoBytes = logo.value;
+                                  if (logoBytes != null) {
+                                    final sessionPosterMapNotifier = ref.read(
+                                      sessionPosterMapProvider.notifier,
+                                    );
+                                    sessionPosterMapNotifier.autoLoad(
+                                      ref,
+                                      session.id,
+                                      (sessionId) => sessionPosterNotifier
+                                          .updateLogo(sessionId, logoBytes),
+                                    );
+                                  }
+                                },
+                                orElse: () {},
+                              );
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                editedSessionMsg,
+                              );
+                            } else {
+                              sessionList.maybeWhen(
+                                data: (list) async {
+                                  final newSession = list.last;
+                                  final logoBytes = logo.value;
+                                  if (logoBytes != null) {
+                                    final sessionPosterMapNotifier = ref.read(
+                                      sessionPosterMapProvider.notifier,
+                                    );
+                                    sessionPosterMapNotifier.autoLoad(
+                                      ref,
+                                      newSession.id,
+                                      (sessionId) => sessionPosterNotifier
+                                          .updateLogo(sessionId, logoBytes),
+                                    );
+                                  }
+                                },
+                                orElse: () {},
+                              );
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                addedSessionMsg,
+                              );
+                            }
+                          } else {
+                            if (isEdit) {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                editingErrorMsg,
+                              );
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                addingErrorMsg,
+                              );
+                            }
+                          }
+                        });
+                      } else {
+                        displayToast(
                           context,
-                        )!.cinemaIncorrectOrMissingFields,
-                      );
-                    }
-                  },
-                  child: Text(
-                    isEdit
-                        ? AppLocalizations.of(context)!.cinemaEdit
-                        : AppLocalizations.of(context)!.cinemaAdd,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
+                          TypeMsg.error,
+                          AppLocalizations.of(
+                            context,
+                          )!.cinemaIncorrectOrMissingFields,
+                        );
+                      }
+                    },
+                    child: Text(
+                      isEdit
+                          ? AppLocalizations.of(context)!.cinemaEdit
+                          : AppLocalizations.of(context)!.cinemaAdd,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-              ],
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
-        ),
         ),
       ),
     );
