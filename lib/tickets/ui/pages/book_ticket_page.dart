@@ -256,7 +256,11 @@ class _TicketEventContent extends HookConsumerWidget {
             // Événement gratuit - rediriger vers la page des tickets avec message de succès
             ref.read(checkoutProvider.notifier).reset();
             if (context.mounted) {
-              displayToast(context, TypeMsg.success, l10n.ticketsReservationSuccess);
+              displayToast(
+                context,
+                TypeMsg.msg,
+                l10n.ticketsReservationSuccess,
+              );
             }
             QR.to(TicketsRouter.root);
           }

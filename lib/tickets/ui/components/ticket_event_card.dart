@@ -58,9 +58,8 @@ class TicketEventCard extends ConsumerWidget {
                     try {
                       final token = ref.read(tokenProvider);
                       final repository = TicketsRepository()..setToken(token);
-                      final detailedShotgun = await repository.getTicketEventById(
-                        ticketEvent.id,
-                      );
+                      final detailedShotgun = await repository
+                          .getTicketEventById(ticketEvent.id);
 
                       if (context.mounted) {
                         Navigator.of(context).pop(); // Ferme le loader

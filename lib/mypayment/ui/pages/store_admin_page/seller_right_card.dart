@@ -90,7 +90,8 @@ class _SellerRightsModalState extends State<_SellerRightsModal> {
                             ),
                           ),
                           const Spacer(),
-                          if (widget.me.canManageSellers && !widget.isStructureAdmin)
+                          if (widget.me.canManageSellers &&
+                              !widget.isStructureAdmin)
                             Checkbox(
                               value: widget.sellerRights[i],
                               activeColor: const Color(0xff204550),
@@ -100,34 +101,33 @@ class _SellerRightsModalState extends State<_SellerRightsModal> {
                               ),
                               onChanged: (value) async {
                                 await tokenExpireWrapper(ref, () async {
-                                  final rightsUpdatedMsg =
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.paiementRightsUpdated;
+                                  final rightsUpdatedMsg = AppLocalizations.of(
+                                    context,
+                                  )!.paiementRightsUpdated;
                                   final rightsUpdateErrorMsg =
                                       AppLocalizations.of(
                                         context,
                                       )!.paiementRightsUpdateError;
-                              final value = await sellerStoreNotifier
-                                  .updateStoreSeller(
-                                    widget.storeSeller.copyWith(
-                                      canBank: i == 0
-                                          ? !widget.sellerRights[0]
-                                          : widget.sellerRights[0],
-                                      canSeeHistory: i == 1
-                                          ? !widget.sellerRights[1]
-                                          : widget.sellerRights[1],
-                                      canCancel: i == 2
-                                          ? !widget.sellerRights[2]
-                                          : widget.sellerRights[2],
-                                      canManageSellers: i == 3
-                                          ? !widget.sellerRights[3]
-                                          : widget.sellerRights[3],
-                                      canManageEvent: i == 4
-                                          ? !widget.sellerRights[4]
-                                          : widget.sellerRights[4],
-                                    ),
-                                  );
+                                  final value = await sellerStoreNotifier
+                                      .updateStoreSeller(
+                                        widget.storeSeller.copyWith(
+                                          canBank: i == 0
+                                              ? !widget.sellerRights[0]
+                                              : widget.sellerRights[0],
+                                          canSeeHistory: i == 1
+                                              ? !widget.sellerRights[1]
+                                              : widget.sellerRights[1],
+                                          canCancel: i == 2
+                                              ? !widget.sellerRights[2]
+                                              : widget.sellerRights[2],
+                                          canManageSellers: i == 3
+                                              ? !widget.sellerRights[3]
+                                              : widget.sellerRights[3],
+                                          canManageEvent: i == 4
+                                              ? !widget.sellerRights[4]
+                                              : widget.sellerRights[4],
+                                        ),
+                                      );
                                   if (value) {
                                     displayToastWithContext(
                                       TypeMsg.msg,
@@ -193,10 +193,7 @@ class _SellerRightsModalState extends State<_SellerRightsModal> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: AddEditButtonLayout(
-                        colors: const [
-                          Color(0xFF9E131F),
-                          Color(0xFF590512),
-                        ],
+                        colors: const [Color(0xFF9E131F), Color(0xFF590512)],
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

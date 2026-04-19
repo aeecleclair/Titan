@@ -136,9 +136,7 @@ class TicketsRepository extends Repository {
     bool required,
   ) async {
     final response = await http.post(
-      Uri.parse(
-        '${Repository.host}${ext}admin/events/$eventId/questions',
-      ),
+      Uri.parse('${Repository.host}${ext}admin/events/$eventId/questions'),
       headers: headers,
       body: jsonEncode({
         'question': questionText,

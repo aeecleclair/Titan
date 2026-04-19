@@ -64,7 +64,9 @@ class EditTicketEventPage extends HookConsumerWidget {
     final categories = useState<List<Category>>(ticketEvent.categories);
     final sessions = useState<List<Session>>(ticketEvent.sessions);
     final questions = useState<List<_QuestionEditFormData>>(
-      ticketEvent.questions.map((q) => _QuestionEditFormData.fromQuestion(q)).toList(),
+      ticketEvent.questions
+          .map((q) => _QuestionEditFormData.fromQuestion(q))
+          .toList(),
     );
 
     // Dispose question controllers when widget is disposed
@@ -297,12 +299,14 @@ class EditTicketEventPage extends HookConsumerWidget {
                       final questionData = questions.value[i];
                       if (questionData.id != null) {
                         // Question existante - vérifier si elle a changé
-                        final originalQuestion = ticketEvent.questions.firstWhere(
-                          (q) => q.id == questionData.id,
-                        );
-                        if (questionData.controller.text != originalQuestion.question ||
-                            questionData.answerType != originalQuestion.answerType ||
-                            questionData.required != originalQuestion.required) {
+                        final originalQuestion = ticketEvent.questions
+                            .firstWhere((q) => q.id == questionData.id);
+                        if (questionData.controller.text !=
+                                originalQuestion.question ||
+                            questionData.answerType !=
+                                originalQuestion.answerType ||
+                            questionData.required !=
+                                originalQuestion.required) {
                           await ticketEventEditNotifier.updateQuestion(
                             ticketEvent.id,
                             questionData.id!,

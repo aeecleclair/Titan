@@ -30,7 +30,7 @@ class Seller {
       canSeeHistory: json['can_see_history'],
       canCancel: json['can_cancel'],
       canManageSellers: json['can_manage_sellers'],
-      canManageEvent: json['can_manage_event'] ?? false,
+      canManageEvent: json['can_manage_events'] ?? false,
     );
   }
 
@@ -43,7 +43,7 @@ class Seller {
       'can_see_history': canSeeHistory,
       'can_cancel': canCancel,
       'can_manage_sellers': canManageSellers,
-      'can_manage_event': canManageEvent,
+      'can_manage_events': canManageEvent,
     };
   }
 
