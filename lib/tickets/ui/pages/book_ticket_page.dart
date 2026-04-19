@@ -342,7 +342,9 @@ class _TicketEventContent extends HookConsumerWidget {
           myPaymentRequestMethod: getPaymentMethod(
             selectedPaymentProvider.value,
           ),
-          myPaymentTransferRedirectUrl: getRedirectUrl(),
+          myPaymentTransferRedirectUrl: getRedirectUrl(
+            selectedPaymentProvider.value,
+          ),
         );
       }
       return null;
