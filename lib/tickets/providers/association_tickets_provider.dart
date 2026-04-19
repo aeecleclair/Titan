@@ -20,7 +20,7 @@ class SelectedAssociationTicketEventListNotifier
   String? _currentAssociationId;
 
   SelectedAssociationTicketEventListNotifier(this._repository)
-      : super(const AsyncValue.data([]));
+    : super(const AsyncValue.data([]));
 
   Future<void> loadTicketEvents(String? associationId) async {
     _currentAssociationId = associationId;
@@ -47,9 +47,12 @@ class SelectedAssociationTicketEventListNotifier
 }
 
 // NOUVEAU : Provider qui prend une association nullable avec StateNotifier
-final selectedAssociationTicketEventListProvider = StateNotifierProvider
-    .family<SelectedAssociationTicketEventListNotifier,
-        AsyncValue<List<TicketEvent>>, String?>((ref, associationId) {
+final selectedAssociationTicketEventListProvider =
+    StateNotifierProvider.family<
+      SelectedAssociationTicketEventListNotifier,
+      AsyncValue<List<TicketEvent>>,
+      String?
+    >((ref, associationId) {
       final repository = ref.watch(ticketEventRepositoryProvider);
       final notifier = SelectedAssociationTicketEventListNotifier(repository);
       // Charger les données initiales
