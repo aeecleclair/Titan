@@ -35,7 +35,7 @@ class PaimentDelegateModal extends HookWidget {
     final idleKey = useMemoized(() => GlobalKey());
     final expirationDate = useMemoized(
       () =>
-          itemExpirationDate ?? DateTime.now().add(const Duration(minutes: 15)),
+          itemExpirationDate ?? DateTime.now().add(const Duration(minutes: 8)),
     );
     final secondsLeft = useMemoized(
       () => expirationDate.difference(DateTime.now()).inSeconds,
@@ -107,7 +107,7 @@ class PaimentDelegateModal extends HookWidget {
                         CountdownTimer(
                           totalSeconds: secondsLeft,
                           fullDurationSeconds: itemExpirationDate != null
-                              ? 15 * 60
+                              ? 8 * 60
                               : null,
                           onFinished: () => isExpired.value = true,
                         ),
