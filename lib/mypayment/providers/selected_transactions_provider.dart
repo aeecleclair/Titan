@@ -25,6 +25,7 @@ final selectedTransactionsProvider =
                 (element) =>
                     (element.status == TransactionStatus.confirmed ||
                         element.status == TransactionStatus.refunded) &&
+                    element.direction == HistoryDirection.credited &&
                     element.creation.year == currentMonth.year &&
                     element.creation.month == currentMonth.month,
               )

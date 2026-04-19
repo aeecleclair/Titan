@@ -44,7 +44,7 @@ class SumUpChart extends HookConsumerWidget {
         for (final transaction in confirmedTransaction) {
           if (transaction.direction == HistoryDirection.credited) {
             final transactionName =
-                transaction.type == HistoryType.transfer ||
+                transaction.type == HistoryType.directTransfer ||
                     transaction.type == HistoryType.requestTransfer
                 ? AppLocalizations.of(context)!.paiementTopUp
                 : transaction.otherWalletName;
@@ -92,6 +92,18 @@ class SumUpChart extends HookConsumerWidget {
                             controller: pageController,
                             clipBehavior: Clip.none,
                             physics: const BouncingScrollPhysics(),
+                            onPageChanged: (page) {
+                              selected.value = -1;
+                              final direction = page == 0
+                                  ? HistoryDirection.credited
+                                  : HistoryDirection.debited;
+                              selectedTransactionsNotifier
+                                  .updateSelectedTransactions(
+                                    confirmedTransaction
+                                        .where((t) => t.direction == direction)
+                                        .toList(),
+                                  );
+                            },
                             children: [
                               TransactionChart(
                                 currentMonth: currentMonth,
@@ -113,7 +125,13 @@ class SumUpChart extends HookConsumerWidget {
                                 selected.value = -1;
                                 selectedTransactionsNotifier
                                     .updateSelectedTransactions(
-                                      confirmedTransaction.toList(),
+                                      confirmedTransaction
+                                          .where(
+                                            (t) =>
+                                                t.direction ==
+                                                HistoryDirection.credited,
+                                          )
+                                          .toList(),
                                     );
                                 pageController.animateToPage(
                                   0,
@@ -146,7 +164,13 @@ class SumUpChart extends HookConsumerWidget {
                                 selected.value = -1;
                                 selectedTransactionsNotifier
                                     .updateSelectedTransactions(
-                                      confirmedTransaction.toList(),
+                                      confirmedTransaction
+                                          .where(
+                                            (t) =>
+                                                t.direction ==
+                                                HistoryDirection.debited,
+                                          )
+                                          .toList(),
                                     );
                                 pageController.animateToPage(
                                   1,
