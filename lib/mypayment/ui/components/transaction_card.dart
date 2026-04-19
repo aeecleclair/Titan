@@ -33,7 +33,7 @@ class TransactionCard extends ConsumerWidget {
       case HistoryType.refund:
         icon = isDebited ? HeroIcons.arrowUturnRight : HeroIcons.arrowUturnLeft;
         break;
-      case HistoryType.transfer:
+      case HistoryType.directTransfer:
         icon = HeroIcons.creditCard;
         break;
       case HistoryType.requestTransfer:
@@ -49,7 +49,7 @@ class TransactionCard extends ConsumerWidget {
 
     final String transactionName;
     switch (transaction.type) {
-      case HistoryType.transfer:
+      case HistoryType.directTransfer:
       case HistoryType.requestTransfer:
         transactionName = AppLocalizations.of(context)!.paiementTopUp;
         break;

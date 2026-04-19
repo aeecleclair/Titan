@@ -3,7 +3,7 @@ import 'package:titan/tools/functions.dart';
 
 enum HistoryType {
   refund,
-  transfer,
+  directTransfer,
   requestTransfer,
   directTransaction,
   requestTransaction,
@@ -13,8 +13,8 @@ String historyTypeToString(HistoryType e) {
   switch (e) {
     case HistoryType.refund:
       return "refund";
-    case HistoryType.transfer:
-      return "transfer";
+    case HistoryType.directTransfer:
+      return "direct_transfer";
     case HistoryType.requestTransfer:
       return "request_transfer";
     case HistoryType.directTransaction:
@@ -85,7 +85,7 @@ class History {
 
   History.empty()
     : id = '',
-      type = HistoryType.transfer,
+      type = HistoryType.directTransfer,
       direction = HistoryDirection.credited,
       otherWalletName = '',
       total = 0,

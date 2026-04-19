@@ -229,7 +229,7 @@ List<Color> getTransactionColors(History transaction) {
         const Color.fromARGB(255, 0, 68, 68),
         const Color.fromARGB(255, 0, 29, 29).withValues(alpha: 0.4),
       ];
-    case HistoryType.transfer:
+    case HistoryType.directTransfer:
       return [
         const Color.fromARGB(255, 255, 119, 7),
         const Color.fromARGB(255, 230, 103, 0),
