@@ -1752,7 +1752,7 @@
   "ticketsCreate": "Create a ticketing",
   "ticketsManageAssociation": "Manage association ticketings",
   "ticketsTitleLabel": "Ticketing title *",
-  "ticketsPlacesLabel": "Number of available seats",
+  "ticketsPlacesLabel": "Quota",
   "ticketsStartDateLabel": "Ticket opening date *",
   "ticketsEndDateLabel": "Ticketing closing date (optional)",
   "ticketsTitleRequired": "Title is required",

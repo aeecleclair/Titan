@@ -1759,7 +1759,7 @@
   "ticketsCreate": "Créer une billetterie",
   "ticketsManageAssociation": "Gérer les billeteries de l'association",
   "ticketsTitleLabel": "Titre de la billetterie *",
-  "ticketsPlacesLabel": "Nombre de places disponibles (optionnel)",
+  "ticketsPlacesLabel": "Quota",
   "ticketsStartDateLabel": "Date d'ouverture de la billetterie *",
   "ticketsEndDateLabel": "Date de fermeture de la billetterie (optionnel)",
   "ticketsTitleRequired": "Le titre est obligatoire",

@@ -9263,7 +9263,7 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsPlacesLabel.
   ///
   /// In fr, this message translates to:
-  /// **'Nombre de places disponibles (optionnel)'**
+  /// **'Quota'**
   String get ticketsPlacesLabel;
 
   /// No description provided for @ticketsStartDateLabel.

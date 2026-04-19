@@ -4763,7 +4763,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsTitleLabel => 'Ticketing title *';
 
   @override
-  String get ticketsPlacesLabel => 'Number of available seats';
+  String get ticketsPlacesLabel => 'Quota';
 
   @override
   String get ticketsStartDateLabel => 'Ticket opening date *';

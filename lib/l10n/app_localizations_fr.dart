@@ -4834,7 +4834,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsTitleLabel => 'Titre de la billetterie *';
 
   @override
-  String get ticketsPlacesLabel => 'Nombre de places disponibles (optionnel)';
+  String get ticketsPlacesLabel => 'Quota';
 
   @override
   String get ticketsStartDateLabel => 'Date d\'ouverture de la billetterie *';
