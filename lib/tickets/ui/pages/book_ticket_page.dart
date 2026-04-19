@@ -268,6 +268,7 @@ class _TicketEventContent extends HookConsumerWidget {
           ref.read(navbarVisibilityProvider.notifier).show();
           final checkout = checkoutState.checkout!;
           if (checkout.paymentUrl != null && checkout.paymentUrl!.isNotEmpty) {
+            // CAS HELLOASSO - URL externe à ouvrir
             ref.read(checkoutProvider.notifier).reset();
             QR.to(TicketsRouter.root);
             if (kIsWeb) {
@@ -281,8 +282,13 @@ class _TicketEventContent extends HookConsumerWidget {
                 }
               }
             }
+          } else if (checkout.price != null && checkout.price! > 0) {
+            // CAS MYEMPAY - prix > 0 mais pas d'URL, rediriger vers mypayment
+            ref.read(checkoutProvider.notifier).reset();
+            ref.read(pathForwardingProvider.notifier).forward('/mypayment');
+            QR.to('/mypayment');
           } else {
-            // Événement gratuit - rediriger vers la page des tickets avec message de succès
+            // CAS GRATUIT - rediriger vers la page des tickets avec message de succès
             ref.read(checkoutProvider.notifier).reset();
             if (context.mounted) {
               displayToast(
