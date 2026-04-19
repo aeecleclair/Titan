@@ -1615,7 +1615,7 @@
   "shotgunOpeningLabel": "Opening",
   "shotgunPaymentMethod": "Payment method",
   "shotgunPlaces": "seats",
-  "shotgunPlacesLabel": "Number of available seats (optional)",
+  "shotgunPlacesLabel": "Number of available seats",
   "shotgunPriceLabel": "Price (€)",
   "shotgunQuestionLabel": "Question {number}",
   "@shotgunQuestionLabel": {
@@ -1752,7 +1752,7 @@
   "ticketsCreate": "Create a ticketing",
   "ticketsManageAssociation": "Manage association ticketings",
   "ticketsTitleLabel": "Ticketing title *",
-  "ticketsPlacesLabel": "Number of available seats (optional)",
+  "ticketsPlacesLabel": "Number of available seats",
   "ticketsStartDateLabel": "Ticket opening date *",
   "ticketsEndDateLabel": "Ticketing closing date (optional)",
   "ticketsTitleRequired": "Title is required",

@@ -4412,7 +4412,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shotgunPlaces => 'seats';
 
   @override
-  String get shotgunPlacesLabel => 'Number of available seats (optional)';
+  String get shotgunPlacesLabel => 'Number of available seats';
 
   @override
   String get shotgunPriceLabel => 'Price (€)';
@@ -4763,7 +4763,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsTitleLabel => 'Ticketing title *';
 
   @override
-  String get ticketsPlacesLabel => 'Number of available seats (optional)';
+  String get ticketsPlacesLabel => 'Number of available seats';
 
   @override
   String get ticketsStartDateLabel => 'Ticket opening date *';
