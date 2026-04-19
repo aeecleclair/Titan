@@ -40,6 +40,11 @@ class ScrollWithRefreshButton extends HookConsumerWidget {
             currentScrollPosition - lastScrollPosition.value;
         final maxScrollExtent = position.maxScrollExtent;
 
+        if (scrollDirection.abs() > 500) {
+          lastScrollPosition.value = currentScrollPosition;
+          return;
+        }
+
         if (currentScrollPosition <= 0) {
           navbarVisibilityNotifier.show();
         } else if (currentScrollPosition >= maxScrollExtent) {

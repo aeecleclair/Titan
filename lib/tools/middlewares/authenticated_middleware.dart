@@ -19,13 +19,13 @@ class AuthenticatedMiddleware extends QMiddleware {
 
   @override
   Future<String?> redirectGuard(String path) async {
-    // Watch all providers at the beginning (Riverpod requirement)
-    final isLoggedIn = ref.watch(isLoggedInProvider);
-    final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
-    final versionVerifier = ref.watch(versionVerifierProvider);
-    final titanVersion = ref.watch(titanVersionProvider);
-    final minimalHyperionVersion = ref.watch(minimalHyperionVersionProvider);
-    final modules = ref.watch(modulesProvider);
+    // Use ref.read instead of ref.watch in async functions to avoid Riverpod errors
+    final isLoggedIn = ref.read(isLoggedInProvider);
+    final pathForwardingNotifier = ref.read(pathForwardingProvider.notifier);
+    final versionVerifier = ref.read(versionVerifierProvider);
+    final titanVersion = ref.read(titanVersionProvider);
+    final minimalHyperionVersion = ref.read(minimalHyperionVersionProvider);
+    final modules = ref.read(modulesProvider);
 
     if (path.startsWith(LoginRouter.root)) {
       return null;
