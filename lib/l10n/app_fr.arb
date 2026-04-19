@@ -1764,7 +1764,7 @@
   "ticketsEndDateLabel": "Date de fermeture de la billetterie (optionnel)",
   "ticketsTitleRequired": "Le titre est obligatoire",
   "ticketsStartDateRequired": "La date de début est obligatoire",
-  "ticketsCategoriesRequired": "Au moins une catégorie est obligatoire",
+  "ticketsCategoriesRequired": "Au moins un tarif est obligatoire",
   "ticketsSessionsRequired": "Au moins une session est obligatoire",
   "ticketsSave": "Enregistrer la billetterie",
   "ticketsAddQuestion": "Ajouter une question",

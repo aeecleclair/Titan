@@ -4778,7 +4778,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsStartDateRequired => 'Start date is required';
 
   @override
-  String get ticketsCategoriesRequired => 'At least one category is required';
+  String get ticketsCategoriesRequired => 'At least one pricing is required';
 
   @override
   String get ticketsSessionsRequired => 'At least one session is required';

@@ -9293,7 +9293,7 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsCategoriesRequired.
   ///
   /// In fr, this message translates to:
-  /// **'Au moins une catégorie est obligatoire'**
+  /// **'Au moins un tarif est obligatoire'**
   String get ticketsCategoriesRequired;
 
   /// No description provided for @ticketsSessionsRequired.

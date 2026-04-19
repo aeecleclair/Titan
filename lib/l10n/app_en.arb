@@ -1757,7 +1757,7 @@
   "ticketsEndDateLabel": "Ticketing closing date (optional)",
   "ticketsTitleRequired": "Title is required",
   "ticketsStartDateRequired": "Start date is required",
-  "ticketsCategoriesRequired": "At least one category is required",
+  "ticketsCategoriesRequired": "At least one pricing is required",
   "ticketsSessionsRequired": "At least one session is required",
   "ticketsSave": "Save tickets",
   "ticketsAddQuestion": "Add a question",

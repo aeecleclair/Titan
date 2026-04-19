@@ -4850,8 +4850,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsStartDateRequired => 'La date de début est obligatoire';
 
   @override
-  String get ticketsCategoriesRequired =>
-      'Au moins une catégorie est obligatoire';
+  String get ticketsCategoriesRequired => 'Au moins un tarif est obligatoire';
 
   @override
   String get ticketsSessionsRequired => 'Au moins une session est obligatoire';

@@ -253,10 +253,12 @@ class _TicketEventContent extends HookConsumerWidget {
               }
             }
           } else {
+            // Événement gratuit - rediriger vers la page des tickets avec message de succès
             ref.read(checkoutProvider.notifier).reset();
-            pathForwardingNotifier.forward(PaymentRouter.root);
-            navbarListModuleNotifier.pushModule(PaymentRouter.module);
-            QR.to(PaymentRouter.root);
+            if (context.mounted) {
+              displayToast(context, TypeMsg.success, l10n.ticketsReservationSuccess);
+            }
+            QR.to(TicketsRouter.root);
           }
         });
       } else if (checkoutState.error != null) {
