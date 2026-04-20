@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:titan/admin/providers/my_association_list_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
@@ -248,6 +249,7 @@ class AssociationAddEditPage extends HookConsumerWidget {
                                 ),
                               );
                           if (value) {
+                            ref.invalidate(asyncMyAssociationListProvider);
                             displayToastWithContext(
                               TypeMsg.msg,
                               localizeWithContext.phonebookAddedAssociation,
