@@ -6,6 +6,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/advert/ui/components/special_action_button.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tickets/providers/can_manage_ticket_events_provider.dart';
+import 'package:titan/tickets/class/user_ticket.dart';
 import 'package:titan/tickets/providers/user_tickets_provider.dart';
 import 'package:titan/tickets/router.dart';
 import 'package:titan/tickets/ui/components/user_ticket_card.dart';
@@ -123,16 +124,31 @@ class TicketsMainPage extends HookConsumerWidget {
               onRefresh: () async {
                 await userTicketsNotifier.loadUserTickets();
               },
-              child: AsyncChild<List<dynamic>>(
+              child: AsyncChild<List<UserTicket>>(
                 value: userTicketsAsync,
                 builder: (context, tickets) {
                   if (tickets.isEmpty) {
                     return _buildEmptyState(l10n);
                   }
+                  final now = DateTime.now();
+                  final sortedTickets = [...tickets]..sort((a, b) {
+                    final aUpcoming = a.session.startDatetime.isAfter(now);
+                    final bUpcoming = b.session.startDatetime.isAfter(now);
+                    if (aUpcoming != bUpcoming) {
+                      return aUpcoming ? -1 : 1;
+                    }
+                    return aUpcoming
+                        ? a.session.startDatetime.compareTo(
+                            b.session.startDatetime,
+                          )
+                        : b.session.startDatetime.compareTo(
+                            a.session.startDatetime,
+                          );
+                  });
                   return Column(
                     children: [
                       const SizedBox(height: 8),
-                      ...tickets.map(
+                      ...sortedTickets.map(
                         (ticket) => UserTicketCard(ticket: ticket),
                       ),
                       const SizedBox(height: 20),
