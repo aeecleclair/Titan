@@ -628,7 +628,9 @@ class _TicketEventContent extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  Row(
+                  IntrinsicHeight(
+                    child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Expanded(
                         child: InkWell(
@@ -656,6 +658,7 @@ class _TicketEventContent extends HookConsumerWidget {
                             ),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SizedBox(
                                   height: 28,
@@ -664,7 +667,7 @@ class _TicketEventContent extends HookConsumerWidget {
                                     fit: BoxFit.contain,
                                   ),
                                 ),
-                                const SizedBox(height: 6),
+                                const SizedBox(height: 10),
                                 Text(
                                   'HelloAsso',
                                   style: Theme.of(context).textTheme.bodySmall
@@ -783,7 +786,7 @@ class _TicketEventContent extends HookConsumerWidget {
                                             : null,
                                       ),
                                     ),
-                                    const SizedBox(height: 6),
+                                    const SizedBox(height: 10),
                                     Text(
                                       'myempay',
                                       style: Theme.of(context)
@@ -821,6 +824,7 @@ class _TicketEventContent extends HookConsumerWidget {
                         },
                       ),
                     ],
+                  ),
                   ),
                 ],
               ],
