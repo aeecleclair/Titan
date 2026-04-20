@@ -12,12 +12,13 @@ class FeedbackRepository extends Repository {
   final ext = "feedback/feedbacks";
 
   Future<Feedback> createFeedback(Feedback feedback) async {
+    return Feedback.fromJson(await create(feedback.toJson()));
     debugPrint("ca marche !");
     var json = feedback.toJson();
     debugPrint("json " + json.toString());
     var f = await create(json);
     debugPrint("f " + f.toString());
-    return Feedback.fromJson(f);
+    return Feedback.fromJson(f); //frr pk ça marche pas
   }
 
   Future<List<Feedback>> getFeedbackList() async {
@@ -26,9 +27,9 @@ class FeedbackRepository extends Repository {
     );
   }
 
-  // Future<bool> deleteFeedback() async {
-  //   return await delete(ff)
-  // }
+  Future<bool> deleteFeedback(String id) async {
+    return await delete("/$id");
+  }
 }
 
 final feedbackRepositoryProvider = Provider<FeedbackRepository>((ref) {
