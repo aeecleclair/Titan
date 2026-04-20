@@ -1190,6 +1190,42 @@ abstract class AppLocalizations {
   /// **'Écoles'**
   String get adminSchools;
 
+  /// No description provided for @adminAccountTypesDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Changer le type de compte d\'un utilisateur'**
+  String get adminAccountTypesDescription;
+
+  /// No description provided for @adminAccountTypeSearchUser.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher un utilisateur'**
+  String get adminAccountTypeSearchUser;
+
+  /// No description provided for @adminAccountTypeSelect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir un type de compte'**
+  String get adminAccountTypeSelect;
+
+  /// No description provided for @adminAccountTypeUpdated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type de compte mis à jour'**
+  String get adminAccountTypeUpdated;
+
+  /// No description provided for @adminAccountTypeUpdateError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de la mise à jour du type de compte'**
+  String get adminAccountTypeUpdateError;
+
+  /// No description provided for @adminAccountTypeConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Changer le type de compte de {user} en {type} ?'**
+  String adminAccountTypeConfirm(String user, String type);
+
   /// No description provided for @adminSuperAdmins.
   ///
   /// In fr, this message translates to:

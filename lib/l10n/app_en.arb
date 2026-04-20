@@ -238,6 +238,23 @@
   "adminRemoveGroupMember": "Remove member from group?",
   "adminResearch": "Search",
   "adminSchools": "Schools",
+  "adminAccountTypes": "Account types",
+  "adminAccountTypesDescription": "Change the account type of a user",
+  "adminAccountTypeSearchUser": "Search a user",
+  "adminAccountTypeSelect": "Select an account type",
+  "adminAccountTypeUpdated": "Account type updated",
+  "adminAccountTypeUpdateError": "Failed to update account type",
+  "adminAccountTypeConfirm": "Change {user}'s account type to {type}?",
+  "@adminAccountTypeConfirm": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      },
+      "type": {
+        "type": "String"
+      }
+    }
+  },
   "adminSuperAdmins": "Super admins",
   "adminSuperAdminSearchUser": "Search a user to promote",
   "adminSuperAdminPromote": "Make super admin",

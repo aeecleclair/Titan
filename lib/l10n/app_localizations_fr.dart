@@ -599,6 +599,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminSchools => 'Écoles';
 
   @override
+  String get adminAccountTypesDescription =>
+      'Changer le type de compte d\'un utilisateur';
+
+  @override
+  String get adminAccountTypeSearchUser => 'Rechercher un utilisateur';
+
+  @override
+  String get adminAccountTypeSelect => 'Choisir un type de compte';
+
+  @override
+  String get adminAccountTypeUpdated => 'Type de compte mis à jour';
+
+  @override
+  String get adminAccountTypeUpdateError =>
+      'Échec de la mise à jour du type de compte';
+
+  @override
+  String adminAccountTypeConfirm(String user, String type) {
+    return 'Changer le type de compte de $user en $type ?';
+  }
+
+  @override
   String get adminSuperAdmins => 'Super admins';
 
   @override

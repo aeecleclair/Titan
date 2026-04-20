@@ -246,6 +246,23 @@
   "adminRemoveGroupMember": "Supprimer le membre du groupe ?",
   "adminResearch": "Recherche",
   "adminSchools": "Écoles",
+  "adminAccountTypes": "Types de compte",
+  "adminAccountTypesDescription": "Changer le type de compte d'un utilisateur",
+  "adminAccountTypeSearchUser": "Rechercher un utilisateur",
+  "adminAccountTypeSelect": "Choisir un type de compte",
+  "adminAccountTypeUpdated": "Type de compte mis à jour",
+  "adminAccountTypeUpdateError": "Échec de la mise à jour du type de compte",
+  "adminAccountTypeConfirm": "Changer le type de compte de {user} en {type} ?",
+  "@adminAccountTypeConfirm": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      },
+      "type": {
+        "type": "String"
+      }
+    }
+  },
   "adminSuperAdmins": "Super admins",
   "adminSuperAdminSearchUser": "Rechercher un utilisateur à promouvoir",
   "adminSuperAdminPromote": "Rendre super admin",

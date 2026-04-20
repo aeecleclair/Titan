@@ -13,6 +13,8 @@ import 'package:titan/admin/ui/pages/groups/groups_page/groups_page.dart'
     deferred as groups_page;
 import 'package:titan/admin/ui/pages/users_management_page/users_management_page.dart'
     deferred as users_managmement_page;
+import 'package:titan/admin/ui/pages/account_types_page/account_types_page.dart'
+    deferred as account_types_page;
 import 'package:titan/admin/ui/pages/group_notifification_page/group_notification_page.dart'
     deferred as group_notification_page;
 import 'package:titan/l10n/app_localizations.dart';
@@ -46,6 +48,7 @@ class AdminRouter {
       '/detail_association_membership';
   static const String addEditMember = '/add_edit_member';
   static const String association = '/association';
+  static const String accountTypes = '/account_types';
   static final Module module = Module(
     getName: (context) => AppLocalizations.of(context)!.moduleAdmin,
     getDescription: (context) =>
@@ -146,6 +149,13 @@ class AdminRouter {
         path: association,
         builder: () => association_page.AssociationPage(),
         middleware: [DeferredLoadingMiddleware(association_page.loadLibrary)],
+      ),
+      QRoute(
+        path: accountTypes,
+        builder: () => account_types_page.AccountTypesPage(),
+        middleware: [
+          DeferredLoadingMiddleware(account_types_page.loadLibrary),
+        ],
       ),
     ],
   );
