@@ -412,9 +412,8 @@ Future getOnlyDayDate(
     lastDate,
   );
 
-  dateController.text = DateFormat.yMd(
-    locale,
-  ).format(date ?? initialDate ?? now);
+  if (date == null) return;
+  dateController.text = DateFormat.yMd(locale).format(date);
 }
 
 Future getOnlyDayDateFunction(
@@ -434,7 +433,8 @@ Future getOnlyDayDateFunction(
     lastDate,
   );
 
-  setDate(DateFormat.yMMMd(locale).format(date ?? initialDate ?? now));
+  if (date == null) return;
+  setDate(DateFormat.yMMMd(locale).format(date));
 }
 
 Future getOnlyHourDate(
@@ -462,19 +462,13 @@ Future getFullDate(
   _getDate(context, now, initialDate, firstDate, lastDate).then((
     DateTime? date,
   ) {
-    if (date != null && context.mounted) {
-      _getTime(context).then((TimeOfDay? time) {
-        if (time != null) {
-          dateController.text = DateFormat.yMd(
-            locale,
-          ).add_Hm().format(DateTimeField.combine(date, time));
-        }
-      });
-    } else {
+    if (date == null || !context.mounted) return;
+    _getTime(context).then((TimeOfDay? time) {
+      if (time == null) return;
       dateController.text = DateFormat.yMd(
         locale,
-      ).add_Hm().format(initialDate ?? now);
-    }
+      ).add_Hm().format(DateTimeField.combine(date, time));
+    });
   });
 }
 
