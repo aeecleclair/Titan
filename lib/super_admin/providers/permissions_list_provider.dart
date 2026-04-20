@@ -37,11 +37,15 @@ class PermissionsNotifier extends ListNotifier<CorePermission> {
           );
           permissions.add(permission);
         } else {
-          permission.authorizedGroupIds.add(
+          if (!permission.authorizedGroupIds.contains(
             newPermission.authorizedGroupIds.first,
-          );
+          )) {
+            permission.authorizedGroupIds.add(
+              newPermission.authorizedGroupIds.first,
+            );
+          }
         }
-        return permissions;
+        return List<CorePermission>.from(permissions);
       },
       permission,
     );
@@ -66,7 +70,7 @@ class PermissionsNotifier extends ListNotifier<CorePermission> {
             (id) => id == groupPermission.authorizedGroupIds.first,
           );
         }
-        return permissions;
+        return List<CorePermission>.from(permissions);
       },
       permissions,
     );
@@ -94,11 +98,15 @@ class PermissionsNotifier extends ListNotifier<CorePermission> {
           );
           permissions.add(perm);
         } else {
-          perm.authorizedAccountTypes.add(
+          if (!perm.authorizedAccountTypes.contains(
             permission.authorizedAccountTypes.first,
-          );
+          )) {
+            perm.authorizedAccountTypes.add(
+              permission.authorizedAccountTypes.first,
+            );
+          }
         }
-        return permissions;
+        return List<CorePermission>.from(permissions);
       },
       permission,
     );
@@ -126,7 +134,7 @@ class PermissionsNotifier extends ListNotifier<CorePermission> {
             (at) => at == accountTypePermission.authorizedAccountTypes.first,
           );
         }
-        return permissions;
+        return List<CorePermission>.from(permissions);
       },
       permission,
     );

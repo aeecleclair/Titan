@@ -17,20 +17,24 @@ class PermissionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: Row(
         children: [
-          Text(
-            label,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          Expanded(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
           ),
-          const Spacer(),
-          GestureDetector(
-            onTap: isAuthorized ? onUnauthorize : onAuthorize,
-            child: HeroIcon(
+          IconButton(
+            onPressed: isAuthorized ? onUnauthorize : onAuthorize,
+            splashRadius: 22,
+            icon: HeroIcon(
               isAuthorized ? HeroIcons.check : HeroIcons.xMark,
-              size: 40,
+              size: 34,
               color: isAuthorized ? Colors.green : Colors.red,
             ),
           ),
