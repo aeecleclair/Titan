@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/super_admin/providers/is_super_admin_provider.dart';
 import 'package:titan/super_admin/ui/pages/permissions/permissions.dart'
     deferred as permissions;
+import 'package:titan/super_admin/ui/pages/super_admins_page/super_admins_page.dart'
+    deferred as super_admins_page;
 
 import 'package:titan/super_admin/ui/pages/schools/school_page/school_page.dart'
     deferred as school_page;
@@ -31,6 +33,7 @@ class SuperAdminRouter {
   static const String structures = '/structures';
   static const String addEditStructure = '/add_edit_structure';
   static const String editPermissions = '/edit_permissions';
+  static const String superAdmins = '/super_admins';
   static const String associationMemberships = '/association_memberships';
   static const String detailAssociationMembership =
       '/detail_association_membership';
@@ -60,6 +63,13 @@ class SuperAdminRouter {
         path: editPermissions,
         builder: () => permissions.PermissionsPage(),
         middleware: [DeferredLoadingMiddleware(permissions.loadLibrary)],
+      ),
+      QRoute(
+        path: superAdmins,
+        builder: () => super_admins_page.SuperAdminsPage(),
+        middleware: [
+          DeferredLoadingMiddleware(super_admins_page.loadLibrary),
+        ],
       ),
       QRoute(
         path: schools,

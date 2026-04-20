@@ -592,6 +592,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminSchools => 'Schools';
 
   @override
+  String get adminSuperAdmins => 'Super admins';
+
+  @override
+  String get adminSuperAdminSearchUser => 'Search a user to promote';
+
+  @override
+  String get adminSuperAdminPromote => 'Make super admin';
+
+  @override
+  String get adminSuperAdminDemote => 'Remove super admin';
+
+  @override
+  String get adminSuperAdminUpdated => 'Super admin status updated';
+
+  @override
+  String get adminSuperAdminUpdateError =>
+      'Failed to update super admin status';
+
+  @override
+  String adminSuperAdminConfirmPromote(String user) {
+    return 'Are you sure you want to grant super admin privileges to $user?';
+  }
+
+  @override
+  String adminSuperAdminConfirmDemote(String user) {
+    return 'Are you sure you want to revoke super admin privileges from $user?';
+  }
+
+  @override
   String get adminSelectGroupAssociationManager =>
       'Select a group to manage this association';
 

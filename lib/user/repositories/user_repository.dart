@@ -42,6 +42,12 @@ class UserRepository extends Repository {
     return await update(nullTrimmedBody, "me");
   }
 
+  Future<bool> updateUserSuperAdmin(String userId, bool isSuperAdmin) async {
+    return await update({
+      'is_super_admin': isSuperAdmin,
+    }, userId, suffix: '/super-admin');
+  }
+
   Future<bool> deletePersonalData() async {
     try {
       return await create({}, suffix: "me/ask-deletion");

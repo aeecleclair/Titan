@@ -238,6 +238,28 @@
   "adminRemoveGroupMember": "Remove member from group?",
   "adminResearch": "Search",
   "adminSchools": "Schools",
+  "adminSuperAdmins": "Super admins",
+  "adminSuperAdminSearchUser": "Search a user to promote",
+  "adminSuperAdminPromote": "Make super admin",
+  "adminSuperAdminDemote": "Remove super admin",
+  "adminSuperAdminUpdated": "Super admin status updated",
+  "adminSuperAdminUpdateError": "Failed to update super admin status",
+  "adminSuperAdminConfirmPromote": "Are you sure you want to grant super admin privileges to {user}?",
+  "@adminSuperAdminConfirmPromote": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      }
+    }
+  },
+  "adminSuperAdminConfirmDemote": "Are you sure you want to revoke super admin privileges from {user}?",
+  "@adminSuperAdminConfirmDemote": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      }
+    }
+  },
   "adminSelectGroupAssociationManager": "Select a group to manage this association",
   "adminSelectManager": "Select a manager",
   "adminSend": "Send",

@@ -57,6 +57,15 @@ class SuperAdminMainPage extends HookConsumerWidget {
                   icon: HeroIcons.academicCap,
                 ),
               ),
+              GestureDetector(
+                onTap: () {
+                  QR.to(SuperAdminRouter.root + SuperAdminRouter.superAdmins);
+                },
+                child: MenuCardUi(
+                  text: AppLocalizations.of(context)!.adminSuperAdmins,
+                  icon: HeroIcons.shieldCheck,
+                ),
+              ),
             ],
           ),
         ),

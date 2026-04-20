@@ -246,6 +246,28 @@
   "adminRemoveGroupMember": "Supprimer le membre du groupe ?",
   "adminResearch": "Recherche",
   "adminSchools": "Écoles",
+  "adminSuperAdmins": "Super admins",
+  "adminSuperAdminSearchUser": "Rechercher un utilisateur à promouvoir",
+  "adminSuperAdminPromote": "Rendre super admin",
+  "adminSuperAdminDemote": "Retirer super admin",
+  "adminSuperAdminUpdated": "Statut super admin mis à jour",
+  "adminSuperAdminUpdateError": "Échec de la mise à jour du statut super admin",
+  "adminSuperAdminConfirmPromote": "Confirmer l'attribution des droits super admin à {user} ?",
+  "@adminSuperAdminConfirmPromote": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      }
+    }
+  },
+  "adminSuperAdminConfirmDemote": "Confirmer le retrait des droits super admin à {user} ?",
+  "@adminSuperAdminConfirmDemote": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      }
+    }
+  },
   "adminSelectGroupAssociationManager": "Séléctionner roupe gestionnaire de l'association",
   "adminSelectManager": "Sélectionner un gestionnaire",
   "adminSend": "Envoyer",

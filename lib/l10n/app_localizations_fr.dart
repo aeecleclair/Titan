@@ -599,6 +599,36 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminSchools => 'Écoles';
 
   @override
+  String get adminSuperAdmins => 'Super admins';
+
+  @override
+  String get adminSuperAdminSearchUser =>
+      'Rechercher un utilisateur à promouvoir';
+
+  @override
+  String get adminSuperAdminPromote => 'Rendre super admin';
+
+  @override
+  String get adminSuperAdminDemote => 'Retirer super admin';
+
+  @override
+  String get adminSuperAdminUpdated => 'Statut super admin mis à jour';
+
+  @override
+  String get adminSuperAdminUpdateError =>
+      'Échec de la mise à jour du statut super admin';
+
+  @override
+  String adminSuperAdminConfirmPromote(String user) {
+    return 'Confirmer l\'attribution des droits super admin à $user ?';
+  }
+
+  @override
+  String adminSuperAdminConfirmDemote(String user) {
+    return 'Confirmer le retrait des droits super admin à $user ?';
+  }
+
+  @override
   String get adminSelectGroupAssociationManager =>
       'Séléctionner roupe gestionnaire de l\'association';
 
