@@ -628,199 +628,203 @@ class _TicketEventContent extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: () =>
-                              selectedPaymentProvider.value = 'helloasso',
-                          borderRadius: BorderRadius.circular(12),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            decoration: BoxDecoration(
-                              color:
-                                  selectedPaymentProvider.value == 'helloasso'
-                                  ? ColorConstants.main.withValues(alpha: 0.1)
-                                  : ColorConstants.background2.withValues(
-                                      alpha: 0.05,
-                                    ),
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
+                  IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () =>
+                                selectedPaymentProvider.value = 'helloasso',
+                            borderRadius: BorderRadius.circular(12),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              decoration: BoxDecoration(
                                 color:
                                     selectedPaymentProvider.value == 'helloasso'
-                                    ? ColorConstants.main
-                                    : ColorConstants.mainBorder.withValues(
-                                        alpha: 0.3,
+                                    ? ColorConstants.main.withValues(alpha: 0.1)
+                                    : ColorConstants.background2.withValues(
+                                        alpha: 0.05,
                                       ),
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color:
+                                      selectedPaymentProvider.value ==
+                                          'helloasso'
+                                      ? ColorConstants.main
+                                      : ColorConstants.mainBorder.withValues(
+                                          alpha: 0.3,
+                                        ),
+                                ),
                               ),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SizedBox(
-                                  height: 28,
-                                  child: SvgPicture.asset(
-                                    'assets/images/helloasso.svg',
-                                    fit: BoxFit.contain,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 28,
+                                    child: SvgPicture.asset(
+                                      'assets/images/helloasso.svg',
+                                      fit: BoxFit.contain,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 6),
-                                Text(
-                                  'HelloAsso',
-                                  style: Theme.of(context).textTheme.bodySmall
-                                      ?.copyWith(
-                                        color:
-                                            selectedPaymentProvider.value ==
-                                                'helloasso'
-                                            ? ColorConstants.main
-                                            : ColorConstants.tertiary,
-                                        fontWeight:
-                                            selectedPaymentProvider.value ==
-                                                'helloasso'
-                                            ? FontWeight.w600
-                                            : FontWeight.normal,
-                                      ),
-                                ),
-                              ],
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    'HelloAsso',
+                                    style: Theme.of(context).textTheme.bodySmall
+                                        ?.copyWith(
+                                          color:
+                                              selectedPaymentProvider.value ==
+                                                  'helloasso'
+                                              ? ColorConstants.main
+                                              : ColorConstants.tertiary,
+                                          fontWeight:
+                                              selectedPaymentProvider.value ==
+                                                  'helloasso'
+                                              ? FontWeight.w600
+                                              : FontWeight.normal,
+                                        ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Builder(
-                        builder: (context) {
-                          final canPayResult = canPayAsync.maybeWhen(
-                            data: (result) => result,
-                            orElse: () => null,
-                          );
-                          final canPayOk = canPayResult?.success ?? false;
-                          final balanceInCents =
-                              walletAsync.valueOrNull?.balance ?? 0;
-                          final categoryPriceCents =
-                              ((selectedCategory.value?.price ?? 0) * 100)
-                                  .round();
-                          final hasInsufficientBalance =
-                              canPayOk && balanceInCents < categoryPriceCents;
-                          final isDisabled =
-                              !canPayOk || hasInsufficientBalance;
-                          final isSelected =
-                              selectedPaymentProvider.value == 'myempay';
+                        const SizedBox(width: 12),
+                        Builder(
+                          builder: (context) {
+                            final canPayResult = canPayAsync.maybeWhen(
+                              data: (result) => result,
+                              orElse: () => null,
+                            );
+                            final canPayOk = canPayResult?.success ?? false;
+                            final balanceInCents =
+                                walletAsync.valueOrNull?.balance ?? 0;
+                            final categoryPriceCents =
+                                ((selectedCategory.value?.price ?? 0) * 100)
+                                    .round();
+                            final hasInsufficientBalance =
+                                canPayOk && balanceInCents < categoryPriceCents;
+                            final isDisabled =
+                                !canPayOk || hasInsufficientBalance;
+                            final isSelected =
+                                selectedPaymentProvider.value == 'myempay';
 
-                          // Auto-switch to helloasso if myempay is selected but can't pay
-                          if (isDisabled && isSelected) {
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              selectedPaymentProvider.value = 'helloasso';
-                            });
-                          }
-
-                          String? disabledReason;
-                          if (!canPayOk && canPayResult != null) {
-                            switch (canPayResult.error!) {
-                              case CanPayError.tosNotAccepted:
-                                disabledReason = l10n.paiementPleaseAcceptTOS;
-                              case CanPayError.noDevice:
-                                disabledReason =
-                                    l10n.paiementDeviceNotRegistered;
-                              case CanPayError.deviceInactive:
-                                disabledReason =
-                                    l10n.paiementDeviceNotActivated;
-                              case CanPayError.deviceRevoked:
-                                disabledReason = l10n.paiementDeviceRevoked;
-                              case CanPayError.insufficientBalance:
-                                disabledReason = l10n.paiementInsufficientFunds;
+                            // Auto-switch to helloasso if myempay is selected but can't pay
+                            if (isDisabled && isSelected) {
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                selectedPaymentProvider.value = 'helloasso';
+                              });
                             }
-                          } else if (hasInsufficientBalance) {
-                            disabledReason = l10n.paiementInsufficientFunds;
-                          }
 
-                          return Expanded(
-                            child: InkWell(
-                              onTap: isDisabled
-                                  ? null
-                                  : () => selectedPaymentProvider.value =
-                                        'myempay',
-                              borderRadius: BorderRadius.circular(12),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: isSelected
-                                      ? ColorConstants.main.withValues(
-                                          alpha: 0.1,
-                                        )
-                                      : isDisabled
-                                      ? ColorConstants.background2.withValues(
-                                          alpha: 0.02,
-                                        )
-                                      : ColorConstants.background2.withValues(
-                                          alpha: 0.05,
-                                        ),
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
+                            String? disabledReason;
+                            if (!canPayOk && canPayResult != null) {
+                              switch (canPayResult.error!) {
+                                case CanPayError.tosNotAccepted:
+                                  disabledReason = l10n.paiementPleaseAcceptTOS;
+                                case CanPayError.noDevice:
+                                  disabledReason =
+                                      l10n.paiementDeviceNotRegistered;
+                                case CanPayError.deviceInactive:
+                                  disabledReason =
+                                      l10n.paiementDeviceNotActivated;
+                                case CanPayError.deviceRevoked:
+                                  disabledReason = l10n.paiementDeviceRevoked;
+                                case CanPayError.insufficientBalance:
+                                  disabledReason =
+                                      l10n.paiementInsufficientFunds;
+                              }
+                            } else if (hasInsufficientBalance) {
+                              disabledReason = l10n.paiementInsufficientFunds;
+                            }
+
+                            return Expanded(
+                              child: InkWell(
+                                onTap: isDisabled
+                                    ? null
+                                    : () => selectedPaymentProvider.value =
+                                          'myempay',
+                                borderRadius: BorderRadius.circular(12),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16,
+                                  ),
+                                  decoration: BoxDecoration(
                                     color: isSelected
-                                        ? ColorConstants.main
-                                        : isDisabled
-                                        ? ColorConstants.mainBorder.withValues(
+                                        ? ColorConstants.main.withValues(
                                             alpha: 0.1,
                                           )
-                                        : ColorConstants.mainBorder.withValues(
-                                            alpha: 0.3,
+                                        : isDisabled
+                                        ? ColorConstants.background2.withValues(
+                                            alpha: 0.02,
+                                          )
+                                        : ColorConstants.background2.withValues(
+                                            alpha: 0.05,
                                           ),
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: isSelected
+                                          ? ColorConstants.main
+                                          : isDisabled
+                                          ? ColorConstants.mainBorder
+                                                .withValues(alpha: 0.1)
+                                          : ColorConstants.mainBorder
+                                                .withValues(alpha: 0.3),
+                                    ),
                                   ),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SizedBox(
-                                      height: 28,
-                                      child: Image.asset(
-                                        'assets/images/logo_prod.png',
-                                        fit: BoxFit.contain,
-                                        color: isDisabled
-                                            ? ColorConstants.tertiary
-                                                  .withValues(alpha: 0.5)
-                                            : null,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SizedBox(
+                                        height: 28,
+                                        child: Image.asset(
+                                          'assets/images/logo_prod.png',
+                                          fit: BoxFit.contain,
+                                          color: isDisabled
+                                              ? ColorConstants.tertiary
+                                                    .withValues(alpha: 0.5)
+                                              : null,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 6),
-                                    Text(
-                                      'myempay',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.copyWith(
-                                            color: isSelected
-                                                ? ColorConstants.main
-                                                : isDisabled
-                                                ? ColorConstants.tertiary
-                                                      .withValues(alpha: 0.5)
-                                                : ColorConstants.tertiary,
-                                            fontWeight: isSelected
-                                                ? FontWeight.w600
-                                                : FontWeight.normal,
-                                          ),
-                                    ),
-                                    if (disabledReason != null)
+                                      const SizedBox(height: 10),
                                       Text(
-                                        disabledReason,
+                                        'myempay',
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodySmall
                                             ?.copyWith(
-                                              color: ColorConstants.error,
-                                              fontSize: 10,
+                                              color: isSelected
+                                                  ? ColorConstants.main
+                                                  : isDisabled
+                                                  ? ColorConstants.tertiary
+                                                        .withValues(alpha: 0.5)
+                                                  : ColorConstants.tertiary,
+                                              fontWeight: isSelected
+                                                  ? FontWeight.w600
+                                                  : FontWeight.normal,
                                             ),
-                                        textAlign: TextAlign.center,
                                       ),
-                                  ],
+                                      if (disabledReason != null)
+                                        Text(
+                                          disabledReason,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(
+                                                color: ColorConstants.error,
+                                                fontSize: 10,
+                                              ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ],

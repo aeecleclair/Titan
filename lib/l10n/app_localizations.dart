@@ -1190,6 +1190,90 @@ abstract class AppLocalizations {
   /// **'Écoles'**
   String get adminSchools;
 
+  /// No description provided for @adminAccountTypesDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Changer le type de compte d\'un utilisateur'**
+  String get adminAccountTypesDescription;
+
+  /// No description provided for @adminAccountTypeSearchUser.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher un utilisateur'**
+  String get adminAccountTypeSearchUser;
+
+  /// No description provided for @adminAccountTypeSelect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir un type de compte'**
+  String get adminAccountTypeSelect;
+
+  /// No description provided for @adminAccountTypeUpdated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type de compte mis à jour'**
+  String get adminAccountTypeUpdated;
+
+  /// No description provided for @adminAccountTypeUpdateError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de la mise à jour du type de compte'**
+  String get adminAccountTypeUpdateError;
+
+  /// No description provided for @adminAccountTypeConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Changer le type de compte de {user} en {type} ?'**
+  String adminAccountTypeConfirm(String user, String type);
+
+  /// No description provided for @adminSuperAdmins.
+  ///
+  /// In fr, this message translates to:
+  /// **'Super admins'**
+  String get adminSuperAdmins;
+
+  /// No description provided for @adminSuperAdminSearchUser.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher un utilisateur à promouvoir'**
+  String get adminSuperAdminSearchUser;
+
+  /// No description provided for @adminSuperAdminPromote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rendre super admin'**
+  String get adminSuperAdminPromote;
+
+  /// No description provided for @adminSuperAdminDemote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer super admin'**
+  String get adminSuperAdminDemote;
+
+  /// No description provided for @adminSuperAdminUpdated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Statut super admin mis à jour'**
+  String get adminSuperAdminUpdated;
+
+  /// No description provided for @adminSuperAdminUpdateError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de la mise à jour du statut super admin'**
+  String get adminSuperAdminUpdateError;
+
+  /// No description provided for @adminSuperAdminConfirmPromote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer l\'attribution des droits super admin à {user} ?'**
+  String adminSuperAdminConfirmPromote(String user);
+
+  /// No description provided for @adminSuperAdminConfirmDemote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer le retrait des droits super admin à {user} ?'**
+  String adminSuperAdminConfirmDemote(String user);
+
   /// No description provided for @adminSelectGroupAssociationManager.
   ///
   /// In fr, this message translates to:

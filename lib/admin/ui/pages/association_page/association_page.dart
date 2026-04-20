@@ -5,6 +5,7 @@ import 'package:titan/admin/admin.dart';
 import 'package:titan/admin/class/assocation.dart';
 import 'package:titan/admin/providers/all_groups_list_provider.dart';
 import 'package:titan/admin/providers/assocation_list_provider.dart';
+import 'package:titan/admin/providers/my_association_list_provider.dart';
 import 'package:titan/admin/ui/pages/association_page/add_association_modal.dart';
 import 'package:titan/admin/ui/pages/association_page/association_item.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -78,6 +79,7 @@ class AssociationPage extends ConsumerWidget {
                                     ),
                                   );
                               if (value) {
+                                ref.invalidate(asyncMyAssociationListProvider);
                                 displayToastWithContext(
                                   TypeMsg.msg,
                                   localizeWithContext.adminAssociationCreated,

@@ -6,7 +6,7 @@ import 'package:titan/mypayment/repositories/devices_repository.dart';
 import 'package:titan/mypayment/tools/can_pay.dart';
 import 'package:titan/tools/exception.dart';
 
-final canPayProvider = FutureProvider<CanPayResult>((ref) async {
+final canPayProvider = FutureProvider.autoDispose<CanPayResult>((ref) async {
   final hasAcceptedToS = ref.watch(hasAcceptedTosProvider);
 
   if (!hasAcceptedToS) {
@@ -40,14 +40,12 @@ final canPayProvider = FutureProvider<CanPayResult>((ref) async {
   return const CanPayResult.ok();
 });
 
-final canPayWithAmountProvider = FutureProvider.family<CanPayResult, int>((
-  ref,
-  amount,
-) async {
-  final baseResult = await ref.watch(canPayProvider.future);
-  if (!baseResult.success) {
-    return baseResult;
-  }
+final canPayWithAmountProvider = FutureProvider.autoDispose
+    .family<CanPayResult, int>((ref, amount) async {
+      final baseResult = await ref.watch(canPayProvider.future);
+      if (!baseResult.success) {
+        return baseResult;
+      }
 
-  return baseResult;
-});
+      return baseResult;
+    });

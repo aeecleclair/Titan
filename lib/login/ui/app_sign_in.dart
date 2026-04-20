@@ -6,7 +6,9 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/feed/router.dart';
+import 'package:titan/login/router.dart';
 import 'package:titan/login/ui/auth_page.dart';
+import 'package:titan/router.dart';
 import 'package:titan/login/ui/components/sign_in_up_bar.dart';
 import 'package:titan/settings/providers/module_list_provider.dart';
 import 'package:titan/super_admin/providers/permissions_list_provider.dart';
@@ -49,6 +51,10 @@ class AppSignIn extends HookConsumerWidget {
             isPermissionsLoaded &&
             isModulesLoaded) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (QR.currentPath != LoginRouter.root &&
+                QR.currentPath != AppRouter.root) {
+              return;
+            }
             final currentPath = ref.read(pathForwardingProvider);
             final targetPath =
                 currentPath.path == "/" || currentPath.path == "/login"

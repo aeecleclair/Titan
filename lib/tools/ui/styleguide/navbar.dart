@@ -36,22 +36,25 @@ class FloatingNavbar extends HookConsumerWidget {
       navbarVisibilityNotifier.showTemporarily();
     }
 
+    final itemsSignature = items.map((i) => i.module.root).join('|');
+
     useEffect(() {
-      if (currentPath.isNotEmpty) {
+      if (currentPath.isNotEmpty && items.isNotEmpty) {
         String currentPathRoot = "/";
         final parts = currentPath.split('/');
         if (parts.length > 1 && parts[1].isNotEmpty) {
           currentPathRoot = '/${parts[1]}';
         }
-        routeIndex.value = items.indexWhere(
+        var newIndex = items.indexWhere(
           (item) => item.module.root == currentPathRoot,
         );
-        if (routeIndex.value < 0 || routeIndex.value >= items.length) {
-          routeIndex.value = 3;
+        if (newIndex < 0 || newIndex >= items.length) {
+          newIndex = items.length - 1;
         }
+        routeIndex.value = newIndex;
       }
       return null;
-    }, [currentPath]);
+    }, [currentPath, itemsSignature]);
 
     useEffect(() {
       currentState.value = routeIndex.value;
