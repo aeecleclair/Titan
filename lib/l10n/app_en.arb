@@ -1669,7 +1669,7 @@
   "shotgunQuestions": "Questions",
   "shotgunQuestionTypeLabel": "Answer type",
   "shotgunQuotaLabel": "Quota",
-  "shotgunReservationSuccess": "Reservation created successfully!",
+  "shotgunReservationSuccess": "Ticketing created successfully!",
   "shotgunReserve": "Book",
   "shotgunSave": "Save ticketing",
   "shotgunSaveChanges": "Save changes",
@@ -1855,7 +1855,7 @@
       }
     }
   },
-  "ticketsReservationSuccess": "Reservation created successfully!",
+  "ticketsReservationSuccess": "Ticketing created successfully!",
   "ticketsMyTickets": "My tickets",
   "ticketsNoTicketsSubtitle": "Book your seat for an event!",
   "ticketsViewResults": "View results",

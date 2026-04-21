@@ -1676,7 +1676,7 @@
   "shotgunQuestions": "Questions",
   "shotgunQuestionTypeLabel": "Type de réponse",
   "shotgunQuotaLabel": "Quota",
-  "shotgunReservationSuccess": "Réservation créée avec succès !",
+  "shotgunReservationSuccess": "Billeterie créée avec succès !",
   "shotgunReserve": "Réserver",
   "shotgunSave": "Enregistrer la billetterie",
   "shotgunSaveChanges": "Enregistrer les modifications",
@@ -1862,7 +1862,7 @@
       }
     }
   },
-  "ticketsReservationSuccess": "Réservation créée avec succès !",
+  "ticketsReservationSuccess": "Billeterie créée avec succès !",
   "ticketsMyTickets": "Mes billets",
   "ticketsNoTicketsSubtitle": "Réservez votre place pour un événement !",
   "ticketsViewResults": "Voir les résultats",
