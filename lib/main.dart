@@ -71,6 +71,7 @@ class MyApp extends HookConsumerWidget {
         Future<void> initDeepLinks() async {
           try {
             appLinks.uriLinkStream.listen((Uri? uri) {
+              print("uri: $uri");
               if (uri != null) {
                 final navbarListModuleNotifier = ref.watch(
                   navbarListModuleProvider.notifier,

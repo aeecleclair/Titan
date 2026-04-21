@@ -8,6 +8,15 @@ class PathForwardingProvider extends StateNotifier<PathForwarding> {
     state = state.copyWith(path: path, queryParameters: queryParameters);
   }
 
+  void removeQueryParam(String key) {
+    final currentParams = state.queryParameters;
+    if (currentParams == null) return;
+    final newParams = Map<String, String>.from(currentParams)..remove(key);
+    state = state.copyWith(
+      queryParameters: newParams.isEmpty ? null : newParams,
+    );
+  }
+
   void clearParams() {
     state = state.copyWith(queryParameters: null);
   }
