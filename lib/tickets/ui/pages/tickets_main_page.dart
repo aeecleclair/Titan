@@ -39,7 +39,7 @@ class TicketsMainPage extends HookConsumerWidget {
       if (isSuccess) {
         // Afficher un toast de succès et nettoyer le paramètre
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          displayToast(context, TypeMsg.msg, l10n.ticketsReservationSuccess);
+          displayToast(context, TypeMsg.msg, l10n.shotgunReservationSuccess);
           ref.read(pathForwardingProvider.notifier).removeQueryParam('code');
         });
       }
