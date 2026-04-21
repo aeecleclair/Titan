@@ -4554,7 +4554,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shotgunQuotaLabel => 'Quota';
 
   @override
-  String get shotgunReservationSuccess => 'Billeterie créée avec succès !';
+  String get shotgunReservationSuccess => 'Billet réservé !';
 
   @override
   String get shotgunReserve => 'Réserver';

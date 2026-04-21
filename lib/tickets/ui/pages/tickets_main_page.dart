@@ -36,7 +36,9 @@ class TicketsMainPage extends HookConsumerWidget {
     useEffect(() {
       final code = pathForwarding.queryParameters?['code'];
       final isSuccess = code == 'succeeded';
-      if (isSuccess) {
+      final currentPath = QR.currentPath;
+      final isOnTicketsPage = currentPath.startsWith(TicketsRouter.root);
+      if (isSuccess && isOnTicketsPage) {
         // Afficher un toast de succès et nettoyer le paramètre
         WidgetsBinding.instance.addPostFrameCallback((_) {
           displayToast(context, TypeMsg.msg, l10n.shotgunReservationSuccess);

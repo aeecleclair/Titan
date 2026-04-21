@@ -8711,7 +8711,7 @@ abstract class AppLocalizations {
   /// No description provided for @shotgunReservationSuccess.
   ///
   /// In fr, this message translates to:
-  /// **'Billeterie créée avec succès !'**
+  /// **'Billet réservé !'**
   String get shotgunReservationSuccess;
 
   /// No description provided for @shotgunReserve.

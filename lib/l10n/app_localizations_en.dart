@@ -4485,7 +4485,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shotgunQuotaLabel => 'Quota';
 
   @override
-  String get shotgunReservationSuccess => 'Ticketing created successfully!';
+  String get shotgunReservationSuccess => 'Ticket booked successfully!';
 
   @override
   String get shotgunReserve => 'Book';
