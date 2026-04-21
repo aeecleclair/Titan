@@ -355,7 +355,8 @@ class AddEditEventPage extends HookConsumerWidget {
                                 const SizedBox(height: 10),
                                 SwitchListTile(
                                   title: Text(
-                                    localizeWithContext.feedUseExistingTicketing,
+                                    localizeWithContext
+                                        .feedUseExistingTicketing,
                                     style: const TextStyle(fontSize: 16),
                                   ),
                                   value: useExistingTicketEvent.value,
