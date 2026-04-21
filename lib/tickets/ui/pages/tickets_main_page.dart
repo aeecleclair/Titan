@@ -31,15 +31,12 @@ class TicketsMainPage extends HookConsumerWidget {
     final scrollController = useScrollController();
     final pathForwarding = ref.watch(pathForwardingProvider);
 
-    // Rafraîchir la liste des tickets à l'arrivée sur la page
-    // ou quand le paramètre code=succeeded est présent (retour de HelloAsso)
     useEffect(() {
       final code = pathForwarding.queryParameters?['code'];
       final isSuccess = code == 'succeeded';
       final currentPath = QR.currentPath;
       final isOnTicketsPage = currentPath.startsWith(TicketsRouter.root);
       if (isSuccess && isOnTicketsPage) {
-        // Afficher un toast de succès et nettoyer le paramètre
         WidgetsBinding.instance.addPostFrameCallback((_) {
           displayToast(context, TypeMsg.msg, l10n.shotgunReservationSuccess);
           ref.read(pathForwardingProvider.notifier).removeQueryParam('code');
