@@ -12,10 +12,12 @@ import 'package:titan/tickets/router.dart';
 import 'package:titan/tickets/ui/components/user_ticket_card.dart';
 import 'package:titan/tickets/ui/tickets_module.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
+import 'package:titan/tools/functions.dart';
 
 class TicketsMainPage extends HookConsumerWidget {
   const TicketsMainPage({super.key});
@@ -27,12 +29,22 @@ class TicketsMainPage extends HookConsumerWidget {
     final userTicketsNotifier = ref.watch(userTicketsProvider.notifier);
     final canManageTicketEvents = ref.watch(canManageTicketEventsProvider);
     final scrollController = useScrollController();
+    final pathForwarding = ref.watch(pathForwardingProvider);
 
-    // Rafraîchir la liste des tickets à l'arrivée sur la page
     useEffect(() {
+      final code = pathForwarding.queryParameters?['code'];
+      final isSuccess = code == 'succeeded';
+      final currentPath = QR.currentPath;
+      final isOnTicketsPage = currentPath.startsWith(TicketsRouter.root);
+      if (isSuccess && isOnTicketsPage) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          displayToast(context, TypeMsg.msg, l10n.shotgunReservationSuccess);
+          ref.read(pathForwardingProvider.notifier).removeQueryParam('code');
+        });
+      }
       userTicketsNotifier.loadUserTickets();
       return null;
-    }, []);
+    }, [pathForwarding.queryParameters?['code']]);
 
     return TicketTemplate(
       child: Column(

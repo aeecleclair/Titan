@@ -353,14 +353,18 @@ class AddEditEventPage extends HookConsumerWidget {
                           ? Column(
                               children: [
                                 const SizedBox(height: 10),
-                                CheckBoxEntry(
-                                  title: localizeWithContext
-                                      .feedUseExistingTicketing,
-                                  valueNotifier: useExistingTicketEvent,
-                                  onChanged: () {
-                                    useExistingTicketEvent.value =
-                                        !useExistingTicketEvent.value;
+                                SwitchListTile(
+                                  title: Text(
+                                    localizeWithContext
+                                        .feedUseExistingTicketing,
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                  value: useExistingTicketEvent.value,
+                                  onChanged: (value) {
+                                    useExistingTicketEvent.value = value;
                                   },
+                                  activeColor: ColorConstants.tertiary,
+                                  contentPadding: EdgeInsets.zero,
                                 ),
                                 // Optionnel : Dropdown pour choisir quel ticketEvent si la checkbox est cochée
                                 if (useExistingTicketEvent.value)

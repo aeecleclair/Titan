@@ -17,13 +17,6 @@ final canManageTicketEventsProvider = Provider<bool>((ref) {
     data: (stores) {
       if (stores.isEmpty) return false;
 
-      // Check if user is a structure admin of any store
-      for (final store in stores) {
-        if (store.structure.managerUser.id == currentUser.id) {
-          return true;
-        }
-      }
-
       // Check if user is a seller with canManageEvent in any store
       for (final store in stores) {
         final sellersAsync = ref.watch(sellerStoreProvider(store.id));

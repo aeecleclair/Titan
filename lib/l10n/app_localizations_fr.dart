@@ -4554,7 +4554,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shotgunQuotaLabel => 'Quota';
 
   @override
-  String get shotgunReservationSuccess => 'Réservation créée avec succès !';
+  String get shotgunReservationSuccess => 'Billet réservé !';
 
   @override
   String get shotgunReserve => 'Réserver';
@@ -5013,7 +5013,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get ticketsReservationSuccess => 'Réservation créée avec succès !';
+  String get ticketsReservationSuccess => 'Billeterie créée avec succès !';
 
   @override
   String get ticketsMyTickets => 'Mes billets';
