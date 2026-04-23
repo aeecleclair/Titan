@@ -92,6 +92,7 @@ class FeedbackPage extends HookConsumerWidget {
                         SettingsTextConstants.feedbackSendingError,
                       );
                     }
+                    QR.back();
                   });
                 },
                 child: const Center(
