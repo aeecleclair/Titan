@@ -23,7 +23,6 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
     return state.when(
       data: (d) async {
         try {
-          print("the function is being called with " + t.toString());
           final newT = await f(t);
           d.add(newT);
           state = AsyncValue.data(d);
@@ -38,7 +37,6 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
         }
       },
       error: (error, s) {
-        print("add, error");
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           throw error;
         } else {
@@ -47,7 +45,6 @@ abstract class ListNotifier<T> extends StateNotifier<AsyncValue<List<T>>> {
         }
       },
       loading: () {
-        print("add, loading");
         state = const AsyncValue.error(
           "Cannot add while loading",
           StackTrace.empty,

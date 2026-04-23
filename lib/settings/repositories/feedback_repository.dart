@@ -9,10 +9,12 @@ import '../class/feedback.dart';
 class FeedbackRepository extends Repository {
   @override
   // ignore: overridden_fields
-  final ext = "feedback/feedbacks";
+  final ext = "feedback/";
 
   Future<Feedback> createFeedback(Feedback feedback) async {
-    return Feedback.fromJson(await create(feedback.toJson()));
+    return Feedback.fromJson(
+      await create(feedback.toJson(), suffix: "feedbacks"),
+    );
     debugPrint("ca marche !");
     var json = feedback.toJson();
     debugPrint("json " + json.toString());
@@ -23,12 +25,12 @@ class FeedbackRepository extends Repository {
 
   Future<List<Feedback>> getFeedbackList() async {
     return List<Feedback>.from(
-      (await getList(suffix: "feedback")).map((x) => Feedback.fromJson(x)),
+      (await getList(suffix: "feedbacks")).map((x) => Feedback.fromJson(x)),
     );
   }
 
   Future<bool> deleteFeedback(String id) async {
-    return await delete("/$id");
+    return await delete("feedbacks/$id");
   }
 }
 
