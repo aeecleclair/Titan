@@ -9,20 +9,32 @@ class SectionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
+      padding: const EdgeInsets.fromLTRB(20, 14, 20, 6),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            section.name,
-            style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w900),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6),
+            child: Text(
+              section.name,
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+            ),
           ),
-          const SizedBox(height: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: section.moduleList
-                .map((module) => ModuleCard(module: module))
-                .toList(),
+          const SizedBox(height: 12),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            clipBehavior: Clip.none,
+            itemCount: section.moduleList.length,
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 130,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              childAspectRatio: 1,
+            ),
+            itemBuilder: (context, index) =>
+                ModuleCard(module: section.moduleList[index]),
           ),
         ],
       ),
