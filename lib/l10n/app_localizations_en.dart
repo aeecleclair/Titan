@@ -2260,10 +2260,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moduleCalendarDescription => 'View the calendar of events';
 
   @override
-  String get moduleCentralisation => 'Centralisation';
+  String get moduleCentralisation => 'Links';
 
   @override
-  String get moduleCentralisationDescription => 'Viw all links';
+  String get moduleCentralisationDescription =>
+      'Quick access to tools and services';
 
   @override
   String get moduleCinema => 'Cinema';
