@@ -36,48 +36,48 @@ class LikedCard extends StatelessWidget {
               onTap: () => openLink(module.url),
               onLongPress: () => showLinkDetails(context, module),
               child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8,
-                vertical: 12,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 36,
-                    height: 36,
-                    child: module.icon.endsWith('.svg')
-                        ? SvgPicture.network(
-                            "${CentralisationTextConstants.imagePath}${module.icon}",
-                            fit: BoxFit.contain,
-                          )
-                        : Image.network(
-                            "${CentralisationTextConstants.imagePath}${module.icon}",
-                            fit: BoxFit.contain,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 12,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 36,
+                      height: 36,
+                      child: module.icon.endsWith('.svg')
+                          ? SvgPicture.network(
+                              "${CentralisationTextConstants.imagePath}${module.icon}",
+                              fit: BoxFit.contain,
+                            )
+                          : Image.network(
+                              "${CentralisationTextConstants.imagePath}${module.icon}",
+                              fit: BoxFit.contain,
+                            ),
+                    ),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      height: 30,
+                      child: Center(
+                        child: AutoSizeText(
+                          module.name,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
                           ),
-                  ),
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    height: 30,
-                    child: Center(
-                      child: AutoSizeText(
-                        module.name,
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
+                          minFontSize: 9,
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
                         ),
-                        minFontSize: 9,
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      ),
       ),
     );
   }
