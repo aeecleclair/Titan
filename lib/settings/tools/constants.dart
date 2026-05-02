@@ -1,3 +1,12 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
+class SettingsColorConstants {
+  static const Color shadowColor = Color(0x80CCCCCC);
+  static const Color cardColor = Colors.white;
+}
+
 class SettingsTextConstants {
   static const String account = "Compte";
   static const String addProfilePicture = "Ajouter une photo";
@@ -35,10 +44,12 @@ class SettingsTextConstants {
   static const String languageFr = "Français";
   static const String logs = "Logs";
   static const String feedback = "Feedback";
-  static const String unephrasecettefoisci = "Décrivez votre problème ou suggestion";
+  static const String unephrasecettefoisci =
+      "Décrivez votre problème ou suggestion";
   static const String send = "Envoyer";
   static const String feedbackSent = "Feedback envoyé";
-  static const String feedbackSendingError = "Erreur lors de l'envoi du feedback";
+  static const String feedbackSendingError =
+      "Erreur lors de l'envoi du feedback";
   static const String modules = "Modules";
   static const String myIcs = "Mon lien Ical";
   static const String name = "Nom";

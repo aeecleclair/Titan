@@ -14,12 +14,16 @@ import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
+import 'package:titan/tools/ui/widgets/admin_button.dart';
 
 class FeedbackPage extends HookConsumerWidget {
+  const FeedbackPage({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final feedbackListNotifier = ref.watch(feedbackListProvider.notifier);
-    final provider = ref.watch(feedbackListProvider);
+    //final isAdmin = ref.watch(isLoanAdminProvider);
+    final isAdmin = true; //for testing only
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -29,86 +33,104 @@ class FeedbackPage extends HookConsumerWidget {
 
     return SettingsTemplate(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        child: Form(
-          key: key,
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              const AlignLeftText(
-                SettingsTextConstants.feedback,
-                color: Colors.grey,
-              ),
-              const SizedBox(height: 40),
-              AlignLeftText(
-                padding: EdgeInsetsGeometry.directional(start: 20),
-                SettingsTextConstants.unephrasecettefoisci,
-                fontSize: 15,
-              ),
-              SizedBox(height: 20),
-              Expanded(
-                child: TextEntry(
-                  label: "contentTextEntry",
-                  controller: feedbackController,
-                  keyboardType: TextInputType.multiline,
-                  canBeEmpty: false,
-                  autofocus: true,
-                  minLines: 4,
-                  maxLines: 15,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: SettingsTextConstants.unephrasecettefoisci,
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Stack(
+          children: [
+            Form(
+              key: key,
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  const AlignLeftText(
+                    SettingsTextConstants.feedback,
+                    color: Colors.grey,
                   ),
-                ),
-              ),
-
-              WaitingButton(
-                builder: (child) => AddEditButtonLayout(
-                  colors: const [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
-                  ],
-                  child: child,
-                ),
-                onTap: () async {
-                  await tokenExpireWrapper(ref, () async {
-                    final value = await feedbackListNotifier.addFeedback(
-                      Feedback.empty().copyWith(
-                        content: feedbackController.value.text,
+                  const SizedBox(height: 40),
+                  AlignLeftText(
+                    padding: EdgeInsetsGeometry.directional(start: 20),
+                    SettingsTextConstants.unephrasecettefoisci,
+                    fontSize: 15,
+                  ),
+                  SizedBox(height: 20),
+                  Expanded(
+                    child: TextEntry(
+                      label: "contentTextEntry",
+                      controller: feedbackController,
+                      keyboardType: TextInputType.multiline,
+                      canBeEmpty: false,
+                      autofocus: true,
+                      minLines: 4,
+                      maxLines: 15,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: SettingsTextConstants.unephrasecettefoisci,
                       ),
-                    );
-
-                    if (value) {
-                      displayToastWithContext(
-                        TypeMsg.msg,
-                        SettingsTextConstants.feedbackSent,
-                      );
-                      QR.removeNavigator(
-                        SettingsRouter.root + SettingsRouter.feedback,
-                      );
-                    } else {
-                      displayToastWithContext(
-                        TypeMsg.error,
-                        SettingsTextConstants.feedbackSendingError,
-                      );
-                    }
-                    QR.back();
-                  });
-                },
-                child: const Center(
-                  child: Text(
-                    SettingsTextConstants.send,
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
                     ),
                   ),
+                  SizedBox(height: 20),
+                  WaitingButton(
+                    builder: (child) => AddEditButtonLayout(
+                      colors: const [
+                        ColorConstants.gradient1,
+                        ColorConstants.gradient2,
+                      ],
+                      child: child,
+                    ),
+                    onTap: () async {
+                      await tokenExpireWrapper(ref, () async {
+                        final value = await feedbackListNotifier.addFeedback(
+                          Feedback.empty().copyWith(
+                            content: feedbackController.value.text,
+                          ),
+                        );
+
+                        if (value) {
+                          displayToastWithContext(
+                            TypeMsg.msg,
+                            SettingsTextConstants.feedbackSent,
+                          );
+                          QR.removeNavigator(
+                            SettingsRouter.root + SettingsRouter.feedback,
+                          );
+                        } else {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            SettingsTextConstants.feedbackSendingError,
+                          );
+                        }
+                        QR.back();
+                      });
+                    },
+                    child: const Center(
+                      child: Text(
+                        SettingsTextConstants.send,
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
+            ),
+            if (isAdmin)
+              Positioned(
+                top: 30,
+                right: 30,
+                child: AdminButton(
+                  onTap: () {
+                    QR.to(
+                      SettingsRouter.root +
+                          SettingsRouter.feedback +
+                          SettingsRouter.admin,
+                    );
+                  },
                 ),
               ),
-              const SizedBox(height: 30),
-            ],
-          ),
+          ],
         ),
       ),
     );

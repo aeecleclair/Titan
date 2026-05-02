@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/settings/ui/pages/edit_user_page/edit_user_page.dart'
     deferred as edit_user_page;
+import 'package:titan/settings/ui/pages/feedback_admin_page/feedback_admin_page.dart'
+    as feedback_admin_page;
 import 'package:titan/settings/ui/pages/feedback_page/feedback_page.dart'
     as feedback_page;
 import 'package:titan/settings/ui/pages/log_page/log_page.dart'
@@ -22,6 +24,7 @@ class SettingsRouter {
   static const String editAccount = '/edit_account';
   static const String logs = '/logs';
   static const String feedback = '/feedback';
+  static const String admin = '/admin';
   static const String modules = '/modules';
   static const String notifications = '/notifications';
   SettingsRouter(this.ref);
@@ -46,7 +49,20 @@ class SettingsRouter {
           builder: () => log_page.LogPage(),
           middleware: [DeferredLoadingMiddleware(log_page.loadLibrary)],
         ),
-      QRoute(path: feedback, builder: () => feedback_page.FeedbackPage()),
+      QRoute(
+        path: feedback,
+        builder: () => feedback_page.FeedbackPage(),
+        //middleware: [
+        //AdminMiddleware(ref, isLoanAdminProvider),
+        //DeferredLoadingMiddleware(admin_page.loadLibrary),
+        //], //todo
+        children: [
+          QRoute(
+            path: admin,
+            builder: () => feedback_admin_page.FeedbackAdminPage(),
+          ),
+        ],
+      ),
       QRoute(
         path: modules,
         builder: () => modules_page.ModulesPage(),
