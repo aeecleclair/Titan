@@ -125,7 +125,6 @@
   <body>
     <script type="text/javascript">
       let isDarkMode = JSON.parse(localStorage.getItem("flutter.isDarkMode"));
-      console.log(isDarkMode);
       if (isDarkMode === null)
         isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
       // Keep these constants up to date with tools/constants.dart
