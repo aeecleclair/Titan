@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:titan/tools/constants.dart';
 
 enum ButtonType { main, danger, onDanger, secondary }
 
@@ -46,26 +45,26 @@ class Button extends StatelessWidget {
   Color get backgroundColor {
     switch (type) {
       case ButtonType.main:
-        return ColorConstants.tertiary;
+        return Color(0xFF424242);
       case ButtonType.danger:
-        return ColorConstants.main;
+        return Color(0xFFfb6d10);
       case ButtonType.onDanger:
-        return ColorConstants.onMain;
+        return Color(0xffeb3e1b);
       case ButtonType.secondary:
-        return ColorConstants.background;
+        return Color(0xFFffffff);
     }
   }
 
   Color get borderColor {
     switch (type) {
       case ButtonType.main:
-        return ColorConstants.onTertiary;
+        return Color(0xFF212121);
       case ButtonType.danger:
-        return ColorConstants.mainBorder;
+        return Color.fromARGB(255, 87, 3, 3);
       case ButtonType.onDanger:
-        return ColorConstants.mainBorder;
+        return Color.fromARGB(255, 87, 3, 3);
       case ButtonType.secondary:
-        return ColorConstants.onBackground;
+        return Color(0xffb4b4b4);
     }
   }
 
@@ -73,13 +72,13 @@ class Button extends StatelessWidget {
     Color color;
     switch (type) {
       case ButtonType.main:
-        color = ColorConstants.background;
+        color = Color(0xFFffffff);
       case ButtonType.onDanger:
-        color = ColorConstants.background;
+        color = Color(0xFFffffff);
       case ButtonType.danger:
-        color = ColorConstants.background;
+        color = Color(0xFFffffff);
       case ButtonType.secondary:
-        color = ColorConstants.tertiary;
+        color = Color(0xFF424242);
     }
     if (disabled == true) {
       return color.withAlpha(150);
