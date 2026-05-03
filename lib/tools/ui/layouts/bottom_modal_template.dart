@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:titan/tools/constants.dart';
 
 enum BottomModalType { main, danger }
 
@@ -42,11 +41,11 @@ class BottomModalTemplate extends StatelessWidget {
             width: 120,
             height: 4,
             decoration: BoxDecoration(
-              color: ColorConstants.onTertiary,
+              color: Color(0xFF212121),
               borderRadius: BorderRadius.circular(2),
               boxShadow: [
                 BoxShadow(
-                  color: ColorConstants.onTertiary.withAlpha(50),
+                  color: Color(0xFF212121).withAlpha(50),
                   blurRadius: 4,
                   spreadRadius: 1,
                 ),
@@ -59,8 +58,8 @@ class BottomModalTemplate extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: type == BottomModalType.main
-                  ? ColorConstants.background
-                  : ColorConstants.main,
+                  ? Color(0xFFffffff)
+                  : Color(0xFFfb6d10),
               borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
             ),
             padding: EdgeInsets.all(20),
@@ -74,8 +73,8 @@ class BottomModalTemplate extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w900,
                     color: type == BottomModalType.main
-                        ? ColorConstants.tertiary
-                        : ColorConstants.background,
+                        ? Color(0xFF424242)
+                        : Color(0xFFffffff),
                   ),
                 ),
                 SizedBox(height: 20),
@@ -85,8 +84,8 @@ class BottomModalTemplate extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 15,
                       color: type == BottomModalType.main
-                          ? ColorConstants.tertiary
-                          : ColorConstants.background,
+                          ? Color(0xFF424242)
+                          : Color(0xFFffffff),
                     ),
                   ),
                 child,

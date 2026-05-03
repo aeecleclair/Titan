@@ -8,7 +8,6 @@ import 'package:titan/phonebook/providers/association_groupement_list_provider.d
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -50,7 +49,7 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
-                  color: ColorConstants.title,
+                  color: Color(0xFF000000),
                 ),
               ),
             ),
