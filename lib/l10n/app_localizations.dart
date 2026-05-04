@@ -4469,13 +4469,13 @@ abstract class AppLocalizations {
   /// No description provided for @moduleCentralisation.
   ///
   /// In fr, this message translates to:
-  /// **'Centralisation'**
+  /// **'Liens'**
   String get moduleCentralisation;
 
   /// No description provided for @moduleCentralisationDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Gérer la centralisation des données'**
+  /// **'Accéder rapidement aux outils et services'**
   String get moduleCentralisationDescription;
 
   /// No description provided for @moduleCinema.

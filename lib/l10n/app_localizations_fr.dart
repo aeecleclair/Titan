@@ -2278,11 +2278,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Consulter les événements et les activités';
 
   @override
-  String get moduleCentralisation => 'Centralisation';
+  String get moduleCentralisation => 'Liens';
 
   @override
   String get moduleCentralisationDescription =>
-      'Gérer la centralisation des données';
+      'Accéder rapidement aux outils et services';
 
   @override
   String get moduleCinema => 'Cinéma';
