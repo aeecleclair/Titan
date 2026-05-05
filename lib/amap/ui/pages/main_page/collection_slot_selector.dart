@@ -5,6 +5,7 @@ import 'package:titan/amap/providers/order_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/tools/functions.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class CollectionSlotSelector extends HookConsumerWidget {
   final CollectionSlot collectionSlot;
@@ -16,6 +17,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
     final orderNotifier = ref.read(orderProvider.notifier);
     final isSelected = collectionSlot == order.collectionSlot;
     final isFirst = CollectionSlot.values.first == collectionSlot;
+    final isDarkTheme = ref.watch(themeProvider);
     return Expanded(
       child: GestureDetector(
         onTap: () {
@@ -33,7 +35,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
               bottomRight: Radius.circular(!isFirst ? 22 : 0),
             ),
             color: isSelected
-                ? Colors.white.withValues(alpha: 0.7)
+                ? Theme.of(context).colorScheme.surface.withValues(alpha: 0.7)
                 : Colors.transparent,
           ),
           child: Center(
@@ -43,8 +45,8 @@ class CollectionSlotSelector extends HookConsumerWidget {
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
                 color: isSelected
-                    ? AMAPColorConstants.greenGradient2
-                    : Colors.white,
+                    ? AMAPColors(isDarkTheme).greenGradientSecondary
+                    : Theme.of(context).colorScheme.onSecondary,
               ),
             ),
           ),

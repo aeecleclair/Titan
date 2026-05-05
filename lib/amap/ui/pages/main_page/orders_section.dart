@@ -9,6 +9,7 @@ import 'package:titan/amap/providers/order_provider.dart';
 import 'package:titan/amap/providers/user_order_list_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/components/order_ui.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
@@ -35,13 +36,14 @@ class OrderSection extends HookConsumerWidget {
           .toList(),
       orElse: () => [],
     );
+    final isDarkTheme = ref.watch(themeProvider);
 
     return Column(
       children: [
-        const AlignLeftText(
+        AlignLeftText(
           AMAPTextConstants.orders,
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          color: AMAPColorConstants.textDark,
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          color: AMAPColors(isDarkTheme).textOnPrimary,
         ),
         const SizedBox(height: 10),
         HorizontalListView(
@@ -55,17 +57,17 @@ class OrderSection extends HookConsumerWidget {
                 orderNotifier.setOrder(e);
                 addOrder();
               },
-              child: const CardLayout(
+              child: CardLayout(
                 width: 100,
                 height: 150,
                 colors: [
-                  AMAPColorConstants.lightGradient1,
-                  AMAPColorConstants.greenGradient1,
+                  AMAPColors(isDarkTheme).lightGradientPrimary,
+                  AMAPColors(isDarkTheme).greenGradientPrimary,
                 ],
                 child: Center(
                   child: HeroIcon(
                     HeroIcons.plus,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onSecondary,
                     size: 50,
                   ),
                 ),
@@ -93,7 +95,7 @@ class OrderSection extends HookConsumerWidget {
                   }).toList(),
                 );
               },
-              loaderColor: AMAPColorConstants.greenGradient2,
+              loaderColor: AMAPColors(isDarkTheme).greenGradientSecondary,
             ),
             const SizedBox(width: 25),
           ],
