@@ -108,7 +108,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                   isEdit
                       ? BookingTextConstants.editBooking
                       : BookingTextConstants.addBooking,
-                  color: Colors.grey,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
               const SizedBox(height: 20),
@@ -138,7 +138,9 @@ class AddEditBookingPage extends HookConsumerWidget {
                       child: Text(
                         e.name,
                         style: TextStyle(
-                          color: selected ? Colors.white : Colors.black,
+                          color: selected
+                              ? Theme.of(context).colorScheme.onSecondary
+                              : Theme.of(context).colorScheme.onSurface,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -195,9 +197,13 @@ class AddEditBookingPage extends HookConsumerWidget {
                     recurrent.value
                         ? Column(
                             children: [
-                              const Text(
+                              Text(
                                 BookingTextConstants.recurrenceDays,
-                                style: TextStyle(color: Colors.black),
+                                style: TextStyle(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onPrimary,
+                                ),
                               ),
                               const SizedBox(height: 10),
                               Column(
@@ -215,13 +221,19 @@ class AddEditBookingPage extends HookConsumerWidget {
                                             Text(
                                               weekDayToString(e),
                                               style: TextStyle(
-                                                color: Colors.grey.shade700,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .secondaryContainer,
                                                 fontSize: 16,
                                               ),
                                             ),
                                             Checkbox(
-                                              checkColor: Colors.white,
-                                              activeColor: Colors.black,
+                                              checkColor: Theme.of(
+                                                context,
+                                              ).colorScheme.onSecondary,
+                                              activeColor: Theme.of(
+                                                context,
+                                              ).colorScheme.secondary,
                                               value: selectedDays.contains(e),
                                               onChanged: (value) {
                                                 selectedDaysNotifier.toggle(e);
@@ -234,9 +246,13 @@ class AddEditBookingPage extends HookConsumerWidget {
                                     .toList(),
                               ),
                               const SizedBox(height: 20),
-                              const Text(
+                              Text(
                                 BookingTextConstants.interval,
-                                style: TextStyle(color: Colors.black),
+                                style: TextStyle(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onPrimary,
+                                ),
                               ),
                               const SizedBox(height: 10),
                               TextEntry(
@@ -464,8 +480,8 @@ class AddEditBookingPage extends HookConsumerWidget {
                         isEdit
                             ? BookingTextConstants.edit
                             : BookingTextConstants.add,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSecondary,
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                         ),
