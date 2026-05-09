@@ -11,18 +11,16 @@ class LogCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Color> colors = log.level == LogLevel.debug
-        ? [const Color(0xff00c3ff), const Color(0xff0077ff)]
-        : log.level == LogLevel.info
-        ? [const Color(0xff549227), const Color(0xFF3E721A)]
-        : log.level == LogLevel.warning
-        ? [const Color(0xfffc9a01), const Color(0xffee8300)]
-        : log.level == LogLevel.error
-        ? [const Color(0xffc72c41), const Color(0xff801336)]
-        : [
-            const Color.fromARGB(255, 198, 190, 21),
-            const Color.fromARGB(255, 187, 178, 14),
-          ];
+    List<Color> colors = switch (log.level) {
+      LogLevel.debug => [const Color(0xff00c3ff), const Color(0xff0077ff)],
+      LogLevel.info => [const Color(0xff549227), const Color(0xFF3E721A)],
+      LogLevel.warning => [const Color(0xfffc9a01), const Color(0xffee8300)],
+      LogLevel.error => [const Color(0xffc72c41), const Color(0xff801336)],
+      _ => [
+        const Color.fromARGB(255, 198, 190, 21),
+        const Color.fromARGB(255, 187, 178, 14),
+      ],
+    };
 
     Color color = colors[0];
 
@@ -49,6 +47,7 @@ class LogCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // it's ok to leave text & icon explicitly white here
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
