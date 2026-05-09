@@ -97,7 +97,7 @@ class ThemeConstants {
     shadowColor: Colors.grey.withValues(alpha: 0.3),
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
-      primary: Colors.white,
+      primary: Color(0xffFEF7FF),
       onPrimary: Colors.black,
       secondary: Colors.black,
       onSecondary: Colors.white,
@@ -132,12 +132,12 @@ class ThemeConstants {
       onSurface: Colors.white,
       primaryContainer: Color(0xffeb3e1b),
       primaryFixed: Color(0xfffb6d10),
-      onPrimaryContainer: Colors.black,
+      onPrimaryContainer: Colors.white,
       secondaryFixed: Color(0xFF222222),
       secondaryContainer: Color(0xFFDDDDDD),
+      tertiary: Colors.grey,
       error: Colors.red,
       onError: Colors.white,
-      tertiary: Colors.grey,
     ),
     textTheme: GoogleFonts.latoTextTheme(
       Theme.of(
