@@ -11,7 +11,6 @@ import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/is_phonebook_admin_provider.dart';
 import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/phonebook/ui/components/groupement_bar.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
@@ -73,7 +72,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                 SizedBox(
                                   child: TextFormField(
                                     controller: name,
-                                    cursorColor: ColorConstants.gradient1,
+                                    cursorColor: Theme.of(
+                                      context,
+                                    ).colorScheme.primaryContainer,
                                     decoration: InputDecoration(
                                       labelText:
                                           PhonebookTextConstants.namePure,
@@ -90,9 +91,11 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                           color: Colors.transparent,
                                         ),
                                       ),
-                                      focusedBorder: const UnderlineInputBorder(
+                                      focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: ColorConstants.gradient1,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.primaryContainer,
                                         ),
                                       ),
                                     ),
@@ -117,7 +120,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                 SizedBox(
                                   child: TextFormField(
                                     controller: description,
-                                    cursorColor: ColorConstants.gradient1,
+                                    cursorColor: Theme.of(
+                                      context,
+                                    ).colorScheme.primaryContainer,
                                     decoration: InputDecoration(
                                       labelText:
                                           PhonebookTextConstants.description,
@@ -134,9 +139,11 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                           color: Colors.transparent,
                                         ),
                                       ),
-                                      focusedBorder: const UnderlineInputBorder(
+                                      focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: ColorConstants.gradient1,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.primaryContainer,
                                         ),
                                       ),
                                     ),
@@ -147,9 +154,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                           ),
                           WaitingButton(
                             builder: (child) => AddEditButtonLayout(
-                              colors: const [
-                                ColorConstants.gradient1,
-                                ColorConstants.gradient2,
+                              colors: [
+                                Theme.of(context).colorScheme.primaryContainer,
+                                Theme.of(context).colorScheme.primaryFixed,
                               ],
                               child: child,
                             ),
@@ -186,12 +193,14 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                 }
                               });
                             },
-                            child: const Text(
+                            child: Text(
                               PhonebookTextConstants.edit,
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
-                                color: Color.fromARGB(255, 255, 255, 255),
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onPrimaryContainer,
                               ),
                             ),
                           ),
@@ -208,12 +217,12 @@ class AssociationInformationEditor extends HookConsumerWidget {
                     if (association.deactivated)
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10),
-                        child: const Text(
+                        child: Text(
                           PhonebookTextConstants.deactivatedAssociationWarning,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.red,
+                            color: Theme.of(context).colorScheme.error,
                           ),
                         ),
                       ),
@@ -265,12 +274,12 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                     horizontal: 20,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withValues(
-                                          alpha: 0.1,
-                                        ),
+                                        color: Theme.of(context).shadowColor,
                                         offset: const Offset(0, 1),
                                         blurRadius: 4,
                                         spreadRadius: 2,
@@ -325,9 +334,9 @@ class AssociationInformationEditor extends HookConsumerWidget {
                 ),
                 WaitingButton(
                   builder: (child) => AddEditButtonLayout(
-                    colors: const [
-                      ColorConstants.gradient1,
-                      ColorConstants.gradient2,
+                    colors: [
+                      Theme.of(context).colorScheme.primaryContainer,
+                      Theme.of(context).colorScheme.primaryFixed,
                     ],
                     child: child,
                   ),
@@ -354,12 +363,12 @@ class AssociationInformationEditor extends HookConsumerWidget {
                       }
                     });
                   },
-                  child: const Text(
+                  child: Text(
                     PhonebookTextConstants.updateGroups,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(255, 255, 255, 255),
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ),
                 ),
