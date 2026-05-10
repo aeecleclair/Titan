@@ -83,7 +83,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                   isEdit
                       ? CinemaTextConstants.editSession
                       : CinemaTextConstants.addSession,
-                  color: Theme.of(context).colorScheme.secondaryFixed,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
                 const SizedBox(height: 30),
                 TextField(
@@ -171,15 +171,15 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 horizontal: 30,
                               ),
                               decoration: BoxDecoration(
-                                color: Theme.of(context).shadowColor,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.secondaryFixed,
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: HeroIcon(
                                 HeroIcons.camera,
                                 size: 100,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.secondaryFixed,
+                                color: Theme.of(context).colorScheme.tertiary,
                               ),
                             )
                           : Image(
