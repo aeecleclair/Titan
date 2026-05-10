@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/drawer/providers/is_web_format_provider.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
@@ -51,7 +50,6 @@ class Calendar extends HookConsumerWidget {
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -63,7 +61,7 @@ class Calendar extends HookConsumerWidget {
                           ),
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
-                            color: Colors.grey.shade400,
+                            color: Theme.of(context).colorScheme.tertiary,
                             fontSize: 15,
                           ),
                         ),
@@ -84,10 +82,8 @@ class Calendar extends HookConsumerWidget {
                     child: GestureDetector(
                       onTap: () => Navigator.pop(context),
                       child: CardButton(
-                        color: Colors.white,
-                        shadowColor: Colors.grey.shade500.withValues(
-                          alpha: 0.3,
-                        ),
+                        color: Theme.of(context).colorScheme.surface,
+                        shadowColor: Theme.of(context).shadowColor,
                         child: const HeroIcon(HeroIcons.xMark, size: 20),
                       ),
                     ),
@@ -120,15 +116,20 @@ class Calendar extends HookConsumerWidget {
                       view: CalendarView.week,
                       selectionDecoration: BoxDecoration(
                         color: Colors.transparent,
-                        border: Border.all(color: Colors.black, width: 2),
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          width: 2,
+                        ),
                         borderRadius: const BorderRadius.all(
                           Radius.circular(5),
                         ),
                         shape: BoxShape.rectangle,
                       ),
-                      todayHighlightColor: Colors.black,
-                      todayTextStyle: const TextStyle(
-                        color: Colors.white,
+                      todayHighlightColor: Theme.of(
+                        context,
+                      ).colorScheme.secondary,
+                      todayTextStyle: TextStyle(
+                        color: Theme.of(context).colorScheme.onSecondary,
                         fontWeight: FontWeight.bold,
                       ),
                       firstDayOfWeek: 1,
@@ -136,24 +137,24 @@ class Calendar extends HookConsumerWidget {
                       timeSlotViewSettings: const TimeSlotViewSettings(
                         timeFormat: 'HH:mm',
                       ),
-                      viewHeaderStyle: const ViewHeaderStyle(
+                      viewHeaderStyle: ViewHeaderStyle(
                         dayTextStyle: TextStyle(
-                          color: Colors.grey,
+                          color: Theme.of(context).colorScheme.tertiary,
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                         ),
                         dateTextStyle: TextStyle(
-                          color: Colors.grey,
+                          color: Theme.of(context).colorScheme.tertiary,
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      headerStyle: const CalendarHeaderStyle(
+                      headerStyle: CalendarHeaderStyle(
                         textAlign: TextAlign.center,
                         textStyle: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ),
@@ -164,13 +165,11 @@ class Calendar extends HookConsumerWidget {
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.secondary,
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.shade700.withValues(
-                                  alpha: 0.3,
-                                ),
+                                color: Theme.of(context).shadowColor,
                                 blurRadius: 5,
                                 spreadRadius: 1,
                               ),
@@ -180,10 +179,10 @@ class Calendar extends HookConsumerWidget {
                             onPressed: () {
                               calendarController.forward!();
                             },
-                            icon: const HeroIcon(
+                            icon: HeroIcon(
                               HeroIcons.arrowRight,
                               size: 25,
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.onSecondary,
                             ),
                           ),
                         ),
@@ -195,13 +194,11 @@ class Calendar extends HookConsumerWidget {
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.secondary,
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.shade700.withValues(
-                                  alpha: 0.3,
-                                ),
+                                color: Theme.of(context).shadowColor,
                                 blurRadius: 5,
                                 spreadRadius: 1,
                               ),
@@ -211,10 +208,10 @@ class Calendar extends HookConsumerWidget {
                             onPressed: () {
                               calendarController.backward!();
                             },
-                            icon: const HeroIcon(
+                            icon: HeroIcon(
                               HeroIcons.arrowLeft,
                               size: 25,
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.onSecondary,
                             ),
                           ),
                         ),
@@ -223,7 +220,7 @@ class Calendar extends HookConsumerWidget {
                 ),
               );
             },
-            loaderColor: ColorConstants.background2,
+            loaderColor: Theme.of(context).colorScheme.primaryContainer,
           ),
         );
       },

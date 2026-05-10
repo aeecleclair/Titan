@@ -7,7 +7,7 @@ class StyledSearchBar extends HookConsumerWidget {
   final Future Function(String)? onChanged;
   final String label;
   final Widget? suffixIcon;
-  final Color color;
+  final Color? color;
   final EdgeInsetsGeometry? padding;
   final void Function(FocusNode focusNode, TextEditingController controller)?
   onSuffixIconTap;
@@ -19,7 +19,7 @@ class StyledSearchBar extends HookConsumerWidget {
     this.suffixIcon,
     this.onSuffixIconTap,
     this.padding,
-    this.color = Colors.grey,
+    this.color,
     this.editingController,
   });
 
@@ -28,6 +28,7 @@ class StyledSearchBar extends HookConsumerWidget {
     final focusNode = useFocusNode();
     final editingController =
         this.editingController ?? useTextEditingController();
+    final color_ = color ?? Theme.of(context).colorScheme.tertiary;
     return Container(
       padding: padding ?? const EdgeInsets.symmetric(horizontal: 30),
       alignment: Alignment.centerLeft,
@@ -39,28 +40,28 @@ class StyledSearchBar extends HookConsumerWidget {
           });
         },
         controller: editingController,
-        cursorColor: color,
+        cursorColor: color_,
         decoration: InputDecoration(
           labelText: label,
           labelStyle: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: color,
+            color: color_,
           ),
           suffixIcon: onSuffixIconTap == null
-              ? suffixIcon ?? Icon(Icons.search, color: color, size: 30)
+              ? suffixIcon ?? Icon(Icons.search, color: color_, size: 30)
               : GestureDetector(
                   onTap: () {
                     onSuffixIconTap!(focusNode, editingController);
                   },
                   child:
-                      suffixIcon ?? Icon(Icons.search, color: color, size: 30),
+                      suffixIcon ?? Icon(Icons.search, color: color_, size: 30),
                 ),
           enabledBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.transparent),
           ),
           focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: color),
+            borderSide: BorderSide(color: color_),
           ),
         ),
       ),

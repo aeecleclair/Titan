@@ -7,6 +7,7 @@ class Consts {
 
   static const double padding = 20.0;
   static const double avatarRadius = 50.0;
+  // it's ok to have these dark "danger red" hard-coded
   static const Color redGradient1 = Color(0xFF9E131F);
   static const Color redGradient2 = Color(0xFF590512);
 }
@@ -34,6 +35,7 @@ class CustomDialogBox extends StatelessWidget {
         Navigator.of(context).pop();
       },
       child: Container(
+        // to darken the page behind the dialog, independently on the theme
         color: Colors.black54,
         child: GestureDetector(
           onTap: () {},
@@ -56,14 +58,14 @@ class CustomDialogBox extends StatelessWidget {
                   ),
                   margin: const EdgeInsets.only(top: Consts.avatarRadius),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(Consts.padding),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        color: Colors.black26,
+                        color: Theme.of(context).shadowColor,
                         blurRadius: 10.0,
-                        offset: Offset(0.0, 10.0),
+                        offset: const Offset(0.0, 10.0),
                       ),
                     ],
                   ),
@@ -98,14 +100,10 @@ class CustomDialogBox extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                gradient: const LinearGradient(
-                                  colors: [Colors.black87, Colors.black],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
+                                color: Theme.of(context).colorScheme.secondary,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.3),
+                                    color: Theme.of(context).shadowColor,
                                     blurRadius: 2.0,
                                     offset: const Offset(1.0, 2.0),
                                   ),
@@ -115,7 +113,9 @@ class CustomDialogBox extends StatelessWidget {
                                 child: Text(
                                   noText ?? "Annuler",
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSecondary,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -129,16 +129,20 @@ class CustomDialogBox extends StatelessWidget {
                               }
                               await onYes();
                             },
-                            waitingColor: Colors.black,
+                            waitingColor: Theme.of(
+                              context,
+                            ).colorScheme.onPrimary,
                             builder: (child) => Container(
                               width: 100,
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Colors.grey.shade300,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.secondaryFixed,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey.withValues(alpha: 0.3),
+                                    color: Theme.of(context).shadowColor,
                                     blurRadius: 2.0,
                                     offset: const Offset(1.0, 2.0),
                                   ),
