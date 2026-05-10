@@ -109,69 +109,67 @@ class InvoicesAdminPage extends HookConsumerWidget {
                           final structure = ref.watch(structureProvider);
                           return BottomModalTemplate(
                             title: "Créer une nouvelle facture",
-                            child: Column(
-                              children: [
-                                Text(
-                                  "Sélectionnez une structure",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                            actions: [
+                              Text(
+                                "Sélectionnez une structure",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                SizedBox(
-                                  height: min(
-                                    structures.length * 50,
-                                    MediaQuery.of(context).size.height * 0.8,
-                                  ),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: structures
-                                          .map(
-                                            (e) => ItemChip(
-                                              vertical: true,
-                                              onTap: () => structureNotifier
-                                                  .setStructure(e),
-                                              selected: structure.id == e.id,
-                                              child: Text(
-                                                e.name,
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: structure.id == e.id
-                                                      ? Colors.white
-                                                      : Colors.black,
-                                                ),
+                              ),
+                              SizedBox(
+                                height: min(
+                                  structures.length * 50,
+                                  MediaQuery.of(context).size.height * 0.8,
+                                ),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: structures
+                                        .map(
+                                          (e) => ItemChip(
+                                            vertical: true,
+                                            onTap: () => structureNotifier
+                                                .setStructure(e),
+                                            selected: structure.id == e.id,
+                                            child: Text(
+                                              e.name,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: structure.id == e.id
+                                                    ? Colors.white
+                                                    : Colors.black,
                                               ),
                                             ),
-                                          )
-                                          .toList(),
-                                    ),
+                                          ),
+                                        )
+                                        .toList(),
                                   ),
                                 ),
-                                Button(
-                                  onPressed: () async {
-                                    if (structure.id == "") return;
-                                    Navigator.pop(context);
-                                    await tokenExpireWrapper(ref, () async {
-                                      final value = await invoicesNotifier
-                                          .createInvoice(structure);
-                                      if (value) {
-                                        displayToastWithContext(
-                                          TypeMsg.msg,
-                                          "Facture créée avec succès",
-                                        );
-                                        refreshInvoices();
-                                      } else {
-                                        displayToastWithContext(
-                                          TypeMsg.error,
-                                          "Aucune facture à générer pour cette structure",
-                                        );
-                                      }
-                                    });
-                                  },
-                                  text: "Créer la facture",
-                                ),
-                              ],
-                            ),
+                              ),
+                              Button(
+                                onPressed: () async {
+                                  if (structure.id == "") return;
+                                  Navigator.pop(context);
+                                  await tokenExpireWrapper(ref, () async {
+                                    final value = await invoicesNotifier
+                                        .createInvoice(structure);
+                                    if (value) {
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        "Facture créée avec succès",
+                                      );
+                                      refreshInvoices();
+                                    } else {
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        "Aucune facture à générer pour cette structure",
+                                      );
+                                    }
+                                  });
+                                },
+                                text: "Créer la facture",
+                              ),
+                            ],
                           );
                         },
                       ),
