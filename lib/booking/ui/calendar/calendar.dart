@@ -195,6 +195,7 @@ class Calendar extends HookConsumerWidget {
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
+                cellBorderColor: Theme.of(context).colorScheme.secondaryFixed,
               ),
               if (isWebFormat)
                 Positioned(
