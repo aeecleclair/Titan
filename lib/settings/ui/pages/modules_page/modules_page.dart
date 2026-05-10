@@ -59,7 +59,10 @@ class ModulesPage extends HookConsumerWidget {
                     const Spacer(),
                     Checkbox(
                       value: modules.contains(module),
-                      activeColor: Theme.of(context).colorScheme.tertiary,
+                      checkColor: Theme.of(context).colorScheme.onSecondary,
+                      activeColor: Theme.of(
+                        context,
+                      ).colorScheme.secondaryContainer,
                       onChanged: (bool? value) {
                         modulesNotifier.toggleModule(module);
                       },
