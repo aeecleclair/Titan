@@ -98,7 +98,7 @@ class GroupementsBar extends HookConsumerWidget {
             },
           ),
         ],
-        child: SizedBox.shrink(),
+        //child: SizedBox.shrink(),
       ),
     );
 

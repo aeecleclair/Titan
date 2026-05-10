@@ -37,128 +37,126 @@ class InvoiceCard extends HookConsumerWidget {
           context: context,
           modal: BottomModalTemplate(
             title: invoice.reference,
-            child: Column(
-              children: [
+            actions: [
+              Button(
+                onPressed: () async {
+                  late final Uint8List pdfBytes;
+                  try {
+                    pdfBytes = await invoicePdf;
+                  } catch (e) {
+                    displayToastWithContext(TypeMsg.error, e.toString());
+                    return;
+                  }
+                  final path = kIsWeb
+                      ? await FileSaver.instance.saveFile(
+                          name: invoice.reference,
+                          bytes: pdfBytes,
+                          ext: "pdf",
+                          mimeType: MimeType.pdf,
+                        )
+                      : await FileSaver.instance.saveAs(
+                          name: invoice.reference,
+                          bytes: pdfBytes,
+                          ext: "pdf",
+                          mimeType: MimeType.pdf,
+                        );
+                  if (path != null) {
+                    displayToastWithContext(
+                      TypeMsg.msg,
+                      "Téléchargement réussi",
+                    );
+                  }
+                },
+                text: "Télécharger la facture (PDF)",
+              ),
+              if (!invoice.received && isAdmin) ...[
+                const SizedBox(height: 10),
                 Button(
                   onPressed: () async {
-                    late final Uint8List pdfBytes;
-                    try {
-                      pdfBytes = await invoicePdf;
-                    } catch (e) {
-                      displayToastWithContext(TypeMsg.error, e.toString());
-                      return;
-                    }
-                    final path = kIsWeb
-                        ? await FileSaver.instance.saveFile(
-                            name: invoice.reference,
-                            bytes: pdfBytes,
-                            ext: "pdf",
-                            mimeType: MimeType.pdf,
-                          )
-                        : await FileSaver.instance.saveAs(
-                            name: invoice.reference,
-                            bytes: pdfBytes,
-                            ext: "pdf",
-                            mimeType: MimeType.pdf,
-                          );
-                    if (path != null) {
+                    final value = await invoicesNotifier
+                        .updateInvoicePaidStatus(invoice, !invoice.paid);
+                    if (value) {
                       displayToastWithContext(
                         TypeMsg.msg,
-                        "Téléchargement réussi",
+                        "Statut mis à jour avec succès",
+                      );
+                    } else {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        "Erreur lors de la mise à jour du statut",
                       );
                     }
                   },
-                  text: "Télécharger la facture (PDF)",
+                  text: invoice.paid
+                      ? "Marquer comme impayée"
+                      : "Marquer comme payée",
                 ),
-                if (!invoice.received && isAdmin) ...[
-                  const SizedBox(height: 10),
-                  Button(
-                    onPressed: () async {
-                      final value = await invoicesNotifier
-                          .updateInvoicePaidStatus(invoice, !invoice.paid);
-                      if (value) {
-                        displayToastWithContext(
-                          TypeMsg.msg,
-                          "Statut mis à jour avec succès",
-                        );
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          "Erreur lors de la mise à jour du statut",
-                        );
-                      }
-                    },
-                    text: invoice.paid
-                        ? "Marquer comme impayée"
-                        : "Marquer comme payée",
-                  ),
-                ],
-                if (!isAdmin && invoice.paid && !invoice.received) ...[
-                  const SizedBox(height: 10),
-                  Button(
-                    onPressed: () async {
-                      Navigator.of(context).pop();
-                      showDialog(
-                        context: context,
-                        builder: (context) => CustomDialogBox(
-                          title: "Marquer comme reçue",
-                          descriptions:
-                              "Confirmez-vous avoir bien reçu le paiement ?",
-                          onYes: () async {
-                            final value = await invoicesNotifier
-                                .updateInvoiceReceivedStatus(invoice, true);
-                            if (value) {
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                "Statut mis à jour avec succès",
-                              );
-                            } else {
-                              displayToastWithContext(
-                                TypeMsg.error,
-                                "Erreur lors de la mise à jour du statut",
-                              );
-                            }
-                          },
-                        ),
-                      );
-                    },
-                    text: "Marquer comme reçue",
-                  ),
-                ],
-                if (!invoice.paid && isAdmin) ...[
-                  const SizedBox(height: 10),
-                  Button(
-                    onPressed: () async {
-                      Navigator.of(context).pop();
-                      showDialog(
-                        context: context,
-                        builder: (context) => CustomDialogBox(
-                          title: "Supprimer la facture",
-                          descriptions: "Cette action est irréversible",
-                          onYes: () async {
-                            final value = await invoicesNotifier.deleteInvoice(
-                              invoice,
-                            );
-                            if (value) {
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                "Facture supprimée avec succès",
-                              );
-                            } else {
-                              displayToastWithContext(
-                                TypeMsg.error,
-                                "Erreur lors de la suppression de la facture",
-                              );
-                            }
-                          },
-                        ),
-                      );
-                    },
-                    text: "Supprimer la facture",
-                  ),
-                ],
               ],
-            ),
+              if (!isAdmin && invoice.paid && !invoice.received) ...[
+                const SizedBox(height: 10),
+                Button(
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                    showDialog(
+                      context: context,
+                      builder: (context) => CustomDialogBox(
+                        title: "Marquer comme reçue",
+                        descriptions:
+                            "Confirmez-vous avoir bien reçu le paiement ?",
+                        onYes: () async {
+                          final value = await invoicesNotifier
+                              .updateInvoiceReceivedStatus(invoice, true);
+                          if (value) {
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              "Statut mis à jour avec succès",
+                            );
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              "Erreur lors de la mise à jour du statut",
+                            );
+                          }
+                        },
+                      ),
+                    );
+                  },
+                  text: "Marquer comme reçue",
+                ),
+              ],
+              if (!invoice.paid && isAdmin) ...[
+                const SizedBox(height: 10),
+                Button(
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                    showDialog(
+                      context: context,
+                      builder: (context) => CustomDialogBox(
+                        title: "Supprimer la facture",
+                        descriptions: "Cette action est irréversible",
+                        onYes: () async {
+                          final value = await invoicesNotifier.deleteInvoice(
+                            invoice,
+                          );
+                          if (value) {
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              "Facture supprimée avec succès",
+                            );
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              "Erreur lors de la suppression de la facture",
+                            );
+                          }
+                        },
+                      ),
+                    );
+                  },
+                  text: "Supprimer la facture",
+                ),
+              ],
+            ],
           ),
         ),
         child: CardLayout(

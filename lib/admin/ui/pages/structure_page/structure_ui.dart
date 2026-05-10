@@ -39,76 +39,74 @@ class StructureUi extends HookConsumerWidget {
         context: context,
         modal: BottomModalTemplate(
           title: structure.name,
-          child: Column(
-            children: [
-              Button(
-                onPressed: () {
-                  structureNotifier.setStructure(structure);
-                  structureManagerNotifier.setUser(structure.managerUser);
+          actions: [
+            Button(
+              onPressed: () {
+                structureNotifier.setStructure(structure);
+                structureManagerNotifier.setUser(structure.managerUser);
 
-                  QR.to(
-                    AdminRouter.root +
-                        AdminRouter.structures +
-                        AdminRouter.addEditStructure,
+                QR.to(
+                  AdminRouter.root +
+                      AdminRouter.structures +
+                      AdminRouter.addEditStructure,
+                );
+                Navigator.of(context).pop();
+              },
+              text: AdminTextConstants.editStructure,
+            ),
+            const SizedBox(height: 10),
+            Button(
+              onPressed: () async {
+                final value = await bankAccountHolderNotifier
+                    .updateBankAccountHolder(structure);
+                if (value) {
+                  displayToastWithContext(
+                    TypeMsg.msg,
+                    AdminTextConstants.setAsBankAccountHolderSuccess,
                   );
-                  Navigator.of(context).pop();
-                },
-                text: AdminTextConstants.editStructure,
-              ),
-              const SizedBox(height: 10),
-              Button(
-                onPressed: () async {
-                  final value = await bankAccountHolderNotifier
-                      .updateBankAccountHolder(structure);
-                  if (value) {
-                    displayToastWithContext(
-                      TypeMsg.msg,
-                      AdminTextConstants.setAsBankAccountHolderSuccess,
-                    );
-                  } else {
-                    displayToastWithContext(
-                      TypeMsg.error,
-                      AdminTextConstants.setAsBankAccountHolderError,
-                    );
-                  }
-                },
-                text: AdminTextConstants.setAsBankAccountHolder,
-              ),
-              const SizedBox(height: 10),
-              Button.danger(
-                onPressed: () async {
-                  await showDialog(
-                    context: context,
-                    builder: (context) {
-                      return CustomDialogBox(
-                        title: AdminTextConstants.delete,
-                        descriptions: AdminTextConstants.deletingDescription,
-                        onYes: () async {
-                          tokenExpireWrapper(ref, () async {
-                            final value = await structuresNotifier
-                                .deleteStructure(structure);
-                            if (value) {
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                AdminTextConstants.deletedStructure,
-                              );
-                            } else {
-                              displayToastWithContext(
-                                TypeMsg.error,
-                                AdminTextConstants.deletingStructureError,
-                              );
-                            }
-                          });
-                          Navigator.of(context).pop();
-                        },
-                      );
-                    },
+                } else {
+                  displayToastWithContext(
+                    TypeMsg.error,
+                    AdminTextConstants.setAsBankAccountHolderError,
                   );
-                },
-                text: AdminTextConstants.deleteStructure,
-              ),
-            ],
-          ),
+                }
+              },
+              text: AdminTextConstants.setAsBankAccountHolder,
+            ),
+            const SizedBox(height: 10),
+            Button.danger(
+              onPressed: () async {
+                await showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CustomDialogBox(
+                      title: AdminTextConstants.delete,
+                      descriptions: AdminTextConstants.deletingDescription,
+                      onYes: () async {
+                        tokenExpireWrapper(ref, () async {
+                          final value = await structuresNotifier
+                              .deleteStructure(structure);
+                          if (value) {
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              AdminTextConstants.deletedStructure,
+                            );
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              AdminTextConstants.deletingStructureError,
+                            );
+                          }
+                        });
+                        Navigator.of(context).pop();
+                      },
+                    );
+                  },
+                );
+              },
+              text: AdminTextConstants.deleteStructure,
+            ),
+          ],
         ),
       ),
       child: ItemCardUi(
