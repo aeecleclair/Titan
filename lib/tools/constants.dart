@@ -97,7 +97,7 @@ class ThemeConstants {
     shadowColor: Colors.grey.withValues(alpha: 0.3),
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
-      primary: Color(0xffFEF7FF),
+      primary: Colors.white, //Color(0xffFEF7FF),
       onPrimary: Colors.black,
       secondary: Colors.black,
       onSecondary: Colors.white,
