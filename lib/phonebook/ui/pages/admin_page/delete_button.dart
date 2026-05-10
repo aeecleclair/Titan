@@ -53,7 +53,7 @@ class DeleteButton extends StatelessWidget {
       onTap: !deactivated ? onDelete : () async {},
       child: HeroIcon(
         deletion ? HeroIcons.trash : HeroIcons.noSymbol,
-        size: 30,
+
         color: Theme.of(context).colorScheme.onPrimaryContainer,
       ),
     );

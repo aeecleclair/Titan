@@ -59,7 +59,7 @@ class EditableAssociationCard extends HookConsumerWidget {
           Row(
             children: [
               EditionButton(onEdition: onEdit, deactivated: !canEdit),
-              const SizedBox(width: 5),
+              const SizedBox(width: 10),
               DeleteButton(
                 onDelete: onDelete,
                 deactivated: !canDelete,

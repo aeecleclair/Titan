@@ -55,7 +55,6 @@ Color getColorFromTagList(
   WidgetRef ref,
   List<String> tags,
 ) {
-  final primaryContainer = Theme.of(context).colorScheme.primaryContainer;
   final rolesTags = ref.watch(rolesTagsProvider).keys.toList();
   int index = 4;
   for (String tag in tags) {
@@ -63,13 +62,15 @@ Color getColorFromTagList(
       index = rolesTags.indexOf(tag);
     }
   }
-  return primaryContainer.withValues(
-    alpha: switch (index) {
-      0 => 1,
-      1 => 0.75,
-      2 => 0.5,
-      3 => 0.25,
-      _ => 0,
-    },
-  );
+  return index < 4
+      ? Theme.of(context).colorScheme.primaryContainer.withValues(
+          alpha: switch (index) {
+            0 => 1,
+            1 => 0.75,
+            2 => 0.5,
+            3 => 0.25,
+            _ => 0, // unreachable anyway
+          },
+        )
+      : Theme.of(context).colorScheme.surface;
 }

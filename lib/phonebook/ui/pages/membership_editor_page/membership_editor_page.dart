@@ -115,6 +115,9 @@ class MembershipEditorPage extends HookConsumerWidget {
                               data: (rolesTag) => rolesTag[0],
                               orElse: () => false,
                             ),
+                            checkColor: Theme.of(
+                              context,
+                            ).colorScheme.onSecondary,
                             fillColor:
                                 rolesTagList.keys.first == tagKey &&
                                     (!isPhonebookAdmin && !isGroupementAdmin)
