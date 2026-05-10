@@ -38,6 +38,17 @@ class LikedCard extends StatelessWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.all(4.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white,
+                          blurRadius: 5,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     child: module.icon.endsWith('.svg')
                         ? SvgPicture.network(
                             "${CentralisationTextConstants.imagePath}${module.icon}",
