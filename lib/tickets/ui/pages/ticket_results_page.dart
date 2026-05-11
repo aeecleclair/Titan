@@ -7,6 +7,7 @@ import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tickets/providers/csv_download_provider.dart';
 import 'package:titan/tickets/providers/event_tickets_provider.dart';
 import 'package:titan/tickets/providers/selected_ticket_event_provider.dart';
+import 'package:titan/tickets/ui/components/stats_card.dart';
 import 'package:titan/tickets/ui/tickets_module.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
@@ -98,6 +99,19 @@ class TicketResultsPage extends HookConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
+          if (selectedTicketEvent.ticketsSold != null ||
+              selectedTicketEvent.ticketsInCheckout != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: StatsCard(
+                ticketsSold: selectedTicketEvent.ticketsSold,
+                ticketsInCheckout: selectedTicketEvent.ticketsInCheckout,
+                quota: selectedTicketEvent.quota,
+              ),
+            ),
+          if (selectedTicketEvent.ticketsSold != null ||
+              selectedTicketEvent.ticketsInCheckout != null)
+            const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Button(
