@@ -14,6 +14,10 @@ class TicketEvent {
     required this.sessions,
     required this.categories,
     required this.questions,
+    this.soldOut = false,
+    this.disabled = false,
+    this.ticketsInCheckout,
+    this.ticketsSold,
   });
   late final String id;
   late final String name;
@@ -24,6 +28,10 @@ class TicketEvent {
   late final List<Session> sessions;
   late final List<Category> categories;
   late final List<Question> questions;
+  late final bool soldOut;
+  late final bool disabled;
+  late final int? ticketsInCheckout;
+  late final int? ticketsSold;
 
   TicketEvent.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -52,6 +60,10 @@ class TicketEvent {
             .whereType<Question>()
             .toList() ??
         [];
+    soldOut = json['sold_out'] ?? false;
+    disabled = json['disabled'] ?? false;
+    ticketsInCheckout = json['tickets_in_checkout'];
+    ticketsSold = json['tickets_sold'];
   }
 
   Map<String, dynamic> toJson() {
@@ -82,6 +94,10 @@ class TicketEvent {
     List<Session>? sessions,
     List<Category>? categories,
     List<Question>? questions,
+    bool? soldOut,
+    bool? disabled,
+    int? ticketsInCheckout,
+    int? ticketsSold,
   }) {
     return TicketEvent(
       id: id ?? this.id,
@@ -93,6 +109,10 @@ class TicketEvent {
       sessions: sessions ?? this.sessions,
       categories: categories ?? this.categories,
       questions: questions ?? this.questions,
+      soldOut: soldOut ?? this.soldOut,
+      disabled: disabled ?? this.disabled,
+      ticketsInCheckout: ticketsInCheckout ?? this.ticketsInCheckout,
+      ticketsSold: ticketsSold ?? this.ticketsSold,
     );
   }
 
@@ -106,10 +126,14 @@ class TicketEvent {
     sessions = [];
     categories = [];
     questions = [];
+    soldOut = false;
+    disabled = false;
+    ticketsInCheckout = null;
+    ticketsSold = null;
   }
 
   @override
   String toString() {
-    return 'Shotgun{id : $id, name: $name, storeId: $storeId, quota: $quota, openDatetime: $openDatetime, closeDatetime: $closeDatetime, sessions: $sessions, categories: $categories, questions: $questions}';
+    return 'Shotgun{id : $id, name: $name, storeId: $storeId, quota: $quota, openDatetime: $openDatetime, closeDatetime: $closeDatetime, sessions: $sessions, categories: $categories, questions: $questions, soldOut: $soldOut, disabled: $disabled, ticketsInCheckout: $ticketsInCheckout, ticketsSold: $ticketsSold}';
   }
 }
