@@ -9619,6 +9619,36 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Cette session est complète'**
   String get ticketsSessionSoldOut;
+
+  /// No description provided for @ticketsSoldOut.
+  ///
+  /// In fr, this message translates to:
+  /// **'Complet'**
+  String get ticketsSoldOut;
+
+  /// No description provided for @ticketsEventSoldOut.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cet évènement est complet'**
+  String get ticketsEventSoldOut;
+
+  /// No description provided for @ticketsTicketsSold.
+  ///
+  /// In fr, this message translates to:
+  /// **'Billets vendus'**
+  String get ticketsTicketsSold;
+
+  /// No description provided for @ticketsTicketsInCheckout.
+  ///
+  /// In fr, this message translates to:
+  /// **'En cours d\'achat'**
+  String get ticketsTicketsInCheckout;
+
+  /// No description provided for @ticketsStatistics.
+  ///
+  /// In fr, this message translates to:
+  /// **'Statistiques'**
+  String get ticketsStatistics;
 }
 
 class _AppLocalizationsDelegate

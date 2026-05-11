@@ -5030,4 +5030,19 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get ticketsSessionSoldOut => 'Cette session est complète';
+
+  @override
+  String get ticketsSoldOut => 'Complet';
+
+  @override
+  String get ticketsEventSoldOut => 'Cet évènement est complet';
+
+  @override
+  String get ticketsTicketsSold => 'Billets vendus';
+
+  @override
+  String get ticketsTicketsInCheckout => 'En cours d\'achat';
+
+  @override
+  String get ticketsStatistics => 'Statistiques';
 }
