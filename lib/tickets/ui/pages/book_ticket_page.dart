@@ -24,6 +24,7 @@ import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tickets/providers/checkout_provider.dart';
 import 'package:titan/tickets/providers/ticket_event_provider.dart';
 import 'package:titan/tickets/router.dart';
+import 'package:titan/tickets/ui/components/sold_out_badge.dart';
 import 'package:titan/tickets/ui/tickets_module.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
@@ -98,11 +99,12 @@ class _TicketEventContent extends HookConsumerWidget {
 
     // Pre-calculate valid categories and sessions
     final validCategories = ticketEvent.categories
-        .where((c) => c.name.trim().isNotEmpty)
+        .where((c) => c.name.trim().isNotEmpty && !c.disabled)
         .toList();
     final validSessions = ticketEvent.sessions
-        .where((s) => s.name.trim().isNotEmpty)
+        .where((s) => s.name.trim().isNotEmpty && !s.disabled)
         .toList();
+    final isEventSoldOut = ticketEvent.soldOut;
 
     // Helper to get payment method from provider value
     RequestType getPaymentMethod(String? provider) {
@@ -391,13 +393,27 @@ class _TicketEventContent extends HookConsumerWidget {
                             color: ColorConstants.main,
                           ),
                           const SizedBox(width: 8),
-                          Text(
-                            ticketEvent.name,
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(color: ColorConstants.onTertiary),
+                          Expanded(
+                            child: Text(
+                              ticketEvent.name,
+                              style: Theme.of(context).textTheme.titleMedium
+                                  ?.copyWith(color: ColorConstants.onTertiary),
+                            ),
                           ),
+                          if (isEventSoldOut) ...[
+                            const SizedBox(width: 8),
+                            const SoldOutBadge(),
+                          ],
                         ],
                       ),
+                      if (isEventSoldOut) ...[
+                        const SizedBox(height: 12),
+                        Text(
+                          l10n.ticketsEventSoldOut,
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: ColorConstants.error),
+                        ),
+                      ],
                       if (validCategories.isNotEmpty) ...[
                         const SizedBox(height: 24),
                         Text(
@@ -409,70 +425,81 @@ class _TicketEventContent extends HookConsumerWidget {
                         ...validCategories.map((category) {
                           final isSelected =
                               selectedCategory.value?.id == category.id;
+                          final isCategorySoldOut =
+                              category.soldOut || isEventSoldOut;
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 8),
                             child: InkWell(
-                              onTap: () => selectedCategory.value = category,
+                              onTap: isCategorySoldOut
+                                  ? null
+                                  : () => selectedCategory.value = category,
                               borderRadius: BorderRadius.circular(8),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 12,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: isSelected
-                                      ? ColorConstants.main.withValues(
-                                          alpha: 0.1,
-                                        )
-                                      : ColorConstants.background2.withValues(
-                                          alpha: 0.05,
-                                        ),
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: isSelected
-                                        ? ColorConstants.main
-                                        : ColorConstants.mainBorder.withValues(
-                                            alpha: 0.3,
-                                          ),
+                              child: Opacity(
+                                opacity: isCategorySoldOut ? 0.5 : 1,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 12,
                                   ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      isSelected
-                                          ? Icons.radio_button_checked
-                                          : Icons.radio_button_unchecked,
-                                      size: 20,
+                                  decoration: BoxDecoration(
+                                    color: isSelected
+                                        ? ColorConstants.main.withValues(
+                                            alpha: 0.1,
+                                          )
+                                        : ColorConstants.background2.withValues(
+                                            alpha: 0.05,
+                                          ),
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
                                       color: isSelected
                                           ? ColorConstants.main
-                                          : ColorConstants.tertiary,
+                                          : ColorConstants.mainBorder
+                                                .withValues(alpha: 0.3),
                                     ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: Text(
-                                        category.name.trim(),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        isSelected
+                                            ? Icons.radio_button_checked
+                                            : Icons.radio_button_unchecked,
+                                        size: 20,
+                                        color: isSelected
+                                            ? ColorConstants.main
+                                            : ColorConstants.tertiary,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          category.name.trim(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium
+                                              ?.copyWith(
+                                                color:
+                                                    ColorConstants.onTertiary,
+                                                fontWeight: isSelected
+                                                    ? FontWeight.w600
+                                                    : FontWeight.normal,
+                                              ),
+                                        ),
+                                      ),
+                                      if (isCategorySoldOut) ...[
+                                        const SoldOutBadge(),
+                                        const SizedBox(width: 8),
+                                      ],
+                                      Text(
+                                        '${category.price}€',
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium
                                             ?.copyWith(
-                                              color: ColorConstants.onTertiary,
-                                              fontWeight: isSelected
-                                                  ? FontWeight.w600
-                                                  : FontWeight.normal,
+                                              color: ColorConstants.main,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                       ),
-                                    ),
-                                    Text(
-                                      '${category.price}€',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                            color: ColorConstants.main,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -490,74 +517,83 @@ class _TicketEventContent extends HookConsumerWidget {
                         ...validSessions.map((session) {
                           final isSelected =
                               selectedSession.value?.id == session.id;
+                          final isSessionSoldOut =
+                              session.soldOut || isEventSoldOut;
                           final sessionTime = timeFormat.format(
                             session.startDatetime,
                           );
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 8),
                             child: InkWell(
-                              onTap: () => selectedSession.value = session,
+                              onTap: isSessionSoldOut
+                                  ? null
+                                  : () => selectedSession.value = session,
                               borderRadius: BorderRadius.circular(8),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 12,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: isSelected
-                                      ? ColorConstants.main.withValues(
-                                          alpha: 0.1,
-                                        )
-                                      : ColorConstants.background2.withValues(
-                                          alpha: 0.05,
-                                        ),
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: isSelected
-                                        ? ColorConstants.main
-                                        : ColorConstants.mainBorder.withValues(
-                                            alpha: 0.3,
-                                          ),
+                              child: Opacity(
+                                opacity: isSessionSoldOut ? 0.5 : 1,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 12,
                                   ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      isSelected
-                                          ? Icons.radio_button_checked
-                                          : Icons.radio_button_unchecked,
-                                      size: 20,
+                                  decoration: BoxDecoration(
+                                    color: isSelected
+                                        ? ColorConstants.main.withValues(
+                                            alpha: 0.1,
+                                          )
+                                        : ColorConstants.background2.withValues(
+                                            alpha: 0.05,
+                                          ),
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
                                       color: isSelected
                                           ? ColorConstants.main
-                                          : ColorConstants.tertiary,
+                                          : ColorConstants.mainBorder
+                                                .withValues(alpha: 0.3),
                                     ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: Text(
-                                        '${session.name.trim()} - $sessionTime',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                              color: ColorConstants.onTertiary,
-                                              fontWeight: isSelected
-                                                  ? FontWeight.w600
-                                                  : FontWeight.normal,
-                                            ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        isSelected
+                                            ? Icons.radio_button_checked
+                                            : Icons.radio_button_unchecked,
+                                        size: 20,
+                                        color: isSelected
+                                            ? ColorConstants.main
+                                            : ColorConstants.tertiary,
                                       ),
-                                    ),
-                                    if (session.quota != null &&
-                                        session.quota! > 0)
-                                      Text(
-                                        '${session.quota} ${l10n.ticketsPlaces}',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            ?.copyWith(
-                                              color: ColorConstants.tertiary,
-                                            ),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          '${session.name.trim()} - $sessionTime',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium
+                                              ?.copyWith(
+                                                color:
+                                                    ColorConstants.onTertiary,
+                                                fontWeight: isSelected
+                                                    ? FontWeight.w600
+                                                    : FontWeight.normal,
+                                              ),
+                                        ),
                                       ),
-                                  ],
+                                      if (isSessionSoldOut)
+                                        const SoldOutBadge()
+                                      else if (session.quota != null &&
+                                          session.quota! > 0)
+                                        Text(
+                                          '${session.quota} ${l10n.ticketsPlaces}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(
+                                                color: ColorConstants.tertiary,
+                                              ),
+                                        ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -834,9 +870,12 @@ class _TicketEventContent extends HookConsumerWidget {
                 child: ElevatedButton(
                   onPressed:
                       checkoutState.isCreating ||
+                          isEventSoldOut ||
                           selectedCategory.value == null ||
+                          (selectedCategory.value?.soldOut ?? false) ||
                           (validSessions.isNotEmpty &&
                               selectedSession.value == null) ||
+                          (selectedSession.value?.soldOut ?? false) ||
                           !areAllRequiredQuestionsAnswered()
                       ? null
                       : () async {
