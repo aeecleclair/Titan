@@ -18,6 +18,7 @@ const String unableToOpen = 'Impossible d\'ouvrir le lien';
 
 const int maxHyperionFileSize = 4194304;
 
+// Old colors: don't forget to nuke that class when there will be no more references to it
 class ColorConstants {
   static const Color gradient1 = Color(0xFFfb6d10);
   static const Color gradient2 = Color(0xffeb3e1b);
@@ -92,11 +93,11 @@ class ThemeConstants {
   ThemeConstants(this.context);
 
   ThemeData get lightTheme => ThemeData(
-    brightness: Brightness.light,
+    brightness: .light,
     primarySwatch: Colors.orange,
     shadowColor: Colors.grey.withValues(alpha: 0.3),
     colorScheme: const ColorScheme(
-      brightness: Brightness.light,
+      brightness: .light,
       primary: Colors.white, //Color(0xffFEF7FF),
       onPrimary: Colors.black,
       secondary: Colors.black,
@@ -119,11 +120,11 @@ class ThemeConstants {
     ),
   );
   ThemeData get darkTheme => ThemeData(
-    brightness: Brightness.dark,
+    brightness: .dark,
     primarySwatch: Colors.orange,
     shadowColor: Colors.grey.withValues(alpha: 0.7),
     colorScheme: const ColorScheme(
-      brightness: Brightness.dark,
+      brightness: .dark,
       primary: Colors.black,
       onPrimary: Colors.white,
       secondary: Colors.white,
@@ -146,3 +147,27 @@ class ThemeConstants {
     ),
   );
 }
+
+// Reference: Flutter's default theme
+// ignore: unused_element
+ThemeData _ = ThemeData(
+  brightness: .light,
+  shadowColor: Color(0xff000000),
+  colorScheme: const ColorScheme(
+    brightness: .light,
+    primary: Color(0xff6750a4),
+    onPrimary: Color(0xffffffff),
+    secondary: Color(0xff625b71),
+    onSecondary: Color(0xffffffff),
+    surface: Color(0xfffef7ff),
+    onSurface: Color(0xff1d1b20),
+    primaryContainer: Color(0xffeaddff),
+    primaryFixed: Color(0xffeaddff),
+    onPrimaryContainer: Color(0xff4f378b),
+    secondaryFixed: Color(0xffe8def8),
+    secondaryContainer: Color(0xffe8def8),
+    tertiary: Color(0xff7d5260),
+    error: Color(0xffb3261e),
+    onError: Color(0xffffffff),
+  ),
+);
