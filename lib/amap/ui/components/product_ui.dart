@@ -57,7 +57,7 @@ class ProductCard extends ConsumerWidget {
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.onSecondary,
+              color: AMAPColors(isDarkTheme).primaryGreen,
             ),
           ),
           const SizedBox(height: 4),
@@ -81,8 +81,8 @@ class ProductCard extends ConsumerWidget {
                       onTap: onEdit,
                       child: CardButton(
                         colors: [
+                          AMAPColors(isDarkTheme).greenGradientPrimary,
                           AMAPColors(isDarkTheme).greenGradientSecondary,
-                          AMAPColors(isDarkTheme).textOnPrimary,
                         ],
                         child: HeroIcon(
                           HeroIcons.pencil,

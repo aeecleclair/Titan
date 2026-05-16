@@ -62,12 +62,12 @@ class OrderSection extends HookConsumerWidget {
                 height: 150,
                 colors: [
                   AMAPColors(isDarkTheme).lightGradientPrimary,
-                  AMAPColors(isDarkTheme).greenGradientPrimary,
+                  AMAPColors(isDarkTheme).lightGradientSecondary,
                 ],
                 child: Center(
                   child: HeroIcon(
                     HeroIcons.plus,
-                    color: Theme.of(context).colorScheme.onSecondary,
+                    color: AMAPColors(isDarkTheme).primaryGreen,
                     size: 50,
                   ),
                 ),

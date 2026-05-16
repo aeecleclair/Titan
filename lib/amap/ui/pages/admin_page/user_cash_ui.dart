@@ -94,7 +94,7 @@ class UserCashUi extends HookConsumerWidget {
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
-                            color: AMAPColors(isDarkTheme).textOnPrimary,
+                            color: AMAPColors(isDarkTheme).secondaryGreen,
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -139,7 +139,7 @@ class UserCashUi extends HookConsumerWidget {
                                 controller: amount,
                                 keyboardType: TextInputType.number,
                                 isDouble: true,
-                                color: AMAPColors(isDarkTheme).textOnPrimary,
+                                color: AMAPColors(isDarkTheme).secondaryGreen,
                                 enabledColor: AMAPColors(
                                   isDarkTheme,
                                 ).primaryGreen,

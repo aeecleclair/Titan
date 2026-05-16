@@ -25,7 +25,6 @@ class ProductDetailCard extends ConsumerWidget {
         AMAPColors(isDarkTheme).lightGradientPrimary,
         AMAPColors(isDarkTheme).lightGradientSecondary,
       ],
-      shadowColor: AMAPColors(isDarkTheme).textOnPrimary.withValues(alpha: 0.3),
       padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -50,7 +49,7 @@ class ProductDetailCard extends ConsumerWidget {
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.onSecondary,
+              color: AMAPColors(isDarkTheme).primaryGreen,
             ),
           ),
           const SizedBox(height: 4),

@@ -90,10 +90,12 @@ class AmapMainPage extends HookConsumerWidget {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: AMAPColors(isDarkTheme).greenGradientPrimary,
+                          color: AMAPColors(isDarkTheme).lightGradientSecondary,
                         ),
                       ),
-                      loaderColor: AMAPColors(isDarkTheme).greenGradientPrimary,
+                      loaderColor: AMAPColors(
+                        isDarkTheme,
+                      ).lightGradientSecondary,
                     ),
                   ),
                   if (isAdmin)

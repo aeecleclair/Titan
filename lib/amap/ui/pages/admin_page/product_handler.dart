@@ -65,13 +65,10 @@ class ProductHandler extends HookConsumerWidget {
                   AMAPColors(isDarkTheme).lightGradientPrimary,
                   AMAPColors(isDarkTheme).lightGradientSecondary,
                 ],
-                shadowColor: AMAPColors(
-                  isDarkTheme,
-                ).textOnPrimary.withValues(alpha: 0.3),
                 child: Center(
                   child: HeroIcon(
                     HeroIcons.plus,
-                    color: Theme.of(context).colorScheme.onSecondary,
+                    color: AMAPColors(isDarkTheme).primaryGreen,
                     size: 50,
                   ),
                 ),

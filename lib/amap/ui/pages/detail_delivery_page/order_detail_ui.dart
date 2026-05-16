@@ -45,7 +45,7 @@ class DetailOrderUI extends HookConsumerWidget {
       height: 139 + (24.0 * order.products.length),
       colors: [
         AMAPColors(isDarkTheme).lightGradientPrimary,
-        AMAPColors(isDarkTheme).greenGradientPrimary,
+        AMAPColors(isDarkTheme).lightGradientSecondary,
       ],
       padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 17.0),
       child: Column(
@@ -60,7 +60,7 @@ class DetailOrderUI extends HookConsumerWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: AMAPColors(isDarkTheme).textOnPrimary,
+                color: AMAPColors(isDarkTheme).secondaryGreen,
               ),
             ),
           ),
@@ -77,7 +77,7 @@ class DetailOrderUI extends HookConsumerWidget {
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
-                      color: Theme.of(context).colorScheme.onSecondary,
+                      color: AMAPColors(isDarkTheme).primaryGreen,
                     ),
                   ),
                 ),
@@ -89,7 +89,7 @@ class DetailOrderUI extends HookConsumerWidget {
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
-                      color: Theme.of(context).colorScheme.onSecondary,
+                      color: AMAPColors(isDarkTheme).primaryGreen,
                     ),
                   ),
                 ),
@@ -99,7 +99,7 @@ class DetailOrderUI extends HookConsumerWidget {
           Container(
             height: 3,
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.onSecondary,
+              color: AMAPColors(isDarkTheme).primaryGreen,
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
             margin: const EdgeInsets.symmetric(vertical: 7),
@@ -111,7 +111,7 @@ class DetailOrderUI extends HookConsumerWidget {
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
-                  color: Theme.of(context).colorScheme.onSecondary,
+                  color: AMAPColors(isDarkTheme).primaryGreen,
                 ),
               ),
               const Spacer(),
@@ -120,7 +120,7 @@ class DetailOrderUI extends HookConsumerWidget {
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
-                  color: Theme.of(context).colorScheme.onSecondary,
+                  color: AMAPColors(isDarkTheme).primaryGreen,
                 ),
               ),
             ],
@@ -133,7 +133,7 @@ class DetailOrderUI extends HookConsumerWidget {
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
-                  color: AMAPColors(isDarkTheme).textOnPrimary,
+                  color: AMAPColors(isDarkTheme).secondaryGreen,
                 ),
               ),
               const Spacer(),

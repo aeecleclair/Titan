@@ -31,9 +31,9 @@ class AMAPColors {
   Color get background3 =>
       isDarkTheme ? Colors.grey.shade700 : Colors.grey.shade300;
   Color get greenGradientPrimary =>
-      isDarkTheme ? greenGradient2 : greenGradient1;
+      isDarkTheme ? lightGradient1 : greenGradient1;
   Color get greenGradientSecondary =>
-      isDarkTheme ? greenGradient1 : greenGradient2;
+      isDarkTheme ? lightGradient2 : greenGradient2;
   Color get primaryGreen => isDarkTheme ? darkGreen : lightGreen;
   Color get secondaryGreen => isDarkTheme ? lightGreen : darkGreen;
   Color get textOnPrimary => isDarkTheme ? textLight : textDark;
@@ -41,9 +41,9 @@ class AMAPColors {
   Color get primaryFixedGreen => isDarkTheme ? green2 : green1;
   Color get secondaryFixedGreen => isDarkTheme ? green1 : green2;
   Color get lightGradientPrimary =>
-      isDarkTheme ? lightGradient2 : lightGradient1;
+      isDarkTheme ? greenGradient1 : lightGradient1;
   Color get lightGradientSecondary =>
-      isDarkTheme ? lightGradient1 : lightGradient2;
+      isDarkTheme ? greenGradient2 : lightGradient2;
   Color get redGradientPrimary => isDarkTheme ? redGradient2 : redGradient1;
   Color get redGradientSecondary => isDarkTheme ? redGradient1 : redGradient2;
 }
