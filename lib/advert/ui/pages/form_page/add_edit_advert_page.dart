@@ -100,9 +100,7 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                     BoxShadow(
                                       color: formFieldState.hasError
                                           ? Theme.of(context).colorScheme.error
-                                          : Theme.of(
-                                              context,
-                                            ).colorScheme.secondary,
+                                          : Theme.of(context).shadowColor,
                                       spreadRadius: 5,
                                       blurRadius: 10,
                                       offset: const Offset(2, 3),
