@@ -41,12 +41,13 @@ class TextEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color_ = color ?? Theme.of(context).colorScheme.onPrimary;
     return TextFormField(
       minLines: minLines,
       maxLines: maxLines,
       controller: controller,
       keyboardType: keyboardType,
-      cursorColor: color ?? Theme.of(context).colorScheme.onPrimary,
+      cursorColor: color ?? Theme.of(context).colorScheme.primaryContainer,
       onChanged: onChanged,
       textInputAction: (keyboardType == TextInputType.multiline)
           ? TextInputAction.newline
@@ -55,25 +56,22 @@ class TextEntry extends StatelessWidget {
       decoration: InputDecoration(
         label: Text(
           canBeEmpty ? '$label (optionnel)' : label,
-          style: TextStyle(color: color, height: 0.5),
+          style: TextStyle(color: color_, height: 0.5),
         ),
         suffix: suffixIcon == null && suffix.isEmpty
             ? null
             : Container(
                 padding: const EdgeInsets.only(left: 10),
                 child:
-                    suffixIcon ?? Text(suffix, style: TextStyle(color: color)),
+                    suffixIcon ?? Text(suffix, style: TextStyle(color: color_)),
               ),
         prefix: prefix.isEmpty
             ? null
             : Container(
                 padding: const EdgeInsets.only(right: 10),
-                child: Text(prefix, style: TextStyle(color: color)),
+                child: Text(prefix, style: TextStyle(color: color_)),
               ),
-        floatingLabelStyle: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
+        floatingLabelStyle: TextStyle(fontWeight: FontWeight.bold),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
             color: enabledColor ?? Theme.of(context).colorScheme.onPrimary,
@@ -87,7 +85,7 @@ class TextEntry extends StatelessWidget {
         ),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: color ?? Theme.of(context).colorScheme.onPrimary,
+            color: color ?? Theme.of(context).colorScheme.primaryContainer,
             width: 2.0,
           ),
         ),
