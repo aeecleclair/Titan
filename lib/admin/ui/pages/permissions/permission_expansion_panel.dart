@@ -42,8 +42,8 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
           headerBuilder: (context, isOpen) => ListTile(
             title: Text(
               capitalizePermissionName(permissionName),
-              style: const TextStyle(
-                color: Color.fromARGB(255, 0, 0, 0),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimary,
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),
@@ -52,10 +52,10 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
           body: permissionExpanded.value[index]
               ? Column(
                   children: [
-                    const Text(
+                    Text(
                       AdminTextConstants.accountTypes,
                       style: TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
+                        color: Theme.of(context).colorScheme.onPrimary,
                         fontSize: 20,
                         fontWeight: FontWeight.w800,
                       ),
@@ -82,10 +82,9 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
                       );
                     }),
                     const Divider(),
-                    const Text(
+                    Text(
                       AdminTextConstants.groups,
                       style: TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
                         fontSize: 20,
                         fontWeight: FontWeight.w900,
                       ),
