@@ -69,12 +69,12 @@ class AddGroupPage extends HookConsumerWidget {
                     });
                   },
                   builder: (child) => AdminButton(child: child),
-                  child: const Text(
+                  child: Text(
                     AdminTextConstants.add,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ),
                 ),
