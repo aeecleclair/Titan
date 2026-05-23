@@ -7,10 +7,10 @@ import 'package:titan/login/providers/animation_provider.dart';
 import 'package:titan/login/tools/constants.dart';
 import 'package:titan/login/ui/auth_page.dart';
 import 'package:titan/login/ui/components/sign_in_up_bar.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class AppSignIn extends HookConsumerWidget {
   const AppSignIn({super.key});
@@ -20,6 +20,7 @@ class AppSignIn extends HookConsumerWidget {
     final authNotifier = ref.watch(authTokenProvider.notifier);
     final pathForwarding = ref.read(pathForwardingProvider);
     final controller = ref.watch(backgroundAnimationProvider);
+    final isDarkTheme = ref.watch(themeProvider);
 
     return LoginTemplate(
       callback: (AnimationController controller) {
@@ -38,10 +39,10 @@ class AppSignIn extends HookConsumerWidget {
                 child: Text(
                   "MyECL",
                   style: GoogleFonts.elMessiri(
-                    textStyle: const TextStyle(
+                    textStyle: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),
                 ),
@@ -87,10 +88,10 @@ class AppSignIn extends HookConsumerWidget {
                                   },
                                 );
                           },
-                          color: ColorConstants.background2,
-                          icon: const HeroIcon(
+                          color: LoginColors(isDarkTheme).background2,
+                          icon: HeroIcon(
                             HeroIcons.arrowRight,
-                            color: ColorConstants.background2,
+                            color: LoginColors(isDarkTheme).background2,
                             size: 35.0,
                           ),
                         ),
