@@ -103,8 +103,8 @@ class LeftPanel extends HookConsumerWidget {
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
                       colors: [
-                        Color.fromARGB(255, 255, 138, 20),
-                        Color.fromARGB(255, 255, 114, 0),
+                        LoginColors.gradientVariant1,
+                        LoginColors.gradientVariant2,
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -112,12 +112,9 @@ class LeftPanel extends HookConsumerWidget {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color.fromARGB(
-                          255,
-                          255,
-                          114,
-                          0,
-                        ).withValues(alpha: 0.2),
+                        color: LoginColors.gradientVariant2.withValues(
+                          alpha: 0.2,
+                        ),
                         spreadRadius: 3,
                         blurRadius: 7,
                         offset: const Offset(0, 3),
