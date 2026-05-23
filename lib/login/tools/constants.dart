@@ -1,3 +1,14 @@
+import 'package:flutter/material.dart';
+
+class LoginColors {
+  bool isDarkTheme;
+  LoginColors(this.isDarkTheme);
+  Color get background2 =>
+      isDarkTheme ? const Color(0xFFDDD9BC) : const Color(0xFF222643);
+  static const Color gradientVariant1 = Color.fromARGB(255, 255, 138, 20);
+  static const Color gradientVariant2 = Color.fromARGB(255, 255, 114, 0);
+}
+
 class LoginTextConstants {
   static const String accountActivated = 'Compte activé';
   static const String accountNotActivated = 'Compte non activé';
