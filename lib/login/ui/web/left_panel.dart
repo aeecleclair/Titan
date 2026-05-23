@@ -44,17 +44,13 @@ class LeftPanel extends HookConsumerWidget {
                         ),
                       ),
                       const SizedBox(width: 15),
-                      const Text(
-                        "-",
-                        style: TextStyle(fontSize: 25, color: Colors.black),
-                      ),
+                      const Text("-", style: TextStyle(fontSize: 25)),
                       const SizedBox(width: 15),
                       const Text(
                         "L'application de l'associatif centralien",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
                         ),
                       ),
                     ],
@@ -107,7 +103,7 @@ class LeftPanel extends HookConsumerWidget {
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
                       colors: [
-                        Color(0xFFFF8A14),
+                        Color.fromARGB(255, 255, 138, 20),
                         Color.fromARGB(255, 255, 114, 0),
                       ],
                       begin: Alignment.topLeft,
@@ -133,26 +129,30 @@ class LeftPanel extends HookConsumerWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       LoginTextConstants.signIn,
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 20),
                       child: isLoading
-                          ? const Padding(
-                              padding: EdgeInsets.all(12.0),
+                          ? Padding(
+                              padding: const EdgeInsets.all(12.0),
                               child: CircularProgressIndicator(
-                                color: Colors.white,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onPrimaryContainer,
                               ),
                             )
-                          : const HeroIcon(
+                          : HeroIcon(
                               HeroIcons.arrowRight,
-                              color: Colors.white,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onPrimaryContainer,
                               size: 35.0,
                             ),
                     ),
