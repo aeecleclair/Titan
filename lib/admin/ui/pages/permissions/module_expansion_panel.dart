@@ -30,6 +30,7 @@ class ModuleExpansionPanel extends HookConsumerWidget {
         isExpanded.value[i] = isOpen;
         isExpanded.value = List.from(isExpanded.value);
       },
+      dividerColor: Theme.of(context).colorScheme.tertiary,
       children: modulesPermissionNames.keys.map((module) {
         final index = modulesPermissionNames.keys.toList().indexOf(module);
         return ExpansionPanel(
@@ -54,6 +55,7 @@ class ModuleExpansionPanel extends HookConsumerWidget {
                   groups: groups,
                 )
               : const SizedBox.shrink(),
+          backgroundColor: Theme.of(context).colorScheme.secondaryFixed,
         );
       }).toList(),
     );

@@ -34,6 +34,7 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
         permissionExpanded.value[i] = isOpen;
         permissionExpanded.value = List.from(permissionExpanded.value);
       },
+      dividerColor: Theme.of(context).colorScheme.tertiary,
       children: permissionNames.map((permissionName) {
         final index = permissionNames.indexOf(permissionName);
         return ExpansionPanel(
@@ -81,7 +82,7 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
                         },
                       );
                     }),
-                    const Divider(),
+                    Divider(color: Theme.of(context).colorScheme.tertiary),
                     Text(
                       AdminTextConstants.groups,
                       style: TextStyle(
@@ -114,6 +115,7 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
                   ],
                 )
               : const SizedBox.shrink(),
+          backgroundColor: Theme.of(context).colorScheme.secondaryFixed,
         );
       }).toList(),
     );
