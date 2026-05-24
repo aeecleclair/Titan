@@ -54,13 +54,13 @@ class DetailPage extends HookConsumerWidget {
       children: [
         Container(
           width: double.infinity,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black26,
+                color: Theme.of(context).colorScheme.secondary,
                 blurRadius: 10,
                 spreadRadius: 7,
-                offset: Offset(0, 5),
+                offset: const Offset(0, 5),
               ),
             ],
           ),
@@ -89,15 +89,17 @@ class DetailPage extends HookConsumerWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       Colors.transparent,
-                      Colors.grey.shade50.withValues(alpha: 0.85),
-                      Colors.grey.shade50,
+                      Theme.of(
+                        context,
+                      ).colorScheme.secondaryFixed.withValues(alpha: 0.85),
+                      Theme.of(context).colorScheme.secondaryFixed,
                     ],
                     stops: const [0.0, 0.65, 1.0],
                   ),
                 ),
               ),
               Container(
-                color: Colors.grey.shade50,
+                color: Theme.of(context).colorScheme.secondaryFixed,
                 child: Column(
                   children: [
                     const SizedBox(height: 15),
@@ -135,13 +137,15 @@ class DetailPage extends HookConsumerWidget {
                           vertical: 10,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade900,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.secondaryContainer,
                           borderRadius: BorderRadius.circular(18),
                         ),
                         child: Text(
                           genre,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSecondary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -176,18 +180,21 @@ class DetailPage extends HookConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.9),
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(18),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.white.withValues(alpha: 0.3),
+                          color: Theme.of(context).shadowColor,
                           blurRadius: 7,
                           spreadRadius: 2,
                           offset: const Offset(2, 3),
                         ),
                       ],
                     ),
-                    child: const Icon(Icons.arrow_back, color: Colors.black),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                   ),
                 ),
                 const Spacer(),
@@ -197,11 +204,11 @@ class DetailPage extends HookConsumerWidget {
                     horizontal: 12,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.9),
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(18),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.white.withValues(alpha: 0.3),
+                        color: Theme.of(context).shadowColor,
                         blurRadius: 7,
                         spreadRadius: 2,
                         offset: const Offset(2, 3),
@@ -236,9 +243,11 @@ class DetailPage extends HookConsumerWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    const Color.fromARGB(0, 255, 255, 255),
-                    Colors.grey.shade50.withValues(alpha: 0.85),
-                    Colors.grey.shade50,
+                    Colors.transparent,
+                    Theme.of(
+                      context,
+                    ).colorScheme.secondaryFixed.withValues(alpha: 0.85),
+                    Theme.of(context).colorScheme.secondaryFixed,
                   ],
                   stops: const [0.0, 0.25, 1.0],
                 ),
@@ -256,11 +265,11 @@ class DetailPage extends HookConsumerWidget {
                       right: sideMargin,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.secondary,
                       borderRadius: BorderRadius.circular(18),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.2),
+                          color: Theme.of(context).shadowColor,
                           blurRadius: 7,
                           spreadRadius: 2,
                           offset: const Offset(2, 3),
@@ -305,7 +314,7 @@ class DetailPage extends HookConsumerWidget {
                             child: HeroIcon(
                               selected ? HeroIcons.bellSlash : HeroIcons.bell,
                               size: 30,
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.onSecondary,
                             ),
                           ),
                           SizedBox(
@@ -314,8 +323,10 @@ class DetailPage extends HookConsumerWidget {
                               selected
                                   ? 'Supprimer le rappel '
                                   : 'Ajouter un rappel',
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSecondary,
                                 fontSize: 20,
                               ),
                             ),
