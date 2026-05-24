@@ -46,11 +46,7 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
                 associationGroupement.id.isNotEmpty
                     ? PhonebookTextConstants.editAssociationGroupement
                     : PhonebookTextConstants.addAssociationGroupement,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF000000),
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
               ),
             ),
             const SizedBox(height: 30),
@@ -86,8 +82,8 @@ class AssociationGroupementAddEditPage extends HookConsumerWidget {
                         group.name,
                         style: TextStyle(
                           color: selectedGroup.value == group.id
-                              ? Colors.white
-                              : Colors.black,
+                              ? Theme.of(context).colorScheme.onSecondary
+                              : Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     );
