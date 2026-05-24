@@ -107,7 +107,8 @@ flutter:
     - assets/web/Vote.webp
     - assets/my_document.pdf
     - assets/images/bird.png
-    - assets/images/pipe.png
+    - assets/images/pipe_day.png
+    - assets/images/pipe_night.png
     - assets/images/logo_flappybird.svg
     - assets/images/helloasso.svg
 
