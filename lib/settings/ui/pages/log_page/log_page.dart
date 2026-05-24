@@ -54,7 +54,9 @@ class LogPage extends HookConsumerWidget {
                     child: Text(
                       capitalize(item.name),
                       style: TextStyle(
-                        color: logTab == item ? Colors.white : Colors.black,
+                        color: logTab == item
+                            ? Theme.of(context).colorScheme.onSecondary
+                            : Theme.of(context).colorScheme.onSurface,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
