@@ -27,6 +27,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background: var(--primary);
         min-height: calc(100vh - 12px);
       }
 
@@ -44,7 +45,6 @@
 
       .dot-container {
         position: absolute;
-        border: 0px solid #fff;
         border-radius: 50px;
       }
       .dot-container:nth-child(2) {
@@ -64,7 +64,7 @@
         position: absolute;
         height: 10px;
         width: 10px;
-        background: #000000;
+        background: var(--onPrimary);
         border-radius: 5px;
         transform: translate(0, 0);
       }
@@ -123,6 +123,16 @@
     </style>
   </head>
   <body>
+    <script type="text/javascript">
+      let isDarkMode = JSON.parse(localStorage.getItem("flutter.isDarkMode"));
+      if (isDarkMode === null)
+        isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      // Keep these constants up to date with tools/constants.dart
+      const primary = isDarkMode ? "black" : "white";
+      const onPrimary = isDarkMode ? "white" : "black";
+      document.documentElement.style.setProperty("--primary", primary);
+      document.documentElement.style.setProperty("--onPrimary", onPrimary);
+    </script>
     <script
       defer
       type="module"
