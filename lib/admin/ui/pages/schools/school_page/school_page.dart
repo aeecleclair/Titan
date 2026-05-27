@@ -8,7 +8,6 @@ import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/components/item_card_ui.dart';
 import 'package:titan/admin/ui/pages/schools/school_page/school_ui.dart';
 import 'package:titan/admin/tools/constants.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
@@ -40,14 +39,14 @@ class SchoolsPage extends HookConsumerWidget {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   AdminTextConstants.schools,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
-                    color: ColorConstants.gradient1,
+                    color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                 ),
               ),
@@ -76,7 +75,9 @@ class SchoolsPage extends HookConsumerWidget {
                                 const Spacer(),
                                 HeroIcon(
                                   HeroIcons.plus,
-                                  color: Colors.grey.shade700,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.secondaryContainer,
                                   size: 40,
                                 ),
                                 const Spacer(),
@@ -133,7 +134,7 @@ class SchoolsPage extends HookConsumerWidget {
                     ],
                   );
                 },
-                loaderColor: ColorConstants.gradient1,
+                loaderColor: Theme.of(context).colorScheme.primaryContainer,
               ),
             ],
           ),

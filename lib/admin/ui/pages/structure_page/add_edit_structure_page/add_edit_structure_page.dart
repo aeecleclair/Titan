@@ -11,7 +11,6 @@ import 'package:titan/admin/ui/components/admin_button.dart';
 import 'package:titan/admin/ui/pages/structure_page/add_edit_structure_page/search_user.dart';
 import 'package:titan/mypayment/class/structure.dart';
 import 'package:titan/mypayment/providers/structure_list_provider.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -195,7 +194,9 @@ class AddEditStructurePage extends HookConsumerWidget {
                           child: Text(
                             associationMembership.name.toUpperCase(),
                             style: TextStyle(
-                              color: selected ? Colors.white : Colors.black,
+                              color: selected
+                                  ? Theme.of(context).colorScheme.onSecondary
+                                  : Theme.of(context).colorScheme.onPrimary,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -211,7 +212,9 @@ class AddEditStructurePage extends HookConsumerWidget {
                           Text(
                             AdminTextConstants.manager,
                             style: TextStyle(
-                              color: ColorConstants.gradient1,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.primaryContainer,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -220,7 +223,9 @@ class AddEditStructurePage extends HookConsumerWidget {
                           Text(
                             structureManager.getName(),
                             style: TextStyle(
-                              color: ColorConstants.gradient1,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.primaryContainer,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -307,7 +312,7 @@ class AddEditStructurePage extends HookConsumerWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ),
                 ),
