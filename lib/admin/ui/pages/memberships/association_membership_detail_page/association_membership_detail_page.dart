@@ -13,7 +13,6 @@ import 'package:titan/admin/ui/pages/memberships/association_membership_detail_p
 import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/association_membership_member_editable_card.dart';
 import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/research_bar.dart';
 import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/search_filters.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -53,7 +52,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
-                    color: ColorConstants.gradient1,
+                    color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                 ),
               ),
@@ -61,21 +60,21 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
               const SizedBox(height: 30),
               Row(
                 children: [
-                  const Text(
+                  Text(
                     AdminTextConstants.members,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      color: ColorConstants.gradient1,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                     ),
                   ),
                   const SizedBox(width: 10),
                   Text(
                     "(${associationMembershipFilteredList.length} ${AdminTextConstants.members})",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
-                      color: ColorConstants.gradient1,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                     ),
                   ),
                   const Spacer(),
@@ -85,7 +84,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                       height: 40,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: ColorConstants.gradient1,
+                        color: Theme.of(context).colorScheme.primaryContainer,
                       ),
                       child: child,
                     ),
@@ -103,10 +102,10 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                             AdminRouter.addEditMember,
                       );
                     },
-                    child: const HeroIcon(
+                    child: HeroIcon(
                       HeroIcons.plus,
                       size: 30,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ),
                 ],

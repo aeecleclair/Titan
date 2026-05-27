@@ -115,8 +115,8 @@ class StructureUi extends HookConsumerWidget {
           Expanded(
             child: Text(
               structure.name,
-              style: const TextStyle(
-                color: Colors.black,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurface,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),

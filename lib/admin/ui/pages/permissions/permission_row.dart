@@ -31,6 +31,7 @@ class PermissionRow extends StatelessWidget {
             child: HeroIcon(
               isAuthorized ? HeroIcons.check : HeroIcons.xMark,
               size: 40,
+              // It's ok to have this green-red hard-coded
               color: isAuthorized ? Colors.green : Colors.red,
             ),
           ),
