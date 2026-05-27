@@ -34,6 +34,7 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
         permissionExpanded.value[i] = isOpen;
         permissionExpanded.value = List.from(permissionExpanded.value);
       },
+      dividerColor: Theme.of(context).colorScheme.tertiary,
       children: permissionNames.map((permissionName) {
         final index = permissionNames.indexOf(permissionName);
         return ExpansionPanel(
@@ -42,8 +43,8 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
           headerBuilder: (context, isOpen) => ListTile(
             title: Text(
               capitalizePermissionName(permissionName),
-              style: const TextStyle(
-                color: Color.fromARGB(255, 0, 0, 0),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimary,
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),
@@ -52,10 +53,10 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
           body: permissionExpanded.value[index]
               ? Column(
                   children: [
-                    const Text(
+                    Text(
                       AdminTextConstants.accountTypes,
                       style: TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
+                        color: Theme.of(context).colorScheme.onPrimary,
                         fontSize: 20,
                         fontWeight: FontWeight.w800,
                       ),
@@ -81,11 +82,10 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
                         },
                       );
                     }),
-                    const Divider(),
-                    const Text(
+                    Divider(color: Theme.of(context).colorScheme.tertiary),
+                    Text(
                       AdminTextConstants.groups,
                       style: TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
                         fontSize: 20,
                         fontWeight: FontWeight.w900,
                       ),
@@ -115,6 +115,7 @@ class PermissionsExpansionPanel extends HookConsumerWidget {
                   ],
                 )
               : const SizedBox.shrink(),
+          backgroundColor: Theme.of(context).colorScheme.secondaryFixed,
         );
       }).toList(),
     );
