@@ -1,4 +1,3 @@
-import 'package:titan/ticketing/class/event.dart';
 import 'package:titan/ticketing/class/session.dart';
 import 'package:titan/tools/repository/repository.dart';
 
@@ -8,7 +7,9 @@ class SessionRepository extends Repository {
   final ext = 'ticketing/';
 
   Future<List<Session>> getAllSession(String eventID) async {
-    return Event.fromJson(await getOne('events/$eventID')).sessions;
+    return (await getList(
+      suffix: 'events/$eventID/sessions',
+    )).map((e) => Session.fromJson(e)).toList();
   }
 
   Future<Session> getSession(String id) async {

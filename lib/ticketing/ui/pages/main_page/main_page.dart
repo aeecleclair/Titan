@@ -133,7 +133,7 @@ class TicketingMainPage extends HookConsumerWidget {
                           showPanel.value = true;
                           print("Event tapped: ${event.name}");
                           eventNotifier.setEvent(event);
-                          categoryListNotifier.loadCategories(event.id);
+                          sessionListNotifier.loadSessions(event.id);
                         },
                       ),
                     ),
@@ -248,14 +248,7 @@ class TicketingMainPage extends HookConsumerWidget {
                             key: const ValueKey('categories'),
                             child: categoryList.when(
                               data: (categories) {
-                                final filteredCategories = categories
-                                    .where(
-                                      (category) => category.sessions.contains(
-                                        session.id,
-                                      ),
-                                    )
-                                    .toList();
-                                if (filteredCategories.isEmpty) {
+                                if (categories.isEmpty) {
                                   return const Padding(
                                     padding: EdgeInsets.all(20),
                                     child: Text(
@@ -264,7 +257,7 @@ class TicketingMainPage extends HookConsumerWidget {
                                   );
                                 }
                                 return Column(
-                                  children: filteredCategories.map((category) {
+                                  children: categories.map((category) {
                                     return CategoryCard(
                                       onTap: () {
                                         print(
@@ -302,25 +295,23 @@ class TicketingMainPage extends HookConsumerWidget {
                             key: const ValueKey('sessions'),
                             child: sessionList.when(
                               data: (sessions) {
-                                final eventSessions = sessions
-                                    .where(
-                                      (session) => session.eventId == event.id,
-                                    )
-                                    .toList();
-                                if (eventSessions.isEmpty) {
+                                if (sessions.isEmpty) {
                                   return const Padding(
                                     padding: EdgeInsets.all(20),
                                     child: Text("Aucune session disponible."),
                                   );
                                 }
                                 return Column(
-                                  children: eventSessions.map((session) {
+                                  children: sessions.map((session) {
                                     return SessionCard(
                                       onTap: () {
                                         sessionNotifier.setSession(session);
                                         showCategories.value = true;
                                         print(
                                           "Session tapped: ${session.name}",
+                                        );
+                                        categoryListNotifier.loadCategories(
+                                          session.id,
                                         );
                                       },
                                       sessionName: session.name,

@@ -1,4 +1,3 @@
-import 'package:titan/ticketing/class/event.dart';
 import 'package:titan/ticketing/class/category.dart';
 import 'package:titan/tools/repository/repository.dart';
 
@@ -7,12 +6,13 @@ class CategoryRepository extends Repository {
   // ignore: overridden_fields
   final ext = 'ticketing/';
 
-  Future<List<Category>> getAllCategory(String eventId) async {
-    return Event.fromJson(await getOne('events/$eventId')).categories;
+  Future<List<Category>> getAllCategory(String sessionId) async {
+    return (await getList(
+      suffix: 'sessions/$sessionId/categories',
+    )).map((e) => Category.fromJson(e)).toList();
   }
 
   Future<Category> getCategory(String id) async {
-    print("Fetching category with id: $id");
     return Category.fromJson(await getOne(id, suffix: 'categories'));
   }
 }
