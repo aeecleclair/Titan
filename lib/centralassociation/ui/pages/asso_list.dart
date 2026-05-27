@@ -15,7 +15,7 @@ class AssoList extends StatelessWidget {
         children: [
           Text(
             asso.name,
-            style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w900),
+            style: TextStyle(fontSize: 23, fontWeight: FontWeight.w900),
           ),
           const SizedBox(height: 10),
           Column(
