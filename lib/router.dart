@@ -30,7 +30,6 @@ import 'package:titan/tools/middlewares/deferred_middleware.dart';
 import 'package:titan/vote/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/centralassociation/router.dart';
-import 'package:myecl/rplace/router.dart';
 import 'package:titan/rplace/router.dart';
 
 final appRouterProvider = Provider<AppRouter>((ref) => AppRouter(ref));
@@ -105,5 +104,3 @@ class AppRouter {
     ];
   }
 }
-
-
