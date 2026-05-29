@@ -13,7 +13,10 @@ class MyPainter extends CustomPainter {
     for (final pixel in pixels) {
       canvas.drawRect(
         Rect.fromCenter(
-          center: Offset(pixel.x * pixelSize + 5, pixel.y * pixelSize + 5),
+          center: Offset(
+            pixel.x * pixelSize + pixelSize / 2,
+            pixel.y * pixelSize + pixelSize / 2,
+          ),
           width: pixelSize,
           height: pixelSize,
         ),
@@ -22,6 +25,35 @@ class MyPainter extends CustomPainter {
           ..style = PaintingStyle.fill,
       );
     }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+class FocusPainter extends CustomPainter {
+  final double pixelSize;
+  final int x;
+  final int y;
+
+  FocusPainter({required this.pixelSize, required this.x, required this.y});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.drawRect(
+      Rect.fromCenter(
+        center: Offset(
+          x * pixelSize + pixelSize / 2,
+          y * pixelSize + pixelSize / 2,
+        ),
+        width: pixelSize,
+        height: pixelSize,
+      ),
+      Paint()
+        ..color = Colors.black
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.0,
+    );
   }
 
   @override

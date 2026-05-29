@@ -3,6 +3,7 @@ import 'package:titan/tools/repository/repository.dart';
 
 class PixelInfoRepository extends Repository {
   @override
+  // ignore: overridden_fields
   final ext = "rplace/";
 
   Future<PixelInfo> getPixelInfo(int x, int y) async {

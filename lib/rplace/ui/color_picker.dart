@@ -66,7 +66,7 @@ class ColorPicker extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pixelinfo_value = ref.watch(pixelInfoProvider);
+    final pixelInfoValue = ref.watch(pixelInfoProvider);
 
     timeago.setLocaleMessages('fr', timeago.FrMessages());
 
@@ -76,22 +76,22 @@ class ColorPicker extends HookConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           AsyncChild(
-            value: pixelinfo_value,
-            builder: (context, pixelinfo_value) {
+            value: pixelInfoValue,
+            builder: (context, pixelInfoValue) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Row(
                     children: [
                       AutoSizeText(
-                        pixelinfo_value.user.nickname ??
-                            ("${pixelinfo_value.user.firstname} ${pixelinfo_value.user.name}"),
+                        pixelInfoValue.user.nickname ??
+                            ("${pixelInfoValue.user.firstname} ${pixelInfoValue.user.name}"),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
-                  Text(timeago.format(pixelinfo_value.date, locale: 'fr')),
+                  Text(timeago.format(pixelInfoValue.date, locale: 'fr')),
                 ],
               );
             },
