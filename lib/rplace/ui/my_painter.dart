@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:titan/rplace/class/pixel.dart';
-import 'dart:ui';
 
 class MyPainter extends CustomPainter {
   final List<Pixel> pixels;

@@ -1,4 +1,4 @@
-import 'package:titan/rplace/class/gridInfo.dart';
+import 'package:titan/rplace/class/grid_info.dart';
 import 'package:titan/tools/repository/repository.dart';
 
 class GridRepository extends Repository {

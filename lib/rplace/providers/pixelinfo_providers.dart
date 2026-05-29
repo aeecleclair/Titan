@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/rplace/class/pixelinfo.dart';
+import 'package:titan/rplace/class/pixel_info.dart';
 import 'package:titan/rplace/repositories/pixelinfo_repository.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
 

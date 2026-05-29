@@ -1,4 +1,4 @@
-import 'package:titan/rplace/class/pixelinfo.dart';
+import 'package:titan/rplace/class/pixel_info.dart';
 import 'package:titan/tools/repository/repository.dart';
 
 class PixelInfoRepository extends Repository {

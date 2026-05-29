@@ -73,7 +73,7 @@ class CanvasViewer extends HookConsumerWidget {
                       if (timeDiff < cooldown) {
                         return CooldownWidget(
                           userinfo: userinfo,
-                          cooldown: cooldown - timeDiff,
+                          cooldown: cooldown,
                         );
                       } else {
                         return ColorPicker(x: x, y: y);
@@ -95,7 +95,10 @@ class CanvasViewer extends HookConsumerWidget {
                 Container(
                   width: canvasWidth,
                   height: canvasHeight,
-                  color: const Color(0xFFC4C4C4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFC4C4C4),
+                    border: Border.all(color: Colors.black, width: 1),
+                  ),
                 ),
                 AsyncChild(
                   value: pixels,

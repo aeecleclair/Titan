@@ -13,22 +13,23 @@ class CooldownWidget extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final remainingTime = useState<Duration>(cooldown);
+    Duration computeRemaining() =>
+        cooldown - DateTime.now().difference(userinfo.lastplaced);
+
+    final remainingTime = useState<Duration>(computeRemaining());
 
     useEffect(() {
-      final timer = Stream.periodic(Duration(seconds: 1)).listen((_) {
-        final currentTimeDiff = DateTime.now().difference(userinfo.lastplaced);
-        final remaining = cooldown - currentTimeDiff;
-
-        if (remaining.isNegative || remaining.inSeconds < 0) {
+      final timer = Stream.periodic(const Duration(seconds: 1)).listen((_) {
+        final remaining = computeRemaining();
+        if (remaining <= Duration.zero) {
           remainingTime.value = Duration.zero;
-          Navigator.of(context).pop();
+          if (context.mounted) Navigator.of(context).pop();
         } else {
           remainingTime.value = remaining;
         }
       });
 
-      return () => timer.cancel();
+      return timer.cancel;
     }, [userinfo.lastplaced]);
 
     return SizedBox(

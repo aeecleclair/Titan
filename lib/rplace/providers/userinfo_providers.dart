@@ -14,6 +14,10 @@ class UserinfoNotifier extends SingleNotifier<UserInfo> {
   Future<AsyncValue<UserInfo>> getLastPlacedDate() async {
     return await load(_userinfoRepository.getLastPlacedDate);
   }
+
+  void setLastPlaced(DateTime when) {
+    state = AsyncValue.data(UserInfo(lastplaced: when));
+  }
 }
 
 final userinfoProvider =

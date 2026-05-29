@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/rplace/class/gridInfo.dart';
+import 'package:titan/rplace/class/grid_info.dart';
 import 'package:titan/rplace/repositories/grid_repository.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';

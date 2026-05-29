@@ -25,21 +25,16 @@ class RPlacePage extends HookConsumerWidget {
       return channel;
     }
 
-    print('connection effectuée');
     connect().then((WebSocketChannel channel) {
       channel.stream.listen((event) {
         final decodedJson = jsonDecode(event);
-        print("json");
-        print(decodedJson);
         if (decodedJson["command"] != "NEW_PIXEL") {
-          print("ca n'est pas un new pixel");
           return;
         }
         final pixel = Pixel.fromJson(decodedJson["data"]);
         ref.read(pixelListProvider.notifier).updatePixel(pixel);
       });
     });
-    print("Afficher le canva");
     return SafeArea(
       child: Column(
         children: [

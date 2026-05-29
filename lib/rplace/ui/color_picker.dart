@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:titan/rplace/class/pixel.dart';
 import 'package:titan/rplace/providers/pixelinfo_providers.dart';
@@ -7,19 +8,10 @@ import 'package:titan/rplace/providers/userinfo_providers.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:titan/rplace/tools/constants.dart';
 
-final listeCouleurs = [
-  'FFffffff',
-  'FFf44336',
-  'FF000000',
-  'FF2196f3',
-  'FF9c27b0',
-  'FF4caf50',
-  'FFe91e63',
-  'FF536dfe',
-  'FF009688',
-  'FFffc107',
-];
+
+final listeCouleurs = RPlaceColorConstants.all;
 
 class ColBouton extends HookConsumerWidget {
   final int x;
@@ -47,10 +39,17 @@ class ColBouton extends HookConsumerWidget {
         style: TextButton.styleFrom(
           backgroundColor: Color(int.parse(color, radix: 16)),
         ),
-        onPressed: () async => {
-          await pixelListNotifier.createPixel(Pixel(x: x, y: y, color: color)),
-          Navigator.pop(context),
-          userinfoNotifier.getLastPlacedDate(),
+        onPressed: () async {
+          final success = await pixelListNotifier.createPixel(
+            Pixel(x: x, y: y, color: color),
+          );
+          if (context.mounted) {
+            Navigator.pop(context);
+          }
+          if (success) {
+            userinfoNotifier.setLastPlaced(DateTime.now());
+            unawaited(userinfoNotifier.getLastPlacedDate());
+          }
         },
         child: null,
       ),
