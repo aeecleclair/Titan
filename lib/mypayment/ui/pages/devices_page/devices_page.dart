@@ -11,12 +11,14 @@ import 'package:titan/mypayment/providers/device_list_provider.dart';
 import 'package:titan/mypayment/providers/device_provider.dart';
 import 'package:titan/mypayment/providers/has_accepted_tos_provider.dart';
 import 'package:titan/mypayment/providers/key_service_provider.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/tools/functions.dart';
 import 'package:titan/mypayment/ui/pages/devices_page/add_device_button.dart';
 import 'package:titan/mypayment/ui/pages/devices_page/device_item.dart';
 import 'package:titan/mypayment/ui/pages/main_page/account_card/device_dialog_box.dart';
 import 'package:titan/mypayment/ui/mypayment.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
@@ -35,6 +37,7 @@ class DevicesPage extends HookConsumerWidget {
     final displayAddDevice = useState(true);
     final hasAcceptedToS = ref.watch(hasAcceptedTosProvider);
     final showRovokedDevices = useState(false);
+    final isDarkTheme = ref.watch(themeProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -215,10 +218,10 @@ class DevicesPage extends HookConsumerWidget {
                           height: 70,
                           decoration: BoxDecoration(
                             gradient: RadialGradient(
-                              colors: const [
-                                Color.fromARGB(255, 9, 103, 103),
-                                Color(0xff017f80),
-                                Color.fromARGB(255, 4, 84, 84),
+                              colors: [
+                                MyPaymentColors(isDarkTheme).gradient2,
+                                MyPaymentColors(isDarkTheme).gradient1,
+                                MyPaymentColors(isDarkTheme).gradient3,
                               ],
                               center: Alignment.topLeft,
                               radius: 1.5,
@@ -226,7 +229,9 @@ class DevicesPage extends HookConsumerWidget {
                             borderRadius: BorderRadius.circular(15),
                             boxShadow: [
                               BoxShadow(
-                                color: Color(0xff017f80).withValues(alpha: 0.2),
+                                color: MyPaymentColors(
+                                  isDarkTheme,
+                                ).gradient1.withValues(alpha: 0.2),
                                 spreadRadius: 1,
                                 blurRadius: 3,
                                 offset: const Offset(
@@ -241,8 +246,8 @@ class DevicesPage extends HookConsumerWidget {
                               showRovokedDevices.value
                                   ? 'Masquer les appareils revoqués'
                                   : 'Afficher les appareils revoqués',
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: MyPaymentColors.onGradient,
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -251,14 +256,14 @@ class DevicesPage extends HookConsumerWidget {
                         ),
                       ),
                       if (showRovokedDevices.value) ...[
-                        const Padding(
-                          padding: EdgeInsets.all(16.0),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
                           child: Text(
                             'Appareils révoqués',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: Colors.grey,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
                         ),
