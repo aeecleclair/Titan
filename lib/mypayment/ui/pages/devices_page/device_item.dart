@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:titan/mypayment/class/wallet_device.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/tools/functions.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class DeviceItem extends ConsumerWidget {
   final WalletDevice device;
@@ -19,6 +21,8 @@ class DeviceItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(themeProvider);
+    final secondaryGreen = MyPaymentColors(isDarkTheme).secondaryGreen;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
       child: Container(
@@ -26,7 +30,7 @@ class DeviceItem extends ConsumerWidget {
           borderRadius: const BorderRadius.all(Radius.circular(15)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
+              color: Theme.of(context).shadowColor,
               spreadRadius: 1,
               blurRadius: 8,
               offset: const Offset(0, 4),
@@ -38,7 +42,9 @@ class DeviceItem extends ConsumerWidget {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
             child: Container(
-              color: Colors.grey.shade200.withValues(alpha: 0.5),
+              color: Theme.of(
+                context,
+              ).colorScheme.secondaryFixed.withValues(alpha: 0.5),
               child: SizedBox(
                 height: isActual ? 80 : 70,
                 child: Row(
@@ -49,17 +55,17 @@ class DeviceItem extends ConsumerWidget {
                       children: [
                         Text(
                           device.name,
-                          style: const TextStyle(
-                            color: Color(0xff204550),
+                          style: TextStyle(
+                            color: secondaryGreen,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         if (isActual)
-                          const Text(
+                          Text(
                             '(cet appareil)',
                             style: TextStyle(
-                              color: Color(0xff204550),
+                              color: secondaryGreen,
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                             ),
@@ -73,10 +79,10 @@ class DeviceItem extends ConsumerWidget {
                       const SizedBox(width: 20),
                       GestureDetector(
                         onTap: onRevoke,
-                        child: const HeroIcon(
+                        child: HeroIcon(
                           HeroIcons.trash,
                           size: 25,
-                          color: Color(0xff204550),
+                          color: secondaryGreen,
                         ),
                       ),
                     ],
