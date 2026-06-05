@@ -2,14 +2,19 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:titan/mypayment/tools/constants.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AddDeviceButton extends StatelessWidget {
+class AddDeviceButton extends ConsumerWidget {
   final Future Function() onTap;
   const AddDeviceButton({super.key, required this.onTap});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(themeProvider);
+    final secondaryGreen = MyPaymentColors(isDarkTheme).secondaryGreen;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
       child: ClipRRect(
@@ -17,7 +22,9 @@ class AddDeviceButton extends StatelessWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
           child: Container(
-            color: Colors.grey.shade200.withValues(alpha: 0.5),
+            color: Theme.of(
+              context,
+            ).colorScheme.secondaryFixed.withValues(alpha: 0.5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -36,7 +43,7 @@ class AddDeviceButton extends StatelessWidget {
                         children: [
                           HeroIcon(
                             HeroIcons.devicePhoneMobile,
-                            color: Color(0xff204550),
+                            color: secondaryGreen,
                             size: 30,
                           ),
                           Positioned(
@@ -44,14 +51,15 @@ class AddDeviceButton extends StatelessWidget {
                             top: -3,
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade200.withValues(
-                                  alpha: 0.9,
-                                ),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryFixed
+                                    .withValues(alpha: 0.9),
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               child: HeroIcon(
                                 HeroIcons.plus,
-                                color: Color(0xff204550),
+                                color: secondaryGreen,
                                 size: 13,
                               ),
                             ),
@@ -62,7 +70,7 @@ class AddDeviceButton extends StatelessWidget {
                       Text(
                         "Ajouter cet appareil",
                         style: TextStyle(
-                          color: Color(0xff204550),
+                          color: secondaryGreen,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
