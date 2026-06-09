@@ -61,7 +61,10 @@ class OfferTicketModal extends HookConsumerWidget {
               waitingColor: ColorConstants.background,
               builder: (child) => Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
                 decoration: BoxDecoration(
                   color: ColorConstants.tertiary,
                   borderRadius: BorderRadius.circular(8),

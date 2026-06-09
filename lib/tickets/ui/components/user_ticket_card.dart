@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tickets/class/user_ticket.dart';
 import 'package:titan/tickets/ui/components/offer_ticket_modal.dart';
 import 'package:titan/tickets/ui/components/ticket_card_layout.dart';
@@ -15,7 +14,6 @@ class UserTicketCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context)!;
     final dateOnlyFormatter = DateFormat('dd/MM/yyyy');
     final timeOnlyFormatter = DateFormat('HH:mm');
 

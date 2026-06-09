@@ -168,9 +168,8 @@ class CreateTicketEventPage extends HookConsumerWidget {
                           return;
                         }
 
-                        final eventSessions = sessionCardController.buildSessions(
-                          locale.toString(),
-                        );
+                        final eventSessions = sessionCardController
+                            .buildSessions(locale.toString());
                         final sessionEntries = sessionCardController.entries;
 
                         if (sessionEntries.any(

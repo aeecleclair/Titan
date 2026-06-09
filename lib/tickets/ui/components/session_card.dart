@@ -49,9 +49,7 @@ class SessionCardController {
     DateTime? parseSessionDate(String dateText) {
       if (dateText.trim().isEmpty) return null;
       try {
-        return DateTime.parse(
-          processDateBackWithHourMaybe(dateText, locale),
-        );
+        return DateTime.parse(processDateBackWithHourMaybe(dateText, locale));
       } catch (_) {
         return null;
       }
@@ -62,8 +60,7 @@ class SessionCardController {
           (e) => Session(
             id: '',
             name: e['label']!.text.trim(),
-            startDatetime:
-                parseSessionDate(e['date']!.text) ?? DateTime.now(),
+            startDatetime: parseSessionDate(e['date']!.text) ?? DateTime.now(),
             quota: int.tryParse(e['quota']!.text.trim()),
           ),
         )
@@ -72,11 +69,7 @@ class SessionCardController {
 }
 
 class SessionCard extends HookWidget {
-  const SessionCard({
-    super.key,
-    required this.controller,
-    this.onChanged,
-  });
+  const SessionCard({super.key, required this.controller, this.onChanged});
 
   final SessionCardController controller;
   final void Function(List<Session> sessions)? onChanged;
@@ -117,70 +110,70 @@ class SessionCard extends HookWidget {
             ...List.generate(
               entries.length,
               (i) => Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextEntry(
-                              label: l10n.ticketsSessionLabelNumbered(i + 1),
-                              controller: entries[i]['label']!,
-                              textCapitalization: TextCapitalization.sentences,
-                              onChanged: (_) => notify(),
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: DateEntry(
-                                    label: l10n.ticketsDateLabel,
-                                    controller: entries[i]['date']!,
-                                    onTap: () async {
-                                      await getFullDate(
-                                        context,
-                                        entries[i]['date']!,
-                                      );
-                                      notify();
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  flex: 1,
-                                  child: TextEntry(
-                                    label: l10n.ticketsQuotaLabel,
-                                    controller: entries[i]['quota']!,
-                                    keyboardType: TextInputType.number,
-                                    isInt: true,
-                                    onChanged: (_) => notify(),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      if (entries.length > 1)
-                        IconButton(
-                          icon: HeroIcon(
-                            HeroIcons.minusCircle,
-                            size: 22,
-                            color: ColorConstants.error,
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextEntry(
+                            label: l10n.ticketsSessionLabelNumbered(i + 1),
+                            controller: entries[i]['label']!,
+                            textCapitalization: TextCapitalization.sentences,
+                            onChanged: (_) => notify(),
                           ),
-                          onPressed: () {
-                            controller.removeEntry(i);
-                            notify();
-                          },
-                        )
-                      else
-                        const SizedBox(width: 48),
-                    ],
-                  ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: DateEntry(
+                                  label: l10n.ticketsDateLabel,
+                                  controller: entries[i]['date']!,
+                                  onTap: () async {
+                                    await getFullDate(
+                                      context,
+                                      entries[i]['date']!,
+                                    );
+                                    notify();
+                                  },
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                flex: 1,
+                                child: TextEntry(
+                                  label: l10n.ticketsQuotaLabel,
+                                  controller: entries[i]['quota']!,
+                                  keyboardType: TextInputType.number,
+                                  isInt: true,
+                                  onChanged: (_) => notify(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (entries.length > 1)
+                      IconButton(
+                        icon: HeroIcon(
+                          HeroIcons.minusCircle,
+                          size: 22,
+                          color: ColorConstants.error,
+                        ),
+                        onPressed: () {
+                          controller.removeEntry(i);
+                          notify();
+                        },
+                      )
+                    else
+                      const SizedBox(width: 48),
+                  ],
                 ),
+              ),
             ),
             TextButton.icon(
               onPressed: () {
@@ -189,9 +182,7 @@ class SessionCard extends HookWidget {
               },
               icon: const HeroIcon(HeroIcons.plus, size: 18),
               label: Text(l10n.ticketsAddSession),
-              style: TextButton.styleFrom(
-                foregroundColor: ColorConstants.main,
-              ),
+              style: TextButton.styleFrom(foregroundColor: ColorConstants.main),
             ),
           ],
         ),

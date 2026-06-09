@@ -363,7 +363,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                   onChanged: (value) {
                                     useExistingTicketEvent.value = value;
                                   },
-                                  activeColor: ColorConstants.tertiary,
+                                  activeThumbColor: ColorConstants.tertiary,
                                   contentPadding: EdgeInsets.zero,
                                 ),
                                 // Optionnel : Dropdown pour choisir quel ticketEvent si la checkbox est cochée
