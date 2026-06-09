@@ -25,12 +25,30 @@ class ShotgunEditNotifier extends StateNotifier<AsyncValue<void>> {
     }
   }
 
+  Future<Session?> addSession(String eventId, Session session) async {
+    try {
+      return await repository.addSession(eventId, session);
+    } catch (e, st) {
+      state = AsyncValue.error(e, st);
+      return null;
+    }
+  }
+
   Future<bool> updateSession(String eventId, Session session) async {
     try {
       return await repository.updateSession(eventId, session);
     } catch (e, st) {
       state = AsyncValue.error(e, st);
       return false;
+    }
+  }
+
+  Future<Category?> addCategory(String eventId, Category category) async {
+    try {
+      return await repository.addCategory(eventId, category);
+    } catch (e, st) {
+      state = AsyncValue.error(e, st);
+      return null;
     }
   }
 
@@ -45,37 +63,22 @@ class ShotgunEditNotifier extends StateNotifier<AsyncValue<void>> {
 
   Future<bool> updateQuestion(
     String eventId,
-    String questionId,
-    String questionText,
-    AnswerType answerType,
-    bool required,
-  ) async {
+    String questionId, {
+    required String questionText,
+    required AnswerType answerType,
+    required bool required,
+    int? price,
+    bool? disabled,
+  }) async {
     try {
       return await repository.updateQuestion(
         eventId,
         questionId,
-        questionText,
-        answerType,
-        required,
-      );
-    } catch (e, st) {
-      state = AsyncValue.error(e, st);
-      return false;
-    }
-  }
-
-  Future<bool> createQuestion(
-    String eventId,
-    String questionText,
-    AnswerType answerType,
-    bool required,
-  ) async {
-    try {
-      return await repository.createQuestion(
-        eventId,
-        questionText,
-        answerType,
-        required,
+        questionText: questionText,
+        answerType: answerType,
+        required: required,
+        price: price,
+        disabled: disabled,
       );
     } catch (e, st) {
       state = AsyncValue.error(e, st);

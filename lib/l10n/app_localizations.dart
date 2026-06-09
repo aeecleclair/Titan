@@ -9446,6 +9446,18 @@ abstract class AppLocalizations {
   /// **'Modifier le tickets'**
   String get ticketsEditTitle;
 
+  /// No description provided for @ticketsEditSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier la session'**
+  String get ticketsEditSession;
+
+  /// No description provided for @ticketsEditCategory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier la catégorie'**
+  String get ticketsEditCategory;
+
   /// No description provided for @ticketsTariffs.
   ///
   /// In fr, this message translates to:
@@ -9686,17 +9698,41 @@ abstract class AppLocalizations {
   /// **'La session de ce billet est passée ({date} à {time})'**
   String ticketsOfferSessionPast(String date, String time);
 
-  /// No description provided for @ticketsSoldOut.
+  /// No description provided for @ticketsStatusOpen.
   ///
   /// In fr, this message translates to:
-  /// **'Complet'**
-  String get ticketsSoldOut;
+  /// **'Ouverte'**
+  String get ticketsStatusOpen;
 
-  /// No description provided for @ticketsEventSoldOut.
+  /// No description provided for @ticketsStatusClosed.
   ///
   /// In fr, this message translates to:
-  /// **'Cet évènement est complet'**
-  String get ticketsEventSoldOut;
+  /// **'Fermée'**
+  String get ticketsStatusClosed;
+
+  /// No description provided for @ticketsStatusUpcoming.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore ouverte'**
+  String get ticketsStatusUpcoming;
+
+  /// No description provided for @ticketsStatusDisabled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactivée'**
+  String get ticketsStatusDisabled;
+
+  /// No description provided for @ticketsAddCategory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une catégorie'**
+  String get ticketsAddCategory;
+
+  /// No description provided for @ticketsCategories.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégories'**
+  String get ticketsCategories;
 
   /// No description provided for @ticketsTicketsSold.
   ///
@@ -9709,6 +9745,162 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'En cours d\'achat'**
   String get ticketsTicketsInCheckout;
+
+  /// No description provided for @ticketsReadOnlyDueSales.
+  ///
+  /// In fr, this message translates to:
+  /// **'Non modifiable (ventes ou réservations existantes)'**
+  String get ticketsReadOnlyDueSales;
+
+  /// No description provided for @ticketsCloseEventHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour fermer les ventes, définir une date de fermeture dans le passé'**
+  String get ticketsCloseEventHint;
+
+  /// No description provided for @ticketsScanTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanner un billet'**
+  String get ticketsScanTitle;
+
+  /// No description provided for @ticketsScanPlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Identifiant du billet'**
+  String get ticketsScanPlaceholder;
+
+  /// No description provided for @ticketsScanCheck.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifier'**
+  String get ticketsScanCheck;
+
+  /// No description provided for @ticketsScanValidate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider l\'entrée'**
+  String get ticketsScanValidate;
+
+  /// No description provided for @ticketsScanAlreadyScanned.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce billet a déjà été scanné'**
+  String get ticketsScanAlreadyScanned;
+
+  /// No description provided for @ticketsScanSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Billet validé avec succès'**
+  String get ticketsScanSuccess;
+
+  /// No description provided for @ticketsScanNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Billet introuvable'**
+  String get ticketsScanNotFound;
+
+  /// No description provided for @ticketsDisableSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactiver la session'**
+  String get ticketsDisableSession;
+
+  /// No description provided for @ticketsDisableCategory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactiver la catégorie'**
+  String get ticketsDisableCategory;
+
+  /// No description provided for @ticketsDisableQuestion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactiver la question'**
+  String get ticketsDisableQuestion;
+
+  /// No description provided for @ticketsGeneralInfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Informations générales'**
+  String get ticketsGeneralInfo;
+
+  /// No description provided for @ticketsSoldTickets.
+  ///
+  /// In fr, this message translates to:
+  /// **'Billets vendus'**
+  String get ticketsSoldTickets;
+
+  /// No description provided for @ticketsDownloadCsv.
+  ///
+  /// In fr, this message translates to:
+  /// **'Télécharger CSV'**
+  String get ticketsDownloadCsv;
+
+  /// No description provided for @ticketsCsvDownloadSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'CSV téléchargé avec succès'**
+  String get ticketsCsvDownloadSuccess;
+
+  /// No description provided for @ticketsCsvDownloadError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors du téléchargement'**
+  String get ticketsCsvDownloadError;
+
+  /// No description provided for @ticketsDisabled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactivé'**
+  String get ticketsDisabled;
+
+  /// No description provided for @ticketsGlobalStats.
+  ///
+  /// In fr, this message translates to:
+  /// **'Statistiques globales'**
+  String get ticketsGlobalStats;
+
+  /// No description provided for @ticketsUnlimited.
+  ///
+  /// In fr, this message translates to:
+  /// **'Illimité'**
+  String get ticketsUnlimited;
+
+  /// No description provided for @ticketsUpdateError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de modifier cet élément'**
+  String get ticketsUpdateError;
+
+  /// No description provided for @ticketsNewTicketing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle billetterie'**
+  String get ticketsNewTicketing;
+
+  /// No description provided for @ticketsScanned.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanné'**
+  String get ticketsScanned;
+
+  /// No description provided for @ticketsValid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valide'**
+  String get ticketsValid;
+
+  /// No description provided for @ticketsSoldOut.
+  ///
+  /// In fr, this message translates to:
+  /// **'Complet'**
+  String get ticketsSoldOut;
+
+  /// No description provided for @ticketsEventSoldOut.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cet évènement est complet'**
+  String get ticketsEventSoldOut;
 
   /// No description provided for @ticketsStatistics.
   ///

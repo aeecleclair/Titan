@@ -9,9 +9,10 @@ import 'package:titan/tickets/providers/can_manage_ticket_events_provider.dart';
 import 'package:titan/tickets/providers/selected_ticket_event_provider.dart';
 import 'package:titan/tickets/repositories/tickets_repository.dart';
 import 'package:titan/tickets/router.dart';
+import 'package:titan/tickets/ui/components/ticket_event_status_chip.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
-import 'package:titan/tools/ui/styleguide/list_item.dart';
+import 'package:titan/tools/ui/styleguide/list_item_template.dart';
 
 class TicketEventCard extends ConsumerWidget {
   final TicketEvent ticketEvent;
@@ -23,16 +24,22 @@ class TicketEventCard extends ConsumerWidget {
     final dateFormatter = DateFormat('dd/MM/yyyy HH:mm');
     final canManageTicketEvents = ref.watch(canManageTicketEventsProvider);
 
-    return ListItem(
+    return ListItemTemplate(
       title: ticketEvent.name,
       subtitle:
           '${l10n.ticketsOpeningLabel}: ${dateFormatter.format(ticketEvent.openDatetime)}',
+      trailing: TicketEventStatusChip(status: ticketEvent.status),
       onTap: () => showCustomBottomModal(
         context: context,
         modal: BottomModalTemplate(
           title: ticketEvent.name,
           child: Column(
             children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TicketEventStatusChip(status: ticketEvent.status),
+              ),
+              const SizedBox(height: 12),
               Button(
                 text: l10n.ticketsViewResults,
                 onPressed: () {
@@ -47,7 +54,6 @@ class TicketEventCard extends ConsumerWidget {
                 Button(
                   text: l10n.ticketsEditTitle,
                   onPressed: () async {
-                    // Charger les détails complets avant d'éditer
                     showDialog(
                       context: context,
                       barrierDismissible: false,
@@ -58,22 +64,23 @@ class TicketEventCard extends ConsumerWidget {
                     try {
                       final token = ref.read(tokenProvider);
                       final repository = TicketsRepository()..setToken(token);
-                      final detailedShotgun = await repository
-                          .getTicketEventById(ticketEvent.id);
+                      final detailedEvent = await repository.getTicketEventById(
+                        ticketEvent.id,
+                      );
 
                       if (context.mounted) {
-                        Navigator.of(context).pop(); // Ferme le loader
+                        Navigator.of(context).pop();
                         ref.read(selectedTicketEventProvider.notifier).state =
-                            detailedShotgun;
+                            detailedEvent;
                         QR.to(TicketsRouter.root + TicketsRouter.edit);
-                        Navigator.of(context).pop(); // Ferme le modal
+                        Navigator.of(context).pop();
                       }
                     } catch (e) {
                       if (context.mounted) {
-                        Navigator.of(context).pop(); // Ferme le loader
+                        Navigator.of(context).pop();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('Erreur: ${e.toString()}'),
+                            content: Text('${l10n.othersError}: ${e.toString()}'),
                             backgroundColor: Colors.red,
                           ),
                         );

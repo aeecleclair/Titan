@@ -3,6 +3,8 @@ import 'package:titan/tickets/class/question.dart';
 import 'package:titan/tickets/class/session.dart';
 import 'package:titan/tools/functions.dart';
 
+enum TicketEventStatus { open, closed, upcoming, disabled }
+
 class TicketEvent {
   TicketEvent({
     required this.id,
@@ -14,10 +16,10 @@ class TicketEvent {
     required this.sessions,
     required this.categories,
     required this.questions,
-    this.soldOut = false,
     this.disabled = false,
-    this.ticketsInCheckout,
-    this.ticketsSold,
+    this.ticketsInCheckout = 0,
+    this.ticketsSold = 0,
+    this.soldOut = false,
   });
   late final String id;
   late final String name;
@@ -28,10 +30,20 @@ class TicketEvent {
   late final List<Session> sessions;
   late final List<Category> categories;
   late final List<Question> questions;
-  late final bool soldOut;
   late final bool disabled;
-  late final int? ticketsInCheckout;
-  late final int? ticketsSold;
+  late final int ticketsInCheckout;
+  late final int ticketsSold;
+  late final bool soldOut;
+
+  TicketEventStatus get status {
+    if (disabled) return TicketEventStatus.disabled;
+    final now = DateTime.now();
+    if (closeDatetime != null && closeDatetime!.isBefore(now)) {
+      return TicketEventStatus.closed;
+    }
+    if (openDatetime.isAfter(now)) return TicketEventStatus.upcoming;
+    return TicketEventStatus.open;
+  }
 
   TicketEvent.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -42,6 +54,9 @@ class TicketEvent {
     closeDatetime = json['close_datetime'] != null
         ? processDateFromAPI(json['close_datetime'])
         : null;
+    disabled = json['disabled'] ?? false;
+    ticketsInCheckout = (json['tickets_in_checkout'] as num?)?.toInt() ?? 0;
+    ticketsSold = (json['tickets_sold'] as num?)?.toInt() ?? 0;
     sessions =
         (json['sessions'] as List<dynamic>?)
             ?.map((e) => Session.fromJson(e))
@@ -82,6 +97,17 @@ class TicketEvent {
     data['categories'] = categories.map((e) => e.toJson()).toList();
     data['questions'] = questions.map((e) => e.toJson()).toList();
     return data;
+  }
+
+  Map<String, dynamic> toUpdateJson() {
+    return {
+      'name': name,
+      'quota': quota,
+      'open_datetime': processDateToAPI(openDatetime),
+      'close_datetime': closeDatetime != null
+          ? processDateToAPI(closeDatetime!)
+          : null,
+    };
   }
 
   TicketEvent copyWith({
@@ -126,10 +152,10 @@ class TicketEvent {
     sessions = [];
     categories = [];
     questions = [];
-    soldOut = false;
     disabled = false;
-    ticketsInCheckout = null;
-    ticketsSold = null;
+    ticketsInCheckout = 0;
+    ticketsSold = 0;
+    soldOut = false;
   }
 
   @override

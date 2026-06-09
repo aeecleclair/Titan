@@ -4867,6 +4867,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsEditTitle => 'Edit ticketing';
 
   @override
+  String get ticketsEditSession => 'Edit session';
+
+  @override
+  String get ticketsEditCategory => 'Edit category';
+
+  @override
   String get ticketsTariffs => 'Pricing';
 
   @override
@@ -4995,16 +5001,109 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get ticketsSoldOut => 'Sold out';
+  String get ticketsStatusOpen => 'Open';
 
   @override
-  String get ticketsEventSoldOut => 'This event is sold out';
+  String get ticketsStatusClosed => 'Closed';
+
+  @override
+  String get ticketsStatusUpcoming => 'Not yet open';
+
+  @override
+  String get ticketsStatusDisabled => 'Disabled';
+
+  @override
+  String get ticketsAddCategory => 'Add category';
+
+  @override
+  String get ticketsCategories => 'Categories';
 
   @override
   String get ticketsTicketsSold => 'Tickets sold';
 
   @override
   String get ticketsTicketsInCheckout => 'In checkout';
+
+  @override
+  String get ticketsReadOnlyDueSales =>
+      'Read-only (existing sales or checkouts)';
+
+  @override
+  String get ticketsCloseEventHint =>
+      'To close sales, set a closing date in the past';
+
+  @override
+  String get ticketsScanTitle => 'Scan a ticket';
+
+  @override
+  String get ticketsScanPlaceholder => 'Ticket ID';
+
+  @override
+  String get ticketsScanCheck => 'Check';
+
+  @override
+  String get ticketsScanValidate => 'Validate entry';
+
+  @override
+  String get ticketsScanAlreadyScanned =>
+      'This ticket has already been scanned';
+
+  @override
+  String get ticketsScanSuccess => 'Ticket validated successfully';
+
+  @override
+  String get ticketsScanNotFound => 'Ticket not found';
+
+  @override
+  String get ticketsDisableSession => 'Disable session';
+
+  @override
+  String get ticketsDisableCategory => 'Disable category';
+
+  @override
+  String get ticketsDisableQuestion => 'Disable question';
+
+  @override
+  String get ticketsGeneralInfo => 'General information';
+
+  @override
+  String get ticketsSoldTickets => 'Sold tickets';
+
+  @override
+  String get ticketsDownloadCsv => 'Download CSV';
+
+  @override
+  String get ticketsCsvDownloadSuccess => 'CSV downloaded successfully';
+
+  @override
+  String get ticketsCsvDownloadError => 'Download error';
+
+  @override
+  String get ticketsDisabled => 'Disabled';
+
+  @override
+  String get ticketsGlobalStats => 'Global statistics';
+
+  @override
+  String get ticketsUnlimited => 'Unlimited';
+
+  @override
+  String get ticketsUpdateError => 'Cannot update this item';
+
+  @override
+  String get ticketsNewTicketing => 'New ticketing';
+
+  @override
+  String get ticketsScanned => 'Scanned';
+
+  @override
+  String get ticketsValid => 'Valid';
+
+  @override
+  String get ticketsSoldOut => 'Sold out';
+
+  @override
+  String get ticketsEventSoldOut => 'This event is sold out';
 
   @override
   String get ticketsStatistics => 'Statistics';

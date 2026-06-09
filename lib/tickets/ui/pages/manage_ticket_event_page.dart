@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/mypayment/class/user_store.dart';
 import 'package:titan/mypayment/providers/my_stores_provider.dart';
 import 'package:titan/tickets/providers/store_tickets_list_provider.dart';
+import 'package:titan/tickets/router.dart';
 import 'package:titan/tickets/ui/components/ticket_event_card.dart';
 import 'package:titan/tickets/ui/tickets_module.dart';
 import 'package:titan/tools/constants.dart';
@@ -29,7 +32,6 @@ class ManageTicketEventPage extends HookConsumerWidget {
           : null,
     );
 
-    // Sélectionner automatiquement le premier store quand la liste charge
     useEffect(() {
       if (selectedStore.value == null &&
           myStores.hasValue &&
@@ -39,7 +41,6 @@ class ManageTicketEventPage extends HookConsumerWidget {
       return null;
     }, [myStores]);
 
-    // Charger les ticketEvents du store sélectionné au démarrage
     useEffect(() {
       if (selectedStore.value != null) {
         storeTicketEventListNotifier.loadStoreTicketEventList(
@@ -55,13 +56,29 @@ class ManageTicketEventPage extends HookConsumerWidget {
           const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              l10n.ticketsManageTitle,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: ColorConstants.title,
-              ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    l10n.ticketsManageTitle,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstants.title,
+                    ),
+                  ),
+                ),
+                FilledButton.icon(
+                  onPressed: () =>
+                      QR.to(TicketsRouter.root + TicketsRouter.create),
+                  icon: const HeroIcon(HeroIcons.plus, size: 18),
+                  label: Text(l10n.ticketsNewTicketing),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: ColorConstants.main,
+                    foregroundColor: Colors.white,
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 16),

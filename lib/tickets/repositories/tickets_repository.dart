@@ -13,6 +13,7 @@ import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tickets/class/ticket.dart';
 import 'package:titan/tickets/class/user_ticket.dart';
 import 'package:titan/tickets/tools/functions.dart';
+import 'package:titan/tools/exception.dart';
 import 'package:titan/tools/repository/repository.dart';
 
 class TicketsRepository extends Repository {
@@ -63,9 +64,24 @@ class TicketsRepository extends Repository {
 
   Future<bool> editTicketEvent(TicketEvent ticketEvent) async {
     return await update(
-      ticketEvent.toJson(),
+      ticketEvent.toUpdateJson(),
       ticketEvent.id,
       suffix: 'admin/events',
+    );
+  }
+
+  Future<Session> addSession(String eventId, Session session) async {
+    final response = await http.post(
+      Uri.parse('${Repository.host}${ext}admin/events/$eventId/sessions'),
+      headers: headers,
+      body: jsonEncode(session.toCreateJson()),
+    );
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      return Session.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+    }
+    throw _parseHttpError(
+      'POST admin/events/$eventId/sessions',
+      response,
     );
   }
 
@@ -79,11 +95,26 @@ class TicketsRepository extends Repository {
     );
     if (response.statusCode == 204 || response.statusCode == 200) {
       return true;
-    } else {
-      throw Exception(
-        'Failed to update session: ${response.statusCode} ${response.body}',
-      );
     }
+    throw _parseHttpError(
+      'PATCH admin/events/$eventId/sessions/${session.id}',
+      response,
+    );
+  }
+
+  Future<Category> addCategory(String eventId, Category category) async {
+    final response = await http.post(
+      Uri.parse('${Repository.host}${ext}admin/events/$eventId/categories'),
+      headers: headers,
+      body: jsonEncode(category.toCreateJson()),
+    );
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      return Category.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+    }
+    throw _parseHttpError(
+      'POST admin/events/$eventId/categories',
+      response,
+    );
   }
 
   Future<bool> updateCategory(String eventId, Category category) async {
@@ -96,38 +127,47 @@ class TicketsRepository extends Repository {
     );
     if (response.statusCode == 204 || response.statusCode == 200) {
       return true;
-    } else {
-      throw Exception(
-        'Failed to update category: ${response.statusCode} ${response.body}',
-      );
     }
+    throw _parseHttpError(
+      'PATCH admin/events/$eventId/categories/${category.id}',
+      response,
+    );
   }
 
   Future<bool> updateQuestion(
     String eventId,
-    String questionId,
-    String questionText,
-    AnswerType answerType,
-    bool required,
-  ) async {
+    String questionId, {
+    required String questionText,
+    required AnswerType answerType,
+    required bool required,
+    int? price,
+    bool? disabled,
+  }) async {
+    final body = <String, dynamic>{
+      'question': questionText,
+      'answer_type': answerType.value,
+      'required': required,
+    };
+    if (price != null) {
+      body['price'] = price * 100;
+    }
+    if (disabled != null) {
+      body['disabled'] = disabled;
+    }
     final response = await http.patch(
       Uri.parse(
         '${Repository.host}${ext}admin/events/$eventId/questions/$questionId',
       ),
       headers: headers,
-      body: jsonEncode({
-        'question': questionText,
-        'answer_type': answerType.value,
-        'required': required,
-      }),
+      body: jsonEncode(body),
     );
     if (response.statusCode == 204 || response.statusCode == 200) {
       return true;
-    } else {
-      throw Exception(
-        'Failed to update question: ${response.statusCode} ${response.body}',
-      );
     }
+    throw _parseHttpError(
+      'PATCH admin/events/$eventId/questions/$questionId',
+      response,
+    );
   }
 
   Future<bool> createQuestion(
@@ -192,6 +232,19 @@ class TicketsRepository extends Repository {
       return response.bodyBytes;
     } else {
       throw Exception('Failed to download CSV: ${response.statusCode}');
+    }
+  }
+
+  AppException _parseHttpError(String action, http.Response response) {
+    try {
+      final decoded = jsonDecode(utf8.decode(response.bodyBytes));
+      final detail = decoded['detail']?.toString() ?? response.body;
+      if (detail == Repository.expiredTokenDetail) {
+        return AppException(ErrorType.tokenExpire, detail);
+      }
+      return AppException(ErrorType.notFound, detail);
+    } catch (_) {
+      return AppException(ErrorType.notFound, response.body);
     }
   }
 }

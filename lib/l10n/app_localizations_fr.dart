@@ -4940,6 +4940,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsEditTitle => 'Modifier le tickets';
 
   @override
+  String get ticketsEditSession => 'Modifier la session';
+
+  @override
+  String get ticketsEditCategory => 'Modifier la catégorie';
+
+  @override
   String get ticketsTariffs => 'Tarifs';
 
   @override
@@ -5072,16 +5078,108 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get ticketsSoldOut => 'Complet';
+  String get ticketsStatusOpen => 'Ouverte';
 
   @override
-  String get ticketsEventSoldOut => 'Cet évènement est complet';
+  String get ticketsStatusClosed => 'Fermée';
+
+  @override
+  String get ticketsStatusUpcoming => 'Pas encore ouverte';
+
+  @override
+  String get ticketsStatusDisabled => 'Désactivée';
+
+  @override
+  String get ticketsAddCategory => 'Ajouter une catégorie';
+
+  @override
+  String get ticketsCategories => 'Catégories';
 
   @override
   String get ticketsTicketsSold => 'Billets vendus';
 
   @override
   String get ticketsTicketsInCheckout => 'En cours d\'achat';
+
+  @override
+  String get ticketsReadOnlyDueSales =>
+      'Non modifiable (ventes ou réservations existantes)';
+
+  @override
+  String get ticketsCloseEventHint =>
+      'Pour fermer les ventes, définir une date de fermeture dans le passé';
+
+  @override
+  String get ticketsScanTitle => 'Scanner un billet';
+
+  @override
+  String get ticketsScanPlaceholder => 'Identifiant du billet';
+
+  @override
+  String get ticketsScanCheck => 'Vérifier';
+
+  @override
+  String get ticketsScanValidate => 'Valider l\'entrée';
+
+  @override
+  String get ticketsScanAlreadyScanned => 'Ce billet a déjà été scanné';
+
+  @override
+  String get ticketsScanSuccess => 'Billet validé avec succès';
+
+  @override
+  String get ticketsScanNotFound => 'Billet introuvable';
+
+  @override
+  String get ticketsDisableSession => 'Désactiver la session';
+
+  @override
+  String get ticketsDisableCategory => 'Désactiver la catégorie';
+
+  @override
+  String get ticketsDisableQuestion => 'Désactiver la question';
+
+  @override
+  String get ticketsGeneralInfo => 'Informations générales';
+
+  @override
+  String get ticketsSoldTickets => 'Billets vendus';
+
+  @override
+  String get ticketsDownloadCsv => 'Télécharger CSV';
+
+  @override
+  String get ticketsCsvDownloadSuccess => 'CSV téléchargé avec succès';
+
+  @override
+  String get ticketsCsvDownloadError => 'Erreur lors du téléchargement';
+
+  @override
+  String get ticketsDisabled => 'Désactivé';
+
+  @override
+  String get ticketsGlobalStats => 'Statistiques globales';
+
+  @override
+  String get ticketsUnlimited => 'Illimité';
+
+  @override
+  String get ticketsUpdateError => 'Impossible de modifier cet élément';
+
+  @override
+  String get ticketsNewTicketing => 'Nouvelle billetterie';
+
+  @override
+  String get ticketsScanned => 'Scanné';
+
+  @override
+  String get ticketsValid => 'Valide';
+
+  @override
+  String get ticketsSoldOut => 'Complet';
+
+  @override
+  String get ticketsEventSoldOut => 'Cet évènement est complet';
 
   @override
   String get ticketsStatistics => 'Statistiques';
