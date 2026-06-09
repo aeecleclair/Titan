@@ -459,17 +459,19 @@ Future getFullDate(
 }) async {
   final locale = Localizations.localeOf(context).toString();
   final DateTime now = DateTime.now();
-  _getDate(context, now, initialDate, firstDate, lastDate).then((
-    DateTime? date,
-  ) {
-    if (date == null || !context.mounted) return;
-    _getTime(context).then((TimeOfDay? time) {
-      if (time == null) return;
-      dateController.text = DateFormat.yMd(
-        locale,
-      ).add_Hm().format(DateTimeField.combine(date, time));
-    });
-  });
+  final DateTime? date = await _getDate(
+    context,
+    now,
+    initialDate,
+    firstDate,
+    lastDate,
+  );
+  if (date == null || !context.mounted) return;
+  final TimeOfDay? time = await _getTime(context);
+  if (time == null) return;
+  dateController.text = DateFormat.yMd(
+    locale,
+  ).add_Hm().format(DateTimeField.combine(date, time));
 }
 
 int generateIntFromString(String s) {

@@ -11,7 +11,6 @@ import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tickets/class/answer_type.dart';
 import 'package:titan/tickets/class/category.dart';
 import 'package:titan/tickets/class/question.dart';
-import 'package:titan/tickets/class/session.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tickets/ui/components/session_card.dart';
 import 'package:titan/tickets/ui/components/tarif_card.dart';
@@ -47,9 +46,13 @@ class CreateTicketEventPage extends HookConsumerWidget {
           : null,
     );
     final categories = useState<List<Category>>([]);
-    final sessions = useState<List<Session>>([]);
+    final sessionCardController = useMemoized(SessionCardController.new);
     final questions = useState<List<_QuestionFormData>>([]);
     final scrollController = useScrollController();
+
+    useEffect(() {
+      return sessionCardController.dispose;
+    }, [sessionCardController]);
 
     final locale = Localizations.localeOf(context);
 
@@ -126,7 +129,7 @@ class CreateTicketEventPage extends HookConsumerWidget {
                   TarifCard(onChanged: (value) => categories.value = value),
                   const SizedBox(height: 16),
 
-                  SessionCard(onChanged: (value) => sessions.value = value),
+                  SessionCard(controller: sessionCardController),
                   const SizedBox(height: 16),
                   _ExtraQuestionsSection(
                     questions: questions.value,
@@ -165,11 +168,29 @@ class CreateTicketEventPage extends HookConsumerWidget {
                           return;
                         }
 
-                        if (sessions.value.isEmpty) {
+                        final eventSessions = sessionCardController.buildSessions(
+                          locale.toString(),
+                        );
+                        final sessionEntries = sessionCardController.entries;
+
+                        if (sessionEntries.any(
+                          (entry) => entry['label']!.text.trim().isEmpty,
+                        )) {
                           displayToast(
                             context,
                             TypeMsg.error,
                             l10n.ticketsSessionsRequired,
+                          );
+                          return;
+                        }
+
+                        if (sessionEntries.any(
+                          (entry) => entry['date']!.text.trim().isEmpty,
+                        )) {
+                          displayToast(
+                            context,
+                            TypeMsg.error,
+                            l10n.toolDateRequired,
                           );
                           return;
                         }
@@ -209,7 +230,7 @@ class CreateTicketEventPage extends HookConsumerWidget {
                                   openDatetime: openDatetime,
                                   closeDatetime: closeDatetime,
                                   categories: categories.value,
-                                  sessions: sessions.value,
+                                  sessions: eventSessions,
                                   questions: questions.value
                                       .where(
                                         (q) =>
