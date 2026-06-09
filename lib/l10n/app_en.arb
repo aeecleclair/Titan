@@ -1861,6 +1861,22 @@
   "ticketsViewResults": "View results",
   "ticketsMinPriceError": "Price must be 0€ or greater than 1€",
   "ticketsSessionSoldOut": "This session is sold out",
+  "ticketsOfferTicket": "Offer this ticket",
+  "ticketsOfferDescription": "The recipient will receive an email to accept the transfer. Any pending invitation will be replaced.",
+  "ticketsOfferSuccess": "Transfer invitation sent",
+  "ticketsOfferError": "Failed to send transfer invitation",
+  "ticketsOfferNotOwner": "You are not the owner of this ticket",
+  "ticketsOfferNotFound": "Ticket not found",
+  "ticketsOfferInvalidEmail": "Invalid email address",
+  "ticketsOfferNotTransferable": "This ticket cannot be transferred",
+  "ticketsOfferAlreadyUsed": "This ticket has already been used and can no longer be transferred",
+  "ticketsOfferSessionPast": "This ticket's session has already passed ({date} at {time})",
+  "@ticketsOfferSessionPast": {
+    "placeholders": {
+      "date": { "type": "String" },
+      "time": { "type": "String" }
+    }
+  },
   "ticketsSoldOut": "Sold out",
   "ticketsEventSoldOut": "This event is sold out",
   "ticketsTicketsSold": "Tickets sold",

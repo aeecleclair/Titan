@@ -9620,6 +9620,66 @@ abstract class AppLocalizations {
   /// **'Cette session est complète'**
   String get ticketsSessionSoldOut;
 
+  /// No description provided for @ticketsOfferTicket.
+  ///
+  /// In fr, this message translates to:
+  /// **'Offrir ce billet'**
+  String get ticketsOfferTicket;
+
+  /// No description provided for @ticketsOfferDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'La personne recevra un email pour accepter le transfert. Toute invitation en cours sera remplacée.'**
+  String get ticketsOfferDescription;
+
+  /// No description provided for @ticketsOfferSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Invitation de transfert envoyée'**
+  String get ticketsOfferSuccess;
+
+  /// No description provided for @ticketsOfferError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de l\'envoi de l\'invitation'**
+  String get ticketsOfferError;
+
+  /// No description provided for @ticketsOfferNotOwner.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous n\'êtes pas le propriétaire de ce billet'**
+  String get ticketsOfferNotOwner;
+
+  /// No description provided for @ticketsOfferNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Billet introuvable'**
+  String get ticketsOfferNotFound;
+
+  /// No description provided for @ticketsOfferInvalidEmail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Adresse email invalide'**
+  String get ticketsOfferInvalidEmail;
+
+  /// No description provided for @ticketsOfferNotTransferable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce billet ne peut pas être transféré'**
+  String get ticketsOfferNotTransferable;
+
+  /// No description provided for @ticketsOfferAlreadyUsed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce billet a déjà été utilisé et ne peut plus être transféré'**
+  String get ticketsOfferAlreadyUsed;
+
+  /// No description provided for @ticketsOfferSessionPast.
+  ///
+  /// In fr, this message translates to:
+  /// **'La session de ce billet est passée ({date} à {time})'**
+  String ticketsOfferSessionPast(String date, String time);
+
   /// No description provided for @ticketsSoldOut.
   ///
   /// In fr, this message translates to:

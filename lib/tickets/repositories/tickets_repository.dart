@@ -8,6 +8,7 @@ import 'package:titan/tickets/class/answer_type.dart';
 import 'package:titan/tickets/class/category.dart';
 import 'package:titan/tickets/class/checkout.dart';
 import 'package:titan/tickets/class/session.dart';
+import 'package:titan/tickets/class/ticket_change_over_invitation.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tickets/class/ticket.dart';
 import 'package:titan/tickets/class/user_ticket.dart';
@@ -162,6 +163,15 @@ class TicketsRepository extends Repository {
     return response.map((e) {
       return UserTicket.fromJson(e);
     }).toList();
+  }
+
+  Future<bool> requestTicketChangeOver(
+    TicketChangeOverInvitation invitation,
+  ) async {
+    return await create(
+      invitation.toJson(),
+      suffix: 'user/me/tickets/change-over/request',
+    );
   }
 
   Future<List<Ticket>> getTicketsByEventId(String eventId) async {

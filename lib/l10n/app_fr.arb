@@ -1868,6 +1868,22 @@
   "ticketsViewResults": "Voir les résultats",
   "ticketsMinPriceError": "Le prix doit être 0€ ou supérieur à 1€",
   "ticketsSessionSoldOut": "Cette session est complète",
+  "ticketsOfferTicket": "Offrir ce billet",
+  "ticketsOfferDescription": "La personne recevra un email pour accepter le transfert. Toute invitation en cours sera remplacée.",
+  "ticketsOfferSuccess": "Invitation de transfert envoyée",
+  "ticketsOfferError": "Erreur lors de l'envoi de l'invitation",
+  "ticketsOfferNotOwner": "Vous n'êtes pas le propriétaire de ce billet",
+  "ticketsOfferNotFound": "Billet introuvable",
+  "ticketsOfferInvalidEmail": "Adresse email invalide",
+  "ticketsOfferNotTransferable": "Ce billet ne peut pas être transféré",
+  "ticketsOfferAlreadyUsed": "Ce billet a déjà été utilisé et ne peut plus être transféré",
+  "ticketsOfferSessionPast": "La session de ce billet est passée ({date} à {time})",
+  "@ticketsOfferSessionPast": {
+    "placeholders": {
+      "date": { "type": "String" },
+      "time": { "type": "String" }
+    }
+  },
   "ticketsSoldOut": "Complet",
   "ticketsEventSoldOut": "Cet évènement est complet",
   "ticketsTicketsSold": "Billets vendus",

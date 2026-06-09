@@ -5032,6 +5032,42 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsSessionSoldOut => 'Cette session est complète';
 
   @override
+  String get ticketsOfferTicket => 'Offrir ce billet';
+
+  @override
+  String get ticketsOfferDescription =>
+      'La personne recevra un email pour accepter le transfert. Toute invitation en cours sera remplacée.';
+
+  @override
+  String get ticketsOfferSuccess => 'Invitation de transfert envoyée';
+
+  @override
+  String get ticketsOfferError => 'Erreur lors de l\'envoi de l\'invitation';
+
+  @override
+  String get ticketsOfferNotOwner =>
+      'Vous n\'êtes pas le propriétaire de ce billet';
+
+  @override
+  String get ticketsOfferNotFound => 'Billet introuvable';
+
+  @override
+  String get ticketsOfferInvalidEmail => 'Adresse email invalide';
+
+  @override
+  String get ticketsOfferNotTransferable =>
+      'Ce billet ne peut pas être transféré';
+
+  @override
+  String get ticketsOfferAlreadyUsed =>
+      'Ce billet a déjà été utilisé et ne peut plus être transféré';
+
+  @override
+  String ticketsOfferSessionPast(String date, String time) {
+    return 'La session de ce billet est passée ($date à $time)';
+  }
+
+  @override
   String get ticketsSoldOut => 'Complet';
 
   @override

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tickets/class/user_ticket.dart';
+import 'package:titan/tickets/ui/components/offer_ticket_modal.dart';
 import 'package:titan/tickets/ui/components/ticket_card_layout.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 
 class UserTicketCard extends ConsumerWidget {
   final UserTicket ticket;
@@ -12,115 +15,137 @@ class UserTicketCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final dateOnlyFormatter = DateFormat('dd/MM/yyyy');
     final timeOnlyFormatter = DateFormat('HH:mm');
 
-    return TicketCardLayout(
-      child: Row(
+    final card = TicketCardLayout(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Icône/Event indicator
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              color: _getStatusColor(ticket.scanned).withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Center(
-              child: HeroIcon(
-                _getStatusIcon(ticket.scanned),
-                size: 32,
-                color: _getStatusColor(ticket.scanned),
+          Row(
+            children: [
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: _getStatusColor(
+                    ticket.scanned,
+                  ).withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Center(
+                  child: HeroIcon(
+                    _getStatusIcon(ticket.scanned),
+                    size: 32,
+                    color: _getStatusColor(ticket.scanned),
+                  ),
+                ),
               ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          // Content
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  ticket.eventName,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  ticket.category.name,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: ColorConstants.tertiary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  ticket.session.name,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: ColorConstants.onTertiary,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                // Date and time
-                Row(
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    HeroIcon(
-                      HeroIcons.calendar,
-                      size: 14,
-                      color: ColorConstants.onTertiary,
-                    ),
-                    const SizedBox(width: 4),
                     Text(
-                      dateOnlyFormatter.format(ticket.session.startDatetime),
+                      ticket.eventName,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      ticket.category.name,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: ColorConstants.tertiary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      ticket.session.name,
                       style: TextStyle(
                         fontSize: 12,
                         color: ColorConstants.onTertiary,
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    HeroIcon(
-                      HeroIcons.clock,
-                      size: 14,
-                      color: ColorConstants.onTertiary,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      timeOnlyFormatter.format(ticket.session.startDatetime),
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: ColorConstants.onTertiary,
-                      ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        HeroIcon(
+                          HeroIcons.calendar,
+                          size: 14,
+                          color: ColorConstants.onTertiary,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          dateOnlyFormatter.format(
+                            ticket.session.startDatetime,
+                          ),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: ColorConstants.onTertiary,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        HeroIcon(
+                          HeroIcons.clock,
+                          size: 14,
+                          color: ColorConstants.onTertiary,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          timeOnlyFormatter.format(
+                            ticket.session.startDatetime,
+                          ),
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: ColorConstants.onTertiary,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
-          // Price and status
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                '${ticket.price}€',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: ColorConstants.gradient1,
-                ),
               ),
-              const SizedBox(height: 8),
-              _buildStatusBadge(context, ticket.scanned),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    '${ticket.price}€',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstants.gradient1,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  _buildStatusBadge(context, ticket.scanned),
+                ],
+              ),
             ],
           ),
         ],
       ),
+    );
+
+    if (!ticket.isTransferable) {
+      return card;
+    }
+
+    return GestureDetector(
+      onTap: () => showCustomBottomModal(
+        context: context,
+        ref: ref,
+        modal: OfferTicketModal(ticket: ticket),
+      ),
+      behavior: HitTestBehavior.opaque,
+      child: card,
     );
   }
 

@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:titan/tickets/class/category.dart';
 import 'package:titan/tickets/class/session.dart';
 
+enum TicketTransferBlockReason { transferable, alreadyUsed, sessionPast }
+
 class UserTicket {
   UserTicket({
     required this.id,
@@ -23,6 +25,20 @@ class UserTicket {
   late final Category category;
   late final Session session;
   late final String eventName;
+
+  bool get isTransferable =>
+      transferBlockReason == TicketTransferBlockReason.transferable;
+
+  TicketTransferBlockReason get transferBlockReason {
+    if (scanned) {
+      return TicketTransferBlockReason.alreadyUsed;
+    }
+    if (session.id.isNotEmpty &&
+        session.startDatetime.isBefore(DateTime.now())) {
+      return TicketTransferBlockReason.sessionPast;
+    }
+    return TicketTransferBlockReason.transferable;
+  }
 
   UserTicket.fromJson(Map<String, dynamic> json) {
     log('Parsing UserTicket from JSON: $json', name: 'UserTicket');

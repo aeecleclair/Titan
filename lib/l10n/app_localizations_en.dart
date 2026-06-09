@@ -4958,6 +4958,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsSessionSoldOut => 'This session is sold out';
 
   @override
+  String get ticketsOfferTicket => 'Offer this ticket';
+
+  @override
+  String get ticketsOfferDescription =>
+      'The recipient will receive an email to accept the transfer. Any pending invitation will be replaced.';
+
+  @override
+  String get ticketsOfferSuccess => 'Transfer invitation sent';
+
+  @override
+  String get ticketsOfferError => 'Failed to send transfer invitation';
+
+  @override
+  String get ticketsOfferNotOwner => 'You are not the owner of this ticket';
+
+  @override
+  String get ticketsOfferNotFound => 'Ticket not found';
+
+  @override
+  String get ticketsOfferInvalidEmail => 'Invalid email address';
+
+  @override
+  String get ticketsOfferNotTransferable => 'This ticket cannot be transferred';
+
+  @override
+  String get ticketsOfferAlreadyUsed =>
+      'This ticket has already been used and can no longer be transferred';
+
+  @override
+  String ticketsOfferSessionPast(String date, String time) {
+    return 'This ticket\'s session has already passed ($date at $time)';
+  }
+
+  @override
   String get ticketsSoldOut => 'Sold out';
 
   @override
