@@ -9512,6 +9512,12 @@ abstract class AppLocalizations {
   /// **'Billeterie non trouvée'**
   String get ticketsNotFound;
 
+  /// No description provided for @ticketsNoTicketingForStore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune billeterie n\'existe pour ce store'**
+  String get ticketsNoTicketingForStore;
+
   /// No description provided for @ticketsBookTicket.
   ///
   /// In fr, this message translates to:

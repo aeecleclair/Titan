@@ -1834,6 +1834,7 @@
   "ticketsManageTitle": "Gérer les tickets de l'association",
   "ticketsNoTickets": "Vous n'avez pas encore de billets",
   "ticketsNotFound": "Billeterie non trouvée",
+  "ticketsNoTicketingForStore": "Aucune billeterie n'existe pour ce store",
   "ticketsBookTicket": "Réserver un billet",
   "ticketsCategoryLabel": "Catégorie (tarif)",
   "ticketsSessionLabel": "Session (horaire)",

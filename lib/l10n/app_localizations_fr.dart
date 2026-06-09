@@ -4973,6 +4973,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsNotFound => 'Billeterie non trouvée';
 
   @override
+  String get ticketsNoTicketingForStore =>
+      'Aucune billeterie n\'existe pour ce store';
+
+  @override
   String get ticketsBookTicket => 'Réserver un billet';
 
   @override

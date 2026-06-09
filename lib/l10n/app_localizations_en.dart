@@ -4900,6 +4900,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsNotFound => 'Ticketing not found';
 
   @override
+  String get ticketsNoTicketingForStore => 'No ticketing exists for this store';
+
+  @override
   String get ticketsBookTicket => 'Book a ticket';
 
   @override

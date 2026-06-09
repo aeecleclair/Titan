@@ -1827,6 +1827,7 @@
   "ticketsManageTitle": "Manage association ticketings",
   "ticketsNoTickets": "You don't have any tickets yet",
   "ticketsNotFound": "Ticketing not found",
+  "ticketsNoTicketingForStore": "No ticketing exists for this store",
   "ticketsBookTicket": "Book a ticket",
   "ticketsCategoryLabel": "Category (pricing)",
   "ticketsSessionLabel": "Session (time)",
