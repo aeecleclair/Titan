@@ -318,7 +318,9 @@ class _SessionsSection extends HookConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextEntry(
-                label: l10n.ticketsSessionLabelNumbered(event.sessions.length + 1),
+                label: l10n.ticketsSessionLabelNumbered(
+                  event.sessions.length + 1,
+                ),
                 controller: nameController,
                 onChanged: (_) {},
               ),
@@ -360,10 +362,7 @@ class _SessionsSection extends HookConsumerWidget {
         id: '',
         name: nameController.text.trim(),
         startDatetime: DateTime.parse(
-          processDateBackWithHourMaybe(
-            dateController.text,
-            locale.toString(),
-          ),
+          processDateBackWithHourMaybe(dateController.text, locale.toString()),
         ),
         quota: quotaController.text.isEmpty
             ? null
@@ -857,10 +856,7 @@ class _QuestionsSection extends HookConsumerWidget {
     if (event.questions.isEmpty) {
       return _SectionCard(
         title: l10n.ticketsQuestions,
-        child: Text(
-          '-',
-          style: TextStyle(color: ColorConstants.tertiary),
-        ),
+        child: Text('-', style: TextStyle(color: ColorConstants.tertiary)),
       );
     }
 

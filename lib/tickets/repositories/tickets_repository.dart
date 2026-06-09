@@ -79,10 +79,7 @@ class TicketsRepository extends Repository {
     if (response.statusCode == 201 || response.statusCode == 200) {
       return Session.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
     }
-    throw _parseHttpError(
-      'POST admin/events/$eventId/sessions',
-      response,
-    );
+    throw _parseHttpError('POST admin/events/$eventId/sessions', response);
   }
 
   Future<bool> updateSession(String eventId, Session session) async {
@@ -111,10 +108,7 @@ class TicketsRepository extends Repository {
     if (response.statusCode == 201 || response.statusCode == 200) {
       return Category.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
     }
-    throw _parseHttpError(
-      'POST admin/events/$eventId/categories',
-      response,
-    );
+    throw _parseHttpError('POST admin/events/$eventId/categories', response);
   }
 
   Future<bool> updateCategory(String eventId, Category category) async {

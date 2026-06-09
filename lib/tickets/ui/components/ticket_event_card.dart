@@ -80,7 +80,9 @@ class TicketEventCard extends ConsumerWidget {
                         Navigator.of(context).pop();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('${l10n.othersError}: ${e.toString()}'),
+                            content: Text(
+                              '${l10n.othersError}: ${e.toString()}',
+                            ),
                             backgroundColor: Colors.red,
                           ),
                         );

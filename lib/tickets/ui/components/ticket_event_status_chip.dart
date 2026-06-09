@@ -12,7 +12,10 @@ class TicketEventStatusChip extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final (label, color) = switch (status) {
       TicketEventStatus.open => (l10n.ticketsStatusOpen, Colors.green.shade600),
-      TicketEventStatus.closed => (l10n.ticketsStatusClosed, Colors.red.shade600),
+      TicketEventStatus.closed => (
+        l10n.ticketsStatusClosed,
+        Colors.red.shade600,
+      ),
       TicketEventStatus.upcoming => (
         l10n.ticketsStatusUpcoming,
         Colors.orange.shade600,
