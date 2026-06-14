@@ -1628,80 +1628,6 @@
   "settingsUpdatingError": "Error updating profile",
   "settingsValidate": "Confirm",
   "settingsVersion": "Version",
-  "shotgunAddQuestion": "Add a question",
-  "shotgunAddSession": "Add session",
-  "shotgunAddTariff": "Add pricing",
-  "shotgunAdmin": "Admin",
-  "shotgunAnswerTypeBoolean": "Yes/No",
-  "shotgunAnswerTypeNumber": "Number",
-  "shotgunAnswerTypeText": "Text",
-  "shotgunBookTicket": "Book a ticket",
-  "shotgunCategoryLabel": "Category (pricing)",
-  "shotgunCreate": "Create a ticketing",
-  "shotgunDateLabel": "Date",
-  "shotgunDeleteQuestionTooltip": "Delete question",
-  "shotgunEditSuccess": "Ticketing updated successfully",
-  "shotgunEditTitle": "Edit ticketing",
-  "shotgunManageAssociation": "Manage association ticketings",
-  "shotgunManageTitle": "Manage association ticketings",
-  "shotgunMinPriceError": "Minimum price is 1€",
-  "shotgunMyTickets": "My tickets",
-  "shotgunNoShotgun": "No ticketing for this store",
-  "shotgunNotFound": "Ticketing not found",
-  "shotgunNoTickets": "You don't have any tickets yet",
-  "shotgunNoTicketsSubtitle": "Book your seat for an event!",
-  "shotgunOpeningLabel": "Opening",
-  "shotgunPaymentMethod": "Payment method",
-  "shotgunPlaces": "seats",
-  "shotgunPlacesLabel": "Number of available seats",
-  "shotgunPriceLabel": "Price (€)",
-  "shotgunQuestionLabel": "Question {number}",
-  "@shotgunQuestionLabel": {
-    "description": "Label for a question in the shotgun form",
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
-  "shotgunQuestionRequiredLabel": "Required",
-  "shotgunQuestions": "Questions",
-  "shotgunQuestionTypeLabel": "Answer type",
-  "shotgunQuotaLabel": "Quota",
-  "shotgunReservationSuccess": "Ticket booked successfully!",
-  "shotgunReserve": "Book",
-  "shotgunSave": "Save ticketing",
-  "shotgunSaveChanges": "Save changes",
-  "shotgunSessionLabel": "Session (time)",
-  "shotgunSessionLabelNumbered": "Session {number}",
-  "@shotgunSessionLabelNumbered": {
-    "description": "Label for a session in the shotgun form",
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
-  "shotgunSessions": "Sessions",
-  "shotgunShotgun": "Ticketing",
-  "shotgunShotgunDescription": "Book your seats for events",
-  "shotgunStartDateLabel": "Ticketing opening date *",
-  "shotgunStartDateRequired": "Start date is required",
-  "shotgunTariffLabel": "Pricing {number}",
-  "@shotgunTariffLabel": {
-    "description": "Label for a pricing tier in the shotgun form",
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
-  "shotgunTariffs": "Pricing",
-  "shotgunTitle": "Shotgun",
-  "shotgunTitleLabel": "Shotgun title *",
-  "shotgunTitleRequired": "Title is required",
-  "shotgunTotal": "Total",
-  "shotgunViewResults": "View results",
   "toolDateRequired": "Date required",
   "toolInvalidNumber": "Invalid number",
   "toolSuccess": "Success",
@@ -1858,6 +1784,7 @@
     }
   },
   "ticketsReservationSuccess": "Ticketing created successfully!",
+  "ticketsBookSuccess": "Ticket booked successfully!",
   "ticketsMyTickets": "My tickets",
   "ticketsNoTicketsSubtitle": "Book your seat for an event!",
   "ticketsViewResults": "View results",

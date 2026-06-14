@@ -5,17 +5,17 @@ import 'package:titan/tickets/repositories/tickets_repository.dart';
 import 'package:titan/tools/providers/list_notifier.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 
-class ShotgunListNotifier extends ListNotifier<TicketEvent> {
+class TicketEventListNotifier extends ListNotifier<TicketEvent> {
   final TicketsRepository _repository;
-  ShotgunListNotifier({required TicketsRepository repository})
+  TicketEventListNotifier({required TicketsRepository repository})
     : _repository = repository,
       super(const AsyncValue.loading());
 
-  Future<AsyncValue<List<TicketEvent>>> loadShotgunList() async {
+  Future<AsyncValue<List<TicketEvent>>> loadTicketEventList() async {
     return await loadList(() async => _repository.getAllTicketEvents());
   }
 
-  Future<TicketEvent> loadShotgunById(String id) async {
+  Future<TicketEvent> loadTicketEventById(String id) async {
     return await _repository.getTicketEventById(id);
   }
 
@@ -35,13 +35,14 @@ class ShotgunListNotifier extends ListNotifier<TicketEvent> {
 }
 
 final ticketEventListProvider =
-    StateNotifierProvider<ShotgunListNotifier, AsyncValue<List<TicketEvent>>>((
-      ref,
-    ) {
+    StateNotifierProvider<
+      TicketEventListNotifier,
+      AsyncValue<List<TicketEvent>>
+    >((ref) {
       final repository = ref.watch(ticketsRepositoryProvider);
-      final notifier = ShotgunListNotifier(repository: repository);
+      final notifier = TicketEventListNotifier(repository: repository);
       tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadShotgunList();
+        await notifier.loadTicketEventList();
       });
       return notifier;
     });

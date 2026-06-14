@@ -4,7 +4,7 @@ import 'package:titan/tickets/class/request_type.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tools/functions.dart';
 
-Checkout checkoutFromShotgun(TicketEvent ticketEvent) {
+Checkout checkoutFromTicketEvent(TicketEvent ticketEvent) {
   final redirectUrl = kIsWeb
       ? "${getTitanURL()}/payment"
       : "${getTitanURLScheme()}://payment";

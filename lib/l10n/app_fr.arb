@@ -1635,80 +1635,6 @@
   "settingsUpdatingError": "Erreur lors de la modification du profil",
   "settingsValidate": "Valider",
   "settingsVersion": "Version",
-  "shotgunAddQuestion": "Ajouter une question",
-  "shotgunAddSession": "Ajouter une session",
-  "shotgunAddTariff": "Ajouter un tarif",
-  "shotgunAdmin": "Admin",
-  "shotgunAnswerTypeBoolean": "Oui/Non",
-  "shotgunAnswerTypeNumber": "Nombre",
-  "shotgunAnswerTypeText": "Texte",
-  "shotgunBookTicket": "Réserver un billet",
-  "shotgunCategoryLabel": "Catégorie (tarif)",
-  "shotgunCreate": "Créer une billetterie",
-  "shotgunDateLabel": "Date",
-  "shotgunDeleteQuestionTooltip": "Supprimer la question",
-  "shotgunEditSuccess": "Billetterie modifié avec succès",
-  "shotgunEditTitle": "Modifier la billetterie",
-  "shotgunManageAssociation": "Gérer les billetteries de l'association",
-  "shotgunManageTitle": "Gérer les billetteries de l'association",
-  "shotgunMinPriceError": "Le prix minimum est 1€",
-  "shotgunMyTickets": "Mes billets",
-  "shotgunNoShotgun": "Aucune billetterie pour ce store",
-  "shotgunNotFound": "Billetterie non trouvé",
-  "shotgunNoTickets": "Vous n'avez pas encore de billets",
-  "shotgunNoTicketsSubtitle": "Réservez votre place pour un événement !",
-  "shotgunOpeningLabel": "Ouverture",
-  "shotgunPaymentMethod": "Moyen de paiement",
-  "shotgunPlaces": "places",
-  "shotgunPlacesLabel": "Nombre de places disponibles (optionnel)",
-  "shotgunPriceLabel": "Prix (€)",
-  "shotgunQuestionLabel": "Question {number}",
-  "@shotgunQuestionLabel": {
-    "description": "Label pour une question dans le formulaire shotgun",
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
-  "shotgunQuestionRequiredLabel": "Obligatoire",
-  "shotgunQuestions": "Questions",
-  "shotgunQuestionTypeLabel": "Type de réponse",
-  "shotgunQuotaLabel": "Quota",
-  "shotgunReservationSuccess": "Billet réservé !",
-  "shotgunReserve": "Réserver",
-  "shotgunSave": "Enregistrer la billetterie",
-  "shotgunSaveChanges": "Enregistrer les modifications",
-  "shotgunSessionLabel": "Session (horaire)",
-  "shotgunSessionLabelNumbered": "Session {number}",
-  "@shotgunSessionLabelNumbered": {
-    "description": "Label pour une session dans le formulaire shotgun",
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
-  "shotgunSessions": "Sessions",
-  "shotgunShotgun": "Billetterie",
-  "shotgunShotgunDescription": "Réserver vos places pour des événements",
-  "shotgunStartDateLabel": "Date d'ouverture de la billetterie *",
-  "shotgunStartDateRequired": "La date de début est obligatoire",
-  "shotgunTariffLabel": "Tarif {number}",
-  "@shotgunTariffLabel": {
-    "description": "Label pour un tarif dans le formulaire shotgun",
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
-  "shotgunTariffs": "Tarifs",
-  "shotgunTitle": "Billetterie",
-  "shotgunTitleLabel": "Titre de la billetterie *",
-  "shotgunTitleRequired": "Le titre est obligatoire",
-  "shotgunTotal": "Total",
-  "shotgunViewResults": "Voir les résultats",
   "toolDateRequired": "Date requise",
   "toolInvalidNumber": "Chiffre invalide",
   "toolSuccess": "Succès",
@@ -1864,6 +1790,7 @@
     }
   },
   "ticketsReservationSuccess": "Billeterie créée avec succès !",
+  "ticketsBookSuccess": "Billet réservé !",
   "ticketsMyTickets": "Mes billets",
   "ticketsNoTicketsSubtitle": "Réservez votre place pour un événement !",
   "ticketsViewResults": "Voir les résultats",

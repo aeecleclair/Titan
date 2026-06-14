@@ -248,7 +248,7 @@ class _TicketEventContent extends HookConsumerWidget {
         final receivedUri = Uri.parse(data);
         final code = receivedUri.queryParameters["code"];
         if (code == "succeeded") {
-          displayToast(context, TypeMsg.msg, l10n.ticketsReservationSuccess);
+          displayToast(context, TypeMsg.msg, l10n.ticketsBookSuccess);
         } else {
           displayToast(context, TypeMsg.error, l10n.paiementRefusedTransaction);
         }
@@ -293,11 +293,7 @@ class _TicketEventContent extends HookConsumerWidget {
             // CAS GRATUIT - rediriger vers la page des tickets avec message de succès
             ref.read(checkoutProvider.notifier).reset();
             if (context.mounted) {
-              displayToast(
-                context,
-                TypeMsg.msg,
-                l10n.ticketsReservationSuccess,
-              );
+              displayToast(context, TypeMsg.msg, l10n.ticketsBookSuccess);
             }
             QR.to(TicketsRouter.root);
           }

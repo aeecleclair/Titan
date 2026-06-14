@@ -7,10 +7,10 @@ import 'package:titan/tickets/class/session.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tickets/repositories/tickets_repository.dart';
 
-class ShotgunEditNotifier extends StateNotifier<AsyncValue<void>> {
+class TicketEventEditNotifier extends StateNotifier<AsyncValue<void>> {
   final TicketsRepository repository;
 
-  ShotgunEditNotifier({required this.repository})
+  TicketEventEditNotifier({required this.repository})
     : super(const AsyncValue.data(null));
 
   Future<bool> editTicketEvent(TicketEvent ticketEvent) async {
@@ -187,7 +187,7 @@ class ShotgunEditNotifier extends StateNotifier<AsyncValue<void>> {
 }
 
 final ticketEventEditProvider =
-    StateNotifierProvider<ShotgunEditNotifier, AsyncValue<void>>((ref) {
+    StateNotifierProvider<TicketEventEditNotifier, AsyncValue<void>>((ref) {
       final repository = ref.watch(ticketsRepositoryProvider);
-      return ShotgunEditNotifier(repository: repository);
+      return TicketEventEditNotifier(repository: repository);
     });

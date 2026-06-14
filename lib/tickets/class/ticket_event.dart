@@ -158,6 +158,6 @@ class TicketEvent {
 
   @override
   String toString() {
-    return 'Shotgun{id : $id, name: $name, storeId: $storeId, quota: $quota, openDatetime: $openDatetime, closeDatetime: $closeDatetime, sessions: $sessions, categories: $categories, questions: $questions, soldOut: $soldOut, disabled: $disabled, ticketsInCheckout: $ticketsInCheckout, ticketsSold: $ticketsSold}';
+    return 'TicketEvent{id : $id, name: $name, storeId: $storeId, quota: $quota, openDatetime: $openDatetime, closeDatetime: $closeDatetime, sessions: $sessions, categories: $categories, questions: $questions, soldOut: $soldOut, disabled: $disabled, ticketsInCheckout: $ticketsInCheckout, ticketsSold: $ticketsSold}';
   }
 }

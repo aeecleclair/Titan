@@ -38,7 +38,7 @@ class TicketsMainPage extends HookConsumerWidget {
       final isOnTicketsPage = currentPath.startsWith(TicketsRouter.root);
       if (isSuccess && isOnTicketsPage) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          displayToast(context, TypeMsg.msg, l10n.shotgunReservationSuccess);
+          displayToast(context, TypeMsg.msg, l10n.ticketsBookSuccess);
           ref.read(pathForwardingProvider.notifier).removeQueryParam('code');
         });
       }

@@ -55,7 +55,7 @@ class TicketsRepository extends Repository {
   Future<Checkout> checkoutTicketEvent(TicketEvent ticketEvent) async {
     return Checkout.fromJson(
       await create(
-        checkoutFromShotgun(ticketEvent).toJson(),
+        checkoutFromTicketEvent(ticketEvent).toJson(),
         suffix: 'events/${ticketEvent.id}/checkout',
       ),
     );
@@ -89,10 +89,9 @@ class TicketsRepository extends Repository {
     String sessionId,
     bool disabled,
   ) async {
-    return update(
-      {'disabled': disabled},
-      'admin/events/$eventId/sessions/$sessionId',
-    );
+    return update({
+      'disabled': disabled,
+    }, 'admin/events/$eventId/sessions/$sessionId');
   }
 
   Future<bool> deleteSession(String eventId, String sessionId) async {
@@ -120,10 +119,9 @@ class TicketsRepository extends Repository {
     String categoryId,
     bool disabled,
   ) async {
-    return update(
-      {'disabled': disabled},
-      'admin/events/$eventId/categories/$categoryId',
-    );
+    return update({
+      'disabled': disabled,
+    }, 'admin/events/$eventId/categories/$categoryId');
   }
 
   Future<bool> deleteCategory(String eventId, String categoryId) async {
@@ -135,10 +133,9 @@ class TicketsRepository extends Repository {
     String questionId,
     bool disabled,
   ) async {
-    return update(
-      {'disabled': disabled},
-      'admin/events/$eventId/questions/$questionId',
-    );
+    return update({
+      'disabled': disabled,
+    }, 'admin/events/$eventId/questions/$questionId');
   }
 
   Future<bool> updateQuestion(
