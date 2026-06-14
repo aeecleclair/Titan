@@ -1867,5 +1867,10 @@
   "ticketsNoTicketsSubtitle": "Réservez votre place pour un événement !",
   "ticketsViewResults": "Voir les résultats",
   "ticketsMinPriceError": "Le prix doit être 0€ ou supérieur à 1€",
-  "ticketsSessionSoldOut": "Cette session est complète"
+  "ticketsSessionSoldOut": "Cette session est complète",
+  "ticketsSoldOut": "Complet",
+  "ticketsEventSoldOut": "Cet évènement est complet",
+  "ticketsTicketsSold": "Billets vendus",
+  "ticketsTicketsInCheckout": "En cours d'achat",
+  "ticketsStatistics": "Statistiques"
 }

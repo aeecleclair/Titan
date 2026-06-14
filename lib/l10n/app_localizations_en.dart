@@ -4956,4 +4956,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ticketsSessionSoldOut => 'This session is sold out';
+
+  @override
+  String get ticketsSoldOut => 'Sold out';
+
+  @override
+  String get ticketsEventSoldOut => 'This event is sold out';
+
+  @override
+  String get ticketsTicketsSold => 'Tickets sold';
+
+  @override
+  String get ticketsTicketsInCheckout => 'In checkout';
+
+  @override
+  String get ticketsStatistics => 'Statistics';
 }

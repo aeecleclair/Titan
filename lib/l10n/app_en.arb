@@ -1860,5 +1860,10 @@
   "ticketsNoTicketsSubtitle": "Book your seat for an event!",
   "ticketsViewResults": "View results",
   "ticketsMinPriceError": "Price must be 0€ or greater than 1€",
-  "ticketsSessionSoldOut": "This session is sold out"
+  "ticketsSessionSoldOut": "This session is sold out",
+  "ticketsSoldOut": "Sold out",
+  "ticketsEventSoldOut": "This event is sold out",
+  "ticketsTicketsSold": "Tickets sold",
+  "ticketsTicketsInCheckout": "In checkout",
+  "ticketsStatistics": "Statistics"
 }

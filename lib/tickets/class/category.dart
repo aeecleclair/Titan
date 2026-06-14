@@ -5,12 +5,16 @@ class Category {
     required this.price,
     required this.quota,
     required this.requiredMembership,
+    this.soldOut = false,
+    this.disabled = false,
   });
   late final String id;
   late final String name;
   late final int price;
   late final int? quota;
   late final String? requiredMembership;
+  late final bool soldOut;
+  late final bool disabled;
 
   Category.fromJson(Map<String, dynamic> json) {
     id = json['id']?.toString() ?? '';
@@ -19,6 +23,8 @@ class Category {
     price = priceInCents ~/ 100;
     quota = json['quota'];
     requiredMembership = json['required_membership']?.toString();
+    soldOut = json['sold_out'] ?? false;
+    disabled = json['disabled'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -38,6 +44,8 @@ class Category {
     int? price,
     int? quota,
     String? requiredMembership,
+    bool? soldOut,
+    bool? disabled,
   }) {
     return Category(
       id: id ?? this.id,
@@ -45,6 +53,8 @@ class Category {
       price: price ?? this.price,
       quota: quota ?? this.quota,
       requiredMembership: requiredMembership ?? this.requiredMembership,
+      soldOut: soldOut ?? this.soldOut,
+      disabled: disabled ?? this.disabled,
     );
   }
 
@@ -54,10 +64,12 @@ class Category {
     price = 0;
     quota = null;
     requiredMembership = null;
+    soldOut = false;
+    disabled = false;
   }
 
   @override
   String toString() {
-    return 'Category{id : $id, name: $name, price: $price, quota: $quota, requiredMembership: $requiredMembership}';
+    return 'Category{id : $id, name: $name, price: $price, quota: $quota, requiredMembership: $requiredMembership, soldOut: $soldOut, disabled: $disabled}';
   }
 }
