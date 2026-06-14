@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,7 +13,6 @@ import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tickets/class/ticket.dart';
 import 'package:titan/tickets/class/user_ticket.dart';
 import 'package:titan/tickets/tools/functions.dart';
-import 'package:titan/tools/exception.dart';
 import 'package:titan/tools/repository/repository.dart';
 
 class TicketsRepository extends Repository {
@@ -71,31 +69,18 @@ class TicketsRepository extends Repository {
   }
 
   Future<Session> addSession(String eventId, Session session) async {
-    final response = await http.post(
-      Uri.parse('${Repository.host}${ext}admin/events/$eventId/sessions'),
-      headers: headers,
-      body: jsonEncode(session.toCreateJson()),
+    return Session.fromJson(
+      await create(
+        session.toCreateJson(),
+        suffix: 'admin/events/$eventId/sessions',
+      ),
     );
-    if (response.statusCode == 201 || response.statusCode == 200) {
-      return Session.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
-    }
-    throw _parseHttpError('POST admin/events/$eventId/sessions', response);
   }
 
   Future<bool> updateSession(String eventId, Session session) async {
-    final response = await http.patch(
-      Uri.parse(
-        '${Repository.host}${ext}admin/events/$eventId/sessions/${session.id}',
-      ),
-      headers: headers,
-      body: jsonEncode(session.toJson()),
-    );
-    if (response.statusCode == 204 || response.statusCode == 200) {
-      return true;
-    }
-    throw _parseHttpError(
-      'PATCH admin/events/$eventId/sessions/${session.id}',
-      response,
+    return update(
+      session.toJson(),
+      'admin/events/$eventId/sessions/${session.id}',
     );
   }
 
@@ -104,64 +89,29 @@ class TicketsRepository extends Repository {
     String sessionId,
     bool disabled,
   ) async {
-    final response = await http.patch(
-      Uri.parse(
-        '${Repository.host}${ext}admin/events/$eventId/sessions/$sessionId',
-      ),
-      headers: headers,
-      body: jsonEncode({'disabled': disabled}),
-    );
-    if (response.statusCode == 204 || response.statusCode == 200) {
-      return true;
-    }
-    throw _parseHttpError(
-      'PATCH admin/events/$eventId/sessions/$sessionId',
-      response,
+    return update(
+      {'disabled': disabled},
+      'admin/events/$eventId/sessions/$sessionId',
     );
   }
 
   Future<bool> deleteSession(String eventId, String sessionId) async {
-    final response = await http.delete(
-      Uri.parse(
-        '${Repository.host}${ext}admin/events/$eventId/sessions/$sessionId',
-      ),
-      headers: headers,
-    );
-    if (response.statusCode == 204 || response.statusCode == 200) {
-      return true;
-    }
-    throw _parseHttpError(
-      'DELETE admin/events/$eventId/sessions/$sessionId',
-      response,
-    );
+    return delete('admin/events/$eventId/sessions/$sessionId');
   }
 
   Future<Category> addCategory(String eventId, Category category) async {
-    final response = await http.post(
-      Uri.parse('${Repository.host}${ext}admin/events/$eventId/categories'),
-      headers: headers,
-      body: jsonEncode(category.toCreateJson()),
+    return Category.fromJson(
+      await create(
+        category.toCreateJson(),
+        suffix: 'admin/events/$eventId/categories',
+      ),
     );
-    if (response.statusCode == 201 || response.statusCode == 200) {
-      return Category.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
-    }
-    throw _parseHttpError('POST admin/events/$eventId/categories', response);
   }
 
   Future<bool> updateCategory(String eventId, Category category) async {
-    final response = await http.patch(
-      Uri.parse(
-        '${Repository.host}${ext}admin/events/$eventId/categories/${category.id}',
-      ),
-      headers: headers,
-      body: jsonEncode(category.toJson()),
-    );
-    if (response.statusCode == 204 || response.statusCode == 200) {
-      return true;
-    }
-    throw _parseHttpError(
-      'PATCH admin/events/$eventId/categories/${category.id}',
-      response,
+    return update(
+      category.toJson(),
+      'admin/events/$eventId/categories/${category.id}',
     );
   }
 
@@ -170,36 +120,14 @@ class TicketsRepository extends Repository {
     String categoryId,
     bool disabled,
   ) async {
-    final response = await http.patch(
-      Uri.parse(
-        '${Repository.host}${ext}admin/events/$eventId/categories/$categoryId',
-      ),
-      headers: headers,
-      body: jsonEncode({'disabled': disabled}),
-    );
-    if (response.statusCode == 204 || response.statusCode == 200) {
-      return true;
-    }
-    throw _parseHttpError(
-      'PATCH admin/events/$eventId/categories/$categoryId',
-      response,
+    return update(
+      {'disabled': disabled},
+      'admin/events/$eventId/categories/$categoryId',
     );
   }
 
   Future<bool> deleteCategory(String eventId, String categoryId) async {
-    final response = await http.delete(
-      Uri.parse(
-        '${Repository.host}${ext}admin/events/$eventId/categories/$categoryId',
-      ),
-      headers: headers,
-    );
-    if (response.statusCode == 204 || response.statusCode == 200) {
-      return true;
-    }
-    throw _parseHttpError(
-      'DELETE admin/events/$eventId/categories/$categoryId',
-      response,
-    );
+    return delete('admin/events/$eventId/categories/$categoryId');
   }
 
   Future<bool> updateQuestionDisabled(
@@ -207,19 +135,9 @@ class TicketsRepository extends Repository {
     String questionId,
     bool disabled,
   ) async {
-    final response = await http.patch(
-      Uri.parse(
-        '${Repository.host}${ext}admin/events/$eventId/questions/$questionId',
-      ),
-      headers: headers,
-      body: jsonEncode({'disabled': disabled}),
-    );
-    if (response.statusCode == 204 || response.statusCode == 200) {
-      return true;
-    }
-    throw _parseHttpError(
-      'PATCH admin/events/$eventId/questions/$questionId',
-      response,
+    return update(
+      {'disabled': disabled},
+      'admin/events/$eventId/questions/$questionId',
     );
   }
 
@@ -241,20 +159,7 @@ class TicketsRepository extends Repository {
     if (disabled != null) {
       body['disabled'] = disabled;
     }
-    final response = await http.patch(
-      Uri.parse(
-        '${Repository.host}${ext}admin/events/$eventId/questions/$questionId',
-      ),
-      headers: headers,
-      body: jsonEncode(body),
-    );
-    if (response.statusCode == 204 || response.statusCode == 200) {
-      return true;
-    }
-    throw _parseHttpError(
-      'PATCH admin/events/$eventId/questions/$questionId',
-      response,
-    );
+    return update(body, 'admin/events/$eventId/questions/$questionId');
   }
 
   Future<Question> createQuestion(
@@ -264,37 +169,18 @@ class TicketsRepository extends Repository {
     required bool required,
     int? price,
   }) async {
-    final body = <String, dynamic>{
-      'question': questionText,
-      'answer_type': answerType.value,
-      'required': required,
-      'price': price != null ? price * 100 : null,
-    };
-    final response = await http.post(
-      Uri.parse('${Repository.host}${ext}admin/events/$eventId/questions'),
-      headers: headers,
-      body: jsonEncode(body),
+    return Question.fromJson(
+      await create({
+        'question': questionText,
+        'answer_type': answerType.value,
+        'required': required,
+        'price': price != null ? price * 100 : null,
+      }, suffix: 'admin/events/$eventId/questions'),
     );
-    if (response.statusCode == 201 || response.statusCode == 200) {
-      return Question.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
-    }
-    throw _parseHttpError('POST admin/events/$eventId/questions', response);
   }
 
   Future<bool> deleteQuestion(String eventId, String questionId) async {
-    final response = await http.delete(
-      Uri.parse(
-        '${Repository.host}${ext}admin/events/$eventId/questions/$questionId',
-      ),
-      headers: headers,
-    );
-    if (response.statusCode == 204 || response.statusCode == 200) {
-      return true;
-    }
-    throw _parseHttpError(
-      'DELETE admin/events/$eventId/questions/$questionId',
-      response,
-    );
+    return delete('admin/events/$eventId/questions/$questionId');
   }
 
   Future<bool> deleteTicketEvent(String id) async {
@@ -335,19 +221,6 @@ class TicketsRepository extends Repository {
       return response.bodyBytes;
     } else {
       throw Exception('Failed to download CSV: ${response.statusCode}');
-    }
-  }
-
-  AppException _parseHttpError(String action, http.Response response) {
-    try {
-      final decoded = jsonDecode(utf8.decode(response.bodyBytes));
-      final detail = decoded['detail']?.toString() ?? response.body;
-      if (detail == Repository.expiredTokenDetail) {
-        return AppException(ErrorType.tokenExpire, detail);
-      }
-      return AppException(ErrorType.notFound, detail);
-    } catch (_) {
-      return AppException(ErrorType.notFound, response.body);
     }
   }
 }
