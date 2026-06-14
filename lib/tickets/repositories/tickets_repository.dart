@@ -7,6 +7,7 @@ import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/tickets/class/answer_type.dart';
 import 'package:titan/tickets/class/category.dart';
 import 'package:titan/tickets/class/checkout.dart';
+import 'package:titan/tickets/class/question.dart';
 import 'package:titan/tickets/class/session.dart';
 import 'package:titan/tickets/class/ticket_change_over_invitation.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
@@ -65,8 +66,7 @@ class TicketsRepository extends Repository {
   Future<bool> editTicketEvent(TicketEvent ticketEvent) async {
     return await update(
       ticketEvent.toUpdateJson(),
-      ticketEvent.id,
-      suffix: 'admin/events',
+      'admin/events/${ticketEvent.id}',
     );
   }
 
@@ -95,6 +95,43 @@ class TicketsRepository extends Repository {
     }
     throw _parseHttpError(
       'PATCH admin/events/$eventId/sessions/${session.id}',
+      response,
+    );
+  }
+
+  Future<bool> updateSessionDisabled(
+    String eventId,
+    String sessionId,
+    bool disabled,
+  ) async {
+    final response = await http.patch(
+      Uri.parse(
+        '${Repository.host}${ext}admin/events/$eventId/sessions/$sessionId',
+      ),
+      headers: headers,
+      body: jsonEncode({'disabled': disabled}),
+    );
+    if (response.statusCode == 204 || response.statusCode == 200) {
+      return true;
+    }
+    throw _parseHttpError(
+      'PATCH admin/events/$eventId/sessions/$sessionId',
+      response,
+    );
+  }
+
+  Future<bool> deleteSession(String eventId, String sessionId) async {
+    final response = await http.delete(
+      Uri.parse(
+        '${Repository.host}${ext}admin/events/$eventId/sessions/$sessionId',
+      ),
+      headers: headers,
+    );
+    if (response.statusCode == 204 || response.statusCode == 200) {
+      return true;
+    }
+    throw _parseHttpError(
+      'DELETE admin/events/$eventId/sessions/$sessionId',
       response,
     );
   }
@@ -128,6 +165,64 @@ class TicketsRepository extends Repository {
     );
   }
 
+  Future<bool> updateCategoryDisabled(
+    String eventId,
+    String categoryId,
+    bool disabled,
+  ) async {
+    final response = await http.patch(
+      Uri.parse(
+        '${Repository.host}${ext}admin/events/$eventId/categories/$categoryId',
+      ),
+      headers: headers,
+      body: jsonEncode({'disabled': disabled}),
+    );
+    if (response.statusCode == 204 || response.statusCode == 200) {
+      return true;
+    }
+    throw _parseHttpError(
+      'PATCH admin/events/$eventId/categories/$categoryId',
+      response,
+    );
+  }
+
+  Future<bool> deleteCategory(String eventId, String categoryId) async {
+    final response = await http.delete(
+      Uri.parse(
+        '${Repository.host}${ext}admin/events/$eventId/categories/$categoryId',
+      ),
+      headers: headers,
+    );
+    if (response.statusCode == 204 || response.statusCode == 200) {
+      return true;
+    }
+    throw _parseHttpError(
+      'DELETE admin/events/$eventId/categories/$categoryId',
+      response,
+    );
+  }
+
+  Future<bool> updateQuestionDisabled(
+    String eventId,
+    String questionId,
+    bool disabled,
+  ) async {
+    final response = await http.patch(
+      Uri.parse(
+        '${Repository.host}${ext}admin/events/$eventId/questions/$questionId',
+      ),
+      headers: headers,
+      body: jsonEncode({'disabled': disabled}),
+    );
+    if (response.statusCode == 204 || response.statusCode == 200) {
+      return true;
+    }
+    throw _parseHttpError(
+      'PATCH admin/events/$eventId/questions/$questionId',
+      response,
+    );
+  }
+
   Future<bool> updateQuestion(
     String eventId,
     String questionId, {
@@ -141,10 +236,8 @@ class TicketsRepository extends Repository {
       'question': questionText,
       'answer_type': answerType.value,
       'required': required,
+      'price': price != null ? price * 100 : null,
     };
-    if (price != null) {
-      body['price'] = price * 100;
-    }
     if (disabled != null) {
       body['disabled'] = disabled;
     }
@@ -164,28 +257,44 @@ class TicketsRepository extends Repository {
     );
   }
 
-  Future<bool> createQuestion(
-    String eventId,
-    String questionText,
-    AnswerType answerType,
-    bool required,
-  ) async {
+  Future<Question> createQuestion(
+    String eventId, {
+    required String questionText,
+    required AnswerType answerType,
+    required bool required,
+    int? price,
+  }) async {
+    final body = <String, dynamic>{
+      'question': questionText,
+      'answer_type': answerType.value,
+      'required': required,
+      'price': price != null ? price * 100 : null,
+    };
     final response = await http.post(
       Uri.parse('${Repository.host}${ext}admin/events/$eventId/questions'),
       headers: headers,
-      body: jsonEncode({
-        'question': questionText,
-        'answer_type': answerType.value,
-        'required': required,
-      }),
+      body: jsonEncode(body),
     );
     if (response.statusCode == 201 || response.statusCode == 200) {
-      return true;
-    } else {
-      throw Exception(
-        'Failed to create question: ${response.statusCode} ${response.body}',
-      );
+      return Question.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
     }
+    throw _parseHttpError('POST admin/events/$eventId/questions', response);
+  }
+
+  Future<bool> deleteQuestion(String eventId, String questionId) async {
+    final response = await http.delete(
+      Uri.parse(
+        '${Repository.host}${ext}admin/events/$eventId/questions/$questionId',
+      ),
+      headers: headers,
+    );
+    if (response.statusCode == 204 || response.statusCode == 200) {
+      return true;
+    }
+    throw _parseHttpError(
+      'DELETE admin/events/$eventId/questions/$questionId',
+      response,
+    );
   }
 
   Future<bool> deleteTicketEvent(String id) async {

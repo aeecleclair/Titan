@@ -8594,12 +8594,6 @@ abstract class AppLocalizations {
   /// **'Modifier la billetterie'**
   String get shotgunEditTitle;
 
-  /// No description provided for @shotgunEndDateLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Date de fermeture de la billetterie (optionnel)'**
-  String get shotgunEndDateLabel;
-
   /// No description provided for @shotgunManageAssociation.
   ///
   /// In fr, this message translates to:
@@ -9359,7 +9353,7 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsEndDateLabel.
   ///
   /// In fr, this message translates to:
-  /// **'Date de fermeture de la billetterie (optionnel)'**
+  /// **'Date de fermeture de la billetterie'**
   String get ticketsEndDateLabel;
 
   /// No description provided for @ticketsTitleRequired.
@@ -9443,20 +9437,14 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsEditTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Modifier le tickets'**
+  /// **'Modifier la billetterie'**
   String get ticketsEditTitle;
 
-  /// No description provided for @ticketsEditSession.
+  /// No description provided for @ticketsEdit.
   ///
   /// In fr, this message translates to:
-  /// **'Modifier la session'**
-  String get ticketsEditSession;
-
-  /// No description provided for @ticketsEditCategory.
-  ///
-  /// In fr, this message translates to:
-  /// **'Modifier la catégorie'**
-  String get ticketsEditCategory;
+  /// **'Modifier'**
+  String get ticketsEdit;
 
   /// No description provided for @ticketsTariffs.
   ///
@@ -9755,8 +9743,50 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsCloseEventHint.
   ///
   /// In fr, this message translates to:
-  /// **'Pour fermer les ventes, définir une date de fermeture dans le passé'**
+  /// **'Pour fermer les ventes, définir une date de fermeture dans le passé. Désactiver l\'événement bloque aussi l\'accès public.'**
   String get ticketsCloseEventHint;
+
+  /// No description provided for @ticketsDisableEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactiver l\'événement'**
+  String get ticketsDisableEvent;
+
+  /// No description provided for @ticketsEventActivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement activé'**
+  String get ticketsEventActivated;
+
+  /// No description provided for @ticketsEventDeactivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement désactivé'**
+  String get ticketsEventDeactivated;
+
+  /// No description provided for @ticketsDelete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer'**
+  String get ticketsDelete;
+
+  /// No description provided for @ticketsDeleteConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer la suppression ?'**
+  String get ticketsDeleteConfirm;
+
+  /// No description provided for @ticketsCannotDeleteDueSales.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de supprimer : ventes ou réservations existantes'**
+  String get ticketsCannotDeleteDueSales;
+
+  /// No description provided for @ticketsCannotDeleteDueAnswers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de supprimer : réponses existantes'**
+  String get ticketsCannotDeleteDueAnswers;
 
   /// No description provided for @ticketsScanTitle.
   ///
@@ -9806,17 +9836,53 @@ abstract class AppLocalizations {
   /// **'Désactiver la session'**
   String get ticketsDisableSession;
 
+  /// No description provided for @ticketsSessionActivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Session activée'**
+  String get ticketsSessionActivated;
+
+  /// No description provided for @ticketsSessionDeactivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Session désactivée'**
+  String get ticketsSessionDeactivated;
+
   /// No description provided for @ticketsDisableCategory.
   ///
   /// In fr, this message translates to:
   /// **'Désactiver la catégorie'**
   String get ticketsDisableCategory;
 
+  /// No description provided for @ticketsCategoryActivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégorie activée'**
+  String get ticketsCategoryActivated;
+
+  /// No description provided for @ticketsCategoryDeactivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégorie désactivée'**
+  String get ticketsCategoryDeactivated;
+
   /// No description provided for @ticketsDisableQuestion.
   ///
   /// In fr, this message translates to:
   /// **'Désactiver la question'**
   String get ticketsDisableQuestion;
+
+  /// No description provided for @ticketsQuestionActivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Question activée'**
+  String get ticketsQuestionActivated;
+
+  /// No description provided for @ticketsQuestionDeactivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Question désactivée'**
+  String get ticketsQuestionDeactivated;
 
   /// No description provided for @ticketsGeneralInfo.
   ///

@@ -107,6 +107,7 @@ class TicketEvent {
       'close_datetime': closeDatetime != null
           ? processDateToAPI(closeDatetime!)
           : null,
+      'disabled': disabled,
     };
   }
 

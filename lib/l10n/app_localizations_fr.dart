@@ -4492,10 +4492,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shotgunEditTitle => 'Modifier la billetterie';
 
   @override
-  String get shotgunEndDateLabel =>
-      'Date de fermeture de la billetterie (optionnel)';
-
-  @override
   String get shotgunManageAssociation =>
       'Gérer les billetteries de l\'association';
 
@@ -4892,8 +4888,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsStartDateLabel => 'Date d\'ouverture de la billetterie *';
 
   @override
-  String get ticketsEndDateLabel =>
-      'Date de fermeture de la billetterie (optionnel)';
+  String get ticketsEndDateLabel => 'Date de fermeture de la billetterie';
 
   @override
   String get ticketsTitleRequired => 'Le titre est obligatoire';
@@ -4937,13 +4932,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsQuestionRequiredLabel => 'Obligatoire';
 
   @override
-  String get ticketsEditTitle => 'Modifier le tickets';
+  String get ticketsEditTitle => 'Modifier la billetterie';
 
   @override
-  String get ticketsEditSession => 'Modifier la session';
-
-  @override
-  String get ticketsEditCategory => 'Modifier la catégorie';
+  String get ticketsEdit => 'Modifier';
 
   @override
   String get ticketsTariffs => 'Tarifs';
@@ -5107,7 +5099,30 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get ticketsCloseEventHint =>
-      'Pour fermer les ventes, définir une date de fermeture dans le passé';
+      'Pour fermer les ventes, définir une date de fermeture dans le passé. Désactiver l\'événement bloque aussi l\'accès public.';
+
+  @override
+  String get ticketsDisableEvent => 'Désactiver l\'événement';
+
+  @override
+  String get ticketsEventActivated => 'Événement activé';
+
+  @override
+  String get ticketsEventDeactivated => 'Événement désactivé';
+
+  @override
+  String get ticketsDelete => 'Supprimer';
+
+  @override
+  String get ticketsDeleteConfirm => 'Confirmer la suppression ?';
+
+  @override
+  String get ticketsCannotDeleteDueSales =>
+      'Impossible de supprimer : ventes ou réservations existantes';
+
+  @override
+  String get ticketsCannotDeleteDueAnswers =>
+      'Impossible de supprimer : réponses existantes';
 
   @override
   String get ticketsScanTitle => 'Scanner un billet';
@@ -5134,10 +5149,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsDisableSession => 'Désactiver la session';
 
   @override
+  String get ticketsSessionActivated => 'Session activée';
+
+  @override
+  String get ticketsSessionDeactivated => 'Session désactivée';
+
+  @override
   String get ticketsDisableCategory => 'Désactiver la catégorie';
 
   @override
+  String get ticketsCategoryActivated => 'Catégorie activée';
+
+  @override
+  String get ticketsCategoryDeactivated => 'Catégorie désactivée';
+
+  @override
   String get ticketsDisableQuestion => 'Désactiver la question';
+
+  @override
+  String get ticketsQuestionActivated => 'Question activée';
+
+  @override
+  String get ticketsQuestionDeactivated => 'Question désactivée';
 
   @override
   String get ticketsGeneralInfo => 'Informations générales';

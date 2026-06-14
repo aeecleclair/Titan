@@ -20,6 +20,9 @@ import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/exception.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/button.dart';
+import 'package:titan/tools/ui/styleguide/confirm_modal.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 
@@ -71,6 +74,12 @@ class _EditTicketEventContent extends HookConsumerWidget {
           ? dateFormatter.format(event.closeDatetime!)
           : '',
     );
+    final eventDisabled = useState(event.disabled);
+
+    useEffect(() {
+      eventDisabled.value = event.disabled;
+      return null;
+    }, [event.id, event.disabled]);
 
     Future<void> reloadEvent() async {
       ref.invalidate(ticketEventByIdProvider(event.id));
@@ -114,6 +123,7 @@ class _EditTicketEventContent extends HookConsumerWidget {
             quota: quota,
             openDatetime: openDatetime,
             closeDatetime: closeDatetime,
+            disabled: eventDisabled.value,
           ),
         );
 
@@ -206,6 +216,16 @@ class _EditTicketEventContent extends HookConsumerWidget {
                       fontStyle: FontStyle.italic,
                     ),
                   ),
+                  SwitchListTile(
+                    value: !eventDisabled.value,
+                    onChanged: (value) => eventDisabled.value = !value,
+                    title: Text(
+                      eventDisabled.value
+                          ? l10n.ticketsEventDeactivated
+                          : l10n.ticketsEventActivated,
+                    ),
+                    contentPadding: EdgeInsets.zero,
+                  ),
                   const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,
@@ -289,6 +309,117 @@ class _ReadOnlyBanner extends StatelessWidget {
         style: TextStyle(fontSize: 12, color: Colors.grey.shade700),
       ),
     );
+  }
+}
+
+Future<bool> _showDeleteConfirm(BuildContext context, WidgetRef ref) async {
+  final l10n = AppLocalizations.of(context)!;
+  var confirmed = false;
+  await showCustomBottomModal(
+    context: context,
+    ref: ref,
+    modal: ConfirmModal(
+      title: l10n.ticketsDeleteConfirm,
+      description: l10n.globalIrreversibleAction,
+      onYes: () => confirmed = true,
+    ),
+  );
+  return confirmed;
+}
+
+void _showEditError(
+  BuildContext context,
+  WidgetRef ref,
+  AppLocalizations l10n, {
+  String? fallbackDueSales,
+  String? fallbackDueAnswers,
+}) {
+  final error = ref.read(ticketEventEditProvider).error;
+  if (error is AppException) {
+    final message = error.message;
+    if (message.contains('checkouts or tickets') && fallbackDueSales != null) {
+      displayToast(context, TypeMsg.error, fallbackDueSales);
+      return;
+    }
+    if (message.contains('answers') && fallbackDueAnswers != null) {
+      displayToast(context, TypeMsg.error, fallbackDueAnswers);
+      return;
+    }
+    displayToast(context, TypeMsg.error, message);
+    return;
+  }
+  displayToast(context, TypeMsg.error, l10n.ticketsUpdateError);
+}
+
+Future<void> _toggleSessionDisabled(
+  BuildContext context,
+  WidgetRef ref,
+  String eventId,
+  Session session,
+  bool disabled,
+  Future<void> Function() onUpdated,
+) async {
+  final l10n = AppLocalizations.of(context)!;
+  final editNotifier = ref.read(ticketEventEditProvider.notifier);
+  final success = await editNotifier.updateSessionDisabled(
+    eventId,
+    session.id,
+    disabled,
+  );
+  if (!context.mounted) return;
+  if (success) {
+    displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
+    await onUpdated();
+  } else {
+    _showEditError(context, ref, l10n);
+  }
+}
+
+Future<void> _toggleCategoryDisabled(
+  BuildContext context,
+  WidgetRef ref,
+  String eventId,
+  Category category,
+  bool disabled,
+  Future<void> Function() onUpdated,
+) async {
+  final l10n = AppLocalizations.of(context)!;
+  final editNotifier = ref.read(ticketEventEditProvider.notifier);
+  final success = await editNotifier.updateCategoryDisabled(
+    eventId,
+    category.id,
+    disabled,
+  );
+  if (!context.mounted) return;
+  if (success) {
+    displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
+    await onUpdated();
+  } else {
+    _showEditError(context, ref, l10n);
+  }
+}
+
+Future<void> _toggleQuestionDisabled(
+  BuildContext context,
+  WidgetRef ref,
+  String eventId,
+  Question question,
+  bool disabled,
+  Future<void> Function() onUpdated,
+) async {
+  final l10n = AppLocalizations.of(context)!;
+  final editNotifier = ref.read(ticketEventEditProvider.notifier);
+  final success = await editNotifier.updateQuestionDisabled(
+    eventId,
+    question.id,
+    disabled,
+  );
+  if (!context.mounted) return;
+  if (success) {
+    displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
+    await onUpdated();
+  } else {
+    _showEditError(context, ref, l10n);
   }
 }
 
@@ -438,17 +569,71 @@ class _SessionsSection extends HookConsumerWidget {
                         color: ColorConstants.onTertiary,
                       ),
                     ),
+                    SwitchListTile(
+                      value: !session.disabled,
+                      onChanged: (value) => _toggleSessionDisabled(
+                        context,
+                        ref,
+                        event.id,
+                        session,
+                        !value,
+                        onUpdated,
+                      ),
+                      title: Text(
+                        session.disabled
+                            ? l10n.ticketsSessionDeactivated
+                            : l10n.ticketsSessionActivated,
+                      ),
+                      contentPadding: EdgeInsets.zero,
+                    ),
                     if (!locked) ...[
                       const SizedBox(height: 8),
-                      OutlinedButton(
-                        onPressed: () => _showSessionEditDialog(
-                          context,
-                          ref,
-                          event.id,
-                          session,
-                          onUpdated,
-                        ),
-                        child: Text(l10n.ticketsEditSession),
+                      Row(
+                        children: [
+                          OutlinedButton(
+                            onPressed: () => _showSessionEditDialog(
+                              context,
+                              ref,
+                              event.id,
+                              session,
+                              onUpdated,
+                            ),
+                            child: Text(l10n.ticketsEdit),
+                          ),
+                          const SizedBox(width: 8),
+                          OutlinedButton(
+                            onPressed: () async {
+                              if (!await _showDeleteConfirm(context, ref))
+                                return;
+                              if (!context.mounted) return;
+                              final success = await editNotifier.deleteSession(
+                                event.id,
+                                session.id,
+                              );
+                              if (!context.mounted) return;
+                              if (success) {
+                                displayToast(
+                                  context,
+                                  TypeMsg.msg,
+                                  l10n.ticketsEditSuccess,
+                                );
+                                await onUpdated();
+                              } else {
+                                _showEditError(
+                                  context,
+                                  ref,
+                                  l10n,
+                                  fallbackDueSales:
+                                      l10n.ticketsCannotDeleteDueSales,
+                                );
+                              }
+                            },
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: ColorConstants.error,
+                            ),
+                            child: Text(l10n.ticketsDelete),
+                          ),
+                        ],
                       ),
                     ],
                   ],
@@ -487,13 +672,13 @@ class _SessionsSection extends HookConsumerWidget {
     );
     var disabled = session.disabled;
 
-    final confirmed = await showDialog<bool>(
+    await showCustomBottomModal(
       context: context,
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setState) => AlertDialog(
-          title: Text(l10n.ticketsEditSession),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
+      ref: ref,
+      modal: StatefulBuilder(
+        builder: (modalContext, setState) => BottomModalTemplate(
+          title: l10n.ticketsEdit,
+          child: Column(
             children: [
               TextEntry(
                 label: l10n.ticketsSessionLabel,
@@ -504,7 +689,7 @@ class _SessionsSection extends HookConsumerWidget {
               DateEntry(
                 label: l10n.ticketsDateLabel,
                 controller: dateController,
-                onTap: () => getFullDate(ctx, dateController),
+                onTap: () => getFullDate(modalContext, dateController),
               ),
               const SizedBox(height: 8),
               TextEntry(
@@ -514,54 +699,66 @@ class _SessionsSection extends HookConsumerWidget {
                 canBeEmpty: true,
                 onChanged: (_) {},
               ),
-              CheckboxListTile(
-                value: disabled,
-                onChanged: (v) => setState(() => disabled = v ?? false),
-                title: Text(l10n.ticketsDisableSession),
+              SwitchListTile(
+                value: !disabled,
+                onChanged: (v) => setState(() => disabled = !v),
+                title: Text(
+                  disabled
+                      ? l10n.ticketsSessionDeactivated
+                      : l10n.ticketsSessionActivated,
+                ),
                 contentPadding: EdgeInsets.zero,
+              ),
+              const SizedBox(height: 20),
+              Button(
+                text: l10n.ticketsSaveChanges,
+                onPressed: () async {
+                  Navigator.pop(modalContext);
+                  if (!context.mounted) return;
+
+                  final updated = session.copyWith(
+                    name: nameController.text.trim(),
+                    startDatetime: DateTime.parse(
+                      processDateBackWithHourMaybe(
+                        dateController.text,
+                        locale.toString(),
+                      ),
+                    ),
+                    quota: quotaController.text.isEmpty
+                        ? null
+                        : int.tryParse(quotaController.text),
+                    disabled: disabled,
+                  );
+
+                  final success = await editNotifier.updateSession(
+                    eventId,
+                    updated,
+                  );
+                  if (!context.mounted) return;
+                  if (success) {
+                    displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
+                    await onUpdated();
+                  } else {
+                    final error = ref.read(ticketEventEditProvider).error;
+                    displayToast(
+                      context,
+                      TypeMsg.error,
+                      error is AppException
+                          ? error.message
+                          : l10n.ticketsUpdateError,
+                    );
+                  }
+                },
               ),
             ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: Text(l10n.globalCancel),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: Text(l10n.ticketsSaveChanges),
-            ),
-          ],
         ),
       ),
     );
 
-    if (confirmed != true || !context.mounted) return;
-
-    final updated = session.copyWith(
-      name: nameController.text.trim(),
-      startDatetime: DateTime.parse(
-        processDateBackWithHourMaybe(dateController.text, locale.toString()),
-      ),
-      quota: quotaController.text.isEmpty
-          ? null
-          : int.tryParse(quotaController.text),
-      disabled: disabled,
-    );
-
-    final success = await editNotifier.updateSession(eventId, updated);
-    if (!context.mounted) return;
-    if (success) {
-      displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-      await onUpdated();
-    } else {
-      final error = ref.read(ticketEventEditProvider).error;
-      displayToast(
-        context,
-        TypeMsg.error,
-        error is AppException ? error.message : l10n.ticketsUpdateError,
-      );
-    }
+    nameController.dispose();
+    dateController.dispose();
+    quotaController.dispose();
   }
 }
 
@@ -713,17 +910,71 @@ class _CategoriesSection extends HookConsumerWidget {
                           color: Colors.grey.shade600,
                         ),
                       ),
+                    SwitchListTile(
+                      value: !category.disabled,
+                      onChanged: (value) => _toggleCategoryDisabled(
+                        context,
+                        ref,
+                        event.id,
+                        category,
+                        !value,
+                        onUpdated,
+                      ),
+                      title: Text(
+                        category.disabled
+                            ? l10n.ticketsCategoryDeactivated
+                            : l10n.ticketsCategoryActivated,
+                      ),
+                      contentPadding: EdgeInsets.zero,
+                    ),
                     if (!locked) ...[
                       const SizedBox(height: 8),
-                      OutlinedButton(
-                        onPressed: () => _showCategoryEditDialog(
-                          context,
-                          ref,
-                          event.id,
-                          category,
-                          onUpdated,
-                        ),
-                        child: Text(l10n.ticketsEditCategory),
+                      Row(
+                        children: [
+                          OutlinedButton(
+                            onPressed: () => _showCategoryEditDialog(
+                              context,
+                              ref,
+                              event.id,
+                              category,
+                              onUpdated,
+                            ),
+                            child: Text(l10n.ticketsEdit),
+                          ),
+                          const SizedBox(width: 8),
+                          OutlinedButton(
+                            onPressed: () async {
+                              if (!await _showDeleteConfirm(context, ref))
+                                return;
+                              if (!context.mounted) return;
+                              final success = await editNotifier.deleteCategory(
+                                event.id,
+                                category.id,
+                              );
+                              if (!context.mounted) return;
+                              if (success) {
+                                displayToast(
+                                  context,
+                                  TypeMsg.msg,
+                                  l10n.ticketsEditSuccess,
+                                );
+                                await onUpdated();
+                              } else {
+                                _showEditError(
+                                  context,
+                                  ref,
+                                  l10n,
+                                  fallbackDueSales:
+                                      l10n.ticketsCannotDeleteDueSales,
+                                );
+                              }
+                            },
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: ColorConstants.error,
+                            ),
+                            child: Text(l10n.ticketsDelete),
+                          ),
+                        ],
                       ),
                     ],
                   ],
@@ -760,13 +1011,13 @@ class _CategoriesSection extends HookConsumerWidget {
     );
     var disabled = category.disabled;
 
-    final confirmed = await showDialog<bool>(
+    await showCustomBottomModal(
       context: context,
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setState) => AlertDialog(
-          title: Text(l10n.ticketsEditCategory),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
+      ref: ref,
+      modal: StatefulBuilder(
+        builder: (modalContext, setState) => BottomModalTemplate(
+          title: l10n.ticketsEdit,
+          child: Column(
             children: [
               TextEntry(
                 label: l10n.ticketsCategoryLabel,
@@ -788,58 +1039,72 @@ class _CategoriesSection extends HookConsumerWidget {
                 canBeEmpty: true,
                 onChanged: (_) {},
               ),
-              CheckboxListTile(
-                value: disabled,
-                onChanged: (v) => setState(() => disabled = v ?? false),
-                title: Text(l10n.ticketsDisableCategory),
+              SwitchListTile(
+                value: !disabled,
+                onChanged: (v) => setState(() => disabled = !v),
+                title: Text(
+                  disabled
+                      ? l10n.ticketsCategoryDeactivated
+                      : l10n.ticketsCategoryActivated,
+                ),
                 contentPadding: EdgeInsets.zero,
+              ),
+              const SizedBox(height: 20),
+              Button(
+                text: l10n.ticketsSaveChanges,
+                onPressed: () async {
+                  Navigator.pop(modalContext);
+                  if (!context.mounted) return;
+
+                  final price =
+                      int.tryParse(priceController.text) ?? category.price;
+                  if (price != 0 && price < 1) {
+                    displayToast(
+                      context,
+                      TypeMsg.error,
+                      l10n.ticketsMinPriceError,
+                    );
+                    return;
+                  }
+
+                  final updated = category.copyWith(
+                    name: nameController.text.trim(),
+                    price: price,
+                    quota: quotaController.text.isEmpty
+                        ? null
+                        : int.tryParse(quotaController.text),
+                    disabled: disabled,
+                  );
+
+                  final success = await editNotifier.updateCategory(
+                    eventId,
+                    updated,
+                  );
+                  if (!context.mounted) return;
+                  if (success) {
+                    displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
+                    await onUpdated();
+                  } else {
+                    final error = ref.read(ticketEventEditProvider).error;
+                    displayToast(
+                      context,
+                      TypeMsg.error,
+                      error is AppException
+                          ? error.message
+                          : l10n.ticketsUpdateError,
+                    );
+                  }
+                },
               ),
             ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: Text(l10n.globalCancel),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: Text(l10n.ticketsSaveChanges),
-            ),
-          ],
         ),
       ),
     );
 
-    if (confirmed != true || !context.mounted) return;
-
-    final price = int.tryParse(priceController.text) ?? category.price;
-    if (price != 0 && price < 1) {
-      displayToast(context, TypeMsg.error, l10n.ticketsMinPriceError);
-      return;
-    }
-
-    final updated = category.copyWith(
-      name: nameController.text.trim(),
-      price: price,
-      quota: quotaController.text.isEmpty
-          ? null
-          : int.tryParse(quotaController.text),
-      disabled: disabled,
-    );
-
-    final success = await editNotifier.updateCategory(eventId, updated);
-    if (!context.mounted) return;
-    if (success) {
-      displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-      await onUpdated();
-    } else {
-      final error = ref.read(ticketEventEditProvider).error;
-      displayToast(
-        context,
-        TypeMsg.error,
-        error is AppException ? error.message : l10n.ticketsUpdateError,
-      );
-    }
+    nameController.dispose();
+    priceController.dispose();
+    quotaController.dispose();
   }
 }
 
@@ -852,69 +1117,249 @@ class _QuestionsSection extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final editNotifier = ref.watch(ticketEventEditProvider.notifier);
 
-    if (event.questions.isEmpty) {
-      return _SectionCard(
-        title: l10n.ticketsQuestions,
-        child: Text('-', style: TextStyle(color: ColorConstants.tertiary)),
+    Future<void> addQuestion() async {
+      final textController = TextEditingController();
+      final priceController = TextEditingController();
+      var answerType = AnswerType.text;
+      var required = false;
+
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => StatefulBuilder(
+          builder: (ctx, setState) => AlertDialog(
+            title: Text(l10n.ticketsAddQuestion),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextEntry(
+                    label: l10n.ticketsQuestionLabel(
+                      event.questions.length + 1,
+                    ),
+                    controller: textController,
+                    onChanged: (_) {},
+                  ),
+                  const SizedBox(height: 8),
+                  DropdownButtonFormField<AnswerType>(
+                    initialValue: answerType,
+                    decoration: InputDecoration(
+                      labelText: l10n.ticketsQuestionTypeLabel,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    items: [
+                      DropdownMenuItem(
+                        value: AnswerType.text,
+                        child: Text(l10n.ticketsAnswerTypeText),
+                      ),
+                      DropdownMenuItem(
+                        value: AnswerType.number,
+                        child: Text(l10n.ticketsAnswerTypeNumber),
+                      ),
+                      DropdownMenuItem(
+                        value: AnswerType.boolean,
+                        child: Text(l10n.ticketsAnswerTypeBoolean),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      if (value != null) setState(() => answerType = value);
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  TextEntry(
+                    label: l10n.ticketsPriceLabel,
+                    controller: priceController,
+                    keyboardType: TextInputType.number,
+                    canBeEmpty: true,
+                    onChanged: (_) {},
+                  ),
+                  CheckboxListTile(
+                    value: required,
+                    onChanged: (value) =>
+                        setState(() => required = value ?? false),
+                    title: Text(l10n.ticketsQuestionRequiredLabel),
+                    contentPadding: EdgeInsets.zero,
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, false),
+                child: Text(l10n.globalCancel),
+              ),
+              FilledButton(
+                onPressed: () => Navigator.pop(ctx, true),
+                child: Text(l10n.ticketsSave),
+              ),
+            ],
+          ),
+        ),
       );
+
+      if (confirmed != true || !context.mounted) return;
+      if (textController.text.trim().isEmpty) return;
+
+      final price = priceController.text.isEmpty
+          ? null
+          : int.tryParse(priceController.text);
+
+      final created = await editNotifier.createQuestion(
+        event.id,
+        questionText: textController.text.trim(),
+        answerType: answerType,
+        required: required,
+        price: price,
+      );
+
+      if (!context.mounted) return;
+      if (created != null) {
+        displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
+        await onUpdated();
+      } else {
+        _showEditError(context, ref, l10n);
+      }
     }
 
     return _SectionCard(
       title: l10n.ticketsQuestions,
       child: Column(
-        children: event.questions.map((question) {
-          return Card(
-            margin: const EdgeInsets.only(bottom: 12),
-            elevation: 0,
-            color: question.disabled ? Colors.grey.shade100 : null,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-              side: BorderSide(
-                color: ColorConstants.secondary.withValues(alpha: 0.3),
+        children: [
+          if (event.questions.isEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Text(
+                '-',
+                style: TextStyle(color: ColorConstants.tertiary),
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    question.question,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '${l10n.ticketsQuestionTypeLabel}: ${question.answerType.value}',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: ColorConstants.onTertiary,
+          ...event.questions.map((question) {
+            return Card(
+              margin: const EdgeInsets.only(bottom: 12),
+              elevation: 0,
+              color: question.disabled ? Colors.grey.shade100 : null,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+                side: BorderSide(
+                  color: ColorConstants.secondary.withValues(alpha: 0.3),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            question.question,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        if (question.disabled)
+                          Text(
+                            l10n.ticketsDisabled,
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontSize: 12,
+                            ),
+                          ),
+                      ],
                     ),
-                  ),
-                  if (question.price != null)
+                    const SizedBox(height: 4),
                     Text(
-                      '${l10n.ticketsPriceLabel}: ${question.price}€',
+                      '${l10n.ticketsQuestionTypeLabel}: ${question.answerType.value}',
                       style: TextStyle(
                         fontSize: 12,
                         color: ColorConstants.onTertiary,
                       ),
                     ),
-                  const SizedBox(height: 8),
-                  OutlinedButton(
-                    onPressed: () => _showQuestionEditDialog(
-                      context,
-                      ref,
-                      event.id,
-                      question,
-                      onUpdated,
+                    if (question.price != null)
+                      Text(
+                        '${l10n.ticketsPriceLabel}: ${question.price}€',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: ColorConstants.onTertiary,
+                        ),
+                      ),
+                    SwitchListTile(
+                      value: !question.disabled,
+                      onChanged: (value) => _toggleQuestionDisabled(
+                        context,
+                        ref,
+                        event.id,
+                        question,
+                        !value,
+                        onUpdated,
+                      ),
+                      title: Text(
+                        question.disabled
+                            ? l10n.ticketsQuestionDeactivated
+                            : l10n.ticketsQuestionActivated,
+                      ),
+                      contentPadding: EdgeInsets.zero,
                     ),
-                    child: Text(l10n.ticketsEditTitle),
-                  ),
-                ],
+                    Row(
+                      children: [
+                        OutlinedButton(
+                          onPressed: () => _showQuestionEditDialog(
+                            context,
+                            ref,
+                            event.id,
+                            question,
+                            onUpdated,
+                          ),
+                          child: Text(l10n.ticketsEdit),
+                        ),
+                        const SizedBox(width: 8),
+                        OutlinedButton(
+                          onPressed: () async {
+                            if (!await _showDeleteConfirm(context, ref)) return;
+                            if (!context.mounted) return;
+                            final success = await editNotifier.deleteQuestion(
+                              event.id,
+                              question.id,
+                            );
+                            if (!context.mounted) return;
+                            if (success) {
+                              displayToast(
+                                context,
+                                TypeMsg.msg,
+                                l10n.ticketsEditSuccess,
+                              );
+                              await onUpdated();
+                            } else {
+                              _showEditError(
+                                context,
+                                ref,
+                                l10n,
+                                fallbackDueAnswers:
+                                    l10n.ticketsCannotDeleteDueAnswers,
+                              );
+                            }
+                          },
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: ColorConstants.error,
+                          ),
+                          child: Text(l10n.ticketsDelete),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        }).toList(),
+            );
+          }),
+          OutlinedButton.icon(
+            onPressed: addQuestion,
+            icon: const HeroIcon(HeroIcons.plus, size: 20),
+            label: Text(l10n.ticketsAddQuestion),
+          ),
+        ],
       ),
     );
   }
@@ -937,14 +1382,14 @@ class _QuestionsSection extends HookConsumerWidget {
     var required = question.required;
     var disabled = question.disabled;
 
-    final confirmed = await showDialog<bool>(
+    await showCustomBottomModal(
       context: context,
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setState) => AlertDialog(
-          title: Text(l10n.ticketsEditTitle),
-          content: SingleChildScrollView(
+      ref: ref,
+      modal: StatefulBuilder(
+        builder: (modalContext, setState) => BottomModalTemplate(
+          title: l10n.ticketsEditTitle,
+          child: SingleChildScrollView(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               children: [
                 TextEntry(
                   label: l10n.ticketsQuestionLabel(1),
@@ -992,56 +1437,58 @@ class _QuestionsSection extends HookConsumerWidget {
                   title: Text(l10n.ticketsQuestionRequiredLabel),
                   contentPadding: EdgeInsets.zero,
                 ),
-                CheckboxListTile(
-                  value: disabled,
-                  onChanged: (v) => setState(() => disabled = v ?? false),
-                  title: Text(l10n.ticketsDisableQuestion),
+                SwitchListTile(
+                  value: !disabled,
+                  onChanged: (v) => setState(() => disabled = !v),
+                  title: Text(
+                    disabled
+                        ? l10n.ticketsQuestionDeactivated
+                        : l10n.ticketsQuestionActivated,
+                  ),
                   contentPadding: EdgeInsets.zero,
+                ),
+                const SizedBox(height: 20),
+                Button(
+                  text: l10n.ticketsSaveChanges,
+                  onPressed: () async {
+                    Navigator.pop(modalContext);
+                    if (!context.mounted) return;
+
+                    final price = priceController.text.isEmpty
+                        ? null
+                        : int.tryParse(priceController.text);
+
+                    final success = await editNotifier.updateQuestion(
+                      eventId,
+                      question.id,
+                      questionText: textController.text.trim(),
+                      answerType: answerType,
+                      required: required,
+                      price: price,
+                      disabled: disabled,
+                    );
+
+                    if (!context.mounted) return;
+                    if (success) {
+                      displayToast(
+                        context,
+                        TypeMsg.msg,
+                        l10n.ticketsEditSuccess,
+                      );
+                      await onUpdated();
+                    } else {
+                      _showEditError(context, ref, l10n);
+                    }
+                  },
                 ),
               ],
             ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: Text(l10n.globalCancel),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: Text(l10n.ticketsSaveChanges),
-            ),
-          ],
         ),
       ),
     );
 
-    if (confirmed != true || !context.mounted) return;
-
-    final price = priceController.text.isEmpty
-        ? null
-        : int.tryParse(priceController.text);
-
-    final success = await editNotifier.updateQuestion(
-      eventId,
-      question.id,
-      questionText: textController.text.trim(),
-      answerType: answerType,
-      required: required,
-      price: price,
-      disabled: disabled,
-    );
-
-    if (!context.mounted) return;
-    if (success) {
-      displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-      await onUpdated();
-    } else {
-      final error = ref.read(ticketEventEditProvider).error;
-      displayToast(
-        context,
-        TypeMsg.error,
-        error is AppException ? error.message : l10n.ticketsUpdateError,
-      );
-    }
+    textController.dispose();
+    priceController.dispose();
   }
 }

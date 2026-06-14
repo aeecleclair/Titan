@@ -60,7 +60,7 @@ class TicketEventRepository extends Repository {
   }
 
   Future<bool> editTicketEvent(TicketEvent tickets) async {
-    return await update(tickets.toJson(), tickets.id, suffix: 'admin/events');
+    return await update(tickets.toJson(), 'admin/events/${tickets.id}');
   }
 
   Future<bool> updateSession(String eventId, Session session) async {
@@ -102,11 +102,9 @@ class TicketEventRepository extends Repository {
     String questionId,
     String questionText,
   ) async {
-    return await update(
-      {'question': questionText},
-      questionId,
-      suffix: 'admin/events/$eventId/questions',
-    );
+    return await update({
+      'question': questionText,
+    }, 'admin/events/$eventId/questions/$questionId');
   }
 
   Future<bool> deleteTicketEvent(String id) async {

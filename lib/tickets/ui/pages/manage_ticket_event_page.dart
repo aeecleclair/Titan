@@ -56,29 +56,14 @@ class ManageTicketEventPage extends HookConsumerWidget {
           const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    l10n.ticketsManageTitle,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: ColorConstants.title,
-                    ),
-                  ),
-                ),
-                FilledButton.icon(
-                  onPressed: () =>
-                      QR.to(TicketsRouter.root + TicketsRouter.create),
-                  icon: const HeroIcon(HeroIcons.plus, size: 18),
-                  label: Text(l10n.ticketsNewTicketing),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: ColorConstants.main,
-                    foregroundColor: Colors.white,
-                  ),
-                ),
-              ],
+            child: FilledButton.icon(
+              onPressed: () => QR.to(TicketsRouter.root + TicketsRouter.create),
+              icon: const HeroIcon(HeroIcons.plus, size: 18),
+              label: Text(l10n.ticketsNewTicketing),
+              style: FilledButton.styleFrom(
+                backgroundColor: ColorConstants.main,
+                foregroundColor: Colors.white,
+              ),
             ),
           ),
           const SizedBox(height: 16),

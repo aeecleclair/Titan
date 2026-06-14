@@ -4427,9 +4427,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shotgunEditTitle => 'Edit ticketing';
 
   @override
-  String get shotgunEndDateLabel => 'Ticketing closing date (optional)';
-
-  @override
   String get shotgunManageAssociation => 'Manage association ticketings';
 
   @override
@@ -4867,10 +4864,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsEditTitle => 'Edit ticketing';
 
   @override
-  String get ticketsEditSession => 'Edit session';
-
-  @override
-  String get ticketsEditCategory => 'Edit category';
+  String get ticketsEdit => 'Modifier';
 
   @override
   String get ticketsTariffs => 'Pricing';
@@ -5030,7 +5024,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ticketsCloseEventHint =>
-      'To close sales, set a closing date in the past';
+      'To close sales, set a closing date in the past. Disabling the event also blocks public access.';
+
+  @override
+  String get ticketsDisableEvent => 'Disable event';
+
+  @override
+  String get ticketsEventActivated => 'Event activated';
+
+  @override
+  String get ticketsEventDeactivated => 'Event deactivated';
+
+  @override
+  String get ticketsDelete => 'Supprimer';
+
+  @override
+  String get ticketsDeleteConfirm => 'Confirm deletion?';
+
+  @override
+  String get ticketsCannotDeleteDueSales =>
+      'Cannot delete: existing sales or checkouts';
+
+  @override
+  String get ticketsCannotDeleteDueAnswers => 'Cannot delete: existing answers';
 
   @override
   String get ticketsScanTitle => 'Scan a ticket';
@@ -5058,10 +5074,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsDisableSession => 'Disable session';
 
   @override
+  String get ticketsSessionActivated => 'Session activated';
+
+  @override
+  String get ticketsSessionDeactivated => 'Session deactivated';
+
+  @override
   String get ticketsDisableCategory => 'Disable category';
 
   @override
+  String get ticketsCategoryActivated => 'Category activated';
+
+  @override
+  String get ticketsCategoryDeactivated => 'Category deactivated';
+
+  @override
   String get ticketsDisableQuestion => 'Disable question';
+
+  @override
+  String get ticketsQuestionActivated => 'Question activated';
+
+  @override
+  String get ticketsQuestionDeactivated => 'Question deactivated';
 
   @override
   String get ticketsGeneralInfo => 'General information';
