@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/tickets/class/answer_type.dart';
 import 'package:titan/tickets/class/category.dart';
 import 'package:titan/tickets/class/question.dart';
@@ -189,7 +188,6 @@ class ShotgunEditNotifier extends StateNotifier<AsyncValue<void>> {
 
 final ticketEventEditProvider =
     StateNotifierProvider<ShotgunEditNotifier, AsyncValue<void>>((ref) {
-      final token = ref.watch(tokenProvider);
-      final repository = TicketsRepository()..setToken(token);
+      final repository = ref.watch(ticketsRepositoryProvider);
       return ShotgunEditNotifier(repository: repository);
     });

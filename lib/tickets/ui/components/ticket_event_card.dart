@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tickets/providers/can_manage_ticket_events_provider.dart';
@@ -62,8 +61,7 @@ class TicketEventCard extends ConsumerWidget {
                     );
 
                     try {
-                      final token = ref.read(tokenProvider);
-                      final repository = TicketsRepository()..setToken(token);
+                      final repository = ref.read(ticketsRepositoryProvider);
                       final detailedEvent = await repository.getTicketEventById(
                         ticketEvent.id,
                       );

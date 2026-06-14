@@ -20,7 +20,7 @@ class TicketsRepository extends Repository {
   // ignore: overridden_fields
   final ext = "tickets/";
 
-  Future<List<TicketEvent>> getAllShotgun() async {
+  Future<List<TicketEvent>> getAllTicketEvents() async {
     return (await getList(
       suffix: 'events',
     )).map((e) => TicketEvent.fromJson(e)).toList();
@@ -34,13 +34,13 @@ class TicketsRepository extends Repository {
     return TicketEvent.fromJson(await getOne("events/$id"));
   }
 
-  Future<List<TicketEvent>> getShotgunListByAssociationId(String id) async {
+  Future<List<TicketEvent>> getTicketEventListByAssociationId(String id) async {
     return (await getList(
       suffix: 'admin/association/$id/events',
     )).map((e) => TicketEvent.fromJson(e)).toList();
   }
 
-  Future<List<TicketEvent>> getShotgunListByStoreId(String id) async {
+  Future<List<TicketEvent>> getTicketEventListByStoreId(String id) async {
     return (await getList(
       suffix: 'admin/store/$id/events',
     )).map((e) => TicketEvent.fromJson(e)).toList();
@@ -52,7 +52,7 @@ class TicketsRepository extends Repository {
     );
   }
 
-  Future<Checkout> checkoutShotgun(TicketEvent ticketEvent) async {
+  Future<Checkout> checkoutTicketEvent(TicketEvent ticketEvent) async {
     return Checkout.fromJson(
       await create(
         checkoutFromShotgun(ticketEvent).toJson(),
