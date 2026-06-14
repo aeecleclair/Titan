@@ -184,7 +184,7 @@ class TicketsRepository extends Repository {
   }
 
   Future<bool> deleteTicketEvent(String id) async {
-    return await delete(id);
+    return delete('admin/events/$id');
   }
 
   Future<List<UserTicket>> getUserTickets() async {
