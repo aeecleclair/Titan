@@ -99,19 +99,15 @@ class TicketResultsPage extends HookConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
-          if (selectedTicketEvent.ticketsSold != null ||
-              selectedTicketEvent.ticketsInCheckout != null)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: StatsCard(
-                ticketsSold: selectedTicketEvent.ticketsSold,
-                ticketsInCheckout: selectedTicketEvent.ticketsInCheckout,
-                quota: selectedTicketEvent.quota,
-              ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: StatsCard(
+              ticketsSold: selectedTicketEvent.ticketsSold,
+              ticketsInCheckout: selectedTicketEvent.ticketsInCheckout,
+              quota: selectedTicketEvent.quota,
             ),
-          if (selectedTicketEvent.ticketsSold != null ||
-              selectedTicketEvent.ticketsInCheckout != null)
-            const SizedBox(height: 16),
+          ),
+          const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Button(

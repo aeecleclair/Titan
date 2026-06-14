@@ -603,8 +603,9 @@ class _SessionsSection extends HookConsumerWidget {
                           const SizedBox(width: 8),
                           OutlinedButton(
                             onPressed: () async {
-                              if (!await _showDeleteConfirm(context, ref))
+                              if (!await _showDeleteConfirm(context, ref)) {
                                 return;
+                              }
                               if (!context.mounted) return;
                               final success = await editNotifier.deleteSession(
                                 event.id,
@@ -944,8 +945,9 @@ class _CategoriesSection extends HookConsumerWidget {
                           const SizedBox(width: 8),
                           OutlinedButton(
                             onPressed: () async {
-                              if (!await _showDeleteConfirm(context, ref))
+                              if (!await _showDeleteConfirm(context, ref)) {
                                 return;
+                              }
                               if (!context.mounted) return;
                               final success = await editNotifier.deleteCategory(
                                 event.id,
