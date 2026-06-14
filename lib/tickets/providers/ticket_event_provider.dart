@@ -23,6 +23,10 @@ class TicketEventByIdNotifier extends StateNotifier<AsyncValue<TicketEvent>> {
       state = AsyncValue.error(e, st);
     }
   }
+
+  void setEvent(TicketEvent event) {
+    state = AsyncValue.data(event);
+  }
 }
 
 final ticketEventByIdProvider =

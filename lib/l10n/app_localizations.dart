@@ -9476,6 +9476,18 @@ abstract class AppLocalizations {
   /// **'Supprimer'**
   String get ticketsDelete;
 
+  /// No description provided for @ticketsDeleteEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer la billetterie'**
+  String get ticketsDeleteEvent;
+
+  /// No description provided for @ticketsDeleteEventSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Billetterie supprimée avec succès'**
+  String get ticketsDeleteEventSuccess;
+
   /// No description provided for @ticketsDeleteConfirm.
   ///
   /// In fr, this message translates to:

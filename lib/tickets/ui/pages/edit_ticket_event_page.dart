@@ -12,6 +12,7 @@ import 'package:titan/tickets/class/question.dart';
 import 'package:titan/tickets/class/session.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tickets/providers/selected_ticket_event_provider.dart';
+import 'package:titan/tickets/providers/store_tickets_list_provider.dart';
 import 'package:titan/tickets/providers/ticket_event_edit_provider.dart';
 import 'package:titan/tickets/providers/ticket_event_provider.dart';
 import 'package:titan/tickets/ui/components/ticket_event_status_chip.dart';
@@ -62,84 +63,46 @@ class _EditTicketEventContent extends HookConsumerWidget {
     final editNotifier = ref.watch(ticketEventEditProvider.notifier);
     final scrollController = useScrollController();
 
-    final titleController = useTextEditingController(text: event.name);
-    final placesController = useTextEditingController(
-      text: event.quota?.toString() ?? '',
-    );
-    final startDateController = useTextEditingController(
-      text: dateFormatter.format(event.openDatetime),
-    );
-    final endDateController = useTextEditingController(
-      text: event.closeDatetime != null
-          ? dateFormatter.format(event.closeDatetime!)
-          : '',
-    );
-    final eventDisabled = useState(event.disabled);
-
-    useEffect(() {
-      eventDisabled.value = event.disabled;
-      return null;
-    }, [event.id, event.disabled]);
-
-    Future<void> reloadEvent() async {
-      ref.invalidate(ticketEventByIdProvider(event.id));
-      await ref.read(ticketEventByIdProvider(event.id).notifier).load();
+    void onEventUpdated(TicketEvent updated) {
+      _updateTicketEventState(ref, updated);
     }
 
-    Future<void> saveGeneralInfo() async {
-      if (titleController.text.trim().isEmpty) {
-        displayToast(context, TypeMsg.error, l10n.ticketsTitleRequired);
-        return;
-      }
-      if (startDateController.text.trim().isEmpty) {
-        displayToast(context, TypeMsg.error, l10n.ticketsStartDateRequired);
+    Future<void> deleteEvent() async {
+      if (event.ticketsSold + event.ticketsInCheckout > 0) {
+        displayToast(context, TypeMsg.error, l10n.ticketsCannotDeleteDueSales);
         return;
       }
 
-      try {
-        final openDatetime = DateTime.parse(
-          processDateBackWithHourMaybe(
-            startDateController.text,
-            locale.toString(),
-          ),
-        );
-        DateTime? closeDatetime;
-        if (endDateController.text.trim().isNotEmpty) {
-          closeDatetime = DateTime.parse(
-            processDateBackWithHourMaybe(
-              endDateController.text,
-              locale.toString(),
-            ),
-          );
-        }
-        int? quota;
-        if (placesController.text.trim().isNotEmpty) {
-          quota = int.parse(placesController.text);
-        }
+      if (!await _showDeleteConfirm(context, ref)) {
+        return;
+      }
+      if (!context.mounted) return;
 
-        final success = await editNotifier.editTicketEvent(
-          event.copyWith(
-            name: titleController.text.trim(),
-            quota: quota,
-            openDatetime: openDatetime,
-            closeDatetime: closeDatetime,
-            disabled: eventDisabled.value,
-          ),
-        );
+      final success = await editNotifier.deleteTicketEvent(event.id);
+      if (!context.mounted) return;
 
+      if (success) {
+        ref.read(selectedTicketEventProvider.notifier).state = null;
+        final storeId = event.storeId;
+        if (storeId != null) {
+          await ref
+              .read(storeTicketEventListProvider.notifier)
+              .loadStoreTicketEventList(storeId);
+        }
         if (!context.mounted) return;
-        if (success) {
-          displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-          await reloadEvent();
-        } else {
-          displayToast(context, TypeMsg.error, l10n.ticketsUpdateError);
-        }
-      } catch (e) {
-        if (context.mounted) {
-          displayToast(context, TypeMsg.error, e.toString());
-        }
+        displayToast(context, TypeMsg.msg, l10n.ticketsDeleteEventSuccess);
+        QR.back();
+      } else {
+        _showEditError(
+          context,
+          ref,
+          l10n,
+          fallbackDueSales: l10n.ticketsCannotDeleteDueSales,
+        );
       }
     }
+
+    final canDeleteEvent = event.ticketsSold + event.ticketsInCheckout == 0;
 
     return ScrollToHideNavbar(
       controller: scrollController,
@@ -179,74 +142,84 @@ class _EditTicketEventContent extends HookConsumerWidget {
             _SectionCard(
               title: l10n.ticketsGeneralInfo,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextEntry(
-                    maxLines: 1,
-                    label: l10n.ticketsTitleLabel,
-                    controller: titleController,
-                    onChanged: (_) {},
-                  ),
-                  const SizedBox(height: 16),
-                  TextEntry(
-                    maxLines: 1,
-                    label: l10n.ticketsPlacesLabel,
-                    controller: placesController,
-                    keyboardType: TextInputType.number,
-                    isInt: true,
-                    canBeEmpty: true,
-                    onChanged: (_) {},
-                  ),
-                  const SizedBox(height: 16),
-                  DateEntry(
-                    label: l10n.ticketsStartDateLabel,
-                    controller: startDateController,
-                    onTap: () => getFullDate(context, startDateController),
-                  ),
-                  DateEntry(
-                    label: l10n.ticketsEndDateLabel,
-                    controller: endDateController,
-                    onTap: () => getFullDate(context, endDateController),
+                  Text(
+                    event.name,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    l10n.ticketsCloseEventHint,
+                    '${l10n.ticketsPlacesLabel}: ${event.quota?.toString() ?? l10n.ticketsUnlimited}',
                     style: TextStyle(
-                      fontSize: 12,
-                      color: ColorConstants.onTertiary,
-                      fontStyle: FontStyle.italic,
+                      fontSize: 14,
+                      color: ColorConstants.tertiary,
+                    ),
+                  ),
+                  Text(
+                    '${l10n.ticketsStartDateLabel}: ${dateFormatter.format(event.openDatetime)}',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: ColorConstants.tertiary,
+                    ),
+                  ),
+                  Text(
+                    '${l10n.ticketsEndDateLabel}: ${event.closeDatetime != null ? dateFormatter.format(event.closeDatetime!) : '-'}',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: ColorConstants.tertiary,
                     ),
                   ),
                   SwitchListTile(
-                    value: !eventDisabled.value,
-                    onChanged: (value) => eventDisabled.value = !value,
+                    value: !event.disabled,
+                    onChanged: (value) => _toggleEventDisabled(
+                      context,
+                      ref,
+                      event,
+                      !value,
+                      onEventUpdated,
+                    ),
                     title: Text(
-                      eventDisabled.value
+                      event.disabled
                           ? l10n.ticketsEventDeactivated
                           : l10n.ticketsEventActivated,
                     ),
                     contentPadding: EdgeInsets.zero,
                   ),
+                  const SizedBox(height: 8),
+                  OutlinedButton(
+                    onPressed: () => _showGeneralInfoEditDialog(
+                      context,
+                      ref,
+                      event,
+                      onEventUpdated,
+                    ),
+                    child: Text(l10n.ticketsEdit),
+                  ),
                   const SizedBox(height: 16),
+                  if (!canDeleteEvent) const _ReadOnlyBanner(),
                   SizedBox(
                     width: double.infinity,
-                    child: FilledButton(
-                      onPressed: saveGeneralInfo,
-                      style: FilledButton.styleFrom(
-                        backgroundColor: ColorConstants.main,
-                        foregroundColor: Colors.white,
+                    child: OutlinedButton(
+                      onPressed: canDeleteEvent ? deleteEvent : null,
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: ColorConstants.error,
                       ),
-                      child: Text(l10n.ticketsSaveChanges),
+                      child: Text(l10n.ticketsDeleteEvent),
                     ),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 16),
-            _SessionsSection(event: event, onUpdated: reloadEvent),
+            _SessionsSection(event: event, onEventUpdated: onEventUpdated),
             const SizedBox(height: 16),
-            _CategoriesSection(event: event, onUpdated: reloadEvent),
+            _CategoriesSection(event: event, onEventUpdated: onEventUpdated),
             const SizedBox(height: 16),
-            _QuestionsSection(event: event, onUpdated: reloadEvent),
+            _QuestionsSection(event: event, onEventUpdated: onEventUpdated),
             const SizedBox(height: 80),
           ],
         ),
@@ -351,25 +324,246 @@ void _showEditError(
   displayToast(context, TypeMsg.error, l10n.ticketsUpdateError);
 }
 
+void _updateTicketEventState(WidgetRef ref, TicketEvent updated) {
+  ref.read(ticketEventByIdProvider(updated.id).notifier).setEvent(updated);
+  ref.read(selectedTicketEventProvider.notifier).state = updated;
+}
+
+TicketEvent _withSession(TicketEvent event, Session session) {
+  return event.copyWith(
+    sessions: event.sessions
+        .map((s) => s.id == session.id ? session : s)
+        .toList(),
+  );
+}
+
+TicketEvent _withoutSession(TicketEvent event, String sessionId) {
+  return event.copyWith(
+    sessions: event.sessions.where((s) => s.id != sessionId).toList(),
+  );
+}
+
+TicketEvent _withCategory(TicketEvent event, Category category) {
+  return event.copyWith(
+    categories: event.categories
+        .map((c) => c.id == category.id ? category : c)
+        .toList(),
+  );
+}
+
+TicketEvent _withoutCategory(TicketEvent event, String categoryId) {
+  return event.copyWith(
+    categories: event.categories.where((c) => c.id != categoryId).toList(),
+  );
+}
+
+TicketEvent _withQuestion(TicketEvent event, Question question) {
+  return event.copyWith(
+    questions: event.questions
+        .map((q) => q.id == question.id ? question : q)
+        .toList(),
+  );
+}
+
+TicketEvent _withoutQuestion(TicketEvent event, String questionId) {
+  return event.copyWith(
+    questions: event.questions.where((q) => q.id != questionId).toList(),
+  );
+}
+
+Future<void> _showGeneralInfoEditDialog(
+  BuildContext context,
+  WidgetRef ref,
+  TicketEvent event,
+  void Function(TicketEvent) onEventUpdated,
+) async {
+  final l10n = AppLocalizations.of(context)!;
+  final locale = Localizations.localeOf(context);
+  final dateFormatter = DateFormat('dd/MM/yyyy HH:mm', locale.toString());
+  final editNotifier = ref.read(ticketEventEditProvider.notifier);
+
+  final titleController = TextEditingController(text: event.name);
+  final placesController = TextEditingController(
+    text: event.quota?.toString() ?? '',
+  );
+  final startDateController = TextEditingController(
+    text: dateFormatter.format(event.openDatetime),
+  );
+  final endDateController = TextEditingController(
+    text: event.closeDatetime != null
+        ? dateFormatter.format(event.closeDatetime!)
+        : '',
+  );
+
+  await showCustomBottomModal(
+    context: context,
+    ref: ref,
+    modal: Builder(
+      builder: (modalContext) => BottomModalTemplate(
+        title: l10n.ticketsGeneralInfo,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextEntry(
+                maxLines: 1,
+                label: l10n.ticketsTitleLabel,
+                controller: titleController,
+                onChanged: (_) {},
+              ),
+              const SizedBox(height: 8),
+              TextEntry(
+                maxLines: 1,
+                label: l10n.ticketsPlacesLabel,
+                controller: placesController,
+                keyboardType: TextInputType.number,
+                isInt: true,
+                canBeEmpty: true,
+                onChanged: (_) {},
+              ),
+              const SizedBox(height: 8),
+              DateEntry(
+                label: l10n.ticketsStartDateLabel,
+                controller: startDateController,
+                onTap: () => getFullDate(modalContext, startDateController),
+              ),
+              DateEntry(
+                label: l10n.ticketsEndDateLabel,
+                controller: endDateController,
+                onTap: () => getFullDate(modalContext, endDateController),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                l10n.ticketsCloseEventHint,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: ColorConstants.onTertiary,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Button(
+                text: l10n.ticketsSaveChanges,
+                onPressed: () async {
+                  if (titleController.text.trim().isEmpty) {
+                    displayToast(
+                      modalContext,
+                      TypeMsg.error,
+                      l10n.ticketsTitleRequired,
+                    );
+                    return;
+                  }
+                  if (startDateController.text.trim().isEmpty) {
+                    displayToast(
+                      modalContext,
+                      TypeMsg.error,
+                      l10n.ticketsStartDateRequired,
+                    );
+                    return;
+                  }
+
+                  Navigator.pop(modalContext);
+                  if (!context.mounted) return;
+
+                  try {
+                    final openDatetime = DateTime.parse(
+                      processDateBackWithHourMaybe(
+                        startDateController.text,
+                        locale.toString(),
+                      ),
+                    );
+                    DateTime? closeDatetime;
+                    if (endDateController.text.trim().isNotEmpty) {
+                      closeDatetime = DateTime.parse(
+                        processDateBackWithHourMaybe(
+                          endDateController.text,
+                          locale.toString(),
+                        ),
+                      );
+                    }
+                    int? quota;
+                    if (placesController.text.trim().isNotEmpty) {
+                      quota = int.tryParse(placesController.text.trim());
+                    }
+
+                    final updated = event.copyWith(
+                      name: titleController.text.trim(),
+                      quota: quota,
+                      openDatetime: openDatetime,
+                      closeDatetime: closeDatetime,
+                    );
+
+                    final success = await editNotifier.editTicketEvent(updated);
+
+                    if (!context.mounted) return;
+                    if (success) {
+                      displayToast(
+                        context,
+                        TypeMsg.msg,
+                        l10n.ticketsEditSuccess,
+                      );
+                      onEventUpdated(updated);
+                    } else {
+                      _showEditError(context, ref, l10n);
+                    }
+                  } catch (e) {
+                    if (context.mounted) {
+                      displayToast(context, TypeMsg.error, e.toString());
+                    }
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+
+  titleController.dispose();
+  placesController.dispose();
+  startDateController.dispose();
+  endDateController.dispose();
+}
+
+Future<void> _toggleEventDisabled(
+  BuildContext context,
+  WidgetRef ref,
+  TicketEvent event,
+  bool disabled,
+  void Function(TicketEvent) onEventUpdated,
+) async {
+  final l10n = AppLocalizations.of(context)!;
+  final editNotifier = ref.read(ticketEventEditProvider.notifier);
+  final updated = event.copyWith(disabled: disabled);
+  final success = await editNotifier.editTicketEvent(updated);
+  if (!context.mounted) return;
+  if (success) {
+    displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
+    onEventUpdated(updated);
+  } else {
+    _showEditError(context, ref, l10n);
+  }
+}
+
 Future<void> _toggleSessionDisabled(
   BuildContext context,
   WidgetRef ref,
-  String eventId,
+  TicketEvent event,
   Session session,
   bool disabled,
-  Future<void> Function() onUpdated,
+  void Function(TicketEvent) onEventUpdated,
 ) async {
   final l10n = AppLocalizations.of(context)!;
   final editNotifier = ref.read(ticketEventEditProvider.notifier);
   final success = await editNotifier.updateSessionDisabled(
-    eventId,
+    event.id,
     session.id,
     disabled,
   );
   if (!context.mounted) return;
   if (success) {
     displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-    await onUpdated();
+    onEventUpdated(_withSession(event, session.copyWith(disabled: disabled)));
   } else {
     _showEditError(context, ref, l10n);
   }
@@ -378,22 +572,22 @@ Future<void> _toggleSessionDisabled(
 Future<void> _toggleCategoryDisabled(
   BuildContext context,
   WidgetRef ref,
-  String eventId,
+  TicketEvent event,
   Category category,
   bool disabled,
-  Future<void> Function() onUpdated,
+  void Function(TicketEvent) onEventUpdated,
 ) async {
   final l10n = AppLocalizations.of(context)!;
   final editNotifier = ref.read(ticketEventEditProvider.notifier);
   final success = await editNotifier.updateCategoryDisabled(
-    eventId,
+    event.id,
     category.id,
     disabled,
   );
   if (!context.mounted) return;
   if (success) {
     displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-    await onUpdated();
+    onEventUpdated(_withCategory(event, category.copyWith(disabled: disabled)));
   } else {
     _showEditError(context, ref, l10n);
   }
@@ -402,22 +596,22 @@ Future<void> _toggleCategoryDisabled(
 Future<void> _toggleQuestionDisabled(
   BuildContext context,
   WidgetRef ref,
-  String eventId,
+  TicketEvent event,
   Question question,
   bool disabled,
-  Future<void> Function() onUpdated,
+  void Function(TicketEvent) onEventUpdated,
 ) async {
   final l10n = AppLocalizations.of(context)!;
   final editNotifier = ref.read(ticketEventEditProvider.notifier);
   final success = await editNotifier.updateQuestionDisabled(
-    eventId,
+    event.id,
     question.id,
     disabled,
   );
   if (!context.mounted) return;
   if (success) {
     displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-    await onUpdated();
+    onEventUpdated(_withQuestion(event, question.copyWith(disabled: disabled)));
   } else {
     _showEditError(context, ref, l10n);
   }
@@ -425,9 +619,9 @@ Future<void> _toggleQuestionDisabled(
 
 class _SessionsSection extends HookConsumerWidget {
   final TicketEvent event;
-  final Future<void> Function() onUpdated;
+  final void Function(TicketEvent) onEventUpdated;
 
-  const _SessionsSection({required this.event, required this.onUpdated});
+  const _SessionsSection({required this.event, required this.onEventUpdated});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -504,7 +698,7 @@ class _SessionsSection extends HookConsumerWidget {
       if (!context.mounted) return;
       if (created != null) {
         displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-        await onUpdated();
+        onEventUpdated(event.copyWith(sessions: [...event.sessions, created]));
       } else {
         displayToast(context, TypeMsg.error, l10n.ticketsUpdateError);
       }
@@ -574,10 +768,10 @@ class _SessionsSection extends HookConsumerWidget {
                       onChanged: (value) => _toggleSessionDisabled(
                         context,
                         ref,
-                        event.id,
+                        event,
                         session,
                         !value,
-                        onUpdated,
+                        onEventUpdated,
                       ),
                       title: Text(
                         session.disabled
@@ -594,9 +788,9 @@ class _SessionsSection extends HookConsumerWidget {
                             onPressed: () => _showSessionEditDialog(
                               context,
                               ref,
-                              event.id,
+                              event,
                               session,
-                              onUpdated,
+                              onEventUpdated,
                             ),
                             child: Text(l10n.ticketsEdit),
                           ),
@@ -618,7 +812,9 @@ class _SessionsSection extends HookConsumerWidget {
                                   TypeMsg.msg,
                                   l10n.ticketsEditSuccess,
                                 );
-                                await onUpdated();
+                                onEventUpdated(
+                                  _withoutSession(event, session.id),
+                                );
                               } else {
                                 _showEditError(
                                   context,
@@ -655,9 +851,9 @@ class _SessionsSection extends HookConsumerWidget {
   Future<void> _showSessionEditDialog(
     BuildContext context,
     WidgetRef ref,
-    String eventId,
+    TicketEvent event,
     Session session,
-    Future<void> Function() onUpdated,
+    void Function(TicketEvent) onEventUpdated,
   ) async {
     final l10n = AppLocalizations.of(context)!;
     final locale = Localizations.localeOf(context);
@@ -732,13 +928,13 @@ class _SessionsSection extends HookConsumerWidget {
                   );
 
                   final success = await editNotifier.updateSession(
-                    eventId,
+                    event.id,
                     updated,
                   );
                   if (!context.mounted) return;
                   if (success) {
                     displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-                    await onUpdated();
+                    onEventUpdated(_withSession(event, updated));
                   } else {
                     final error = ref.read(ticketEventEditProvider).error;
                     displayToast(
@@ -765,9 +961,9 @@ class _SessionsSection extends HookConsumerWidget {
 
 class _CategoriesSection extends HookConsumerWidget {
   final TicketEvent event;
-  final Future<void> Function() onUpdated;
+  final void Function(TicketEvent) onEventUpdated;
 
-  const _CategoriesSection({required this.event, required this.onUpdated});
+  const _CategoriesSection({required this.event, required this.onEventUpdated});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -844,7 +1040,9 @@ class _CategoriesSection extends HookConsumerWidget {
       if (!context.mounted) return;
       if (created != null) {
         displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-        await onUpdated();
+        onEventUpdated(
+          event.copyWith(categories: [...event.categories, created]),
+        );
       } else {
         displayToast(context, TypeMsg.error, l10n.ticketsUpdateError);
       }
@@ -916,10 +1114,10 @@ class _CategoriesSection extends HookConsumerWidget {
                       onChanged: (value) => _toggleCategoryDisabled(
                         context,
                         ref,
-                        event.id,
+                        event,
                         category,
                         !value,
-                        onUpdated,
+                        onEventUpdated,
                       ),
                       title: Text(
                         category.disabled
@@ -936,9 +1134,9 @@ class _CategoriesSection extends HookConsumerWidget {
                             onPressed: () => _showCategoryEditDialog(
                               context,
                               ref,
-                              event.id,
+                              event,
                               category,
-                              onUpdated,
+                              onEventUpdated,
                             ),
                             child: Text(l10n.ticketsEdit),
                           ),
@@ -960,7 +1158,9 @@ class _CategoriesSection extends HookConsumerWidget {
                                   TypeMsg.msg,
                                   l10n.ticketsEditSuccess,
                                 );
-                                await onUpdated();
+                                onEventUpdated(
+                                  _withoutCategory(event, category.id),
+                                );
                               } else {
                                 _showEditError(
                                   context,
@@ -997,9 +1197,9 @@ class _CategoriesSection extends HookConsumerWidget {
   Future<void> _showCategoryEditDialog(
     BuildContext context,
     WidgetRef ref,
-    String eventId,
+    TicketEvent event,
     Category category,
-    Future<void> Function() onUpdated,
+    void Function(TicketEvent) onEventUpdated,
   ) async {
     final l10n = AppLocalizations.of(context)!;
     final editNotifier = ref.read(ticketEventEditProvider.notifier);
@@ -1079,13 +1279,13 @@ class _CategoriesSection extends HookConsumerWidget {
                   );
 
                   final success = await editNotifier.updateCategory(
-                    eventId,
+                    event.id,
                     updated,
                   );
                   if (!context.mounted) return;
                   if (success) {
                     displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-                    await onUpdated();
+                    onEventUpdated(_withCategory(event, updated));
                   } else {
                     final error = ref.read(ticketEventEditProvider).error;
                     displayToast(
@@ -1112,9 +1312,9 @@ class _CategoriesSection extends HookConsumerWidget {
 
 class _QuestionsSection extends HookConsumerWidget {
   final TicketEvent event;
-  final Future<void> Function() onUpdated;
+  final void Function(TicketEvent) onEventUpdated;
 
-  const _QuestionsSection({required this.event, required this.onUpdated});
+  const _QuestionsSection({required this.event, required this.onEventUpdated});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -1220,7 +1420,9 @@ class _QuestionsSection extends HookConsumerWidget {
       if (!context.mounted) return;
       if (created != null) {
         displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-        await onUpdated();
+        onEventUpdated(
+          event.copyWith(questions: [...event.questions, created]),
+        );
       } else {
         _showEditError(context, ref, l10n);
       }
@@ -1293,10 +1495,10 @@ class _QuestionsSection extends HookConsumerWidget {
                       onChanged: (value) => _toggleQuestionDisabled(
                         context,
                         ref,
-                        event.id,
+                        event,
                         question,
                         !value,
-                        onUpdated,
+                        onEventUpdated,
                       ),
                       title: Text(
                         question.disabled
@@ -1311,9 +1513,9 @@ class _QuestionsSection extends HookConsumerWidget {
                           onPressed: () => _showQuestionEditDialog(
                             context,
                             ref,
-                            event.id,
+                            event,
                             question,
-                            onUpdated,
+                            onEventUpdated,
                           ),
                           child: Text(l10n.ticketsEdit),
                         ),
@@ -1333,7 +1535,9 @@ class _QuestionsSection extends HookConsumerWidget {
                                 TypeMsg.msg,
                                 l10n.ticketsEditSuccess,
                               );
-                              await onUpdated();
+                              onEventUpdated(
+                                _withoutQuestion(event, question.id),
+                              );
                             } else {
                               _showEditError(
                                 context,
@@ -1369,9 +1573,9 @@ class _QuestionsSection extends HookConsumerWidget {
   Future<void> _showQuestionEditDialog(
     BuildContext context,
     WidgetRef ref,
-    String eventId,
+    TicketEvent event,
     Question question,
-    Future<void> Function() onUpdated,
+    void Function(TicketEvent) onEventUpdated,
   ) async {
     final l10n = AppLocalizations.of(context)!;
     final editNotifier = ref.read(ticketEventEditProvider.notifier);
@@ -1460,14 +1664,22 @@ class _QuestionsSection extends HookConsumerWidget {
                         ? null
                         : int.tryParse(priceController.text);
 
-                    final success = await editNotifier.updateQuestion(
-                      eventId,
-                      question.id,
-                      questionText: textController.text.trim(),
+                    final updatedQuestion = question.copyWith(
+                      question: textController.text.trim(),
                       answerType: answerType,
                       required: required,
                       price: price,
                       disabled: disabled,
+                    );
+
+                    final success = await editNotifier.updateQuestion(
+                      event.id,
+                      question.id,
+                      questionText: updatedQuestion.question,
+                      answerType: updatedQuestion.answerType,
+                      required: updatedQuestion.required,
+                      price: updatedQuestion.price,
+                      disabled: updatedQuestion.disabled,
                     );
 
                     if (!context.mounted) return;
@@ -1477,7 +1689,7 @@ class _QuestionsSection extends HookConsumerWidget {
                         TypeMsg.msg,
                         l10n.ticketsEditSuccess,
                       );
-                      await onUpdated();
+                      onEventUpdated(_withQuestion(event, updatedQuestion));
                     } else {
                       _showEditError(context, ref, l10n);
                     }

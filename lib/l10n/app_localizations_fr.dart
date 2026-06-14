@@ -4958,6 +4958,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsDelete => 'Supprimer';
 
   @override
+  String get ticketsDeleteEvent => 'Supprimer la billetterie';
+
+  @override
+  String get ticketsDeleteEventSuccess => 'Billetterie supprimée avec succès';
+
+  @override
   String get ticketsDeleteConfirm => 'Confirmer la suppression ?';
 
   @override

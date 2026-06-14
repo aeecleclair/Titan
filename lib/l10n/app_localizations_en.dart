@@ -4886,6 +4886,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsDelete => 'Supprimer';
 
   @override
+  String get ticketsDeleteEvent => 'Delete ticketing';
+
+  @override
+  String get ticketsDeleteEventSuccess => 'Ticketing deleted successfully';
+
+  @override
   String get ticketsDeleteConfirm => 'Confirm deletion?';
 
   @override

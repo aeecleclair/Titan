@@ -184,6 +184,18 @@ class TicketEventEditNotifier extends StateNotifier<AsyncValue<void>> {
       return false;
     }
   }
+
+  Future<bool> deleteTicketEvent(String id) async {
+    state = const AsyncValue.loading();
+    try {
+      final result = await repository.deleteTicketEvent(id);
+      state = const AsyncValue.data(null);
+      return result;
+    } catch (e, st) {
+      state = AsyncValue.error(e, st);
+      return false;
+    }
+  }
 }
 
 final ticketEventEditProvider =

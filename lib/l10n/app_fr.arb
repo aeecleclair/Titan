@@ -1826,6 +1826,8 @@
   "ticketsEventActivated": "Événement activé",
   "ticketsEventDeactivated": "Événement désactivé",
   "ticketsDelete": "Supprimer",
+  "ticketsDeleteEvent": "Supprimer la billetterie",
+  "ticketsDeleteEventSuccess": "Billetterie supprimée avec succès",
   "ticketsDeleteConfirm": "Confirmer la suppression ?",
   "ticketsCannotDeleteDueSales": "Impossible de supprimer : ventes ou réservations existantes",
   "ticketsCannotDeleteDueAnswers": "Impossible de supprimer : réponses existantes",
