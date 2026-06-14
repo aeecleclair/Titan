@@ -76,9 +76,6 @@ class TicketEvent {
             .toList() ??
         [];
     soldOut = json['sold_out'] ?? false;
-    disabled = json['disabled'] ?? false;
-    ticketsInCheckout = json['tickets_in_checkout'];
-    ticketsSold = json['tickets_sold'];
   }
 
   Map<String, dynamic> toJson() {
