@@ -166,7 +166,8 @@ class AddEditStructurePage extends HookConsumerWidget {
                   label: AdminTextConstants.structureBic,
                   validator: (value) {
                     if (value.isNotEmpty &&
-                        value.replaceAll(" ", "").length != 11) {
+                        value.replaceAll(" ", "").length != 11 &&
+                        value.replaceAll(" ", "").length != 8) {
                       return AdminTextConstants.structureBicError;
                     }
                     return null;
