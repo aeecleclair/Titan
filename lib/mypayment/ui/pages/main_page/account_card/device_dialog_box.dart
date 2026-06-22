@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:titan/mypayment/tools/constants.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class Consts {
   Consts._();
 
   static const double padding = 20.0;
   static const double avatarRadius = 50.0;
-  static const Color redGradient1 = Color(0xFF9E131F);
-  static const Color redGradient2 = Color(0xFF590512);
 }
 
-class DeviceDialogBox extends StatelessWidget {
+class DeviceDialogBox extends ConsumerWidget {
   final String title, descriptions;
   final String? buttonText;
   final Function() onClick;
@@ -24,12 +25,14 @@ class DeviceDialogBox extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(themeProvider);
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pop();
       },
       child: Container(
+        // to darken the page behind the dialog, independently on the theme, cf. CustomDialogBox
         color: Colors.black54,
         child: GestureDetector(
           onTap: () {},
@@ -52,12 +55,12 @@ class DeviceDialogBox extends StatelessWidget {
                   ),
                   margin: const EdgeInsets.only(top: Consts.avatarRadius),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(Consts.padding),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        color: Colors.black26,
+                        color: Theme.of(context).shadowColor,
                         blurRadius: 10.0,
                         offset: Offset(0.0, 10.0),
                       ),
@@ -98,16 +101,19 @@ class DeviceDialogBox extends StatelessWidget {
                                 ),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  gradient: const LinearGradient(
-                                    colors: [Colors.black87, Colors.black],
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Theme.of(
+                                        context,
+                                      ).colorScheme.secondaryContainer,
+                                      Theme.of(context).colorScheme.secondary,
+                                    ],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValues(
-                                        alpha: 0.3,
-                                      ),
+                                      color: Theme.of(context).shadowColor,
                                       blurRadius: 2.0,
                                       offset: const Offset(1.0, 2.0),
                                     ),
@@ -117,7 +123,9 @@ class DeviceDialogBox extends StatelessWidget {
                                   child: Text(
                                     buttonText!,
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSecondary,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -137,24 +145,29 @@ class DeviceDialogBox extends StatelessWidget {
                     height: Consts.avatarRadius * 2,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: const LinearGradient(
-                        colors: [Consts.redGradient1, Consts.redGradient2],
+                      gradient: LinearGradient(
+                        colors: [
+                          MyPaymentColors(isDarkTheme).redGradient1,
+                          MyPaymentColors(isDarkTheme).redGradient2,
+                        ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Consts.redGradient2.withValues(alpha: 0.3),
+                          color: MyPaymentColors(
+                            isDarkTheme,
+                          ).redGradient2.withValues(alpha: 0.3),
                           blurRadius: 10.0,
                           offset: const Offset(0.0, 10.0),
                         ),
                       ],
                     ),
-                    child: const Center(
+                    child: Center(
                       child: HeroIcon(
                         HeroIcons.exclamationCircle,
                         size: 60,
-                        color: Colors.white,
+                        color: MyPaymentColors.onGradient,
                       ),
                     ),
                   ),
