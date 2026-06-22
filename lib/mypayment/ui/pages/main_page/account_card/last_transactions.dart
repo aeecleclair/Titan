@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/mypayment/class/history.dart';
 import 'package:titan/mypayment/providers/my_history_provider.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/ui/pages/main_page/account_card/day_divider.dart';
 import 'package:titan/mypayment/ui/components/transaction_card.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -14,6 +16,7 @@ class LastTransactions extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final history = ref.watch(myHistoryProvider);
+    final isDarkTheme = ref.watch(themeProvider);
     return SizedBox(
       height: maxHeight,
       child: SingleChildScrollView(
@@ -23,10 +26,10 @@ class LastTransactions extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               alignment: Alignment.centerLeft,
-              child: const Text(
+              child: Text(
                 "Dernières transactions",
                 style: TextStyle(
-                  color: Color(0xff204550),
+                  color: MyPaymentColors(isDarkTheme).secondaryGreen,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -80,7 +83,7 @@ class LastTransactions extends ConsumerWidget {
               errorBuilder: (error, stack) => Center(
                 child: Text(
                   "Erreur lors de la récupération des transactions : $error",
-                  style: TextStyle(color: Colors.red),
+                  style: TextStyle(color: MyPaymentColors.errorText),
                 ),
               ),
             ),
