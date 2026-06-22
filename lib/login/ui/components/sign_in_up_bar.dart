@@ -9,12 +9,8 @@ class SignInUpBar extends StatelessWidget {
     required this.label,
     required this.onPressed,
     required this.isLoading,
-    this.color = Colors.white,
-    this.icon = const HeroIcon(
-      HeroIcons.arrowRight,
-      color: Colors.white,
-      size: 35.0,
-    ),
+    required this.color,
+    required this.icon,
   });
 
   final String label;
@@ -30,9 +26,7 @@ class SignInUpBar extends StatelessWidget {
       child: Container(
         height: 50,
         width: double.infinity,
-        alignment: color == Colors.white
-            ? Alignment.centerLeft
-            : Alignment.center,
+        alignment: Alignment.center,
         child: WaitingButton(
           onTap: onPressed,
           builder: (child) => Row(

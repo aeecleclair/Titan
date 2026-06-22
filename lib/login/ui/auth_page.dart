@@ -22,7 +22,11 @@ class LoginTemplate extends HookConsumerWidget {
         children: [
           SizedBox.expand(
             child: CustomPaint(
-              painter: BackgroundPainter(animation: controller),
+              painter: BackgroundPainter(
+                animation: controller,
+                context: context,
+                ref: ref,
+              ),
             ),
           ),
           SafeArea(child: Center(child: child)),
