@@ -6,7 +6,6 @@ import 'package:titan/mypayment/providers/invoice_list_provider.dart';
 import 'package:titan/mypayment/providers/selected_structure_provider.dart';
 import 'package:titan/mypayment/ui/pages/invoices_admin_page/invoice_card.dart';
 import 'package:titan/mypayment/ui/mypayment.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
@@ -56,8 +55,8 @@ class StructureInvoicesPage extends HookConsumerWidget {
                                 page.value--;
                                 refreshInvoices();
                               },
-                        color: Colors.white,
-                        disabledColor: ColorConstants.deactivated1,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        disabledColor: Theme.of(context).colorScheme.tertiary,
                       ),
                       DropdownButton<int>(
                         items: [10, 20, 50, 100]
@@ -84,8 +83,8 @@ class StructureInvoicesPage extends HookConsumerWidget {
                                 page.value++;
                                 refreshInvoices();
                               },
-                        color: Colors.white,
-                        disabledColor: ColorConstants.deactivated1,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        disabledColor: Theme.of(context).colorScheme.tertiary,
                       ),
                     ],
                   ),
