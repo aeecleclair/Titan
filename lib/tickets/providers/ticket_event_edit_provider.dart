@@ -6,112 +6,49 @@ import 'package:titan/tickets/class/question.dart';
 import 'package:titan/tickets/class/session.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tickets/repositories/tickets_repository.dart';
+import 'package:titan/tools/providers/action_notifier.dart';
 
-class TicketEventEditNotifier extends StateNotifier<AsyncValue<void>> {
+class TicketEventEditNotifier extends ActionNotifier {
   final TicketsRepository repository;
 
-  TicketEventEditNotifier({required this.repository})
-    : super(const AsyncValue.data(null));
+  TicketEventEditNotifier({required this.repository});
 
-  Future<bool> editTicketEvent(TicketEvent ticketEvent) async {
-    state = const AsyncValue.loading();
-    try {
-      final result = await repository.editTicketEvent(ticketEvent);
-      state = const AsyncValue.data(null);
-      return result;
-    } catch (e, st) {
-      state = AsyncValue.error(e, st);
-      return false;
-    }
-  }
+  Future<bool> editTicketEvent(TicketEvent ticketEvent) =>
+      runBool(() => repository.editTicketEvent(ticketEvent), showLoading: true);
 
-  Future<Session?> addSession(String eventId, Session session) async {
-    try {
-      return await repository.addSession(eventId, session);
-    } catch (e, st) {
-      state = AsyncValue.error(e, st);
-      return null;
-    }
-  }
+  Future<Session?> addSession(String eventId, Session session) =>
+      run(() => repository.addSession(eventId, session));
 
-  Future<bool> updateSession(String eventId, Session session) async {
-    try {
-      return await repository.updateSession(eventId, session);
-    } catch (e, st) {
-      state = AsyncValue.error(e, st);
-      return false;
-    }
-  }
+  Future<bool> updateSession(String eventId, Session session) =>
+      runBool(() => repository.updateSession(eventId, session));
 
   Future<bool> updateSessionDisabled(
     String eventId,
     String sessionId,
     bool disabled,
-  ) async {
-    try {
-      return await repository.updateSessionDisabled(
-        eventId,
-        sessionId,
-        disabled,
-      );
-    } catch (e, st) {
-      state = AsyncValue.error(e, st);
-      return false;
-    }
-  }
+  ) => runBool(
+    () => repository.updateSessionDisabled(eventId, sessionId, disabled),
+  );
 
-  Future<bool> deleteSession(String eventId, String sessionId) async {
-    try {
-      return await repository.deleteSession(eventId, sessionId);
-    } catch (e, st) {
-      state = AsyncValue.error(e, st);
-      return false;
-    }
-  }
+  Future<bool> deleteSession(String eventId, String sessionId) =>
+      runBool(() => repository.deleteSession(eventId, sessionId));
 
-  Future<Category?> addCategory(String eventId, Category category) async {
-    try {
-      return await repository.addCategory(eventId, category);
-    } catch (e, st) {
-      state = AsyncValue.error(e, st);
-      return null;
-    }
-  }
+  Future<Category?> addCategory(String eventId, Category category) =>
+      run(() => repository.addCategory(eventId, category));
 
-  Future<bool> updateCategory(String eventId, Category category) async {
-    try {
-      return await repository.updateCategory(eventId, category);
-    } catch (e, st) {
-      state = AsyncValue.error(e, st);
-      return false;
-    }
-  }
+  Future<bool> updateCategory(String eventId, Category category) =>
+      runBool(() => repository.updateCategory(eventId, category));
 
   Future<bool> updateCategoryDisabled(
     String eventId,
     String categoryId,
     bool disabled,
-  ) async {
-    try {
-      return await repository.updateCategoryDisabled(
-        eventId,
-        categoryId,
-        disabled,
-      );
-    } catch (e, st) {
-      state = AsyncValue.error(e, st);
-      return false;
-    }
-  }
+  ) => runBool(
+    () => repository.updateCategoryDisabled(eventId, categoryId, disabled),
+  );
 
-  Future<bool> deleteCategory(String eventId, String categoryId) async {
-    try {
-      return await repository.deleteCategory(eventId, categoryId);
-    } catch (e, st) {
-      state = AsyncValue.error(e, st);
-      return false;
-    }
-  }
+  Future<bool> deleteCategory(String eventId, String categoryId) =>
+      runBool(() => repository.deleteCategory(eventId, categoryId));
 
   Future<Question?> createQuestion(
     String eventId, {
@@ -119,20 +56,15 @@ class TicketEventEditNotifier extends StateNotifier<AsyncValue<void>> {
     required AnswerType answerType,
     required bool required,
     int? price,
-  }) async {
-    try {
-      return await repository.createQuestion(
-        eventId,
-        questionText: questionText,
-        answerType: answerType,
-        required: required,
-        price: price,
-      );
-    } catch (e, st) {
-      state = AsyncValue.error(e, st);
-      return null;
-    }
-  }
+  }) => run(
+    () => repository.createQuestion(
+      eventId,
+      questionText: questionText,
+      answerType: answerType,
+      required: required,
+      price: price,
+    ),
+  );
 
   Future<bool> updateQuestion(
     String eventId,
@@ -142,60 +74,31 @@ class TicketEventEditNotifier extends StateNotifier<AsyncValue<void>> {
     required bool required,
     int? price,
     bool? disabled,
-  }) async {
-    try {
-      return await repository.updateQuestion(
-        eventId,
-        questionId,
-        questionText: questionText,
-        answerType: answerType,
-        required: required,
-        price: price,
-        disabled: disabled,
-      );
-    } catch (e, st) {
-      state = AsyncValue.error(e, st);
-      return false;
-    }
-  }
+  }) => runBool(
+    () => repository.updateQuestion(
+      eventId,
+      questionId,
+      questionText: questionText,
+      answerType: answerType,
+      required: required,
+      price: price,
+      disabled: disabled,
+    ),
+  );
 
   Future<bool> updateQuestionDisabled(
     String eventId,
     String questionId,
     bool disabled,
-  ) async {
-    try {
-      return await repository.updateQuestionDisabled(
-        eventId,
-        questionId,
-        disabled,
-      );
-    } catch (e, st) {
-      state = AsyncValue.error(e, st);
-      return false;
-    }
-  }
+  ) => runBool(
+    () => repository.updateQuestionDisabled(eventId, questionId, disabled),
+  );
 
-  Future<bool> deleteQuestion(String eventId, String questionId) async {
-    try {
-      return await repository.deleteQuestion(eventId, questionId);
-    } catch (e, st) {
-      state = AsyncValue.error(e, st);
-      return false;
-    }
-  }
+  Future<bool> deleteQuestion(String eventId, String questionId) =>
+      runBool(() => repository.deleteQuestion(eventId, questionId));
 
-  Future<bool> deleteTicketEvent(String id) async {
-    state = const AsyncValue.loading();
-    try {
-      final result = await repository.deleteTicketEvent(id);
-      state = const AsyncValue.data(null);
-      return result;
-    } catch (e, st) {
-      state = AsyncValue.error(e, st);
-      return false;
-    }
-  }
+  Future<bool> deleteTicketEvent(String id) =>
+      runBool(() => repository.deleteTicketEvent(id), showLoading: true);
 }
 
 final ticketEventEditProvider =

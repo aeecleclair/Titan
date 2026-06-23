@@ -20,6 +20,7 @@ import 'package:titan/tickets/ui/tickets_module.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/exception.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
@@ -78,28 +79,30 @@ class _EditTicketEventContent extends HookConsumerWidget {
       }
       if (!context.mounted) return;
 
-      final success = await editNotifier.deleteTicketEvent(event.id);
-      if (!context.mounted) return;
-
-      if (success) {
-        ref.read(selectedTicketEventProvider.notifier).state = null;
-        final storeId = event.storeId;
-        if (storeId != null) {
-          await ref
-              .read(storeTicketEventListProvider.notifier)
-              .loadStoreTicketEventList(storeId);
-        }
+      await tokenExpireWrapper(ref, () async {
+        final success = await editNotifier.deleteTicketEvent(event.id);
         if (!context.mounted) return;
-        displayToast(context, TypeMsg.msg, l10n.ticketsDeleteEventSuccess);
-        QR.back();
-      } else {
-        _showEditError(
-          context,
-          ref,
-          l10n,
-          fallbackDueSales: l10n.ticketsCannotDeleteDueSales,
-        );
-      }
+
+        if (success) {
+          ref.read(selectedTicketEventProvider.notifier).state = null;
+          final storeId = event.storeId;
+          if (storeId != null) {
+            await ref
+                .read(storeTicketEventListProvider.notifier)
+                .loadStoreTicketEventList(storeId);
+          }
+          if (!context.mounted) return;
+          displayToast(context, TypeMsg.msg, l10n.ticketsDeleteEventSuccess);
+          QR.back();
+        } else {
+          _showEditError(
+            context,
+            ref,
+            l10n,
+            fallbackDueSales: l10n.ticketsCannotDeleteDueSales,
+          );
+        }
+      });
     }
 
     final canDeleteEvent = event.ticketsSold + event.ticketsInCheckout == 0;
@@ -492,19 +495,23 @@ Future<void> _showGeneralInfoEditDialog(
                       closeDatetime: closeDatetime,
                     );
 
-                    final success = await editNotifier.editTicketEvent(updated);
-
-                    if (!context.mounted) return;
-                    if (success) {
-                      displayToast(
-                        context,
-                        TypeMsg.msg,
-                        l10n.ticketsEditSuccess,
+                    await tokenExpireWrapper(ref, () async {
+                      final success = await editNotifier.editTicketEvent(
+                        updated,
                       );
-                      onEventUpdated(updated);
-                    } else {
-                      _showEditError(context, ref, l10n);
-                    }
+
+                      if (!context.mounted) return;
+                      if (success) {
+                        displayToast(
+                          context,
+                          TypeMsg.msg,
+                          l10n.ticketsEditSuccess,
+                        );
+                        onEventUpdated(updated);
+                      } else {
+                        _showEditError(context, ref, l10n);
+                      }
+                    });
                   } catch (e) {
                     if (context.mounted) {
                       displayToast(context, TypeMsg.error, e.toString());
@@ -535,14 +542,16 @@ Future<void> _toggleEventDisabled(
   final l10n = AppLocalizations.of(context)!;
   final editNotifier = ref.read(ticketEventEditProvider.notifier);
   final updated = event.copyWith(disabled: disabled);
-  final success = await editNotifier.editTicketEvent(updated);
-  if (!context.mounted) return;
-  if (success) {
-    displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-    onEventUpdated(updated);
-  } else {
-    _showEditError(context, ref, l10n);
-  }
+  await tokenExpireWrapper(ref, () async {
+    final success = await editNotifier.editTicketEvent(updated);
+    if (!context.mounted) return;
+    if (success) {
+      displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
+      onEventUpdated(updated);
+    } else {
+      _showEditError(context, ref, l10n);
+    }
+  });
 }
 
 Future<void> _toggleSessionDisabled(
@@ -555,18 +564,20 @@ Future<void> _toggleSessionDisabled(
 ) async {
   final l10n = AppLocalizations.of(context)!;
   final editNotifier = ref.read(ticketEventEditProvider.notifier);
-  final success = await editNotifier.updateSessionDisabled(
-    event.id,
-    session.id,
-    disabled,
-  );
-  if (!context.mounted) return;
-  if (success) {
-    displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-    onEventUpdated(_withSession(event, session.copyWith(disabled: disabled)));
-  } else {
-    _showEditError(context, ref, l10n);
-  }
+  await tokenExpireWrapper(ref, () async {
+    final success = await editNotifier.updateSessionDisabled(
+      event.id,
+      session.id,
+      disabled,
+    );
+    if (!context.mounted) return;
+    if (success) {
+      displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
+      onEventUpdated(_withSession(event, session.copyWith(disabled: disabled)));
+    } else {
+      _showEditError(context, ref, l10n);
+    }
+  });
 }
 
 Future<void> _toggleCategoryDisabled(
@@ -579,18 +590,22 @@ Future<void> _toggleCategoryDisabled(
 ) async {
   final l10n = AppLocalizations.of(context)!;
   final editNotifier = ref.read(ticketEventEditProvider.notifier);
-  final success = await editNotifier.updateCategoryDisabled(
-    event.id,
-    category.id,
-    disabled,
-  );
-  if (!context.mounted) return;
-  if (success) {
-    displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-    onEventUpdated(_withCategory(event, category.copyWith(disabled: disabled)));
-  } else {
-    _showEditError(context, ref, l10n);
-  }
+  await tokenExpireWrapper(ref, () async {
+    final success = await editNotifier.updateCategoryDisabled(
+      event.id,
+      category.id,
+      disabled,
+    );
+    if (!context.mounted) return;
+    if (success) {
+      displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
+      onEventUpdated(
+        _withCategory(event, category.copyWith(disabled: disabled)),
+      );
+    } else {
+      _showEditError(context, ref, l10n);
+    }
+  });
 }
 
 Future<void> _toggleQuestionDisabled(
@@ -603,18 +618,22 @@ Future<void> _toggleQuestionDisabled(
 ) async {
   final l10n = AppLocalizations.of(context)!;
   final editNotifier = ref.read(ticketEventEditProvider.notifier);
-  final success = await editNotifier.updateQuestionDisabled(
-    event.id,
-    question.id,
-    disabled,
-  );
-  if (!context.mounted) return;
-  if (success) {
-    displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-    onEventUpdated(_withQuestion(event, question.copyWith(disabled: disabled)));
-  } else {
-    _showEditError(context, ref, l10n);
-  }
+  await tokenExpireWrapper(ref, () async {
+    final success = await editNotifier.updateQuestionDisabled(
+      event.id,
+      question.id,
+      disabled,
+    );
+    if (!context.mounted) return;
+    if (success) {
+      displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
+      onEventUpdated(
+        _withQuestion(event, question.copyWith(disabled: disabled)),
+      );
+    } else {
+      _showEditError(context, ref, l10n);
+    }
+  });
 }
 
 class _SessionsSection extends HookConsumerWidget {
@@ -694,14 +713,18 @@ class _SessionsSection extends HookConsumerWidget {
             : int.tryParse(quotaController.text),
       );
 
-      final created = await editNotifier.addSession(event.id, session);
-      if (!context.mounted) return;
-      if (created != null) {
-        displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-        onEventUpdated(event.copyWith(sessions: [...event.sessions, created]));
-      } else {
-        displayToast(context, TypeMsg.error, l10n.ticketsUpdateError);
-      }
+      await tokenExpireWrapper(ref, () async {
+        final created = await editNotifier.addSession(event.id, session);
+        if (!context.mounted) return;
+        if (created != null) {
+          displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
+          onEventUpdated(
+            event.copyWith(sessions: [...event.sessions, created]),
+          );
+        } else {
+          displayToast(context, TypeMsg.error, l10n.ticketsUpdateError);
+        }
+      });
     }
 
     return _SectionCard(
@@ -801,29 +824,29 @@ class _SessionsSection extends HookConsumerWidget {
                                 return;
                               }
                               if (!context.mounted) return;
-                              final success = await editNotifier.deleteSession(
-                                event.id,
-                                session.id,
-                              );
-                              if (!context.mounted) return;
-                              if (success) {
-                                displayToast(
-                                  context,
-                                  TypeMsg.msg,
-                                  l10n.ticketsEditSuccess,
-                                );
-                                onEventUpdated(
-                                  _withoutSession(event, session.id),
-                                );
-                              } else {
-                                _showEditError(
-                                  context,
-                                  ref,
-                                  l10n,
-                                  fallbackDueSales:
-                                      l10n.ticketsCannotDeleteDueSales,
-                                );
-                              }
+                              await tokenExpireWrapper(ref, () async {
+                                final success = await editNotifier
+                                    .deleteSession(event.id, session.id);
+                                if (!context.mounted) return;
+                                if (success) {
+                                  displayToast(
+                                    context,
+                                    TypeMsg.msg,
+                                    l10n.ticketsEditSuccess,
+                                  );
+                                  onEventUpdated(
+                                    _withoutSession(event, session.id),
+                                  );
+                                } else {
+                                  _showEditError(
+                                    context,
+                                    ref,
+                                    l10n,
+                                    fallbackDueSales:
+                                        l10n.ticketsCannotDeleteDueSales,
+                                  );
+                                }
+                              });
                             },
                             style: OutlinedButton.styleFrom(
                               foregroundColor: ColorConstants.error,
@@ -927,24 +950,30 @@ class _SessionsSection extends HookConsumerWidget {
                     disabled: disabled,
                   );
 
-                  final success = await editNotifier.updateSession(
-                    event.id,
-                    updated,
-                  );
-                  if (!context.mounted) return;
-                  if (success) {
-                    displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-                    onEventUpdated(_withSession(event, updated));
-                  } else {
-                    final error = ref.read(ticketEventEditProvider).error;
-                    displayToast(
-                      context,
-                      TypeMsg.error,
-                      error is AppException
-                          ? error.message
-                          : l10n.ticketsUpdateError,
+                  await tokenExpireWrapper(ref, () async {
+                    final success = await editNotifier.updateSession(
+                      event.id,
+                      updated,
                     );
-                  }
+                    if (!context.mounted) return;
+                    if (success) {
+                      displayToast(
+                        context,
+                        TypeMsg.msg,
+                        l10n.ticketsEditSuccess,
+                      );
+                      onEventUpdated(_withSession(event, updated));
+                    } else {
+                      final error = ref.read(ticketEventEditProvider).error;
+                      displayToast(
+                        context,
+                        TypeMsg.error,
+                        error is AppException
+                            ? error.message
+                            : l10n.ticketsUpdateError,
+                      );
+                    }
+                  });
                 },
               ),
             ],
@@ -1036,16 +1065,18 @@ class _CategoriesSection extends HookConsumerWidget {
         requiredMembership: null,
       );
 
-      final created = await editNotifier.addCategory(event.id, category);
-      if (!context.mounted) return;
-      if (created != null) {
-        displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-        onEventUpdated(
-          event.copyWith(categories: [...event.categories, created]),
-        );
-      } else {
-        displayToast(context, TypeMsg.error, l10n.ticketsUpdateError);
-      }
+      await tokenExpireWrapper(ref, () async {
+        final created = await editNotifier.addCategory(event.id, category);
+        if (!context.mounted) return;
+        if (created != null) {
+          displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
+          onEventUpdated(
+            event.copyWith(categories: [...event.categories, created]),
+          );
+        } else {
+          displayToast(context, TypeMsg.error, l10n.ticketsUpdateError);
+        }
+      });
     }
 
     return _SectionCard(
@@ -1147,29 +1178,29 @@ class _CategoriesSection extends HookConsumerWidget {
                                 return;
                               }
                               if (!context.mounted) return;
-                              final success = await editNotifier.deleteCategory(
-                                event.id,
-                                category.id,
-                              );
-                              if (!context.mounted) return;
-                              if (success) {
-                                displayToast(
-                                  context,
-                                  TypeMsg.msg,
-                                  l10n.ticketsEditSuccess,
-                                );
-                                onEventUpdated(
-                                  _withoutCategory(event, category.id),
-                                );
-                              } else {
-                                _showEditError(
-                                  context,
-                                  ref,
-                                  l10n,
-                                  fallbackDueSales:
-                                      l10n.ticketsCannotDeleteDueSales,
-                                );
-                              }
+                              await tokenExpireWrapper(ref, () async {
+                                final success = await editNotifier
+                                    .deleteCategory(event.id, category.id);
+                                if (!context.mounted) return;
+                                if (success) {
+                                  displayToast(
+                                    context,
+                                    TypeMsg.msg,
+                                    l10n.ticketsEditSuccess,
+                                  );
+                                  onEventUpdated(
+                                    _withoutCategory(event, category.id),
+                                  );
+                                } else {
+                                  _showEditError(
+                                    context,
+                                    ref,
+                                    l10n,
+                                    fallbackDueSales:
+                                        l10n.ticketsCannotDeleteDueSales,
+                                  );
+                                }
+                              });
                             },
                             style: OutlinedButton.styleFrom(
                               foregroundColor: ColorConstants.error,
@@ -1278,24 +1309,30 @@ class _CategoriesSection extends HookConsumerWidget {
                     disabled: disabled,
                   );
 
-                  final success = await editNotifier.updateCategory(
-                    event.id,
-                    updated,
-                  );
-                  if (!context.mounted) return;
-                  if (success) {
-                    displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-                    onEventUpdated(_withCategory(event, updated));
-                  } else {
-                    final error = ref.read(ticketEventEditProvider).error;
-                    displayToast(
-                      context,
-                      TypeMsg.error,
-                      error is AppException
-                          ? error.message
-                          : l10n.ticketsUpdateError,
+                  await tokenExpireWrapper(ref, () async {
+                    final success = await editNotifier.updateCategory(
+                      event.id,
+                      updated,
                     );
-                  }
+                    if (!context.mounted) return;
+                    if (success) {
+                      displayToast(
+                        context,
+                        TypeMsg.msg,
+                        l10n.ticketsEditSuccess,
+                      );
+                      onEventUpdated(_withCategory(event, updated));
+                    } else {
+                      final error = ref.read(ticketEventEditProvider).error;
+                      displayToast(
+                        context,
+                        TypeMsg.error,
+                        error is AppException
+                            ? error.message
+                            : l10n.ticketsUpdateError,
+                      );
+                    }
+                  });
                 },
               ),
             ],
@@ -1409,23 +1446,25 @@ class _QuestionsSection extends HookConsumerWidget {
           ? null
           : int.tryParse(priceController.text);
 
-      final created = await editNotifier.createQuestion(
-        event.id,
-        questionText: textController.text.trim(),
-        answerType: answerType,
-        required: required,
-        price: price,
-      );
-
-      if (!context.mounted) return;
-      if (created != null) {
-        displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
-        onEventUpdated(
-          event.copyWith(questions: [...event.questions, created]),
+      await tokenExpireWrapper(ref, () async {
+        final created = await editNotifier.createQuestion(
+          event.id,
+          questionText: textController.text.trim(),
+          answerType: answerType,
+          required: required,
+          price: price,
         );
-      } else {
-        _showEditError(context, ref, l10n);
-      }
+
+        if (!context.mounted) return;
+        if (created != null) {
+          displayToast(context, TypeMsg.msg, l10n.ticketsEditSuccess);
+          onEventUpdated(
+            event.copyWith(questions: [...event.questions, created]),
+          );
+        } else {
+          _showEditError(context, ref, l10n);
+        }
+      });
     }
 
     return _SectionCard(
@@ -1524,29 +1563,31 @@ class _QuestionsSection extends HookConsumerWidget {
                           onPressed: () async {
                             if (!await _showDeleteConfirm(context, ref)) return;
                             if (!context.mounted) return;
-                            final success = await editNotifier.deleteQuestion(
-                              event.id,
-                              question.id,
-                            );
-                            if (!context.mounted) return;
-                            if (success) {
-                              displayToast(
-                                context,
-                                TypeMsg.msg,
-                                l10n.ticketsEditSuccess,
+                            await tokenExpireWrapper(ref, () async {
+                              final success = await editNotifier.deleteQuestion(
+                                event.id,
+                                question.id,
                               );
-                              onEventUpdated(
-                                _withoutQuestion(event, question.id),
-                              );
-                            } else {
-                              _showEditError(
-                                context,
-                                ref,
-                                l10n,
-                                fallbackDueAnswers:
-                                    l10n.ticketsCannotDeleteDueAnswers,
-                              );
-                            }
+                              if (!context.mounted) return;
+                              if (success) {
+                                displayToast(
+                                  context,
+                                  TypeMsg.msg,
+                                  l10n.ticketsEditSuccess,
+                                );
+                                onEventUpdated(
+                                  _withoutQuestion(event, question.id),
+                                );
+                              } else {
+                                _showEditError(
+                                  context,
+                                  ref,
+                                  l10n,
+                                  fallbackDueAnswers:
+                                      l10n.ticketsCannotDeleteDueAnswers,
+                                );
+                              }
+                            });
                           },
                           style: OutlinedButton.styleFrom(
                             foregroundColor: ColorConstants.error,
@@ -1672,27 +1713,29 @@ class _QuestionsSection extends HookConsumerWidget {
                       disabled: disabled,
                     );
 
-                    final success = await editNotifier.updateQuestion(
-                      event.id,
-                      question.id,
-                      questionText: updatedQuestion.question,
-                      answerType: updatedQuestion.answerType,
-                      required: updatedQuestion.required,
-                      price: updatedQuestion.price,
-                      disabled: updatedQuestion.disabled,
-                    );
-
-                    if (!context.mounted) return;
-                    if (success) {
-                      displayToast(
-                        context,
-                        TypeMsg.msg,
-                        l10n.ticketsEditSuccess,
+                    await tokenExpireWrapper(ref, () async {
+                      final success = await editNotifier.updateQuestion(
+                        event.id,
+                        question.id,
+                        questionText: updatedQuestion.question,
+                        answerType: updatedQuestion.answerType,
+                        required: updatedQuestion.required,
+                        price: updatedQuestion.price,
+                        disabled: updatedQuestion.disabled,
                       );
-                      onEventUpdated(_withQuestion(event, updatedQuestion));
-                    } else {
-                      _showEditError(context, ref, l10n);
-                    }
+
+                      if (!context.mounted) return;
+                      if (success) {
+                        displayToast(
+                          context,
+                          TypeMsg.msg,
+                          l10n.ticketsEditSuccess,
+                        );
+                        onEventUpdated(_withQuestion(event, updatedQuestion));
+                      } else {
+                        _showEditError(context, ref, l10n);
+                      }
+                    });
                   },
                 ),
               ],
