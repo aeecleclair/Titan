@@ -234,7 +234,7 @@ abstract class Repository {
       headers: headers,
       body: body != null ? jsonEncode(body) : null,
     );
-    if (response.statusCode == 204 || response.statusCode == 200) {
+    if (response.statusCode == 204) {
       return true;
     } else if (response.statusCode >= 400) {
       logger.error(
