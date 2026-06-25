@@ -1,34 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:titan/tools/constants.dart';
-
-enum BottomModalType { main, danger }
 
 class BottomModalTemplate extends StatelessWidget {
-  final Widget child;
   final String title;
   final String? description;
-  final List<Widget>? actions;
-  final BottomModalType type;
+  final List<Widget> actions;
   final String? animationKey;
 
   const BottomModalTemplate({
     super.key,
-    required this.child,
-    this.type = BottomModalType.main,
     this.animationKey,
     required this.title,
     this.description,
-    this.actions,
+    required this.actions,
   });
-
-  const BottomModalTemplate.danger({
-    super.key,
-    required this.child,
-    this.animationKey,
-    required this.title,
-    this.description,
-    this.actions,
-  }) : type = BottomModalType.danger;
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +26,11 @@ class BottomModalTemplate extends StatelessWidget {
             width: 120,
             height: 4,
             decoration: BoxDecoration(
-              color: ColorConstants.onTertiary,
+              color: Theme.of(context).colorScheme.secondaryContainer,
               borderRadius: BorderRadius.circular(2),
               boxShadow: [
                 BoxShadow(
-                  color: ColorConstants.onTertiary.withAlpha(50),
+                  color: Theme.of(context).shadowColor,
                   blurRadius: 4,
                   spreadRadius: 1,
                 ),
@@ -58,9 +42,7 @@ class BottomModalTemplate extends StatelessWidget {
           tag: animationKey ?? 'bottom_modal',
           child: Container(
             decoration: BoxDecoration(
-              color: type == BottomModalType.main
-                  ? ColorConstants.background
-                  : ColorConstants.main,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
             ),
             padding: EdgeInsets.all(20),
@@ -73,9 +55,7 @@ class BottomModalTemplate extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w900,
-                    color: type == BottomModalType.main
-                        ? ColorConstants.tertiary
-                        : ColorConstants.background,
+                    color: Theme.of(context).colorScheme.secondaryContainer,
                   ),
                 ),
                 SizedBox(height: 20),
@@ -84,14 +64,10 @@ class BottomModalTemplate extends StatelessWidget {
                     description!,
                     style: TextStyle(
                       fontSize: 15,
-                      color: type == BottomModalType.main
-                          ? ColorConstants.tertiary
-                          : ColorConstants.background,
+                      color: Theme.of(context).colorScheme.secondaryContainer,
                     ),
                   ),
-                child,
-                if (actions != null && actions!.isNotEmpty)
-                  Column(children: actions!),
+                Column(children: actions),
                 SizedBox(height: 20),
               ],
             ),

@@ -35,6 +35,7 @@ class CalendarDialog extends StatelessWidget {
 
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      backgroundColor: Theme.of(context).colorScheme.secondaryFixed,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -44,10 +45,10 @@ class CalendarDialog extends StatelessWidget {
             children: [
               Text(
                 '${booking.room.name} - ${booking.reason}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 10),
@@ -60,7 +61,7 @@ class CalendarDialog extends StatelessWidget {
                 ),
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  color: Colors.grey.shade400,
+                  color: Theme.of(context).colorScheme.tertiary,
                   fontSize: 15,
                 ),
               ),
@@ -74,14 +75,17 @@ class CalendarDialog extends StatelessWidget {
               ),
               if (isManager) ...[
                 const SizedBox(height: 10),
-                const Divider(thickness: 3),
+                Divider(
+                  thickness: 3,
+                  color: Theme.of(context).colorScheme.tertiary,
+                ),
                 const SizedBox(height: 10),
                 if (booking.note != null)
                   Text(
                     booking.note!,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      color: Colors.grey,
+                      color: Theme.of(context).colorScheme.tertiary,
                       fontSize: 15,
                     ),
                   ),
@@ -136,11 +140,11 @@ class CalendarDialog extends StatelessWidget {
                       GestureDetector(
                         onTap: onEdit,
                         child: CardButton(
-                          color: Colors.white,
-                          shadowColor: Colors.grey.withValues(alpha: 0.2),
+                          color: Theme.of(context).colorScheme.primary,
+                          shadowColor: Theme.of(context).shadowColor,
                           child: HeroIcon(
                             HeroIcons.pencil,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),
                       ),
@@ -148,11 +152,11 @@ class CalendarDialog extends StatelessWidget {
                     GestureDetector(
                       onTap: onCopy,
                       child: CardButton(
-                        color: Colors.white,
-                        shadowColor: Colors.grey.withValues(alpha: 0.2),
+                        color: Theme.of(context).colorScheme.primary,
+                        shadowColor: Theme.of(context).shadowColor,
                         child: HeroIcon(
                           HeroIcons.documentDuplicate,
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                     ),
@@ -160,20 +164,23 @@ class CalendarDialog extends StatelessWidget {
                     GestureDetector(
                       onTap: onConfirm,
                       child: CardButton(
-                        color: Colors.white,
-                        shadowColor: Colors.grey.withValues(alpha: 0.2),
-                        child: HeroIcon(HeroIcons.check, color: Colors.black),
+                        color: Theme.of(context).colorScheme.primary,
+                        shadowColor: Theme.of(context).shadowColor,
+                        child: HeroIcon(
+                          HeroIcons.check,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
                       ),
                     ),
                     const Spacer(),
                     GestureDetector(
                       onTap: onDecline,
                       child: CardButton(
-                        color: Colors.black,
-                        shadowColor: Colors.black.withValues(alpha: 0.2),
-                        child: const HeroIcon(
+                        color: Theme.of(context).colorScheme.secondary,
+                        shadowColor: Theme.of(context).shadowColor,
+                        child: HeroIcon(
                           HeroIcons.xMark,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ),
                     ),
@@ -192,10 +199,10 @@ class CalendarDialog extends StatelessWidget {
                 width: 40,
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.shade500.withValues(alpha: 0.3),
+                      color: Theme.of(context).shadowColor,
                       blurRadius: 5,
                       spreadRadius: 1,
                     ),

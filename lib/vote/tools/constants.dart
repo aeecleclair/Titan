@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class VoteTextConstants {
   static const String add = 'Ajouter';
   static const String addMember = 'Ajouter un membre';
@@ -93,4 +95,9 @@ class VotePermissionConstants {
   static const String accessVotes = "access_campaign";
   static const String manageVotes = "manage_campaign";
   static const String vote = "vote";
+}
+
+class VoteColorConstants {
+  static const Color redGradient1 = Color(0xFF9E131F);
+  static const Color redGradient2 = Color(0xFF590512);
 }

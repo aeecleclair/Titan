@@ -20,6 +20,7 @@ import 'package:titan/tools/ui/widgets/date_entry.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class AddEditDeliveryPage extends HookConsumerWidget {
   const AddEditDeliveryPage({super.key});
@@ -37,6 +38,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
     final sortedProductsList = ref.watch(sortedByCategoryProductsProvider);
     final selected = ref.watch(selectedListProvider);
     final selectedNotifier = ref.watch(selectedListProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -56,15 +58,15 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
-                    const AlignLeftText(
+                    AlignLeftText(
                       AMAPTextConstants.addDelivery,
-                      color: AMAPColorConstants.green2,
+                      color: AMAPColors(isDarkTheme).secondaryFixedGreen,
                     ),
                     const SizedBox(height: 20),
                     TextEntry(
                       label: AMAPTextConstants.name,
                       controller: nameController,
-                      color: AMAPColorConstants.greenGradient2,
+                      color: AMAPColors(isDarkTheme).greenGradientSecondary,
                       enabledColor: AMAPColorConstants.enabled,
                     ),
 
@@ -75,7 +77,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                         label: AMAPTextConstants.commandDate,
                         controller: dateController,
                         enabledColor: AMAPColorConstants.enabled,
-                        color: AMAPColorConstants.greenGradient2,
+                        color: AMAPColors(isDarkTheme).greenGradientSecondary,
                       ),
                     ),
                     const SizedBox(height: 15),
@@ -103,12 +105,6 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                               style: const TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.w800,
-                                                color: Color.fromARGB(
-                                                  0,
-                                                  255,
-                                                  0,
-                                                  0,
-                                                ),
                                               ),
                                             ),
                                           ),
@@ -136,9 +132,9 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                           const SizedBox(height: 30),
                           WaitingButton(
                             builder: (child) => AddEditButtonLayout(
-                              colors: const [
-                                AMAPColorConstants.greenGradient1,
-                                AMAPColorConstants.greenGradient2,
+                              colors: [
+                                AMAPColors(isDarkTheme).greenGradientPrimary,
+                                AMAPColors(isDarkTheme).greenGradientSecondary,
                               ],
                               child: child,
                             ),
@@ -221,13 +217,15 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w700,
-                                color: AMAPColorConstants.background,
+                                color: AMAPColors(isDarkTheme).background,
                               ),
                             ),
                           ),
                         ],
                       ),
-                      loaderColor: AMAPColorConstants.greenGradient2,
+                      loaderColor: AMAPColors(
+                        isDarkTheme,
+                      ).greenGradientSecondary,
                     ),
                     const SizedBox(height: 40),
                   ],

@@ -64,49 +64,44 @@ class StructureAdminCard extends ConsumerWidget {
               context: context,
               modal: BottomModalTemplate(
                 title: "Gestion de ${structure.name}",
-                child: Column(
-                  children: [
-                    if (isManager) ...[
-                      Button(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          selectedStructureNotifier.setStructure(structure);
-                          QR.to(
-                            PaymentRouter.root + PaymentRouter.administrators,
-                          );
-                        },
-                        text: "Administrateurs",
-                      ),
-                      const SizedBox(height: 10),
-                    ],
+                actions: [
+                  if (isManager) ...[
                     Button(
                       onPressed: () {
                         Navigator.of(context).pop();
                         selectedStructureNotifier.setStructure(structure);
                         QR.to(
-                          PaymentRouter.root + PaymentRouter.structureStores,
+                          PaymentRouter.root + PaymentRouter.administrators,
                         );
                       },
-                      text: "Magasins",
+                      text: "Administrateurs",
                     ),
                     const SizedBox(height: 10),
-                    Button(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        tokenExpireWrapper(
-                          ref,
-                          () => invoicesNotifier.getStructureInvoices(
-                            structure.id,
-                          ),
-                        );
-                        QR.to(
-                          PaymentRouter.root + PaymentRouter.invoicesStructure,
-                        );
-                      },
-                      text: "Factures",
-                    ),
                   ],
-                ),
+                  Button(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      selectedStructureNotifier.setStructure(structure);
+                      QR.to(PaymentRouter.root + PaymentRouter.structureStores);
+                    },
+                    text: "Magasins",
+                  ),
+                  const SizedBox(height: 10),
+                  Button(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      tokenExpireWrapper(
+                        ref,
+                        () =>
+                            invoicesNotifier.getStructureInvoices(structure.id),
+                      );
+                      QR.to(
+                        PaymentRouter.root + PaymentRouter.invoicesStructure,
+                      );
+                    },
+                    text: "Factures",
+                  ),
+                ],
               ),
             );
           },
