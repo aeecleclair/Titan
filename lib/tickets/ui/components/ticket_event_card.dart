@@ -42,8 +42,9 @@ class TicketEventCard extends ConsumerWidget {
               Button(
                 text: l10n.ticketsViewResults,
                 onPressed: () {
-                  ref.read(selectedTicketEventProvider.notifier).state =
-                      ticketEvent;
+                  ref
+                      .read(selectedTicketEventProvider.notifier)
+                      .setEvent(ticketEvent);
                   QR.to(TicketsRouter.root + TicketsRouter.results);
                   Navigator.of(context).pop();
                 },
@@ -68,8 +69,9 @@ class TicketEventCard extends ConsumerWidget {
 
                       if (context.mounted) {
                         Navigator.of(context).pop();
-                        ref.read(selectedTicketEventProvider.notifier).state =
-                            detailedEvent;
+                        ref
+                            .read(selectedTicketEventProvider.notifier)
+                            .setEvent(detailedEvent);
                         QR.to(TicketsRouter.root + TicketsRouter.edit);
                         Navigator.of(context).pop();
                       }

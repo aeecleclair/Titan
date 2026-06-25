@@ -450,14 +450,12 @@ Future getOnlyHourDate(
   ).format(DateTimeField.combine(now, time));
 }
 
-Future getFullDate(
-  BuildContext context,
-  TextEditingController dateController, {
+Future<DateTime?> pickFullDate(
+  BuildContext context, {
   DateTime? initialDate,
   DateTime? firstDate,
   DateTime? lastDate,
 }) async {
-  final locale = Localizations.localeOf(context).toString();
   final DateTime now = DateTime.now();
   final DateTime? date = await _getDate(
     context,
@@ -466,12 +464,28 @@ Future getFullDate(
     firstDate,
     lastDate,
   );
-  if (date == null || !context.mounted) return;
+  if (date == null || !context.mounted) return null;
   final TimeOfDay? time = await _getTime(context);
-  if (time == null) return;
-  dateController.text = DateFormat.yMd(
-    locale,
-  ).add_Hm().format(DateTimeField.combine(date, time));
+  if (time == null) return null;
+  return DateTimeField.combine(date, time);
+}
+
+Future getFullDate(
+  BuildContext context,
+  TextEditingController dateController, {
+  DateTime? initialDate,
+  DateTime? firstDate,
+  DateTime? lastDate,
+}) async {
+  final picked = await pickFullDate(
+    context,
+    initialDate: initialDate,
+    firstDate: firstDate,
+    lastDate: lastDate,
+  );
+  if (picked == null || !context.mounted) return;
+  final locale = Localizations.localeOf(context).toString();
+  dateController.text = DateFormat.yMd(locale).add_Hm().format(picked);
 }
 
 int generateIntFromString(String s) {

@@ -20,6 +20,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/styleguide/horizontal_multi_select.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
+import 'package:titan/tickets/providers/sessions_form_provider.dart';
 import 'package:titan/tickets/providers/ticket_event_list_provider.dart';
 
 enum QuestionType { tarif, quota }
@@ -46,13 +47,9 @@ class CreateTicketEventPage extends HookConsumerWidget {
           : null,
     );
     final categories = useState<List<Category>>([]);
-    final sessionCardController = useMemoized(SessionCardController.new);
     final questions = useState<List<_QuestionFormData>>([]);
     final scrollController = useScrollController();
-
-    useEffect(() {
-      return sessionCardController.dispose;
-    }, [sessionCardController]);
+    final sessionsFormNotifier = ref.read(sessionsFormProvider.notifier);
 
     final locale = Localizations.localeOf(context);
 
@@ -129,7 +126,7 @@ class CreateTicketEventPage extends HookConsumerWidget {
                   TarifCard(onChanged: (value) => categories.value = value),
                   const SizedBox(height: 16),
 
-                  SessionCard(controller: sessionCardController),
+                  const SessionCard(),
                   const SizedBox(height: 16),
                   _ExtraQuestionsSection(
                     questions: questions.value,
@@ -168,12 +165,12 @@ class CreateTicketEventPage extends HookConsumerWidget {
                           return;
                         }
 
-                        final eventSessions = sessionCardController
-                            .buildSessions(locale.toString());
-                        final sessionEntries = sessionCardController.entries;
+                        final sessionsForm = ref.read(sessionsFormProvider);
+                        final eventSessions = sessionsFormNotifier
+                            .buildSessions();
 
-                        if (sessionEntries.any(
-                          (entry) => entry['label']!.text.trim().isEmpty,
+                        if (sessionsForm.entries.any(
+                          (entry) => entry.label.trim().isEmpty,
                         )) {
                           displayToast(
                             context,
@@ -183,8 +180,8 @@ class CreateTicketEventPage extends HookConsumerWidget {
                           return;
                         }
 
-                        if (sessionEntries.any(
-                          (entry) => entry['date']!.text.trim().isEmpty,
+                        if (sessionsForm.entries.any(
+                          (entry) => entry.startDatetime == null,
                         )) {
                           displayToast(
                             context,

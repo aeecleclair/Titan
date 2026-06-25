@@ -85,7 +85,7 @@ class _EditTicketEventContent extends HookConsumerWidget {
         if (!context.mounted) return;
 
         if (success) {
-          ref.read(selectedTicketEventProvider.notifier).state = null;
+          ref.read(selectedTicketEventProvider.notifier).clear();
           final storeId = event.storeId;
           if (storeId != null) {
             await ref
@@ -234,7 +234,7 @@ class _EditTicketEventContent extends HookConsumerWidget {
 
 void _updateTicketEventState(WidgetRef ref, TicketEvent updated) {
   ref.read(ticketEventByIdProvider(updated.id).notifier).setEvent(updated);
-  ref.read(selectedTicketEventProvider.notifier).state = updated;
+  ref.read(selectedTicketEventProvider.notifier).setEvent(updated);
 }
 
 TicketEvent _withCategory(TicketEvent event, Category category) {
@@ -271,156 +271,168 @@ Future<void> _showGeneralInfoEditDialog(
   TicketEvent event,
   void Function(TicketEvent) onEventUpdated,
 ) async {
-  final l10n = AppLocalizations.of(context)!;
-  final locale = Localizations.localeOf(context);
-  final dateFormatter = DateFormat('dd/MM/yyyy HH:mm', locale.toString());
-  final editNotifier = ref.read(ticketEventEditProvider.notifier);
-
-  final titleController = TextEditingController(text: event.name);
-  final placesController = TextEditingController(
-    text: event.quota?.toString() ?? '',
-  );
-  final startDateController = TextEditingController(
-    text: dateFormatter.format(event.openDatetime),
-  );
-  final endDateController = TextEditingController(
-    text: event.closeDatetime != null
-        ? dateFormatter.format(event.closeDatetime!)
-        : '',
-  );
-
   await showCustomBottomModal(
     context: context,
     ref: ref,
-    modal: Builder(
-      builder: (modalContext) => BottomModalTemplate(
-        title: l10n.ticketsGeneralInfo,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextEntry(
-                maxLines: 1,
-                label: l10n.ticketsTitleLabel,
-                controller: titleController,
-                onChanged: (_) {},
-              ),
-              const SizedBox(height: 8),
-              TextEntry(
-                maxLines: 1,
-                label: l10n.ticketsPlacesLabel,
-                controller: placesController,
-                keyboardType: TextInputType.number,
-                isInt: true,
-                canBeEmpty: true,
-                onChanged: (_) {},
-              ),
-              const SizedBox(height: 8),
-              DateEntry(
-                label: l10n.ticketsStartDateLabel,
-                controller: startDateController,
-                onTap: () => getFullDate(modalContext, startDateController),
-              ),
-              DateEntry(
-                label: l10n.ticketsEndDateLabel,
-                controller: endDateController,
-                onTap: () => getFullDate(modalContext, endDateController),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                l10n.ticketsCloseEventHint,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: ColorConstants.onTertiary,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Button(
-                text: l10n.ticketsSaveChanges,
-                onPressed: () async {
-                  if (titleController.text.trim().isEmpty) {
-                    displayToast(
-                      modalContext,
-                      TypeMsg.error,
-                      l10n.ticketsTitleRequired,
-                    );
-                    return;
-                  }
-                  if (startDateController.text.trim().isEmpty) {
-                    displayToast(
-                      modalContext,
-                      TypeMsg.error,
-                      l10n.ticketsStartDateRequired,
-                    );
-                    return;
-                  }
+    modal: _GeneralInfoEditModal(
+      parentContext: context,
+      event: event,
+      onEventUpdated: onEventUpdated,
+    ),
+  );
+}
 
-                  Navigator.pop(modalContext);
-                  if (!context.mounted) return;
+class _GeneralInfoEditModal extends HookConsumerWidget {
+  const _GeneralInfoEditModal({
+    required this.parentContext,
+    required this.event,
+    required this.onEventUpdated,
+  });
 
-                  try {
-                    final openDatetime = DateTime.parse(
+  final BuildContext parentContext;
+  final TicketEvent event;
+  final void Function(TicketEvent) onEventUpdated;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context);
+    final dateFormatter = DateFormat('dd/MM/yyyy HH:mm', locale.toString());
+    final editNotifier = ref.read(ticketEventEditProvider.notifier);
+
+    final titleController = useTextEditingController(text: event.name);
+    final placesController = useTextEditingController(
+      text: event.quota?.toString() ?? '',
+    );
+    final startDateController = useTextEditingController(
+      text: dateFormatter.format(event.openDatetime),
+    );
+    final endDateController = useTextEditingController(
+      text: event.closeDatetime != null
+          ? dateFormatter.format(event.closeDatetime!)
+          : '',
+    );
+
+    return BottomModalTemplate(
+      title: l10n.ticketsGeneralInfo,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            TextEntry(
+              maxLines: 1,
+              label: l10n.ticketsTitleLabel,
+              controller: titleController,
+              onChanged: (_) {},
+            ),
+            const SizedBox(height: 8),
+            TextEntry(
+              maxLines: 1,
+              label: l10n.ticketsPlacesLabel,
+              controller: placesController,
+              keyboardType: TextInputType.number,
+              isInt: true,
+              canBeEmpty: true,
+              onChanged: (_) {},
+            ),
+            const SizedBox(height: 8),
+            DateEntry(
+              label: l10n.ticketsStartDateLabel,
+              controller: startDateController,
+              onTap: () => getFullDate(context, startDateController),
+            ),
+            DateEntry(
+              label: l10n.ticketsEndDateLabel,
+              controller: endDateController,
+              onTap: () => getFullDate(context, endDateController),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              l10n.ticketsCloseEventHint,
+              style: TextStyle(
+                fontSize: 12,
+                color: ColorConstants.onTertiary,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Button(
+              text: l10n.ticketsSaveChanges,
+              onPressed: () async {
+                if (titleController.text.trim().isEmpty) {
+                  displayToast(
+                    context,
+                    TypeMsg.error,
+                    l10n.ticketsTitleRequired,
+                  );
+                  return;
+                }
+                if (startDateController.text.trim().isEmpty) {
+                  displayToast(
+                    context,
+                    TypeMsg.error,
+                    l10n.ticketsStartDateRequired,
+                  );
+                  return;
+                }
+
+                Navigator.pop(context);
+                if (!parentContext.mounted) return;
+
+                try {
+                  final openDatetime = DateTime.parse(
+                    processDateBackWithHourMaybe(
+                      startDateController.text,
+                      locale.toString(),
+                    ),
+                  );
+                  DateTime? closeDatetime;
+                  if (endDateController.text.trim().isNotEmpty) {
+                    closeDatetime = DateTime.parse(
                       processDateBackWithHourMaybe(
-                        startDateController.text,
+                        endDateController.text,
                         locale.toString(),
                       ),
                     );
-                    DateTime? closeDatetime;
-                    if (endDateController.text.trim().isNotEmpty) {
-                      closeDatetime = DateTime.parse(
-                        processDateBackWithHourMaybe(
-                          endDateController.text,
-                          locale.toString(),
-                        ),
-                      );
-                    }
-                    int? quota;
-                    if (placesController.text.trim().isNotEmpty) {
-                      quota = int.tryParse(placesController.text.trim());
-                    }
-
-                    final updated = event.copyWith(
-                      name: titleController.text.trim(),
-                      quota: quota,
-                      openDatetime: openDatetime,
-                      closeDatetime: closeDatetime,
-                    );
-
-                    await tokenExpireWrapper(ref, () async {
-                      final success = await editNotifier.editTicketEvent(
-                        updated,
-                      );
-
-                      if (!context.mounted) return;
-                      if (success) {
-                        displayToast(
-                          context,
-                          TypeMsg.msg,
-                          l10n.ticketsEditSuccess,
-                        );
-                        onEventUpdated(updated);
-                      } else {
-                        showEditError(context, ref, l10n);
-                      }
-                    });
-                  } catch (e) {
-                    if (context.mounted) {
-                      displayToast(context, TypeMsg.error, e.toString());
-                    }
                   }
-                },
-              ),
-            ],
-          ),
+                  int? quota;
+                  if (placesController.text.trim().isNotEmpty) {
+                    quota = int.tryParse(placesController.text.trim());
+                  }
+
+                  final updated = event.copyWith(
+                    name: titleController.text.trim(),
+                    quota: quota,
+                    openDatetime: openDatetime,
+                    closeDatetime: closeDatetime,
+                  );
+
+                  await tokenExpireWrapper(ref, () async {
+                    final success = await editNotifier.editTicketEvent(updated);
+
+                    if (!parentContext.mounted) return;
+                    if (success) {
+                      displayToast(
+                        parentContext,
+                        TypeMsg.msg,
+                        l10n.ticketsEditSuccess,
+                      );
+                      onEventUpdated(updated);
+                    } else {
+                      showEditError(parentContext, ref, l10n);
+                    }
+                  });
+                } catch (e) {
+                  if (parentContext.mounted) {
+                    displayToast(parentContext, TypeMsg.error, e.toString());
+                  }
+                }
+              },
+            ),
+          ],
         ),
       ),
-    ),
-  );
-
-  titleController.dispose();
-  placesController.dispose();
-  startDateController.dispose();
-  endDateController.dispose();
+    );
+  }
 }
 
 Future<void> _toggleEventDisabled(
@@ -513,56 +525,16 @@ class _CategoriesSection extends HookConsumerWidget {
     final editNotifier = ref.watch(ticketEventEditProvider.notifier);
 
     Future<void> addCategory() async {
-      final nameController = TextEditingController();
-      final priceController = TextEditingController(text: '0');
-      final quotaController = TextEditingController();
-
-      final confirmed = await showDialog<bool>(
+      final result = await showDialog<_CategoryFormResult>(
         context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text(l10n.ticketsAddCategory),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextEntry(
-                label: l10n.ticketsTariffLabel(event.categories.length + 1),
-                controller: nameController,
-                onChanged: (_) {},
-              ),
-              const SizedBox(height: 8),
-              TextEntry(
-                label: l10n.ticketsPriceLabel,
-                controller: priceController,
-                keyboardType: TextInputType.number,
-                onChanged: (_) {},
-              ),
-              const SizedBox(height: 8),
-              TextEntry(
-                label: l10n.ticketsQuotaLabel,
-                controller: quotaController,
-                keyboardType: TextInputType.number,
-                canBeEmpty: true,
-                onChanged: (_) {},
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: Text(l10n.globalCancel),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: Text(l10n.ticketsSave),
-            ),
-          ],
-        ),
+        builder: (ctx) =>
+            _AddCategoryDialog(tariffIndex: event.categories.length + 1),
       );
 
-      if (confirmed != true || !context.mounted) return;
-      if (nameController.text.trim().isEmpty) return;
+      if (result == null || !context.mounted) return;
+      if (result.name.isEmpty) return;
 
-      final price = int.tryParse(priceController.text) ?? 0;
+      final price = int.tryParse(result.priceText) ?? 0;
       if (price != 0 && price < 1) {
         displayToast(context, TypeMsg.error, l10n.ticketsMinPriceError);
         return;
@@ -570,11 +542,9 @@ class _CategoriesSection extends HookConsumerWidget {
 
       final category = Category(
         id: '',
-        name: nameController.text.trim(),
+        name: result.name,
         price: price,
-        quota: quotaController.text.isEmpty
-            ? null
-            : int.tryParse(quotaController.text),
+        quota: result.quotaText.isEmpty ? null : int.tryParse(result.quotaText),
         requiredMembership: null,
       );
 
@@ -728,135 +698,233 @@ class _CategoriesSection extends HookConsumerWidget {
               ),
             );
           }),
-          OutlinedButton.icon(
-            onPressed: addCategory,
-            icon: const HeroIcon(HeroIcons.plus, size: 20),
-            label: Text(l10n.ticketsAddCategory),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                onPressed: addCategory,
+                icon: const HeroIcon(
+                  HeroIcons.plus,
+                  size: 22,
+                  color: ColorConstants.main,
+                ),
+                tooltip: l10n.ticketsAddCategory,
+              ),
+            ],
           ),
         ],
       ),
     );
   }
+}
 
-  Future<void> _showCategoryEditDialog(
-    BuildContext context,
-    WidgetRef ref,
-    TicketEvent event,
-    Category category,
-    void Function(TicketEvent) onEventUpdated,
-  ) async {
+Future<void> _showCategoryEditDialog(
+  BuildContext context,
+  WidgetRef ref,
+  TicketEvent event,
+  Category category,
+  void Function(TicketEvent) onEventUpdated,
+) async {
+  await showCustomBottomModal(
+    context: context,
+    ref: ref,
+    modal: _CategoryEditModal(
+      parentContext: context,
+      event: event,
+      category: category,
+      onEventUpdated: onEventUpdated,
+    ),
+  );
+}
+
+class _CategoryFormResult {
+  const _CategoryFormResult({
+    required this.name,
+    required this.priceText,
+    required this.quotaText,
+  });
+
+  final String name;
+  final String priceText;
+  final String quotaText;
+}
+
+class _AddCategoryDialog extends HookConsumerWidget {
+  const _AddCategoryDialog({required this.tariffIndex});
+
+  final int tariffIndex;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final nameController = useTextEditingController();
+    final priceController = useTextEditingController(text: '0');
+    final quotaController = useTextEditingController();
+
+    return AlertDialog(
+      title: Text(l10n.ticketsAddCategory),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextEntry(
+            label: l10n.ticketsTariffLabel(tariffIndex),
+            controller: nameController,
+            onChanged: (_) {},
+          ),
+          const SizedBox(height: 8),
+          TextEntry(
+            label: l10n.ticketsPriceLabel,
+            controller: priceController,
+            keyboardType: TextInputType.number,
+            onChanged: (_) {},
+          ),
+          const SizedBox(height: 8),
+          TextEntry(
+            label: l10n.ticketsQuotaLabel,
+            controller: quotaController,
+            keyboardType: TextInputType.number,
+            canBeEmpty: true,
+            onChanged: (_) {},
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(l10n.globalCancel),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.pop(
+            context,
+            _CategoryFormResult(
+              name: nameController.text.trim(),
+              priceText: priceController.text,
+              quotaText: quotaController.text,
+            ),
+          ),
+          child: Text(l10n.ticketsSave),
+        ),
+      ],
+    );
+  }
+}
+
+class _CategoryEditModal extends HookConsumerWidget {
+  const _CategoryEditModal({
+    required this.parentContext,
+    required this.event,
+    required this.category,
+    required this.onEventUpdated,
+  });
+
+  final BuildContext parentContext;
+  final TicketEvent event;
+  final Category category;
+  final void Function(TicketEvent) onEventUpdated;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final editNotifier = ref.read(ticketEventEditProvider.notifier);
-
-    final nameController = TextEditingController(text: category.name);
-    final priceController = TextEditingController(
+    final nameController = useTextEditingController(text: category.name);
+    final priceController = useTextEditingController(
       text: category.price.toString(),
     );
-    final quotaController = TextEditingController(
+    final quotaController = useTextEditingController(
       text: category.quota?.toString() ?? '',
     );
-    var disabled = category.disabled;
+    final disabled = useState(category.disabled);
 
-    await showCustomBottomModal(
-      context: context,
-      ref: ref,
-      modal: StatefulBuilder(
-        builder: (modalContext, setState) => BottomModalTemplate(
-          title: l10n.ticketsEdit,
-          child: Column(
-            children: [
-              TextEntry(
-                label: l10n.ticketsCategoryLabel,
-                controller: nameController,
-                onChanged: (_) {},
-              ),
-              const SizedBox(height: 8),
-              TextEntry(
-                label: l10n.ticketsPriceLabel,
-                controller: priceController,
-                keyboardType: TextInputType.number,
-                onChanged: (_) {},
-              ),
-              const SizedBox(height: 8),
-              TextEntry(
-                label: l10n.ticketsQuotaLabel,
-                controller: quotaController,
-                keyboardType: TextInputType.number,
-                canBeEmpty: true,
-                onChanged: (_) {},
-              ),
-              SwitchListTile(
-                value: !disabled,
-                onChanged: (v) => setState(() => disabled = !v),
-                title: Text(
-                  disabled
-                      ? l10n.ticketsCategoryDeactivated
-                      : l10n.ticketsCategoryActivated,
-                ),
-                contentPadding: EdgeInsets.zero,
-              ),
-              const SizedBox(height: 20),
-              Button(
-                text: l10n.ticketsSaveChanges,
-                onPressed: () async {
-                  Navigator.pop(modalContext);
-                  if (!context.mounted) return;
-
-                  final price =
-                      int.tryParse(priceController.text) ?? category.price;
-                  if (price != 0 && price < 1) {
-                    displayToast(
-                      context,
-                      TypeMsg.error,
-                      l10n.ticketsMinPriceError,
-                    );
-                    return;
-                  }
-
-                  final updated = category.copyWith(
-                    name: nameController.text.trim(),
-                    price: price,
-                    quota: quotaController.text.isEmpty
-                        ? null
-                        : int.tryParse(quotaController.text),
-                    disabled: disabled,
-                  );
-
-                  await tokenExpireWrapper(ref, () async {
-                    final success = await editNotifier.updateCategory(
-                      event.id,
-                      updated,
-                    );
-                    if (!context.mounted) return;
-                    if (success) {
-                      displayToast(
-                        context,
-                        TypeMsg.msg,
-                        l10n.ticketsEditSuccess,
-                      );
-                      onEventUpdated(_withCategory(event, updated));
-                    } else {
-                      final error = ref.read(ticketEventEditProvider).error;
-                      displayToast(
-                        context,
-                        TypeMsg.error,
-                        error is AppException
-                            ? error.message
-                            : l10n.ticketsUpdateError,
-                      );
-                    }
-                  });
-                },
-              ),
-            ],
+    return BottomModalTemplate(
+      title: l10n.ticketsEdit,
+      child: Column(
+        children: [
+          TextEntry(
+            label: l10n.ticketsCategoryLabel,
+            controller: nameController,
+            onChanged: (_) {},
           ),
-        ),
+          const SizedBox(height: 8),
+          TextEntry(
+            label: l10n.ticketsPriceLabel,
+            controller: priceController,
+            keyboardType: TextInputType.number,
+            onChanged: (_) {},
+          ),
+          const SizedBox(height: 8),
+          TextEntry(
+            label: l10n.ticketsQuotaLabel,
+            controller: quotaController,
+            keyboardType: TextInputType.number,
+            canBeEmpty: true,
+            onChanged: (_) {},
+          ),
+          SwitchListTile(
+            value: !disabled.value,
+            onChanged: (v) => disabled.value = !v,
+            title: Text(
+              disabled.value
+                  ? l10n.ticketsCategoryDeactivated
+                  : l10n.ticketsCategoryActivated,
+            ),
+            contentPadding: EdgeInsets.zero,
+          ),
+          const SizedBox(height: 20),
+          Button(
+            text: l10n.ticketsSaveChanges,
+            onPressed: () async {
+              Navigator.pop(context);
+              if (!parentContext.mounted) return;
+
+              final price =
+                  int.tryParse(priceController.text) ?? category.price;
+              if (price != 0 && price < 1) {
+                displayToast(
+                  parentContext,
+                  TypeMsg.error,
+                  l10n.ticketsMinPriceError,
+                );
+                return;
+              }
+
+              final updated = category.copyWith(
+                name: nameController.text.trim(),
+                price: price,
+                quota: quotaController.text.isEmpty
+                    ? null
+                    : int.tryParse(quotaController.text),
+                disabled: disabled.value,
+              );
+
+              await tokenExpireWrapper(ref, () async {
+                final success = await editNotifier.updateCategory(
+                  event.id,
+                  updated,
+                );
+                if (!parentContext.mounted) return;
+                if (success) {
+                  displayToast(
+                    parentContext,
+                    TypeMsg.msg,
+                    l10n.ticketsEditSuccess,
+                  );
+                  onEventUpdated(_withCategory(event, updated));
+                } else {
+                  final error = ref.read(ticketEventEditProvider).error;
+                  displayToast(
+                    parentContext,
+                    TypeMsg.error,
+                    error is AppException
+                        ? error.message
+                        : l10n.ticketsUpdateError,
+                  );
+                }
+              });
+            },
+          ),
+        ],
       ),
     );
-
-    nameController.dispose();
-    priceController.dispose();
-    quotaController.dispose();
   }
 }
 
@@ -872,99 +940,25 @@ class _QuestionsSection extends HookConsumerWidget {
     final editNotifier = ref.watch(ticketEventEditProvider.notifier);
 
     Future<void> addQuestion() async {
-      final textController = TextEditingController();
-      final priceController = TextEditingController();
-      var answerType = AnswerType.text;
-      var required = false;
-
-      final confirmed = await showDialog<bool>(
+      final result = await showDialog<_QuestionFormResult>(
         context: context,
-        builder: (ctx) => StatefulBuilder(
-          builder: (ctx, setState) => AlertDialog(
-            title: Text(l10n.ticketsAddQuestion),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextEntry(
-                    label: l10n.ticketsQuestionLabel(
-                      event.questions.length + 1,
-                    ),
-                    controller: textController,
-                    onChanged: (_) {},
-                  ),
-                  const SizedBox(height: 8),
-                  DropdownButtonFormField<AnswerType>(
-                    initialValue: answerType,
-                    decoration: InputDecoration(
-                      labelText: l10n.ticketsQuestionTypeLabel,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    items: [
-                      DropdownMenuItem(
-                        value: AnswerType.text,
-                        child: Text(l10n.ticketsAnswerTypeText),
-                      ),
-                      DropdownMenuItem(
-                        value: AnswerType.number,
-                        child: Text(l10n.ticketsAnswerTypeNumber),
-                      ),
-                      DropdownMenuItem(
-                        value: AnswerType.boolean,
-                        child: Text(l10n.ticketsAnswerTypeBoolean),
-                      ),
-                    ],
-                    onChanged: (value) {
-                      if (value != null) setState(() => answerType = value);
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  TextEntry(
-                    label: l10n.ticketsPriceLabel,
-                    controller: priceController,
-                    keyboardType: TextInputType.number,
-                    canBeEmpty: true,
-                    onChanged: (_) {},
-                  ),
-                  CheckboxListTile(
-                    value: required,
-                    onChanged: (value) =>
-                        setState(() => required = value ?? false),
-                    title: Text(l10n.ticketsQuestionRequiredLabel),
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                ],
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(ctx, false),
-                child: Text(l10n.globalCancel),
-              ),
-              FilledButton(
-                onPressed: () => Navigator.pop(ctx, true),
-                child: Text(l10n.ticketsSave),
-              ),
-            ],
-          ),
-        ),
+        builder: (ctx) =>
+            _AddQuestionDialog(questionIndex: event.questions.length + 1),
       );
 
-      if (confirmed != true || !context.mounted) return;
-      if (textController.text.trim().isEmpty) return;
+      if (result == null || !context.mounted) return;
+      if (result.text.isEmpty) return;
 
-      final price = priceController.text.isEmpty
+      final price = result.priceText.isEmpty
           ? null
-          : int.tryParse(priceController.text);
+          : int.tryParse(result.priceText);
 
       await tokenExpireWrapper(ref, () async {
         final created = await editNotifier.createQuestion(
           event.id,
-          questionText: textController.text.trim(),
-          answerType: answerType,
-          required: required,
+          questionText: result.text,
+          answerType: result.answerType,
+          required: result.required,
           price: price,
         );
 
@@ -1114,151 +1108,282 @@ class _QuestionsSection extends HookConsumerWidget {
               ),
             );
           }),
-          OutlinedButton.icon(
-            onPressed: addQuestion,
-            icon: const HeroIcon(HeroIcons.plus, size: 20),
-            label: Text(l10n.ticketsAddQuestion),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                onPressed: addQuestion,
+                icon: const HeroIcon(
+                  HeroIcons.plus,
+                  size: 22,
+                  color: ColorConstants.main,
+                ),
+                tooltip: l10n.ticketsAddQuestion,
+              ),
+            ],
           ),
         ],
       ),
     );
   }
+}
 
-  Future<void> _showQuestionEditDialog(
-    BuildContext context,
-    WidgetRef ref,
-    TicketEvent event,
-    Question question,
-    void Function(TicketEvent) onEventUpdated,
-  ) async {
+Future<void> _showQuestionEditDialog(
+  BuildContext context,
+  WidgetRef ref,
+  TicketEvent event,
+  Question question,
+  void Function(TicketEvent) onEventUpdated,
+) async {
+  await showCustomBottomModal(
+    context: context,
+    ref: ref,
+    modal: _QuestionEditModal(
+      parentContext: context,
+      event: event,
+      question: question,
+      onEventUpdated: onEventUpdated,
+    ),
+  );
+}
+
+class _QuestionFormResult {
+  const _QuestionFormResult({
+    required this.text,
+    required this.answerType,
+    required this.required,
+    required this.priceText,
+  });
+
+  final String text;
+  final AnswerType answerType;
+  final bool required;
+  final String priceText;
+}
+
+class _AddQuestionDialog extends HookConsumerWidget {
+  const _AddQuestionDialog({required this.questionIndex});
+
+  final int questionIndex;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final editNotifier = ref.read(ticketEventEditProvider.notifier);
+    final textController = useTextEditingController();
+    final priceController = useTextEditingController();
+    final answerType = useState(AnswerType.text);
+    final required = useState(false);
 
-    final textController = TextEditingController(text: question.question);
-    final priceController = TextEditingController(
-      text: question.price?.toString() ?? '',
-    );
-    var answerType = question.answerType;
-    var required = question.required;
-    var disabled = question.disabled;
-
-    await showCustomBottomModal(
-      context: context,
-      ref: ref,
-      modal: StatefulBuilder(
-        builder: (modalContext, setState) => BottomModalTemplate(
-          title: l10n.ticketsEditTitle,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                TextEntry(
-                  label: l10n.ticketsQuestionLabel(1),
-                  controller: textController,
-                  onChanged: (_) {},
+    return AlertDialog(
+      title: Text(l10n.ticketsAddQuestion),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextEntry(
+              label: l10n.ticketsQuestionLabel(questionIndex),
+              controller: textController,
+              onChanged: (_) {},
+            ),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<AnswerType>(
+              initialValue: answerType.value,
+              decoration: InputDecoration(
+                labelText: l10n.ticketsQuestionTypeLabel,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                const SizedBox(height: 8),
-                DropdownButtonFormField<AnswerType>(
-                  initialValue: answerType,
-                  decoration: InputDecoration(
-                    labelText: l10n.ticketsQuestionTypeLabel,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  items: [
-                    DropdownMenuItem(
-                      value: AnswerType.text,
-                      child: Text(l10n.ticketsAnswerTypeText),
-                    ),
-                    DropdownMenuItem(
-                      value: AnswerType.number,
-                      child: Text(l10n.ticketsAnswerTypeNumber),
-                    ),
-                    DropdownMenuItem(
-                      value: AnswerType.boolean,
-                      child: Text(l10n.ticketsAnswerTypeBoolean),
-                    ),
-                  ],
-                  onChanged: (v) {
-                    if (v != null) setState(() => answerType = v);
-                  },
+              ),
+              items: [
+                DropdownMenuItem(
+                  value: AnswerType.text,
+                  child: Text(l10n.ticketsAnswerTypeText),
                 ),
-                const SizedBox(height: 8),
-                TextEntry(
-                  label: l10n.ticketsPriceLabel,
-                  controller: priceController,
-                  keyboardType: TextInputType.number,
-                  canBeEmpty: true,
-                  onChanged: (_) {},
+                DropdownMenuItem(
+                  value: AnswerType.number,
+                  child: Text(l10n.ticketsAnswerTypeNumber),
                 ),
-                CheckboxListTile(
-                  value: required,
-                  onChanged: (v) => setState(() => required = v ?? false),
-                  title: Text(l10n.ticketsQuestionRequiredLabel),
-                  contentPadding: EdgeInsets.zero,
-                ),
-                SwitchListTile(
-                  value: !disabled,
-                  onChanged: (v) => setState(() => disabled = !v),
-                  title: Text(
-                    disabled
-                        ? l10n.ticketsQuestionDeactivated
-                        : l10n.ticketsQuestionActivated,
-                  ),
-                  contentPadding: EdgeInsets.zero,
-                ),
-                const SizedBox(height: 20),
-                Button(
-                  text: l10n.ticketsSaveChanges,
-                  onPressed: () async {
-                    Navigator.pop(modalContext);
-                    if (!context.mounted) return;
-
-                    final price = priceController.text.isEmpty
-                        ? null
-                        : int.tryParse(priceController.text);
-
-                    final updatedQuestion = question.copyWith(
-                      question: textController.text.trim(),
-                      answerType: answerType,
-                      required: required,
-                      price: price,
-                      disabled: disabled,
-                    );
-
-                    await tokenExpireWrapper(ref, () async {
-                      final success = await editNotifier.updateQuestion(
-                        event.id,
-                        question.id,
-                        questionText: updatedQuestion.question,
-                        answerType: updatedQuestion.answerType,
-                        required: updatedQuestion.required,
-                        price: updatedQuestion.price,
-                        disabled: updatedQuestion.disabled,
-                      );
-
-                      if (!context.mounted) return;
-                      if (success) {
-                        displayToast(
-                          context,
-                          TypeMsg.msg,
-                          l10n.ticketsEditSuccess,
-                        );
-                        onEventUpdated(_withQuestion(event, updatedQuestion));
-                      } else {
-                        showEditError(context, ref, l10n);
-                      }
-                    });
-                  },
+                DropdownMenuItem(
+                  value: AnswerType.boolean,
+                  child: Text(l10n.ticketsAnswerTypeBoolean),
                 ),
               ],
+              onChanged: (value) {
+                if (value != null) answerType.value = value;
+              },
+            ),
+            const SizedBox(height: 8),
+            TextEntry(
+              label: l10n.ticketsPriceLabel,
+              controller: priceController,
+              keyboardType: TextInputType.number,
+              canBeEmpty: true,
+              onChanged: (_) {},
+            ),
+            CheckboxListTile(
+              value: required.value,
+              onChanged: (value) => required.value = value ?? false,
+              title: Text(l10n.ticketsQuestionRequiredLabel),
+              contentPadding: EdgeInsets.zero,
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(l10n.globalCancel),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.pop(
+            context,
+            _QuestionFormResult(
+              text: textController.text.trim(),
+              answerType: answerType.value,
+              required: required.value,
+              priceText: priceController.text,
             ),
           ),
+          child: Text(l10n.ticketsSave),
+        ),
+      ],
+    );
+  }
+}
+
+class _QuestionEditModal extends HookConsumerWidget {
+  const _QuestionEditModal({
+    required this.parentContext,
+    required this.event,
+    required this.question,
+    required this.onEventUpdated,
+  });
+
+  final BuildContext parentContext;
+  final TicketEvent event;
+  final Question question;
+  final void Function(TicketEvent) onEventUpdated;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final editNotifier = ref.read(ticketEventEditProvider.notifier);
+    final textController = useTextEditingController(text: question.question);
+    final priceController = useTextEditingController(
+      text: question.price?.toString() ?? '',
+    );
+    final answerType = useState(question.answerType);
+    final required = useState(question.required);
+    final disabled = useState(question.disabled);
+
+    return BottomModalTemplate(
+      title: l10n.ticketsEditTitle,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            TextEntry(
+              label: l10n.ticketsQuestionLabel(1),
+              controller: textController,
+              onChanged: (_) {},
+            ),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<AnswerType>(
+              initialValue: answerType.value,
+              decoration: InputDecoration(
+                labelText: l10n.ticketsQuestionTypeLabel,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              items: [
+                DropdownMenuItem(
+                  value: AnswerType.text,
+                  child: Text(l10n.ticketsAnswerTypeText),
+                ),
+                DropdownMenuItem(
+                  value: AnswerType.number,
+                  child: Text(l10n.ticketsAnswerTypeNumber),
+                ),
+                DropdownMenuItem(
+                  value: AnswerType.boolean,
+                  child: Text(l10n.ticketsAnswerTypeBoolean),
+                ),
+              ],
+              onChanged: (v) {
+                if (v != null) answerType.value = v;
+              },
+            ),
+            const SizedBox(height: 8),
+            TextEntry(
+              label: l10n.ticketsPriceLabel,
+              controller: priceController,
+              keyboardType: TextInputType.number,
+              canBeEmpty: true,
+              onChanged: (_) {},
+            ),
+            CheckboxListTile(
+              value: required.value,
+              onChanged: (v) => required.value = v ?? false,
+              title: Text(l10n.ticketsQuestionRequiredLabel),
+              contentPadding: EdgeInsets.zero,
+            ),
+            SwitchListTile(
+              value: !disabled.value,
+              onChanged: (v) => disabled.value = !v,
+              title: Text(
+                disabled.value
+                    ? l10n.ticketsQuestionDeactivated
+                    : l10n.ticketsQuestionActivated,
+              ),
+              contentPadding: EdgeInsets.zero,
+            ),
+            const SizedBox(height: 20),
+            Button(
+              text: l10n.ticketsSaveChanges,
+              onPressed: () async {
+                Navigator.pop(context);
+                if (!parentContext.mounted) return;
+
+                final price = priceController.text.isEmpty
+                    ? null
+                    : int.tryParse(priceController.text);
+
+                final updatedQuestion = question.copyWith(
+                  question: textController.text.trim(),
+                  answerType: answerType.value,
+                  required: required.value,
+                  price: price,
+                  disabled: disabled.value,
+                );
+
+                await tokenExpireWrapper(ref, () async {
+                  final success = await editNotifier.updateQuestion(
+                    event.id,
+                    question.id,
+                    questionText: updatedQuestion.question,
+                    answerType: updatedQuestion.answerType,
+                    required: updatedQuestion.required,
+                    price: updatedQuestion.price,
+                    disabled: updatedQuestion.disabled,
+                  );
+
+                  if (!parentContext.mounted) return;
+                  if (success) {
+                    displayToast(
+                      parentContext,
+                      TypeMsg.msg,
+                      l10n.ticketsEditSuccess,
+                    );
+                    onEventUpdated(_withQuestion(event, updatedQuestion));
+                  } else {
+                    showEditError(parentContext, ref, l10n);
+                  }
+                });
+              },
+            ),
+          ],
         ),
       ),
     );
-
-    textController.dispose();
-    priceController.dispose();
   }
 }
