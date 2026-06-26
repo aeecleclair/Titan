@@ -25,6 +25,8 @@
   "feedSGExternalLink": "SG External link",
   "feedCreateEvent": "Create an event",
   "feedUseExistingTicketing": "Use an existing ticketing",
+  "feedSelectTicketing": "Select a ticketing",
+  "feedPleaseSelectTicketing": "Please select an existing ticketing",
   "feedNotification": "Send a notification",
   "feedPleaseSelectAnAssociation": "Please select an association",
   "feedReject": "Reject",
@@ -238,7 +240,6 @@
   "adminRemoveGroupMember": "Remove member from group?",
   "adminResearch": "Search",
   "adminSchools": "Schools",
-  "adminAccountTypes": "Account types",
   "adminAccountTypesDescription": "Change the account type of a user",
   "adminAccountTypeSearchUser": "Search a user",
   "adminAccountTypeSelect": "Select an account type",
@@ -1857,7 +1858,26 @@
   "ticketsValid": "Valid",
   "ticketsSoldOut": "Sold out",
   "ticketsEventSoldOut": "This event is sold out",
-  "ticketsTicketsSold": "Tickets sold",
-  "ticketsTicketsInCheckout": "In checkout",
-  "ticketsStatistics": "Statistics"
+  "ticketsStatistics": "Statistics",
+  "feedShotgunIn": "Shotgun in {time}",
+  "@feedShotgunIn": {
+    "description": "Shotgun in time",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "adminModifyModuleVisibility": "Module visibility",
+  "paiementCancel": "Cancel",
+  "paiementCancelled": "Cancelled",
+  "paiementCancelledTransaction": "Payment cancelled",
+  "paiementCancelTransaction": "Cancel transaction",
+  "paiementCancelTransactions": "Cancel transactions",
+  "settingsPasswordStrength": "Password strength",
+  "settingsPasswordStrengthVeryWeak": "Very weak",
+  "settingsPasswordStrengthWeak": "Weak",
+  "settingsPasswordStrengthMedium": "Medium",
+  "settingsPasswordStrengthStrong": "Strong",
+  "settingsPasswordStrengthVeryStrong": "Very strong"
 }

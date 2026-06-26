@@ -25,6 +25,8 @@
   "feedSGExternalLink": "Lien externe du SG",
   "feedCreateEvent": "Créer l'événement",
   "feedUseExistingTicketing": "Utiliser une billetterie existante",
+  "feedSelectTicketing": "Sélectionner une billetterie",
+  "feedPleaseSelectTicketing": "Veuillez sélectionner une billetterie existante",
   "feedNotification": "Envoyer une notification",
   "feedPleaseSelectAnAssociation": "Veuillez sélectionner une association",
   "feedReject": "Rejeter",
@@ -246,7 +248,6 @@
   "adminRemoveGroupMember": "Supprimer le membre du groupe ?",
   "adminResearch": "Recherche",
   "adminSchools": "Écoles",
-  "adminAccountTypes": "Types de compte",
   "adminAccountTypesDescription": "Changer le type de compte d'un utilisateur",
   "adminAccountTypeSearchUser": "Rechercher un utilisateur",
   "adminAccountTypeSelect": "Choisir un type de compte",
@@ -1570,6 +1571,7 @@
   "settingsDetelePersonalDataDesc": "Cette action notifie l'administrateur que vous souhaitez supprimer vos données personnelles.",
   "settingsEdit": "Modifier",
   "settingsEditAccount": "Modifier mon profil",
+  "settingsEditPassword": "Modifier le mot de passe",
   "settingsEditedAccount": "Compte modifié avec succès",
   "settingsEmail": "Email",
   "settingsEmptyField": "Ce champ ne peut pas être vide",
@@ -1749,6 +1751,8 @@
   "ticketsQuestionRequiredLabel": "Obligatoire",
   "ticketsEditTitle": "Modifier la billetterie",
   "ticketsEdit": "Modifier",
+  "ticketsEditSession": "Modifier la séance",
+  "ticketsEditCategory": "Modifier la catégorie",
   "ticketsTariffs": "Catégories",
   "ticketsPriceLabel": "Prix (€)",
   "ticketsSessions": "Sessions",
@@ -1827,6 +1831,8 @@
   "ticketsEventActivated": "Événement activé",
   "ticketsEventDeactivated": "Événement désactivé",
   "ticketsDelete": "Supprimer",
+  "ticketsDeleteSession": "Supprimer la séance",
+  "ticketsDeleteCategory": "Supprimer la catégorie",
   "ticketsDeleteEvent": "Supprimer la billetterie",
   "ticketsDeleteEventSuccess": "Billetterie supprimée avec succès",
   "ticketsDeleteConfirm": "Confirmer la suppression ?",
@@ -1862,7 +1868,26 @@
   "ticketsValid": "Valide",
   "ticketsSoldOut": "Complet",
   "ticketsEventSoldOut": "Cet évènement est complet",
-  "ticketsTicketsSold": "Billets vendus",
-  "ticketsTicketsInCheckout": "En cours d'achat",
-  "ticketsStatistics": "Statistiques"
+  "ticketsStatistics": "Statistiques",
+  "feedShotgunIn": "Shotgun {time}",
+  "@feedShotgunIn": {
+    "description": "Placeholder pour le temps restant avant le shotgun",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "adminModifyModuleVisibility": "Visibilité des modules",
+  "paiementCancel": "Annuler",
+  "paiementCancelled": "Annulé",
+  "paiementCancelledTransaction": "Paiement annulé",
+  "paiementCancelTransaction": "Annuler la transaction",
+  "paiementCancelTransactions": "Annuler les transactions",
+  "settingsPasswordStrength": "Force du mot de passe",
+  "settingsPasswordStrengthVeryWeak": "Très faible",
+  "settingsPasswordStrengthWeak": "Faible",
+  "settingsPasswordStrengthMedium": "Moyen",
+  "settingsPasswordStrengthStrong": "Fort",
+  "settingsPasswordStrengthVeryStrong": "Très fort"
 }

@@ -84,6 +84,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get feedUseExistingTicketing => 'Utiliser une billetterie existante';
 
   @override
+  String get feedSelectTicketing => 'Sélectionner une billetterie';
+
+  @override
+  String get feedPleaseSelectTicketing =>
+      'Veuillez sélectionner une billetterie existante';
+
+  @override
   String get feedNotification => 'Envoyer une notification';
 
   @override
@@ -4271,6 +4278,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsEditAccount => 'Modifier mon profil';
 
   @override
+  String get settingsEditPassword => 'Modifier le mot de passe';
+
+  @override
   String get settingsEditedAccount => 'Compte modifié avec succès';
 
   @override
@@ -4780,6 +4790,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsEdit => 'Modifier';
 
   @override
+  String get ticketsEditSession => 'Modifier la séance';
+
+  @override
+  String get ticketsEditCategory => 'Modifier la catégorie';
+
+  @override
   String get ticketsTariffs => 'Catégories';
 
   @override
@@ -4936,7 +4952,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsTicketsSold => 'Billets vendus';
 
   @override
-  String get ticketsTicketsInCheckout => 'En cours d\'achat';
+  String get ticketsTicketsInCheckout => 'En cours de réservation';
 
   @override
   String get ticketsReadOnlyDueSales =>
@@ -4961,6 +4977,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get ticketsDelete => 'Supprimer';
+
+  @override
+  String get ticketsDeleteSession => 'Supprimer la séance';
+
+  @override
+  String get ticketsDeleteCategory => 'Supprimer la catégorie';
 
   @override
   String get ticketsDeleteEvent => 'Supprimer la billetterie';
@@ -5071,4 +5093,45 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get ticketsStatistics => 'Statistiques';
+
+  @override
+  String feedShotgunIn(String time) {
+    return 'Shotgun $time';
+  }
+
+  @override
+  String get adminModifyModuleVisibility => 'Visibilité des modules';
+
+  @override
+  String get paiementCancel => 'Annuler';
+
+  @override
+  String get paiementCancelled => 'Annulé';
+
+  @override
+  String get paiementCancelledTransaction => 'Paiement annulé';
+
+  @override
+  String get paiementCancelTransaction => 'Annuler la transaction';
+
+  @override
+  String get paiementCancelTransactions => 'Annuler les transactions';
+
+  @override
+  String get settingsPasswordStrength => 'Force du mot de passe';
+
+  @override
+  String get settingsPasswordStrengthVeryWeak => 'Très faible';
+
+  @override
+  String get settingsPasswordStrengthWeak => 'Faible';
+
+  @override
+  String get settingsPasswordStrengthMedium => 'Moyen';
+
+  @override
+  String get settingsPasswordStrengthStrong => 'Fort';
+
+  @override
+  String get settingsPasswordStrengthVeryStrong => 'Très fort';
 }

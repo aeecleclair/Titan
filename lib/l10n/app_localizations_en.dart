@@ -84,6 +84,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feedUseExistingTicketing => 'Use an existing ticketing';
 
   @override
+  String get feedSelectTicketing => 'Select a ticketing';
+
+  @override
+  String get feedPleaseSelectTicketing => 'Please select an existing ticketing';
+
+  @override
   String get feedNotification => 'Send a notification';
 
   @override
@@ -4213,6 +4219,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsEditAccount => 'Edit account';
 
   @override
+  String get settingsEditPassword => 'Edit password';
+
+  @override
   String get settingsEditedAccount => 'Account edited';
 
   @override
@@ -4711,6 +4720,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsEdit => 'Modifier';
 
   @override
+  String get ticketsEditSession => 'Edit session';
+
+  @override
+  String get ticketsEditCategory => 'Edit category';
+
+  @override
   String get ticketsTariffs => 'Categories';
 
   @override
@@ -4890,6 +4905,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsDelete => 'Supprimer';
 
   @override
+  String get ticketsDeleteSession => 'Delete session';
+
+  @override
+  String get ticketsDeleteCategory => 'Delete category';
+
+  @override
   String get ticketsDeleteEvent => 'Delete ticketing';
 
   @override
@@ -4998,4 +5019,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ticketsStatistics => 'Statistics';
+
+  @override
+  String feedShotgunIn(String time) {
+    return 'Shotgun in $time';
+  }
+
+  @override
+  String get adminModifyModuleVisibility => 'Module visibility';
+
+  @override
+  String get paiementCancel => 'Cancel';
+
+  @override
+  String get paiementCancelled => 'Cancelled';
+
+  @override
+  String get paiementCancelledTransaction => 'Payment cancelled';
+
+  @override
+  String get paiementCancelTransaction => 'Cancel transaction';
+
+  @override
+  String get paiementCancelTransactions => 'Cancel transactions';
+
+  @override
+  String get settingsPasswordStrength => 'Password strength';
+
+  @override
+  String get settingsPasswordStrengthVeryWeak => 'Very weak';
+
+  @override
+  String get settingsPasswordStrengthWeak => 'Weak';
+
+  @override
+  String get settingsPasswordStrengthMedium => 'Medium';
+
+  @override
+  String get settingsPasswordStrengthStrong => 'Strong';
+
+  @override
+  String get settingsPasswordStrengthVeryStrong => 'Very strong';
 }
