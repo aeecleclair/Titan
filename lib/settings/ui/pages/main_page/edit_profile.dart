@@ -3,10 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/settings/ui/pages/main_page/picture_button.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';
@@ -200,34 +200,32 @@ class EditProfile extends HookConsumerWidget {
             onPressed: () async {
               if (phoneController.value.text != me.phone ||
                   birthdayController.value.text.isNotEmpty) {
-                await tokenExpireWrapper(ref, () async {
-                  final newMe = me.copyWith(
-                    birthday: birthdayController.value.text.isNotEmpty
-                        ? DateTime.parse(
-                            processDateBack(
-                              birthdayController.value.text,
-                              locale.toString(),
-                            ),
-                          )
-                        : null,
-                    phone: phoneController.value.text.isEmpty
-                        ? null
-                        : phoneController.value.text,
+                final newMe = me.copyWith(
+                  birthday: birthdayController.value.text.isNotEmpty
+                      ? DateTime.parse(
+                          processDateBack(
+                            birthdayController.value.text,
+                            locale.toString(),
+                          ),
+                        )
+                      : null,
+                  phone: phoneController.value.text.isEmpty
+                      ? null
+                      : phoneController.value.text,
+                );
+                final value = await asyncUserNotifier.updateMe(newMe);
+                if (value) {
+                  displayToastWithContext(
+                    TypeMsg.msg,
+                    localizeWithContext.settingsEditedAccount,
                   );
-                  final value = await asyncUserNotifier.updateMe(newMe);
-                  if (value) {
-                    displayToastWithContext(
-                      TypeMsg.msg,
-                      localizeWithContext.settingsEditedAccount,
-                    );
-                    navigatorWithContext.pop();
-                  } else {
-                    displayToastWithContext(
-                      TypeMsg.error,
-                      localizeWithContext.settingsFailedToEditAccount,
-                    );
-                  }
-                });
+                  navigatorWithContext.pop();
+                } else {
+                  displayToastWithContext(
+                    TypeMsg.error,
+                    localizeWithContext.settingsFailedToEditAccount,
+                  );
+                }
               }
             },
           ),

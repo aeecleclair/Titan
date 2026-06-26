@@ -1,50 +1,36 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/settings/class/notification_topic.dart';
-import 'package:titan/settings/repositories/notification_topic_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class NotificationTopicNotifier extends ListNotifier<NotificationTopic> {
-  final NotificationTopicRepository notificationTopicRepository =
-      NotificationTopicRepository();
-  NotificationTopicNotifier({required String token})
-    : super(const AsyncValue.loading()) {
-    notificationTopicRepository.setToken(token);
+class NotificationTopicNotifier extends ListNotifierAPI<TopicUser> {
+  Openapi get notificationTopicRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<List<TopicUser>> build() {
+    loadNotificationTopicList();
+    return const AsyncValue.loading();
   }
 
-  Future<AsyncValue<List<NotificationTopic>>>
-  loadNotificationTopicList() async {
-    return await loadList(
-      () async => notificationTopicRepository.getAllNotificationTopic(),
-    );
+  Future<AsyncValue<List<TopicUser>>> loadNotificationTopicList() async {
+    return await loadList(notificationTopicRepository.notificationTopicsGet);
   }
 
-  Future<bool> toggleSubscription(NotificationTopic topic) async {
+  Future<bool> toggleSubscription(TopicUser topic) async {
     return await update(
-      topic.isUserSubscribed
-          ? notificationTopicRepository.unsubscribeTopic
-          : notificationTopicRepository.subscribeTopic,
-      (topics, topic) {
-        topics[topics.indexWhere((t) => t.id == topic.id)] = topic.copyWith(
-          isUserSubscribed: !topic.isUserSubscribed,
-        );
-        return topics;
-      },
-      topic,
+      () => topic.isUserSubscribed
+          ? notificationTopicRepository
+                .notificationTopicsTopicIdUnsubscribePost(topicId: topic.id)
+          : notificationTopicRepository.notificationTopicsTopicIdSubscribePost(
+              topicId: topic.id,
+            ),
+      (topic) => topic.id,
+      topic.copyWith(isUserSubscribed: !topic.isUserSubscribed),
     );
   }
 }
 
 final notificationTopicListProvider =
-    StateNotifierProvider<
-      NotificationTopicNotifier,
-      AsyncValue<List<NotificationTopic>>
-    >((ref) {
-      final token = ref.watch(tokenProvider);
-      final notifier = NotificationTopicNotifier(token: token);
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadNotificationTopicList();
-      });
-      return notifier;
-    });
+    NotifierProvider<NotificationTopicNotifier, AsyncValue<List<TopicUser>>>(
+      NotificationTopicNotifier.new,
+    );

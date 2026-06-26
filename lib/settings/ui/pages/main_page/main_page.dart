@@ -8,7 +8,6 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/login/router.dart';
 import 'package:titan/service/providers/firebase_token_expiration_provider.dart';
-import 'package:titan/service/providers/messages_provider.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/styleguide/confirm_modal.dart';
 import 'package:titan/tools/ui/widgets/vertical_clip_scroll.dart';
@@ -17,12 +16,10 @@ import 'package:titan/settings/providers/notification_topic_provider.dart';
 import 'package:titan/settings/tools/functions.dart';
 import 'package:titan/settings/ui/pages/main_page/edit_profile.dart';
 import 'package:titan/settings/ui/pages/main_page/load_switch_topic.dart';
-
 import 'package:titan/settings/ui/settings.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/locale_notifier.dart';
-import 'package:titan/tools/repository/repository.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
@@ -335,7 +332,7 @@ class SettingsMainPage extends HookConsumerWidget {
                 ),
                 onTap: () {
                   Clipboard.setData(
-                    ClipboardData(text: "${Repository.host}calendar/ical"),
+                    ClipboardData(text: "${getTitanHost()}calendar/ical"),
                   ).then((value) {
                     displayToastWithContext(
                       TypeMsg.msg,
@@ -376,7 +373,6 @@ class SettingsMainPage extends HookConsumerWidget {
                       onYes: () {
                         auth.deleteToken();
                         if (!kIsWeb) {
-                          ref.watch(messagesProvider.notifier).forgetDevice();
                           ref
                               .watch(firebaseTokenExpirationProvider.notifier)
                               .reset();
@@ -434,7 +430,7 @@ class SettingsMainPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 10),
               AutoSizeText(
-                Repository.host,
+                getTitanHost(),
                 maxLines: 1,
                 minFontSize: 10,
                 style: const TextStyle(
