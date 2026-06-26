@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/vote/providers/result_provider.dart';
-import 'package:titan/vote/providers/sections_contender_provider.dart';
+import 'package:titan/vote/providers/sections_list_provider.dart';
 import 'package:titan/vote/providers/sections_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
@@ -13,7 +13,7 @@ class VoteBars extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     const Duration animDuration = Duration(milliseconds: 250);
-    final sectionsContender = ref.watch(sectionContenderProvider);
+    final sectionsList = ref.watch(sectionListProvider);
     final section = ref.watch(sectionProvider);
     final results = ref.watch(resultProvider);
     final touchedIndex = useState(-1);
@@ -21,20 +21,20 @@ class VoteBars extends HookConsumerWidget {
     final barBackgroundColor = Colors.grey.shade300;
     const barColor = Colors.black;
 
-    List<BarChartGroupData> contenderBars = [];
+    List<BarChartGroupData> listBars = [];
     List<String> sectionNames = [];
     Map<String, int> voteValue = {};
     results.whenData((votes) {
       for (var i = 0; i < votes.length; i++) {
-        voteValue[votes[i].id] = votes[i].count;
+        voteValue[votes[i].listId] = votes[i].count;
       }
     });
 
     final Map<int, String> sectionIds = {};
     int total = 0;
 
-    if (sectionsContender[section] != null) {
-      sectionsContender[section]!.maybeWhen(
+    if (sectionsList[section] != null) {
+      sectionsList[section]!.maybeWhen(
         data: ((data) {
           sectionNames = data.map((e) => e.name).toList();
           sectionIds.addAll({for (var e in data) data.indexOf(e): e.id});
@@ -43,7 +43,7 @@ class VoteBars extends HookConsumerWidget {
                   .map((e) => voteValue[e.id])
                   .reduce((value, element) => (value ?? 0) + (element ?? 0)) ??
               0;
-          contenderBars = data
+          listBars = data
               .map(
                 (x) => BarChartGroupData(
                   x: data.indexOf(x),
@@ -163,7 +163,7 @@ class VoteBars extends HookConsumerWidget {
               ),
             ),
             borderData: FlBorderData(show: false),
-            barGroups: contenderBars,
+            barGroups: listBars,
           ),
           duration: animDuration,
         ),

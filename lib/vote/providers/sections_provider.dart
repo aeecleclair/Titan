@@ -1,55 +1,46 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
-import 'package:titan/vote/class/section.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 import 'package:titan/vote/providers/section_id_provider.dart';
-import 'package:titan/vote/repositories/section_repository.dart';
 
-class SectionNotifier extends ListNotifier<Section> {
-  final SectionRepository sectionRepository;
-  SectionNotifier({required this.sectionRepository})
-    : super(const AsyncValue.loading());
+class SectionNotifier extends ListNotifierAPI<SectionComplete> {
+  Openapi get sectionRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<List<Section>>> loadSectionList() async {
-    return await loadList(sectionRepository.getSections);
+  @override
+  AsyncValue<List<SectionComplete>> build() {
+    loadSectionList();
+    return const AsyncValue.loading();
   }
 
-  Future<bool> addSection(Section section) async {
-    return await add(sectionRepository.createSection, section);
+  Future<AsyncValue<List<SectionComplete>>> loadSectionList() async {
+    return await loadList(sectionRepository.campaignSectionsGet);
   }
 
-  Future<bool> updateSection(Section section) async {
-    return await update(
-      sectionRepository.updateSection,
-      (sections, section) =>
-          sections..[sections.indexWhere((s) => s.id == section.id)] = section,
+  Future<bool> addSection(SectionBase section) async {
+    return await add(
+      () => sectionRepository.campaignSectionsPost(body: section),
       section,
     );
   }
 
-  Future<bool> deleteSection(Section section) async {
+  Future<bool> deleteSection(SectionComplete section) async {
     return await delete(
-      sectionRepository.deleteSection,
-      (sections, section) => sections..removeWhere((s) => s.id == section.id),
+      () => sectionRepository.campaignSectionsSectionIdDelete(
+        sectionId: section.id,
+      ),
+      (section) => section.id,
       section.id,
-      section,
     );
   }
 }
 
 final sectionsProvider =
-    StateNotifierProvider<SectionNotifier, AsyncValue<List<Section>>>((ref) {
-      final sectionRepository = ref.watch(sectionRepositoryProvider);
-      SectionNotifier notifier = SectionNotifier(
-        sectionRepository: sectionRepository,
-      );
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadSectionList();
-      });
-      return notifier;
-    });
+    NotifierProvider<SectionNotifier, AsyncValue<List<SectionComplete>>>(
+      SectionNotifier.new,
+    );
 
-final sectionList = Provider<List<Section>>((ref) {
+final sectionList = Provider<List<SectionComplete>>((ref) {
   final sections = ref.watch(sectionsProvider);
   return sections.maybeWhen(
     data: (section) {
@@ -61,10 +52,10 @@ final sectionList = Provider<List<Section>>((ref) {
   );
 });
 
-final sectionProvider = Provider<Section>((ref) {
+final sectionProvider = Provider<SectionComplete>((ref) {
   final sections = ref.watch(sectionList);
   final sectionId = ref.watch(sectionIdProvider);
   return sections.isEmpty
-      ? Section.empty()
+      ? SectionComplete.empty()
       : sections.where((element) => element.id == sectionId).first;
 });

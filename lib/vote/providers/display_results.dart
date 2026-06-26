@@ -1,11 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final displayResult = StateNotifierProvider<DisplayResult, bool>((ref) {
-  return DisplayResult();
-});
+final displayResult = NotifierProvider<DisplayResult, bool>(DisplayResult.new);
 
-class DisplayResult extends StateNotifier<bool> {
-  DisplayResult() : super(false);
+class DisplayResult extends Notifier<bool> {
+  @override
+  bool build() => false;
 
   void setId(bool p) {
     state = p;

@@ -1,19 +1,24 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/tools/providers/single_notifier.dart';
-import 'package:titan/vote/repositories/section_vote_count_repository.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/single_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class SectionVoteCountNotifier extends SingleNotifier<int> {
-  final SectionVoteCountRepository repository;
-  SectionVoteCountNotifier({required this.repository})
-    : super(const AsyncLoading());
+class SectionVoteCountNotifier extends SingleNotifierAPI<VoteStats> {
+  Openapi get repository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<int>> loadCount(String id) async {
-    return await load(() => repository.getSectionVoteCount(id));
+  @override
+  AsyncValue<VoteStats> build() {
+    return const AsyncLoading();
+  }
+
+  Future<AsyncValue<VoteStats>> loadCount(String sectionId) async {
+    return await load(
+      () => repository.campaignStatsSectionIdGet(sectionId: sectionId),
+    );
   }
 }
 
 final sectionVoteCountProvider =
-    StateNotifierProvider<SectionVoteCountNotifier, AsyncValue<int>>((ref) {
-      final repository = ref.watch(sectionVoteCountRepositoryProvider);
-      return SectionVoteCountNotifier(repository: repository);
-    });
+    NotifierProvider<SectionVoteCountNotifier, AsyncValue<VoteStats>>(
+      SectionVoteCountNotifier.new,
+    );

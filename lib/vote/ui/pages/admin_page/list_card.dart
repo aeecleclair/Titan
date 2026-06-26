@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
-import 'package:titan/user/extensions/core_user_simple.dart';
+import 'package:titan/vote/ui/components/list_logo.dart';
 
-class MemberCard extends ConsumerWidget {
-  final ListMemberComplete member;
-  final Function() onEdit, onDelete;
-  final bool isAdmin;
-  const MemberCard({
+class ListCard extends HookConsumerWidget {
+  final ListReturn list;
+  final bool isAdmin, isDetail;
+  final Function() onEdit;
+  final Future Function() onDelete;
+  const ListCard({
     super.key,
-    required this.member,
+    required this.list,
     required this.onEdit,
     required this.onDelete,
     this.isAdmin = false,
+    this.isDetail = false,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListItem(
-      title: member.user.getName(),
-      subtitle: member.role,
+      title: list.name,
+      subtitle: list.type.name,
+      icon: ListLogo(list),
       onTap: isAdmin
           ? () async {
               FocusScope.of(context).unfocus();
@@ -35,8 +38,8 @@ class MemberCard extends ConsumerWidget {
                 context: ctx,
                 ref: ref,
                 modal: BottomModalTemplate(
-                  title: member.user.getName(),
-                  description: member.role,
+                  title: list.name,
+                  description: list.program,
                   child: Column(
                     children: [
                       const SizedBox(height: 20),

@@ -1,14 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/vote/repositories/voted_sections_repository.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class VotedSectionProvider extends ListNotifier<String> {
-  final VotedSectionRepository votesRepository;
-  VotedSectionProvider({required this.votesRepository})
-    : super(const AsyncValue.loading());
+class VotedSectionProvider extends ListNotifierAPI<String> {
+  Openapi get votesRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<List<String>> build() {
+    return const AsyncValue.loading();
+  }
 
   Future<AsyncValue<List<String>>> getVotedSections() async {
-    return await loadList(votesRepository.getVotes);
+    return await loadList(votesRepository.campaignVotesGet);
   }
 
   void addVote(String id) {
@@ -22,12 +26,6 @@ class VotedSectionProvider extends ListNotifier<String> {
 }
 
 final votedSectionProvider =
-    StateNotifierProvider<VotedSectionProvider, AsyncValue<List<String>>>((
-      ref,
-    ) {
-      final votesRepository = ref.watch(votedSectionRepositoryProvider);
-      VotedSectionProvider votesProvider = VotedSectionProvider(
-        votesRepository: votesRepository,
-      );
-      return votesProvider;
-    });
+    NotifierProvider<VotedSectionProvider, AsyncValue<List<String>>>(
+      VotedSectionProvider.new,
+    );

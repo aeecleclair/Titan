@@ -12,8 +12,8 @@ import 'package:titan/vote/ui/pages/detail_page/detail_page.dart'
     deferred as detail_page;
 import 'package:titan/vote/ui/pages/main_page/main_page.dart'
     deferred as main_page;
-import 'package:titan/vote/ui/pages/contender_pages/add_edit_contender.dart'
-    deferred as add_edit_contender;
+import 'package:titan/vote/ui/pages/list_pages/add_edit_list.dart'
+    deferred as add_edit_list;
 import 'package:titan/vote/ui/pages/section_pages/add_section.dart'
     deferred as add_section;
 import 'package:qlevar_router/qlevar_router.dart';
@@ -22,7 +22,7 @@ class VoteRouter {
   final Ref ref;
   static const String root = '/vote';
   static const String admin = '/admin';
-  static const String addEditContender = '/add_edit_contender';
+  static const String addEditList = '/add_edit_list';
   static const String addSection = '/add_edit_section';
   static const String detail = '/detail';
   static final Module module = Module(
@@ -60,11 +60,9 @@ class VoteRouter {
             middleware: [DeferredLoadingMiddleware(detail_page.loadLibrary)],
           ),
           QRoute(
-            path: addEditContender,
-            builder: () => add_edit_contender.AddEditContenderPage(),
-            middleware: [
-              DeferredLoadingMiddleware(add_edit_contender.loadLibrary),
-            ],
+            path: addEditList,
+            builder: () => add_edit_list.AddEditListPage(),
+            middleware: [DeferredLoadingMiddleware(add_edit_list.loadLibrary)],
           ),
           QRoute(
             path: addSection,

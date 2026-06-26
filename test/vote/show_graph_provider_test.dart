@@ -5,12 +5,16 @@ import 'package:titan/vote/providers/show_graph_provider.dart';
 void main() {
   group('ShowGraphNotifier', () {
     test('initial state should be false', () {
-      final showGraphNotifier = ShowGraphNotifier();
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final showGraphNotifier = container.read(showGraphProvider.notifier);
       expect(showGraphNotifier.state, false);
     });
 
     test('toggle should change the state', () {
-      final showGraphNotifier = ShowGraphNotifier();
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final showGraphNotifier = container.read(showGraphProvider.notifier);
       showGraphNotifier.toggle(true);
       expect(showGraphNotifier.state, true);
       showGraphNotifier.toggle(false);

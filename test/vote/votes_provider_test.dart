@@ -1,63 +1,58 @@
+import 'package:chopper/chopper.dart' as chopper;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
-import 'package:titan/vote/class/votes.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/repository/repository.dart';
 import 'package:titan/vote/providers/votes_provider.dart';
-import 'package:titan/vote/repositories/votes_repository.dart';
 
-class MockVotesRepository extends Mock implements VotesRepository {}
+class MockVotesRepository extends Mock implements Openapi {}
 
 void main() {
   group('VotesProvider', () {
-    late VotesProvider votesProvider;
-    late MockVotesRepository mockVotesRepository;
+    late MockVotesRepository mockRepository;
+    late ProviderContainer container;
+    late VotesProvider provider;
+    final votes = VoteBase(listId: '1');
 
-    setUp(() {
-      mockVotesRepository = MockVotesRepository();
-      votesProvider = VotesProvider(votesRepository: mockVotesRepository);
+    setUp(() async {
+      mockRepository = MockVotesRepository();
+      container = ProviderContainer(
+        overrides: [repositoryProvider.overrideWithValue(mockRepository)],
+      );
+      provider = container.read(votesProvider.notifier);
+      await Future(() {});
     });
 
-    test('initial state is loading', () {
-      expect(votesProvider.state, isA<AsyncValue<List<Votes>>>());
-    });
+    tearDown(() => container.dispose());
 
     test('addVote returns true when successful', () async {
-      final votes = Votes.empty();
       when(
-        () => mockVotesRepository.addVote(votes),
-      ).thenAnswer((_) async => votes);
+        () => mockRepository.campaignVotesPost(body: any(named: 'body')),
+      ).thenAnswer(
+        (_) async => chopper.Response(http.Response('body', 200), votes),
+      );
 
-      final result = await votesProvider.addVote(votes);
+      final result = await provider.addVote(votes);
 
       expect(result, true);
     });
 
-    test('addVote rethrows error when unsuccessful', () async {
-      final votes = Votes.empty();
-      final error = Exception('Failed to add vote');
-      when(() => mockVotesRepository.addVote(votes)).thenThrow(error);
-
-      expect(() => votesProvider.addVote(votes), throwsA(error));
-    });
-
-    test('removeVote deletes all votes', () async {
+    test('addVote handles error', () async {
       when(
-        () => mockVotesRepository.removeVote(),
-      ).thenAnswer((_) async => true);
-      votesProvider.state = const AsyncValue<List<Votes>>.data([]);
-      final result = await votesProvider.removeVote();
+        () => mockRepository.campaignVotesPost(body: any(named: 'body')),
+      ).thenThrow(Exception('Failed to add vote'));
 
-      expect(result, true);
-      expect(votesProvider.state, isA<AsyncValue<List<Votes>>>());
+      expect(() => provider.addVote(votes), throwsA(isA<Exception>()));
     });
 
     test('copy returns current state', () async {
-      const currentState = AsyncValue<List<Votes>>.data([]);
-      votesProvider.state = currentState;
+      provider.state = AsyncValue.data([votes]);
 
-      final result = await votesProvider.copy();
+      final result = await provider.copy();
 
-      expect(result, currentState);
+      expect(result.maybeWhen(data: (data) => data, orElse: () => []), [votes]);
     });
   });
 }

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:titan/vote/class/contender.dart';
-import 'package:titan/vote/providers/contender_list_provider.dart';
+import 'package:titan/vote/providers/list_list_provider.dart';
 import 'package:titan/vote/providers/status_provider.dart';
 
 class OpeningVote extends ConsumerWidget {
@@ -39,24 +38,22 @@ class OpeningVote extends ConsumerWidget {
               child: child,
             ),
             onTap: () async {
-              await tokenExpireWrapper(ref, () async {
-                final openVotesMsg = AppLocalizations.of(
-                  context,
-                )!.voteVotesOpened;
-                final errorOpeningVotesMsg = AppLocalizations.of(
-                  context,
-                )!.voteErrorOpeningVotes;
-                final value = await statusNotifier.openVote();
-                ref.watch(contenderListProvider.notifier).loadContenderList();
-                if (value) {
-                  displayVoteToastWithContext(TypeMsg.msg, openVotesMsg);
-                } else {
-                  displayVoteToastWithContext(
-                    TypeMsg.error,
-                    errorOpeningVotesMsg,
-                  );
-                }
-              });
+              final openVotesMsg = AppLocalizations.of(
+                context,
+              )!.voteVotesOpened;
+              final errorOpeningVotesMsg = AppLocalizations.of(
+                context,
+              )!.voteErrorOpeningVotes;
+              final value = await statusNotifier.openVote();
+              ref.watch(listListProvider.notifier).loadListList();
+              if (value) {
+                displayVoteToastWithContext(TypeMsg.msg, openVotesMsg);
+              } else {
+                displayVoteToastWithContext(
+                  TypeMsg.error,
+                  errorOpeningVotesMsg,
+                );
+              }
             },
             child: Center(
               child: Text(
@@ -96,22 +93,20 @@ class OpeningVote extends ConsumerWidget {
                     final errorDeletingVotesMsg = AppLocalizations.of(
                       context,
                     )!.voteDeletingError;
-                    await tokenExpireWrapper(ref, () async {
-                      final value = await ref
-                          .watch(contenderListProvider.notifier)
-                          .deleteContenders();
-                      if (value) {
-                        displayVoteToastWithContext(
-                          TypeMsg.msg,
-                          deleteAllVotesMsg,
-                        );
-                      } else {
-                        displayVoteToastWithContext(
-                          TypeMsg.error,
-                          errorDeletingVotesMsg,
-                        );
-                      }
-                    });
+                    final value = await ref
+                        .watch(listListProvider.notifier)
+                        .deleteLists();
+                    if (value) {
+                      displayVoteToastWithContext(
+                        TypeMsg.msg,
+                        deleteAllVotesMsg,
+                      );
+                    } else {
+                      displayVoteToastWithContext(
+                        TypeMsg.error,
+                        errorDeletingVotesMsg,
+                      );
+                    }
                   },
                 ),
               );
@@ -165,22 +160,20 @@ class OpeningVote extends ConsumerWidget {
                     final errorDeletingPipoVotesMsg = AppLocalizations.of(
                       context,
                     )!.voteDeletingError;
-                    await tokenExpireWrapper(ref, () async {
-                      final value = await ref
-                          .watch(contenderListProvider.notifier)
-                          .deleteContenders(type: ListType.fake);
-                      if (value) {
-                        displayVoteToastWithContext(
-                          TypeMsg.msg,
-                          deletePipoVotesMsg,
-                        );
-                      } else {
-                        displayVoteToastWithContext(
-                          TypeMsg.error,
-                          errorDeletingPipoVotesMsg,
-                        );
-                      }
-                    });
+                    final value = await ref
+                        .watch(listListProvider.notifier)
+                        .deleteLists(type: ListType.pipo);
+                    if (value) {
+                      displayVoteToastWithContext(
+                        TypeMsg.msg,
+                        deletePipoVotesMsg,
+                      );
+                    } else {
+                      displayVoteToastWithContext(
+                        TypeMsg.error,
+                        errorDeletingPipoVotesMsg,
+                      );
+                    }
                   },
                 ),
               );
