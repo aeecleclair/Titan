@@ -15,8 +15,6 @@ class EventAction extends HookWidget {
   final DateTime? timeOpening, eventEnd;
   final VoidCallback? onActionPressed;
   final bool isActionValidated;
-  final bool isDisabled;
-  final String? disabledLabel;
 
   const EventAction({
     super.key,
@@ -29,8 +27,6 @@ class EventAction extends HookWidget {
     required this.timeOpening,
     required this.eventEnd,
     required this.waitingTitle,
-    this.isDisabled = false,
-    this.disabledLabel,
   });
 
   @override
@@ -47,7 +43,6 @@ class EventAction extends HookWidget {
     }, []);
 
     final isActionEnabled =
-        !isDisabled &&
         timeOpening != null &&
         timeOpening!.isBefore(now.value) &&
         eventEnd != null &&
@@ -119,9 +114,7 @@ class EventAction extends HookWidget {
             ),
             child: Center(
               child: Text(
-                isDisabled && disabledLabel != null
-                    ? disabledLabel!
-                    : isActionValidated
+                isActionValidated
                     ? actionValidatedButtonText
                     : actionEnableButtonText,
                 style: TextStyle(

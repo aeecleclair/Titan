@@ -25,7 +25,7 @@ class FilterNewsModal extends HookWidget {
       builder: (context, ref, child) {
         final newsListNotifier = ref.watch(newsListProvider.notifier);
         final filterState = ref.watch(filterStateProvider);
-        final filterStateNotifier = ref.watch(filterStateProvider.notifier);
+        final filterNotifier = ref.watch(filterStateProvider.notifier);
         return BottomModalTemplate(
           title: localizeWithContext.feedFilter,
           child: Column(
@@ -41,14 +41,14 @@ class FilterNewsModal extends HookWidget {
                         selected: filterState.selectedEntities.contains(entity),
                         onTap: () {
                           if (filterState.selectedEntities.contains(entity)) {
-                            filterStateNotifier.setFilterState(
+                            filterNotifier.setFilterState(
                               filterState.copyWith(
                                 selectedEntities: filterState.selectedEntities
                                   ..remove(entity),
                               ),
                             );
                           } else {
-                            filterStateNotifier.setFilterState(
+                            filterNotifier.setFilterState(
                               filterState.copyWith(
                                 selectedEntities: filterState.selectedEntities
                                   ..add(entity),
@@ -92,14 +92,14 @@ class FilterNewsModal extends HookWidget {
                         selected: filterState.selectedModules.contains(module),
                         onTap: () {
                           if (filterState.selectedModules.contains(module)) {
-                            filterStateNotifier.setFilterState(
+                            filterNotifier.setFilterState(
                               filterState.copyWith(
                                 selectedModules: filterState.selectedModules
                                   ..remove(module),
                               ),
                             );
                           } else {
-                            filterStateNotifier.setFilterState(
+                            filterNotifier.setFilterState(
                               filterState.copyWith(
                                 selectedModules: filterState.selectedModules
                                   ..add(module),

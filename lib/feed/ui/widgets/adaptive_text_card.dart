@@ -5,37 +5,41 @@ import 'package:titan/feed/tools/image_color_utils.dart' as image_color_utils;
 
 // Provider for managing dominant color state
 final dominantColorProvider =
-    StateNotifierProvider.family<
-      DominantColorNotifier,
-      AsyncValue<Color?>,
-      ImageProvider?
-    >((ref, imageProvider) => DominantColorNotifier(imageProvider));
+    AsyncNotifierProvider.family<DominantColorNotifier, Color?, ImageProvider?>(
+      DominantColorNotifier.new,
+    );
 
-class DominantColorNotifier extends StateNotifier<AsyncValue<Color?>> {
+class DominantColorNotifier extends AsyncNotifier<Color?> {
+  DominantColorNotifier(this.imageProvider);
+
   final ImageProvider? imageProvider;
 
-  DominantColorNotifier(this.imageProvider)
-    : super(const AsyncValue.loading()) {
-    _analyzeDominantColor();
+  @override
+  Future<Color?> build() async {
+    return await _analyzeDominantColor(imageProvider);
   }
 
-  Future<void> _analyzeDominantColor() async {
+  Future<Color?> _analyzeDominantColor(ImageProvider? imageProvider) async {
     if (imageProvider == null) {
-      state = const AsyncValue.data(null);
-      return;
+      return null;
     }
 
     try {
-      state = const AsyncValue.loading();
-      final color = await image_color_utils.getDominantColor(imageProvider!);
+      final color = await image_color_utils.getDominantColor(imageProvider);
+      return color;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  void refresh() async {
+    state = const AsyncValue.loading();
+    try {
+      final color = await _analyzeDominantColor(imageProvider);
       state = AsyncValue.data(color);
     } catch (error, stackTrace) {
       state = AsyncValue.error(error, stackTrace);
     }
-  }
-
-  void refresh() {
-    _analyzeDominantColor();
   }
 }
 

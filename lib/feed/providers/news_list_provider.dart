@@ -1,17 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/feed/class/news.dart';
-import 'package:titan/feed/repositories/news_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class NewsListNotifier extends ListNotifier<News> {
-  final NewsRepository newsRepository;
+class NewsListNotifier extends ListNotifierAPI<News> {
+  Openapi get newsRepository => ref.watch(repositoryProvider);
   AsyncValue<List<News>> allNews = const AsyncValue.loading();
-  NewsListNotifier({required this.newsRepository})
-    : super(const AsyncValue.loading());
+
+  @override
+  AsyncValue<List<News>> build() {
+    return const AsyncValue.loading();
+  }
 
   Future<AsyncValue<List<News>>> loadNewsList() async {
-    return allNews = await loadList(newsRepository.getPublishedNews);
+    return allNews = await loadList(newsRepository.feedNewsGet);
   }
 
   void filterNews(List<String> entities, List<String> modules) {
@@ -31,11 +33,6 @@ class NewsListNotifier extends ListNotifier<News> {
 }
 
 final newsListProvider =
-    StateNotifierProvider<NewsListNotifier, AsyncValue<List<News>>>((ref) {
-      final token = ref.watch(tokenProvider);
-      final newsRepository = NewsRepository()..setToken(token);
-      NewsListNotifier newsListNotifier = NewsListNotifier(
-        newsRepository: newsRepository,
-      )..loadNewsList();
-      return newsListNotifier;
-    });
+    NotifierProvider<NewsListNotifier, AsyncValue<List<News>>>(
+      NewsListNotifier.new,
+    );

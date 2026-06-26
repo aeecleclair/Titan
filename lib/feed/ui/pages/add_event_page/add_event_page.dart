@@ -9,25 +9,24 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 // import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:titan/admin/class/assocation.dart';
 import 'package:titan/admin/providers/my_association_list_provider.dart';
+import 'package:titan/event/adapters/event_complete_ticket_url.dart';
 // import 'package:titan/event/providers/selected_days_provider.dart';
 // import 'package:titan/event/tools/constants.dart';
 // import 'package:titan/event/tools/functions.dart';
 import 'package:titan/event/ui/pages/event_pages/checkbox_entry.dart';
-import 'package:titan/feed/class/event.dart';
 import 'package:titan/feed/providers/association_event_list_provider.dart';
 import 'package:titan/feed/providers/event_image_provider.dart';
 import 'package:titan/feed/providers/event_provider.dart';
 import 'package:titan/feed/providers/news_list_provider.dart';
 import 'package:titan/feed/ui/feed.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
-import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tickets/providers/association_tickets_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/styleguide/horizontal_multi_select.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';
@@ -60,25 +59,6 @@ class AddEditEventPage extends HookConsumerWidget {
       myAssociations.length == 1 ? myAssociations.first : null,
     );
 
-    final ticketEventsAsync = ref.watch(
-      selectedAssociationTicketEventListProvider(selectedAssociation.value?.id),
-    );
-
-    final ticketEventsNotifier = ref.watch(
-      selectedAssociationTicketEventListProvider(
-        selectedAssociation.value?.id,
-      ).notifier,
-    );
-
-    // Rafraîchir la liste des billetteries quand l'association change ou quand la page s'ouvre
-    useEffect(() {
-      ticketEventsNotifier.loadTicketEvents(selectedAssociation.value?.id);
-      return null;
-    }, [selectedAssociation.value?.id]);
-
-    final useExistingTicketEvent = useState(false);
-    final selectedTicketEvent = useState<TicketEvent?>(null);
-
     final ImagePicker picker = ImagePicker();
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -87,7 +67,7 @@ class AddEditEventPage extends HookConsumerWidget {
 
     final syncEvent = event.maybeWhen(
       data: (event) => event,
-      orElse: () => Event.empty(),
+      orElse: () => EventCompleteTicketUrl.empty(),
     );
     final poster = useState<Uint8List?>(null);
     final posterFile = useState<Image?>(null);
@@ -99,7 +79,7 @@ class AddEditEventPage extends HookConsumerWidget {
     final locationController = useTextEditingController(
       text: syncEvent.location,
     );
-    final ticketEventDateController = useTextEditingController(
+    final shotgunDateController = useTextEditingController(
       text: syncEvent.ticketUrlOpening != null
           ? DateFormat.yMd(
               locale.toString(),
@@ -109,6 +89,25 @@ class AddEditEventPage extends HookConsumerWidget {
     final externalLinkController = useTextEditingController(
       text: syncEvent.ticketUrl,
     );
+
+    // A ticketing this association already runs can be pointed at instead of
+    // typing an external link by hand.
+    final useExistingTicketEvent = useState(syncEvent.ticketEventId != null);
+    final selectedTicketEventId = useState<String?>(syncEvent.ticketEventId);
+    final associationTicketEventsNotifier = ref.watch(
+      associationTicketEventListProvider.notifier,
+    );
+    final associationTicketEvents =
+        ref.watch(associationTicketEventListProvider).asData?.value ??
+        const <EventSimple>[];
+    // When editing, the association is fixed and its selector is not rendered.
+    final associationId = syncEvent.id != ""
+        ? syncEvent.associationId
+        : selectedAssociation.value?.id;
+    useEffect(() {
+      associationTicketEventsNotifier.loadTicketEvents(associationId);
+      return null;
+    }, [associationId]);
     final startDateController = useTextEditingController(
       text: syncEvent.id != ""
           ? (allDay.value
@@ -159,6 +158,7 @@ class AddEditEventPage extends HookConsumerWidget {
                               onItemSelected: (association) {
                                 selectedAssociation.value = association;
                                 useExistingTicketEvent.value = false;
+                                selectedTicketEventId.value = null;
                               },
                               itemBuilder:
                                   (context, association, index, selected) =>
@@ -347,60 +347,50 @@ class AddEditEventPage extends HookConsumerWidget {
                       label: localizeWithContext.feedLocation,
                       controller: locationController,
                     ),
-                    SizedBox(height: 10),
-                    ticketEventsAsync.when(
-                      data: (ticketEvents) => ticketEvents.isNotEmpty
-                          ? Column(
-                              children: [
-                                const SizedBox(height: 10),
-                                SwitchListTile(
-                                  title: Text(
-                                    localizeWithContext
-                                        .feedUseExistingTicketing,
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                  value: useExistingTicketEvent.value,
-                                  onChanged: (value) {
-                                    useExistingTicketEvent.value = value;
-                                  },
-                                  activeThumbColor: ColorConstants.tertiary,
-                                  contentPadding: EdgeInsets.zero,
+                    // An event either points at a ticketing this association
+                    // already runs in the tickets module, or carries a date and
+                    // a link to an external one — never both.
+                    if (associationTicketEvents.isNotEmpty) ...[
+                      const SizedBox(height: 10),
+                      SwitchListTile(
+                        title: Text(
+                          localizeWithContext.feedUseExistingTicketing,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        value: useExistingTicketEvent.value,
+                        onChanged: (value) =>
+                            useExistingTicketEvent.value = value,
+                        activeThumbColor: ColorConstants.tertiary,
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                      if (useExistingTicketEvent.value)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: DropdownButtonFormField<String>(
+                            initialValue: selectedTicketEventId.value,
+                            decoration: InputDecoration(
+                              labelText:
+                                  localizeWithContext.feedSelectTicketing,
+                              border: const OutlineInputBorder(),
+                            ),
+                            items: [
+                              for (final ticketEvent in associationTicketEvents)
+                                DropdownMenuItem(
+                                  value: ticketEvent.id,
+                                  child: Text(ticketEvent.name),
                                 ),
-                                // Optionnel : Dropdown pour choisir quel ticketEvent si la checkbox est cochée
-                                if (useExistingTicketEvent.value)
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: DropdownButtonFormField<TicketEvent>(
-                                      initialValue: selectedTicketEvent.value,
-                                      decoration: InputDecoration(
-                                        labelText:
-                                            "Sélectionner un ticketEvent",
-                                        border: OutlineInputBorder(),
-                                      ),
-                                      items: ticketEvents.map((ticketEvent) {
-                                        return DropdownMenuItem(
-                                          value: ticketEvent,
-                                          child: Text(ticketEvent.name),
-                                        );
-                                      }).toList(),
-                                      onChanged: (value) {
-                                        selectedTicketEvent.value = value;
-                                      },
-                                    ),
-                                  ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
-                      loading: () =>
-                          const SizedBox.shrink(), // Ou un petit indicator
-                      error: (e, st) => const SizedBox.shrink(),
-                    ),
+                            ],
+                            onChanged: (value) =>
+                                selectedTicketEventId.value = value,
+                          ),
+                        ),
+                    ],
                     if (!useExistingTicketEvent.value) ...[
                       SizedBox(height: 10),
                       DateEntry(
                         onTap: () =>
-                            getFullDate(context, ticketEventDateController),
-                        controller: ticketEventDateController,
+                            getFullDate(context, shotgunDateController),
+                        controller: shotgunDateController,
                         label: localizeWithContext.feedSGDate,
                         canBeEmpty: true,
                       ),
@@ -568,7 +558,7 @@ class AddEditEventPage extends HookConsumerWidget {
                         }
                         if (!useExistingTicketEvent.value) {
                           if (externalLinkController.text.isEmpty &&
-                              ticketEventDateController.text.isNotEmpty) {
+                              shotgunDateController.text.isNotEmpty) {
                             displayToastWithContext(
                               TypeMsg.error,
                               localizeWithContext
@@ -577,19 +567,17 @@ class AddEditEventPage extends HookConsumerWidget {
                             return;
                           }
                           if (externalLinkController.text.isNotEmpty &&
-                              ticketEventDateController.text.isEmpty) {
+                              shotgunDateController.text.isEmpty) {
                             displayToastWithContext(
                               TypeMsg.error,
                               localizeWithContext.feedPleaseProvideASGDate,
                             );
                             return;
                           }
-                        }
-                        if (useExistingTicketEvent.value &&
-                            selectedTicketEvent.value == null) {
+                        } else if (selectedTicketEventId.value == null) {
                           displayToastWithContext(
                             TypeMsg.error,
-                            "Veuillez sélectionner un ticketEvent existant",
+                            localizeWithContext.feedPleaseSelectTicketing,
                           );
                           return;
                         }
@@ -624,120 +612,115 @@ class AddEditEventPage extends HookConsumerWidget {
                             //     localizeWithContext.eventNoDaySelected,
                             //   );
                           } else {
-                            await tokenExpireWrapper(ref, () async {
-                              // String recurrenceRule = "";
-                              // String startString = startDateController.text;
-                              // if (!startString.contains("/")) {
-                              //   startString = "${DateFormat.yMd(locale).format(now)} $startString";
-                              // }
-                              // String endString = endDateController.text;
-                              // if (!endString.contains("/")) {
-                              //   endString = "${DateFormat.yMd(locale).format(now)} $endString";
-                              // }
-                              // if (recurrentController.value) {
-                              //   RecurrenceProperties recurrence =
-                              //       RecurrenceProperties(startDate: now);
-                              //   recurrence.recurrenceType = RecurrenceType.weekly;
-                              //   recurrence.recurrenceRange =
-                              //       RecurrenceRange.endDate;
-                              //   recurrence.endDate = DateTime.parse(
-                              //     processDateBack(recurrenceEndDate.text),
-                              //   );
-                              //   recurrence.weekDays = WeekDays.values
-                              //       .where(
-                              //         (element) =>
-                              //             selectedDays[(WeekDays.values.indexOf(
-                              //                       element,
-                              //                     ) -
-                              //                     1) %
-                              //                 7],
-                              //       )
-                              //       .toList();
-                              //   recurrence.interval = int.parse(interval.text);
-                              //   recurrenceRule = SfCalendar.generateRRule(
-                              //     recurrence,
-                              //     DateTime.parse(
-                              //       processDateBackWithHour(startString),
-                              //     ),
-                              //     DateTime.parse(
-                              //       processDateBackWithHour(endString),
-                              //     ),
-                              //   );
-                              // }
-                              final newEvent = Event(
-                                id: syncEvent.id,
-                                start: DateTime.parse(
-                                  processDateBackWithHourMaybe(
-                                    startDateController.text,
-                                    locale.toString(),
-                                  ),
+                            // String recurrenceRule = "";
+                            // String startString = startDateController.text;
+                            // if (!startString.contains("/")) {
+                            //   startString = "${DateFormat.yMd(locale).format(now)} $startString";
+                            // }
+                            // String endString = endDateController.text;
+                            // if (!endString.contains("/")) {
+                            //   endString = "${DateFormat.yMd(locale).format(now)} $endString";
+                            // }
+                            // if (recurrentController.value) {
+                            //   RecurrenceProperties recurrence =
+                            //       RecurrenceProperties(startDate: now);
+                            //   recurrence.recurrenceType = RecurrenceType.weekly;
+                            //   recurrence.recurrenceRange =
+                            //       RecurrenceRange.endDate;
+                            //   recurrence.endDate = DateTime.parse(
+                            //     processDateBack(recurrenceEndDate.text),
+                            //   );
+                            //   recurrence.weekDays = WeekDays.values
+                            //       .where(
+                            //         (element) =>
+                            //             selectedDays[(WeekDays.values.indexOf(
+                            //                       element,
+                            //                     ) -
+                            //                     1) %
+                            //                 7],
+                            //       )
+                            //       .toList();
+                            //   recurrence.interval = int.parse(interval.text);
+                            //   recurrenceRule = SfCalendar.generateRRule(
+                            //     recurrence,
+                            //     DateTime.parse(
+                            //       processDateBackWithHour(startString),
+                            //     ),
+                            //     DateTime.parse(
+                            //       processDateBackWithHour(endString),
+                            //     ),
+                            //   );
+                            // }
+                            final newEvent = EventCompleteTicketUrl(
+                              id: syncEvent.id,
+                              start: DateTime.parse(
+                                processDateBackWithHourMaybe(
+                                  startDateController.text,
+                                  locale.toString(),
                                 ),
-                                end: DateTime.parse(
-                                  processDateBackWithHourMaybe(
-                                    endDateController.text,
-                                    locale.toString(),
-                                  ),
+                              ),
+                              end: DateTime.parse(
+                                processDateBackWithHourMaybe(
+                                  endDateController.text,
+                                  locale.toString(),
                                 ),
-                                location: locationController.text,
-                                ticketUrlOpening: useExistingTicketEvent.value
-                                    ? null
-                                    : ticketEventDateController.text != ""
-                                    ? DateTime.parse(
-                                        processDateBackWithHourMaybe(
-                                          ticketEventDateController.text,
-                                          locale.toString(),
-                                        ),
-                                      )
-                                    : null,
-                                name: titleController.text,
-                                allDay: allDay.value,
-                                // recurrenceRule: recurrenceRule,
-                                recurrenceRule: "",
-                                associationId: syncEvent.id != ""
-                                    ? syncEvent.associationId
-                                    : selectedAssociation.value!.id,
-                                ticketUrl: useExistingTicketEvent.value
-                                    ? null
-                                    : externalLinkController.text,
-                                notification: notification.value,
-                                ticketEventId: useExistingTicketEvent.value
-                                    ? selectedTicketEvent.value?.id
-                                    : null,
-                              );
-                              try {
-                                if (syncEvent.id != "") {
-                                  final value = await eventListNotifier
-                                      .updateEvent(newEvent);
-                                  // Rafraîchir la liste des billetteries
-                                  await ticketEventsNotifier.refresh();
-                                  if (value) {
-                                    if (poster.value == null) {
-                                      QR.back();
-                                      displayToastWithContext(
-                                        TypeMsg.msg,
-                                        localizeWithContext.eventModifiedEvent,
+                              ),
+                              location: locationController.text,
+                              ticketUrlOpening:
+                                  useExistingTicketEvent.value ||
+                                      shotgunDateController.text == ""
+                                  ? null
+                                  : DateTime.parse(
+                                      processDateBackWithHourMaybe(
+                                        shotgunDateController.text,
+                                        locale.toString(),
+                                      ),
+                                    ),
+                              name: titleController.text,
+                              allDay: allDay.value,
+                              // recurrenceRule: recurrenceRule,
+                              recurrenceRule: "",
+                              associationId: syncEvent.id != ""
+                                  ? syncEvent.associationId
+                                  : selectedAssociation.value!.id,
+                              ticketUrl: useExistingTicketEvent.value
+                                  ? null
+                                  : externalLinkController.text,
+                              ticketEventId: useExistingTicketEvent.value
+                                  ? selectedTicketEventId.value
+                                  : null,
+                              notification: notification.value,
+                              association:
+                                  selectedAssociation.value ??
+                                  Association.empty(),
+                              decision: Decision.pending,
+                            );
+                            try {
+                              if (syncEvent.id != "") {
+                                final value = await eventListNotifier
+                                    .updateEvent(newEvent);
+                                if (value) {
+                                  if (poster.value == null) {
+                                    QR.back();
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      localizeWithContext.eventModifiedEvent,
+                                    );
+                                    newsListNotifier.loadNewsList();
+                                    return;
+                                  }
+                                  final imageUploaded = await eventImageNotifier
+                                      .addEventImage(
+                                        syncEvent.id,
+                                        poster.value!,
                                       );
-                                      newsListNotifier.loadNewsList();
-                                      return;
-                                    }
-                                    final imageUploaded =
-                                        await eventImageNotifier.addEventImage(
-                                          syncEvent.id,
-                                          poster.value!,
-                                        );
-                                    if (imageUploaded) {
-                                      QR.back();
-                                      displayToastWithContext(
-                                        TypeMsg.msg,
-                                        localizeWithContext.eventModifiedEvent,
-                                      );
-                                      newsListNotifier.loadNewsList();
-                                    } else {
-                                      displayToastWithContext(
-                                        TypeMsg.error,
-                                        localizeWithContext.eventModifyingError,
-                                      );
-                                    }
+                                  if (imageUploaded) {
+                                    QR.back();
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      localizeWithContext.eventModifiedEvent,
+                                    );
+                                    newsListNotifier.loadNewsList();
                                   } else {
                                     displayToastWithContext(
                                       TypeMsg.error,
@@ -745,47 +728,59 @@ class AddEditEventPage extends HookConsumerWidget {
                                     );
                                   }
                                 } else {
-                                  final eventCreated =
-                                      await eventCreationNotifier.addEvent(
-                                        newEvent,
-                                      );
-                                  // Rafraîchir la liste des billetteries pour inclure les nouveaux
-                                  await ticketEventsNotifier.refresh();
-                                  if (poster.value == null) {
-                                    QR.back();
-                                    displayToastWithContext(
-                                      TypeMsg.msg,
-                                      localizeWithContext.eventAddedEvent,
-                                    );
-                                    newsListNotifier.loadNewsList();
-                                    return;
-                                  }
-                                  final value = await eventImageNotifier
-                                      .addEventImage(
-                                        eventCreated.id,
-                                        poster.value!,
-                                      );
-                                  if (value) {
-                                    QR.back();
-                                    displayToastWithContext(
-                                      TypeMsg.msg,
-                                      localizeWithContext.eventAddedEvent,
-                                    );
-                                    newsListNotifier.loadNewsList();
-                                  } else {
-                                    displayToastWithContext(
-                                      TypeMsg.error,
-                                      localizeWithContext.eventAddingError,
-                                    );
-                                  }
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    localizeWithContext.eventModifyingError,
+                                  );
                                 }
-                              } catch (e) {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  localizeWithContext.eventAddingError,
+                              } else {
+                                final eventCreated = await eventCreationNotifier
+                                    .addEvent(newEvent.toEventBaseCreation());
+                                if (poster.value == null) {
+                                  QR.back();
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    localizeWithContext.eventAddedEvent,
+                                  );
+                                  newsListNotifier.loadNewsList();
+                                  return;
+                                }
+                                final eventCreatedId = eventCreated.maybeWhen(
+                                  orElse: () => "",
+                                  data: (event) => event.id,
                                 );
+                                if (eventCreatedId == "") {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    localizeWithContext.eventAddingError,
+                                  );
+                                  return;
+                                }
+                                final value = await eventImageNotifier
+                                    .addEventImage(
+                                      eventCreatedId,
+                                      poster.value!,
+                                    );
+                                if (value) {
+                                  QR.back();
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    localizeWithContext.eventAddedEvent,
+                                  );
+                                  newsListNotifier.loadNewsList();
+                                } else {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    localizeWithContext.eventAddingError,
+                                  );
+                                }
                               }
-                            });
+                            } catch (e) {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                localizeWithContext.eventAddingError,
+                              );
+                            }
                           }
                         }
                       },

@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/feed/class/news.dart';
 import 'package:titan/feed/tools/news_helper.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
 class EventCardTextContent extends ConsumerWidget {
   final News item;

@@ -1,27 +1,30 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/tools/repository/logo_repository.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class EventImageRepository extends LogoRepository {
-  @override
-  // ignore: overridden_fields
-  final ext = 'calendar/events/';
-
-  Future<Image> addEventImage(Uint8List bytes, String id) async {
-    final uint8List = await addLogo(bytes, id, suffix: "/image");
-    return Image.memory(uint8List);
-  }
+class EventImageRepository {
+  final Openapi client;
+  EventImageRepository(this.client);
 
   Future<Image> getEventImage(String id) async {
-    final uint8List = await getLogo(id, suffix: "/image");
-    return Image.memory(uint8List);
+    final response = await client.calendarEventsEventIdImageGet(eventId: id);
+    final bytes = response.bodyBytes;
+    if (bytes.isEmpty) {
+      return Image.asset(getTitanLogo());
+    }
+    return Image.memory(bytes);
+  }
+
+  Future<Image> addEventImage(Uint8List bytes, String id) async {
+    await client.calendarEventsEventIdImagePost(eventId: id, image: bytes);
+    return Image.memory(bytes);
   }
 }
 
-final eventImageRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return EventImageRepository()..setToken(token);
-});
+final eventImageRepositoryProvider = Provider<EventImageRepository>(
+  (ref) => EventImageRepository(ref.watch(repositoryProvider)),
+);

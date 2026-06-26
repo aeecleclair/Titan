@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:titan/feed/class/news.dart';
 import 'package:titan/feed/tools/news_helper.dart';
 import 'package:titan/feed/ui/pages/main_page/event_action.dart';
 import 'package:titan/feed/ui/pages/main_page/event_card.dart';
 import 'package:titan/feed/ui/widgets/event_card_text_content.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/tickets/providers/ticket_event_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/feed/ui/pages/main_page/dotted_vertical_line.dart';
 
@@ -30,7 +29,7 @@ class TimelineItem extends ConsumerWidget {
         final baseHeight = 30 + eventCardHeight + 20;
 
         final totalHeight = item.actionStart != null
-            ? baseHeight + 42
+            ? baseHeight + 40
             : baseHeight;
 
         return SizedBox(
@@ -119,53 +118,23 @@ class TimelineItem extends ConsumerWidget {
                               ),
                             ),
                             Expanded(
-                              child: Builder(
-                                builder: (context) {
-                                  final isSoldOut = item.module == 'tickets'
-                                      ? ref
-                                            .watch(
-                                              publicTicketEventByIdProvider(
-                                                item.moduleObjectId,
-                                              ),
-                                            )
-                                            .maybeWhen(
-                                              data: (event) => event.soldOut,
-                                              orElse: () => false,
-                                            )
-                                      : false;
-                                  return EventAction(
-                                    title: getActionTitle(item, context),
-                                    waitingTitle: (timeToGo) => getWaitingTitle(
-                                      item,
-                                      context,
-                                      timeToGo: timeToGo,
-                                    ),
-                                    subtitle: getActionSubtitle(item, context),
-                                    onActionPressed: () =>
-                                        getActionButtonAction(
-                                          item,
-                                          context,
-                                          ref,
-                                        ),
-                                    actionEnableButtonText:
-                                        getActionEnableButtonText(
-                                          item,
-                                          context,
-                                        ),
-                                    actionValidatedButtonText:
-                                        getActionValidatedButtonText(
-                                          item,
-                                          context,
-                                        ),
-                                    isActionValidated: false,
-                                    eventEnd: item.end,
-                                    timeOpening: item.actionStart,
-                                    isDisabled: isSoldOut,
-                                    disabledLabel: isSoldOut
-                                        ? localizeWithContext.ticketsSoldOut
-                                        : null,
-                                  );
-                                },
+                              child: EventAction(
+                                title: getActionTitle(item, context),
+                                waitingTitle: (timeToGo) => getWaitingTitle(
+                                  item,
+                                  context,
+                                  timeToGo: timeToGo,
+                                ),
+                                subtitle: getActionSubtitle(item, context),
+                                onActionPressed: () =>
+                                    getActionButtonAction(item, context, ref),
+                                actionEnableButtonText:
+                                    getActionEnableButtonText(item, context),
+                                actionValidatedButtonText:
+                                    getActionValidatedButtonText(item, context),
+                                isActionValidated: false,
+                                eventEnd: item.end,
+                                timeOpening: item.actionStart,
                               ),
                             ),
                           ],

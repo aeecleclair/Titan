@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/advert/router.dart';
-import 'package:titan/feed/class/news.dart';
 import 'package:titan/feed/providers/news_image_provider.dart';
 import 'package:titan/feed/providers/news_images_provider.dart';
 import 'package:titan/feed/tools/news_helper.dart';
 import 'package:titan/feed/ui/widgets/adaptive_text_card.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/tickets/providers/ticket_event_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
@@ -27,11 +26,6 @@ class EventCard extends ConsumerWidget {
     final imageNotifier = ref.watch(newsImageProvider.notifier);
     final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     final localizeWithContext = AppLocalizations.of(context)!;
-    final isSoldOut = item.module == 'tickets'
-        ? ref
-              .watch(publicTicketEventByIdProvider(item.moduleObjectId))
-              .maybeWhen(data: (event) => event.soldOut, orElse: () => false)
-        : false;
     return GestureDetector(
       onTap: () {
         if (item.module == "advert") {
@@ -85,30 +79,7 @@ class EventCard extends ConsumerWidget {
                 ),
               ),
             ),
-            if (isSoldOut)
-              Positioned(
-                bottom: 53,
-                left: 15,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 7,
-                    vertical: 3,
-                  ),
-                  decoration: const BoxDecoration(
-                    color: ColorConstants.error,
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                  ),
-                  child: Text(
-                    localizeWithContext.ticketsSoldOut,
-                    style: TextStyle(
-                      color: ColorConstants.background,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              )
-            else if (isNewsTerminated(item) && item.module != "advert")
+            if (isNewsTerminated(item) && item.module != "advert")
               Positioned(
                 bottom: 53,
                 left: 15,
@@ -129,8 +100,8 @@ class EventCard extends ConsumerWidget {
                     ),
                   ),
                 ),
-              )
-            else if (isNewsOngoing(item) && item.module != "advert")
+              ),
+            if (isNewsOngoing(item) && item.module != "advert")
               Positioned(
                 bottom: 53,
                 left: 15,

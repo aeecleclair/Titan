@@ -1,47 +1,39 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/feed/class/news.dart';
-import 'package:titan/feed/repositories/news_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class AdminNewsListNotifier extends ListNotifier<News> {
-  final NewsRepository newsRepository;
-  AdminNewsListNotifier({required this.newsRepository})
-    : super(const AsyncValue.loading());
+class AdminNewsListNotifier extends ListNotifierAPI<News> {
+  Openapi get newsRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<List<News>>> loadNewsList() async {
-    return await loadList(newsRepository.getAllNews);
+  @override
+  AsyncValue<List<News>> build() {
+    loadNewsList();
+    return const AsyncValue.loading();
   }
 
-  Future<bool> addNews(News news) async {
-    return await add(newsRepository.createNews, news);
+  Future<AsyncValue<List<News>>> loadNewsList() async {
+    return await loadList(newsRepository.feedAdminNewsGet);
   }
 
   Future<bool> approveNews(News news) async {
     return await update(
-      (news) => newsRepository.approveNews(news.id),
-      (newsList, news) =>
-          newsList..[newsList.indexWhere((d) => d.id == news.id)] = news,
+      () => newsRepository.feedAdminNewsNewsIdApprovePost(newsId: news.id),
+      (news) => news.id,
       news,
     );
   }
 
   Future<bool> rejectNews(News news) async {
     return await update(
-      (news) => newsRepository.rejectNews(news.id),
-      (newsList, news) =>
-          newsList..[newsList.indexWhere((d) => d.id == news.id)] = news,
+      () => newsRepository.feedAdminNewsNewsIdRejectPost(newsId: news.id),
+      (news) => news.id,
       news,
     );
   }
 }
 
 final adminNewsListProvider =
-    StateNotifierProvider<AdminNewsListNotifier, AsyncValue<List<News>>>((ref) {
-      final token = ref.watch(tokenProvider);
-      final newsRepository = NewsRepository()..setToken(token);
-      AdminNewsListNotifier newsListNotifier = AdminNewsListNotifier(
-        newsRepository: newsRepository,
-      )..loadNewsList();
-      return newsListNotifier;
-    });
+    NotifierProvider<AdminNewsListNotifier, AsyncValue<List<News>>>(
+      AdminNewsListNotifier.new,
+    );

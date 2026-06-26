@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:titan/feed/class/news.dart';
 import 'package:titan/feed/ui/pages/main_page/time_line_item.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
 class FeedTimeline extends StatelessWidget {
   final List<News> items;
