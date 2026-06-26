@@ -2,14 +2,18 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/tools/repository/repository.dart';
+import 'package:titan/tools/functions.dart';
 
-class IsConnectedProvider extends StateNotifier<bool> {
-  IsConnectedProvider() : super(false);
+class IsConnectedProvider extends Notifier<bool> {
+  @override
+  bool build() {
+    isInternet();
+    return false;
+  }
 
   Future isInternet() async {
     try {
-      final result = await http.get(Uri.parse("${Repository.host}information"));
+      final result = await http.get(Uri.parse("${getTitanHost()}information"));
       state = result.statusCode < 400;
     } catch (e) {
       state = false;
@@ -17,10 +21,6 @@ class IsConnectedProvider extends StateNotifier<bool> {
   }
 }
 
-final isConnectedProvider = StateNotifierProvider<IsConnectedProvider, bool>((
-  ref,
-) {
-  final notifier = IsConnectedProvider();
-  notifier.isInternet();
-  return notifier;
-});
+final isConnectedProvider = NotifierProvider<IsConnectedProvider, bool>(
+  IsConnectedProvider.new,
+);
