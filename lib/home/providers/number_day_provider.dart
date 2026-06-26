@@ -1,13 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final numberDayProvider = StateNotifierProvider<NumberDay, int>((ref) {
-  return NumberDay();
-});
-
-class NumberDay extends StateNotifier<int> {
-  NumberDay() : super(30);
+class NumberDay extends Notifier<int> {
+  @override
+  int build() {
+    return 30;
+  }
 
   void add(int i) {
     state += i;
   }
 }
+
+final numberDayProvider = NotifierProvider<NumberDay, int>(NumberDay.new);
