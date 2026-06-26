@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:titan/admin/class/simple_group.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
@@ -10,8 +10,8 @@ import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 
 class AddMembershipModal extends HookWidget {
-  final List<SimpleGroup> groups;
-  final void Function(SimpleGroup group, String name) onSubmit;
+  final List<CoreGroupSimple> groups;
+  final void Function(CoreGroupSimple group, String name) onSubmit;
   final WidgetRef ref;
 
   const AddMembershipModal({
@@ -24,7 +24,7 @@ class AddMembershipModal extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final nameController = useTextEditingController();
-    final chosenGroup = useState<SimpleGroup?>(null);
+    final chosenGroup = useState<CoreGroupSimple?>(null);
 
     final localizeWithContext = AppLocalizations.of(context)!;
 

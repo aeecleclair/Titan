@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/class/group.dart';
+import 'package:titan/admin/adapters/core_group.dart';
 import 'package:titan/admin/providers/group_provider.dart';
 import 'package:titan/admin/providers/simple_groups_groups_provider.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/list_item_template.dart';
+import 'package:titan/user/extensions/core_user_simple.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
@@ -38,9 +39,9 @@ class MemberResults extends HookConsumerWidget {
                 child: ListItemTemplate(
                   title: e.getName(),
                   onTap: () async {
-                    if (!group.value!.members.contains(e)) {
-                      Group newGroup = group.value!.copyWith(
-                        members: group.value!.members + [e],
+                    if (!(group.value!.members?.contains(e) ?? false)) {
+                      CoreGroup newGroup = group.value!.copyWith(
+                        members: (group.value!.members ?? []) + [e],
                       );
                       final addedMemberMsg = AppLocalizations.of(
                         context,
@@ -48,25 +49,20 @@ class MemberResults extends HookConsumerWidget {
                       final addingErrorMsg = AppLocalizations.of(
                         context,
                       )!.adminAddingError;
-                      await tokenExpireWrapper(ref, () async {
-                        groupNotifier.addMember(newGroup, e).then((result) {
-                          if (result) {
-                            simpleGroupGroupsNotifier.setTData(
-                              newGroup.id,
-                              AsyncData([newGroup]),
-                            );
-                            value.remove(e);
-                            displayToastWithContext(
-                              TypeMsg.msg,
-                              addedMemberMsg,
-                            );
-                          } else {
-                            displayToastWithContext(
-                              TypeMsg.error,
-                              addingErrorMsg,
-                            );
-                          }
-                        });
+                      groupNotifier.addMember(newGroup, e).then((result) {
+                        if (result) {
+                          simpleGroupGroupsNotifier.setTData(
+                            newGroup.id,
+                            AsyncData([newGroup.toCoreGroupSimple()]),
+                          );
+                          value.remove(e);
+                          displayToastWithContext(TypeMsg.msg, addedMemberMsg);
+                        } else {
+                          displayToastWithContext(
+                            TypeMsg.error,
+                            addingErrorMsg,
+                          );
+                        }
                       });
                     }
                   },

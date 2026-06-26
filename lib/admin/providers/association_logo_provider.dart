@@ -5,18 +5,22 @@ import 'package:titan/admin/providers/associations_logo_map_provider.dart';
 import 'package:titan/admin/repositories/association_logo_repository.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
 
-class AssociationLogoProvider extends SingleNotifier<Image> {
-  final AssociationLogoRepository associationLogoRepository;
-  final AssociationLogoMapNotifier associationLogoMapNotifier;
+class AssociationLogoNotifier extends SingleNotifier<Image> {
   final ImagePicker _picker = ImagePicker();
 
-  AssociationLogoProvider({
-    required this.associationLogoRepository,
-    required this.associationLogoMapNotifier,
-  }) : super(const AsyncLoading());
+  AssociationLogoRepository get associationLogoRepositoryGetter =>
+      ref.watch(associationLogoRepository);
+
+  AssociationLogoMapNotifier get associationLogoMapNotifier =>
+      ref.watch(associationLogoMapProvider.notifier);
+
+  @override
+  AsyncValue<Image> build() {
+    return const AsyncLoading();
+  }
 
   Future<Image> getAssociationLogo(String associationId) async {
-    final image = await associationLogoRepository.getAssociationLogo(
+    final image = await associationLogoRepositoryGetter.getAssociationLogo(
       associationId,
     );
     associationLogoMapNotifier.setTData(associationId, AsyncData([image]));
@@ -33,7 +37,7 @@ class AssociationLogoProvider extends SingleNotifier<Image> {
     );
     if (image != null) {
       try {
-        final i = await associationLogoRepository.addAssociationLogo(
+        final i = await associationLogoRepositoryGetter.addAssociationLogo(
           await image.readAsBytes(),
           associationId,
         );
@@ -51,13 +55,6 @@ class AssociationLogoProvider extends SingleNotifier<Image> {
 }
 
 final associationLogoProvider =
-    StateNotifierProvider<AssociationLogoProvider, AsyncValue<Image>>((ref) {
-      final associationLogo = ref.watch(associationLogoRepository);
-      final sessionPosterMapNotifier = ref.watch(
-        associationLogoMapProvider.notifier,
-      );
-      return AssociationLogoProvider(
-        associationLogoRepository: associationLogo,
-        associationLogoMapNotifier: sessionPosterMapNotifier,
-      );
-    });
+    NotifierProvider<AssociationLogoNotifier, AsyncValue<Image>>(
+      AssociationLogoNotifier.new,
+    );

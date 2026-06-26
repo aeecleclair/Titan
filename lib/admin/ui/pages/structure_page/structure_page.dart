@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/admin.dart';
 import 'package:titan/admin/router.dart';
 import 'package:titan/admin/providers/structure_manager_provider.dart';
 import 'package:titan/admin/providers/structure_provider.dart';
-import 'package:titan/mypayment/class/structure.dart';
 import 'package:titan/mypayment/providers/bank_account_holder_provider.dart';
 import 'package:titan/mypayment/providers/structure_list_provider.dart';
 import 'package:titan/tools/constants.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
@@ -18,7 +17,7 @@ import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
-import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/user/extensions/core_user_simple.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -78,7 +77,7 @@ class StructurePage extends HookConsumerWidget {
                     ),
                     onPressed: () {
                       structureNotifier.setStructure(Structure.empty());
-                      structureManagerNotifier.setUser(SimpleUser.empty());
+                      structureManagerNotifier.setUser(CoreUserSimple.empty());
                       QR.to(
                         AdminRouter.root +
                             AdminRouter.structures +
@@ -155,7 +154,7 @@ class StructurePage extends HookConsumerWidget {
                                             onPressed: () async {
                                               final value =
                                                   await bankAccountHolderNotifier
-                                                      .updateBankAccountHolder(
+                                                      .addBankAccountHolder(
                                                         structure,
                                                       );
                                               if (value) {
@@ -197,27 +196,25 @@ class StructurePage extends HookConsumerWidget {
                                                       final deletingErrorMsg =
                                                           localizeWithContext
                                                               .adminDeletingError;
-                                                      tokenExpireWrapper(ref, () async {
-                                                        final value =
-                                                            await structuresNotifier
-                                                                .deleteStructure(
-                                                                  structure,
-                                                                );
-                                                        if (value) {
-                                                          displayToastWithContext(
-                                                            TypeMsg.msg,
-                                                            deletedGroupMsg,
-                                                          );
-                                                        } else {
-                                                          displayToastWithContext(
-                                                            TypeMsg.error,
-                                                            deletingErrorMsg,
-                                                          );
-                                                        }
-                                                      });
-                                                      Navigator.of(
-                                                        context,
-                                                      ).pop();
+                                                      final navigator =
+                                                          Navigator.of(context);
+                                                      final value =
+                                                          await structuresNotifier
+                                                              .deleteStructure(
+                                                                structure,
+                                                              );
+                                                      if (value) {
+                                                        displayToastWithContext(
+                                                          TypeMsg.msg,
+                                                          deletedGroupMsg,
+                                                        );
+                                                      } else {
+                                                        displayToastWithContext(
+                                                          TypeMsg.error,
+                                                          deletingErrorMsg,
+                                                        );
+                                                      }
+                                                      navigator.pop();
                                                     },
                                                   );
                                                 },

@@ -1,15 +1,18 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class StructureManagerProvider extends StateNotifier<SimpleUser> {
-  StructureManagerProvider() : super(SimpleUser.empty());
+class StructureManagerProvider extends Notifier<CoreUserSimple> {
+  @override
+  CoreUserSimple build() {
+    return CoreUserSimple.empty();
+  }
 
-  void setUser(SimpleUser user) {
+  void setUser(CoreUserSimple user) {
     state = user;
   }
 }
 
 final structureManagerProvider =
-    StateNotifierProvider<StructureManagerProvider, SimpleUser>(
-      (ref) => StructureManagerProvider(),
+    NotifierProvider<StructureManagerProvider, CoreUserSimple>(
+      () => StructureManagerProvider(),
     );

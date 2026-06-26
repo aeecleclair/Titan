@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/admin.dart';
 import 'package:titan/admin/providers/research_filter_provider.dart';
 import 'package:titan/admin/router.dart';
-import 'package:titan/admin/class/user_association_membership.dart';
 import 'package:titan/admin/providers/association_membership_filtered_members_provider.dart';
 import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
 import 'package:titan/admin/providers/association_membership_provider.dart';
@@ -12,6 +11,7 @@ import 'package:titan/admin/providers/user_association_membership_provider.dart'
 import 'package:titan/admin/ui/pages/membership/association_membership_detail_page/association_membership_information_editor.dart';
 import 'package:titan/admin/ui/pages/membership/association_membership_detail_page/association_membership_member_editable_card.dart';
 import 'package:titan/admin/ui/pages/membership/association_membership_detail_page/search_filters.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -79,7 +79,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                     onPressed: () async {
                       userAssociationMembershipNotifier
                           .setUserAssociationMembership(
-                            UserAssociationMembership.empty().copyWith(
+                            UserMembershipComplete.empty().copyWith(
                               associationMembershipId: associationMembership.id,
                             ),
                           );

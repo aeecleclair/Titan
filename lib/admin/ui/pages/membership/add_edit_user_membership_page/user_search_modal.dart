@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/ui/pages/membership/add_edit_user_membership_page/search_result.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/searchbar.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
@@ -25,7 +24,7 @@ class UserSearchModal extends HookConsumerWidget {
         children: [
           CustomSearchBar(
             autofocus: true,
-            onSearch: (value) => tokenExpireWrapper(ref, () async {
+            onSearch: (value) async {
               if (value.isNotEmpty) {
                 await usersNotifier.filterUsers(value);
                 textController.text = value;
@@ -33,7 +32,7 @@ class UserSearchModal extends HookConsumerWidget {
                 usersNotifier.clear();
                 textController.clear();
               }
-            }),
+            },
           ),
           const SizedBox(height: 10),
           ConstrainedBox(

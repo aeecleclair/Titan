@@ -69,13 +69,6 @@ class AdminMainPage extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 10),
                 ListItem(
-                  title: localizeWithContext.adminAccountTypes,
-                  subtitle: localizeWithContext.adminAccountTypesDescription,
-                  onTap: () =>
-                      QR.to(AdminRouter.root + AdminRouter.accountTypes),
-                ),
-                const SizedBox(height: 10),
-                ListItem(
                   title: localizeWithContext.adminGroupNotification,
                   subtitle: localizeWithContext.adminSendNotificationToGroup,
                   onTap: () =>

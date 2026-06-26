@@ -1,35 +1,69 @@
+import 'package:chopper/chopper.dart' as chopper;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
-import 'package:titan/super_admin/class/account_type.dart';
-import 'package:titan/admin/class/simple_group.dart';
-import 'package:titan/admin/providers/group_list_provider.dart';
-import 'package:titan/admin/repositories/group_repository.dart';
-import 'package:titan/user/class/user.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/admin/providers/all_group_list_provider.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class MockGroupRepository extends Mock implements GroupRepository {}
+class MockGroupRepository extends Mock implements Openapi {}
 
-class MockUserNotifier extends Mock implements StateNotifier<User> {}
+class MockCoreUserNotifier extends Mock implements Notifier<CoreUser> {}
 
 void main() {
   group('GroupListNotifier', () {
+    late MockGroupRepository mockGroup;
+    late ProviderContainer container;
+    late GroupListNotifier groupNotifier;
+    final group = CoreGroupSimple(
+      id: "1",
+      name: "name",
+      description: "description",
+    );
+    final modifiedGroup = CoreGroupSimple(
+      id: '1',
+      name: 'Modified Group',
+      description: 'Modified Description',
+    );
+    final existingGroup = CoreGroupSimple(
+      id: '1',
+      name: 'Existing Group',
+      description: 'Existing Description',
+    );
+    final returnedGroup = CoreGroupSimple.empty().copyWith(id: "2");
+
+    setUp(() async {
+      mockGroup = MockGroupRepository();
+      // Default stub for the build()-time auto-load.
+      when(() => mockGroup.groupsGet()).thenAnswer(
+        (_) async =>
+            chopper.Response(http.Response('[]', 200), <CoreGroupSimple>[]),
+      );
+      container = ProviderContainer(
+        overrides: [repositoryProvider.overrideWithValue(mockGroup)],
+      );
+      groupNotifier = container.read(allGroupListProvider.notifier);
+      await Future(() {}); // let build()'s auto-load settle
+    });
+
+    tearDown(() => container.dispose());
+
     test('Should return a group', () async {
-      final mockGroup = MockGroupRepository();
-      when(
-        () => mockGroup.getGroupList(),
-      ).thenAnswer((_) async => [SimpleGroup.empty()]);
-      final GroupListNotifier groupNotifier = GroupListNotifier(
-        groupRepository: mockGroup,
+      when(() => mockGroup.groupsGet()).thenAnswer(
+        (_) async => chopper.Response(http.Response('[]', 200), [
+          CoreGroupSimple.empty(),
+        ]),
       );
       final groupList = await groupNotifier.loadGroups();
-      expect(groupList, isA<AsyncData<List<SimpleGroup>>>());
+      expect(groupList, isA<AsyncData<List<CoreGroupSimple>>>());
       expect(
         groupList.when(
           data: (liste) => liste,
           error: (e, s) => null,
           loading: () => null,
         ),
-        isA<List<SimpleGroup>>(),
+        isA<List<CoreGroupSimple>>(),
       );
       expect(
         groupList.when(
@@ -41,40 +75,43 @@ void main() {
       );
     });
 
-    test('Should return a group', () async {
-      final mockGroup = MockGroupRepository();
-      final group = SimpleGroup(
-        id: "1",
-        name: "name",
-        description: "description",
-      );
-      final user = User(
-        id: "1",
-        name: "name",
-        firstname: "firstname",
-        nickname: null,
-        email: "email",
-        accountType: AccountType(type: "external"),
-        groups: [group],
-        birthday: DateTime.now(),
-        createdOn: DateTime.now(),
-        floor: '',
-        phone: '',
-        promo: null,
-        isSuperAdmin: false,
-      );
-      final GroupListNotifier groupNotifier = GroupListNotifier(
-        groupRepository: mockGroup,
-      );
-      final groupList = await groupNotifier.loadGroupsFromUser(user);
-      expect(groupList, isA<AsyncData<List<SimpleGroup>>>());
+    test('Should return an empty list when no groups are available', () async {
+      when(
+        () => mockGroup.groupsGet(),
+      ).thenAnswer((_) async => chopper.Response(http.Response('[]', 200), []));
+      final groupList = await groupNotifier.loadGroups();
+      expect(groupList, isA<AsyncData<List<CoreGroupSimple>>>());
       expect(
         groupList.when(
           data: (liste) => liste,
           error: (e, s) => null,
           loading: () => null,
         ),
-        isA<List<SimpleGroup>>(),
+        isEmpty,
+      );
+    });
+
+    test('Should handle error when loading groups', () async {
+      when(() => mockGroup.groupsGet()).thenThrow(Exception('Error'));
+      final groupList = await groupNotifier.loadGroups();
+      expect(groupList, isA<AsyncError>());
+    });
+
+    test('Should return a group from coreUser', () async {
+      when(() => mockGroup.groupsGet()).thenAnswer(
+        (_) async => chopper.Response(http.Response('[]', 200), [
+          CoreGroupSimple.empty(),
+        ]),
+      );
+      final groupList = await groupNotifier.loadGroups();
+      expect(groupList, isA<AsyncData<List<CoreGroupSimple>>>());
+      expect(
+        groupList.when(
+          data: (liste) => liste,
+          error: (e, s) => null,
+          loading: () => null,
+        ),
+        isA<List<CoreGroupSimple>>(),
       );
       expect(
         groupList.when(
@@ -87,83 +124,88 @@ void main() {
     });
 
     test('Should create a group', () async {
-      final mockGroup = MockGroupRepository();
-      final newGroup = SimpleGroup.empty().copyWith(id: "2");
-      when(
-        () => mockGroup.getGroupList(),
-      ).thenAnswer((_) async => [SimpleGroup.empty()]);
-      when(
-        () => mockGroup.createGroup(newGroup),
-      ).thenAnswer((_) async => newGroup);
-      final GroupListNotifier groupNotifier = GroupListNotifier(
-        groupRepository: mockGroup,
+      when(() => mockGroup.groupsGet()).thenAnswer(
+        (_) async => chopper.Response(http.Response('[]', 200), [
+          CoreGroupSimple.empty(),
+        ]),
+      );
+      when(() => mockGroup.groupsPost(body: any(named: 'body'))).thenAnswer(
+        (_) async => chopper.Response(http.Response('[]', 200), returnedGroup),
       );
       await groupNotifier.loadGroups();
-      final group = await groupNotifier.createGroup(newGroup);
-      expect(group, true);
+      final result = await groupNotifier.createGroup(group);
+      expect(result, true);
+    });
+
+    test('Should handle error when creating a group', () async {
+      when(
+        () => mockGroup.groupsPost(body: any(named: 'body')),
+      ).thenThrow(Exception('Error'));
+      final result = await groupNotifier.createGroup(group);
+      expect(result, false);
     });
 
     test('Should update a group', () async {
-      final mockGroup = MockGroupRepository();
-      final newGroup = SimpleGroup.empty().copyWith(id: "2");
+      when(() => mockGroup.groupsGet()).thenAnswer(
+        (_) async => chopper.Response(http.Response('[]', 200), [
+          CoreGroupSimple.empty(),
+          returnedGroup,
+        ]),
+      );
       when(
-        () => mockGroup.getGroupList(),
-      ).thenAnswer((_) async => [SimpleGroup.empty(), newGroup]);
-      when(() => mockGroup.updateGroup(newGroup)).thenAnswer((_) async => true);
-      final GroupListNotifier groupNotifier = GroupListNotifier(
-        groupRepository: mockGroup,
+        () => mockGroup.groupsGroupIdPatch(
+          groupId: any(named: 'groupId'),
+          body: any(named: 'body'),
+        ),
+      ).thenAnswer(
+        (_) async => chopper.Response(http.Response('[]', 200), true),
       );
       await groupNotifier.loadGroups();
-      expect(await groupNotifier.updateGroup(newGroup), true);
+      expect(await groupNotifier.updateGroup(returnedGroup), true);
+    });
+
+    test('Should handle error when updating a group', () async {
+      when(
+        () => mockGroup.groupsGroupIdPatch(
+          groupId: any(named: 'groupId'),
+          body: any(named: 'body'),
+        ),
+      ).thenThrow(Exception('Error'));
+      final result = await groupNotifier.updateGroup(returnedGroup);
+      expect(result, false);
     });
 
     test('Should delete a group', () async {
-      final mockGroup = MockGroupRepository();
-      final newGroup = SimpleGroup.empty().copyWith(id: "2");
+      when(() => mockGroup.groupsGet()).thenAnswer(
+        (_) async => chopper.Response(http.Response('[]', 200), [
+          CoreGroupSimple.empty(),
+          returnedGroup,
+        ]),
+      );
       when(
-        () => mockGroup.getGroupList(),
-      ).thenAnswer((_) async => [SimpleGroup.empty(), newGroup]);
-      when(() => mockGroup.deleteGroup("2")).thenAnswer((_) async => true);
-      final GroupListNotifier groupNotifier = GroupListNotifier(
-        groupRepository: mockGroup,
+        () => mockGroup.groupsGroupIdDelete(groupId: any(named: 'groupId')),
+      ).thenAnswer(
+        (_) async => chopper.Response(http.Response('[]', 200), true),
       );
       await groupNotifier.loadGroups();
-      expect(await groupNotifier.deleteGroup(newGroup), true);
+      expect(await groupNotifier.deleteGroup(returnedGroup), true);
     });
 
-    test('Should return a group', () async {
-      final mockGroup = MockGroupRepository();
-      final newGroup = SimpleGroup.empty().copyWith(id: "2");
+    test('Should handle error when deleting a group', () async {
       when(
-        () => mockGroup.getGroupList(),
-      ).thenAnswer((_) async => [SimpleGroup.empty(), newGroup]);
-      when(() => mockGroup.updateGroup(newGroup)).thenAnswer((_) async => true);
-      final GroupListNotifier groupNotifier = GroupListNotifier(
-        groupRepository: mockGroup,
-      );
-      await groupNotifier.loadGroups();
-      expect(await groupNotifier.updateGroup(newGroup), true);
+        () => mockGroup.groupsGroupIdDelete(groupId: any(named: 'groupId')),
+      ).thenThrow(Exception('Error'));
+      final result = await groupNotifier.deleteGroup(returnedGroup);
+      expect(result, false);
     });
 
     test(
-      'setGroup should modify an existing SimpleGroup object in the list',
+      'setGroup should modify an existing CoreGroupSimple object in the list',
       () {
-        final mockGroup = MockGroupRepository();
-        final groupListNotifier = GroupListNotifier(groupRepository: mockGroup);
-        final existingGroup = SimpleGroup(
-          id: '1',
-          name: 'Existing Group',
-          description: 'Existing Description',
-        );
-        groupListNotifier.state = AsyncValue.data([existingGroup]);
-        final modifiedGroup = SimpleGroup(
-          id: '1',
-          name: 'Modified Group',
-          description: 'Modified Description',
-        );
-        groupListNotifier.setGroup(modifiedGroup);
+        groupNotifier.state = AsyncValue.data([existingGroup]);
+        groupNotifier.setGroup(modifiedGroup);
         expect(
-          groupListNotifier.state.when(
+          groupNotifier.state.when(
             data: (data) => data,
             error: (e, s) => [],
             loading: () => [],
@@ -171,7 +213,7 @@ void main() {
           contains(modifiedGroup),
         );
         expect(
-          groupListNotifier.state.when(
+          groupNotifier.state.when(
             data: (data) => data,
             error: (e, s) => [],
             loading: () => [],

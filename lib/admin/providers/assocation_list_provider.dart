@@ -1,38 +1,43 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/class/assocation.dart';
-import 'package:titan/admin/repositories/association_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class AssociationListNotifier extends ListNotifier<Association> {
-  final AssociationRepository associationRepository;
-  AssociationListNotifier({required this.associationRepository})
-    : super(const AsyncValue.loading());
+class AssociationListNotifier extends ListNotifierAPI<Association> {
+  Openapi get associationRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<List<Association>> build() {
+    loadAssociations();
+    return const AsyncValue.loading();
+  }
 
   Future<AsyncValue<List<Association>>> loadAssociations() async {
-    return await loadList(associationRepository.getAssociationList);
+    return await loadList(associationRepository.associationsGet);
   }
 
   Future<bool> createAssociation(Association association) async {
-    return await add(associationRepository.createAssociation, association);
-  }
-
-  Future<bool> updateAssociation(Association association) async {
-    return await update(
-      associationRepository.updateAssociation,
-      (associations, association) => associations
-        ..[associations.indexWhere((g) => g.id == association.id)] =
-            association,
+    return await add(
+      () => associationRepository.associationsPost(
+        body: AppCoreAssociationsSchemasAssociationsAssociationBase(
+          name: association.name,
+          groupId: association.groupId,
+        ),
+      ),
       association,
     );
   }
 
-  Future<bool> deleteAssociation(Association association) async {
-    return await delete(
-      associationRepository.deleteAssociation,
-      (associations, association) =>
-          associations..removeWhere((i) => i.id == association.id),
-      association.id,
+  Future<bool> updateAssociation(Association association) async {
+    return await update(
+      () => associationRepository.associationsAssociationIdPatch(
+        associationId: association.id,
+        body: AssociationUpdate(
+          name: association.name,
+          groupId: association.groupId,
+        ),
+      ),
+      (association) => association.id,
       association,
     );
   }
@@ -48,16 +53,6 @@ class AssociationListNotifier extends ListNotifier<Association> {
 }
 
 final associationListProvider =
-    StateNotifierProvider<
-      AssociationListNotifier,
-      AsyncValue<List<Association>>
-    >((ref) {
-      final associationRepository = ref.watch(associationRepositoryProvider);
-      AssociationListNotifier provider = AssociationListNotifier(
-        associationRepository: associationRepository,
-      );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadAssociations();
-      });
-      return provider;
-    });
+    NotifierProvider<AssociationListNotifier, AsyncValue<List<Association>>>(
+      AssociationListNotifier.new,
+    );

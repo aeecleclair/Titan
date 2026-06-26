@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/providers/all_groups_list_provider.dart';
+import 'package:titan/admin/providers/all_group_list_provider.dart';
 import 'package:titan/admin/providers/association_membership_list_provider.dart';
 import 'package:titan/admin/providers/association_membership_provider.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
@@ -163,35 +163,33 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
               if (!key.currentState!.validate()) {
                 return;
               }
-
-              await tokenExpireWrapper(ref, () async {
-                final updatedAssociationMembershipMsg = AppLocalizations.of(
-                  context,
-                )!.adminUpdatedAssociationMembership;
-                final updatingAssociationMembershipErrorMsg =
-                    AppLocalizations.of(context)!.adminUpdatingError;
-                final value = await associationMembershipListNotifier
-                    .updateAssociationMembership(
-                      associationMembership.copyWith(name: name.text),
-                    );
-                if (value) {
-                  associationMembershipNotifier.setAssociationMembership(
-                    associationMembership.copyWith(
-                      name: name.text,
-                      managerGroupId: groupIdController.text,
-                    ),
+              final updatedAssociationMembershipMsg = AppLocalizations.of(
+                context,
+              )!.adminUpdatedAssociationMembership;
+              final updatingAssociationMembershipErrorMsg = AppLocalizations.of(
+                context,
+              )!.adminUpdatingError;
+              final value = await associationMembershipListNotifier
+                  .updateAssociationMembership(
+                    associationMembership.copyWith(name: name.text),
                   );
-                  displayToastWithContext(
-                    TypeMsg.msg,
-                    updatedAssociationMembershipMsg,
-                  );
-                } else {
-                  displayToastWithContext(
-                    TypeMsg.msg,
-                    updatingAssociationMembershipErrorMsg,
-                  );
-                }
-              });
+              if (value) {
+                associationMembershipNotifier.setAssociationMembership(
+                  associationMembership.copyWith(
+                    name: name.text,
+                    managerGroupId: groupIdController.text,
+                  ),
+                );
+                displayToastWithContext(
+                  TypeMsg.msg,
+                  updatedAssociationMembershipMsg,
+                );
+              } else {
+                displayToastWithContext(
+                  TypeMsg.msg,
+                  updatingAssociationMembershipErrorMsg,
+                );
+              }
             },
             child: Text(
               AppLocalizations.of(context)!.adminEdit,

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/admin.dart';
-import 'package:titan/admin/class/association_membership_simple.dart';
-import 'package:titan/admin/providers/all_groups_list_provider.dart';
+import 'package:titan/admin/providers/all_group_list_provider.dart';
 import 'package:titan/admin/providers/association_membership_list_provider.dart';
 import 'package:titan/admin/router.dart';
 import 'package:titan/admin/ui/pages/membership/association_membership_page/add_membership_modal.dart';
 import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
 import 'package:titan/admin/providers/association_membership_provider.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
@@ -18,7 +18,6 @@ import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
@@ -86,29 +85,28 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                         modal: AddMembershipModal(
                           ref: ref,
                           groups: groups,
-                          onSubmit: (group, name) {
-                            tokenExpireWrapper(ref, () async {
-                              final value = await associationMembershipsNotifier
-                                  .createAssociationMembership(
-                                    AssociationMembership.empty().copyWith(
-                                      managerGroupId: group.id,
-                                      name: name,
-                                    ),
-                                  );
-                              if (value) {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  localizeWithContext
-                                      .adminCreatedAssociationMembership,
+                          onSubmit: (group, name) async {
+                            final value = await associationMembershipsNotifier
+                                .createAssociationMembership(
+                                  MembershipSimple(
+                                    managerGroupId: group.id,
+                                    name: name,
+                                    id: '',
+                                  ),
                                 );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  localizeWithContext.adminCreationError,
-                                );
-                              }
-                              popWithContext();
-                            });
+                            if (value) {
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                localizeWithContext
+                                    .adminCreatedAssociationMembership,
+                              );
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                localizeWithContext.adminCreationError,
+                              );
+                            }
+                            popWithContext();
                           },
                         ),
                       );
@@ -181,32 +179,30 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                                           context,
                                                         )!.adminDeleteAssociationMembership,
                                                     onYes: () async {
-                                                      tokenExpireWrapper(ref, () async {
-                                                        final deletedAssociationMembershipMsg =
-                                                            AppLocalizations.of(
-                                                              context,
-                                                            )!.adminDeletedAssociationMembership;
-                                                        final deletingErrorMsg =
-                                                            AppLocalizations.of(
-                                                              context,
-                                                            )!.adminDeletingError;
-                                                        final value =
-                                                            await associationMembershipsNotifier
-                                                                .deleteAssociationMembership(
-                                                                  associationMembership,
-                                                                );
-                                                        if (value) {
-                                                          displayToastWithContext(
-                                                            TypeMsg.msg,
-                                                            deletedAssociationMembershipMsg,
-                                                          );
-                                                        } else {
-                                                          displayToastWithContext(
-                                                            TypeMsg.error,
-                                                            deletingErrorMsg,
-                                                          );
-                                                        }
-                                                      });
+                                                      final deletedAssociationMembershipMsg =
+                                                          AppLocalizations.of(
+                                                            context,
+                                                          )!.adminDeletedAssociationMembership;
+                                                      final deletingErrorMsg =
+                                                          AppLocalizations.of(
+                                                            context,
+                                                          )!.adminDeletingError;
+                                                      final value =
+                                                          await associationMembershipsNotifier
+                                                              .deleteAssociationMembership(
+                                                                associationMembership,
+                                                              );
+                                                      if (value) {
+                                                        displayToastWithContext(
+                                                          TypeMsg.msg,
+                                                          deletedAssociationMembershipMsg,
+                                                        );
+                                                      } else {
+                                                        displayToastWithContext(
+                                                          TypeMsg.error,
+                                                          deletingErrorMsg,
+                                                        );
+                                                      }
                                                     },
                                                   );
                                                 },

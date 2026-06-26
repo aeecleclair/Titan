@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/class/assocation.dart';
-import 'package:titan/admin/providers/all_groups_list_provider.dart';
+import 'package:titan/admin/providers/all_group_list_provider.dart';
 import 'package:titan/admin/providers/association_logo_provider.dart';
 import 'package:titan/admin/providers/associations_logo_map_provider.dart';
 import 'package:titan/admin/ui/pages/association_page/edit_association.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';

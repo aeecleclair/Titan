@@ -1,21 +1,18 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/class/user_association_membership.dart';
-import 'package:titan/admin/class/user_association_membership_base.dart';
-import 'package:titan/admin/repositories/association_membership_repository.dart';
-import 'package:titan/admin/repositories/association_membership_user_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class AssociationMembershipMembersNotifier
-    extends ListNotifier<UserAssociationMembership> {
-  final AssociationMembershipRepository associationMembershipRepository;
-  final AssociationMembershipUserRepository associationMembershipUserRepository;
-  AssociationMembershipMembersNotifier({
-    required this.associationMembershipRepository,
-    required this.associationMembershipUserRepository,
-  }) : super(const AsyncValue.loading());
+    extends ListNotifierAPI<UserMembershipComplete> {
+  Openapi get associationMembershipRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<List<UserAssociationMembership>>>
+  @override
+  AsyncValue<List<UserMembershipComplete>> build() {
+    return const AsyncValue.loading();
+  }
+
+  Future<AsyncValue<List<UserMembershipComplete>>>
   loadAssociationMembershipMembers(
     String associationMembershipId, {
     DateTime? minimalStartDate,
@@ -24,79 +21,80 @@ class AssociationMembershipMembersNotifier
     DateTime? maximalEndDate,
   }) async {
     return await loadList(
-      () async =>
-          associationMembershipRepository.getAssociationMembershipMembers(
-            associationMembershipId,
-            minimalStartDate,
-            minimalEndDate,
-            maximalStartDate,
-            maximalEndDate,
+      () => associationMembershipRepository
+          .membershipsAssociationMembershipIdMembersGet(
+            associationMembershipId: associationMembershipId,
+            minimalStartDate: minimalStartDate
+                ?.toIso8601String()
+                .split('T')
+                .first,
+            minimalEndDate: minimalEndDate?.toIso8601String().split('T').first,
+            maximalStartDate: maximalStartDate
+                ?.toIso8601String()
+                .split('T')
+                .first,
+            maximalEndDate: maximalEndDate?.toIso8601String().split('T').first,
           ),
     );
   }
 
   Future<bool> addMember(
-    UserAssociationMembershipBase userAssociationMembership,
-    SimpleUser user,
+    UserMembershipComplete userAssociationMembership,
+    CoreUserSimple user,
   ) async {
-    return await add(
-      (associationMembership) async => associationMembershipUserRepository
-          .addUserMembership(userAssociationMembership),
-      UserAssociationMembership(
-        id: userAssociationMembership.id,
+    return (await associationMembershipRepository.membershipsUsersUserIdPost(
+      userId: user.id,
+      body: UserMembershipBase(
         associationMembershipId:
             userAssociationMembership.associationMembershipId,
-        userId: userAssociationMembership.userId,
         startDate: userAssociationMembership.startDate,
         endDate: userAssociationMembership.endDate,
-        user: user,
       ),
-    );
+    )).isSuccessful;
   }
 
   Future<bool> updateMember(
-    UserAssociationMembership associationMembership,
+    UserMembershipComplete associationMembership,
   ) async {
-    return await update(
-      (associationMembership) async => associationMembershipUserRepository
-          .updateUserMembership(associationMembership),
-      (userAssociationMemberships, membership) => userAssociationMemberships
-        ..[userAssociationMemberships.indexWhere(
-              (g) => g.id == membership.id,
-            )] =
-            membership,
-      associationMembership,
-    );
+    final response = await associationMembershipRepository
+        .membershipsUsersMembershipIdPatch(
+          membershipId: associationMembership.id,
+          body: UserMembershipEdit(
+            startDate: associationMembership.startDate,
+            endDate: associationMembership.endDate,
+          ),
+        );
+    if (!response.isSuccessful) return false;
+    state.whenData((members) {
+      state = AsyncValue.data([
+        for (final m in members)
+          m.id == associationMembership.id
+              ? m.copyWith(
+                  startDate: associationMembership.startDate,
+                  endDate: associationMembership.endDate,
+                )
+              : m,
+      ]);
+    });
+    return true;
   }
 
   Future<bool> deleteMember(
-    UserAssociationMembership associationMembership,
+    UserMembershipComplete associationMembership,
   ) async {
     return await delete(
-      (membershipId) async => associationMembershipUserRepository
-          .deleteUserMembership(membershipId),
-      (userAssociationMemberships, membership) =>
-          userAssociationMemberships..remove(associationMembership),
+      () async =>
+          associationMembershipRepository.membershipsUsersMembershipIdDelete(
+            membershipId: associationMembership.id,
+          ),
+      (membership) => membership.id,
       associationMembership.id,
-      associationMembership,
     );
   }
 }
 
 final associationMembershipMembersProvider =
-    StateNotifierProvider<
+    NotifierProvider<
       AssociationMembershipMembersNotifier,
-      AsyncValue<List<UserAssociationMembership>>
-    >((ref) {
-      final associationMembershipUserRepository = ref.watch(
-        associationMembershipUserRepositoryProvider,
-      );
-      final associationMembershipRepository = ref.watch(
-        associationMembershipRepositoryProvider,
-      );
-      return AssociationMembershipMembersNotifier(
-        associationMembershipRepository: associationMembershipRepository,
-        associationMembershipUserRepository:
-            associationMembershipUserRepository,
-      );
-    });
+      AsyncValue<List<UserMembershipComplete>>
+    >(() => AssociationMembershipMembersNotifier());

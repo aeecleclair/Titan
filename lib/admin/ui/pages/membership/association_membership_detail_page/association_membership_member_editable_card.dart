@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:titan/admin/class/user_association_membership.dart';
 import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
 import 'package:titan/admin/providers/user_association_membership_provider.dart';
 import 'package:titan/admin/router.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/locale_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/styleguide/icon_button.dart';
@@ -19,7 +18,7 @@ import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 class MemberEditableCard extends HookConsumerWidget {
   const MemberEditableCard({super.key, required this.associationMembership});
 
-  final UserAssociationMembership associationMembership;
+  final UserMembershipComplete associationMembership;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -115,22 +114,17 @@ class MemberEditableCard extends HookConsumerWidget {
                           localization.phonebookDeletedMember;
                       final deleteMemberErrorMsg =
                           localization.phonebookDeletingError;
-                      await tokenExpireWrapper(ref, () async {
-                        final result =
-                            await associationMembershipMemberListNotifier
-                                .deleteMember(associationMembership);
-                        if (result) {
-                          displayToastWithContext(
-                            TypeMsg.msg,
-                            deletedMemberMsg,
-                          );
-                        } else {
-                          displayToastWithContext(
-                            TypeMsg.error,
-                            deleteMemberErrorMsg,
-                          );
-                        }
-                      });
+                      final result =
+                          await associationMembershipMemberListNotifier
+                              .deleteMember(associationMembership);
+                      if (result) {
+                        displayToastWithContext(TypeMsg.msg, deletedMemberMsg);
+                      } else {
+                        displayToastWithContext(
+                          TypeMsg.error,
+                          deleteMemberErrorMsg,
+                        );
+                      }
                     },
                   );
                 },

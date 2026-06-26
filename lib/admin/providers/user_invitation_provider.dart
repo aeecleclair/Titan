@@ -1,25 +1,24 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/repositories/user_invitation_repository.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/single_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class UserInvitationNotifier extends StateNotifier {
-  final UserInvitationRepository userInvitationRepository;
-  UserInvitationNotifier({required this.userInvitationRepository})
-    : super(null);
+class UserInvitationNotifier extends SingleNotifierAPI<BatchResult> {
+  Openapi get userInvitationRepository => ref.watch(repositoryProvider);
+  @override
+  AsyncValue<BatchResult> build() {
+    return const AsyncValue.loading();
+  }
 
-  Future<List<String>> createUsers(
-    List<String> mailList,
-    String? groupId,
+  Future<AsyncValue<BatchResult>> createUsers(
+    List<CoreBatchUserCreateRequest> mailList,
   ) async {
-    return await userInvitationRepository.createUsers(mailList, groupId);
+    return await load(
+      () => userInvitationRepository.usersBatchCreationPost(body: mailList),
+    );
   }
 }
 
-final userInvitationProvider =
-    StateNotifierProvider<UserInvitationNotifier, void>((ref) {
-      final userInvitationRepository = ref.watch(
-        userInvitationRepositoryProvider,
-      );
-      return UserInvitationNotifier(
-        userInvitationRepository: userInvitationRepository,
-      );
-    });
+final userInvitationProvider = NotifierProvider<UserInvitationNotifier, void>(
+  () => UserInvitationNotifier(),
+);

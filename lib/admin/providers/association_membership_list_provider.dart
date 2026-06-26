@@ -1,74 +1,69 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/class/association_membership_simple.dart';
-import 'package:titan/admin/repositories/association_membership_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class AssociationMembershipListNotifier
-    extends ListNotifier<AssociationMembership> {
-  final AssociationMembershipRepository associationMembershipRepository;
-  AssociationMembershipListNotifier({
-    required this.associationMembershipRepository,
-  }) : super(const AsyncValue.loading());
+    extends ListNotifierAPI<MembershipSimple> {
+  Openapi get associationMembershipRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<List<AssociationMembership>>>
+  @override
+  AsyncValue<List<MembershipSimple>> build() {
+    return const AsyncValue.loading();
+  }
+
+  Future<AsyncValue<List<MembershipSimple>>>
   loadAssociationMemberships() async {
-    return await loadList(
-      associationMembershipRepository.getAssociationMembershipList,
-    );
+    return await loadList(associationMembershipRepository.membershipsGet);
   }
 
   Future<bool> createAssociationMembership(
-    AssociationMembership associationMembership,
+    MembershipSimple associationMembership,
   ) async {
     return await add(
-      associationMembershipRepository.createAssociationMembership,
+      () => associationMembershipRepository.membershipsPost(
+        body: AppCoreMembershipsSchemasMembershipsMembershipBase(
+          name: associationMembership.name,
+          managerGroupId: associationMembership.managerGroupId,
+        ),
+      ),
       associationMembership,
     );
   }
 
   Future<bool> updateAssociationMembership(
-    AssociationMembership associationMembership,
+    MembershipSimple associationMembership,
   ) async {
     return await update(
-      associationMembershipRepository.updateAssociationMembership,
-      (associationMemberships, associationMembership) => associationMemberships
-        ..[associationMemberships.indexWhere(
-              (g) => g.id == associationMembership.id,
-            )] =
-            associationMembership,
+      () => associationMembershipRepository
+          .membershipsAssociationMembershipIdPatch(
+            associationMembershipId: associationMembership.id,
+            body: AppCoreMembershipsSchemasMembershipsMembershipBase(
+              name: associationMembership.name,
+              managerGroupId: associationMembership.managerGroupId,
+            ),
+          ),
+      (membership) => membership.id,
       associationMembership,
     );
   }
 
   Future<bool> deleteAssociationMembership(
-    AssociationMembership associationMembership,
+    MembershipSimple associationMembership,
   ) async {
     return await delete(
-      associationMembershipRepository.deleteAssociationMembership,
-      (associationMemberships, associationMembership) =>
-          associationMemberships
-            ..removeWhere((i) => i.id == associationMembership.id),
+      () => associationMembershipRepository
+          .membershipsAssociationMembershipIdDelete(
+            associationMembershipId: associationMembership.id,
+          ),
+      (associationMembership) => associationMembership.id,
       associationMembership.id,
-      associationMembership,
     );
   }
 }
 
 final allAssociationMembershipListProvider =
-    StateNotifierProvider<
+    NotifierProvider<
       AssociationMembershipListNotifier,
-      AsyncValue<List<AssociationMembership>>
-    >((ref) {
-      final associationMembershipRepository = ref.watch(
-        associationMembershipRepositoryProvider,
-      );
-      AssociationMembershipListNotifier provider =
-          AssociationMembershipListNotifier(
-            associationMembershipRepository: associationMembershipRepository,
-          );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadAssociationMemberships();
-      });
-      return provider;
-    });
+      AsyncValue<List<MembershipSimple>>
+    >(AssociationMembershipListNotifier.new);

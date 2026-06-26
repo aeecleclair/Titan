@@ -3,8 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/admin/admin.dart';
-import 'package:titan/admin/providers/group_list_provider.dart';
-import 'package:titan/admin/repositories/notification_repository.dart';
+import 'package:titan/admin/providers/all_group_list_provider.dart';
+import 'package:titan/admin/providers/notification_provider.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
@@ -22,7 +23,7 @@ class GroupNotificationPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final groups = ref.watch(allGroupListProvider);
     final groupsNotifier = ref.watch(allGroupListProvider.notifier);
-    final notificationRepository = ref.watch(notificationRepositoryProvider);
+    final notificationNotifier = ref.watch(notificationProvider.notifier);
     final titleController = useTextEditingController();
     final contentController = useTextEditingController();
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -93,6 +94,7 @@ class GroupNotificationPage extends HookConsumerWidget {
                                             label: localizeWithContext
                                                 .adminContent,
                                             controller: contentController,
+                                            maxLines: 5,
                                             keyboardType:
                                                 TextInputType.multiline,
                                           ),
@@ -100,11 +102,15 @@ class GroupNotificationPage extends HookConsumerWidget {
                                           Button(
                                             text: localizeWithContext.adminSend,
                                             onPressed: () {
-                                              notificationRepository
+                                              notificationNotifier
                                                   .sendNotification(
-                                                    group.id,
-                                                    titleController.text,
-                                                    contentController.text,
+                                                    GroupNotificationRequest(
+                                                      groupId: group.id,
+                                                      title:
+                                                          titleController.text,
+                                                      content: contentController
+                                                          .text,
+                                                    ),
                                                   )
                                                   .then((value) {
                                                     if (value) {

@@ -3,15 +3,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:titan/admin/class/assocation.dart';
-import 'package:titan/admin/class/simple_group.dart';
-import 'package:titan/admin/providers/all_groups_list_provider.dart';
+import 'package:titan/admin/providers/all_group_list_provider.dart';
 import 'package:titan/admin/providers/assocation_list_provider.dart';
 import 'package:titan/admin/providers/association_logo_provider.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/settings/ui/pages/main_page/picture_button.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/button.dart';
@@ -20,7 +18,7 @@ import 'package:titan/tools/ui/styleguide/text_entry.dart';
 
 class EditAssociation extends HookConsumerWidget {
   final Association association;
-  final SimpleGroup group;
+  final CoreGroupSimple group;
   const EditAssociation({
     super.key,
     required this.association,
@@ -32,7 +30,7 @@ class EditAssociation extends HookConsumerWidget {
     final associationListNotifier = ref.watch(associationListProvider.notifier);
     final nameController = useTextEditingController(text: association.name);
     final groups = ref.watch(allGroupList);
-    final chosenGroup = useState<SimpleGroup?>(group);
+    final chosenGroup = useState<CoreGroupSimple?>(group);
     final associationLogo = ref.watch(associationLogoProvider);
     final associationLogoNotifier = ref.watch(associationLogoProvider.notifier);
 
@@ -196,27 +194,25 @@ class EditAssociation extends HookConsumerWidget {
                 !(nameController.value.text != association.name ||
                     chosenGroup.value!.id != association.groupId),
             onPressed: () async {
-              await tokenExpireWrapper(ref, () async {
-                final newAssociation = association.copyWith(
-                  name: nameController.value.text,
-                  groupId: chosenGroup.value!.id,
+              final newAssociation = association.copyWith(
+                name: nameController.value.text,
+                groupId: chosenGroup.value!.id,
+              );
+              final value = await associationListNotifier.updateAssociation(
+                newAssociation,
+              );
+              if (value) {
+                displayToastWithContext(
+                  TypeMsg.msg,
+                  localizeWithContext.adminAssociationUpdated,
                 );
-                final value = await associationListNotifier.updateAssociation(
-                  newAssociation,
+                navigatorWithContext.pop();
+              } else {
+                displayToastWithContext(
+                  TypeMsg.error,
+                  localizeWithContext.adminAssociationUpdateError,
                 );
-                if (value) {
-                  displayToastWithContext(
-                    TypeMsg.msg,
-                    localizeWithContext.adminAssociationUpdated,
-                  );
-                  navigatorWithContext.pop();
-                } else {
-                  displayToastWithContext(
-                    TypeMsg.error,
-                    localizeWithContext.adminAssociationUpdateError,
-                  );
-                }
-              });
+              }
             },
           ),
         ],

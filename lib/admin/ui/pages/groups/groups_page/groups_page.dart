@@ -3,10 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/admin.dart';
-import 'package:titan/admin/class/simple_group.dart';
 import 'package:titan/admin/providers/group_id_provider.dart';
-import 'package:titan/admin/providers/group_list_provider.dart';
+import 'package:titan/admin/providers/all_group_list_provider.dart';
 import 'package:titan/admin/router.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -17,7 +17,6 @@ import 'package:titan/tools/ui/styleguide/list_item.dart';
 import 'package:titan/tools/ui/styleguide/text_entry.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -102,28 +101,26 @@ class GroupsPage extends HookConsumerWidget {
                                     final addingErrorMsg = AppLocalizations.of(
                                       context,
                                     )!.adminAddingError;
-                                    await tokenExpireWrapper(ref, () async {
-                                      final value = await groupListNotifier
-                                          .createGroup(
-                                            SimpleGroup(
-                                              name: nameController.text,
-                                              description: descController.text,
-                                              id: '',
-                                            ),
-                                          );
-                                      if (value) {
-                                        QR.back();
-                                        displayToastWithContext(
-                                          TypeMsg.msg,
-                                          addedGroupMsg,
+                                    final value = await groupListNotifier
+                                        .createGroup(
+                                          CoreGroupSimple(
+                                            name: nameController.text,
+                                            description: descController.text,
+                                            id: '',
+                                          ),
                                         );
-                                      } else {
-                                        displayToastWithContext(
-                                          TypeMsg.error,
-                                          addingErrorMsg,
-                                        );
-                                      }
-                                    });
+                                    if (value) {
+                                      QR.back();
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        addedGroupMsg,
+                                      );
+                                    } else {
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        addingErrorMsg,
+                                      );
+                                    }
                                   },
                                 ),
                               ],
@@ -163,7 +160,7 @@ class GroupsPage extends HookConsumerWidget {
                                           onPressed: () async {
                                             nameController.text = group.name;
                                             descController.text =
-                                                group.description;
+                                                group.description ?? '';
                                             Navigator.pop(context);
                                             await showCustomBottomModal(
                                               context: context,
@@ -199,35 +196,30 @@ class GroupsPage extends HookConsumerWidget {
                                                             AppLocalizations.of(
                                                               context,
                                                             )!.adminAddingError;
-                                                        await tokenExpireWrapper(
-                                                          ref,
-                                                          () async {
-                                                            final value = await groupListNotifier
-                                                                .updateGroup(
-                                                                  SimpleGroup(
-                                                                    name: nameController
+                                                        final value = await groupListNotifier
+                                                            .updateGroup(
+                                                              CoreGroupSimple(
+                                                                name:
+                                                                    nameController
                                                                         .text,
-                                                                    description:
-                                                                        descController
-                                                                            .text,
-                                                                    id: group
-                                                                        .id,
-                                                                  ),
-                                                                );
-                                                            if (value) {
-                                                              QR.back();
-                                                              displayToastWithContext(
-                                                                TypeMsg.msg,
-                                                                addedGroupMsg,
-                                                              );
-                                                            } else {
-                                                              displayToastWithContext(
-                                                                TypeMsg.error,
-                                                                addingErrorMsg,
-                                                              );
-                                                            }
-                                                          },
-                                                        );
+                                                                description:
+                                                                    descController
+                                                                        .text,
+                                                                id: group.id,
+                                                              ),
+                                                            );
+                                                        if (value) {
+                                                          QR.back();
+                                                          displayToastWithContext(
+                                                            TypeMsg.msg,
+                                                            addedGroupMsg,
+                                                          );
+                                                        } else {
+                                                          displayToastWithContext(
+                                                            TypeMsg.error,
+                                                            addingErrorMsg,
+                                                          );
+                                                        }
                                                       },
                                                     ),
                                                   ],
@@ -265,26 +257,22 @@ class GroupsPage extends HookConsumerWidget {
                                                   descriptions: localizeWithContext
                                                       .adminDeleteGroupConfirmation,
                                                   onYes: () async {
-                                                    tokenExpireWrapper(ref, () async {
-                                                      final value =
-                                                          await groupsNotifier
-                                                              .deleteGroup(
-                                                                group,
-                                                              );
-                                                      if (value) {
-                                                        displayToastWithContext(
-                                                          TypeMsg.msg,
-                                                          localizeWithContext
-                                                              .adminDeletedGroup,
-                                                        );
-                                                      } else {
-                                                        displayToastWithContext(
-                                                          TypeMsg.error,
-                                                          localizeWithContext
-                                                              .adminFailedToDeleteGroup,
-                                                        );
-                                                      }
-                                                    });
+                                                    final value =
+                                                        await groupsNotifier
+                                                            .deleteGroup(group);
+                                                    if (value) {
+                                                      displayToastWithContext(
+                                                        TypeMsg.msg,
+                                                        localizeWithContext
+                                                            .adminDeletedGroup,
+                                                      );
+                                                    } else {
+                                                      displayToastWithContext(
+                                                        TypeMsg.error,
+                                                        localizeWithContext
+                                                            .adminFailedToDeleteGroup,
+                                                      );
+                                                    }
                                                   },
                                                 );
                                               },
