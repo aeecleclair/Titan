@@ -1,7 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/event/tools/constants.dart';
-import 'package:titan/tools/functions.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 final isEventAdminProvider = Provider<bool>((ref) {
-  return hasUserPermission(ref, EventPermissionConstants.manageEvents);
+  final me = ref.watch(userProvider);
+  return (me.groups ?? [])
+      .map((e) => e.id)
+      .contains("b0357687-2211-410a-9e2a-144519eeaafa"); // admin_calendar
 });

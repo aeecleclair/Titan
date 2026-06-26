@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/event/class/event.dart';
 import 'package:titan/event/providers/event_provider.dart';
 import 'package:titan/event/providers/is_admin_provider.dart';
 import 'package:titan/event/providers/user_event_list_provider.dart';
@@ -66,7 +66,7 @@ class EventMainPage extends HookConsumerWidget {
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
-                  eventNotifier.setEvent(Event.empty());
+                  eventNotifier.setEvent(EventCompleteTicketUrl.empty());
                   QR.to(EventRouter.root + EventRouter.addEdit);
                 },
                 child: CardLayout(

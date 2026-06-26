@@ -1,10 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/event/class/event.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class EventNotifier extends StateNotifier<Event> {
-  EventNotifier() : super(Event.empty());
+class EventNotifier extends Notifier<EventCompleteTicketUrl> {
+  @override
+  EventCompleteTicketUrl build() {
+    return EventCompleteTicketUrl.fromJson({});
+  }
 
-  void setEvent(Event event) {
+  void setEvent(EventCompleteTicketUrl event) {
     state = event;
   }
 
@@ -13,6 +16,6 @@ class EventNotifier extends StateNotifier<Event> {
   }
 }
 
-final eventProvider = StateNotifierProvider<EventNotifier, Event>((ref) {
-  return EventNotifier();
-});
+final eventProvider = NotifierProvider<EventNotifier, EventCompleteTicketUrl>(
+  EventNotifier.new,
+);

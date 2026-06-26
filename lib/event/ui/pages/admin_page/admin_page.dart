@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/event/ui/event.dart';
-import 'package:titan/event/class/event.dart';
 import 'package:titan/event/providers/event_list_provider.dart';
 import 'package:titan/event/ui/pages/admin_page/list_event.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/widgets/calendar.dart';
@@ -17,12 +18,12 @@ class AdminPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final events = ref.watch(eventListProvider);
 
-    final List<Event> pendingEvents = [],
+    final List<EventCompleteTicketUrl> pendingEvents = [],
         confirmedEvents = [],
         canceledEvents = [];
     events.maybeWhen(
       data: (events) {
-        for (Event b in events) {
+        for (EventCompleteTicketUrl b in events) {
           switch (b.decision) {
             case Decision.approved:
               confirmedEvents.add(b);
@@ -33,6 +34,8 @@ class AdminPage extends HookConsumerWidget {
             case Decision.pending:
               pendingEvents.add(b);
               break;
+            case Decision.swaggerGeneratedUnknown:
+              break;
           }
         }
       },
@@ -40,14 +43,14 @@ class AdminPage extends HookConsumerWidget {
     );
     List<Appointment> appointments = <Appointment>[];
     confirmedEvents.map((e) {
-      if (e.recurrenceRule != "") {
-        final dates = getDateInRecurrence(e.recurrenceRule, e.start);
+      if (e.recurrenceRule != null && e.recurrenceRule != "") {
+        final dates = getDateInRecurrence(e.recurrenceRule!, e.start);
         dates.map((data) {
           appointments.add(
             Appointment(
               startTime: combineDate(data, e.start),
               endTime: combineDate(data, e.end),
-              subject: '${e.name} - ${e.organizer}',
+              subject: '${e.name} - ${e.association.name}',
               isAllDay: e.allDay,
               startTimeZone: "Europe/Paris",
               endTimeZone: "Europe/Paris",
@@ -61,7 +64,7 @@ class AdminPage extends HookConsumerWidget {
           Appointment(
             startTime: e.start,
             endTime: e.end,
-            subject: '${e.name} - ${e.organizer}',
+            subject: '${e.name} - ${e.association.name}',
             isAllDay: e.allDay,
             startTimeZone: "Europe/Paris",
             endTimeZone: "Europe/Paris",

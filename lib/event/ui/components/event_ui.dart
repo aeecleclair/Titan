@@ -2,12 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:titan/event/class/event.dart';
 import 'package:titan/event/providers/event_provider.dart';
 import 'package:titan/event/providers/user_event_list_provider.dart';
 import 'package:titan/event/router.dart';
-import 'package:titan/event/tools/functions.dart';
 import 'package:titan/event/ui/components/edit_delete_button.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
@@ -17,7 +17,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
 class EventUi extends ConsumerWidget {
-  final Event event;
+  final EventCompleteTicketUrl event;
   final bool isDetailPage, isAdmin;
   final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
   const EventUi({
@@ -126,7 +126,7 @@ class EventUi extends ConsumerWidget {
                       formatRecurrenceRule(
                         event.start,
                         event.end,
-                        event.recurrenceRule,
+                        event.recurrenceRule ?? "",
                         event.allDay,
                         locale.toString(),
                       ),
@@ -151,21 +151,26 @@ class EventUi extends ConsumerWidget {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    event.organizer,
+                    event.association.name,
                     style: TextStyle(color: textColor, fontSize: 15),
                   ),
                 ],
               ),
               const SizedBox(height: 5),
               Text(
-                event.description
-                        .split("\n")
-                        .sublist(
-                          0,
-                          event.description.split("\n").length > 1 ? 2 : 1,
-                        )
-                        .join("\n") +
-                    (event.description.split("\n").length > 1 ? "..." : ""),
+                (event.description
+                            ?.split("\n")
+                            .sublist(
+                              0,
+                              (event.description?.split("\n").length ?? 0) > 1
+                                  ? 2
+                                  : 1,
+                            )
+                            .join("\n") ??
+                        "") +
+                    ((event.description?.split("\n").length ?? 0) > 1
+                        ? "..."
+                        : ""),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -177,7 +182,7 @@ class EventUi extends ConsumerWidget {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  decisionToString(event.decision, context),
+                  event.decision.name,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: textColor,

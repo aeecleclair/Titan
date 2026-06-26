@@ -1,43 +1,33 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/event/class/event.dart';
-import 'package:titan/event/repositories/event_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class ConfirmedEventListProvider extends ListNotifier<Event> {
-  final EventRepository eventRepository;
-  ConfirmedEventListProvider({required this.eventRepository})
-    : super(const AsyncValue.loading());
+class ConfirmedEventListProvider
+    extends ListNotifierAPI<EventCompleteTicketUrl> {
+  Openapi get eventRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<List<Event>>> loadConfirmedEvent() async {
-    return await loadList(eventRepository.getConfirmedEventList);
+  @override
+  AsyncValue<List<EventCompleteTicketUrl>> build() {
+    loadConfirmedEvent();
+    return const AsyncValue.loading();
   }
 
-  Future<bool> addEvent(Event booking) async {
-    return await add((b) async => b, booking);
+  Future<AsyncValue<List<EventCompleteTicketUrl>>> loadConfirmedEvent() async {
+    return await loadList(eventRepository.calendarEventsConfirmedGet);
   }
 
-  Future<bool> deleteEvent(Event booking) async {
-    return await delete(
-      (_) async => true,
-      (bookings, booking) =>
-          bookings..removeWhere((element) => element.id == booking.id),
-      booking.id,
-      booking,
-    );
+  Future<bool> addEvent(EventCompleteTicketUrl booking) async {
+    return await localAdd(booking);
+  }
+
+  Future<bool> deleteEvent(EventCompleteTicketUrl booking) async {
+    return await localDelete((booking) => booking.id, booking.id);
   }
 }
 
 final confirmedEventListProvider =
-    StateNotifierProvider<ConfirmedEventListProvider, AsyncValue<List<Event>>>((
-      ref,
-    ) {
-      final eventRepository = ref.watch(eventRepositoryProvider);
-      final provider = ConfirmedEventListProvider(
-        eventRepository: eventRepository,
-      );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadConfirmedEvent();
-      });
-      return provider;
-    });
+    NotifierProvider<
+      ConfirmedEventListProvider,
+      AsyncValue<List<EventCompleteTicketUrl>>
+    >(ConfirmedEventListProvider.new);

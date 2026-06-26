@@ -1,58 +1,62 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/event/class/event.dart';
-import 'package:titan/event/repositories/event_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class EventEventListProvider extends ListNotifier<Event> {
-  final EventRepository eventRepository;
-  String userId = "";
-  EventEventListProvider({required this.eventRepository})
-    : super(const AsyncValue.loading());
-  void setId(String id) {
-    userId = id;
+class EventEventListProvider extends ListNotifierAPI<EventCompleteTicketUrl> {
+  Openapi get eventRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<List<EventCompleteTicketUrl>> build() {
+    final userId = ref.watch(idProvider);
+    userId.whenData((value) async {
+      await loadConfirmedEvent();
+    });
+    return const AsyncValue.loading();
   }
 
-  Future<AsyncValue<List<Event>>> loadConfirmedEvent() async {
-    return await loadList(() async => eventRepository.getUserEventList(userId));
+  Future<AsyncValue<List<EventCompleteTicketUrl>>> loadConfirmedEvent() async {
+    return await loadList(eventRepository.calendarEventsConfirmedGet);
   }
 
-  Future<bool> addEvent(Event event) async {
-    return await add(eventRepository.createEvent, event);
-  }
-
-  Future<bool> updateEvent(Event event) async {
-    return await update(
-      eventRepository.updateEvent,
-      (events, event) =>
-          events..[events.indexWhere((e) => e.id == event.id)] = event,
+  Future<bool> addEvent(EventBaseCreation event) async {
+    return await add(
+      () => eventRepository.calendarEventsPost(body: event),
       event,
     );
   }
 
-  Future<bool> deleteEvent(Event event) async {
-    return await delete(
-      eventRepository.deleteEvent,
-      (events, event) => events..removeWhere((e) => e.id == event.id),
-      event.id,
+  Future<bool> updateEvent(EventCompleteTicketUrl event) async {
+    return await update(
+      () => eventRepository.calendarEventsEventIdPatch(
+        eventId: event.id,
+        body: EventEdit(
+          name: event.name,
+          start: event.start,
+          end: event.end,
+          allDay: event.allDay,
+          location: event.location,
+          description: event.description,
+          recurrenceRule: event.recurrenceRule,
+        ),
+      ),
+      (event) => event.id,
       event,
+    );
+  }
+
+  Future<bool> deleteEvent(EventCompleteTicketUrl event) async {
+    return await delete(
+      () => eventRepository.calendarEventsEventIdDelete(eventId: event.id),
+      (event) => event.id,
+      event.id,
     );
   }
 }
 
 final eventEventListProvider =
-    StateNotifierProvider<EventEventListProvider, AsyncValue<List<Event>>>((
-      ref,
-    ) {
-      final eventRepository = ref.watch(eventRepositoryProvider);
-      final userId = ref.watch(idProvider);
-      final provider = EventEventListProvider(eventRepository: eventRepository);
-      tokenExpireWrapperAuth(ref, () async {
-        userId.whenData((value) async {
-          provider.setId(value);
-          await provider.loadConfirmedEvent();
-        });
-      });
-      return provider;
-    });
+    NotifierProvider<
+      EventEventListProvider,
+      AsyncValue<List<EventCompleteTicketUrl>>
+    >(EventEventListProvider.new);

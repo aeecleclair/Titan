@@ -6,14 +6,11 @@ import 'package:titan/event/router.dart';
 import 'package:titan/home/router.dart';
 import 'package:tuple/tuple.dart';
 
-final Map<String, Tuple2<String, List<StateNotifierProvider>>> eventProviders =
-    {
-      "userEvents": Tuple2(EventRouter.root, [
-        eventEventListProvider,
-        confirmedEventListProvider,
-      ]),
-      "confirmedEvents": Tuple2(HomeRouter.root, [confirmedEventListProvider]),
-      "events": Tuple2(EventRouter.root + EventRouter.admin, [
-        eventListProvider,
-      ]),
-    };
+final Map<String, Tuple2<String, List<NotifierProvider>>> eventProviders = {
+  "userEvents": Tuple2(EventRouter.root, [
+    eventEventListProvider,
+    confirmedEventListProvider,
+  ]),
+  "confirmedEvents": Tuple2(HomeRouter.root, [confirmedEventListProvider]),
+  "events": Tuple2(EventRouter.root + EventRouter.admin, [eventListProvider]),
+};

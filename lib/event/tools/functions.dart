@@ -1,60 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:titan/event/class/event.dart';
-import 'package:titan/tools/functions.dart';
 import 'package:titan/l10n/app_localizations.dart';
-
-String decisionToString(Decision d, BuildContext context) {
-  switch (d) {
-    case Decision.approved:
-      return AppLocalizations.of(context)!.eventConfirmed;
-    case Decision.declined:
-      return AppLocalizations.of(context)!.eventDeclined;
-    case Decision.pending:
-      return AppLocalizations.of(context)!.eventPending;
-  }
-}
-
-String calendarEventTypeToString(CalendarEventType type) {
-  switch (type) {
-    case CalendarEventType.eventAE:
-      return "Event AE";
-    case CalendarEventType.eventUSE:
-      return "Event USE";
-    case CalendarEventType.independentAssociation:
-      return "Asso indé";
-    case CalendarEventType.happyHour:
-      return "HH";
-    case CalendarEventType.direction:
-      return "Strass";
-    case CalendarEventType.nightParty:
-      return "Rewass";
-    case CalendarEventType.other:
-      return "Autre";
-  }
-}
-
-CalendarEventType stringToCalendarEventType(String type) {
-  switch (type) {
-    case "Event AE":
-      return CalendarEventType.eventAE;
-    case "Event USE":
-      return CalendarEventType.eventUSE;
-    case "Asso indé":
-      return CalendarEventType.independentAssociation;
-    case "HH":
-      return CalendarEventType.happyHour;
-    case "Strass":
-      return CalendarEventType.direction;
-    case "Rewass":
-      return CalendarEventType.nightParty;
-    case "Autre":
-      return CalendarEventType.other;
-    default:
-      return CalendarEventType.other;
-  }
-}
 
 String processDateOnlyHour(DateTime date) {
   return "${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
