@@ -1,11 +1,14 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 
-class FavoritesNameNotifier extends StateNotifier<List<String>> {
+class FavoritesNameNotifier extends Notifier<List<String>> {
   final key = 'favorites';
-  FavoritesNameNotifier() : super([]);
+
+  @override
+  List<String> build() {
+    return [];
+  }
 
   Future<void> loadFavorites() async {
     final prefs = await SharedPreferences.getInstance();
@@ -45,10 +48,6 @@ class FavoritesNameNotifier extends StateNotifier<List<String>> {
 }
 
 final favoritesNameProvider =
-    StateNotifierProvider<FavoritesNameNotifier, List<String>>((ref) {
-      final favoritesNameNotifier = FavoritesNameNotifier();
-      tokenExpireWrapperAuth(ref, () async {
-        favoritesNameNotifier.loadFavorites();
-      });
-      return favoritesNameNotifier;
-    });
+    NotifierProvider<FavoritesNameNotifier, List<String>>(
+      FavoritesNameNotifier.new,
+    );
