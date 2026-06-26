@@ -9,9 +9,3 @@ final weekDaysOrdered = [
   WeekDays.saturday,
   WeekDays.sunday,
 ];
-
-class BookingPermissionConstants {
-  static const String accessBooking = 'access_booking';
-  static const String manageManagers = 'manage_managers';
-  static const String manageRooms = 'manage_rooms';
-}

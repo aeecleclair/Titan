@@ -1,73 +1,137 @@
+import 'package:chopper/chopper.dart' as chopper;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
-import 'package:titan/booking/class/booking.dart';
 import 'package:titan/booking/providers/manager_booking_list_provider.dart';
-import 'package:titan/booking/repositories/booking_repository.dart';
-import 'package:titan/tools/functions.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class MockBookingRepository extends Mock implements BookingRepository {}
+class MockBookingRepository extends Mock implements Openapi {}
 
 void main() {
-  group('BookingListProvider', () {
-    test('Should load manager bookings', () async {
-      final mockBookingRepository = MockBookingRepository();
+  group('ManagerBookingListProvider', () {
+    late MockBookingRepository mockRepository;
+    late ProviderContainer container;
+    late ManagerBookingListProvider provider;
+    final bookings = [
+      BookingReturnApplicant.empty().copyWith(id: '1'),
+      BookingReturnApplicant.empty().copyWith(id: '2'),
+    ];
+    final updatedBooking = bookings.first.copyWith(reason: 'Updated');
+    final booking = bookings.first.copyWith(decision: Decision.approved);
+
+    setUp(() async {
+      mockRepository = MockBookingRepository();
       when(
-        () => mockBookingRepository.getUserManageBookingList(),
-      ).thenAnswer((_) async => [Booking.empty(), Booking.empty()]);
-      final managerBookingListProvider = ManagerBookingListProvider(
-        bookingRepository: mockBookingRepository,
+        () => mockRepository.bookingBookingsUsersMeManageGet(),
+      ).thenThrow(Exception('Failed to load bookings'));
+      container = ProviderContainer(
+        overrides: [repositoryProvider.overrideWithValue(mockRepository)],
       );
-      final bookings = await managerBookingListProvider
-          .loadUserManageBookings();
-      expect(bookings, isA<AsyncData<List<Booking>>>());
+      provider = container.read(managerBookingListProvider.notifier);
+      await Future(() {});
+    });
+
+    tearDown(() => container.dispose());
+
+    test('loadUserManageBookings returns expected data', () async {
+      when(() => mockRepository.bookingBookingsUsersMeManageGet()).thenAnswer(
+        (_) async => chopper.Response(http.Response('body', 200), bookings),
+      );
+
+      final result = await provider.loadUserManageBookings();
+
       expect(
-        bookings.maybeWhen(data: (data) => data, orElse: () => []).length,
-        2,
+        result.maybeWhen(data: (data) => data, orElse: () => []),
+        bookings,
       );
     });
 
-    test('Should update a booking', () async {
-      final mockBookingRepository = MockBookingRepository();
-      final newBooking = Booking.empty().copyWith(id: "1");
+    test('loadUserManageBookings handles error', () async {
       when(
-        () => mockBookingRepository.getUserManageBookingList(),
-      ).thenAnswer((_) async => [Booking.empty(), newBooking]);
-      when(
-        () => mockBookingRepository.updateBooking(newBooking),
-      ).thenAnswer((_) async => true);
-      final bookingListProvider = ManagerBookingListProvider(
-        bookingRepository: mockBookingRepository,
+        () => mockRepository.bookingBookingsUsersMeManageGet(),
+      ).thenThrow(Exception('Failed to load bookings'));
+
+      final result = await provider.loadUserManageBookings();
+
+      expect(
+        result.maybeWhen(error: (error, _) => error, orElse: () => null),
+        isA<Exception>(),
       );
-      await bookingListProvider.loadUserManageBookings();
-      final booking = await bookingListProvider.updateBooking(newBooking);
-      expect(booking, true);
+    });
+    test('updateBooking updates a booking in the list', () async {
+      when(() => mockRepository.bookingBookingsUsersMeManageGet()).thenAnswer(
+        (_) async => chopper.Response(http.Response('body', 200), bookings),
+      );
+      when(
+        () => mockRepository.bookingBookingsBookingIdPatch(
+          bookingId: any(named: 'bookingId'),
+          body: any(named: 'body'),
+        ),
+      ).thenAnswer(
+        (_) async =>
+            chopper.Response(http.Response('body', 200), updatedBooking),
+      );
+
+      provider.state = AsyncValue.data(bookings);
+      final result = await provider.updateBooking(updatedBooking);
+
+      expect(result, true);
+      expect(provider.state.maybeWhen(data: (data) => data, orElse: () => []), [
+        updatedBooking,
+        ...bookings.skip(1),
+      ]);
     });
 
-    test(
-      'toggleConfirmed should return true if booking is confirmed successfully',
-      () async {
-        final mockBookingRepository = MockBookingRepository();
-        final newBooking = Booking.empty().copyWith(id: "1");
-        when(
-          () => mockBookingRepository.getUserManageBookingList(),
-        ).thenAnswer((_) async => [Booking.empty(), newBooking]);
-        when(
-          () => mockBookingRepository.confirmBooking(
-            newBooking,
-            Decision.approved,
-          ),
-        ).thenAnswer((_) async => true);
-        final bookingListProvider = ManagerBookingListProvider(
-          bookingRepository: mockBookingRepository,
-        );
-        await bookingListProvider.loadUserManageBookings();
-        final result = await bookingListProvider.toggleConfirmed(
-          newBooking,
-          Decision.approved,
-        );
-        expect(result, true);
-      },
-    );
+    test('updateBooking handles error', () async {
+      when(
+        () => mockRepository.bookingBookingsBookingIdPatch(
+          bookingId: any(named: 'bookingId'),
+          body: any(named: 'body'),
+        ),
+      ).thenThrow(Exception('Failed to update booking'));
+
+      final result = await provider.updateBooking(updatedBooking);
+
+      expect(result, false);
+    });
+
+    test('toggleConfirmed confirms a booking', () async {
+      when(() => mockRepository.bookingBookingsUsersMeManageGet()).thenAnswer(
+        (_) async => chopper.Response(http.Response('body', 200), bookings),
+      );
+      when(
+        () => mockRepository.bookingBookingsBookingIdReplyDecisionPatch(
+          bookingId: any(named: 'bookingId'),
+          decision: any(named: 'decision'),
+        ),
+      ).thenAnswer(
+        (_) async => chopper.Response(http.Response('body', 200), booking),
+      );
+
+      provider.state = AsyncValue.data(bookings);
+      final result = await provider.toggleConfirmed(booking, Decision.approved);
+
+      expect(result, true);
+      expect(provider.state.maybeWhen(data: (data) => data, orElse: () => []), [
+        booking,
+        ...bookings.skip(1),
+      ]);
+    });
+
+    test('toggleConfirmed handles error', () async {
+      when(
+        () => mockRepository.bookingBookingsBookingIdPatch(
+          bookingId: any(named: 'bookingId'),
+          body: any(named: 'body'),
+        ),
+      ).thenThrow(Exception('Failed to confirm booking'));
+
+      provider.state = AsyncValue.data(bookings);
+      final result = await provider.toggleConfirmed(booking, Decision.approved);
+
+      expect(result, false);
+    });
   });
 }

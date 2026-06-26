@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/booking/providers/is_admin_provider.dart';
+import 'package:titan/booking/providers/is_manager_provider.dart';
 import 'package:titan/booking/ui/pages/admin_pages/add_edit_manager_page.dart'
     deferred as add_edit_manager_page;
 import 'package:titan/booking/ui/pages/detail_pages/detail_booking.dart'
@@ -55,7 +56,7 @@ class BookingRouter {
         path: admin,
         builder: () => admin_page.AdminPage(),
         middleware: [
-          AdminMiddleware(ref, isBookingAdminProvider),
+          AdminMiddleware(ref, isAdminProvider),
           DeferredLoadingMiddleware(admin_page.loadLibrary),
         ],
         children: [
@@ -63,7 +64,7 @@ class BookingRouter {
             path: room,
             builder: () => add_edit_room_page.AddEditRoomPage(),
             middleware: [
-              AdminMiddleware(ref, isRoomsAdminProvider),
+              AdminMiddleware(ref, isAdminProvider),
               DeferredLoadingMiddleware(add_edit_room_page.loadLibrary),
             ],
           ),
@@ -71,7 +72,7 @@ class BookingRouter {
             path: manager,
             builder: () => add_edit_manager_page.AddEditManagerPage(),
             middleware: [
-              AdminMiddleware(ref, isManagersAdminProvider),
+              AdminMiddleware(ref, isAdminProvider),
               DeferredLoadingMiddleware(add_edit_manager_page.loadLibrary),
             ],
           ),

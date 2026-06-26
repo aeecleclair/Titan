@@ -3,10 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/booking/class/booking.dart';
+import 'package:titan/booking/adapters/booking_return.dart';
 import 'package:titan/booking/providers/booking_provider.dart';
 import 'package:titan/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:titan/booking/providers/is_admin_provider.dart';
+import 'package:titan/booking/providers/is_manager_provider.dart';
 import 'package:titan/booking/providers/manager_booking_list_provider.dart';
 import 'package:titan/booking/providers/selected_days_provider.dart';
 import 'package:titan/booking/providers/user_booking_list_provider.dart';
@@ -14,8 +15,8 @@ import 'package:titan/booking/router.dart';
 import 'package:titan/booking/ui/booking.dart';
 import 'package:titan/booking/ui/calendar/calendar.dart';
 import 'package:titan/booking/ui/components/booking_card.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/admin_button.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
@@ -34,7 +35,7 @@ class BookingMainPage extends HookConsumerWidget {
     const double minCalendarHeight = 400;
     const double sumOfHeightOfOthersWidgets = 361;
     final isManager = ref.watch(isManagerProvider);
-    final isAdmin = ref.watch(isBookingAdminProvider);
+    final isAdmin = ref.watch(isAdminProvider);
     final bookingsNotifier = ref.watch(userBookingListProvider.notifier);
     final confirmedBookingsNotifier = ref.watch(
       confirmedBookingListProvider.notifier,
@@ -47,10 +48,10 @@ class BookingMainPage extends HookConsumerWidget {
       displayToast(context, type, message);
     }
 
-    void handleBooking(Booking booking) {
+    void handleBooking(BookingReturnApplicant booking) {
       bookingNotifier.setBooking(booking);
       final recurrentDays = SfCalendar.parseRRule(
-        booking.recurrenceRule,
+        booking.recurrenceRule ?? "",
         booking.start,
       ).weekDays;
       selectedDaysNotifier.setSelectedDays(recurrentDays);
@@ -120,7 +121,9 @@ class BookingMainPage extends HookConsumerWidget {
                       height: 210,
                       firstChild: GestureDetector(
                         onTap: () {
-                          bookingNotifier.setBooking(Booking.empty());
+                          bookingNotifier.setBooking(
+                            BookingReturnApplicant.empty(),
+                          );
                           selectedDaysNotifier.clear();
                           QR.to(BookingRouter.root + BookingRouter.addEdit);
                         },
@@ -140,56 +143,56 @@ class BookingMainPage extends HookConsumerWidget {
                       itemBuilder: (context, e, i) => BookingCard(
                         booking: e,
                         onEdit: () {
-                          handleBooking(e);
+                          handleBooking(e.toBookingReturnApplicant());
                         },
                         onInfo: () {
-                          bookingNotifier.setBooking(e);
+                          bookingNotifier.setBooking(
+                            e.toBookingReturnApplicant(),
+                          );
                           QR.to(BookingRouter.root + BookingRouter.detail);
                         },
                         onDelete: () async {
-                          await tokenExpireWrapper(ref, () async {
-                            await showDialog(
-                              context: context,
-                              builder: (context) => CustomDialogBox(
-                                descriptions: AppLocalizations.of(
+                          await showDialog(
+                            context: context,
+                            builder: (context) => CustomDialogBox(
+                              descriptions: AppLocalizations.of(
+                                context,
+                              )!.bookingDeleteBookingConfirmation,
+                              onYes: () async {
+                                final deleteMsg = AppLocalizations.of(
                                   context,
-                                )!.bookingDeleteBookingConfirmation,
-                                onYes: () async {
-                                  final deleteMsg = AppLocalizations.of(
-                                    context,
-                                  )!.bookingDeleteBooking;
-                                  final errorMsg = AppLocalizations.of(
-                                    context,
-                                  )!.bookingDeletingError;
-                                  final value = await bookingsNotifier
-                                      .deleteBooking(e);
+                                )!.bookingDeleteBooking;
+                                final errorMsg = AppLocalizations.of(
+                                  context,
+                                )!.bookingDeletingError;
+                                final value = await bookingsNotifier
+                                    .deleteBooking(e);
 
-                                  if (value) {
-                                    ref
-                                        .read(
-                                          managerBookingListProvider.notifier,
-                                        )
-                                        .loadUserManageBookings;
-                                    displayToastWithContext(
-                                      TypeMsg.msg,
-                                      deleteMsg,
-                                    );
-                                  } else {
-                                    displayToastWithContext(
-                                      TypeMsg.error,
-                                      errorMsg,
-                                    );
-                                  }
-                                },
-                                title: AppLocalizations.of(
-                                  context,
-                                )!.bookingDeleteBooking,
-                              ),
-                            );
-                          });
+                                if (value) {
+                                  ref
+                                      .read(managerBookingListProvider.notifier)
+                                      .loadUserManageBookings;
+                                  displayToastWithContext(
+                                    TypeMsg.msg,
+                                    deleteMsg,
+                                  );
+                                } else {
+                                  displayToastWithContext(
+                                    TypeMsg.error,
+                                    errorMsg,
+                                  );
+                                }
+                              },
+                              title: AppLocalizations.of(
+                                context,
+                              )!.bookingDeleteBooking,
+                            ),
+                          );
                         },
                         onCopy: () {
-                          handleBooking(e.copyWith(id: ""));
+                          handleBooking(
+                            e.toBookingReturnApplicant().copyWith(id: ""),
+                          );
                         },
                       ),
                     );

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:titan/booking/class/manager.dart';
-import 'package:titan/service/class/room.dart';
+import 'package:titan/booking/adapters/room.dart';
 import 'package:titan/booking/providers/manager_list_provider.dart';
 import 'package:titan/booking/providers/manager_id_provider.dart';
-import 'package:titan/service/providers/room_list_provider.dart';
+import 'package:titan/booking/providers/room_list_provider.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/booking/providers/room_provider.dart';
 import 'package:titan/booking/ui/booking.dart';
 import 'package:titan/booking/ui/pages/admin_pages/admin_entry.dart';
 import 'package:titan/booking/ui/pages/admin_pages/admin_scroll_chips.dart';
 import 'package:titan/booking/ui/pages/admin_pages/admin_shrink_button.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/item_chip.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -30,7 +29,7 @@ class AddEditRoomPage extends HookConsumerWidget {
     final roomListNotifier = ref.watch(roomListProvider.notifier);
     final key = GlobalKey<FormState>();
     final room = ref.watch(roomProvider);
-    final isEdit = room.id != Room.empty().id;
+    final isEdit = room.id != RoomComplete.empty().id;
     final name = useTextEditingController(text: room.name);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -99,31 +98,28 @@ class AddEditRoomPage extends HookConsumerWidget {
                   const SizedBox(height: 50),
                   AdminShrinkButton(
                     onTap: () async {
-                      await tokenExpireWrapper(ref, () async {
-                        Room newRoom = Room(
-                          id: isEdit ? room.id : '',
-                          name: name.text,
-                          managerId: managerId,
-                        );
-                        final editedRoomMsg = isEdit
-                            ? AppLocalizations.of(context)!.bookingEditedRoom
-                            : AppLocalizations.of(context)!.bookingAddedRoom;
-                        final addingErrorMsg = isEdit
-                            ? AppLocalizations.of(context)!.bookingEditionError
-                            : AppLocalizations.of(context)!.bookingAddingError;
-                        final value = isEdit
-                            ? await roomListNotifier.updateRoom(newRoom)
-                            : await roomListNotifier.addRoom(newRoom);
-                        if (value) {
-                          QR.back();
-                          displayToastWithContext(TypeMsg.msg, editedRoomMsg);
-                        } else {
-                          displayToastWithContext(
-                            TypeMsg.error,
-                            addingErrorMsg,
-                          );
-                        }
-                      });
+                      RoomComplete newRoom = RoomComplete(
+                        id: isEdit ? room.id : '',
+                        name: name.text,
+                        managerId: managerId,
+                      );
+                      final editedRoomMsg = isEdit
+                          ? AppLocalizations.of(context)!.bookingEditedRoom
+                          : AppLocalizations.of(context)!.bookingAddedRoom;
+                      final addingErrorMsg = isEdit
+                          ? AppLocalizations.of(context)!.bookingEditionError
+                          : AppLocalizations.of(context)!.bookingAddingError;
+                      final value = isEdit
+                          ? await roomListNotifier.updateRoom(newRoom)
+                          : await roomListNotifier.addRoom(
+                              newRoom.toRoomBase(),
+                            );
+                      if (value) {
+                        QR.back();
+                        displayToastWithContext(TypeMsg.msg, editedRoomMsg);
+                      } else {
+                        displayToastWithContext(TypeMsg.error, addingErrorMsg);
+                      }
                     },
                     buttonText: isEdit
                         ? AppLocalizations.of(context)!.bookingEdit
@@ -133,42 +129,40 @@ class AddEditRoomPage extends HookConsumerWidget {
                     const SizedBox(height: 30),
                     AdminShrinkButton(
                       onTap: () async {
-                        await tokenExpireWrapper(ref, () async {
-                          await showDialog(
-                            context: context,
-                            builder: (context) => CustomDialogBox(
-                              descriptions: AppLocalizations.of(
+                        await showDialog(
+                          context: context,
+                          builder: (context) => CustomDialogBox(
+                            descriptions: AppLocalizations.of(
+                              context,
+                            )!.bookingDeleteRoomConfirmation,
+                            onYes: () async {
+                              final deletedRoomMsg = AppLocalizations.of(
                                 context,
-                              )!.bookingDeleteRoomConfirmation,
-                              onYes: () async {
-                                final deletedRoomMsg = AppLocalizations.of(
-                                  context,
-                                )!.bookingDeletedRoom;
-                                final deletingErrorMsg = AppLocalizations.of(
-                                  context,
-                                )!.bookingDeletingError;
-                                final value = await roomListNotifier.deleteRoom(
-                                  room,
+                              )!.bookingDeletedRoom;
+                              final deletingErrorMsg = AppLocalizations.of(
+                                context,
+                              )!.bookingDeletingError;
+                              final value = await roomListNotifier.deleteRoom(
+                                room,
+                              );
+                              if (value) {
+                                QR.back();
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  deletedRoomMsg,
                                 );
-                                if (value) {
-                                  QR.back();
-                                  displayToastWithContext(
-                                    TypeMsg.msg,
-                                    deletedRoomMsg,
-                                  );
-                                } else {
-                                  displayToastWithContext(
-                                    TypeMsg.error,
-                                    deletingErrorMsg,
-                                  );
-                                }
-                              },
-                              title: AppLocalizations.of(
-                                context,
-                              )!.bookingDeleteBooking,
-                            ),
-                          );
-                        });
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  deletingErrorMsg,
+                                );
+                              }
+                            },
+                            title: AppLocalizations.of(
+                              context,
+                            )!.bookingDeleteBooking,
+                          ),
+                        );
                       },
                       buttonText: AppLocalizations.of(context)!.bookingDelete,
                     ),

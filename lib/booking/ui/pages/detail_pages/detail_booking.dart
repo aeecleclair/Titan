@@ -2,12 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/booking/adapters/booking_return_applicant.dart';
 import 'package:titan/booking/providers/booking_provider.dart';
-import 'package:titan/booking/tools/functions.dart';
 import 'package:titan/booking/ui/booking.dart';
 import 'package:titan/booking/ui/components/booking_card.dart';
 import 'package:titan/booking/ui/pages/detail_pages/contact_button.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/user/extensions/applicants.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
@@ -56,7 +57,10 @@ class DetailBookingPage extends HookConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                decisionToString(booking.decision, context),
+                                booking.decision.name
+                                    .toString()
+                                    .split('.')
+                                    .last,
                                 style: const TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
@@ -111,7 +115,7 @@ class DetailBookingPage extends HookConsumerWidget {
                                 ),
                               ),
                               const SizedBox(height: 30),
-                              if (booking.entity.isNotEmpty)
+                              if (booking.entity?.isNotEmpty == true)
                                 Column(
                                   children: [
                                     AutoSizeText(
@@ -199,7 +203,10 @@ class DetailBookingPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Center(
-                child: BookingCard(booking: booking, isDetail: true),
+                child: BookingCard(
+                  booking: booking.toBookingReturn(),
+                  isDetail: true,
+                ),
               ),
             ),
           ],

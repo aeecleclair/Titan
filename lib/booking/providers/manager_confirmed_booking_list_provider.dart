@@ -1,46 +1,34 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/booking/class/booking.dart';
-import 'package:titan/booking/repositories/booking_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class ManagerConfirmedBookingListProvider extends ListNotifier<Booking> {
-  final BookingRepository bookingRepository;
-  ManagerConfirmedBookingListProvider({required this.bookingRepository})
-    : super(const AsyncValue.loading());
+class ManagerConfirmedBookingListProvider
+    extends ListNotifierAPI<BookingReturnSimpleApplicant> {
+  Openapi get bookingRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<List<Booking>>> loadConfirmedBookingForManager() async {
-    return await loadList(
-      () async => bookingRepository.getUserManageConfirmedBookingList(),
-    );
+  @override
+  AsyncValue<List<BookingReturnSimpleApplicant>> build() {
+    loadConfirmedBookingForManager();
+    return const AsyncValue.loading();
   }
 
-  Future<bool> addBooking(Booking booking) async {
-    return await add((b) async => b, booking);
+  Future<AsyncValue<List<BookingReturnSimpleApplicant>>>
+  loadConfirmedBookingForManager() async {
+    return await loadList(bookingRepository.bookingBookingsConfirmedGet);
   }
 
-  Future<bool> deleteBooking(Booking booking) async {
-    return await delete(
-      (_) async => true,
-      (bookings, booking) =>
-          bookings..removeWhere((element) => element.id == booking.id),
-      booking.id,
-      booking,
-    );
+  Future<bool> addBooking(BookingReturnSimpleApplicant booking) async {
+    return await localAdd(booking);
+  }
+
+  Future<bool> deleteBooking(BookingReturnSimpleApplicant booking) async {
+    return await localDelete((booking) => booking.id, booking.id);
   }
 }
 
 final managerConfirmedBookingListProvider =
-    StateNotifierProvider<
+    NotifierProvider<
       ManagerConfirmedBookingListProvider,
-      AsyncValue<List<Booking>>
-    >((ref) {
-      final bookingRepository = ref.watch(bookingRepositoryProvider);
-      final provider = ManagerConfirmedBookingListProvider(
-        bookingRepository: bookingRepository,
-      );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadConfirmedBookingForManager();
-      });
-      return provider;
-    });
+      AsyncValue<List<BookingReturnSimpleApplicant>>
+    >(ManagerConfirmedBookingListProvider.new);

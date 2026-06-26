@@ -1,7 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:titan/booking/class/booking.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
@@ -10,7 +11,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
 class BookingCard extends StatelessWidget {
-  final Booking booking;
+  final BookingReturn booking;
   final Function()? onEdit, onConfirm, onDecline, onCopy, onInfo;
   final Future Function()? onDelete;
   final bool isAdmin, isDetail;
@@ -30,9 +31,9 @@ class BookingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final locale = Localizations.localeOf(context);
-    final isNotEnded = booking.recurrenceRule.isNotEmpty
+    final isNotEnded = booking.recurrenceRule?.isNotEmpty ?? false
         ? SfCalendar.parseRRule(
-            booking.recurrenceRule,
+            booking.recurrenceRule!,
             booking.start,
           ).endDate!.isAfter(DateTime.now())
         : booking.end.isAfter(DateTime.now());
@@ -64,6 +65,10 @@ class BookingCard extends StatelessWidget {
           const Color.fromARGB(255, 172, 32, 10),
         ];
         darkIconBackgroundColor = const Color.fromARGB(255, 99, 13, 0);
+        break;
+      case Decision.swaggerGeneratedUnknown:
+        cardColor = [Colors.white, Colors.white];
+        darkIconBackgroundColor = Colors.black;
         break;
     }
 
@@ -125,7 +130,7 @@ class BookingCard extends StatelessWidget {
                   formatRecurrenceRule(
                     booking.start,
                     booking.end,
-                    booking.recurrenceRule,
+                    booking.recurrenceRule ?? '',
                     false,
                     locale.toString(),
                   ),

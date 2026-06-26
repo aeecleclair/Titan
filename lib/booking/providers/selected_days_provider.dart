@@ -1,13 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-final selectedDaysProvider =
-    StateNotifierProvider<SelectedDaysProvider, List<WeekDays>>((ref) {
-      return SelectedDaysProvider();
-    });
-
-class SelectedDaysProvider extends StateNotifier<List<WeekDays>> {
-  SelectedDaysProvider() : super(List.empty());
+class SelectedDaysProvider extends Notifier<List<WeekDays>> {
+  @override
+  List<WeekDays> build() {
+    return List.empty();
+  }
 
   void toggle(WeekDays day) {
     var copy = state.toList();
@@ -27,3 +25,8 @@ class SelectedDaysProvider extends StateNotifier<List<WeekDays>> {
     state = days;
   }
 }
+
+final selectedDaysProvider =
+    NotifierProvider<SelectedDaysProvider, List<WeekDays>>(
+      SelectedDaysProvider.new,
+    );

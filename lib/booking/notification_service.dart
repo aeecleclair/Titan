@@ -5,8 +5,7 @@ import 'package:titan/booking/providers/user_booking_list_provider.dart';
 import 'package:titan/booking/router.dart';
 import 'package:tuple/tuple.dart';
 
-final Map<String, Tuple2<String, List<StateNotifierProvider>>>
-bookingProviders = {
+final Map<String, Tuple2<String, List<NotifierProvider>>> bookingProviders = {
   "userBooking": Tuple2(BookingRouter.root, [
     userBookingListProvider,
     confirmedBookingListProvider,

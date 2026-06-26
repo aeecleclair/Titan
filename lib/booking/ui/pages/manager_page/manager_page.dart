@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/booking/class/booking.dart';
 import 'package:titan/booking/providers/manager_booking_list_provider.dart';
 import 'package:titan/booking/providers/manager_confirmed_booking_list_provider.dart';
-import 'package:titan/service/providers/room_list_provider.dart';
+import 'package:titan/booking/providers/room_list_provider.dart';
 import 'package:titan/booking/ui/booking.dart';
 import 'package:titan/booking/ui/calendar/calendar.dart';
 import 'package:titan/booking/ui/pages/manager_page/list_booking.dart';
-import 'package:titan/tools/functions.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
@@ -17,12 +17,12 @@ class ManagerPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookings = ref.watch(managerBookingListProvider);
-    final List<Booking> pendingBookings = [],
+    final List<BookingReturnApplicant> pendingBookings = [],
         confirmedBookings = [],
         canceledBookings = [];
     bookings.maybeWhen(
       data: (bookings) {
-        for (Booking b in bookings) {
+        for (BookingReturnApplicant b in bookings) {
           switch (b.decision) {
             case Decision.approved:
               confirmedBookings.add(b);
@@ -32,6 +32,8 @@ class ManagerPage extends HookConsumerWidget {
               break;
             case Decision.pending:
               pendingBookings.add(b);
+              break;
+            case Decision.swaggerGeneratedUnknown:
               break;
           }
         }

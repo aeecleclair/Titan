@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/booking/class/booking.dart';
+import 'package:titan/booking/adapters/booking_return_applicant.dart';
 import 'package:titan/booking/providers/confirmed_booking_list_provider.dart';
 import 'package:titan/booking/providers/manager_booking_list_provider.dart';
 import 'package:titan/booking/providers/booking_provider.dart';
@@ -11,8 +11,8 @@ import 'package:titan/booking/providers/user_booking_list_provider.dart';
 import 'package:titan/booking/providers/selected_days_provider.dart';
 import 'package:titan/booking/router.dart';
 import 'package:titan/booking/ui/components/booking_card.dart';
-import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -20,7 +20,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
 class ListBooking extends HookConsumerWidget {
-  final List<Booking> bookings;
+  final List<BookingReturnApplicant> bookings;
   final bool canToggle;
   final String title;
   const ListBooking({
@@ -44,10 +44,10 @@ class ListBooking extends HookConsumerWidget {
 
     final toggle = useState(!canToggle);
 
-    void handleBooking(Booking booking) {
+    void handleBooking(BookingReturnApplicant booking) {
       bookingNotifier.setBooking(booking);
       final recurrentDays = SfCalendar.parseRRule(
-        booking.recurrenceRule,
+        booking.recurrenceRule ?? "",
         booking.start,
       ).weekDays;
       selectedDaysNotifier.setSelectedDays(recurrentDays);
@@ -100,7 +100,7 @@ class ListBooking extends HookConsumerWidget {
                 horizontalSpace: 10,
                 items: bookings,
                 itemBuilder: (context, e, i) => BookingCard(
-                  booking: e,
+                  booking: e.toBookingReturn(),
                   isAdmin: true,
                   isDetail: false,
                   onEdit: () {
@@ -124,30 +124,26 @@ class ListBooking extends HookConsumerWidget {
                             context,
                           )!.bookingConfirmBooking,
                           onYes: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              Booking newBooking = e.copyWith(
-                                decision: Decision.approved,
-                              );
-                              bookingListNotifier
-                                  .toggleConfirmed(
-                                    newBooking,
-                                    Decision.approved,
-                                  )
-                                  .then((value) {
-                                    if (value) {
-                                      ref
-                                          .read(
-                                            userBookingListProvider.notifier,
-                                          )
-                                          .loadUserBookings();
-                                      confirmedBookingListNotifier.addBooking(
-                                        newBooking,
-                                      );
-                                      managerConfirmedBookingListNotifier
-                                          .addBooking(newBooking);
-                                    }
-                                  });
-                            });
+                            BookingReturnApplicant newBooking = e
+                              ..copyWith(decision: Decision.approved);
+                            bookingListNotifier
+                                .toggleConfirmed(newBooking, Decision.approved)
+                                .then((value) {
+                                  if (value) {
+                                    ref
+                                        .read(userBookingListProvider.notifier)
+                                        .loadUserBookings();
+                                    confirmedBookingListNotifier.addBooking(
+                                      newBooking
+                                          .toBookingReturnSimpleApplicant(),
+                                    );
+                                    managerConfirmedBookingListNotifier
+                                        .addBooking(
+                                          newBooking
+                                              .toBookingReturnSimpleApplicant(),
+                                        );
+                                  }
+                                });
                           },
                         );
                       },
@@ -163,36 +159,39 @@ class ListBooking extends HookConsumerWidget {
                             context,
                           )!.bookingDeclineBooking,
                           onYes: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              Booking newBooking = e.copyWith(
-                                decision: Decision.declined,
-                              );
-                              bookingListNotifier
-                                  .toggleConfirmed(
-                                    newBooking,
-                                    Decision.declined,
-                                  )
-                                  .then((value) {
-                                    if (value) {
-                                      ref
-                                          .read(
-                                            userBookingListProvider.notifier,
-                                          )
-                                          .loadUserBookings();
-                                      confirmedBookingListNotifier
-                                          .deleteBooking(newBooking);
-                                      managerConfirmedBookingListNotifier
-                                          .deleteBooking(newBooking);
-                                    }
-                                  });
-                            });
+                            BookingReturnApplicant newBooking = e.copyWith(
+                              decision: Decision.declined,
+                            );
+                            bookingListNotifier
+                                .toggleConfirmed(newBooking, Decision.declined)
+                                .then((value) {
+                                  if (value) {
+                                    ref
+                                        .read(userBookingListProvider.notifier)
+                                        .loadUserBookings();
+                                    confirmedBookingListNotifier.deleteBooking(
+                                      newBooking
+                                          .toBookingReturnSimpleApplicant(),
+                                    );
+                                    managerConfirmedBookingListNotifier
+                                        .deleteBooking(
+                                          newBooking
+                                              .toBookingReturnSimpleApplicant(),
+                                        );
+                                  }
+                                });
                           },
                         );
                       },
                     );
                   },
                   onCopy: () {
-                    handleBooking(e.copyWith(id: ""));
+                    bookingNotifier.setBooking(e.copyWith(id: ""));
+                    QR.to(
+                      BookingRouter.root +
+                          BookingRouter.manager +
+                          BookingRouter.addEdit,
+                    );
                   },
                   onDelete: () async {},
                 ),

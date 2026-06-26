@@ -1,51 +1,52 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/booking/class/booking.dart';
-import 'package:titan/booking/repositories/booking_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/booking/adapters/booking_return.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class UserBookingListProvider extends ListNotifier<Booking> {
-  final BookingRepository bookingRepository;
-  UserBookingListProvider({required this.bookingRepository})
-    : super(const AsyncValue.loading());
+class UserBookingListProvider extends ListNotifierAPI<BookingReturn> {
+  Openapi get bookingRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<List<Booking>>> loadUserBookings() async {
-    return await loadList(bookingRepository.getUserBookingList);
+  @override
+  AsyncValue<List<BookingReturn>> build() {
+    loadUserBookings();
+    return const AsyncValue.loading();
   }
 
-  Future<bool> addBooking(Booking booking) async {
-    return await add(bookingRepository.createBooking, booking);
+  Future<AsyncValue<List<BookingReturn>>> loadUserBookings() async {
+    return await loadList(bookingRepository.bookingBookingsUsersMeGet);
   }
 
-  Future<bool> updateBooking(Booking booking) async {
-    return await update(
-      bookingRepository.updateBooking,
-      (bookings, booking) =>
-          bookings..[bookings.indexWhere((b) => b.id == booking.id)] = booking,
+  Future<bool> addBooking(BookingBase booking) async {
+    return await add(
+      () => bookingRepository.bookingBookingsPost(body: booking),
       booking,
     );
   }
 
-  Future<bool> deleteBooking(Booking booking) async {
-    return await delete(
-      bookingRepository.deleteBooking,
-      (bookings, booking) => bookings..removeWhere((i) => i.id == booking.id),
-      booking.id,
+  Future<bool> updateBooking(BookingReturn booking) async {
+    return await update(
+      () => bookingRepository.bookingBookingsBookingIdPatch(
+        bookingId: booking.id,
+        body: booking.toBookingEdit(),
+      ),
+      (booking) => booking.id,
       booking,
+    );
+  }
+
+  Future<bool> deleteBooking(BookingReturn booking) async {
+    return await delete(
+      () => bookingRepository.bookingBookingsBookingIdDelete(
+        bookingId: booking.id,
+      ),
+      (booking) => booking.id,
+      booking.id,
     );
   }
 }
 
 final userBookingListProvider =
-    StateNotifierProvider<UserBookingListProvider, AsyncValue<List<Booking>>>((
-      ref,
-    ) {
-      final bookingRepository = ref.watch(bookingRepositoryProvider);
-      final provider = UserBookingListProvider(
-        bookingRepository: bookingRepository,
-      );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadUserBookings();
-      });
-      return provider;
-    });
+    NotifierProvider<UserBookingListProvider, AsyncValue<List<BookingReturn>>>(
+      UserBookingListProvider.new,
+    );
