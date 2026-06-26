@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:titan/generated/openapi.swagger.dart';
 import 'package:titan/tools/repository/repository.dart';
 
@@ -34,11 +33,13 @@ class CheckoutCreationState {
   }
 }
 
-class CheckoutNotifier extends StateNotifier<CheckoutCreationState> {
-  final Openapi client;
+class CheckoutNotifier extends Notifier<CheckoutCreationState> {
+  Openapi get repository => ref.watch(repositoryProvider);
 
-  CheckoutNotifier({required this.client})
-    : super(CheckoutCreationState.initial());
+  @override
+  CheckoutCreationState build() {
+    return CheckoutCreationState.initial();
+  }
 
   Future<void> createCheckout(Checkout checkout, String eventId) async {
     state = state.copyWith(
@@ -49,7 +50,7 @@ class CheckoutNotifier extends StateNotifier<CheckoutCreationState> {
     );
 
     try {
-      final response = await client.ticketsEventsEventIdCheckoutPost(
+      final response = await repository.ticketsEventsEventIdCheckoutPost(
         eventId: eventId,
         body: checkout,
       );
@@ -83,6 +84,6 @@ class CheckoutNotifier extends StateNotifier<CheckoutCreationState> {
 }
 
 final checkoutProvider =
-    StateNotifierProvider<CheckoutNotifier, CheckoutCreationState>((ref) {
-      return CheckoutNotifier(client: ref.watch(repositoryProvider));
-    });
+    NotifierProvider<CheckoutNotifier, CheckoutCreationState>(
+      CheckoutNotifier.new,
+    );

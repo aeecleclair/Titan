@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:titan/phonebook/providers/associations_picture_map_provider.dart';
-import 'package:titan/phonebook/repositories/association_picture_repository.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class AssociationPictureProvider extends SingleNotifier<Image> {
-  late final AssociationPictureRepository associationPictureRepository;
   late final AssociationPictureMapNotifier associationPictureMapNotifier;
   final ImagePicker _picker = ImagePicker();
 
+  Openapi get repository => ref.watch(repositoryProvider);
+
   @override
   AsyncValue<Image> build() {
-    associationPictureRepository = ref.watch(
-      associationPictureRepositoryProvider,
-    );
     associationPictureMapNotifier = ref.watch(
       associationPictureMapProvider.notifier,
     );
@@ -22,9 +22,13 @@ class AssociationPictureProvider extends SingleNotifier<Image> {
   }
 
   Future<Image> getAssociationPicture(String associationId) async {
-    final image = await associationPictureRepository.getAssociationPicture(
-      associationId,
-    );
+    final response = await repository
+        .phonebookAssociationsAssociationIdPictureGet(
+          associationId: associationId,
+        );
+    final image = response.bodyBytes.isEmpty
+        ? Image.asset(getTitanLogo())
+        : Image.memory(response.bodyBytes);
     associationPictureMapNotifier.setTData(associationId, AsyncData([image]));
     state = AsyncData(image);
     return image;
@@ -42,10 +46,12 @@ class AssociationPictureProvider extends SingleNotifier<Image> {
     );
     if (image != null) {
       try {
-        final i = await associationPictureRepository.addAssociationPicture(
-          await image.readAsBytes(),
-          associationId,
+        final bytes = await image.readAsBytes();
+        await repository.phonebookAssociationsAssociationIdPicturePost(
+          associationId: associationId,
+          image: bytes,
         );
+        final i = Image.memory(bytes);
         state = AsyncValue.data(i);
         associationPictureMapNotifier.setTData(associationId, AsyncData([i]));
         return true;

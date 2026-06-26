@@ -2,26 +2,35 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/recommendation/repositories/recommendation_logo_repository.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class RecommendationLogoNotifier extends SingleNotifier<Image> {
-  late final RecommendationLogoRepository recommendationLogoRepository;
+  Openapi get repository => ref.watch(repositoryProvider);
 
   @override
   AsyncValue<Image> build() {
-    recommendationLogoRepository = ref.watch(
-      recommendationLogoRepositoryProvider,
-    );
     return const AsyncValue.loading();
   }
 
   Future<Image> getRecommendationLogo(String id) async {
-    return await recommendationLogoRepository.getRecommendationLogo(id);
+    final response = await repository
+        .recommendationRecommendationsRecommendationIdPictureGet(
+          recommendationId: id,
+        );
+    return response.bodyBytes.isEmpty
+        ? Image.asset(getTitanLogo())
+        : Image.memory(response.bodyBytes);
   }
 
   Future<Image> updateRecommendationLogo(String id, Uint8List bytes) async {
-    return await recommendationLogoRepository.addRecommendationLogo(bytes, id);
+    await repository.recommendationRecommendationsRecommendationIdPicturePost(
+      recommendationId: id,
+      image: bytes,
+    );
+    return Image.memory(bytes);
   }
 }
 

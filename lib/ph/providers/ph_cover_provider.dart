@@ -1,14 +1,14 @@
 import 'dart:typed_data';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/ph/repositories/ph_cover_repository.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 final phCoverProvider = FutureProvider.family<Uint8List, String>((
   ref,
   id,
 ) async {
-  final PhCoverRepository phPdfFirstPageRepository = ref.watch(
-    phCoverRepositoryProvider,
-  );
-  return await phPdfFirstPageRepository.getPhPdfFirstPage(id);
+  final response = await ref
+      .watch(repositoryProvider)
+      .phPaperIdCoverGet(paperId: id);
+  return response.bodyBytes;
 });

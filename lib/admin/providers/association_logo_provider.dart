@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:titan/admin/providers/associations_logo_map_provider.dart';
-import 'package:titan/admin/repositories/association_logo_repository.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class AssociationLogoNotifier extends SingleNotifier<Image> {
   final ImagePicker _picker = ImagePicker();
 
-  AssociationLogoRepository get associationLogoRepositoryGetter =>
-      ref.watch(associationLogoRepository);
+  Openapi get repository => ref.watch(repositoryProvider);
 
   AssociationLogoMapNotifier get associationLogoMapNotifier =>
       ref.watch(associationLogoMapProvider.notifier);
@@ -20,9 +20,12 @@ class AssociationLogoNotifier extends SingleNotifier<Image> {
   }
 
   Future<Image> getAssociationLogo(String associationId) async {
-    final image = await associationLogoRepositoryGetter.getAssociationLogo(
-      associationId,
+    final response = await repository.associationsAssociationIdLogoGet(
+      associationId: associationId,
     );
+    final image = response.bodyBytes.isEmpty
+        ? Image.asset("assets/images/vache.png", fit: BoxFit.cover)
+        : Image.memory(response.bodyBytes);
     associationLogoMapNotifier.setTData(associationId, AsyncData([image]));
     state = AsyncData(image);
     return image;
@@ -37,10 +40,12 @@ class AssociationLogoNotifier extends SingleNotifier<Image> {
     );
     if (image != null) {
       try {
-        final i = await associationLogoRepositoryGetter.addAssociationLogo(
-          await image.readAsBytes(),
-          associationId,
+        final bytes = await image.readAsBytes();
+        await repository.associationsAssociationIdLogoPost(
+          associationId: associationId,
+          image: bytes,
         );
+        final i = Image.memory(bytes);
         state = AsyncValue.data(i);
         associationLogoMapNotifier.setTData(associationId, AsyncData([i]));
         return true;

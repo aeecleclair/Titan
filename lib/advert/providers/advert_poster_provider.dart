@@ -2,14 +2,14 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
-import 'package:titan/advert/repositories/advert_poster_repository.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class AdvertPosterNotifier extends SingleNotifier<Image> {
-  AdvertPosterRepository get advertPosterRepository =>
-      ref.watch(advertPosterRepositoryProvider);
+  Openapi get repository => ref.watch(repositoryProvider);
   AdvertPostersNotifier? _advertPostersNotifier;
 
   @override
@@ -19,14 +19,23 @@ class AdvertPosterNotifier extends SingleNotifier<Image> {
   }
 
   Future<Image> getAdvertPoster(String id) async {
-    final image = await advertPosterRepository.getAdvertPoster(id);
+    final response = await repository.advertAdvertsAdvertIdPictureGet(
+      advertId: id,
+    );
+    final image = response.bodyBytes.isEmpty
+        ? Image.asset(getTitanLogo())
+        : Image.memory(response.bodyBytes);
     _advertPostersNotifier!.setTData(id, AsyncData([image]));
     return image;
   }
 
   Future<Image> updateAdvertPoster(String id, Uint8List bytes) async {
     _advertPostersNotifier!.setTData(id, const AsyncLoading());
-    final image = await advertPosterRepository.addAdvertPoster(bytes, id);
+    await repository.advertAdvertsAdvertIdPicturePost(
+      advertId: id,
+      image: bytes,
+    );
+    final image = Image.memory(bytes);
     _advertPostersNotifier!.setTData(id, AsyncData([image]));
     return image;
   }

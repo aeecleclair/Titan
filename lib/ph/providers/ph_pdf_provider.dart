@@ -1,22 +1,25 @@
 import 'dart:typed_data';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/ph/repositories/ph_pdf_repository.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class PhPdf extends AsyncNotifier<Uint8List> {
   PhPdf(this.phId);
 
   final String phId;
 
+  Openapi get repository => ref.watch(repositoryProvider);
+
   @override
   Future<Uint8List> build() async {
-    final PhPdfRepository phPdfRepository = ref.watch(phPdfRepositoryProvider);
-    return await phPdfRepository.getPhPdf(phId);
+    final response = await repository.phPaperIdPdfGet(paperId: phId);
+    return response.bodyBytes;
   }
 
   Future<Uint8List> updatePhPdf(Uint8List bytes) async {
-    final PhPdfRepository phPdfRepository = ref.watch(phPdfRepositoryProvider);
-    return await phPdfRepository.updatePhPdf(bytes, phId);
+    await repository.phPaperIdPdfPost(paperId: phId, pdf: bytes);
+    return bytes;
   }
 }
 

@@ -2,13 +2,14 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/tools/repository/repository.dart';
 import 'package:titan/vote/providers/list_logos_provider.dart';
-import 'package:titan/vote/repositories/list_logo_repository.dart';
 
 class ListLogoProvider extends SingleNotifier<Image> {
-  ListLogoRepository get listLogoRepository =>
-      ref.watch(listLogoRepositoryProvider);
+  Openapi get repository => ref.watch(repositoryProvider);
   ListLogoNotifier get listLogosNotifier =>
       ref.watch(listLogosProvider.notifier);
 
@@ -18,14 +19,17 @@ class ListLogoProvider extends SingleNotifier<Image> {
   }
 
   Future<Image> getLogo(String id) async {
-    return await listLogoRepository.getListLogo(id).then((image) {
-      listLogosNotifier.setTData(id, AsyncData([image]));
-      return image;
-    });
+    final response = await repository.campaignListsListIdLogoGet(listId: id);
+    final image = response.bodyBytes.isEmpty
+        ? Image.asset(getTitanLogo())
+        : Image.memory(response.bodyBytes);
+    listLogosNotifier.setTData(id, AsyncData([image]));
+    return image;
   }
 
   Future<Image> updateLogo(String id, Uint8List bytes) async {
-    final image = await listLogoRepository.addListLogo(bytes, id);
+    await repository.campaignListsListIdLogoPost(listId: id, image: bytes);
+    final image = Image.memory(bytes);
     listLogosNotifier.setTData(id, AsyncData([image]));
     return image;
   }

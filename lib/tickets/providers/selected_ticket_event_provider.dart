@@ -1,4 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 
-final selectedTicketEventIdProvider = StateProvider<String?>((ref) => null);
+class SelectedTicketEventIdNotifier extends Notifier<String?> {
+  @override
+  String? build() => null;
+
+  void setId(String? id) {
+    state = id;
+  }
+}
+
+final selectedTicketEventIdProvider =
+    NotifierProvider<SelectedTicketEventIdNotifier, String?>(
+      SelectedTicketEventIdNotifier.new,
+    );

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
-import 'package:titan/user/repositories/profile_picture_repository.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 final profilePictureProvider =
     NotifierProvider<ProfilePictureNotifier, AsyncValue<Image>>(
@@ -9,8 +10,7 @@ final profilePictureProvider =
     );
 
 class ProfilePictureNotifier extends SingleNotifier<Image> {
-  ProfilePictureRepository get profilePictureRepository =>
-      ref.watch(profilePictureRepositoryProvider);
+  Openapi get repository => ref.watch(repositoryProvider);
 
   @override
   AsyncValue<Image> build() {
@@ -18,8 +18,9 @@ class ProfilePictureNotifier extends SingleNotifier<Image> {
   }
 
   Future<Image> getProfilePicture(String profileId) async {
-    return Image.memory(
-      await profilePictureRepository.getProfilePicture(profileId),
+    final response = await repository.usersUserIdProfilePictureGet(
+      userId: profileId,
     );
+    return Image.memory(response.bodyBytes);
   }
 }
