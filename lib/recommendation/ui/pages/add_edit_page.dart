@@ -6,13 +6,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:titan/recommendation/class/recommendation.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
+import 'package:titan/recommendation/adapters/recommendation.dart';
 import 'package:titan/recommendation/providers/recommendation_list_provider.dart';
 import 'package:titan/recommendation/providers/recommendation_logo_map_provider.dart';
 import 'package:titan/recommendation/providers/recommendation_logo_provider.dart';
-import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/recommendation/providers/recommendation_provider.dart';
-import 'package:titan/recommendation/ui/widgets/recommendation_template.dart';
+import 'package:titan/recommendation/ui/components/recommendation_template.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
@@ -62,182 +62,177 @@ class AddEditRecommendationPage extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final scrollController = useScrollController();
-
     return RecommendationTemplate(
       child: Form(
         key: formKey,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: ScrollToHideNavbar(
-            controller: scrollController,
-            child: SingleChildScrollView(
-              controller: scrollController,
-              child: Column(
-                children: [
-                  TextEntry(
-                    maxLines: 1,
-                    label: AppLocalizations.of(context)!.recommendationTitle,
-                    controller: title,
-                  ),
-                  const SizedBox(height: 30),
-                  FormField<File>(
-                    validator: (e) {
-                      if (logoBytes.value == null && !isEdit) {
-                        return AppLocalizations.of(
-                          context,
-                        )!.recommendationAddImage;
-                      }
-                      return null;
-                    },
-                    builder: (formFieldState) => Center(
-                      child: ImagePickerOnTap(
-                        imageBytesNotifier: logoBytes,
-                        imageNotifier: logo,
-                        displayToastWithContext: displayAdvertToastWithContext,
-                        picker: picker,
-                        child: logo.value != null
-                            ? Container(
-                                height: 100,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50.0),
-                                  image: DecorationImage(
-                                    image: logoBytes.value != null
-                                        ? Image.memory(logoBytes.value!).image
-                                        : logo.value!.image,
-                                  ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextEntry(
+                  maxLines: 1,
+                  label: AppLocalizations.of(context)!.recommendationTitle,
+                  controller: title,
+                ),
+                const SizedBox(height: 30),
+                FormField<File>(
+                  validator: (e) {
+                    if (logoBytes.value == null && !isEdit) {
+                      return AppLocalizations.of(
+                        context,
+                      )!.recommendationAddImage;
+                    }
+                    return null;
+                  },
+                  builder: (formFieldState) => Center(
+                    child: ImagePickerOnTap(
+                      imageBytesNotifier: logoBytes,
+                      imageNotifier: logo,
+                      displayToastWithContext: displayAdvertToastWithContext,
+                      picker: picker,
+                      child: logo.value != null
+                          ? Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50.0),
+                                image: DecorationImage(
+                                  image: logoBytes.value != null
+                                      ? Image.memory(logoBytes.value!).image
+                                      : logo.value!.image,
                                 ),
-                              )
-                            : const HeroIcon(
-                                HeroIcons.photo,
-                                size: 100,
-                                color: Colors.grey,
                               ),
-                      ),
+                            )
+                          : const HeroIcon(
+                              HeroIcons.photo,
+                              size: 100,
+                              color: Colors.grey,
+                            ),
                     ),
                   ),
-                  TextEntry(
-                    maxLines: 1,
-                    label: AppLocalizations.of(context)!.recommendationCode,
-                    controller: code,
-                    canBeEmpty: true,
-                  ),
-                  const SizedBox(height: 30),
-                  TextEntry(
-                    minLines: 1,
-                    maxLines: 2,
-                    keyboardType: TextInputType.multiline,
-                    label: AppLocalizations.of(context)!.recommendationSummary,
-                    controller: summary,
-                  ),
-                  const SizedBox(height: 30),
-                  TextEntry(
-                    minLines: 5,
-                    maxLines: 50,
-                    keyboardType: TextInputType.multiline,
-                    label: AppLocalizations.of(
-                      context,
-                    )!.recommendationDescription,
-                    controller: description,
-                  ),
-                  const SizedBox(height: 50),
-                  WaitingButton(
-                    child: Text(
-                      isEdit
-                          ? AppLocalizations.of(context)!.recommendationEdit
-                          : AppLocalizations.of(context)!.recommendationAdd,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
+                ),
+                TextEntry(
+                  maxLines: 1,
+                  label: AppLocalizations.of(context)!.recommendationCode,
+                  controller: code,
+                  canBeEmpty: true,
+                ),
+                const SizedBox(height: 30),
+                TextEntry(
+                  minLines: 1,
+                  maxLines: 2,
+                  keyboardType: TextInputType.multiline,
+                  label: AppLocalizations.of(context)!.recommendationSummary,
+                  controller: summary,
+                ),
+                const SizedBox(height: 30),
+                TextEntry(
+                  minLines: 5,
+                  maxLines: 50,
+                  keyboardType: TextInputType.multiline,
+                  label: AppLocalizations.of(
+                    context,
+                  )!.recommendationDescription,
+                  controller: description,
+                ),
+                const SizedBox(height: 50),
+                WaitingButton(
+                  child: Text(
+                    isEdit
+                        ? AppLocalizations.of(context)!.recommendationEdit
+                        : AppLocalizations.of(context)!.recommendationAdd,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
                     ),
-                    onTap: () async {
-                      if (formKey.currentState!.validate()) {
-                        Recommendation newRecommendation = Recommendation(
-                          id: recommendation.id,
-                          creation: recommendation.creation,
-                          title: title.text,
-                          code: code.text == "" ? null : code.text,
-                          summary: summary.text,
-                          description: description.text,
+                  ),
+                  onTap: () async {
+                    if (formKey.currentState!.validate()) {
+                      Recommendation newRecommendation = Recommendation(
+                        id: recommendation.id,
+                        creation: recommendation.creation,
+                        title: title.text,
+                        code: code.text == "" ? null : code.text,
+                        summary: summary.text,
+                        description: description.text,
+                      );
+                      final editedRecommendationMsg = isEdit
+                          ? AppLocalizations.of(
+                              context,
+                            )!.recommendationEditedRecommendation
+                          : AppLocalizations.of(
+                              context,
+                            )!.recommendationAddedRecommendation;
+                      final editingErrorMsg = isEdit
+                          ? AppLocalizations.of(
+                              context,
+                            )!.recommendationEditingError
+                          : AppLocalizations.of(
+                              context,
+                            )!.recommendationAddingError;
+                      final value = isEdit
+                          ? await recommendationListNotifier
+                                .updateRecommendation(newRecommendation)
+                          : await recommendationListNotifier.addRecommendation(
+                              newRecommendation.toRecommendationBase(),
+                            );
+                      if (value) {
+                        displayAdvertToastWithContext(
+                          TypeMsg.msg,
+                          editedRecommendationMsg,
                         );
-                        final editedRecommendationMsg = isEdit
-                            ? AppLocalizations.of(
-                                context,
-                              )!.recommendationEditedRecommendation
-                            : AppLocalizations.of(
-                                context,
-                              )!.recommendationAddedRecommendation;
-                        final editingErrorMsg = isEdit
-                            ? AppLocalizations.of(
-                                context,
-                              )!.recommendationEditingError
-                            : AppLocalizations.of(
-                                context,
-                              )!.recommendationAddingError;
-                        final value = isEdit
-                            ? await recommendationListNotifier
-                                  .updateRecommendation(newRecommendation)
-                            : await recommendationListNotifier
-                                  .addRecommendation(newRecommendation);
-                        if (value) {
-                          displayAdvertToastWithContext(
-                            TypeMsg.msg,
-                            editedRecommendationMsg,
+                        if (isEdit) {
+                          recommendationNotifier.setRecommendation(
+                            newRecommendation,
                           );
-                          if (isEdit) {
-                            recommendationNotifier.setRecommendation(
-                              newRecommendation,
-                            );
-                            recommendationList.maybeWhen(
-                              data: (list) {
-                                if (logoBytes.value != null) {
-                                  recommendationLogoNotifier
-                                      .updateRecommendationLogo(
-                                        recommendation.id!,
-                                        logoBytes.value!,
-                                      );
-                                }
-                              },
-                              orElse: () {},
-                            );
-                          } else {
-                            recommendationList.maybeWhen(
-                              data: (list) {
-                                final newRecommendation = list.last;
+                          recommendationList.maybeWhen(
+                            data: (list) {
+                              if (logoBytes.value != null) {
                                 recommendationLogoNotifier
                                     .updateRecommendationLogo(
-                                      newRecommendation.id!,
+                                      recommendation.id,
                                       logoBytes.value!,
                                     );
-                              },
-                              orElse: () {},
-                            );
-                          }
-                          QR.back();
+                              }
+                            },
+                            orElse: () {},
+                          );
                         } else {
-                          displayAdvertToastWithContext(
-                            TypeMsg.error,
-                            editingErrorMsg,
+                          recommendationList.maybeWhen(
+                            data: (list) {
+                              final newRecommendation = list.last;
+                              recommendationLogoNotifier
+                                  .updateRecommendationLogo(
+                                    newRecommendation.id,
+                                    logoBytes.value!,
+                                  );
+                            },
+                            orElse: () {},
                           );
                         }
+                        QR.back();
                       } else {
-                        displayToast(
-                          context,
+                        displayAdvertToastWithContext(
                           TypeMsg.error,
-                          AppLocalizations.of(
-                            context,
-                          )!.recommendationIncorrectOrMissingFields,
+                          editingErrorMsg,
                         );
                       }
-                    },
-                    builder: (child) => AddEditButtonLayout(child: child),
-                  ),
-                  const SizedBox(height: 20),
-                ],
-              ),
+                    } else {
+                      displayToast(
+                        context,
+                        TypeMsg.error,
+                        AppLocalizations.of(
+                          context,
+                        )!.recommendationIncorrectOrMissingFields,
+                      );
+                    }
+                  },
+                  builder: (child) => AddEditButtonLayout(child: child),
+                ),
+                const SizedBox(height: 20),
+              ],
             ),
           ),
         ),

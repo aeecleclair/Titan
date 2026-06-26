@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/recommendation/class/recommendation.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/recommendation/providers/is_recommendation_admin_provider.dart';
 import 'package:titan/recommendation/providers/recommendation_list_provider.dart';
 import 'package:titan/recommendation/providers/recommendation_logo_map_provider.dart';
 import 'package:titan/recommendation/providers/recommendation_logo_provider.dart';
 import 'package:titan/recommendation/providers/recommendation_provider.dart';
 import 'package:titan/recommendation/router.dart';
-import 'package:titan/recommendation/ui/widgets/recommendation_card_layout.dart';
+import 'package:titan/recommendation/ui/components/recommendation_card_layout.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
@@ -56,7 +55,7 @@ class RecommendationCard extends HookConsumerWidget {
       notifier: recommendationLogoMapNotifier,
       mapKey: recommendation,
       loader: (ref) =>
-          recommendationLogoNotifier.getRecommendationLogo(recommendation.id!),
+          recommendationLogoNotifier.getRecommendationLogo(recommendation.id),
       loadingBuilder: (context) => const HeroIcon(HeroIcons.photo),
       dataBuilder: (context, data) => RecommendationCardLayout(
         child: Row(
@@ -154,46 +153,44 @@ class RecommendationCard extends HookConsumerWidget {
                               const SizedBox(height: 10),
                               GestureDetector(
                                 onTap: () async {
-                                  await tokenExpireWrapper(ref, () async {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (context) => CustomDialogBox(
-                                        descriptions: AppLocalizations.of(
-                                          context,
-                                        )!.recommendationDeleteRecommendationConfirmation,
-                                        onYes: () async {
-                                          final deletedRecommendationMsg =
-                                              AppLocalizations.of(
-                                                context,
-                                              )!.recommendationDeletedRecommendation;
-                                          final deletedRecommendationErrorMsg =
-                                              AppLocalizations.of(
-                                                context,
-                                              )!.recommendationDeletingRecommendationError;
-                                          final value =
-                                              await recommendationListNotifier
-                                                  .deleteRecommendation(
-                                                    recommendation,
-                                                  );
-                                          if (value) {
-                                            displayToastWithContext(
-                                              TypeMsg.msg,
-                                              deletedRecommendationMsg,
-                                            );
-                                            QR.back();
-                                          } else {
-                                            displayToastWithContext(
-                                              TypeMsg.error,
-                                              deletedRecommendationErrorMsg,
-                                            );
-                                          }
-                                        },
-                                        title: AppLocalizations.of(
-                                          context,
-                                        )!.recommendationDeleteRecommendation,
-                                      ),
-                                    );
-                                  });
+                                  await showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialogBox(
+                                      descriptions: AppLocalizations.of(
+                                        context,
+                                      )!.recommendationDeleteRecommendationConfirmation,
+                                      onYes: () async {
+                                        final deletedRecommendationMsg =
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.recommendationDeletedRecommendation;
+                                        final deletedRecommendationErrorMsg =
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.recommendationDeletingRecommendationError;
+                                        final value =
+                                            await recommendationListNotifier
+                                                .deleteRecommendation(
+                                                  recommendation,
+                                                );
+                                        if (value) {
+                                          displayToastWithContext(
+                                            TypeMsg.msg,
+                                            deletedRecommendationMsg,
+                                          );
+                                          QR.back();
+                                        } else {
+                                          displayToastWithContext(
+                                            TypeMsg.error,
+                                            deletedRecommendationErrorMsg,
+                                          );
+                                        }
+                                      },
+                                      title: AppLocalizations.of(
+                                        context,
+                                      )!.recommendationDeleteRecommendation,
+                                    ),
+                                  );
                                 },
                                 child: const CardButton(
                                   color: Colors.black,

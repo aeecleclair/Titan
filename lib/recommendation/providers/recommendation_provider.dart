@@ -1,8 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/recommendation/class/recommendation.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class RecommendationNotifier extends StateNotifier<Recommendation> {
-  RecommendationNotifier() : super(Recommendation.empty());
+class RecommendationNotifier extends Notifier<Recommendation> {
+  @override
+  Recommendation build() {
+    return Recommendation.empty();
+  }
 
   void setRecommendation(Recommendation r) {
     state = r;
@@ -10,6 +13,6 @@ class RecommendationNotifier extends StateNotifier<Recommendation> {
 }
 
 final recommendationProvider =
-    StateNotifierProvider<RecommendationNotifier, Recommendation>((ref) {
-      return RecommendationNotifier();
-    });
+    NotifierProvider<RecommendationNotifier, Recommendation>(
+      RecommendationNotifier.new,
+    );

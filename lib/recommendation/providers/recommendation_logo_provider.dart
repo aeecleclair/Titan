@@ -6,9 +6,15 @@ import 'package:titan/recommendation/repositories/recommendation_logo_repository
 import 'package:titan/tools/providers/single_notifier.dart';
 
 class RecommendationLogoNotifier extends SingleNotifier<Image> {
-  final RecommendationLogoRepository recommendationLogoRepository;
-  RecommendationLogoNotifier({required this.recommendationLogoRepository})
-    : super(const AsyncValue.loading());
+  late final RecommendationLogoRepository recommendationLogoRepository;
+
+  @override
+  AsyncValue<Image> build() {
+    recommendationLogoRepository = ref.watch(
+      recommendationLogoRepositoryProvider,
+    );
+    return const AsyncValue.loading();
+  }
 
   Future<Image> getRecommendationLogo(String id) async {
     return await recommendationLogoRepository.getRecommendationLogo(id);
@@ -20,11 +26,6 @@ class RecommendationLogoNotifier extends SingleNotifier<Image> {
 }
 
 final recommendationLogoProvider =
-    StateNotifierProvider<RecommendationLogoNotifier, AsyncValue<Image>>((ref) {
-      final recommendationLogoRepository = ref.watch(
-        recommendationLogoRepositoryProvider,
-      );
-      return RecommendationLogoNotifier(
-        recommendationLogoRepository: recommendationLogoRepository,
-      );
-    });
+    NotifierProvider<RecommendationLogoNotifier, AsyncValue<Image>>(
+      RecommendationLogoNotifier.new,
+    );
