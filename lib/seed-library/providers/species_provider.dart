@@ -1,14 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/seed-library/class/species.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-final speciesProvider = StateNotifierProvider<SpeciesNotifier, Species>((ref) {
-  return SpeciesNotifier();
-});
+class SpeciesNotifier extends Notifier<SpeciesComplete> {
+  @override
+  SpeciesComplete build() => SpeciesComplete.empty();
 
-class SpeciesNotifier extends StateNotifier<Species> {
-  SpeciesNotifier() : super(Species.empty());
-
-  void setSpecies(Species i) {
+  void setSpecies(SpeciesComplete i) {
     state = i;
   }
 }
+
+final speciesProvider = NotifierProvider<SpeciesNotifier, SpeciesComplete>(
+  SpeciesNotifier.new,
+);

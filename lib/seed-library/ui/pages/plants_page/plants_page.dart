@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/seed-library/providers/consumed_filter_provider.dart';
+import 'package:titan/seed-library/providers/my_plants_list_provider.dart';
 import 'package:titan/seed-library/providers/plant_complete_provider.dart';
 import 'package:titan/seed-library/providers/plants_filtered_list_provider.dart';
 import 'package:titan/seed-library/providers/plants_list_provider.dart';

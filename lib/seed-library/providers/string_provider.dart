@@ -1,28 +1,34 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/seed-library/tools/constants.dart';
 
-final searchFilterProvider = StateNotifierProvider<StringNotifier, String>((
-  ref,
-) {
-  return StringNotifier();
-});
+final searchFilterProvider = NotifierProvider<StringNotifier, String>(
+  StringNotifier.new,
+);
 
-final startMonthProvider = StateNotifierProvider<StringNotifier, String>((ref) {
-  return StringNotifier();
-});
+final startMonthProvider = NotifierProvider<StringNotifier, String>(
+  StringNotifier.new,
+);
 
-final endMonthProvider = StateNotifierProvider<StringNotifier, String>((ref) {
-  return StringNotifier();
-});
+final endMonthProvider = NotifierProvider<StringNotifier, String>(
+  StringNotifier.new,
+);
 
-final seasonFilterProvider = StateNotifierProvider<StringNotifier, String>((
-  ref,
-) {
-  return StringNotifier(init: SeedLibraryTextConstants.all);
-});
+final seasonFilterProvider = NotifierProvider<SeasonStringNotifier, String>(
+  SeasonStringNotifier.new,
+);
 
-class StringNotifier extends StateNotifier<String> {
-  StringNotifier({String? init}) : super(init ?? "");
+class StringNotifier extends Notifier<String> {
+  @override
+  String build() => "";
+
+  void setString(String i) {
+    state = i;
+  }
+}
+
+class SeasonStringNotifier extends Notifier<String> {
+  @override
+  String build() => SeedLibraryTextConstants.all;
 
   void setString(String i) {
     state = i;

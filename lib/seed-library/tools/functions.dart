@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
 import 'package:titan/seed-library/tools/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -11,8 +12,6 @@ void openLink(String url) async {
 }
 
 enum State { pending, retrieved, consumed }
-
-enum PropagationMethod { bouture, graine }
 
 State getStateByValue(String value) {
   switch (value) {
@@ -55,6 +54,8 @@ String getPropagationMethodValue(PropagationMethod propagationMethod) {
       return 'bouture';
     case PropagationMethod.graine:
       return 'graine';
+    case PropagationMethod.swaggerGeneratedUnknown:
+      return 'inconnu';
   }
 }
 

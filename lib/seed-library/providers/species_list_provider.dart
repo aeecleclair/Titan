@@ -1,57 +1,78 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/seed-library/class/species.dart';
-import 'package:titan/seed-library/repositories/species_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class SpeciesListNotifier extends ListNotifier<Species> {
-  final SpeciesRepository speciesRepository;
-  SpeciesListNotifier({required this.speciesRepository})
-    : super(const AsyncValue.loading());
+class SpeciesListNotifier extends ListNotifierAPI<SpeciesComplete> {
+  Openapi get speciesRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<List<Species>>> loadSpecies() async {
-    return await loadList(speciesRepository.getSpeciesList);
+  @override
+  AsyncValue<List<SpeciesComplete>> build() {
+    loadSpecies();
+    return const AsyncValue.loading();
   }
 
-  Future<bool> createSpecies(Species species) async {
-    return await add(speciesRepository.createSpecies, species);
+  Future<AsyncValue<List<SpeciesComplete>>> loadSpecies() async {
+    return await loadList(speciesRepository.seedLibrarySpeciesGet);
   }
 
-  Future<bool> updateSpecies(Species species) async {
-    return await update(
-      speciesRepository.updateSpecies,
-      (species, specie) => species
-        ..removeWhere((i) => i.id == specie.id)
-        ..add(specie),
+  Future<bool> createSpecies(SpeciesComplete species) async {
+    return await add(
+      () => speciesRepository.seedLibrarySpeciesPost(
+        body: SpeciesBase(
+          prefix: species.prefix,
+          name: species.name,
+          difficulty: species.difficulty,
+          speciesType: species.speciesType,
+          card: species.card,
+          nbSeedsRecommended: species.nbSeedsRecommended,
+          startSeason: species.startSeason,
+          endSeason: species.endSeason,
+          timeMaturation: species.timeMaturation,
+        ),
+      ),
       species,
     );
   }
 
-  Future<bool> deleteSpecie(Species specie) async {
+  Future<bool> updateSpecies(SpeciesComplete species) async {
+    return await update(
+      () => speciesRepository.seedLibrarySpeciesSpeciesIdPatch(
+        speciesId: species.id,
+        body: SpeciesEdit(
+          prefix: species.prefix,
+          name: species.name,
+          difficulty: species.difficulty,
+          speciesType: species.speciesType,
+          card: species.card,
+          nbSeedsRecommended: species.nbSeedsRecommended,
+          startSeason: species.startSeason,
+          endSeason: species.endSeason,
+          timeMaturation: species.timeMaturation,
+        ),
+      ),
+      (species) => species.id,
+      species,
+    );
+  }
+
+  Future<bool> deleteSpecie(SpeciesComplete species) async {
     return await delete(
-      speciesRepository.deleteSpecies,
-      (species, specie) => species..removeWhere((i) => i.id == specie.id),
-      specie.id,
-      specie,
+      () => speciesRepository.seedLibrarySpeciesSpeciesIdDelete(
+        speciesId: species.id,
+      ),
+      (species) => species.id,
+      species.id,
     );
   }
 }
 
 final speciesListProvider =
-    StateNotifierProvider<SpeciesListNotifier, AsyncValue<List<Species>>>((
-      ref,
-    ) {
-      final speciesRepository = ref.watch(speciesRepositoryProvider);
-      SpeciesListNotifier provider = SpeciesListNotifier(
-        speciesRepository: speciesRepository,
-      );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadSpecies();
-      });
-      return provider;
-    });
+    NotifierProvider<SpeciesListNotifier, AsyncValue<List<SpeciesComplete>>>(
+      SpeciesListNotifier.new,
+    );
 
-final syncSpeciesListProvider = Provider<List<Species>>((ref) {
+final syncSpeciesListProvider = Provider<List<SpeciesComplete>>((ref) {
   final speciesList = ref.watch(speciesListProvider);
   return speciesList.maybeWhen(orElse: () => [], data: (species) => species);
 });

@@ -1,7 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/seed-library/class/plant_simple.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/seed-library/providers/species_list_provider.dart';
 import 'package:titan/seed-library/tools/constants.dart';
 import 'package:titan/seed-library/tools/functions.dart';
@@ -41,7 +42,7 @@ class PlantCard extends HookConsumerWidget {
                       ),
                     ),
                     AutoSizeText(
-                      plant.nickname ?? plant.plantReference,
+                      plant.nickname ?? plant.reference,
                       textAlign: TextAlign.center,
                       minFontSize: 10,
                       maxLines: 1,
@@ -54,7 +55,10 @@ class PlantCard extends HookConsumerWidget {
                 width: 100,
                 child: Column(
                   children: [
-                    Text(plantSpecies.type.name, textAlign: TextAlign.center),
+                    Text(
+                      plantSpecies.speciesType.name,
+                      textAlign: TextAlign.center,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(plantSpecies.difficulty, (index) {
@@ -81,7 +85,7 @@ class PlantCard extends HookConsumerWidget {
                     ),
                     plant.propagationMethod == PropagationMethod.graine
                         ? Text(
-                            "(${plant.nbSeedsEnvelope.toString()} ${plant.nbSeedsEnvelope > 1 ? SeedLibraryTextConstants.seeds : SeedLibraryTextConstants.seed})",
+                            "(${plant.nbSeedsEnvelope.toString()} ${(plant.nbSeedsEnvelope ?? 0) > 1 ? SeedLibraryTextConstants.seeds : SeedLibraryTextConstants.seed})",
                             textAlign: TextAlign.center,
                           )
                         : const SizedBox(),

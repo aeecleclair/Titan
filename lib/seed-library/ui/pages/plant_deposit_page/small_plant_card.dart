@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:titan/seed-library/class/plant_simple.dart';
-import 'package:titan/seed-library/class/species.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
 class SmallPlantCard extends StatelessWidget {
   const SmallPlantCard({
@@ -12,7 +11,7 @@ class SmallPlantCard extends StatelessWidget {
   });
 
   final PlantSimple plant;
-  final List<Species> species;
+  final List<SpeciesComplete> species;
   final VoidCallback onClicked;
   final bool selected;
 
@@ -39,7 +38,7 @@ class SmallPlantCard extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
-              Text(plant.nickname ?? plant.plantReference),
+              Text(plant.nickname ?? plant.reference),
             ],
           ),
         ),

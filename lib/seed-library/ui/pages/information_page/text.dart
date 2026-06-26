@@ -72,7 +72,7 @@ class InformationPage extends HookConsumerWidget {
                   ),
                 ),
                 Text(
-                  info.description,
+                  info.description ?? '',
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -88,7 +88,7 @@ class InformationPage extends HookConsumerWidget {
                   ),
                 ),
                 Text(
-                  info.contact,
+                  info.contact ?? '',
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,

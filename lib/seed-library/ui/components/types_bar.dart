@@ -21,9 +21,9 @@ class TypesBar extends HookConsumerWidget {
         height: 40,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: types.length,
+          itemCount: types.speciesType.length,
           itemBuilder: (context, index) {
-            final item = types[index];
+            final item = types.speciesType[index];
             return RadioChip(
               onTap: () {
                 typeNotifier.setType(item);

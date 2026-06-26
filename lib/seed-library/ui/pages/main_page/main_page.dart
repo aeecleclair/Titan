@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:flutter/widgets.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/centralisation/tools/functions.dart';
-import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
-import 'package:titan/seed-library/class/species.dart';
-import 'package:titan/seed-library/class/species_type.dart';
 import 'package:titan/seed-library/providers/difficulty_filter_provider.dart';
 import 'package:titan/seed-library/providers/information_provider.dart';
 import 'package:titan/seed-library/providers/is_seed_library_admin_provider.dart';
@@ -32,11 +30,11 @@ class SeedLibraryMainPage extends HookConsumerWidget {
     final speciesTypeNotifier = ref.watch(speciesTypeFilterProvider.notifier);
 
     void resetNotifier() {
-      speciesNotifier.setSpecies(Species.empty());
+      speciesNotifier.setSpecies(SpeciesComplete.empty());
       seasonNotifier.setString(SeedLibraryTextConstants.all);
       difficultyNotifier.setFilter(0);
       searchNotifier.setString('');
-      speciesTypeNotifier.setFilter(SpeciesType.empty());
+      speciesTypeNotifier.setFilter(SpeciesType.plantesAromatiques);
     }
 
     final controller = ScrollController();
@@ -44,82 +42,85 @@ class SeedLibraryMainPage extends HookConsumerWidget {
     return SeedLibraryTemplate(
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: ScrollToHideNavbar(
+        child: GridView(
           controller: controller,
-          child: GridView(
-            controller: controller,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 20,
-              childAspectRatio:
-                  MediaQuery.of(context).size.width <
-                      MediaQuery.of(context).size.height
-                  ? 0.75
-                  : 1.5,
-            ),
-            children: [
-              if (isSeedLibraryAdmin)
-                GestureDetector(
-                  onTap: () {
-                    resetNotifier();
-                    QR.to(SeedLibraryRouter.root + SeedLibraryRouter.species);
-                  },
-                  child: const MenuCardUi(
-                    text: SeedLibraryTextConstants.speciesSimple,
-                    icon: HeroIcons.wallet,
-                  ),
-                ),
-              GestureDetector(
-                onTap: () {
-                  resetNotifier();
-                  QR.to(SeedLibraryRouter.root + SeedLibraryRouter.plants);
-                },
-                child: const MenuCardUi(
-                  text: SeedLibraryTextConstants.myPlants,
-                  icon: HeroIcons.magnifyingGlass,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  resetNotifier();
-                  QR.to(SeedLibraryRouter.root + SeedLibraryRouter.stock);
-                },
-                child: const MenuCardUi(
-                  text: SeedLibraryTextConstants.stock,
-                  icon: HeroIcons.inboxStack,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  resetNotifier();
-                  QR.to(SeedLibraryRouter.root + SeedLibraryRouter.seedDeposit);
-                },
-                child: const MenuCardUi(
-                  text: SeedLibraryTextConstants.seedDeposit,
-                  icon: HeroIcons.inboxArrowDown,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  openLink(information.facebookUrl);
-                },
-                child: const MenuCardUi(
-                  text: SeedLibraryTextConstants.helpSheets,
-                  icon: HeroIcons.documentMagnifyingGlass,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  openLink(information.forumUrl);
-                },
-                child: const MenuCardUi(
-                  text: SeedLibraryTextConstants.forum,
-                  icon: HeroIcons.fire,
-                ),
-              ),
-            ],
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
+            childAspectRatio:
+                MediaQuery.of(context).size.width <
+                    MediaQuery.of(context).size.height
+                ? 0.75
+                : 1.5,
           ),
+          children: [
+            if (isSeedLibraryAdmin)
+              GestureDetector(
+                onTap: () {
+                  resetNotifier();
+                  QR.to(SeedLibraryRouter.root + SeedLibraryRouter.species);
+                },
+                child: const MenuCardUi(
+                  text: SeedLibraryTextConstants.speciesSimple,
+                  icon: HeroIcons.wallet,
+                ),
+              ),
+            GestureDetector(
+              onTap: () {
+                resetNotifier();
+                QR.to(SeedLibraryRouter.root + SeedLibraryRouter.plants);
+              },
+              child: const MenuCardUi(
+                text: SeedLibraryTextConstants.myPlants,
+                icon: HeroIcons.magnifyingGlass,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                resetNotifier();
+                QR.to(SeedLibraryRouter.root + SeedLibraryRouter.stock);
+              },
+              child: const MenuCardUi(
+                text: SeedLibraryTextConstants.stock,
+                icon: HeroIcons.inboxStack,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                resetNotifier();
+                QR.to(SeedLibraryRouter.root + SeedLibraryRouter.seedDeposit);
+              },
+              child: const MenuCardUi(
+                text: SeedLibraryTextConstants.seedDeposit,
+                icon: HeroIcons.inboxArrowDown,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                information.facebookUrl != null &&
+                        information.facebookUrl?.isNotEmpty == true
+                    ? openLink(information.facebookUrl!)
+                    : null;
+              },
+              child: const MenuCardUi(
+                text: SeedLibraryTextConstants.helpSheets,
+                icon: HeroIcons.documentMagnifyingGlass,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                information.forumUrl != null &&
+                        information.forumUrl?.isNotEmpty == true
+                    ? openLink(information.forumUrl!)
+                    : null;
+              },
+              child: const MenuCardUi(
+                text: SeedLibraryTextConstants.forum,
+                icon: HeroIcons.fire,
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:titan/seed-library/class/plant_complete.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
+import 'package:titan/seed-library/adapters/plant_complete.dart';
+import 'package:titan/seed-library/providers/my_plants_list_provider.dart';
 import 'package:titan/seed-library/providers/plant_complete_provider.dart';
-import 'package:titan/seed-library/providers/plants_list_provider.dart';
 import 'package:titan/seed-library/providers/species_list_provider.dart';
 import 'package:titan/seed-library/tools/constants.dart';
 import 'package:titan/seed-library/tools/functions.dart' as function;
@@ -25,9 +27,7 @@ class EditablePlantDetail extends HookConsumerWidget {
     final species = ref.watch(syncSpeciesListProvider);
     final plantNotifier = ref.watch(plantProvider.notifier);
     final myPlantsNotifier = ref.watch(myPlantListProvider.notifier);
-    final name = TextEditingController(
-      text: plant.nickname ?? plant.plantReference,
-    );
+    final name = TextEditingController(text: plant.nickname ?? plant.reference);
     final notes = TextEditingController(text: plant.currentNote ?? '');
     final plantationDate = TextEditingController(
       text: plant.plantingDate != null
@@ -63,7 +63,7 @@ class EditablePlantDetail extends HookConsumerWidget {
             const SizedBox(height: 20),
             if (plant.nickname != null) ...[
               Text(
-                '${SeedLibraryTextConstants.reference} ${plant.plantReference}',
+                '${SeedLibraryTextConstants.reference} ${plant.reference}',
                 style: const TextStyle(fontSize: 16),
               ),
             ],
@@ -72,7 +72,7 @@ class EditablePlantDetail extends HookConsumerWidget {
               style: const TextStyle(fontSize: 16),
             ),
             Text(
-              '${SeedLibraryTextConstants.type} ${plantSpecies.type.name}',
+              '${SeedLibraryTextConstants.type} ${plantSpecies.speciesType.name}',
               style: const TextStyle(fontSize: 16),
             ),
             Row(
@@ -160,7 +160,7 @@ class EditablePlantDetail extends HookConsumerWidget {
               SizedBox(height: 10),
             ],
             if (plant.plantingDate != null &&
-                plant.state != function.State.consumed) ...[
+                plant.state != PlantState.consommE) ...[
               WaitingButton(
                 onTap: () async {
                   await showDialog(
@@ -172,7 +172,7 @@ class EditablePlantDetail extends HookConsumerWidget {
                         onYes: () async {
                           final result = await plantNotifier.updatePlant(
                             plant.copyWith(
-                              state: function.State.consumed,
+                              state: PlantState.consommE,
                               plantingDate: DateTime.now(),
                             ),
                           );
@@ -184,7 +184,7 @@ class EditablePlantDetail extends HookConsumerWidget {
                             myPlantsNotifier.updatePlantInList(
                               plant
                                   .copyWith(
-                                    state: function.State.consumed,
+                                    state: PlantState.consommE,
                                     plantingDate: DateTime.now(),
                                   )
                                   .toPlantSimple(),
@@ -221,7 +221,7 @@ class EditablePlantDetail extends HookConsumerWidget {
             ],
             DateEntry(
               controller: plantationDate,
-              label: plant.state == function.State.consumed
+              label: plant.state == PlantState.consommE
                   ? SeedLibraryTextConstants.deathDate
                   : SeedLibraryTextConstants.plantingDate,
               onTap: () {

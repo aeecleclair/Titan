@@ -1,16 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:diacritic/diacritic.dart';
-import 'package:titan/seed-library/class/plant_simple.dart';
-import 'package:titan/seed-library/class/species.dart';
-import 'package:titan/seed-library/class/species_type.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/seed-library/providers/consumed_filter_provider.dart';
 import 'package:titan/seed-library/providers/difficulty_filter_provider.dart';
+import 'package:titan/seed-library/providers/my_plants_list_provider.dart';
 import 'package:titan/seed-library/providers/plants_list_provider.dart';
 import 'package:titan/seed-library/providers/species_type_filter_provider.dart';
 import 'package:titan/seed-library/providers/string_provider.dart';
 import 'package:titan/seed-library/providers/species_list_provider.dart';
 import 'package:titan/seed-library/tools/constants.dart';
-import 'package:titan/seed-library/tools/functions.dart';
 
 List<int> getMonthsBySeason(String season) {
   if (season == SeedLibraryTextConstants.spring) {
@@ -28,14 +27,14 @@ List<int> getMonthsBySeason(String season) {
   return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 }
 
-List<Species> filterSpeciesWithFilters(
-  List<Species> speciesList,
+List<SpeciesComplete> filterSpeciesWithFilters(
+  List<SpeciesComplete> speciesList,
   String searchFilter,
   String seasonsTypeFilter,
   int difficultyTypeFilter,
   SpeciesType speciesTypeFilter,
 ) {
-  List<Species> filteredSpecies = speciesList
+  List<SpeciesComplete> filteredSpecies = speciesList
       .where(
         (species) => searchFilter == ""
             ? true
@@ -64,10 +63,9 @@ List<Species> filterSpeciesWithFilters(
       .toList();
   filteredSpecies = filteredSpecies
       .where(
-        (species) =>
-            speciesTypeFilter == SpeciesType(name: SeedLibraryTextConstants.all)
+        (species) => speciesTypeFilter == SpeciesType.autre
             ? true
-            : species.type == speciesTypeFilter,
+            : species.speciesType == speciesTypeFilter,
       )
       .toList();
   return filteredSpecies;
@@ -80,7 +78,7 @@ final plantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
   final seasonsFilter = ref.watch(seasonFilterProvider);
   final difficultyFilter = ref.watch(difficultyFilterProvider);
   final searchFilter = ref.watch(searchFilterProvider);
-  List<Species> filteredSpecies = [];
+  List<SpeciesComplete> filteredSpecies = [];
   speciesProvider.maybeWhen(
     data: (speciesList) {
       filteredSpecies = filterSpeciesWithFilters(
@@ -99,9 +97,7 @@ final plantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
       final filteredPlants = plants
           .where((plant) => speciesId.contains(plant.speciesId))
           .toList();
-      filteredPlants.sort(
-        (a, b) => a.plantReference.compareTo(b.plantReference),
-      );
+      filteredPlants.sort((a, b) => a.reference.compareTo(b.reference));
       return filteredPlants;
     },
     orElse: () => [],
@@ -117,7 +113,7 @@ final myPlantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
   final searchFilter = ref.watch(searchFilterProvider);
   final consummedFilter = ref.watch(consumedFilterProvider);
 
-  List<Species> filteredSpecies = filterSpeciesWithFilters(
+  List<SpeciesComplete> filteredSpecies = filterSpeciesWithFilters(
     species,
     searchFilter,
     seasonsFilter,
@@ -129,8 +125,8 @@ final myPlantsFilteredListProvider = Provider<List<PlantSimple>>((ref) {
       .where((plant) => speciesId.contains(plant.speciesId))
       .toList();
   if (!consummedFilter) {
-    filteredPlants.removeWhere((plant) => plant.state == State.consumed);
+    filteredPlants.removeWhere((plant) => plant.state == PlantState.consommE);
   }
-  filteredPlants.sort((a, b) => a.plantReference.compareTo(b.plantReference));
+  filteredPlants.sort((a, b) => a.reference.compareTo(b.reference));
   return filteredPlants;
 });

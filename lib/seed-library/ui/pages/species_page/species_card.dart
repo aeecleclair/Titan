@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/seed-library/class/species.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/seed-library/tools/functions.dart' as function;
 import 'package:titan/seed-library/ui/components/delete_button.dart';
 import 'package:titan/seed-library/ui/components/edition_button.dart';
@@ -13,7 +13,7 @@ class SpeciesCard extends HookConsumerWidget {
     required this.onDelete,
   });
 
-  final Species species;
+  final SpeciesComplete species;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
 
@@ -41,7 +41,7 @@ class SpeciesCard extends HookConsumerWidget {
               width: 100,
               child: Column(
                 children: [
-                  Text(species.type.name, textAlign: TextAlign.center),
+                  Text(species.speciesType.name, textAlign: TextAlign.center),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

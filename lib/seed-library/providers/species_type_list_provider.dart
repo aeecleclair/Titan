@@ -1,37 +1,31 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/seed-library/class/species_type.dart';
-import 'package:titan/seed-library/repositories/species_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/single_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class SpeciesListNotifier extends ListNotifier<SpeciesType> {
-  final SpeciesRepository speciesRepository;
-  SpeciesListNotifier({required this.speciesRepository})
-    : super(const AsyncValue.loading());
+class SpeciesListNotifier extends SingleNotifierAPI<SpeciesTypesReturn> {
+  Openapi get speciesRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<List<SpeciesType>>> loadSpeciesTypes() async {
-    return await loadList(speciesRepository.getSpeciesTypeList);
+  @override
+  AsyncValue<SpeciesTypesReturn> build() {
+    loadSpeciesTypes();
+    return const AsyncValue.loading();
+  }
+
+  Future<AsyncValue<SpeciesTypesReturn>> loadSpeciesTypes() async {
+    return await load(speciesRepository.seedLibrarySpeciesTypesGet);
   }
 }
 
 final speciesTypeListProvider =
-    StateNotifierProvider<SpeciesListNotifier, AsyncValue<List<SpeciesType>>>((
-      ref,
-    ) {
-      final speciesRepository = ref.watch(speciesRepositoryProvider);
-      SpeciesListNotifier provider = SpeciesListNotifier(
-        speciesRepository: speciesRepository,
-      );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadSpeciesTypes();
-      });
-      return provider;
-    });
+    NotifierProvider<SpeciesListNotifier, AsyncValue<SpeciesTypesReturn>>(
+      SpeciesListNotifier.new,
+    );
 
-final syncSpeciesTypeListProvider = Provider<List<SpeciesType>>((ref) {
+final syncSpeciesTypeListProvider = Provider<SpeciesTypesReturn>((ref) {
   final speciesList = ref.watch(speciesTypeListProvider);
   return speciesList.maybeWhen(
-    orElse: () => [],
+    orElse: () => SpeciesTypesReturn(speciesType: []),
     data: (speciesType) => speciesType,
   );
 });

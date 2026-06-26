@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:titan/seed-library/class/species.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
 class SmallSpeciesCard extends StatelessWidget {
   const SmallSpeciesCard({
@@ -9,7 +9,7 @@ class SmallSpeciesCard extends StatelessWidget {
     required this.selected,
   });
 
-  final Species species;
+  final SpeciesComplete species;
   final VoidCallback onClicked;
   final bool selected;
 
