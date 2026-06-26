@@ -7,15 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/user/repositories/profile_picture_repository.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
-  final ProfilePictureRepository profilePictureRepository;
+  late final ProfilePictureRepository profilePictureRepository;
   final ImagePicker _picker = ImagePicker();
-  ProfilePictureNotifier({required this.profilePictureRepository})
-    : super(const AsyncLoading());
+
+  @override
+  AsyncValue<Uint8List> build() {
+    profilePictureRepository = ref.watch(profilePictureRepositoryProvider);
+    getMyProfilePicture();
+    return const AsyncLoading();
+  }
 
   Future<AsyncValue<Uint8List>> getProfilePicture(String userId) async {
     return await load(
@@ -111,15 +115,6 @@ class ProfilePictureNotifier extends SingleNotifier<Uint8List> {
 }
 
 final profilePictureProvider =
-    StateNotifierProvider<ProfilePictureNotifier, AsyncValue<Uint8List>>((ref) {
-      final profilePictureRepository = ref.watch(
-        profilePictureRepositoryProvider,
-      );
-      ProfilePictureNotifier notifier = ProfilePictureNotifier(
-        profilePictureRepository: profilePictureRepository,
-      );
-      tokenExpireWrapperAuth(ref, () async {
-        notifier.getMyProfilePicture();
-      });
-      return notifier;
-    });
+    NotifierProvider<ProfilePictureNotifier, AsyncValue<Uint8List>>(
+      ProfilePictureNotifier.new,
+    );

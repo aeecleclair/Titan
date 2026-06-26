@@ -1,25 +1,31 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/class/simple_group.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
-import 'package:titan/user/class/simple_users.dart';
-import 'package:titan/user/repositories/user_list_repository.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class UserListNotifier extends ListNotifier<SimpleUser> {
-  final UserListRepository userListRepository;
-  UserListNotifier({required this.userListRepository})
-    : super(const AsyncValue.loading());
+class UserListNotifier extends ListNotifierAPI<CoreUserSimple> {
+  Openapi get userListRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<List<SimpleUser>>> filterUsers(
+  @override
+  AsyncValue<List<CoreUserSimple>> build() {
+    clear();
+    return const AsyncValue.loading();
+  }
+
+  Future<AsyncValue<List<CoreUserSimple>>> filterUsers(
     String query, {
-    List<SimpleGroup>? includeGroup,
-    List<SimpleGroup>? excludeGroup,
+    List<String>? includedGroups,
+    List<String>? excludedGroups,
+    List<AccountType>? includedAccountTypes,
+    List<AccountType>? excludedAccountTypes,
   }) async {
     return await loadList(
-      () async => userListRepository.searchUser(
-        query,
-        includeId: includeGroup?.map((e) => e.id).toList(),
-        excludeId: excludeGroup?.map((e) => e.id).toList(),
+      () async => userListRepository.usersSearchGet(
+        query: query,
+        includedGroups: includedGroups,
+        excludedGroups: excludedGroups,
+        includedAccountTypes: includedAccountTypes,
+        excludedAccountTypes: excludedAccountTypes,
       ),
     );
   }
@@ -30,15 +36,6 @@ class UserListNotifier extends ListNotifier<SimpleUser> {
 }
 
 final userList =
-    StateNotifierProvider<UserListNotifier, AsyncValue<List<SimpleUser>>>((
-      ref,
-    ) {
-      final userListRepository = ref.watch(userListRepositoryProvider);
-      UserListNotifier userListNotifier = UserListNotifier(
-        userListRepository: userListRepository,
-      );
-      tokenExpireWrapperAuth(ref, () async {
-        userListNotifier.clear();
-      });
-      return userListNotifier;
-    });
+    NotifierProvider<UserListNotifier, AsyncValue<List<CoreUserSimple>>>(
+      UserListNotifier.new,
+    );

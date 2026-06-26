@@ -19,9 +19,7 @@ void main() {
 
     setUp(() {
       profilePictureRepository = MockProfilePictureRepository();
-      profilePictureNotifier = ProfilePictureNotifier(
-        profilePictureRepository: profilePictureRepository,
-      );
+      profilePictureNotifier = ProfilePictureNotifier();
     });
 
     test('getProfilePicture returns AsyncValue<Uint8List>', () async {

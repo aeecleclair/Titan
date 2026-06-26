@@ -1,23 +1,24 @@
-import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/tools/repository/logo_repository.dart';
+import 'dart:typed_data';
 
-class ProfilePictureRepository extends LogoRepository {
-  @override
-  // ignore: overridden_fields
-  final ext = 'users/';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/repository/repository.dart';
+
+class ProfilePictureRepository {
+  final Openapi client;
+  ProfilePictureRepository(this.client);
 
   Future<Uint8List> getProfilePicture(String id) async {
-    return await getLogo(id, suffix: "/profile-picture");
+    final response = await client.usersUserIdProfilePictureGet(userId: id);
+    return response.bodyBytes;
   }
 
   Future<Uint8List> addProfilePicture(Uint8List bytes) async {
-    return await addLogo(bytes, "me", suffix: "/profile-picture");
+    await client.usersMeProfilePicturePost(image: bytes);
+    return bytes;
   }
 }
 
-final profilePictureRepositoryProvider = Provider((ref) {
-  final token = ref.watch(tokenProvider);
-  return ProfilePictureRepository()..setToken(token);
-});
+final profilePictureRepositoryProvider = Provider<ProfilePictureRepository>(
+  (ref) => ProfilePictureRepository(ref.watch(repositoryProvider)),
+);
