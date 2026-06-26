@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final sessionListPageControllerProvider =
-    StateNotifierProvider.family<
+    NotifierProvider.family<
       SessionListPageControllerNotifier,
       PageController,
       int
-    >((ref, i) {
-      return SessionListPageControllerNotifier(i);
-    });
+    >(SessionListPageControllerNotifier.new);
 
-class SessionListPageControllerNotifier extends StateNotifier<PageController> {
-  SessionListPageControllerNotifier(int i)
-    : super(PageController(viewportFraction: 0.8, initialPage: i));
+class SessionListPageControllerNotifier extends Notifier<PageController> {
+  SessionListPageControllerNotifier(this.initialPage);
+
+  final int initialPage;
+
+  @override
+  PageController build() {
+    return PageController(viewportFraction: 0.8, initialPage: initialPage);
+  }
 }

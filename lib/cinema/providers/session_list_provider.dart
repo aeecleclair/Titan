@@ -1,51 +1,59 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/cinema/class/session.dart';
-import 'package:titan/cinema/repositories/session_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class SessionListNotifier extends ListNotifier<Session> {
-  final SessionRepository sessionRepository;
-  SessionListNotifier({required this.sessionRepository})
-    : super(const AsyncValue.loading());
+class SessionListNotifier extends ListNotifierAPI<CineSessionComplete> {
+  Openapi get sessionRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<List<Session>>> loadSessions() async {
-    return await loadList(sessionRepository.getAllSessions);
+  @override
+  AsyncValue<List<CineSessionComplete>> build() {
+    loadSessions();
+    return const AsyncValue.loading();
   }
 
-  Future<bool> addSession(Session session) async {
-    return await add(sessionRepository.addSession, session);
+  Future<AsyncValue<List<CineSessionComplete>>> loadSessions() async {
+    return await loadList(sessionRepository.cinemaSessionsGet);
   }
 
-  Future<bool> updateSession(Session session) async {
-    return await update(
-      sessionRepository.updateSession,
-      (sessions, session) =>
-          sessions..[sessions.indexWhere((b) => b.id == session.id)] = session,
+  Future<bool> addSession(CineSessionBase session) async {
+    return await add(
+      () => sessionRepository.cinemaSessionsPost(body: session),
       session,
     );
   }
 
-  Future<bool> deleteSession(Session session) async {
-    return await delete(
-      sessionRepository.deleteSession,
-      (sessions, session) => sessions..removeWhere((b) => b.id == session.id),
-      session.id,
+  Future<bool> updateSession(CineSessionComplete session) async {
+    return await update(
+      () => sessionRepository.cinemaSessionsSessionIdPatch(
+        sessionId: session.id,
+        body: CineSessionUpdate(
+          name: session.name,
+          start: session.start,
+          duration: session.duration,
+          overview: session.overview,
+          genre: session.genre,
+          tagline: session.tagline,
+        ),
+      ),
+      (session) => session.id,
       session,
+    );
+  }
+
+  Future<bool> deleteSession(CineSessionComplete session) async {
+    return await delete(
+      () => sessionRepository.cinemaSessionsSessionIdDelete(
+        sessionId: session.id,
+      ),
+      (session) => session.id,
+      session.id,
     );
   }
 }
 
 final sessionListProvider =
-    StateNotifierProvider<SessionListNotifier, AsyncValue<List<Session>>>((
-      ref,
-    ) {
-      final sessionRepository = ref.watch(sessionRepositoryProvider);
-      SessionListNotifier notifier = SessionListNotifier(
-        sessionRepository: sessionRepository,
-      );
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadSessions();
-      });
-      return notifier;
-    });
+    NotifierProvider<
+      SessionListNotifier,
+      AsyncValue<List<CineSessionComplete>>
+    >(SessionListNotifier.new);

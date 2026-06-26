@@ -9,8 +9,9 @@ import 'package:titan/cinema/providers/cinema_topic_provider.dart';
 import 'package:titan/cinema/providers/session_poster_map_provider.dart';
 import 'package:titan/cinema/providers/session_poster_provider.dart';
 import 'package:titan/cinema/providers/session_provider.dart';
+import 'package:titan/cinema/router.dart';
 import 'package:titan/cinema/tools/functions.dart';
-import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/service/class/message.dart';
 import 'package:titan/service/local_notification_service.dart';
 import 'package:titan/tools/functions.dart';
@@ -36,7 +37,7 @@ class DetailPage extends HookConsumerWidget {
     final localNotificationService = LocalNotificationService();
     final cinemaTopics = ref.watch(cinemaTopicsProvider);
     final selected = cinemaTopics.maybeWhen(
-      data: (data) => data.contains(session.id),
+      data: (data) => data.map((e) => e.id).contains(session.id),
       orElse: () => false,
     );
     final List<String> genres = session.genre != null
@@ -51,7 +52,6 @@ class DetailPage extends HookConsumerWidget {
       parent: animation,
       curve: Curves.easeInOut,
     );
-    final scrollController = useScrollController();
     return Stack(
       children: [
         Container(
@@ -77,98 +77,94 @@ class DetailPage extends HookConsumerWidget {
                 const Center(child: HeroIcon(HeroIcons.exclamationCircle)),
           ),
         ),
-        ScrollToHideNavbar(
-          controller: scrollController,
-          child: SingleChildScrollView(
-            controller: scrollController,
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                const SizedBox(height: 220),
-                Container(
-                  width: double.infinity,
-                  height: 250,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        Colors.grey.shade50.withValues(alpha: 0.85),
-                        Colors.grey.shade50,
-                      ],
-                      stops: const [0.0, 0.65, 1.0],
-                    ),
+        SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              const SizedBox(height: 220),
+              Container(
+                width: double.infinity,
+                height: 250,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.grey.shade50.withValues(alpha: 0.85),
+                      Colors.grey.shade50,
+                    ],
+                    stops: const [0.0, 0.65, 1.0],
                   ),
                 ),
-                Container(
-                  color: Colors.grey.shade50,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 15),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        alignment: Alignment.center,
-                        child: AutoSizeText(
-                          session.name,
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
+              ),
+              Container(
+                color: Colors.grey.shade50,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 15),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      alignment: Alignment.center,
+                      child: AutoSizeText(
+                        session.name,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      alignment: Alignment.center,
+                      child: Text(
+                        formatDate(session.start),
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    HorizontalListView.builder(
+                      height: 35,
+                      items: genres,
+                      horizontalSpace: 20,
+                      itemBuilder: (context, genre, index) => Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade900,
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: Text(
+                          genre,
                           style: const TextStyle(
-                            fontSize: 30,
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      const SizedBox(height: 15),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          formatDate(session.start),
-                          style: const TextStyle(fontSize: 18),
-                        ),
+                    ),
+                    const SizedBox(height: 15),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Text(
+                        session.overview.isNotEmpty
+                            ? session.overview
+                            : AppLocalizations.of(context)!.cinemaNoOverview,
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(fontSize: 15),
                       ),
-                      const SizedBox(height: 20),
-                      HorizontalListView.builder(
-                        height: 35,
-                        items: genres,
-                        horizontalSpace: 20,
-                        itemBuilder: (context, genre, index) => Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 10,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade900,
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                          child: Text(
-                            genre,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Text(
-                          session.overview != null
-                              ? session.overview!
-                              : AppLocalizations.of(context)!.cinemaNoOverview,
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(fontSize: 15),
-                        ),
-                      ),
-                      const SizedBox(height: 140),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 140),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         Column(
@@ -280,7 +276,15 @@ class DetailPage extends HookConsumerWidget {
                         } else {
                           animation.forward();
                         }
-                        cinemaTopicsNotifier.toggleSubscription(session.id);
+                        cinemaTopicsNotifier.toggleSubscription(
+                          TopicUser(
+                            id: session.id,
+                            name: session.name,
+                            moduleRoot: CinemaRouter.module.getName(context),
+                            topicIdentifier: session.id,
+                            isUserSubscribed: selected,
+                          ),
+                        );
                         if (selected) {
                           localNotificationService.cancelNotificationById(
                             session.id,

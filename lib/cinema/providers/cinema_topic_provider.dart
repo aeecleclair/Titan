@@ -1,37 +1,42 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/cinema/repositories/cinema_topic_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class CinemaTopicsProvider extends ListNotifier<String> {
-  final CinemaTopicRepository cinemaTopicRepository = CinemaTopicRepository();
-  CinemaTopicsProvider({required String token})
-    : super(const AsyncValue.loading()) {
-    cinemaTopicRepository.setToken(token);
+class CinemaTopicsProvider extends ListNotifierAPI<TopicUser> {
+  Openapi get cinemaTopicRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<List<TopicUser>> build() {
+    getTopics();
+    return const AsyncValue.loading();
   }
 
-  Future<AsyncValue<List<String>>> getTopics() async {
-    return await loadList(cinemaTopicRepository.getCinemaTopics);
+  Future<AsyncValue<List<TopicUser>>> getTopics() async {
+    return await loadList(cinemaTopicRepository.notificationTopicsGet);
   }
 
-  Future<bool> subscribeSession(String topic) async {
+  Future<bool> subscribeSession(TopicUser topic) async {
     return await update(
-      cinemaTopicRepository.subscribeSession,
-      (listT, t) => listT..add(t),
+      () => cinemaTopicRepository.notificationTopicsTopicIdSubscribePost(
+        topicId: topic.id,
+      ),
+      (topic) => topic.id,
       topic,
     );
   }
 
-  Future<bool> unsubscribeSession(String topic) async {
+  Future<bool> unsubscribeSession(TopicUser topic) async {
     return await update(
-      cinemaTopicRepository.unsubscribeSession,
-      (listT, t) => listT..remove(t),
+      () => cinemaTopicRepository.notificationTopicsTopicIdUnsubscribePost(
+        topicId: topic.id,
+      ),
+      (topic) => topic.id,
       topic,
     );
   }
 
-  Future<bool> toggleSubscription(String topic) async {
+  Future<bool> toggleSubscription(TopicUser topic) async {
     return state.maybeWhen(
       data: (data) {
         if (data.contains(topic)) {
@@ -45,13 +50,6 @@ class CinemaTopicsProvider extends ListNotifier<String> {
 }
 
 final cinemaTopicsProvider =
-    StateNotifierProvider<CinemaTopicsProvider, AsyncValue<List<String>>>((
-      ref,
-    ) {
-      final token = ref.watch(tokenProvider);
-      CinemaTopicsProvider notifier = CinemaTopicsProvider(token: token);
-      tokenExpireWrapperAuth(ref, () async {
-        notifier.getTopics();
-      });
-      return notifier;
-    });
+    NotifierProvider<CinemaTopicsProvider, AsyncValue<List<TopicUser>>>(
+      CinemaTopicsProvider.new,
+    );

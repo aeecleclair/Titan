@@ -17,15 +17,10 @@ void main() {
   group('SessionPosterProvider', () {
     late SessionPosterRepository repository;
     late SessionPosterProvider provider;
-    late SessionLogoNotifier notifier;
 
     setUp(() {
       repository = MockSessionPosterRepository();
-      notifier = MockSessionLogoNotifier();
-      provider = SessionPosterProvider(
-        repository: repository,
-        sessionLogoNotifier: notifier,
-      );
+      provider = SessionPosterProvider();
     });
 
     test('initial state is loading', () {

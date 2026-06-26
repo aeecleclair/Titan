@@ -7,12 +7,15 @@ import 'package:titan/cinema/repositories/session_poster_repository.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
 
 class SessionPosterProvider extends SingleNotifier<Image> {
-  final SessionPosterRepository repository;
-  final SessionLogoNotifier sessionLogoNotifier;
-  SessionPosterProvider({
-    required this.repository,
-    required this.sessionLogoNotifier,
-  }) : super(const AsyncValue.loading());
+  @override
+  AsyncValue<Image> build() {
+    return const AsyncValue.loading();
+  }
+
+  SessionPosterRepository get repository =>
+      ref.watch(sessionPosterRepositoryProvider);
+  SessionLogoNotifier get sessionLogoNotifier =>
+      ref.watch(sessionPosterMapProvider.notifier);
 
   Future<Image> getLogo(String id) async {
     final image = await repository.getSessionLogo(id);
@@ -28,13 +31,6 @@ class SessionPosterProvider extends SingleNotifier<Image> {
 }
 
 final sessionPosterProvider =
-    StateNotifierProvider<SessionPosterProvider, AsyncValue<Image>>((ref) {
-      final sessionPoster = ref.watch(sessionPosterRepository);
-      final sessionPosterMapNotifier = ref.watch(
-        sessionPosterMapProvider.notifier,
-      );
-      return SessionPosterProvider(
-        repository: sessionPoster,
-        sessionLogoNotifier: sessionPosterMapNotifier,
-      );
-    });
+    NotifierProvider<SessionPosterProvider, AsyncValue<Image>>(
+      SessionPosterProvider.new,
+    );

@@ -1,11 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/super_admin/class/permissions.dart';
-import 'package:titan/admin/class/simple_group.dart';
-import 'package:titan/super_admin/providers/permissions_list_provider.dart';
 import 'package:titan/cinema/providers/is_cinema_admin.dart';
-import 'package:titan/cinema/tools/constants.dart';
-import 'package:titan/user/class/user.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
 void main() {
@@ -14,22 +10,15 @@ void main() {
       final container = ProviderContainer(
         overrides: [
           userProvider.overrideWithValue(
-            User.empty().copyWith(
+            CoreUser.empty().copyWith(
               groups: [
-                SimpleGroup.empty().copyWith(
+                CoreGroupSimple.empty().copyWith(
                   id: 'ce5f36e6-5377-489f-9696-de70e2477300',
                   name: 'Cinema Admin',
                 ),
               ],
             ),
           ),
-          mappedPermissionsProvider.overrideWithValue({
-            CinemaPermissionConstants.manageSessions: CorePermission(
-              permissionName: CinemaPermissionConstants.manageSessions,
-              authorizedGroupIds: ['ce5f36e6-5377-489f-9696-de70e2477300'],
-              authorizedAccountTypes: [],
-            ),
-          }),
         ],
       );
 
@@ -42,20 +31,13 @@ void main() {
       final container = ProviderContainer(
         overrides: [
           userProvider.overrideWithValue(
-            User.empty().copyWith(
+            CoreUser.empty().copyWith(
               groups: [
-                SimpleGroup.empty().copyWith(id: '123', name: 'Group 1'),
-                SimpleGroup.empty().copyWith(id: '456', name: 'Group 2'),
+                CoreGroupSimple.empty().copyWith(id: '123', name: 'Group 1'),
+                CoreGroupSimple.empty().copyWith(id: '456', name: 'Group 2'),
               ],
             ),
           ),
-          mappedPermissionsProvider.overrideWithValue({
-            CinemaPermissionConstants.manageSessions: CorePermission(
-              permissionName: CinemaPermissionConstants.manageSessions,
-              authorizedGroupIds: ['ce5f36e6-5377-489f-9696-de70e2477300'],
-              authorizedAccountTypes: [],
-            ),
-          }),
         ],
       );
 

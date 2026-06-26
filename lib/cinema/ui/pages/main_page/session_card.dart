@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/cinema/class/session.dart';
 import 'package:titan/cinema/providers/cinema_topic_provider.dart';
 import 'package:titan/cinema/providers/scroll_provider.dart';
 import 'package:titan/cinema/providers/session_poster_map_provider.dart';
 import 'package:titan/cinema/providers/session_poster_provider.dart';
 import 'package:titan/cinema/tools/functions.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/navigation/providers/is_web_format_provider.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
-import 'package:titan/l10n/app_localizations.dart';
 
 class SessionCard extends HookConsumerWidget {
-  final Session session;
+  final CineSessionComplete session;
   final int index;
   final VoidCallback? onTap;
   const SessionCard({
@@ -35,7 +34,7 @@ class SessionCard extends HookConsumerWidget {
     final isWebFormat = ref.watch(isWebFormatProvider);
     final cinemaTopics = ref.watch(cinemaTopicsProvider);
     final selected = cinemaTopics.maybeWhen(
-      data: (data) => data.contains(session.id),
+      data: (data) => data.map((e) => e.id).contains(session.id),
       orElse: () => false,
     );
 
@@ -163,10 +162,7 @@ class SessionCard extends HookConsumerWidget {
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
-                                      session.overview ??
-                                          AppLocalizations.of(
-                                            context,
-                                          )!.cinemaNoOverview,
+                                      session.overview,
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(fontSize: 16),
                                     ),

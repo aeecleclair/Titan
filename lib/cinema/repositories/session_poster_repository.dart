@@ -1,19 +1,20 @@
-import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/repository/logo_repository.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class SessionPosterRepository extends LogoRepository {
-  @override
-  // ignore: overridden_fields
-  final ext = 'cinema/sessions/';
+class SessionPosterRepository {
+  final Openapi client;
+  SessionPosterRepository(this.client);
 
   Future<Image> getSessionLogo(String id) async {
-    final bytes = await getLogo(id, suffix: "/poster");
+    final response = await client.cinemaSessionsSessionIdPosterGet(
+      sessionId: id,
+    );
+    final bytes = response.bodyBytes;
     if (bytes.isEmpty) {
       return Image.asset(getTitanLogo());
     }
@@ -21,14 +22,11 @@ class SessionPosterRepository extends LogoRepository {
   }
 
   Future<Image> addSessionLogo(Uint8List bytes, String id) async {
-    return Image.memory(
-      await addLogo(bytes, id, suffix: "/poster"),
-      fit: BoxFit.cover,
-    );
+    await client.cinemaSessionsSessionIdPosterPost(sessionId: id, image: bytes);
+    return Image.memory(bytes);
   }
 }
 
-final sessionPosterRepository = Provider<SessionPosterRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return SessionPosterRepository()..setToken(token);
-});
+final sessionPosterRepositoryProvider = Provider<SessionPosterRepository>(
+  (ref) => SessionPosterRepository(ref.watch(repositoryProvider)),
+);
