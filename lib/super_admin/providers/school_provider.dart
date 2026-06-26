@@ -1,17 +1,17 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/super_admin/class/school.dart';
-import 'package:titan/super_admin/repositories/school_repository.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class SchoolNotifier extends StateNotifier<School> {
-  final SchoolRepository schoolRepository;
-  SchoolNotifier({required this.schoolRepository}) : super(School.empty());
+class SchoolNotifier extends Notifier<CoreSchool> {
+  @override
+  CoreSchool build() {
+    return CoreSchool.empty();
+  }
 
-  void setSchool(School school) {
+  void setSchool(CoreSchool school) {
     state = school;
   }
 }
 
-final schoolProvider = StateNotifierProvider<SchoolNotifier, School>((ref) {
-  final schoolRepository = ref.watch(schoolRepositoryProvider);
-  return SchoolNotifier(schoolRepository: schoolRepository);
-});
+final schoolProvider = NotifierProvider<SchoolNotifier, CoreSchool>(
+  SchoolNotifier.new,
+);

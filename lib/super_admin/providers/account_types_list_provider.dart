@@ -1,30 +1,24 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/super_admin/class/account_type.dart';
-import 'package:titan/super_admin/repositories/account_type_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart' as enums;
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-import 'package:titan/tools/token_expire_wrapper.dart';
+class AccountTypesNotifier extends ListNotifierAPI<enums.AccountType> {
+  Openapi get accountTypeRepository => ref.watch(repositoryProvider);
 
-class AccountTypesNotifier extends ListNotifier<AccountType> {
-  final AccountTypeRepository accountTypeRepository;
-  AccountTypesNotifier({required this.accountTypeRepository})
-    : super(const AsyncValue.loading());
+  @override
+  AsyncValue<List<enums.AccountType>> build() {
+    loadAccountTypes();
+    return const AsyncValue.loading();
+  }
 
-  Future<AsyncValue<List<AccountType>>> loadAccountTypes() async {
-    return await loadList(accountTypeRepository.getAccountTypeList);
+  Future<AsyncValue<List<enums.AccountType>>> loadAccountTypes() async {
+    return await loadList(accountTypeRepository.usersAccountTypesGet);
   }
 }
 
 final allAccountTypesListProvider =
-    StateNotifierProvider<AccountTypesNotifier, AsyncValue<List<AccountType>>>((
-      ref,
-    ) {
-      final accountTypeRepository = ref.watch(accountTypeRepositoryProvider);
-      AccountTypesNotifier provider = AccountTypesNotifier(
-        accountTypeRepository: accountTypeRepository,
-      );
-      tokenExpireWrapperAuth(ref, () async {
-        await provider.loadAccountTypes();
-      });
-      return provider;
-    });
+    NotifierProvider<AccountTypesNotifier, AsyncValue<List<enums.AccountType>>>(
+      AccountTypesNotifier.new,
+    );

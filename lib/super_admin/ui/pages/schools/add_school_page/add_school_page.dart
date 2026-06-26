@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/super_admin/class/school.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/super_admin/providers/school_list_provider.dart';
 import 'package:titan/super_admin/ui/admin.dart';
 import 'package:titan/super_admin/ui/components/admin_button.dart';
 import 'package:titan/super_admin/ui/components/text_editing.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -49,27 +48,25 @@ class AddSchoolPage extends HookConsumerWidget {
                 ),
                 WaitingButton(
                   onTap: () async {
-                    await tokenExpireWrapper(ref, () async {
-                      final addedSchoolMsg = AppLocalizations.of(
-                        context,
-                      )!.adminAddedSchool;
-                      final addingErrorMsg = AppLocalizations.of(
-                        context,
-                      )!.adminAddingError;
-                      final value = await schoolListNotifier.createSchool(
-                        School(
-                          name: name.text,
-                          emailRegex: emailRegex.text,
-                          id: '',
-                        ),
-                      );
-                      if (value) {
-                        QR.back();
-                        displayToastWithContext(TypeMsg.msg, addedSchoolMsg);
-                      } else {
-                        displayToastWithContext(TypeMsg.error, addingErrorMsg);
-                      }
-                    });
+                    final addedSchoolMsg = AppLocalizations.of(
+                      context,
+                    )!.adminAddedSchool;
+                    final addingErrorMsg = AppLocalizations.of(
+                      context,
+                    )!.adminAddingError;
+                    final value = await schoolListNotifier.createSchool(
+                      CoreSchool(
+                        name: name.text,
+                        emailRegex: emailRegex.text,
+                        id: '',
+                      ),
+                    );
+                    if (value) {
+                      QR.back();
+                      displayToastWithContext(TypeMsg.msg, addedSchoolMsg);
+                    } else {
+                      displayToastWithContext(TypeMsg.error, addingErrorMsg);
+                    }
                   },
                   builder: (child) => SuperAdminButton(child: child),
                   child: Text(

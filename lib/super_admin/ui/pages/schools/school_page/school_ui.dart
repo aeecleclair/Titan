@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/super_admin/class/school.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/super_admin/tools/constants.dart';
 import 'package:titan/super_admin/tools/function.dart';
 import 'package:titan/super_admin/ui/components/item_card_ui.dart';
@@ -10,7 +10,7 @@ import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class SchoolUi extends HookConsumerWidget {
-  final School school;
+  final CoreSchool school;
   final void Function() onEdit;
   final Future Function() onDelete;
   const SchoolUi({
