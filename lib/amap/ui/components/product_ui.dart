@@ -1,21 +1,23 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:titan/amap/class/product.dart';
 import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
-import 'package:titan/l10n/app_localizations.dart';
 
 class ProductCard extends StatelessWidget {
-  final Product product;
+  final AppModulesAmapSchemasAmapProductComplete product;
+  final int quantity;
   final Function()? onEdit;
   final Future Function()? onDelete;
   final bool showButton;
   const ProductCard({
     super.key,
     required this.product,
+    required this.quantity,
     this.onEdit,
     this.onDelete,
     this.showButton = true,
@@ -60,7 +62,7 @@ class ProductCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           AutoSizeText(
-            '${(product.price / 100).toStringAsFixed(2)} €',
+            '${product.price.toStringAsFixed(2)} €',
             maxLines: 1,
             minFontSize: 10,
             overflow: TextOverflow.ellipsis,
@@ -104,7 +106,7 @@ class ProductCard extends StatelessWidget {
               : Container(
                   margin: const EdgeInsets.only(bottom: 5),
                   child: Text(
-                    "${AppLocalizations.of(context)!.amapQuantity} : ${product.quantity}",
+                    "${AppLocalizations.of(context)!.amapQuantity} : $quantity",
                     style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,

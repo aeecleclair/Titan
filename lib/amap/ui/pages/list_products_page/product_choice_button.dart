@@ -1,16 +1,17 @@
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:titan/amap/class/order.dart';
+import 'package:titan/amap/adapters/order_return.dart';
 import 'package:titan/amap/providers/order_provider.dart';
 import 'package:titan/amap/providers/delivery_id_provider.dart';
 import 'package:titan/amap/providers/user_order_list_provider.dart';
 import 'package:titan/amap/providers/user_amount_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
-import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
+import 'package:titan/user/adapters/core_user.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -26,7 +27,7 @@ class ProductChoiceButton extends HookConsumerWidget {
     final orderListNotifier = ref.watch(userOrderListProvider.notifier);
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final me = ref.watch(userProvider);
-    final isEdit = order.id != Order.empty().id;
+    final isEdit = order.orderId != OrderReturn.empty().orderId;
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -73,52 +74,49 @@ class ProductChoiceButton extends HookConsumerWidget {
                     AppLocalizations.of(context)!.amapNoProduct,
                   );
                 } else {
-                  Order newOrder = order.copyWith(
+                  OrderReturn newOrder = order.copyWith(
                     deliveryId: deliveryId,
-                    user: me.toSimpleUser(),
-                    lastAmount: order.amount,
+                    user: me.toCoreUserSimple(),
+                    amount: order.amount,
                   );
-                  await tokenExpireWrapper(ref, () async {
-                    final updatedOrderMsg = AppLocalizations.of(
-                      context,
-                    )!.amapUpdatedOrder;
-                    final addedOrderMsg = AppLocalizations.of(
-                      context,
-                    )!.amapAddedOrder;
-                    final updatingErrorMsg = AppLocalizations.of(
-                      context,
-                    )!.amapUpdatingError;
-                    final addingErrorMsg = AppLocalizations.of(
-                      context,
-                    )!.amapAddingError;
-                    final value = isEdit
-                        ? await orderListNotifier.updateOrder(newOrder)
-                        : await orderListNotifier.addOrder(newOrder);
-                    if (value) {
-                      QR.back();
-                      userAmountNotifier.updateCash(
-                        order.lastAmount - order.amount,
-                      );
-                      if (isEdit) {
-                        displayToastWithContext(TypeMsg.msg, updatedOrderMsg);
-                      } else {
-                        displayToastWithContext(TypeMsg.msg, addedOrderMsg);
-                      }
-                    } else {
-                      if (isEdit) {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          updatingErrorMsg,
+                  final updatedOrderMsg = AppLocalizations.of(
+                    context,
+                  )!.amapUpdatedOrder;
+                  final addedOrderMsg = AppLocalizations.of(
+                    context,
+                  )!.amapAddedOrder;
+                  final updatingErrorMsg = AppLocalizations.of(
+                    context,
+                  )!.amapUpdatingError;
+                  final addingErrorMsg = AppLocalizations.of(
+                    context,
+                  )!.amapAddingError;
+                  final value = isEdit
+                      ? await orderListNotifier.updateOrder(newOrder)
+                      : await orderListNotifier.addOrder(
+                          newOrder.toOrderBase(),
                         );
-                      } else {
-                        displayToastWithContext(TypeMsg.error, addingErrorMsg);
-                      }
+                  if (value) {
+                    QR.back();
+                    userAmountNotifier.updateCash(
+                      (order.amount - order.amount).toDouble(),
+                    );
+                    if (isEdit) {
+                      displayToastWithContext(TypeMsg.msg, updatedOrderMsg);
+                    } else {
+                      displayToastWithContext(TypeMsg.msg, addedOrderMsg);
                     }
-                  });
+                  } else {
+                    if (isEdit) {
+                      displayToastWithContext(TypeMsg.error, updatingErrorMsg);
+                    } else {
+                      displayToastWithContext(TypeMsg.error, addingErrorMsg);
+                    }
+                  }
                 }
               },
               child: Text(
-                "${AppLocalizations.of(context)!.amapConfirm} (${(order.amount / 100).toStringAsFixed(2)}€)",
+                "${AppLocalizations.of(context)!.amapConfirm} (${order.amount.toStringAsFixed(2)}€)",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
@@ -159,7 +157,8 @@ class ProductChoiceButton extends HookConsumerWidget {
               ),
             ),
             onTap: () {
-              if (order.amount != 0.0 || order.id != Order.empty().id) {
+              if (order.amount != 0.0 ||
+                  order.orderId != OrderReturn.empty().orderId) {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) => CustomDialogBox(
@@ -168,7 +167,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                     )!.amapDeletingOrder,
                     title: AppLocalizations.of(context)!.amapDeleting,
                     onYes: () {
-                      orderNotifier.setOrder(Order.empty());
+                      orderNotifier.setOrder(OrderReturn.empty());
                       QR.back();
                     },
                   ),

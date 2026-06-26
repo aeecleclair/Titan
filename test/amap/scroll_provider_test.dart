@@ -5,12 +5,16 @@ import 'package:titan/amap/providers/scroll_provider.dart';
 void main() {
   group('ScrollNotifier', () {
     test('initial state should be 0', () {
-      final scrollNotifier = ScrollNotifier();
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final scrollNotifier = container.read(scrollProvider.notifier);
       expect(scrollNotifier.state, 0);
     });
 
     test('setScroll should update state', () {
-      final scrollNotifier = ScrollNotifier();
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final scrollNotifier = container.read(scrollProvider.notifier);
       scrollNotifier.setScroll(50);
       expect(scrollNotifier.state, 50);
     });

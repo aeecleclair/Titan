@@ -1,16 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final selectedCategoryProvider =
-    StateNotifierProvider.family<SelectedCategoryNotifier, String, String>((
-      ref,
-      txt,
-    ) {
-      return SelectedCategoryNotifier(txt);
-    });
+    NotifierProvider.family<SelectedCategoryNotifier, String, String>(
+      SelectedCategoryNotifier.new,
+    );
 
-class SelectedCategoryNotifier extends StateNotifier<String> {
-  String txt;
-  SelectedCategoryNotifier(this.txt) : super(txt);
+class SelectedCategoryNotifier extends Notifier<String> {
+  SelectedCategoryNotifier(this.initialText);
+
+  final String initialText;
+
+  @override
+  String build() {
+    return initialText;
+  }
 
   void setText(String txt) {
     state = txt;

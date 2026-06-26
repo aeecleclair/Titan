@@ -1,13 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ScrollNotifier extends StateNotifier<double> {
-  ScrollNotifier() : super(0);
+class ScrollNotifier extends Notifier<double> {
+  @override
+  double build() {
+    return 0;
+  }
 
   void setScroll(double event) {
     state = event;
   }
 }
 
-final scrollProvider = StateNotifierProvider<ScrollNotifier, double>((ref) {
-  return ScrollNotifier();
-});
+final scrollProvider = NotifierProvider<ScrollNotifier, double>(
+  ScrollNotifier.new,
+);

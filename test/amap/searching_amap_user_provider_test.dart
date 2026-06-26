@@ -5,7 +5,9 @@ import 'package:titan/amap/providers/searching_amap_user_provider.dart';
 void main() {
   group('SearchingAmapUserNotifier', () {
     test('SearchingAmapUserNotifier sets state correctly', () {
-      final notifier = SearchingAmapUserNotifier();
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final notifier = container.read(searchingAmapUserProvider.notifier);
 
       expect(notifier.state, true);
 

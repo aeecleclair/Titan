@@ -6,13 +6,17 @@ import 'package:titan/amap/providers/page_controller_provider.dart';
 void main() {
   group('AmapPageControllerNotifier', () {
     test('initial state', () {
-      final notifier = AmapPageControllerNotifier();
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final notifier = container.read(amapPageControllerProvider.notifier);
       expect(notifier.state.viewportFraction, 0.9);
       expect(notifier.state.initialPage, 0);
     });
 
     test('can change state', () {
-      final notifier = AmapPageControllerNotifier();
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final notifier = container.read(amapPageControllerProvider.notifier);
       final newController = PageController(
         viewportFraction: 0.8,
         initialPage: 1,

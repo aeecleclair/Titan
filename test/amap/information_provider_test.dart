@@ -1,29 +1,45 @@
+import 'package:chopper/chopper.dart' as chopper;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
-import 'package:titan/amap/class/information.dart';
 import 'package:titan/amap/providers/information_provider.dart';
-import 'package:titan/amap/repositories/information_repository.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class MockInformationRepository extends Mock implements InformationRepository {}
+class MockInformationRepository extends Mock implements Openapi {}
 
 void main() {
   group('InformationNotifier', () {
-    late InformationRepository informationRepository;
+    late MockInformationRepository informationRepository;
+    late ProviderContainer container;
     late InformationNotifier informationNotifier;
+    final information = Information(
+      manager: 'manager',
+      link: 'link',
+      description: 'description',
+    );
 
-    setUp(() {
+    setUp(() async {
       informationRepository = MockInformationRepository();
-      informationNotifier = InformationNotifier(
-        informationRepository: informationRepository,
+      when(() => informationRepository.amapInformationGet()).thenAnswer(
+        (_) async => chopper.Response(http.Response('[]', 200), information),
       );
+      container = ProviderContainer(
+        overrides: [
+          repositoryProvider.overrideWithValue(informationRepository),
+        ],
+      );
+      informationNotifier = container.read(informationProvider.notifier);
+      await Future(() {});
     });
 
-    test('loadInformation', () async {
-      final information = Information.empty();
-      when(
-        () => informationRepository.getInformation(),
-      ).thenAnswer((_) async => information);
+    tearDown(() => container.dispose());
+
+    test('loadInformation should return information from repository', () async {
+      when(() => informationRepository.amapInformationGet()).thenAnswer(
+        (_) async => chopper.Response(http.Response('[]', 200), information),
+      );
 
       final result = await informationNotifier.loadInformation();
 
@@ -37,40 +53,44 @@ void main() {
       );
     });
 
-    test('createInformation', () async {
-      final information = Information.empty();
+    test(
+      'updateInformation should update information in repository and state',
+      () async {
+        when(
+          () => informationRepository.amapInformationPatch(
+            body: any(named: 'body'),
+          ),
+        ).thenAnswer(
+          (_) async => chopper.Response(http.Response('[]', 200), true),
+        );
+        informationNotifier.state = AsyncValue.data(information);
+
+        final result = await informationNotifier.updateInformation(information);
+
+        expect(result, true);
+      },
+    );
+
+    test('loadInformation should handle error', () async {
       when(
-        () => informationRepository.createInformation(information),
-      ).thenAnswer((_) async => information);
-      informationNotifier.state = AsyncValue.data(information);
+        () => informationRepository.amapInformationGet(),
+      ).thenThrow(Exception('Error'));
 
-      final result = await informationNotifier.createInformation(information);
+      final result = await informationNotifier.loadInformation();
 
-      expect(result, true);
+      expect(result, isA<AsyncError>());
     });
 
-    test('updateInformation', () async {
-      final information = Information.empty();
+    test('updateInformation should handle error', () async {
       when(
-        () => informationRepository.updateInformation(information),
-      ).thenAnswer((_) async => true);
-      informationNotifier.state = AsyncValue.data(information);
+        () => informationRepository.amapInformationPatch(
+          body: any(named: 'body'),
+        ),
+      ).thenThrow(Exception('Error'));
 
       final result = await informationNotifier.updateInformation(information);
 
-      expect(result, true);
-    });
-
-    test('deleteInformation', () async {
-      final information = Information.empty();
-      when(
-        () => informationRepository.deleteInformation(information.manager),
-      ).thenAnswer((_) async => true);
-      informationNotifier.state = AsyncValue.data(information);
-
-      final result = await informationNotifier.deleteInformation(information);
-
-      expect(result, true);
+      expect(result, false);
     });
   });
 }

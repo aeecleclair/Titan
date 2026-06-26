@@ -1,14 +1,17 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/amap/class/order.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class OrderNotifier extends StateNotifier<Order> {
-  OrderNotifier() : super(Order.empty());
+class OrderNotifier extends Notifier<OrderReturn> {
+  @override
+  OrderReturn build() {
+    return OrderReturn.empty();
+  }
 
-  void setOrder(Order order) {
+  void setOrder(OrderReturn order) {
     state = order;
   }
 }
 
-final orderProvider = StateNotifierProvider<OrderNotifier, Order>((ref) {
-  return OrderNotifier();
-});
+final orderProvider = NotifierProvider<OrderNotifier, OrderReturn>(
+  OrderNotifier.new,
+);

@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart' as intl;
-import 'package:titan/amap/class/order.dart';
+import 'package:intl/intl.dart';
 import 'package:titan/amap/providers/user_amount_provider.dart';
 import 'package:titan/amap/providers/user_order_list_provider.dart';
 import 'package:titan/amap/providers/order_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
-import 'package:titan/amap/tools/functions.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
-import 'package:titan/l10n/app_localizations.dart';
 
 class OrderUI extends HookConsumerWidget {
-  final Order order;
+  final OrderReturn order;
   final void Function()? onTap, onEdit;
   final bool showButton, isDetail;
   const OrderUI({
@@ -39,25 +38,10 @@ class OrderUI extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    final style = TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.bold,
-      color: AMAPColorConstants.textDark,
-    );
-
-    final tp = TextPainter(
-      text: TextSpan(text: order.deliveryName, style: style),
-      textDirection: TextDirection.ltr,
-      maxLines: isDetail ? 3 : 2,
-    );
-    final maxTextWidth = isDetail ? 180.0 : 150.0;
-    tp.layout(maxWidth: maxTextWidth);
-    final lines = tp.computeLineMetrics().length;
-
     return CardLayout(
-      id: order.id,
-      width: 214,
-      height: isDetail ? 104 + 26.0 * lines : 144 + 26.0 * lines,
+      id: order.orderId,
+      width: 195,
+      height: isDetail ? 100 : 150,
       colors: const [
         AMAPColorConstants.lightGradient1,
         AMAPColorConstants.greenGradient1,
@@ -70,33 +54,14 @@ class OrderUI extends HookConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: maxTextWidth),
-                    child: Text(
-                      order.deliveryName,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AMAPColorConstants.textDark,
-                      ),
-                      maxLines: isDetail ? 3 : 2,
-                    ),
-                  ),
-                  Text(
-                    '${AppLocalizations.of(context)!.amapThe} ${intl.DateFormat.yMd(locale).format(order.deliveryDate)}',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AMAPColorConstants.textDark,
-                    ),
-                  ),
-                ],
+              Text(
+                '${AppLocalizations.of(context)!.amapThe} ${DateFormat.yMd(locale).format(order.deliveryDate)}',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AMAPColorConstants.textDark,
+                ),
               ),
-
               if (!isDetail)
                 GestureDetector(
                   onTap: () {
@@ -115,7 +80,7 @@ class OrderUI extends HookConsumerWidget {
           Row(
             children: [
               Text(
-                "${order.products.length} ${AppLocalizations.of(context)!.amapProduct}${order.products.length != 1 ? "s" : ""}",
+                "${order.productsdetail.length} ${AppLocalizations.of(context)!.amapProduct}${order.productsdetail.length != 1 ? "s" : ""}",
                 style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -124,7 +89,7 @@ class OrderUI extends HookConsumerWidget {
               ),
               const Spacer(),
               Text(
-                "${(order.amount / 100).toStringAsFixed(2)}€",
+                "${order.amount.toStringAsFixed(2)}€",
                 style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w700,
@@ -135,7 +100,7 @@ class OrderUI extends HookConsumerWidget {
           ),
           const SizedBox(height: 3),
           Text(
-            uiCollectionSlotToString(order.collectionSlot, context),
+            capitalize(order.collectionSlot.name),
             style: const TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w700,
@@ -180,23 +145,23 @@ class OrderUI extends HookConsumerWidget {
                                 final deletingErrorMsg = AppLocalizations.of(
                                   context,
                                 )!.amapDeletingError;
-                                await tokenExpireWrapper(ref, () async {
-                                  orderListNotifier.deleteOrder(order).then((
-                                    value,
-                                  ) {
-                                    if (value) {
-                                      balanceNotifier.updateCash(order.amount);
-                                      displayToastWithContext(
-                                        TypeMsg.msg,
-                                        deletedOrderMsg,
-                                      );
-                                    } else {
-                                      displayToastWithContext(
-                                        TypeMsg.error,
-                                        deletingErrorMsg,
-                                      );
-                                    }
-                                  });
+                                orderListNotifier.deleteOrder(order).then((
+                                  value,
+                                ) {
+                                  if (value) {
+                                    balanceNotifier.updateCash(
+                                      order.amount.toDouble(),
+                                    );
+                                    displayToastWithContext(
+                                      TypeMsg.msg,
+                                      deletedOrderMsg,
+                                    );
+                                  } else {
+                                    displayToastWithContext(
+                                      TypeMsg.error,
+                                      deletingErrorMsg,
+                                    );
+                                  }
                                 });
                               },
                             )),

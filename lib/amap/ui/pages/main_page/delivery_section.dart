@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/amap/class/delivery.dart';
 import 'package:titan/amap/providers/delivery_id_provider.dart';
 import 'package:titan/amap/providers/delivery_list_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/pages/main_page/delivery_ui.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
-import 'package:titan/l10n/app_localizations.dart';
 
 class DeliverySection extends HookConsumerWidget {
   final bool showSelected;
@@ -22,9 +22,9 @@ class DeliverySection extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deliveryIdNotifier = ref.read(deliveryIdProvider.notifier);
     final deliveries = ref.watch(deliveryListProvider);
-    final availableDeliveries = deliveries.maybeWhen<List<Delivery>>(
+    final availableDeliveries = deliveries.maybeWhen<List<DeliveryReturn>>(
       data: (data) => data
-          .where((element) => element.status == DeliveryStatus.available)
+          .where((element) => element.status == DeliveryStatusType.orderable)
           .toList(),
       orElse: () => [],
     )..sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));

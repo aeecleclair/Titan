@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/amap/class/product.dart';
 import 'package:titan/amap/providers/product_list_provider.dart';
 import 'package:titan/amap/providers/product_provider.dart';
 import 'package:titan/amap/providers/sorted_by_category_products.dart';
@@ -11,11 +11,10 @@ import 'package:titan/amap/ui/components/product_ui.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
-import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 
 class ProductHandler extends HookConsumerWidget {
   const ProductHandler({super.key});
@@ -50,7 +49,9 @@ class ProductHandler extends HookConsumerWidget {
             const SizedBox(width: 10),
             GestureDetector(
               onTap: () {
-                productNotifier.setProduct(Product.empty());
+                productNotifier.setProduct(
+                  AppModulesAmapSchemasAmapProductComplete.empty(),
+                );
                 QR.to(
                   AmapRouter.root +
                       AmapRouter.admin +
@@ -83,6 +84,7 @@ class ProductHandler extends HookConsumerWidget {
                         .map(
                           (e) => ProductCard(
                             product: e,
+                            quantity: 0,
                             onDelete: () async {
                               await showDialog(
                                 context: context,
@@ -93,7 +95,7 @@ class ProductHandler extends HookConsumerWidget {
                                   descriptions: AppLocalizations.of(
                                     context,
                                   )!.amapDeleteProductDescription,
-                                  onYes: () {
+                                  onYes: () async {
                                     final deletedProductMsg =
                                         AppLocalizations.of(
                                           context,
@@ -102,21 +104,19 @@ class ProductHandler extends HookConsumerWidget {
                                         AppLocalizations.of(
                                           context,
                                         )!.amapDeletingError;
-                                    tokenExpireWrapper(ref, () async {
-                                      final value = await productsNotifier
-                                          .deleteProduct(e);
-                                      if (value) {
-                                        displayToastWithContext(
-                                          TypeMsg.msg,
-                                          deletedProductMsg,
-                                        );
-                                      } else {
-                                        displayToastWithContext(
-                                          TypeMsg.error,
-                                          deletingErrorMsg,
-                                        );
-                                      }
-                                    });
+                                    final value = await productsNotifier
+                                        .deleteProduct(e);
+                                    if (value) {
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        deletedProductMsg,
+                                      );
+                                    } else {
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        deletingErrorMsg,
+                                      );
+                                    }
                                   },
                                 ),
                               );

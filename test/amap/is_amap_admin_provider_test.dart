@@ -1,11 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:titan/super_admin/class/permissions.dart';
-import 'package:titan/admin/class/simple_group.dart';
-import 'package:titan/super_admin/providers/permissions_list_provider.dart';
 import 'package:titan/amap/providers/is_amap_admin_provider.dart';
-import 'package:titan/amap/tools/constants.dart';
-import 'package:titan/user/class/user.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
 void main() {
@@ -14,23 +10,16 @@ void main() {
       final container = ProviderContainer(
         overrides: [
           userProvider.overrideWithValue(
-            User.empty().copyWith(
+            CoreUser.empty().copyWith(
               groups: [
-                SimpleGroup.empty().copyWith(
+                CoreGroupSimple.empty().copyWith(
                   id: '70db65ee-d533-4f6b-9ffa-a4d70a17b7ef',
                   name: 'Amap Admin',
                 ),
-                SimpleGroup.empty().copyWith(id: '123', name: 'Some Group'),
+                CoreGroupSimple.empty().copyWith(id: '123', name: 'Some Group'),
               ],
             ),
           ),
-          mappedPermissionsProvider.overrideWithValue({
-            AMAPPermissionConstants.manageAMAP: CorePermission(
-              permissionName: AMAPPermissionConstants.manageAMAP,
-              authorizedGroupIds: ['70db65ee-d533-4f6b-9ffa-a4d70a17b7ef'],
-              authorizedAccountTypes: [],
-            ),
-          }),
         ],
       );
 
@@ -43,19 +32,12 @@ void main() {
       final container = ProviderContainer(
         overrides: [
           userProvider.overrideWithValue(
-            User.empty().copyWith(
+            CoreUser.empty().copyWith(
               groups: [
-                SimpleGroup.empty().copyWith(id: '123', name: 'Some Group'),
+                CoreGroupSimple.empty().copyWith(id: '123', name: 'Some Group'),
               ],
             ),
           ),
-          mappedPermissionsProvider.overrideWithValue({
-            AMAPPermissionConstants.manageAMAP: CorePermission(
-              permissionName: AMAPPermissionConstants.manageAMAP,
-              authorizedGroupIds: ['70db65ee-d533-4f6b-9ffa-a4d70a17b7ef'],
-              authorizedAccountTypes: [],
-            ),
-          }),
         ],
       );
 

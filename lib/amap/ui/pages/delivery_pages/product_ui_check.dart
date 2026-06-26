@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/amap/class/product.dart';
 import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
 class ProductUi extends ConsumerWidget {
-  final Product product;
+  final AppModulesAmapSchemasAmapProductComplete product;
   final Function onclick;
   final bool isModification;
   const ProductUi({
@@ -36,7 +36,7 @@ class ProductUi extends ConsumerWidget {
                 width: 50,
                 alignment: Alignment.centerRight,
                 child: Text(
-                  "${(product.price / 100).toStringAsFixed(2)}€",
+                  "${product.price.toStringAsFixed(2)}€",
                   style: const TextStyle(fontSize: 13),
                 ),
               ),
@@ -44,7 +44,7 @@ class ProductUi extends ConsumerWidget {
               Checkbox(
                 value: isModification,
                 checkColor: AMAPColorConstants.background,
-                activeColor: const Color.fromARGB(223, 121, 164, 0),
+                activeColor: AMAPColorConstants.green2,
                 onChanged: (value) {
                   onclick();
                 },

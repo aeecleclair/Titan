@@ -1,33 +1,60 @@
+import 'dart:async';
+
+import 'package:chopper/chopper.dart' as chopper;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:titan/amap/providers/user_amount_provider.dart';
-import 'package:titan/user/class/simple_users.dart';
-import 'package:titan/amap/class/cash.dart';
-import 'package:titan/amap/repositories/amap_user_repository.dart';
+import 'package:titan/auth/providers/openid_provider.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class MockAmapUserRepository extends Mock implements AmapUserRepository {}
+class MockAmapUserRepository extends Mock implements Openapi {}
 
 void main() {
   late MockAmapUserRepository mockRepository;
+  late ProviderContainer container;
   late UserCashNotifier notifier;
 
-  setUp(() {
+  final user = CoreUserSimple(
+    id: '123',
+    name: 'name',
+    firstname: 'firstname',
+    nickname: null,
+    accountType: AccountType.$external,
+    schoolId: 'schoolId',
+  );
+  final cash = AppModulesAmapSchemasAmapCashComplete(
+    balance: 100,
+    userId: '123',
+    user: user,
+    lastOrderDate: DateTime(2024),
+  );
+
+  setUp(() async {
     mockRepository = MockAmapUserRepository();
-    notifier = UserCashNotifier(amapUserRepository: mockRepository);
+    container = ProviderContainer(
+      overrides: [
+        repositoryProvider.overrideWithValue(mockRepository),
+        // Keep idProvider pending so build()'s whenData auto-load never
+        // triggers a rebuild that would re-read state.
+        idProvider.overrideWith((ref) => Completer<String>().future),
+      ],
+    );
+    notifier = container.read(userAmountProvider.notifier);
+    await Future(() {});
   });
+
+  tearDown(() => container.dispose());
 
   group('loadCashByUser', () {
     test('returns cash for valid user id', () async {
-      final user = SimpleUser.empty().copyWith(id: '123');
-      final cash = Cash(
-        balance: 100,
-        user: user,
-        lastOrderDate: DateTime(2025),
-      );
       when(
-        () => mockRepository.getCashByUser('123'),
-      ).thenAnswer((_) async => cash);
+        () => mockRepository.amapUsersUserIdCashGet(userId: '123'),
+      ).thenAnswer(
+        (_) async => chopper.Response(http.Response('[]', 200), cash),
+      );
 
       final result = await notifier.loadCashByUser(user.id);
 
@@ -39,30 +66,31 @@ void main() {
         ),
         equals(100.0),
       );
-      verify(() => mockRepository.getCashByUser('123')).called(1);
+      verify(
+        () => mockRepository.amapUsersUserIdCashGet(userId: '123'),
+      ).called(1);
     });
 
     test('returns error for invalid user id', () async {
       const error = 'User not found';
-      when(() => mockRepository.getCashByUser('123')).thenThrow(error);
+      when(
+        () => mockRepository.amapUsersUserIdCashGet(userId: '123'),
+      ).thenThrow(Exception(error));
 
       final result = await notifier.loadCashByUser('123');
 
-      expect(result.error, equals(error));
-      verify(() => mockRepository.getCashByUser('123')).called(1);
+      expect(result, isA<AsyncError>());
+      verify(
+        () => mockRepository.amapUsersUserIdCashGet(userId: '123'),
+      ).called(1);
     });
   });
 
   group('updateCash', () {
     test('updates cash balance', () async {
-      final cash = Cash(
-        balance: 100,
-        user: SimpleUser.empty(),
-        lastOrderDate: DateTime(2025),
-      );
       notifier.state = AsyncValue.data(cash);
 
-      await notifier.updateCash(50);
+      await notifier.updateCash(50.0);
 
       expect(
         notifier.state.when(
@@ -70,18 +98,18 @@ void main() {
           loading: () => 0.0,
           error: (error, stackTrace) => 0.0,
         ),
-        equals(150),
+        equals(150.0),
       );
     });
 
     test('returns error when loading', () async {
       notifier.state = const AsyncValue.loading();
 
-      await notifier.updateCash(50);
+      await notifier.updateCash(50.0);
 
       expect(
         notifier.state,
-        const AsyncValue<Cash>.error(
+        const AsyncValue<AppModulesAmapSchemasAmapCashComplete>.error(
           "Cannot update cash while loading",
           StackTrace.empty,
         ),
@@ -92,7 +120,7 @@ void main() {
       const error = 'User not found';
       notifier.state = const AsyncValue.error(error, StackTrace.empty);
 
-      await notifier.updateCash(50);
+      await notifier.updateCash(50.0);
 
       expect(notifier.state.error, equals(error));
     });

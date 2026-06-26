@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/amap/class/order.dart';
 import 'package:titan/amap/providers/order_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
-import 'package:titan/amap/tools/functions.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
+import 'package:titan/tools/builders/enums_cleaner.dart';
 import 'package:titan/tools/functions.dart';
 
 class CollectionSlotSelector extends HookConsumerWidget {
-  final CollectionSlot collectionSlot;
+  final AmapSlotType collectionSlot;
   const CollectionSlotSelector({super.key, required this.collectionSlot});
 
   @override
@@ -15,7 +16,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
     final order = ref.watch(orderProvider);
     final orderNotifier = ref.read(orderProvider.notifier);
     final isSelected = collectionSlot == order.collectionSlot;
-    final isFirst = CollectionSlot.values.first == collectionSlot;
+    final isFirst = getEnumValues(AmapSlotType.values).first == collectionSlot;
     return Expanded(
       child: GestureDetector(
         onTap: () {
@@ -38,7 +39,7 @@ class CollectionSlotSelector extends HookConsumerWidget {
           ),
           child: Center(
             child: Text(
-              capitalize(uiCollectionSlotToString(collectionSlot, context)),
+              capitalize(collectionSlot.name),
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,

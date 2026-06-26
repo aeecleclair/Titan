@@ -1,21 +1,22 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/amap/providers/product_list_provider.dart';
 
-final selectedListProvider =
-    StateNotifierProvider<SelectedListProvider, List<bool>>((ref) {
-      final productsList = ref.watch(productListProvider);
-      final products = [];
-      productsList.when(
-        data: (list) => products.addAll(list),
-        error: (e, s) {},
-        loading: () {},
-      );
-      return SelectedListProvider(products);
-    });
+final selectedListProvider = NotifierProvider<SelectedListProvider, List<bool>>(
+  () => SelectedListProvider(),
+);
 
-class SelectedListProvider extends StateNotifier<List<bool>> {
-  SelectedListProvider(List<dynamic> p)
-    : super(List.generate(p.length, (index) => true));
+class SelectedListProvider extends Notifier<List<bool>> {
+  @override
+  List<bool> build() {
+    final productsList = ref.watch(productListProvider);
+    final products = [];
+    productsList.when(
+      data: (list) => products.addAll(list),
+      error: (e, s) {},
+      loading: () {},
+    );
+    return List.generate(products.length, (index) => true);
+  }
 
   void toggle(int i) {
     var copy = state.toList();

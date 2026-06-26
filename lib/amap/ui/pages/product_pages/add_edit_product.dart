@@ -1,7 +1,7 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:titan/amap/class/product.dart';
+import 'package:titan/amap/adapters/product_complete.dart';
 import 'package:titan/amap/providers/category_list_provider.dart';
 import 'package:titan/amap/providers/product_provider.dart';
 import 'package:titan/amap/providers/product_list_provider.dart';
@@ -9,8 +9,8 @@ import 'package:titan/amap/providers/selected_category_provider.dart';
 import 'package:titan/amap/providers/selected_list_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/amap.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
@@ -25,15 +25,14 @@ class AddEditProduct extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
     final product = ref.watch(productProvider);
-    final isEdit = product.id != Product.empty().id;
+    final isEdit =
+        product.id != AppModulesAmapSchemasAmapProductComplete.empty().id;
     final products = ref.watch(productListProvider);
     final productsNotifier = ref.watch(productListProvider.notifier);
     final categories = ref.watch(categoryListProvider);
     final nameController = useTextEditingController(text: product.name);
     final priceController = useTextEditingController(
-      text: isEdit
-          ? (product.price / 100).toStringAsFixed(2).replaceAll('.', ',')
-          : "",
+      text: isEdit ? product.price.toStringAsFixed(2).replaceAll('.', ',') : "",
     );
     final beginState = isEdit
         ? product.category
@@ -179,64 +178,50 @@ class AddEditProduct extends HookConsumerWidget {
                                   )!.amapCreateCategory
                               ? newCategory.text
                               : categoryController;
-                          Product newProduct = Product(
-                            id: isEdit ? product.id : "",
-                            name: nameController.text,
-                            price:
-                                (100 *
-                                        double.parse(
-                                          priceController.text.replaceAll(
-                                            ',',
-                                            '.',
-                                          ),
-                                        ))
-                                    .round(),
-                            category: cate,
-                            quantity: 0,
-                          );
-                          await tokenExpireWrapper(ref, () async {
-                            final updatedProductMsg = isEdit
-                                ? AppLocalizations.of(
-                                    context,
-                                  )!.amapUpdatedProduct
-                                : AppLocalizations.of(
-                                    context,
-                                  )!.amapAddedProduct;
-                            final addingErrorMsg = isEdit
-                                ? AppLocalizations.of(
-                                    context,
-                                  )!.amapUpdatingError
-                                : AppLocalizations.of(context)!.amapAddingError;
-                            final value = isEdit
-                                ? await productsNotifier.updateProduct(
-                                    newProduct,
-                                  )
-                                : await productsNotifier.addProduct(newProduct);
-                            if (value) {
-                              if (isEdit) {
-                                formKey.currentState!.reset();
-                              } else {
-                                ref
-                                    .watch(selectedListProvider.notifier)
-                                    .rebuild(
-                                      products.maybeWhen(
-                                        data: (data) => data,
-                                        orElse: () => [],
-                                      ),
-                                    );
-                              }
-                              displayToastWithContext(
-                                TypeMsg.msg,
-                                updatedProductMsg,
+                          AppModulesAmapSchemasAmapProductComplete newProduct =
+                              AppModulesAmapSchemasAmapProductComplete(
+                                id: isEdit ? product.id : "",
+                                name: nameController.text,
+                                price: double.parse(
+                                  priceController.text.replaceAll(',', '.'),
+                                ).round(),
+                                category: cate,
                               );
+                          final updatedProductMsg = isEdit
+                              ? AppLocalizations.of(context)!.amapUpdatedProduct
+                              : AppLocalizations.of(context)!.amapAddedProduct;
+                          final addingErrorMsg = isEdit
+                              ? AppLocalizations.of(context)!.amapUpdatingError
+                              : AppLocalizations.of(context)!.amapAddingError;
+                          final value = isEdit
+                              ? await productsNotifier.updateProduct(newProduct)
+                              : await productsNotifier.addProduct(
+                                  newProduct.toProductSimple(),
+                                );
+                          if (value) {
+                            if (isEdit) {
+                              formKey.currentState!.reset();
                             } else {
-                              displayToastWithContext(
-                                TypeMsg.error,
-                                addingErrorMsg,
-                              );
+                              ref
+                                  .watch(selectedListProvider.notifier)
+                                  .rebuild(
+                                    products.maybeWhen(
+                                      data: (data) => data,
+                                      orElse: () => [],
+                                    ),
+                                  );
                             }
-                            QR.back();
-                          });
+                            displayToastWithContext(
+                              TypeMsg.msg,
+                              updatedProductMsg,
+                            );
+                          } else {
+                            displayToastWithContext(
+                              TypeMsg.error,
+                              addingErrorMsg,
+                            );
+                          }
+                          QR.back();
                         }
                       },
                       child: Text(

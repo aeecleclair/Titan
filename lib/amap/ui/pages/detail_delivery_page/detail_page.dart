@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:titan/amap/class/order.dart';
-import 'package:titan/amap/class/product.dart';
 import 'package:titan/amap/providers/cash_list_provider.dart';
 import 'package:titan/amap/providers/delivery_list_provider.dart';
 import 'package:titan/amap/providers/delivery_order_list_provider.dart';
@@ -13,11 +11,12 @@ import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/amap.dart';
 import 'package:titan/amap/ui/pages/detail_delivery_page/order_detail_ui.dart';
 import 'package:titan/amap/ui/pages/detail_delivery_page/product_detail_ui.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
+import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/widgets/loader.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
-import 'package:titan/l10n/app_localizations.dart';
 
 class DetailDeliveryPage extends HookConsumerWidget {
   const DetailDeliveryPage({super.key});
@@ -40,7 +39,9 @@ class DetailDeliveryPage extends HookConsumerWidget {
       child: Refresher(
         controller: ScrollController(),
         onRefresh: () async {
-          await deliveryProductListNotifier.loadProductList(delivery.products);
+          await deliveryProductListNotifier.loadProductList(
+            delivery.products ?? [],
+          );
           await deliveryListNotifier.loadDeliveriesList();
         },
         child: Column(
@@ -49,13 +50,6 @@ class DetailDeliveryPage extends HookConsumerWidget {
               padding: const EdgeInsets.all(30),
               child: Column(
                 children: [
-                  Text(
-                    delivery.name,
-                    style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                   Text(
                     "${AppLocalizations.of(context)!.amapDeliveryDate} : ${DateFormat.yMd(locale).format(delivery.deliveryDate)}",
                     style: const TextStyle(
@@ -77,13 +71,15 @@ class DetailDeliveryPage extends HookConsumerWidget {
               if (deliveryOrderList != null) {
                 deliveryOrderList.maybeWhen(
                   data: (listOrders) {
-                    for (Order o in listOrders) {
-                      for (Product p in o.products) {
-                        if (!productsQuantity.containsKey(p.id)) {
-                          productsQuantity.addEntries({p.id: 0}.entries);
+                    for (OrderReturn o in listOrders) {
+                      for (ProductQuantity p in o.productsdetail) {
+                        if (!productsQuantity.containsKey(p.product.id)) {
+                          productsQuantity.addEntries(
+                            {p.product.id: 0}.entries,
+                          );
                         }
-                        productsQuantity[p.id] =
-                            productsQuantity[p.id]! + p.quantity;
+                        productsQuantity[p.product.id] =
+                            productsQuantity[p.product.id]! + p.quantity;
                       }
                     }
                   },

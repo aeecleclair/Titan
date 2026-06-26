@@ -1,23 +1,32 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/amap/class/cash.dart';
-import 'package:titan/amap/repositories/amap_user_repository.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/tools/providers/single_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/single_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class UserCashNotifier extends SingleNotifier<Cash> {
-  final AmapUserRepository amapUserRepository;
-  UserCashNotifier({required this.amapUserRepository})
-    : super(const AsyncValue.loading());
+class UserCashNotifier
+    extends SingleNotifierAPI<AppModulesAmapSchemasAmapCashComplete> {
+  Openapi get amapUserRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<Cash>> loadCashByUser(String userId) async {
-    return await load(() async => amapUserRepository.getCashByUser(userId));
+  @override
+  AsyncValue<AppModulesAmapSchemasAmapCashComplete> build() {
+    final userId = ref.watch(idProvider);
+    userId.whenData((value) async => await loadCashByUser(value));
+    return state;
   }
 
-  Future updateCash(int amount) async {
+  Future<AsyncValue<AppModulesAmapSchemasAmapCashComplete>> loadCashByUser(
+    String userId,
+  ) async {
+    return await load(
+      () async => amapUserRepository.amapUsersUserIdCashGet(userId: userId),
+    );
+  }
+
+  Future updateCash(double amount) async {
     state.when(
       data: (cash) {
-        final newCash = cash.copyWith(balance: cash.balance + amount);
+        final newCash = cash.copyWith(balance: (cash.balance + amount).round());
         state = AsyncValue.data(newCash);
       },
       error: (error, stackTrace) {
@@ -34,18 +43,7 @@ class UserCashNotifier extends SingleNotifier<Cash> {
 }
 
 final userAmountProvider =
-    StateNotifierProvider<UserCashNotifier, AsyncValue<Cash>>((ref) {
-      final AmapUserRepository amapUserRepository = ref.watch(
-        amapUserRepositoryProvider,
-      );
-      UserCashNotifier userCashNotifier = UserCashNotifier(
-        amapUserRepository: amapUserRepository,
-      );
-      tokenExpireWrapperAuth(ref, () async {
-        final userId = ref.watch(idProvider);
-        userId.whenData(
-          (value) async => await userCashNotifier.loadCashByUser(value),
-        );
-      });
-      return userCashNotifier;
-    });
+    NotifierProvider<
+      UserCashNotifier,
+      AsyncValue<AppModulesAmapSchemasAmapCashComplete>
+    >(UserCashNotifier.new);

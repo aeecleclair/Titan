@@ -1,42 +1,36 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/amap/class/information.dart';
-import 'package:titan/amap/repositories/information_repository.dart';
-import 'package:titan/tools/providers/single_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/single_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class InformationNotifier extends SingleNotifier<Information> {
-  final InformationRepository informationRepository;
-  InformationNotifier({required this.informationRepository})
-    : super(const AsyncLoading());
-  Future<AsyncValue<Information>> loadInformation() async {
-    return await load(informationRepository.getInformation);
+class InformationNotifier extends SingleNotifierAPI<Information> {
+  Openapi get informationRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<Information> build() {
+    loadInformation();
+    return const AsyncLoading();
   }
 
-  Future<bool> createInformation(Information information) async {
-    return await add(informationRepository.createInformation, information);
+  Future<AsyncValue<Information>> loadInformation() async {
+    return await load(informationRepository.amapInformationGet);
   }
 
   Future<bool> updateInformation(Information information) async {
-    return await update(informationRepository.updateInformation, information);
-  }
-
-  Future<bool> deleteInformation(Information information) async {
-    return await delete(
-      informationRepository.deleteInformation,
+    return await update(
+      () => informationRepository.amapInformationPatch(
+        body: InformationEdit(
+          manager: information.manager,
+          link: information.link,
+          description: information.description,
+        ),
+      ),
       information,
-      "",
     );
   }
 }
 
 final informationProvider =
-    StateNotifierProvider<InformationNotifier, AsyncValue<Information>>((ref) {
-      final informationRepository = ref.watch(informationRepositoryProvider);
-      InformationNotifier informationNotifier = InformationNotifier(
-        informationRepository: informationRepository,
-      );
-      tokenExpireWrapperAuth(ref, () async {
-        informationNotifier.loadInformation();
-      });
-      return informationNotifier;
-    });
+    NotifierProvider<InformationNotifier, AsyncValue<Information>>(
+      InformationNotifier.new,
+    );

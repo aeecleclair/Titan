@@ -1,13 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/amap/class/cash.dart';
 import 'package:titan/amap/providers/cash_list_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
-import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
 class AddingUserCard extends HookConsumerWidget {
-  final SimpleUser user;
+  final CoreUserSimple user;
   final VoidCallback onAdd;
   const AddingUserCard({super.key, required this.user, required this.onAdd});
 
@@ -17,7 +16,12 @@ class AddingUserCard extends HookConsumerWidget {
     return GestureDetector(
       onTap: () {
         cashNotifier.addCash(
-          Cash(balance: 0, user: user, lastOrderDate: DateTime.now()),
+          AppModulesAmapSchemasAmapCashComplete(
+            balance: 0,
+            user: user,
+            userId: user.id,
+            lastOrderDate: DateTime.now(),
+          ),
         );
         onAdd();
       },

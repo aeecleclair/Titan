@@ -49,7 +49,7 @@ class AccountHandler extends HookConsumerWidget {
           editingController: editingController,
         ),
         HorizontalListView(
-          height: 145,
+          height: 135,
           children: [
             const SizedBox(width: 15),
             GestureDetector(
@@ -69,7 +69,7 @@ class AccountHandler extends HookConsumerWidget {
                       }
                     },
               child: CardLayout(
-                height: 110,
+                height: 100,
                 width: 100,
                 colors: const [
                   AMAPColorConstants.green1,

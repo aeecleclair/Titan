@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/amap/tools/constants.dart';
-import 'package:titan/tools/functions.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 final isAmapAdminProvider = Provider<bool>((ref) {
-  return hasUserPermission(ref, AMAPPermissionConstants.manageAMAP);
+  final me = ref.watch(userProvider);
+  return (me.groups ?? [])
+      .map((e) => e.id)
+      .contains("70db65ee-d533-4f6b-9ffa-a4d70a17b7ef"); // admin_amap
 });

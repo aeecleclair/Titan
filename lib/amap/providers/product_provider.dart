@@ -1,14 +1,19 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/amap/class/product.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class ProductNotifier extends StateNotifier<Product> {
-  ProductNotifier() : super(Product.empty());
+class ProductNotifier
+    extends Notifier<AppModulesAmapSchemasAmapProductComplete> {
+  @override
+  AppModulesAmapSchemasAmapProductComplete build() {
+    return AppModulesAmapSchemasAmapProductComplete.empty();
+  }
 
-  void setProduct(Product product) {
+  void setProduct(AppModulesAmapSchemasAmapProductComplete product) {
     state = product;
   }
 }
 
-final productProvider = StateNotifierProvider<ProductNotifier, Product>((ref) {
-  return ProductNotifier();
-});
+final productProvider =
+    NotifierProvider<ProductNotifier, AppModulesAmapSchemasAmapProductComplete>(
+      ProductNotifier.new,
+    );

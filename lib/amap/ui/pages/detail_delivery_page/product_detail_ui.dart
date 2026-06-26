@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:titan/amap/class/product.dart';
 import 'package:titan/amap/tools/constants.dart';
-import 'package:titan/tools/ui/layouts/card_layout.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/tools/ui/layouts/card_layout.dart';
 
 class ProductDetailCard extends StatelessWidget {
-  final Product product;
+  final AppModulesAmapSchemasAmapProductComplete product;
   final int quantity;
   const ProductDetailCard({
     super.key,
@@ -18,7 +18,7 @@ class ProductDetailCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardLayout(
       width: 130,
-      height: 104,
+      height: 100,
       colors: const [
         AMAPColorConstants.lightGradient1,
         AMAPColorConstants.lightGradient2,
@@ -53,7 +53,7 @@ class ProductDetailCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           AutoSizeText(
-            '${((product.price * quantity) / 100).toStringAsFixed(2)} €',
+            '${(product.price * quantity).toStringAsFixed(2)} €',
             maxLines: 1,
             minFontSize: 10,
             overflow: TextOverflow.ellipsis,

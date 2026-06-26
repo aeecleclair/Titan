@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/amap/class/delivery.dart';
 import 'package:titan/amap/providers/delivery_id_provider.dart';
 import 'package:titan/amap/providers/delivery_list_provider.dart';
 import 'package:titan/amap/providers/selected_list_provider.dart';
@@ -32,13 +32,13 @@ class DeliveryHandler extends HookConsumerWidget {
         ),
         const SizedBox(height: 10),
         HorizontalListView(
-          height: 233,
+          height: 200,
           children: [
             const SizedBox(width: 15, height: 195),
             GestureDetector(
               onTap: () {
                 selectedNotifier.clear();
-                deliveryIdNotifier.setId(Delivery.empty().id);
+                deliveryIdNotifier.setId(DeliveryReturn.empty().id);
                 QR.to(
                   AmapRouter.root +
                       AmapRouter.admin +

@@ -2,22 +2,22 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:titan/amap/class/product.dart';
 import 'package:titan/amap/providers/order_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
 class ProductUiInList extends ConsumerWidget {
-  final Product p;
+  final AppModulesAmapSchemasAmapProductComplete p;
   const ProductUiInList({super.key, required this.p});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final order = ref.watch(orderProvider);
     final orderNotifier = ref.watch(orderProvider.notifier);
-    final quantity = order.products
+    final quantity = order.productsdetail
         .firstWhere(
-          (element) => element.id == p.id,
-          orElse: () => Product.empty(),
+          (element) => element.product.id == p.id,
+          orElse: () => ProductQuantity.empty(),
         )
         .quantity;
     return Container(
@@ -40,7 +40,7 @@ class ProductUiInList extends ConsumerWidget {
               Container(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  "${(p.price / 100).toStringAsFixed(2)}€",
+                  "${p.price.toStringAsFixed(2)}€",
                   style: const TextStyle(fontSize: 15),
                 ),
               ),
@@ -64,8 +64,8 @@ class ProductUiInList extends ConsumerWidget {
                     if (quantity == 1) {
                       orderNotifier.setOrder(
                         order.copyWith(
-                          products: order.products
-                              .where((element) => element.id != p.id)
+                          productsdetail: order.productsdetail
+                              .where((element) => element.product.id != p.id)
                               .toList(),
                           amount: newAmount,
                         ),
@@ -73,9 +73,9 @@ class ProductUiInList extends ConsumerWidget {
                     } else {
                       orderNotifier.setOrder(
                         order.copyWith(
-                          products: order.products
+                          productsdetail: order.productsdetail
                               .map(
-                                (e) => e.id == p.id
+                                (e) => e.product.id == p.id
                                     ? e.copyWith(quantity: e.quantity - 1)
                                     : e,
                               )
@@ -112,12 +112,14 @@ class ProductUiInList extends ConsumerWidget {
                 ),
                 onTap: () {
                   final newAmount = order.amount + p.price;
-                  if (order.products.map((e) => e.id).contains(p.id)) {
+                  if (order.productsdetail
+                      .map((e) => e.product.id)
+                      .contains(p.id)) {
                     orderNotifier.setOrder(
                       order.copyWith(
-                        products: order.products
+                        productsdetail: order.productsdetail
                             .map(
-                              (e) => e.id == p.id
+                              (e) => e.product.id == p.id
                                   ? e.copyWith(quantity: e.quantity + 1)
                                   : e,
                             )
@@ -128,7 +130,10 @@ class ProductUiInList extends ConsumerWidget {
                   } else {
                     orderNotifier.setOrder(
                       order.copyWith(
-                        products: [...order.products, p.copyWith(quantity: 1)],
+                        productsdetail: [
+                          ...order.productsdetail,
+                          ProductQuantity(quantity: 1, product: p),
+                        ],
                         amount: newAmount,
                       ),
                     );

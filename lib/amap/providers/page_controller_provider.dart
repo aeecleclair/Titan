@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final amapPageControllerProvider =
-    StateNotifierProvider<AmapPageControllerNotifier, PageController>((ref) {
-      return AmapPageControllerNotifier();
-    });
-
-class AmapPageControllerNotifier extends StateNotifier<PageController> {
-  AmapPageControllerNotifier()
-    : super(PageController(viewportFraction: 0.9, initialPage: 0));
+class AmapPageControllerNotifier extends Notifier<PageController> {
+  @override
+  PageController build() {
+    return PageController(viewportFraction: 0.9, initialPage: 0);
+  }
 }
+
+final amapPageControllerProvider =
+    NotifierProvider<AmapPageControllerNotifier, PageController>(
+      AmapPageControllerNotifier.new,
+    );
