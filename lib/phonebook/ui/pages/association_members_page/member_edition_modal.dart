@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/phonebook/class/complete_member.dart';
-import 'package:titan/phonebook/class/membership.dart';
+import 'package:titan/phonebook/extensions/members.dart';
 import 'package:titan/phonebook/providers/association_member_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/complete_member_provider.dart';
@@ -16,8 +16,8 @@ import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/tools/ui/styleguide/confirm_modal.dart';
 
 class MemberEditionModal extends HookConsumerWidget {
-  final CompleteMember member;
-  final Membership membership;
+  final MemberComplete member;
+  final MembershipComplete membership;
   const MemberEditionModal({
     super.key,
     required this.member,
@@ -41,7 +41,7 @@ class MemberEditionModal extends HookConsumerWidget {
 
     return BottomModalTemplate(
       title:
-          "${member.member.nickname ?? '${member.member.firstname} ${member.member.name}'} - ${membership.apparentName}",
+          "${member.nickname ?? '${member.firstname} ${member.name}'} - ${membership.roleName}",
       type: BottomModalType.main,
       child: SingleChildScrollView(
         child: Column(
@@ -79,7 +79,7 @@ class MemberEditionModal extends HookConsumerWidget {
                   ref: ref,
                   modal: ConfirmModal.danger(
                     title: localizeWithContext.phonebookDeleteUserRole(
-                      member.member.nickname ?? member.getName(),
+                      member.nickname ?? member.getName(),
                     ),
                     description: localizeWithContext.globalIrreversibleAction,
                     onYes: () async {

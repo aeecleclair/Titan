@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/phonebook/class/complete_member.dart';
-import 'package:titan/phonebook/class/membership.dart';
 import 'package:titan/phonebook/providers/association_member_list_provider.dart';
 import 'package:titan/phonebook/providers/association_member_sorted_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
@@ -15,7 +14,6 @@ import 'package:titan/phonebook/ui/components/member_card.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/styleguide/list_item_template.dart';
@@ -47,13 +45,11 @@ class AssociationMembersPage extends HookConsumerWidget {
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Refresher(
           controller: ScrollController(),
-          onRefresh: () {
-            return tokenExpireWrapper(ref, () async {
-              await associationMemberListNotifier.loadMembers(
-                association.id,
-                association.mandateYear,
-              );
-            });
+          onRefresh: () async {
+            await associationMemberListNotifier.loadMembers(
+              association.id,
+              association.mandateYear,
+            );
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +63,7 @@ class AssociationMembersPage extends HookConsumerWidget {
                   color: ColorConstants.title,
                 ),
               ),
-              if (!association.deactivated) ...[
+              if (association.deactivated != true) ...[
                 SizedBox(height: 20),
                 ListItemTemplate(
                   icon: const HeroIcon(
@@ -79,10 +75,10 @@ class AssociationMembersPage extends HookConsumerWidget {
                   trailing: SizedBox.shrink(),
                   onTap: () async {
                     completeMemberNotifier.setCompleteMember(
-                      CompleteMember.empty(),
+                      MemberComplete.empty(),
                     );
                     membershipNotifier.setMembership(
-                      Membership.empty().copyWith(
+                      MembershipComplete.empty().copyWith(
                         associationId: association.id,
                       ),
                     );
@@ -109,7 +105,7 @@ class AssociationMembersPage extends HookConsumerWidget {
                 builder: (context, associationMembers) =>
                     associationMembers.isEmpty
                     ? Text(localizeWithContext.phonebookNoMember)
-                    : !association.deactivated
+                    : association.deactivated != true
                     ? SizedBox(
                         height: MediaQuery.of(context).size.height - 120,
                         child: ReorderableListView(
@@ -118,41 +114,39 @@ class AssociationMembersPage extends HookConsumerWidget {
                             return Transform.scale(scale: 1.05, child: child);
                           },
                           onReorderItem: (int oldIndex, int newIndex) async {
-                            await tokenExpireWrapper(ref, () async {
-                              final result = await associationMemberListNotifier
-                                  .reorderMember(
-                                    associationMemberSortedList[oldIndex],
-                                    associationMemberSortedList[oldIndex]
-                                        .memberships
-                                        .firstWhere(
-                                          (element) =>
-                                              element.associationId ==
-                                                  association.id &&
-                                              element.mandateYear ==
-                                                  association.mandateYear,
-                                        )
-                                        .copyWith(order: newIndex),
-                                    oldIndex,
-                                    newIndex,
-                                  );
-                              if (result) {
-                                displayToastWithContext(
-                                  TypeMsg.msg,
-                                  localizeWithContext.phonebookMemberReordered,
+                            final result = await associationMemberListNotifier
+                                .reorderMember(
+                                  associationMemberSortedList[oldIndex],
+                                  associationMemberSortedList[oldIndex]
+                                      .memberships
+                                      .firstWhere(
+                                        (element) =>
+                                            element.associationId ==
+                                                association.id &&
+                                            element.mandateYear ==
+                                                association.mandateYear,
+                                      )
+                                      .copyWith(memberOrder: newIndex),
+                                  oldIndex,
+                                  newIndex,
                                 );
-                              } else {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  localizeWithContext.phonebookReorderingError,
-                                );
-                              }
-                            });
+                            if (result) {
+                              displayToastWithContext(
+                                TypeMsg.msg,
+                                localizeWithContext.phonebookMemberReordered,
+                              );
+                            } else {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                localizeWithContext.phonebookReorderingError,
+                              );
+                            }
                           },
                           children: associationMemberSortedList
                               .map(
                                 (member) => MemberCard(
                                   deactivated: false,
-                                  key: ValueKey(member.member.id),
+                                  key: ValueKey(member.id),
                                   member: member,
                                   association: association,
                                   editable: true,

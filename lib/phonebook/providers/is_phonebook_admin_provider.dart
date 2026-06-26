@@ -1,41 +1,46 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
-import 'package:titan/phonebook/providers/association_groupement_list_provider.dart';
 import 'package:titan/phonebook/providers/association_member_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
-import 'package:titan/phonebook/tools/constant.dart';
-import 'package:titan/tools/functions.dart';
+import 'package:titan/phonebook/providers/roles_tags_provider.dart';
+import 'package:titan/phonebook/tools/function.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
 final isPhonebookAdminProvider = Provider<bool>((ref) {
-  return hasUserPermission(ref, PhonebookPermissionConstants.managePhonebook);
-});
-
-final isAssociationPresidentProvider = Provider<bool>((ref) {
-  final association = ref.watch(associationProvider);
-  final membersList = ref.watch(associationMemberListProvider);
-  final me = ref.watch(userProvider);
-  bool isPresident = false;
-  membersList.whenData((members) {
-    if (members.map((e) => e.member.id).contains(me.id)) {
-      if (members
-          .firstWhere((completeMember) => completeMember.member.id == me.id)
-          .memberships
-          .firstWhere(
-            (membership) => membership.associationId == association.id,
-          )
-          .rolesTags
-          .contains(PhonebookTextConstants.presidentRoleTag)) {
-        isPresident = true;
-      }
-    }
-  });
-  return isPresident;
+  final user = ref.watch(userProvider);
+  return (user.groups ?? [])
+      .map((e) => e.id)
+      .contains("d3f91313-d7e5-49c6-b01f-c19932a7e09b"); // admin_phonebook
 });
 
 final hasPhonebookAdminAccessProvider = Provider<bool>((ref) {
   final isPhonebookAdmin = ref.watch(isPhonebookAdminProvider);
-  final isAnyGroupementAdmin = ref.watch(groupementAdminProvider);
   final isAdmin = ref.watch(isAdminProvider);
-  return isPhonebookAdmin || isAdmin || isAnyGroupementAdmin.isNotEmpty;
+  return isPhonebookAdmin || isAdmin;
+});
+
+final isAssociationPresidentProvider = Provider<bool>((ref) {
+  final association = ref.watch(associationProvider);
+  final rolesTags = ref.watch(rolesTagsProvider);
+  final membersList = ref.watch(associationMemberListProvider);
+  final me = ref.watch(userProvider);
+
+  return membersList.maybeWhen(
+    data: (members) {
+      final member = members.firstWhere(
+        (m) => m.id == me.id,
+        orElse: () => MemberComplete.empty(),
+      );
+      if (member.id == "") return false;
+      final membership = getMembershipForAssociation(member, association);
+      return rolesTags.maybeWhen(
+        data: (tags) {
+          return membership.roleTags?.contains(tags.tags.first) ?? false;
+        },
+        orElse: () => false,
+      );
+    },
+    orElse: () => false,
+  );
 });

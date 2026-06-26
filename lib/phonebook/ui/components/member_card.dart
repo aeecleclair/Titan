@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/phonebook/class/association.dart';
-import 'package:titan/phonebook/class/complete_member.dart';
-import 'package:titan/phonebook/class/membership.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
+import 'package:titan/phonebook/extensions/members.dart';
 import 'package:titan/phonebook/providers/complete_member_provider.dart';
 import 'package:titan/phonebook/providers/member_pictures_provider.dart';
 import 'package:titan/phonebook/providers/profile_picture_provider.dart';
@@ -25,8 +24,8 @@ class MemberCard extends HookConsumerWidget {
     this.editable = false,
   });
 
-  final CompleteMember member;
-  final Association association;
+  final MemberComplete member;
+  final AssociationComplete association;
   final bool deactivated;
   final bool editable;
 
@@ -40,7 +39,7 @@ class MemberCard extends HookConsumerWidget {
     );
     final memberPicturesNotifier = ref.watch(memberPicturesProvider.notifier);
 
-    Membership assoMembership = getMembershipForAssociation(
+    MembershipComplete assoMembership = getMembershipForAssociation(
       member,
       association,
     );
@@ -48,16 +47,15 @@ class MemberCard extends HookConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: ListItemTemplate(
         title:
-            "${(member.member.nickname ?? member.getName())} - ${assoMembership.apparentName}",
-        subtitle: member.member.nickname != null
-            ? "${member.member.firstname} ${member.member.name}"
+            "${(member.nickname ?? member.getName())} - ${assoMembership.roleName}",
+        subtitle: member.nickname != null
+            ? "${member.firstname} ${member.name}"
             : null,
         icon: AutoLoaderChild(
           group: memberPictures,
           notifier: memberPicturesNotifier,
           mapKey: member,
-          loader: (ref) =>
-              profilePictureNotifier.getProfilePicture(member.member.id),
+          loader: (ref) => profilePictureNotifier.getProfilePicture(member.id),
           loadingBuilder: (context) => const CircleAvatar(
             radius: 20,
             child: CircularProgressIndicator(),

@@ -1,36 +1,36 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/tools/repository/logo_repository.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class AssociationPictureRepository extends LogoRepository {
-  @override
-  // ignore: overridden_fields
-  final ext = 'phonebook/associations/';
+class AssociationPictureRepository {
+  final Openapi client;
+  AssociationPictureRepository(this.client);
 
-  Future<Image> getAssociationPicture(String associationId) async {
-    final uint8List = await getLogo(associationId, suffix: "/picture");
-    if (uint8List.isEmpty) {
-      return Image.asset('assets/images/vache.png');
+  Future<Image> getAssociationPicture(String id) async {
+    final response = await client.phonebookAssociationsAssociationIdPictureGet(
+      associationId: id,
+    );
+    final bytes = response.bodyBytes;
+    if (bytes.isEmpty) {
+      return Image.asset(getTitanLogo());
     }
-    return Image.memory(uint8List);
+    return Image.memory(bytes);
   }
 
-  Future<Image> addAssociationPicture(
-    Uint8List bytes,
-    String associationId,
-  ) async {
-    final uint8List = await addLogo(bytes, associationId, suffix: "/picture");
-    return Image.memory(uint8List);
+  Future<Image> addAssociationPicture(Uint8List bytes, String id) async {
+    await client.phonebookAssociationsAssociationIdPicturePost(
+      associationId: id,
+      image: bytes,
+    );
+    return Image.memory(bytes);
   }
 }
 
-final associationPictureRepository = Provider<AssociationPictureRepository>((
-  ref,
-) {
-  final token = ref.watch(tokenProvider);
-  return AssociationPictureRepository()..setToken(token);
-});
+final associationPictureRepositoryProvider =
+    Provider<AssociationPictureRepository>(
+      (ref) => AssociationPictureRepository(ref.watch(repositoryProvider)),
+    );

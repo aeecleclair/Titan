@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/phonebook/class/association.dart';
-import 'package:titan/phonebook/class/association_groupement.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/phonebook/providers/association_picture_provider.dart';
 import 'package:titan/phonebook/providers/associations_picture_map_provider.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/association_admin_edition_modal.dart';
@@ -10,7 +9,7 @@ import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/list_item.dart';
 
 class EditableAssociationCard extends HookConsumerWidget {
-  final Association association;
+  final AssociationComplete association;
   final AssociationGroupement groupement;
   final bool isPhonebookAdmin;
   final bool isAdmin;

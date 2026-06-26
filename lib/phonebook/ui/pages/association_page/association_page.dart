@@ -107,7 +107,7 @@ class AssociationPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                association.description,
+                association.description ?? '',
                 style: const TextStyle(fontSize: 15, color: Colors.black),
               ),
               const SizedBox(height: 20),

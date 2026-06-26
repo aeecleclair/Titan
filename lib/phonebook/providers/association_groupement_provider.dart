@@ -1,16 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/phonebook/class/association_groupement.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
 final associationGroupementProvider =
-    StateNotifierProvider<AssociationGroupementNotifier, AssociationGroupement>(
-      (ref) {
-        return AssociationGroupementNotifier();
-      },
+    NotifierProvider<AssociationGroupementNotifier, AssociationGroupement>(
+      () => AssociationGroupementNotifier(),
     );
 
-class AssociationGroupementNotifier
-    extends StateNotifier<AssociationGroupement> {
-  AssociationGroupementNotifier() : super(AssociationGroupement.empty());
+class AssociationGroupementNotifier extends Notifier<AssociationGroupement> {
+  @override
+  AssociationGroupement build() {
+    return AssociationGroupement.empty();
+  }
 
   void setAssociationGroupement(AssociationGroupement i) {
     state = i;

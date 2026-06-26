@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/phonebook/class/association.dart';
-import 'package:titan/phonebook/class/association_groupement.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_picture_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
@@ -18,7 +17,7 @@ class AssociationCard extends HookConsumerWidget {
     required this.groupement,
   });
 
-  final Association association;
+  final AssociationComplete association;
   final AssociationGroupement groupement;
 
   @override

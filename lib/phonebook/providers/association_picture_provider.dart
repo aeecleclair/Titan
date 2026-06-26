@@ -6,14 +6,20 @@ import 'package:titan/phonebook/repositories/association_picture_repository.dart
 import 'package:titan/tools/providers/single_notifier.dart';
 
 class AssociationPictureProvider extends SingleNotifier<Image> {
-  final AssociationPictureRepository associationPictureRepository;
-  final AssociationPictureMapNotifier associationPictureMapNotifier;
+  late final AssociationPictureRepository associationPictureRepository;
+  late final AssociationPictureMapNotifier associationPictureMapNotifier;
   final ImagePicker _picker = ImagePicker();
 
-  AssociationPictureProvider({
-    required this.associationPictureRepository,
-    required this.associationPictureMapNotifier,
-  }) : super(const AsyncLoading());
+  @override
+  AsyncValue<Image> build() {
+    associationPictureRepository = ref.watch(
+      associationPictureRepositoryProvider,
+    );
+    associationPictureMapNotifier = ref.watch(
+      associationPictureMapProvider.notifier,
+    );
+    return const AsyncLoading();
+  }
 
   Future<Image> getAssociationPicture(String associationId) async {
     final image = await associationPictureRepository.getAssociationPicture(
@@ -54,13 +60,6 @@ class AssociationPictureProvider extends SingleNotifier<Image> {
 }
 
 final associationPictureProvider =
-    StateNotifierProvider<AssociationPictureProvider, AsyncValue<Image>>((ref) {
-      final associationPicture = ref.watch(associationPictureRepository);
-      final sessionPosterMapNotifier = ref.watch(
-        associationPictureMapProvider.notifier,
-      );
-      return AssociationPictureProvider(
-        associationPictureRepository: associationPicture,
-        associationPictureMapNotifier: sessionPosterMapNotifier,
-      );
-    });
+    NotifierProvider<AssociationPictureProvider, AsyncValue<Image>>(
+      AssociationPictureProvider.new,
+    );

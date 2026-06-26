@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
+import 'package:titan/phonebook/extensions/members.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';
 import 'package:titan/phonebook/providers/complete_member_provider.dart';
 import 'package:titan/phonebook/providers/member_pictures_provider.dart';
@@ -30,115 +29,103 @@ class MemberDetailPage extends HookConsumerWidget {
     final sortedMemberships = [...member.memberships];
     sortedMemberships.sort((a, b) => a.mandateYear.compareTo(b.mandateYear));
 
-    final scrollController = useScrollController();
-
     return PhonebookTemplate(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: ScrollToHideNavbar(
-          controller: scrollController,
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                Center(
-                  child: Column(
-                    children: [
-                      AutoLoaderChild(
-                        group: memberPictures,
-                        notifier: memberPicturesNotifier,
-                        mapKey: member,
-                        loader: (ref) => profilePictureNotifier
-                            .getProfilePicture(member.member.id),
-                        loadingBuilder: (context) => const CircleAvatar(
-                          radius: 80,
-                          child: CircularProgressIndicator(),
-                        ),
-                        dataBuilder: (context, data) => CircleAvatar(
-                          radius: 80,
-                          backgroundColor: Colors.white,
-                          backgroundImage: Image(image: data.first.image).image,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              Center(
+                child: Column(
+                  children: [
+                    AutoLoaderChild(
+                      group: memberPictures,
+                      notifier: memberPicturesNotifier,
+                      mapKey: member,
+                      loader: (ref) =>
+                          profilePictureNotifier.getProfilePicture(member.id),
+                      loadingBuilder: (context) => const CircleAvatar(
+                        radius: 80,
+                        child: CircularProgressIndicator(),
+                      ),
+                      dataBuilder: (context, data) => CircleAvatar(
+                        radius: 80,
+                        backgroundColor: Colors.white,
+                        backgroundImage: Image(image: data.first.image).image,
+                      ),
+                    ),
+                    if (member.nickname != null) ...[
+                      Text(
+                        member.nickname!,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      if (member.member.nickname != null) ...[
-                        Text(
-                          member.member.nickname!,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          member.getName(),
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ] else
-                        Text(
-                          member.getName(),
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
                       const SizedBox(height: 5),
-                      if (member.member.promotion != 0)
-                        Text(
-                          localizeWithContext.phonebookPromotion(
-                            member.member.promotion < 100
-                                ? member.member.promotion + 2000
-                                : member.member.promotion,
-                          ),
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      const SizedBox(height: 20),
                       Text(
-                        member.member.email,
+                        member.getName(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ] else
+                      Text(
+                        member.getName(),
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    const SizedBox(height: 5),
+                    if (member.promo != 0)
+                      Text(
+                        localizeWithContext.phonebookPromotion(
+                          (member.promo ?? 0) < 100
+                              ? member.promo! + 2000
+                              : member.promo!,
+                        ),
                         style: const TextStyle(fontSize: 16),
                       ),
-                      const SizedBox(height: 5),
-                      if (member.member.phone != null)
-                        Text(
-                          member.member.phone!,
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                    ],
-                  ),
+                    const SizedBox(height: 20),
+                    Text(member.email, style: const TextStyle(fontSize: 16)),
+                    const SizedBox(height: 5),
+                    if (member.phone != null)
+                      Text(member.phone!, style: const TextStyle(fontSize: 16)),
+                  ],
                 ),
-                const SizedBox(height: 20),
-                if (member.memberships.isNotEmpty)
-                  Text(
-                    member.memberships.length == 1
-                        ? localizeWithContext.phonebookAssociation
-                        : localizeWithContext.phonebookAssociations,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                const SizedBox(height: 10),
-                AsyncChild(
-                  value: associationList,
-                  builder: (context, associations) => Column(
-                    children: [
-                      ...sortedMemberships.map((membership) {
-                        final membershipAssociation = associations.firstWhere(
-                          (association) =>
-                              association.id == membership.associationId,
-                        );
-                        return MembershipCard(
-                          association: membershipAssociation,
-                          membership: membership,
-                        );
-                      }),
-                    ],
-                  ),
+              ),
+              const SizedBox(height: 20),
+              if (member.memberships.isNotEmpty)
+                Text(
+                  member.memberships.length == 1
+                      ? localizeWithContext.phonebookAssociation
+                      : localizeWithContext.phonebookAssociations,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 20),
-              ],
-            ),
+              const SizedBox(height: 10),
+              AsyncChild(
+                value: associationList,
+                builder: (context, associations) => Column(
+                  children: [
+                    ...sortedMemberships.map((membership) {
+                      final membershipAssociation = associations.firstWhere(
+                        (association) =>
+                            association.id == membership.associationId,
+                      );
+                      return MembershipCard(
+                        association: membershipAssociation,
+                        membership: membership,
+                      );
+                    }),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
           ),
         ),
       ),

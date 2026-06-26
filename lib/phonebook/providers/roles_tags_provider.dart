@@ -1,27 +1,23 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/phonebook/repositories/role_tags_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/single_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class RolesTagsNotifier extends ListNotifier<String> {
-  final RolesTagsRepository rolesTagsRepository = RolesTagsRepository();
-  RolesTagsNotifier({required String token})
-    : super(const AsyncValue.loading()) {
-    rolesTagsRepository.setToken(token);
+class RolesTagsNotifier extends SingleNotifierAPI<RoleTagsReturn> {
+  Openapi get rolesTagsRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<RoleTagsReturn> build() {
+    loadRolesTags();
+    return const AsyncValue.loading();
   }
 
-  Future<AsyncValue<List<String>>> loadRolesTags() async {
-    return loadList(rolesTagsRepository.getRolesTags);
+  Future<AsyncValue<RoleTagsReturn>> loadRolesTags() async {
+    return load(rolesTagsRepository.phonebookRoletagsGet);
   }
 }
 
 final rolesTagsProvider =
-    StateNotifierProvider<RolesTagsNotifier, AsyncValue<List<String>>>((ref) {
-      final token = ref.watch(tokenProvider);
-      RolesTagsNotifier notifier = RolesTagsNotifier(token: token);
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadRolesTags();
-      });
-      return notifier;
-    });
+    NotifierProvider<RolesTagsNotifier, AsyncValue<RoleTagsReturn>>(
+      RolesTagsNotifier.new,
+    );

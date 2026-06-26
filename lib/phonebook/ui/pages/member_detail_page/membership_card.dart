@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/phonebook/class/association.dart';
-import 'package:titan/phonebook/class/membership.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/phonebook/providers/association_picture_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/providers/associations_picture_map_provider.dart';
@@ -17,8 +16,8 @@ class MembershipCard extends HookConsumerWidget {
     required this.membership,
   });
 
-  final Association association;
-  final Membership membership;
+  final AssociationComplete association;
+  final MembershipComplete membership;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,7 +34,7 @@ class MembershipCard extends HookConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: ListItem(
-        title: "${association.name} - ${membership.apparentName}",
+        title: "${association.name} - ${membership.roleName}",
         subtitle: membership.mandateYear.toString(),
         icon: AutoLoaderChild(
           group: associationPicture,

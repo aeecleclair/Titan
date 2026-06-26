@@ -1,18 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/phonebook/class/complete_member.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/phonebook/providers/association_member_list_provider.dart';
 import 'package:titan/phonebook/providers/association_provider.dart';
 import 'package:titan/phonebook/tools/function.dart';
 
-final associationMemberSortedListProvider = Provider<List<CompleteMember>>((
+final associationMemberSortedListProvider = Provider<List<MemberComplete>>((
   ref,
 ) {
   final memberListProvider = ref.watch(associationMemberListProvider);
   final association = ref.watch(associationProvider);
   return memberListProvider.maybeWhen(
     data: (members) {
-      return sortedMembers(members, association.id, association.mandateYear);
+      return sortedMembers(members, association);
     },
-    orElse: () => List<CompleteMember>.empty(),
+    orElse: () => List<MemberComplete>.empty(),
   );
 });
