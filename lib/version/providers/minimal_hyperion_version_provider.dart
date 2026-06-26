@@ -1,10 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
-class MinimalHyperionVersionNotifier extends StateNotifier<String> {
-  late PackageInfo packageInfo;
-  MinimalHyperionVersionNotifier() : super("");
+class MinimalHyperionVersionNotifier extends Notifier<String> {
+  @override
+  String build() {
+    loadVersionFromStorage();
+    return "";
+  }
 
   Future<String> loadVersionFromStorage() async {
     state = await getMinimalHyperionVersion();
@@ -13,8 +15,6 @@ class MinimalHyperionVersionNotifier extends StateNotifier<String> {
 }
 
 final minimalHyperionVersionProvider =
-    StateNotifierProvider<MinimalHyperionVersionNotifier, String>((ref) {
-      final notifier = MinimalHyperionVersionNotifier();
-      notifier.loadVersionFromStorage();
-      return notifier;
-    });
+    NotifierProvider<MinimalHyperionVersionNotifier, String>(
+      MinimalHyperionVersionNotifier.new,
+    );

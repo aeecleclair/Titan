@@ -1,24 +1,23 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/tools/providers/single_notifier.dart';
-import 'package:titan/version/class/version.dart';
-import 'package:titan/version/repositories/version_repository.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/single_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class VersionVerifierNotifier extends SingleNotifier<Version> {
-  final VersionRepository versionRepository;
-  VersionVerifierNotifier({required this.versionRepository})
-    : super(const AsyncLoading());
+class VersionVerifierNotifier extends SingleNotifierAPI<CoreInformation> {
+  Openapi get versionRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<Version>> loadVersion() async {
-    return await load(versionRepository.getVersion);
+  @override
+  AsyncValue<CoreInformation> build() {
+    loadVersion();
+    return const AsyncLoading();
+  }
+
+  Future<AsyncValue<CoreInformation>> loadVersion() async {
+    return await load(versionRepository.informationGet);
   }
 }
 
 final versionVerifierProvider =
-    StateNotifierProvider<VersionVerifierNotifier, AsyncValue<Version>>((ref) {
-      final versionRepository = ref.watch(versionRepositoryProvider);
-      final notifier = VersionVerifierNotifier(
-        versionRepository: versionRepository,
-      );
-      notifier.loadVersion();
-      return notifier;
-    });
+    NotifierProvider<VersionVerifierNotifier, AsyncValue<CoreInformation>>(
+      VersionVerifierNotifier.new,
+    );

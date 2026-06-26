@@ -1,70 +1,70 @@
+import 'package:chopper/chopper.dart' as chopper;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
-import 'package:titan/version/class/version.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/repository/repository.dart';
 import 'package:titan/version/providers/version_verifier_provider.dart';
-import 'package:titan/version/repositories/version_repository.dart';
 
-class MockVersionRepository extends Mock implements VersionRepository {}
+class MockVersionRepository extends Mock implements Openapi {}
 
 void main() {
-  late VersionRepository versionRepository;
-  late VersionVerifierNotifier versionVerifierNotifier;
-
-  setUp(() {
-    versionRepository = MockVersionRepository();
-    versionVerifierNotifier = VersionVerifierNotifier(
-      versionRepository: versionRepository,
-    );
-  });
-
   group('VersionVerifierNotifier', () {
-    test('should return AsyncLoading when initialized', () {
-      expect(versionVerifierNotifier.state, isA<AsyncLoading>());
+    late MockVersionRepository mockRepository;
+    late ProviderContainer container;
+    late VersionVerifierNotifier provider;
+    final version = CoreInformation(
+      ready: true,
+      version: '1.0.0',
+      minimalTitanVersionCode: 1,
+    );
+
+    setUp(() async {
+      mockRepository = MockVersionRepository();
+      when(() => mockRepository.informationGet()).thenAnswer(
+        (_) async => chopper.Response(
+          http.Response('{}', 200),
+          CoreInformation(
+            ready: true,
+            version: '1.0.0',
+            minimalTitanVersionCode: 1,
+          ),
+        ),
+      );
+      container = ProviderContainer(
+        overrides: [repositoryProvider.overrideWithValue(mockRepository)],
+      );
+      provider = container.read(versionVerifierProvider.notifier);
+      await Future(() {});
     });
 
-    test(
-      'should return AsyncValue<Version> when loadVersion is called',
-      () async {
-        final version = Version(
-          version: '1.0.0',
-          minimalTitanVersion: 1,
-          ready: true,
-        );
-        when(
-          () => versionRepository.getVersion(),
-        ).thenAnswer((_) async => version);
+    tearDown(() => container.dispose());
 
-        final result = await versionVerifierNotifier.loadVersion();
+    test('loadVersion returns expected data', () async {
+      when(() => mockRepository.informationGet()).thenAnswer(
+        (_) async => chopper.Response(http.Response('body', 200), version),
+      );
 
-        expect(result, AsyncValue.data(version));
-      },
-    );
+      final result = await provider.loadVersion();
 
-    test(
-      'should return AsyncError when loadVersion throws an exception',
-      () async {
-        final exception = Exception('Failed to load version');
-        when(() => versionRepository.getVersion()).thenThrow(exception);
+      expect(
+        result.maybeWhen(data: (data) => data, orElse: () => null),
+        version,
+      );
+    });
 
-        final result = await versionVerifierNotifier.loadVersion();
+    test('loadVersion handles error', () async {
+      when(
+        () => mockRepository.informationGet(),
+      ).thenThrow(Exception('Failed to load version'));
 
-        expect(result, isA<AsyncError>());
-      },
-    );
+      final result = await provider.loadVersion();
 
-    test(
-      'should call getVersion method of VersionRepository when loadVersion is called',
-      () async {
-        when(() => versionRepository.getVersion()).thenAnswer(
-          (_) async =>
-              Version(version: '1.0.0', minimalTitanVersion: 1, ready: true),
-        );
-
-        await versionVerifierNotifier.loadVersion();
-
-        verify(() => versionRepository.getVersion()).called(1);
-      },
-    );
+      expect(
+        result.maybeWhen(error: (error, _) => error, orElse: () => null),
+        isA<Exception>(),
+      );
+    });
   });
 }
