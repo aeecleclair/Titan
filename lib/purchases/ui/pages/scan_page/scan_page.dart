@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/purchases/class/seller.dart';
 import 'package:titan/purchases/providers/product_list_provider.dart';
 import 'package:titan/purchases/providers/generated_ticket_provider.dart';
 import 'package:titan/purchases/providers/scanner_provider.dart';
@@ -9,7 +9,6 @@ import 'package:titan/purchases/providers/seller_provider.dart';
 import 'package:titan/purchases/ui/pages/scan_page/ticket_card.dart';
 import 'package:titan/purchases/ui/pages/scan_page/scan_dialog.dart';
 import 'package:titan/purchases/ui/purchases.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/layouts/item_chip.dart';
@@ -35,7 +34,7 @@ class ScanPage extends HookConsumerWidget {
         controller: ScrollController(),
         onRefresh: () async {
           await sellersNotifier.loadSellers();
-          if (seller != Seller.empty()) {
+          if (seller.id != SellerComplete.empty().id) {
             await productsNotifier.loadProducts(seller.id);
           }
           scannerNotifier.reset();
@@ -56,12 +55,8 @@ class ScanPage extends HookConsumerWidget {
                         return ItemChip(
                           selected: selected,
                           onTap: () async {
-                            await tokenExpireWrapper(ref, () async {
-                              sellerNotifier.setSeller(eachSeller);
-                              await productsNotifier.loadProducts(
-                                eachSeller.id,
-                              );
-                            });
+                            sellerNotifier.setSeller(eachSeller);
+                            await productsNotifier.loadProducts(eachSeller.id);
                           },
                           child: Text(
                             eachSeller.name,
@@ -84,8 +79,7 @@ class ScanPage extends HookConsumerWidget {
                             value: products,
                             builder: (context, products) {
                               final scannableProducts = products.where(
-                                (product) =>
-                                    product.ticketGenerators.isNotEmpty,
+                                (product) => (product.tickets ?? []).isNotEmpty,
                               );
                               if (scannableProducts.isEmpty) {
                                 return Text(
@@ -97,7 +91,7 @@ class ScanPage extends HookConsumerWidget {
                               return Column(
                                 children: scannableProducts
                                     .map((product) {
-                                      return product.ticketGenerators.map((
+                                      return (product.tickets ?? []).map((
                                         ticket,
                                       ) {
                                         return TicketCard(

@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/purchases/repositories/user_information_repository.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 class TicketIdNotifier extends SingleNotifier<String> {
-  final UserInformationRepository ticketIdRepository =
-      UserInformationRepository();
-  TicketIdNotifier({required String token})
-    : super(const AsyncValue.loading()) {
-    ticketIdRepository.setToken(token);
+  Openapi get ticketIdRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<String> build() {
+    return const AsyncValue.loading();
   }
 
   void setTicketId(String i) {
@@ -16,9 +16,6 @@ class TicketIdNotifier extends SingleNotifier<String> {
   }
 }
 
-final ticketIdProvider =
-    StateNotifierProvider<TicketIdNotifier, AsyncValue<String>>((ref) {
-      final token = ref.watch(tokenProvider);
-      TicketIdNotifier notifier = TicketIdNotifier(token: token);
-      return notifier;
-    });
+final ticketIdProvider = NotifierProvider<TicketIdNotifier, AsyncValue<String>>(
+  TicketIdNotifier.new,
+);

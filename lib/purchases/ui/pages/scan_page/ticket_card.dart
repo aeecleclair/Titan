@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:titan/purchases/class/product.dart';
-import 'package:titan/purchases/class/ticket_generator.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/purchases/providers/product_id_provider.dart';
 import 'package:titan/purchases/providers/seller_provider.dart';
 import 'package:titan/purchases/providers/tag_list_provider.dart';
 import 'package:titan/purchases/providers/ticket_id_provider.dart';
 import 'package:titan/purchases/router.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -21,8 +19,8 @@ class TicketCard extends HookConsumerWidget {
     required this.onClicked,
   });
 
-  final TicketGenerator ticket;
-  final Product product;
+  final GenerateTicketComplete ticket;
+  final AppModulesCdrSchemasCdrProductComplete product;
   final VoidCallback onClicked;
 
   @override
@@ -65,12 +63,10 @@ class TicketCard extends HookConsumerWidget {
               const Spacer(),
               GestureDetector(
                 onTap: () async {
-                  await tokenExpireWrapper(ref, () async {
-                    ticketIdNotifier.setTicketId(ticket.id);
-                    productIdNotifier.setProductId(product.id);
-                    tagListNotifier.loadTags(seller.id, product.id, ticket.id);
-                    QR.to(PurchasesRouter.root + PurchasesRouter.userList);
-                  });
+                  ticketIdNotifier.setTicketId(ticket.id);
+                  productIdNotifier.setProductId(product.id);
+                  tagListNotifier.loadTags(seller.id, product.id, ticket.id);
+                  QR.to(PurchasesRouter.root + PurchasesRouter.userList);
                 },
                 child: const HeroIcon(HeroIcons.listBullet),
               ),

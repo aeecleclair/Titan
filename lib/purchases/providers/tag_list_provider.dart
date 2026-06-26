@@ -1,13 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/purchases/repositories/scanner_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class TagListNotifier extends ListNotifier<String> {
-  final ScannerRepository scannerRepository = ScannerRepository();
+class TagListNotifier extends ListNotifierAPI<String> {
+  Openapi get scannerRepository => ref.watch(repositoryProvider);
   AsyncValue<List<String>> tagList = const AsyncValue.loading();
-  TagListNotifier({required String token}) : super(const AsyncValue.loading()) {
-    scannerRepository.setToken(token);
+
+  @override
+  AsyncValue<List<String>> build() {
+    return const AsyncValue.loading();
   }
 
   Future<AsyncValue<List<String>>> loadTags(
@@ -16,14 +18,17 @@ class TagListNotifier extends ListNotifier<String> {
     String generatorId,
   ) async {
     return await loadList(
-      () => scannerRepository.getTags(sellerId, productId, generatorId),
+      () => scannerRepository
+          .cdrSellersSellerIdProductsProductIdTagsGeneratorIdGet(
+            sellerId: sellerId,
+            productId: productId,
+            generatorId: generatorId,
+          ),
     );
   }
 }
 
 final tagListProvider =
-    StateNotifierProvider<TagListNotifier, AsyncValue<List<String>>>((ref) {
-      final token = ref.watch(tokenProvider);
-      TagListNotifier notifier = TagListNotifier(token: token);
-      return notifier;
-    });
+    NotifierProvider<TagListNotifier, AsyncValue<List<String>>>(
+      TagListNotifier.new,
+    );

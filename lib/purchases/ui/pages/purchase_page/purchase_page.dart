@@ -26,7 +26,7 @@ class PurchasePage extends HookConsumerWidget {
                 children: [
                   const SizedBox(height: 20),
                   Text(
-                    data.product.nameFR,
+                    data.product.nameFr,
                     style: const TextStyle(fontSize: 40, color: Colors.black),
                   ),
                   ...!data.validated
@@ -43,7 +43,7 @@ class PurchasePage extends HookConsumerWidget {
                       : [],
                   const SizedBox(height: 10),
                   Text(
-                    data.product.descriptionFR ?? "",
+                    data.product.descriptionFr ?? "",
                     style: const TextStyle(fontSize: 15, color: Colors.black),
                   ),
                   const SizedBox(height: 10),

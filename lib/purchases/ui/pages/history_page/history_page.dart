@@ -37,7 +37,7 @@ class HistoryPage extends HookConsumerWidget {
             List<int> years = purchasesListNotifier.getPurchasesYears();
             children.addAll(
               purchases.map((purchase) {
-                if (purchase.product.year == selectedYear.value) {
+                if (purchase.purchasedOn.year == selectedYear.value) {
                   return PurchaseCard(
                     purchase: purchase,
                     onClicked: () {

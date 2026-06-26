@@ -1,31 +1,41 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/purchases/class/ticket.dart';
-import 'package:titan/purchases/repositories/user_information_repository.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class TicketNotifier extends SingleNotifier<Ticket> {
-  final UserInformationRepository ticketRepository =
-      UserInformationRepository();
-  TicketNotifier({required String token}) : super(const AsyncValue.loading()) {
-    ticketRepository.setToken(token);
+class TicketNotifier extends SingleNotifier<AppModulesCdrSchemasCdrTicket> {
+  Openapi get ticketRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<AppModulesCdrSchemasCdrTicket> build() {
+    return const AsyncValue.loading();
   }
 
-  void setTicket(Ticket i) {
+  void setTicket(AppModulesCdrSchemasCdrTicket i) {
     state = AsyncValue.data(i);
   }
 
-  Future<AsyncValue<Ticket>> loadTicketSecret() async {
-    state.whenData((ticket) async {
-      return await load(() => ticketRepository.getTicketQrCodeSecret(ticket));
-    });
-    return state;
+  Future<AsyncValue<TicketSecret>> loadTicketSecret() async {
+    return state.maybeWhen(
+      orElse: () async {
+        return AsyncValue.error(
+          'AppModulesCdrSchemasCdrTicket is not loaded',
+          StackTrace.current,
+        );
+      },
+      data: (value) async {
+        final response = await ticketRepository
+            .cdrUsersMeTicketsTicketIdSecretGet(ticketId: value.id);
+        if (response.isSuccessful) {
+          return AsyncValue.data(response.body!);
+        }
+        return AsyncValue.error(response.error.toString(), StackTrace.current);
+      },
+    );
   }
 }
 
 final ticketProvider =
-    StateNotifierProvider<TicketNotifier, AsyncValue<Ticket>>((ref) {
-      final token = ref.watch(tokenProvider);
-      TicketNotifier notifier = TicketNotifier(token: token);
-      return notifier;
-    });
+    NotifierProvider<TicketNotifier, AsyncValue<AppModulesCdrSchemasCdrTicket>>(
+      TicketNotifier.new,
+    );

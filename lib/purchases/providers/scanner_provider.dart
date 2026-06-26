@@ -1,42 +1,49 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/purchases/class/ticket.dart';
-import 'package:titan/purchases/repositories/scanner_repository.dart';
-import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/single_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class ScannerNotifier extends SingleNotifier<Ticket> {
-  final ScannerRepository scannerRepository = ScannerRepository();
-  ScannerNotifier({required String token}) : super(const AsyncValue.loading()) {
-    scannerRepository.setToken(token);
+class ScannerNotifier extends SingleNotifierAPI<AppModulesCdrSchemasCdrTicket> {
+  Openapi get scannerRepository => ref.watch(repositoryProvider);
+  String secret = "";
+
+  @override
+  AsyncValue<AppModulesCdrSchemasCdrTicket> build() {
+    return const AsyncValue.loading();
   }
-  Future<AsyncValue<Ticket>> scanTicket(
+
+  Future<AsyncValue<AppModulesCdrSchemasCdrTicket>> scanTicket(
     String sellerId,
     String productId,
-    String ticketSecret,
     String generatorId,
   ) async {
     return await load(
-      () => scannerRepository.scanTicket(
-        sellerId,
-        productId,
-        ticketSecret,
-        generatorId,
-      ),
+      () => scannerRepository
+          .cdrSellersSellerIdProductsProductIdTicketsGeneratorIdSecretGet(
+            sellerId: sellerId,
+            productId: productId,
+            generatorId: generatorId,
+            secret: secret,
+          ),
     );
   }
 
-  void setScanner(Ticket i) {
+  void setScanner(AppModulesCdrSchemasCdrTicket i) {
     state = AsyncValue.data(i);
   }
 
   void reset() {
     state = const AsyncValue.loading();
+    secret = "";
+  }
+
+  void setSecret(String secret) {
+    this.secret = secret;
   }
 }
 
 final scannerProvider =
-    StateNotifierProvider<ScannerNotifier, AsyncValue<Ticket>>((ref) {
-      final token = ref.watch(tokenProvider);
-      ScannerNotifier notifier = ScannerNotifier(token: token);
-      return notifier;
-    });
+    NotifierProvider<
+      ScannerNotifier,
+      AsyncValue<AppModulesCdrSchemasCdrTicket>
+    >(ScannerNotifier.new);

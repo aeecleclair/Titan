@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/purchases/class/ticket_generator.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
+import 'package:titan/purchases/extensions/user_ticket.dart';
 import 'package:titan/purchases/providers/scanner_provider.dart';
 import 'package:titan/purchases/providers/tag_provider.dart';
 import 'package:titan/purchases/providers/ticket_list_provider.dart';
@@ -10,7 +11,6 @@ import 'package:titan/purchases/tools/constants.dart';
 import 'package:titan/purchases/ui/pages/scan_page/qr_code_scanner.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
@@ -19,7 +19,7 @@ import 'package:titan/l10n/app_localizations.dart';
 class ScanDialog extends HookConsumerWidget {
   final String sellerId;
   final String productId;
-  final TicketGenerator ticket;
+  final GenerateTicketComplete ticket;
   const ScanDialog({
     super.key,
     required this.ticket,
@@ -138,31 +138,26 @@ class ScanDialog extends HookConsumerWidget {
                       child: QRCodeScannerScreen(
                         scanner: scanner,
                         onScan: (secret) async {
-                          await tokenExpireWrapper(ref, () async {
-                            await scannerNotifier.scanTicket(
-                              sellerId,
-                              productId,
-                              secret,
-                              ticket.id,
-                            );
-                            scanner.when(
-                              data: (data) {
-                                scannerNotifier.setScanner(
-                                  data.copyWith(qrCodeSecret: secret),
-                                );
-                              },
-                              error: (error, stack) {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  error.toString(),
-                                );
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  scannerNotifier.reset();
-                                });
-                              },
-                              loading: () {},
-                            );
-                          });
+                          await scannerNotifier.scanTicket(
+                            sellerId,
+                            productId,
+                            ticket.id,
+                          );
+                          scanner.when(
+                            data: (data) {
+                              scannerNotifier.setSecret(secret);
+                            },
+                            error: (error, stack) {
+                              displayToastWithContext(
+                                TypeMsg.error,
+                                error.toString(),
+                              );
+                              Future.delayed(const Duration(seconds: 2), () {
+                                scannerNotifier.reset();
+                              });
+                            },
+                            loading: () {},
+                          );
                         },
                       ),
                     ),
@@ -181,7 +176,7 @@ class ScanDialog extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            "Variant : ${data.productVariant.nameFR}",
+                            "Variant : ${data.productVariant.nameFr}",
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.black,
@@ -196,68 +191,72 @@ class ScanDialog extends HookConsumerWidget {
                             ),
                           ),
                           const SizedBox(height: 30),
-                          if (data.qrCodeSecret != "")
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                              ),
-                              child: Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      scannerNotifier.reset();
-                                    },
-                                    child: const SizedBox(
-                                      width: 100,
-                                      child: AddEditButtonLayout(
-                                        color: Colors.red,
-                                        child: Text(
-                                          "Annuler",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    scannerNotifier.reset();
+                                  },
+                                  child: const SizedBox(
+                                    width: 100,
+                                    child: AddEditButtonLayout(
+                                      color: Colors.red,
+                                      child: Text(
+                                        "Annuler",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
                                         ),
                                       ),
                                     ),
                                   ),
-                                  const Spacer(),
-                                  GestureDetector(
-                                    onTap: () async {
-                                      await tokenExpireWrapper(ref, () async {
-                                        await (ticketListNotifier.consumeTicket(
+                                ),
+                                const Spacer(),
+                                GestureDetector(
+                                  onTap: () async {
+                                    final value = await ticketListNotifier
+                                        .consumeTicket(
                                           sellerId,
+                                          productId,
                                           data,
                                           ticket.id,
-                                          tag == "" ? "no tag" : tag,
-                                        )).then((_) {
-                                          displayToastWithContext(
-                                            TypeMsg.msg,
-                                            "Scan validé",
-                                          );
-                                          scannerNotifier.reset();
-                                        });
-                                      });
-                                    },
-                                    child: const SizedBox(
-                                      width: 100,
-                                      child: AddEditButtonLayout(
-                                        color: Colors.green,
-                                        child: Text(
-                                          "Suivant",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                          ),
+                                          tag,
+                                          scannerNotifier.secret,
+                                        );
+                                    if (value) {
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        "Scan validé",
+                                      );
+                                      scannerNotifier.reset();
+                                    } else {
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        "Erreur lors de la validation",
+                                      );
+                                    }
+                                  },
+                                  child: const SizedBox(
+                                    width: 100,
+                                    child: AddEditButtonLayout(
+                                      color: Colors.green,
+                                      child: Text(
+                                        "Valider",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
                                         ),
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
+                          ),
                         ],
                       );
                     },

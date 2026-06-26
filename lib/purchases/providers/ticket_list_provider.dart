@@ -1,54 +1,51 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/purchases/class/ticket.dart';
-import 'package:titan/purchases/repositories/scanner_repository.dart';
-import 'package:titan/purchases/repositories/user_information_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class TicketListNotifier extends ListNotifier<Ticket> {
-  final UserInformationRepository ticketRepository =
-      UserInformationRepository();
-  final ScannerRepository scannerRepository = ScannerRepository();
-  TicketListNotifier({required String token})
-    : super(const AsyncValue.loading()) {
-    ticketRepository.setToken(token);
-    scannerRepository.setToken(token);
+class TicketListNotifier
+    extends ListNotifierAPI<AppModulesCdrSchemasCdrTicket> {
+  Openapi get ticketRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<List<AppModulesCdrSchemasCdrTicket>> build() {
+    loadTickets();
+    return const AsyncValue.loading();
   }
 
-  Future<AsyncValue<List<Ticket>>> loadTickets() async {
-    return await loadList(ticketRepository.getTicketList);
+  Future<AsyncValue<List<AppModulesCdrSchemasCdrTicket>>> loadTickets() async {
+    return await loadList(ticketRepository.cdrUsersMeTicketsGet);
   }
 
+  // Need to go back to it
   Future<bool> consumeTicket(
     String sellerId,
-    Ticket ticket,
+    String productId,
+    AppModulesCdrSchemasCdrTicket ticket,
     String generatorId,
     String tag,
+    String secret,
   ) async {
     return await update(
-      (Ticket fakeTicket) =>
-          scannerRepository.consumeTicket(sellerId, ticket, generatorId, tag),
-      (tickets, ticket) {
-        List<String> tags = ticket.tags;
-        tags.add(tag);
-        return tickets
-          ..[tickets.indexWhere((g) => g.id == ticket.id)] = ticket.copyWith(
-            tags: tags,
-            scanLeft: ticket.scanLeft - 1,
-          );
-      },
-      ticket,
+      () => ticketRepository
+          .cdrSellersSellerIdProductsProductIdTicketsGeneratorIdSecretPatch(
+            sellerId: sellerId,
+            productId: productId,
+            generatorId: generatorId,
+            secret: secret,
+            body: TicketScan(tag: tag),
+          ),
+      (ticket) => ticket.id,
+      ticket.copyWith(
+        tags: "${ticket.tags}, $tag",
+        scanLeft: ticket.scanLeft - 1,
+      ),
     );
   }
 }
 
 final ticketListProvider =
-    StateNotifierProvider<TicketListNotifier, AsyncValue<List<Ticket>>>((ref) {
-      final token = ref.watch(tokenProvider);
-      TicketListNotifier notifier = TicketListNotifier(token: token);
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadTickets();
-      });
-      return notifier;
-    });
+    NotifierProvider<
+      TicketListNotifier,
+      AsyncValue<List<AppModulesCdrSchemasCdrTicket>>
+    >(TicketListNotifier.new);

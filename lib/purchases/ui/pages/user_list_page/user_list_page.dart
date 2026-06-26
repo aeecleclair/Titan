@@ -7,11 +7,11 @@ import 'package:titan/purchases/providers/seller_provider.dart';
 import 'package:titan/purchases/providers/tag_list_provider.dart';
 import 'package:titan/purchases/providers/ticket_id_provider.dart';
 import 'package:titan/purchases/ui/purchases.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/horizontal_list_view.dart';
 import 'package:titan/tools/ui/layouts/item_chip.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
+import 'package:titan/user/extensions/core_user_simple.dart';
 
 class UserListPage extends HookConsumerWidget {
   const UserListPage({super.key});
@@ -62,25 +62,23 @@ class UserListPage extends HookConsumerWidget {
                     return ItemChip(
                       selected: selected,
                       onTap: () async {
-                        await tokenExpireWrapper(ref, () async {
-                          selectedTag.value = tag;
-                          productId.maybeWhen(
-                            orElse: () {},
-                            data: (id) {
-                              ticketId.maybeWhen(
-                                orElse: () {},
-                                data: (ticketId) {
-                                  scannedUsersListNotifier.loadUsers(
-                                    seller.id,
-                                    id,
-                                    ticketId,
-                                    tag,
-                                  );
-                                },
-                              );
-                            },
-                          );
-                        });
+                        selectedTag.value = tag;
+                        productId.maybeWhen(
+                          orElse: () {},
+                          data: (id) {
+                            ticketId.maybeWhen(
+                              orElse: () {},
+                              data: (ticketId) {
+                                scannedUsersListNotifier.loadUsers(
+                                  seller.id,
+                                  id,
+                                  ticketId,
+                                  tag,
+                                );
+                              },
+                            );
+                          },
+                        );
                       },
                       child: Text(
                         tag,

@@ -1,17 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/purchases/class/seller.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class SellerNotifier extends StateNotifier<Seller> {
-  SellerNotifier({required String token}) : super(Seller.empty());
+class SellerNotifier extends Notifier<SellerComplete> {
+  @override
+  SellerComplete build() {
+    return SellerComplete.empty();
+  }
 
-  void setSeller(Seller i) {
+  void setSeller(SellerComplete i) {
     state = i;
   }
 }
 
-final sellerProvider = StateNotifierProvider<SellerNotifier, Seller>((ref) {
-  final token = ref.watch(tokenProvider);
-  SellerNotifier notifier = SellerNotifier(token: token);
-  return notifier;
-});
+final sellerProvider = NotifierProvider<SellerNotifier, SellerComplete>(
+  SellerNotifier.new,
+);

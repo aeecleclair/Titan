@@ -1,19 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/purchases/class/ticket_generator.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class TicketGeneratorNotifier extends StateNotifier<TicketGenerator> {
-  TicketGeneratorNotifier({required String token})
-    : super(TicketGenerator.empty());
+class TicketGeneratorNotifier extends Notifier<GenerateTicketComplete> {
+  @override
+  GenerateTicketComplete build() {
+    return GenerateTicketComplete.empty();
+  }
 
-  void setTicketGenerator(TicketGenerator i) {
+  void setTicketGenerator(GenerateTicketComplete i) {
     state = i;
   }
 }
 
 final ticketGeneratorProvider =
-    StateNotifierProvider<TicketGeneratorNotifier, TicketGenerator>((ref) {
-      final token = ref.watch(tokenProvider);
-      TicketGeneratorNotifier notifier = TicketGeneratorNotifier(token: token);
-      return notifier;
-    });
+    NotifierProvider<TicketGeneratorNotifier, GenerateTicketComplete>(
+      TicketGeneratorNotifier.new,
+    );
