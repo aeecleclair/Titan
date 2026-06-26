@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:titan/flappybird/class/score.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
 class LeaderBoardItem extends StatelessWidget {
-  final Score score;
+  final FlappyBirdScoreCompleteFeedBack score;
   const LeaderBoardItem({super.key, required this.score});
 
   @override

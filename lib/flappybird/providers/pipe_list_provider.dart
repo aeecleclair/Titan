@@ -2,13 +2,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/flappybird/class/bird.dart';
 import 'package:titan/flappybird/class/pipe.dart';
 
-class PipeListNotifier extends StateNotifier<List<Pipe>> {
-  PipeListNotifier()
-    : super([
-        Pipe.random(position: 1),
-        Pipe.random(position: 2.2),
-        Pipe.random(position: 3.4),
-      ]);
+class PipeListNotifier extends Notifier<List<Pipe>> {
+  @override
+  List<Pipe> build() {
+    return [
+      Pipe.random(position: 1),
+      Pipe.random(position: 2.2),
+      Pipe.random(position: 3.4),
+    ];
+  }
 
   List<Pipe> update() {
     return state = state.map((e) {
@@ -60,8 +62,6 @@ class PipeListNotifier extends StateNotifier<List<Pipe>> {
   }
 }
 
-final pipeListProvider = StateNotifierProvider<PipeListNotifier, List<Pipe>>((
-  ref,
-) {
-  return PipeListNotifier();
-});
+final pipeListProvider = NotifierProvider<PipeListNotifier, List<Pipe>>(
+  PipeListNotifier.new,
+);

@@ -4,11 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/flappybird/class/bird.dart';
 import 'package:titan/flappybird/providers/bird_image_provider.dart';
-import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
+import 'package:titan/user/adapters/core_user.dart';
 import 'package:titan/user/providers/user_provider.dart';
 
-class BirdNotifier extends StateNotifier<Bird> {
-  BirdNotifier() : super(Bird.empty());
+class BirdNotifier extends Notifier<Bird> {
+  @override
+  Bird build() {
+    final user = ref.watch(userProvider);
+    final birdImage = ref.watch(birdImageProvider);
+    final birdImageNotifier = ref.watch(birdImageProvider.notifier);
+
+    setUser(user.toCoreUserSimple());
+    if (birdImage.isNotEmpty) {
+      // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+      birdImageNotifier.switchColor(state.color).then((value) {
+        setBirdImage(Image.memory(value));
+      });
+    }
+
+    return Bird.empty();
+  }
 
   void setBird(Bird bird) {
     state = bird;
@@ -18,7 +34,7 @@ class BirdNotifier extends StateNotifier<Bird> {
     state = state.copyWith(birdImage: birdImage);
   }
 
-  void setUser(SimpleUser user) {
+  void setUser(CoreUserSimple user) {
     state = state.copyWith(user: user);
   }
 
@@ -56,18 +72,4 @@ class BirdNotifier extends StateNotifier<Bird> {
   }
 }
 
-final birdProvider = StateNotifierProvider<BirdNotifier, Bird>((ref) {
-  BirdNotifier notifier = BirdNotifier();
-  final user = ref.watch(userProvider);
-  final birdImage = ref.watch(birdImageProvider);
-  final birdImageNotifier = ref.watch(birdImageProvider.notifier);
-  notifier.setUser(user.toSimpleUser());
-  if (birdImage.isNotEmpty) {
-    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-    birdImageNotifier.switchColor(notifier.state.color).then((value) {
-      notifier.setBirdImage(Image.memory(value));
-      return notifier;
-    });
-  }
-  return notifier;
-});
+final birdProvider = NotifierProvider<BirdNotifier, Bird>(BirdNotifier.new);

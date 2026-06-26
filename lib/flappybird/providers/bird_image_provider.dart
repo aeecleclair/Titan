@@ -3,8 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image/image.dart' as external_image;
 
-class BirdImageNotifier extends StateNotifier<Uint8List> {
-  BirdImageNotifier() : super(Uint8List.fromList([]));
+class BirdImageNotifier extends Notifier<Uint8List> {
+  @override
+  Uint8List build() {
+    getBirdImage();
+    return Uint8List.fromList([]);
+  }
 
   void setList(Uint8List list) {
     state = list;
@@ -61,10 +65,6 @@ class BirdImageNotifier extends StateNotifier<Uint8List> {
   }
 }
 
-final birdImageProvider = StateNotifierProvider<BirdImageNotifier, Uint8List>((
-  ref,
-) {
-  BirdImageNotifier notifier = BirdImageNotifier();
-  notifier.getBirdImage();
-  return notifier;
-});
+final birdImageProvider = NotifierProvider<BirdImageNotifier, Uint8List>(
+  BirdImageNotifier.new,
+);

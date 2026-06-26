@@ -1,31 +1,30 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/flappybird/class/score.dart';
-import 'package:titan/flappybird/repositories/score_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class ScoreListNotifier extends ListNotifier<Score> {
-  final ScoreRepository _scoreRepository = ScoreRepository();
-  ScoreListNotifier({required String token}) : super(const AsyncLoading()) {
-    _scoreRepository.setToken(token);
+class ScoreListNotifier extends ListNotifierAPI<FlappyBirdScoreInDB> {
+  Openapi get scoreRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<List<FlappyBirdScoreInDB>> build() {
+    getLeaderboard();
+    return const AsyncLoading();
   }
 
-  Future<AsyncValue<List<Score>>> getLeaderboard() async {
-    return await loadList(_scoreRepository.getLeaderboard);
+  Future<AsyncValue<List<FlappyBirdScoreInDB>>> getLeaderboard() async {
+    return await loadList(scoreRepository.flappybirdScoresGet);
   }
 
-  Future<bool> createScore(Score score) async {
-    return await add(_scoreRepository.createScore, score);
+  Future<bool> createScore(FlappyBirdScoreBase score) async {
+    return await add(
+      () => scoreRepository.flappybirdScoresPost(body: score),
+      score,
+    );
   }
 }
 
 final scoreListProvider =
-    StateNotifierProvider<ScoreListNotifier, AsyncValue<List<Score>>>((ref) {
-      final token = ref.watch(tokenProvider);
-      final notifier = ScoreListNotifier(token: token);
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.getLeaderboard();
-      });
-      return notifier;
-    });
+    NotifierProvider<ScoreListNotifier, AsyncValue<List<FlappyBirdScoreInDB>>>(
+      ScoreListNotifier.new,
+    );

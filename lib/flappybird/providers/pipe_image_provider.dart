@@ -2,8 +2,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image/image.dart' as external_image;
 
-class PipeImageNotifier extends StateNotifier<Uint8List> {
-  PipeImageNotifier() : super(Uint8List.fromList([]));
+class PipeImageNotifier extends Notifier<Uint8List> {
+  @override
+  Uint8List build() {
+    getPipeImage();
+    return Uint8List.fromList([]);
+  }
 
   void setList(Uint8List list) {
     state = list;
@@ -19,10 +23,6 @@ class PipeImageNotifier extends StateNotifier<Uint8List> {
   }
 }
 
-final pipeImageProvider = StateNotifierProvider<PipeImageNotifier, Uint8List>((
-  ref,
-) {
-  PipeImageNotifier notifier = PipeImageNotifier();
-  notifier.getPipeImage();
-  return notifier;
-});
+final pipeImageProvider = NotifierProvider<PipeImageNotifier, Uint8List>(
+  PipeImageNotifier.new,
+);
