@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/service/class/message.dart';
 import 'package:titan/tools/logs/file_logger_output.dart';
 import 'package:titan/tools/logs/log.dart';
@@ -73,3 +74,5 @@ class Logger {
     writeLog(Log(message: messageString, level: LogLevel.notification));
   }
 }
+
+final loggerProvider = Provider((ref) => Logger());

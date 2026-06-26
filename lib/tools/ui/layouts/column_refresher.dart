@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 
 class ColumnRefresher extends ConsumerWidget {
   final List<Widget> children;
@@ -36,9 +35,7 @@ class ColumnRefresher extends ConsumerWidget {
   }
 
   Widget buildAndroidList(WidgetRef ref) => RefreshIndicator(
-    onRefresh: () async {
-      tokenExpireWrapper(ref, onRefresh);
-    },
+    onRefresh: onRefresh,
     child: ScrollToHideNavbar(
       controller: controller,
       child: ListView.builder(
@@ -56,11 +53,7 @@ class ColumnRefresher extends ConsumerWidget {
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       slivers: [
-        CupertinoSliverRefreshControl(
-          onRefresh: () async {
-            tokenExpireWrapper(ref, onRefresh);
-          },
-        ),
+        CupertinoSliverRefreshControl(onRefresh: onRefresh),
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) => children[index],

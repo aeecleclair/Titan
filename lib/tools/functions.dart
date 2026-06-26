@@ -1,18 +1,40 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/super_admin/providers/permissions_list_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/plausible/plausible.dart';
-import 'package:titan/tools/repository/repository.dart';
-import 'package:titan/version/repositories/version_repository.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:toastification/toastification.dart';
-import 'package:titan/user/providers/user_provider.dart';
 import 'package:yaml/yaml.dart';
+
+Future<String> getMinimalHyperionVersion() async {
+  final String pubspecString = await rootBundle.loadString("pubspec.yaml");
+  final YamlMap pubspec = loadYaml(pubspecString);
+  final String minimalHyperionVersion = pubspec["minimal_hyperion_version"];
+  return minimalHyperionVersion;
+}
+
+bool isVersionCompatible(String currentVersion, String minimalVersion) {
+  final [major, minor, patch] = currentVersion
+      .split('.')
+      .map(int.parse)
+      .toList();
+  final [minimalMajor, minimalMinor, minimalPatch] = minimalVersion
+      .split('.')
+      .map(int.parse)
+      .toList();
+  if (major < minimalMajor ||
+      (major == minimalMajor && minor < minimalMinor) ||
+      (major == minimalMajor &&
+          minor == minimalMinor &&
+          patch < minimalPatch)) {
+    return false;
+  }
+  return true;
+}
 
 /// Parses CSV content with automatic separator detection
 /// Supports common separators: comma, semicolon, tab, pipe
@@ -70,21 +92,6 @@ bool _isValidEmail(String email) {
 }
 
 enum TypeMsg { msg, error }
-
-enum Decision { approved, declined, pending }
-
-Decision stringToDecision(String s) {
-  switch (s) {
-    case "approved":
-      return Decision.approved;
-    case "declined":
-      return Decision.declined;
-    case "pending":
-      return Decision.pending;
-    default:
-      return Decision.pending;
-  }
-}
 
 void displayToast(
   BuildContext context,
@@ -412,8 +419,9 @@ Future getOnlyDayDate(
     lastDate,
   );
 
-  if (date == null) return;
-  dateController.text = DateFormat.yMd(locale).format(date);
+  dateController.text = DateFormat.yMd(
+    locale,
+  ).format(date ?? initialDate ?? now);
 }
 
 Future getOnlyDayDateFunction(
@@ -433,8 +441,7 @@ Future getOnlyDayDateFunction(
     lastDate,
   );
 
-  if (date == null) return;
-  setDate(DateFormat.yMMMd(locale).format(date));
+  setDate(DateFormat.yMMMd(locale).format(date ?? initialDate ?? now));
 }
 
 Future getOnlyHourDate(
@@ -492,38 +499,38 @@ int generateIntFromString(String s) {
   return s.codeUnits.reduce((value, element) => value + 100 * element);
 }
 
-bool hasUserPermission(Ref ref, String permission) {
-  final me = ref.watch(userProvider);
-  final permissions = ref.watch(mappedPermissionsProvider);
-  return me.groups.any(
-        (g) => permissions[permission]!.authorizedGroupIds.contains(g.id),
-      ) ||
-      permissions[permission]!.authorizedAccountTypes.contains(
-        me.accountType.type,
-      );
+bool isEmailInValid(String email) {
+  final regex = RegExp(previousEmailRegex);
+  return regex.hasMatch(email);
 }
 
-/// getAppFlavor and functions depending on it
+bool isStudent(String email) {
+  final regex = RegExp(studentRegex);
+  return regex.hasMatch(email);
+}
+
+bool isNotStaff(String email) {
+  final regex = RegExp(previousStaffEmailRegex);
+  return !regex.hasMatch(email);
+}
 
 String getAppFlavor() {
   if (appFlavor != null) {
     return appFlavor!.toLowerCase();
   }
 
-  const flavor = String.fromEnvironment("FLAVOR");
-
-  if (flavor.isEmpty) {
-    throw StateError("App flavor not set");
+  if (const String.fromEnvironment("flavor") != "") {
+    return const String.fromEnvironment("flavor");
   }
 
-  return flavor.toLowerCase();
+  throw StateError("App flavor not set");
 }
 
 Plausible? getPlausible() {
-  const serverUrl = String.fromEnvironment("PLAUSIBLE_HOST");
-  const domain = String.fromEnvironment("PLAUSIBLE_DOMAIN");
+  final serverUrl = dotenv.env["PLAUSIBLE_HOST"];
+  final domain = dotenv.env["PLAUSIBLE_DOMAIN"];
 
-  if (serverUrl == "" || domain == "") {
+  if (serverUrl == null || domain == null) {
     return null;
   }
 
@@ -535,38 +542,37 @@ Plausible? getPlausible() {
 }
 
 String getTitanHost() {
-  const backendHost = String.fromEnvironment("BACKEND_HOST");
-  if (backendHost.isEmpty) {
-    throw StateError("Could not find BACKEND_HOST in config.json");
-  }
-  if (backendHost[backendHost.length - 1] != "/") {
-    throw StateError("BACKEND_HOST in config.json should end with a /");
+  var host = dotenv.env["${getAppFlavor().toUpperCase()}_HOST"];
+
+  if (host == null || host == "") {
+    throw StateError("Could not find host corresponding to flavor");
   }
 
-  return backendHost;
+  return host;
 }
 
 String getPaymentName() {
-  return const String.fromEnvironment("PAYMENT_NAME", defaultValue: "ProxiPay");
+  var paymentName = dotenv.env["PAYMENT_NAME"];
+  if (paymentName == null || paymentName.isEmpty) {
+    paymentName = "Payment";
+  }
+  return paymentName;
 }
 
 String getBaseSchoolName() {
-  const schoolName = String.fromEnvironment("SCHOOL_NAME");
-  if (schoolName.isEmpty) {
-    throw StateError("Could not find SCHOOL_NAME in config.json");
+  var schoolName = dotenv.env["SCHOOL_NAME"];
+  if (schoolName == null || schoolName.isEmpty) {
+    throw StateError("Could not find school name in environment variables");
   }
   return schoolName;
 }
 
 String getTitanURL() {
-  const titanUrl = String.fromEnvironment("TITAN_URL");
-  if (titanUrl.isEmpty) {
-    throw StateError("Could not find TITAN_URL in config.json");
+  var titanURL = dotenv.env["TITAN_URL"];
+  if (titanURL == null || titanURL.isEmpty) {
+    throw StateError("Could not find TITAN_URL in environment variables");
   }
-  if (titanUrl[titanUrl.length - 1] != "/") {
-    throw StateError("TITAN_URL in config.json should end with a /");
-  }
-  return titanUrl;
+  return titanURL;
 }
 
 String getTitanPackageSuffix() {
@@ -583,9 +589,9 @@ String getTitanPackageSuffix() {
 }
 
 String getTitanPackageName() {
-  const appIdPrefix = String.fromEnvironment("APP_ID_PREFIX");
-  if (appIdPrefix.isEmpty) {
-    throw StateError("Could not find APP_ID_PREFIX in config.json");
+  var appIdPrefix = dotenv.env['APP_ID_PREFIX'];
+  if (appIdPrefix == null || appIdPrefix.isEmpty) {
+    throw StateError("Could not find APP_ID_PREFIX in environment variables");
   }
   return "$appIdPrefix.${getTitanPackageSuffix()}";
 }
@@ -595,9 +601,9 @@ String getTitanURLScheme() {
 }
 
 String getAppName() {
-  const appName = String.fromEnvironment("APP_NAME");
-  if (appName.isEmpty) {
-    throw StateError("Could not find APP_NAME in config.json");
+  var appName = dotenv.env["APP_NAME"];
+  if (appName == null || appName.isEmpty) {
+    throw StateError("Could not find APP_NAME in environment variables");
   }
   return appName;
 }
@@ -605,59 +611,3 @@ String getAppName() {
 String getTitanLogo() {
   return "assets/images/logo_${getAppFlavor()}.png";
 }
-
-/// Start of functions to choose back-end
-
-bool isVersionCompatible(String currentVersion, String minimalVersion) {
-  final [major, minor, patch] = currentVersion
-      .split('.')
-      .map(int.parse)
-      .toList();
-  final [minimalMajor, minimalMinor, minimalPatch] = minimalVersion
-      .split('.')
-      .map(int.parse)
-      .toList();
-  if (major < minimalMajor ||
-      (major == minimalMajor && minor < minimalMinor) ||
-      (major == minimalMajor &&
-          minor == minimalMinor &&
-          patch < minimalPatch)) {
-    return false;
-  }
-  return true;
-}
-
-Future<String> getMinimalHyperionVersion() async {
-  final String pubspecString = await rootBundle.loadString("pubspec.yaml");
-  final YamlMap pubspec = loadYaml(pubspecString);
-  final String minimalHyperionVersion = pubspec["minimal_hyperion_version"];
-  return minimalHyperionVersion;
-}
-
-Future<String> setHyperionAndGetVersion(String flavor) async {
-  Repository.host = getTitanHost(); // set Titan's back-end
-  final String hyperionVersion = await VersionRepository().getVersion().then(
-    (value) => value.version,
-  );
-  return hyperionVersion;
-}
-
-Future<void> setHyperionHost() async {
-  final String flavor = getAppFlavor();
-  final String minimalHyperionVersion = await getMinimalHyperionVersion();
-
-  try {
-    if (!isVersionCompatible(
-      await setHyperionAndGetVersion(flavor),
-      minimalHyperionVersion,
-    )) {
-      if (flavor != "alpha") {
-        await setHyperionAndGetVersion("alpha");
-      }
-    }
-  } catch (_) {
-    return;
-  }
-}
-
-/// End of functions to choose back-end and functions depending on getAppFlavor

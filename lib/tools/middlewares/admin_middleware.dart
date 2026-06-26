@@ -3,7 +3,7 @@ import 'package:titan/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class AdminMiddleware extends QMiddleware {
-  final ProviderListenable<bool> isAdminProvider;
+  final Provider<bool> isAdminProvider;
   final Ref ref;
 
   AdminMiddleware(this.ref, this.isAdminProvider);

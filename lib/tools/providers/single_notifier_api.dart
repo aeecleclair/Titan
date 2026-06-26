@@ -1,15 +1,23 @@
+import 'package:chopper/chopper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/tools/exception.dart';
 
-abstract class SingleNotifier<T> extends Notifier<AsyncValue<T>> {
+abstract class SingleNotifierAPI<T> extends Notifier<AsyncValue<T>> {
   @override
-  AsyncValue<T> build() => const AsyncLoading();
+  AsyncValue<T> build() {
+    return const AsyncLoading();
+  }
 
-  Future<AsyncValue<T>> load(Future<T> Function() f) async {
+  Future<AsyncValue<T>> load(Future<Response<T>> Function() f) async {
     try {
-      final data = await f();
-      state = AsyncValue.data(data);
-      return state;
+      final response = await f();
+      final data = response.body;
+      if (response.isSuccessful && data != null) {
+        state = AsyncValue.data(data);
+        return state;
+      } else {
+        throw response.error!;
+      }
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
       if (e is AppException && e.type == ErrorType.tokenExpire) {
@@ -20,13 +28,18 @@ abstract class SingleNotifier<T> extends Notifier<AsyncValue<T>> {
     }
   }
 
-  Future<bool> add(Future<T> Function(T t) f, T t) async {
+  Future<bool> add(Future<Response<T>> Function(T t) f, T t) async {
     return state.when(
       data: (d) async {
         try {
-          final newT = await f(t);
-          state = AsyncValue.data(newT);
-          return true;
+          final response = await f(t);
+          final data = response.body;
+          if (response.isSuccessful && data != null) {
+            state = AsyncValue.data(data);
+            return true;
+          } else {
+            throw response.error!;
+          }
         } catch (error) {
           state = AsyncValue.data(d);
           if (error is AppException && error.type == ErrorType.tokenExpire) {
@@ -54,16 +67,17 @@ abstract class SingleNotifier<T> extends Notifier<AsyncValue<T>> {
     );
   }
 
-  Future<bool> update(Future<bool> Function(T t) f, T t) async {
+  Future<bool> update(Future<Response<dynamic>> Function() f, T t) async {
     return state.when(
       data: (d) async {
         try {
-          final value = await f(t);
-          if (!value) {
-            return false;
+          final response = await f();
+          if (response.isSuccessful) {
+            state = AsyncValue.data(t);
+            return true;
+          } else {
+            throw response.error!;
           }
-          state = AsyncValue.data(t);
-          return true;
         } catch (error) {
           state = AsyncValue.data(d);
           if (error is AppException && error.type == ErrorType.tokenExpire) {
@@ -91,20 +105,17 @@ abstract class SingleNotifier<T> extends Notifier<AsyncValue<T>> {
     );
   }
 
-  Future<bool> delete(
-    Future<bool> Function(String id) f,
-    T t,
-    String id,
-  ) async {
+  Future<bool> delete(Future<Response<dynamic>> Function() f) async {
     return state.when(
       data: (d) async {
         try {
-          final value = await f(id);
-          if (!value) {
-            return false;
+          final response = await f();
+          if (response.isSuccessful) {
+            state = const AsyncValue.loading();
+            return true;
+          } else {
+            throw response.error!;
           }
-          state = const AsyncValue.loading();
-          return true;
         } catch (error) {
           state = AsyncValue.data(d);
           if (error is AppException && error.type == ErrorType.tokenExpire) {

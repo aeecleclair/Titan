@@ -4,7 +4,11 @@ import 'package:titan/tools/providers/asking_refresh_token_provider.dart';
 
 void main() {
   test('AskingRefreshTokenNotifier sets state correctly', () {
-    final askingRefreshTokenNotifier = AskingRefreshTokenNotifier();
+    final container = ProviderContainer();
+    addTearDown(container.dispose);
+    final askingRefreshTokenNotifier = container.read(
+      askingRefreshTokenProvider.notifier,
+    );
 
     askingRefreshTokenNotifier.setAskingRefresh(true);
     expect(askingRefreshTokenNotifier.state, true);

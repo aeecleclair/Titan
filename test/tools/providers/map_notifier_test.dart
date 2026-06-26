@@ -30,15 +30,26 @@ class MockMapNotifier extends MapNotifier<MockT, MockE> {
   }
 }
 
+final mockMapNotifierProvider =
+    NotifierProvider<MockMapNotifier, Map<MockT, AsyncValue<List<MockE>>?>>(
+      MockMapNotifier.new,
+    );
+
+MockMapNotifier makeNotifier() {
+  final container = ProviderContainer();
+  addTearDown(container.dispose);
+  return container.read(mockMapNotifierProvider.notifier);
+}
+
 void main() {
   group('Testing MapNotifier : loadTList', () {
     test('Should initiate to AsyncLoading', () {
-      final notifier = MockMapNotifier();
+      final notifier = makeNotifier();
       expect(notifier.state, isA<Map>());
     });
 
     test('Should state be AsyncData when loading data', () async {
-      final notifier = MockMapNotifier();
+      final notifier = makeNotifier();
       final data = [MockT(), MockT()];
       notifier.testLoadTlist(data);
       expect(notifier.state, isA<Map<MockT, AsyncValue<List<MockE>>?>>());
@@ -49,7 +60,7 @@ void main() {
 
   group('Testing MapNotifier : addT', () {
     test('Should updates state on success', () async {
-      final notifier = MockMapNotifier();
+      final notifier = makeNotifier();
       final data = <MockT, AsyncValue<List<MockE>>?>{
         MockT(): const AsyncLoading(),
         MockT(): const AsyncValue.data(<MockE>[]),
@@ -64,7 +75,7 @@ void main() {
     test(
       'Should sets state on loading when start state is AsyncLoading',
       () async {
-        final notifier = MockMapNotifier();
+        final notifier = makeNotifier();
         final newData = MockT();
         notifier.testAddT(newData);
         expect(notifier.state, isA<Map>());
@@ -76,7 +87,7 @@ void main() {
     test(
       'Should returns true and updates state on success when value is AsyncData',
       () async {
-        final notifier = MockMapNotifier();
+        final notifier = makeNotifier();
         final key = MockT();
         final data = <MockT, AsyncValue<List<MockE>>>{
           MockT(): const AsyncLoading(),
@@ -101,7 +112,7 @@ void main() {
     test(
       'Should returns true and updates state on success when value is AsyncLoading',
       () async {
-        final notifier = MockMapNotifier();
+        final notifier = makeNotifier();
         final key = MockT();
         final data = <MockT, AsyncValue<List<MockE>>>{
           MockT(): const AsyncLoading(),
@@ -126,7 +137,7 @@ void main() {
     test(
       'Should returns true and updates state on success when value is AsyncError',
       () async {
-        final notifier = MockMapNotifier();
+        final notifier = makeNotifier();
         final key = MockT();
         final data = <MockT, AsyncValue<List<MockE>>>{
           MockT(): const AsyncLoading(),
@@ -151,7 +162,7 @@ void main() {
 
   group('Testing MapNotifier : deleteT', () {
     test('Should returns true and updates state', () async {
-      final notifier = MockMapNotifier();
+      final notifier = makeNotifier();
       final key = MockT();
       final data = <MockT, AsyncValue<List<MockE>>>{
         MockT(): const AsyncLoading(),
@@ -166,7 +177,7 @@ void main() {
     test(
       'Should returns true and does not touch state when key is not in map',
       () async {
-        final notifier = MockMapNotifier();
+        final notifier = makeNotifier();
         final key = MockT();
         final data = <MockT, AsyncValue<List<MockE>>>{
           MockT(): const AsyncLoading(),
@@ -182,7 +193,7 @@ void main() {
 
   group('Testing MapNotifier : setTData', () {
     test('Should returns true and updates state', () async {
-      final notifier = MockMapNotifier();
+      final notifier = makeNotifier();
       final key = MockT();
       final data = <MockT, AsyncValue<List<MockE>>>{
         MockT(): const AsyncLoading(),
@@ -198,7 +209,7 @@ void main() {
     test(
       'Should returns true and does not touch state when key is not in map',
       () async {
-        final notifier = MockMapNotifier();
+        final notifier = makeNotifier();
         final key = MockT();
         final data = <MockT, AsyncValue<List<MockE>>>{
           MockT(): const AsyncLoading(),

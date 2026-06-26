@@ -1,7 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AskingRefreshTokenNotifier extends StateNotifier<bool> {
-  AskingRefreshTokenNotifier() : super(false);
+class AskingRefreshTokenNotifier extends Notifier<bool> {
+  @override
+  bool build() => false;
 
   void setAskingRefresh(bool bool) {
     state = bool;
@@ -9,6 +10,6 @@ class AskingRefreshTokenNotifier extends StateNotifier<bool> {
 }
 
 final askingRefreshTokenProvider =
-    StateNotifierProvider<AskingRefreshTokenNotifier, bool>((ref) {
-      return AskingRefreshTokenNotifier();
-    });
+    NotifierProvider<AskingRefreshTokenNotifier, bool>(
+      AskingRefreshTokenNotifier.new,
+    );

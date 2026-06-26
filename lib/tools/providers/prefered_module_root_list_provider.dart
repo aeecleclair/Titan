@@ -1,11 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PreferedModuleRootListNotifier extends StateNotifier<List<String>> {
+class PreferedModuleRootListNotifier extends Notifier<List<String>> {
   static const preferedModuleRootListKey = 'prefered_modules';
 
-  PreferedModuleRootListNotifier() : super([]) {
+  @override
+  List<String> build() {
     loadPreferedModulesRootList();
+    return [];
   }
 
   Future<void> loadPreferedModulesRootList() async {
@@ -51,6 +53,6 @@ class PreferedModuleRootListNotifier extends StateNotifier<List<String>> {
 }
 
 final preferedModuleListRootProvider =
-    StateNotifierProvider<PreferedModuleRootListNotifier, List<String>>(
-      (ref) => PreferedModuleRootListNotifier(),
+    NotifierProvider<PreferedModuleRootListNotifier, List<String>>(
+      () => PreferedModuleRootListNotifier(),
     );
