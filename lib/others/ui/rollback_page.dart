@@ -54,7 +54,7 @@ class RollbackPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              "${localizeWithContext.settingsHyperionVersion} (${Repository.host}) : ${versionVerifier.whenOrNull(data: (value) {
+              "${localizeWithContext.settingsHyperionVersion} (${getTitanHost()}) : ${versionVerifier.whenOrNull(data: (value) {
                 return value.version;
               })}",
               style: const TextStyle(
