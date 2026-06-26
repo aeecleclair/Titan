@@ -7,7 +7,9 @@ void main() {
     late StartNotifier startNotifier;
 
     setUp(() {
-      startNotifier = StartNotifier();
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      startNotifier = container.read(startProvider.notifier);
     });
 
     test('initial state is empty string', () {

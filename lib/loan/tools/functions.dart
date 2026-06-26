@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:titan/loan/class/item_quantity.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
 String formatItems(List<ItemQuantity> itemsQty, BuildContext context) {

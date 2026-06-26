@@ -6,6 +6,7 @@ import 'package:titan/loan/ui/pages/detail_pages/item_card_in_loan.dart';
 import 'package:titan/loan/ui/loan.dart';
 import 'package:titan/loan/ui/pages/admin_page/loan_card.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/user/extensions/core_user_simple.dart';
 
 class DetailLoanPage extends HookConsumerWidget {
   const DetailLoanPage({super.key});
@@ -64,17 +65,17 @@ class DetailLoanPage extends HookConsumerWidget {
                               ),
                               const SizedBox(height: 30),
                               Text(
-                                loan.notes,
+                                loan.notes ?? "",
                                 style: const TextStyle(fontSize: 18),
                               ),
                             ],
                           ),
                         ),
-                        loan.itemsQuantity.isNotEmpty
+                        loan.itemsQty.isNotEmpty
                             ? SingleChildScrollView(
                                 physics: const BouncingScrollPhysics(),
                                 child: Wrap(
-                                  children: loan.itemsQuantity
+                                  children: loan.itemsQty
                                       .map(
                                         (itemQty) =>
                                             ItemCardInLoan(itemQty: itemQty),

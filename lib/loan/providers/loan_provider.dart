@@ -1,8 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/loan/class/loan.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class LoanNotifier extends StateNotifier<Loan> {
-  LoanNotifier() : super(Loan.empty());
+class LoanNotifier extends Notifier<Loan> {
+  @override
+  Loan build() {
+    return Loan.empty();
+  }
 
   Future<bool> setLoan(Loan loan) async {
     state = loan;
@@ -10,6 +13,4 @@ class LoanNotifier extends StateNotifier<Loan> {
   }
 }
 
-final loanProvider = StateNotifierProvider<LoanNotifier, Loan>((ref) {
-  return LoanNotifier();
-});
+final loanProvider = NotifierProvider<LoanNotifier, Loan>(LoanNotifier.new);

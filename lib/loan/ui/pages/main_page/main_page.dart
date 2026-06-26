@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/loan/class/loan.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/loan/providers/admin_loan_list_provider.dart';
 import 'package:titan/loan/providers/is_loan_admin_provider.dart';
 import 'package:titan/loan/providers/item_list_provider.dart';

@@ -1,54 +1,55 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/loan/class/loaner.dart';
-import 'package:titan/loan/repositories/loaner_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class UserLoanerListNotifier extends ListNotifier<Loaner> {
-  final LoanerRepository loanerRepository;
-  UserLoanerListNotifier({required this.loanerRepository})
-    : super(const AsyncValue.loading());
+class UserLoanerListNotifier extends ListNotifierAPI<Loaner> {
+  Openapi get loanerRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<List<Loaner>>> loadMyLoanerList() async {
-    return await loadList(loanerRepository.getMyLoaner);
+  @override
+  AsyncValue<List<Loaner>> build() {
+    loadMyLoanerList();
+    return const AsyncValue.loading();
   }
 
-  Future<bool> addLoaner(Loaner loaner) async {
-    return await add(loanerRepository.createLoaner, loaner);
+  Future<AsyncValue<List<Loaner>>> loadMyLoanerList() async {
+    return await loadList(loanerRepository.loansUsersMeLoanersGet);
+  }
+
+  Future<bool> addLoaner(LoanerBase loaner) async {
+    return await add(
+      () => loanerRepository.loansLoanersPost(body: loaner),
+      loaner,
+    );
   }
 
   Future<bool> updateLoaner(Loaner loaner) async {
     return await update(
-      loanerRepository.updateLoaner,
-      (loaners, loaner) =>
-          loaners..[loaners.indexWhere((i) => i.id == loaner.id)] = loaner,
+      () => loanerRepository.loansLoanersLoanerIdPatch(
+        loanerId: loaner.id,
+        body: LoanerUpdate(
+          name: loaner.name,
+          groupManagerId: loaner.groupManagerId,
+        ),
+      ),
+      (loaner) => loaner.id,
       loaner,
     );
   }
 
   Future<bool> deleteLoaner(Loaner loaner) async {
     return await delete(
-      loanerRepository.deleteLoaner,
-      (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
+      () => loanerRepository.loansLoanersLoanerIdDelete(loanerId: loaner.id),
+      (loaner) => loaner.id,
       loaner.id,
-      loaner,
     );
   }
 }
 
 final userLoanerListProvider =
-    StateNotifierProvider<UserLoanerListNotifier, AsyncValue<List<Loaner>>>((
-      ref,
-    ) {
-      final loanerRepository = ref.watch(loanerRepositoryProvider);
-      UserLoanerListNotifier orderListNotifier = UserLoanerListNotifier(
-        loanerRepository: loanerRepository,
-      );
-      tokenExpireWrapperAuth(ref, () async {
-        await orderListNotifier.loadMyLoanerList();
-      });
-      return orderListNotifier;
-    });
+    NotifierProvider<UserLoanerListNotifier, AsyncValue<List<Loaner>>>(
+      UserLoanerListNotifier.new,
+    );
 
 final loanerList = Provider<List<Loaner>>((ref) {
   final deliveryProvider = ref.watch(userLoanerListProvider);

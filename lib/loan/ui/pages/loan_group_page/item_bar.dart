@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/loan/class/item.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/loan/providers/caution_provider.dart';
+import 'package:titan/loan/providers/edit_selected_items_provider.dart';
 import 'package:titan/loan/providers/end_provider.dart';
 import 'package:titan/loan/providers/item_list_provider.dart';
 import 'package:titan/loan/providers/loaner_provider.dart';
 import 'package:titan/loan/providers/loaners_items_provider.dart';
-import 'package:titan/loan/providers/selected_items_provider.dart';
 import 'package:titan/loan/providers/start_provider.dart';
 import 'package:titan/loan/ui/pages/loan_group_page/check_item_card.dart';
 import 'package:titan/tools/constants.dart';

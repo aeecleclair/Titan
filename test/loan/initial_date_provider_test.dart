@@ -5,12 +5,16 @@ import 'package:titan/loan/providers/initial_date_provider.dart';
 void main() {
   group('InitialDateNotifier', () {
     test('initial value is DateTime.now()', () {
-      final provider = InitialDateNotifier();
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final provider = container.read(initialDateProvider.notifier);
       expect(provider.state, isA<DateTime>());
     });
 
     test('setDate() updates the state', () {
-      final provider = InitialDateNotifier();
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final provider = container.read(initialDateProvider.notifier);
       final newDate = DateTime(2022, 1, 1);
       provider.setDate(newDate);
       expect(provider.state, newDate);

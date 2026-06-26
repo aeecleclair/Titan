@@ -1,13 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class StartNotifier extends StateNotifier<String> {
-  StartNotifier() : super("");
+class StartNotifier extends Notifier<String> {
+  @override
+  String build() {
+    return "";
+  }
 
   void setStart(String start) {
     state = start;
   }
 }
 
-final startProvider = StateNotifierProvider<StartNotifier, String>((ref) {
-  return StartNotifier();
-});
+final startProvider = NotifierProvider<StartNotifier, String>(
+  StartNotifier.new,
+);

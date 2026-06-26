@@ -8,7 +8,9 @@ void main() {
     test(
       'setCaution sets the text and selection of the TextEditingController',
       () {
-        final notifier = CautionNotifier();
+        final container = ProviderContainer();
+        addTearDown(container.dispose);
+        final notifier = container.read(cautionProvider.notifier);
         final textEditingController = notifier.state;
 
         notifier.setCaution('Test Caution');

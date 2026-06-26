@@ -1,57 +1,67 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/loan/class/loan.dart';
-import 'package:titan/loan/repositories/loan_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class LoanListNotifier extends ListNotifier<Loan> {
-  final LoanRepository loanrepository;
-  LoanListNotifier({required this.loanrepository})
-    : super(const AsyncValue.loading());
+class LoanListNotifier extends ListNotifierAPI<Loan> {
+  Openapi get loanRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<List<Loan>>> loadLoanList() async {
-    return await loadList(loanrepository.getMyLoanList);
+  @override
+  AsyncValue<List<Loan>> build() {
+    loadLoanList();
+    return const AsyncValue.loading();
   }
 
-  Future<bool> addLoan(Loan loan) async {
-    return await add(loanrepository.createLoan, loan);
+  Future<AsyncValue<List<Loan>>> loadLoanList() async {
+    return await loadList(loanRepository.loansUsersMeGet);
+  }
+
+  Future<bool> addLoan(LoanCreation loan) async {
+    return await add(() => loanRepository.loansPost(body: loan), loan);
   }
 
   Future<bool> updateLoan(Loan loan) async {
-    return await update(loanrepository.updateLoan, (loans, loan) {
-      final index = loans.indexWhere((l) => l.id == loan.id);
-      loans[index] = loan;
-      return loans;
-    }, loan);
+    return await update(
+      () => loanRepository.loansLoanIdPatch(
+        loanId: loan.id,
+        body: LoanUpdate(
+          borrowerId: loan.borrower.id,
+          start: loan.start,
+          end: loan.end,
+          notes: loan.notes,
+          caution: loan.caution,
+          returned: loan.returned,
+          itemsBorrowed: loan.itemsQty
+              .map(
+                (e) =>
+                    ItemBorrowed(itemId: e.itemSimple.id, quantity: e.quantity),
+              )
+              .toList(),
+        ),
+      ),
+      (loan) => loan.id,
+      loan,
+    );
   }
 
   Future<bool> deleteLoan(Loan loan) async {
     return await delete(
-      loanrepository.deleteLoan,
-      (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
+      () => loanRepository.loansLoanIdDelete(loanId: loan.id),
+      (loan) => loan.id,
       loan.id,
-      loan,
     );
   }
 
   Future<bool> returnLoan(Loan loan) async {
     return await delete(
-      loanrepository.returnLoan,
-      (loans, loan) => loans..removeWhere((i) => i.id == loan.id),
+      () => loanRepository.loansLoanIdReturnPost(loanId: loan.id),
+      (loan) => loan.id,
       loan.id,
-      loan,
     );
   }
 }
 
 final loanListProvider =
-    StateNotifierProvider<LoanListNotifier, AsyncValue<List<Loan>>>((ref) {
-      final loanRepository = ref.watch(loanRepositoryProvider);
-      LoanListNotifier loanListNotifier = LoanListNotifier(
-        loanrepository: loanRepository,
-      );
-      tokenExpireWrapperAuth(ref, () async {
-        await loanListNotifier.loadLoanList();
-      });
-      return loanListNotifier;
-    });
+    NotifierProvider<LoanListNotifier, AsyncValue<List<Loan>>>(
+      LoanListNotifier.new,
+    );

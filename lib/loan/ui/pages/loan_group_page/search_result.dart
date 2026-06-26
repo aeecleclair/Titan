@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/loan/providers/borrower_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/user/extensions/core_user_simple.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
@@ -16,10 +17,10 @@ class SearchResult extends HookConsumerWidget {
     final borrowerNotifier = ref.watch(borrowerProvider.notifier);
     return AsyncChild(
       value: users,
-      builder: (context, user) => Column(
-        children: user
+      builder: (context, userList) => Column(
+        children: userList
             .map(
-              (simpleUser) => GestureDetector(
+              (user) => GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -29,10 +30,10 @@ class SearchResult extends HookConsumerWidget {
                       Container(width: 20),
                       Expanded(
                         child: Text(
-                          simpleUser.getName(),
+                          user.getName(),
                           style: TextStyle(
                             fontSize: 13,
-                            fontWeight: (borrower.id == simpleUser.id)
+                            fontWeight: (borrower.id == user.id)
                                 ? FontWeight.bold
                                 : FontWeight.w400,
                           ),
@@ -43,8 +44,8 @@ class SearchResult extends HookConsumerWidget {
                   ),
                 ),
                 onTap: () {
-                  borrowerNotifier.setBorrower(simpleUser);
-                  queryController.text = simpleUser.getName();
+                  borrowerNotifier.setBorrower(user);
+                  queryController.text = user.getName();
                   usersNotifier.clear();
                 },
               ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/loan/class/item.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
+import 'package:titan/loan/providers/edit_selected_items_provider.dart';
 import 'package:titan/loan/providers/end_provider.dart';
 import 'package:titan/loan/providers/initial_date_provider.dart';
 import 'package:titan/loan/providers/item_list_provider.dart';
-import 'package:titan/loan/providers/selected_items_provider.dart';
 import 'package:titan/loan/providers/start_provider.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';

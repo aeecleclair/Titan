@@ -1,14 +1,27 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/loan/providers/item_list_provider.dart';
+import 'package:titan/loan/providers/loan_provider.dart';
 
-class SelectedListProvider extends Notifier<List<int>> {
+class EditSelectedListProvider extends Notifier<List<int>> {
   @override
   List<int> build() {
+    final loan = ref.watch(loanProvider);
     final itemsList = ref.watch(itemListProvider);
     final List<Item> items = [];
     itemsList.maybeWhen(data: (list) => items.addAll(list), orElse: () {});
-    return List.generate(items.length, (index) => 0);
+
+    final result = List.generate(items.length, (index) => 0);
+    final itemIds = items.map((item) => item.id).toList();
+
+    for (final itemQty in loan.itemsQty) {
+      final index = itemIds.indexOf(itemQty.itemSimple.id);
+      if (index != -1) {
+        result[index] = itemQty.quantity;
+      }
+    }
+
+    return result;
   }
 
   Future<List<int>> toggle(int i, int quantity) async {
@@ -25,22 +38,12 @@ class SelectedListProvider extends Notifier<List<int>> {
     return state;
   }
 
-  void initWithLoan(List<Item> items, Loan loan) {
-    var copy = state.toList();
-    final itemIds = items.map((i) => i.id).toList();
-    for (var itemQty in loan.itemsQty) {
-      if (itemIds.contains(itemQty.itemSimple.id)) {
-        copy[itemIds.indexOf(itemQty.itemSimple.id)] = itemQty.quantity;
-      }
-    }
-    state = copy;
-  }
-
   void clear() {
     state = List.generate(state.length, (index) => 0);
   }
 }
 
-final selectedListProvider = NotifierProvider<SelectedListProvider, List<int>>(
-  SelectedListProvider.new,
-);
+final editSelectedListProvider =
+    NotifierProvider<EditSelectedListProvider, List<int>>(
+      EditSelectedListProvider.new,
+    );

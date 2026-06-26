@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/loan/class/item.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class CautionNotifier extends StateNotifier<TextEditingController> {
-  CautionNotifier() : super(TextEditingController());
+class CautionNotifier extends Notifier<TextEditingController> {
+  @override
+  TextEditingController build() {
+    return TextEditingController();
+  }
 
   void setCaution(String caution) {
     state.value = state.value.copyWith(
@@ -17,7 +20,7 @@ class CautionNotifier extends StateNotifier<TextEditingController> {
   void setCautionFromSelected(Map<Item, int> selected) {
     double total = 0;
     selected.forEach((key, value) {
-      total += key.caution * value;
+      total += key.suggestedCaution * value;
     });
     final caution = "${total.toStringAsFixed(2)} €";
     state.value = state.value.copyWith(
@@ -30,6 +33,6 @@ class CautionNotifier extends StateNotifier<TextEditingController> {
 }
 
 final cautionProvider =
-    StateNotifierProvider<CautionNotifier, TextEditingController>((ref) {
-      return CautionNotifier();
-    });
+    NotifierProvider<CautionNotifier, TextEditingController>(
+      CautionNotifier.new,
+    );

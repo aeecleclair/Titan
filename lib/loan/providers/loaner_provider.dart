@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/loan/class/loaner.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:titan/loan/providers/loaner_id_provider.dart';
 import 'package:titan/loan/providers/user_loaner_list_provider.dart';
 

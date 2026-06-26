@@ -2,11 +2,14 @@ import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:titan/loan/class/item.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/tools/functions.dart';
 
-class EndNotifier extends StateNotifier<String> {
-  EndNotifier() : super("");
+class EndNotifier extends Notifier<String> {
+  @override
+  String build() {
+    return "";
+  }
 
   void setEnd(String end) {
     state = end;
@@ -25,6 +28,4 @@ class EndNotifier extends StateNotifier<String> {
   }
 }
 
-final endProvider = StateNotifierProvider<EndNotifier, String>((ref) {
-  return EndNotifier();
-});
+final endProvider = NotifierProvider<EndNotifier, String>(EndNotifier.new);

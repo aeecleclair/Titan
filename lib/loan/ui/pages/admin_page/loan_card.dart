@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
-import 'package:titan/loan/class/loan.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/loan/tools/constants.dart';
 import 'package:titan/loan/tools/functions.dart';
 import 'package:titan/tools/functions.dart';
@@ -10,6 +10,7 @@ import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/user/extensions/core_user_simple.dart';
 
 class LoanCard extends StatelessWidget {
   final Loan loan;
@@ -104,7 +105,7 @@ class LoanCard extends StatelessWidget {
             ),
             const SizedBox(height: 7),
             Text(
-              formatItems(loan.itemsQuantity, context),
+              formatItems(loan.itemsQty, context),
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
@@ -115,7 +116,7 @@ class LoanCard extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              loan.caution,
+              loan.caution ?? "",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
