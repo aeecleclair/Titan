@@ -25,7 +25,6 @@ import 'package:titan/others/ui/update_page.dart' deferred as update_page;
 import 'package:titan/mypayment/router.dart';
 import 'package:titan/phonebook/router.dart';
 import 'package:titan/ph/router.dart';
-import 'package:titan/tickets/router.dart';
 import 'package:titan/purchases/router.dart';
 import 'package:titan/recommendation/router.dart';
 import 'package:titan/seed-library/router.dart';
@@ -39,6 +38,7 @@ import 'package:titan/tools/ui/styleguide/router.dart';
 import 'package:titan/vote/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/centralassociation/router.dart';
+import 'package:titan/tickets/router.dart';
 
 final appRouterProvider = Provider<AppRouter>((ref) => AppRouter(ref));
 
@@ -106,6 +106,7 @@ class AppRouter {
       BookingRouter(ref).route(),
       CentralisationRouter(ref).route(),
       CentralassociationRouter(ref).route(),
+      TicketsRouter(ref).route(),
       CinemaRouter(ref).route(),
       EventRouter(ref).route(),
       FlappyBirdRouter(ref).route(),
@@ -116,7 +117,6 @@ class AppRouter {
       PaymentRouter(ref).route(),
       PhonebookRouter(ref).route(),
       PhRouter(ref).route(),
-      TicketsRouter(ref).route(),
       PurchasesRouter(ref).route(),
       RaffleRouter(ref).route(),
       RecommendationRouter(ref).route(),

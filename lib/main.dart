@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -26,13 +27,14 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:app_links/app_links.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await setHyperionHost();
+  await dotenv.load();
   QR.setUrlStrategy();
   // We set the default page type to QMaterialPage
   // See https://pub.dev/packages/qlevar_router#page-transition
   // We should not use a combination of QMaterialPage and QCupertinoPage
   QR.settings.pagesType = const QMaterialPage();
+
+  WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb) {
     await Firebase.initializeApp();
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
