@@ -1,15 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DisplayQuitNotifier extends StateNotifier<bool> {
-  DisplayQuitNotifier() : super(false);
+class DisplayQuitNotifier extends Notifier<bool> {
+  @override
+  bool build() {
+    return false;
+  }
 
   void setDisplay(bool newState) {
     state = newState;
   }
 }
 
-final displayQuitProvider = StateNotifierProvider<DisplayQuitNotifier, bool>((
-  ref,
-) {
-  return DisplayQuitNotifier();
-});
+final displayQuitProvider = NotifierProvider<DisplayQuitNotifier, bool>(
+  DisplayQuitNotifier.new,
+);

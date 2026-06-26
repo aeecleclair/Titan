@@ -1,11 +1,10 @@
-import 'dart:async';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class NavbarVisibilityNotifier extends StateNotifier<bool> {
-  NavbarVisibilityNotifier() : super(true);
-
+class NavbarVisibilityNotifier extends Notifier<bool> {
   bool lastRequestedState = true;
-  Timer? _delayTimer;
+
+  @override
+  bool build() => true;
 
   void _updateState(bool visible) {
     lastRequestedState = visible;
@@ -18,54 +17,35 @@ class NavbarVisibilityNotifier extends StateNotifier<bool> {
 
   void hide() => _updateState(false);
 
-  void showDelayed({Duration delay = const Duration(milliseconds: 500)}) {
-    _delayTimer?.cancel();
-    _delayTimer = Timer(delay, () {
-      _updateState(true);
-    });
-  }
-
-  void cancelDelayedShow() {
-    _delayTimer?.cancel();
-  }
-
   void toggle() => _updateState(!state);
 
   void forceShow() {
-    _delayTimer?.cancel();
     lastRequestedState = true;
     state = true;
   }
 
   void hideWithoutAutoShow() {
-    _delayTimer?.cancel();
     lastRequestedState = false;
     state = false;
   }
 
   void showTemporarily() {
-    _delayTimer?.cancel();
     if (!state) {
       forceShow();
     }
   }
-
-  @override
-  void dispose() {
-    _delayTimer?.cancel();
-    super.dispose();
-  }
 }
 
 final navbarVisibilityProvider =
-    StateNotifierProvider<NavbarVisibilityNotifier, bool>((ref) {
-      return NavbarVisibilityNotifier();
-    });
+    NotifierProvider<NavbarVisibilityNotifier, bool>(
+      NavbarVisibilityNotifier.new,
+    );
 
-class ScrollDirectionNotifier extends StateNotifier<ScrollDirection> {
-  ScrollDirectionNotifier() : super(ScrollDirection.idle);
-
+class ScrollDirectionNotifier extends Notifier<ScrollDirection> {
   double _lastScrollOffset = 0;
+
+  @override
+  ScrollDirection build() => ScrollDirection.idle;
 
   void updateScrollDirection(double scrollOffset) {
     final double scrollDelta = scrollOffset - _lastScrollOffset;
@@ -88,6 +68,6 @@ class ScrollDirectionNotifier extends StateNotifier<ScrollDirection> {
 enum ScrollDirection { up, down, idle }
 
 final scrollDirectionProvider =
-    StateNotifierProvider<ScrollDirectionNotifier, ScrollDirection>((ref) {
-      return ScrollDirectionNotifier();
-    });
+    NotifierProvider<ScrollDirectionNotifier, ScrollDirection>(
+      ScrollDirectionNotifier.new,
+    );

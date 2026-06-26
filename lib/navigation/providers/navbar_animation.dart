@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NavbarAnimationProvider extends StateNotifier<AnimationController?> {
-  NavbarAnimationProvider() : super(null);
+class NavbarAnimationProvider extends Notifier<AnimationController?> {
+  @override
+  AnimationController? build() {
+    return null;
+  }
 
   int _modalCount = 0;
 
@@ -68,6 +71,6 @@ class NavbarAnimationProvider extends StateNotifier<AnimationController?> {
 }
 
 final navbarAnimationProvider =
-    StateNotifierProvider<NavbarAnimationProvider, AnimationController?>((ref) {
-      return NavbarAnimationProvider();
-    });
+    NotifierProvider<NavbarAnimationProvider, AnimationController?>(
+      NavbarAnimationProvider.new,
+    );

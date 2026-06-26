@@ -6,7 +6,6 @@ import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/login/router.dart';
 import 'package:titan/navigation/providers/display_quit_popup.dart';
 import 'package:titan/service/providers/firebase_token_expiration_provider.dart';
-import 'package:titan/service/providers/messages_provider.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -33,7 +32,6 @@ class QuitDialog extends HookConsumerWidget {
             onYes: () {
               auth.deleteToken();
               if (!kIsWeb) {
-                ref.watch(messagesProvider.notifier).forgetDevice();
                 ref.watch(firebaseTokenExpirationProvider.notifier).reset();
               }
               isCachingNotifier.set(false);
