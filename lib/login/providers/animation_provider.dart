@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AnimationNotifier extends StateNotifier<AnimationController?> {
-  AnimationNotifier() : super(null);
+class AnimationNotifier extends Notifier<AnimationController?> {
+  @override
+  AnimationController? build() {
+    return null;
+  }
 
   void setController(AnimationController controller) {
     state = controller;
@@ -32,6 +35,6 @@ class AnimationNotifier extends StateNotifier<AnimationController?> {
 }
 
 final backgroundAnimationProvider =
-    StateNotifierProvider<AnimationNotifier, AnimationController?>((ref) {
-      return AnimationNotifier();
-    });
+    NotifierProvider<AnimationNotifier, AnimationController?>(
+      AnimationNotifier.new,
+    );
