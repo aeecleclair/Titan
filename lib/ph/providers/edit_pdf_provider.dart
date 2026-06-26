@@ -1,13 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EditPdfNotifier extends StateNotifier<bool> {
-  EditPdfNotifier() : super(false);
+class EditPdfNotifier extends Notifier<bool> {
+  @override
+  bool build() {
+    return false;
+  }
 
   void editPdf(bool a) {
     state = a;
   }
 }
 
-final editPdfProvider = StateNotifierProvider<EditPdfNotifier, bool>((ref) {
-  return EditPdfNotifier();
-});
+final editPdfProvider = NotifierProvider<EditPdfNotifier, bool>(
+  EditPdfNotifier.new,
+);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:titan/ph/class/ph.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/ph/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
@@ -8,7 +8,7 @@ import 'package:titan/l10n/app_localizations.dart';
 
 class AdminPhCard extends StatelessWidget {
   final VoidCallback onEdit, onDelete;
-  final Ph ph;
+  final PaperComplete ph;
   const AdminPhCard({
     super.key,
     required this.ph,
@@ -45,7 +45,7 @@ class AdminPhCard extends StatelessWidget {
                       style: const TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.left,
                     ),
-                    Text(shortenText(phFormatDate(ph.date, locale), 28)),
+                    Text(shortenText(phFormatDate(ph.releaseDate, locale), 28)),
                   ],
                 ),
               ],

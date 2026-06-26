@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/ph/class/ph.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
+import 'package:titan/ph/adapters/ph.dart';
 import 'package:titan/ph/providers/ph_list_provider.dart';
 import 'package:titan/ph/providers/ph_pdf_provider.dart';
 import 'package:titan/ph/providers/ph_send_pdf_provider.dart';
@@ -13,7 +14,6 @@ import 'package:titan/ph/tools/functions.dart';
 import 'package:titan/ph/ui/pages/file_picker/pdf_picker.dart';
 import 'package:titan/ph/ui/pages/ph.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
@@ -28,9 +28,9 @@ class PhAddEditPhPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = Localizations.localeOf(context).toString();
     final ph = ref.watch(phProvider);
-    final isEdit = ph.id != Ph.empty().id;
+    final isEdit = ph.id != PaperComplete.empty().id;
     final dateController = TextEditingController(
-      text: phFormatDateEntry(ph.date, locale),
+      text: phFormatDateEntry(ph.releaseDate, locale),
     );
     final key = GlobalKey<FormState>();
     final name = useTextEditingController(text: ph.name);
@@ -104,57 +104,53 @@ class PhAddEditPhPage extends HookConsumerWidget {
                         )!.phAddingFileError;
                         if (true &&
                             (!listEquals(phSendPdf, Uint8List(0)) || isEdit)) {
-                          await tokenExpireWrapper(ref, () async {
-                            final phList = ref.watch(phListProvider);
-                            Ph newPh = Ph(
-                              id: isEdit ? ph.id : '',
-                              date: DateTime.parse(
-                                processDateBack(
-                                  dateController.text,
-                                  locale.toString(),
-                                ),
+                          final phList = ref.watch(phListProvider);
+                          PaperComplete newPh = PaperComplete(
+                            id: isEdit ? ph.id : '',
+                            releaseDate: DateTime.parse(
+                              processDateBack(
+                                dateController.text,
+                                locale.toString(),
                               ),
-                              name: name.text,
-                            );
-                            final value = isEdit
-                                ? await phListNotifier.editPh(newPh)
-                                : await phListNotifier.addPh(newPh);
+                            ),
+                            name: name.text,
+                          );
+                          final value = isEdit
+                              ? await phListNotifier.editPh(newPh)
+                              : await phListNotifier.addPh(newPh.toPaperBase());
 
-                            if (value) {
-                              SystemChannels.textInput.invokeMethod(
-                                'TextInput.hide',
-                              );
-                              QR.back();
-                              {
-                                if (editPdf) {
-                                  phList.maybeWhen(
-                                    data: (list) {
-                                      ref
-                                          .read(
-                                            phPdfProvider(
-                                              list.last.id,
-                                            ).notifier,
-                                          )
-                                          .updatePhPdf(
-                                            Uint8List.fromList(phSendPdf),
-                                          );
-                                    },
-                                    orElse: () {},
-                                  );
-                                }
-                                displayPhToastWithContext(
-                                  TypeMsg.msg,
-                                  addedPhMsg,
+                          if (value) {
+                            SystemChannels.textInput.invokeMethod(
+                              'TextInput.hide',
+                            );
+                            QR.back();
+                            {
+                              if (editPdf) {
+                                phList.maybeWhen(
+                                  data: (list) {
+                                    ref
+                                        .read(
+                                          phPdfProvider(list.last.id).notifier,
+                                        )
+                                        .updatePhPdf(
+                                          Uint8List.fromList(phSendPdf),
+                                        );
+                                  },
+                                  orElse: () {},
                                 );
-                                editPdfNotifier.editPdf(false);
                               }
-                            } else {
                               displayPhToastWithContext(
-                                TypeMsg.error,
-                                phAddingFileErrorMsg,
+                                TypeMsg.msg,
+                                addedPhMsg,
                               );
+                              editPdfNotifier.editPdf(false);
                             }
-                          });
+                          } else {
+                            displayPhToastWithContext(
+                              TypeMsg.error,
+                              phAddingFileErrorMsg,
+                            );
+                          }
                         } else {
                           displayToast(
                             context,

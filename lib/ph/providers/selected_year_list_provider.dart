@@ -1,7 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SelectedYearListNotifier extends StateNotifier<List<int>> {
-  SelectedYearListNotifier() : super([DateTime.now().year]);
+class SelectedYearListNotifier extends Notifier<List<int>> {
+  @override
+  List<int> build() {
+    return [DateTime.now().year];
+  }
 
   void addYear(int year) {
     final copy = List<int>.from(state);
@@ -17,6 +20,6 @@ class SelectedYearListNotifier extends StateNotifier<List<int>> {
 }
 
 final selectedYearListProvider =
-    StateNotifierProvider<SelectedYearListNotifier, List<int>>((ref) {
-      return SelectedYearListNotifier();
-    });
+    NotifierProvider<SelectedYearListNotifier, List<int>>(
+      SelectedYearListNotifier.new,
+    );

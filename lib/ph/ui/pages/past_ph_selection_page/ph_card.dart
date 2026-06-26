@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/ph/class/ph.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/ph/providers/ph_cover_provider.dart';
 import 'package:titan/ph/providers/ph_provider.dart';
 import 'package:titan/ph/providers/ph_pdf_provider.dart';
@@ -16,7 +16,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
 class PhCard extends HookConsumerWidget {
-  final Ph ph;
+  final PaperComplete ph;
 
   const PhCard({super.key, required this.ph});
 
@@ -70,13 +70,13 @@ class PhCard extends HookConsumerWidget {
                       ? await FileSaver.instance.saveFile(
                           name: ph.name,
                           bytes: pdfBytes,
-                          ext: "pdf",
+                          fileExtension: "pdf",
                           mimeType: MimeType.pdf,
                         )
                       : await FileSaver.instance.saveAs(
                           name: ph.name,
                           bytes: pdfBytes,
-                          ext: "pdf",
+                          fileExtension: "pdf",
                           mimeType: MimeType.pdf,
                         );
 

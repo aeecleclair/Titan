@@ -1,8 +1,11 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FilePickerResultNotifier extends StateNotifier<FilePickerResult?> {
-  FilePickerResultNotifier() : super(null);
+class FilePickerResultNotifier extends Notifier<FilePickerResult?> {
+  @override
+  FilePickerResult? build() {
+    return null;
+  }
 
   void setFilePickerResult(FilePickerResult? bytes) {
     state = bytes;
@@ -10,6 +13,6 @@ class FilePickerResultNotifier extends StateNotifier<FilePickerResult?> {
 }
 
 final filePickerResultProvider =
-    StateNotifierProvider<FilePickerResultNotifier, FilePickerResult?>((ref) {
-      return FilePickerResultNotifier();
-    });
+    NotifierProvider<FilePickerResultNotifier, FilePickerResult?>(
+      FilePickerResultNotifier.new,
+    );

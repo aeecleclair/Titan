@@ -1,49 +1,46 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/ph/class/ph.dart';
-import 'package:titan/ph/repositories/ph_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class PhListNotifier extends ListNotifier<Ph> {
-  final PhRepository _phRepository = PhRepository();
-  PhListNotifier({required String token}) : super(const AsyncValue.loading()) {
-    _phRepository.setToken(token);
+class PhListNotifier extends ListNotifierAPI<PaperComplete> {
+  Openapi get phRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<List<PaperComplete>> build() {
+    loadPhList();
+    return const AsyncValue.loading();
   }
 
-  Future<AsyncValue<List<Ph>>> loadPhList() async {
-    return await loadList(() async => _phRepository.getAllPh());
+  Future<AsyncValue<List<PaperComplete>>> loadPhList() async {
+    return await loadList(phRepository.phGet);
   }
 
-  Future<bool> addPh(Ph ph) async {
-    return await add(_phRepository.addPh, ph);
+  Future<bool> addPh(PaperBase ph) async {
+    return await add(() => phRepository.phPost(body: ph), ph);
   }
 
-  Future<bool> editPh(Ph ph) async {
+  Future<bool> editPh(PaperComplete ph) async {
     return await update(
-      _phRepository.editPh,
-      (phs, ph) =>
-          phs..[phs.indexWhere((phToCheck) => phToCheck.id == ph.id)] = ph,
+      () => phRepository.phPaperIdPatch(
+        paperId: ph.id,
+        body: PaperUpdate(name: ph.name, releaseDate: ph.releaseDate),
+      ),
+      (ph) => ph.id,
       ph,
     );
   }
 
-  Future<bool> deletePh(Ph ph) async {
+  Future<bool> deletePh(PaperComplete ph) async {
     return await delete(
-      _phRepository.deletePh,
-      (phs, ph) => phs..removeWhere((phToCheck) => phToCheck.id == ph.id),
+      () => phRepository.phPaperIdDelete(paperId: ph.id),
+      (ph) => ph.id,
       ph.id,
-      ph,
     );
   }
 }
 
 final phListProvider =
-    StateNotifierProvider<PhListNotifier, AsyncValue<List<Ph>>>((ref) {
-      final token = ref.watch(tokenProvider);
-      final notifier = PhListNotifier(token: token);
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadPhList();
-      });
-      return notifier;
-    });
+    NotifierProvider<PhListNotifier, AsyncValue<List<PaperComplete>>>(
+      PhListNotifier.new,
+    );

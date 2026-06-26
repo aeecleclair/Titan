@@ -1,21 +1,21 @@
-import 'dart:async';
 import 'dart:typed_data';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/tools/repository/logo_repository.dart';
 
-class PhCoverRepository extends LogoRepository {
-  @override
-  // ignore: overridden_fields
-  final ext = "ph/";
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/repository/repository.dart';
+
+class PhCoverRepository {
+  final Openapi client;
+  PhCoverRepository(this.client);
 
   Future<Uint8List> getPhPdfFirstPage(String id) async {
-    final uint8List = await getLogo("", suffix: "$id/cover");
-    return uint8List;
+    final response = await client.phPaperIdCoverGet(paperId: id);
+    return response.bodyBytes;
   }
 }
 
-final phCoverRepositoryProvider = Provider<PhCoverRepository>((ref) {
-  final token = ref.watch(tokenProvider);
-  return PhCoverRepository()..setToken(token);
-});
+final phCoverRepositoryProvider = Provider<PhCoverRepository>(
+  (ref) => PhCoverRepository(ref.watch(repositoryProvider)),
+);

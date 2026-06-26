@@ -21,6 +21,7 @@ class PhMainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isAdmin = ref.watch(isPhAdminProvider);
     final phList = ref.watch(phListProvider);
+
     return PhTemplate(
       child: Column(
         children: [
@@ -49,7 +50,7 @@ class PhMainPage extends HookConsumerWidget {
           AsyncChild(
             value: phList,
             builder: (context, phs) {
-              phs.sort((a, b) => a.date.compareTo(b.date));
+              phs.sort((a, b) => a.releaseDate.compareTo(b.releaseDate));
               if (phs.isEmpty) {
                 return Text(
                   AppLocalizations.of(context)!.phNoJournalInDatabase,
