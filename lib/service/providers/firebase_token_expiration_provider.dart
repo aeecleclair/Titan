@@ -5,9 +5,14 @@ import 'package:titan/service/class/firebase_toke_expiration.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FirebaseTokenExpirationNotifier
-    extends StateNotifier<FirebaseTokenExpiration> {
+    extends Notifier<FirebaseTokenExpiration> {
   final String dbDate = "firebaseTokenExpiration";
-  FirebaseTokenExpirationNotifier() : super(FirebaseTokenExpiration.empty());
+
+  @override
+  FirebaseTokenExpiration build() {
+    getSavedDate();
+    return FirebaseTokenExpiration.empty();
+  }
 
   void getSavedDate() async {
     final prefs = await SharedPreferences.getInstance();
@@ -39,12 +44,6 @@ class FirebaseTokenExpirationNotifier
 }
 
 final firebaseTokenExpirationProvider =
-    StateNotifierProvider<
-      FirebaseTokenExpirationNotifier,
-      FirebaseTokenExpiration
-    >((ref) {
-      FirebaseTokenExpirationNotifier firebaseTokenExpirationNotifier =
-          FirebaseTokenExpirationNotifier();
-      firebaseTokenExpirationNotifier.getSavedDate();
-      return firebaseTokenExpirationNotifier;
-    });
+    NotifierProvider<FirebaseTokenExpirationNotifier, FirebaseTokenExpiration>(
+      () => FirebaseTokenExpirationNotifier(),
+    );
