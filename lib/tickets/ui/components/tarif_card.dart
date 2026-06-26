@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/tickets/class/category.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
 
 class TarifCard extends HookWidget {
   const TarifCard({super.key, required this.onChanged});
 
-  final void Function(List<Category> categories) onChanged;
+  final void Function(List<CategoryCreate> categories) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +21,14 @@ class TarifCard extends HookWidget {
     void notify() => onChanged(
       entries.value
           .map(
-            (e) => Category(
-              id: '',
+            (e) => CategoryCreate(
               name: e['label']!.text,
-              price: int.tryParse(e['value']!.text) ?? 0,
+              // The UI works in euros; the backend stores price in cents.
+              price:
+                  ((double.tryParse(e['value']!.text.replaceAll(',', '.')) ??
+                              0) *
+                          100)
+                      .round(),
               quota: int.tryParse(e['quota']!.text),
               requiredMembership: null,
             ),

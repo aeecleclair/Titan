@@ -1,13 +1,12 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/tickets/class/checkout.dart';
-import 'package:titan/tickets/class/ticket_event.dart';
-import 'package:titan/tickets/repositories/checkout_repository.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/repository/repository.dart';
 
 /// État de la création d'un checkout
 class CheckoutCreationState {
   final bool isCreating;
-  final Checkout? checkout;
+  final CheckoutResponse? checkout;
   final String? error;
   final bool isSuccess;
 
@@ -22,7 +21,7 @@ class CheckoutCreationState {
 
   CheckoutCreationState copyWith({
     bool? isCreating,
-    Checkout? checkout,
+    CheckoutResponse? checkout,
     String? error,
     bool? isSuccess,
   }) {
@@ -36,17 +35,12 @@ class CheckoutCreationState {
 }
 
 class CheckoutNotifier extends StateNotifier<CheckoutCreationState> {
-  final CheckoutRepository _checkoutRepository = CheckoutRepository();
+  final Openapi client;
 
-  CheckoutNotifier({required String token})
-    : super(CheckoutCreationState.initial()) {
-    _checkoutRepository.setToken(token);
-  }
+  CheckoutNotifier({required this.client})
+    : super(CheckoutCreationState.initial());
 
-  Future<void> createCheckout(
-    Checkout checkout,
-    TicketEvent ticketEvent,
-  ) async {
+  Future<void> createCheckout(Checkout checkout, String eventId) async {
     state = state.copyWith(
       isCreating: true,
       error: null,
@@ -55,18 +49,20 @@ class CheckoutNotifier extends StateNotifier<CheckoutCreationState> {
     );
 
     try {
-      final createdCheckout = await _checkoutRepository.createCheckout(
-        checkout,
-        ticketEvent,
+      final response = await client.ticketsEventsEventIdCheckoutPost(
+        eventId: eventId,
+        body: checkout,
       );
+      if (!response.isSuccessful) {
+        throw Exception(response.error?.toString() ?? 'Checkout failed');
+      }
       state = state.copyWith(
         isCreating: false,
-        checkout: createdCheckout,
+        checkout: response.body!,
         isSuccess: true,
       );
     } catch (e) {
       final errorString = e.toString();
-      // Map backend errors to translation keys
       String errorKey;
       if (errorString.contains('Session is sold out')) {
         errorKey = 'ticketsSessionSoldOut';
@@ -88,7 +84,5 @@ class CheckoutNotifier extends StateNotifier<CheckoutCreationState> {
 
 final checkoutProvider =
     StateNotifierProvider<CheckoutNotifier, CheckoutCreationState>((ref) {
-      final token = ref.watch(tokenProvider);
-      final notifier = CheckoutNotifier(token: token);
-      return notifier;
+      return CheckoutNotifier(client: ref.watch(repositoryProvider));
     });

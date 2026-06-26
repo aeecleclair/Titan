@@ -13,14 +13,8 @@ import 'package:titan/mypayment/providers/can_pay_provider.dart';
 import 'package:titan/mypayment/providers/my_wallet_provider.dart';
 import 'package:titan/mypayment/tools/can_pay.dart' show CanPayError;
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
-import 'package:titan/tickets/class/answer.dart';
-import 'package:titan/tickets/class/answer_type.dart';
-import 'package:titan/tickets/class/category.dart';
-import 'package:titan/tickets/class/checkout.dart';
-import 'package:titan/tickets/class/request_type.dart';
-import 'package:titan/tickets/class/question.dart';
-import 'package:titan/tickets/class/session.dart';
-import 'package:titan/tickets/class/ticket_event.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tickets/adapters/category.dart';
 import 'package:titan/tickets/providers/checkout_provider.dart';
 import 'package:titan/tickets/providers/ticket_event_provider.dart';
 import 'package:titan/tickets/providers/user_tickets_provider.dart';
@@ -59,7 +53,7 @@ class BookTicketPage extends HookConsumerWidget {
     );
 
     return TicketTemplate(
-      child: AsyncChild<TicketEvent>(
+      child: AsyncChild<EventPublic>(
         value: ticketEventAsync,
         builder: (context, ticketEvent) =>
             _TicketEventContent(ticketEvent: ticketEvent),
@@ -71,14 +65,14 @@ class BookTicketPage extends HookConsumerWidget {
 class _TicketEventContent extends HookConsumerWidget {
   const _TicketEventContent({required this.ticketEvent});
 
-  final TicketEvent ticketEvent;
+  final EventPublic ticketEvent;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final timeFormat = DateFormat.Hm('fr');
 
-    final selectedCategory = useState<Category?>(null);
-    final selectedSession = useState<Session?>(null);
+    final selectedCategory = useState<CategoryPublic?>(null);
+    final selectedSession = useState<SessionPublic?>(null);
     final selectedPaymentProvider = useState<String?>('helloasso');
     final answersMap = useState<Map<String, dynamic>>({});
     final checkoutState = ref.watch(checkoutProvider);
@@ -122,15 +116,12 @@ class _TicketEventContent extends HookConsumerWidget {
     }
 
     // Helper to build answers list from answersMap
-    List<Answer> buildAnswersList() {
+    List<AnswerCreate> buildAnswersList() {
       return ticketEvent.questions
           .where((q) => answersMap.value.containsKey(q.id))
           .map(
-            (q) => Answer(
-              questionId: q.id,
-              answerType: q.answerType,
-              answer: answersMap.value[q.id],
-            ),
+            (q) =>
+                AnswerCreate(questionId: q.id, answer: answersMap.value[q.id]),
           )
           .toList();
     }
@@ -175,8 +166,8 @@ class _TicketEventContent extends HookConsumerWidget {
         categoryId: getEffectiveCategoryId(),
         sessionId: getEffectiveSessionId(),
         answers: [],
-        myPaymentRequestMethod: getPaymentMethod(selectedPaymentProvider.value),
-        myPaymentTransferRedirectUrl: getRedirectUrl(),
+        mypaymentRequestMethod: getPaymentMethod(selectedPaymentProvider.value),
+        mypaymentTransferRedirectUrl: getRedirectUrl(),
       ),
     );
 
@@ -187,10 +178,10 @@ class _TicketEventContent extends HookConsumerWidget {
           categoryId: getEffectiveCategoryId(),
           sessionId: getEffectiveSessionId(),
           answers: buildAnswersList(),
-          myPaymentRequestMethod: getPaymentMethod(
+          mypaymentRequestMethod: getPaymentMethod(
             selectedPaymentProvider.value,
           ),
-          myPaymentTransferRedirectUrl: getRedirectUrl(),
+          mypaymentTransferRedirectUrl: getRedirectUrl(),
         );
         return null;
       },
@@ -285,7 +276,7 @@ class _TicketEventContent extends HookConsumerWidget {
                 }
               }
             }
-          } else if (checkout.price != null && checkout.price! > 0) {
+          } else if (checkout.price > 0) {
             // CAS MYEMPAY - prix > 0 mais pas d'URL, rediriger vers mypayment
             ref.read(checkoutProvider.notifier).reset();
             ref.read(pathForwardingProvider.notifier).forward('/mypayment');
@@ -342,10 +333,10 @@ class _TicketEventContent extends HookConsumerWidget {
               selectedSession.value?.id ??
               (validSessions.length == 1 ? validSessions.first.id : ''),
           answers: buildAnswersList(),
-          myPaymentRequestMethod: getPaymentMethod(
+          mypaymentRequestMethod: getPaymentMethod(
             selectedPaymentProvider.value,
           ),
-          myPaymentTransferRedirectUrl: getRedirectUrl(),
+          mypaymentTransferRedirectUrl: getRedirectUrl(),
         );
       }
       return null;
@@ -489,7 +480,7 @@ class _TicketEventContent extends HookConsumerWidget {
                                         const SizedBox(width: 8),
                                       ],
                                       Text(
-                                        '${category.price}€',
+                                        '${category.priceInEuros}€',
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium
@@ -580,18 +571,7 @@ class _TicketEventContent extends HookConsumerWidget {
                                         ),
                                       ),
                                       if (isSessionSoldOut)
-                                        const SoldOutBadge()
-                                      else if (session.quota != null &&
-                                          session.quota! > 0)
-                                        Text(
-                                          '${session.quota} ${l10n.ticketsPlaces}',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall
-                                              ?.copyWith(
-                                                color: ColorConstants.tertiary,
-                                              ),
-                                        ),
+                                        const SoldOutBadge(),
                                     ],
                                   ),
                                 ),
@@ -646,7 +626,7 @@ class _TicketEventContent extends HookConsumerWidget {
                       ),
                     ),
                     Text(
-                      '${selectedCategory.value!.price}€',
+                      '${selectedCategory.value!.priceInEuros}€',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         color: ColorConstants.main,
                         fontWeight: FontWeight.bold,
@@ -656,7 +636,7 @@ class _TicketEventContent extends HookConsumerWidget {
                 ),
                 const SizedBox(height: 16),
                 // Only show payment method if price > 0
-                if (selectedCategory.value!.price > 0) ...[
+                if (selectedCategory.value!.priceInEuros > 0) ...[
                   Text(
                     l10n.ticketsPaymentMethod,
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
@@ -729,16 +709,12 @@ class _TicketEventContent extends HookConsumerWidget {
                         const SizedBox(width: 12),
                         Builder(
                           builder: (context) {
-                            final canPayResult = canPayAsync.maybeWhen(
-                              data: (result) => result,
-                              orElse: () => null,
-                            );
+                            final canPayResult = canPayAsync.asData?.value;
                             final canPayOk = canPayResult?.success ?? false;
                             final balanceInCents =
-                                walletAsync.valueOrNull?.balance ?? 0;
+                                walletAsync.value?.balance ?? 0;
                             final categoryPriceCents =
-                                ((selectedCategory.value?.price ?? 0) * 100)
-                                    .round();
+                                selectedCategory.value?.price ?? 0;
                             final hasInsufficientBalance =
                                 canPayOk && balanceInCents < categoryPriceCents;
                             final isDisabled =
@@ -746,7 +722,7 @@ class _TicketEventContent extends HookConsumerWidget {
                             final isSelected =
                                 selectedPaymentProvider.value == 'myempay';
 
-                            // Auto-switch to helloasso if myempay is selected but can't pay
+                            // Auto-switch to helloasso if myempay can't pay
                             if (isDisabled && isSelected) {
                               WidgetsBinding.instance.addPostFrameCallback((_) {
                                 selectedPaymentProvider.value = 'helloasso';
@@ -754,22 +730,19 @@ class _TicketEventContent extends HookConsumerWidget {
                             }
 
                             String? disabledReason;
-                            if (!canPayOk && canPayResult != null) {
-                              switch (canPayResult.error!) {
-                                case CanPayError.tosNotAccepted:
-                                  disabledReason = l10n.paiementPleaseAcceptTOS;
-                                case CanPayError.noDevice:
-                                  disabledReason =
-                                      l10n.paiementDeviceNotRegistered;
-                                case CanPayError.deviceInactive:
-                                  disabledReason =
-                                      l10n.paiementDeviceNotActivated;
-                                case CanPayError.deviceRevoked:
-                                  disabledReason = l10n.paiementDeviceRevoked;
-                                case CanPayError.insufficientBalance:
-                                  disabledReason =
-                                      l10n.paiementInsufficientFunds;
-                              }
+                            if (!canPayOk && canPayResult?.error != null) {
+                              disabledReason = switch (canPayResult!.error!) {
+                                CanPayError.tosNotAccepted =>
+                                  l10n.paiementPleaseAcceptTOS,
+                                CanPayError.noDevice =>
+                                  l10n.paiementDeviceNotRegistered,
+                                CanPayError.deviceInactive =>
+                                  l10n.paiementDeviceNotActivated,
+                                CanPayError.deviceRevoked =>
+                                  l10n.paiementDeviceRevoked,
+                                CanPayError.insufficientBalance =>
+                                  l10n.paiementInsufficientFunds,
+                              };
                             } else if (hasInsufficientBalance) {
                               disabledReason = l10n.paiementInsufficientFunds;
                             }
@@ -882,7 +855,7 @@ class _TicketEventContent extends HookConsumerWidget {
                           final notifier = ref.read(checkoutProvider.notifier);
                           await notifier.createCheckout(
                             checkout.value,
-                            ticketEvent,
+                            ticketEvent.id,
                           );
                         },
                   style: ElevatedButton.styleFrom(
@@ -929,7 +902,7 @@ class _TicketEventContent extends HookConsumerWidget {
 
 // Widget for displaying a question and its answer input field
 class _QuestionAnswerField extends StatelessWidget {
-  final Question question;
+  final QuestionPublic question;
   final dynamic value;
   final ValueChanged<dynamic> onChanged;
 
@@ -1160,6 +1133,8 @@ class _QuestionAnswerField extends StatelessWidget {
           ),
           onChanged: onChanged,
         );
+      case AnswerType.swaggerGeneratedUnknown:
+        return const SizedBox.shrink();
     }
   }
 }

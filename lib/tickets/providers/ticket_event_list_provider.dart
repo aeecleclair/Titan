@@ -1,47 +1,32 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/tickets/class/ticket_event.dart';
-import 'package:titan/tickets/repositories/tickets_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class TicketEventListNotifier extends ListNotifier<TicketEvent> {
-  final TicketsRepository _repository;
-  TicketEventListNotifier({required this._repository})
-    : super(const AsyncValue.loading());
+class ShotgunListNotifier extends ListNotifierAPI<EventSimple> {
+  Openapi get repository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<List<TicketEvent>>> loadTicketEventList() async {
-    return await loadList(() async => _repository.getAllTicketEvents());
+  @override
+  AsyncValue<List<EventSimple>> build() {
+    loadShotgunList();
+    return const AsyncValue.loading();
   }
 
-  Future<TicketEvent> loadTicketEventById(String id) async {
-    return await _repository.getTicketEventById(id);
+  Future<AsyncValue<List<EventSimple>>> loadShotgunList() async {
+    return await loadList(repository.ticketsEventsGet);
   }
 
-  Future<bool> createTicketEvent(TicketEvent ticketEvent) async {
-    return await add(_repository.createTicketEvent, ticketEvent);
-  }
-
-  Future<bool> deleteTicketEvent(TicketEvent ticketEvent) async {
-    return await delete(
-      _repository.deleteTicketEvent,
-      (ticketEvents, ticketEvent) =>
-          ticketEvents..removeWhere((toCheck) => toCheck.id == ticketEvent.id),
-      ticketEvent.id,
-      ticketEvent,
-    );
+  Future<bool> createTicketEvent(EventCreate event) async {
+    final response = await repository.ticketsAdminEventsPost(body: event);
+    if (response.isSuccessful) {
+      await loadShotgunList();
+      return true;
+    }
+    return false;
   }
 }
 
 final ticketEventListProvider =
-    StateNotifierProvider<
-      TicketEventListNotifier,
-      AsyncValue<List<TicketEvent>>
-    >((ref) {
-      final repository = ref.watch(ticketsRepositoryProvider);
-      final notifier = TicketEventListNotifier(repository: repository);
-      tokenExpireWrapperAuth(ref, () async {
-        await notifier.loadTicketEventList();
-      });
-      return notifier;
-    });
+    NotifierProvider<ShotgunListNotifier, AsyncValue<List<EventSimple>>>(
+      ShotgunListNotifier.new,
+    );

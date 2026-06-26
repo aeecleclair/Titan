@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/tickets/class/user_ticket.dart';
 import 'package:titan/tickets/providers/ticket_change_over_provider.dart';
 import 'package:titan/tickets/providers/user_tickets_provider.dart';
 import 'package:titan/tools/constants.dart';
@@ -14,7 +14,7 @@ import 'package:titan/tools/ui/styleguide/text_entry.dart';
 final _emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
 
 class OfferTicketModal extends HookConsumerWidget {
-  final UserTicket ticket;
+  final AppCoreTicketsSchemasTicketsTicketComplete ticket;
 
   const OfferTicketModal({super.key, required this.ticket});
 
@@ -37,7 +37,7 @@ class OfferTicketModal extends HookConsumerWidget {
     final isLoading = changeOverState.isLoading;
 
     return BottomModalTemplate(
-      title: ticket.eventName,
+      title: ticket.event.name,
       description: l10n.ticketsOfferDescription,
       child: Form(
         key: formKey,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/tickets/class/ticket_event.dart';
+import 'package:titan/tickets/adapters/ticket_event.dart';
 
 class TicketEventStatusChip extends StatelessWidget {
   final TicketEventStatus status;

@@ -1,28 +1,27 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/tickets/class/ticket_event.dart';
-import 'package:titan/tickets/repositories/tickets_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class StoreTicketEventListNotifier extends ListNotifier<TicketEvent> {
-  final TicketsRepository _repository;
-  StoreTicketEventListNotifier({required this._repository})
-    : super(const AsyncValue.loading());
+class StoreTicketEventListNotifier extends ListNotifierAPI<EventSimple> {
+  Openapi get repository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<List<TicketEvent>>> loadStoreTicketEventList(
+  @override
+  AsyncValue<List<EventSimple>> build() {
+    return const AsyncValue.loading();
+  }
+
+  Future<AsyncValue<List<EventSimple>>> loadStoreTicketEventList(
     String storeId,
   ) async {
     return await loadList(
-      () => _repository.getTicketEventListByStoreId(storeId),
+      () => repository.ticketsAdminStoreStoreIdEventsGet(storeId: storeId),
     );
   }
 }
 
 final storeTicketEventListProvider =
-    StateNotifierProvider<
+    NotifierProvider<
       StoreTicketEventListNotifier,
-      AsyncValue<List<TicketEvent>>
-    >((ref) {
-      final repository = ref.watch(ticketsRepositoryProvider);
-      return StoreTicketEventListNotifier(repository: repository);
-    });
+      AsyncValue<List<EventSimple>>
+    >(StoreTicketEventListNotifier.new);

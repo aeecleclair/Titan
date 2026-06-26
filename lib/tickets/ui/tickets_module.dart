@@ -16,7 +16,7 @@ class TicketTemplate extends HookConsumerWidget {
     VoidCallback? topBarOnBack;
     if (onBack != null) {
       topBarOnBack = () {
-        ref.read(ticketsOnBackProvider.notifier).state = null;
+        ref.read(ticketsOnBackProvider.notifier).setOnBack(null);
         onBack();
       };
     }

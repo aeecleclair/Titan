@@ -4,7 +4,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/mypayment/class/user_store.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/mypayment/providers/my_stores_provider.dart';
 import 'package:titan/tickets/providers/store_tickets_list_provider.dart';
 import 'package:titan/tickets/router.dart';
@@ -27,16 +27,14 @@ class ManageTicketEventPage extends HookConsumerWidget {
       storeTicketEventListProvider.notifier,
     );
     final selectedStore = useState<UserStore?>(
-      myStores.valueOrNull?.isNotEmpty ?? false
-          ? myStores.valueOrNull?.first
-          : null,
+      myStores.value?.isNotEmpty ?? false ? myStores.value?.first : null,
     );
 
     useEffect(() {
       if (selectedStore.value == null &&
           myStores.hasValue &&
-          (myStores.valueOrNull?.isNotEmpty ?? false)) {
-        selectedStore.value = myStores.valueOrNull?.first;
+          (myStores.value?.isNotEmpty ?? false)) {
+        selectedStore.value = myStores.value?.first;
       }
       return null;
     }, [myStores]);
@@ -76,7 +74,7 @@ class ManageTicketEventPage extends HookConsumerWidget {
           SizedBox(
             height: 50,
             child: HorizontalMultiSelect<UserStore>(
-              items: myStores.valueOrNull ?? [],
+              items: myStores.value ?? [],
               selectedItem: selectedStore.value,
               onItemSelected: (store) {
                 selectedStore.value = store;

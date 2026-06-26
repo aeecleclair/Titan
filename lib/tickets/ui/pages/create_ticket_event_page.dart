@@ -5,13 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/feed/providers/association_event_list_provider.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/mypayment/class/user_store.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:titan/mypayment/providers/my_stores_provider.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
-import 'package:titan/tickets/class/answer_type.dart';
-import 'package:titan/tickets/class/category.dart';
-import 'package:titan/tickets/class/question.dart';
-import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tickets/ui/components/session_card.dart';
 import 'package:titan/tickets/ui/components/tarif_card.dart';
 import 'package:titan/tickets/ui/tickets_module.dart';
@@ -20,7 +16,6 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/styleguide/horizontal_multi_select.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
-import 'package:titan/tickets/providers/sessions_form_provider.dart';
 import 'package:titan/tickets/providers/ticket_event_list_provider.dart';
 
 enum QuestionType { tarif, quota }
@@ -42,14 +37,12 @@ class CreateTicketEventPage extends HookConsumerWidget {
       associationEventsListProvider.notifier,
     );
     final selectedStore = useState<UserStore?>(
-      myStores.valueOrNull?.isNotEmpty ?? false
-          ? myStores.valueOrNull?.first
-          : null,
+      myStores.value?.isNotEmpty ?? false ? myStores.value?.first : null,
     );
-    final categories = useState<List<Category>>([]);
+    final categories = useState<List<CategoryCreate>>([]);
+    final sessions = useState<List<SessionCreate>>([]);
     final questions = useState<List<_QuestionFormData>>([]);
     final scrollController = useScrollController();
-    final sessionsFormNotifier = ref.read(sessionsFormProvider.notifier);
 
     final locale = Localizations.localeOf(context);
 
@@ -70,7 +63,7 @@ class CreateTicketEventPage extends HookConsumerWidget {
                   SizedBox(
                     height: 50,
                     child: HorizontalMultiSelect<UserStore>(
-                      items: myStores.valueOrNull ?? [],
+                      items: myStores.value ?? [],
                       selectedItem: selectedStore.value,
                       onItemSelected: (store) {
                         selectedStore.value = store;
@@ -126,7 +119,7 @@ class CreateTicketEventPage extends HookConsumerWidget {
                   TarifCard(onChanged: (value) => categories.value = value),
                   const SizedBox(height: 16),
 
-                  const SessionCard(),
+                  SessionCard(onChanged: (value) => sessions.value = value),
                   const SizedBox(height: 16),
                   _ExtraQuestionsSection(
                     questions: questions.value,
@@ -165,28 +158,11 @@ class CreateTicketEventPage extends HookConsumerWidget {
                           return;
                         }
 
-                        final sessionsForm = ref.read(sessionsFormProvider);
-                        final eventSessions = sessionsFormNotifier
-                            .buildSessions();
-
-                        if (sessionsForm.entries.any(
-                          (entry) => entry.label.trim().isEmpty,
-                        )) {
+                        if (sessions.value.isEmpty) {
                           displayToast(
                             context,
                             TypeMsg.error,
                             l10n.ticketsSessionsRequired,
-                          );
-                          return;
-                        }
-
-                        if (sessionsForm.entries.any(
-                          (entry) => entry.startDatetime == null,
-                        )) {
-                          displayToast(
-                            context,
-                            TypeMsg.error,
-                            l10n.toolDateRequired,
                           );
                           return;
                         }
@@ -218,29 +194,25 @@ class CreateTicketEventPage extends HookConsumerWidget {
 
                           final success = await ticketEventListNotifier
                               .createTicketEvent(
-                                TicketEvent(
-                                  id: '',
+                                EventCreate(
                                   name: titleController.text.trim(),
                                   storeId: selectedStore.value?.id ?? '',
                                   quota: quota,
                                   openDatetime: openDatetime,
                                   closeDatetime: closeDatetime,
                                   categories: categories.value,
-                                  sessions: eventSessions,
+                                  sessions: sessions.value,
                                   questions: questions.value
                                       .where(
                                         (q) =>
                                             q.controller.text.trim().isNotEmpty,
                                       )
                                       .map(
-                                        (q) => Question(
-                                          id: '',
-                                          eventId: '',
+                                        (q) => QuestionCreate(
                                           question: q.controller.text.trim(),
                                           answerType: q.answerType,
                                           price: null,
                                           required: q.required,
-                                          disabled: false,
                                         ),
                                       )
                                       .toList(),

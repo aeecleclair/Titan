@@ -7,6 +7,7 @@ import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tickets/providers/csv_download_provider.dart';
 import 'package:titan/tickets/providers/event_tickets_provider.dart';
 import 'package:titan/tickets/providers/selected_ticket_event_provider.dart';
+import 'package:titan/tickets/providers/ticket_event_provider.dart';
 import 'package:titan/tickets/ui/components/stats_card.dart';
 import 'package:titan/tickets/ui/tickets_module.dart';
 import 'package:titan/tools/constants.dart';
@@ -22,7 +23,9 @@ class TicketResultsPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final selectedTicketEvent = ref.watch(selectedTicketEventProvider);
+    final selectedId = ref.watch(selectedTicketEventIdProvider);
+    final selectedEvent = ref.watch(ticketEventProvider).asData?.value;
+    final ticketEventNotifier = ref.watch(ticketEventProvider.notifier);
     final eventTickets = ref.watch(eventTicketsProvider);
     final eventTicketsNotifier = ref.watch(eventTicketsProvider.notifier);
     final csvDownload = ref.watch(csvDownloadProvider);
@@ -33,27 +36,26 @@ class TicketResultsPage extends HookConsumerWidget {
     }
 
     Future<void> downloadCsv() async {
-      if (selectedTicketEvent == null) return;
+      if (selectedId == null) return;
 
-      final bytes = await csvDownloadNotifier.downloadCsv(
-        selectedTicketEvent.id,
-      );
+      final bytes = await csvDownloadNotifier.downloadCsv(selectedId);
       if (bytes == null) {
         displayToastWithContext(TypeMsg.error, 'Erreur lors du téléchargement');
         return;
       }
 
+      final eventName = selectedEvent?.name ?? 'event';
       final path = kIsWeb
           ? await FileSaver.instance.saveFile(
-              name: '${selectedTicketEvent.name}_tickets',
+              name: '${eventName}_tickets',
               bytes: bytes,
-              ext: "csv",
+              fileExtension: "csv",
               mimeType: MimeType.csv,
             )
           : await FileSaver.instance.saveAs(
-              name: '${selectedTicketEvent.name}_tickets',
+              name: '${eventName}_tickets',
               bytes: bytes,
-              ext: "csv",
+              fileExtension: "csv",
               mimeType: MimeType.csv,
             );
 
@@ -64,14 +66,15 @@ class TicketResultsPage extends HookConsumerWidget {
 
     // Load tickets when the page is first built
     useEffect(() {
-      if (selectedTicketEvent != null) {
-        eventTicketsNotifier.loadEventTickets(selectedTicketEvent.id);
+      if (selectedId != null) {
+        eventTicketsNotifier.loadEventTickets(selectedId);
+        ticketEventNotifier.loadTicketEvent(selectedId);
       }
       return null;
-    }, [selectedTicketEvent]);
+    }, [selectedId]);
 
     // Handle case where no ticketEvent is selected
-    if (selectedTicketEvent == null) {
+    if (selectedId == null) {
       return TicketTemplate(
         child: Center(
           child: Text(
@@ -89,7 +92,7 @@ class TicketResultsPage extends HookConsumerWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              '${l10n.ticketsViewResults} - ${selectedTicketEvent.name}',
+              '${l10n.ticketsViewResults} - ${selectedEvent?.name ?? ''}',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -99,15 +102,17 @@ class TicketResultsPage extends HookConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: StatsCard(
-              ticketsSold: selectedTicketEvent.ticketsSold,
-              ticketsInCheckout: selectedTicketEvent.ticketsInCheckout,
-              quota: selectedTicketEvent.quota,
+          if (selectedEvent != null) ...[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: StatsCard(
+                ticketsSold: selectedEvent.ticketsSold,
+                ticketsInCheckout: selectedEvent.ticketsInCheckout,
+                quota: selectedEvent.quota,
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
+            const SizedBox(height: 16),
+          ],
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Button(
@@ -123,9 +128,7 @@ class TicketResultsPage extends HookConsumerWidget {
           Expanded(
             child: Refresher(
               onRefresh: () {
-                return eventTicketsNotifier.loadEventTickets(
-                  selectedTicketEvent.id,
-                );
+                return eventTicketsNotifier.loadEventTickets(selectedId);
               },
               controller: ScrollController(),
               child: Padding(
@@ -150,7 +153,7 @@ class TicketResultsPage extends HookConsumerWidget {
                       itemBuilder: (context, index) {
                         final ticket = tickets[index];
                         return ListItemTemplate(
-                          title: '${ticket.userFirstname} ${ticket.userName}',
+                          title: '${ticket.user.firstname} ${ticket.user.name}',
                           subtitle:
                               '${ticket.category.name} - ${ticket.session.name}',
                           trailing: const SizedBox.shrink(),

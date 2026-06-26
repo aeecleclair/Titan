@@ -1,20 +1,25 @@
 import 'dart:typed_data';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/tickets/repositories/tickets_repository.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class CsvDownloadNotifier extends StateNotifier<AsyncValue<void>> {
-  final TicketsRepository _repository;
-  CsvDownloadNotifier({required this._repository})
-    : super(const AsyncValue.data(null));
+class CsvDownloadNotifier extends Notifier<AsyncValue<void>> {
+  Openapi get repository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<void> build() {
+    return const AsyncValue.data(null);
+  }
 
   Future<Uint8List?> downloadCsv(String eventId) async {
     state = const AsyncValue.loading();
     try {
-      final bytes = await _repository.downloadTicketsCsv(eventId);
+      final response = await repository.ticketsAdminEventsEventIdTicketsCsvGet(
+        eventId: eventId,
+      );
       state = const AsyncValue.data(null);
-      return bytes;
+      return response.bodyBytes;
     } catch (e, stackTrace) {
       state = AsyncValue.error(e, stackTrace);
       return null;
@@ -23,7 +28,6 @@ class CsvDownloadNotifier extends StateNotifier<AsyncValue<void>> {
 }
 
 final csvDownloadProvider =
-    StateNotifierProvider<CsvDownloadNotifier, AsyncValue<void>>((ref) {
-      final repository = ref.watch(ticketsRepositoryProvider);
-      return CsvDownloadNotifier(repository: repository);
-    });
+    NotifierProvider<CsvDownloadNotifier, AsyncValue<void>>(
+      CsvDownloadNotifier.new,
+    );

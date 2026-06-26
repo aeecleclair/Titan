@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/tickets/providers/ticket_event_edit_provider.dart';
 import 'package:titan/tools/constants.dart';
-import 'package:titan/tools/exception.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/tools/ui/styleguide/confirm_modal.dart';
@@ -58,26 +56,13 @@ Future<bool> showDeleteConfirm(BuildContext context, WidgetRef ref) async {
   return confirmed;
 }
 
+/// Reports a refused edit, with [reason] naming the cause the call site can
+/// already anticipate — a delete the backend only rejects because rows depend
+/// on the row being removed.
 void showEditError(
   BuildContext context,
-  WidgetRef ref,
   AppLocalizations l10n, {
-  String? fallbackDueSales,
-  String? fallbackDueAnswers,
+  String? reason,
 }) {
-  final error = ref.read(ticketEventEditProvider).error;
-  if (error is AppException) {
-    final message = error.message;
-    if (message.contains('checkouts or tickets') && fallbackDueSales != null) {
-      displayToast(context, TypeMsg.error, fallbackDueSales);
-      return;
-    }
-    if (message.contains('answers') && fallbackDueAnswers != null) {
-      displayToast(context, TypeMsg.error, fallbackDueAnswers);
-      return;
-    }
-    displayToast(context, TypeMsg.error, message);
-    return;
-  }
-  displayToast(context, TypeMsg.error, l10n.ticketsUpdateError);
+  displayToast(context, TypeMsg.error, reason ?? l10n.ticketsUpdateError);
 }

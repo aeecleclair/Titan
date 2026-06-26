@@ -1,26 +1,27 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/tickets/class/ticket_change_over_invitation.dart';
-import 'package:titan/tickets/repositories/tickets_repository.dart';
-import 'package:titan/tools/exception.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class TicketChangeOverNotifier extends StateNotifier<AsyncValue<void>> {
-  final TicketsRepository _ticketsRepository;
+class TicketChangeOverNotifier extends Notifier<AsyncValue<void>> {
+  Openapi get repository => ref.watch(repositoryProvider);
 
-  TicketChangeOverNotifier({required this._ticketsRepository})
-    : super(const AsyncValue.data(null));
+  @override
+  AsyncValue<void> build() {
+    return const AsyncValue.data(null);
+  }
 
   Future<bool> requestChangeOver(String ticketId, String email) async {
     state = const AsyncValue.loading();
     try {
-      await _ticketsRepository.requestTicketChangeOver(
-        TicketChangeOverInvitation(ticketId: ticketId, email: email),
-      );
+      final response = await repository
+          .ticketsUserMeTicketsChangeOverRequestPost(
+            body: TicketChangeOverInvitation(ticketId: ticketId, email: email),
+          );
+      if (!response.isSuccessful) {
+        throw Exception(response.error?.toString() ?? 'Change over failed');
+      }
       state = const AsyncValue.data(null);
       return true;
-    } on AppException catch (e, stackTrace) {
-      state = AsyncValue.error(e.message, stackTrace);
-      return false;
     } catch (e, stackTrace) {
       state = AsyncValue.error(e.toString(), stackTrace);
       return false;
@@ -29,7 +30,6 @@ class TicketChangeOverNotifier extends StateNotifier<AsyncValue<void>> {
 }
 
 final ticketChangeOverProvider =
-    StateNotifierProvider<TicketChangeOverNotifier, AsyncValue<void>>((ref) {
-      final ticketsRepository = ref.watch(ticketsRepositoryProvider);
-      return TicketChangeOverNotifier(ticketsRepository: ticketsRepository);
-    });
+    NotifierProvider<TicketChangeOverNotifier, AsyncValue<void>>(
+      TicketChangeOverNotifier.new,
+    );

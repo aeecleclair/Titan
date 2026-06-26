@@ -4717,9 +4717,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsEditTitle => 'Edit ticketing';
 
   @override
-  String get ticketsEdit => 'Modifier';
-
-  @override
   String get ticketsEditSession => 'Edit session';
 
   @override
@@ -4900,9 +4897,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ticketsEventDeactivated => 'Event deactivated';
-
-  @override
-  String get ticketsDelete => 'Supprimer';
 
   @override
   String get ticketsDeleteSession => 'Delete session';

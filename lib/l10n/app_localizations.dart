@@ -9158,12 +9158,6 @@ abstract class AppLocalizations {
   /// **'Modifier la billetterie'**
   String get ticketsEditTitle;
 
-  /// No description provided for @ticketsEdit.
-  ///
-  /// In fr, this message translates to:
-  /// **'Modifier'**
-  String get ticketsEdit;
-
   /// No description provided for @ticketsEditSession.
   ///
   /// In fr, this message translates to:
@@ -9505,12 +9499,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Événement désactivé'**
   String get ticketsEventDeactivated;
-
-  /// No description provided for @ticketsDelete.
-  ///
-  /// In fr, this message translates to:
-  /// **'Supprimer'**
-  String get ticketsDelete;
 
   /// No description provided for @ticketsDeleteSession.
   ///
