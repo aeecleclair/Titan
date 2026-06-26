@@ -1,8 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/mypayment/class/history_interval.dart';
 
-class SelectedIntervalNotifier extends StateNotifier<HistoryInterval> {
-  SelectedIntervalNotifier() : super(HistoryInterval.currentMonth());
+class SelectedIntervalNotifier extends Notifier<HistoryInterval> {
+  @override
+  HistoryInterval build() {
+    return HistoryInterval.currentMonth();
+  }
 
   void updateStart(DateTime start) {
     state = HistoryInterval(start, state.end);
@@ -18,6 +21,6 @@ class SelectedIntervalNotifier extends StateNotifier<HistoryInterval> {
 }
 
 final selectedIntervalProvider =
-    StateNotifierProvider<SelectedIntervalNotifier, HistoryInterval>((ref) {
-      return SelectedIntervalNotifier();
-    });
+    NotifierProvider<SelectedIntervalNotifier, HistoryInterval>(
+      SelectedIntervalNotifier.new,
+    );

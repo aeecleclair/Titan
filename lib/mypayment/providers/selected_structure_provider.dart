@@ -1,8 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/mypayment/class/structure.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class SelectedStructureNotifier extends StateNotifier<Structure> {
-  SelectedStructureNotifier() : super(Structure.empty());
+class SelectedStructureNotifier extends Notifier<Structure> {
+  @override
+  Structure build() {
+    return Structure.empty();
+  }
 
   void setStructure(Structure structure) {
     state = structure;
@@ -10,6 +13,6 @@ class SelectedStructureNotifier extends StateNotifier<Structure> {
 }
 
 final selectedStructureProvider =
-    StateNotifierProvider<SelectedStructureNotifier, Structure>((ref) {
-      return SelectedStructureNotifier();
-    });
+    NotifierProvider<SelectedStructureNotifier, Structure>(
+      SelectedStructureNotifier.new,
+    );

@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/tools/providers/locale_notifier.dart';
-import 'package:titan/mypayment/class/history.dart';
 import 'package:titan/mypayment/providers/my_history_provider.dart';
 import 'package:titan/mypayment/providers/selected_transactions_provider.dart';
 import 'package:titan/mypayment/ui/pages/stats_page/month_section_summary.dart';
 import 'package:titan/mypayment/ui/pages/stats_page/transaction_chart.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 
 class SumUpChart extends HookConsumerWidget {
@@ -42,12 +43,12 @@ class SumUpChart extends HookConsumerWidget {
               element.creation.month == currentMonth.month,
         );
         for (final transaction in confirmedTransaction) {
-          if (transaction.direction == HistoryDirection.credited) {
+          if (transaction.type == HistoryType.directTransfer ||
+              transaction.type == HistoryType.requestTransfer) {
             final transactionName =
-                transaction.type == HistoryType.directTransfer ||
-                    transaction.type == HistoryType.requestTransfer
-                ? AppLocalizations.of(context)!.paiementTopUp
-                : transaction.otherWalletName;
+                transaction.type != HistoryType.directTransfer
+                ? transaction.otherWalletName
+                : AppLocalizations.of(context)!.paiementTopUp;
             creditedTransactionPerStore[transactionName] = [
               ...?creditedTransactionPerStore[transactionName],
               transaction,
@@ -92,18 +93,6 @@ class SumUpChart extends HookConsumerWidget {
                             controller: pageController,
                             clipBehavior: Clip.none,
                             physics: const BouncingScrollPhysics(),
-                            onPageChanged: (page) {
-                              selected.value = -1;
-                              final direction = page == 0
-                                  ? HistoryDirection.credited
-                                  : HistoryDirection.debited;
-                              selectedTransactionsNotifier
-                                  .updateSelectedTransactions(
-                                    confirmedTransaction
-                                        .where((t) => t.direction == direction)
-                                        .toList(),
-                                  );
-                            },
                             children: [
                               TransactionChart(
                                 currentMonth: currentMonth,
@@ -125,13 +114,7 @@ class SumUpChart extends HookConsumerWidget {
                                 selected.value = -1;
                                 selectedTransactionsNotifier
                                     .updateSelectedTransactions(
-                                      confirmedTransaction
-                                          .where(
-                                            (t) =>
-                                                t.direction ==
-                                                HistoryDirection.credited,
-                                          )
-                                          .toList(),
+                                      confirmedTransaction.toList(),
                                     );
                                 pageController.animateToPage(
                                   0,
@@ -164,13 +147,7 @@ class SumUpChart extends HookConsumerWidget {
                                 selected.value = -1;
                                 selectedTransactionsNotifier
                                     .updateSelectedTransactions(
-                                      confirmedTransaction
-                                          .where(
-                                            (t) =>
-                                                t.direction ==
-                                                HistoryDirection.debited,
-                                          )
-                                          .toList(),
+                                      confirmedTransaction.toList(),
                                     );
                                 pageController.animateToPage(
                                   1,

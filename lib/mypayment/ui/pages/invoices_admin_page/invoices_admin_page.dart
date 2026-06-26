@@ -12,7 +12,6 @@ import 'package:titan/mypayment/ui/pages/invoices_admin_page/invoice_card.dart';
 import 'package:titan/mypayment/ui/mypayment.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
@@ -37,13 +36,7 @@ class InvoicesAdminPage extends HookConsumerWidget {
     final localizeWithContext = AppLocalizations.of(context)!;
 
     void refreshInvoices() {
-      tokenExpireWrapper(
-        ref,
-        () => invoicesNotifier.getInvoices(
-          page: page.value,
-          pageLimit: pageSize.value,
-        ),
-      );
+      invoicesNotifier.getInvoices(page: page.value, pageLimit: pageSize.value);
     }
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -163,24 +156,22 @@ class InvoicesAdminPage extends HookConsumerWidget {
                                   onPressed: () async {
                                     if (structure.id == "") return;
                                     Navigator.pop(context);
-                                    await tokenExpireWrapper(ref, () async {
-                                      final value = await invoicesNotifier
-                                          .createInvoice(structure);
-                                      if (value) {
-                                        displayToastWithContext(
-                                          TypeMsg.msg,
-                                          localizeWithContext
-                                              .paiementInvoiceCreatedSuccessfully,
-                                        );
-                                        refreshInvoices();
-                                      } else {
-                                        displayToastWithContext(
-                                          TypeMsg.error,
-                                          localizeWithContext
-                                              .paiementNoInvoiceToCreate,
-                                        );
-                                      }
-                                    });
+                                    final value = await invoicesNotifier
+                                        .createInvoice(structure);
+                                    if (value) {
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        localizeWithContext
+                                            .paiementInvoiceCreatedSuccessfully,
+                                      );
+                                      refreshInvoices();
+                                    } else {
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        localizeWithContext
+                                            .paiementNoInvoiceToCreate,
+                                      );
+                                    }
                                   },
                                 ),
                               ],

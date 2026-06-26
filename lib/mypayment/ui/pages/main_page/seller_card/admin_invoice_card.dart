@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/mypayment/providers/invoice_list_provider.dart';
 import 'package:titan/mypayment/router.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/tools/constants.dart';
 
 class InvoiceAdminCard extends ConsumerWidget {
   const InvoiceAdminCard({super.key});
@@ -52,7 +51,7 @@ class InvoiceAdminCard extends ConsumerWidget {
         ),
       ),
       onTap: () {
-        tokenExpireWrapper(ref, () => invoicesNotifier.getInvoices());
+        invoicesNotifier.getInvoices();
         QR.to(PaymentRouter.root + PaymentRouter.invoicesAdmin);
       },
     );

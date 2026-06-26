@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/mypayment/class/user_store.dart';
 import 'package:titan/mypayment/providers/is_payment_admin.dart';
 import 'package:titan/mypayment/providers/my_stores_provider.dart';
 import 'package:titan/mypayment/ui/pages/main_page/seller_card/admin_invoice_card.dart';
+import 'package:titan/mypayment/ui/pages/main_page/seller_card/structure_admin_card.dart';
 import 'package:titan/mypayment/ui/pages/main_page/seller_card/store_divider.dart';
 import 'package:titan/mypayment/ui/pages/main_page/seller_card/store_seller_card.dart';
-import 'package:titan/mypayment/ui/pages/main_page/seller_card/structure_admin_card.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 
 class StoreList extends ConsumerWidget {

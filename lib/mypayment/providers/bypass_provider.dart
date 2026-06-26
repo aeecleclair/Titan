@@ -1,13 +1,16 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class BypassNotifier extends StateNotifier<bool> {
-  BypassNotifier() : super(false);
+class BypassNotifier extends Notifier<bool> {
+  @override
+  bool build() {
+    return false;
+  }
 
   void setBypass(bool bypass) {
     state = bypass;
   }
 }
 
-final bypassProvider = StateNotifierProvider<BypassNotifier, bool>((ref) {
-  return BypassNotifier();
-});
+final bypassProvider = NotifierProvider<BypassNotifier, bool>(
+  BypassNotifier.new,
+);

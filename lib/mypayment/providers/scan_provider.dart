@@ -1,20 +1,35 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/mypayment/class/scan_info.dart';
-import 'package:titan/mypayment/class/transaction.dart';
-import 'package:titan/mypayment/repositories/stores_repository.dart';
-import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/single_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class ScanNotifier extends SingleNotifier<Transaction> {
-  final StoresRepository storesRepository;
-  ScanNotifier({required this.storesRepository})
-    : super(const AsyncValue.loading());
+class ScanNotifier extends SingleNotifierAPI<History> {
+  Openapi get storesRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<Transaction>?> scan(String storeId, ScanInfo data) async {
-    return await load(() => storesRepository.scan(storeId, data));
+  @override
+  AsyncValue<History> build() {
+    return const AsyncValue.loading();
   }
 
-  Future<bool> canScan(String storeId, ScanInfo data) async {
-    return storesRepository.canScan(storeId, data);
+  Future<AsyncValue<History>?> scan(
+    String storeId,
+    ScanInfo data, {
+    bool? bypass,
+  }) async {
+    return await load(
+      () => storesRepository.mypaymentStoresStoreIdScanPost(
+        storeId: storeId,
+        body: data.copyWith(bypassMembership: bypass),
+      ),
+    );
+  }
+
+  Future<bool> canScan(String storeId, ScanInfo data, {bool? bypass}) async {
+    return (await storesRepository.mypaymentStoresStoreIdScanCheckPost(
+          storeId: storeId,
+          body: data.copyWith(bypassMembership: bypass),
+        )).body?.success ??
+        false;
   }
 
   void reset() {
@@ -22,8 +37,6 @@ class ScanNotifier extends SingleNotifier<Transaction> {
   }
 }
 
-final scanProvider =
-    StateNotifierProvider<ScanNotifier, AsyncValue<Transaction>>((ref) {
-      final storesRepository = ref.watch(storesRepositoryProvider);
-      return ScanNotifier(storesRepository: storesRepository);
-    });
+final scanProvider = NotifierProvider<ScanNotifier, AsyncValue<History>>(
+  ScanNotifier.new,
+);

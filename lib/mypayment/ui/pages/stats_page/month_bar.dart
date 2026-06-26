@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:titan/tools/providers/locale_notifier.dart';
-import 'package:titan/mypayment/class/history.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
 import 'package:titan/mypayment/providers/my_history_provider.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 
 class MonthBar extends HookConsumerWidget {
   final DateTime currentMonth;
@@ -32,8 +32,10 @@ class MonthBar extends HookConsumerWidget {
           0,
           (previousValue, element) =>
               previousValue +
-              (element.direction == HistoryDirection.debited
+              (element.type == HistoryType.directTransaction
                   ? -element.total
+                  : element.type == HistoryType.refund
+                  ? -element.total + element.refund!.total
                   : element.total),
         );
       },

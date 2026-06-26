@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/mypayment/providers/bank_account_holder_provider.dart';
 import 'package:titan/mypayment/providers/my_structures_provider.dart';
 
-final isStructureAdminProvider = StateProvider((ref) {
+final isStructureAdminProvider = Provider((ref) {
   final myStructures = ref.watch(myStructuresProvider);
   return myStructures.isNotEmpty;
 });

@@ -1,19 +1,22 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/mypayment/repositories/users_me_repository.dart';
-import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/single_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class RegisterNotifier extends SingleNotifier<bool> {
-  final UsersMeRepository usersMeRepository;
-  RegisterNotifier({required this.usersMeRepository})
-    : super(const AsyncValue.loading());
+class RegisterNotifier extends SingleNotifierAPI<bool> {
+  Openapi get usersMeRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<bool>> register() async {
-    return await load(usersMeRepository.register);
+  @override
+  AsyncValue<bool> build() {
+    return const AsyncValue.loading();
+  }
+
+  Future<bool> register() async {
+    return (await usersMeRepository.mypaymentUsersMeRegisterPost())
+        .isSuccessful;
   }
 }
 
-final registerProvider =
-    StateNotifierProvider<RegisterNotifier, AsyncValue<bool>>((ref) {
-      final registerRepository = ref.watch(usersMeRepositoryProvider);
-      return RegisterNotifier(usersMeRepository: registerRepository);
-    });
+final registerProvider = NotifierProvider<RegisterNotifier, AsyncValue<bool>>(
+  RegisterNotifier.new,
+);

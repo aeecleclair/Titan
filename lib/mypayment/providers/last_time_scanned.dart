@@ -1,7 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class LastTimeScannedNotifier extends StateNotifier<DateTime?> {
-  LastTimeScannedNotifier() : super(null);
+class LastTimeScannedNotifier extends Notifier<DateTime?> {
+  @override
+  DateTime? build() {
+    return null;
+  }
 
   void updateLastTimeScanned(DateTime lastTimeScanned) {
     state = lastTimeScanned;
@@ -13,6 +16,6 @@ class LastTimeScannedNotifier extends StateNotifier<DateTime?> {
 }
 
 final lastTimeScannedProvider =
-    StateNotifierProvider<LastTimeScannedNotifier, DateTime?>((ref) {
-      return LastTimeScannedNotifier();
-    });
+    NotifierProvider<LastTimeScannedNotifier, DateTime?>(
+      LastTimeScannedNotifier.new,
+    );

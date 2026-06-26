@@ -1,13 +1,16 @@
 import 'dart:convert';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/mypayment/class/signed_content.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class BarcodeNotifier extends StateNotifier<SignedContent?> {
-  BarcodeNotifier() : super(null);
+class BarcodeNotifier extends Notifier<ScanInfo?> {
+  @override
+  ScanInfo? build() {
+    return null;
+  }
 
-  SignedContent updateBarcode(String barcode) {
-    state = SignedContent.fromJson(jsonDecode(barcode));
+  ScanInfo updateBarcode(String barcode) {
+    state = ScanInfo.fromJson(jsonDecode(barcode));
     return state!;
   }
 
@@ -16,8 +19,6 @@ class BarcodeNotifier extends StateNotifier<SignedContent?> {
   }
 }
 
-final barcodeProvider = StateNotifierProvider<BarcodeNotifier, SignedContent?>((
-  ref,
-) {
-  return BarcodeNotifier();
-});
+final barcodeProvider = NotifierProvider<BarcodeNotifier, ScanInfo?>(
+  BarcodeNotifier.new,
+);

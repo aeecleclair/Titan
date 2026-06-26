@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/mypayment/class/scan_info.dart';
 import 'package:titan/mypayment/providers/barcode_provider.dart';
 import 'package:titan/mypayment/providers/bypass_provider.dart';
 import 'package:titan/mypayment/providers/last_time_scanned.dart';
@@ -15,7 +14,6 @@ import 'package:titan/mypayment/providers/scan_provider.dart';
 import 'package:titan/mypayment/providers/selected_store_provider.dart';
 import 'package:titan/mypayment/ui/pages/scan_page/scan_overlay_shape.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -37,7 +35,6 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
     setState(() {
       scannedValue = null;
     });
-    controller.stop();
     controller.start();
   }
 
@@ -51,9 +48,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
             context,
           )!.paiementScanNoMembershipConfirmation,
           onYes: () async {
-            tokenExpireWrapper(ref, () async {
-              onYes.call();
-            });
+            onYes.call();
           },
         );
       },
@@ -88,16 +83,10 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
         barcodes.barcodes.firstOrNull!.rawValue!,
       );
       if (!bypass) {
-        final canScan = await scanNotifier.canScan(
-          store.id,
-          ScanInfo.fromSignedContent(data),
-        );
+        final canScan = await scanNotifier.canScan(store.id, data);
         if (!canScan) {
           showWithoutMembershipDialog(() async {
-            final value = await scanNotifier.scan(
-              store.id,
-              ScanInfo.fromSignedContent(data, bypassMembership: true),
-            );
+            final value = await scanNotifier.scan(store.id, data, bypass: true);
             if (value == null) {
               displayToastWithContext(
                 TypeMsg.error,
@@ -112,10 +101,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
           return;
         }
       }
-      final value = await scanNotifier.scan(
-        store.id,
-        ScanInfo.fromSignedContent(data),
-      );
+      final value = await scanNotifier.scan(store.id, data);
       if (value == null) {
         displayToastWithContext(
           TypeMsg.error,

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/tools/providers/locale_notifier.dart';
-import 'package:titan/mypayment/class/history.dart';
 
 class SummaryCard extends ConsumerWidget {
   final List<History> history;
@@ -21,13 +22,28 @@ class SummaryCard extends ConsumerWidget {
       if (transaction.status == TransactionStatus.canceled) {
         continue; // Only consider successful transactions
       }
-      final signed = transaction.direction == HistoryDirection.debited
-          ? -transaction.total
-          : transaction.total;
-      total += signed;
-      if (transaction.type == HistoryType.directTransaction ||
-          transaction.type == HistoryType.requestTransaction) {
-        numberTransactions++;
+      switch (transaction.type) {
+        case HistoryType.directTransaction:
+          total -= transaction.total;
+          numberTransactions++;
+          break;
+        case HistoryType.refund:
+          total -= transaction.total;
+          break;
+
+        case HistoryType.requestTransaction:
+          total += transaction.total;
+          numberTransactions++;
+          break;
+        case HistoryType.requestTransfer:
+          total += transaction.total;
+          break;
+
+        case HistoryType.directTransfer:
+          total += transaction.total;
+          break;
+        case HistoryType.swaggerGeneratedUnknown:
+          break;
       }
     }
 

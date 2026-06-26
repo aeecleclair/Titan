@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/mypayment/class/invoice.dart';
 import 'package:titan/mypayment/providers/invoice_list_provider.dart';
 import 'package:titan/mypayment/providers/invoice_pdf_provider.dart';
 import 'package:titan/tools/constants.dart';
@@ -57,13 +57,13 @@ class InvoiceCard extends HookConsumerWidget {
                         ? await FileSaver.instance.saveFile(
                             name: invoice.reference,
                             bytes: pdfBytes,
-                            ext: "pdf",
+                            fileExtension: "pdf",
                             mimeType: MimeType.pdf,
                           )
                         : await FileSaver.instance.saveAs(
                             name: invoice.reference,
                             bytes: pdfBytes,
-                            ext: "pdf",
+                            fileExtension: "pdf",
                             mimeType: MimeType.pdf,
                           );
                     if (path != null) {
@@ -74,15 +74,18 @@ class InvoiceCard extends HookConsumerWidget {
                     }
                   },
                 ),
-                if (!invoice.received && isAdmin) ...[
+                if (invoice.received != true && isAdmin) ...[
                   const SizedBox(height: 10),
                   Button(
-                    text: invoice.paid
+                    text: invoice.paid == true
                         ? localizeWithContext.paiementMarkUnpaid
                         : localizeWithContext.paiementMarkPaid,
                     onPressed: () async {
                       final value = await invoicesNotifier
-                          .updateInvoicePaidStatus(invoice, !invoice.paid);
+                          .updateInvoicePaidStatus(
+                            invoice,
+                            invoice.paid != true,
+                          );
                       if (value) {
                         displayToastWithContext(
                           TypeMsg.msg,
@@ -97,7 +100,9 @@ class InvoiceCard extends HookConsumerWidget {
                     },
                   ),
                 ],
-                if (!isAdmin && invoice.paid && !invoice.received) ...[
+                if (!isAdmin &&
+                    invoice.paid == true &&
+                    invoice.received != true) ...[
                   const SizedBox(height: 10),
                   Button(
                     text: localizeWithContext.paiementMarkReceived,
@@ -130,7 +135,7 @@ class InvoiceCard extends HookConsumerWidget {
                     },
                   ),
                 ],
-                if (!invoice.paid && isAdmin) ...[
+                if (invoice.paid != true && isAdmin) ...[
                   const SizedBox(height: 10),
                   Button(
                     text: localizeWithContext.paiementDeleteInvoice,
@@ -196,17 +201,17 @@ class InvoiceCard extends HookConsumerWidget {
                   ],
                 ),
               Text(
-                invoice.received
+                invoice.received == true
                     ? localizeWithContext.paiementReceived
-                    : invoice.paid
+                    : invoice.paid == true
                     ? localizeWithContext.paiementPaid
                     : localizeWithContext.paiementPending,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: invoice.received
+                  color: invoice.received == true
                       ? Colors.green
-                      : invoice.paid
+                      : invoice.paid == true
                       ? Colors.blue
                       : Colors.orange,
                 ),

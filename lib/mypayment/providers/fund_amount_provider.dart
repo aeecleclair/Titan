@@ -1,15 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final fundAmountProvider = StateNotifierProvider<FundAmountProvider, String>((
-  ref,
-) {
-  return FundAmountProvider();
-});
-
-class FundAmountProvider extends StateNotifier<String> {
-  FundAmountProvider() : super('');
+class FundAmountProvider extends Notifier<String> {
+  @override
+  String build() {
+    return '';
+  }
 
   void setFundAmount(String i) {
     state = i;
   }
 }
+
+final fundAmountProvider = NotifierProvider<FundAmountProvider, String>(
+  FundAmountProvider.new,
+);

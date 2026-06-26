@@ -3,13 +3,17 @@ import 'dart:typed_data';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/mypayment/repositories/invoice_pdf_repository.dart';
 
-class InvoicePdfNotifier extends FamilyAsyncNotifier<Uint8List, String> {
+class InvoicePdfNotifier extends AsyncNotifier<Uint8List> {
+  InvoicePdfNotifier(this.invoiceId);
+
+  final String invoiceId;
+
   @override
-  Future<Uint8List> build(String arg) async {
+  Future<Uint8List> build() async {
     final InvoicePdfRepository invoicePdfRepository = ref.watch(
       invoicePdfRepositoryProvider,
     );
-    return await invoicePdfRepository.getInvoicePdf(arg);
+    return await invoicePdfRepository.getInvoicePdf(invoiceId);
   }
 }
 

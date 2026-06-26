@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/mypayment/providers/barcode_provider.dart';
 import 'package:titan/mypayment/providers/ongoing_transaction.dart';
 import 'package:titan/mypayment/providers/selected_store_provider.dart';
@@ -11,6 +10,7 @@ import 'package:titan/mypayment/router.dart';
 import 'package:titan/mypayment/ui/pages/main_page/main_card_button.dart';
 import 'package:titan/mypayment/ui/pages/main_page/main_card_template.dart';
 import 'package:titan/mypayment/ui/pages/scan_page/scan_page.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 

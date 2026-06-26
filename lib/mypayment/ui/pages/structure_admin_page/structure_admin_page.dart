@@ -10,8 +10,8 @@ import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
-class StructureStorePage extends ConsumerWidget {
-  const StructureStorePage({super.key});
+class StructureStoresPage extends ConsumerWidget {
+  const StructureStoresPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

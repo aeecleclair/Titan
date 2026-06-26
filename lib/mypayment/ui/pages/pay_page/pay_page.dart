@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/tools/providers/locale_notifier.dart';
 import 'package:titan/mypayment/providers/my_wallet_provider.dart';
 import 'package:titan/mypayment/providers/pay_amount_provider.dart';
 import 'package:titan/mypayment/ui/pages/pay_page/confirm_button.dart';
 import 'package:titan/mypayment/ui/components/digit_fade_in_animation.dart';
 import 'package:titan/mypayment/ui/components/keyboard.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 
 class PayPage extends ConsumerWidget {
   const PayPage({super.key});

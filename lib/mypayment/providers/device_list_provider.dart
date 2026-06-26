@@ -1,32 +1,34 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/mypayment/class/wallet_device.dart';
-import 'package:titan/mypayment/repositories/devices_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class DeviceListNotifier extends ListNotifier<WalletDevice> {
-  final DevicesRepository devicesRepository;
-  DeviceListNotifier({required this.devicesRepository})
-    : super(const AsyncValue.loading());
+class DeviceListNotifier extends ListNotifierAPI<WalletDevice> {
+  Openapi get devicesRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<List<WalletDevice>> build() {
+    getDeviceList();
+    return const AsyncValue.loading();
+  }
 
   Future<AsyncValue<List<WalletDevice>>> getDeviceList() async {
-    return await loadList(devicesRepository.getDevices);
+    return await loadList(devicesRepository.mypaymentUsersMeWalletDevicesGet);
   }
 
   Future<bool> revokeDevice(WalletDevice device) async {
     return await update(
-      (device) => devicesRepository.revokeDevice(device.id),
-      (devices, device) =>
-          devices..[devices.indexWhere((d) => d.id == device.id)] = device,
+      () => devicesRepository
+          .mypaymentUsersMeWalletDevicesWalletDeviceIdRevokePost(
+            walletDeviceId: device.id,
+          ),
+      (device) => device.id,
       device,
     );
   }
 }
 
 final deviceListProvider =
-    StateNotifierProvider<DeviceListNotifier, AsyncValue<List<WalletDevice>>>((
-      ref,
-    ) {
-      final deviceListRepository = ref.watch(devicesRepositoryProvider);
-      return DeviceListNotifier(devicesRepository: deviceListRepository)
-        ..getDeviceList();
-    });
+    NotifierProvider<DeviceListNotifier, AsyncValue<List<WalletDevice>>>(
+      DeviceListNotifier.new,
+    );

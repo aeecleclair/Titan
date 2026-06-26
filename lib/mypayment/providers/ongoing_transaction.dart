@@ -1,10 +1,13 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/mypayment/class/transaction.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class OngoingTransaction extends StateNotifier<AsyncValue<Transaction>> {
-  OngoingTransaction() : super(const AsyncValue.loading());
+class OngoingTransaction extends Notifier<AsyncValue<History>> {
+  @override
+  AsyncValue<History> build() {
+    return const AsyncValue.loading();
+  }
 
-  void updateOngoingTransaction(AsyncValue<Transaction> transaction) {
+  void updateOngoingTransaction(AsyncValue<History> transaction) {
     state = transaction;
   }
 
@@ -14,6 +17,6 @@ class OngoingTransaction extends StateNotifier<AsyncValue<Transaction>> {
 }
 
 final ongoingTransactionProvider =
-    StateNotifierProvider<OngoingTransaction, AsyncValue<Transaction>>((ref) {
-      return OngoingTransaction();
-    });
+    NotifierProvider<OngoingTransaction, AsyncValue<History>>(
+      OngoingTransaction.new,
+    );

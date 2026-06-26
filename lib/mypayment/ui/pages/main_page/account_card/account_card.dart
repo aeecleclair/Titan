@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/mypayment/class/wallet_device.dart';
 import 'package:titan/mypayment/providers/device_list_provider.dart';
 import 'package:titan/mypayment/providers/device_provider.dart';
 import 'package:titan/mypayment/providers/fund_amount_provider.dart';
@@ -20,7 +20,6 @@ import 'package:titan/mypayment/ui/pages/main_page/main_card_template.dart';
 import 'package:titan/mypayment/ui/pages/pay_page/pay_page.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/providers/locale_notifier.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
@@ -126,66 +125,63 @@ class AccountCard extends HookConsumerWidget {
             icon: HeroIcons.qrCode,
             title: localizeWithContext.paiementPay,
             onPressed: () async {
-              await tokenExpireWrapper(ref, () async {
-                if (!hasAcceptedToS) {
+              if (!hasAcceptedToS) {
+                displayToastWithContext(
+                  TypeMsg.error,
+                  localizeWithContext.paiementPleaseAcceptTOS,
+                );
+                return;
+              }
+              String? keyId = await keyService.getKeyId();
+              if (keyId == null) {
+                showNotRegisteredDeviceDialog();
+                return;
+              }
+              final device = await deviceNotifier.getDevice(keyId);
+              device.when(
+                data: (device) async {
+                  if (device.status == WalletDeviceStatus.active) {
+                    showPayModal();
+                  } else if (device.status == WalletDeviceStatus.inactive) {
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return DeviceDialogBox(
+                          title: localizeWithContext.paiementDeviceNotActivated,
+                          descriptions: localizeWithContext
+                              .paiementDeviceNotActivatedDescription,
+                          buttonText: localizeWithContext.paiementAccessPage,
+                          onClick: () {
+                            QR.to(PaymentRouter.root + PaymentRouter.devices);
+                          },
+                        );
+                      },
+                    );
+                  } else {
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return DeviceDialogBox(
+                          title: localizeWithContext.paiementDeviceRevoked,
+                          descriptions: localizeWithContext
+                              .paiementReactivateRevokedDeviceDescription,
+                          buttonText: localizeWithContext.paiementAccessPage,
+                          onClick: () {
+                            QR.to(PaymentRouter.root + PaymentRouter.devices);
+                          },
+                        );
+                      },
+                    );
+                  }
+                },
+                error: (e, s) {
                   displayToastWithContext(
                     TypeMsg.error,
-                    localizeWithContext.paiementPleaseAcceptTOS,
+                    localizeWithContext.paiementDeviceRecoveryError,
                   );
-                  return;
-                }
-                String? keyId = await keyService.getKeyId();
-                if (keyId == null) {
-                  showNotRegisteredDeviceDialog();
-                  return;
-                }
-                final device = await deviceNotifier.getDevice(keyId);
-                device.when(
-                  data: (device) async {
-                    if (device.status == WalletDeviceStatus.active) {
-                      showPayModal();
-                    } else if (device.status == WalletDeviceStatus.inactive) {
-                      await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return DeviceDialogBox(
-                            title:
-                                localizeWithContext.paiementDeviceNotActivated,
-                            descriptions: localizeWithContext
-                                .paiementDeviceNotActivatedDescription,
-                            buttonText: localizeWithContext.paiementAccessPage,
-                            onClick: () {
-                              QR.to(PaymentRouter.root + PaymentRouter.devices);
-                            },
-                          );
-                        },
-                      );
-                    } else {
-                      await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return DeviceDialogBox(
-                            title: localizeWithContext.paiementDeviceRevoked,
-                            descriptions: localizeWithContext
-                                .paiementReactivateRevokedDeviceDescription,
-                            buttonText: localizeWithContext.paiementAccessPage,
-                            onClick: () {
-                              QR.to(PaymentRouter.root + PaymentRouter.devices);
-                            },
-                          );
-                        },
-                      );
-                    }
-                  },
-                  error: (e, s) {
-                    displayToastWithContext(
-                      TypeMsg.error,
-                      localizeWithContext.paiementDeviceRecoveryError,
-                    );
-                  },
-                  loading: () {},
-                );
-              });
+                },
+                loading: () {},
+              );
             },
           ),
         MainCardButton(
@@ -194,14 +190,6 @@ class AccountCard extends HookConsumerWidget {
           title: localizeWithContext.paiementStats,
           onPressed: () async {
             QR.to(PaymentRouter.root + PaymentRouter.stats);
-          },
-        ),
-        MainCardButton(
-          colors: buttonGradient,
-          icon: HeroIcons.listBullet,
-          title: localizeWithContext.paiementRequestHistory,
-          onPressed: () async {
-            QR.to(PaymentRouter.root + PaymentRouter.requestHistory);
           },
         ),
         MainCardButton(

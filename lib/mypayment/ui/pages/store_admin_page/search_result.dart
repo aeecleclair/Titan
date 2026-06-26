@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/mypayment/class/seller.dart';
 import 'package:titan/mypayment/providers/new_admin_provider.dart';
 import 'package:titan/mypayment/providers/selected_store_provider.dart';
 import 'package:titan/mypayment/providers/seller_rights_list_providder.dart';
 import 'package:titan/mypayment/providers/store_sellers_list_provider.dart';
 import 'package:titan/mypayment/ui/pages/store_admin_page/right_check_box.dart';
 import 'package:titan/mypayment/ui/pages/store_admin_page/seller_right_dialog.dart';
-import 'package:titan/navigation/providers/navbar_visibility_provider.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
-import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/user/extensions/core_user_simple.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
@@ -46,105 +44,92 @@ class SearchResult extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    Future handleUserSelected(SimpleUser simpleUser) async {
-      ref.read(navbarVisibilityProvider.notifier).hide();
-      try {
-        await showDialog(
-          context: context,
-          builder: (context) {
-            return Consumer(
-              builder: (context, ref, _) {
-                final sellerRightsList = ref.watch(sellerRightsListProvider);
-                return SellerRightDialog(
-                  title: AppLocalizations.of(context)!.paiementSellerRigths,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      RightCheckBox(
-                        title: AppLocalizations.of(context)!.paiementCanBank,
-                        index: 0,
-                      ),
-                      RightCheckBox(
-                        title: AppLocalizations.of(
-                          context,
-                        )!.paiementCanSeeHistory,
-                        index: 1,
-                      ),
-                      RightCheckBox(
-                        title: AppLocalizations.of(
-                          context,
-                        )!.paiementCanCancelTransaction,
-                        index: 2,
-                      ),
-                      RightCheckBox(
-                        title: AppLocalizations.of(
-                          context,
-                        )!.paiementCanManageSellers,
-                        index: 3,
-                      ),
-                      RightCheckBox(
-                        title: AppLocalizations.of(
-                          context,
-                        )!.paiementCanManageEvents,
-                        index: 4,
-                      ),
-                    ],
-                  ),
-                  onYes: () async {
-                    await tokenExpireWrapper(ref, () async {
-                      newAdminNotifier.updateNewAdmin(simpleUser);
-                      queryController.text = simpleUser.getName();
-                      Seller seller = Seller(
-                        storeId: store.id,
-                        userId: simpleUser.id,
-                        user: simpleUser,
-                        canBank: sellerRightsList[0],
-                        canSeeHistory: sellerRightsList[1],
-                        canCancel: sellerRightsList[2],
-                        canManageSellers: sellerRightsList[3],
-                        canManageEvent: sellerRightsList[4],
-                      );
-                      final addedSellerMsg = AppLocalizations.of(
+    Future handleUserSelected(CoreUserSimple simpleUser) async {
+      await showDialog(
+        context: context,
+        builder: (context) {
+          return Consumer(
+            builder: (context, ref, _) {
+              final sellerRightsList = ref.watch(sellerRightsListProvider);
+              return SellerRightDialog(
+                title: AppLocalizations.of(context)!.paiementSellerRigths,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    RightCheckBox(
+                      title: AppLocalizations.of(context)!.paiementCanBank,
+                      index: 0,
+                    ),
+                    RightCheckBox(
+                      title: AppLocalizations.of(
                         context,
-                      )!.paiementAddedSeller;
-                      final addingSellerErrorMsg = AppLocalizations.of(
+                      )!.paiementCanSeeHistory,
+                      index: 1,
+                    ),
+                    RightCheckBox(
+                      title: AppLocalizations.of(
                         context,
-                      )!.paiementAddingSellerError;
-                      final value = await sellerStoreNotifier.createStoreSeller(
-                        seller,
-                      );
-                      if (value) {
-                        queryController.clear();
-                        usersNotifier.clear();
-                        sellerRightsListNotifier.clearRights();
-                        newAdminNotifier.resetNewAdmin();
-                        displayToastWithContext(TypeMsg.msg, addedSellerMsg);
-                        if (context.mounted) {
-                          Navigator.of(context).pop();
-                        }
-                      } else {
-                        displayToastWithContext(
-                          TypeMsg.error,
-                          addingSellerErrorMsg,
-                        );
-                      }
-                    });
-                    onChoose();
-                  },
-                );
-              },
-            );
-          },
-        );
-      } finally {
-        ref.read(navbarVisibilityProvider.notifier).show();
-      }
+                      )!.paiementCanCancelTransaction,
+                      index: 2,
+                    ),
+                    RightCheckBox(
+                      title: AppLocalizations.of(
+                        context,
+                      )!.paiementCanManageSellers,
+                      index: 3,
+                    ),
+                  ],
+                ),
+                onYes: () async {
+                  newAdminNotifier.updateNewAdmin(simpleUser);
+                  queryController.text = simpleUser.getName();
+                  Seller seller = Seller(
+                    storeId: store.id,
+                    userId: simpleUser.id,
+                    user: simpleUser,
+                    canBank: sellerRightsList[0],
+                    canSeeHistory: sellerRightsList[1],
+                    canCancel: sellerRightsList[2],
+                    canManageSellers: sellerRightsList[3],
+                    canManageEvents: false,
+                  );
+                  final addedSellerMsg = AppLocalizations.of(
+                    context,
+                  )!.paiementAddedSeller;
+                  final addingSellerErrorMsg = AppLocalizations.of(
+                    context,
+                  )!.paiementAddingSellerError;
+                  final value = await sellerStoreNotifier.createStoreSeller(
+                    seller,
+                  );
+                  if (value) {
+                    queryController.clear();
+                    usersNotifier.clear();
+                    sellerRightsListNotifier.clearRights();
+                    newAdminNotifier.resetNewAdmin();
+                    displayToastWithContext(TypeMsg.msg, addedSellerMsg);
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
+                  } else {
+                    displayToastWithContext(
+                      TypeMsg.error,
+                      addingSellerErrorMsg,
+                    );
+                  }
+                  onChoose();
+                },
+              );
+            },
+          );
+        },
+      );
     }
 
     return AsyncChild(
       value: users,
       builder: (context, user) {
-        final List<SimpleUser> filteredUsers = user
+        final List<CoreUserSimple> filteredUsers = user
             .where((simpleUser) => !sellers.contains(simpleUser.id))
             .toList();
         return Column(

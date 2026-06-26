@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
-import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
-import 'package:titan/tools/ui/styleguide/button.dart';
 import 'package:titan/mypayment/providers/invoice_list_provider.dart';
 import 'package:titan/mypayment/providers/my_structures_provider.dart';
 import 'package:titan/mypayment/providers/selected_structure_provider.dart';
 import 'package:titan/mypayment/router.dart';
+import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/tools/ui/styleguide/bottom_modal_template.dart';
+import 'package:titan/tools/ui/styleguide/button.dart';
 
 class StructureAdminCard extends ConsumerWidget {
   const StructureAdminCard({super.key});
@@ -61,8 +60,8 @@ class StructureAdminCard extends ConsumerWidget {
               ],
             ),
           ),
-          onTap: () async {
-            await showCustomBottomModal(
+          onTap: () {
+            showCustomBottomModal(
               context: context,
               modal: BottomModalTemplate(
                 title: structure.name,
@@ -83,12 +82,7 @@ class StructureAdminCard extends ConsumerWidget {
                       text: localizeWithContext.paiementInvoices,
                       onPressed: () {
                         Navigator.of(context).pop();
-                        tokenExpireWrapper(
-                          ref,
-                          () => invoicesNotifier.getStructureInvoices(
-                            structure.id,
-                          ),
-                        );
+                        invoicesNotifier.getStructureInvoices(structure.id);
                         QR.to(
                           PaymentRouter.root + PaymentRouter.invoicesStructure,
                         );

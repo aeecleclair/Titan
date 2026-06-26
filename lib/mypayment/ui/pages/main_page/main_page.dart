@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
-import 'package:titan/mypayment/class/payment_request.dart';
 import 'package:titan/mypayment/providers/has_accepted_tos_provider.dart';
 import 'package:titan/mypayment/providers/my_wallet_provider.dart';
-import 'package:titan/mypayment/providers/payment_requests_provider.dart';
 import 'package:titan/mypayment/providers/tos_provider.dart';
 import 'package:titan/mypayment/providers/is_payment_admin.dart';
 import 'package:titan/mypayment/providers/my_history_provider.dart';
 import 'package:titan/mypayment/providers/my_stores_provider.dart';
 import 'package:titan/mypayment/providers/register_provider.dart';
 import 'package:titan/mypayment/providers/should_display_tos_dialog.dart';
-import 'package:titan/mypayment/ui/components/show_request_modal.dart';
 import 'package:titan/mypayment/ui/pages/main_page/account_card/account_card.dart';
 import 'package:titan/mypayment/ui/pages/main_page/tos_dialog.dart';
 import 'package:titan/mypayment/ui/pages/main_page/account_card/last_transactions.dart';
@@ -51,9 +49,6 @@ class PaymentMainPage extends HookConsumerWidget {
     final myWalletNotifier = ref.read(myWalletProvider.notifier);
     final isAdmin = ref.watch(isStructureAdminProvider);
     final flipped = useState(true);
-    final paymentRequests = ref.watch(paymentRequestsProvider);
-    final paymentRequestsNotifier = ref.read(paymentRequestsProvider.notifier);
-    final hasShownRequestModal = useState(false);
 
     ref.listen(pathForwardingProvider, (previous, next) async {
       final params = next.queryParameters;
@@ -90,56 +85,13 @@ class PaymentMainPage extends HookConsumerWidget {
       }
     }
 
-    Future<void> onShowRequestModal(PaymentRequest request) async {
-      await showRequestModal(
-        context: context,
-        ref: ref,
-        request: request,
-        onSuccess: () async {
-          await myHistoryNotifier.getHistory();
-          await myWalletNotifier.getMyWallet();
-        },
-      );
-    }
-
-    useEffect(() {
-      paymentRequestsNotifier.getRequests();
-      return null;
-    }, []);
-
-    useEffect(() {
-      paymentRequests.whenData((requests) {
-        final pendingRequests = requests
-            .where(
-              (r) =>
-                  r.status == RequestStatus.proposed &&
-                  r.creation
-                      .add(const Duration(minutes: 15))
-                      .isAfter(DateTime.now()),
-            )
-            .toList();
-        if (pendingRequests.isNotEmpty && !hasShownRequestModal.value) {
-          hasShownRequestModal.value = true;
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            onShowRequestModal(pendingRequests.first);
-          });
-        }
-      });
-      return null;
-    }, [paymentRequests]);
-
     tos.maybeWhen(
       orElse: () {},
       error: (e, s) async {
         final value = await registerNotifier.register();
-        value.maybeWhen(
-          orElse: () {},
-          data: (value) async {
-            if (value) {
-              tosNotifier.getTOS();
-            }
-          },
-        );
+        if (value) {
+          tosNotifier.getTOS();
+        }
       },
     );
 
@@ -189,8 +141,6 @@ class PaymentMainPage extends HookConsumerWidget {
                     await myHistoryNotifier.getHistory();
                     await myWalletNotifier.getMyWallet();
                     await tosNotifier.getTOS();
-                    hasShownRequestModal.value = false;
-                    await paymentRequestsNotifier.getRequests();
                   },
                   child: Column(
                     children: [

@@ -1,21 +1,22 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/mypayment/class/wallet.dart';
-import 'package:titan/mypayment/repositories/users_me_repository.dart';
-import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/single_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class MyWalletNotifier extends SingleNotifier<Wallet> {
-  final UsersMeRepository usersMeRepository;
-  MyWalletNotifier({required this.usersMeRepository})
-    : super(const AsyncValue.loading());
+class MyWalletNotifier extends SingleNotifierAPI<Wallet> {
+  Openapi get usersMeRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<Wallet> build() {
+    getMyWallet();
+    return const AsyncValue.loading();
+  }
 
   Future<AsyncValue<Wallet>> getMyWallet() async {
-    return await load(usersMeRepository.getMyWallet);
+    return await load(usersMeRepository.mypaymentUsersMeWalletGet);
   }
 }
 
-final myWalletProvider =
-    StateNotifierProvider<MyWalletNotifier, AsyncValue<Wallet>>((ref) {
-      final usersMeRepository = ref.watch(usersMeRepositoryProvider);
-      return MyWalletNotifier(usersMeRepository: usersMeRepository)
-        ..getMyWallet();
-    });
+final myWalletProvider = NotifierProvider<MyWalletNotifier, AsyncValue<Wallet>>(
+  MyWalletNotifier.new,
+);

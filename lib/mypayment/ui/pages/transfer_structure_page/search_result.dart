@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
 import 'package:titan/mypayment/providers/selected_store_provider.dart';
 import 'package:titan/mypayment/providers/transfer_structure_provider.dart';
@@ -9,7 +10,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
-import 'package:titan/user/class/simple_users.dart';
+import 'package:titan/user/extensions/core_user_simple.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
 
 class SearchResult extends HookConsumerWidget {
@@ -28,7 +29,7 @@ class SearchResult extends HookConsumerWidget {
       displayToast(context, type, msg);
     }
 
-    Future showTransferWarningDialog(SimpleUser simpleUser) async {
+    Future showTransferWarningDialog(CoreUserSimple simpleUser) async {
       await showDialog(
         context: context,
         builder: (context) {

@@ -1,7 +1,10 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SellerRightsListNotifier extends StateNotifier<List<bool>> {
-  SellerRightsListNotifier() : super([true, false, false, false, false]);
+class SellerRightsListNotifier extends Notifier<List<bool>> {
+  @override
+  List<bool> build() {
+    return [true, false, false, false];
+  }
 
   void updateRights(int index, bool value) {
     final updatedRights = List<bool>.from(state);
@@ -10,11 +13,11 @@ class SellerRightsListNotifier extends StateNotifier<List<bool>> {
   }
 
   void clearRights() {
-    state = [true, false, false, false, false];
+    state = [true, false, false, false];
   }
 }
 
 final sellerRightsListProvider =
-    StateNotifierProvider<SellerRightsListNotifier, List<bool>>((ref) {
-      return SellerRightsListNotifier();
-    });
+    NotifierProvider<SellerRightsListNotifier, List<bool>>(
+      SellerRightsListNotifier.new,
+    );

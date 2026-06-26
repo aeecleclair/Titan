@@ -2,9 +2,8 @@ import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:titan/mypayment/class/history.dart';
-import 'package:titan/mypayment/class/secured_content_data.dart';
-import 'package:titan/mypayment/class/wallet_device.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/mypayment/tools/key_service.dart';
 
 enum TransferType { helloAsso, check, cash, bankTransfer }
@@ -59,6 +58,8 @@ Widget getStatusTag(WalletDeviceStatus status) {
           ),
         ),
       );
+    case WalletDeviceStatus.swaggerGeneratedUnknown:
+      return Container();
   }
 }
 
@@ -68,16 +69,29 @@ Future<String> getQRCodeContent(
   KeyService keyService,
   bool store,
 ) async {
+  final keyId = await keyService.getKeyId();
+  final keyPair = await keyService.getKeyPair();
+  final now = DateTime.now();
   final total = (double.parse(payAmount.replaceAll(',', '.')) * 100).round();
-  final content = SecuredContentData(
-    id: id,
-    tot: total,
-    iat: DateTime.now(),
-    key: (await keyService.getKeyId())!,
-    store: store,
+  final data = jsonEncode({
+    "id": id,
+    "tot": total,
+    "iat": now.toUtc().toIso8601String(),
+    "key": keyId,
+    "store": store,
+  });
+  return jsonEncode(
+    ScanInfo(
+      id: id,
+      tot: total,
+      iat: now,
+      key: keyId!,
+      store: store,
+      signature: base64Encode(
+        (await keyService.signMessage(keyPair!, data.codeUnits)).bytes,
+      ),
+    ).toJson(),
   );
-  final signed = await keyService.signContent(content);
-  return jsonEncode(signed!.toJson());
 }
 
 String transferTypeToString(TransferType type) {
@@ -116,6 +130,8 @@ int statusOrder(WalletDeviceStatus status) {
       return 1;
     case WalletDeviceStatus.revoked:
       return 2;
+    case WalletDeviceStatus.swaggerGeneratedUnknown:
+      return 3;
   }
 }
 
@@ -223,7 +239,19 @@ int _generateSeedFromString(String input) {
 
 List<Color> getTransactionColors(History transaction) {
   switch (transaction.type) {
+    case HistoryType.directTransaction:
+      return [
+        const Color.fromARGB(255, 1, 127, 128),
+        const Color.fromARGB(255, 0, 102, 103),
+        const Color.fromARGB(255, 0, 44, 45).withValues(alpha: 0.3),
+      ];
     case HistoryType.refund:
+      return [
+        const Color.fromARGB(255, 4, 84, 84),
+        const Color.fromARGB(255, 0, 68, 68),
+        const Color.fromARGB(255, 0, 29, 29).withValues(alpha: 0.4),
+      ];
+    case HistoryType.requestTransfer:
       return [
         const Color.fromARGB(255, 4, 84, 84),
         const Color.fromARGB(255, 0, 68, 68),
@@ -235,23 +263,17 @@ List<Color> getTransactionColors(History transaction) {
         const Color.fromARGB(255, 230, 103, 0),
         const Color.fromARGB(255, 97, 44, 0).withValues(alpha: 0.2),
       ];
-    case HistoryType.requestTransfer:
-      return [
-        const Color.fromARGB(255, 255, 119, 7),
-        const Color.fromARGB(255, 230, 103, 0),
-        const Color.fromARGB(255, 97, 44, 0).withValues(alpha: 0.2),
-      ];
-    case HistoryType.directTransaction:
+    case HistoryType.requestTransaction:
       return [
         const Color.fromARGB(255, 1, 127, 128),
         const Color.fromARGB(255, 0, 102, 103),
         const Color.fromARGB(255, 0, 44, 45).withValues(alpha: 0.3),
       ];
-    case HistoryType.requestTransaction:
+    case HistoryType.swaggerGeneratedUnknown:
       return [
-        const Color.fromARGB(255, 124, 58, 237),
-        const Color.fromARGB(255, 99, 46, 190),
-        const Color.fromARGB(255, 42, 20, 80).withValues(alpha: 0.3),
+        const Color.fromARGB(255, 1, 127, 128),
+        const Color.fromARGB(255, 0, 102, 103),
+        const Color.fromARGB(255, 0, 44, 45).withValues(alpha: 0.3),
       ];
   }
 }

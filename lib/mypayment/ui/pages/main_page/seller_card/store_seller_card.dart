@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:titan/mypayment/class/user_store.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/mypayment/providers/selected_store_provider.dart';
 
 class StoreSellerCard extends ConsumerWidget {

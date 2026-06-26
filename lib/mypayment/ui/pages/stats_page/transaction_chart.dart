@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/tools/providers/locale_notifier.dart';
-import 'package:titan/mypayment/class/history.dart';
 import 'package:titan/mypayment/providers/selected_transactions_provider.dart';
 import 'package:titan/mypayment/tools/functions.dart';
 import 'package:titan/mypayment/ui/pages/stats_page/sum_up_card.dart';
+import 'package:titan/tools/providers/locale_notifier.dart';
 
 class TransactionChart extends HookConsumerWidget {
   final Map<String, List<History>> transactionPerStore;

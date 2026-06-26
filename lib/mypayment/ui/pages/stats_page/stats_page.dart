@@ -6,7 +6,6 @@ import 'package:titan/mypayment/ui/pages/stats_page/month_bar.dart';
 import 'package:titan/mypayment/ui/pages/stats_page/sum_up_chart.dart';
 import 'package:titan/mypayment/ui/pages/stats_page/transactions_detail.dart';
 import 'package:titan/mypayment/ui/mypayment.dart';
-import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 
 class StatsPage extends HookConsumerWidget {
@@ -17,8 +16,6 @@ class StatsPage extends HookConsumerWidget {
     final myHistoryNotifier = ref.read(myHistoryProvider.notifier);
     final pageController = usePageController();
     final now = DateTime.now();
-    final scrollController = useMemoized(() => ScrollController(), []);
-
     return PaymentTemplate(
       child: LayoutBuilder(
         builder: (context, constraints) => Refresher(
@@ -41,20 +38,16 @@ class StatsPage extends HookConsumerWidget {
                     MonthBar(currentMonth: month),
                     SizedBox(height: 5),
                     Expanded(
-                      child: ScrollToHideNavbar(
-                        controller: scrollController,
-                        child: SingleChildScrollView(
-                          controller: scrollController,
-                          physics: const BouncingScrollPhysics(),
-                          child: Column(
-                            children: [
-                              SizedBox(height: 10),
-                              SumUpChart(currentMonth: month),
-                              SizedBox(height: 20),
-                              TransactionsDetail(currentMonth: month),
-                              SizedBox(height: 20),
-                            ],
-                          ),
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 10),
+                            SumUpChart(currentMonth: month),
+                            SizedBox(height: 20),
+                            TransactionsDetail(currentMonth: month),
+                            SizedBox(height: 20),
+                          ],
                         ),
                       ),
                     ),

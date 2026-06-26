@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/navigation/class/module.dart';
 import 'package:titan/mypayment/providers/is_payment_admin.dart';
 import 'package:titan/mypayment/ui/pages/structure_admin_page/structure_admin_page.dart'
-    deferred as structure_admin_page;
+    deferred as structure_stores_page;
 import 'package:titan/mypayment/ui/pages/fund_page/web_view_modal.dart'
     deferred as fund_page;
 import 'package:titan/mypayment/ui/pages/invoices_admin_page/invoices_admin_page.dart'
@@ -22,11 +23,8 @@ import 'package:titan/mypayment/ui/pages/stats_page/stats_page.dart'
     deferred as stats_page;
 import 'package:titan/mypayment/ui/pages/store_stats_page/store_stats_page.dart'
     deferred as store_stats_page;
-import 'package:titan/mypayment/ui/pages/request_history_page/request_history_page.dart'
-    deferred as request_history_page;
 import 'package:titan/mypayment/ui/pages/transfer_structure_page/transfer_structure_page.dart'
     deferred as transfer_structure_page;
-import 'package:titan/navigation/class/module.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
@@ -35,7 +33,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 
 class PaymentRouter {
   final Ref ref;
-  static const String root = '/mypayment';
+  static const String root = '/payment';
   static const String stats = '/stats';
   static const String devices = '/devices';
   static const String structureStores = '/structureStores';
@@ -46,7 +44,6 @@ class PaymentRouter {
   static const String transferStructure = '/transferStructure';
   static const String storeAdmin = '/storeAdmin';
   static const String storeStats = '/storeStats';
-  static const String requestHistory = '/requestHistory';
   static final Module module = Module(
     getName: (context) => getPaymentName(),
     getDescription: (context) =>
@@ -101,9 +98,9 @@ class PaymentRouter {
       ),
       QRoute(
         path: PaymentRouter.structureStores,
-        builder: () => structure_admin_page.StructureStorePage(),
+        builder: () => structure_stores_page.StructureStoresPage(),
         middleware: [
-          DeferredLoadingMiddleware(structure_admin_page.loadLibrary),
+          DeferredLoadingMiddleware(structure_stores_page.loadLibrary),
           AdminMiddleware(ref, isStructureAdminProvider),
         ],
         children: [
@@ -118,13 +115,6 @@ class PaymentRouter {
         path: PaymentRouter.storeStats,
         builder: () => store_stats_page.StoreStatsPage(),
         middleware: [DeferredLoadingMiddleware(store_stats_page.loadLibrary)],
-      ),
-      QRoute(
-        path: PaymentRouter.requestHistory,
-        builder: () => request_history_page.RequestHistoryPage(),
-        middleware: [
-          DeferredLoadingMiddleware(request_history_page.loadLibrary),
-        ],
       ),
       QRoute(
         path: PaymentRouter.fund,

@@ -1,68 +1,64 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/mypayment/class/history.dart';
 import 'package:titan/mypayment/providers/my_history_provider.dart';
 import 'package:titan/mypayment/ui/pages/main_page/account_card/day_divider.dart';
 import 'package:titan/mypayment/ui/components/transaction_card.dart';
-import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class LastTransactions extends HookConsumerWidget {
+class LastTransactions extends ConsumerWidget {
   final double maxHeight;
   const LastTransactions({required this.maxHeight, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final history = ref.watch(myHistoryProvider);
-    final scrollController = useMemoized(() => ScrollController(), []);
-
     return SizedBox(
       height: maxHeight,
-      child: ScrollToHideNavbar(
-        controller: scrollController,
-        child: SingleChildScrollView(
-          controller: scrollController,
-          child: Column(
-            children: [
-              const SizedBox(height: 25),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  AppLocalizations.of(context)!.paiementLastTransactions,
-                  style: const TextStyle(
-                    color: Color(0xff204550),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 25),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                AppLocalizations.of(context)!.paiementLastTransactions,
+                style: const TextStyle(
+                  color: Color(0xff204550),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 15),
-              AsyncChild(
-                value: history,
-                builder: (context, history) {
-                  final Map<String, List<History>> groupedByDay = {};
-                  final Map<String, DateTime> stringDate = {};
-                  for (var transaction in history.where(
-                    (h) => h.status != TransactionStatus.pending,
-                  )) {
-                    final date = transaction.creation;
-                    final day = timeago.format(date, locale: 'fr_short');
-                    if (groupedByDay[day] == null) {
-                      groupedByDay[day] = [];
-                      stringDate[day] = date;
-                    }
-                    groupedByDay[day]!.add(transaction);
+            ),
+            const SizedBox(height: 15),
+            AsyncChild(
+              value: history,
+              builder: (context, history) {
+                final Map<String, List<History>> groupedByDay = {};
+                final Map<String, DateTime> stringDate = {};
+                for (var transaction in history.where(
+                  (h) => h.status != TransactionStatus.pending,
+                )) {
+                  final date = transaction.creation;
+                  final day = timeago.format(date, locale: 'fr_short');
+                  if (groupedByDay[day] == null) {
+                    groupedByDay[day] = [];
+                    stringDate[day] = date;
                   }
-                  final sortedByDayKeys = stringDate.keys.toList()
-                    ..sort((a, b) => stringDate[b]!.compareTo(stringDate[a]!));
-                  final sortedByDay = {
-                    for (var key in sortedByDayKeys) key: groupedByDay[key],
-                  };
-                  return Column(
+                  groupedByDay[day]!.add(transaction);
+                }
+                final sortedByDayKeys = stringDate.keys.toList()
+                  ..sort((a, b) => stringDate[b]!.compareTo(stringDate[a]!));
+                final sortedByDay = {
+                  for (var key in sortedByDayKeys) key: groupedByDay[key],
+                };
+                return SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Column(
                     children: sortedByDay
                         .map((day, transactions) {
                           final dateOrderedTransactions = transactions!
@@ -80,17 +76,17 @@ class LastTransactions extends HookConsumerWidget {
                         })
                         .values
                         .toList(),
-                  );
-                },
-                errorBuilder: (error, stack) => Center(
-                  child: Text(
-                    "${AppLocalizations.of(context)!.paiementGetTransactionsError} : $error",
-                    style: TextStyle(color: Colors.red),
                   ),
+                );
+              },
+              errorBuilder: (error, stack) => Center(
+                child: Text(
+                  "${AppLocalizations.of(context)!.paiementGetTransactionsError} : $error",
+                  style: TextStyle(color: Colors.red),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

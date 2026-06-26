@@ -1,23 +1,38 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/mypayment/class/create_device.dart';
-import 'package:titan/mypayment/class/wallet_device.dart';
-import 'package:titan/mypayment/repositories/devices_repository.dart';
-import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/single_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class DeviceNotifier extends SingleNotifier<WalletDevice> {
-  final DevicesRepository devicesRepository;
-  DeviceNotifier({required this.devicesRepository})
-    : super(const AsyncValue.loading());
+class DeviceNotifier extends SingleNotifierAPI<WalletDevice> {
+  Openapi get devicesRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<WalletDevice>> getDevice(String deviceId) async {
-    return await load(() => devicesRepository.getDevice(deviceId));
+  @override
+  AsyncValue<WalletDevice> build() {
+    return const AsyncValue.loading();
   }
 
-  Future<String?> registerDevice(CreateDevice body) async {
+  Future<AsyncValue<WalletDevice>> getDevice(String deviceId) async {
+    return await load(
+      () => devicesRepository.mypaymentUsersMeWalletDevicesWalletDeviceIdGet(
+        walletDeviceId: deviceId,
+      ),
+    );
+  }
+
+  Future<String?> registerDevice(WalletDeviceCreation body) async {
     try {
-      final fake = await devicesRepository.registerDevice(body);
-      state = AsyncValue.data(fake);
-      return fake.id;
+      final fake = await devicesRepository.mypaymentUsersMeWalletDevicesPost(
+        body: body,
+      );
+      if (fake.body == null) {
+        state = AsyncValue.error(
+          'Error while creating device',
+          StackTrace.current,
+        );
+        return null;
+      }
+      state = AsyncValue.data(fake.body!);
+      return fake.body!.id;
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
       return null;
@@ -26,7 +41,6 @@ class DeviceNotifier extends SingleNotifier<WalletDevice> {
 }
 
 final deviceProvider =
-    StateNotifierProvider<DeviceNotifier, AsyncValue<WalletDevice>>((ref) {
-      final deviceListRepository = ref.watch(devicesRepositoryProvider);
-      return DeviceNotifier(devicesRepository: deviceListRepository);
-    });
+    NotifierProvider<DeviceNotifier, AsyncValue<WalletDevice>>(
+      DeviceNotifier.new,
+    );

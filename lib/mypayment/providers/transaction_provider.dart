@@ -1,31 +1,40 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/mypayment/class/refund.dart';
-import 'package:titan/mypayment/repositories/transaction_repository.dart';
-import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/single_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class TransactionNotifier extends SingleNotifier<bool> {
-  final TransactionsRepository transactionRepository;
-  TransactionNotifier({required this.transactionRepository})
-    : super(const AsyncValue.loading());
+class TransactionNotifier extends SingleNotifierAPI<bool> {
+  Openapi get transactionRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<bool> build() {
+    return const AsyncValue.loading();
+  }
 
   Future<AsyncValue<bool>> refundTransaction(
     String transactionId,
-    Refund refund,
+    RefundInfo refund,
   ) async {
-    return await load(
-      () => transactionRepository.refundTransaction(transactionId, refund),
-    );
+    final response = await transactionRepository
+        .mypaymentTransactionsTransactionIdRefundPost(
+          transactionId: transactionId,
+          body: refund,
+        );
+    state = AsyncValue.data(response.isSuccessful);
+    return state;
   }
 
   Future<AsyncValue<bool>> cancelTransaction(String transactionId) async {
-    return await load(
-      () => transactionRepository.cancelTransaction(transactionId),
-    );
+    final response = await transactionRepository
+        .mypaymentTransactionsTransactionIdCancelPost(
+          transactionId: transactionId,
+        );
+    state = AsyncValue.data(response.isSuccessful);
+    return state;
   }
 }
 
 final transactionProvider =
-    StateNotifierProvider<TransactionNotifier, AsyncValue<bool>>((ref) {
-      final transactionRepository = ref.watch(transactionsRepositoryProvider);
-      return TransactionNotifier(transactionRepository: transactionRepository);
-    });
+    NotifierProvider<TransactionNotifier, AsyncValue<bool>>(
+      TransactionNotifier.new,
+    );

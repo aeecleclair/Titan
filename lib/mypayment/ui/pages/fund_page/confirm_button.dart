@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/l10n/app_localizations.dart';
-import 'package:titan/mypayment/class/init_info.dart';
 import 'package:titan/mypayment/providers/fund_amount_provider.dart';
 import 'package:titan/mypayment/providers/funding_url_provider.dart';
 import 'package:titan/mypayment/providers/my_history_provider.dart';
@@ -38,8 +38,8 @@ class ConfirmFundButton extends ConsumerWidget {
     );
 
     final redirectUrl = kIsWeb
-        ? "${getTitanURL()}mypayment" // ?
-        : "${getTitanURLScheme()}://mypayment";
+        ? "${getTitanURL()}/payment"
+        : "${getTitanURLScheme()}://payment";
     final amountToAdd = double.tryParse(fundAmount.replaceAll(",", ".")) ?? 0;
 
     final minValidFundAmount =
@@ -51,14 +51,15 @@ class ConfirmFundButton extends ConsumerWidget {
       displayToast(context, type, message);
     }
 
-    final localizeWithContext = AppLocalizations.of(context)!;
-
     Future<void> tryLaunchUrl(url) async {
+      final cantLaunchUrlMsg = AppLocalizations.of(
+        context,
+      )!.paiementCantLaunchURL;
       if (!await launchUrl(
         Uri.parse(url),
         mode: LaunchMode.externalApplication,
       )) {
-        throw Exception(localizeWithContext.paiementCantLaunchURL);
+        throw Exception(cantLaunchUrlMsg);
       }
     }
 
@@ -74,7 +75,7 @@ class ConfirmFundButton extends ConsumerWidget {
       if (popupWin == null) {
         displayToastWithContext(
           TypeMsg.error,
-          localizeWithContext.paiementPleaseAcceptPopup,
+          AppLocalizations.of(context)!.paiementPleaseAcceptPopup,
         );
         return;
       }
@@ -97,14 +98,14 @@ class ConfirmFundButton extends ConsumerWidget {
         if (code == "succeeded") {
           displayToastWithContext(
             TypeMsg.msg,
-            localizeWithContext.paiementProceedSuccessfully,
+            AppLocalizations.of(context)!.paiementProceedSuccessfully,
           );
           myWalletNotifier.getMyWallet();
           myHistoryNotifier.getHistory();
         } else {
           displayToastWithContext(
             TypeMsg.error,
-            localizeWithContext.paiementRefusedTransaction,
+            AppLocalizations.of(context)!.paiementCancelledTransaction,
           );
         }
         popupWin.close();
@@ -123,20 +124,20 @@ class ConfirmFundButton extends ConsumerWidget {
         if (!minValidFundAmount) {
           displayToastWithContext(
             TypeMsg.error,
-            localizeWithContext.paiementPleaseEnterMinAmount,
+            AppLocalizations.of(context)!.paiementPleaseEnterMinAmount,
           );
           return;
         }
         if (!maxValidFundAmount) {
           displayToastWithContext(
             TypeMsg.error,
-            "${localizeWithContext.paiementMaxAmount} ${maxBalanceAmount.toStringAsFixed(2)}€",
+            "${AppLocalizations.of(context)!.paiementMaxAmount} ${maxBalanceAmount.toStringAsFixed(2)}€",
           );
           return;
         }
 
         final value = await fundingUrlNotifier.getFundingUrl(
-          InitInfo(
+          TransferInfo(
             amount: (double.parse(fundAmount.replaceAll(',', '.')) * 100)
                 .round(),
             redirectUrl: redirectUrl,
@@ -193,7 +194,7 @@ class ConfirmFundButton extends ConsumerWidget {
             ),
           ),
           Text(
-            localizeWithContext.paiementPayWithHA,
+            AppLocalizations.of(context)!.paiementPayWithHA,
             style: TextStyle(
               color: (minValidFundAmount && maxValidFundAmount)
                   ? const Color(0xff2e2f5e)

@@ -1,21 +1,23 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/mypayment/class/history.dart';
-import 'package:titan/mypayment/repositories/users_me_repository.dart';
-import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/list_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class MyHistoryNotifier extends ListNotifier<History> {
-  final UsersMeRepository usersMeRepository;
-  MyHistoryNotifier({required this.usersMeRepository})
-    : super(const AsyncValue.loading());
+class MyHistoryNotifier extends ListNotifierAPI<History> {
+  Openapi get usersMeRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<List<History>> build() {
+    getHistory();
+    return const AsyncValue.loading();
+  }
 
   Future<AsyncValue<List<History>>> getHistory() async {
-    return await loadList(usersMeRepository.getMyHistory);
+    return await loadList(usersMeRepository.mypaymentUsersMeWalletHistoryGet);
   }
 }
 
 final myHistoryProvider =
-    StateNotifierProvider<MyHistoryNotifier, AsyncValue<List<History>>>((ref) {
-      final historyRepository = ref.watch(usersMeRepositoryProvider);
-      return MyHistoryNotifier(usersMeRepository: historyRepository)
-        ..getHistory();
-    });
+    NotifierProvider<MyHistoryNotifier, AsyncValue<List<History>>>(
+      MyHistoryNotifier.new,
+    );

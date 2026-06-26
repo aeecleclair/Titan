@@ -8,7 +8,6 @@ import 'package:titan/mypayment/providers/store_sellers_list_provider.dart';
 import 'package:titan/mypayment/ui/pages/store_admin_page/search_result.dart';
 import 'package:titan/mypayment/ui/pages/store_admin_page/seller_right_card.dart';
 import 'package:titan/mypayment/ui/mypayment.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
@@ -119,16 +118,14 @@ class StoreAdminPage extends HookConsumerWidget {
                     Expanded(
                       child: TextEntry(
                         label: AppLocalizations.of(context)!.paiementAddSeller,
-                        onChanged: (value) {
-                          tokenExpireWrapper(ref, () async {
-                            if (queryController.text.isNotEmpty) {
-                              await usersNotifier.filterUsers(
-                                queryController.text,
-                              );
-                            } else {
-                              usersNotifier.clear();
-                            }
-                          });
+                        onChanged: (value) async {
+                          if (queryController.text.isNotEmpty) {
+                            await usersNotifier.filterUsers(
+                              queryController.text,
+                            );
+                          } else {
+                            usersNotifier.clear();
+                          }
                         },
                         canBeEmpty: false,
                         controller: queryController,

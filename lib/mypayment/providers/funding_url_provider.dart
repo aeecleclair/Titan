@@ -1,21 +1,24 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/mypayment/class/funding_url.dart';
-import 'package:titan/mypayment/class/init_info.dart';
-import 'package:titan/mypayment/repositories/funding_repository.dart';
-import 'package:titan/tools/providers/single_notifier.dart';
+import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/tools/providers/single_notifier_api.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class FundingUrlNotifier extends SingleNotifier<FundingUrl> {
-  final FundingRepository fundingRepository;
-  FundingUrlNotifier({required this.fundingRepository})
-    : super(const AsyncValue.loading());
+class FundingUrlNotifier extends SingleNotifierAPI<PaymentUrl> {
+  Openapi get fundingRepository => ref.watch(repositoryProvider);
 
-  Future<AsyncValue<FundingUrl>> getFundingUrl(InitInfo info) async {
-    return await load(() => fundingRepository.getInitPaymentUrl(info));
+  @override
+  AsyncValue<PaymentUrl> build() {
+    return const AsyncValue.loading();
+  }
+
+  Future<AsyncValue<PaymentUrl>> getFundingUrl(TransferInfo info) async {
+    return await load(
+      () => fundingRepository.mypaymentTransferInitPost(body: info),
+    );
   }
 }
 
 final fundingUrlProvider =
-    StateNotifierProvider<FundingUrlNotifier, AsyncValue<FundingUrl>>((ref) {
-      final fundingUrlRepository = ref.watch(fundingRepositoryProvider);
-      return FundingUrlNotifier(fundingRepository: fundingUrlRepository);
-    });
+    NotifierProvider<FundingUrlNotifier, AsyncValue<PaymentUrl>>(
+      FundingUrlNotifier.new,
+    );
