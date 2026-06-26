@@ -72,12 +72,12 @@ class AdvertMainPage extends HookConsumerWidget {
               value: advertList,
               builder: (context, advertData) {
                 final sortedAdvertData = advertData
-                    .sortedBy((element) => element.date)
+                    .sortedBy((element) => element.date ?? DateTime(0))
                     .reversed;
                 final filteredSortedAdvertData = sortedAdvertData.where(
                   (advert) =>
                       selected
-                          .where((e) => advert.associationId == e.id)
+                          .where((e) => advert.advertiserId == e.id)
                           .isNotEmpty ||
                       selected.isEmpty,
                 );

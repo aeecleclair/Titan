@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/my_association_list_provider.dart';
-import 'package:titan/advert/class/advert.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/styleguide/icon_button.dart';
 
 class AdminAdvertCard extends HookConsumerWidget {
   final VoidCallback onEdit;
   final Future Function() onDelete;
-  final Advert advert;
+  final AdvertComplete advert;
 
   const AdminAdvertCard({
     super.key,
@@ -44,9 +44,11 @@ class AdminAdvertCard extends HookConsumerWidget {
                       ),
                     ),
                     Text(
-                      _capitalizeFirst(
-                        timeago.format(advert.date, locale: 'fr_short'),
-                      ),
+                      advert.date != null
+                          ? _capitalizeFirst(
+                              timeago.format(advert.date!, locale: 'fr_short'),
+                            )
+                          : '',
                       style: const TextStyle(
                         fontSize: 12,
                         color: ColorConstants.tertiary,
@@ -55,7 +57,7 @@ class AdminAdvertCard extends HookConsumerWidget {
                   ],
                 ),
                 const Spacer(),
-                if (myAssociationIdList.contains(advert.associationId))
+                if (myAssociationIdList.contains(advert.advertiserId))
                   CustomIconButton.secondary(
                     onPressed: onEdit,
                     icon: const HeroIcon(

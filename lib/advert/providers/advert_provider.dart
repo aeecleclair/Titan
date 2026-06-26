@@ -1,14 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/advert/class/advert.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class AdvertNotifier extends StateNotifier<Advert> {
-  AdvertNotifier() : super(Advert.empty());
+class AdvertNotifier extends Notifier<AdvertComplete> {
+  @override
+  AdvertComplete build() {
+    return AdvertComplete.empty();
+  }
 
-  void setAdvert(Advert i) {
+  void setAdvert(AdvertComplete i) {
     state = i;
   }
 }
 
-final advertProvider = StateNotifierProvider<AdvertNotifier, Advert>((ref) {
-  return AdvertNotifier();
-});
+final advertProvider = NotifierProvider<AdvertNotifier, AdvertComplete>(
+  AdvertNotifier.new,
+);

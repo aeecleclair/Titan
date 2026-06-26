@@ -7,16 +7,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/assocation_list_provider.dart';
 import 'package:titan/admin/providers/association_logo_provider.dart';
 import 'package:titan/admin/providers/associations_logo_map_provider.dart';
-import 'package:titan/advert/class/advert.dart';
 import 'package:titan/advert/providers/advert_poster_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/auto_loader_child.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 
 class AdvertCard extends HookConsumerWidget {
-  final Advert advert;
+  final AdvertComplete advert;
 
   const AdvertCard({super.key, required this.advert});
 
@@ -36,11 +36,11 @@ class AdvertCard extends HookConsumerWidget {
     );
     final associationName =
         associationList
-            .firstWhereOrNull((e) => e.id == advert.associationId)
+            .firstWhereOrNull((e) => e.id == advert.advertiserId)
             ?.name ??
         '';
     final associationLogo = ref.watch(
-      associationLogoMapProvider.select((value) => value[advert.associationId]),
+      associationLogoMapProvider.select((value) => value[advert.advertiserId]),
     );
     final associationLogoMapNotifier = ref.watch(
       associationLogoMapProvider.notifier,
@@ -59,7 +59,7 @@ class AdvertCard extends HookConsumerWidget {
                   child: AutoLoaderChild(
                     group: associationLogo,
                     notifier: associationLogoMapNotifier,
-                    mapKey: advert.associationId,
+                    mapKey: advert.advertiserId,
                     loader: (associationId) => associationLogoNotifier
                         .getAssociationLogo(associationId),
                     dataBuilder: (context, data) {
@@ -106,9 +106,14 @@ class AdvertCard extends HookConsumerWidget {
                         ),
                       ),
                       Text(
-                        _capitalizeFirst(
-                          timeago.format(advert.date, locale: 'fr_short'),
-                        ),
+                        advert.date != null
+                            ? _capitalizeFirst(
+                                timeago.format(
+                                  advert.date!,
+                                  locale: 'fr_short',
+                                ),
+                              )
+                            : '',
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,

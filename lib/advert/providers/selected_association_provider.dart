@@ -1,13 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/class/assocation.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-final selectedAssociationProvider =
-    StateNotifierProvider<AssociationNotifier, List<Association>>((ref) {
-      return AssociationNotifier();
-    });
-
-class AssociationNotifier extends StateNotifier<List<Association>> {
-  AssociationNotifier() : super([]);
+class AssociationNotifier extends Notifier<List<Association>> {
+  @override
+  List<Association> build() {
+    return [];
+  }
 
   void addAssociation(Association i) {
     state.add(i);
@@ -22,3 +20,8 @@ class AssociationNotifier extends StateNotifier<List<Association>> {
     state = [];
   }
 }
+
+final selectedAssociationProvider =
+    NotifierProvider<AssociationNotifier, List<Association>>(
+      AssociationNotifier.new,
+    );

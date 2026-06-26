@@ -1,10 +1,10 @@
 import 'package:collection/collection.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/admin/providers/my_association_list_provider.dart';
-import 'package:titan/advert/class/advert.dart';
 import 'package:titan/advert/providers/advert_list_provider.dart';
 import 'package:titan/advert/providers/advert_posters_provider.dart';
 import 'package:titan/advert/providers/advert_provider.dart';
@@ -62,7 +62,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                 SizedBox(width: 5),
                 SpecialActionButton(
                   onTap: () {
-                    advertNotifier.setAdvert(Advert.empty());
+                    advertNotifier.setAdvert(AdvertComplete.empty());
                     if (myAssociationList.length == 1 &&
                         selectedAssociations.isEmpty) {
                       selectedAssociationsNotifier.addAssociation(
@@ -93,20 +93,20 @@ class AdvertAdminPage extends HookConsumerWidget {
                 final userAssociationAdvert = advertData.where(
                   (advert) => !isAdmin
                       ? myAssociationList.any(
-                          (element) => advert.associationId == element.id,
+                          (element) => advert.advertiserId == element.id,
                         )
                       : true,
                 );
                 final sortedUserAssociationAdverts = userAssociationAdvert
                     .toList()
-                    .sortedBy((element) => element.date)
+                    .sortedBy((element) => element.date ?? DateTime(0))
                     .reversed;
                 final filteredSortedUserAssociationAdverts =
                     sortedUserAssociationAdverts
                         .where(
                           (advert) =>
                               selectedAssociations
-                                  .where((e) => advert.associationId == e.id)
+                                  .where((e) => advert.advertiserId == e.id)
                                   .isNotEmpty ||
                               selectedAssociations.isEmpty,
                         )
@@ -137,7 +137,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                             selectedAssociationsNotifier.clearAssociation();
                             selectedAssociationsNotifier.addAssociation(
                               myAssociationList.firstWhere(
-                                (element) => element.id == advert.associationId,
+                                (element) => element.id == advert.advertiserId,
                               ),
                             );
                           },
