@@ -1,7 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SearchingAmapUserNotifier extends StateNotifier<bool> {
-  SearchingAmapUserNotifier() : super(true);
+class SearchingAmapUserNotifier extends Notifier<bool> {
+  @override
+  bool build() => true;
 
   void setProduct(bool value) {
     state = value;
@@ -9,6 +10,6 @@ class SearchingAmapUserNotifier extends StateNotifier<bool> {
 }
 
 final searchingAmapUserProvider =
-    StateNotifierProvider<SearchingAmapUserNotifier, bool>((ref) {
-      return SearchingAmapUserNotifier();
-    });
+    NotifierProvider<SearchingAmapUserNotifier, bool>(
+      SearchingAmapUserNotifier.new,
+    );

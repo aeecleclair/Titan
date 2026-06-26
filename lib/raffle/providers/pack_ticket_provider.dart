@@ -1,15 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/raffle/class/pack_ticket.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class PackTicketNotifier extends StateNotifier<PackTicket> {
-  PackTicketNotifier() : super(PackTicket.empty());
+class PackTicketNotifier extends Notifier<PackTicketSimple> {
+  @override
+  PackTicketSimple build() {
+    return PackTicketSimple.empty();
+  }
 
-  void setPackTicket(PackTicket packTicket) {
+  void setPackTicket(PackTicketSimple packTicket) {
     state = packTicket;
   }
 }
 
 final packTicketProvider =
-    StateNotifierProvider<PackTicketNotifier, PackTicket>((ref) {
-      return PackTicketNotifier();
-    });
+    NotifierProvider<PackTicketNotifier, PackTicketSimple>(
+      () => PackTicketNotifier(),
+    );

@@ -1,14 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/raffle/class/prize.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 
-class PrizeNotifier extends StateNotifier<Prize> {
-  PrizeNotifier() : super(Prize.empty());
+class PrizeNotifier extends Notifier<PrizeSimple> {
+  @override
+  PrizeSimple build() => PrizeSimple.empty();
 
-  void setPrize(Prize lot) {
+  void setPrize(PrizeSimple lot) {
     state = lot;
   }
 }
 
-final prizeProvider = StateNotifierProvider<PrizeNotifier, Prize>((ref) {
-  return PrizeNotifier();
-});
+final prizeProvider = NotifierProvider<PrizeNotifier, PrizeSimple>(
+  PrizeNotifier.new,
+);

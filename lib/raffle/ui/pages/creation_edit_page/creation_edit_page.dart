@@ -4,8 +4,8 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:titan/raffle/class/raffle.dart';
-import 'package:titan/raffle/class/raffle_status_type.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/raffle/providers/cash_provider.dart';
 import 'package:titan/raffle/providers/prize_list_provider.dart';
 import 'package:titan/raffle/providers/raffle_list_provider.dart';
@@ -23,7 +23,6 @@ import 'package:titan/raffle/ui/pages/creation_edit_page/ticket_handler.dart';
 import 'package:titan/raffle/ui/pages/creation_edit_page/winning_ticket_handler.dart';
 import 'package:titan/raffle/ui/raffle.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
@@ -76,8 +75,8 @@ class CreationPage extends HookConsumerWidget {
         controller: ScrollController(),
         onRefresh: () async {
           await cashNotifier.loadCashList();
-          await packTicketListNotifier.loadPackTicketList();
-          await prizeListNotifier.loadPrizeList();
+          await packTicketListNotifier.loadPackTicketList(raffle.id);
+          await prizeListNotifier.loadPrizeList(raffle.id);
         },
         child: Column(
           children: [
@@ -137,7 +136,7 @@ class CreationPage extends HookConsumerWidget {
                             color: Colors.grey,
                           ),
                   ),
-                  if (raffle.raffleStatusType == RaffleStatusType.creation)
+                  if (raffle.status == RaffleStatusType.creation)
                     Positioned(
                       bottom: 0,
                       left: 0,
@@ -189,8 +188,7 @@ class CreationPage extends HookConsumerWidget {
                   key: formKey,
                   child: TextEntry(
                     label: AppLocalizations.of(context)!.raffleName,
-                    enabled:
-                        raffle.raffleStatusType == RaffleStatusType.creation,
+                    enabled: raffle.status == RaffleStatusType.creation,
                     controller: name,
                     keyboardType: TextInputType.text,
                   ),
@@ -203,16 +201,10 @@ class CreationPage extends HookConsumerWidget {
               child: WaitingButton(
                 builder: (child) => BlueBtn(child: child),
                 onTap: () async {
-                  if (raffle.raffleStatusType == RaffleStatusType.creation &&
+                  if (raffle.status == RaffleStatusType.creation &&
                       formKey.currentState!.validate()) {
-                    await tokenExpireWrapper(ref, () async {
-                      Raffle newRaffle = raffle.copyWith(
-                        name: name.text,
-                        description: raffle.description,
-                        raffleStatusType: raffle.raffleStatusType,
-                      );
-                      await raffleListNotifier.updateRaffle(newRaffle);
-                    });
+                    RaffleComplete newRaffle = raffle.copyWith(name: name.text);
+                    await raffleListNotifier.updateRaffle(newRaffle);
                     raffleList.when(
                       data: (list) async {
                         if (logo.value != null) {
@@ -229,7 +221,7 @@ class CreationPage extends HookConsumerWidget {
               ),
             ),
             const SizedBox(height: 40),
-            raffle.raffleStatusType != RaffleStatusType.lock
+            raffle.status != RaffleStatusType.lock
                 ? const TicketHandler()
                 : const WinningTicketHandler(),
             const SizedBox(height: 30),
@@ -246,7 +238,7 @@ class CreationPage extends HookConsumerWidget {
                 ),
               ),
             ),
-            raffle.raffleStatusType != RaffleStatusType.lock
+            raffle.status != RaffleStatusType.lock
                 ? Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 30,
@@ -255,67 +247,58 @@ class CreationPage extends HookConsumerWidget {
                     child: WaitingButton(
                       builder: (child) => BlueBtn(child: child),
                       onTap: () async {
-                        await tokenExpireWrapper(ref, () async {
-                          await showDialog(
-                            context: context,
-                            builder: (context) => CustomDialogBox(
-                              title:
-                                  raffle.raffleStatusType ==
-                                      RaffleStatusType.creation
-                                  ? AppLocalizations.of(
-                                      context,
-                                    )!.raffleOpenRaffle
-                                  : AppLocalizations.of(
-                                      context,
-                                    )!.raffleCloseRaffle,
-                              descriptions:
-                                  raffle.raffleStatusType ==
-                                      RaffleStatusType.creation
-                                  ? AppLocalizations.of(
-                                      context,
-                                    )!.raffleOpenRaffleDescription
-                                  : AppLocalizations.of(
-                                      context,
-                                    )!.raffleCloseRaffleDescription,
-                              onYes: () async {
-                                switch (raffle.raffleStatusType) {
-                                  case RaffleStatusType.creation:
-                                    await raffleListNotifier.openRaffle(
-                                      raffle.copyWith(
-                                        description: raffle.description,
-                                        raffleStatusType: RaffleStatusType.open,
-                                      ),
-                                    );
-                                    QR.back();
-                                    break;
-                                  case RaffleStatusType.open:
-                                    await raffleListNotifier.lockRaffle(
-                                      raffle.copyWith(
-                                        description: raffle.description,
-                                        raffleStatusType: RaffleStatusType.lock,
-                                      ),
-                                    );
-                                    prizeList.whenData((prizes) {
-                                      for (var prize in prizes) {
-                                        if (prize.raffleId == raffle.id) {
-                                          winningTicketListNotifier.drawPrize(
-                                            prize,
-                                          );
-                                        }
+                        await showDialog(
+                          context: context,
+                          builder: (context) => CustomDialogBox(
+                            title: raffle.status == RaffleStatusType.creation
+                                ? AppLocalizations.of(context)!.raffleOpenRaffle
+                                : AppLocalizations.of(
+                                    context,
+                                  )!.raffleCloseRaffle,
+                            descriptions:
+                                raffle.status == RaffleStatusType.creation
+                                ? AppLocalizations.of(
+                                    context,
+                                  )!.raffleOpenRaffleDescription
+                                : AppLocalizations.of(
+                                    context,
+                                  )!.raffleCloseRaffleDescription,
+                            onYes: () async {
+                              switch (raffle.status) {
+                                case RaffleStatusType.creation:
+                                  await raffleListNotifier.openRaffle(
+                                    raffle.copyWith(
+                                      status: RaffleStatusType.open,
+                                    ),
+                                  );
+                                  QR.back();
+                                  break;
+                                case RaffleStatusType.open:
+                                  await raffleListNotifier.lockRaffle(
+                                    raffle.copyWith(
+                                      status: RaffleStatusType.lock,
+                                    ),
+                                  );
+                                  prizeList.whenData((prizes) {
+                                    for (var prize in prizes) {
+                                      if (prize.raffleId == raffle.id) {
+                                        winningTicketListNotifier.drawPrize(
+                                          prize,
+                                        );
                                       }
-                                    });
-                                    QR.back();
-                                    break;
-                                  default:
-                                }
-                              },
-                            ),
-                          );
-                        });
+                                    }
+                                  });
+                                  QR.back();
+                                  break;
+                                default:
+                              }
+                            },
+                          ),
+                        );
                       },
                       child: BlueBtn(
                         child: Text(
-                          raffle.raffleStatusType == RaffleStatusType.open
+                          raffle.status == RaffleStatusType.open
                               ? AppLocalizations.of(context)!.raffleClose
                               : AppLocalizations.of(context)!.raffleOpen,
                         ),

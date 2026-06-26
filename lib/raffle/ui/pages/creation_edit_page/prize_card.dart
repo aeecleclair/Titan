@@ -1,14 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:titan/raffle/class/prize.dart';
-import 'package:titan/raffle/class/raffle_status_type.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
 class PrizeCard extends StatelessWidget {
-  final Prize lot;
+  final PrizeSimple lot;
   final Function() onEdit;
   final Future Function() onDelete, onDraw;
   final RaffleStatusType status;

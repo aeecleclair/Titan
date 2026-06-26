@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/raffle/class/tickets.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/raffle/tools/constants.dart';
 
 class WinningTicketUI extends HookConsumerWidget {
-  final Ticket ticket;
+  final AppModulesRaffleSchemasRaffleTicketComplete ticket;
   final VoidCallback onEdit;
   final Future Function() onDelete;
   const WinningTicketUI({

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/raffle/class/pack_ticket.dart';
-import 'package:titan/raffle/class/raffle_status_type.dart';
 import 'package:titan/raffle/providers/pack_ticket_list_provider.dart';
 import 'package:titan/raffle/providers/pack_ticket_provider.dart';
 import 'package:titan/raffle/providers/raffle_provider.dart';
@@ -10,7 +9,6 @@ import 'package:titan/raffle/router.dart';
 import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/raffle/ui/pages/creation_edit_page/ticket_ui.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
@@ -49,10 +47,10 @@ class TicketHandler extends HookConsumerWidget {
           child: Row(
             children: [
               const SizedBox(width: 15, height: 125),
-              if (raffle.raffleStatusType == RaffleStatusType.creation)
+              if (raffle.status == RaffleStatusType.creation)
                 GestureDetector(
                   onTap: () {
-                    packTicketNotifier.setPackTicket(PackTicket.empty());
+                    packTicketNotifier.setPackTicket(PackTicketSimple.empty());
                     QR.to(
                       RaffleRouter.root +
                           RaffleRouter.detail +
@@ -109,8 +107,7 @@ class TicketHandler extends HookConsumerWidget {
                               );
                             },
                             showButton:
-                                raffle.raffleStatusType ==
-                                RaffleStatusType.creation,
+                                raffle.status == RaffleStatusType.creation,
                             onDelete: () async {
                               await showDialog(
                                 context: context,
@@ -118,30 +115,28 @@ class TicketHandler extends HookConsumerWidget {
                                   title: "Supprimer le ticket",
                                   descriptions:
                                       "Voulez-vous vraiment supprimer ce ticket?",
-                                  onYes: () {
-                                    tokenExpireWrapper(ref, () async {
-                                      final deletedTicketMsg =
-                                          AppLocalizations.of(
-                                            context,
-                                          )!.raffleDeletedTicket;
-                                      final deletingErrorMsg =
-                                          AppLocalizations.of(
-                                            context,
-                                          )!.raffleDeletingError;
-                                      final value = await packTicketsNotifier
-                                          .deletePackTicket(e);
-                                      if (value) {
-                                        displayToastWithContext(
-                                          TypeMsg.msg,
-                                          deletedTicketMsg,
-                                        );
-                                      } else {
-                                        displayToastWithContext(
-                                          TypeMsg.error,
-                                          deletingErrorMsg,
-                                        );
-                                      }
-                                    });
+                                  onYes: () async {
+                                    final deletedTicketMsg =
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.raffleDeletedTicket;
+                                    final deletingErrorMsg =
+                                        AppLocalizations.of(
+                                          context,
+                                        )!.raffleDeletingError;
+                                    final value = await packTicketsNotifier
+                                        .deletePackTicket(e);
+                                    if (value) {
+                                      displayToastWithContext(
+                                        TypeMsg.msg,
+                                        deletedTicketMsg,
+                                      );
+                                    } else {
+                                      displayToastWithContext(
+                                        TypeMsg.error,
+                                        deletingErrorMsg,
+                                      );
+                                    }
                                   },
                                 ),
                               );

@@ -5,16 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/raffle/class/cash.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/raffle/providers/cash_provider.dart';
 import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
 class UserCashUi extends HookConsumerWidget {
-  final Cash cash;
+  final AppModulesRaffleSchemasRaffleCashComplete cash;
   const UserCashUi({super.key, required this.cash});
 
   @override
@@ -232,37 +231,35 @@ class UserCashUi extends HookConsumerWidget {
                                       return;
                                     }
                                     if (key.currentState!.validate()) {
-                                      await tokenExpireWrapper(ref, () async {
-                                        final raffleUpdatedAmountMsg =
-                                            AppLocalizations.of(
-                                              context,
-                                            )!.raffleUpdatedAmount;
-                                        final raffleUpdatingErrorMsg =
-                                            AppLocalizations.of(
-                                              context,
-                                            )!.raffleUpdatingError;
-                                        await ref
-                                            .read(cashProvider.notifier)
-                                            .updateCash(
-                                              cash,
-                                              int.parse(amount.text),
-                                            )
-                                            .then((value) {
-                                              if (value) {
-                                                key.currentState!.reset();
-                                                toggle();
-                                                displayVoteWithContext(
-                                                  TypeMsg.msg,
-                                                  raffleUpdatedAmountMsg,
-                                                );
-                                              } else {
-                                                displayVoteWithContext(
-                                                  TypeMsg.error,
-                                                  raffleUpdatingErrorMsg,
-                                                );
-                                              }
-                                            });
-                                      });
+                                      final raffleUpdatedAmountMsg =
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.raffleUpdatedAmount;
+                                      final raffleUpdatingErrorMsg =
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.raffleUpdatingError;
+                                      await ref
+                                          .read(cashProvider.notifier)
+                                          .updateCash(
+                                            cash,
+                                            int.parse(amount.text),
+                                          )
+                                          .then((value) {
+                                            if (value) {
+                                              key.currentState!.reset();
+                                              toggle();
+                                              displayVoteWithContext(
+                                                TypeMsg.msg,
+                                                raffleUpdatedAmountMsg,
+                                              );
+                                            } else {
+                                              displayVoteWithContext(
+                                                TypeMsg.error,
+                                                raffleUpdatingErrorMsg,
+                                              );
+                                            }
+                                          });
                                     }
                                   },
                                   child: const Icon(

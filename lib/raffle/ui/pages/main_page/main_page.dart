@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/raffle/class/raffle.dart';
-import 'package:titan/raffle/class/raffle_status_type.dart';
-import 'package:titan/raffle/class/tickets.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/raffle/providers/is_raffle_admin.dart';
 import 'package:titan/raffle/providers/raffle_list_provider.dart';
 import 'package:titan/raffle/providers/tombola_logos_provider.dart';
@@ -19,12 +18,14 @@ import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 class RaffleMainPage extends HookConsumerWidget {
   const RaffleMainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
     final raffleList = ref.watch(raffleListProvider);
     final raffleListNotifier = ref.watch(raffleListProvider.notifier);
     final userTicketList = ref.watch(userTicketListProvider);
@@ -35,7 +36,7 @@ class RaffleMainPage extends HookConsumerWidget {
     final rafflesStatus = {};
     raffleList.whenData((raffles) {
       for (var raffle in raffles) {
-        rafflesStatus[raffle.id] = raffle.raffleStatusType;
+        rafflesStatus[raffle.id] = raffle.status;
       }
     });
 
@@ -43,7 +44,7 @@ class RaffleMainPage extends HookConsumerWidget {
       child: Refresher(
         controller: ScrollController(),
         onRefresh: () async {
-          await userTicketListNotifier.loadTicketList();
+          await userTicketListNotifier.loadTicketList(user.id);
           await raffleListNotifier.loadRaffleList();
           tombolaLogosNotifier.resetTData();
         },
@@ -82,7 +83,11 @@ class RaffleMainPage extends HookConsumerWidget {
                                     RaffleStatusType.lock),
                       )
                       .toList();
-                  final ticketSum = <String, List<Ticket>>{};
+                  final ticketSum =
+                      <
+                        String,
+                        List<AppModulesRaffleSchemasRaffleTicketComplete>
+                      >{};
                   final ticketPrice = <String, double>{};
                   for (final ticket in tickets) {
                     if (ticket.prize == null) {
@@ -134,11 +139,11 @@ class RaffleMainPage extends HookConsumerWidget {
               child: AsyncChild(
                 value: raffleList,
                 builder: (context, raffles) {
-                  final incomingRaffles = <Raffle>[];
-                  final pastRaffles = <Raffle>[];
-                  final onGoingRaffles = <Raffle>[];
+                  final incomingRaffles = <RaffleComplete>[];
+                  final pastRaffles = <RaffleComplete>[];
+                  final onGoingRaffles = <RaffleComplete>[];
                   for (final raffle in raffles) {
-                    switch (raffle.raffleStatusType) {
+                    switch (raffle.status) {
                       case RaffleStatusType.creation:
                         incomingRaffles.add(raffle);
                         break;
@@ -147,6 +152,10 @@ class RaffleMainPage extends HookConsumerWidget {
                         break;
                       case RaffleStatusType.lock:
                         pastRaffles.add(raffle);
+                        break;
+                      case null:
+                        break;
+                      case RaffleStatusType.swaggerGeneratedUnknown:
                         break;
                     }
                   }

@@ -2,19 +2,19 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/raffle/providers/tombola_logos_provider.dart';
 import 'package:titan/tools/providers/single_notifier.dart';
 import 'package:titan/raffle/repositories/tombola_logo_repository.dart';
 
 class TombolaLogoProvider extends SingleNotifier<Image> {
-  final repository = TombolaLogoRepository();
-  final TombolaLogosNotifier tombolaLogosNotifier;
-  TombolaLogoProvider({
-    required String token,
-    required this.tombolaLogosNotifier,
-  }) : super(const AsyncValue.loading()) {
-    repository.setToken(token);
+  TombolaLogoRepository get repository =>
+      ref.watch(tombolaLogoRepositoryProvider);
+  late final TombolaLogosNotifier tombolaLogosNotifier;
+
+  @override
+  AsyncValue<Image> build() {
+    tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
+    return const AsyncValue.loading();
   }
 
   Future<Image> getLogo(String id) async {
@@ -33,11 +33,6 @@ class TombolaLogoProvider extends SingleNotifier<Image> {
 }
 
 final tombolaLogoProvider =
-    StateNotifierProvider<TombolaLogoProvider, AsyncValue<Image>>((ref) {
-      final token = ref.watch(tokenProvider);
-      final tombolaLogosNotifier = ref.watch(tombolaLogosProvider.notifier);
-      return TombolaLogoProvider(
-        token: token,
-        tombolaLogosNotifier: tombolaLogosNotifier,
-      );
-    });
+    NotifierProvider<TombolaLogoProvider, AsyncValue<Image>>(
+      TombolaLogoProvider.new,
+    );

@@ -1,6 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/raffle/providers/pack_ticket_list_provider.dart';
 import 'package:titan/raffle/providers/user_amount_provider.dart';
 import 'package:titan/raffle/providers/prize_list_provider.dart';
@@ -14,13 +13,14 @@ import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/l10n/app_localizations.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 class RaffleInfoPage extends HookConsumerWidget {
   const RaffleInfoPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userId = ref.watch(idProvider);
+    final user = ref.watch(userProvider);
     final raffle = ref.watch(raffleProvider);
     final balance = ref.watch(userAmountProvider);
     final balanceNotifier = ref.read(userAmountProvider.notifier);
@@ -33,11 +33,9 @@ class RaffleInfoPage extends HookConsumerWidget {
       child: Refresher(
         controller: ScrollController(),
         onRefresh: () async {
-          userId.whenData(
-            (value) async => await balanceNotifier.loadCashByUser(value),
-          );
-          await packTicketListNotifier.loadPackTicketList();
-          await prizeListNotifier.loadPrizeList();
+          await balanceNotifier.loadCashByUser(user.id);
+          await packTicketListNotifier.loadPackTicketList(raffle.id);
+          await prizeListNotifier.loadPrizeList(raffle.id);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

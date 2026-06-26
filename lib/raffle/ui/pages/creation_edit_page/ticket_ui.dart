@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/raffle/class/pack_ticket.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class TicketUI extends HookConsumerWidget {
-  final PackTicket packTicket;
+  final PackTicketSimple packTicket;
   final VoidCallback onEdit;
   final Future Function() onDelete;
   final bool showButton;

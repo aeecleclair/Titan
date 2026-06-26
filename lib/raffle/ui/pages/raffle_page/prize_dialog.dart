@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/raffle/class/prize.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
 class PrizeDialog extends HookConsumerWidget {
-  final Prize prize;
+  final PrizeSimple prize;
   const PrizeDialog({super.key, required this.prize});
 
   @override
@@ -77,9 +77,9 @@ class PrizeDialog extends HookConsumerWidget {
             ),
             const Spacer(),
             AutoSizeText(
-              prize.description == null || prize.description!.isEmpty
+              prize.description.isEmpty
                   ? AppLocalizations.of(context)!.raffleNoDescription
-                  : prize.description!,
+                  : prize.description,
               maxLines: 4,
               textAlign: TextAlign.justify,
               style: const TextStyle(

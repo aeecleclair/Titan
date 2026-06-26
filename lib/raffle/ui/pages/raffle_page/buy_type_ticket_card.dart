@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/raffle/class/pack_ticket.dart';
-import 'package:titan/raffle/class/raffle.dart';
-import 'package:titan/raffle/class/raffle_status_type.dart';
+import 'package:titan/generated/openapi.enums.swagger.dart';
+import 'package:titan/generated/openapi.models.swagger.dart';
 import 'package:titan/raffle/providers/tombola_logo_provider.dart';
 import 'package:titan/raffle/providers/tombola_logos_provider.dart';
 import 'package:titan/raffle/tools/constants.dart';
 import 'package:titan/raffle/ui/pages/raffle_page/confirm_payment.dart';
-import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
 class BuyPackTicket extends HookConsumerWidget {
-  final PackTicket packTicket;
-  final Raffle raffle;
+  final PackTicketSimple packTicket;
+  final RaffleComplete raffle;
   const BuyPackTicket({
     super.key,
     required this.packTicket,
@@ -27,7 +25,7 @@ class BuyPackTicket extends HookConsumerWidget {
     final tombolaLogoNotifier = ref.watch(tombolaLogoProvider.notifier);
     return GestureDetector(
       onTap: () {
-        if (raffle.raffleStatusType == RaffleStatusType.open) {
+        if (raffle.status == RaffleStatusType.open) {
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -103,15 +101,13 @@ class BuyPackTicket extends HookConsumerWidget {
                                     );
                                   },
                                 );
-                                tokenExpireWrapper(ref, () async {
-                                  tombolaLogoNotifier.getLogo(raffle.id).then((
-                                    value,
-                                  ) {
-                                    tombolaLogosNotifier.setTData(
-                                      raffle.id,
-                                      AsyncData([value]),
-                                    );
-                                  });
+                                tombolaLogoNotifier.getLogo(raffle.id).then((
+                                  value,
+                                ) {
+                                  tombolaLogosNotifier.setTData(
+                                    raffle.id,
+                                    AsyncData([value]),
+                                  );
                                 });
                                 return const HeroIcon(
                                   HeroIcons.cubeTransparent,
@@ -155,7 +151,7 @@ class BuyPackTicket extends HookConsumerWidget {
               width: 150,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: raffle.raffleStatusType != RaffleStatusType.open
+                  colors: raffle.status != RaffleStatusType.open
                       ? [
                           RaffleColorConstants.redGradient1,
                           RaffleColorConstants.redGradient2,
@@ -169,13 +165,13 @@ class BuyPackTicket extends HookConsumerWidget {
               child: FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  raffle.raffleStatusType == RaffleStatusType.open
+                  raffle.status == RaffleStatusType.open
                       ? AppLocalizations.of(context)!.raffleBuyThisTicket
-                      : raffle.raffleStatusType == RaffleStatusType.lock
+                      : raffle.status == RaffleStatusType.lock
                       ? AppLocalizations.of(context)!.raffleLockedRaffle
                       : AppLocalizations.of(context)!.raffleUnavailableRaffle,
                   style: TextStyle(
-                    color: raffle.raffleStatusType != RaffleStatusType.open
+                    color: raffle.status != RaffleStatusType.open
                         ? Colors.white
                         : RaffleColorConstants.gradient2,
                     fontWeight: FontWeight.bold,

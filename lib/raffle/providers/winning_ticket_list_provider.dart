@@ -1,48 +1,55 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
-import 'package:titan/raffle/class/prize.dart';
-import 'package:titan/raffle/class/tickets.dart';
+import 'package:titan/generated/openapi.swagger.dart';
 import 'package:titan/raffle/providers/ticket_list_provider.dart';
-import 'package:titan/raffle/repositories/prize_repository.dart';
 import 'package:titan/tools/providers/list_notifier.dart';
+import 'package:titan/tools/repository/repository.dart';
 
-class WinningTicketNotifier extends ListNotifier<Ticket> {
-  final LotRepository _lotRepository = LotRepository();
-  WinningTicketNotifier({required String token})
-    : super(const AsyncValue.loading()) {
-    _lotRepository.setToken(token);
+class WinningTicketNotifier
+    extends ListNotifier<AppModulesRaffleSchemasRaffleTicketComplete> {
+  Openapi get prizeRepository => ref.watch(repositoryProvider);
+
+  @override
+  AsyncValue<List<AppModulesRaffleSchemasRaffleTicketComplete>> build() {
+    final ticketFromRaffle = ref.watch(ticketsListProvider);
+    final winningTickets = ticketFromRaffle
+        .maybeWhen<List<AppModulesRaffleSchemasRaffleTicketComplete>>(
+          data: (data) =>
+              data.where((element) => element.prize != null).toList(),
+          orElse: () => [],
+        );
+
+    Future.microtask(() => setData(winningTickets));
+    return const AsyncValue.loading();
   }
 
-  void setData(List<Ticket> tickets) {
+  void setData(List<AppModulesRaffleSchemasRaffleTicketComplete> tickets) {
     state = AsyncValue.data(tickets);
   }
 
-  Future<AsyncValue<List<Ticket>>> drawPrize(Prize lot) async {
-    final drawnList = await _lotRepository.drawLot(lot);
-    state.when(
-      data: (list) {
-        state = AsyncValue.data(list + drawnList);
-      },
-      error: (e, s) {},
-      loading: () {
-        state = AsyncValue.data(drawnList);
-      },
+  Future<AsyncValue<List<AppModulesRaffleSchemasRaffleTicketComplete>>>
+  drawPrize(PrizeSimple prize) async {
+    final drawnList = await prizeRepository.tombolaPrizesPrizeIdDrawPost(
+      prizeId: prize.id,
     );
-    return AsyncData(drawnList);
+    if (drawnList.isSuccessful) {
+      state.when(
+        data: (list) {
+          state = AsyncValue.data(list + drawnList.body!);
+        },
+        error: (e, s) {},
+        loading: () {
+          state = AsyncValue.data(drawnList.body!);
+        },
+      );
+      return AsyncData(drawnList.body!);
+    } else {
+      return AsyncError(drawnList.error!, StackTrace.current);
+    }
   }
 }
 
 final winningTicketListProvider =
-    StateNotifierProvider<WinningTicketNotifier, AsyncValue<List<Ticket>>>((
-      ref,
-    ) {
-      final token = ref.watch(tokenProvider);
-      WinningTicketNotifier notifier = WinningTicketNotifier(token: token);
-      final ticketFromRaffle = ref.watch(ticketsListProvider);
-      final winningTickets = ticketFromRaffle.maybeWhen<List<Ticket>>(
-        data: (data) => data.where((element) => element.prize != null).toList(),
-        orElse: () => [],
-      );
-      notifier.setData(winningTickets);
-      return notifier;
-    });
+    NotifierProvider<
+      WinningTicketNotifier,
+      AsyncValue<List<AppModulesRaffleSchemasRaffleTicketComplete>>
+    >(WinningTicketNotifier.new);
