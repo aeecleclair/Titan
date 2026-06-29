@@ -1,22 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
-import 'package:titan/tickets/repositories/ticket_event_repository.dart';
+import 'package:titan/tickets/repositories/tickets_repository.dart';
 
-// Provider family existant
 final associationTicketEventListProvider =
     FutureProvider.family<List<TicketEvent>, String>((
       ref,
       associationId,
     ) async {
-      final repository = ref.watch(ticketEventRepositoryProvider);
+      final repository = ref.watch(ticketsRepositoryProvider);
       return await repository.getTicketEventListByAssociationId(associationId);
     });
 
-// NOUVEAU : Notifier pour gérer l'état des ticket events avec rafraîchissement
 class SelectedAssociationTicketEventListNotifier
     extends StateNotifier<AsyncValue<List<TicketEvent>>> {
-  final TicketEventRepository _repository;
+  final TicketsRepository _repository;
   String? _currentAssociationId;
 
   SelectedAssociationTicketEventListNotifier(this._repository)
@@ -46,16 +44,14 @@ class SelectedAssociationTicketEventListNotifier
   }
 }
 
-// NOUVEAU : Provider qui prend une association nullable avec StateNotifier
 final selectedAssociationTicketEventListProvider =
     StateNotifierProvider.family<
       SelectedAssociationTicketEventListNotifier,
       AsyncValue<List<TicketEvent>>,
       String?
     >((ref, associationId) {
-      final repository = ref.watch(ticketEventRepositoryProvider);
+      final repository = ref.watch(ticketsRepositoryProvider);
       final notifier = SelectedAssociationTicketEventListNotifier(repository);
-      // Charger les données initiales
       notifier.loadTicketEvents(associationId);
       return notifier;
     });

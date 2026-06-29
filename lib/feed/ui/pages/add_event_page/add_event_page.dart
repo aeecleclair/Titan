@@ -70,7 +70,7 @@ class AddEditEventPage extends HookConsumerWidget {
       ).notifier,
     );
 
-    // Rafraîchir la liste des shotguns quand l'association change ou quand la page s'ouvre
+    // Rafraîchir la liste des billetteries quand l'association change ou quand la page s'ouvre
     useEffect(() {
       ticketEventsNotifier.loadTicketEvents(selectedAssociation.value?.id);
       return null;
@@ -363,7 +363,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                   onChanged: (value) {
                                     useExistingTicketEvent.value = value;
                                   },
-                                  activeColor: ColorConstants.tertiary,
+                                  activeThumbColor: ColorConstants.tertiary,
                                   contentPadding: EdgeInsets.zero,
                                 ),
                                 // Optionnel : Dropdown pour choisir quel ticketEvent si la checkbox est cochée
@@ -708,7 +708,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                 if (syncEvent.id != "") {
                                   final value = await eventListNotifier
                                       .updateEvent(newEvent);
-                                  // Rafraîchir la liste des shotguns
+                                  // Rafraîchir la liste des billetteries
                                   await ticketEventsNotifier.refresh();
                                   if (value) {
                                     if (poster.value == null) {
@@ -749,7 +749,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                       await eventCreationNotifier.addEvent(
                                         newEvent,
                                       );
-                                  // Rafraîchir la liste des shotguns pour inclure les nouveaux
+                                  // Rafraîchir la liste des billetteries pour inclure les nouveaux
                                   await ticketEventsNotifier.refresh();
                                   if (poster.value == null) {
                                     QR.back();

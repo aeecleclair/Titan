@@ -4385,165 +4385,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsVersion => 'Version';
 
   @override
-  String get shotgunAddQuestion => 'Add a question';
-
-  @override
-  String get shotgunAddSession => 'Add session';
-
-  @override
-  String get shotgunAddTariff => 'Add pricing';
-
-  @override
-  String get shotgunAdmin => 'Admin';
-
-  @override
-  String get shotgunAnswerTypeBoolean => 'Yes/No';
-
-  @override
-  String get shotgunAnswerTypeNumber => 'Number';
-
-  @override
-  String get shotgunAnswerTypeText => 'Text';
-
-  @override
-  String get shotgunBookTicket => 'Book a ticket';
-
-  @override
-  String get shotgunCategoryLabel => 'Category (pricing)';
-
-  @override
-  String get shotgunCreate => 'Create a ticketing';
-
-  @override
-  String get shotgunDateLabel => 'Date';
-
-  @override
-  String get shotgunDeleteQuestionTooltip => 'Delete question';
-
-  @override
-  String get shotgunEditSuccess => 'Ticketing updated successfully';
-
-  @override
-  String get shotgunEditTitle => 'Edit ticketing';
-
-  @override
-  String get shotgunEndDateLabel => 'Ticketing closing date (optional)';
-
-  @override
-  String get shotgunManageAssociation => 'Manage association ticketings';
-
-  @override
-  String get shotgunManageTitle => 'Manage association ticketings';
-
-  @override
-  String get shotgunMinPriceError => 'Minimum price is 1€';
-
-  @override
-  String get shotgunMyTickets => 'My tickets';
-
-  @override
-  String get shotgunNoShotgun => 'No ticketing for this store';
-
-  @override
-  String get shotgunNotFound => 'Ticketing not found';
-
-  @override
-  String get shotgunNoTickets => 'You don\'t have any tickets yet';
-
-  @override
-  String get shotgunNoTicketsSubtitle => 'Book your seat for an event!';
-
-  @override
-  String get shotgunOpeningLabel => 'Opening';
-
-  @override
-  String get shotgunPaymentMethod => 'Payment method';
-
-  @override
-  String get shotgunPlaces => 'seats';
-
-  @override
-  String get shotgunPlacesLabel => 'Number of available seats';
-
-  @override
-  String get shotgunPriceLabel => 'Price (€)';
-
-  @override
-  String shotgunQuestionLabel(int number) {
-    return 'Question $number';
-  }
-
-  @override
-  String get shotgunQuestionRequiredLabel => 'Required';
-
-  @override
-  String get shotgunQuestions => 'Questions';
-
-  @override
-  String get shotgunQuestionTypeLabel => 'Answer type';
-
-  @override
-  String get shotgunQuotaLabel => 'Quota';
-
-  @override
-  String get shotgunReservationSuccess => 'Ticket booked successfully!';
-
-  @override
-  String get shotgunReserve => 'Book';
-
-  @override
-  String get shotgunSave => 'Save ticketing';
-
-  @override
-  String get shotgunSaveChanges => 'Save changes';
-
-  @override
-  String get shotgunSessionLabel => 'Session (time)';
-
-  @override
-  String shotgunSessionLabelNumbered(int number) {
-    return 'Session $number';
-  }
-
-  @override
-  String get shotgunSessions => 'Sessions';
-
-  @override
-  String get shotgunShotgun => 'Ticketing';
-
-  @override
-  String get shotgunShotgunDescription => 'Book your seats for events';
-
-  @override
-  String get shotgunStartDateLabel => 'Ticketing opening date *';
-
-  @override
-  String get shotgunStartDateRequired => 'Start date is required';
-
-  @override
-  String shotgunTariffLabel(int number) {
-    return 'Pricing $number';
-  }
-
-  @override
-  String get shotgunTariffs => 'Pricing';
-
-  @override
-  String get shotgunTitle => 'Shotgun';
-
-  @override
-  String get shotgunTitleLabel => 'Shotgun title *';
-
-  @override
-  String get shotgunTitleRequired => 'Title is required';
-
-  @override
-  String get shotgunTotal => 'Total';
-
-  @override
-  String get shotgunViewResults => 'View results';
-
-  @override
   String get toolDateRequired => 'Date required';
 
   @override
@@ -4867,6 +4708,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsEditTitle => 'Edit ticketing';
 
   @override
+  String get ticketsEdit => 'Modifier';
+
+  @override
   String get ticketsTariffs => 'Pricing';
 
   @override
@@ -4898,6 +4742,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ticketsNotFound => 'Ticketing not found';
+
+  @override
+  String get ticketsNoTicketingForStore => 'No ticketing exists for this store';
 
   @override
   String get ticketsBookTicket => 'Book a ticket';
@@ -4943,6 +4790,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsReservationSuccess => 'Ticketing created successfully!';
 
   @override
+  String get ticketsBookSuccess => 'Ticket booked successfully!';
+
+  @override
   String get ticketsMyTickets => 'My tickets';
 
   @override
@@ -4958,16 +4808,189 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsSessionSoldOut => 'This session is sold out';
 
   @override
-  String get ticketsSoldOut => 'Sold out';
+  String get ticketsOfferTicket => 'Offer this ticket';
 
   @override
-  String get ticketsEventSoldOut => 'This event is sold out';
+  String get ticketsOfferDescription =>
+      'The recipient will receive an email to accept the transfer. Any pending invitation will be replaced.';
+
+  @override
+  String get ticketsOfferSuccess => 'Transfer invitation sent';
+
+  @override
+  String get ticketsOfferError => 'Failed to send transfer invitation';
+
+  @override
+  String get ticketsOfferNotOwner => 'You are not the owner of this ticket';
+
+  @override
+  String get ticketsOfferNotFound => 'Ticket not found';
+
+  @override
+  String get ticketsOfferInvalidEmail => 'Invalid email address';
+
+  @override
+  String get ticketsOfferNotTransferable => 'This ticket cannot be transferred';
+
+  @override
+  String get ticketsOfferAlreadyUsed =>
+      'This ticket has already been used and can no longer be transferred';
+
+  @override
+  String ticketsOfferSessionPast(String date, String time) {
+    return 'This ticket\'s session has already passed ($date at $time)';
+  }
+
+  @override
+  String get ticketsStatusOpen => 'Open';
+
+  @override
+  String get ticketsStatusClosed => 'Closed';
+
+  @override
+  String get ticketsStatusUpcoming => 'Not yet open';
+
+  @override
+  String get ticketsStatusDisabled => 'Disabled';
+
+  @override
+  String get ticketsAddCategory => 'Add category';
+
+  @override
+  String get ticketsCategories => 'Categories';
 
   @override
   String get ticketsTicketsSold => 'Tickets sold';
 
   @override
   String get ticketsTicketsInCheckout => 'In checkout';
+
+  @override
+  String get ticketsReadOnlyDueSales =>
+      'Read-only (existing sales or checkouts)';
+
+  @override
+  String get ticketsCloseEventHint =>
+      'To close sales, set a closing date in the past. Disabling the event also blocks public access.';
+
+  @override
+  String get ticketsDisableEvent => 'Disable event';
+
+  @override
+  String get ticketsEventActivated => 'Event activated';
+
+  @override
+  String get ticketsEventDeactivated => 'Event deactivated';
+
+  @override
+  String get ticketsDelete => 'Supprimer';
+
+  @override
+  String get ticketsDeleteEvent => 'Delete ticketing';
+
+  @override
+  String get ticketsDeleteEventSuccess => 'Ticketing deleted successfully';
+
+  @override
+  String get ticketsDeleteConfirm => 'Confirm deletion?';
+
+  @override
+  String get ticketsCannotDeleteDueSales =>
+      'Cannot delete: existing sales or checkouts';
+
+  @override
+  String get ticketsCannotDeleteDueAnswers => 'Cannot delete: existing answers';
+
+  @override
+  String get ticketsScanTitle => 'Scan a ticket';
+
+  @override
+  String get ticketsScanPlaceholder => 'Ticket ID';
+
+  @override
+  String get ticketsScanCheck => 'Check';
+
+  @override
+  String get ticketsScanValidate => 'Validate entry';
+
+  @override
+  String get ticketsScanAlreadyScanned =>
+      'This ticket has already been scanned';
+
+  @override
+  String get ticketsScanSuccess => 'Ticket validated successfully';
+
+  @override
+  String get ticketsScanNotFound => 'Ticket not found';
+
+  @override
+  String get ticketsDisableSession => 'Disable session';
+
+  @override
+  String get ticketsSessionActivated => 'Session activated';
+
+  @override
+  String get ticketsSessionDeactivated => 'Session deactivated';
+
+  @override
+  String get ticketsDisableCategory => 'Disable category';
+
+  @override
+  String get ticketsCategoryActivated => 'Category activated';
+
+  @override
+  String get ticketsCategoryDeactivated => 'Category deactivated';
+
+  @override
+  String get ticketsDisableQuestion => 'Disable question';
+
+  @override
+  String get ticketsQuestionActivated => 'Question activated';
+
+  @override
+  String get ticketsQuestionDeactivated => 'Question deactivated';
+
+  @override
+  String get ticketsGeneralInfo => 'General information';
+
+  @override
+  String get ticketsSoldTickets => 'Sold tickets';
+
+  @override
+  String get ticketsDownloadCsv => 'Download CSV';
+
+  @override
+  String get ticketsCsvDownloadSuccess => 'CSV downloaded successfully';
+
+  @override
+  String get ticketsCsvDownloadError => 'Download error';
+
+  @override
+  String get ticketsDisabled => 'Disabled';
+
+  @override
+  String get ticketsGlobalStats => 'Global statistics';
+
+  @override
+  String get ticketsUnlimited => 'Unlimited';
+
+  @override
+  String get ticketsUpdateError => 'Cannot update this item';
+
+  @override
+  String get ticketsNewTicketing => 'New ticketing';
+
+  @override
+  String get ticketsScanned => 'Scanned';
+
+  @override
+  String get ticketsValid => 'Valid';
+
+  @override
+  String get ticketsSoldOut => 'Sold out';
+
+  @override
+  String get ticketsEventSoldOut => 'This event is sold out';
 
   @override
   String get ticketsStatistics => 'Statistics';

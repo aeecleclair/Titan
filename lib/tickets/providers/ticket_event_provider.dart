@@ -1,18 +1,18 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tickets/repositories/tickets_repository.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 
 class TicketEventByIdNotifier extends StateNotifier<AsyncValue<TicketEvent>> {
-  TicketEventByIdNotifier({required String token, required String id})
-    : _id = id,
-      super(const AsyncValue.loading()) {
-    _repository = TicketsRepository()..setToken(token);
-  }
+  TicketEventByIdNotifier({
+    required TicketsRepository repository,
+    required String id,
+  }) : _repository = repository,
+       _id = id,
+       super(const AsyncValue.loading());
 
+  final TicketsRepository _repository;
   final String _id;
-  late final TicketsRepository _repository;
 
   Future<void> load() async {
     state = const AsyncValue.loading();
@@ -23,6 +23,10 @@ class TicketEventByIdNotifier extends StateNotifier<AsyncValue<TicketEvent>> {
       state = AsyncValue.error(e, st);
     }
   }
+
+  void setEvent(TicketEvent event) {
+    state = AsyncValue.data(event);
+  }
 }
 
 final ticketEventByIdProvider =
@@ -31,8 +35,8 @@ final ticketEventByIdProvider =
       AsyncValue<TicketEvent>,
       String
     >((ref, id) {
-      final token = ref.watch(tokenProvider);
-      final notifier = TicketEventByIdNotifier(token: token, id: id);
+      final repository = ref.watch(ticketsRepositoryProvider);
+      final notifier = TicketEventByIdNotifier(repository: repository, id: id);
       tokenExpireWrapperAuth(ref, () async {
         await notifier.load();
       });
@@ -41,14 +45,15 @@ final ticketEventByIdProvider =
 
 class PublicTicketEventByIdNotifier
     extends StateNotifier<AsyncValue<TicketEvent>> {
-  PublicTicketEventByIdNotifier({required String token, required String id})
-    : _id = id,
-      super(const AsyncValue.loading()) {
-    _repository = TicketsRepository()..setToken(token);
-  }
+  PublicTicketEventByIdNotifier({
+    required TicketsRepository repository,
+    required String id,
+  }) : _repository = repository,
+       _id = id,
+       super(const AsyncValue.loading());
 
+  final TicketsRepository _repository;
   final String _id;
-  late final TicketsRepository _repository;
 
   Future<void> load() async {
     state = const AsyncValue.loading();
@@ -67,8 +72,11 @@ final publicTicketEventByIdProvider =
       AsyncValue<TicketEvent>,
       String
     >((ref, id) {
-      final token = ref.watch(tokenProvider);
-      final notifier = PublicTicketEventByIdNotifier(token: token, id: id);
+      final repository = ref.watch(ticketsRepositoryProvider);
+      final notifier = PublicTicketEventByIdNotifier(
+        repository: repository,
+        id: id,
+      );
       tokenExpireWrapperAuth(ref, () async {
         await notifier.load();
       });

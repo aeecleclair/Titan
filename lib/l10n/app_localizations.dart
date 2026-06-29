@@ -8510,312 +8510,6 @@ abstract class AppLocalizations {
   /// **'Version'**
   String get settingsVersion;
 
-  /// No description provided for @shotgunAddQuestion.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ajouter une question'**
-  String get shotgunAddQuestion;
-
-  /// No description provided for @shotgunAddSession.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ajouter une session'**
-  String get shotgunAddSession;
-
-  /// No description provided for @shotgunAddTariff.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ajouter un tarif'**
-  String get shotgunAddTariff;
-
-  /// No description provided for @shotgunAdmin.
-  ///
-  /// In fr, this message translates to:
-  /// **'Admin'**
-  String get shotgunAdmin;
-
-  /// No description provided for @shotgunAnswerTypeBoolean.
-  ///
-  /// In fr, this message translates to:
-  /// **'Oui/Non'**
-  String get shotgunAnswerTypeBoolean;
-
-  /// No description provided for @shotgunAnswerTypeNumber.
-  ///
-  /// In fr, this message translates to:
-  /// **'Nombre'**
-  String get shotgunAnswerTypeNumber;
-
-  /// No description provided for @shotgunAnswerTypeText.
-  ///
-  /// In fr, this message translates to:
-  /// **'Texte'**
-  String get shotgunAnswerTypeText;
-
-  /// No description provided for @shotgunBookTicket.
-  ///
-  /// In fr, this message translates to:
-  /// **'Réserver un billet'**
-  String get shotgunBookTicket;
-
-  /// No description provided for @shotgunCategoryLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Catégorie (tarif)'**
-  String get shotgunCategoryLabel;
-
-  /// No description provided for @shotgunCreate.
-  ///
-  /// In fr, this message translates to:
-  /// **'Créer une billetterie'**
-  String get shotgunCreate;
-
-  /// No description provided for @shotgunDateLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Date'**
-  String get shotgunDateLabel;
-
-  /// No description provided for @shotgunDeleteQuestionTooltip.
-  ///
-  /// In fr, this message translates to:
-  /// **'Supprimer la question'**
-  String get shotgunDeleteQuestionTooltip;
-
-  /// No description provided for @shotgunEditSuccess.
-  ///
-  /// In fr, this message translates to:
-  /// **'Billetterie modifié avec succès'**
-  String get shotgunEditSuccess;
-
-  /// No description provided for @shotgunEditTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Modifier la billetterie'**
-  String get shotgunEditTitle;
-
-  /// No description provided for @shotgunEndDateLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Date de fermeture de la billetterie (optionnel)'**
-  String get shotgunEndDateLabel;
-
-  /// No description provided for @shotgunManageAssociation.
-  ///
-  /// In fr, this message translates to:
-  /// **'Gérer les billetteries de l\'association'**
-  String get shotgunManageAssociation;
-
-  /// No description provided for @shotgunManageTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Gérer les billetteries de l\'association'**
-  String get shotgunManageTitle;
-
-  /// No description provided for @shotgunMinPriceError.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le prix minimum est 1€'**
-  String get shotgunMinPriceError;
-
-  /// No description provided for @shotgunMyTickets.
-  ///
-  /// In fr, this message translates to:
-  /// **'Mes billets'**
-  String get shotgunMyTickets;
-
-  /// No description provided for @shotgunNoShotgun.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aucune billetterie pour ce store'**
-  String get shotgunNoShotgun;
-
-  /// No description provided for @shotgunNotFound.
-  ///
-  /// In fr, this message translates to:
-  /// **'Billetterie non trouvé'**
-  String get shotgunNotFound;
-
-  /// No description provided for @shotgunNoTickets.
-  ///
-  /// In fr, this message translates to:
-  /// **'Vous n\'avez pas encore de billets'**
-  String get shotgunNoTickets;
-
-  /// No description provided for @shotgunNoTicketsSubtitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Réservez votre place pour un événement !'**
-  String get shotgunNoTicketsSubtitle;
-
-  /// No description provided for @shotgunOpeningLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ouverture'**
-  String get shotgunOpeningLabel;
-
-  /// No description provided for @shotgunPaymentMethod.
-  ///
-  /// In fr, this message translates to:
-  /// **'Moyen de paiement'**
-  String get shotgunPaymentMethod;
-
-  /// No description provided for @shotgunPlaces.
-  ///
-  /// In fr, this message translates to:
-  /// **'places'**
-  String get shotgunPlaces;
-
-  /// No description provided for @shotgunPlacesLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Nombre de places disponibles (optionnel)'**
-  String get shotgunPlacesLabel;
-
-  /// No description provided for @shotgunPriceLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Prix (€)'**
-  String get shotgunPriceLabel;
-
-  /// Label pour une question dans le formulaire shotgun
-  ///
-  /// In fr, this message translates to:
-  /// **'Question {number}'**
-  String shotgunQuestionLabel(int number);
-
-  /// No description provided for @shotgunQuestionRequiredLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Obligatoire'**
-  String get shotgunQuestionRequiredLabel;
-
-  /// No description provided for @shotgunQuestions.
-  ///
-  /// In fr, this message translates to:
-  /// **'Questions'**
-  String get shotgunQuestions;
-
-  /// No description provided for @shotgunQuestionTypeLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Type de réponse'**
-  String get shotgunQuestionTypeLabel;
-
-  /// No description provided for @shotgunQuotaLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Quota'**
-  String get shotgunQuotaLabel;
-
-  /// No description provided for @shotgunReservationSuccess.
-  ///
-  /// In fr, this message translates to:
-  /// **'Billet réservé !'**
-  String get shotgunReservationSuccess;
-
-  /// No description provided for @shotgunReserve.
-  ///
-  /// In fr, this message translates to:
-  /// **'Réserver'**
-  String get shotgunReserve;
-
-  /// No description provided for @shotgunSave.
-  ///
-  /// In fr, this message translates to:
-  /// **'Enregistrer la billetterie'**
-  String get shotgunSave;
-
-  /// No description provided for @shotgunSaveChanges.
-  ///
-  /// In fr, this message translates to:
-  /// **'Enregistrer les modifications'**
-  String get shotgunSaveChanges;
-
-  /// No description provided for @shotgunSessionLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Session (horaire)'**
-  String get shotgunSessionLabel;
-
-  /// Label pour une session dans le formulaire shotgun
-  ///
-  /// In fr, this message translates to:
-  /// **'Session {number}'**
-  String shotgunSessionLabelNumbered(int number);
-
-  /// No description provided for @shotgunSessions.
-  ///
-  /// In fr, this message translates to:
-  /// **'Sessions'**
-  String get shotgunSessions;
-
-  /// No description provided for @shotgunShotgun.
-  ///
-  /// In fr, this message translates to:
-  /// **'Billetterie'**
-  String get shotgunShotgun;
-
-  /// No description provided for @shotgunShotgunDescription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Réserver vos places pour des événements'**
-  String get shotgunShotgunDescription;
-
-  /// No description provided for @shotgunStartDateLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Date d\'ouverture de la billetterie *'**
-  String get shotgunStartDateLabel;
-
-  /// No description provided for @shotgunStartDateRequired.
-  ///
-  /// In fr, this message translates to:
-  /// **'La date de début est obligatoire'**
-  String get shotgunStartDateRequired;
-
-  /// Label pour un tarif dans le formulaire shotgun
-  ///
-  /// In fr, this message translates to:
-  /// **'Tarif {number}'**
-  String shotgunTariffLabel(int number);
-
-  /// No description provided for @shotgunTariffs.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tarifs'**
-  String get shotgunTariffs;
-
-  /// No description provided for @shotgunTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Billetterie'**
-  String get shotgunTitle;
-
-  /// No description provided for @shotgunTitleLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Titre de la billetterie *'**
-  String get shotgunTitleLabel;
-
-  /// No description provided for @shotgunTitleRequired.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le titre est obligatoire'**
-  String get shotgunTitleRequired;
-
-  /// No description provided for @shotgunTotal.
-  ///
-  /// In fr, this message translates to:
-  /// **'Total'**
-  String get shotgunTotal;
-
-  /// No description provided for @shotgunViewResults.
-  ///
-  /// In fr, this message translates to:
-  /// **'Voir les résultats'**
-  String get shotgunViewResults;
-
   /// No description provided for @toolDateRequired.
   ///
   /// In fr, this message translates to:
@@ -9359,7 +9053,7 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsEndDateLabel.
   ///
   /// In fr, this message translates to:
-  /// **'Date de fermeture de la billetterie (optionnel)'**
+  /// **'Date de fermeture de la billetterie'**
   String get ticketsEndDateLabel;
 
   /// No description provided for @ticketsTitleRequired.
@@ -9443,8 +9137,14 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsEditTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Modifier le tickets'**
+  /// **'Modifier la billetterie'**
   String get ticketsEditTitle;
+
+  /// No description provided for @ticketsEdit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier'**
+  String get ticketsEdit;
 
   /// No description provided for @ticketsTariffs.
   ///
@@ -9511,6 +9211,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Billeterie non trouvée'**
   String get ticketsNotFound;
+
+  /// No description provided for @ticketsNoTicketingForStore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune billeterie n\'existe pour ce store'**
+  String get ticketsNoTicketingForStore;
 
   /// No description provided for @ticketsBookTicket.
   ///
@@ -9590,6 +9296,12 @@ abstract class AppLocalizations {
   /// **'Billeterie créée avec succès !'**
   String get ticketsReservationSuccess;
 
+  /// No description provided for @ticketsBookSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Billet réservé !'**
+  String get ticketsBookSuccess;
+
   /// No description provided for @ticketsMyTickets.
   ///
   /// In fr, this message translates to:
@@ -9620,17 +9332,101 @@ abstract class AppLocalizations {
   /// **'Cette session est complète'**
   String get ticketsSessionSoldOut;
 
-  /// No description provided for @ticketsSoldOut.
+  /// No description provided for @ticketsOfferTicket.
   ///
   /// In fr, this message translates to:
-  /// **'Complet'**
-  String get ticketsSoldOut;
+  /// **'Offrir ce billet'**
+  String get ticketsOfferTicket;
 
-  /// No description provided for @ticketsEventSoldOut.
+  /// No description provided for @ticketsOfferDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Cet évènement est complet'**
-  String get ticketsEventSoldOut;
+  /// **'La personne recevra un email pour accepter le transfert. Toute invitation en cours sera remplacée.'**
+  String get ticketsOfferDescription;
+
+  /// No description provided for @ticketsOfferSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Invitation de transfert envoyée'**
+  String get ticketsOfferSuccess;
+
+  /// No description provided for @ticketsOfferError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de l\'envoi de l\'invitation'**
+  String get ticketsOfferError;
+
+  /// No description provided for @ticketsOfferNotOwner.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous n\'êtes pas le propriétaire de ce billet'**
+  String get ticketsOfferNotOwner;
+
+  /// No description provided for @ticketsOfferNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Billet introuvable'**
+  String get ticketsOfferNotFound;
+
+  /// No description provided for @ticketsOfferInvalidEmail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Adresse email invalide'**
+  String get ticketsOfferInvalidEmail;
+
+  /// No description provided for @ticketsOfferNotTransferable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce billet ne peut pas être transféré'**
+  String get ticketsOfferNotTransferable;
+
+  /// No description provided for @ticketsOfferAlreadyUsed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce billet a déjà été utilisé et ne peut plus être transféré'**
+  String get ticketsOfferAlreadyUsed;
+
+  /// No description provided for @ticketsOfferSessionPast.
+  ///
+  /// In fr, this message translates to:
+  /// **'La session de ce billet est passée ({date} à {time})'**
+  String ticketsOfferSessionPast(String date, String time);
+
+  /// No description provided for @ticketsStatusOpen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouverte'**
+  String get ticketsStatusOpen;
+
+  /// No description provided for @ticketsStatusClosed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermée'**
+  String get ticketsStatusClosed;
+
+  /// No description provided for @ticketsStatusUpcoming.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore ouverte'**
+  String get ticketsStatusUpcoming;
+
+  /// No description provided for @ticketsStatusDisabled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactivée'**
+  String get ticketsStatusDisabled;
+
+  /// No description provided for @ticketsAddCategory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une catégorie'**
+  String get ticketsAddCategory;
+
+  /// No description provided for @ticketsCategories.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégories'**
+  String get ticketsCategories;
 
   /// No description provided for @ticketsTicketsSold.
   ///
@@ -9643,6 +9439,252 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'En cours d\'achat'**
   String get ticketsTicketsInCheckout;
+
+  /// No description provided for @ticketsReadOnlyDueSales.
+  ///
+  /// In fr, this message translates to:
+  /// **'Non modifiable (ventes ou réservations existantes)'**
+  String get ticketsReadOnlyDueSales;
+
+  /// No description provided for @ticketsCloseEventHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour fermer les ventes, définir une date de fermeture dans le passé. Désactiver l\'événement bloque aussi l\'accès public.'**
+  String get ticketsCloseEventHint;
+
+  /// No description provided for @ticketsDisableEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactiver l\'événement'**
+  String get ticketsDisableEvent;
+
+  /// No description provided for @ticketsEventActivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement activé'**
+  String get ticketsEventActivated;
+
+  /// No description provided for @ticketsEventDeactivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement désactivé'**
+  String get ticketsEventDeactivated;
+
+  /// No description provided for @ticketsDelete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer'**
+  String get ticketsDelete;
+
+  /// No description provided for @ticketsDeleteEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer la billetterie'**
+  String get ticketsDeleteEvent;
+
+  /// No description provided for @ticketsDeleteEventSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Billetterie supprimée avec succès'**
+  String get ticketsDeleteEventSuccess;
+
+  /// No description provided for @ticketsDeleteConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer la suppression ?'**
+  String get ticketsDeleteConfirm;
+
+  /// No description provided for @ticketsCannotDeleteDueSales.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de supprimer : ventes ou réservations existantes'**
+  String get ticketsCannotDeleteDueSales;
+
+  /// No description provided for @ticketsCannotDeleteDueAnswers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de supprimer : réponses existantes'**
+  String get ticketsCannotDeleteDueAnswers;
+
+  /// No description provided for @ticketsScanTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanner un billet'**
+  String get ticketsScanTitle;
+
+  /// No description provided for @ticketsScanPlaceholder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Identifiant du billet'**
+  String get ticketsScanPlaceholder;
+
+  /// No description provided for @ticketsScanCheck.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifier'**
+  String get ticketsScanCheck;
+
+  /// No description provided for @ticketsScanValidate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider l\'entrée'**
+  String get ticketsScanValidate;
+
+  /// No description provided for @ticketsScanAlreadyScanned.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce billet a déjà été scanné'**
+  String get ticketsScanAlreadyScanned;
+
+  /// No description provided for @ticketsScanSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Billet validé avec succès'**
+  String get ticketsScanSuccess;
+
+  /// No description provided for @ticketsScanNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Billet introuvable'**
+  String get ticketsScanNotFound;
+
+  /// No description provided for @ticketsDisableSession.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactiver la session'**
+  String get ticketsDisableSession;
+
+  /// No description provided for @ticketsSessionActivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Session activée'**
+  String get ticketsSessionActivated;
+
+  /// No description provided for @ticketsSessionDeactivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Session désactivée'**
+  String get ticketsSessionDeactivated;
+
+  /// No description provided for @ticketsDisableCategory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactiver la catégorie'**
+  String get ticketsDisableCategory;
+
+  /// No description provided for @ticketsCategoryActivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégorie activée'**
+  String get ticketsCategoryActivated;
+
+  /// No description provided for @ticketsCategoryDeactivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégorie désactivée'**
+  String get ticketsCategoryDeactivated;
+
+  /// No description provided for @ticketsDisableQuestion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactiver la question'**
+  String get ticketsDisableQuestion;
+
+  /// No description provided for @ticketsQuestionActivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Question activée'**
+  String get ticketsQuestionActivated;
+
+  /// No description provided for @ticketsQuestionDeactivated.
+  ///
+  /// In fr, this message translates to:
+  /// **'Question désactivée'**
+  String get ticketsQuestionDeactivated;
+
+  /// No description provided for @ticketsGeneralInfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Informations générales'**
+  String get ticketsGeneralInfo;
+
+  /// No description provided for @ticketsSoldTickets.
+  ///
+  /// In fr, this message translates to:
+  /// **'Billets vendus'**
+  String get ticketsSoldTickets;
+
+  /// No description provided for @ticketsDownloadCsv.
+  ///
+  /// In fr, this message translates to:
+  /// **'Télécharger CSV'**
+  String get ticketsDownloadCsv;
+
+  /// No description provided for @ticketsCsvDownloadSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'CSV téléchargé avec succès'**
+  String get ticketsCsvDownloadSuccess;
+
+  /// No description provided for @ticketsCsvDownloadError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors du téléchargement'**
+  String get ticketsCsvDownloadError;
+
+  /// No description provided for @ticketsDisabled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactivé'**
+  String get ticketsDisabled;
+
+  /// No description provided for @ticketsGlobalStats.
+  ///
+  /// In fr, this message translates to:
+  /// **'Statistiques globales'**
+  String get ticketsGlobalStats;
+
+  /// No description provided for @ticketsUnlimited.
+  ///
+  /// In fr, this message translates to:
+  /// **'Illimité'**
+  String get ticketsUnlimited;
+
+  /// No description provided for @ticketsUpdateError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de modifier cet élément'**
+  String get ticketsUpdateError;
+
+  /// No description provided for @ticketsNewTicketing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle billetterie'**
+  String get ticketsNewTicketing;
+
+  /// No description provided for @ticketsScanned.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanné'**
+  String get ticketsScanned;
+
+  /// No description provided for @ticketsValid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valide'**
+  String get ticketsValid;
+
+  /// No description provided for @ticketsSoldOut.
+  ///
+  /// In fr, this message translates to:
+  /// **'Complet'**
+  String get ticketsSoldOut;
+
+  /// No description provided for @ticketsEventSoldOut.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cet évènement est complet'**
+  String get ticketsEventSoldOut;
 
   /// No description provided for @ticketsStatistics.
   ///

@@ -11,7 +11,6 @@ import 'package:titan/navigation/ui/scroll_to_hide_navbar.dart';
 import 'package:titan/tickets/class/answer_type.dart';
 import 'package:titan/tickets/class/category.dart';
 import 'package:titan/tickets/class/question.dart';
-import 'package:titan/tickets/class/session.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tickets/ui/components/session_card.dart';
 import 'package:titan/tickets/ui/components/tarif_card.dart';
@@ -21,6 +20,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/styleguide/horizontal_multi_select.dart';
 import 'package:titan/tools/ui/widgets/date_entry.dart';
 import 'package:titan/tools/ui/widgets/text_entry.dart';
+import 'package:titan/tickets/providers/sessions_form_provider.dart';
 import 'package:titan/tickets/providers/ticket_event_list_provider.dart';
 
 enum QuestionType { tarif, quota }
@@ -47,9 +47,9 @@ class CreateTicketEventPage extends HookConsumerWidget {
           : null,
     );
     final categories = useState<List<Category>>([]);
-    final sessions = useState<List<Session>>([]);
     final questions = useState<List<_QuestionFormData>>([]);
     final scrollController = useScrollController();
+    final sessionsFormNotifier = ref.read(sessionsFormProvider.notifier);
 
     final locale = Localizations.localeOf(context);
 
@@ -126,7 +126,7 @@ class CreateTicketEventPage extends HookConsumerWidget {
                   TarifCard(onChanged: (value) => categories.value = value),
                   const SizedBox(height: 16),
 
-                  SessionCard(onChanged: (value) => sessions.value = value),
+                  const SessionCard(),
                   const SizedBox(height: 16),
                   _ExtraQuestionsSection(
                     questions: questions.value,
@@ -165,11 +165,28 @@ class CreateTicketEventPage extends HookConsumerWidget {
                           return;
                         }
 
-                        if (sessions.value.isEmpty) {
+                        final sessionsForm = ref.read(sessionsFormProvider);
+                        final eventSessions = sessionsFormNotifier
+                            .buildSessions();
+
+                        if (sessionsForm.entries.any(
+                          (entry) => entry.label.trim().isEmpty,
+                        )) {
                           displayToast(
                             context,
                             TypeMsg.error,
                             l10n.ticketsSessionsRequired,
+                          );
+                          return;
+                        }
+
+                        if (sessionsForm.entries.any(
+                          (entry) => entry.startDatetime == null,
+                        )) {
+                          displayToast(
+                            context,
+                            TypeMsg.error,
+                            l10n.toolDateRequired,
                           );
                           return;
                         }
@@ -209,7 +226,7 @@ class CreateTicketEventPage extends HookConsumerWidget {
                                   openDatetime: openDatetime,
                                   closeDatetime: closeDatetime,
                                   categories: categories.value,
-                                  sessions: sessions.value,
+                                  sessions: eventSessions,
                                   questions: questions.value
                                       .where(
                                         (q) =>
