@@ -1,5 +1,7 @@
+import 'package:chopper/chopper.dart' show Response;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/mypayment/adapters/store_adapter.dart';
 import 'package:titan/tools/providers/list_notifier_api.dart';
 import 'package:titan/tools/repository/repository.dart';
 
@@ -18,10 +20,15 @@ class StoreListNotifier extends ListNotifierAPI<UserStore> {
 
   Future<bool> createStore(Structure structure, UserStore store) async {
     return await add(
-      () => repository.mypaymentStructuresStructureIdStoresPost(
-        structureId: structure.id,
-        body: StoreBase(name: store.name),
-      ),
+      () => repository
+          .mypaymentStructuresStructureIdStoresPost(
+            structureId: structure.id,
+            body: StoreBase(name: store.name),
+          )
+          .then(
+            (response) =>
+                Response(response.base, (response.body as Store).toUserStore()),
+          ),
       store,
     );
   }
