@@ -177,7 +177,8 @@ class AddEditStructurePage extends HookConsumerWidget {
                     label: localizeWithContext.adminBic,
                     validator: (value) {
                       if (value.isNotEmpty &&
-                          value.replaceAll(" ", "").length != 11) {
+                          value.replaceAll(" ", "").length != 11 &&
+                          value.replaceAll(" ", "").length != 8) {
                         return localizeWithContext.adminBicError;
                       }
                       return null;
