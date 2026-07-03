@@ -16,6 +16,9 @@ class InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
+        // The QR Code background MUST be white.
+        // So the whole modal has hard-coded colors.
+        // See confirm_button.dart
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: Colors.grey.shade200.withValues(alpha: 0.5),

@@ -36,6 +36,7 @@ class QrCode extends ConsumerWidget {
                   MediaQuery.of(context).size.width * 0.8,
                   MediaQuery.of(context).size.height * 0.8,
                 ),
+                // The QR Code MUST be black
                 eyeStyle: const QrEyeStyle(
                   color: Colors.black,
                   eyeShape: QrEyeShape.square,

@@ -11,9 +11,11 @@ import 'package:titan/mypayment/providers/key_service_provider.dart';
 import 'package:titan/mypayment/providers/my_history_provider.dart';
 import 'package:titan/mypayment/providers/my_wallet_provider.dart';
 import 'package:titan/mypayment/providers/pay_amount_provider.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/ui/pages/pay_page/info_card.dart';
 import 'package:titan/mypayment/ui/pages/pay_page/qr_code.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 
 class ConfirmButton extends ConsumerWidget {
@@ -46,6 +48,8 @@ class ConfirmButton extends ConsumerWidget {
 
     final formatter = NumberFormat("#,##0.00", "fr_FR");
 
+    final isDarkTheme = ref.watch(themeProvider);
+
     void displayQRModal() {
       showModalBottomSheet(
         context: context,
@@ -55,6 +59,8 @@ class ConfirmButton extends ConsumerWidget {
         backgroundColor: Colors.transparent,
         builder: (context) {
           return Container(
+            // The QR Code background MUST be white.
+            // So the whole modal has hard-coded colors
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(40),
@@ -168,11 +174,11 @@ class ConfirmButton extends ConsumerWidget {
         width: 75,
         decoration: BoxDecoration(
           color: enabled
-              ? Colors.white
+              ? MyPaymentColors.onGradient
               : Colors.grey.shade200.withValues(alpha: 0.5),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
+              color: Theme.of(context).shadowColor,
               blurRadius: 5,
               offset: const Offset(1, 2),
             ),
@@ -181,9 +187,9 @@ class ConfirmButton extends ConsumerWidget {
         ),
         child: HeroIcon(
           HeroIcons.qrCode,
-          color: enabled
-              ? const Color(0xff017f80)
-              : const Color.fromARGB(134, 1, 128, 128),
+          color: MyPaymentColors(
+            isDarkTheme,
+          ).gradient1.withValues(alpha: enabled ? 1 : .5),
           size: 65,
         ),
       ),
