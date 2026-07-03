@@ -1,11 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/mypayment/class/history.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/tools/functions.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
-class TransactionCard extends StatelessWidget {
+class TransactionCard extends ConsumerWidget {
   final History transaction;
   final Function()? onTap;
   final bool storeView;
@@ -17,9 +20,11 @@ class TransactionCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final formatter = NumberFormat("#,##0.00", "fr_FR");
     final HeroIcons icon;
+    final isDarkTheme = ref.watch(themeProvider);
+    final canceledColor = const Color(0xffcc4619);
 
     switch (transaction.type) {
       case HistoryType.given:
@@ -65,7 +70,11 @@ class TransactionCard extends StatelessWidget {
                   radius: 1,
                 ),
               ),
-              child: HeroIcon(icon, color: Colors.white, size: 25),
+              child: HeroIcon(
+                icon,
+                color: MyPaymentColors.onGradient,
+                size: 25,
+              ),
             ),
             const SizedBox(width: 15),
             Expanded(
@@ -82,8 +91,8 @@ class TransactionCard extends StatelessWidget {
                               : "${transaction.type == HistoryType.refundCredited || transaction.type == HistoryType.refundDebited ? "Remboursement - " : ""}$transactionName",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Color(0xff204550),
+                          style: TextStyle(
+                            color: MyPaymentColors(isDarkTheme).secondaryGreen,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
@@ -97,18 +106,13 @@ class TransactionCard extends StatelessWidget {
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color.fromARGB(
-                              255,
-                              204,
-                              70,
-                              25,
-                            ).withValues(alpha: 0.2),
+                            color: canceledColor.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: Text(
                             "Annulé",
                             style: TextStyle(
-                              color: const Color.fromARGB(255, 204, 70, 25),
+                              color: canceledColor,
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                             ),
@@ -119,16 +123,16 @@ class TransactionCard extends StatelessWidget {
                   if (transaction.refund == null) const SizedBox(height: 5),
                   Text(
                     "Le ${DateFormat("EEE dd MMMM yyyy à HH:mm", "fr_FR").format(transaction.creation)}",
-                    style: const TextStyle(
-                      color: Color(0xff204550),
+                    style: TextStyle(
+                      color: MyPaymentColors(isDarkTheme).secondaryGreen,
                       fontSize: 12,
                     ),
                   ),
                   if (transaction.refund != null)
                     Text(
                       "Remboursé le ${DateFormat("EEE dd MMMM yyyy à HH:mm", "fr_FR").format(transaction.refund!.creation)} de ${formatter.format(transaction.refund!.total / 100)} €",
-                      style: const TextStyle(
-                        color: Color.fromARGB(255, 16, 46, 55),
+                      style: TextStyle(
+                        color: MyPaymentColors(isDarkTheme).secondaryGreen,
                         fontSize: 9,
                       ),
                     ),
@@ -139,7 +143,7 @@ class TransactionCard extends StatelessWidget {
             Text(
               "${transaction.type == HistoryType.given || transaction.type == HistoryType.refundDebited ? " -" : " +"} ${formatter.format(transaction.total / 100)} €",
               style: TextStyle(
-                color: const Color(0xff204550),
+                color: MyPaymentColors(isDarkTheme).secondaryGreen,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 decoration:
@@ -147,7 +151,9 @@ class TransactionCard extends StatelessWidget {
                         transaction.status == TransactionStatus.refunded)
                     ? TextDecoration.none
                     : TextDecoration.lineThrough,
-                decorationColor: const Color(0xff204550).withValues(alpha: 0.8),
+                decorationColor: MyPaymentColors(
+                  isDarkTheme,
+                ).secondaryGreen.withValues(alpha: 0.8),
                 decorationThickness: 2.85,
               ),
             ),

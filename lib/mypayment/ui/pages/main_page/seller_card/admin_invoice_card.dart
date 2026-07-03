@@ -38,7 +38,7 @@ class InvoiceAdminCard extends ConsumerWidget {
                 "Factures",
                 maxLines: 1,
                 style: TextStyle(
-                  color: MyPaymentColors(isDarkTheme).backgroundGradient2,
+                  color: MyPaymentColors(isDarkTheme).secondaryGreen,
                   fontSize: 14,
                 ),
               ),
@@ -46,7 +46,7 @@ class InvoiceAdminCard extends ConsumerWidget {
             SizedBox(width: 10),
             HeroIcon(
               HeroIcons.arrowRight,
-              color: MyPaymentColors(isDarkTheme).backgroundGradient2,
+              color: MyPaymentColors(isDarkTheme).secondaryGreen,
               size: 25,
             ),
           ],

@@ -28,8 +28,8 @@ class StoreCard extends HookConsumerWidget {
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
     final isDarkTheme = ref.watch(themeProvider);
     final buttonGradient = [
-      MyPaymentColors(isDarkTheme).backgroundGradient1,
       MyPaymentColors(isDarkTheme).backgroundGradient2,
+      MyPaymentColors(isDarkTheme).backgroundGradient1,
     ];
 
     return MainCardTemplate(

@@ -33,7 +33,7 @@ class StoreList extends ConsumerWidget {
               child: Text(
                 "Associations",
                 style: TextStyle(
-                  color: MyPaymentColors(isDarkTheme).backgroundGradient2,
+                  color: MyPaymentColors(isDarkTheme).secondaryGreen,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),

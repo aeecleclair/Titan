@@ -49,7 +49,7 @@ class StructureAdminCard extends ConsumerWidget {
                     "Gestion de ${structure.name}",
                     maxLines: 2,
                     style: TextStyle(
-                      color: MyPaymentColors(isDarkTheme).backgroundGradient2,
+                      color: MyPaymentColors(isDarkTheme).secondaryGreen,
                       fontSize: 14,
                     ),
                   ),
@@ -57,7 +57,7 @@ class StructureAdminCard extends ConsumerWidget {
                 SizedBox(width: 10),
                 HeroIcon(
                   HeroIcons.arrowRight,
-                  color: MyPaymentColors(isDarkTheme).backgroundGradient2,
+                  color: MyPaymentColors(isDarkTheme).secondaryGreen,
                   size: 25,
                 ),
               ],

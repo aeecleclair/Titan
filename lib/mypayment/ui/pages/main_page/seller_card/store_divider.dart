@@ -16,7 +16,7 @@ class StoreDivider extends ConsumerWidget {
         children: [
           Expanded(
             child: Divider(
-              color: MyPaymentColors(isDarkTheme).backgroundGradient2,
+              color: MyPaymentColors(isDarkTheme).secondaryGreen,
               thickness: 1,
             ),
           ),
@@ -26,7 +26,7 @@ class StoreDivider extends ConsumerWidget {
               child: Text(
                 name,
                 style: TextStyle(
-                  color: MyPaymentColors(isDarkTheme).backgroundGradient2,
+                  color: MyPaymentColors(isDarkTheme).secondaryGreen,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
@@ -35,7 +35,7 @@ class StoreDivider extends ConsumerWidget {
           ),
           Expanded(
             child: Divider(
-              color: MyPaymentColors(isDarkTheme).backgroundGradient2,
+              color: MyPaymentColors(isDarkTheme).secondaryGreen,
               thickness: 1,
             ),
           ),

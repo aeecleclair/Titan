@@ -49,7 +49,7 @@ class StoreSellerCard extends ConsumerWidget {
                 store.name,
                 maxLines: 2,
                 style: TextStyle(
-                  color: MyPaymentColors(isDarkTheme).backgroundGradient2,
+                  color: MyPaymentColors(isDarkTheme).secondaryGreen,
                   fontSize: 14,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),
