@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:titan/mypayment/class/user_store.dart';
 import 'package:titan/mypayment/providers/selected_store_provider.dart';
+import 'package:titan/mypayment/tools/constants.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class StoreSellerCard extends ConsumerWidget {
   final UserStore store;
@@ -13,6 +15,7 @@ class StoreSellerCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedStore = ref.watch(selectedStoreProvider);
     final selectedStoreNotifier = ref.read(selectedStoreProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
 
     final isSelected = store.id == selectedStore.id;
 
@@ -30,12 +33,12 @@ class StoreSellerCard extends ConsumerWidget {
             CircleAvatar(
               radius: 27,
               backgroundColor: isSelected
-                  ? Color.fromARGB(255, 0, 29, 29)
-                  : Color.fromARGB(255, 6, 75, 75),
+                  ? MyPaymentColors(isDarkTheme).backgroundGradient2
+                  : MyPaymentColors(isDarkTheme).backgroundGradient1,
               child: (isSelected)
-                  ? const HeroIcon(
+                  ? HeroIcon(
                       HeroIcons.check,
-                      color: Color.fromARGB(255, 255, 255, 255),
+                      color: MyPaymentColors.onGradient,
                       size: 25,
                     )
                   : null,
@@ -46,7 +49,7 @@ class StoreSellerCard extends ConsumerWidget {
                 store.name,
                 maxLines: 2,
                 style: TextStyle(
-                  color: Color.fromARGB(255, 0, 29, 29),
+                  color: MyPaymentColors(isDarkTheme).backgroundGradient2,
                   fontSize: 14,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),

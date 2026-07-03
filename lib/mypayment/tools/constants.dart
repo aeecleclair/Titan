@@ -11,4 +11,12 @@ class MyPaymentColors {
   static const Color onGradient = Colors.white;
   static const Color helloAssoBlue = Color(0xff4c40cf);
   static const Color errorText = Color(0xff5b0600);
+  Color get redGradient1 => isDarkTheme ? Color(0xFF590512) : Color(0xFF9E131F);
+  Color get redGradient2 => isDarkTheme ? Color(0xFF9E131F) : Color(0xFF590512);
+  Color get backgroundGradient1 =>
+      isDarkTheme ? Color(0xff001d1d) : Color(0xff064b4b);
+  Color get backgroundGradient2 =>
+      isDarkTheme ? Color(0xff064b4b) : Color(0xff001d1d);
+  Color get backgroundGradient3 =>
+      isDarkTheme ? Color(0xff002424) : Color(0xff004444);
 }

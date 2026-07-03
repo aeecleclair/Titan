@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/mypayment/class/user_store.dart';
 import 'package:titan/mypayment/providers/is_payment_admin.dart';
 import 'package:titan/mypayment/providers/my_stores_provider.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/ui/pages/main_page/seller_card/admin_invoice_card.dart';
 import 'package:titan/mypayment/ui/pages/main_page/seller_card/store_divider.dart';
 import 'package:titan/mypayment/ui/pages/main_page/seller_card/store_seller_card.dart';
 import 'package:titan/mypayment/ui/pages/main_page/seller_card/structure_admin_card.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 
 class StoreList extends ConsumerWidget {
@@ -18,6 +20,7 @@ class StoreList extends ConsumerWidget {
     final stores = ref.watch(myStoresProvider);
     final isStructureAdmin = ref.watch(isStructureAdminProvider);
     final isBankAccountHolder = ref.watch(isBankAccountHolderProvider);
+    final isDarkTheme = ref.watch(themeProvider);
     return SizedBox(
       height: maxHeight,
       child: SingleChildScrollView(
@@ -27,10 +30,10 @@ class StoreList extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               alignment: Alignment.centerLeft,
-              child: const Text(
+              child: Text(
                 "Associations",
                 style: TextStyle(
-                  color: Color.fromARGB(255, 0, 29, 29),
+                  color: MyPaymentColors(isDarkTheme).backgroundGradient2,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),

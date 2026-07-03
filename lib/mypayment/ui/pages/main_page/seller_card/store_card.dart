@@ -6,9 +6,11 @@ import 'package:titan/mypayment/providers/barcode_provider.dart';
 import 'package:titan/mypayment/providers/ongoing_transaction.dart';
 import 'package:titan/mypayment/providers/selected_store_provider.dart';
 import 'package:titan/mypayment/router.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/ui/pages/main_page/main_card_button.dart';
 import 'package:titan/mypayment/ui/pages/main_page/main_card_template.dart';
 import 'package:titan/mypayment/ui/pages/scan_page/scan_page.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/user/providers/user_provider.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -24,17 +26,18 @@ class StoreCard extends HookConsumerWidget {
       ongoingTransactionProvider.notifier,
     );
     final barcodeNotifier = ref.read(barcodeProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
     final buttonGradient = [
-      const Color.fromARGB(255, 6, 75, 75),
-      const Color.fromARGB(255, 0, 29, 29),
+      MyPaymentColors(isDarkTheme).backgroundGradient1,
+      MyPaymentColors(isDarkTheme).backgroundGradient2,
     ];
 
     return MainCardTemplate(
       toggle: toggle,
-      colors: const [
-        Color.fromARGB(255, 3, 58, 58),
-        Color.fromARGB(255, 0, 68, 68),
-        Color.fromARGB(255, 0, 29, 29),
+      colors: [
+        MyPaymentColors(isDarkTheme).backgroundGradient3,
+        MyPaymentColors(isDarkTheme).backgroundGradient3,
+        MyPaymentColors(isDarkTheme).backgroundGradient2,
       ],
       title: 'Solde associatif',
       actionButtons: [
@@ -94,7 +97,10 @@ class StoreCard extends HookConsumerWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
-          style: const TextStyle(color: Colors.white, fontSize: 50),
+          style: const TextStyle(
+            color: MyPaymentColors.onGradient,
+            fontSize: 50,
+          ),
         ),
       ),
     );
