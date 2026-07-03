@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 
 class MonthSectionSummary extends StatelessWidget {
   final String title;
   final String amount;
-  final Color color, darkColor, shadowColor;
+  final Color color, secondaryColor, shadowColor;
   const MonthSectionSummary({
     super.key,
     required this.title,
     required this.amount,
     required this.color,
-    required this.darkColor,
+    required this.secondaryColor,
     required this.shadowColor,
   });
 
@@ -25,7 +26,7 @@ class MonthSectionSummary extends StatelessWidget {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
 
-          colors: [darkColor, color, darkColor],
+          colors: [secondaryColor, color, secondaryColor],
         ),
         boxShadow: [
           BoxShadow(
@@ -42,7 +43,7 @@ class MonthSectionSummary extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.8),
+              color: MyPaymentColors.onGradient.withValues(alpha: 0.8),
               fontWeight: FontWeight.bold,
               fontSize: 13,
             ),
@@ -50,7 +51,7 @@ class MonthSectionSummary extends StatelessWidget {
           Text(
             amount,
             style: const TextStyle(
-              color: Colors.white,
+              color: MyPaymentColors.onGradient,
               fontWeight: FontWeight.bold,
               fontSize: 15,
             ),

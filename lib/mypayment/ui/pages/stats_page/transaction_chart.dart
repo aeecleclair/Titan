@@ -53,7 +53,7 @@ class TransactionChart extends HookConsumerWidget {
           badgeWidget: SumUpCard(
             amount: '${formatter.format(totalAmount / 100)} €',
             color: walletColor[0],
-            darkColor: walletColor[1],
+            secondaryColor: walletColor[1],
             shadowColor: walletColor[2],
             title: wallet,
           ),
@@ -62,10 +62,13 @@ class TransactionChart extends HookConsumerWidget {
     }
 
     return chartPart.isEmpty
-        ? const Center(
+        ? Center(
             child: Text(
               "Aucune transaction",
-              style: TextStyle(fontSize: 20, color: Colors.black54),
+              style: TextStyle(
+                fontSize: 20,
+                color: Theme.of(context).colorScheme.tertiary,
+              ),
             ),
           )
         : PieChart(
