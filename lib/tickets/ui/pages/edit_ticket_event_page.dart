@@ -44,9 +44,16 @@ class EditTicketEventPage extends HookConsumerWidget {
     final eventAsync = ref.watch(ticketEventByIdProvider(selectedEvent.id));
 
     return TicketTemplate(
-      child: AsyncChild(
-        value: eventAsync,
-        builder: (context, event) => _EditTicketEventContent(event: event),
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: Theme.of(
+            context,
+          ).colorScheme.copyWith(primary: ColorConstants.main),
+        ),
+        child: AsyncChild(
+          value: eventAsync,
+          builder: (context, event) => _EditTicketEventContent(event: event),
+        ),
       ),
     );
   }
@@ -702,7 +709,7 @@ class _CategoriesSection extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                onPressed: addCategory,
+            onPressed: addCategory,
                 icon: const HeroIcon(
                   HeroIcons.plus,
                   size: 22,
@@ -1053,56 +1060,56 @@ class _QuestionsSection extends HookConsumerWidget {
                       ),
                       contentPadding: EdgeInsets.zero,
                     ),
-                    Row(
-                      children: [
-                        OutlinedButton(
-                          onPressed: () => _showQuestionEditDialog(
-                            context,
-                            ref,
-                            event,
-                            question,
-                            onEventUpdated,
+                      Row(
+                        children: [
+                          OutlinedButton(
+                            onPressed: () => _showQuestionEditDialog(
+                              context,
+                              ref,
+                              event,
+                              question,
+                              onEventUpdated,
+                            ),
+                            child: Text(l10n.ticketsEdit),
                           ),
-                          child: Text(l10n.ticketsEdit),
-                        ),
-                        const SizedBox(width: 8),
-                        OutlinedButton(
-                          onPressed: () async {
-                            if (!await showDeleteConfirm(context, ref)) return;
-                            if (!context.mounted) return;
-                            await tokenExpireWrapper(ref, () async {
+                          const SizedBox(width: 8),
+                          OutlinedButton(
+                            onPressed: () async {
+                              if (!await showDeleteConfirm(context, ref)) return;
+                              if (!context.mounted) return;
+                              await tokenExpireWrapper(ref, () async {
                               final success = await editNotifier.deleteQuestion(
                                 event.id,
                                 question.id,
                               );
-                              if (!context.mounted) return;
-                              if (success) {
-                                displayToast(
-                                  context,
-                                  TypeMsg.msg,
-                                  l10n.ticketsEditSuccess,
-                                );
-                                onEventUpdated(
-                                  _withoutQuestion(event, question.id),
-                                );
-                              } else {
-                                showEditError(
-                                  context,
-                                  ref,
-                                  l10n,
-                                  fallbackDueAnswers:
-                                      l10n.ticketsCannotDeleteDueAnswers,
-                                );
-                              }
-                            });
-                          },
-                          style: OutlinedButton.styleFrom(
-                            foregroundColor: ColorConstants.error,
+                                if (!context.mounted) return;
+                                if (success) {
+                                  displayToast(
+                                    context,
+                                    TypeMsg.msg,
+                                    l10n.ticketsEditSuccess,
+                                  );
+                                  onEventUpdated(
+                                    _withoutQuestion(event, question.id),
+                                  );
+                                } else {
+                                  showEditError(
+                                    context,
+                                    ref,
+                                    l10n,
+                                    fallbackDueAnswers:
+                                        l10n.ticketsCannotDeleteDueAnswers,
+                                  );
+                                }
+                              });
+                            },
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: ColorConstants.error,
+                            ),
+                            child: Text(l10n.ticketsDelete),
                           ),
-                          child: Text(l10n.ticketsDelete),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
                   ],
                 ),
               ),
@@ -1112,7 +1119,7 @@ class _QuestionsSection extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                onPressed: addQuestion,
+            onPressed: addQuestion,
                 icon: const HeroIcon(
                   HeroIcons.plus,
                   size: 22,
