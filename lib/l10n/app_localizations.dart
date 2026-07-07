@@ -9071,7 +9071,7 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsCategoriesRequired.
   ///
   /// In fr, this message translates to:
-  /// **'Au moins un tarif est obligatoire'**
+  /// **'Au moins une catégorie est obligatoire'**
   String get ticketsCategoriesRequired;
 
   /// No description provided for @ticketsSessionsRequired.
@@ -9149,7 +9149,7 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsTariffs.
   ///
   /// In fr, this message translates to:
-  /// **'Tarifs'**
+  /// **'Catégories'**
   String get ticketsTariffs;
 
   /// No description provided for @ticketsPriceLabel.
@@ -9227,7 +9227,7 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsCategoryLabel.
   ///
   /// In fr, this message translates to:
-  /// **'Catégorie (tarif)'**
+  /// **'Catégorie'**
   String get ticketsCategoryLabel;
 
   /// No description provided for @ticketsSessionLabel.
@@ -9269,7 +9269,7 @@ abstract class AppLocalizations {
   /// No description provided for @ticketsAddTariff.
   ///
   /// In fr, this message translates to:
-  /// **'Ajouter un tarif'**
+  /// **'Ajouter une catégorie'**
   String get ticketsAddTariff;
 
   /// No description provided for @ticketsAddSession.
@@ -9278,10 +9278,10 @@ abstract class AppLocalizations {
   /// **'Ajouter une session'**
   String get ticketsAddSession;
 
-  /// Label pour un tarif dans le formulaire tickets
+  /// Label pour une catégorie dans le formulaire tickets
   ///
   /// In fr, this message translates to:
-  /// **'Tarif {number}'**
+  /// **'Catégorie {number}'**
   String ticketsTariffLabel(int number);
 
   /// Label pour une session dans le formulaire tickets
@@ -9445,6 +9445,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Non modifiable (ventes ou réservations existantes)'**
   String get ticketsReadOnlyDueSales;
+
+  /// No description provided for @ticketsReadOnlyDueAnswers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Non modifiable (des réponses ont déjà été enregistrées)'**
+  String get ticketsReadOnlyDueAnswers;
 
   /// No description provided for @ticketsCloseEventHint.
   ///

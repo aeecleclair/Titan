@@ -4738,7 +4738,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsStartDateRequired => 'La date de début est obligatoire';
 
   @override
-  String get ticketsCategoriesRequired => 'Au moins un tarif est obligatoire';
+  String get ticketsCategoriesRequired =>
+      'Au moins une catégorie est obligatoire';
 
   @override
   String get ticketsSessionsRequired => 'Au moins une session est obligatoire';
@@ -4779,7 +4780,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsEdit => 'Modifier';
 
   @override
-  String get ticketsTariffs => 'Tarifs';
+  String get ticketsTariffs => 'Catégories';
 
   @override
   String get ticketsPriceLabel => 'Prix (€)';
@@ -4819,7 +4820,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsBookTicket => 'Réserver un billet';
 
   @override
-  String get ticketsCategoryLabel => 'Catégorie (tarif)';
+  String get ticketsCategoryLabel => 'Catégorie';
 
   @override
   String get ticketsSessionLabel => 'Session (horaire)';
@@ -4840,14 +4841,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ticketsOpeningLabel => 'Ouverture';
 
   @override
-  String get ticketsAddTariff => 'Ajouter un tarif';
+  String get ticketsAddTariff => 'Ajouter une catégorie';
 
   @override
   String get ticketsAddSession => 'Ajouter une session';
 
   @override
   String ticketsTariffLabel(int number) {
-    return 'Tarif $number';
+    return 'Catégorie $number';
   }
 
   @override
@@ -4940,6 +4941,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get ticketsReadOnlyDueSales =>
       'Non modifiable (ventes ou réservations existantes)';
+
+  @override
+  String get ticketsReadOnlyDueAnswers =>
+      'Non modifiable (des réponses ont déjà été enregistrées)';
 
   @override
   String get ticketsCloseEventHint =>

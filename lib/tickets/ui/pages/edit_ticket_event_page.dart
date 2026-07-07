@@ -44,9 +44,16 @@ class EditTicketEventPage extends HookConsumerWidget {
     final eventAsync = ref.watch(ticketEventByIdProvider(selectedEvent.id));
 
     return TicketTemplate(
-      child: AsyncChild(
-        value: eventAsync,
-        builder: (context, event) => _EditTicketEventContent(event: event),
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: Theme.of(
+            context,
+          ).colorScheme.copyWith(primary: ColorConstants.main),
+        ),
+        child: AsyncChild(
+          value: eventAsync,
+          builder: (context, event) => _EditTicketEventContent(event: event),
+        ),
       ),
     );
   }
@@ -204,7 +211,8 @@ class _EditTicketEventContent extends HookConsumerWidget {
                     child: Text(l10n.ticketsEdit),
                   ),
                   const SizedBox(height: 16),
-                  if (!canDeleteEvent) const ReadOnlyBanner(),
+                  if (!canDeleteEvent)
+                    ReadOnlyBanner(message: l10n.ticketsCannotDeleteDueSales),
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton(
@@ -698,19 +706,10 @@ class _CategoriesSection extends HookConsumerWidget {
               ),
             );
           }),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                onPressed: addCategory,
-                icon: const HeroIcon(
-                  HeroIcons.plus,
-                  size: 22,
-                  color: ColorConstants.main,
-                ),
-                tooltip: l10n.ticketsAddCategory,
-              ),
-            ],
+          OutlinedButton.icon(
+            onPressed: addCategory,
+            icon: const HeroIcon(HeroIcons.plus, size: 20),
+            label: Text(l10n.ticketsAddCategory),
           ),
         ],
       ),
@@ -987,10 +986,11 @@ class _QuestionsSection extends HookConsumerWidget {
               ),
             ),
           ...event.questions.map((question) {
+            final locked = event.ticketsSold + event.ticketsInCheckout > 0;
             return Card(
               margin: const EdgeInsets.only(bottom: 12),
               elevation: 0,
-              color: question.disabled ? Colors.grey.shade100 : null,
+              color: question.disabled || locked ? Colors.grey.shade100 : null,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
                 side: BorderSide(
@@ -1002,6 +1002,8 @@ class _QuestionsSection extends HookConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if (locked)
+                      ReadOnlyBanner(message: l10n.ticketsReadOnlyDueAnswers),
                     Row(
                       children: [
                         Expanded(
@@ -1053,74 +1055,65 @@ class _QuestionsSection extends HookConsumerWidget {
                       ),
                       contentPadding: EdgeInsets.zero,
                     ),
-                    Row(
-                      children: [
-                        OutlinedButton(
-                          onPressed: () => _showQuestionEditDialog(
-                            context,
-                            ref,
-                            event,
-                            question,
-                            onEventUpdated,
+                    if (!locked)
+                      Row(
+                        children: [
+                          OutlinedButton(
+                            onPressed: () => _showQuestionEditDialog(
+                              context,
+                              ref,
+                              event,
+                              question,
+                              onEventUpdated,
+                            ),
+                            child: Text(l10n.ticketsEdit),
                           ),
-                          child: Text(l10n.ticketsEdit),
-                        ),
-                        const SizedBox(width: 8),
-                        OutlinedButton(
-                          onPressed: () async {
-                            if (!await showDeleteConfirm(context, ref)) return;
-                            if (!context.mounted) return;
-                            await tokenExpireWrapper(ref, () async {
-                              final success = await editNotifier.deleteQuestion(
-                                event.id,
-                                question.id,
-                              );
+                          const SizedBox(width: 8),
+                          OutlinedButton(
+                            onPressed: () async {
+                              if (!await showDeleteConfirm(context, ref))
+                                return;
                               if (!context.mounted) return;
-                              if (success) {
-                                displayToast(
-                                  context,
-                                  TypeMsg.msg,
-                                  l10n.ticketsEditSuccess,
-                                );
-                                onEventUpdated(
-                                  _withoutQuestion(event, question.id),
-                                );
-                              } else {
-                                showEditError(
-                                  context,
-                                  ref,
-                                  l10n,
-                                  fallbackDueAnswers:
-                                      l10n.ticketsCannotDeleteDueAnswers,
-                                );
-                              }
-                            });
-                          },
-                          style: OutlinedButton.styleFrom(
-                            foregroundColor: ColorConstants.error,
+                              await tokenExpireWrapper(ref, () async {
+                                final success = await editNotifier
+                                    .deleteQuestion(event.id, question.id);
+                                if (!context.mounted) return;
+                                if (success) {
+                                  displayToast(
+                                    context,
+                                    TypeMsg.msg,
+                                    l10n.ticketsEditSuccess,
+                                  );
+                                  onEventUpdated(
+                                    _withoutQuestion(event, question.id),
+                                  );
+                                } else {
+                                  showEditError(
+                                    context,
+                                    ref,
+                                    l10n,
+                                    fallbackDueAnswers:
+                                        l10n.ticketsCannotDeleteDueAnswers,
+                                  );
+                                }
+                              });
+                            },
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: ColorConstants.error,
+                            ),
+                            child: Text(l10n.ticketsDelete),
                           ),
-                          child: Text(l10n.ticketsDelete),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
                   ],
                 ),
               ),
             );
           }),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                onPressed: addQuestion,
-                icon: const HeroIcon(
-                  HeroIcons.plus,
-                  size: 22,
-                  color: ColorConstants.main,
-                ),
-                tooltip: l10n.ticketsAddQuestion,
-              ),
-            ],
+          OutlinedButton.icon(
+            onPressed: addQuestion,
+            icon: const HeroIcon(HeroIcons.plus, size: 20),
+            label: Text(l10n.ticketsAddQuestion),
           ),
         ],
       ),

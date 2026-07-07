@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:titan/l10n/app_localizations.dart';
 
 class ReadOnlyBanner extends StatelessWidget {
-  const ReadOnlyBanner({super.key});
+  /// Optional custom message. Defaults to [ticketsReadOnlyDueSales].
+  final String? message;
+
+  const ReadOnlyBanner({super.key, this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class ReadOnlyBanner extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
-        l10n.ticketsReadOnlyDueSales,
+        message ?? l10n.ticketsReadOnlyDueSales,
         style: TextStyle(fontSize: 12, color: Colors.grey.shade700),
       ),
     );

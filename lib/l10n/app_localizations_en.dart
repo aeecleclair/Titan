@@ -4670,7 +4670,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsStartDateRequired => 'Start date is required';
 
   @override
-  String get ticketsCategoriesRequired => 'At least one pricing is required';
+  String get ticketsCategoriesRequired => 'At least one category is required';
 
   @override
   String get ticketsSessionsRequired => 'At least one session is required';
@@ -4711,7 +4711,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsEdit => 'Modifier';
 
   @override
-  String get ticketsTariffs => 'Pricing';
+  String get ticketsTariffs => 'Categories';
 
   @override
   String get ticketsPriceLabel => 'Price (€)';
@@ -4750,7 +4750,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsBookTicket => 'Book a ticket';
 
   @override
-  String get ticketsCategoryLabel => 'Category (pricing)';
+  String get ticketsCategoryLabel => 'Category';
 
   @override
   String get ticketsSessionLabel => 'Session (time)';
@@ -4771,14 +4771,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsOpeningLabel => 'Opening';
 
   @override
-  String get ticketsAddTariff => 'Add pricing';
+  String get ticketsAddTariff => 'Add a category';
 
   @override
   String get ticketsAddSession => 'Add session';
 
   @override
   String ticketsTariffLabel(int number) {
-    return 'Pricing $number';
+    return 'Category $number';
   }
 
   @override
@@ -4868,6 +4868,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get ticketsReadOnlyDueSales =>
       'Read-only (existing sales or checkouts)';
+
+  @override
+  String get ticketsReadOnlyDueAnswers =>
+      'Read-only (answers have already been recorded)';
 
   @override
   String get ticketsCloseEventHint =>
