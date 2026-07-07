@@ -23,6 +23,7 @@ import 'package:titan/tickets/class/session.dart';
 import 'package:titan/tickets/class/ticket_event.dart';
 import 'package:titan/tickets/providers/checkout_provider.dart';
 import 'package:titan/tickets/providers/ticket_event_provider.dart';
+import 'package:titan/tickets/providers/user_tickets_provider.dart';
 import 'package:titan/tickets/router.dart';
 import 'package:titan/tickets/ui/components/sold_out_badge.dart';
 import 'package:titan/tickets/ui/tickets_module.dart';
@@ -292,6 +293,9 @@ class _TicketEventContent extends HookConsumerWidget {
           } else {
             // CAS GRATUIT - rediriger vers la page des tickets avec message de succès
             ref.read(checkoutProvider.notifier).reset();
+            // Refresh the user's tickets so the newly booked free ticket shows
+            // up immediately after the redirect.
+            ref.read(userTicketsProvider.notifier).loadUserTickets();
             if (context.mounted) {
               displayToast(context, TypeMsg.msg, l10n.ticketsBookSuccess);
             }
