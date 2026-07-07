@@ -211,7 +211,8 @@ class _EditTicketEventContent extends HookConsumerWidget {
                     child: Text(l10n.ticketsEdit),
                   ),
                   const SizedBox(height: 16),
-                  if (!canDeleteEvent) const ReadOnlyBanner(),
+                  if (!canDeleteEvent)
+                    ReadOnlyBanner(message: l10n.ticketsCannotDeleteDueSales),
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton(
@@ -705,19 +706,10 @@ class _CategoriesSection extends HookConsumerWidget {
               ),
             );
           }),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
+          OutlinedButton.icon(
             onPressed: addCategory,
-                icon: const HeroIcon(
-                  HeroIcons.plus,
-                  size: 22,
-                  color: ColorConstants.main,
-                ),
-                tooltip: l10n.ticketsAddCategory,
-              ),
-            ],
+            icon: const HeroIcon(HeroIcons.plus, size: 20),
+            label: Text(l10n.ticketsAddCategory),
           ),
         ],
       ),
@@ -994,10 +986,11 @@ class _QuestionsSection extends HookConsumerWidget {
               ),
             ),
           ...event.questions.map((question) {
+            final locked = event.ticketsSold + event.ticketsInCheckout > 0;
             return Card(
               margin: const EdgeInsets.only(bottom: 12),
               elevation: 0,
-              color: question.disabled ? Colors.grey.shade100 : null,
+              color: question.disabled || locked ? Colors.grey.shade100 : null,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
                 side: BorderSide(
@@ -1009,6 +1002,8 @@ class _QuestionsSection extends HookConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if (locked)
+                      ReadOnlyBanner(message: l10n.ticketsReadOnlyDueAnswers),
                     Row(
                       children: [
                         Expanded(
@@ -1060,6 +1055,7 @@ class _QuestionsSection extends HookConsumerWidget {
                       ),
                       contentPadding: EdgeInsets.zero,
                     ),
+                    if (!locked)
                       Row(
                         children: [
                           OutlinedButton(
@@ -1078,10 +1074,8 @@ class _QuestionsSection extends HookConsumerWidget {
                               if (!await showDeleteConfirm(context, ref)) return;
                               if (!context.mounted) return;
                               await tokenExpireWrapper(ref, () async {
-                              final success = await editNotifier.deleteQuestion(
-                                event.id,
-                                question.id,
-                              );
+                                final success = await editNotifier
+                                    .deleteQuestion(event.id, question.id);
                                 if (!context.mounted) return;
                                 if (success) {
                                   displayToast(
@@ -1115,19 +1109,10 @@ class _QuestionsSection extends HookConsumerWidget {
               ),
             );
           }),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
+          OutlinedButton.icon(
             onPressed: addQuestion,
-                icon: const HeroIcon(
-                  HeroIcons.plus,
-                  size: 22,
-                  color: ColorConstants.main,
-                ),
-                tooltip: l10n.ticketsAddQuestion,
-              ),
-            ],
+            icon: const HeroIcon(HeroIcons.plus, size: 20),
+            label: Text(l10n.ticketsAddQuestion),
           ),
         ],
       ),
