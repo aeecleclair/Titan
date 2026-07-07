@@ -80,13 +80,13 @@ Map<String, dynamic> _$AnswerToJson(Answer instance) => <String, dynamic>{
 
 AnswerBoolean _$AnswerBooleanFromJson(Map<String, dynamic> json) =>
     AnswerBoolean(
-      answerType: answerBooleanAnswerTypeFromJson(json['answer_type']),
+      answerType: json['answer_type'] as String? ?? '',
       answer: json['answer'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$AnswerBooleanToJson(AnswerBoolean instance) =>
     <String, dynamic>{
-      'answer_type': answerBooleanAnswerTypeToJson(instance.answerType),
+      'answer_type': instance.answerType,
       'answer': instance.answer,
     };
 
@@ -102,24 +102,24 @@ Map<String, dynamic> _$AnswerCreateToJson(AnswerCreate instance) =>
     };
 
 AnswerNumber _$AnswerNumberFromJson(Map<String, dynamic> json) => AnswerNumber(
-  answerType: answerNumberAnswerTypeFromJson(json['answer_type']),
+  answerType: json['answer_type'] as String? ?? '',
   answer: (json['answer'] as num?)?.toInt() ?? 0,
 );
 
 Map<String, dynamic> _$AnswerNumberToJson(AnswerNumber instance) =>
     <String, dynamic>{
-      'answer_type': answerNumberAnswerTypeToJson(instance.answerType),
+      'answer_type': instance.answerType,
       'answer': instance.answer,
     };
 
 AnswerText _$AnswerTextFromJson(Map<String, dynamic> json) => AnswerText(
-  answerType: answerTextAnswerTypeFromJson(json['answer_type']),
+  answerType: json['answer_type'] as String? ?? '',
   answer: json['answer'] as String? ?? '',
 );
 
 Map<String, dynamic> _$AnswerTextToJson(AnswerText instance) =>
     <String, dynamic>{
-      'answer_type': answerTextAnswerTypeToJson(instance.answerType),
+      'answer_type': instance.answerType,
       'answer': instance.answer,
     };
 
@@ -2162,6 +2162,7 @@ EventUpdate _$EventUpdateFromJson(Map<String, dynamic> json) => EventUpdate(
   closeDatetime: json['close_datetime'] == null
       ? null
       : DateTime.parse(json['close_datetime'] as String),
+  disabled: json['disabled'] as bool?,
 );
 
 Map<String, dynamic> _$EventUpdateToJson(EventUpdate instance) =>
@@ -2170,6 +2171,7 @@ Map<String, dynamic> _$EventUpdateToJson(EventUpdate instance) =>
       'quota': instance.quota,
       'open_datetime': instance.openDatetime?.toIso8601String(),
       'close_datetime': instance.closeDatetime?.toIso8601String(),
+      'disabled': instance.disabled,
     };
 
 FirebaseDevice _$FirebaseDeviceFromJson(Map<String, dynamic> json) =>
@@ -3740,6 +3742,26 @@ Map<String, dynamic> _$PurchaseReturnToJson(PurchaseReturn instance) =>
       'product': instance.product.toJson(),
       'seller': instance.seller.toJson(),
     };
+
+Question _$QuestionFromJson(Map<String, dynamic> json) => Question(
+  id: json['id'] as String? ?? '',
+  eventId: json['event_id'] as String? ?? '',
+  question: json['question'] as String? ?? '',
+  answerType: answerTypeFromJson(json['answer_type']),
+  price: (json['price'] as num?)?.toInt(),
+  required: json['required'] as bool? ?? false,
+  disabled: json['disabled'] as bool? ?? false,
+);
+
+Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
+  'id': instance.id,
+  'event_id': instance.eventId,
+  'question': instance.question,
+  'answer_type': answerTypeToJson(instance.answerType),
+  'price': instance.price,
+  'required': instance.required,
+  'disabled': instance.disabled,
+};
 
 QuestionAdmin _$QuestionAdminFromJson(Map<String, dynamic> json) =>
     QuestionAdmin(
@@ -5537,9 +5559,7 @@ Map<String, dynamic> _$TicketSimpleToJson(TicketSimple instance) =>
 TokenResponse _$TokenResponseFromJson(Map<String, dynamic> json) =>
     TokenResponse(
       accessToken: json['access_token'] as String? ?? '',
-      tokenType: TokenResponse.tokenResponseTokenTypeTokenTypeNullableFromJson(
-        json['token_type'],
-      ),
+      tokenType: json['token_type'] as String? ?? '',
       expiresIn: (json['expires_in'] as num?)?.toInt() ?? 0,
       scope: json['scope'] as String? ?? '',
       refreshToken: json['refresh_token'] as String? ?? '',
@@ -5549,7 +5569,7 @@ TokenResponse _$TokenResponseFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$TokenResponseToJson(TokenResponse instance) =>
     <String, dynamic>{
       'access_token': instance.accessToken,
-      'token_type': tokenResponseTokenTypeNullableToJson(instance.tokenType),
+      'token_type': instance.tokenType,
       'expires_in': instance.expiresIn,
       'scope': instance.scope,
       'refresh_token': instance.refreshToken,
@@ -5784,6 +5804,8 @@ ValidationError _$ValidationErrorFromJson(
   loc: (json['loc'] as List<dynamic>?)?.map((e) => e as Object).toList() ?? [],
   msg: json['msg'] as String? ?? '',
   type: json['type'] as String? ?? '',
+  input: json['input'],
+  ctx: json['ctx'],
 );
 
 Map<String, dynamic> _$ValidationErrorToJson(ValidationError instance) =>
@@ -5791,6 +5813,8 @@ Map<String, dynamic> _$ValidationErrorToJson(ValidationError instance) =>
       'loc': instance.loc,
       'msg': instance.msg,
       'type': instance.type,
+      'input': instance.input,
+      'ctx': instance.ctx,
     };
 
 VolunteerRegistrationComplete _$VolunteerRegistrationCompleteFromJson(

@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/generated/openapi.swagger.dart';
+import 'package:titan/mypayment/adapters/transaction_adapter.dart';
 import 'package:titan/tools/providers/single_notifier_api.dart';
 import 'package:titan/tools/repository/repository.dart';
 
@@ -16,12 +17,13 @@ class ScanNotifier extends SingleNotifierAPI<History> {
     ScanInfo data, {
     bool? bypass,
   }) async {
-    return await load(
-      () => storesRepository.mypaymentStoresStoreIdScanPost(
+    return await load(() async {
+      final response = await storesRepository.mypaymentStoresStoreIdScanPost(
         storeId: storeId,
         body: data.copyWith(bypassMembership: bypass),
-      ),
-    );
+      );
+      return response.copyWith<History>(body: response.body?.toHistory());
+    });
   }
 
   Future<bool> canScan(String storeId, ScanInfo data, {bool? bypass}) async {

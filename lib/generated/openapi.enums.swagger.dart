@@ -62,42 +62,6 @@ enum AmapSlotType {
   const AmapSlotType(this.value);
 }
 
-enum AnswerBooleanAnswerType {
-  @JsonValue(null)
-  swaggerGeneratedUnknown(null),
-
-  @JsonValue('boolean')
-  boolean('boolean');
-
-  final String? value;
-
-  const AnswerBooleanAnswerType(this.value);
-}
-
-enum AnswerNumberAnswerType {
-  @JsonValue(null)
-  swaggerGeneratedUnknown(null),
-
-  @JsonValue('number')
-  number('number');
-
-  final String? value;
-
-  const AnswerNumberAnswerType(this.value);
-}
-
-enum AnswerTextAnswerType {
-  @JsonValue(null)
-  swaggerGeneratedUnknown(null),
-
-  @JsonValue('text')
-  text('text');
-
-  final String? value;
-
-  const AnswerTextAnswerType(this.value);
-}
-
 enum AnswerType {
   @JsonValue(null)
   swaggerGeneratedUnknown(null),
@@ -572,18 +536,6 @@ enum StatusType {
   final String? value;
 
   const StatusType(this.value);
-}
-
-enum TokenResponseTokenType {
-  @JsonValue(null)
-  swaggerGeneratedUnknown(null),
-
-  @JsonValue('bearer')
-  bearer('bearer');
-
-  final String? value;
-
-  const TokenResponseTokenType(this.value);
 }
 
 enum TransactionStatus {

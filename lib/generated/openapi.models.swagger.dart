@@ -442,10 +442,7 @@ extension $AnswerExtension on Answer {
 
 @JsonSerializable(explicitToJson: true)
 class AnswerBoolean {
-  static AnswerBoolean empty() => AnswerBoolean(
-    answerType: enums.AnswerBooleanAnswerType.boolean,
-    answer: false,
-  );
+  static AnswerBoolean empty() => AnswerBoolean(answerType: '', answer: false);
   const AnswerBoolean({required this.answerType, required this.answer});
 
   factory AnswerBoolean.fromJson(Map<String, dynamic> json) =>
@@ -454,12 +451,8 @@ class AnswerBoolean {
   static const toJsonFactory = _$AnswerBooleanToJson;
   Map<String, dynamic> toJson() => _$AnswerBooleanToJson(this);
 
-  @JsonKey(
-    name: 'answer_type',
-    toJson: answerBooleanAnswerTypeToJson,
-    fromJson: answerBooleanAnswerTypeFromJson,
-  )
-  final enums.AnswerBooleanAnswerType answerType;
+  @JsonKey(name: 'answer_type', defaultValue: '')
+  final String answerType;
   @JsonKey(name: 'answer', defaultValue: false)
   final bool answer;
   static const fromJsonFactory = _$AnswerBooleanFromJson;
@@ -488,10 +481,7 @@ class AnswerBoolean {
 }
 
 extension $AnswerBooleanExtension on AnswerBoolean {
-  AnswerBoolean copyWith({
-    enums.AnswerBooleanAnswerType? answerType,
-    bool? answer,
-  }) {
+  AnswerBoolean copyWith({String? answerType, bool? answer}) {
     return AnswerBoolean(
       answerType: answerType ?? this.answerType,
       answer: answer ?? this.answer,
@@ -499,7 +489,7 @@ extension $AnswerBooleanExtension on AnswerBoolean {
   }
 
   AnswerBoolean copyWithWrapped({
-    Wrapped<enums.AnswerBooleanAnswerType>? answerType,
+    Wrapped<String>? answerType,
     Wrapped<bool>? answer,
   }) {
     return AnswerBoolean(
@@ -570,8 +560,7 @@ extension $AnswerCreateExtension on AnswerCreate {
 
 @JsonSerializable(explicitToJson: true)
 class AnswerNumber {
-  static AnswerNumber empty() =>
-      AnswerNumber(answerType: enums.AnswerNumberAnswerType.number, answer: 0);
+  static AnswerNumber empty() => AnswerNumber(answerType: '', answer: 0);
   const AnswerNumber({required this.answerType, required this.answer});
 
   factory AnswerNumber.fromJson(Map<String, dynamic> json) =>
@@ -580,12 +569,8 @@ class AnswerNumber {
   static const toJsonFactory = _$AnswerNumberToJson;
   Map<String, dynamic> toJson() => _$AnswerNumberToJson(this);
 
-  @JsonKey(
-    name: 'answer_type',
-    toJson: answerNumberAnswerTypeToJson,
-    fromJson: answerNumberAnswerTypeFromJson,
-  )
-  final enums.AnswerNumberAnswerType answerType;
+  @JsonKey(name: 'answer_type', defaultValue: '')
+  final String answerType;
   @JsonKey(name: 'answer', defaultValue: 0)
   final int answer;
   static const fromJsonFactory = _$AnswerNumberFromJson;
@@ -614,10 +599,7 @@ class AnswerNumber {
 }
 
 extension $AnswerNumberExtension on AnswerNumber {
-  AnswerNumber copyWith({
-    enums.AnswerNumberAnswerType? answerType,
-    int? answer,
-  }) {
+  AnswerNumber copyWith({String? answerType, int? answer}) {
     return AnswerNumber(
       answerType: answerType ?? this.answerType,
       answer: answer ?? this.answer,
@@ -625,7 +607,7 @@ extension $AnswerNumberExtension on AnswerNumber {
   }
 
   AnswerNumber copyWithWrapped({
-    Wrapped<enums.AnswerNumberAnswerType>? answerType,
+    Wrapped<String>? answerType,
     Wrapped<int>? answer,
   }) {
     return AnswerNumber(
@@ -637,8 +619,7 @@ extension $AnswerNumberExtension on AnswerNumber {
 
 @JsonSerializable(explicitToJson: true)
 class AnswerText {
-  static AnswerText empty() =>
-      AnswerText(answerType: enums.AnswerTextAnswerType.text, answer: '');
+  static AnswerText empty() => AnswerText(answerType: '', answer: '');
   const AnswerText({required this.answerType, required this.answer});
 
   factory AnswerText.fromJson(Map<String, dynamic> json) =>
@@ -647,12 +628,8 @@ class AnswerText {
   static const toJsonFactory = _$AnswerTextToJson;
   Map<String, dynamic> toJson() => _$AnswerTextToJson(this);
 
-  @JsonKey(
-    name: 'answer_type',
-    toJson: answerTextAnswerTypeToJson,
-    fromJson: answerTextAnswerTypeFromJson,
-  )
-  final enums.AnswerTextAnswerType answerType;
+  @JsonKey(name: 'answer_type', defaultValue: '')
+  final String answerType;
   @JsonKey(name: 'answer', defaultValue: '')
   final String answer;
   static const fromJsonFactory = _$AnswerTextFromJson;
@@ -681,10 +658,7 @@ class AnswerText {
 }
 
 extension $AnswerTextExtension on AnswerText {
-  AnswerText copyWith({
-    enums.AnswerTextAnswerType? answerType,
-    String? answer,
-  }) {
+  AnswerText copyWith({String? answerType, String? answer}) {
     return AnswerText(
       answerType: answerType ?? this.answerType,
       answer: answer ?? this.answer,
@@ -692,7 +666,7 @@ extension $AnswerTextExtension on AnswerText {
   }
 
   AnswerText copyWithWrapped({
-    Wrapped<enums.AnswerTextAnswerType>? answerType,
+    Wrapped<String>? answerType,
     Wrapped<String>? answer,
   }) {
     return AnswerText(
@@ -11537,6 +11511,7 @@ class EventUpdate {
     this.quota,
     this.openDatetime,
     this.closeDatetime,
+    this.disabled,
   });
 
   factory EventUpdate.fromJson(Map<String, dynamic> json) =>
@@ -11553,6 +11528,8 @@ class EventUpdate {
   final DateTime? openDatetime;
   @JsonKey(name: 'close_datetime')
   final DateTime? closeDatetime;
+  @JsonKey(name: 'disabled')
+  final bool? disabled;
   static const fromJsonFactory = _$EventUpdateFromJson;
 
   @override
@@ -11572,6 +11549,11 @@ class EventUpdate {
                 const DeepCollectionEquality().equals(
                   other.closeDatetime,
                   closeDatetime,
+                )) &&
+            (identical(other.disabled, disabled) ||
+                const DeepCollectionEquality().equals(
+                  other.disabled,
+                  disabled,
                 )));
   }
 
@@ -11584,6 +11566,7 @@ class EventUpdate {
       const DeepCollectionEquality().hash(quota) ^
       const DeepCollectionEquality().hash(openDatetime) ^
       const DeepCollectionEquality().hash(closeDatetime) ^
+      const DeepCollectionEquality().hash(disabled) ^
       runtimeType.hashCode;
 }
 
@@ -11593,12 +11576,14 @@ extension $EventUpdateExtension on EventUpdate {
     int? quota,
     DateTime? openDatetime,
     DateTime? closeDatetime,
+    bool? disabled,
   }) {
     return EventUpdate(
       name: name ?? this.name,
       quota: quota ?? this.quota,
       openDatetime: openDatetime ?? this.openDatetime,
       closeDatetime: closeDatetime ?? this.closeDatetime,
+      disabled: disabled ?? this.disabled,
     );
   }
 
@@ -11607,6 +11592,7 @@ extension $EventUpdateExtension on EventUpdate {
     Wrapped<int?>? quota,
     Wrapped<DateTime?>? openDatetime,
     Wrapped<DateTime?>? closeDatetime,
+    Wrapped<bool?>? disabled,
   }) {
     return EventUpdate(
       name: (name != null ? name.value : this.name),
@@ -11617,6 +11603,7 @@ extension $EventUpdateExtension on EventUpdate {
       closeDatetime: (closeDatetime != null
           ? closeDatetime.value
           : this.closeDatetime),
+      disabled: (disabled != null ? disabled.value : this.disabled),
     );
   }
 }
@@ -20451,6 +20438,145 @@ extension $PurchaseReturnExtension on PurchaseReturn {
       price: (price != null ? price.value : this.price),
       product: (product != null ? product.value : this.product),
       seller: (seller != null ? seller.value : this.seller),
+    );
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class Question {
+  static Question empty() => Question(
+    id: '',
+    eventId: '',
+    question: '',
+    answerType: enums.AnswerType.text,
+    price: null,
+    required: false,
+    disabled: false,
+  );
+  const Question({
+    required this.id,
+    required this.eventId,
+    required this.question,
+    required this.answerType,
+    required this.price,
+    required this.required,
+    required this.disabled,
+  });
+
+  factory Question.fromJson(Map<String, dynamic> json) =>
+      _$QuestionFromJson(json);
+
+  static const toJsonFactory = _$QuestionToJson;
+  Map<String, dynamic> toJson() => _$QuestionToJson(this);
+
+  @JsonKey(name: 'id', defaultValue: '')
+  final String id;
+  @JsonKey(name: 'event_id', defaultValue: '')
+  final String eventId;
+  @JsonKey(name: 'question', defaultValue: '')
+  final String question;
+  @JsonKey(
+    name: 'answer_type',
+    toJson: answerTypeToJson,
+    fromJson: answerTypeFromJson,
+  )
+  final enums.AnswerType answerType;
+  @JsonKey(name: 'price')
+  final int? price;
+  @JsonKey(name: 'required', defaultValue: false)
+  final bool required;
+  @JsonKey(name: 'disabled', defaultValue: false)
+  final bool disabled;
+  static const fromJsonFactory = _$QuestionFromJson;
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other is Question &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.eventId, eventId) ||
+                const DeepCollectionEquality().equals(
+                  other.eventId,
+                  eventId,
+                )) &&
+            (identical(other.question, question) ||
+                const DeepCollectionEquality().equals(
+                  other.question,
+                  question,
+                )) &&
+            (identical(other.answerType, answerType) ||
+                const DeepCollectionEquality().equals(
+                  other.answerType,
+                  answerType,
+                )) &&
+            (identical(other.price, price) ||
+                const DeepCollectionEquality().equals(other.price, price)) &&
+            (identical(other.required, required) ||
+                const DeepCollectionEquality().equals(
+                  other.required,
+                  required,
+                )) &&
+            (identical(other.disabled, disabled) ||
+                const DeepCollectionEquality().equals(
+                  other.disabled,
+                  disabled,
+                )));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(eventId) ^
+      const DeepCollectionEquality().hash(question) ^
+      const DeepCollectionEquality().hash(answerType) ^
+      const DeepCollectionEquality().hash(price) ^
+      const DeepCollectionEquality().hash(required) ^
+      const DeepCollectionEquality().hash(disabled) ^
+      runtimeType.hashCode;
+}
+
+extension $QuestionExtension on Question {
+  Question copyWith({
+    String? id,
+    String? eventId,
+    String? question,
+    enums.AnswerType? answerType,
+    int? price,
+    bool? required,
+    bool? disabled,
+  }) {
+    return Question(
+      id: id ?? this.id,
+      eventId: eventId ?? this.eventId,
+      question: question ?? this.question,
+      answerType: answerType ?? this.answerType,
+      price: price ?? this.price,
+      required: required ?? this.required,
+      disabled: disabled ?? this.disabled,
+    );
+  }
+
+  Question copyWithWrapped({
+    Wrapped<String>? id,
+    Wrapped<String>? eventId,
+    Wrapped<String>? question,
+    Wrapped<enums.AnswerType>? answerType,
+    Wrapped<int?>? price,
+    Wrapped<bool>? required,
+    Wrapped<bool>? disabled,
+  }) {
+    return Question(
+      id: (id != null ? id.value : this.id),
+      eventId: (eventId != null ? eventId.value : this.eventId),
+      question: (question != null ? question.value : this.question),
+      answerType: (answerType != null ? answerType.value : this.answerType),
+      price: (price != null ? price.value : this.price),
+      required: (required != null ? required.value : this.required),
+      disabled: (disabled != null ? disabled.value : this.disabled),
     );
   }
 }
@@ -31014,19 +31140,8 @@ class TokenResponse {
 
   @JsonKey(name: 'access_token', defaultValue: '')
   final String accessToken;
-  @JsonKey(
-    name: 'token_type',
-    toJson: tokenResponseTokenTypeNullableToJson,
-    fromJson: tokenResponseTokenTypeTokenTypeNullableFromJson,
-  )
-  final enums.TokenResponseTokenType? tokenType;
-  static enums.TokenResponseTokenType?
-  tokenResponseTokenTypeTokenTypeNullableFromJson(Object? value) =>
-      tokenResponseTokenTypeNullableFromJson(
-        value,
-        enums.TokenResponseTokenType.bearer,
-      );
-
+  @JsonKey(name: 'token_type', defaultValue: '')
+  final String? tokenType;
   @JsonKey(name: 'expires_in', defaultValue: 0)
   final int? expiresIn;
   @JsonKey(name: 'scope', defaultValue: '')
@@ -31084,7 +31199,7 @@ class TokenResponse {
 extension $TokenResponseExtension on TokenResponse {
   TokenResponse copyWith({
     String? accessToken,
-    enums.TokenResponseTokenType? tokenType,
+    String? tokenType,
     int? expiresIn,
     String? scope,
     String? refreshToken,
@@ -31102,7 +31217,7 @@ extension $TokenResponseExtension on TokenResponse {
 
   TokenResponse copyWithWrapped({
     Wrapped<String>? accessToken,
-    Wrapped<enums.TokenResponseTokenType?>? tokenType,
+    Wrapped<String?>? tokenType,
     Wrapped<int?>? expiresIn,
     Wrapped<String?>? scope,
     Wrapped<String>? refreshToken,
@@ -32469,6 +32584,8 @@ class ValidationError {
     required this.loc,
     required this.msg,
     required this.type,
+    this.input,
+    this.ctx,
   });
 
   factory ValidationError.fromJson(Map<String, dynamic> json) =>
@@ -32483,6 +32600,10 @@ class ValidationError {
   final String msg;
   @JsonKey(name: 'type', defaultValue: '')
   final String type;
+  @JsonKey(name: 'input')
+  final dynamic input;
+  @JsonKey(name: 'ctx')
+  final Object? ctx;
   static const fromJsonFactory = _$ValidationErrorFromJson;
 
   @override
@@ -32494,7 +32615,11 @@ class ValidationError {
             (identical(other.msg, msg) ||
                 const DeepCollectionEquality().equals(other.msg, msg)) &&
             (identical(other.type, type) ||
-                const DeepCollectionEquality().equals(other.type, type)));
+                const DeepCollectionEquality().equals(other.type, type)) &&
+            (identical(other.input, input) ||
+                const DeepCollectionEquality().equals(other.input, input)) &&
+            (identical(other.ctx, ctx) ||
+                const DeepCollectionEquality().equals(other.ctx, ctx)));
   }
 
   @override
@@ -32505,15 +32630,25 @@ class ValidationError {
       const DeepCollectionEquality().hash(loc) ^
       const DeepCollectionEquality().hash(msg) ^
       const DeepCollectionEquality().hash(type) ^
+      const DeepCollectionEquality().hash(input) ^
+      const DeepCollectionEquality().hash(ctx) ^
       runtimeType.hashCode;
 }
 
 extension $ValidationErrorExtension on ValidationError {
-  ValidationError copyWith({List<Object>? loc, String? msg, String? type}) {
+  ValidationError copyWith({
+    List<Object>? loc,
+    String? msg,
+    String? type,
+    dynamic input,
+    Object? ctx,
+  }) {
     return ValidationError(
       loc: loc ?? this.loc,
       msg: msg ?? this.msg,
       type: type ?? this.type,
+      input: input ?? this.input,
+      ctx: ctx ?? this.ctx,
     );
   }
 
@@ -32521,11 +32656,15 @@ extension $ValidationErrorExtension on ValidationError {
     Wrapped<List<Object>>? loc,
     Wrapped<String>? msg,
     Wrapped<String>? type,
+    Wrapped<dynamic>? input,
+    Wrapped<Object?>? ctx,
   }) {
     return ValidationError(
       loc: (loc != null ? loc.value : this.loc),
       msg: (msg != null ? msg.value : this.msg),
       type: (type != null ? type.value : this.type),
+      input: (input != null ? input.value : this.input),
+      ctx: (ctx != null ? ctx.value : this.ctx),
     );
   }
 }
@@ -38251,241 +38390,6 @@ List<enums.AmapSlotType>? amapSlotTypeNullableListFromJson(
   return amapSlotType.map((e) => amapSlotTypeFromJson(e.toString())).toList();
 }
 
-String? answerBooleanAnswerTypeNullableToJson(
-  enums.AnswerBooleanAnswerType? answerBooleanAnswerType,
-) {
-  return answerBooleanAnswerType?.value;
-}
-
-String? answerBooleanAnswerTypeToJson(
-  enums.AnswerBooleanAnswerType answerBooleanAnswerType,
-) {
-  return answerBooleanAnswerType.value;
-}
-
-enums.AnswerBooleanAnswerType answerBooleanAnswerTypeFromJson(
-  Object? answerBooleanAnswerType, [
-  enums.AnswerBooleanAnswerType? defaultValue,
-]) {
-  return enums.AnswerBooleanAnswerType.values.firstWhereOrNull(
-        (e) => e.value == answerBooleanAnswerType,
-      ) ??
-      defaultValue ??
-      enums.AnswerBooleanAnswerType.swaggerGeneratedUnknown;
-}
-
-enums.AnswerBooleanAnswerType? answerBooleanAnswerTypeNullableFromJson(
-  Object? answerBooleanAnswerType, [
-  enums.AnswerBooleanAnswerType? defaultValue,
-]) {
-  if (answerBooleanAnswerType == null) {
-    return null;
-  }
-  return enums.AnswerBooleanAnswerType.values.firstWhereOrNull(
-        (e) => e.value == answerBooleanAnswerType,
-      ) ??
-      defaultValue;
-}
-
-String answerBooleanAnswerTypeExplodedListToJson(
-  List<enums.AnswerBooleanAnswerType>? answerBooleanAnswerType,
-) {
-  return answerBooleanAnswerType?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> answerBooleanAnswerTypeListToJson(
-  List<enums.AnswerBooleanAnswerType>? answerBooleanAnswerType,
-) {
-  if (answerBooleanAnswerType == null) {
-    return [];
-  }
-
-  return answerBooleanAnswerType.map((e) => e.value!).toList();
-}
-
-List<enums.AnswerBooleanAnswerType> answerBooleanAnswerTypeListFromJson(
-  List? answerBooleanAnswerType, [
-  List<enums.AnswerBooleanAnswerType>? defaultValue,
-]) {
-  if (answerBooleanAnswerType == null) {
-    return defaultValue ?? [];
-  }
-
-  return answerBooleanAnswerType
-      .map((e) => answerBooleanAnswerTypeFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.AnswerBooleanAnswerType>?
-answerBooleanAnswerTypeNullableListFromJson(
-  List? answerBooleanAnswerType, [
-  List<enums.AnswerBooleanAnswerType>? defaultValue,
-]) {
-  if (answerBooleanAnswerType == null) {
-    return defaultValue;
-  }
-
-  return answerBooleanAnswerType
-      .map((e) => answerBooleanAnswerTypeFromJson(e.toString()))
-      .toList();
-}
-
-String? answerNumberAnswerTypeNullableToJson(
-  enums.AnswerNumberAnswerType? answerNumberAnswerType,
-) {
-  return answerNumberAnswerType?.value;
-}
-
-String? answerNumberAnswerTypeToJson(
-  enums.AnswerNumberAnswerType answerNumberAnswerType,
-) {
-  return answerNumberAnswerType.value;
-}
-
-enums.AnswerNumberAnswerType answerNumberAnswerTypeFromJson(
-  Object? answerNumberAnswerType, [
-  enums.AnswerNumberAnswerType? defaultValue,
-]) {
-  return enums.AnswerNumberAnswerType.values.firstWhereOrNull(
-        (e) => e.value == answerNumberAnswerType,
-      ) ??
-      defaultValue ??
-      enums.AnswerNumberAnswerType.swaggerGeneratedUnknown;
-}
-
-enums.AnswerNumberAnswerType? answerNumberAnswerTypeNullableFromJson(
-  Object? answerNumberAnswerType, [
-  enums.AnswerNumberAnswerType? defaultValue,
-]) {
-  if (answerNumberAnswerType == null) {
-    return null;
-  }
-  return enums.AnswerNumberAnswerType.values.firstWhereOrNull(
-        (e) => e.value == answerNumberAnswerType,
-      ) ??
-      defaultValue;
-}
-
-String answerNumberAnswerTypeExplodedListToJson(
-  List<enums.AnswerNumberAnswerType>? answerNumberAnswerType,
-) {
-  return answerNumberAnswerType?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> answerNumberAnswerTypeListToJson(
-  List<enums.AnswerNumberAnswerType>? answerNumberAnswerType,
-) {
-  if (answerNumberAnswerType == null) {
-    return [];
-  }
-
-  return answerNumberAnswerType.map((e) => e.value!).toList();
-}
-
-List<enums.AnswerNumberAnswerType> answerNumberAnswerTypeListFromJson(
-  List? answerNumberAnswerType, [
-  List<enums.AnswerNumberAnswerType>? defaultValue,
-]) {
-  if (answerNumberAnswerType == null) {
-    return defaultValue ?? [];
-  }
-
-  return answerNumberAnswerType
-      .map((e) => answerNumberAnswerTypeFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.AnswerNumberAnswerType>? answerNumberAnswerTypeNullableListFromJson(
-  List? answerNumberAnswerType, [
-  List<enums.AnswerNumberAnswerType>? defaultValue,
-]) {
-  if (answerNumberAnswerType == null) {
-    return defaultValue;
-  }
-
-  return answerNumberAnswerType
-      .map((e) => answerNumberAnswerTypeFromJson(e.toString()))
-      .toList();
-}
-
-String? answerTextAnswerTypeNullableToJson(
-  enums.AnswerTextAnswerType? answerTextAnswerType,
-) {
-  return answerTextAnswerType?.value;
-}
-
-String? answerTextAnswerTypeToJson(
-  enums.AnswerTextAnswerType answerTextAnswerType,
-) {
-  return answerTextAnswerType.value;
-}
-
-enums.AnswerTextAnswerType answerTextAnswerTypeFromJson(
-  Object? answerTextAnswerType, [
-  enums.AnswerTextAnswerType? defaultValue,
-]) {
-  return enums.AnswerTextAnswerType.values.firstWhereOrNull(
-        (e) => e.value == answerTextAnswerType,
-      ) ??
-      defaultValue ??
-      enums.AnswerTextAnswerType.swaggerGeneratedUnknown;
-}
-
-enums.AnswerTextAnswerType? answerTextAnswerTypeNullableFromJson(
-  Object? answerTextAnswerType, [
-  enums.AnswerTextAnswerType? defaultValue,
-]) {
-  if (answerTextAnswerType == null) {
-    return null;
-  }
-  return enums.AnswerTextAnswerType.values.firstWhereOrNull(
-        (e) => e.value == answerTextAnswerType,
-      ) ??
-      defaultValue;
-}
-
-String answerTextAnswerTypeExplodedListToJson(
-  List<enums.AnswerTextAnswerType>? answerTextAnswerType,
-) {
-  return answerTextAnswerType?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> answerTextAnswerTypeListToJson(
-  List<enums.AnswerTextAnswerType>? answerTextAnswerType,
-) {
-  if (answerTextAnswerType == null) {
-    return [];
-  }
-
-  return answerTextAnswerType.map((e) => e.value!).toList();
-}
-
-List<enums.AnswerTextAnswerType> answerTextAnswerTypeListFromJson(
-  List? answerTextAnswerType, [
-  List<enums.AnswerTextAnswerType>? defaultValue,
-]) {
-  if (answerTextAnswerType == null) {
-    return defaultValue ?? [];
-  }
-
-  return answerTextAnswerType
-      .map((e) => answerTextAnswerTypeFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.AnswerTextAnswerType>? answerTextAnswerTypeNullableListFromJson(
-  List? answerTextAnswerType, [
-  List<enums.AnswerTextAnswerType>? defaultValue,
-]) {
-  if (answerTextAnswerType == null) {
-    return defaultValue;
-  }
-
-  return answerTextAnswerType
-      .map((e) => answerTextAnswerTypeFromJson(e.toString()))
-      .toList();
-}
-
 String? answerTypeNullableToJson(enums.AnswerType? answerType) {
   return answerType?.value;
 }
@@ -40428,84 +40332,6 @@ List<enums.StatusType>? statusTypeNullableListFromJson(
   }
 
   return statusType.map((e) => statusTypeFromJson(e.toString())).toList();
-}
-
-String? tokenResponseTokenTypeNullableToJson(
-  enums.TokenResponseTokenType? tokenResponseTokenType,
-) {
-  return tokenResponseTokenType?.value;
-}
-
-String? tokenResponseTokenTypeToJson(
-  enums.TokenResponseTokenType tokenResponseTokenType,
-) {
-  return tokenResponseTokenType.value;
-}
-
-enums.TokenResponseTokenType tokenResponseTokenTypeFromJson(
-  Object? tokenResponseTokenType, [
-  enums.TokenResponseTokenType? defaultValue,
-]) {
-  return enums.TokenResponseTokenType.values.firstWhereOrNull(
-        (e) => e.value == tokenResponseTokenType,
-      ) ??
-      defaultValue ??
-      enums.TokenResponseTokenType.swaggerGeneratedUnknown;
-}
-
-enums.TokenResponseTokenType? tokenResponseTokenTypeNullableFromJson(
-  Object? tokenResponseTokenType, [
-  enums.TokenResponseTokenType? defaultValue,
-]) {
-  if (tokenResponseTokenType == null) {
-    return null;
-  }
-  return enums.TokenResponseTokenType.values.firstWhereOrNull(
-        (e) => e.value == tokenResponseTokenType,
-      ) ??
-      defaultValue;
-}
-
-String tokenResponseTokenTypeExplodedListToJson(
-  List<enums.TokenResponseTokenType>? tokenResponseTokenType,
-) {
-  return tokenResponseTokenType?.map((e) => e.value!).join(',') ?? '';
-}
-
-List<String> tokenResponseTokenTypeListToJson(
-  List<enums.TokenResponseTokenType>? tokenResponseTokenType,
-) {
-  if (tokenResponseTokenType == null) {
-    return [];
-  }
-
-  return tokenResponseTokenType.map((e) => e.value!).toList();
-}
-
-List<enums.TokenResponseTokenType> tokenResponseTokenTypeListFromJson(
-  List? tokenResponseTokenType, [
-  List<enums.TokenResponseTokenType>? defaultValue,
-]) {
-  if (tokenResponseTokenType == null) {
-    return defaultValue ?? [];
-  }
-
-  return tokenResponseTokenType
-      .map((e) => tokenResponseTokenTypeFromJson(e.toString()))
-      .toList();
-}
-
-List<enums.TokenResponseTokenType>? tokenResponseTokenTypeNullableListFromJson(
-  List? tokenResponseTokenType, [
-  List<enums.TokenResponseTokenType>? defaultValue,
-]) {
-  if (tokenResponseTokenType == null) {
-    return defaultValue;
-  }
-
-  return tokenResponseTokenType
-      .map((e) => tokenResponseTokenTypeFromJson(e.toString()))
-      .toList();
 }
 
 String? transactionStatusNullableToJson(

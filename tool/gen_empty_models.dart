@@ -40,8 +40,14 @@ void main() {
     if (c == null) continue;
 
     // Idempotent: skip if the static was already injected on a prior run.
-    if (i + 1 < lines.length &&
-        lines[i + 1].trimLeft().startsWith('static ${c.name} empty(')) {
+    // `dart format` (run by codegen.dart after this step) may wrap a long
+    // signature so the return type and `empty()` land on separate lines, e.g.
+    //   static VeryLongClassName
+    //   empty() => VeryLongClassName(
+    // so the next line reads just `static <ClassName>`. Match both forms.
+    final next = i + 1 < lines.length ? lines[i + 1].trimLeft() : '';
+    if (next.startsWith('static ${c.name} empty(') ||
+        next == 'static ${c.name}') {
       continue;
     }
 
