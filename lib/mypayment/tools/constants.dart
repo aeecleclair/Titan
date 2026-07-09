@@ -19,4 +19,8 @@ class MyPaymentColors {
       isDarkTheme ? Color(0xff064b4b) : Color(0xff001d1d);
   Color get backgroundGradient3 =>
       isDarkTheme ? Color(0xff002424) : Color(0xff004444);
+  Color get secondaryGradient1 =>
+      isDarkTheme ? Color(0xffff991a) : Color(0xffff7707);
+  Color get secondaryGradient2 =>
+      isDarkTheme ? Color(0xfff98801) : Color(0xffe66700);
 }

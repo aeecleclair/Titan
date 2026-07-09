@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/mypayment/providers/seller_rights_list_providder.dart';
+import 'package:titan/mypayment/tools/constants.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class RightCheckBox extends ConsumerWidget {
   final int index;
@@ -13,10 +15,11 @@ class RightCheckBox extends ConsumerWidget {
     final sellerRightsListNotifier = ref.watch(
       sellerRightsListProvider.notifier,
     );
+    final isDarkTheme = ref.watch(themeProvider);
     return CheckboxListTile(
       title: Text(title),
       value: sellerRightsList[index],
-      activeColor: const Color(0xff204550),
+      activeColor: MyPaymentColors(isDarkTheme).secondaryGreen,
       onChanged: (value) {
         sellerRightsListNotifier.updateRights(index, value ?? false);
       },
