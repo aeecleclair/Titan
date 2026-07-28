@@ -3,7 +3,7 @@ class CentralisationTextConstants {
   static const String close = 'Fermer';
   static const String error = "Erreur";
   static const String imagePath =
-      "https://centralisation.myecl.fr/assets/icons/";
+      "https://links.myemapp.proximapp.fr/assets/icons/";
   static const String openLink = 'Accéder au site';
   static const String unableToOpen = "Impossible d'ouvrir le lien";
 }
