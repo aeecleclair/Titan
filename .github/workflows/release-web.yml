@@ -87,24 +87,6 @@ jobs:
           ICON_IOS_PATH: ${{ vars.ICON_IOS_PATH }}
           ICON_WEB_PATH: ${{ vars.ICON_WEB_PATH }}
 
-      - name: Configure env
-        run: |
-          echo PROD_HOST=$PROD_HOST >> .env
-          echo ALPHA_HOST=$ALPHA_HOST >> .env
-          echo PAYMENT_NAME=$PAYMENT_NAME >> .env
-          echo SCHOOL_NAME=$SCHOOL_NAME >> .env
-          echo APP_NAME=$APP_NAME >> .env
-          echo APP_ID_PREFIX=$APP_ID_PREFIX >> .env
-          echo TITAN_URL=$TITAN_URL >> .env
-        env:
-          PROD_HOST: ${{ vars.PROD_HOST }}
-          ALPHA_HOST: ${{ vars.ALPHA_HOST }}
-          PAYMENT_NAME: ${{ vars.PAYMENT_NAME }}
-          SCHOOL_NAME: ${{ vars.SCHOOL_NAME }}
-          APP_NAME: ${{ vars.APP_NAME }}
-          APP_ID_PREFIX: ${{ vars.APP_ID_PREFIX }}
-          TITAN_URL: ${{ vars.TITAN_URL }}
-
       - name: Configure Alpha env
         if: needs.extract-version.outputs.isAlpha == 'true'
         run: |
