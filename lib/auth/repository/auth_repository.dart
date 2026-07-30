@@ -22,7 +22,7 @@ class AuthRepository {
   final String tokenName = "my_ecl_auth_token";
   final String clientId = "Titan";
   final String redirectUrl = "${getTitanPackageName()}://authorized";
-  final String redirectUrlHost = getTitanURL();
+  final String redirectURL = "${getTitanURL()}static.html";
   final AuthorizationServiceConfiguration authorizationServiceConfiguration =
       AuthorizationServiceConfiguration(
         authorizationEndpoint: "${getTitanHost()}auth/authorize",
@@ -46,16 +46,11 @@ class AuthRepository {
   Future<models.TokenResponse> getTokenFromRequest() async {
     html.WindowBase? popupWin;
 
-    final redirectUri = Uri(
-      host: redirectUrlHost,
-      scheme: "https",
-      path: '/static.html',
-    );
     final codeVerifier = generateRandomString(128);
     models.TokenResponse tokenResponse = models.TokenResponse.empty();
 
     final authUrl =
-        "${getTitanHost()}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}&redirect_uri=$redirectUri&code_challenge=${hash(codeVerifier)}&code_challenge_method=S256";
+        "${getTitanHost()}auth/authorize?client_id=$clientId&response_type=code&scope=${scopes.join(" ")}&redirect_uri=$redirectURL&code_challenge=${hash(codeVerifier)}&code_challenge_method=S256";
 
     if (kIsWeb) {
       popupWin = html.window.open(
@@ -89,7 +84,7 @@ class AuthRepository {
               body: {
                 "client_id": clientId,
                 "code": token,
-                "redirect_uri": redirectUri.toString(),
+                "redirect_uri": redirectURL,
                 "code_verifier": codeVerifier,
                 "grant_type": "authorization_code",
                 "refresh_token": token,
