@@ -7,9 +7,8 @@ import 'package:titan/tools/exception.dart';
 class TicketChangeOverNotifier extends StateNotifier<AsyncValue<void>> {
   final TicketsRepository _ticketsRepository;
 
-  TicketChangeOverNotifier({required TicketsRepository ticketsRepository})
-    : _ticketsRepository = ticketsRepository,
-      super(const AsyncValue.data(null));
+  TicketChangeOverNotifier({required this._ticketsRepository})
+    : super(const AsyncValue.data(null));
 
   Future<bool> requestChangeOver(String ticketId, String email) async {
     state = const AsyncValue.loading();

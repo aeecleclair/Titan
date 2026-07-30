@@ -5,11 +5,9 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 
 class TicketEventByIdNotifier extends StateNotifier<AsyncValue<TicketEvent>> {
   TicketEventByIdNotifier({
-    required TicketsRepository repository,
-    required String id,
-  }) : _repository = repository,
-       _id = id,
-       super(const AsyncValue.loading());
+    required this._repository,
+    required this._id,
+  }) : super(const AsyncValue.loading());
 
   final TicketsRepository _repository;
   final String _id;
@@ -46,11 +44,9 @@ final ticketEventByIdProvider =
 class PublicTicketEventByIdNotifier
     extends StateNotifier<AsyncValue<TicketEvent>> {
   PublicTicketEventByIdNotifier({
-    required TicketsRepository repository,
-    required String id,
-  }) : _repository = repository,
-       _id = id,
-       super(const AsyncValue.loading());
+    required this._repository,
+    required this._id,
+  }) : super(const AsyncValue.loading());
 
   final TicketsRepository _repository;
   final String _id;

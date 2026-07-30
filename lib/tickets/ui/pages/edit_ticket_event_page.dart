@@ -1071,8 +1071,9 @@ class _QuestionsSection extends HookConsumerWidget {
                           const SizedBox(width: 8),
                           OutlinedButton(
                             onPressed: () async {
-                              if (!await showDeleteConfirm(context, ref))
+                              if (!await showDeleteConfirm(context, ref)) {
                                 return;
+                              }
                               if (!context.mounted) return;
                               await tokenExpireWrapper(ref, () async {
                                 final success = await editNotifier
