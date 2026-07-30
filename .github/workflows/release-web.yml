@@ -123,8 +123,15 @@ jobs:
           sed -i "s/{{APP_NAME}}/$APP_NAME/g" web/manifest.json
           sed -i "s/{{SCHOOL_NAME}}/$SCHOOL_NAME/g" web/manifest.json
 
-      - name: Build 🔧
-        run: flutter build web --release --dart-define-from-file=config.json
+      - name: Build Alpha 🔧
+        if: needs.extract-version.outputs.isAlpha == 'true'
+        run: |
+          flutter build web --release --dart-define-from-file=config.json --flavor=prod
+
+      - name: Build Prod 🔧
+        if: needs.extract-version.outputs.isAlpha == 'false'
+        run: |
+          flutter build web --release --dart-define-from-file=config.json --flavor=alpha
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
