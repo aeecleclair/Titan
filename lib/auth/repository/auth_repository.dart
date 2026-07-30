@@ -21,8 +21,8 @@ class AuthRepository {
   final Base64Codec base64 = const Base64Codec.urlSafe();
   final String tokenName = "my_ecl_auth_token";
   final String clientId = "Titan";
-  final String redirectUrl = "fr.titan.titan://authorized";
-  final String redirectUrlHost = "titan.fr";
+  final String redirectUrl = "${getTitanPackageName()}://authorized";
+  final String redirectUrlHost = getTitanURL();
   final AuthorizationServiceConfiguration authorizationServiceConfiguration =
       AuthorizationServiceConfiguration(
         authorizationEndpoint: "${getTitanHost()}auth/authorize",
