@@ -7,9 +7,8 @@ import 'package:titan/tools/token_expire_wrapper.dart';
 
 class TicketEventListNotifier extends ListNotifier<TicketEvent> {
   final TicketsRepository _repository;
-  TicketEventListNotifier({required TicketsRepository repository})
-    : _repository = repository,
-      super(const AsyncValue.loading());
+  TicketEventListNotifier({required this._repository})
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<TicketEvent>>> loadTicketEventList() async {
     return await loadList(() async => _repository.getAllTicketEvents());

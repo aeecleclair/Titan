@@ -55,7 +55,7 @@ class CentralisationMainPage extends HookConsumerWidget {
                       ),
                       header: const SizedBox(width: 15),
                       footer: const SizedBox(width: 15),
-                      onReorder: favoritesNameNotifier.reorderFavorites,
+                      onReorderItem: favoritesNameNotifier.reorderFavorites,
                       children: favorites
                           .map(
                             (module) => LikedCard(

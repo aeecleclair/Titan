@@ -6,9 +6,8 @@ import 'package:titan/tools/providers/list_notifier.dart';
 
 class StoreTicketEventListNotifier extends ListNotifier<TicketEvent> {
   final TicketsRepository _repository;
-  StoreTicketEventListNotifier({required TicketsRepository repository})
-    : _repository = repository,
-      super(const AsyncValue.loading());
+  StoreTicketEventListNotifier({required this._repository})
+    : super(const AsyncValue.loading());
 
   Future<AsyncValue<List<TicketEvent>>> loadStoreTicketEventList(
     String storeId,

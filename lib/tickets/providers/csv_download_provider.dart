@@ -6,9 +6,8 @@ import 'package:titan/tickets/repositories/tickets_repository.dart';
 
 class CsvDownloadNotifier extends StateNotifier<AsyncValue<void>> {
   final TicketsRepository _repository;
-  CsvDownloadNotifier({required TicketsRepository repository})
-    : _repository = repository,
-      super(const AsyncValue.data(null));
+  CsvDownloadNotifier({required this._repository})
+    : super(const AsyncValue.data(null));
 
   Future<Uint8List?> downloadCsv(String eventId) async {
     state = const AsyncValue.loading();

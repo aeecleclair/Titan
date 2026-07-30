@@ -117,7 +117,7 @@ class AssociationMembersPage extends HookConsumerWidget {
                           proxyDecorator: (child, index, animation) {
                             return Transform.scale(scale: 1.05, child: child);
                           },
-                          onReorder: (int oldIndex, int newIndex) async {
+                          onReorderItem: (int oldIndex, int newIndex) async {
                             await tokenExpireWrapper(ref, () async {
                               final result = await associationMemberListNotifier
                                   .reorderMember(
