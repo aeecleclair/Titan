@@ -8,6 +8,8 @@
   "PAYMENT_NAME": "<payment_name>",
   "APP_ID_PREFIX": "<app_id_prefix>",
   "APP_NAME": "<app_name>",
+  // A trailing slash is required for the CENTRALISATION_HOST
+  "CENTRALISATION_HOST": "<centralisation_host>",
   "PLAUSIBLE_HOST": "",
   "PLAUSIBLE_DOMAIN": ""
 }

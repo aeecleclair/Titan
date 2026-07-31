@@ -558,6 +558,18 @@ String getPaymentName() {
   return const String.fromEnvironment("PAYMENT_NAME", defaultValue: "ProxiPay");
 }
 
+/// Origin serving the centralisation links catalogue and its module icons.
+String getCentralisationHost() {
+  const centralisationHost = String.fromEnvironment(
+    "CENTRALISATION_HOST",
+    defaultValue: "https://links.myemapp.proximapp.fr/",
+  );
+  if (centralisationHost[centralisationHost.length - 1] != "/") {
+    throw StateError("CENTRALISATION_HOST in config.json should end with a /");
+  }
+  return centralisationHost;
+}
+
 String getBaseSchoolName() {
   const schoolName = String.fromEnvironment("SCHOOL_NAME");
   if (schoolName.isEmpty) {

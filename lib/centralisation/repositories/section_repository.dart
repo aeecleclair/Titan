@@ -1,10 +1,11 @@
 import 'package:titan/centralisation/class/section.dart';
 import 'package:http/http.dart' as http;
+import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/logs/logger.dart';
 import 'dart:convert';
 
 class SectionRepository {
-  static const String host = "https://links.myemapp.proximapp.fr/links.json";
+  static String get host => "${getCentralisationHost()}links.json";
   final Map<String, String> headers = {
     "Content-Type": "application/json; charset=UTF-8",
     "Accept": "application/json",
