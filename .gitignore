@@ -91,6 +91,3 @@ MainActivity.kt
 android/build/reports/problems/problems-report.html
 
 .env
-
-# Codegen
-/swaggers/
