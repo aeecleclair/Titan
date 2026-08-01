@@ -23,4 +23,8 @@ class MyPaymentColors {
       isDarkTheme ? Color(0xffff991a) : Color(0xffff7707);
   Color get secondaryGradient2 =>
       isDarkTheme ? Color(0xfff98801) : Color(0xffe66700);
+  static const scannerGreenGradient1 = Color(0xff79a400);
+  static const scannerGreenGradient2 = Color(0xff387200);
+  static const scannerRedGradient1 = Color(0xffa40000);
+  static const scannerRedGradient2 = Color(0xff720000);
 }

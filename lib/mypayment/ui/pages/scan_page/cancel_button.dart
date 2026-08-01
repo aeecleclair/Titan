@@ -2,18 +2,22 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/mypayment/tools/constants.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
-class CancelButton extends HookWidget {
+class CancelButton extends ConsumerWidget {
   final Future Function(bool) onCancel;
 
   const CancelButton({super.key, required this.onCancel});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final disablingAnimationController = useAnimationController(
       duration: const Duration(seconds: 30),
     )..forward();
+    final isDarkTheme = ref.watch(themeProvider);
 
     return Expanded(
       child: WaitingButton(
@@ -23,7 +27,7 @@ class CancelButton extends HookWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.grey,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
           child: child,
         ),
@@ -47,30 +51,21 @@ class CancelButton extends HookWidget {
                         borderRadius: BorderRadius.circular(10),
                         gradient: RadialGradient(
                           colors: [
-                            const Color.fromARGB(
-                              255,
-                              138,
-                              38,
-                              5,
-                            ).withValues(alpha: 0.8),
-                            const Color.fromARGB(
-                              255,
-                              116,
-                              29,
-                              0,
-                            ).withValues(alpha: 0.8),
+                            MyPaymentColors(
+                              isDarkTheme,
+                            ).redGradient1.withValues(alpha: 0.8),
+                            MyPaymentColors(
+                              isDarkTheme,
+                            ).redGradient2.withValues(alpha: 0.8),
                           ],
                           center: Alignment.topLeft,
                           radius: 1.3,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: const Color.fromARGB(
-                              255,
-                              116,
-                              29,
-                              0,
-                            ).withValues(alpha: 0.3),
+                            color: MyPaymentColors(
+                              isDarkTheme,
+                            ).redGradient2.withValues(alpha: 0.3),
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(3, 3),
@@ -92,7 +87,7 @@ class CancelButton extends HookWidget {
                   child: Text(
                     'Annuler (${((1 - disablingAnimationController.value) * 30).toStringAsFixed(0)}s)',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: MyPaymentColors.onGradient,
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
