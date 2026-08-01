@@ -6,6 +6,7 @@ import 'package:titan/mypayment/class/history.dart';
 import 'package:titan/mypayment/class/qr_code_data.dart';
 import 'package:titan/mypayment/class/qr_code_signature_data.dart';
 import 'package:titan/mypayment/class/wallet_device.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/tools/key_service.dart';
 
 enum TransferType { helloAsso, check, cash, bankTransfer }
@@ -28,56 +29,28 @@ String getMonth(int m) {
   return months[m];
 }
 
+Widget statusTagWidget(Color color, String text) {
+  return Container(
+    decoration: BoxDecoration(
+      color: color.withValues(alpha: 0.2),
+      borderRadius: BorderRadius.circular(5),
+    ),
+    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+    child: Text(
+      text,
+      style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 18),
+    ),
+  );
+}
+
 Widget getStatusTag(WalletDeviceStatus status) {
   switch (status) {
     case WalletDeviceStatus.active:
-      return Container(
-        decoration: BoxDecoration(
-          color: Colors.green.withValues(alpha: 0.2),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-        child: const Text(
-          'Actif',
-          style: TextStyle(
-            color: Colors.green,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
-      );
+      return statusTagWidget(Colors.green, 'Actif');
     case WalletDeviceStatus.inactive:
-      return Container(
-        decoration: BoxDecoration(
-          color: Colors.orange.withValues(alpha: 0.2),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-        child: const Text(
-          'Inactif',
-          style: TextStyle(
-            color: Colors.orange,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
-      );
+      return statusTagWidget(Colors.orange, 'Inactif');
     case WalletDeviceStatus.revoked:
-      return Container(
-        decoration: BoxDecoration(
-          color: Colors.red.withValues(alpha: 0.2),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-        child: const Text(
-          'Désactivé',
-          style: TextStyle(
-            color: Colors.red,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
-      );
+      return statusTagWidget(Colors.red, 'Désactivé');
   }
 }
 
@@ -255,37 +228,33 @@ int _generateSeedFromString(String input) {
   return hash.abs();
 }
 
-List<Color> getTransactionColors(History transaction) {
-  switch (transaction.type) {
-    case HistoryType.given:
-      return [
-        const Color.fromARGB(255, 1, 127, 128),
-        const Color.fromARGB(255, 0, 102, 103),
-        const Color.fromARGB(255, 0, 44, 45).withValues(alpha: 0.3),
-      ];
-    case HistoryType.refundDebited:
-      return [
-        const Color.fromARGB(255, 4, 84, 84),
-        const Color.fromARGB(255, 0, 68, 68),
-        const Color.fromARGB(255, 0, 29, 29).withValues(alpha: 0.4),
-      ];
-    case HistoryType.refundCredited:
-      return [
-        const Color.fromARGB(255, 4, 84, 84),
-        const Color.fromARGB(255, 0, 68, 68),
-        const Color.fromARGB(255, 0, 29, 29).withValues(alpha: 0.4),
-      ];
-    case HistoryType.transfer:
-      return [
-        const Color.fromARGB(255, 255, 119, 7),
-        const Color.fromARGB(255, 230, 103, 0),
-        const Color.fromARGB(255, 97, 44, 0).withValues(alpha: 0.2),
-      ];
-    case HistoryType.received:
-      return [
-        const Color.fromARGB(255, 1, 127, 128),
-        const Color.fromARGB(255, 0, 102, 103),
-        const Color.fromARGB(255, 0, 44, 45).withValues(alpha: 0.3),
-      ];
-  }
+List<Color> getTransactionColors(History transaction, bool isDarkTheme) {
+  MyPaymentColors myPaymentColors = MyPaymentColors(isDarkTheme);
+  return switch (transaction.type) {
+    HistoryType.given => [
+      myPaymentColors.gradient1,
+      myPaymentColors.gradient2,
+      myPaymentColors.gradient3.withValues(alpha: 0.3),
+    ],
+    HistoryType.refundDebited => [
+      myPaymentColors.gradient3,
+      myPaymentColors.backgroundGradient3,
+      myPaymentColors.backgroundGradient2.withValues(alpha: 0.4),
+    ],
+    HistoryType.refundCredited => [
+      myPaymentColors.gradient3,
+      myPaymentColors.backgroundGradient3,
+      myPaymentColors.backgroundGradient2.withValues(alpha: 0.4),
+    ],
+    HistoryType.transfer => [
+      myPaymentColors.secondaryGradient1,
+      myPaymentColors.secondaryGradient2,
+      myPaymentColors.redGradient2.withValues(alpha: 0.2),
+    ],
+    HistoryType.received => [
+      myPaymentColors.gradient1,
+      myPaymentColors.gradient2,
+      myPaymentColors.gradient3.withValues(alpha: 0.3),
+    ],
+  };
 }

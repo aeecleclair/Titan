@@ -8,6 +8,7 @@ import 'package:titan/mypayment/providers/selected_transactions_provider.dart';
 import 'package:titan/mypayment/tools/functions.dart';
 import 'package:titan/mypayment/ui/pages/stats_page/month_section_summary.dart';
 import 'package:titan/mypayment/ui/pages/stats_page/transaction_chart.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 
 class SumUpChart extends HookConsumerWidget {
@@ -25,10 +26,23 @@ class SumUpChart extends HookConsumerWidget {
     final formatter = NumberFormat("#,##0.00", "fr_FR");
     final Map<String, List<History>> transactionPerStore = {};
     final Map<String, List<History>> creditedTransactionPerStore = {};
-    final [transferColor, transferSecondaryColor, transferShadowColor] =
-        getTransactionColors(History.empty().copyWith(type: .transfer));
-    final [givenColor, givenSecondaryColor, givenShadowColor] =
-        getTransactionColors(History.empty().copyWith(type: .given));
+    final isDarkTheme = ref.watch(themeProvider);
+    final [
+      transferColor,
+      transferSecondaryColor,
+      transferShadowColor,
+    ] = getTransactionColors(
+      History.empty().copyWith(type: .transfer),
+      isDarkTheme,
+    );
+    final [
+      givenColor,
+      givenSecondaryColor,
+      givenShadowColor,
+    ] = getTransactionColors(
+      History.empty().copyWith(type: .given),
+      isDarkTheme,
+    );
 
     return AsyncChild(
       value: history,
