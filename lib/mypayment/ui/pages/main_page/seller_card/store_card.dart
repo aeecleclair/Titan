@@ -48,8 +48,10 @@ class StoreCard extends HookConsumerWidget {
                 context: context,
                 enableDrag: false,
                 backgroundColor: Colors.transparent,
-                scrollControlDisabledMaxHeightRatio:
-                    (1 - 80 / MediaQuery.of(context).size.height),
+                isScrollControlled: true,
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height - 80,
+                ),
                 builder: (context) => ScanPage(),
               ).then((_) {
                 ongoingTransactionNotifier.clearOngoingTransaction();
