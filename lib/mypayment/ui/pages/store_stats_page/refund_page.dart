@@ -6,9 +6,11 @@ import 'package:titan/mypayment/class/refund.dart';
 import 'package:titan/mypayment/providers/refund_amount_provider.dart';
 import 'package:titan/mypayment/providers/selected_store_history.dart';
 import 'package:titan/mypayment/providers/transaction_provider.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/ui/components/digit_fade_in_animation.dart';
 import 'package:titan/mypayment/ui/components/keyboard.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 
@@ -22,6 +24,7 @@ class ReFundPage extends ConsumerWidget {
     final refundAmountNotifier = ref.watch(refundAmountProvider.notifier);
     final transactionNotifier = ref.watch(transactionProvider.notifier);
     final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final isDarkTheme = ref.watch(themeProvider);
 
     final isValid =
         double.tryParse(refundAmount.replaceAll(",", ".")) != null &&
@@ -37,9 +40,12 @@ class ReFundPage extends ConsumerWidget {
         topRight: Radius.circular(40),
       ),
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xff017f80), Color.fromARGB(255, 9, 103, 103)],
+            colors: [
+              MyPaymentColors(isDarkTheme).gradient1,
+              MyPaymentColors(isDarkTheme).gradient2,
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -50,7 +56,7 @@ class ReFundPage extends ConsumerWidget {
             Text(
               'Remboursement',
               style: const TextStyle(
-                color: Colors.white,
+                color: MyPaymentColors.onGradient,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -58,7 +64,10 @@ class ReFundPage extends ConsumerWidget {
             const SizedBox(height: 5),
             Text(
               '${history.otherWalletName} (max: ${formatter.format(history.total / 100)} €)',
-              style: const TextStyle(color: Colors.white, fontSize: 15),
+              style: const TextStyle(
+                color: MyPaymentColors.onGradient,
+                fontSize: 15,
+              ),
             ),
             Expanded(
               child: Center(
@@ -71,8 +80,8 @@ class ReFundPage extends ConsumerWidget {
                           e,
                           style: TextStyle(
                             color: isValid
-                                ? Colors.white
-                                : const Color.fromARGB(255, 91, 6, 0),
+                                ? MyPaymentColors.onGradient
+                                : MyPaymentColors.errorText,
                             fontSize: 50,
                             fontWeight: FontWeight.bold,
                           ),
@@ -84,8 +93,8 @@ class ReFundPage extends ConsumerWidget {
                         ' €',
                         style: TextStyle(
                           color: isValid
-                              ? Colors.white
-                              : const Color.fromARGB(255, 91, 6, 0),
+                              ? MyPaymentColors.onGradient
+                              : MyPaymentColors.errorText,
                           fontSize: 50,
                           fontWeight: FontWeight.bold,
                         ),
@@ -158,15 +167,18 @@ class ReFundPage extends ConsumerWidget {
                         },
                       );
                     },
-                    waitingColor: Colors.black,
+                    waitingColor: Theme.of(context).colorScheme.onSurface,
                     builder: (child) => AddEditButtonLayout(
-                      colors: [Colors.grey.shade100, Colors.grey.shade200],
+                      colors: [
+                        Theme.of(context).colorScheme.surface,
+                        Theme.of(context).colorScheme.secondaryFixed,
+                      ],
                       child: child,
                     ),
                     child: Text(
                       "Rembourser",
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Theme.of(context).colorScheme.onSurface,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),

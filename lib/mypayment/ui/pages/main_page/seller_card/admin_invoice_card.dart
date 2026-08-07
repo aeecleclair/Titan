@@ -5,6 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/mypayment/providers/invoice_list_provider.dart';
 import 'package:titan/mypayment/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/mypayment/tools/constants.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 
 class InvoiceAdminCard extends ConsumerWidget {
@@ -13,6 +15,7 @@ class InvoiceAdminCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final invoicesNotifier = ref.watch(invoiceListProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -23,10 +26,10 @@ class InvoiceAdminCard extends ConsumerWidget {
           children: [
             CircleAvatar(
               radius: 27,
-              backgroundColor: Color.fromARGB(255, 6, 75, 75),
+              backgroundColor: MyPaymentColors(isDarkTheme).backgroundGradient1,
               child: HeroIcon(
                 HeroIcons.documentCurrencyEuro,
-                color: Colors.white,
+                color: MyPaymentColors.onGradient,
               ),
             ),
             SizedBox(width: 15),
@@ -35,7 +38,7 @@ class InvoiceAdminCard extends ConsumerWidget {
                 "Factures",
                 maxLines: 1,
                 style: TextStyle(
-                  color: Color.fromARGB(255, 0, 29, 29),
+                  color: MyPaymentColors(isDarkTheme).secondaryGreen,
                   fontSize: 14,
                 ),
               ),
@@ -43,7 +46,7 @@ class InvoiceAdminCard extends ConsumerWidget {
             SizedBox(width: 10),
             HeroIcon(
               HeroIcons.arrowRight,
-              color: Color.fromARGB(255, 0, 29, 29),
+              color: MyPaymentColors(isDarkTheme).secondaryGreen,
               size: 25,
             ),
           ],

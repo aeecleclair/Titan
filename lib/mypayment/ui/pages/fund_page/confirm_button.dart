@@ -10,6 +10,7 @@ import 'package:titan/mypayment/providers/funding_url_provider.dart';
 import 'package:titan/mypayment/providers/my_history_provider.dart';
 import 'package:titan/mypayment/providers/my_wallet_provider.dart';
 import 'package:titan/mypayment/providers/tos_provider.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -35,6 +36,7 @@ class ConfirmFundButton extends ConsumerWidget {
       orElse: () => 0,
       data: (wallet) => wallet.balance / 100,
     );
+    final helloAssoBlue = MyPaymentColors.helloAssoBlue;
 
     final redirectUrl = kIsWeb
         ? "${getTitanURL()}static.html" // ?
@@ -122,18 +124,20 @@ class ConfirmFundButton extends ConsumerWidget {
           },
         );
       },
-      waitingColor: const Color(0xff2e2f5e),
+      waitingColor: helloAssoBlue,
       builder: (Widget child) => Container(
         height: 75,
         width: double.infinity,
         margin: const EdgeInsets.symmetric(horizontal: 30),
         decoration: BoxDecoration(
           color: (minValidFundAmount && maxValidFundAmount)
-              ? Colors.white
-              : Colors.grey.shade200.withValues(alpha: 0.8),
+              ? Theme.of(context).colorScheme.surface
+              : Theme.of(
+                  context,
+                ).colorScheme.secondaryFixed.withValues(alpha: 0.8),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
+              color: Theme.of(context).shadowColor,
               blurRadius: 5,
               offset: const Offset(1, 2),
             ),
@@ -160,8 +164,8 @@ class ConfirmFundButton extends ConsumerWidget {
             "Payer avec HelloAsso",
             style: TextStyle(
               color: (minValidFundAmount && maxValidFundAmount)
-                  ? const Color(0xff2e2f5e)
-                  : const Color(0xff2e2f5e).withValues(alpha: 0.5),
+                  ? helloAssoBlue
+                  : helloAssoBlue.withValues(alpha: 0.5),
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),

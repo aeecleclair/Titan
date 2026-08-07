@@ -3,9 +3,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/mypayment/providers/my_wallet_provider.dart';
 import 'package:titan/mypayment/providers/pay_amount_provider.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/ui/pages/pay_page/confirm_button.dart';
 import 'package:titan/mypayment/ui/components/digit_fade_in_animation.dart';
 import 'package:titan/mypayment/ui/components/keyboard.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class PayPage extends ConsumerWidget {
   const PayPage({super.key});
@@ -20,6 +22,7 @@ class PayPage extends ConsumerWidget {
       data: (wallet) => wallet.balance / 100,
     );
     final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final isDarkTheme = ref.watch(themeProvider);
 
     final amountToSub = double.tryParse(payAmount.replaceAll(",", ".")) ?? 0;
 
@@ -30,9 +33,12 @@ class PayPage extends ConsumerWidget {
         topRight: Radius.circular(40),
       ),
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xff017f80), Color.fromARGB(255, 9, 103, 103)],
+            colors: [
+              MyPaymentColors(isDarkTheme).gradient1,
+              MyPaymentColors(isDarkTheme).gradient2,
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -43,7 +49,7 @@ class PayPage extends ConsumerWidget {
             Text(
               'Paiement',
               style: const TextStyle(
-                color: Colors.white,
+                color: MyPaymentColors.onGradient,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -51,7 +57,10 @@ class PayPage extends ConsumerWidget {
             const SizedBox(height: 5),
             Text(
               'Solde après paiement : ${formatter.format(currentAmount - amountToSub)} €',
-              style: const TextStyle(color: Colors.white, fontSize: 15),
+              style: const TextStyle(
+                color: MyPaymentColors.onGradient,
+                fontSize: 15,
+              ),
             ),
             Expanded(
               child: Center(
@@ -64,8 +73,8 @@ class PayPage extends ConsumerWidget {
                           e,
                           style: TextStyle(
                             color: isValid
-                                ? Colors.white
-                                : const Color.fromARGB(255, 91, 6, 0),
+                                ? MyPaymentColors.onGradient
+                                : MyPaymentColors.errorText,
                             fontSize: 50,
                             fontWeight: FontWeight.bold,
                           ),
@@ -77,8 +86,8 @@ class PayPage extends ConsumerWidget {
                         ' €',
                         style: TextStyle(
                           color: isValid
-                              ? Colors.white
-                              : const Color.fromARGB(255, 91, 6, 0),
+                              ? MyPaymentColors.onGradient
+                              : MyPaymentColors.errorText,
                           fontSize: 50,
                           fontWeight: FontWeight.bold,
                         ),

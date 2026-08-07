@@ -1,15 +1,20 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/mypayment/class/history.dart';
+import 'package:titan/mypayment/tools/constants.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
-class SummaryCard extends StatelessWidget {
+class SummaryCard extends ConsumerWidget {
   final List<History> history;
   const SummaryCard({super.key, required this.history});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(themeProvider);
+
     int total = 0;
     int numberTransactions = 0;
 
@@ -53,12 +58,12 @@ class SummaryCard extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       child: Row(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 27,
-            backgroundColor: Color(0xff017f80),
+            backgroundColor: MyPaymentColors(isDarkTheme).gradient1,
             child: HeroIcon(
               HeroIcons.listBullet,
-              color: Colors.white,
+              color: MyPaymentColors.onGradient,
               size: 25,
             ),
           ),
@@ -70,18 +75,21 @@ class SummaryCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const AutoSizeText(
+                    AutoSizeText(
                       "Total sur la période",
                       maxLines: 2,
-                      style: TextStyle(color: Color(0xff204550), fontSize: 14),
+                      style: TextStyle(
+                        color: MyPaymentColors(isDarkTheme).secondaryGreen,
+                        fontSize: 14,
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 5),
                 Text(
                   "Moyenne : ${formatter.format(mean / 100)} € / transaction",
-                  style: const TextStyle(
-                    color: Color(0xff204550),
+                  style: TextStyle(
+                    color: MyPaymentColors(isDarkTheme).secondaryGreen,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
@@ -93,10 +101,12 @@ class SummaryCard extends StatelessWidget {
           Text(
             "${formatter.format(total / 100)} €",
             style: TextStyle(
-              color: const Color(0xff204550),
+              color: MyPaymentColors(isDarkTheme).secondaryGreen,
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              decorationColor: const Color(0xff204550).withValues(alpha: 0.8),
+              decorationColor: MyPaymentColors(
+                isDarkTheme,
+              ).secondaryGreen.withValues(alpha: 0.8),
               decorationThickness: 2.85,
             ),
           ),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:titan/mypayment/tools/constants.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class Consts {
@@ -11,7 +14,7 @@ class Consts {
   static const Color gradient2 = Color.fromARGB(255, 0, 29, 29);
 }
 
-class SellerRightDialog extends StatelessWidget {
+class SellerRightDialog extends ConsumerWidget {
   final String title;
   final Function() onYes;
   final Widget? child;
@@ -24,13 +27,14 @@ class SellerRightDialog extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(themeProvider);
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pop();
       },
       child: Container(
-        color: Colors.black54,
+        color: Colors.black54, // hard-coded, for background shadow
         child: GestureDetector(
           onTap: () {},
           child: Dialog(
@@ -50,14 +54,14 @@ class SellerRightDialog extends StatelessWidget {
                     left: Consts.padding,
                     right: Consts.padding,
                   ),
-                  margin: const EdgeInsets.only(top: Consts.avatarRadius),
+                  margin: EdgeInsets.only(top: Consts.avatarRadius),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(Consts.padding),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        color: Colors.black26,
+                        color: Theme.of(context).shadowColor,
                         blurRadius: 10.0,
                         offset: Offset(0.0, 10.0),
                       ),
@@ -83,7 +87,6 @@ class SellerRightDialog extends StatelessWidget {
                             onTap: () async {
                               await onYes();
                             },
-                            waitingColor: Colors.black,
                             builder: (child) => Container(
                               width:
                                   MediaQuery.of(context).size.width -
@@ -91,10 +94,12 @@ class SellerRightDialog extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Colors.grey.shade300,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.secondaryFixed,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey.withValues(alpha: 0.3),
+                                    color: Theme.of(context).shadowColor,
                                     blurRadius: 2.0,
                                     offset: const Offset(1.0, 2.0),
                                   ),
@@ -122,14 +127,17 @@ class SellerRightDialog extends StatelessWidget {
                     height: Consts.avatarRadius * 2,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: const LinearGradient(
-                        colors: [Consts.gradient1, Consts.gradient2],
+                      gradient: LinearGradient(
+                        colors: [
+                          MyPaymentColors(isDarkTheme).backgroundGradient1,
+                          MyPaymentColors(isDarkTheme).backgroundGradient2,
+                        ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Consts.gradient2.withValues(alpha: 0.3),
+                          color: Theme.of(context).shadowColor,
                           blurRadius: 10.0,
                           offset: const Offset(0.0, 10.0),
                         ),
@@ -139,7 +147,7 @@ class SellerRightDialog extends StatelessWidget {
                       child: HeroIcon(
                         HeroIcons.exclamationCircle,
                         size: 60,
-                        color: Colors.white,
+                        color: MyPaymentColors.onGradient,
                       ),
                     ),
                   ),

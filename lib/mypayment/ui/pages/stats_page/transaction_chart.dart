@@ -7,6 +7,7 @@ import 'package:titan/mypayment/class/history.dart';
 import 'package:titan/mypayment/providers/selected_transactions_provider.dart';
 import 'package:titan/mypayment/tools/functions.dart';
 import 'package:titan/mypayment/ui/pages/stats_page/sum_up_card.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class TransactionChart extends HookConsumerWidget {
   final Map<String, List<History>> transactionPerStore;
@@ -28,6 +29,7 @@ class TransactionChart extends HookConsumerWidget {
     final Map<String, List<History>> mappedHistory = {};
     final List<String> keys = [];
     final formatter = NumberFormat("#,##0.00", "fr_FR");
+    final isDarkTheme = ref.watch(themeProvider);
 
     for (final (index, wallet) in transactionPerStore.keys.indexed) {
       final l = transactionPerStore[wallet]!;
@@ -38,7 +40,7 @@ class TransactionChart extends HookConsumerWidget {
         (previousValue, element) => previousValue + element.total,
       );
       keys.add(wallet);
-      final baseColors = getTransactionColors(l.first);
+      final baseColors = getTransactionColors(l.first, isDarkTheme);
       List<Color> walletColor = baseColors;
       if (index > 0) {
         walletColor = generateColorVariations(baseColors, wallet);
@@ -53,7 +55,7 @@ class TransactionChart extends HookConsumerWidget {
           badgeWidget: SumUpCard(
             amount: '${formatter.format(totalAmount / 100)} €',
             color: walletColor[0],
-            darkColor: walletColor[1],
+            secondaryColor: walletColor[1],
             shadowColor: walletColor[2],
             title: wallet,
           ),
@@ -62,10 +64,13 @@ class TransactionChart extends HookConsumerWidget {
     }
 
     return chartPart.isEmpty
-        ? const Center(
+        ? Center(
             child: Text(
               "Aucune transaction",
-              style: TextStyle(fontSize: 20, color: Colors.black54),
+              style: TextStyle(
+                fontSize: 20,
+                color: Theme.of(context).colorScheme.tertiary,
+              ),
             ),
           )
         : PieChart(

@@ -5,8 +5,10 @@ import 'package:intl/intl.dart';
 import 'package:titan/mypayment/class/history.dart';
 import 'package:titan/mypayment/providers/my_history_provider.dart';
 import 'package:titan/mypayment/providers/selected_transactions_provider.dart';
+import 'package:titan/mypayment/tools/functions.dart';
 import 'package:titan/mypayment/ui/pages/stats_page/month_section_summary.dart';
 import 'package:titan/mypayment/ui/pages/stats_page/transaction_chart.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 
 class SumUpChart extends HookConsumerWidget {
@@ -24,6 +26,23 @@ class SumUpChart extends HookConsumerWidget {
     final formatter = NumberFormat("#,##0.00", "fr_FR");
     final Map<String, List<History>> transactionPerStore = {};
     final Map<String, List<History>> creditedTransactionPerStore = {};
+    final isDarkTheme = ref.watch(themeProvider);
+    final [
+      transferColor,
+      transferSecondaryColor,
+      transferShadowColor,
+    ] = getTransactionColors(
+      History.empty().copyWith(type: .transfer),
+      isDarkTheme,
+    );
+    final [
+      givenColor,
+      givenSecondaryColor,
+      givenShadowColor,
+    ] = getTransactionColors(
+      History.empty().copyWith(type: .given),
+      isDarkTheme,
+    );
 
     return AsyncChild(
       value: history,
@@ -118,19 +137,9 @@ class SumUpChart extends HookConsumerWidget {
                                 title: "Reçu",
                                 amount:
                                     '${formatter.format(transferTotal / 100)} €',
-                                color: const Color.fromARGB(255, 255, 119, 7),
-                                darkColor: const Color.fromARGB(
-                                  255,
-                                  230,
-                                  103,
-                                  0,
-                                ),
-                                shadowColor: const Color.fromARGB(
-                                  255,
-                                  97,
-                                  44,
-                                  0,
-                                ).withValues(alpha: 0.2),
+                                color: transferColor,
+                                secondaryColor: transferSecondaryColor,
+                                shadowColor: transferShadowColor,
                               ),
                             ),
                             GestureDetector(
@@ -149,19 +158,9 @@ class SumUpChart extends HookConsumerWidget {
                               child: MonthSectionSummary(
                                 title: "Déboursé",
                                 amount: '${formatter.format(total / 100)} €',
-                                color: const Color.fromARGB(255, 1, 127, 128),
-                                darkColor: const Color.fromARGB(
-                                  255,
-                                  0,
-                                  102,
-                                  103,
-                                ),
-                                shadowColor: const Color.fromARGB(
-                                  255,
-                                  0,
-                                  44,
-                                  45,
-                                ).withValues(alpha: 0.3),
+                                color: givenColor,
+                                secondaryColor: givenSecondaryColor,
+                                shadowColor: givenShadowColor,
                               ),
                             ),
                           ],
@@ -174,9 +173,12 @@ class SumUpChart extends HookConsumerWidget {
             : Container(
                 height: 300,
                 alignment: Alignment.center,
-                child: const Text(
+                child: Text(
                   "Aucune transaction pour ce mois",
-                  style: TextStyle(fontSize: 18, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Theme.of(context).colorScheme.tertiary,
+                  ),
                 ),
               );
       },

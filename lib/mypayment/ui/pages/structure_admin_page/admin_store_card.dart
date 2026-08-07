@@ -5,7 +5,9 @@ import 'package:titan/mypayment/class/store.dart';
 import 'package:titan/mypayment/providers/store_provider.dart';
 import 'package:titan/mypayment/providers/stores_list_provider.dart';
 import 'package:titan/mypayment/router.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
@@ -20,6 +22,7 @@ class AdminStoreCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final storeNotifier = ref.watch(storeProvider.notifier);
     final storeListNotifier = ref.watch(storeListProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -29,11 +32,11 @@ class AdminStoreCard extends ConsumerWidget {
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: const Color.fromARGB(255, 0, 29, 29).withValues(alpha: 0.2),
+            color: Theme.of(context).shadowColor,
             spreadRadius: 1,
             blurRadius: 7,
             offset: const Offset(0, 3),
@@ -47,9 +50,9 @@ class AdminStoreCard extends ConsumerWidget {
             children: [
               Text(
                 store.name,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 20,
-                  color: Color.fromARGB(255, 0, 29, 29),
+                  color: MyPaymentColors(isDarkTheme).backgroundGradient2,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -63,12 +66,15 @@ class AdminStoreCard extends ConsumerWidget {
                         PaymentRouter.addEditStore,
                   );
                 },
-                child: const CardButton(
+                child: CardButton(
                   colors: [
-                    Color.fromARGB(255, 6, 75, 75),
-                    Color.fromARGB(255, 0, 29, 29),
+                    MyPaymentColors(isDarkTheme).backgroundGradient1,
+                    MyPaymentColors(isDarkTheme).backgroundGradient2,
                   ],
-                  child: HeroIcon(HeroIcons.pencilSquare, color: Colors.white),
+                  child: HeroIcon(
+                    HeroIcons.pencilSquare,
+                    color: MyPaymentColors.onGradient,
+                  ),
                 ),
               ),
               const SizedBox(width: 10),
@@ -102,10 +108,16 @@ class AdminStoreCard extends ConsumerWidget {
                   );
                 },
                 builder: (child) => CardButton(
-                  colors: const [Color(0xFF9E131F), Color(0xFF590512)],
+                  colors: [
+                    MyPaymentColors(isDarkTheme).redGradient1,
+                    MyPaymentColors(isDarkTheme).redGradient2,
+                  ],
                   child: child,
                 ),
-                child: const HeroIcon(HeroIcons.trash, color: Colors.white),
+                child: const HeroIcon(
+                  HeroIcons.trash,
+                  color: MyPaymentColors.onGradient,
+                ),
               ),
             ],
           ),
