@@ -1,9 +1,10 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:titan/tools/constants.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/login/tools/constants.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class Point {
   final double x;
@@ -24,25 +25,30 @@ class SpringCurve extends Curve {
 }
 
 class BackgroundPainter extends CustomPainter {
-  BackgroundPainter({required Animation<double> animation})
-    : blueAnim = CurvedAnimation(
-        parent: animation,
-        curve: const Interval(
-          0,
-          0.8,
-          curve: Interval(0, 0.9, curve: SpringCurve()),
-        ),
-        reverseCurve: const Interval(0.5, 1, curve: Curves.easeIn),
-      ),
-      blueAnim2 = CurvedAnimation(
-        parent: animation,
-        curve: const Interval(0, 0.5, curve: Curves.easeOutSine),
-        reverseCurve: const Interval(0.5, 1, curve: Curves.easeInSine),
-      ),
-      super(repaint: animation);
+  BackgroundPainter({
+    required Animation<double> animation,
+    required this.context,
+    required this.ref,
+  }) : blueAnim = CurvedAnimation(
+         parent: animation,
+         curve: const Interval(
+           0,
+           0.8,
+           curve: Interval(0, 0.9, curve: SpringCurve()),
+         ),
+         reverseCurve: const Interval(0.5, 1, curve: Curves.easeIn),
+       ),
+       blueAnim2 = CurvedAnimation(
+         parent: animation,
+         curve: const Interval(0, 0.5, curve: Curves.easeOutSine),
+         reverseCurve: const Interval(0.5, 1, curve: Curves.easeInSine),
+       ),
+       super(repaint: animation);
 
   final Animation<double> blueAnim;
   final Animation<double> blueAnim2;
+  final BuildContext context;
+  final WidgetRef ref;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -119,7 +125,10 @@ class BackgroundPainter extends CustomPainter {
       Point(w, lerpDouble(0, h / 10.2, blueAnim.value)!),
     ]);
 
-    var colors = [ColorConstants.gradient1, ColorConstants.gradient2];
+    var colors = [
+      Theme.of(context).colorScheme.primaryContainer,
+      Theme.of(context).colorScheme.primaryFixed,
+    ];
 
     Rect rectShape = Rect.fromLTWH(0, 0, w, h);
     final Gradient gradient = LinearGradient(
@@ -128,7 +137,8 @@ class BackgroundPainter extends CustomPainter {
       end: Alignment.topRight,
     );
 
-    paint = Paint()..color = ColorConstants.background2;
+    final isDarkTheme = ref.watch(themeProvider);
+    paint = Paint()..color = LoginColors(isDarkTheme).background2;
 
     paint2 = Paint()..shader = gradient.createShader(rectShape);
     paint3 = Paint()..shader = gradient.createShader(rectShape);
@@ -138,7 +148,7 @@ class BackgroundPainter extends CustomPainter {
 
     canvas.drawShadow(
       path,
-      ColorConstants.background2.withAlpha(125),
+      LoginColors(isDarkTheme).background2.withValues(alpha: 0.5),
       10.0,
       false,
     );
