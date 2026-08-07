@@ -27,10 +27,10 @@ class DetailLoanPage extends HookConsumerWidget {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.grey.shade50,
+                      color: Theme.of(context).colorScheme.surface,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withValues(alpha: 0.2),
+                          color: Theme.of(context).shadowColor,
                           blurRadius: 10,
                           offset: const Offset(0, 10),
                         ),
