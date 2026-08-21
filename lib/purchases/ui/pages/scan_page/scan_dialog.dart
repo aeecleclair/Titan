@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/purchases/class/ticket.dart';
 import 'package:titan/purchases/class/ticket_generator.dart';
 import 'package:titan/purchases/providers/scanner_provider.dart';
 import 'package:titan/purchases/providers/tag_provider.dart';
-import 'package:titan/purchases/providers/ticket_list_provider.dart';
 import 'package:titan/purchases/tools/constants.dart';
 import 'package:titan/purchases/ui/pages/scan_page/qr_code_scanner.dart';
 import 'package:titan/tools/constants.dart';
+import 'package:titan/tools/exception.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
@@ -33,12 +34,23 @@ class ScanDialog extends HookConsumerWidget {
 
     final tag = ref.watch(tagProvider);
     final tagNotifier = ref.read(tagProvider.notifier);
-    final ticketListNotifier = ref.read(ticketListProvider.notifier);
     final shouldSetTag = useState(true);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
+
+    ref.listen<AsyncValue<Ticket>>(scannerProvider, (previous, next) {
+      next.whenOrNull(
+        error: (error, stack) {
+          debugPrint('ScanDialog scan error: $error\n$stack');
+          displayToastWithContext(TypeMsg.error, error.toString());
+          Future.delayed(const Duration(seconds: 2), () {
+            scannerNotifier.reset();
+          });
+        },
+      );
+    });
 
     return CardLayout(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
@@ -74,6 +86,20 @@ class ScanDialog extends HookConsumerWidget {
                 const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
+                    if (tag.trim().isEmpty) {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        "Veuillez renseigner un tag",
+                      );
+                      return;
+                    }
+                    if (tag.contains(",")) {
+                      displayToastWithContext(
+                        TypeMsg.error,
+                        "Le tag ne peut pas contenir de virgule",
+                      );
+                      return;
+                    }
                     shouldSetTag.value = false;
                     scannerNotifier.reset();
                   },
@@ -135,34 +161,9 @@ class ScanDialog extends HookConsumerWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: QRCodeScannerScreen(
-                        scanner: scanner,
-                        onScan: (secret) async {
-                          await tokenExpireWrapper(ref, () async {
-                            await scannerNotifier.scanTicket(
-                              sellerId,
-                              productId,
-                              secret,
-                              ticket.id,
-                            );
-                            scanner.when(
-                              data: (data) {
-                                scannerNotifier.setScanner(
-                                  data.copyWith(qrCodeSecret: secret),
-                                );
-                              },
-                              error: (error, stack) {
-                                displayToastWithContext(
-                                  TypeMsg.error,
-                                  error.toString(),
-                                );
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  scannerNotifier.reset();
-                                });
-                              },
-                              loading: () {},
-                            );
-                          });
-                        },
+                        sellerId: sellerId,
+                        productId: productId,
+                        generatorId: ticket.id,
                       ),
                     ),
                   ),
@@ -225,31 +226,43 @@ class ScanDialog extends HookConsumerWidget {
                                   GestureDetector(
                                     onTap: () async {
                                       await tokenExpireWrapper(ref, () async {
-                                        await (ticketListNotifier.consumeTicket(
-                                          sellerId,
-                                          data,
-                                          ticket.id,
-                                          tag,
-                                        )).then((value) {
-                                          if (value) {
-                                            displayToastWithContext(
-                                              TypeMsg.msg,
-                                              "Scan validé",
-                                            );
-                                          } else {
-                                            displayToastWithContext(
-                                              TypeMsg.error,
-                                              "Erreur lors du scan",
-                                            );
-                                          }
-
+                                        void finish(bool success) {
+                                          displayToastWithContext(
+                                            success
+                                                ? TypeMsg.msg
+                                                : TypeMsg.error,
+                                            success
+                                                ? "Scan validé"
+                                                : "Erreur lors du scan",
+                                          );
                                           Future.delayed(
                                             const Duration(seconds: 2),
                                             () {
                                               scannerNotifier.reset();
                                             },
                                           );
-                                        });
+                                        }
+
+                                        try {
+                                          final value = await scannerNotifier
+                                              .consumeTicket(
+                                                sellerId,
+                                                data,
+                                                ticket.id,
+                                                tag,
+                                              );
+                                          finish(value);
+                                        } catch (error, stack) {
+                                          debugPrint(
+                                            'ScanDialog consumeTicket error: $error\n$stack',
+                                          );
+                                          if (error is AppException &&
+                                              error.type ==
+                                                  ErrorType.tokenExpire) {
+                                            rethrow;
+                                          }
+                                          finish(false);
+                                        }
                                       });
                                     },
                                     child: const SizedBox(
