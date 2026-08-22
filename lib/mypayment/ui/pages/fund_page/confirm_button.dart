@@ -12,8 +12,8 @@ import 'package:titan/mypayment/providers/my_wallet_provider.dart';
 import 'package:titan/mypayment/providers/tos_provider.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
-import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:titan/tools/web-window-callback/web_window_with_callback.dart';
 
 class ConfirmFundButton extends ConsumerWidget {
   const ConfirmFundButton({super.key});
@@ -60,50 +60,26 @@ class ConfirmFundButton extends ConsumerWidget {
     }
 
     void helloAssoCallback(String fundingUrl) async {
-      html.WindowBase? popupWin =
-          html.window.open(
-                fundingUrl,
-                "HelloAsso",
-                "width=800, height=900, scrollbars=yes",
-              )
-              as html.WindowBase?;
-
-      if (popupWin == null) {
-        displayToastWithContext(TypeMsg.error, "Veuillez autoriser les popups");
-        return;
-      }
-
-      final completer = Completer();
-      void checkWindowClosed() {
-        if (popupWin.closed == true) {
-          completer.complete();
-        } else {
-          Future.delayed(const Duration(milliseconds: 100), checkWindowClosed);
-        }
-      }
-
-      checkWindowClosed();
-      completer.future.then((_) {});
-
-      void login(String data) async {
-        final receivedUri = Uri.parse(data);
-        final code = receivedUri.queryParameters["code"];
-        if (code == "succeeded") {
-          displayToastWithContext(TypeMsg.msg, "Paiement effectué avec succès");
-          myWalletNotifier.getMyWallet();
-          myHistoryNotifier.getHistory();
-        } else {
-          displayToastWithContext(TypeMsg.error, "Paiement annulé");
-        }
-        popupWin.close();
-        Navigator.pop(context, code);
-      }
-
-      html.window.onMessage.listen((event) {
-        if (event.data.toString().contains('code=')) {
-          login(event.data);
-        }
-      });
+      webWindowWithCallback(
+        fundingUrl,
+        "HelloAsso",
+        completerFutureCallback: () {},
+        loginCallback: (String data) async {
+          final receivedUri = Uri.parse(data);
+          final code = receivedUri.queryParameters["code"];
+          if (code == "succeeded") {
+            displayToastWithContext(
+              TypeMsg.msg,
+              "Paiement effectué avec succès",
+            );
+            myWalletNotifier.getMyWallet();
+            myHistoryNotifier.getHistory();
+          } else {
+            displayToastWithContext(TypeMsg.error, "Paiement annulé");
+          }
+          Navigator.pop(context, code);
+        },
+      );
     }
 
     return WaitingButton(

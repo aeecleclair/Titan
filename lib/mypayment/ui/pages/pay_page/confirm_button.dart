@@ -42,7 +42,7 @@ class ConfirmButton extends ConsumerWidget {
         ? double.parse(payAmount.replaceAll(',', '.'))
         : 0.0;
 
-    final enabled = amount > 0 && amount * 100 <= myWalletBalance;
+    final enabled = amount > 0 && (amount * 100).round() <= myWalletBalance;
 
     final formatter = NumberFormat("#,##0.00", "fr_FR");
 

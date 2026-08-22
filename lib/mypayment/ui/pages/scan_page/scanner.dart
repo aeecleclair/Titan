@@ -82,34 +82,40 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
       final data = barcodeNotifier.updateBarcode(
         barcodes.barcodes.firstOrNull!.rawValue!,
       );
-      if (!bypass) {
-        final canScan = await scanNotifier.canScan(store.id, data);
-        if (!canScan) {
-          showWithoutMembershipDialog(() async {
-            final value = await scanNotifier.scan(store.id, data, bypass: true);
-            if (value == null) {
-              displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
-              barcodeNotifier.clearBarcode();
-              ongoingTransactionNotifier.clearOngoingTransaction();
-              return;
-            }
-            ongoingTransactionNotifier.updateOngoingTransaction(value);
-          });
-          return;
+      await tokenExpireWrapper(ref, () async {
+        if (!bypass) {
+          final canScan = await scanNotifier.canScan(store.id, data);
+          if (!canScan) {
+            showWithoutMembershipDialog(() async {
+              final value = await scanNotifier.scan(
+                store.id,
+                data,
+                bypass: true,
+              );
+              if (value == null) {
+                displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
+                barcodeNotifier.clearBarcode();
+                ongoingTransactionNotifier.clearOngoingTransaction();
+                return;
+              }
+              ongoingTransactionNotifier.updateOngoingTransaction(value);
+            });
+            return;
+          }
         }
-      }
-      final value = await scanNotifier.scan(store.id, data);
-      if (value == null) {
-        displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
-        barcodeNotifier.clearBarcode();
-        ongoingTransactionNotifier.clearOngoingTransaction();
-        return;
-      } else {
-        setState(() {
-          scannedValue = barcodes.barcodes.firstOrNull?.rawValue;
-        });
-        ongoingTransactionNotifier.updateOngoingTransaction(value);
-      }
+        final value = await scanNotifier.scan(store.id, data);
+        if (value == null) {
+          displayToastWithContext(TypeMsg.error, "QR Code déjà utilisé");
+          barcodeNotifier.clearBarcode();
+          ongoingTransactionNotifier.clearOngoingTransaction();
+          return;
+        } else {
+          setState(() {
+            scannedValue = barcodes.barcodes.firstOrNull?.rawValue;
+          });
+          ongoingTransactionNotifier.updateOngoingTransaction(value);
+        }
+      });
     }
   }
 

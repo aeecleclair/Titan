@@ -5,29 +5,63 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Titan dev",
+      "name": "Titan dev (JS)",
       "request": "launch",
       "type": "dart",
       "args": ["--flavor", "dev", "--dart-define", "flavor=dev"]
     },
     {
-      "name": "Titan dev (profile mode)",
+      "name": "Titan dev (JS, profile mode)",
       "request": "launch",
       "type": "dart",
       "flutterMode": "profile",
       "args": ["--flavor", "dev", "--dart-define", "flavor=dev"]
     },
     {
-      "name": "Titan alpha",
+      "name": "Titan alpha (JS)",
       "request": "launch",
       "type": "dart",
       "args": ["--flavor", "alpha", "--dart-define", "flavor=alpha"]
     },
     {
-      "name": "Titan prod",
+      "name": "Titan dev (WASM)",
       "request": "launch",
       "type": "dart",
-      "args": ["--flavor", "prod", "--dart-define", "flavor=prod"]
+      "args": [
+        "--flavor",
+        "dev",
+        "--dart-define",
+        "flavor=dev",
+        "--wasm",
+        "--no-cross-origin-isolation"
+      ]
+    },
+    {
+      "name": "Titan dev (WASM, profile mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "args": [
+        "--flavor",
+        "dev",
+        "--dart-define",
+        "flavor=dev",
+        "--wasm",
+        "--no-cross-origin-isolation"
+      ]
+    },
+    {
+      "name": "Titan alpha (WASM)",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--flavor",
+        "alpha",
+        "--dart-define",
+        "flavor=alpha",
+        "--wasm",
+        "--no-cross-origin-isolation"
+      ]
     }
   ]
 }

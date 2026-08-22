@@ -39,7 +39,7 @@ jobs:
     needs: [extract-version]
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # Remove ^ to fix flutter version parsing
       - name: Fix Flutter Version in Pubspec
@@ -103,11 +103,11 @@ jobs:
 
       - name: Build Alpha 🔧
         if: needs.extract-version.outputs.isAlpha == 'true'
-        run: flutter build web --release --dart-define=flavor=alpha
+        run: flutter build web --release --dart-define=flavor=alpha --wasm
 
       - name: Build Prod 🔧
         if: needs.extract-version.outputs.isAlpha == 'false'
-        run: flutter build web --release --dart-define=flavor=prod
+        run: flutter build web --release --dart-define=flavor=prod --wasm
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
