@@ -9,7 +9,7 @@ class Event {
   late final DateTime closeDate;
   late final int quota;
   late final int userQuota;
-  late final int usedQuota;
+  // late final int usedQuota;
   late final bool disabled;
   late final List<Session> sessions;
   late final List<Category> categories;
@@ -21,7 +21,7 @@ class Event {
     required this.closeDate,
     required this.quota,
     required this.userQuota,
-    required this.usedQuota,
+    // required this.usedQuota,
     required this.disabled,
     required this.sessions,
     required this.categories,
@@ -38,7 +38,7 @@ class Event {
         : DateTime.now();
     quota = json["quota"];
     userQuota = json["user_quota"];
-    usedQuota = json["used_quota"];
+    // usedQuota = json["used_quota"];
     disabled = json["disabled"];
     sessions = json["sessions"] != null
         ? List<Session>.from(json["sessions"].map((x) => Session.fromJson(x)))
@@ -58,7 +58,7 @@ class Event {
     data["close_date"] = processDateToAPI(closeDate);
     data["quota"] = quota;
     data["user_quota"] = userQuota;
-    data["used_quota"] = usedQuota;
+    // data["used_quota"] = usedQuota;
     data["disabled"] = disabled;
     data["sessions"] = sessions.map((s) => s.toJson()).toList();
     data["categories"] = categories.map((c) => c.toJson()).toList();
@@ -73,7 +73,7 @@ class Event {
       closeDate: DateTime.now().add(Duration(days: 1)),
       quota: 0,
       userQuota: 0,
-      usedQuota: 0,
+      // usedQuota: 0,
       disabled: false,
       sessions: [],
       categories: [],

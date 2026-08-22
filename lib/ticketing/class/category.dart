@@ -5,7 +5,7 @@ class Category {
   late final List<String> sessions;
   late final String requiredMembership;
   late final int quota;
-  late final int usedQuota;
+  // late final int usedQuota;
   late final int userQuota;
   late final double price;
   late final bool disabled;
@@ -29,7 +29,7 @@ class Category {
         : [];
     requiredMembership = json["required_membership"] ?? "";
     quota = json["quota"] ?? 0;
-    usedQuota = json["used_quota"] ?? 0;
+    // usedQuota = json["used_quota"] ?? 0;
     userQuota = json["user_quota"] ?? 0;
     price = (json["price"] ?? 0).toDouble();
     disabled = json["disabled"] ?? false;
@@ -43,7 +43,7 @@ class Category {
     data["sessions"] = sessions;
     data["required_membership"] = requiredMembership;
     data["quota"] = quota;
-    data["used_quota"] = usedQuota;
+    // data["used_quota"] = usedQuota;
     data["user_quota"] = userQuota;
     data["price"] = price;
     data["disabled"] = disabled;

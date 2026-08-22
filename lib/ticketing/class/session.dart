@@ -3,7 +3,7 @@ class Session {
   late final String eventId;
   late final String name;
   late final int quota;
-  late final int usedQuota;
+  // late final int usedQuota;
   late final int userQuota;
   late final bool disabled;
 
@@ -12,7 +12,7 @@ class Session {
     required this.eventId,
     required this.name,
     required this.quota,
-    required this.usedQuota,
+    // required this.usedQuota,
     required this.userQuota,
     required this.disabled,
   });
@@ -22,7 +22,7 @@ class Session {
     eventId = json["event_id"];
     name = json["name"];
     quota = json["quota"];
-    usedQuota = json["used_quota"];
+    // usedQuota = json["used_quota"];
     userQuota = json["user_quota"];
     disabled = json["disabled"];
   }
@@ -33,7 +33,7 @@ class Session {
     data["event_id"] = eventId;
     data["name"] = name;
     data["quota"] = quota;
-    data["used_quota"] = usedQuota;
+    // data["used_quota"] = usedQuota;
     data["user_quota"] = userQuota;
     data["disabled"] = disabled;
     return data;
@@ -45,7 +45,7 @@ class Session {
       eventId: "",
       name: "",
       quota: 0,
-      usedQuota: 0,
+      // usedQuota: 0,
       userQuota: 0,
       disabled: false,
     );
