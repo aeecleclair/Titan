@@ -57,7 +57,7 @@ class FundPage extends ConsumerWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              'Solde après recharge : ${formatter.format(amountToAdd + currentAmount)} € (max: ${formatter.format(maxBalanceAmount)} €)',
+              'Solde après recharge : ${formatter.format(amountToAdd + currentAmount)} ʍ (max: ${formatter.format(maxBalanceAmount)} ʍ)',
               style: const TextStyle(color: Colors.white, fontSize: 15),
             ),
             Expanded(
@@ -81,7 +81,7 @@ class FundPage extends ConsumerWidget {
                     }),
                     if (fundAmount.isNotEmpty)
                       Text(
-                        ' €',
+                        ' ʍ',
                         style: TextStyle(
                           color: isValid
                               ? Colors.white

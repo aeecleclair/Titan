@@ -126,7 +126,7 @@ class TransactionCard extends StatelessWidget {
                   ),
                   if (transaction.refund != null)
                     Text(
-                      "Remboursé le ${DateFormat("EEE dd MMMM yyyy à HH:mm", "fr_FR").format(transaction.refund!.creation)} de ${formatter.format(transaction.refund!.total / 100)} €",
+                      "Remboursé le ${DateFormat("EEE dd MMMM yyyy à HH:mm", "fr_FR").format(transaction.refund!.creation)} de ${formatter.format(transaction.refund!.total / 100)} ʍ",
                       style: const TextStyle(
                         color: Color.fromARGB(255, 16, 46, 55),
                         fontSize: 9,
@@ -137,7 +137,7 @@ class TransactionCard extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             Text(
-              "${transaction.type == HistoryType.given || transaction.type == HistoryType.refundDebited ? " -" : " +"} ${formatter.format(transaction.total / 100)} €",
+              "${transaction.type == HistoryType.given || transaction.type == HistoryType.refundDebited ? " -" : " +"} ${formatter.format(transaction.total / 100)} ʍ",
               style: TextStyle(
                 color: const Color(0xff204550),
                 fontSize: 18,

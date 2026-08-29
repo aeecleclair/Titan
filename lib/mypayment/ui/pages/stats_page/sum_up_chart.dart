@@ -117,7 +117,7 @@ class SumUpChart extends HookConsumerWidget {
                               child: MonthSectionSummary(
                                 title: "Reçu",
                                 amount:
-                                    '${formatter.format(transferTotal / 100)} €',
+                                    '${formatter.format(transferTotal / 100)} ʍ',
                                 color: const Color.fromARGB(255, 255, 119, 7),
                                 darkColor: const Color.fromARGB(
                                   255,
@@ -148,7 +148,7 @@ class SumUpChart extends HookConsumerWidget {
                               },
                               child: MonthSectionSummary(
                                 title: "Déboursé",
-                                amount: '${formatter.format(total / 100)} €',
+                                amount: '${formatter.format(total / 100)} ʍ',
                                 color: const Color.fromARGB(255, 1, 127, 128),
                                 darkColor: const Color.fromARGB(
                                   255,

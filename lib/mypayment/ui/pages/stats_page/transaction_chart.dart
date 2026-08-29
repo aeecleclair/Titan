@@ -51,7 +51,7 @@ class TransactionChart extends HookConsumerWidget {
           radius: 40 + (keys.indexOf(wallet) == selected.value ? 10 : 0),
           badgePositionPercentageOffset: 0.6,
           badgeWidget: SumUpCard(
-            amount: '${formatter.format(totalAmount / 100)} €',
+            amount: '${formatter.format(totalAmount / 100)} ʍ',
             color: walletColor[0],
             darkColor: walletColor[1],
             shadowColor: walletColor[2],

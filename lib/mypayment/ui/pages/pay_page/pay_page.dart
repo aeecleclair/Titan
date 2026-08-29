@@ -50,7 +50,7 @@ class PayPage extends ConsumerWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              'Solde après paiement : ${formatter.format(currentAmount - amountToSub)} €',
+              'Solde après paiement : ${formatter.format(currentAmount - amountToSub)} ʍ',
               style: const TextStyle(color: Colors.white, fontSize: 15),
             ),
             Expanded(
@@ -74,7 +74,7 @@ class PayPage extends ConsumerWidget {
                     }),
                     if (payAmount.isNotEmpty)
                       Text(
-                        ' €',
+                        ' ʍ',
                         style: TextStyle(
                           color: isValid
                               ? Colors.white

@@ -70,7 +70,7 @@ class ConfirmButton extends ConsumerWidget {
                       icons: HeroIcons.currencyEuro,
                       title: "Montant",
                       value:
-                          '${formatter.format(double.parse(payAmount.replaceAll(',', '.')))} €',
+                          '${formatter.format(double.parse(payAmount.replaceAll(',', '.')))} ʍ',
                     ),
                     const SizedBox(width: 10),
                     InfoCard(

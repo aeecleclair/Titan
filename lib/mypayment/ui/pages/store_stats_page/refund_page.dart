@@ -57,7 +57,7 @@ class ReFundPage extends ConsumerWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              '${history.otherWalletName} (max: ${formatter.format(history.total / 100)} €)',
+              '${history.otherWalletName} (max: ${formatter.format(history.total / 100)} ʍ)',
               style: const TextStyle(color: Colors.white, fontSize: 15),
             ),
             Expanded(
@@ -81,7 +81,7 @@ class ReFundPage extends ConsumerWidget {
                     }),
                     if (refundAmount.isNotEmpty)
                       Text(
-                        ' €',
+                        ' ʍ',
                         style: TextStyle(
                           color: isValid
                               ? Colors.white

@@ -79,7 +79,7 @@ class SummaryCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  "Moyenne : ${formatter.format(mean / 100)} € / transaction",
+                  "Moyenne : ${formatter.format(mean / 100)} ʍ / transaction",
                   style: const TextStyle(
                     color: Color(0xff204550),
                     fontSize: 12,
@@ -91,7 +91,7 @@ class SummaryCard extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           Text(
-            "${formatter.format(total / 100)} €",
+            "${formatter.format(total / 100)} ʍ",
             style: TextStyle(
               color: const Color(0xff204550),
               fontSize: 18,

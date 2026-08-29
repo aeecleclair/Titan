@@ -168,7 +168,7 @@ class ScanPage extends HookConsumerWidget {
                                               ),
                                             ),
                                             Text(
-                                              '${formatter.format(barcode.tot / 100)} €',
+                                              '${formatter.format(barcode.tot / 100)} ʍ',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 25,
@@ -302,7 +302,7 @@ class ScanPage extends HookConsumerWidget {
                                           return CustomDialogBox(
                                             title: "Annuler la transaction",
                                             descriptions:
-                                                "Voulez-vous vraiment annuler la transaction de ${formatter.format(transaction.total / 100)} € ?",
+                                                "Voulez-vous vraiment annuler la transaction de ${formatter.format(transaction.total / 100)} ʍ ?",
                                             onYes: () async {
                                               tokenExpireWrapper(ref, () async {
                                                 final value =

@@ -201,7 +201,7 @@ class AccountCard extends HookConsumerWidget {
       child: AsyncChild(
         value: myWallet,
         builder: (context, wallet) => Text(
-          '${formatter.format(wallet.balance / 100)} €',
+          '${formatter.format(wallet.balance / 100)} ʍ',
           style: const TextStyle(color: Colors.white, fontSize: 50),
         ),
         errorBuilder: (error, stackTrace) => Text(
