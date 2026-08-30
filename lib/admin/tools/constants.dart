@@ -74,10 +74,14 @@ class AdminTextConstants {
   static const String modifyModuleVisibility = "Permissions";
   static const String myPayment = "MyECLPay";
   static const String name = "Nom";
+  static const String noDocumentTeamAvailable =
+      "Aucune équipe de documents correspondante au groupe manager";
   static const String noManager = "Aucun manager n'est sélectionné";
   static const String noMember = "Aucun membre";
   static const String noMoreLoaner = "Aucun prêteur n'est disponible";
   static const String noSchool = "Sans école";
+  static const String noTemplateAvailable =
+      "Aucun document d'adhésion disponible";
   static const String permissions = "Permissions";
   static const String removeGroupMember1 = "Supprimer ";
   static const String removeGroupMember2 =
@@ -139,7 +143,7 @@ class AdminTextConstants {
       "Erreur lors de la définition comme titulaire du compte bancaire";
   static const String setAsBankAccountHolder =
       "Définir comme titulaire du compte bancaire";
-  static const String templateId = "Identifiant du modèle";
+  static const String template = "Document d'adhésion";
 }
 
 enum SchoolIdConstant {
