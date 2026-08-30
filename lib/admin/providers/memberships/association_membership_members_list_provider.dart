@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:titan/admin/class/association_membership_simple.dart';
 import 'package:titan/admin/class/user_association_membership.dart';
 import 'package:titan/admin/class/user_association_membership_base.dart';
 import 'package:titan/admin/repositories/association_membership_repository.dart';
@@ -33,6 +34,34 @@ class AssociationMembershipMembersNotifier
             maximalEndDate,
           ),
     );
+  }
+
+  Future<AssociationMembershipRenewDocumentsReturn>
+  renewAssociationMembershipDocuments(
+    String associationMembershipId,
+    DateTime activeDate,
+  ) async {
+    final errors = await associationMembershipRepository
+        .renewAssociationMembershipDocuments(
+          associationMembershipId,
+          activeDate,
+        );
+    await loadList(
+      () async => associationMembershipRepository
+          .getAssociationMembershipMembers(associationMembershipId),
+    );
+    return errors;
+  }
+
+  Future<AssociationMembershipRenewDocumentsReturn>
+  renewUserMembershipDocuments(String userAssociationMembershipId) async {
+    final errors = await associationMembershipUserRepository
+        .renewUserMembershipDocument(userAssociationMembershipId);
+    await loadList(
+      () async => associationMembershipRepository
+          .getAssociationMembershipMembers(userAssociationMembershipId),
+    );
+    return errors;
   }
 
   Future<bool> addMember(

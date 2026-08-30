@@ -85,6 +85,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                       associationMembership.name,
                       fontWeight: FontWeight.bold,
                     ),
+              const SizedBox(height: 10),
               AlignLeftText(
                 AdminTextConstants.group,
                 fontWeight: FontWeight.bold,

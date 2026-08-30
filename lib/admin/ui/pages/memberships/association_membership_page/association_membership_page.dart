@@ -148,6 +148,8 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                                 associationMembershipMembersNotifier
                                     .loadAssociationMembershipMembers(
                                       associationMembership.id,
+                                      maximalStartDate: DateTime.now(),
+                                      minimalEndDate: DateTime.now(),
                                     );
                                 associationMembershipNotifier
                                     .setAssociationMembership(

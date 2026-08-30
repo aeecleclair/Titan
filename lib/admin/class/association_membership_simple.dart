@@ -50,3 +50,25 @@ class AssociationMembership {
     return 'AssociationMembership(id: $id, name: $name, groupId: $managerGroupId, templateId: $templateId)';
   }
 }
+
+class AssociationMembershipRenewDocumentsReturn {
+  AssociationMembershipRenewDocumentsReturn({required this.errors});
+  late final Map<String, String> errors;
+
+  AssociationMembershipRenewDocumentsReturn.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    errors = Map<String, String>.from(json['errors'] ?? {});
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['errors'] = errors;
+    return data;
+  }
+
+  @override
+  String toString() {
+    return 'AssociationMembershipRenewDocumentsReturn(errors: $errors)';
+  }
+}

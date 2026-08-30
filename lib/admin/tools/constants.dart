@@ -82,6 +82,19 @@ class AdminTextConstants {
   static const String removeGroupMember1 = "Supprimer ";
   static const String removeGroupMember2 =
       " du groupe ?"; //En deux fois pour ajouter le surnom après ("Supprimer {surnom} du groupe")
+  static const String renewDocuments = "Renouveler les documents";
+  static const String renewedDocuments =
+      "Le document de l'adhésion a été renouvelé avec succès";
+  static const String renewingDocumentConfirmation =
+      "Êtes-vous sûr de vouloir renouveler le document de cette adhésion ?\nCette opération redemandera une signature à l'utilisateur et rendra l'adhésion inactive en attendant la signature.";
+  static const String renewingDocumentsConfirmation1 =
+      "Êtes-vous sûr de vouloir renouveler les documents de cette adhésion pour les adhérents encore actifs le ";
+  static const String renewingDocumentsConfirmation2 =
+      " ?\nCette opération redemandera une signature aux utilisateurs et rendra leur adhésion inactive en attendant la signature.";
+  static const String renewingDocumentTitle = "Renouvellement du document";
+  static const String renewingDocumentsTitle = "Renouvellement des documents";
+  static const String renewingError =
+      "Erreur lors du renouvellement du document de l'adhésion";
   static const String research = "Recherche";
   static const String schools = "Écoles";
   static const String structures = "Structures";

@@ -65,6 +65,18 @@ class AssociationMembershipRepository extends Repository {
     );
   }
 
+  Future<AssociationMembershipRenewDocumentsReturn>
+  renewAssociationMembershipDocuments(
+    String associationMembershipId,
+    DateTime activeDate,
+  ) async {
+    return AssociationMembershipRenewDocumentsReturn.fromJson(
+      await create({
+        "active_date": processDateToAPIWithoutHour(activeDate),
+      }, suffix: "$associationMembershipId/renew-documents"),
+    );
+  }
+
   Future<AssociationMembership> createAssociationMembership(
     AssociationMembership associationMembership,
   ) async {
