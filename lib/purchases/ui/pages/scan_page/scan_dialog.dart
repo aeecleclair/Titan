@@ -12,6 +12,7 @@ import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/exception.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
@@ -223,59 +224,64 @@ class ScanDialog extends HookConsumerWidget {
                                     ),
                                   ),
                                   const Spacer(),
-                                  GestureDetector(
-                                    onTap: () async {
-                                      await tokenExpireWrapper(ref, () async {
-                                        void finish(bool success) {
-                                          displayToastWithContext(
-                                            success
-                                                ? TypeMsg.msg
-                                                : TypeMsg.error,
-                                            success
-                                                ? "Scan validé"
-                                                : "Erreur lors du scan",
-                                          );
-                                          Future.delayed(
-                                            const Duration(seconds: 2),
-                                            () {
-                                              scannerNotifier.reset();
-                                            },
-                                          );
-                                        }
-
-                                        try {
-                                          final value = await scannerNotifier
-                                              .consumeTicket(
-                                                sellerId,
-                                                data,
-                                                ticket.id,
-                                                tag,
-                                              );
-                                          finish(value);
-                                        } catch (error, stack) {
-                                          debugPrint(
-                                            'ScanDialog consumeTicket error: $error\n$stack',
-                                          );
-                                          if (error is AppException &&
-                                              error.type ==
-                                                  ErrorType.tokenExpire) {
-                                            rethrow;
-                                          }
-                                          finish(false);
-                                        }
-                                      });
-                                    },
-                                    child: const SizedBox(
-                                      width: 100,
-                                      child: AddEditButtonLayout(
+                                  SizedBox(
+                                    width: 100,
+                                    child: WaitingButton(
+                                      builder: (child) => AddEditButtonLayout(
                                         color: Colors.green,
-                                        child: Text(
-                                          "Valider",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                          ),
+                                        child: child,
+                                      ),
+                                      onTap: () async {
+                                        await tokenExpireWrapper(ref, () async {
+                                          void finish(bool success) {
+                                            displayToastWithContext(
+                                              success
+                                                  ? TypeMsg.msg
+                                                  : TypeMsg.error,
+                                              success
+                                                  ? "Scan validé"
+                                                  : "Erreur lors du scan",
+                                            );
+                                            if (success) {
+                                              scannerNotifier.reset();
+                                            } else {
+                                              Future.delayed(
+                                                const Duration(seconds: 2),
+                                                () {
+                                                  scannerNotifier.reset();
+                                                },
+                                              );
+                                            }
+                                          }
+
+                                          try {
+                                            final value = await scannerNotifier
+                                                .consumeTicket(
+                                                  sellerId,
+                                                  data,
+                                                  ticket.id,
+                                                  tag,
+                                                );
+                                            finish(value);
+                                          } catch (error, stack) {
+                                            debugPrint(
+                                              'ScanDialog consumeTicket error: $error\n$stack',
+                                            );
+                                            if (error is AppException &&
+                                                error.type ==
+                                                    ErrorType.tokenExpire) {
+                                              rethrow;
+                                            }
+                                            finish(false);
+                                          }
+                                        });
+                                      },
+                                      child: const Text(
+                                        "Valider",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
                                         ),
                                       ),
                                     ),
