@@ -1,16 +1,3 @@
-// class TemplateBase(BaseModel):
-//     documenso_id: int
-//     name: str
-//     recipient_id: int
-//     team_id: UUID
-
-// class Template(TemplateBase):
-//     id: UUID
-//     deleted: bool
-//     document_directory_id: str | None = None
-//     created_at: datetime
-//     updated_at: datetime
-
 import 'package:titan/tools/functions.dart';
 
 class DocumentTemplate {

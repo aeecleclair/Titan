@@ -1,16 +1,3 @@
-// class TeamBase(BaseModel):
-//     group_id: str
-//     name: str
-//     api_key: str
-
-// class Team(TeamBase):
-//     id: UUID
-//     team_id: int
-
-// class TeamComplete(Team):
-//     templates: list["TemplateWithStatistics"]
-//     group: CoreGroup
-
 import 'package:titan/admin/class/document_template.dart';
 import 'package:titan/admin/class/simple_group.dart';
 
