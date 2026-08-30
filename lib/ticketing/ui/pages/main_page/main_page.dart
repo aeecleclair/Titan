@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:titan/advert/providers/announcer_provider.dart';
 import 'package:titan/ticketing/providers/category_list_provider.dart';
+import 'package:titan/ticketing/providers/category_provider.dart';
 import 'package:titan/ticketing/providers/session_list_provider.dart';
 import 'package:titan/ticketing/providers/session_provider.dart';
 import 'package:titan/booking/providers/is_admin_provider.dart';
@@ -22,9 +23,8 @@ import 'package:titan/ticketing/providers/event_provider.dart';
 import 'package:titan/ticketing/ui/pages/main_page/main_page.dart';
 import 'package:titan/ticketing/ui/components/announcer_bar.dart';
 import 'package:titan/ticketing/tools/constants.dart';
+import 'package:titan/ticketing/ui/components/custom_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-
-import '../../components/custom_button.dart';
 
 class TicketingMainPage extends HookConsumerWidget {
   const TicketingMainPage({super.key});
@@ -39,14 +39,17 @@ class TicketingMainPage extends HookConsumerWidget {
     final eventList = ref.watch(eventListProvider);
     final eventListNotifier = ref.watch(eventListProvider.notifier);
 
-    final categoryList = ref.watch(categoryListProvider);
-    final categoryListNotifier = ref.watch(categoryListProvider.notifier);
-
     final session = ref.watch(sessionProvider);
     final sessionNotifier = ref.watch(sessionProvider.notifier);
 
     final sessionList = ref.watch(sessionListProvider);
     final sessionListNotifier = ref.watch(sessionListProvider.notifier);
+
+    final category = ref.watch(categoryProvider);
+    final categoryNotifier = ref.watch(categoryProvider.notifier);
+
+    final categoryList = ref.watch(categoryListProvider);
+    final categoryListNotifier = ref.watch(categoryListProvider.notifier);
 
     final selectedAnnouncer = ref.watch(announcerProvider);
     final selectedAnnouncerNotifier = ref.watch(announcerProvider.notifier);
@@ -64,8 +67,6 @@ class TicketingMainPage extends HookConsumerWidget {
     final showCategories = useState(false);
     final selectedSession = useState('');
 
-    double width = 300;
-    double height = 300;
     double imageHeight = 175;
     double maxHeight = MediaQuery.of(context).size.height - 344;
 
@@ -186,8 +187,12 @@ class TicketingMainPage extends HookConsumerWidget {
                       children: [
                         Row(
                           children: [
-                            if (showCategories.value)
-                              IconButton(
+                            Visibility(
+                              visible: showCategories.value,
+                              maintainSize: true,
+                              maintainAnimation: true,
+                              maintainState: true,
+                              child: IconButton(
                                 icon: const HeroIcon(
                                   HeroIcons.arrowLeft,
                                   color: Colors.black,
@@ -196,9 +201,8 @@ class TicketingMainPage extends HookConsumerWidget {
                                 onPressed: () {
                                   showCategories.value = false;
                                 },
-                              )
-                            else
-                              SizedBox(width: 40),
+                              ),
+                            ),
                             Text(
                               showCategories.value
                                   ? "Liste des catégories"
@@ -260,9 +264,7 @@ class TicketingMainPage extends HookConsumerWidget {
                                   children: categories.map((category) {
                                     return CategoryCard(
                                       onTap: () {
-                                        print(
-                                          "Category tapped: ${category.name}",
-                                        );
+                                        categoryNotifier.setCategory(category);
                                         QR.to(
                                           TicketingRouter.root +
                                               TicketingRouter.form,
@@ -307,9 +309,6 @@ class TicketingMainPage extends HookConsumerWidget {
                                       onTap: () {
                                         sessionNotifier.setSession(session);
                                         showCategories.value = true;
-                                        print(
-                                          "Session tapped: ${session.name}",
-                                        );
                                         categoryListNotifier.loadCategories(
                                           session.id,
                                         );
