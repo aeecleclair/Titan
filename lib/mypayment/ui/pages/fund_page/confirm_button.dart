@@ -87,14 +87,14 @@ class ConfirmFundButton extends ConsumerWidget {
         if (!minValidFundAmount) {
           displayToastWithContext(
             TypeMsg.error,
-            "Veuillez entrer un montant supérieur à 1€",
+            "Veuillez entrer un montant supérieur à 1ʍ",
           );
           return;
         }
         if (!maxValidFundAmount) {
           displayToastWithContext(
             TypeMsg.error,
-            "Le montant maximum de votre portefeuille est de ${maxBalanceAmount.toStringAsFixed(2)}€",
+            "Le montant maximum de votre portefeuille est de ${maxBalanceAmount.toStringAsFixed(2)}ʍ",
           );
           return;
         }
