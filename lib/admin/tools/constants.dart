@@ -34,10 +34,17 @@ class AdminTextConstants {
   static const String deleteSchool1 = "Supprimer l'école : ";
   static const String deleteSchool2 =
       " ?"; //En deux fois pour ajouter l'école après ("Supprimer l'école : {ecole} ?")
+  static const String deleteStructure = "Supprimer la structure ?";
   static const String deletedSchool = "École supprimée";
+  static const String deletedStructure = "Structure supprimée avec succès";
   static const String deleting = "Suppression";
+  static const String deletingDescription =
+      "Attention, cette action est irréversible";
   static const String deletingError = "Erreur lors de la suppression";
+  static const String deletingStructureError =
+      "Erreur lors de la suppression de la structure";
   static const String description = "Description";
+
   static const String eclSchool = "Centrale Lyon";
   static const String edit = "Modifier";
   static const String editStructure = "Modifier la structure";
@@ -67,14 +74,31 @@ class AdminTextConstants {
   static const String modifyModuleVisibility = "Permissions";
   static const String myPayment = "MyECLPay";
   static const String name = "Nom";
+  static const String noDocumentTeamAvailable =
+      "Aucune équipe de documents correspondante au groupe manager";
   static const String noManager = "Aucun manager n'est sélectionné";
   static const String noMember = "Aucun membre";
   static const String noMoreLoaner = "Aucun prêteur n'est disponible";
   static const String noSchool = "Sans école";
+  static const String noTemplateAvailable =
+      "Aucun document d'adhésion disponible";
   static const String permissions = "Permissions";
   static const String removeGroupMember1 = "Supprimer ";
   static const String removeGroupMember2 =
       " du groupe ?"; //En deux fois pour ajouter le surnom après ("Supprimer {surnom} du groupe")
+  static const String renewDocuments = "Renouveler les documents";
+  static const String renewedDocuments =
+      "Le document de l'adhésion a été renouvelé avec succès";
+  static const String renewingDocumentConfirmation =
+      "Êtes-vous sûr de vouloir renouveler le document de cette adhésion ?\nCette opération redemandera une signature à l'utilisateur et rendra l'adhésion inactive en attendant la signature.";
+  static const String renewingDocumentsConfirmation1 =
+      "Êtes-vous sûr de vouloir renouveler les documents de cette adhésion pour les adhérents encore actifs le ";
+  static const String renewingDocumentsConfirmation2 =
+      " ?\nCette opération redemandera une signature aux utilisateurs et rendra leur adhésion inactive en attendant la signature.";
+  static const String renewingDocumentTitle = "Renouvellement du document";
+  static const String renewingDocumentsTitle = "Renouvellement des documents";
+  static const String renewingError =
+      "Erreur lors du renouvellement du document de l'adhésion";
   static const String research = "Recherche";
   static const String schools = "Écoles";
   static const String structures = "Structures";
@@ -119,13 +143,7 @@ class AdminTextConstants {
       "Erreur lors de la définition comme titulaire du compte bancaire";
   static const String setAsBankAccountHolder =
       "Définir comme titulaire du compte bancaire";
-  static const String deletingDescription =
-      "Attention, cette action est irréversible";
-  static const String deletedStructure = "Structure supprimée avec succès";
-  static const String deletingStructureError =
-      "Erreur lors de la suppression de la structure";
-
-  static const String deleteStructure = "Supprimer la structure ?";
+  static const String template = "Document d'adhésion";
 }
 
 enum SchoolIdConstant {

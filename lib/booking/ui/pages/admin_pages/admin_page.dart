@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/providers/group_id_provider.dart';
+import 'package:titan/admin/providers/groups/group_id_provider.dart';
 import 'package:titan/booking/class/manager.dart';
 import 'package:titan/booking/providers/is_admin_provider.dart';
 import 'package:titan/service/class/room.dart';

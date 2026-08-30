@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/providers/account_types_list_provider.dart';
-import 'package:titan/admin/providers/group_list_provider.dart';
-import 'package:titan/admin/providers/permission_name_list_provider.dart';
-import 'package:titan/admin/providers/permissions_list_provider.dart';
+import 'package:titan/admin/providers/permissions/account_types_list_provider.dart';
+import 'package:titan/admin/providers/groups/group_list_provider.dart';
+import 'package:titan/admin/providers/permissions/permission_name_list_provider.dart';
+import 'package:titan/admin/providers/permissions/permissions_list_provider.dart';
 import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/pages/permissions/module_expansion_panel.dart';

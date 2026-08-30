@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:titan/admin/class/permissions.dart';
-import 'package:titan/admin/providers/permission_name_list_provider.dart';
+import 'package:titan/admin/providers/permissions/permission_name_list_provider.dart';
 import 'package:titan/admin/repositories/permission_repository.dart';
 import 'package:titan/auth/providers/openid_provider.dart';
 import 'package:titan/tools/providers/list_notifier.dart';

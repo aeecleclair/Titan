@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/providers/group_list_provider.dart';
+import 'package:titan/admin/providers/groups/group_list_provider.dart';
 import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/loan/class/loaner.dart';
