@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/providers/school_list_provider.dart';
-import 'package:titan/admin/providers/school_provider.dart';
+import 'package:titan/admin/providers/schools/school_list_provider.dart';
+import 'package:titan/admin/providers/schools/school_provider.dart';
 import 'package:titan/admin/router.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/components/item_card_ui.dart';

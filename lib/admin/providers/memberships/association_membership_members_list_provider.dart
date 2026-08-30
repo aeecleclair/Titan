@@ -49,6 +49,8 @@ class AssociationMembershipMembersNotifier
         userId: userAssociationMembership.userId,
         startDate: userAssociationMembership.startDate,
         endDate: userAssociationMembership.endDate,
+        documentId: userAssociationMembership.documentId,
+        documentStatus: userAssociationMembership.documentStatus,
         user: user,
       ),
     );

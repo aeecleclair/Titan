@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/school.dart';
-import 'package:titan/admin/providers/school_list_provider.dart';
+import 'package:titan/admin/providers/schools/school_list_provider.dart';
 import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/components/admin_button.dart';

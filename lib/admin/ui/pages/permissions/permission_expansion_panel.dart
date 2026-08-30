@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/account_type.dart';
 import 'package:titan/admin/class/permissions.dart';
 import 'package:titan/admin/class/simple_group.dart';
-import 'package:titan/admin/providers/permissions_list_provider.dart';
+import 'package:titan/admin/providers/permissions/permissions_list_provider.dart';
 import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/tools/function.dart';
 import 'package:titan/admin/ui/pages/permissions/permission_row.dart';

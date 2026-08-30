@@ -3,8 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/user_association_membership.dart';
 import 'package:titan/admin/class/user_association_membership_base.dart';
-import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
-import 'package:titan/admin/providers/user_association_membership_provider.dart';
+import 'package:titan/admin/providers/memberships/association_membership_members_list_provider.dart';
+import 'package:titan/admin/providers/memberships/user_association_membership_provider.dart';
 import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/pages/memberships/add_edit_user_membership_page/search_result.dart';
@@ -36,6 +36,11 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
     );
     final end = useTextEditingController(
       text: isEdit ? processDate(membership.endDate) : "",
+    );
+    final documentStatus = useTextEditingController(
+      text: isEdit && membership.documentStatus != null
+          ? membership.documentStatus.toString().toLowerCase()
+          : "",
     );
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -100,6 +105,26 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                   lastDate: DateTime(2100),
                 ),
               ),
+              if (isEdit && membership.documentId != null) ...[
+                const SizedBox(height: 50),
+                DropdownButtonFormField<String>(
+                  initialValue: documentStatus.text,
+                  onChanged: (String? newValue) {
+                    documentStatus.text = newValue!;
+                  },
+                  items: DocumentStatus.values
+                      .map(
+                        (status) => DropdownMenuItem<String>(
+                          value: status.name,
+                          child: Text(status.name.toUpperCase()),
+                        ),
+                      )
+                      .toList(),
+                  decoration: const InputDecoration(
+                    hintText: AdminTextConstants.group,
+                  ),
+                ),
+              ],
               const SizedBox(height: 50),
               WaitingButton(
                 builder: (child) => AddEditButtonLayout(
@@ -153,6 +178,13 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                               endDate: DateTime.parse(
                                 processDateBack(end.text),
                               ),
+                              documentStatus: documentStatus.text.isEmpty
+                                  ? null
+                                  : DocumentStatus.values.firstWhere(
+                                      (status) =>
+                                          status.name ==
+                                          documentStatus.text.toLowerCase(),
+                                    ),
                             ),
                           );
                       if (value) {
@@ -176,6 +208,8 @@ class AddEditUserMembershipPage extends HookConsumerWidget {
                         userId: membership.user.id,
                         startDate: DateTime.parse(processDateBack(start.text)),
                         endDate: DateTime.parse(processDateBack(end.text)),
+                        documentId: null,
+                        documentStatus: null,
                       );
                       final value = await associationMembershipMembersNotifier
                           .addMember(membershipAdd, membership.user);

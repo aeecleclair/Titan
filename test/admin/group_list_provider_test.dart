@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:titan/admin/class/account_type.dart';
 import 'package:titan/admin/class/simple_group.dart';
-import 'package:titan/admin/providers/group_list_provider.dart';
+import 'package:titan/admin/providers/groups/group_list_provider.dart';
 import 'package:titan/admin/repositories/group_repository.dart';
 import 'package:titan/user/class/user.dart';
 

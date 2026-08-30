@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/association_membership_simple.dart';
-import 'package:titan/admin/providers/all_groups_list_provider.dart';
-import 'package:titan/admin/providers/association_membership_list_provider.dart';
-import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
-import 'package:titan/admin/providers/association_membership_provider.dart';
+import 'package:titan/admin/providers/groups/all_groups_list_provider.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/admin/providers/memberships/association_membership_list_provider.dart';
+import 'package:titan/admin/providers/memberships/association_membership_members_list_provider.dart';
+import 'package:titan/admin/providers/memberships/association_membership_provider.dart';
 import 'package:titan/admin/router.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/components/item_card_ui.dart';
@@ -19,6 +20,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/user/providers/user_provider.dart';
 
 class AssociationMembershipsPage extends HookConsumerWidget {
   const AssociationMembershipsPage({super.key});
@@ -38,6 +40,8 @@ class AssociationMembershipsPage extends HookConsumerWidget {
       associationMembershipMembersProvider.notifier,
     );
     final groups = ref.watch(allGroupList);
+    final me = ref.watch(userProvider);
+    final isAdmin = ref.watch(isAdminProvider);
 
     final nameController = TextEditingController();
     final groupIdController = TextEditingController();
@@ -134,6 +138,12 @@ class AssociationMembershipsPage extends HookConsumerWidget {
                           ...g.map(
                             (associationMembership) => AssociationMembershipUi(
                               associationMembership: associationMembership,
+                              canEdit: me.groups.any(
+                                (group) =>
+                                    group.id ==
+                                    associationMembership.managerGroupId,
+                              ),
+                              isAdmin: isAdmin,
                               onEdit: () {
                                 associationMembershipMembersNotifier
                                     .loadAssociationMembershipMembers(

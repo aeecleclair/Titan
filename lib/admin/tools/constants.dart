@@ -34,10 +34,17 @@ class AdminTextConstants {
   static const String deleteSchool1 = "Supprimer l'école : ";
   static const String deleteSchool2 =
       " ?"; //En deux fois pour ajouter l'école après ("Supprimer l'école : {ecole} ?")
+  static const String deleteStructure = "Supprimer la structure ?";
   static const String deletedSchool = "École supprimée";
+  static const String deletedStructure = "Structure supprimée avec succès";
   static const String deleting = "Suppression";
+  static const String deletingDescription =
+      "Attention, cette action est irréversible";
   static const String deletingError = "Erreur lors de la suppression";
+  static const String deletingStructureError =
+      "Erreur lors de la suppression de la structure";
   static const String description = "Description";
+
   static const String eclSchool = "Centrale Lyon";
   static const String edit = "Modifier";
   static const String editStructure = "Modifier la structure";
@@ -119,13 +126,7 @@ class AdminTextConstants {
       "Erreur lors de la définition comme titulaire du compte bancaire";
   static const String setAsBankAccountHolder =
       "Définir comme titulaire du compte bancaire";
-  static const String deletingDescription =
-      "Attention, cette action est irréversible";
-  static const String deletedStructure = "Structure supprimée avec succès";
-  static const String deletingStructureError =
-      "Erreur lors de la suppression de la structure";
-
-  static const String deleteStructure = "Supprimer la structure ?";
+  static const String templateId = "Identifiant du modèle";
 }
 
 enum SchoolIdConstant {

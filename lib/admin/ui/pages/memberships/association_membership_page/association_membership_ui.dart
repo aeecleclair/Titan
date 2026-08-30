@@ -9,6 +9,8 @@ import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class AssociationMembershipUi extends HookConsumerWidget {
   final AssociationMembership associationMembership;
+  final bool canEdit;
+  final bool isAdmin;
   final void Function() onEdit;
   final Future Function() onDelete;
   const AssociationMembershipUi({
@@ -16,6 +18,8 @@ class AssociationMembershipUi extends HookConsumerWidget {
     required this.associationMembership,
     required this.onEdit,
     required this.onDelete,
+    required this.canEdit,
+    required this.isAdmin,
   });
 
   @override
@@ -33,29 +37,33 @@ class AssociationMembershipUi extends HookConsumerWidget {
             ),
           ),
         ),
-        const SizedBox(width: 10),
-        Row(
-          children: [
-            GestureDetector(
-              onTap: onEdit,
-              child: AssociationMembershipButton(
-                gradient1: Colors.grey.shade800,
-                gradient2: Colors.grey.shade900,
-                child: const HeroIcon(HeroIcons.eye, color: Colors.white),
+        if (canEdit || isAdmin) ...[
+          const SizedBox(width: 10),
+          Row(
+            children: [
+              GestureDetector(
+                onTap: onEdit,
+                child: AssociationMembershipButton(
+                  gradient1: Colors.grey.shade800,
+                  gradient2: Colors.grey.shade900,
+                  child: const HeroIcon(HeroIcons.eye, color: Colors.white),
+                ),
               ),
-            ),
-            const SizedBox(width: 10),
-            WaitingButton(
-              onTap: onDelete,
-              builder: (child) => AssociationMembershipButton(
-                gradient1: ColorConstants.gradient1,
-                gradient2: ColorConstants.gradient2,
-                child: child,
-              ),
-              child: const HeroIcon(HeroIcons.xMark, color: Colors.white),
-            ),
-          ],
-        ),
+              if (isAdmin) ...[
+                const SizedBox(width: 10),
+                WaitingButton(
+                  onTap: onDelete,
+                  builder: (child) => AssociationMembershipButton(
+                    gradient1: ColorConstants.gradient1,
+                    gradient2: ColorConstants.gradient2,
+                    child: child,
+                  ),
+                  child: const HeroIcon(HeroIcons.xMark, color: Colors.white),
+                ),
+              ],
+            ],
+          ),
+        ],
       ],
     );
   }

@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/permissions.dart';
 import 'package:titan/admin/class/simple_group.dart';
-import 'package:titan/admin/providers/permissions_list_provider.dart';
+import 'package:titan/admin/providers/permissions/permissions_list_provider.dart';
 import 'package:titan/cinema/providers/is_cinema_admin.dart';
 import 'package:titan/cinema/tools/constants.dart';
 import 'package:titan/user/class/user.dart';

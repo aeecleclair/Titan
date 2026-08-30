@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/user_association_membership.dart';
-import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
-import 'package:titan/admin/providers/user_association_membership_provider.dart';
+import 'package:titan/admin/class/user_association_membership_base.dart';
+import 'package:titan/admin/providers/memberships/association_membership_members_list_provider.dart';
+import 'package:titan/admin/providers/memberships/user_association_membership_provider.dart';
 import 'package:titan/admin/router.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/delete_button.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/edition_button.dart';
@@ -61,6 +63,24 @@ class MemberEditableCard extends HookConsumerWidget {
               ],
             ),
           ),
+          if (kIsWeb && associationMembership.documentStatus != null)
+            Expanded(
+              child: AutoSizeText(
+                associationMembership.documentStatus!.name.toUpperCase(),
+                minFontSize: 10,
+                maxFontSize: 15,
+                style: TextStyle(
+                  color:
+                      associationMembership.documentStatus ==
+                          DocumentStatus.approved
+                      ? Colors.green
+                      : associationMembership.documentStatus ==
+                            DocumentStatus.pending
+                      ? Colors.blue
+                      : Colors.red,
+                ),
+              ),
+            ),
           Expanded(
             child: Column(
               children: [
