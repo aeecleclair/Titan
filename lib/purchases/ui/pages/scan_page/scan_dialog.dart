@@ -44,7 +44,6 @@ class ScanDialog extends HookConsumerWidget {
     ref.listen<AsyncValue<Ticket>>(scannerProvider, (previous, next) {
       next.whenOrNull(
         error: (error, stack) {
-          debugPrint('ScanDialog scan error: $error\n$stack');
           displayToastWithContext(TypeMsg.error, error.toString());
           Future.delayed(const Duration(seconds: 2), () {
             scannerNotifier.reset();
@@ -263,10 +262,7 @@ class ScanDialog extends HookConsumerWidget {
                                                   tag,
                                                 );
                                             finish(value);
-                                          } catch (error, stack) {
-                                            debugPrint(
-                                              'ScanDialog consumeTicket error: $error\n$stack',
-                                            );
+                                          } catch (error) {
                                             if (error is AppException &&
                                                 error.type ==
                                                     ErrorType.tokenExpire) {
