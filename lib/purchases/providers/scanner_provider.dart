@@ -29,6 +29,20 @@ class ScannerNotifier extends SingleNotifier<Ticket> {
     state = AsyncValue.data(i);
   }
 
+  Future<bool> consumeTicket(
+    String sellerId,
+    Ticket ticket,
+    String generatorId,
+    String tag,
+  ) async {
+    return await scannerRepository.consumeTicket(
+      sellerId,
+      ticket,
+      generatorId,
+      tag,
+    );
+  }
+
   void reset() {
     state = const AsyncValue.loading();
   }

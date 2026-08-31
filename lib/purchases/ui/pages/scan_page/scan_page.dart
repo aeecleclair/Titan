@@ -119,67 +119,6 @@ class ScanPage extends HookConsumerWidget {
                 );
               },
             ),
-            // TextField(
-            //   onChanged: (value) async {
-            //     tagNotifier.setTag(value);
-            //   },
-            //   cursorColor: PurchasesColorConstants.textDark,
-            //   decoration: const InputDecoration(
-            //     isDense: true,
-            //     label: Text(
-            //       PurchasesTextConstants.tag,
-            //       style: TextStyle(
-            //         color: PurchasesColorConstants.textDark,
-            //       ),
-            //     ),
-            //     focusedBorder: UnderlineInputBorder(
-            //       borderSide: BorderSide(color: ColorConstants.gradient1),
-            //     ),
-            //   ),
-            // ),
-            // tag == ""
-            //     ? const Text(
-            //         PurchasesTextConstants.noTagGiven,
-            //         style: TextStyle(color: Colors.red),
-            //       )
-            //     : const SizedBox(),
-            // product.id == ""
-            //     ? const Text(PurchasesTextConstants.pleaseSelectProduct)
-            //     : Padding(
-            //         padding: const EdgeInsets.all(30),
-            //         child: SizedBox(
-            //           height: 300,
-            //           width: 300,
-            //           child: QRCodeScannerScreen(
-            //             product: product,
-            //             onScan: (secret) async {
-            //               await scannerNotifier.scanTicket(product.id, secret);
-            //               scanner.when(
-            //                 data: (data) {
-            //                   scannerNotifier.setScanner(
-            //                     data.copyWith(
-            //                       secret: secret,
-            //                     ),
-            //                   );
-            //                   QR.to(
-            //                     PurchasesRouter.root +
-            //                         PurchasesRouter.scan +
-            //                         PurchasesRouter.confirmation,
-            //                   );
-            //                 },
-            //                 error: (error, stack) {
-            //                   ScaffoldMessenger.of(context).showSnackBar(
-            //                     SnackBar(
-            //                       content: Text(error.toString()),
-            //                     ),
-            //                   );
-            //                 },
-            //                 loading: () {},
-            //               );
-            //             },
-            //           ),
-            //         ),
-            //       ),
           ],
         ),
       ),
