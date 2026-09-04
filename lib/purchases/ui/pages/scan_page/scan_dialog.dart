@@ -86,13 +86,6 @@ class ScanDialog extends HookConsumerWidget {
                 const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
-                    if (tag.trim().isEmpty) {
-                      displayToastWithContext(
-                        TypeMsg.error,
-                        "Veuillez renseigner un tag",
-                      );
-                      return;
-                    }
                     if (tag.contains(",")) {
                       displayToastWithContext(
                         TypeMsg.error,
@@ -259,7 +252,7 @@ class ScanDialog extends HookConsumerWidget {
                                                   sellerId,
                                                   data,
                                                   ticket.id,
-                                                  tag,
+                                                  tag.isEmpty ? "no tag" : tag,
                                                 );
                                             finish(value);
                                           } catch (error) {
