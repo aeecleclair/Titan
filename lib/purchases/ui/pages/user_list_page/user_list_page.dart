@@ -95,30 +95,32 @@ class UserListPage extends HookConsumerWidget {
             ),
             const SizedBox(height: 10),
             if (selectedTag.value != null)
-              AsyncChild(
-                value: scannedUsersList,
-                builder: (context, users) {
-                  if (users.isEmpty) {
-                    return const Text("Aucun utilisateur scanné");
-                  }
-                  return SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: users
-                          .map(
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: AsyncChild(
+                  value: scannedUsersList,
+                  builder: (context, users) {
+                    if (users.isEmpty) {
+                      return const Text("Aucun utilisateur scanné");
+                    }
+                    return SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Nombre de tickets scannés : ${users.length}"),
+                          Divider(),
+                          ...users.map(
                             (user) => Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 5,
-                                horizontal: 30,
-                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 5),
                               child: Text(user.getName()),
                             ),
-                          )
-                          .toList(),
-                    ),
-                  );
-                },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
           ],
         ),

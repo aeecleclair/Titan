@@ -45,7 +45,7 @@ class TicketCard extends HookConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      ticket.name,
+                      "${ticket.name} - Scans : ${ticket.scanCount}",
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

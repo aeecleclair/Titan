@@ -45,6 +45,7 @@ class ScanPage extends HookConsumerWidget {
             AsyncChild(
               value: sellers,
               builder: (context, sellers) {
+                sellers.sort((a, b) => a.name.compareTo(b.name));
                 return Column(
                   children: [
                     HorizontalListView.builder(
