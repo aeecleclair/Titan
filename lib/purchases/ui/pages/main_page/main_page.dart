@@ -70,25 +70,26 @@ class PurchasesMainPage extends HookConsumerWidget {
                         child: Text(PurchasesTextConstants.noTickets),
                       )
                     else
-                      ...ticketList.maybeWhen(
-                        data: (tickets) => tickets.map(
-                          (ticket) => TicketCard(
-                            ticket: ticket,
-                            onClicked: () async {
-                              await tokenExpireWrapper(ref, () async {
-                                ticketNotifier.setTicket(ticket);
-                                ticketNotifier.loadTicketSecret();
-                                QR.to(
-                                  PurchasesRouter.root + PurchasesRouter.ticket,
-                                );
-                              });
-                            },
+                      ...tickets
+                          .where(
+                            (ticket) =>
+                                ticket.expirationDate.isAfter(DateTime.now()),
+                          )
+                          .map(
+                            (ticket) => TicketCard(
+                              ticket: ticket,
+                              onClicked: () async {
+                                await tokenExpireWrapper(ref, () async {
+                                  ticketNotifier.setTicket(ticket);
+                                  ticketNotifier.loadTicketSecret();
+                                  QR.to(
+                                    PurchasesRouter.root +
+                                        PurchasesRouter.ticket,
+                                  );
+                                });
+                              },
+                            ),
                           ),
-                        ),
-                        orElse: () => [
-                          const Text(PurchasesTextConstants.ticketsError),
-                        ],
-                      ),
                   ],
                 );
               },
