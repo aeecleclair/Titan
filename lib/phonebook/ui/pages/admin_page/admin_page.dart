@@ -15,7 +15,6 @@ import 'package:titan/phonebook/ui/components/groupement_bar.dart';
 import 'package:titan/phonebook/ui/phonebook.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/association_research_bar.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/editable_association_card.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
@@ -98,13 +97,13 @@ class AdminPage extends HookConsumerWidget {
                             color:
                                 isPhonebookAdmin ||
                                     groupementAdminProviderList.isNotEmpty
-                                ? Colors.white
-                                : ColorConstants.deactivated2,
+                                ? Theme.of(context).colorScheme.surface
+                                : Theme.of(context).colorScheme.tertiary,
                             child: Center(
                               child: HeroIcon(
                                 HeroIcons.plus,
                                 size: 40,
-                                color: Colors.grey.shade500,
+                                color: Theme.of(context).colorScheme.tertiary,
                               ),
                             ),
                           ),

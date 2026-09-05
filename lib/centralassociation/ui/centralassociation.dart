@@ -10,19 +10,16 @@ class CentralassociationTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const TopBar(
-                title: CentralassociationTextConstants.centralassociation,
-                root: CentralassociationRouter.root,
-              ),
-              Expanded(child: child),
-            ],
-          ),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const TopBar(
+              title: CentralassociationTextConstants.centralassociation,
+              root: CentralassociationRouter.root,
+            ),
+            Expanded(child: child),
+          ],
         ),
       ),
     );

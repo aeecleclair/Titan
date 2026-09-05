@@ -5,6 +5,7 @@ import 'package:titan/amap/providers/information_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/amap.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,6 +15,7 @@ class PresentationPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final information = ref.watch(informationProvider);
+    final isDarkTheme = ref.watch(themeProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -37,10 +39,10 @@ class PresentationPage extends HookConsumerWidget {
                         fontWeight: FontWeight.w600,
                         foreground: Paint()
                           ..shader =
-                              const RadialGradient(
+                              RadialGradient(
                                 colors: [
-                                  AMAPColorConstants.greenGradient1,
-                                  AMAPColorConstants.textDark,
+                                  AMAPColors(isDarkTheme).greenGradientPrimary,
+                                  AMAPColors(isDarkTheme).textOnPrimary,
                                 ],
                                 center: Alignment.topLeft,
                                 radius: 10,
@@ -73,14 +75,17 @@ class PresentationPage extends HookConsumerWidget {
                             }
                           },
                       ),
-                      error: (Object error, StackTrace stackTrace) =>
-                          const TextSpan(
-                            text: AMAPTextConstants.loadingError,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                      loading: () => const TextSpan(
+                      error: (Object error, StackTrace stackTrace) => TextSpan(
+                        text: AMAPTextConstants.loadingError,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      ),
+                      loading: () => TextSpan(
                         text: AMAPTextConstants.loading,
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                       ),
                     ),
                     TextSpan(
@@ -90,10 +95,10 @@ class PresentationPage extends HookConsumerWidget {
                         fontWeight: FontWeight.w600,
                         foreground: Paint()
                           ..shader =
-                              const RadialGradient(
+                              RadialGradient(
                                 colors: [
-                                  AMAPColorConstants.greenGradient1,
-                                  AMAPColorConstants.textDark,
+                                  AMAPColors(isDarkTheme).greenGradientPrimary,
+                                  AMAPColors(isDarkTheme).textOnPrimary,
                                 ],
                                 center: Alignment.topLeft,
                                 radius: 10,
@@ -110,10 +115,10 @@ class PresentationPage extends HookConsumerWidget {
                 value: information,
                 builder: (context, info) => Text(
                   "${AMAPTextConstants.contact} : ${info.manager}	",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: AMAPColorConstants.textDark,
+                    color: AMAPColors(isDarkTheme).textOnPrimary,
                   ),
                 ),
               ),

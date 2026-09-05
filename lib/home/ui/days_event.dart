@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/event/class/event.dart';
 import 'package:titan/event/providers/event_provider.dart';
 import 'package:titan/home/router.dart';
-import 'package:titan/home/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
@@ -29,7 +28,7 @@ class DaysEvent extends HookConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
       child: Column(
         children: [
-          AlignLeftText(day, color: Colors.grey),
+          AlignLeftText(day, color: Theme.of(context).colorScheme.tertiary),
           const SizedBox(height: 10),
           ...events.map((event) {
             final start = DateTime(
@@ -47,18 +46,27 @@ class DaysEvent extends HookConsumerWidget {
               event.end.minute,
             );
             final textColor = start.compareTo(now) <= 0
-                ? Colors.white
-                : Colors.black;
+                ? Theme.of(context).colorScheme.onSecondary
+                : Theme.of(context).colorScheme.onPrimary;
             return CardLayout(
               id: event.id,
               margin: const EdgeInsets.all(10),
               height: 135,
               width: double.infinity,
               colors: end.compareTo(now) < 0
-                  ? [Colors.grey.shade700, Colors.grey.shade800]
+                  ? [
+                      Theme.of(context).colorScheme.tertiary,
+                      Theme.of(context).colorScheme.secondaryContainer,
+                    ]
                   : start.compareTo(now) <= 0
-                  ? [HomeColorConstants.gradient1, HomeColorConstants.gradient2]
-                  : [Colors.white, Colors.white],
+                  ? [
+                      Theme.of(context).colorScheme.primaryContainer,
+                      Theme.of(context).colorScheme.primaryFixed,
+                    ]
+                  : [
+                      Theme.of(context).colorScheme.primary,
+                      Theme.of(context).colorScheme.secondaryFixed,
+                    ],
               padding: const EdgeInsets.symmetric(
                 horizontal: 15.0,
                 vertical: 12,
