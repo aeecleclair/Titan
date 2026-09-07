@@ -31,6 +31,7 @@ class LoanMainPage extends HookConsumerWidget {
     ref.watch(itemListProvider);
     ref.watch(loanerLoanListProvider);
     List<Loan> onGoingLoan = [];
+    int lateLoanCount = 0;
     List<Loan> returnedLoan = [];
 
     loanList.maybeWhen(
@@ -41,6 +42,9 @@ class LoanMainPage extends HookConsumerWidget {
               returnedLoan.add(l);
             } else {
               onGoingLoan.add(l);
+              if (l.end.isBefore(DateTime.now())) {
+                lateLoanCount++;
+              }
             }
           }
           onGoingLoan.sort((a, b) => b.end.compareTo(a.end));
@@ -64,7 +68,7 @@ class LoanMainPage extends HookConsumerWidget {
                     ? Column(
                         children: [
                           AlignLeftText(
-                            '${onGoingLoan.length} ${LoanTextConstants.loan.toLowerCase()}${onGoingLoan.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
+                            '${onGoingLoan.length} ${LoanTextConstants.loan.toLowerCase()}${onGoingLoan.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}. $lateLoanCount ${LoanTextConstants.loan.toLowerCase()}${lateLoanCount > 1 ? 's' : ''} ${LoanTextConstants.late.toLowerCase()}',
                             padding: const EdgeInsets.symmetric(
                               horizontal: 30.0,
                             ),
