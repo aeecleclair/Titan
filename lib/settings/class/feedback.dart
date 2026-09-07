@@ -21,18 +21,18 @@ class Feedback {
     : id = json['id'],
       content = json['content'],
       userId = json['user_id'],
-      userName = json['userName'],
+      userName = json['user_name'],
       creation = DateTime.parse(json['creation']),
-      isAddressed = json['isAddressed'];
+      isAddressed = json['is_addressed'];
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['id'] = id;
     data['content'] = content;
     data['user_id'] = userId;
-    data['userName'] = userName;
+    data['user_name'] = userName;
     data['creation'] = processDateToAPI(creation);
-    data['isAddressed'] = isAddressed;
+    data['is_addressed'] = isAddressed;
     return data;
   }
 

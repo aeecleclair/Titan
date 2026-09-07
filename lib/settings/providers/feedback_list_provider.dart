@@ -9,11 +9,6 @@ class FeedbackListNotifier extends ListNotifier<Feedback> {
   FeedbackListNotifier({required this.feedbackRepository})
     : super(const AsyncValue.loading());
 
-  Future<bool> addFeedback(Feedback feedback) async {
-    var result = await add(feedbackRepository.createFeedback, feedback);
-    return result;
-  }
-
   Future<AsyncValue<List<Feedback>>> getFeedbackList() async {
     return await loadList(feedbackRepository.getFeedbackList);
   }

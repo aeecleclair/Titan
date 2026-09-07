@@ -36,6 +36,12 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
         }
       },
       error: (error, s) {
+        print("(single)\n");
+        print(f);
+        print(t);
+        print(error);
+        print(s);
+        print("\n");
         if (error is AppException && error.type == ErrorType.tokenExpire) {
           throw error;
         } else {
@@ -44,6 +50,7 @@ abstract class SingleNotifier<T> extends StateNotifier<AsyncValue<T>> {
         }
       },
       loading: () {
+        print("loading............");
         state = const AsyncValue.error(
           "Cannot add while loading",
           StackTrace.empty,

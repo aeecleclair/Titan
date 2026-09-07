@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/settings/class/feedback.dart';
 import 'package:titan/settings/providers/feedback_list_provider.dart';
+import 'package:titan/settings/providers/feedback_provider.dart';
 import 'package:titan/settings/router.dart';
 import 'package:titan/settings/tools/constants.dart';
 import 'package:titan/settings/ui/settings.dart';
@@ -21,7 +22,7 @@ class FeedbackPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final feedbackListNotifier = ref.watch(feedbackListProvider.notifier);
+    final feedbackNotifier = ref.watch(feedbackProvider.notifier);
     //final isAdmin = ref.watch(isLoanAdminProvider);
     final isAdmin = true; //for testing only
 
@@ -78,7 +79,7 @@ class FeedbackPage extends HookConsumerWidget {
                     ),
                     onTap: () async {
                       await tokenExpireWrapper(ref, () async {
-                        final value = await feedbackListNotifier.addFeedback(
+                        final value = await feedbackNotifier.addFeedback(
                           Feedback.empty().copyWith(
                             content: feedbackController.value.text,
                           ),
@@ -98,7 +99,7 @@ class FeedbackPage extends HookConsumerWidget {
                             SettingsTextConstants.feedbackSendingError,
                           );
                         }
-                        QR.back();
+                        //QR.back();
                       });
                     },
                     child: const Center(

@@ -10,6 +10,7 @@ class FeedbackRepository extends Repository {
   final ext = "feedback/";
 
   Future<Feedback> createFeedback(Feedback feedback) async {
+    print("feedbake repo");
     return Feedback.fromJson(
       await create(feedback.toJson(), suffix: "feedbacks"),
     );
