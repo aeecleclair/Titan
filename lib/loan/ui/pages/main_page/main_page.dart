@@ -68,7 +68,7 @@ class LoanMainPage extends HookConsumerWidget {
                     ? Column(
                         children: [
                           AlignLeftText(
-                            '${onGoingLoan.length} ${LoanTextConstants.loan.toLowerCase()}${onGoingLoan.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}. $lateLoanCount ${LoanTextConstants.loan.toLowerCase()}${lateLoanCount > 1 ? 's' : ''} ${LoanTextConstants.late.toLowerCase()}',
+                            '${onGoingLoan.length} ${LoanTextConstants.loan.toLowerCase()}${onGoingLoan.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}, ${LoanTextConstants.including.toLowerCase()} $lateLoanCount ${LoanTextConstants.late.toLowerCase()}',
                             padding: const EdgeInsets.symmetric(
                               horizontal: 30.0,
                             ),
