@@ -72,7 +72,7 @@ class OnGoingLoan extends HookConsumerWidget {
           children: [
             StyledSearchBar(
               label:
-                  '${data.isEmpty ? LoanTextConstants.none : data.length} ${LoanTextConstants.loan.toLowerCase()}${data.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}, ${LoanTextConstants.including.toLowerCase()} $lateLoanCount ${LoanTextConstants.late.toLowerCase()}',
+                  '${data.isEmpty ? LoanTextConstants.none : data.length} ${LoanTextConstants.loan.toLowerCase()}${data.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}, ${LoanTextConstants.including} $lateLoanCount ${LoanTextConstants.late}',
               onChanged: (value) async {
                 if (value.isNotEmpty) {
                   adminLoanListNotifier.setTData(
