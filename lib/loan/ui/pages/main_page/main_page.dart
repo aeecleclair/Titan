@@ -42,11 +42,10 @@ class LoanMainPage extends HookConsumerWidget {
               returnedLoan.add(l);
             } else {
               onGoingLoan.add(l);
-              if (l.end.isBefore(DateTime.now())) {
-                lateLoanCount++;
-              }
             }
           }
+          final now = DateTime.now();
+          lateLoanCount = onGoingLoan.where((l) => l.end.isBefore(now)).length;
           onGoingLoan.sort((a, b) => b.end.compareTo(a.end));
           returnedLoan.sort((a, b) => b.end.compareTo(a.end));
         }

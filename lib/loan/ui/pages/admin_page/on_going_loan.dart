@@ -62,11 +62,8 @@ class OnGoingLoan extends HookConsumerWidget {
         int lateLoanCount = 0;
         if (data.isNotEmpty) {
           data.sort((a, b) => a.end.compareTo(b.end));
-          for (Loan l in data) {
-            if (l.end.isBefore(DateTime.now())) {
-              lateLoanCount++;
-            }
-          }
+          final now = DateTime.now();
+          lateLoanCount = data.where((l) => l.end.isBefore(now)).length;
         }
         return Column(
           children: [
