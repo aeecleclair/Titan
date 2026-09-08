@@ -59,14 +59,17 @@ class OnGoingLoan extends HookConsumerWidget {
     return AsyncChild(
       value: adminLoanList[loaner]!,
       builder: (context, data) {
+        int lateLoanCount = 0;
         if (data.isNotEmpty) {
           data.sort((a, b) => a.end.compareTo(b.end));
+          final now = DateTime.now();
+          lateLoanCount = data.where((l) => l.end.isBefore(now)).length;
         }
         return Column(
           children: [
             StyledSearchBar(
               label:
-                  '${data.isEmpty ? LoanTextConstants.none : data.length} ${LoanTextConstants.loan.toLowerCase()}${data.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}',
+                  '${data.isEmpty ? LoanTextConstants.none : data.length} ${LoanTextConstants.loan.toLowerCase()}${data.length > 1 ? 's' : ''} ${LoanTextConstants.onGoing.toLowerCase()}, ${LoanTextConstants.including} $lateLoanCount ${LoanTextConstants.lateLoan}',
               onChanged: (value) async {
                 if (value.isNotEmpty) {
                   adminLoanListNotifier.setTData(

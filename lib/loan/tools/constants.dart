@@ -78,6 +78,8 @@ class LoanTextConstants {
   static const String note = "Note";
   static const String noValue = "Veuillez entrer une valeur";
   static const String onGoing = "En cours";
+  static const String including = "dont";
+  static const String lateLoan = "en retard";
   static const String onGoingLoan = "Prêt en cours";
   static const String others = "autres";
   static const String paidCaution = "Caution payée";
