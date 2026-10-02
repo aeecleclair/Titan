@@ -39,7 +39,7 @@ jobs:
     needs: [extract-version]
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       # Remove ^ to fix flutter version parsing
       - name: Fix Flutter Version in Pubspec
