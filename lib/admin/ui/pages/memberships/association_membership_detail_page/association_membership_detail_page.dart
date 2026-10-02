@@ -1,16 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/user_association_membership.dart';
-import 'package:titan/admin/providers/association_membership_filtered_members_provider.dart';
-import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
-import 'package:titan/admin/providers/association_membership_provider.dart';
-import 'package:titan/admin/providers/user_association_membership_provider.dart';
+import 'package:titan/admin/providers/memberships/association_membership_filtered_members_provider.dart';
+import 'package:titan/admin/providers/memberships/association_membership_members_list_provider.dart';
+import 'package:titan/admin/providers/memberships/association_membership_provider.dart';
+import 'package:titan/admin/providers/memberships/user_association_membership_provider.dart';
 import 'package:titan/admin/router.dart';
 import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/admin.dart';
 import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/association_membership_information_editor.dart';
 import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/association_membership_member_editable_card.dart';
+import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/documents_renewer.dart';
 import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/research_bar.dart';
 import 'package:titan/admin/ui/pages/memberships/association_membership_detail_page/search_filters.dart';
 import 'package:titan/tools/constants.dart';
@@ -39,7 +41,11 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
       child: Refresher(
         onRefresh: () async {
           await associationMembershipMemberListNotifier
-              .loadAssociationMembershipMembers(associationMembership.id);
+              .loadAssociationMembershipMembers(
+                associationMembership.id,
+                maximalStartDate: DateTime.now(),
+                minimalEndDate: DateTime.now(),
+              );
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -117,12 +123,16 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                 children: const [SearchFilters()],
               ),
               const SizedBox(height: 20),
+              if (kIsWeb && associationMembership.templateId != null) ...[
+                DocumentsRenewer(),
+                const SizedBox(height: 20),
+              ],
               ResearchBar(),
               const SizedBox(height: 10),
               associationMembershipFilteredList.isEmpty
                   ? const Text(AdminTextConstants.noMember)
                   : SizedBox(
-                      height: 400,
+                      height: 600,
                       child: ListView.builder(
                         itemCount: associationMembershipFilteredList.length,
                         itemBuilder: (context, index) {

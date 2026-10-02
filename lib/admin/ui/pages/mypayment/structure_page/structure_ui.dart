@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:titan/admin/providers/structure_manager_provider.dart';
-import 'package:titan/admin/providers/structure_provider.dart';
+import 'package:titan/admin/providers/mypayment/structure_manager_provider.dart';
+import 'package:titan/admin/providers/mypayment/structure_provider.dart';
 import 'package:titan/admin/router.dart';
 import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/components/item_card_ui.dart';

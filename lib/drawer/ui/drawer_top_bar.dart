@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/admin/providers/memberships/is_membership_admin.dart';
 import 'package:titan/admin/router.dart';
 import 'package:titan/auth/providers/is_connected_provider.dart';
 import 'package:titan/drawer/providers/animation_provider.dart';
@@ -31,6 +32,7 @@ class DrawerTopBar extends HookConsumerWidget {
     final profilePicture = ref.watch(profilePictureProvider);
     final hasScrolled = ref.watch(hasScrolledProvider.notifier);
     final isAdmin = ref.watch(isAdminProvider);
+    final isMembershipAdmin = ref.watch(isMembershipAdminProvider);
     final isConnected = ref.watch(isConnectedProvider);
     final animation = ref.watch(animationProvider);
     final emailPopupStateNotifier = ref.read(emailPopupStateProvider.notifier);
@@ -65,7 +67,7 @@ class DrawerTopBar extends HookConsumerWidget {
                 Container(width: 25),
                 GestureDetector(
                   onTap: () {
-                    if (isAdmin) {
+                    if (isAdmin || isMembershipAdmin) {
                       if (dropDownAnimation.isDismissed) {
                         dropDownAnimation.forward();
                       } else {
@@ -105,7 +107,7 @@ class DrawerTopBar extends HookConsumerWidget {
                                         : Image.memory(file).image,
                                   ),
                                 ),
-                                if (isAdmin)
+                                if (isAdmin || isMembershipAdmin)
                                   Positioned(
                                     bottom: 0,
                                     right: 0,
@@ -236,7 +238,7 @@ class DrawerTopBar extends HookConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    if (isAdmin)
+                    if (isAdmin || isMembershipAdmin)
                       Transform.translate(
                         offset: Offset(0, -15 * (1 - dropDownAnimation.value)),
                         child: GestureDetector(

@@ -1,16 +1,22 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/providers/all_groups_list_provider.dart';
-import 'package:titan/admin/providers/association_membership_list_provider.dart';
-import 'package:titan/admin/providers/association_membership_provider.dart';
+import 'package:titan/admin/class/document_team.dart';
+import 'package:titan/admin/providers/groups/all_groups_list_provider.dart';
+import 'package:titan/admin/providers/is_admin_provider.dart';
+import 'package:titan/admin/providers/memberships/association_membership_list_provider.dart';
+import 'package:titan/admin/providers/memberships/association_membership_provider.dart';
+import 'package:titan/admin/providers/memberships/document_team_list_provider.dart';
 import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
+import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/widgets/align_left_text.dart';
 
 class AssociationMembershipInformationEditor extends HookConsumerWidget {
   final scrollKey = GlobalKey();
@@ -27,6 +33,9 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
       associationMembershipProvider.notifier,
     );
     final name = useTextEditingController(text: associationMembership.name);
+    final templateId = useTextEditingController(
+      text: associationMembership.templateId ?? '',
+    );
     final groups = ref.watch(allGroupList);
     final groupIdController = useTextEditingController(
       text: associationMembership.managerGroupId,
@@ -34,6 +43,8 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
     final associationMembershipListNotifier = ref.watch(
       allAssociationMembershipListProvider.notifier,
     );
+    final documentTeams = ref.watch(documentTeamListProvider);
+    final isAdmin = ref.watch(isAdminProvider);
     final key = GlobalKey<FormState>();
 
     groups.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
@@ -44,71 +55,124 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
           key: key,
           child: Column(
             children: [
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      child: TextFormField(
-                        controller: name,
-                        cursorColor: ColorConstants.gradient1,
-                        decoration: InputDecoration(
-                          labelText: AdminTextConstants.name,
-                          labelStyle: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          suffixIcon: Container(
-                            padding: const EdgeInsets.all(10),
-                            child: const HeroIcon(HeroIcons.pencil),
-                          ),
-                          enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent),
-                          ),
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: ColorConstants.gradient1,
-                            ),
+              isAdmin
+                  ? TextFormField(
+                      controller: name,
+                      cursorColor: ColorConstants.gradient1,
+                      decoration: InputDecoration(
+                        labelText: AdminTextConstants.name,
+                        labelStyle: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        suffixIcon: Container(
+                          padding: const EdgeInsets.all(10),
+                          child: const HeroIcon(HeroIcons.pencil),
+                        ),
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.transparent),
+                        ),
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: ColorConstants.gradient1,
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return AdminTextConstants.emptyFieldError;
-                          }
-                          return null;
-                        },
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return AdminTextConstants.emptyFieldError;
+                        }
+                        return null;
+                      },
+                    )
+                  : AlignLeftText(
+                      associationMembership.name,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
+              const SizedBox(height: 10),
+              AlignLeftText(
+                AdminTextConstants.group,
+                fontWeight: FontWeight.bold,
               ),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  AdminTextConstants.group,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              DropdownButtonFormField<String>(
-                initialValue: groupIdController.text,
-                onChanged: (String? newValue) {
-                  groupIdController.text = newValue!;
-                },
-                items: groups
-                    .map(
-                      (group) => DropdownMenuItem<String>(
-                        value: group.id,
-                        child: Text(group.name),
+              isAdmin
+                  ? DropdownButtonFormField<String>(
+                      initialValue: groupIdController.text,
+                      onChanged: (String? newValue) {
+                        groupIdController.text = newValue!;
+                      },
+                      items: groups
+                          .map(
+                            (group) => DropdownMenuItem<String>(
+                              value: group.id,
+                              child: Text(group.name),
+                            ),
+                          )
+                          .toList(),
+                      decoration: const InputDecoration(
+                        hintText: AdminTextConstants.group,
                       ),
                     )
-                    .toList(),
-                decoration: const InputDecoration(
-                  hintText: AdminTextConstants.group,
-                ),
-              ),
+                  : AlignLeftText(
+                      groups
+                          .firstWhere(
+                            (group) =>
+                                group.id ==
+                                associationMembership.managerGroupId,
+                          )
+                          .name,
+                      fontWeight: FontWeight.bold,
+                    ),
               const SizedBox(height: 20),
+              if (kIsWeb) ...[
+                AlignLeftText(
+                  AdminTextConstants.template,
+                  fontWeight: FontWeight.bold,
+                ),
+                AsyncChild(
+                  value: documentTeams,
+                  builder: (context, teams) {
+                    final membershipDocumentTeam = teams.firstWhere(
+                      (team) =>
+                          team.groupId == associationMembership.managerGroupId,
+                      orElse: () => DocumentTeam.empty(),
+                    );
+                    membershipDocumentTeam.templates.sort(
+                      (a, b) =>
+                          a.name.toLowerCase().compareTo(b.name.toLowerCase()),
+                    );
+                    return membershipDocumentTeam.id.isNotEmpty
+                        ? membershipDocumentTeam.templates.isNotEmpty
+                              ? DropdownButtonFormField<String>(
+                                  initialValue: templateId.text.isEmpty
+                                      ? null
+                                      : templateId.text,
+                                  onChanged: (String? newValue) {
+                                    templateId.text = newValue ?? '';
+                                  },
+                                  items: membershipDocumentTeam.templates
+                                      .map(
+                                        (template) => DropdownMenuItem<String>(
+                                          value: template.id,
+                                          child: Text(template.name),
+                                        ),
+                                      )
+                                      .toList(),
+                                  decoration: const InputDecoration(
+                                    hintText: AdminTextConstants.template,
+                                  ),
+                                )
+                              : AlignLeftText(
+                                  AdminTextConstants.noTemplateAvailable,
+                                  fontWeight: FontWeight.bold,
+                                )
+                        : AlignLeftText(
+                            AdminTextConstants.noDocumentTeamAvailable,
+                            fontWeight: FontWeight.bold,
+                          );
+                  },
+                ),
+                const SizedBox(height: 20),
+              ],
               WaitingButton(
                 builder: (child) => AddEditButtonLayout(
                   colors: const [
@@ -125,13 +189,22 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                   await tokenExpireWrapper(ref, () async {
                     final value = await associationMembershipListNotifier
                         .updateAssociationMembership(
-                          associationMembership.copyWith(name: name.text),
+                          associationMembership.copyWith(
+                            name: name.text,
+                            managerGroupId: groupIdController.text,
+                            templateId: templateId.text.isEmpty
+                                ? null
+                                : templateId.text,
+                          ),
                         );
                     if (value) {
                       associationMembershipNotifier.setAssociationMembership(
                         associationMembership.copyWith(
                           name: name.text,
                           managerGroupId: groupIdController.text,
+                          templateId: templateId.text.isEmpty
+                              ? null
+                              : templateId.text,
                         ),
                       );
                       displayToastWithContext(

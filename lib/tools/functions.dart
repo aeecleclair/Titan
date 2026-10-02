@@ -7,7 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:titan/admin/providers/permissions_list_provider.dart';
+import 'package:titan/admin/providers/permissions/permissions_list_provider.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/plausible/plausible.dart';
 import 'package:titan/tools/repository/repository.dart';

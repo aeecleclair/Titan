@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:titan/admin/providers/permissions_list_provider.dart';
+import 'package:titan/admin/providers/permissions/permissions_list_provider.dart';
 import 'package:titan/advert/router.dart';
 import 'package:titan/amap/router.dart';
 import 'package:titan/booking/router.dart';

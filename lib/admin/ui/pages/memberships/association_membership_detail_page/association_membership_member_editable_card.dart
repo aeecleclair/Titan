@@ -1,16 +1,24 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/user_association_membership.dart';
-import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
-import 'package:titan/admin/providers/user_association_membership_provider.dart';
+import 'package:titan/admin/class/user_association_membership_base.dart';
+import 'package:titan/admin/providers/memberships/association_membership_members_list_provider.dart';
+import 'package:titan/admin/providers/memberships/user_association_membership_provider.dart';
 import 'package:titan/admin/router.dart';
+import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/delete_button.dart';
 import 'package:titan/phonebook/ui/pages/admin_page/edition_button.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/phonebook/tools/constants.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/tools/ui/builders/waiting_button.dart';
+import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
+import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 
 class MemberEditableCard extends HookConsumerWidget {
   const MemberEditableCard({super.key, required this.associationMembership});
@@ -61,6 +69,73 @@ class MemberEditableCard extends HookConsumerWidget {
               ],
             ),
           ),
+          if (kIsWeb && associationMembership.documentStatus != null)
+            Expanded(
+              child: Row(
+                children: [
+                  AutoSizeText(
+                    associationMembership.documentStatus!.name.toUpperCase(),
+                    minFontSize: 10,
+                    maxFontSize: 15,
+                    style: TextStyle(
+                      color:
+                          associationMembership.documentStatus ==
+                              DocumentStatus.approved
+                          ? Colors.green
+                          : associationMembership.documentStatus ==
+                                DocumentStatus.pending
+                          ? Colors.blue
+                          : Colors.red,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  WaitingButton(
+                    builder: (child) => AddEditButtonLayout(
+                      colors: const [
+                        ColorConstants.gradient1,
+                        ColorConstants.gradient2,
+                      ],
+                      child: child,
+                    ),
+                    onTap: () async {
+                      await showDialog(
+                        context: context,
+                        builder: ((context) => CustomDialogBox(
+                          title: AdminTextConstants.renewingDocumentTitle,
+                          descriptions:
+                              AdminTextConstants.renewingDocumentConfirmation,
+                          onYes: (() async {
+                            await tokenExpireWrapper(ref, () async {
+                              final result =
+                                  await associationMembershipMemberListNotifier
+                                      .renewUserMembershipDocuments(
+                                        associationMembership.id,
+                                      );
+                              if (result.errors.isNotEmpty) {
+                                displayToastWithContext(
+                                  TypeMsg.error,
+                                  result.errors[associationMembership.userId] ??
+                                      AdminTextConstants.renewingError,
+                                );
+                              } else {
+                                displayToastWithContext(
+                                  TypeMsg.msg,
+                                  AdminTextConstants.renewedDocuments,
+                                );
+                              }
+                            });
+                          }),
+                        )),
+                      );
+                    },
+                    child: const HeroIcon(
+                      HeroIcons.arrowPath,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           Expanded(
             child: Column(
               children: [

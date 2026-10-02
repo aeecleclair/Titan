@@ -22,12 +22,11 @@ import 'package:titan/admin/ui/pages/schools/add_school_page/add_school_page.dar
     deferred as add_school_page;
 import 'package:titan/admin/ui/pages/schools/edit_school_page/edit_school_page.dart'
     deferred as edit_school_page;
-import 'package:titan/admin/ui/pages/structure_page/structure_page.dart'
+import 'package:titan/admin/ui/pages/mypayment/structure_page/structure_page.dart'
     deferred as structure_page;
-import 'package:titan/admin/ui/pages/structure_page/add_edit_structure_page/add_edit_structure_page.dart'
+import 'package:titan/admin/ui/pages/mypayment/add_edit_structure_page/add_edit_structure_page.dart'
     deferred as add_edit_structure_page;
-import 'package:titan/admin/ui/pages/main_page/main_page.dart'
-    deferred as main_page;
+import 'package:titan/admin/ui/pages/main_page.dart' deferred as main_page;
 import 'package:titan/tools/middlewares/admin_middleware.dart';
 import 'package:titan/tools/middlewares/authenticated_middleware.dart';
 import 'package:titan/tools/middlewares/deferred_middleware.dart';

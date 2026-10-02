@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:titan/admin/class/group.dart';
-import 'package:titan/admin/providers/group_provider.dart';
+import 'package:titan/admin/providers/groups/group_provider.dart';
 import 'package:titan/admin/repositories/group_repository.dart';
 import 'package:titan/user/class/simple_users.dart';
 

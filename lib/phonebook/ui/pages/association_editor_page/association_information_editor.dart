@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/simple_group.dart';
-import 'package:titan/admin/providers/group_list_provider.dart';
+import 'package:titan/admin/providers/groups/group_list_provider.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/phonebook/providers/association_groupement_provider.dart';
 import 'package:titan/phonebook/providers/association_list_provider.dart';

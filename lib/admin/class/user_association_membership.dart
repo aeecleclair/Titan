@@ -9,10 +9,11 @@ class UserAssociationMembership extends UserAssociationMembershipBase {
     required super.startDate,
     required super.endDate,
     required this.user,
+    required super.documentId,
+    required super.documentStatus,
   });
   late final SimpleUser user;
 
-  @override
   UserAssociationMembership.fromJson(super.json)
     : user = SimpleUser.fromJson(json['user']),
       super.fromJson();
@@ -32,6 +33,8 @@ class UserAssociationMembership extends UserAssociationMembershipBase {
     String? userId,
     DateTime? startDate,
     DateTime? endDate,
+    String? documentId,
+    DocumentStatus? documentStatus,
     SimpleUser? user,
   }) {
     return UserAssociationMembership(
@@ -41,12 +44,14 @@ class UserAssociationMembership extends UserAssociationMembershipBase {
       userId: userId ?? this.userId,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
+      documentId: documentId ?? this.documentId,
+      documentStatus: documentStatus ?? this.documentStatus,
       user: user ?? this.user,
     );
   }
 
   @override
   String toString() {
-    return "UserAssociationMembership {id: $id, associationMembershipId: $associationMembershipId, userId: $userId, startDate: $startDate, endDate: $endDate}";
+    return "UserAssociationMembership {id: $id, associationMembershipId: $associationMembershipId, userId: $userId, startDate: $startDate, endDate: $endDate, documentId: $documentId, documentStatus: $documentStatus, user: $user}";
   }
 }

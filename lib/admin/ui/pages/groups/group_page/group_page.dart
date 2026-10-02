@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/providers/group_id_provider.dart';
-import 'package:titan/admin/providers/group_list_provider.dart';
+import 'package:titan/admin/providers/groups/group_id_provider.dart';
+import 'package:titan/admin/providers/groups/group_list_provider.dart';
 import 'package:titan/admin/providers/is_admin_provider.dart';
 import 'package:titan/admin/router.dart';
 import 'package:titan/admin/ui/admin.dart';

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/admin/providers/structure_provider.dart';
+import 'package:titan/admin/providers/mypayment/structure_provider.dart';
 import 'package:titan/mypayment/providers/invoice_list_provider.dart';
 import 'package:titan/mypayment/providers/structure_list_provider.dart';
 import 'package:titan/mypayment/ui/pages/invoices_admin_page/invoice_card.dart';
