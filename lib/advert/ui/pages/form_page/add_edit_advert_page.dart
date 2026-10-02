@@ -95,12 +95,12 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                   displayAdvertToastWithContext,
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Theme.of(context).colorScheme.primary,
                                   boxShadow: [
                                     BoxShadow(
                                       color: formFieldState.hasError
-                                          ? Colors.red
-                                          : Colors.black.withValues(alpha: 0.1),
+                                          ? Theme.of(context).colorScheme.error
+                                          : Theme.of(context).shadowColor,
                                       spreadRadius: 5,
                                       blurRadius: 10,
                                       offset: const Offset(2, 3),
@@ -137,13 +137,17 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                                       const BorderRadius.all(
                                                         Radius.circular(5),
                                                       ),
-                                                  color: Colors.white
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary
                                                       .withValues(alpha: 0.4),
                                                 ),
                                                 child: HeroIcon(
                                                   HeroIcons.photo,
                                                   size: 40,
-                                                  color: Colors.black
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onPrimary
                                                       .withValues(alpha: 0.5),
                                                 ),
                                               ),
@@ -151,10 +155,12 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                                           ),
                                         ],
                                       )
-                                    : const HeroIcon(
+                                    : HeroIcon(
                                         HeroIcons.photo,
                                         size: 160,
-                                        color: Colors.grey,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.tertiary,
                                       ),
                               ),
                             ),
@@ -182,15 +188,17 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                 },
                 builder: (formFieldState) => Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.primary,
                     borderRadius: const BorderRadius.all(Radius.circular(20)),
                     boxShadow: formFieldState.hasError
                         ? [
-                            const BoxShadow(
-                              color: Colors.red,
+                            BoxShadow(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.primaryContainer,
                               spreadRadius: 3,
                               blurRadius: 3,
-                              offset: Offset(2, 2),
+                              offset: const Offset(2, 2),
                             ),
                           ]
                         : [],
@@ -289,8 +297,8 @@ class AdvertAddEditAdvertPage extends HookConsumerWidget {
                         isEdit
                             ? AdvertTextConstants.edit
                             : AdvertTextConstants.add,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSecondary,
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                         ),

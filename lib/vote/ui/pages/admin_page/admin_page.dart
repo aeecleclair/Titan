@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/layouts/card_layout.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
@@ -402,8 +401,8 @@ class AdminPage extends HookConsumerWidget {
                                           ),
                                           margin: const EdgeInsets.all(0),
                                           colors: const [
-                                            AMAPColorConstants.redGradient1,
-                                            AMAPColorConstants.redGradient2,
+                                            VoteColorConstants.redGradient1,
+                                            VoteColorConstants.redGradient2,
                                           ],
                                           borderColor: Colors.white,
                                           child: child,
@@ -479,8 +478,8 @@ class AdminPage extends HookConsumerWidget {
                                           ),
                                           margin: const EdgeInsets.all(0),
                                           colors: const [
-                                            AMAPColorConstants.redGradient1,
-                                            AMAPColorConstants.redGradient2,
+                                            VoteColorConstants.redGradient1,
+                                            VoteColorConstants.redGradient2,
                                           ],
                                           borderColor: Colors.white,
                                           child: child,

@@ -7,6 +7,7 @@ import 'package:titan/amap/providers/delivery_id_provider.dart';
 import 'package:titan/amap/providers/user_order_list_provider.dart';
 import 'package:titan/amap/providers/user_amount_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -26,6 +27,7 @@ class ProductChoiceButton extends HookConsumerWidget {
     final userAmountNotifier = ref.watch(userAmountProvider.notifier);
     final me = ref.watch(userProvider);
     final isEdit = order.id != Order.empty().id;
+    final isDarkTheme = ref.watch(themeProvider);
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
     }
@@ -38,23 +40,23 @@ class ProductChoiceButton extends HookConsumerWidget {
         children: [
           Expanded(
             child: WaitingButton(
-              waitingColor: AMAPColorConstants.background,
+              waitingColor: AMAPColors(isDarkTheme).background,
               builder: (child) => Container(
                 margin: const EdgeInsets.only(right: 10),
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
+                  gradient: LinearGradient(
                     colors: [
-                      AMAPColorConstants.greenGradient1,
-                      AMAPColorConstants.greenGradient2,
+                      AMAPColors(isDarkTheme).greenGradientPrimary,
+                      AMAPColors(isDarkTheme).greenGradientSecondary,
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: AMAPColorConstants.greenGradient2.withValues(
-                        alpha: 0.4,
-                      ),
+                      color: AMAPColors(
+                        isDarkTheme,
+                      ).greenGradientSecondary.withValues(alpha: 0.4),
                       offset: const Offset(2, 3),
                       blurRadius: 5,
                     ),
@@ -118,7 +120,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
-                  color: AMAPColorConstants.background,
+                  color: AMAPColors(isDarkTheme).background,
                 ),
               ),
             ),
@@ -128,19 +130,19 @@ class ProductChoiceButton extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 12),
               height: 70,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   colors: [
-                    AMAPColorConstants.redGradient1,
-                    AMAPColorConstants.redGradient2,
+                    AMAPColors(isDarkTheme).redGradientPrimary,
+                    AMAPColors(isDarkTheme).redGradientSecondary,
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: AMAPColorConstants.redGradient2.withValues(
-                      alpha: 0.4,
-                    ),
+                    color: AMAPColors(
+                      isDarkTheme,
+                    ).redGradientSecondary.withValues(alpha: 0.4),
                     offset: const Offset(2, 3),
                     blurRadius: 5,
                   ),
@@ -151,7 +153,7 @@ class ProductChoiceButton extends HookConsumerWidget {
               child: HeroIcon(
                 HeroIcons.xMark,
                 size: 35,
-                color: AMAPColorConstants.background,
+                color: AMAPColors(isDarkTheme).background,
               ),
             ),
             onTap: () {

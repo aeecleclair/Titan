@@ -18,11 +18,11 @@ class AdminShrinkButton extends StatelessWidget {
         padding: const EdgeInsets.only(top: 8, bottom: 12),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Colors.black,
+          color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withValues(alpha: 0.5),
+              color: Theme.of(context).shadowColor,
               spreadRadius: 5,
               blurRadius: 10,
               offset: const Offset(3, 3),
@@ -34,8 +34,8 @@ class AdminShrinkButton extends StatelessWidget {
       onTap: onTap,
       child: Text(
         buttonText,
-        style: const TextStyle(
-          color: Colors.white,
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.onSecondary,
           fontSize: 25,
           fontWeight: FontWeight.bold,
         ),

@@ -4,6 +4,7 @@ import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/pages/admin_page/adding_user_card.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/user/providers/user_list_provider.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class AddingUserContainer extends HookConsumerWidget {
   final VoidCallback onAdd;
@@ -12,6 +13,7 @@ class AddingUserContainer extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final users = ref.watch(userList);
+    final isDarkTheme = ref.watch(themeProvider);
     return AsyncChild(
       value: users,
       builder: (context, users) => Row(
@@ -19,7 +21,7 @@ class AddingUserContainer extends HookConsumerWidget {
             .map((e) => AddingUserCard(user: e, onAdd: onAdd))
             .toList(),
       ),
-      loaderColor: AMAPColorConstants.greenGradient2,
+      loaderColor: AMAPColors(isDarkTheme).greenGradientSecondary,
     );
   }
 }

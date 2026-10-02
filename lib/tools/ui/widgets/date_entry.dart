@@ -7,7 +7,7 @@ class DateEntry extends StatelessWidget {
   final String label;
   final bool enabled;
   final TextEditingController controller;
-  final Color color, enabledColor, errorColor;
+  final Color? color, enabledColor, errorColor;
   final Widget? suffixIcon;
 
   const DateEntry({
@@ -16,9 +16,9 @@ class DateEntry extends StatelessWidget {
     required this.controller,
     required this.onTap,
     this.enabled = true,
-    this.color = Colors.black,
-    this.enabledColor = Colors.black,
-    this.errorColor = Colors.red,
+    this.color,
+    this.enabledColor,
+    this.errorColor,
     this.suffixIcon,
   });
   @override

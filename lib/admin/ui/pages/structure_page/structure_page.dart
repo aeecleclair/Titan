@@ -11,7 +11,6 @@ import 'package:titan/admin/ui/pages/structure_page/structure_ui.dart';
 import 'package:titan/mypayment/class/structure.dart';
 import 'package:titan/mypayment/providers/bank_account_holder_provider.dart';
 import 'package:titan/mypayment/providers/structure_list_provider.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/refresher.dart';
 import 'package:titan/user/class/simple_users.dart';
@@ -44,14 +43,14 @@ class StructurePage extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   AdminTextConstants.structures,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
-                    color: ColorConstants.gradient1,
+                    color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                 ),
               ),
@@ -94,7 +93,9 @@ class StructurePage extends HookConsumerWidget {
                                 const Spacer(),
                                 HeroIcon(
                                   HeroIcons.plus,
-                                  color: Colors.grey.shade700,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.secondaryContainer,
                                   size: 40,
                                 ),
                                 const Spacer(),

@@ -5,6 +5,7 @@ import 'package:titan/amap/providers/delivery_id_provider.dart';
 import 'package:titan/amap/providers/delivery_list_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/pages/main_page/delivery_ui.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 
@@ -27,12 +28,15 @@ class DeliverySection extends HookConsumerWidget {
           .toList(),
       orElse: () => [],
     )..sort((a, b) => a.deliveryDate.compareTo(b.deliveryDate));
+    final isDarkTheme = ref.watch(themeProvider);
     return Column(
       children: [
         AlignLeftText(
           AMAPTextConstants.deliveries,
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          color: showSelected ? Colors.white : AMAPColorConstants.textDark,
+          color: showSelected
+              ? Theme.of(context).colorScheme.onSecondary
+              : AMAPColors(isDarkTheme).textOnPrimary,
         ),
         AsyncChild(
           value: deliveries,
@@ -67,7 +71,7 @@ class DeliverySection extends HookConsumerWidget {
               ),
             );
           },
-          loaderColor: AMAPColorConstants.greenGradient2,
+          loaderColor: AMAPColors(isDarkTheme).greenGradientSecondary,
         ),
       ],
     );

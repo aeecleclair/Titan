@@ -19,6 +19,7 @@ import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class DeliveryUi extends HookConsumerWidget {
   final Delivery delivery;
@@ -40,6 +41,7 @@ class DeliveryUi extends HookConsumerWidget {
     final ordersByDeliveryListNotifier = ref.watch(
       orderByDeliveryListProvider.notifier,
     );
+    final isDarkTheme = ref.watch(themeProvider);
 
     void displayVoteWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -48,7 +50,7 @@ class DeliveryUi extends HookConsumerWidget {
     final style = TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.bold,
-      color: AMAPColorConstants.textDark,
+      color: AMAPColors(isDarkTheme).textOnPrimary,
     );
 
     final tp = TextPainter(
@@ -64,7 +66,7 @@ class DeliveryUi extends HookConsumerWidget {
       id: delivery.id,
       height: 155 + 26.0 * (lines),
       width: 280,
-      shadowColor: AMAPColorConstants.textDark.withValues(alpha: 0.2),
+      shadowColor: AMAPColors(isDarkTheme).textOnPrimary.withValues(alpha: 0.2),
       padding: const EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,20 +91,20 @@ class DeliveryUi extends HookConsumerWidget {
                             constraints: BoxConstraints(maxWidth: maxTextWidth),
                             child: Text(
                               delivery.name,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: AMAPColorConstants.textDark,
+                                color: AMAPColors(isDarkTheme).textOnPrimary,
                               ),
                               maxLines: 3,
                             ),
                           ),
                           Text(
                             ' ${AMAPTextConstants.the} ${processDate(delivery.deliveryDate)}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: AMAPColorConstants.textDark,
+                              color: AMAPColors(isDarkTheme).textOnPrimary,
                             ),
                           ),
                         ],
@@ -119,9 +121,9 @@ class DeliveryUi extends HookConsumerWidget {
                                 AmapRouter.detailDelivery,
                           );
                         },
-                        child: const HeroIcon(
+                        child: HeroIcon(
                           HeroIcons.arrowTopRightOnSquare,
-                          color: AMAPColorConstants.textDark,
+                          color: AMAPColors(isDarkTheme).textOnPrimary,
                         ),
                       ),
                     ],
@@ -137,20 +139,20 @@ class DeliveryUi extends HookConsumerWidget {
                         orders.isEmpty
                             ? AMAPTextConstants.noCurrentOrder
                             : '${orders.length} ${AMAPTextConstants.oneOrder}${orders.length != 1 ? "s" : ""}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: AMAPColorConstants.textDark,
+                          color: AMAPColors(isDarkTheme).textOnPrimary,
                         ),
                       );
                     },
                   ),
                   Text(
                     "${delivery.products.length} ${AMAPTextConstants.product}${delivery.products.length != 1 ? "s" : ""}",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w700,
-                      color: AMAPColorConstants.textLight,
+                      color: AMAPColors(isDarkTheme).textOnSecondary,
                     ),
                   ),
                 ],
@@ -192,14 +194,14 @@ class DeliveryUi extends HookConsumerWidget {
                         orElse: () {},
                       );
                     },
-                    child: const CardButton(
+                    child: CardButton(
                       colors: [
-                        AMAPColorConstants.greenGradient1,
-                        AMAPColorConstants.greenGradient1,
+                        AMAPColors(isDarkTheme).greenGradientPrimary,
+                        AMAPColors(isDarkTheme).greenGradientPrimary,
                       ],
                       child: HeroIcon(
                         HeroIcons.pencil,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onSecondary,
                         size: 22,
                       ),
                     ),
@@ -236,15 +238,15 @@ class DeliveryUi extends HookConsumerWidget {
                       );
                     },
                     builder: (child) => CardButton(
-                      colors: const [
-                        AMAPColorConstants.redGradient1,
-                        AMAPColorConstants.redGradient2,
+                      colors: [
+                        AMAPColors(isDarkTheme).redGradientPrimary,
+                        AMAPColors(isDarkTheme).redGradientSecondary,
                       ],
                       child: child,
                     ),
-                    child: const HeroIcon(
+                    child: HeroIcon(
                       HeroIcons.trash,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onSecondary,
                       size: 22,
                     ),
                   ),
@@ -346,12 +348,12 @@ class DeliveryUi extends HookConsumerWidget {
                       gradient: LinearGradient(
                         colors: !(delivery.status == DeliveryStatus.creation)
                             ? [
-                                AMAPColorConstants.redGradient1,
-                                AMAPColorConstants.redGradient2,
+                                AMAPColors(isDarkTheme).redGradientPrimary,
+                                AMAPColors(isDarkTheme).redGradientSecondary,
                               ]
                             : [
-                                AMAPColorConstants.greenGradient1,
-                                AMAPColorConstants.greenGradient2,
+                                AMAPColors(isDarkTheme).greenGradientPrimary,
+                                AMAPColors(isDarkTheme).greenGradientSecondary,
                               ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -359,12 +361,12 @@ class DeliveryUi extends HookConsumerWidget {
                       boxShadow: [
                         BoxShadow(
                           color: !(delivery.status == DeliveryStatus.creation)
-                              ? AMAPColorConstants.redGradient2.withValues(
-                                  alpha: 0.5,
-                                )
-                              : AMAPColorConstants.greenGradient2.withValues(
-                                  alpha: 0.5,
-                                ),
+                              ? AMAPColors(
+                                  isDarkTheme,
+                                ).redGradientSecondary.withValues(alpha: 0.5)
+                              : AMAPColors(
+                                  isDarkTheme,
+                                ).greenGradientSecondary.withValues(alpha: 0.5),
                           blurRadius: 10,
                           offset: const Offset(2, 3),
                         ),
@@ -384,8 +386,8 @@ class DeliveryUi extends HookConsumerWidget {
                               : delivery.status == DeliveryStatus.locked
                               ? AMAPTextConstants.endingDelivery
                               : AMAPTextConstants.archiveDelivery,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSecondary,
                             fontSize: 20,
                           ),
                         ),
@@ -399,7 +401,7 @@ class DeliveryUi extends HookConsumerWidget {
                             : delivery.status == DeliveryStatus.locked
                             ? HeroIcons.truck
                             : HeroIcons.archiveBoxArrowDown,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onSecondary,
                         size: 22,
                       ),
                     ],

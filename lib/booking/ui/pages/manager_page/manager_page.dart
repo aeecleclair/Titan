@@ -63,11 +63,11 @@ class ManagerPage extends HookConsumerWidget {
             if (pendingBookings.isEmpty &&
                 confirmedBookings.isEmpty &&
                 canceledBookings.isEmpty)
-              const Center(
+              Center(
                 child: Text(
                   BookingTextConstants.noCurrentBooking,
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),

@@ -5,6 +5,7 @@ import 'package:titan/amap/providers/cash_list_provider.dart';
 import 'package:titan/amap/tools/constants.dart';
 import 'package:titan/amap/ui/pages/admin_page/user_cash_ui.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class CashContainer extends HookConsumerWidget {
   const CashContainer({super.key});
@@ -12,6 +13,7 @@ class CashContainer extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cash = ref.watch(cashListProvider);
+    final isDarkTheme = ref.watch(themeProvider);
     return AsyncChild(
       value: cash,
       builder: (context, cash) => Row(
@@ -20,7 +22,7 @@ class CashContainer extends HookConsumerWidget {
             .map((e) => UserCashUi(cash: e))
             .toList(),
       ),
-      loaderColor: AMAPColorConstants.greenGradient2,
+      loaderColor: AMAPColors(isDarkTheme).greenGradientSecondary,
     );
   }
 }

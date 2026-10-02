@@ -50,7 +50,11 @@ List<Association> sortedAssociationByKind(
   return sortedByGroupement.values.expand((list) => list).toList();
 }
 
-Color getColorFromTagList(WidgetRef ref, List<String> tags) {
+Color getColorFromTagList(
+  BuildContext context,
+  WidgetRef ref,
+  List<String> tags,
+) {
   final rolesTags = ref.watch(rolesTagsProvider).keys.toList();
   int index = 4;
   for (String tag in tags) {
@@ -58,15 +62,15 @@ Color getColorFromTagList(WidgetRef ref, List<String> tags) {
       index = rolesTags.indexOf(tag);
     }
   }
-  switch (index) {
-    case 0:
-      return const Color.fromARGB(255, 251, 109, 16);
-    case 1:
-      return const Color.fromARGB(255, 252, 145, 74);
-    case 2:
-      return const Color.fromARGB(255, 253, 193, 153);
-    case 3:
-      return const Color.fromARGB(255, 254, 205, 180);
-  }
-  return Colors.white;
+  return index < 4
+      ? Theme.of(context).colorScheme.primaryContainer.withValues(
+          alpha: switch (index) {
+            0 => 1,
+            1 => 0.75,
+            2 => 0.5,
+            3 => 0.25,
+            _ => 0, // unreachable anyway
+          },
+        )
+      : Theme.of(context).colorScheme.surface;
 }

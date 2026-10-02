@@ -20,12 +20,12 @@ class LogTab extends HookConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
+            Text(
               SettingsTextConstants.logs,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.grey,
+                color: Theme.of(context).colorScheme.secondaryContainer,
               ),
             ),
             GestureDetector(
@@ -47,19 +47,23 @@ class LogTab extends HookConsumerWidget {
                   vertical: 12,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: Theme.of(context).colorScheme.secondary,
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.2),
+                      color: Theme.of(context).shadowColor,
                       blurRadius: 10,
                       offset: const Offset(0, 5),
                     ),
                   ],
                 ),
-                child: const Row(
+                child: Row(
                   children: [
-                    HeroIcon(HeroIcons.trash, color: Colors.white, size: 20),
+                    HeroIcon(
+                      HeroIcons.trash,
+                      color: Theme.of(context).colorScheme.onSecondary,
+                      size: 20,
+                    ),
                   ],
                 ),
               ),

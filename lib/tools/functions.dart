@@ -8,7 +8,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/admin/providers/permissions_list_provider.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/plausible/plausible.dart';
 import 'package:titan/tools/repository/repository.dart';
 import 'package:titan/version/repositories/version_repository.dart';
@@ -41,23 +40,32 @@ void displayToast(
 }) {
   LinearGradient linearGradient;
   HeroIcons icon;
+  Color color;
 
   switch (type) {
     case TypeMsg.msg:
-      linearGradient = const LinearGradient(
-        colors: [ColorConstants.gradient1, ColorConstants.gradient2],
+      linearGradient = LinearGradient(
+        colors: [
+          Theme.of(context).colorScheme.primaryContainer,
+          Theme.of(context).colorScheme.primaryFixed,
+        ],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       );
+      color = Theme.of(context).colorScheme.onPrimaryContainer;
       icon = HeroIcons.check;
       duration = duration ?? 1500;
       break;
     case TypeMsg.error:
-      linearGradient = const LinearGradient(
-        colors: [ColorConstants.background2, Colors.black],
+      linearGradient = LinearGradient(
+        colors: [
+          Theme.of(context).colorScheme.secondaryContainer,
+          Theme.of(context).colorScheme.secondary,
+        ],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       );
+      color = Theme.of(context).colorScheme.onSecondary;
       icon = HeroIcons.exclamationTriangle;
       duration = duration ?? 3000;
       break;
@@ -88,7 +96,7 @@ void displayToast(
               Container(
                 width: 40,
                 alignment: Alignment.center,
-                child: HeroIcon(icon, color: Colors.white),
+                child: HeroIcon(icon, color: color),
               ),
               const SizedBox(width: 10),
               Expanded(
@@ -96,8 +104,8 @@ void displayToast(
                   child: AutoSizeText(
                     text,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: color,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -322,14 +330,11 @@ Future<TimeOfDay?> _getTime(BuildContext context) async {
     initialTime: TimeOfDay.now(),
     builder: (BuildContext context, Widget? child) {
       return Theme(
-        data: ThemeData.light().copyWith(
-          colorScheme: const ColorScheme.light(
-            primary: ColorConstants.gradient1,
-            onPrimary: Colors.white,
-            surface: Colors.white,
-            onSurface: Colors.black,
+        data: Theme.of(context).copyWith(
+          colorScheme: Theme.of(context).colorScheme.copyWith(
+            primary: Theme.of(context).colorScheme.primaryContainer,
+            onPrimary: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
-          dialogTheme: DialogThemeData(backgroundColor: Colors.white),
         ),
         child: child!,
       );
@@ -351,14 +356,11 @@ Future<DateTime?> _getDate(
     lastDate: lastDate ?? DateTime(now.year + 1, now.month, now.day),
     builder: (BuildContext context, Widget? child) {
       return Theme(
-        data: ThemeData.light().copyWith(
-          colorScheme: const ColorScheme.light(
-            primary: ColorConstants.gradient1,
-            onPrimary: Colors.white,
-            surface: Colors.white,
-            onSurface: Colors.black,
+        data: Theme.of(context).copyWith(
+          colorScheme: Theme.of(context).colorScheme.copyWith(
+            primary: Theme.of(context).colorScheme.primaryContainer,
+            onPrimary: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
-          dialogTheme: DialogThemeData(backgroundColor: Colors.white),
         ),
         child: child!,
       );

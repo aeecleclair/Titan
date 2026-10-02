@@ -5,7 +5,6 @@ import 'package:titan/admin/class/school.dart';
 import 'package:titan/admin/tools/constants.dart';
 import 'package:titan/admin/ui/components/item_card_ui.dart';
 import 'package:titan/admin/ui/pages/schools/school_page/school_button.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class SchoolUi extends HookConsumerWidget {
@@ -27,8 +26,8 @@ class SchoolUi extends HookConsumerWidget {
         Expanded(
           child: Text(
             school.name,
-            style: const TextStyle(
-              color: Colors.black,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -40,9 +39,12 @@ class SchoolUi extends HookConsumerWidget {
             GestureDetector(
               onTap: onEdit,
               child: SchoolButton(
-                gradient1: Colors.grey.shade800,
-                gradient2: Colors.grey.shade900,
-                child: const HeroIcon(HeroIcons.eye, color: Colors.white),
+                gradient1: Theme.of(context).colorScheme.secondaryContainer,
+                gradient2: Theme.of(context).colorScheme.secondary,
+                child: HeroIcon(
+                  HeroIcons.eye,
+                  color: Theme.of(context).colorScheme.onSecondary,
+                ),
               ),
             ),
             const SizedBox(width: 10),
@@ -51,11 +53,14 @@ class SchoolUi extends HookConsumerWidget {
               WaitingButton(
                 onTap: onDelete,
                 builder: (child) => SchoolButton(
-                  gradient1: ColorConstants.gradient1,
-                  gradient2: ColorConstants.gradient2,
+                  gradient1: Theme.of(context).colorScheme.primaryContainer,
+                  gradient2: Theme.of(context).colorScheme.primaryFixed,
                   child: child,
                 ),
-                child: const HeroIcon(HeroIcons.xMark, color: Colors.white),
+                child: HeroIcon(
+                  HeroIcons.xMark,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
               ),
           ],
         ),

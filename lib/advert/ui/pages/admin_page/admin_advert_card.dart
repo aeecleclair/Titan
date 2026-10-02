@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/advert/class/advert.dart';
-import 'package:titan/advert/tools/constants.dart';
 import 'package:titan/advert/ui/components/advert_card.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
@@ -38,11 +37,14 @@ class AdminAdvertCard extends HookConsumerWidget {
                   GestureDetector(
                     onTap: onEdit,
                     child: CardButton(
-                      colors: [Colors.grey.shade100, Colors.grey.shade400],
-                      shadowColor: Colors.grey.shade300.withValues(alpha: 0.2),
-                      child: const HeroIcon(
+                      colors: [
+                        Theme.of(context).colorScheme.surface,
+                        Theme.of(context).colorScheme.secondaryFixed,
+                      ],
+                      shadowColor: Theme.of(context).shadowColor,
+                      child: HeroIcon(
                         HeroIcons.pencil,
-                        color: Colors.black,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                   ),
@@ -50,16 +52,19 @@ class AdminAdvertCard extends HookConsumerWidget {
                   WaitingButton(
                     onTap: onDelete,
                     builder: (child) => CardButton(
-                      colors: const [
-                        AdvertColorConstants.redGradient1,
-                        AdvertColorConstants.redGradient2,
+                      colors: [
+                        Theme.of(context).colorScheme.primaryContainer,
+                        Theme.of(context).colorScheme.primaryFixed,
                       ],
-                      shadowColor: AdvertColorConstants.redGradient2.withValues(
-                        alpha: 0.2,
-                      ),
+                      shadowColor: Theme.of(
+                        context,
+                      ).colorScheme.primaryFixed.withValues(alpha: 0.2),
                       child: child,
                     ),
-                    child: const HeroIcon(HeroIcons.trash, color: Colors.white),
+                    child: HeroIcon(
+                      HeroIcons.trash,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    ),
                   ),
                 ],
               ),

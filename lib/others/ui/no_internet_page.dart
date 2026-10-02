@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/auth/providers/is_connected_provider.dart';
 import 'package:titan/home/router.dart';
 import 'package:titan/others/tools/constants.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:titan/tools/repository/repository.dart';
 
@@ -48,36 +47,40 @@ class NoInternetPage extends HookConsumerWidget {
                   padding: const EdgeInsets.only(top: 12, bottom: 15),
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
+                    gradient: LinearGradient(
                       colors: [
-                        ColorConstants.gradient1,
-                        ColorConstants.gradient2,
+                        Theme.of(context).colorScheme.primaryContainer,
+                        Theme.of(context).colorScheme.primaryFixed,
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: ColorConstants.gradient1.withValues(alpha: 0.2),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.primaryContainer.withValues(alpha: 0.2),
                         blurRadius: 10,
                         offset: const Offset(0, 5),
                       ),
                     ],
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       HeroIcon(
                         HeroIcons.arrowPath,
                         size: 35,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),
                       Text(
                         OthersTextConstants.retry,
                         style: TextStyle(
                           fontSize: 25,
-                          color: Colors.white,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onPrimaryContainer,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

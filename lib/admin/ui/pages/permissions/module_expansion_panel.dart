@@ -30,6 +30,7 @@ class ModuleExpansionPanel extends HookConsumerWidget {
         isExpanded.value[i] = isOpen;
         isExpanded.value = List.from(isExpanded.value);
       },
+      dividerColor: Theme.of(context).colorScheme.tertiary,
       children: modulesPermissionNames.keys.map((module) {
         final index = modulesPermissionNames.keys.toList().indexOf(module);
         return ExpansionPanel(
@@ -39,8 +40,8 @@ class ModuleExpansionPanel extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Text(
               module,
-              style: const TextStyle(
-                color: Color.fromARGB(255, 0, 0, 0),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimary,
                 fontSize: 22,
                 fontWeight: FontWeight.w800,
               ),
@@ -54,6 +55,7 @@ class ModuleExpansionPanel extends HookConsumerWidget {
                   groups: groups,
                 )
               : const SizedBox.shrink(),
+          backgroundColor: Theme.of(context).colorScheme.secondaryFixed,
         );
       }).toList(),
     );

@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/class/simple_group.dart';
 import 'package:titan/admin/ui/components/item_card_ui.dart';
 import 'package:titan/admin/ui/pages/groups/group_page/group_button.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
 class GroupUi extends HookConsumerWidget {
@@ -28,15 +27,18 @@ class GroupUi extends HookConsumerWidget {
         if (isLoaner)
           Row(
             children: [
-              HeroIcon(HeroIcons.buildingLibrary, color: Colors.grey.shade700),
+              HeroIcon(
+                HeroIcons.buildingLibrary,
+                color: Theme.of(context).colorScheme.secondaryContainer,
+              ),
               const SizedBox(width: 15),
             ],
           ),
         Expanded(
           child: Text(
             group.name,
-            style: const TextStyle(
-              color: Colors.black,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimary,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -48,20 +50,26 @@ class GroupUi extends HookConsumerWidget {
             GestureDetector(
               onTap: onEdit,
               child: GroupButton(
-                gradient1: Colors.grey.shade800,
-                gradient2: Colors.grey.shade900,
-                child: const HeroIcon(HeroIcons.eye, color: Colors.white),
+                gradient1: Theme.of(context).colorScheme.secondaryContainer,
+                gradient2: Theme.of(context).colorScheme.secondary,
+                child: HeroIcon(
+                  HeroIcons.eye,
+                  color: Theme.of(context).colorScheme.onSecondary,
+                ),
               ),
             ),
             const SizedBox(width: 10),
             WaitingButton(
               onTap: onDelete,
               builder: (child) => GroupButton(
-                gradient1: ColorConstants.gradient1,
-                gradient2: ColorConstants.gradient2,
+                gradient1: Theme.of(context).colorScheme.primaryContainer,
+                gradient2: Theme.of(context).colorScheme.primaryFixed,
                 child: child,
               ),
-              child: const HeroIcon(HeroIcons.xMark, color: Colors.white),
+              child: HeroIcon(
+                HeroIcons.xMark,
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
             ),
           ],
         ),

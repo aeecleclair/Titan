@@ -23,10 +23,10 @@ class LikedCard extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.primary,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.3),
+                    color: Theme.of(context).shadowColor,
                     blurRadius: 8,
                     spreadRadius: 2,
                     offset: const Offset(2, 3),
@@ -38,6 +38,17 @@ class LikedCard extends StatelessWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.all(4.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white,
+                          blurRadius: 5,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     child: module.icon.endsWith('.svg')
                         ? SvgPicture.network(
                             "${CentralisationTextConstants.imagePath}${module.icon}",

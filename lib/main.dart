@@ -11,13 +11,14 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:titan/drawer/providers/animation_provider.dart';
 import 'package:titan/drawer/providers/swipe_provider.dart';
 import 'package:titan/drawer/providers/top_bar_callback_provider.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/router.dart';
 import 'package:titan/service/tools/setup.dart';
+import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/plausible/plausible_observer.dart';
 import 'package:titan/tools/providers/path_forwarding_provider.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/layouts/app_template.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:qlevar_router/qlevar_router.dart' as qqr;
@@ -58,6 +59,7 @@ class MyApp extends HookConsumerWidget {
     final plausible = getPlausible();
     final pathForwardingNotifier = ref.watch(pathForwardingProvider.notifier);
     Future(() => animationNotifier.setController(animationController));
+    final isDarkTheme = ref.watch(themeProvider);
 
     if (!kIsWeb) {
       useEffect(() {
@@ -124,11 +126,9 @@ class MyApp extends HookConsumerWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        theme: ThemeData(
-          primarySwatch: Colors.orange,
-          textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
-          brightness: Brightness.light,
-        ),
+        theme: ThemeConstants(context).lightTheme,
+        darkTheme: ThemeConstants(context).darkTheme,
+        themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
         routeInformationParser: const QRouteInformationParser(),
         builder: (context, child) {
           if (child == null) {

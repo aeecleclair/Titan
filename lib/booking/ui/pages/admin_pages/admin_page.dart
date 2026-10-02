@@ -57,7 +57,7 @@ class AdminPage extends HookConsumerWidget {
                 const Expanded(child: Calendar(isManagerPage: false)),
                 if (isRoomsAdmin) ...[
                   const SizedBox(height: 30),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
@@ -66,7 +66,7 @@ class AdminPage extends HookConsumerWidget {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 149, 149, 149),
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
                     ),
@@ -90,9 +90,9 @@ class AdminPage extends HookConsumerWidget {
                                     BookingRouter.room,
                               );
                             },
-                            child: const HeroIcon(
+                            child: HeroIcon(
                               HeroIcons.plus,
-                              color: Colors.black,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
                           ...data.map(
@@ -108,8 +108,10 @@ class AdminPage extends HookConsumerWidget {
                               },
                               child: Text(
                                 capitalize(e.name),
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -129,7 +131,7 @@ class AdminPage extends HookConsumerWidget {
                 ],
                 if (isManagersAdmin) ...[
                   const SizedBox(height: 20),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
@@ -138,7 +140,7 @@ class AdminPage extends HookConsumerWidget {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 149, 149, 149),
+                          color: Theme.of(context).colorScheme.tertiary,
                         ),
                       ),
                     ),
@@ -162,9 +164,9 @@ class AdminPage extends HookConsumerWidget {
                                     BookingRouter.manager,
                               );
                             },
-                            child: const HeroIcon(
+                            child: HeroIcon(
                               HeroIcons.plus,
-                              color: Colors.black,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
                           ...data.map(
@@ -180,8 +182,10 @@ class AdminPage extends HookConsumerWidget {
                               },
                               child: Text(
                                 e.name,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

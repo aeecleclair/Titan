@@ -23,11 +23,14 @@ class CheckBoxEntry extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(color: Colors.grey.shade700, fontSize: 16),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.secondaryContainer,
+              fontSize: 16,
+            ),
           ),
           Checkbox(
-            checkColor: Colors.white,
-            activeColor: Colors.black,
+            checkColor: Theme.of(context).colorScheme.onSecondary,
+            activeColor: Theme.of(context).colorScheme.secondary,
             value: valueNotifier.value,
             onChanged: (value) {
               valueNotifier.value = value!;
