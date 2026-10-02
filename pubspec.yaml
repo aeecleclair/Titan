@@ -24,7 +24,7 @@ dependencies:
   file_picker: ^10.1.2
   file_saver: ^0.2.12
   firebase_core: ^3.9.0
-  firebase_messaging: ^15.2.2
+  firebase_messaging: ^15.2.10
   fl_chart: ^1.0.0
   flash: ^3.1.1
   flutter:
