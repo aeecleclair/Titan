@@ -40,14 +40,14 @@ class SellerRightCard extends ConsumerWidget {
     final isStructureManager =
         storeSeller.userId == store.structure.managerUser.id;
 
-    final isStructureAdmin =
-        isStructureManager ||
-        store.structure.administrators.any(
-          (admin) => admin.id == storeSeller.userId,
-        );
+    final isStructureAdmin = store.structure.administrators.any(
+      (admin) => admin.id == storeSeller.userId,
+    );
+
+    final isAdminOrManager = isStructureManager || isStructureAdmin;
 
     final canEdit =
-        me.canManageSellers && (amIManager || (amIAdmin && !isStructureAdmin));
+        (me.canManageSellers || amIManager || amIAdmin) && !isAdminOrManager;
 
     final icons =
         [
@@ -71,6 +71,16 @@ class SellerRightCard extends ConsumerWidget {
       const CardButton(
         size: 35,
         colors: [
+          Color.fromARGB(255, 201, 178, 4),
+          Color.fromARGB(255, 170, 142, 3),
+        ],
+        child: HeroIcon(HeroIcons.userGroup, color: Colors.white, size: 20),
+      ),
+    );
+    icons.add(
+      const CardButton(
+        size: 35,
+        colors: [
           Color.fromARGB(255, 255, 119, 7),
           Color.fromARGB(255, 186, 84, 1),
         ],
@@ -84,6 +94,7 @@ class SellerRightCard extends ConsumerWidget {
       "Annuler les transactions",
       "Gérer les vendeurs",
       "Administrateur de la structure",
+      "Manager de la structure",
     ];
 
     List<bool> sellerRights = [
@@ -105,6 +116,11 @@ class SellerRightCard extends ConsumerWidget {
       rightsIcons.add(icons[4]);
     }
 
+    if (isStructureManager) {
+      rightsLabel.add(labels[5]);
+      rightsIcons.add(icons[5]);
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: GestureDetector(
@@ -114,7 +130,7 @@ class SellerRightCard extends ConsumerWidget {
             context: context,
             backgroundColor: Colors.transparent,
             scrollControlDisabledMaxHeightRatio:
-                (((!amIManager || isStructureAdmin) ? 80 : 100) +
+                (((!amIManager || isAdminOrManager) ? 80 : 100) +
                     45 * icons.length) /
                 MediaQuery.of(context).size.height,
             builder: (context) {
@@ -142,7 +158,9 @@ class SellerRightCard extends ConsumerWidget {
                       ),
                       const SizedBox(height: 10),
                       for (var i = 0; i < icons.length; i++)
-                        if (i < 4 || isStructureAdmin)
+                        if (i < 4 ||
+                            (i == 4 && isStructureAdmin) ||
+                            (i == 5 && isStructureManager))
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             child: Row(
@@ -157,7 +175,7 @@ class SellerRightCard extends ConsumerWidget {
                                   ),
                                 ),
                                 const Spacer(),
-                                if (canEdit)
+                                if (canEdit && i < 4)
                                   Checkbox(
                                     value: sellerRights[i],
                                     activeColor: const Color(0xff204550),
