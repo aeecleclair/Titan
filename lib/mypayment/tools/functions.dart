@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:titan/mypayment/class/history.dart';
 import 'package:titan/mypayment/class/qr_code_data.dart';
 import 'package:titan/mypayment/class/qr_code_signature_data.dart';
+import 'package:titan/mypayment/class/seller.dart';
+import 'package:titan/mypayment/class/structure.dart';
 import 'package:titan/mypayment/class/wallet_device.dart';
 import 'package:titan/mypayment/tools/key_service.dart';
 
@@ -288,4 +290,22 @@ List<Color> getTransactionColors(History transaction) {
         const Color.fromARGB(255, 0, 44, 45).withValues(alpha: 0.3),
       ];
   }
+}
+
+int compareSellers(Seller sellerA, Seller sellerB, Structure structure) {
+  return countSellerRights(sellerB, structure) -
+      countSellerRights(sellerA, structure);
+}
+
+int countSellerRights(Seller seller, Structure structure) {
+  int count = 0;
+  if (seller.canBank) count++;
+  if (seller.canSeeHistory) count++;
+  if (seller.canCancel) count++;
+  if (seller.canManageSellers) count++;
+  if (seller.userId == structure.managerUser.id) count += 2;
+  if (structure.administrators.any((admin) => admin.id == seller.userId)) {
+    count++;
+  }
+  return count;
 }
