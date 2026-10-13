@@ -46,10 +46,13 @@ class LoanCard extends StatelessWidget {
             : 180,
         colors: shouldReturn
             ? [LoanColorConstants.redGradient1, LoanColorConstants.redGradient2]
-            : [Colors.white, Colors.white],
+            : [
+                Theme.of(context).colorScheme.surface,
+                Theme.of(context).colorScheme.secondaryFixed,
+              ],
         shadowColor: shouldReturn
             ? LoanColorConstants.redGradient2.withValues(alpha: 0.25)
-            : LoanColorConstants.shadowColor,
+            : Theme.of(context).shadowColor,
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -69,7 +72,9 @@ class LoanCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
-                          color: shouldReturn ? Colors.white : Colors.black,
+                          color: shouldReturn
+                              ? LoanColorConstants.contrast
+                              : Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                       !isDetail
@@ -78,8 +83,8 @@ class LoanCard extends StatelessWidget {
                               child: HeroIcon(
                                 HeroIcons.informationCircle,
                                 color: shouldReturn
-                                    ? Colors.white
-                                    : Colors.black,
+                                    ? LoanColorConstants.contrast
+                                    : Theme.of(context).colorScheme.onSurface,
                                 size: 25,
                               ),
                             )
@@ -96,7 +101,9 @@ class LoanCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: shouldReturn ? Colors.white : Colors.black,
+                color: shouldReturn
+                    ? LoanColorConstants.contrast
+                    : Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 7),
@@ -106,8 +113,8 @@ class LoanCard extends StatelessWidget {
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
                 color: shouldReturn
-                    ? Colors.white.withValues(alpha: 0.8)
-                    : Colors.grey.shade400,
+                    ? LoanColorConstants.contrast.withValues(alpha: 0.8)
+                    : Theme.of(context).colorScheme.tertiary,
               ),
             ),
             const SizedBox(height: 5),
@@ -116,7 +123,9 @@ class LoanCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: shouldReturn ? Colors.white : Colors.black,
+                color: shouldReturn
+                    ? LoanColorConstants.contrast
+                    : Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 5),
@@ -134,7 +143,7 @@ class LoanCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: shouldReturn
                         ? LoanColorConstants.urgentRed
-                        : Colors.grey.shade400,
+                        : Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
                 Text(
@@ -147,8 +156,8 @@ class LoanCard extends StatelessWidget {
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
                     color: shouldReturn
-                        ? Colors.white.withValues(alpha: 0.8)
-                        : Colors.grey.shade400,
+                        ? LoanColorConstants.contrast.withValues(alpha: 0.8)
+                        : Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
               ],
@@ -162,24 +171,24 @@ class LoanCard extends StatelessWidget {
                     onTap: onEdit,
                     child: CardButton(
                       color: shouldReturn
-                          ? Colors.white.withValues(alpha: 0.7)
-                          : Colors.grey.shade200,
+                          ? LoanColorConstants.contrast.withValues(alpha: 0.7)
+                          : Theme.of(context).colorScheme.secondaryFixed,
                       child: HeroIcon(
                         HeroIcons.pencil,
                         color: shouldReturn
                             ? LoanColorConstants.urgentRed
-                            : Colors.black,
+                            : Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                   ),
                   WaitingButton(
                     waitingColor: shouldReturn
                         ? LoanColorConstants.urgentRed
-                        : Colors.black,
+                        : Theme.of(context).colorScheme.onSurface,
                     builder: (child) => CardButton(
                       color: shouldReturn
-                          ? Colors.white.withValues(alpha: 0.7)
-                          : Colors.grey.shade200,
+                          ? LoanColorConstants.contrast.withValues(alpha: 0.7)
+                          : Theme.of(context).colorScheme.secondaryFixed,
                       child: child,
                     ),
                     onTap: onCalendar,
@@ -187,18 +196,23 @@ class LoanCard extends StatelessWidget {
                       HeroIcons.calendarDays,
                       color: shouldReturn
                           ? LoanColorConstants.urgentRed
-                          : Colors.black,
+                          : Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   WaitingButton(
                     builder: (child) => CardButton(
                       color: shouldReturn
                           ? LoanColorConstants.urgentRed
-                          : Colors.black,
+                          : Theme.of(context).colorScheme.secondary,
                       child: child,
                     ),
                     onTap: onReturn,
-                    child: const HeroIcon(HeroIcons.check, color: Colors.white),
+                    child: HeroIcon(
+                      HeroIcons.check,
+                      color: shouldReturn
+                          ? LoanColorConstants.contrast
+                          : Theme.of(context).colorScheme.onSecondary,
+                    ),
                   ),
                 ],
               ),

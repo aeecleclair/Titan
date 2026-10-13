@@ -37,11 +37,7 @@ class ItemCard extends StatelessWidget {
             item.name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 5),
           Text(
@@ -52,8 +48,8 @@ class ItemCard extends StatelessWidget {
               fontSize: 13,
               fontWeight: FontWeight.bold,
               color: availableQuantity > 0
-                  ? Colors.grey.shade400
-                  : LoanColorConstants.redGradient2,
+                  ? Theme.of(context).colorScheme.tertiary
+                  : Theme.of(context).colorScheme.error,
             ),
           ),
           const SizedBox(height: 5),
@@ -61,11 +57,7 @@ class ItemCard extends StatelessWidget {
             '${item.caution.toStringAsFixed(2)} €',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const Spacer(),
           if (showButtons)
@@ -75,19 +67,20 @@ class ItemCard extends StatelessWidget {
                 GestureDetector(
                   onTap: onEdit,
                   child: CardButton(
-                    color: Colors.grey.shade200,
-                    shadowColor: Colors.grey.withValues(alpha: 0.2),
-                    child: const HeroIcon(
-                      HeroIcons.pencil,
-                      color: Colors.black,
-                    ),
+                    color: Theme.of(context).colorScheme.secondaryFixed,
+                    child: const HeroIcon(HeroIcons.pencil),
                   ),
                 ),
                 WaitingButton(
-                  builder: (child) =>
-                      CardButton(color: Colors.black, child: child),
+                  builder: (child) => CardButton(
+                    color: Theme.of(context).colorScheme.secondary,
+                    child: child,
+                  ),
                   onTap: onDelete,
-                  child: const HeroIcon(HeroIcons.trash, color: Colors.white),
+                  child: HeroIcon(
+                    HeroIcons.trash,
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ),
                 ),
               ],
             ),
