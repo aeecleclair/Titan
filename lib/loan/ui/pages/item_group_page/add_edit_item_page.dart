@@ -55,7 +55,7 @@ class AddEditItemPage extends HookConsumerWidget {
                     ? LoanTextConstants.editItem
                     : LoanTextConstants.addObject,
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                color: Colors.grey,
+                color: Theme.of(context).colorScheme.tertiary,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -88,10 +88,7 @@ class AddEditItemPage extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 50),
                     WaitingButton(
-                      builder: (child) => AddEditButtonLayout(
-                        color: Colors.black,
-                        child: child,
-                      ),
+                      builder: (child) => AddEditButtonLayout(child: child),
                       onTap: () async {
                         if (key.currentState == null) {
                           return;
@@ -158,8 +155,8 @@ class AddEditItemPage extends HookConsumerWidget {
                       },
                       child: Text(
                         isEdit ? LoanTextConstants.edit : LoanTextConstants.add,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSecondary,
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                         ),
