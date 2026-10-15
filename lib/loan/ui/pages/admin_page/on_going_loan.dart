@@ -97,13 +97,7 @@ class OnGoingLoan extends HookConsumerWidget {
                 child: const CardLayout(
                   width: 100,
                   height: 170,
-                  child: Center(
-                    child: HeroIcon(
-                      HeroIcons.plus,
-                      size: 40.0,
-                      color: Colors.black,
-                    ),
-                  ),
+                  child: Center(child: HeroIcon(HeroIcons.plus, size: 40.0)),
                 ),
               ),
               items: data,

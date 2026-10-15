@@ -11,10 +11,12 @@ import 'package:titan/flappybird/providers/game_loop_provider.dart';
 import 'package:titan/flappybird/providers/game_state_provider.dart';
 import 'package:titan/flappybird/providers/pipe_list_provider.dart';
 import 'package:titan/flappybird/providers/score_list_provider.dart';
+import 'package:titan/flappybird/tools/constants.dart';
 import 'package:titan/flappybird/ui/flappybird_template.dart';
 import 'package:titan/flappybird/ui/pages/game_page/pipe_handler.dart';
 import 'package:titan/flappybird/ui/pages/game_page/score.dart';
 import 'package:titan/flappybird/ui/pages/game_page/start_screen.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 import 'bird.dart';
 
@@ -35,6 +37,8 @@ class GamePage extends HookConsumerWidget {
     final bestScoreNotifier = ref.read(bestScoreProvider.notifier);
     final width = MediaQuery.of(context).size.width;
 
+    final isDarkTheme = ref.watch(themeProvider);
+
     void showGameOverDialog() {
       showDialog(
         context: context,
@@ -47,12 +51,14 @@ class GamePage extends HookConsumerWidget {
               Navigator.of(context).pop();
             },
             child: AlertDialog(
-              backgroundColor: Colors.brown,
+              backgroundColor: FlappyBirdColors(isDarkTheme).land,
               title: Center(
                 child: Text(
                   'Game over!'.toUpperCase(),
                   style: GoogleFonts.silkscreen(
-                    textStyle: const TextStyle(color: Colors.white),
+                    textStyle: TextStyle(
+                      color: FlappyBirdColors(isDarkTheme).text,
+                    ),
                   ),
                 ),
               ),
@@ -60,13 +66,16 @@ class GamePage extends HookConsumerWidget {
                 Container(
                   margin: const EdgeInsets.only(bottom: 10),
                   child: MaterialButton(
-                    color: Colors.grey[100],
+                    color: FlappyBirdColors(isDarkTheme).text,
                     onPressed: () {
                       birdNotifier.resetBird();
                       pipeListNotifier.clearPipe();
                       Navigator.pop(context);
                     },
-                    child: const Icon(Icons.refresh, color: Colors.brown),
+                    child: Icon(
+                      Icons.refresh,
+                      color: FlappyBirdColors(isDarkTheme).land,
+                    ),
                   ),
                 ),
               ],
@@ -132,7 +141,7 @@ class GamePage extends HookConsumerWidget {
                     }
                   },
                   child: Container(
-                    color: Colors.blue,
+                    color: FlappyBirdColors(isDarkTheme).sky,
                     child: Stack(
                       children: [
                         const BirdDisplay(),

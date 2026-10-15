@@ -30,11 +30,11 @@ class IntegerExampleState extends State<DelayDialog> {
           margin: const EdgeInsets.only(top: 45),
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.shade700,
+                color: Theme.of(context).shadowColor,
                 offset: const Offset(0, 5),
                 blurRadius: 5,
               ),
@@ -45,11 +45,7 @@ class IntegerExampleState extends State<DelayDialog> {
             children: <Widget>[
               const Text(
                 LoanTextConstants.delay,
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.black,
-                ),
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800),
               ),
               const SizedBox(height: 15),
               NumberPicker(
@@ -70,12 +66,12 @@ class IntegerExampleState extends State<DelayDialog> {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Text(
+                      child: Text(
                         LoanTextConstants.cancel,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ),
@@ -84,12 +80,12 @@ class IntegerExampleState extends State<DelayDialog> {
                         Navigator.of(context).pop();
                         widget.onYes(_currentIntValue);
                       },
-                      child: const Text(
+                      child: Text(
                         LoanTextConstants.confirm,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ),
