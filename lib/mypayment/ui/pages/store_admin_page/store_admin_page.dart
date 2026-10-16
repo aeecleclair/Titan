@@ -4,9 +4,11 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/mypayment/providers/selected_store_provider.dart';
 import 'package:titan/mypayment/providers/store_sellers_list_provider.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/ui/pages/store_admin_page/search_result.dart';
 import 'package:titan/mypayment/ui/pages/store_admin_page/seller_right_card.dart';
 import 'package:titan/mypayment/ui/mypayment.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
@@ -30,6 +32,9 @@ class StoreAdminPage extends HookConsumerWidget {
     final isSearching = useState(false);
 
     final me = ref.watch(userProvider);
+
+    final isDarkTheme = ref.watch(themeProvider);
+    final color = MyPaymentColors(isDarkTheme).gradient3;
     return PaymentTemplate(
       child: Refresher(
         onRefresh: () async {
@@ -42,8 +47,8 @@ class StoreAdminPage extends HookConsumerWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 "Les vendeurs de ${store.name}",
-                style: const TextStyle(
-                  color: Color.fromARGB(255, 0, 29, 29),
+                style: TextStyle(
+                  color: color,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -54,28 +59,21 @@ class StoreAdminPage extends HookConsumerWidget {
                 onTap: () {
                   isSearching.value = true;
                 },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Center(
                         child: Text(
                           "Ajouter un vendeur",
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 0, 29, 29),
-                            fontSize: 14,
-                          ),
+                          style: TextStyle(color: color, fontSize: 14),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       CardButton(
                         size: 35,
-                        child: HeroIcon(
-                          HeroIcons.plus,
-                          color: Color.fromARGB(255, 0, 29, 29),
-                          size: 20,
-                        ),
+                        child: HeroIcon(HeroIcons.plus, color: color, size: 20),
                       ),
                     ],
                   ),
@@ -136,11 +134,7 @@ class StoreAdminPage extends HookConsumerWidget {
                         queryController.clear();
                         usersNotifier.clear();
                       },
-                      child: const HeroIcon(
-                        HeroIcons.xMark,
-                        size: 30,
-                        color: Color.fromARGB(255, 0, 29, 29),
-                      ),
+                      child: HeroIcon(HeroIcons.xMark, size: 30, color: color),
                     ),
                   ],
                 ),

@@ -10,7 +10,9 @@ import 'package:titan/mypayment/providers/history_export_csv_provider.dart';
 import 'package:titan/mypayment/providers/selected_interval_provider.dart';
 import 'package:titan/mypayment/providers/selected_store_history.dart';
 import 'package:titan/mypayment/providers/selected_store_provider.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class ToolBar extends ConsumerWidget {
   const ToolBar({super.key});
@@ -24,9 +26,21 @@ class ToolBar extends ConsumerWidget {
     final selectedIntervalNotifier = ref.read(
       selectedIntervalProvider.notifier,
     );
+    final isDarkTheme = ref.watch(themeProvider);
 
     void displayMyPaymentToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
+    }
+
+    Widget builder(BuildContext context, Widget? child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: Theme.of(context).colorScheme.copyWith(
+            primary: MyPaymentColors(isDarkTheme).gradient1,
+          ),
+        ),
+        child: child!,
+      );
     }
 
     Future<DateTime?> getDate(DateTime initialDate) async {
@@ -35,20 +49,7 @@ class ToolBar extends ConsumerWidget {
         initialDate: initialDate,
         firstDate: now.subtract(const Duration(days: 365 * 5)),
         lastDate: now,
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: const ColorScheme.light(
-                primary: Color(0xff017f80),
-                onPrimary: Colors.white,
-                surface: Colors.white,
-                onSurface: Colors.black,
-              ),
-              dialogTheme: DialogThemeData(backgroundColor: Colors.white),
-            ),
-            child: child!,
-          );
-        },
+        builder: builder,
       );
     }
 
@@ -56,20 +57,7 @@ class ToolBar extends ConsumerWidget {
       return await showTimePicker(
         context: context,
         initialTime: TimeOfDay.fromDateTime(initialDate),
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData.light().copyWith(
-              colorScheme: const ColorScheme.light(
-                primary: Color(0xff017f80),
-                onPrimary: Colors.white,
-                surface: Colors.white,
-                onSurface: Colors.black,
-              ),
-              dialogTheme: DialogThemeData(backgroundColor: Colors.white),
-            ),
-            child: child!,
-          );
-        },
+        builder: builder,
       );
     }
 
@@ -89,7 +77,9 @@ class ToolBar extends ConsumerWidget {
                         vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: Color(0xff017f80).withAlpha(50),
+                        color: MyPaymentColors(
+                          isDarkTheme,
+                        ).gradient1.withAlpha(50),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
@@ -98,7 +88,7 @@ class ToolBar extends ConsumerWidget {
                           "fr_FR",
                         ).format(selectedInterval.start),
                         style: TextStyle(
-                          color: const Color(0xff204550),
+                          color: MyPaymentColors(isDarkTheme).secondaryGreen,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
@@ -124,7 +114,9 @@ class ToolBar extends ConsumerWidget {
                         vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: Color(0xff017f80).withAlpha(50),
+                        color: MyPaymentColors(
+                          isDarkTheme,
+                        ).gradient1.withAlpha(50),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
@@ -133,7 +125,7 @@ class ToolBar extends ConsumerWidget {
                           "fr_FR",
                         ).format(selectedInterval.start),
                         style: TextStyle(
-                          color: const Color(0xff204550),
+                          color: MyPaymentColors(isDarkTheme).secondaryGreen,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
@@ -163,7 +155,7 @@ class ToolBar extends ConsumerWidget {
               SizedBox(width: 5),
               HeroIcon(
                 HeroIcons.arrowRight,
-                color: const Color(0xff204550),
+                color: MyPaymentColors(isDarkTheme).secondaryGreen,
                 size: 20,
               ),
               SizedBox(width: 5),
@@ -176,7 +168,9 @@ class ToolBar extends ConsumerWidget {
                         vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: Color(0xff017f80).withAlpha(50),
+                        color: MyPaymentColors(
+                          isDarkTheme,
+                        ).gradient1.withAlpha(50),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
@@ -185,7 +179,7 @@ class ToolBar extends ConsumerWidget {
                           "fr_FR",
                         ).format(selectedInterval.end),
                         style: TextStyle(
-                          color: const Color(0xff204550),
+                          color: MyPaymentColors(isDarkTheme).secondaryGreen,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
@@ -211,7 +205,9 @@ class ToolBar extends ConsumerWidget {
                         vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: Color(0xff017f80).withAlpha(50),
+                        color: MyPaymentColors(
+                          isDarkTheme,
+                        ).gradient1.withAlpha(50),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
@@ -220,7 +216,7 @@ class ToolBar extends ConsumerWidget {
                           "fr_FR",
                         ).format(selectedInterval.end),
                         style: TextStyle(
-                          color: const Color(0xff204550),
+                          color: MyPaymentColors(isDarkTheme).secondaryGreen,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
                         ),
@@ -293,8 +289,8 @@ class ToolBar extends ConsumerWidget {
           icon: const Icon(Icons.download),
           label: const Text('Exporter CSV'),
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xff017f80),
-            foregroundColor: Colors.white,
+            backgroundColor: MyPaymentColors(isDarkTheme).gradient1,
+            foregroundColor: MyPaymentColors.onGradient,
           ),
         ),
       ],

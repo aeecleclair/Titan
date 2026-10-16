@@ -4,7 +4,9 @@ import 'package:heroicons/heroicons.dart';
 import 'package:titan/mypayment/class/seller.dart';
 import 'package:titan/mypayment/providers/selected_store_provider.dart';
 import 'package:titan/mypayment/providers/store_sellers_list_provider.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/layouts/card_button.dart';
@@ -49,6 +51,8 @@ class SellerRightCard extends ConsumerWidget {
     final canEdit =
         me.canManageSellers && (amIManager || (amIAdmin && !isStructureAdmin));
 
+    final isDarkTheme = ref.watch(themeProvider);
+
     final icons =
         [
               HeroIcons.viewfinderCircle,
@@ -59,22 +63,26 @@ class SellerRightCard extends ConsumerWidget {
             .map(
               (e) => CardButton(
                 size: 35,
-                colors: const [
-                  Color.fromARGB(255, 6, 75, 75),
-                  Color.fromARGB(255, 0, 29, 29),
+                colors: [
+                  MyPaymentColors(isDarkTheme).backgroundGradient1,
+                  MyPaymentColors(isDarkTheme).backgroundGradient2,
                 ],
-                child: HeroIcon(e, color: Colors.white, size: 20),
+                child: HeroIcon(e, color: MyPaymentColors.onGradient, size: 20),
               ),
             )
             .toList();
     icons.add(
-      const CardButton(
+      CardButton(
         size: 35,
         colors: [
-          Color.fromARGB(255, 255, 119, 7),
-          Color.fromARGB(255, 186, 84, 1),
+          MyPaymentColors(isDarkTheme).secondaryGradient1,
+          MyPaymentColors(isDarkTheme).secondaryGradient2,
         ],
-        child: HeroIcon(HeroIcons.userGroup, color: Colors.white, size: 20),
+        child: HeroIcon(
+          HeroIcons.userGroup,
+          color: MyPaymentColors.onGradient,
+          size: 20,
+        ),
       ),
     );
 
@@ -124,7 +132,7 @@ class SellerRightCard extends ConsumerWidget {
                   topRight: Radius.circular(40),
                 ),
                 child: Container(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     children: [
@@ -133,8 +141,8 @@ class SellerRightCard extends ConsumerWidget {
                         child: Text(
                           "Droits de ${storeSeller.user.nickname ?? ("${storeSeller.user.firstname} ${storeSeller.user.name}")}",
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 0, 29, 29),
+                          style: TextStyle(
+                            color: MyPaymentColors(isDarkTheme).gradient3,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -151,8 +159,10 @@ class SellerRightCard extends ConsumerWidget {
                                 const SizedBox(width: 15),
                                 Text(
                                   labels[i],
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 0, 29, 29),
+                                  style: TextStyle(
+                                    color: MyPaymentColors(
+                                      isDarkTheme,
+                                    ).gradient3,
                                     fontSize: 14,
                                   ),
                                 ),
@@ -160,7 +170,9 @@ class SellerRightCard extends ConsumerWidget {
                                 if (canEdit)
                                   Checkbox(
                                     value: sellerRights[i],
-                                    activeColor: const Color(0xff204550),
+                                    activeColor: MyPaymentColors(
+                                      isDarkTheme,
+                                    ).gradient3,
                                     visualDensity: const VisualDensity(
                                       horizontal: -4,
                                       vertical: -4,
@@ -237,23 +249,26 @@ class SellerRightCard extends ConsumerWidget {
                               ),
                             );
                           },
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
                             child: AddEditButtonLayout(
-                              colors: [Color(0xFF9E131F), Color(0xFF590512)],
-                              child: Row(
+                              colors: [
+                                MyPaymentColors(isDarkTheme).redGradient1,
+                                MyPaymentColors(isDarkTheme).redGradient2,
+                              ],
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   HeroIcon(
                                     HeroIcons.trash,
-                                    color: Colors.white,
+                                    color: MyPaymentColors.onGradient,
                                     size: 20,
                                   ),
                                   SizedBox(width: 15),
                                   Text(
                                     "Supprimer le vendeur",
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: MyPaymentColors.onGradient,
                                       fontSize: 14,
                                     ),
                                   ),
@@ -277,8 +292,8 @@ class SellerRightCard extends ConsumerWidget {
               child: Text(
                 storeSeller.user.nickname ??
                     ("${storeSeller.user.firstname} ${storeSeller.user.name}"),
-                style: const TextStyle(
-                  color: Color.fromARGB(255, 0, 29, 29),
+                style: TextStyle(
+                  color: MyPaymentColors(isDarkTheme).gradient3,
                   fontSize: 14,
                 ),
               ),

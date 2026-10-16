@@ -3,7 +3,6 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/mypayment/providers/selected_structure_provider.dart';
 import 'package:titan/mypayment/providers/structure_list_provider.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
@@ -75,7 +74,9 @@ class MemberResults extends HookConsumerWidget {
                               });
                             }
                           },
-                          waitingColor: ColorConstants.gradient1,
+                          waitingColor: Theme.of(
+                            context,
+                          ).colorScheme.primaryContainer,
                           builder: (child) => child,
                           child: const HeroIcon(HeroIcons.plus),
                         ),
@@ -87,7 +88,7 @@ class MemberResults extends HookConsumerWidget {
             )
             .toList(),
       ),
-      loaderColor: ColorConstants.gradient1,
+      loaderColor: Theme.of(context).colorScheme.primaryContainer,
     );
   }
 }

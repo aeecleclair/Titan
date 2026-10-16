@@ -12,12 +12,14 @@ import 'package:titan/mypayment/providers/key_service_provider.dart';
 import 'package:titan/mypayment/providers/my_wallet_provider.dart';
 import 'package:titan/mypayment/providers/pay_amount_provider.dart';
 import 'package:titan/mypayment/router.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/ui/pages/fund_page/fund_page.dart';
 import 'package:titan/mypayment/ui/pages/main_page/account_card/device_dialog_box.dart';
 import 'package:titan/mypayment/ui/pages/main_page/main_card_button.dart';
 import 'package:titan/mypayment/ui/pages/main_page/main_card_template.dart';
 import 'package:titan/mypayment/ui/pages/pay_page/pay_page.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -39,9 +41,10 @@ class AccountCard extends HookConsumerWidget {
     final fundAmountNotifier = ref.watch(fundAmountProvider.notifier);
     final deviceNotifier = ref.watch(deviceProvider.notifier);
     final hasAcceptedToS = ref.watch(hasAcceptedTosProvider);
+    final isDarkTheme = ref.watch(themeProvider);
     final buttonGradient = [
-      const Color(0xff017f80),
-      const Color.fromARGB(255, 4, 84, 84),
+      MyPaymentColors(isDarkTheme).gradient1,
+      MyPaymentColors(isDarkTheme).gradient3,
     ];
     final formatter = NumberFormat("#,##0.00", "fr_FR");
 
@@ -75,10 +78,10 @@ class AccountCard extends HookConsumerWidget {
     }
 
     return MainCardTemplate(
-      colors: const [
-        Color.fromARGB(255, 9, 103, 103),
-        Color(0xff017f80),
-        Color.fromARGB(255, 4, 84, 84),
+      colors: [
+        MyPaymentColors(isDarkTheme).gradient2,
+        MyPaymentColors(isDarkTheme).gradient1,
+        MyPaymentColors(isDarkTheme).gradient3,
       ],
       title: 'Solde personnel',
       toggle: toggle,
@@ -92,7 +95,7 @@ class AccountCard extends HookConsumerWidget {
             QR.to(PaymentRouter.root + PaymentRouter.devices);
           },
         ),
-        if (!kIsWeb)
+        if (kIsWeb)
           MainCardButton(
             colors: buttonGradient,
             icon: HeroIcons.qrCode,
@@ -202,11 +205,17 @@ class AccountCard extends HookConsumerWidget {
         value: myWallet,
         builder: (context, wallet) => Text(
           '${formatter.format(wallet.balance / 100)} €',
-          style: const TextStyle(color: Colors.white, fontSize: 50),
+          style: const TextStyle(
+            color: MyPaymentColors.onGradient,
+            fontSize: 50,
+          ),
         ),
         errorBuilder: (error, stackTrace) => Text(
           'Erreur lors de la récupération du solde : $error',
-          style: const TextStyle(color: Colors.white, fontSize: 50),
+          style: const TextStyle(
+            color: MyPaymentColors.onGradient,
+            fontSize: 50,
+          ),
         ),
       ),
     );

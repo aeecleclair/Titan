@@ -8,7 +8,6 @@ import 'package:titan/admin/ui/components/user_ui.dart';
 import 'package:titan/mypayment/providers/selected_structure_provider.dart';
 import 'package:titan/mypayment/providers/structure_list_provider.dart';
 import 'package:titan/mypayment/ui/pages/structure_administrators_page/results.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
@@ -38,17 +37,17 @@ class StructureAdministratorsPage extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Column(
             children: [
-              const AlignLeftText(
+              AlignLeftText(
                 "Administrateurs de la structure",
                 fontSize: 20,
-                color: ColorConstants.gradient1,
+                color: Theme.of(context).colorScheme.primaryContainer,
               ),
               const SizedBox(height: 20),
               Column(
                 children: [
                   StyledSearchBar(
                     label: "Rechercher un utilisateur",
-                    color: ColorConstants.gradient1,
+                    color: Theme.of(context).colorScheme.primaryContainer,
                     padding: const EdgeInsets.all(0),
                     onChanged: (value) async {
                       if (value.isNotEmpty) {
@@ -72,19 +71,19 @@ class StructureAdministratorsPage extends HookConsumerWidget {
                       child: Container(
                         padding: const EdgeInsets.all(7),
                         decoration: BoxDecoration(
-                          gradient: const LinearGradient(
+                          gradient: LinearGradient(
                             colors: [
-                              ColorConstants.gradient1,
-                              ColorConstants.gradient2,
+                              Theme.of(context).colorScheme.primaryContainer,
+                              Theme.of(context).colorScheme.primaryFixed,
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: ColorConstants.gradient2.withValues(
-                                alpha: 0.4,
-                              ),
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.primaryFixed.withValues(alpha: 0.4),
                               offset: const Offset(2, 3),
                               blurRadius: 5,
                             ),
@@ -96,7 +95,9 @@ class StructureAdministratorsPage extends HookConsumerWidget {
                         child: HeroIcon(
                           !add.value ? HeroIcons.plus : HeroIcons.xMark,
                           size: 20,
-                          color: Colors.white,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onPrimaryContainer,
                         ),
                       ),
                     ),

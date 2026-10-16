@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/ui/pages/stats_page/description_shape.dart';
 
 class SumUpCard extends StatelessWidget {
   final String title;
   final String amount;
-  final Color color, darkColor, shadowColor;
+  final Color color, secondaryColor, shadowColor;
   const SumUpCard({
     super.key,
     required this.title,
     required this.amount,
     required this.color,
-    required this.darkColor,
+    required this.secondaryColor,
     required this.shadowColor,
   });
 
@@ -29,7 +30,7 @@ class SumUpCard extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
-            colors: [darkColor, color, darkColor],
+            colors: [secondaryColor, color, secondaryColor],
           ),
           shadows: [
             BoxShadow(
@@ -46,7 +47,7 @@ class SumUpCard extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                color: Colors.white.withValues(alpha: 0.8),
+                color: MyPaymentColors.onGradient.withValues(alpha: 0.8),
                 fontWeight: FontWeight.bold,
                 fontSize: 13,
               ),
@@ -55,7 +56,7 @@ class SumUpCard extends StatelessWidget {
             Text(
               amount,
               style: const TextStyle(
-                color: Colors.white,
+                color: MyPaymentColors.onGradient,
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
               ),

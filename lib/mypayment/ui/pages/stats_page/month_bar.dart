@@ -37,11 +37,7 @@ class MonthBar extends HookConsumerWidget {
     );
     return Text(
       "${DateFormat("MMMM yyyy", "fr_FR").format(currentMonth)} : ${total > 0 ? "+" : ""}${formatter.format(total / 100)} €",
-      style: const TextStyle(
-        fontSize: 20,
-        color: Colors.black,
-        fontWeight: FontWeight.bold,
-      ),
+      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
     );
   }
 }

@@ -1,33 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/mypayment/tools/constants.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
-class StoreDivider extends StatelessWidget {
+class StoreDivider extends ConsumerWidget {
   final String name;
   const StoreDivider({super.key, required this.name});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(themeProvider);
     return Padding(
       padding: const EdgeInsets.only(top: 10, left: 30, right: 30, bottom: 5),
       child: Row(
         children: [
-          const Expanded(
-            child: Divider(color: Color.fromARGB(255, 0, 29, 29), thickness: 1),
+          Expanded(
+            child: Divider(
+              color: MyPaymentColors(isDarkTheme).secondaryGreen,
+              thickness: 1,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Center(
               child: Text(
                 name,
-                style: const TextStyle(
-                  color: Color.fromARGB(255, 0, 29, 29),
+                style: TextStyle(
+                  color: MyPaymentColors(isDarkTheme).secondaryGreen,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ),
-          const Expanded(
-            child: Divider(color: Color.fromARGB(255, 0, 29, 29), thickness: 1),
+          Expanded(
+            child: Divider(
+              color: MyPaymentColors(isDarkTheme).secondaryGreen,
+              thickness: 1,
+            ),
           ),
         ],
       ),

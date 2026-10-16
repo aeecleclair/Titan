@@ -4,9 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:titan/mypayment/providers/fund_amount_provider.dart';
 import 'package:titan/mypayment/providers/my_wallet_provider.dart';
 import 'package:titan/mypayment/providers/tos_provider.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/ui/components/digit_fade_in_animation.dart';
 import 'package:titan/mypayment/ui/components/keyboard.dart';
 import 'package:titan/mypayment/ui/pages/fund_page/confirm_button.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class FundPage extends ConsumerWidget {
   const FundPage({super.key});
@@ -31,15 +33,20 @@ class FundPage extends ConsumerWidget {
 
     final isValid = amountToAdd + currentAmount <= maxBalanceAmount;
 
+    final isDarkTheme = ref.watch(themeProvider);
+
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(40),
         topRight: Radius.circular(40),
       ),
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xff017f80), Color.fromARGB(255, 9, 103, 103)],
+            colors: [
+              MyPaymentColors(isDarkTheme).gradient1,
+              MyPaymentColors(isDarkTheme).gradient2,
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -49,8 +56,8 @@ class FundPage extends ConsumerWidget {
             const SizedBox(height: 20),
             Text(
               'Recharge',
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: MyPaymentColors.onGradient,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -58,7 +65,7 @@ class FundPage extends ConsumerWidget {
             const SizedBox(height: 5),
             Text(
               'Solde après recharge : ${formatter.format(amountToAdd + currentAmount)} € (max: ${formatter.format(maxBalanceAmount)} €)',
-              style: const TextStyle(color: Colors.white, fontSize: 15),
+              style: TextStyle(color: MyPaymentColors.onGradient, fontSize: 15),
             ),
             Expanded(
               child: Center(
@@ -71,8 +78,8 @@ class FundPage extends ConsumerWidget {
                           e,
                           style: TextStyle(
                             color: isValid
-                                ? Colors.white
-                                : const Color.fromARGB(255, 91, 6, 0),
+                                ? MyPaymentColors.onGradient
+                                : MyPaymentColors.errorText,
                             fontSize: 50,
                             fontWeight: FontWeight.bold,
                           ),
@@ -84,8 +91,8 @@ class FundPage extends ConsumerWidget {
                         ' €',
                         style: TextStyle(
                           color: isValid
-                              ? Colors.white
-                              : const Color.fromARGB(255, 91, 6, 0),
+                              ? MyPaymentColors.onGradient
+                              : MyPaymentColors.errorText,
                           fontSize: 50,
                           fontWeight: FontWeight.bold,
                         ),

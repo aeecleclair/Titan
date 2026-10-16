@@ -7,7 +7,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/mypayment/class/invoice.dart';
 import 'package:titan/mypayment/providers/invoice_list_provider.dart';
 import 'package:titan/mypayment/providers/invoice_pdf_provider.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/ui/layouts/bottom_modal_template.dart';
 import 'package:titan/tools/ui/layouts/button.dart';
@@ -161,7 +160,7 @@ class InvoiceCard extends HookConsumerWidget {
         ),
         child: CardLayout(
           margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-          shadowColor: Colors.grey.withValues(alpha: 0.2),
+          shadowColor: Theme.of(context).shadowColor,
           child: Row(
             children: [
               Expanded(
@@ -196,7 +195,6 @@ class InvoiceCard extends HookConsumerWidget {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
-                              color: ColorConstants.background2,
                             ),
                           ),
                           AutoSizeText(
@@ -215,6 +213,7 @@ class InvoiceCard extends HookConsumerWidget {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
+                        // It's ok to leave these hard-coded: not used anywhere else, only seen by one user (the bank account holder)
                         color: invoice.received
                             ? Colors.green
                             : invoice.paid
@@ -222,10 +221,7 @@ class InvoiceCard extends HookConsumerWidget {
                             : Colors.orange,
                       ),
                     ),
-                    const HeroIcon(
-                      HeroIcons.chevronRight,
-                      color: ColorConstants.background2,
-                    ),
+                    const HeroIcon(HeroIcons.chevronRight),
                   ],
                 ),
               ),

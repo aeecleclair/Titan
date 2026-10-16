@@ -17,6 +17,7 @@ class ScannerOverlayPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
+      // The QR Code MUST be black
       ..color = Colors.black.withValues(alpha: 0.6)
       ..style = PaintingStyle.fill;
 
