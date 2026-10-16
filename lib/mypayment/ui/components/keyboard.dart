@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 
 class NumericKeyboard extends StatelessWidget {
   /// Color of the text [default = Colors.black]
@@ -25,7 +26,7 @@ class NumericKeyboard extends StatelessWidget {
   const NumericKeyboard({
     super.key,
     required this.onKeyboardTap,
-    this.textColor = Colors.white,
+    this.textColor = MyPaymentColors.onGradient,
     this.rightButtonFn,
     this.leftIcon,
     this.leftButtonFn,

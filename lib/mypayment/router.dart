@@ -1,5 +1,5 @@
 import 'package:either_dart/either.dart';
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:titan/drawer/class/module.dart';
@@ -63,10 +63,11 @@ class PaymentRouter {
       AuthenticatedMiddleware(ref),
       DeferredLoadingMiddleware(main_page.loadLibrary),
     ],
-    pageType: QCustomPage(
-      transitionsBuilder: (_, animation, _, child) =>
-          FadeTransition(opacity: animation, child: child),
-    ),
+    // No idea what is the point of this, but it forces white background on the main page
+    // pageType: QCustomPage(
+    //   transitionsBuilder: (_, animation, _, child) =>
+    //       FadeTransition(opacity: animation, child: child),
+    // ),
     children: [
       QRoute(
         path: PaymentRouter.stats,

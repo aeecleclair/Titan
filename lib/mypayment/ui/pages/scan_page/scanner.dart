@@ -11,6 +11,7 @@ import 'package:titan/mypayment/providers/last_time_scanned.dart';
 import 'package:titan/mypayment/providers/ongoing_transaction.dart';
 import 'package:titan/mypayment/providers/scan_provider.dart';
 import 'package:titan/mypayment/providers/selected_store_provider.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/ui/pages/scan_page/scan_overlay_shape.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
@@ -25,6 +26,8 @@ class Scanner extends StatefulHookConsumerWidget {
   ConsumerState<Scanner> createState() => ScannerState();
 }
 
+/// This class contains hard-coded blacks and whites
+/// for the contour of the QR Code and the rest of the screen
 class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
   final controller = MobileScannerController(autoStart: false);
   String? scannedValue;
@@ -196,8 +199,8 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
                     painter: ScannerOverlayPainter(
                       scanArea: MediaQuery.of(context).size.width * 0.8,
                       borderColor: ongoingTransaction.when(
-                        data: (_) => Color(0xff387200),
-                        error: (_, _) => Color(0xff720000),
+                        data: (_) => MyPaymentColors.scannerGreenGradient2,
+                        error: (_, _) => MyPaymentColors.scannerRedGradient2,
                         loading: () => Colors.white,
                       ),
                     ),
@@ -212,8 +215,8 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
                     painter: ScannerOverlayPainter(
                       scanArea: scanArea,
                       borderColor: ongoingTransaction.when(
-                        data: (_) => Color(0xff387200),
-                        error: (_, _) => Color(0xff720000),
+                        data: (_) => MyPaymentColors.scannerGreenGradient2,
+                        error: (_, _) => MyPaymentColors.scannerRedGradient2,
                         loading: () => Colors.white,
                       ),
                     ),

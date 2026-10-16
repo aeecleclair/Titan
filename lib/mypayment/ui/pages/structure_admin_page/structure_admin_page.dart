@@ -27,7 +27,7 @@ class StructureAdminPage extends ConsumerWidget {
             const SizedBox(height: 10),
             AlignLeftText(
               "Gestion des associations ${structure.name}",
-              color: Colors.grey,
+              color: Theme.of(context).colorScheme.tertiary,
               fontSize: 20,
               fontWeight: FontWeight.bold,
               padding: EdgeInsets.only(left: 30),

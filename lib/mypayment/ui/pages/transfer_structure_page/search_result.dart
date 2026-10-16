@@ -3,8 +3,9 @@ import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/mypayment/providers/selected_store_provider.dart';
 import 'package:titan/mypayment/providers/transfer_structure_provider.dart';
-import 'package:titan/tools/constants.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/builders/async_child.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/widgets/custom_dialog_box.dart';
@@ -22,6 +23,7 @@ class SearchResult extends HookConsumerWidget {
     final transferStructureNotifier = ref.watch(
       transferStructureProvider.notifier,
     );
+    final isDarkTheme = ref.watch(themeProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
       displayToast(context, type, msg);
@@ -84,7 +86,9 @@ class SearchResult extends HookConsumerWidget {
                               Navigator.pop(context);
                             }
                           },
-                          waitingColor: Color.fromARGB(255, 0, 29, 29),
+                          waitingColor: MyPaymentColors(
+                            isDarkTheme,
+                          ).backgroundGradient2,
                           builder: (child) => child,
                           child: const HeroIcon(HeroIcons.plus),
                         ),
@@ -96,7 +100,7 @@ class SearchResult extends HookConsumerWidget {
             )
             .toList(),
       ),
-      loaderColor: ColorConstants.gradient1,
+      loaderColor: Theme.of(context).colorScheme.primaryContainer,
     );
   }
 }

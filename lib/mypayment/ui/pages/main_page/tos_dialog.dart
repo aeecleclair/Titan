@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:titan/tools/constants.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:titan/mypayment/tools/constants.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 
-class TOSDialogBox extends StatelessWidget {
+class TOSDialogBox extends ConsumerWidget {
   final String title, descriptions;
-  static const Color titleColor = Color.fromARGB(255, 4, 84, 84);
-  static const Color descriptionColor = Colors.black;
-  static const Color yesColor = Color.fromARGB(255, 9, 103, 103);
-  static const Color noColor = ColorConstants.background2;
 
   final Function() onYes;
   final Function()? onNo;
@@ -16,7 +14,6 @@ class TOSDialogBox extends StatelessWidget {
   static const double _padding = 20;
   static const double _avatarRadius = 45;
 
-  static const Color background = Color(0xfffafafa);
   const TOSDialogBox({
     super.key,
     required this.title,
@@ -26,7 +23,12 @@ class TOSDialogBox extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkTheme = ref.watch(themeProvider);
+    final titleColor = MyPaymentColors(isDarkTheme).gradient3;
+    final yesColor = MyPaymentColors(isDarkTheme).gradient2;
+    final noColor = Theme.of(context).colorScheme.secondaryContainer;
+    final background = Theme.of(context).colorScheme.surface;
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(TOSDialogBox._padding),
@@ -40,11 +42,11 @@ class TOSDialogBox extends StatelessWidget {
             margin: const EdgeInsets.only(top: TOSDialogBox._avatarRadius),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              color: TOSDialogBox.background,
+              color: background,
               borderRadius: BorderRadius.circular(TOSDialogBox._padding),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.shade400,
+                  color: Theme.of(context).shadowColor,
                   offset: const Offset(0, 5),
                   blurRadius: 5,
                 ),
@@ -55,7 +57,7 @@ class TOSDialogBox extends StatelessWidget {
               children: <Widget>[
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w800,
                     color: titleColor,
@@ -82,7 +84,7 @@ class TOSDialogBox extends StatelessWidget {
                               ? Navigator.of(context).pop()
                               : onNo?.call();
                         },
-                        child: const Text(
+                        child: Text(
                           "Refuser",
                           style: TextStyle(
                             fontSize: 18,
@@ -99,7 +101,7 @@ class TOSDialogBox extends StatelessWidget {
                           await onYes();
                         },
                         builder: (child) => child,
-                        child: const Text(
+                        child: Text(
                           "Accepter",
                           style: TextStyle(
                             fontSize: 18,
