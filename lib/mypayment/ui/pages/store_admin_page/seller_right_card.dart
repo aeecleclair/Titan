@@ -44,10 +44,11 @@ class SellerRightCard extends ConsumerWidget {
       (admin) => admin.id == storeSeller.userId,
     );
 
-    final isAdminOrManager = isStructureManager || isStructureAdmin;
+    final isStructureAdminOrManager = isStructureManager || isStructureAdmin;
 
     final canEdit =
-        (me.canManageSellers || amIManager || amIAdmin) && !isAdminOrManager;
+        (me.canManageSellers || amIManager || amIAdmin) &&
+        !isStructureAdminOrManager;
 
     final icons =
         [
@@ -130,7 +131,7 @@ class SellerRightCard extends ConsumerWidget {
             context: context,
             backgroundColor: Colors.transparent,
             scrollControlDisabledMaxHeightRatio:
-                (((!amIManager || isAdminOrManager) ? 80 : 100) +
+                (((!amIManager || isStructureAdminOrManager) ? 80 : 100) +
                     45 * icons.length) /
                 MediaQuery.of(context).size.height,
             builder: (context) {
