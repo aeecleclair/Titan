@@ -303,9 +303,9 @@ int countSellerRights(Seller seller, Structure structure) {
   if (seller.canSeeHistory) count++;
   if (seller.canCancel) count++;
   if (seller.canManageSellers) count++;
-  if (seller.userId == structure.managerUser.id) count += 2;
+  if (seller.userId == structure.managerUser.id) count += 10;
   if (structure.administrators.any((admin) => admin.id == seller.userId)) {
-    count++;
+    count += 5;
   }
   return count;
 }
