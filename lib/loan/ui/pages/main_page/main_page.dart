@@ -75,7 +75,7 @@ class LoanMainPage extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 30),
                           HorizontalListView.builder(
-                            height: 170,
+                            height: 190,
                             items: onGoingLoan,
                             itemBuilder: (context, e, i) => LoanCard(
                               loan: e,
