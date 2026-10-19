@@ -102,6 +102,7 @@ class LoanCard extends StatelessWidget {
             const SizedBox(height: 7),
             Text(
               formatItems(loan.itemsQuantity),
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
@@ -113,6 +114,7 @@ class LoanCard extends StatelessWidget {
             const SizedBox(height: 5),
             Text(
               loan.caution,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
