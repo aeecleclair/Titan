@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/ui/pages/main_page/main_card_button.dart';
 
 class MainCardTemplate extends StatelessWidget {
@@ -30,7 +31,7 @@ class MainCardTemplate extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.3),
+            color: Theme.of(context).shadowColor,
             spreadRadius: 2,
             blurRadius: 7,
             offset: const Offset(0, 3), // changes position of shadow
@@ -56,7 +57,7 @@ class MainCardTemplate extends StatelessWidget {
                         title,
                         textAlign: TextAlign.left,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: MyPaymentColors.onGradient,
                           fontSize: 18,
                         ),
                       ),
@@ -68,7 +69,7 @@ class MainCardTemplate extends StatelessWidget {
                           },
                           child: const HeroIcon(
                             HeroIcons.arrowsRightLeft,
-                            color: Colors.white,
+                            color: MyPaymentColors.onGradient,
                             size: 30,
                           ),
                         ),
@@ -88,8 +89,8 @@ class MainCardTemplate extends StatelessWidget {
           ),
           Container(
             height: 80,
-            decoration: const BoxDecoration(
-              color: Colors.white,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),

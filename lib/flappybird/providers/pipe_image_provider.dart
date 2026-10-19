@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image/image.dart' as external_image;
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class PipeImageNotifier extends StateNotifier<Uint8List> {
   PipeImageNotifier() : super(Uint8List.fromList([]));
@@ -9,8 +10,10 @@ class PipeImageNotifier extends StateNotifier<Uint8List> {
     state = list;
   }
 
-  Future<void> getPipeImage() async {
-    final image = await rootBundle.load("assets/images/pipe.png");
+  Future<void> getPipeImage(bool isDarkTheme) async {
+    final image = await rootBundle.load(
+      "assets/images/pipe_${isDarkTheme ? "night" : "day"}.png",
+    );
     external_image.Image? img = external_image.decodeImage(
       image.buffer.asUint8List(),
     );
@@ -23,6 +26,7 @@ final pipeImageProvider = StateNotifierProvider<PipeImageNotifier, Uint8List>((
   ref,
 ) {
   PipeImageNotifier notifier = PipeImageNotifier();
-  notifier.getPipeImage();
+  final isDarkTheme = ref.watch(themeProvider);
+  notifier.getPipeImage(isDarkTheme);
   return notifier;
 });

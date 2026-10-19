@@ -5,6 +5,8 @@ import 'package:titan/mypayment/class/store.dart';
 import 'package:titan/mypayment/providers/store_provider.dart';
 import 'package:titan/mypayment/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/mypayment/tools/constants.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 
 class AddStoreCard extends ConsumerWidget {
   const AddStoreCard({super.key});
@@ -12,6 +14,7 @@ class AddStoreCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final storeNotifier = ref.watch(storeProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
     return GestureDetector(
       onTap: () {
         storeNotifier.updateStore(Store.empty());
@@ -25,27 +28,22 @@ class AddStoreCard extends ConsumerWidget {
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: const Color.fromARGB(
-                255,
-                0,
-                29,
-                29,
-              ).withValues(alpha: 0.2),
+              color: Theme.of(context).shadowColor,
               spreadRadius: 1,
               blurRadius: 7,
               offset: const Offset(0, 3),
             ),
           ],
         ),
-        child: const Center(
+        child: Center(
           child: HeroIcon(
             HeroIcons.plus,
             size: 40,
-            color: Color.fromARGB(255, 0, 29, 29),
+            color: MyPaymentColors(isDarkTheme).backgroundGradient2,
           ),
         ),
       ),

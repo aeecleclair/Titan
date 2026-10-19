@@ -19,10 +19,10 @@ class ModuleCard extends HookConsumerWidget {
       margin: const EdgeInsets.symmetric(vertical: 7),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(20)),
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.primary,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.3),
+            color: Theme.of(context).shadowColor,
             blurRadius: 8,
             spreadRadius: 2,
             offset: const Offset(2, 3),
@@ -36,7 +36,7 @@ class ModuleCard extends HookConsumerWidget {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           ),
           overlayColor: WidgetStateProperty.all<Color>(
-            const Color.fromARGB(37, 0, 0, 0),
+            Theme.of(context).shadowColor,
           ),
         ),
         onLongPress: () {
@@ -45,6 +45,17 @@ class ModuleCard extends HookConsumerWidget {
         child: Row(
           children: [
             Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.white,
+                    blurRadius: 5,
+                    spreadRadius: 2,
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(15),
+              ),
               margin: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 3),
               width: 45,
               height: 45,
@@ -64,15 +75,21 @@ class ModuleCard extends HookConsumerWidget {
                 children: [
                   Text(
                     module.name,
-                    style: const TextStyle(fontSize: 18, color: Colors.black),
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                 ],
               ),
             ),
             IconButton(
-              icon: favorites.contains(module.name)
-                  ? const Icon(Icons.star, color: Colors.grey)
-                  : const Icon(Icons.star_border, color: Colors.grey),
+              icon: Icon(
+                favorites.contains(module.name)
+                    ? Icons.star
+                    : Icons.star_border,
+                color: Theme.of(context).colorScheme.tertiary,
+              ),
               onPressed: () {
                 favoritesProviderNotifier.toggleFavorite(module.name);
               },

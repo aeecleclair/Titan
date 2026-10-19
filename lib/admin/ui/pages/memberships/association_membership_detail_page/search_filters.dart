@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/association_membership_members_list_provider.dart';
 import 'package:titan/admin/providers/association_membership_provider.dart';
 import 'package:titan/admin/tools/constants.dart';
-import 'package:titan/tools/constants.dart';
 import 'package:titan/tools/functions.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
@@ -132,9 +131,9 @@ class SearchFilters extends HookConsumerWidget {
                   });
                 },
                 builder: (child) => AddEditButtonLayout(
-                  colors: const [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
+                  colors: [
+                    Theme.of(context).colorScheme.primaryContainer,
+                    Theme.of(context).colorScheme.primaryFixed,
                   ],
                   child: child,
                 ),
@@ -143,7 +142,7 @@ class SearchFilters extends HookConsumerWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 255, 255, 255),
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -166,9 +165,9 @@ class SearchFilters extends HookConsumerWidget {
                   });
                 },
                 builder: (child) => AddEditButtonLayout(
-                  colors: const [
-                    ColorConstants.gradient1,
-                    ColorConstants.gradient2,
+                  colors: [
+                    Theme.of(context).colorScheme.primaryContainer,
+                    Theme.of(context).colorScheme.primaryFixed,
                   ],
                   child: child,
                 ),
@@ -177,7 +176,7 @@ class SearchFilters extends HookConsumerWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 255, 255, 255),
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
                   textAlign: TextAlign.center,
                 ),

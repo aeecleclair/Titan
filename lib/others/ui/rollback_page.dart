@@ -37,31 +37,19 @@ class RollbackPage extends HookConsumerWidget {
             const Spacer(flex: 3),
             Text(
               "${OthersTextConstants.version} $titanVersion, flavor ${getAppFlavor()}",
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 20),
             Text(
               "${OthersTextConstants.minimalHyperionVersion} : $minimalHyperionVersion",
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 20),
             Text(
               "${OthersTextConstants.hyperionVersion} (${Repository.host}) : ${versionVerifier.whenOrNull(data: (value) {
                 return value.version;
               })}",
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 20),
           ],

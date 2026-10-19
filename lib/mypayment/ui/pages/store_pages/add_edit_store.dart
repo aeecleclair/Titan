@@ -7,8 +7,10 @@ import 'package:titan/mypayment/providers/my_stores_provider.dart';
 import 'package:titan/mypayment/providers/selected_structure_provider.dart';
 import 'package:titan/mypayment/providers/store_provider.dart';
 import 'package:titan/mypayment/providers/stores_list_provider.dart';
+import 'package:titan/mypayment/tools/constants.dart';
 import 'package:titan/mypayment/ui/mypayment.dart';
 import 'package:titan/tools/functions.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/ui/builders/waiting_button.dart';
 import 'package:titan/tools/ui/layouts/add_edit_button_layout.dart';
 import 'package:titan/tools/ui/widgets/align_left_text.dart';
@@ -25,6 +27,7 @@ class AddEditStorePage extends HookConsumerWidget {
     final key = GlobalKey<FormState>();
     final isEdit = store.id != store_class.Store.empty().id;
     final name = useTextEditingController(text: store.name);
+    final isDarkTheme = ref.watch(themeProvider);
     Structure structure = ref.watch(selectedStructureProvider);
 
     void displayToastWithContext(TypeMsg type, String msg) {
@@ -42,7 +45,7 @@ class AddEditStorePage extends HookConsumerWidget {
               AlignLeftText(
                 "${isEdit ? 'Modifier' : 'Ajouter'} une association ${structure.name}",
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                color: Colors.grey,
+                color: Theme.of(context).colorScheme.tertiary,
               ),
               const SizedBox(height: 20),
               Column(
@@ -59,9 +62,9 @@ class AddEditStorePage extends HookConsumerWidget {
                         const SizedBox(height: 50),
                         WaitingButton(
                           builder: (child) => AddEditButtonLayout(
-                            colors: const [
-                              Color.fromARGB(255, 6, 75, 75),
-                              Color.fromARGB(255, 0, 29, 29),
+                            colors: [
+                              MyPaymentColors(isDarkTheme).backgroundGradient1,
+                              MyPaymentColors(isDarkTheme).backgroundGradient2,
                             ],
                             child: child,
                           ),
@@ -106,7 +109,7 @@ class AddEditStorePage extends HookConsumerWidget {
                           child: Text(
                             isEdit ? "Modifier" : "Ajouter",
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: MyPaymentColors.onGradient,
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                             ),

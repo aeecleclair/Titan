@@ -62,7 +62,9 @@ class TopBar extends HookConsumerWidget {
                       QR.currentPath == root
                           ? HeroIcons.bars3BottomLeft
                           : HeroIcons.chevronLeft,
-                      color: textStyle?.color ?? Colors.black,
+                      color:
+                          textStyle?.color ??
+                          Theme.of(context).colorScheme.onPrimary,
                       size: 30,
                     ),
                   );
@@ -79,7 +81,6 @@ class TopBar extends HookConsumerWidget {
                       const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w700,
-                        color: Colors.black,
                       ),
                 ),
               ),

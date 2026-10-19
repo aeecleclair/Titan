@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-class CinemaColorConstants {
-  static const Color tmdbColor = Color(0xffe2b616);
-}
+// class CinemaColorConstants {
+//   static const Color tmdbColor = Color(0xffe2b616);
+// }
 
 class CinemaTextConstants {
   static const String add = "Ajouter";

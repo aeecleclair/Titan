@@ -34,17 +34,20 @@ class CalendarDialogButton extends StatelessWidget {
         padding: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.0),
-          border: Border.all(color: Colors.black, width: 2),
-          color: Colors.grey.shade50,
+          border: Border.all(
+            color: Theme.of(context).colorScheme.onSurface,
+            width: 2,
+          ),
+          color: Theme.of(context).colorScheme.surface,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withValues(alpha: 0.2),
+              color: Theme.of(context).shadowColor,
               blurRadius: 10,
               offset: const Offset(0, 10),
             ),
           ],
         ),
-        child: HeroIcon(icon, color: Colors.black),
+        child: HeroIcon(icon, color: Theme.of(context).colorScheme.onSurface),
       ),
     );
   }

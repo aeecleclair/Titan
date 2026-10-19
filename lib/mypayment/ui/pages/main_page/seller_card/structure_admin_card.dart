@@ -7,6 +7,8 @@ import 'package:titan/mypayment/providers/my_structures_provider.dart';
 import 'package:titan/mypayment/providers/selected_structure_provider.dart';
 import 'package:titan/mypayment/router.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:titan/mypayment/tools/constants.dart';
+import 'package:titan/tools/providers/theme_provider.dart';
 import 'package:titan/tools/token_expire_wrapper.dart';
 import 'package:titan/tools/ui/layouts/bottom_modal_template.dart';
 import 'package:titan/tools/ui/layouts/button.dart';
@@ -23,6 +25,7 @@ class StructureAdminCard extends ConsumerWidget {
       selectedStructureProvider.notifier,
     );
     final invoicesNotifier = ref.watch(invoiceListProvider.notifier);
+    final isDarkTheme = ref.watch(themeProvider);
 
     return Column(
       children: myStructures.map((structure) {
@@ -36,7 +39,9 @@ class StructureAdminCard extends ConsumerWidget {
               children: [
                 CircleAvatar(
                   radius: 27,
-                  backgroundColor: Color.fromARGB(255, 6, 75, 75),
+                  backgroundColor: MyPaymentColors(
+                    isDarkTheme,
+                  ).backgroundGradient1,
                 ),
                 SizedBox(width: 15),
                 Expanded(
@@ -44,7 +49,7 @@ class StructureAdminCard extends ConsumerWidget {
                     "Gestion de ${structure.name}",
                     maxLines: 2,
                     style: TextStyle(
-                      color: Color.fromARGB(255, 0, 29, 29),
+                      color: MyPaymentColors(isDarkTheme).secondaryGreen,
                       fontSize: 14,
                     ),
                   ),
@@ -52,7 +57,7 @@ class StructureAdminCard extends ConsumerWidget {
                 SizedBox(width: 10),
                 HeroIcon(
                   HeroIcons.arrowRight,
-                  color: Color.fromARGB(255, 0, 29, 29),
+                  color: MyPaymentColors(isDarkTheme).secondaryGreen,
                   size: 25,
                 ),
               ],
@@ -64,49 +69,44 @@ class StructureAdminCard extends ConsumerWidget {
               context: context,
               modal: BottomModalTemplate(
                 title: "Gestion de ${structure.name}",
-                child: Column(
-                  children: [
-                    if (isManager) ...[
-                      Button(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          selectedStructureNotifier.setStructure(structure);
-                          QR.to(
-                            PaymentRouter.root + PaymentRouter.administrators,
-                          );
-                        },
-                        text: "Administrateurs",
-                      ),
-                      const SizedBox(height: 10),
-                    ],
+                actions: [
+                  if (isManager) ...[
                     Button(
                       onPressed: () {
                         Navigator.of(context).pop();
                         selectedStructureNotifier.setStructure(structure);
                         QR.to(
-                          PaymentRouter.root + PaymentRouter.structureStores,
+                          PaymentRouter.root + PaymentRouter.administrators,
                         );
                       },
-                      text: "Magasins",
+                      text: "Administrateurs",
                     ),
                     const SizedBox(height: 10),
-                    Button(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        tokenExpireWrapper(
-                          ref,
-                          () => invoicesNotifier.getStructureInvoices(
-                            structure.id,
-                          ),
-                        );
-                        QR.to(
-                          PaymentRouter.root + PaymentRouter.invoicesStructure,
-                        );
-                      },
-                      text: "Factures",
-                    ),
                   ],
-                ),
+                  Button(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      selectedStructureNotifier.setStructure(structure);
+                      QR.to(PaymentRouter.root + PaymentRouter.structureStores);
+                    },
+                    text: "Magasins",
+                  ),
+                  const SizedBox(height: 10),
+                  Button(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      tokenExpireWrapper(
+                        ref,
+                        () =>
+                            invoicesNotifier.getStructureInvoices(structure.id),
+                      );
+                      QR.to(
+                        PaymentRouter.root + PaymentRouter.invoicesStructure,
+                      );
+                    },
+                    text: "Factures",
+                  ),
+                ],
               ),
             );
           },

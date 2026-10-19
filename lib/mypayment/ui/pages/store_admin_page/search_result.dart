@@ -139,17 +139,12 @@ class SearchResult extends HookConsumerWidget {
                           onTap: () async {
                             await handleUserSelected(simpleUser);
                           },
-                          waitingColor: Colors.black,
                           builder: (child) => child,
                           child: SizedBox(
                             width: 35,
                             height: 35,
                             child: Center(
-                              child: const HeroIcon(
-                                HeroIcons.plus,
-                                color: Colors.black,
-                                size: 18,
-                              ),
+                              child: const HeroIcon(HeroIcons.plus, size: 18),
                             ),
                           ),
                         ),

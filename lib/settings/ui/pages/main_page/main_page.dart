@@ -59,7 +59,9 @@ class SettingsMainPage extends HookConsumerWidget {
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.3),
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onPrimary.withValues(alpha: 0.3),
                               spreadRadius: 6,
                               blurRadius: 10,
                               offset: const Offset(0, 2),
@@ -82,10 +84,10 @@ class SettingsMainPage extends HookConsumerWidget {
                             Container(
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
-                                color: Colors.white,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.white.withValues(alpha: 0.5),
+                                    color: Theme.of(context).colorScheme.primary
+                                        .withValues(alpha: 0.5),
                                     spreadRadius: 5,
                                     blurRadius: 10,
                                     offset: const Offset(-2, -3),
@@ -135,8 +137,8 @@ class SettingsMainPage extends HookConsumerWidget {
                 selected: true,
                 child: Text(
                   capitalize(item.name),
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSecondary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -158,9 +160,12 @@ class SettingsMainPage extends HookConsumerWidget {
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.editAccount);
                     },
-                    child: const Text(
+                    child: Text(
                       SettingsTextConstants.editAccount,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -176,9 +181,12 @@ class SettingsMainPage extends HookConsumerWidget {
                         );
                       });
                     },
-                    child: const Text(
+                    child: Text(
                       SettingsTextConstants.eventsIcal,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 50),
@@ -194,9 +202,12 @@ class SettingsMainPage extends HookConsumerWidget {
                         "${getTitanHost()}calypsso/change-password/?email=${me.email}",
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       SettingsTextConstants.editPassword,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 50),
@@ -211,9 +222,12 @@ class SettingsMainPage extends HookConsumerWidget {
                       onTap: () {
                         QR.to(SettingsRouter.root + SettingsRouter.logs);
                       },
-                      child: const Text(
+                      child: Text(
                         SettingsTextConstants.logs,
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 50),
@@ -228,9 +242,12 @@ class SettingsMainPage extends HookConsumerWidget {
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.modules);
                     },
-                    child: const Text(
+                    child: Text(
                       SettingsTextConstants.modules,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -239,9 +256,12 @@ class SettingsMainPage extends HookConsumerWidget {
                     onTap: () {
                       QR.to(SettingsRouter.root + SettingsRouter.notifications);
                     },
-                    child: const Text(
+                    child: Text(
                       SettingsTextConstants.notifications,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 50),
@@ -278,18 +298,21 @@ class SettingsMainPage extends HookConsumerWidget {
                         },
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       SettingsTextConstants.detelePersonalData,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 60),
                   Text(
                     "${SettingsTextConstants.version} $titanVersion",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -297,10 +320,10 @@ class SettingsMainPage extends HookConsumerWidget {
                     Repository.host,
                     maxLines: 1,
                     minFontSize: 10,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
                   const SizedBox(height: 20),

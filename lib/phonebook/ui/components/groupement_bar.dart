@@ -98,7 +98,7 @@ class GroupementsBar extends HookConsumerWidget {
             },
           ),
         ],
-        child: SizedBox.shrink(),
+        //child: SizedBox.shrink(),
       ),
     );
 
@@ -118,10 +118,10 @@ class GroupementsBar extends HookConsumerWidget {
                 height: 40,
                 firstChild: !restrictToManaged && isAdmin
                     ? ItemChip(
-                        child: const Text(
+                        child: Text(
                           "+",
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.onSurface,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -157,7 +157,9 @@ class GroupementsBar extends HookConsumerWidget {
                     child: Text(
                       item.name,
                       style: TextStyle(
-                        color: selected ? Colors.white : Colors.black,
+                        color: selected
+                            ? Theme.of(context).colorScheme.onSecondary
+                            : Theme.of(context).colorScheme.onSurface,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:titan/tools/constants.dart';
 
-enum ButtonType { main, danger, onDanger, secondary }
+enum ButtonType { main, danger, secondary }
 
 class Button extends StatelessWidget {
   final ButtonType type;
@@ -27,14 +26,6 @@ class Button extends StatelessWidget {
     this.fontSize,
   }) : type = ButtonType.danger;
 
-  const Button.onDanger({
-    super.key,
-    required this.text,
-    required this.onPressed,
-    this.disabled = false,
-    this.fontSize,
-  }) : type = ButtonType.onDanger;
-
   const Button.secondary({
     super.key,
     required this.text,
@@ -42,50 +33,6 @@ class Button extends StatelessWidget {
     this.disabled = false,
     this.fontSize,
   }) : type = ButtonType.secondary;
-
-  Color get backgroundColor {
-    switch (type) {
-      case ButtonType.main:
-        return ColorConstants.tertiary;
-      case ButtonType.danger:
-        return ColorConstants.main;
-      case ButtonType.onDanger:
-        return ColorConstants.onMain;
-      case ButtonType.secondary:
-        return ColorConstants.background;
-    }
-  }
-
-  Color get borderColor {
-    switch (type) {
-      case ButtonType.main:
-        return ColorConstants.onTertiary;
-      case ButtonType.danger:
-        return ColorConstants.mainBorder;
-      case ButtonType.onDanger:
-        return ColorConstants.mainBorder;
-      case ButtonType.secondary:
-        return ColorConstants.onBackground;
-    }
-  }
-
-  Color get textColor {
-    Color color;
-    switch (type) {
-      case ButtonType.main:
-        color = ColorConstants.background;
-      case ButtonType.onDanger:
-        color = ColorConstants.background;
-      case ButtonType.danger:
-        color = ColorConstants.background;
-      case ButtonType.secondary:
-        color = ColorConstants.tertiary;
-    }
-    if (disabled == true) {
-      return color.withAlpha(150);
-    }
-    return color;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,16 +42,36 @@ class Button extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
-          color: backgroundColor,
+          color: switch (type) {
+            .main => Theme.of(context).colorScheme.secondaryContainer,
+            .danger => Theme.of(context).colorScheme.primaryContainer,
+            .secondary => Theme.of(context).colorScheme.secondaryFixed,
+          },
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: borderColor),
+          border: Border.all(
+            color: switch (type) {
+              .main => Theme.of(context).colorScheme.tertiary,
+              .danger => Theme.of(context).colorScheme.primaryFixed,
+              .secondary => Theme.of(context).colorScheme.tertiary,
+            },
+          ),
         ),
         child: Center(
           child: Text(
             text,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: textColor,
+              color: disabled == true
+                  ? Theme.of(context).colorScheme.tertiary
+                  : switch (type) {
+                      .main => Theme.of(context).colorScheme.secondaryFixed,
+                      .danger => Theme.of(
+                        context,
+                      ).colorScheme.onPrimaryContainer,
+                      .secondary => Theme.of(
+                        context,
+                      ).colorScheme.secondaryContainer,
+                    },
               fontSize: fontSize ?? 18,
               fontWeight: FontWeight.w900,
             ),
