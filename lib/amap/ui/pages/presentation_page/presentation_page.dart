@@ -79,6 +79,7 @@ class PresentationPage extends HookConsumerWidget {
                             }
                           },
                       ),
+                      WidgetSpan(child: Container()),
                       TextSpan(
                         text: AMAPTextConstants.contactUs,
                         style: TextStyle(

@@ -76,7 +76,7 @@ class AMAPTextConstants {
   static const String confirm = "Confirmer";
   static const String contact = "Contacts associatifs : ";
   static const String contactUs =
-      "\n\nN'hésitez pas à nous contacter en cas de problème !";
+      "N'hésitez pas à nous contacter en cas de problème !";
   static const String createCategory = "Créer une catégorie";
   static const String delete = "Supprimer";
   static const String deleteDelivery = "Supprimer la livraison ?";
