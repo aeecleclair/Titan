@@ -74,7 +74,9 @@ class AMAPTextConstants {
   static const String commandDate = "Date de la commande";
   static const String commandProducts = "Produits de la commande";
   static const String confirm = "Confirmer";
-  static const String contact = "Contacts associatifs ";
+  static const String contact = "Contacts associatifs : ";
+  static const String contactUs =
+      "\n\nN'hésitez pas à nous contacter en cas de problème !";
   static const String createCategory = "Créer une catégorie";
   static const String delete = "Supprimer";
   static const String deleteDelivery = "Supprimer la livraison ?";
@@ -151,10 +153,6 @@ class AMAPTextConstants {
       "Veuillez entrer une valeur ou choisir une catégorie existante";
   static const String pickDeliveryMoment = "Choisissez un moment de livraison";
   static const String presentation = "Présentation";
-  static const String presentation1 =
-      "L'AMAP (association pour le maintien d'une agriculture paysanne) est un service proposé par l'association Planet&Co de l'ECL. Vous pouvez ainsi recevoir des produits (paniers de fruits et légumes, jus, confitures...) directement sur le campus !\n\nLes commandes doivent être passées avant le dimanche 21h et sont livrées sur le campus le mercredi de 13h à 13h45 (ou de 18h15 à 18h30 si vous ne pouvez pas passer le midi) à l'épicerie solidaire.\n\nVous ne pouvez commander que si votre solde le permet. Vous pouvez recharger votre solde via la collecte HelloAsso ou bien avec un chèque que vous pouvez nous transmettre lors des permanences.\n\nLien vers la collecte HelloAsso pour le rechargement : ";
-  static const String presentation2 =
-      "\n\nN'hésitez pas à nous contacter en cas de problème !";
   static const String price = "Prix";
   static const String product = "produit";
   static const String products = "Produits";
