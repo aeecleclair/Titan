@@ -14,7 +14,7 @@ import 'package:titan/amap/ui/pages/list_products_page/list_products_page.dart'
     deferred as list_products_page;
 import 'package:titan/amap/ui/pages/main_page/main_page.dart'
     deferred as main_page;
-import 'package:titan/amap/ui/pages/presentation_page/text.dart'
+import 'package:titan/amap/ui/pages/presentation_page/presentation_page.dart'
     deferred as presentation_page;
 import 'package:titan/amap/ui/pages/product_pages/add_edit_product.dart'
     deferred as add_edit_product;
