@@ -70,14 +70,14 @@ class DeliveryUi extends HookConsumerWidget {
       padding: const EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: .spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(
                 mainAxisAlignment: .spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   const SizedBox(),
                   Row(
@@ -85,7 +85,7 @@ class DeliveryUi extends HookConsumerWidget {
                     children: [
                       Column(
                         mainAxisAlignment: .spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: .start,
                         children: [
                           ConstrainedBox(
                             constraints: BoxConstraints(maxWidth: maxTextWidth),

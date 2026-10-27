@@ -165,7 +165,7 @@ class InvoiceCard extends HookConsumerWidget {
             children: [
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   children: [
                     Text(
                       invoice.reference,

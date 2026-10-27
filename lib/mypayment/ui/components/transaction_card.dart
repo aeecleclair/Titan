@@ -82,7 +82,7 @@ class TransactionCard extends ConsumerWidget {
             Expanded(
               child: Column(
                 mainAxisAlignment: .center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   Row(
                     children: [

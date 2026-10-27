@@ -43,7 +43,7 @@ class DetailLoanPage extends HookConsumerWidget {
                           padding: const EdgeInsets.all(30.0),
                           alignment: .centerLeft,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: .start,
                             children: [
                               AutoSizeText(
                                 loan.borrower.getName(),

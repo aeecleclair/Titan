@@ -95,7 +95,7 @@ class SettingsMainPage extends HookConsumerWidget {
                                 ],
                               ),
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                                crossAxisAlignment: .center,
                                 children: [
                                   Column(
                                     children: [

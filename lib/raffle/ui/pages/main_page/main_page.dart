@@ -144,7 +144,7 @@ class RaffleMainPage extends HookConsumerWidget {
                     }
                   }
                   return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: .start,
                     children: [
                       if (onGoingRaffles.isNotEmpty)
                         Container(

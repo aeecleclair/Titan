@@ -39,7 +39,7 @@ class TombolaCard extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 5),
           child: Column(
             mainAxisAlignment: .start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               const SizedBox(height: 8),
               AutoSizeText(

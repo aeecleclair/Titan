@@ -306,7 +306,7 @@ class SellerRightCard extends ConsumerWidget {
           );
         },
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: .center,
           children: [
             Center(
               child: Text(

@@ -19,7 +19,7 @@ class BottomBar extends HookConsumerWidget {
         SizedBox(
           height: 30,
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: .center,
             children: [
               const SizedBox(width: 25),
               HeroIcon(
@@ -59,7 +59,7 @@ class BottomBar extends HookConsumerWidget {
                   displayQuitNotifier.setDisplay(true);
                 },
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: .center,
                   children: [
                     const SizedBox(width: 25),
                     HeroIcon(

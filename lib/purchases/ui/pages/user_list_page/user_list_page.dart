@@ -106,7 +106,7 @@ class UserListPage extends HookConsumerWidget {
                     return SizedBox(
                       width: double.infinity,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: .start,
                         children: [
                           Text("Nombre de tickets scannés : ${users.length}"),
                           Divider(),

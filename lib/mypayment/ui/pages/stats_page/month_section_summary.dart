@@ -38,7 +38,7 @@ class MonthSectionSummary extends StatelessWidget {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: .center,
         children: [
           Text(
             title,

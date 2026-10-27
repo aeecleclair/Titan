@@ -54,7 +54,7 @@ class DrawerTopBar extends HookConsumerWidget {
     }
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Container(height: 20),
         Row(

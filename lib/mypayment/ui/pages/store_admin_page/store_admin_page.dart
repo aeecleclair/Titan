@@ -64,7 +64,7 @@ class StoreAdminPage extends HookConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: .center,
                     children: [
                       Center(
                         child: Text(

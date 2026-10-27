@@ -99,11 +99,11 @@ class WebMemberCard extends HookConsumerWidget {
                     Expanded(
                       child: Column(
                         mainAxisAlignment: .spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: .start,
                         children: [
                           if (member.member.nickname != null) ...[
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: .start,
                               children: [
                                 SelectableText(
                                   member.member.nickname!,
@@ -185,7 +185,7 @@ class WebMemberCard extends HookConsumerWidget {
                 children: [
                   Column(
                     mainAxisAlignment: .spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: .center,
                     children: [
                       if (member.member.nickname != null) ...[
                         Row(

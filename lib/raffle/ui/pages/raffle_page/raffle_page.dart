@@ -38,7 +38,7 @@ class RaffleInfoPage extends HookConsumerWidget {
           await prizeListNotifier.loadPrizeList();
         },
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
             Container(
               margin: const EdgeInsets.only(left: 30, top: 20),
@@ -117,7 +117,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                           horizontal: 30,
                         ),
                         child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: .start,
                           children: [
                             Text(
                               RaffleTextConstants.actualPrize,
@@ -166,7 +166,7 @@ class RaffleInfoPage extends HookConsumerWidget {
                   horizontal: 30,
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   children: [
                     const Text(
                       RaffleTextConstants.actualPrize,

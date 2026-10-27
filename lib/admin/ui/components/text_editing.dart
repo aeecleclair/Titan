@@ -13,7 +13,7 @@ class TextEditing extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 20),
       child: Column(
         mainAxisAlignment: .spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           AlignLeftText(
             padding: const EdgeInsets.only(bottom: 3),

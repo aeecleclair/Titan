@@ -40,7 +40,7 @@ class Calendar extends HookConsumerWidget {
                         220 + (appointmentDetails.notes!.length / 30 - 5) * 15,
                     padding: const EdgeInsets.all(20),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: .start,
                       children: [
                         AutoSizeText(
                           appointmentDetails.subject,

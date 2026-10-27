@@ -71,7 +71,7 @@ class ModuleCard extends HookConsumerWidget {
             Expanded(
               child: Column(
                 mainAxisAlignment: .center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: .center,
                 children: [
                   Text(
                     module.name,

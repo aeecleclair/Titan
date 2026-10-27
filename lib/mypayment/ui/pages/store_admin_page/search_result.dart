@@ -123,7 +123,7 @@ class SearchResult extends HookConsumerWidget {
                       vertical: 5,
                     ),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: .center,
                       children: [
                         Text(
                           simpleUser.getName(),

@@ -50,7 +50,7 @@ class DetailOrderUI extends HookConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 17.0),
       child: Column(
         mainAxisAlignment: .start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           SizedBox(
             width: 216,

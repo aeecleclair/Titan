@@ -85,7 +85,7 @@ class EventUi extends ConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 12),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               Row(
                 mainAxisAlignment: .spaceBetween,

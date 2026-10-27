@@ -11,7 +11,7 @@ class AssoList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Text(
             asso.name,
@@ -19,7 +19,7 @@ class AssoList extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: asso.linkList
                 .map((link) => LinkCard(link: link))
                 .toList(),

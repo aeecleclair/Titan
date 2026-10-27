@@ -18,7 +18,7 @@ class ItemCardInLoan extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 17.0),
       child: Column(
         mainAxisAlignment: .center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: .center,
         children: [
           AutoSizeText(
             item.name,

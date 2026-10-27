@@ -11,7 +11,7 @@ class SectionList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Text(
             section.name,
@@ -19,7 +19,7 @@ class SectionList extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: section.moduleList
                 .map((module) => ModuleCard(module: module))
                 .toList(),

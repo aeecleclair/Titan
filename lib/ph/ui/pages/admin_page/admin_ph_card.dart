@@ -25,7 +25,7 @@ class AdminPhCard extends StatelessWidget {
         child: Row(
           children: [
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 Row(
                   children: [

@@ -63,7 +63,7 @@ class LeftPanel extends HookConsumerWidget {
         ),
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: .center,
             children: [
               const Spacer(),
               Expanded(

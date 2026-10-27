@@ -99,7 +99,7 @@ class MemberCard extends HookConsumerWidget {
                   if ((member.member.nickname != null) &&
                       (member.member.nickname != "")) ...[
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: .start,
                       children: [
                         Text(
                           member.member.nickname!,

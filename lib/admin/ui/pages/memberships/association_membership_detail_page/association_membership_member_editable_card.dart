@@ -41,7 +41,7 @@ class MemberEditableCard extends HookConsumerWidget {
         children: [
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 AutoSizeText(
                   (associationMembership.user.nickname ??

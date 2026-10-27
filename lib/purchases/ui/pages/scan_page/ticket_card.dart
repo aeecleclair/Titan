@@ -42,7 +42,7 @@ class TicketCard extends HookConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   children: [
                     Text(
                       "${ticket.name} - Scans : ${ticket.scanCount}",

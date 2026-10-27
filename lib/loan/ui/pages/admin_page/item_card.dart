@@ -30,7 +30,7 @@ class ItemCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 17.0),
       child: Column(
         mainAxisAlignment: .start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           const SizedBox(height: 15),
           AutoSizeText(

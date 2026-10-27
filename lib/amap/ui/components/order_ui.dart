@@ -61,14 +61,14 @@ class OrderUI extends HookConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 12),
       child: Column(
         mainAxisAlignment: .start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Row(
             mainAxisAlignment: .spaceBetween,
             children: [
               Column(
                 mainAxisAlignment: .start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: maxTextWidth),

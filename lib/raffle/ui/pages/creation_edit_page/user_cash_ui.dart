@@ -97,7 +97,7 @@ class UserCashUi extends HookConsumerWidget {
                         ),
                         child: Column(
                           mainAxisAlignment: .start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: .start,
                           children: [
                             const SizedBox(height: 8),
                             AutoSizeText(

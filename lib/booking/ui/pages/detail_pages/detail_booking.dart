@@ -53,7 +53,7 @@ class DetailBookingPage extends HookConsumerWidget {
                           padding: const EdgeInsets.all(30.0),
                           alignment: .centerLeft,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: .start,
                             children: [
                               Text(
                                 decisionToString(booking.decision),

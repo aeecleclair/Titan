@@ -24,7 +24,7 @@ class MenuCardUi extends StatelessWidget {
       ),
       child: Column(
         mainAxisAlignment: .center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: .center,
         children: [
           HeroIcon(icon, color: Colors.grey.shade700, size: 40),
           const SizedBox(width: 10),

@@ -45,7 +45,7 @@ class LogCard extends StatelessWidget {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           // it's ok to leave text & icon explicitly white here
           Row(

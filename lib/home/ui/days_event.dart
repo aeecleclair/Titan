@@ -72,7 +72,7 @@ class DaysEvent extends HookConsumerWidget {
                 vertical: 12,
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: [
                   Row(
                     mainAxisAlignment: .spaceBetween,

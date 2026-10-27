@@ -231,7 +231,7 @@ class AdvertCard extends HookConsumerWidget {
                               vertical: 5,
                             ),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: .center,
                               mainAxisAlignment: .center,
                               children: [
                                 AutoSizeText(

@@ -46,7 +46,7 @@ class ContenderCard extends HookConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
       child: Column(
         mainAxisAlignment: .start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Row(
             mainAxisAlignment: .spaceBetween,

@@ -103,7 +103,7 @@ class BookingCard extends ConsumerWidget {
       padding: const EdgeInsets.all(15.0),
       child: Column(
         mainAxisAlignment: .start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Row(
             mainAxisAlignment: .spaceBetween,

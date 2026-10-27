@@ -100,7 +100,7 @@ class DevicesPage extends HookConsumerWidget {
                     displayAddDevice.value;
 
                 return Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  crossAxisAlignment: .stretch,
                   children: [
                     if (shouldDisplayAddDevice && !kIsWeb)
                       AddDeviceButton(

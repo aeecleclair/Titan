@@ -91,7 +91,7 @@ class CalendarDialog extends StatelessWidget {
                   ),
                 if (booking.note != null) const SizedBox(height: 20),
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: .center,
                   children: [
                     CalendarDialogButton(
                       uri: 'mailto:${booking.applicant.email}',
@@ -111,7 +111,7 @@ class CalendarDialog extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: .center,
                   children: [
                     CalendarDialogButton(
                       uri: (booking.applicant.phone != null)
