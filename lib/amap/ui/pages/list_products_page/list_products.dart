@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/amap/providers/scroll_provider.dart';
 import 'package:titan/amap/providers/sorted_delivery_product.dart';
@@ -79,7 +78,7 @@ class ListProducts extends HookConsumerWidget {
                   curve: Curves.decelerate,
                 );
               },
-              icon: HeroIcons.arrowRight,
+              icon: .arrowRight,
             ),
           ),
         if (isWebFormat)
@@ -93,7 +92,7 @@ class ListProducts extends HookConsumerWidget {
                   curve: Curves.decelerate,
                 );
               },
-              icon: HeroIcons.arrowLeft,
+              icon: .arrowLeft,
             ),
           ),
       ],

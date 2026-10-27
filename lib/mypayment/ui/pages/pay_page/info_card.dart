@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 
 class InfoCard extends StatelessWidget {
-  final HeroIcons icons;
+  final HeroIcons icon;
   final String title;
   final String value;
   const InfoCard({
     super.key,
-    required this.icons,
+    required this.icon,
     required this.title,
     required this.value,
   });
@@ -26,7 +26,7 @@ class InfoCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            HeroIcon(icons, color: Colors.black, size: 35),
+            HeroIcon(icon, color: Colors.black, size: 35),
             const SizedBox(height: 10),
             Text(title, style: const TextStyle(fontSize: 13)),
             Text(

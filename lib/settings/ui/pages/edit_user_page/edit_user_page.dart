@@ -130,7 +130,7 @@ class EditUserPage extends HookConsumerWidget {
                                   );
                                 }
                               },
-                              child: const PictureButton(icon: HeroIcons.photo),
+                              child: const PictureButton(icon: .photo),
                             ),
                           ),
                           Positioned(
@@ -161,9 +161,7 @@ class EditUserPage extends HookConsumerWidget {
                                   );
                                 }
                               },
-                              child: const PictureButton(
-                                icon: HeroIcons.camera,
-                              ),
+                              child: const PictureButton(icon: .camera),
                             ),
                           ),
                           Positioned(
@@ -188,9 +186,7 @@ class EditUserPage extends HookConsumerWidget {
                                   }
                                 }
                               },
-                              child: const PictureButton(
-                                icon: HeroIcons.sparkles,
-                              ),
+                              child: const PictureButton(icon: .sparkles),
                             ),
                           ),
                         ],

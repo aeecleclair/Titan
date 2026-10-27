@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:titan/mypayment/class/wallet_device.dart';
@@ -88,7 +87,7 @@ class AccountCard extends HookConsumerWidget {
       actionButtons: [
         MainCardButton(
           colors: buttonGradient,
-          icon: HeroIcons.devicePhoneMobile,
+          icon: .devicePhoneMobile,
           title: "Appareils",
           onPressed: () async {
             ref.invalidate(deviceListProvider);
@@ -98,7 +97,7 @@ class AccountCard extends HookConsumerWidget {
         if (kIsWeb)
           MainCardButton(
             colors: buttonGradient,
-            icon: HeroIcons.qrCode,
+            icon: .qrCode,
             title: "Payer",
             onPressed: () async {
               await tokenExpireWrapper(ref, () async {
@@ -179,7 +178,7 @@ class AccountCard extends HookConsumerWidget {
           ),
         MainCardButton(
           colors: buttonGradient,
-          icon: HeroIcons.chartPie,
+          icon: .chartPie,
           title: "Stats",
           onPressed: () async {
             QR.to(PaymentRouter.root + PaymentRouter.stats);
@@ -187,7 +186,7 @@ class AccountCard extends HookConsumerWidget {
         ),
         MainCardButton(
           colors: buttonGradient,
-          icon: HeroIcons.creditCard,
+          icon: .creditCard,
           title: "Recharger",
           onPressed: () async {
             if (!hasAcceptedToS) {

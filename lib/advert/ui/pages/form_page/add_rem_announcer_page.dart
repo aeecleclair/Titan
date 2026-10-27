@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/admin/providers/group_list_provider.dart';
 import 'package:titan/advert/class/announcer.dart';
@@ -98,7 +97,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                             },
                                             child: AnnouncerCard(
                                               e: e,
-                                              icon: HeroIcons.plus,
+                                              icon: .plus,
                                             ),
                                           ),
                                         )
@@ -151,7 +150,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                                             },
                                             child: AnnouncerCard(
                                               e: e,
-                                              icon: HeroIcons.minus,
+                                              icon: .minus,
                                             ),
                                           ),
                                         )

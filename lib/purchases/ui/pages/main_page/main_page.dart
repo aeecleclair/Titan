@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:titan/purchases/providers/purchases_admin_provider.dart';
 import 'package:titan/purchases/providers/ticket_list_provider.dart';
@@ -38,7 +37,7 @@ class PurchasesMainPage extends HookConsumerWidget {
                 mainAxisAlignment: .spaceBetween,
                 children: [
                   CustomButton(
-                    icon: HeroIcons.clock,
+                    icon: .clock,
                     text: PurchasesTextConstants.history,
                     onTap: () {
                       QR.to(PurchasesRouter.root + PurchasesRouter.history);
@@ -46,7 +45,7 @@ class PurchasesMainPage extends HookConsumerWidget {
                   ),
                   if (isAdmin)
                     CustomButton(
-                      icon: HeroIcons.viewfinderCircle,
+                      icon: .viewfinderCircle,
                       text: PurchasesTextConstants.scan,
                       onTap: () {
                         QR.to(PurchasesRouter.root + PurchasesRouter.scan);

@@ -73,14 +73,14 @@ class ConfirmButton extends ConsumerWidget {
                   children: [
                     const SizedBox(width: 20),
                     InfoCard(
-                      icons: HeroIcons.currencyEuro,
+                      icon: .currencyEuro,
                       title: "Montant",
                       value:
                           '${formatter.format(double.parse(payAmount.replaceAll(',', '.')))} ʍ',
                     ),
                     const SizedBox(width: 10),
                     InfoCard(
-                      icons: HeroIcons.clock,
+                      icon: .clock,
                       title: "Valide jusqu'à",
                       value: processDateOnlyHour(
                         DateTime.now().add(const Duration(minutes: 5)),
