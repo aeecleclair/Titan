@@ -29,7 +29,7 @@ class ItemCard extends StatelessWidget {
       height: (showButtons) ? 150 : 95,
       padding: const EdgeInsets.symmetric(horizontal: 17.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: .start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 15),
@@ -62,7 +62,7 @@ class ItemCard extends StatelessWidget {
           const Spacer(),
           if (showButtons)
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 GestureDetector(
                   onTap: onEdit,

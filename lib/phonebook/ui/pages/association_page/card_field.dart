@@ -18,7 +18,7 @@ class CardField extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
       child: Center(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
           children: [
             if (showLabel) ...[
               Text(label, style: const TextStyle(fontSize: 16)),

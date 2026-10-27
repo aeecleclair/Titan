@@ -88,7 +88,7 @@ class EventUi extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   Expanded(
                     child: AutoSizeText(
@@ -138,7 +138,7 @@ class EventUi extends ConsumerWidget {
               ),
               const SizedBox(height: 5),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   Expanded(
                     child: AutoSizeText(

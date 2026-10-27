@@ -134,7 +134,7 @@ class CalendarDialog extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: .center,
                   children: [
                     if (showButton)
                       GestureDetector(

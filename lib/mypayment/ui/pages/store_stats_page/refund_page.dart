@@ -72,7 +72,7 @@ class ReFundPage extends ConsumerWidget {
             Expanded(
               child: Center(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: .center,
                   children: [
                     ...refundAmount.characters.map((e) {
                       return DigitFadeInAnimation(

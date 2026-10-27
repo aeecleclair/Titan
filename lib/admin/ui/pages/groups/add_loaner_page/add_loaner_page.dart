@@ -80,8 +80,7 @@ class AddLoanerPage extends HookConsumerWidget {
                                             vertical: 20,
                                           ),
                                           child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: .spaceBetween,
                                             children: [
                                               Text(
                                                 e.name,

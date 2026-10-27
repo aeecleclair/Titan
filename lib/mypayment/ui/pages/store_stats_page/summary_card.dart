@@ -70,7 +70,7 @@ class SummaryCard extends ConsumerWidget {
           const SizedBox(width: 15),
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: .center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(

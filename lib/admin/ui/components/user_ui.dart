@@ -14,7 +14,7 @@ class UserUi extends HookConsumerWidget {
     return SizedBox(
       height: 55,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: [
           Expanded(
             child: Text(

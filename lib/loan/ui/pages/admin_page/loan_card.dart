@@ -55,7 +55,7 @@ class LoanCard extends StatelessWidget {
             : Theme.of(context).shadowColor,
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: .start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (!isAdmin && !isHistory)
@@ -63,7 +63,7 @@ class LoanCard extends StatelessWidget {
                 children: [
                   const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       Container(width: 25),
                       AutoSizeText(
@@ -132,7 +132,7 @@ class LoanCard extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 Text(
                   loan.returned
@@ -167,7 +167,7 @@ class LoanCard extends StatelessWidget {
             const Spacer(),
             if (isAdmin)
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   GestureDetector(
                     onTap: onEdit,

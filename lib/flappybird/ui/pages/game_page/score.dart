@@ -18,7 +18,7 @@ class GameScore extends HookConsumerWidget {
       child: Container(
         color: FlappyBirdColors(isDarkTheme).land,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: .spaceEvenly,
           children: [
             _TextWidget(title: 'S C O R E', number: bird.score.toString()),
             _TextWidget(title: 'R E C O R D', number: record.toString()),
@@ -39,7 +39,7 @@ class _TextWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDarkTheme = ref.watch(themeProvider);
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: .center,
       children: [
         Text(
           number,

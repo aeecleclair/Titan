@@ -87,7 +87,7 @@ class CustomDialogBox extends StatelessWidget {
                       ),
                       const SizedBox(height: 30.0),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: .spaceBetween,
                         children: [
                           GestureDetector(
                             onTap: () {

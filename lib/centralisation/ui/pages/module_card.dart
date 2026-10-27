@@ -70,7 +70,7 @@ class ModuleCard extends HookConsumerWidget {
             const SizedBox(width: 10),
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: .center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(

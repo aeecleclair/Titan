@@ -83,7 +83,7 @@ class RightPanel extends HookConsumerWidget {
                 children: [
                   const SizedBox(height: 50),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: .center,
                     children: [
                       const SizedBox(width: 20),
                       if (screenShot.title.isNotEmpty)

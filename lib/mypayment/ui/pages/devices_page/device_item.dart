@@ -51,7 +51,7 @@ class DeviceItem extends ConsumerWidget {
                   children: [
                     const SizedBox(width: 20),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: .center,
                       children: [
                         Text(
                           device.name,

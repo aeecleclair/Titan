@@ -46,7 +46,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: .spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(

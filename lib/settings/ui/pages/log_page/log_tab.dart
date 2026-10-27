@@ -18,7 +18,7 @@ class LogTab extends HookConsumerWidget {
       children: [
         const SizedBox(height: 10),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             Text(
               SettingsTextConstants.logs,

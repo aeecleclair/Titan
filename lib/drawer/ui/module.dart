@@ -29,7 +29,7 @@ class ModuleUI extends HookConsumerWidget {
         margin: const EdgeInsets.only(top: 8, bottom: 8),
         width: 220,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: .start,
           children: [
             Row(
               children: [

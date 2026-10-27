@@ -123,7 +123,7 @@ class ScanDialog extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: .center,
                     children: [
                       Text(
                         tag.isNotEmpty ? "Tag : $tag" : "Aucun tag",

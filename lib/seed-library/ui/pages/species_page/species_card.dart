@@ -43,7 +43,7 @@ class SpeciesCard extends HookConsumerWidget {
                 children: [
                   Text(species.type.name, textAlign: TextAlign.center),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: .center,
                     children: [
                       ...List.generate(species.difficulty, (index) {
                         return Icon(

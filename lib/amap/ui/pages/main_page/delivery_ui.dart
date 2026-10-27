@@ -54,12 +54,12 @@ class DeliveryUi extends HookConsumerWidget {
         ),
         child: Center(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: .start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(width: 10),
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: .center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ConstrainedBox(

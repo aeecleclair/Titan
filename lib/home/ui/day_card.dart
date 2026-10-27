@@ -110,7 +110,7 @@ class DayCard extends HookConsumerWidget {
               height: 25,
               child: numberOfEvent < 6
                   ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: .center,
                       children: [
                         for (int i = 0; i < numberOfEvent; i++)
                           SizedBox(

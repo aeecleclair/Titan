@@ -105,7 +105,7 @@ class AdminPage extends HookConsumerWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       const Text(
                         VoteTextConstants.vote,
@@ -118,7 +118,7 @@ class AdminPage extends HookConsumerWidget {
                       if (showVotes && status == Status.counting)
                         Expanded(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: .spaceEvenly,
                             children: [
                               GestureDetector(
                                 onTap: () {
@@ -227,7 +227,7 @@ class AdminPage extends HookConsumerWidget {
                               },
                               behavior: HitTestBehavior.opaque,
                               child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: .center,
                                 children: [
                                   SizedBox(height: 40),
                                   HeroIcon(
@@ -389,8 +389,7 @@ class AdminPage extends HookConsumerWidget {
                               SizedBox(
                                 width: double.infinity,
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: .spaceBetween,
                                   children: [
                                     Expanded(
                                       child: WaitingButton(
@@ -446,8 +445,7 @@ class AdminPage extends HookConsumerWidget {
                                         },
                                         child: const Center(
                                           child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            mainAxisAlignment: .center,
                                             children: [
                                               Text(
                                                 VoteTextConstants.all,
@@ -525,8 +523,7 @@ class AdminPage extends HookConsumerWidget {
                                         },
                                         child: const Center(
                                           child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            mainAxisAlignment: .center,
                                             children: [
                                               Text(
                                                 VoteTextConstants.pipo,

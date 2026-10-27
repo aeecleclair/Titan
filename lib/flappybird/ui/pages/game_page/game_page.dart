@@ -79,7 +79,7 @@ class GamePage extends HookConsumerWidget {
                   ),
                 ),
               ],
-              actionsAlignment: MainAxisAlignment.center,
+              actionsAlignment: .center,
             ),
           );
         },

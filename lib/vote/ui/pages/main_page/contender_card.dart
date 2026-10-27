@@ -168,11 +168,11 @@ class ContenderCard extends HookConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: .start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       contender.listType != ListType.blank
                           ? ContenderLogo(contender)
@@ -236,7 +236,7 @@ class ContenderCard extends HookConsumerWidget {
                   const Spacer(),
                   if (s == Status.open && enableVote)
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: .center,
                       children: [
                         selectedContender.id != contender.id
                             ? GestureDetector(

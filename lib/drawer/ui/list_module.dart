@@ -20,7 +20,7 @@ class ListModule extends HookConsumerWidget {
         controller: scrollController,
         physics: const BouncingScrollPhysics(),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: modules.map((module) => ModuleUI(module: module)).toList(),
         ),
       ),

@@ -20,10 +20,7 @@ class ItemCardUi extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: children,
-      ),
+      child: Row(mainAxisAlignment: .center, children: children),
     );
   }
 }

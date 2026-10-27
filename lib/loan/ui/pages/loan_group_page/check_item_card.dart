@@ -29,7 +29,7 @@ class CheckItemCard extends StatelessWidget {
               .withValues(alpha: 0.5),
       padding: const EdgeInsets.symmetric(horizontal: 17.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: .start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 15),

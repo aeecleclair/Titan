@@ -84,7 +84,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
               ),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 Container(
                   margin: const EdgeInsets.symmetric(
@@ -92,7 +92,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                     vertical: 20,
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       Container(
                         width: 100,
@@ -207,7 +207,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                     bottom: 12,
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: .center,
                     children: [
                       const Spacer(),
                       WaitingButton(

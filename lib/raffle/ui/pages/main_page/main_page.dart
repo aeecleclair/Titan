@@ -52,7 +52,7 @@ class RaffleMainPage extends HookConsumerWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   const SectionTitle(text: RaffleTextConstants.tickets),
                   if (isAdmin)

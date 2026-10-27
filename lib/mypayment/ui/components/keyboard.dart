@@ -20,7 +20,7 @@ class NumericKeyboard extends StatelessWidget {
   /// Callback when an item is pressed
   final Function(String) onKeyboardTap;
 
-  /// Main axis alignment [default = MainAxisAlignment.spaceEvenly]
+  /// Main axis alignment [default = .spaceEvenly]
   final MainAxisAlignment mainAxisAlignment;
 
   const NumericKeyboard({
@@ -30,7 +30,7 @@ class NumericKeyboard extends StatelessWidget {
     this.rightButtonFn,
     this.leftIcon,
     this.leftButtonFn,
-    this.mainAxisAlignment = MainAxisAlignment.spaceEvenly,
+    this.mainAxisAlignment = .spaceEvenly,
   });
 
   @override
@@ -41,7 +41,7 @@ class NumericKeyboard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: <Widget>[
               _calcButton('1'),
               _calcButton('2'),
@@ -50,7 +50,7 @@ class NumericKeyboard extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: <Widget>[
               _calcButton('4'),
               _calcButton('5'),
@@ -59,7 +59,7 @@ class NumericKeyboard extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: <Widget>[
               _calcButton('7'),
               _calcButton('8'),
@@ -68,7 +68,7 @@ class NumericKeyboard extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: <Widget>[
               _calcButton(','),
               _calcButton('0'),

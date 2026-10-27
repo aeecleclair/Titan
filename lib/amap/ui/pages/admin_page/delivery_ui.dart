@@ -69,22 +69,22 @@ class DeliveryUi extends HookConsumerWidget {
       shadowColor: AMAPColors(isDarkTheme).textOnPrimary.withValues(alpha: 0.2),
       padding: const EdgeInsets.all(10),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: .spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ConstrainedBox(
@@ -164,8 +164,8 @@ class DeliveryUi extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: Row(
               mainAxisAlignment: (delivery.status == DeliveryStatus.creation)
-                  ? MainAxisAlignment.spaceBetween
-                  : MainAxisAlignment.center,
+                  ? .spaceBetween
+                  : .center,
               children: [
                 if (delivery.status == DeliveryStatus.creation)
                   GestureDetector(

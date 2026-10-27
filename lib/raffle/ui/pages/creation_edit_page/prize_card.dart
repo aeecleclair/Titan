@@ -47,7 +47,7 @@ class PrizeCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: .center,
             children: [
               const SizedBox(height: 10),
               AutoSizeText(
@@ -76,7 +76,7 @@ class PrizeCard extends StatelessWidget {
               const Spacer(),
               status == RaffleStatusType.creation
                   ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: .spaceBetween,
                       children: [
                         GestureDetector(
                           onTap: onEdit,

@@ -58,7 +58,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
               ),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 10),
@@ -69,7 +69,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                   ),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: .center,
                   children: [
                     const Spacer(),
                     WaitingButton(

@@ -27,7 +27,7 @@ class ProductDetailCard extends ConsumerWidget {
       ],
       padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: .start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),

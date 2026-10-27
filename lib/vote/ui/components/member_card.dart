@@ -26,7 +26,7 @@ class MemberCard extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.symmetric(horizontal: 17.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: .start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),
@@ -69,7 +69,7 @@ class MemberCard extends StatelessWidget {
           if (isAdmin) const Spacer(),
           if (isAdmin)
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 GestureDetector(
                   onTap: onEdit,

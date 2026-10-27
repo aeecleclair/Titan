@@ -26,7 +26,7 @@ class ProductUiInList extends ConsumerWidget {
       height: 50,
       alignment: Alignment.centerLeft,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: [
           const SizedBox(width: 20),
           Expanded(

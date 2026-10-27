@@ -65,7 +65,7 @@ class WebMemberCard extends HookConsumerWidget {
             builder: (context, constraints) {
               if (constraints.maxWidth > 700) {
                 return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: .spaceAround,
                   children: [
                     Container(
                       decoration: BoxDecoration(
@@ -98,7 +98,7 @@ class WebMemberCard extends HookConsumerWidget {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: .spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (member.member.nickname != null) ...[
@@ -137,7 +137,7 @@ class WebMemberCard extends HookConsumerWidget {
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: .start,
                               children: [
                                 CardField(
                                   label: PhonebookTextConstants.promotion,
@@ -163,7 +163,7 @@ class WebMemberCard extends HookConsumerWidget {
                       ),
                     ),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: .center,
                       children: [
                         Text(
                           textAlign: TextAlign.right,
@@ -181,15 +181,15 @@ class WebMemberCard extends HookConsumerWidget {
                 );
               }
               return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: .spaceAround,
                 children: [
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: .spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       if (member.member.nickname != null) ...[
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: .center,
                           children: [
                             SelectableText(
                               member.member.nickname!,

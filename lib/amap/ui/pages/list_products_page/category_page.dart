@@ -157,8 +157,7 @@ class CategoryPage extends HookConsumerWidget {
                                 ),
                                 alignment: Alignment.center,
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: .spaceEvenly,
                                   children: [
                                     HeroIcon(
                                       HeroIcons.chevronDoubleDown,

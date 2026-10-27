@@ -18,7 +18,7 @@ class AdminTemplate extends HookConsumerWidget {
         decoration: const BoxDecoration(),
         child: SafeArea(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: .start,
             children: [
               TopBar(
                 title: AdminTextConstants.administration,

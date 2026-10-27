@@ -185,7 +185,7 @@ class InvoiceCard extends HookConsumerWidget {
               Expanded(
                 flex: kIsWeb ? 2 : 1,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: .spaceBetween,
                   children: [
                     if (kIsWeb)
                       Column(

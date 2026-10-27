@@ -30,7 +30,7 @@ class SignInUpBar extends StatelessWidget {
         child: WaitingButton(
           onTap: onPressed,
           builder: (child) => Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: .center,
             children: [
               Text(
                 label,

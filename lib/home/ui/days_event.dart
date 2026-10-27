@@ -75,7 +75,7 @@ class DaysEvent extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       Expanded(
                         child: AutoSizeText(
@@ -112,7 +112,7 @@ class DaysEvent extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 5),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       Text(
                         event.location,

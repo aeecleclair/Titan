@@ -39,7 +39,7 @@ class NotificationPage extends HookConsumerWidget {
                         (e) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: .spaceBetween,
                             children: [
                               Text(
                                 topicToFrenchString(e),

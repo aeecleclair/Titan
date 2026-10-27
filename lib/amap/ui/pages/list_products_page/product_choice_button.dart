@@ -36,7 +36,7 @@ class ProductChoiceButton extends HookConsumerWidget {
       height: 60,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: .spaceEvenly,
         children: [
           Expanded(
             child: WaitingButton(

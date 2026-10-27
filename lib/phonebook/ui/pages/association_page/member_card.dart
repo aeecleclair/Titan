@@ -61,10 +61,10 @@ class MemberCard extends HookConsumerWidget {
           ),
           margin: EdgeInsets.zero,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: .start,
                 children: [
                   Container(
                     decoration: BoxDecoration(

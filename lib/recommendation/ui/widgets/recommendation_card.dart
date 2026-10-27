@@ -60,7 +60,7 @@ class RecommendationCard extends HookConsumerWidget {
       loadingBuilder: (context) => const HeroIcon(HeroIcons.photo),
       dataBuilder: (context, data) => RecommendationCardLayout(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
@@ -69,7 +69,7 @@ class RecommendationCard extends HookConsumerWidget {
             const SizedBox(width: 20),
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: .spaceEvenly,
                 children: [
                   Text(
                     recommendation.title,
@@ -81,7 +81,7 @@ class RecommendationCard extends HookConsumerWidget {
                   ),
                   if (recommendation.code != null)
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: .center,
                       children: [
                         Flexible(
                           child: Text(

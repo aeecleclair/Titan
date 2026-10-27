@@ -150,7 +150,7 @@ class ConfirmFundButton extends ConsumerWidget {
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: .spaceEvenly,
         children: [
           Container(
             padding: const EdgeInsets.symmetric(vertical: 15),

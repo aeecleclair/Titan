@@ -305,7 +305,7 @@ class DetailPage extends HookConsumerWidget {
                         }
                       },
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: .spaceEvenly,
                         children: [
                           Transform.rotate(
                             origin: const Offset(0, -20),

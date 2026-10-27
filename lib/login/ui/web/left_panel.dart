@@ -32,7 +32,7 @@ class LeftPanel extends HookConsumerWidget {
                 flex: 3,
                 child: Center(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: .center,
                     children: [
                       Image.asset(getTitanLogo(), width: 70, height: 70),
                       const SizedBox(width: 20),
@@ -124,7 +124,7 @@ class LeftPanel extends HookConsumerWidget {
                   child: child,
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: .center,
                   children: [
                     Text(
                       LoginTextConstants.signIn,

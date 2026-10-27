@@ -35,7 +35,7 @@ class WinningTicketUI extends HookConsumerWidget {
             borderRadius: const BorderRadius.all(Radius.circular(30)),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               AutoSizeText(
                 ticket.prize == null ? "Lot" : ticket.prize!.name,

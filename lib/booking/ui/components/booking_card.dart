@@ -102,11 +102,11 @@ class BookingCard extends ConsumerWidget {
       shadowColor: cardBoxShadow,
       padding: const EdgeInsets.all(15.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: .start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               Text(
                 booking.room.name,
@@ -162,7 +162,7 @@ class BookingCard extends ConsumerWidget {
           ),
           const SizedBox(height: 4),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               Text(
                 booking.decision == Decision.pending
@@ -189,7 +189,7 @@ class BookingCard extends ConsumerWidget {
           const Spacer(),
           if (!isDetail)
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: .center,
               children: [
                 if (showButton)
                   GestureDetector(

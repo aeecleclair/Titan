@@ -35,7 +35,7 @@ class ProductCard extends ConsumerWidget {
       ],
       padding: const EdgeInsets.only(left: 17.0, top: 5, right: 17),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: .start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),
@@ -75,7 +75,7 @@ class ProductCard extends ConsumerWidget {
           const Spacer(),
           showButton
               ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: .spaceBetween,
                   children: [
                     GestureDetector(
                       onTap: onEdit,

@@ -38,7 +38,7 @@ class PrizeCard extends HookConsumerWidget {
           borderRadius: const BorderRadius.all(Radius.circular(20)),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: .end,
           children: [
             Center(
               child: FittedBox(

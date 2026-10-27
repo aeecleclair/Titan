@@ -28,14 +28,14 @@ class CustomDrawer extends HookConsumerWidget {
         child: Stack(
           children: [
             const Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [DrawerTopBar(), BottomBar()],
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: .center,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: .start,
                   children: [
                     Expanded(
                       child: SizedBox(

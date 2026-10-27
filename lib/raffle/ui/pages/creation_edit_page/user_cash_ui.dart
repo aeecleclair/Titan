@@ -96,7 +96,7 @@ class UserCashUi extends HookConsumerWidget {
                           vertical: 5,
                         ),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: .start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(height: 8),
@@ -125,7 +125,7 @@ class UserCashUi extends HookConsumerWidget {
                             ),
                             const SizedBox(height: 5),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: .spaceBetween,
                               children: [
                                 AutoSizeText(
                                   '${cash.balance.toStringAsFixed(2)} €',

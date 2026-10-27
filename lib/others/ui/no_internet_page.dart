@@ -20,7 +20,7 @@ class NoInternetPage extends HookConsumerWidget {
         height: MediaQuery.of(context).size.height * 0.90,
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: .center,
             children: [
               const HeroIcon(HeroIcons.signalSlash, size: 150),
               const SizedBox(height: 20),
@@ -67,7 +67,7 @@ class NoInternetPage extends HookConsumerWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: .spaceEvenly,
                     children: [
                       HeroIcon(
                         HeroIcons.arrowPath,

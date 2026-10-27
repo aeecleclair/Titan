@@ -193,8 +193,7 @@ class AddEditEventPage extends HookConsumerWidget {
                                                     HitTestBehavior.opaque,
                                                 child: Row(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                      .spaceBetween,
                                                   children: [
                                                     Text(
                                                       e,
@@ -301,7 +300,7 @@ class AddEditEventPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 30),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: .spaceEvenly,
                     children: [
                       ItemChip(
                         onTap: () {

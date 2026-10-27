@@ -149,7 +149,7 @@ class VoteMainPage extends HookConsumerWidget {
                                 ? 150
                                 : 155),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: .start,
                           children: [
                             ListSideItem(
                               sectionList: sectionList,
@@ -161,8 +161,7 @@ class VoteMainPage extends HookConsumerWidget {
                                 child: Column(
                                   children: [
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: .spaceBetween,
                                       children: [
                                         SectionTitle(sectionList: sectionList),
                                         if (isAdmin)

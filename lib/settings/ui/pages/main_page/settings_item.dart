@@ -19,7 +19,7 @@ class SettingsItem extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: [
           Padding(
             padding: const EdgeInsets.only(right: 20),

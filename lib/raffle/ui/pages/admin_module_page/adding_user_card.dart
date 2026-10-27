@@ -31,7 +31,7 @@ class AddingUserCard extends HookConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: .center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AutoSizeText(

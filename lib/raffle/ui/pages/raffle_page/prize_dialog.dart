@@ -36,7 +36,7 @@ class PrizeDialog extends HookConsumerWidget {
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: .start,
           children: [
             Container(
               padding: const EdgeInsets.only(bottom: 20),

@@ -84,7 +84,7 @@ class DeviceDialogBox extends ConsumerWidget {
                       ),
                       const SizedBox(height: 30.0),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: .spaceBetween,
                         children: [
                           if (buttonText != null)
                             GestureDetector(

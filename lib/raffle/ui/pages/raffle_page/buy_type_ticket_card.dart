@@ -61,12 +61,12 @@ class BuyPackTicket extends HookConsumerWidget {
           borderRadius: const BorderRadius.all(Radius.circular(20)),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 17),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   Container(
                     width: 50,

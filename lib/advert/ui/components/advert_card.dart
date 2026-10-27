@@ -47,7 +47,7 @@ class AdvertCard extends HookConsumerWidget {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: .spaceBetween,
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(30),
@@ -238,7 +238,7 @@ class AdvertCard extends HookConsumerWidget {
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: .center,
                               children: [
                                 AutoSizeText(
                                   DateFormat('dd').format(advert.date),

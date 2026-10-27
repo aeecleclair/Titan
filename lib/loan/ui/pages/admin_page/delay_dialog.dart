@@ -60,7 +60,7 @@ class IntegerExampleState extends State<DelayDialog> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: .spaceAround,
                   children: [
                     TextButton(
                       onPressed: () {

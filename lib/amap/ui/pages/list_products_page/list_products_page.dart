@@ -55,7 +55,7 @@ class ListProductPage extends HookConsumerWidget {
               ),
             ),
             const Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: .spaceEvenly,
               children: [ListProducts(), Dots(), ProductChoiceButton()],
             ),
           ],

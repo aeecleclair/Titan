@@ -79,7 +79,7 @@ class AmapMainPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 8),
@@ -188,7 +188,7 @@ class AmapMainPage extends HookConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: .spaceBetween,
                             children: [
                               AlignLeftText(
                                 AMAPTextConstants.addOrder,

@@ -69,7 +69,7 @@ class PlantDetailPage extends HookConsumerWidget {
                       style: const TextStyle(fontSize: 15),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: .center,
                       children: [
                         Text(
                           SeedLibraryTextConstants.difficulty,

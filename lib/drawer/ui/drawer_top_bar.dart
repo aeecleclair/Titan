@@ -58,7 +58,7 @@ class DrawerTopBar extends HookConsumerWidget {
       children: [
         Container(height: 20),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             Row(
               children: [
@@ -149,7 +149,7 @@ class DrawerTopBar extends HookConsumerWidget {
                         ),
                       ),
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: .spaceEvenly,
                         children: [
                           SizedBox(
                             width: 200,

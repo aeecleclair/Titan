@@ -277,7 +277,7 @@ class SellerRightCard extends ConsumerWidget {
                                 MyPaymentColors(isDarkTheme).redGradient2,
                               ],
                               child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: .center,
                                 children: [
                                   HeroIcon(
                                     HeroIcons.trash,

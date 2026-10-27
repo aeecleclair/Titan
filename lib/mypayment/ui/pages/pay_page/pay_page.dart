@@ -65,7 +65,7 @@ class PayPage extends ConsumerWidget {
             Expanded(
               child: Center(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: .center,
                   children: [
                     ...payAmount.characters.map((e) {
                       return DigitFadeInAnimation(

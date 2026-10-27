@@ -118,7 +118,7 @@ class SumUpChart extends HookConsumerWidget {
                           ),
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: .spaceEvenly,
                           children: [
                             GestureDetector(
                               onTap: () {

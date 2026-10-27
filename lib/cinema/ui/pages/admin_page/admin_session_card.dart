@@ -88,7 +88,7 @@ class AdminSessionCard extends HookConsumerWidget {
                     ),
                     const Spacer(),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: .spaceBetween,
                       children: [
                         GestureDetector(
                           onTap: onEdit,

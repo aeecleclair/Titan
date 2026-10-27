@@ -91,7 +91,7 @@ void displayToast(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           height: 50 + text.length / 2,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               Container(
                 width: 40,

@@ -59,7 +59,7 @@ class ListEvent extends HookConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 AlignLeftText(
                   "$title${filteredEvents.length > 1 ? "s" : ""} (${filteredEvents.length})",

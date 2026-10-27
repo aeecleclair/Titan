@@ -70,7 +70,7 @@ class UserCashUi extends HookConsumerWidget {
             child: isFrontImage(angle.abs())
                 ? UserCashUiLayout(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: .start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 8),
@@ -99,7 +99,7 @@ class UserCashUi extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 5),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: .spaceBetween,
                           children: [
                             AutoSizeText(
                               '${(cash.balance / 100).toStringAsFixed(2)} €',

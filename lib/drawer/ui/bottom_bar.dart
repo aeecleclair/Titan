@@ -51,7 +51,7 @@ class BottomBar extends HookConsumerWidget {
         SizedBox(
           height: 30,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               GestureDetector(
                 behavior: HitTestBehavior.translucent,

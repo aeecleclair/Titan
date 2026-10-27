@@ -12,7 +12,7 @@ class TextEditing extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 20),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AlignLeftText(

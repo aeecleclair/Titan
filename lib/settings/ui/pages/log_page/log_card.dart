@@ -49,7 +49,7 @@ class LogCard extends StatelessWidget {
         children: [
           // it's ok to leave text & icon explicitly white here
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               Text(
                 log.time.toString(),

@@ -56,7 +56,7 @@ class PlantCard extends HookConsumerWidget {
                   children: [
                     Text(plantSpecies.type.name, textAlign: TextAlign.center),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: .center,
                       children: List.generate(plantSpecies.difficulty, (index) {
                         return Icon(
                           Icons.star,

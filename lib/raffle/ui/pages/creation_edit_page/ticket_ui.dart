@@ -39,7 +39,7 @@ class TicketUI extends HookConsumerWidget {
             borderRadius: const BorderRadius.all(Radius.circular(30)),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: .spaceAround,
             children: [
               Column(
                 children: [
@@ -65,7 +65,7 @@ class TicketUI extends HookConsumerWidget {
               if (showButton) const Spacer(),
               if (showButton)
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: .spaceBetween,
                   children: [
                     GestureDetector(
                       onTap: onEdit,

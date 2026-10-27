@@ -215,8 +215,7 @@ class AddEditBookingPage extends HookConsumerWidget {
                                         },
                                         behavior: HitTestBehavior.opaque,
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: .spaceBetween,
                                           children: [
                                             Text(
                                               weekDayToString(e),

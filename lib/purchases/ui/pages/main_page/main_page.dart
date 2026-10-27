@@ -35,7 +35,7 @@ class PurchasesMainPage extends HookConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   CustomButton(
                     icon: HeroIcons.clock,

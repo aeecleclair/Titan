@@ -32,7 +32,7 @@ class AdminAdvertCard extends HookConsumerWidget {
             child: Container(
               margin: const EdgeInsets.only(top: 30),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: .center,
                 children: [
                   GestureDetector(
                     onTap: onEdit,

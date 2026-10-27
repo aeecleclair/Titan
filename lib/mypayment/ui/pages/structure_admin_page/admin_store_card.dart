@@ -46,7 +46,7 @@ class AdminStoreCard extends ConsumerWidget {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: .start,
             children: [
               Text(
                 store.name,

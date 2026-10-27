@@ -39,7 +39,7 @@ class MainCardTemplate extends StatelessWidget {
         ],
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: .center,
         children: [
           Expanded(
             child: Padding(
@@ -97,7 +97,7 @@ class MainCardTemplate extends StatelessWidget {
               ),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: .spaceEvenly,
               children: actionButtons,
             ),
           ),

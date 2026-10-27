@@ -76,7 +76,7 @@ class ItemBar extends HookConsumerWidget {
                       SizedBox(
                         width: 120,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: .spaceBetween,
                           children: [
                             Container(
                               padding: const EdgeInsets.all(5),

@@ -41,7 +41,7 @@ class EditableAssociationCard extends HookConsumerWidget {
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: .spaceEvenly,
         children: [
           const SizedBox(width: 10),
           Expanded(

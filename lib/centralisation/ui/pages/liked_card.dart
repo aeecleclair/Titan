@@ -34,7 +34,7 @@ class LikedCard extends StatelessWidget {
                 ],
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: .center,
                 children: [
                   Container(
                     margin: const EdgeInsets.all(4.0),

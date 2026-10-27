@@ -61,7 +61,7 @@ class CinemaMainPage extends HookConsumerWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       Text(
                         CinemaTextConstants.incomingSession,

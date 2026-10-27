@@ -33,7 +33,7 @@ class MonthBar extends HookConsumerWidget {
     });
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: .spaceBetween,
       children: [
         Row(
           children: [

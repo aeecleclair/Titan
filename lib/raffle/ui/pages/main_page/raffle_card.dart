@@ -61,7 +61,7 @@ class RaffleWidget extends HookConsumerWidget {
                 SizedBox(
                   height: 100,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
                       Image.asset("assets/images/soli.png"),
                       Expanded(

@@ -81,7 +81,7 @@ class SellerRightDialog extends ConsumerWidget {
                       if (child != null) child!,
                       const SizedBox(height: 30.0),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: .spaceBetween,
                         children: [
                           WaitingButton(
                             onTap: () async {

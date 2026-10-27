@@ -26,7 +26,7 @@ class AddDeviceButton extends ConsumerWidget {
               context,
             ).colorScheme.secondaryFixed.withValues(alpha: 0.5),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: .center,
               children: [
                 WaitingButton(
                   onTap: onTap,

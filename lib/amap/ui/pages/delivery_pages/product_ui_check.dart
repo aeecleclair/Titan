@@ -22,7 +22,7 @@ class ProductUi extends ConsumerWidget {
       height: 55,
       alignment: Alignment.centerLeft,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: .spaceBetween,
         children: [
           Expanded(
             child: Text(

@@ -75,7 +75,7 @@ class BookingMainPage extends HookConsumerWidget {
                 SizedBox(
                   width: 300,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: .spaceAround,
                     children: [
                       if (isManager)
                         AdminButton(

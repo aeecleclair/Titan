@@ -70,7 +70,7 @@ class FundPage extends ConsumerWidget {
             Expanded(
               child: Center(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: .center,
                   children: [
                     ...fundAmount.characters.map((e) {
                       return DigitFadeInAnimation(

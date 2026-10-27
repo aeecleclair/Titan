@@ -97,7 +97,7 @@ class SessionCard extends HookConsumerWidget {
         margin: const EdgeInsets.all(10),
         padding: EdgeInsets.all(isWebFormat ? 50 : 0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: .start,
           children: [
             SizedBox(height: height),
             Container(
@@ -125,7 +125,7 @@ class SessionCard extends HookConsumerWidget {
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: .spaceBetween,
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(30),
@@ -245,7 +245,7 @@ class SessionCard extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: .center,
                     children: [
                       const HeroIcon(HeroIcons.calendar, size: 20),
                       const SizedBox(width: 7),
@@ -257,7 +257,7 @@ class SessionCard extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 5),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: .center,
                     children: [
                       const HeroIcon(HeroIcons.clock, size: 20),
                       const SizedBox(width: 7),

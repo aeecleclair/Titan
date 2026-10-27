@@ -41,7 +41,7 @@ class TicketWidget extends HookConsumerWidget {
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: .spaceBetween,
                   children: [
                     Container(
                       width: 50,

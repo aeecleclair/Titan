@@ -41,7 +41,7 @@ class SearchResult extends HookConsumerWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: .spaceBetween,
                           children: [
                             Container(width: 20),
                             Expanded(

@@ -45,11 +45,11 @@ class ContenderCard extends HookConsumerWidget {
           : 130,
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: .start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: .spaceBetween,
             children: [
               ContenderLogo(contender),
               const SizedBox(width: 10),
@@ -111,7 +111,7 @@ class ContenderCard extends HookConsumerWidget {
               status == Status.waiting &&
               isAdmin)
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 GestureDetector(
                   onTap: onEdit,
