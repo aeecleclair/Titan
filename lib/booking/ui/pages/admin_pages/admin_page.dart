@@ -91,7 +91,7 @@ class AdminPage extends HookConsumerWidget {
                               );
                             },
                             child: HeroIcon(
-                              HeroIcons.plus,
+                              .plus,
                               color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
@@ -165,7 +165,7 @@ class AdminPage extends HookConsumerWidget {
                               );
                             },
                             child: HeroIcon(
-                              HeroIcons.plus,
+                              .plus,
                               color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),

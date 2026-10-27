@@ -26,7 +26,7 @@ class PermissionRow extends StatelessWidget {
           GestureDetector(
             onTap: isAuthorized ? onUnauthorize : onAuthorize,
             child: HeroIcon(
-              isAuthorized ? HeroIcons.check : HeroIcons.xMark,
+              isAuthorized ? .check : .xMark,
               size: 40,
               // It's ok to have this green-red hard-coded
               color: isAuthorized ? Colors.green : Colors.red,

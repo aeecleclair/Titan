@@ -116,7 +116,7 @@ class ScanPage extends HookConsumerWidget {
                                 Navigator.pop(context);
                               },
                               child: HeroIcon(
-                                HeroIcons.xMark,
+                                .xMark,
                                 size: 20,
                                 color: Theme.of(
                                   context,
@@ -135,7 +135,7 @@ class ScanPage extends HookConsumerWidget {
                           Navigator.pop(context);
                         },
                         child: HeroIcon(
-                          HeroIcons.xMark,
+                          .xMark,
                           size: 20,
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),

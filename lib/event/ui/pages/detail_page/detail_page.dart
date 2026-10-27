@@ -143,7 +143,7 @@ class DetailPage extends HookConsumerWidget {
                                               ],
                                             ),
                                             child: const HeroIcon(
-                                              HeroIcons.phone,
+                                              .phone,
                                               color: Colors.black,
                                             ),
                                           ),
@@ -188,8 +188,7 @@ class DetailPage extends HookConsumerWidget {
                                               ],
                                             ),
                                             child: const HeroIcon(
-                                              HeroIcons
-                                                  .chatBubbleBottomCenterText,
+                                              .chatBubbleBottomCenterText,
                                               color: Colors.black,
                                             ),
                                           ),

@@ -276,7 +276,7 @@ class EditUserPage extends HookConsumerWidget {
                           borderRadius: .circular(10),
                         ),
                         child: HeroIcon(
-                          HeroIcons.calendar,
+                          .calendar,
                           size: 25,
                           color: Theme.of(
                             context,

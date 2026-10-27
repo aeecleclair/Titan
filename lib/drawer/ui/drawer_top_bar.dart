@@ -136,7 +136,7 @@ class DrawerTopBar extends HookConsumerWidget {
                                           ],
                                         ),
                                         child: const HeroIcon(
-                                          HeroIcons.bolt,
+                                          .bolt,
                                           color: Colors.white,
                                         ),
                                       ),
@@ -186,7 +186,7 @@ class DrawerTopBar extends HookConsumerWidget {
               Container(
                 margin: const .only(right: 20),
                 child: const HeroIcon(
-                  HeroIcons.signalSlash,
+                  .signalSlash,
                   color: Colors.white,
                   size: 40,
                 ),
@@ -209,7 +209,7 @@ class DrawerTopBar extends HookConsumerWidget {
                         child: Row(
                           children: [
                             HeroIcon(
-                              HeroIcons.cog,
+                              .cog,
                               color:
                                   pathForwarding.path.startsWith(
                                     SettingsRouter.root,
@@ -245,7 +245,7 @@ class DrawerTopBar extends HookConsumerWidget {
                           child: Row(
                             children: [
                               HeroIcon(
-                                HeroIcons.userGroup,
+                                .userGroup,
                                 color:
                                     pathForwarding.path.startsWith(
                                       AdminRouter.root,

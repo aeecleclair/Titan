@@ -125,7 +125,7 @@ class AdminPage extends HookConsumerWidget {
                                   showVotesNotifier.toggle(false);
                                 },
                                 child: const HeroIcon(
-                                  HeroIcons.eyeSlash,
+                                  .eyeSlash,
                                   size: 25.0,
                                   color: Colors.black,
                                 ),
@@ -231,7 +231,7 @@ class AdminPage extends HookConsumerWidget {
                                 children: [
                                   SizedBox(height: 40),
                                   HeroIcon(
-                                    HeroIcons.eye,
+                                    .eye,
                                     size: 80.0,
                                     color: Colors.black,
                                   ),
@@ -454,7 +454,7 @@ class AdminPage extends HookConsumerWidget {
                                               ),
                                               SizedBox(width: 10),
                                               HeroIcon(
-                                                HeroIcons.trash,
+                                                .trash,
                                                 color: Colors.white,
                                                 size: 20,
                                               ),
@@ -532,7 +532,7 @@ class AdminPage extends HookConsumerWidget {
                                               ),
                                               SizedBox(width: 10),
                                               HeroIcon(
-                                                HeroIcons.trash,
+                                                .trash,
                                                 color: Colors.white,
                                                 size: 20,
                                               ),

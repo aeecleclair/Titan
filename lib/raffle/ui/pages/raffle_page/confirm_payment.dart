@@ -136,23 +136,17 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                                               );
                                             });
                                       });
-                                      return const HeroIcon(
-                                        HeroIcons.cubeTransparent,
-                                      );
+                                      return const HeroIcon(.cubeTransparent);
                                     }
                                   },
                                   loading: () =>
                                       const CircularProgressIndicator(),
                                   error:
                                       (Object error, StackTrace? stackTrace) =>
-                                          const HeroIcon(
-                                            HeroIcons.cubeTransparent,
-                                          ),
+                                          const HeroIcon(.cubeTransparent),
                                 );
                               } else {
-                                return const HeroIcon(
-                                  HeroIcons.cubeTransparent,
-                                );
+                                return const HeroIcon(.cubeTransparent);
                               }
                             },
                           ),
@@ -255,7 +249,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                           }
                         },
                         child: const HeroIcon(
-                          HeroIcons.check,
+                          .check,
                           color: RaffleColorConstants.textDark,
                           size: 40,
                         ),
@@ -290,7 +284,7 @@ class ConfirmPaymentDialog extends HookConsumerWidget {
                             borderRadius: const .all(Radius.circular(15)),
                           ),
                           child: const HeroIcon(
-                            HeroIcons.xMark,
+                            .xMark,
                             color: Colors.white,
                             size: 40,
                           ),

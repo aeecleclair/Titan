@@ -91,7 +91,7 @@ class StructureAdministratorsPage extends HookConsumerWidget {
                           borderRadius: const .all(Radius.circular(10)),
                         ),
                         child: HeroIcon(
-                          !add.value ? HeroIcons.plus : HeroIcons.xMark,
+                          !add.value ? .plus : .xMark,
                           size: 20,
                           color: Theme.of(
                             context,

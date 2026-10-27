@@ -122,7 +122,7 @@ class DeliveryUi extends HookConsumerWidget {
                           );
                         },
                         child: HeroIcon(
-                          HeroIcons.arrowTopRightOnSquare,
+                          .arrowTopRightOnSquare,
                           color: AMAPColors(isDarkTheme).textOnPrimary,
                         ),
                       ),
@@ -200,7 +200,7 @@ class DeliveryUi extends HookConsumerWidget {
                         AMAPColors(isDarkTheme).greenGradientPrimary,
                       ],
                       child: HeroIcon(
-                        HeroIcons.pencil,
+                        .pencil,
                         color: Theme.of(context).colorScheme.onSecondary,
                         size: 22,
                       ),
@@ -245,7 +245,7 @@ class DeliveryUi extends HookConsumerWidget {
                       child: child,
                     ),
                     child: HeroIcon(
-                      HeroIcons.trash,
+                      .trash,
                       color: Theme.of(context).colorScheme.onSecondary,
                       size: 22,
                     ),
@@ -392,12 +392,12 @@ class DeliveryUi extends HookConsumerWidget {
                       const SizedBox(width: 10),
                       HeroIcon(
                         delivery.status == DeliveryStatus.creation
-                            ? HeroIcons.lockOpen
+                            ? .lockOpen
                             : delivery.status == DeliveryStatus.available
-                            ? HeroIcons.lockClosed
+                            ? .lockClosed
                             : delivery.status == DeliveryStatus.locked
-                            ? HeroIcons.truck
-                            : HeroIcons.archiveBoxArrowDown,
+                            ? .truck
+                            : .archiveBoxArrowDown,
                         color: Theme.of(context).colorScheme.onSecondary,
                         size: 22,
                       ),

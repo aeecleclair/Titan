@@ -85,7 +85,7 @@ class ProductCard extends ConsumerWidget {
                           AMAPColors(isDarkTheme).greenGradientSecondary,
                         ],
                         child: HeroIcon(
-                          HeroIcons.pencil,
+                          .pencil,
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ),
@@ -100,7 +100,7 @@ class ProductCard extends ConsumerWidget {
                         child: child,
                       ),
                       child: HeroIcon(
-                        HeroIcons.trash,
+                        .trash,
                         color: Theme.of(context).colorScheme.onSecondary,
                       ),
                     ),

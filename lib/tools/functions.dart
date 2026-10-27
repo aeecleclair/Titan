@@ -53,7 +53,7 @@ void displayToast(
         end: .bottomRight,
       );
       color = Theme.of(context).colorScheme.onPrimaryContainer;
-      icon = HeroIcons.check;
+      icon = .check;
       duration = duration ?? 1500;
       break;
     case TypeMsg.error:
@@ -66,7 +66,7 @@ void displayToast(
         end: .bottomRight,
       );
       color = Theme.of(context).colorScheme.onSecondary;
-      icon = HeroIcons.exclamationTriangle;
+      icon = .exclamationTriangle;
       duration = duration ?? 3000;
       break;
   }

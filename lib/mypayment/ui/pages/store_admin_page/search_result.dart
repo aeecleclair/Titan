@@ -141,7 +141,7 @@ class SearchResult extends HookConsumerWidget {
                             width: 35,
                             height: 35,
                             child: Center(
-                              child: const HeroIcon(HeroIcons.plus, size: 18),
+                              child: const HeroIcon(.plus, size: 18),
                             ),
                           ),
                         ),

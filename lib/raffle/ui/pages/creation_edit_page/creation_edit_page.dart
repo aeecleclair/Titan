@@ -130,7 +130,7 @@ class CreationPage extends HookConsumerWidget {
                             ),
                           )
                         : const HeroIcon(
-                            HeroIcons.userCircle,
+                            .userCircle,
                             size: 160,
                             color: Colors.grey,
                           ),
@@ -169,10 +169,7 @@ class CreationPage extends HookConsumerWidget {
                               ),
                             ],
                           ),
-                          child: const HeroIcon(
-                            HeroIcons.photo,
-                            color: Colors.white,
-                          ),
+                          child: const HeroIcon(.photo, color: Colors.white),
                         ),
                       ),
                     ),

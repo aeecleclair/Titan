@@ -134,7 +134,7 @@ class ScanDialog extends HookConsumerWidget {
                             shouldSetTag.value = true;
                           },
                           child: const HeroIcon(
-                            HeroIcons.pencil,
+                            .pencil,
                             size: 20,
                             color: Colors.white,
                           ),

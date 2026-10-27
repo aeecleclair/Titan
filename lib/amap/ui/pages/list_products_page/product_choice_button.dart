@@ -151,7 +151,7 @@ class ProductChoiceButton extends HookConsumerWidget {
               ),
               alignment: .center,
               child: HeroIcon(
-                HeroIcons.xMark,
+                .xMark,
                 size: 35,
                 color: AMAPColors(isDarkTheme).background,
               ),

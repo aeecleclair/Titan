@@ -46,7 +46,7 @@ class MemberResults extends HookConsumerWidget {
                             context,
                           ).colorScheme.primaryContainer,
                           builder: (child) => child,
-                          child: const HeroIcon(HeroIcons.plus),
+                          child: const HeroIcon(.plus),
                         ),
                       ],
                     ),

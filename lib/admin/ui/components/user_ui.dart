@@ -48,7 +48,7 @@ class UserUi extends HookConsumerWidget {
                 borderRadius: const .all(Radius.circular(10)),
               ),
               child: HeroIcon(
-                HeroIcons.trash,
+                .trash,
                 size: 20,
                 color: Theme.of(context).colorScheme.onSecondary,
               ),

@@ -81,7 +81,7 @@ class LoanCard extends StatelessWidget {
                           ? GestureDetector(
                               onTap: onInfo,
                               child: HeroIcon(
-                                HeroIcons.informationCircle,
+                                .informationCircle,
                                 color: shouldReturn
                                     ? LoanColorConstants.contrast
                                     : Theme.of(context).colorScheme.onSurface,
@@ -176,7 +176,7 @@ class LoanCard extends StatelessWidget {
                           ? LoanColorConstants.contrast.withValues(alpha: 0.7)
                           : Theme.of(context).colorScheme.secondaryFixed,
                       child: HeroIcon(
-                        HeroIcons.pencil,
+                        .pencil,
                         color: shouldReturn
                             ? LoanColorConstants.urgentRed
                             : Theme.of(context).colorScheme.onSurface,
@@ -195,7 +195,7 @@ class LoanCard extends StatelessWidget {
                     ),
                     onTap: onCalendar,
                     child: HeroIcon(
-                      HeroIcons.calendarDays,
+                      .calendarDays,
                       color: shouldReturn
                           ? LoanColorConstants.urgentRed
                           : Theme.of(context).colorScheme.onSurface,
@@ -210,7 +210,7 @@ class LoanCard extends StatelessWidget {
                     ),
                     onTap: onReturn,
                     child: HeroIcon(
-                      HeroIcons.check,
+                      .check,
                       color: shouldReturn
                           ? LoanColorConstants.contrast
                           : Theme.of(context).colorScheme.onSecondary,

@@ -100,7 +100,7 @@ class OrderUI extends HookConsumerWidget {
                     onTap?.call();
                   },
                   child: HeroIcon(
-                    HeroIcons.informationCircle,
+                    .informationCircle,
                     color: AMAPColors(isDarkTheme).secondaryGreen,
                     size: 30,
                   ),
@@ -154,7 +154,7 @@ class OrderUI extends HookConsumerWidget {
                             AMAPColors(isDarkTheme).greenGradientSecondary,
                           ],
                           child: HeroIcon(
-                            HeroIcons.pencil,
+                            .pencil,
                             color: Theme.of(context).colorScheme.onSecondary,
                           ),
                         ),
@@ -198,7 +198,7 @@ class OrderUI extends HookConsumerWidget {
                           child: child,
                         ),
                         child: HeroIcon(
-                          HeroIcons.trash,
+                          .trash,
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ),

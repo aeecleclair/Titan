@@ -42,7 +42,7 @@ class AddDeviceButton extends ConsumerWidget {
                         clipBehavior: Clip.none,
                         children: [
                           HeroIcon(
-                            HeroIcons.devicePhoneMobile,
+                            .devicePhoneMobile,
                             color: secondaryGreen,
                             size: 30,
                           ),
@@ -58,7 +58,7 @@ class AddDeviceButton extends ConsumerWidget {
                                 borderRadius: .circular(50),
                               ),
                               child: HeroIcon(
-                                HeroIcons.plus,
+                                .plus,
                                 color: secondaryGreen,
                                 size: 13,
                               ),

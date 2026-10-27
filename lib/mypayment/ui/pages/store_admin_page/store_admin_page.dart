@@ -71,7 +71,7 @@ class StoreAdminPage extends HookConsumerWidget {
                       const Spacer(),
                       CardButton(
                         size: 35,
-                        child: HeroIcon(HeroIcons.plus, color: color, size: 20),
+                        child: HeroIcon(.plus, color: color, size: 20),
                       ),
                     ],
                   ),
@@ -140,7 +140,7 @@ class StoreAdminPage extends HookConsumerWidget {
                         queryController.clear();
                         usersNotifier.clear();
                       },
-                      child: HeroIcon(HeroIcons.xMark, size: 30, color: color),
+                      child: HeroIcon(.xMark, size: 30, color: color),
                     ),
                   ],
                 ),

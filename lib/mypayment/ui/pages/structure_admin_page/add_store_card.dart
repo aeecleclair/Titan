@@ -41,7 +41,7 @@ class AddStoreCard extends ConsumerWidget {
         ),
         child: Center(
           child: HeroIcon(
-            HeroIcons.plus,
+            .plus,
             size: 40,
             color: MyPaymentColors(isDarkTheme).backgroundGradient2,
           ),

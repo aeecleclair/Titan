@@ -120,7 +120,7 @@ class BookingCard extends ConsumerWidget {
                 GestureDetector(
                   onTap: onInfo,
                   child: HeroIcon(
-                    HeroIcons.informationCircle,
+                    .informationCircle,
                     color: informationCircleColor,
                     size: 25,
                   ),
@@ -197,10 +197,7 @@ class BookingCard extends ConsumerWidget {
                     child: CardButton(
                       color: primaryIconBackgroundColor,
                       shadowColor: Theme.of(context).shadowColor,
-                      child: HeroIcon(
-                        HeroIcons.pencil,
-                        color: primaryIconColor,
-                      ),
+                      child: HeroIcon(.pencil, color: primaryIconColor),
                     ),
                   ),
                 if (showButton) const Spacer(),
@@ -210,7 +207,7 @@ class BookingCard extends ConsumerWidget {
                     color: primaryIconBackgroundColor,
                     shadowColor: Theme.of(context).shadowColor,
                     child: HeroIcon(
-                      HeroIcons.documentDuplicate,
+                      .documentDuplicate,
                       color: primaryIconColor,
                     ),
                   ),
@@ -228,7 +225,7 @@ class BookingCard extends ConsumerWidget {
                           : Colors.transparent,
                       shadowColor: Theme.of(context).shadowColor,
                       child: HeroIcon(
-                        HeroIcons.check,
+                        .check,
                         color: secondaryIconBackgroundColor,
                       ),
                     ),
@@ -248,7 +245,7 @@ class BookingCard extends ConsumerWidget {
                         alpha: 0.2,
                       ),
                       child: HeroIcon(
-                        HeroIcons.xMark,
+                        .xMark,
                         color: Theme.of(context).colorScheme.onSecondary,
                       ),
                     ),
@@ -265,7 +262,7 @@ class BookingCard extends ConsumerWidget {
                       child: child,
                     ),
                     child: HeroIcon(
-                      HeroIcons.trash,
+                      .trash,
                       color: Theme.of(context).colorScheme.onSecondary,
                     ),
                   ),

@@ -54,7 +54,7 @@ class DeliveryHandler extends HookConsumerWidget {
                 ).textOnPrimary.withValues(alpha: 0.2),
                 child: Center(
                   child: HeroIcon(
-                    HeroIcons.plus,
+                    .plus,
                     color: AMAPColors(isDarkTheme).textOnPrimary,
                     size: 50,
                   ),

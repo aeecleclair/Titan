@@ -31,7 +31,7 @@ class EditionButton extends HookConsumerWidget {
             ),
           ],
         ),
-        child: const HeroIcon(HeroIcons.pencil, color: Colors.black),
+        child: const HeroIcon(.pencil, color: Colors.black),
       ),
     );
   }

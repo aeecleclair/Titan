@@ -74,7 +74,7 @@ class SchoolsPage extends HookConsumerWidget {
                               children: [
                                 const Spacer(),
                                 HeroIcon(
-                                  HeroIcons.plus,
+                                  .plus,
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.secondaryContainer,

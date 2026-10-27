@@ -126,8 +126,7 @@ class SettingsMainPage extends HookConsumerWidget {
                   ),
                 );
               },
-              errorBuilder: (e, s) =>
-                  const HeroIcon(HeroIcons.userCircle, size: 140),
+              errorBuilder: (e, s) => const HeroIcon(.userCircle, size: 140),
             ),
             const SizedBox(height: 100),
             HorizontalListView.builder(

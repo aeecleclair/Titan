@@ -46,7 +46,7 @@ class SettingsItem extends StatelessWidget {
               borderRadius: .circular(10),
             ),
             child: HeroIcon(
-              HeroIcons.chevronRight,
+              .chevronRight,
               size: 25,
               color: Theme.of(context).colorScheme.onPrimary,
             ),

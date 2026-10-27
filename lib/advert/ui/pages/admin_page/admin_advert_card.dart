@@ -43,7 +43,7 @@ class AdminAdvertCard extends HookConsumerWidget {
                       ],
                       shadowColor: Theme.of(context).shadowColor,
                       child: HeroIcon(
-                        HeroIcons.pencil,
+                        .pencil,
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
@@ -62,7 +62,7 @@ class AdminAdvertCard extends HookConsumerWidget {
                       child: child,
                     ),
                     child: HeroIcon(
-                      HeroIcons.trash,
+                      .trash,
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ),

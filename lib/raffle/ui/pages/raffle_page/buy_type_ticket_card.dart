@@ -112,17 +112,15 @@ class BuyPackTicket extends HookConsumerWidget {
                                     );
                                   });
                                 });
-                                return const HeroIcon(
-                                  HeroIcons.cubeTransparent,
-                                );
+                                return const HeroIcon(.cubeTransparent);
                               }
                             },
                             loading: () => const CircularProgressIndicator(),
                             error: (Object error, StackTrace? stackTrace) =>
-                                const HeroIcon(HeroIcons.cubeTransparent),
+                                const HeroIcon(.cubeTransparent),
                           );
                         } else {
-                          return const HeroIcon(HeroIcons.cubeTransparent);
+                          return const HeroIcon(.cubeTransparent);
                         }
                       },
                     ),

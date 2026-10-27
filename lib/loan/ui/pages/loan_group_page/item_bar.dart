@@ -83,7 +83,7 @@ class ItemBar extends HookConsumerWidget {
                               ),
                               child: GestureDetector(
                                 child: HeroIcon(
-                                  HeroIcons.minus,
+                                  .minus,
                                   color: currentValue == 0
                                       ? Theme.of(context).colorScheme.tertiary
                                       : Theme.of(
@@ -145,7 +145,7 @@ class ItemBar extends HookConsumerWidget {
                               ),
                               child: GestureDetector(
                                 child: HeroIcon(
-                                  HeroIcons.plus,
+                                  .plus,
                                   color:
                                       currentValue ==
                                           e.totalQuantity - e.loanedQuantity

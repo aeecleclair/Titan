@@ -41,7 +41,7 @@ class AssociationMembershipUi extends HookConsumerWidget {
                 gradient1: Theme.of(context).colorScheme.secondaryContainer,
                 gradient2: Theme.of(context).colorScheme.secondary,
                 child: HeroIcon(
-                  HeroIcons.eye,
+                  .eye,
                   color: Theme.of(context).colorScheme.onSecondary,
                 ),
               ),
@@ -55,7 +55,7 @@ class AssociationMembershipUi extends HookConsumerWidget {
                 child: child,
               ),
               child: HeroIcon(
-                HeroIcons.xMark,
+                .xMark,
                 color: Theme.of(context).colorScheme.onPrimaryContainer,
               ),
             ),

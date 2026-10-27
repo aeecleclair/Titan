@@ -84,7 +84,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                       ),
                                       suffixIcon: Container(
                                         padding: const .all(10),
-                                        child: const HeroIcon(HeroIcons.pencil),
+                                        child: const HeroIcon(.pencil),
                                       ),
                                       enabledBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(
@@ -132,7 +132,7 @@ class AssociationInformationEditor extends HookConsumerWidget {
                                       ),
                                       suffixIcon: Container(
                                         padding: const .all(10),
-                                        child: const HeroIcon(HeroIcons.pencil),
+                                        child: const HeroIcon(.pencil),
                                       ),
                                       enabledBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(

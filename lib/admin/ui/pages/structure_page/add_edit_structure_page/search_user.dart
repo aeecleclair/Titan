@@ -60,7 +60,7 @@ class SearchUser extends HookConsumerWidget {
                 borderRadius: const .all(Radius.circular(10)),
               ),
               child: HeroIcon(
-                HeroIcons.plus,
+                .plus,
                 size: 20,
                 color: Theme.of(context).colorScheme.onPrimaryContainer,
               ),

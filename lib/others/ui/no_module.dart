@@ -25,7 +25,7 @@ class NoModulePage extends HookConsumerWidget {
         child: Column(
           children: [
             Spacer(flex: 2),
-            HeroIcon(HeroIcons.cubeTransparent, size: 100),
+            HeroIcon(.cubeTransparent, size: 100),
             SizedBox(height: 50),
             Center(
               child: Text(

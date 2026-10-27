@@ -191,7 +191,7 @@ class DetailOrderUI extends HookConsumerWidget {
                   child: child,
                 ),
                 child: HeroIcon(
-                  HeroIcons.trash,
+                  .trash,
                   color: Theme.of(context).colorScheme.onSecondary,
                   size: 20,
                 ),

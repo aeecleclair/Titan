@@ -62,7 +62,7 @@ class SummaryCard extends ConsumerWidget {
             radius: 27,
             backgroundColor: MyPaymentColors(isDarkTheme).gradient1,
             child: HeroIcon(
-              HeroIcons.listBullet,
+              .listBullet,
               color: MyPaymentColors.onGradient,
               size: 25,
             ),

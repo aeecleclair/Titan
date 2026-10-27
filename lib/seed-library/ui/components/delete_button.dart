@@ -40,7 +40,7 @@ class DeleteButton extends StatelessWidget {
           borderRadius: .circular(10),
         ),
         child: HeroIcon(
-          deletion ? HeroIcons.trash : HeroIcons.noSymbol,
+          deletion ? .trash : .noSymbol,
           size: 30,
           color: Colors.white,
         ),

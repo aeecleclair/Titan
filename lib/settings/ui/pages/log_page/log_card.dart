@@ -68,7 +68,7 @@ class LogCard extends StatelessWidget {
                     SettingsTextConstants.copied,
                   );
                 },
-                child: const HeroIcon(HeroIcons.clipboard, color: Colors.white),
+                child: const HeroIcon(.clipboard, color: Colors.white),
               ),
             ],
           ),

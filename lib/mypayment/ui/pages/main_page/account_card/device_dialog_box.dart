@@ -163,7 +163,7 @@ class DeviceDialogBox extends ConsumerWidget {
                     ),
                     child: Center(
                       child: HeroIcon(
-                        HeroIcons.exclamationCircle,
+                        .exclamationCircle,
                         size: 60,
                         color: MyPaymentColors.onGradient,
                       ),

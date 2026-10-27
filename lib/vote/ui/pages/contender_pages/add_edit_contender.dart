@@ -122,7 +122,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                               ),
                             )
                           : const HeroIcon(
-                              HeroIcons.userCircle,
+                              .userCircle,
                               size: 160,
                               color: Colors.grey,
                             ),
@@ -140,7 +140,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                             ColorConstants.gradient1,
                             ColorConstants.gradient2,
                           ],
-                          child: HeroIcon(HeroIcons.photo, color: Colors.white),
+                          child: HeroIcon(.photo, color: Colors.white),
                         ),
                       ),
                     ),

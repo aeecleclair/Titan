@@ -68,7 +68,7 @@ class ItemCard extends StatelessWidget {
                   onTap: onEdit,
                   child: CardButton(
                     color: Theme.of(context).colorScheme.secondaryFixed,
-                    child: const HeroIcon(HeroIcons.pencil),
+                    child: const HeroIcon(.pencil),
                   ),
                 ),
                 WaitingButton(
@@ -78,7 +78,7 @@ class ItemCard extends StatelessWidget {
                   ),
                   onTap: onDelete,
                   child: HeroIcon(
-                    HeroIcons.trash,
+                    .trash,
                     color: Theme.of(context).colorScheme.onSecondary,
                   ),
                 ),

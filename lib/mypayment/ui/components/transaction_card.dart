@@ -30,19 +30,19 @@ class TransactionCard extends ConsumerWidget {
 
     switch (transaction.type) {
       case HistoryType.given:
-        icon = HeroIcons.qrCode;
+        icon = .qrCode;
         break;
       case HistoryType.received:
-        icon = HeroIcons.arrowDownRight;
+        icon = .arrowDownRight;
         break;
       case HistoryType.refundCredited:
-        icon = HeroIcons.arrowUturnLeft;
+        icon = .arrowUturnLeft;
         break;
       case HistoryType.refundDebited:
-        icon = HeroIcons.arrowUturnRight;
+        icon = .arrowUturnRight;
         break;
       case HistoryType.transfer:
-        icon = HeroIcons.creditCard;
+        icon = .creditCard;
         break;
     }
 

@@ -65,7 +65,7 @@ class TicketCard extends HookConsumerWidget {
                     QR.to(PurchasesRouter.root + PurchasesRouter.userList);
                   });
                 },
-                child: const HeroIcon(HeroIcons.listBullet),
+                child: const HeroIcon(.listBullet),
               ),
             ],
           ),

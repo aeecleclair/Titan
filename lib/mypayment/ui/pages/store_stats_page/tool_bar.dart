@@ -148,7 +148,7 @@ class ToolBar extends ConsumerWidget {
               ),
               SizedBox(width: 5),
               HeroIcon(
-                HeroIcons.arrowRight,
+                .arrowRight,
                 color: MyPaymentColors(isDarkTheme).secondaryGreen,
                 size: 20,
               ),

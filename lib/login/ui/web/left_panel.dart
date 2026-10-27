@@ -140,7 +140,7 @@ class LeftPanel extends HookConsumerWidget {
                               ),
                             )
                           : HeroIcon(
-                              HeroIcons.arrowRight,
+                              .arrowRight,
                               color: Theme.of(
                                 context,
                               ).colorScheme.onPrimaryContainer,

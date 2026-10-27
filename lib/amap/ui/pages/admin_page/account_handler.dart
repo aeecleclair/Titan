@@ -83,7 +83,7 @@ class AccountHandler extends HookConsumerWidget {
                 child: Container(
                   padding: const .symmetric(horizontal: 12.0),
                   child: HeroIcon(
-                    searchingAmapUser ? HeroIcons.plus : HeroIcons.xMark,
+                    searchingAmapUser ? .plus : .xMark,
                     color: AMAPColors(isDarkTheme).primaryGreen,
                     size: 50,
                   ),

@@ -161,7 +161,7 @@ class AssociationPage extends HookConsumerWidget {
                         ],
                       ),
                       child: HeroIcon(
-                        HeroIcons.envelope,
+                        .envelope,
                         color: Theme.of(context).colorScheme.onSecondary,
                       ),
                     ),
@@ -204,7 +204,7 @@ class AssociationPage extends HookConsumerWidget {
                         ],
                       ),
                       child: HeroIcon(
-                        HeroIcons.pencil,
+                        .pencil,
                         color: Theme.of(context).colorScheme.onSecondary,
                       ),
                     ),

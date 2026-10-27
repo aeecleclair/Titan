@@ -1,6 +1,5 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:titan/centralisation/tools/constants.dart';
 import 'package:titan/centralisation/ui/pages/main_page.dart'
     deferred as main_page;
@@ -14,7 +13,7 @@ class CentralisationRouter {
   static const String root = '/centralisation';
   static final Module module = Module(
     name: CentralisationTextConstants.centralisation,
-    icon: const Left(HeroIcons.link),
+    icon: const Left(.link),
     root: CentralisationRouter.root,
     selected: false,
   );

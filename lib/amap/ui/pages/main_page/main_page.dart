@@ -198,7 +198,7 @@ class AmapMainPage extends HookConsumerWidget {
                               ),
                               IconButton(
                                 icon: HeroIcon(
-                                  HeroIcons.xMark,
+                                  .xMark,
                                   color: Theme.of(
                                     context,
                                   ).colorScheme.onSecondary,

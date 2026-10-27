@@ -146,7 +146,7 @@ class TombolaHandler extends HookConsumerWidget {
                         child: Container(
                           padding: const .symmetric(horizontal: 12.0),
                           child: const HeroIcon(
-                            HeroIcons.plus,
+                            .plus,
                             color: Colors.white,
                             size: 50,
                           ),

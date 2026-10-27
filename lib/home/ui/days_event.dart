@@ -92,10 +92,7 @@ class DaysEvent extends HookConsumerWidget {
                           eventNotifier.setEvent(event);
                           QR.to(HomeRouter.root + HomeRouter.detail);
                         },
-                        child: HeroIcon(
-                          HeroIcons.informationCircle,
-                          color: textColor,
-                        ),
+                        child: HeroIcon(.informationCircle, color: textColor),
                       ),
                     ],
                   ),

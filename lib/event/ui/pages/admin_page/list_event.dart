@@ -67,7 +67,7 @@ class ListEvent extends HookConsumerWidget {
                 ),
                 if (canToggle)
                   HeroIcon(
-                    toggle.value ? HeroIcons.chevronUp : HeroIcons.chevronDown,
+                    toggle.value ? .chevronUp : .chevronDown,
                     color: Colors.grey,
                     size: 30,
                   ),

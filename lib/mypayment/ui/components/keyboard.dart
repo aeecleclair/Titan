@@ -78,11 +78,7 @@ class NumericKeyboard extends StatelessWidget {
                   alignment: .center,
                   width: 50,
                   height: 50,
-                  child: HeroIcon(
-                    HeroIcons.backspace,
-                    color: textColor,
-                    size: 35,
-                  ),
+                  child: HeroIcon(.backspace, color: textColor, size: 35),
                 ),
               ),
             ],

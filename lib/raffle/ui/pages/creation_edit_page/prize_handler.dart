@@ -136,11 +136,7 @@ class PrizeHandler extends HookConsumerWidget {
                         ],
                       ),
                       child: const Center(
-                        child: HeroIcon(
-                          HeroIcons.plus,
-                          color: Colors.white,
-                          size: 50,
-                        ),
+                        child: HeroIcon(.plus, color: Colors.white, size: 50),
                       ),
                     ),
                   ),

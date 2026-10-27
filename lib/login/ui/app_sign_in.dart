@@ -90,7 +90,7 @@ class AppSignIn extends HookConsumerWidget {
                           },
                           color: LoginColors(isDarkTheme).background2,
                           icon: HeroIcon(
-                            HeroIcons.arrowRight,
+                            .arrowRight,
                             color: LoginColors(isDarkTheme).background2,
                             size: 35.0,
                           ),

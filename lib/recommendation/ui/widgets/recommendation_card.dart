@@ -57,7 +57,7 @@ class RecommendationCard extends HookConsumerWidget {
       mapKey: recommendation,
       loader: (ref) =>
           recommendationLogoNotifier.getRecommendationLogo(recommendation.id!),
-      loadingBuilder: (context) => const HeroIcon(HeroIcons.photo),
+      loadingBuilder: (context) => const HeroIcon(.photo),
       dataBuilder: (context, data) => RecommendationCardLayout(
         child: Row(
           mainAxisAlignment: .spaceBetween,
@@ -126,10 +126,7 @@ class RecommendationCard extends HookConsumerWidget {
                               RecommendationRouter.information,
                         );
                       },
-                      icon: const HeroIcon(
-                        HeroIcons.informationCircle,
-                        size: 40,
-                      ),
+                      icon: const HeroIcon(.informationCircle, size: 40),
                     ),
                   )
                 : SizedBox(
@@ -145,7 +142,7 @@ class RecommendationCard extends HookConsumerWidget {
                                   );
                                 },
                                 child: const CardButton(
-                                  child: HeroIcon(HeroIcons.pencil, size: 25),
+                                  child: HeroIcon(.pencil, size: 25),
                                 ),
                               ),
                               const SizedBox(height: 10),
@@ -187,8 +184,8 @@ class RecommendationCard extends HookConsumerWidget {
                                 child: const CardButton(
                                   color: Colors.black,
                                   child: HeroIcon(
+                                    .trash,
                                     color: Colors.white,
-                                    HeroIcons.trash,
                                     size: 25,
                                   ),
                                 ),

@@ -82,7 +82,7 @@ class Calendar extends HookConsumerWidget {
                       child: CardButton(
                         color: Theme.of(context).colorScheme.surface,
                         shadowColor: Theme.of(context).shadowColor,
-                        child: const HeroIcon(HeroIcons.xMark, size: 20),
+                        child: const HeroIcon(.xMark, size: 20),
                       ),
                     ),
                   ),
@@ -176,7 +176,7 @@ class Calendar extends HookConsumerWidget {
                               calendarController.forward!();
                             },
                             icon: HeroIcon(
-                              HeroIcons.arrowRight,
+                              .arrowRight,
                               size: 25,
                               color: Theme.of(context).colorScheme.onSecondary,
                             ),
@@ -205,7 +205,7 @@ class Calendar extends HookConsumerWidget {
                               calendarController.backward!();
                             },
                             icon: HeroIcon(
-                              HeroIcons.arrowLeft,
+                              .arrowLeft,
                               size: 25,
                               color: Theme.of(context).colorScheme.onSecondary,
                             ),

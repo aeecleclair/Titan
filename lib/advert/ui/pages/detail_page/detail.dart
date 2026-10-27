@@ -173,7 +173,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                   ),
                   child: Row(
                     children: [
-                      const HeroIcon(HeroIcons.calendar, size: 20),
+                      const HeroIcon(.calendar, size: 20),
                       const SizedBox(width: 7),
                       Text(
                         DateFormat('dd/MM/yyyy - HH:mm').format(advert.date),

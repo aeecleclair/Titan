@@ -44,7 +44,7 @@ class FlappyBirdTemplate extends HookConsumerWidget {
                         );
                       },
                       icon: HeroIcon(
-                        HeroIcons.trophy,
+                        .trophy,
                         color: FlappyBirdColors(isDarkTheme).text,
                         size: 40,
                       ),

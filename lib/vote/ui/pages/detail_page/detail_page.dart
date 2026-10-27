@@ -72,7 +72,7 @@ class DetailPage extends HookConsumerWidget {
                                           },
                                         );
                                         return const HeroIcon(
-                                          HeroIcons.userCircle,
+                                          .userCircle,
                                           size: 40,
                                         );
                                       }
@@ -100,7 +100,7 @@ class DetailPage extends HookConsumerWidget {
                                     errorBuilder: (error, stack) =>
                                         const Center(
                                           child: HeroIcon(
-                                            HeroIcons.exclamationCircle,
+                                            .exclamationCircle,
                                             size: 40,
                                           ),
                                         ),

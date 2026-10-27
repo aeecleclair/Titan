@@ -139,7 +139,7 @@ class UserCashUi extends HookConsumerWidget {
                                   ),
                                 ),
                                 const HeroIcon(
-                                  HeroIcons.plus,
+                                  .plus,
                                   color: Colors.white,
                                   size: 20,
                                 ),

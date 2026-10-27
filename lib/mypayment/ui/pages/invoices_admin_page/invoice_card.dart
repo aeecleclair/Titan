@@ -215,7 +215,7 @@ class InvoiceCard extends HookConsumerWidget {
                             : Colors.orange,
                       ),
                     ),
-                    const HeroIcon(HeroIcons.chevronRight),
+                    const HeroIcon(.chevronRight),
                   ],
                 ),
               ),

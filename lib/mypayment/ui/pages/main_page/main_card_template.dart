@@ -68,7 +68,7 @@ class MainCardTemplate extends StatelessWidget {
                             toggle!();
                           },
                           child: const HeroIcon(
-                            HeroIcons.arrowsRightLeft,
+                            .arrowsRightLeft,
                             color: MyPaymentColors.onGradient,
                             size: 30,
                           ),

@@ -58,7 +58,7 @@ class AdvertCard extends HookConsumerWidget {
                           loader: (advertId) =>
                               posterNotifier.getAdvertPoster(advertId),
                           loadingBuilder: (context) =>
-                              HeroIcon(HeroIcons.photo, size: width),
+                              HeroIcon(.photo, size: width),
                           dataBuilder: (context, value) => Image(
                             image: value.first.image,
                             fit: BoxFit.cover, // use this
@@ -139,7 +139,7 @@ class AdvertCard extends HookConsumerWidget {
                                 topRight: Radius.circular(20),
                               ),
                             ),
-                            child: HeroIcon(HeroIcons.photo, size: width),
+                            child: HeroIcon(.photo, size: width),
                           ),
                           dataBuilder: (context, value) => Container(
                             width: width,

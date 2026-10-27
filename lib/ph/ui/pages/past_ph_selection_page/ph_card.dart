@@ -89,7 +89,7 @@ class PhCard extends HookConsumerWidget {
                   size: 60,
                   color: Theme.of(context).shadowColor,
                   child: HeroIcon(
-                    HeroIcons.arrowDownTray,
+                    .arrowDownTray,
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),

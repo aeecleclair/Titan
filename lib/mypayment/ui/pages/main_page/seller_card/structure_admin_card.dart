@@ -56,7 +56,7 @@ class StructureAdminCard extends ConsumerWidget {
                 ),
                 SizedBox(width: 10),
                 HeroIcon(
-                  HeroIcons.arrowRight,
+                  .arrowRight,
                   color: MyPaymentColors(isDarkTheme).secondaryGreen,
                   size: 25,
                 ),

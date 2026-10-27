@@ -219,7 +219,7 @@ class Calendar extends HookConsumerWidget {
                         calendarController.forward!();
                       },
                       icon: HeroIcon(
-                        HeroIcons.arrowRight,
+                        .arrowRight,
                         size: 25,
                         color: Theme.of(context).colorScheme.onSecondary,
                       ),
@@ -248,7 +248,7 @@ class Calendar extends HookConsumerWidget {
                         calendarController.backward!();
                       },
                       icon: HeroIcon(
-                        HeroIcons.arrowLeft,
+                        .arrowLeft,
                         size: 25,
                         color: Theme.of(context).colorScheme.onSecondary,
                       ),

@@ -82,9 +82,7 @@ class ListBooking extends HookConsumerWidget {
                   ),
                   if (canToggle)
                     HeroIcon(
-                      toggle.value
-                          ? HeroIcons.chevronUp
-                          : HeroIcons.chevronDown,
+                      toggle.value ? .chevronUp : .chevronDown,
                       color: Theme.of(context).colorScheme.tertiary,
                       size: 30,
                     ),

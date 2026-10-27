@@ -134,7 +134,7 @@ class CalendarDialog extends StatelessWidget {
                           color: Theme.of(context).colorScheme.primary,
                           shadowColor: Theme.of(context).shadowColor,
                           child: HeroIcon(
-                            HeroIcons.pencil,
+                            .pencil,
                             color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),
@@ -146,7 +146,7 @@ class CalendarDialog extends StatelessWidget {
                         color: Theme.of(context).colorScheme.primary,
                         shadowColor: Theme.of(context).shadowColor,
                         child: HeroIcon(
-                          HeroIcons.documentDuplicate,
+                          .documentDuplicate,
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
@@ -158,7 +158,7 @@ class CalendarDialog extends StatelessWidget {
                         color: Theme.of(context).colorScheme.primary,
                         shadowColor: Theme.of(context).shadowColor,
                         child: HeroIcon(
-                          HeroIcons.check,
+                          .check,
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
@@ -170,7 +170,7 @@ class CalendarDialog extends StatelessWidget {
                         color: Theme.of(context).colorScheme.secondary,
                         shadowColor: Theme.of(context).shadowColor,
                         child: HeroIcon(
-                          HeroIcons.xMark,
+                          .xMark,
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ),
@@ -200,7 +200,7 @@ class CalendarDialog extends StatelessWidget {
                   ],
                   borderRadius: .circular(15),
                 ),
-                child: const HeroIcon(HeroIcons.xMark, size: 20),
+                child: const HeroIcon(.xMark, size: 20),
               ),
             ),
           ),

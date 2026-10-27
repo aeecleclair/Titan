@@ -90,7 +90,7 @@ class SearchResult extends HookConsumerWidget {
                             isDarkTheme,
                           ).backgroundGradient2,
                           builder: (child) => child,
-                          child: const HeroIcon(HeroIcons.plus),
+                          child: const HeroIcon(.plus),
                         ),
                       ],
                     ),

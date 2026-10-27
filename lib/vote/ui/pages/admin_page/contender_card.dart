@@ -87,7 +87,7 @@ class ContenderCard extends HookConsumerWidget {
                         QR.to(VoteRouter.root + VoteRouter.detail);
                       },
                       child: const HeroIcon(
-                        HeroIcons.informationCircle,
+                        .informationCircle,
                         color: Colors.black,
                         size: 25,
                       ),
@@ -118,17 +118,14 @@ class ContenderCard extends HookConsumerWidget {
                   child: CardButton(
                     color: Colors.grey.shade200,
                     shadowColor: Colors.grey.withValues(alpha: 0.2),
-                    child: const HeroIcon(
-                      HeroIcons.pencil,
-                      color: Colors.black,
-                    ),
+                    child: const HeroIcon(.pencil, color: Colors.black),
                   ),
                 ),
                 WaitingButton(
                   builder: (child) =>
                       CardButton(color: Colors.black, child: child),
                   onTap: onDelete,
-                  child: const HeroIcon(HeroIcons.trash, color: Colors.white),
+                  child: const HeroIcon(.trash, color: Colors.white),
                 ),
               ],
             ),

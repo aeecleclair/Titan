@@ -169,7 +169,7 @@ class ListContenderCard extends HookConsumerWidget {
                         mainAxisAlignment: .spaceEvenly,
                         children: [
                           HeroIcon(
-                            HeroIcons.chevronDoubleDown,
+                            .chevronDoubleDown,
                             size: 15,
                             color: Colors.grey.shade100,
                           ),

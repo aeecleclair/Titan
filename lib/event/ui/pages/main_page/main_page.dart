@@ -75,7 +75,7 @@ class EventMainPage extends HookConsumerWidget {
                   color: Colors.white,
                   child: Center(
                     child: HeroIcon(
-                      HeroIcons.plus,
+                      .plus,
                       size: 40,
                       color: Colors.grey.shade500,
                     ),

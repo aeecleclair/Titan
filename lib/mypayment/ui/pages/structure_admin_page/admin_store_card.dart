@@ -72,7 +72,7 @@ class AdminStoreCard extends ConsumerWidget {
                     MyPaymentColors(isDarkTheme).backgroundGradient2,
                   ],
                   child: HeroIcon(
-                    HeroIcons.pencilSquare,
+                    .pencilSquare,
                     color: MyPaymentColors.onGradient,
                   ),
                 ),
@@ -115,7 +115,7 @@ class AdminStoreCard extends ConsumerWidget {
                   child: child,
                 ),
                 child: const HeroIcon(
-                  HeroIcons.trash,
+                  .trash,
                   color: MyPaymentColors.onGradient,
                 ),
               ),

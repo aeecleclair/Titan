@@ -31,7 +31,7 @@ class EditionButton extends HookConsumerWidget {
           ],
         ),
         child: HeroIcon(
-          HeroIcons.pencil,
+          .pencil,
           color: Theme.of(context).colorScheme.onSurface,
         ),
       ),

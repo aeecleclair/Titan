@@ -113,7 +113,7 @@ class UserCashUi extends HookConsumerWidget {
                               ),
                             ),
                             HeroIcon(
-                              HeroIcons.plus,
+                              .plus,
                               color: AMAPColors(isDarkTheme).primaryGreen,
                               size: 20,
                             ),

@@ -152,7 +152,7 @@ class CategoryPage extends HookConsumerWidget {
                                   mainAxisAlignment: .spaceEvenly,
                                   children: [
                                     HeroIcon(
-                                      HeroIcons.chevronDoubleDown,
+                                      .chevronDoubleDown,
                                       size: 15,
                                       color: AMAPColors(isDarkTheme).background,
                                     ),

@@ -176,7 +176,7 @@ class ContenderCard extends HookConsumerWidget {
                     children: [
                       contender.listType != ListType.blank
                           ? ContenderLogo(contender)
-                          : const HeroIcon(HeroIcons.cubeTransparent, size: 40),
+                          : const HeroIcon(.cubeTransparent, size: 40),
                       const SizedBox(width: 10),
                       Expanded(
                         child: Column(
@@ -213,7 +213,7 @@ class ContenderCard extends HookConsumerWidget {
                                 QR.to(VoteRouter.root + VoteRouter.detail);
                               },
                               child: const HeroIcon(
-                                HeroIcons.informationCircle,
+                                .informationCircle,
                                 color: Colors.black,
                                 size: 25,
                               ),
@@ -253,7 +253,7 @@ class ContenderCard extends HookConsumerWidget {
                                 child: const CardButton(
                                   color: Colors.black,
                                   child: HeroIcon(
-                                    HeroIcons.envelopeOpen,
+                                    .envelopeOpen,
                                     color: Colors.white,
                                   ),
                                 ),

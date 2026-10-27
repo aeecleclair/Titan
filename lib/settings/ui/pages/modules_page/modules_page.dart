@@ -67,7 +67,7 @@ class ModulesPage extends HookConsumerWidget {
                         modulesNotifier.toggleModule(module);
                       },
                     ),
-                    const HeroIcon(HeroIcons.chevronUpDown, size: 30),
+                    const HeroIcon(.chevronUpDown, size: 30),
                   ],
                 ),
               ),

@@ -327,7 +327,7 @@ class EmailChangeDialog extends HookConsumerWidget {
                           ),
                           child: const Center(
                             child: HeroIcon(
-                              HeroIcons.exclamationCircle,
+                              .exclamationCircle,
                               size: 60,
                               color: Colors.white,
                             ),

@@ -149,7 +149,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                         },
                         builder: (child) => TmdbButton(child: child),
                         child: HeroIcon(
-                          HeroIcons.arrowRight,
+                          .arrowRight,
                           size: 22,
                           color: Theme.of(
                             context,
@@ -177,7 +177,7 @@ class AddEditSessionPage extends HookConsumerWidget {
                                 borderRadius: .circular(20),
                               ),
                               child: HeroIcon(
-                                HeroIcons.camera,
+                                .camera,
                                 size: 100,
                                 color: Theme.of(context).colorScheme.tertiary,
                               ),

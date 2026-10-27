@@ -94,7 +94,7 @@ class TicketUI extends HookConsumerWidget {
                           ],
                         ),
                         child: const HeroIcon(
-                          HeroIcons.pencil,
+                          .pencil,
                           color: RaffleColorConstants.textDark,
                         ),
                       ),
@@ -126,10 +126,7 @@ class TicketUI extends HookConsumerWidget {
                         child: child,
                       ),
                       onTap: onDelete,
-                      child: const HeroIcon(
-                        HeroIcons.trash,
-                        color: Colors.white,
-                      ),
+                      child: const HeroIcon(.trash, color: Colors.white),
                     ),
                   ],
                 ),

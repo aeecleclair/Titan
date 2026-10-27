@@ -57,7 +57,7 @@ class NotificationTab extends HookConsumerWidget {
                 child: Row(
                   children: [
                     HeroIcon(
-                      HeroIcons.trash,
+                      .trash,
                       color: Theme.of(context).colorScheme.onSecondary,
                       size: 20,
                     ),

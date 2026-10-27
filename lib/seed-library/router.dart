@@ -1,6 +1,5 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:titan/drawer/class/module.dart';
 import 'package:titan/seed-library/providers/is_seed_library_admin_provider.dart';
 import 'package:titan/seed-library/ui/pages/add_edit_species_page/add_edit_species_page.dart'
@@ -49,7 +48,7 @@ class SeedLibraryRouter {
   SeedLibraryRouter(this.ref);
   static final Module module = Module(
     name: "Grainothèque",
-    icon: const Left(HeroIcons.inboxStack),
+    icon: const Left(.inboxStack),
     root: SeedLibraryRouter.root,
     selected: false,
   );

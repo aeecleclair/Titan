@@ -186,7 +186,7 @@ class ConfirmButton extends ConsumerWidget {
           borderRadius: .circular(25),
         ),
         child: HeroIcon(
-          HeroIcons.qrCode,
+          .qrCode,
           color: MyPaymentColors(
             isDarkTheme,
           ).gradient1.withValues(alpha: enabled ? 1 : .5),

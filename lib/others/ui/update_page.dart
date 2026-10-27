@@ -16,7 +16,7 @@ class UpdatePage extends HookConsumerWidget {
         child: Column(
           children: [
             const Spacer(flex: 2),
-            const HeroIcon(HeroIcons.bellAlert, size: 100),
+            const HeroIcon(.bellAlert, size: 100),
             const SizedBox(height: 50),
             const Center(
               child: Text(

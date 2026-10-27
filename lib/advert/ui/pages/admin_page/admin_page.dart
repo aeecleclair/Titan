@@ -95,7 +95,7 @@ class AdvertAdminPage extends HookConsumerWidget {
                     shadowColor: Theme.of(context).shadowColor,
                     child: Center(
                       child: HeroIcon(
-                        HeroIcons.plus,
+                        .plus,
                         size: 40,
                         color: Theme.of(context).colorScheme.tertiary,
                       ),

@@ -54,24 +54,18 @@ class SellerRightCard extends ConsumerWidget {
 
     final isDarkTheme = ref.watch(themeProvider);
 
-    final icons =
-        [
-              HeroIcons.viewfinderCircle,
-              HeroIcons.wallet,
-              HeroIcons.xMark,
-              HeroIcons.userGroup,
-            ]
-            .map(
-              (e) => CardButton(
-                size: 35,
-                colors: [
-                  MyPaymentColors(isDarkTheme).backgroundGradient1,
-                  MyPaymentColors(isDarkTheme).backgroundGradient2,
-                ],
-                child: HeroIcon(e, color: MyPaymentColors.onGradient, size: 20),
-              ),
-            )
-            .toList();
+    final icons = <HeroIcons>[.viewfinderCircle, .wallet, .xMark, .userGroup]
+        .map(
+          (icon) => CardButton(
+            size: 35,
+            colors: [
+              MyPaymentColors(isDarkTheme).backgroundGradient1,
+              MyPaymentColors(isDarkTheme).backgroundGradient2,
+            ],
+            child: HeroIcon(icon, color: MyPaymentColors.onGradient, size: 20),
+          ),
+        )
+        .toList();
 
     icons.add(
       CardButton(
@@ -80,7 +74,7 @@ class SellerRightCard extends ConsumerWidget {
           MyPaymentColors(isDarkTheme).secondaryGradient1,
           MyPaymentColors(isDarkTheme).secondaryGradient2,
         ],
-        child: HeroIcon(HeroIcons.userGroup, color: Colors.white, size: 20),
+        child: HeroIcon(.userGroup, color: Colors.white, size: 20),
       ),
     );
     icons.add(
@@ -91,7 +85,7 @@ class SellerRightCard extends ConsumerWidget {
           MyPaymentColors(isDarkTheme).secondaryGradient2,
         ],
         child: HeroIcon(
-          HeroIcons.userGroup,
+          .userGroup,
           color: MyPaymentColors.onGradient,
           size: 20,
         ),
@@ -280,7 +274,7 @@ class SellerRightCard extends ConsumerWidget {
                                 mainAxisAlignment: .center,
                                 children: [
                                   HeroIcon(
-                                    HeroIcons.trash,
+                                    .trash,
                                     color: MyPaymentColors.onGradient,
                                     size: 20,
                                   ),

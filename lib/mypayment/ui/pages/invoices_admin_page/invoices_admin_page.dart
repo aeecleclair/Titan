@@ -59,7 +59,7 @@ class InvoicesAdminPage extends HookConsumerWidget {
                   Row(
                     children: [
                       IconButton(
-                        icon: HeroIcon(HeroIcons.arrowLeft),
+                        icon: HeroIcon(.arrowLeft),
                         onPressed: page.value <= 1
                             ? null
                             : () {
@@ -87,7 +87,7 @@ class InvoicesAdminPage extends HookConsumerWidget {
                         value: pageSize.value,
                       ),
                       IconButton(
-                        icon: HeroIcon(HeroIcons.arrowRight),
+                        icon: HeroIcon(.arrowRight),
                         onPressed: invoices.length < pageSize.value
                             ? null
                             : () {

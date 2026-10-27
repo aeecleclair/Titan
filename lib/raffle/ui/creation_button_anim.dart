@@ -25,7 +25,7 @@ class CustomButton extends HookConsumerWidget {
       ),
       child: Row(
         children: [
-          const HeroIcon(HeroIcons.userGroup, color: Colors.white, size: 20),
+          const HeroIcon(.userGroup, color: Colors.white, size: 20),
           const SizedBox(width: 10),
           Text(
             text,

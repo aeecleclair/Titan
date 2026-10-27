@@ -215,7 +215,7 @@ class SessionCard extends HookConsumerWidget {
                                   ),
                                   child: Center(
                                     child: HeroIcon(
-                                      HeroIcons.bell,
+                                      .bell,
                                       size: 30,
                                       color: Theme.of(
                                         context,
@@ -228,7 +228,7 @@ class SessionCard extends HookConsumerWidget {
                         );
                 },
                 errorBuilder: (error, stack) =>
-                    const Center(child: HeroIcon(HeroIcons.exclamationCircle)),
+                    const Center(child: HeroIcon(.exclamationCircle)),
               ),
             ),
             const SizedBox(height: 15),
@@ -244,7 +244,7 @@ class SessionCard extends HookConsumerWidget {
                   Row(
                     mainAxisAlignment: .center,
                     children: [
-                      const HeroIcon(HeroIcons.calendar, size: 20),
+                      const HeroIcon(.calendar, size: 20),
                       const SizedBox(width: 7),
                       Text(
                         formatDate(session.start),
@@ -256,7 +256,7 @@ class SessionCard extends HookConsumerWidget {
                   Row(
                     mainAxisAlignment: .center,
                     children: [
-                      const HeroIcon(HeroIcons.clock, size: 20),
+                      const HeroIcon(.clock, size: 20),
                       const SizedBox(width: 7),
                       Text(
                         formatDuration(session.duration),

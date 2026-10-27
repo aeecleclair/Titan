@@ -103,10 +103,7 @@ class PrizeCard extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: const HeroIcon(
-                              HeroIcons.pencil,
-                              color: Colors.white,
-                            ),
+                            child: const HeroIcon(.pencil, color: Colors.white),
                           ),
                         ),
                         WaitingButton(
@@ -136,10 +133,7 @@ class PrizeCard extends StatelessWidget {
                             child: child,
                           ),
                           onTap: onDelete,
-                          child: const HeroIcon(
-                            HeroIcons.trash,
-                            color: Colors.white,
-                          ),
+                          child: const HeroIcon(.trash, color: Colors.white),
                         ),
                       ],
                     )
@@ -175,10 +169,7 @@ class PrizeCard extends StatelessWidget {
                               onTap: onDraw,
                               child: const Row(
                                 children: [
-                                  HeroIcon(
-                                    HeroIcons.envelopeOpen,
-                                    color: Colors.white,
-                                  ),
+                                  HeroIcon(.envelopeOpen, color: Colors.white),
                                   SizedBox(width: 15),
                                   Text(
                                     "Tirer",
@@ -199,7 +190,7 @@ class PrizeCard extends StatelessWidget {
                             ),
                             child: const Row(
                               children: [
-                                HeroIcon(HeroIcons.check, color: Colors.white),
+                                HeroIcon(.check, color: Colors.white),
                                 SizedBox(width: 15),
                                 Text(
                                   "Tiré",

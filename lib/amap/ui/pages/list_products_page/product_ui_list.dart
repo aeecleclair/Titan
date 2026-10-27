@@ -53,7 +53,7 @@ class ProductUiInList extends ConsumerWidget {
                   height: 25,
                   alignment: .center,
                   child: HeroIcon(
-                    HeroIcons.minus,
+                    .minus,
                     size: 22,
                     color: quantity > 0
                         ? AMAPColors(
@@ -106,7 +106,7 @@ class ProductUiInList extends ConsumerWidget {
                   height: 25,
                   alignment: .center,
                   child: HeroIcon(
-                    HeroIcons.plus,
+                    .plus,
                     size: 22,
                     color: AMAPColors(
                       isDarkTheme,

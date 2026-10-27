@@ -103,7 +103,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
                       );
                     },
                     child: HeroIcon(
-                      HeroIcons.plus,
+                      .plus,
                       size: 30,
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),

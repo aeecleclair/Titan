@@ -63,9 +63,8 @@ class AdminSessionCard extends HookConsumerWidget {
                       sessionPosterNotifier.getLogo(sessionId),
                   dataBuilder: (context, data) =>
                       Image(image: data.first.image, fit: BoxFit.cover),
-                  errorBuilder: (error, stack) => const Center(
-                    child: HeroIcon(HeroIcons.exclamationCircle),
-                  ),
+                  errorBuilder: (error, stack) =>
+                      const Center(child: HeroIcon(.exclamationCircle)),
                 ),
               ),
               Container(
@@ -90,7 +89,7 @@ class AdminSessionCard extends HookConsumerWidget {
                             color: Theme.of(context).shadowColor,
                             shadowColor: Theme.of(context).shadowColor,
                             child: HeroIcon(
-                              HeroIcons.pencil,
+                              .pencil,
                               color: Theme.of(context).colorScheme.onPrimary,
                             ),
                           ),
@@ -102,7 +101,7 @@ class AdminSessionCard extends HookConsumerWidget {
                             child: child,
                           ),
                           child: HeroIcon(
-                            HeroIcons.trash,
+                            .trash,
                             color: Theme.of(context).colorScheme.onSecondary,
                           ),
                         ),

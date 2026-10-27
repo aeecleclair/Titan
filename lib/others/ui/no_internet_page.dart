@@ -22,7 +22,7 @@ class NoInternetPage extends HookConsumerWidget {
           child: Column(
             mainAxisAlignment: .center,
             children: [
-              const HeroIcon(HeroIcons.signalSlash, size: 150),
+              const HeroIcon(.signalSlash, size: 150),
               const SizedBox(height: 20),
               Center(
                 child: Text(
@@ -70,7 +70,7 @@ class NoInternetPage extends HookConsumerWidget {
                     mainAxisAlignment: .spaceEvenly,
                     children: [
                       HeroIcon(
-                        HeroIcons.arrowPath,
+                        .arrowPath,
                         size: 35,
                         color: Theme.of(context).colorScheme.onPrimaryContainer,
                       ),

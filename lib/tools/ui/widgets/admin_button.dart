@@ -43,7 +43,7 @@ class AdminButton extends StatelessWidget {
         child: Row(
           children: [
             HeroIcon(
-              HeroIcons.userGroup,
+              .userGroup,
               color: textColor ?? Theme.of(context).colorScheme.onSecondary,
             ),
             const SizedBox(width: 10),

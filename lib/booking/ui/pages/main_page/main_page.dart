@@ -128,7 +128,7 @@ class BookingMainPage extends HookConsumerWidget {
                           height: 200,
                           child: Center(
                             child: HeroIcon(
-                              HeroIcons.plus,
+                              .plus,
                               size: 40.0,
                               color: Theme.of(context).colorScheme.onPrimary,
                             ),

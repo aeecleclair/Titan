@@ -23,7 +23,7 @@ class RollbackPage extends HookConsumerWidget {
         child: Column(
           children: [
             const Spacer(flex: 2),
-            const HeroIcon(HeroIcons.rocketLaunch, size: 100),
+            const HeroIcon(.rocketLaunch, size: 100),
             const SizedBox(height: 50),
             Center(
               child: Text(

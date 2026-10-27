@@ -37,7 +37,7 @@ class StoreSellerCard extends ConsumerWidget {
                   : MyPaymentColors(isDarkTheme).backgroundGradient1,
               child: (isSelected)
                   ? HeroIcon(
-                      HeroIcons.check,
+                      .check,
                       color: MyPaymentColors.onGradient,
                       size: 25,
                     )

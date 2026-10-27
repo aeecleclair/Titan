@@ -41,7 +41,7 @@ class AdminPage extends HookConsumerWidget {
                   width: 155,
                   height: 300,
                   margin: .all(8),
-                  child: Center(child: HeroIcon(HeroIcons.plus, size: 50)),
+                  child: Center(child: HeroIcon(.plus, size: 50)),
                 ),
               ),
               ...data.map(

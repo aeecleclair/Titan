@@ -23,7 +23,7 @@ class BottomBar extends HookConsumerWidget {
             children: [
               const SizedBox(width: 25),
               HeroIcon(
-                isDarkTheme ? HeroIcons.moon : HeroIcons.sun,
+                isDarkTheme ? .moon : .sun,
                 color: DrawerColorConstants.lightText,
                 size: 27,
               ),
@@ -63,7 +63,7 @@ class BottomBar extends HookConsumerWidget {
                   children: [
                     const SizedBox(width: 25),
                     HeroIcon(
-                      HeroIcons.arrowRightOnRectangle,
+                      .arrowRightOnRectangle,
                       color: DrawerColorConstants.lightText,
                       size: 27,
                     ),

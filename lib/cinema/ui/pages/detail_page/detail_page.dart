@@ -72,7 +72,7 @@ class DetailPage extends HookConsumerWidget {
             dataBuilder: (context, data) =>
                 Image(image: data.first.image, fit: BoxFit.fill),
             errorBuilder: (error, stack) =>
-                const Center(child: HeroIcon(HeroIcons.exclamationCircle)),
+                const Center(child: HeroIcon(.exclamationCircle)),
           ),
         ),
         SingleChildScrollView(
@@ -208,7 +208,7 @@ class DetailPage extends HookConsumerWidget {
                   ),
                   child: Row(
                     children: [
-                      const HeroIcon(HeroIcons.clock, size: 20),
+                      const HeroIcon(.clock, size: 20),
                       const SizedBox(width: 7),
                       Text(
                         formatDuration(session.duration),
@@ -303,7 +303,7 @@ class DetailPage extends HookConsumerWidget {
                             // Bounce
                             angle: sin(curvedAnimation.value * pi * 2) * 0.2,
                             child: HeroIcon(
-                              selected ? HeroIcons.bellSlash : HeroIcons.bell,
+                              selected ? .bellSlash : .bell,
                               size: 30,
                               color: Theme.of(context).colorScheme.onSecondary,
                             ),

@@ -80,7 +80,7 @@ class DeviceItem extends ConsumerWidget {
                       GestureDetector(
                         onTap: onRevoke,
                         child: HeroIcon(
-                          HeroIcons.trash,
+                          .trash,
                           size: 25,
                           color: secondaryGreen,
                         ),

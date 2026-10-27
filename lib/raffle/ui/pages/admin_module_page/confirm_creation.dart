@@ -111,7 +111,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                         });
                       },
                       child: const HeroIcon(
-                        HeroIcons.check,
+                        .check,
                         color: RaffleColorConstants.textDark,
                         size: 40,
                       ),
@@ -143,7 +143,7 @@ class ConfirmCreationDialog extends HookConsumerWidget {
                           borderRadius: const .all(Radius.circular(15)),
                         ),
                         child: const HeroIcon(
-                          HeroIcons.xMark,
+                          .xMark,
                           color: Colors.white,
                           size: 40,
                         ),

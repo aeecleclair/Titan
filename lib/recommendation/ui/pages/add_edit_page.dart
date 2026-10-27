@@ -102,7 +102,7 @@ class AddEditRecommendationPage extends HookConsumerWidget {
                               ),
                             )
                           : const HeroIcon(
-                              HeroIcons.photo,
+                              .photo,
                               size: 100,
                               color: Colors.grey,
                             ),
