@@ -114,7 +114,7 @@ class Calendar extends HookConsumerWidget {
                       view: CalendarView.week,
                       selectionDecoration: BoxDecoration(
                         color: Colors.transparent,
-                        border: Border.all(
+                        border: .all(
                           color: Theme.of(context).colorScheme.onPrimary,
                           width: 2,
                         ),

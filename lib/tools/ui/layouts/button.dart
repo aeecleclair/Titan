@@ -48,7 +48,7 @@ class Button extends StatelessWidget {
             .secondary => Theme.of(context).colorScheme.secondaryFixed,
           },
           borderRadius: .circular(8),
-          border: Border.all(
+          border: .all(
             color: switch (type) {
               .main => Theme.of(context).colorScheme.tertiary,
               .danger => Theme.of(context).colorScheme.primaryFixed,

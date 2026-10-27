@@ -47,7 +47,7 @@ class CardLayout extends StatelessWidget {
               ? null
               : color ?? Theme.of(context).colorScheme.primary,
           border: borderColor != null
-              ? Border.all(color: borderColor!, width: 2)
+              ? .all(color: borderColor!, width: 2)
               : null,
           boxShadow: [
             BoxShadow(

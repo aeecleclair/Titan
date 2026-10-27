@@ -170,7 +170,7 @@ class RightPanel extends HookConsumerWidget {
                                         .secondaryFixed
                                         .withValues(alpha: 0.2),
                                     borderRadius: .circular(20),
-                                    border: Border.all(
+                                    border: .all(
                                       color: Theme.of(context)
                                           .colorScheme
                                           .primary

@@ -36,7 +36,7 @@ class CardButton extends StatelessWidget {
             ? RadialGradient(colors: colors!, center: .topLeft, radius: 1.3)
             : null,
         border: borderColor != null
-            ? Border.all(color: borderColor!, width: 2)
+            ? .all(color: borderColor!, width: 2)
             : null,
         boxShadow: [
           BoxShadow(

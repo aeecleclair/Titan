@@ -135,7 +135,7 @@ class QRCodeScannerScreenState extends ConsumerState<QRCodeScannerScreen>
             height: constraints.maxWidth * 0.8,
             decoration: BoxDecoration(
               borderRadius: .circular(10),
-              border: Border.all(
+              border: .all(
                 color: scanner.when(
                   data: (data) => Colors.green,
                   loading: () => Colors.white,

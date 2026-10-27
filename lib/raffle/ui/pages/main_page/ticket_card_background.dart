@@ -34,7 +34,7 @@ class TicketCardBackground extends HookConsumerWidget {
                 ),
               ],
               color: Colors.white,
-              border: Border.all(color: Colors.white, width: 3),
+              border: .all(color: Colors.white, width: 3),
               borderRadius: const .all(Radius.circular(20)),
             ),
             margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),

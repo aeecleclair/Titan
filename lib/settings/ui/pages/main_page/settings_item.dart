@@ -34,9 +34,7 @@ class SettingsItem extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
-              border: Border.all(
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
+              border: .all(color: Theme.of(context).colorScheme.onPrimary),
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).shadowColor,

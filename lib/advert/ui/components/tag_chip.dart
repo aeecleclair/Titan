@@ -46,7 +46,7 @@ class TagChip extends ConsumerWidget {
           stops: const [0.7, 1.0],
         ),
         borderRadius: .circular(20),
-        border: Border.all(color: borderColor),
+        border: .all(color: borderColor),
       ),
       child: Align(
         alignment: .center,

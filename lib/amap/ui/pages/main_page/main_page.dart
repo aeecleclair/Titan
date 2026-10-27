@@ -220,7 +220,7 @@ class AmapMainPage extends HookConsumerWidget {
                             width: double.infinity,
                             decoration: BoxDecoration(
                               borderRadius: .circular(25),
-                              border: Border.all(
+                              border: .all(
                                 color: Theme.of(
                                   context,
                                 ).colorScheme.onSecondary,

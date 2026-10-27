@@ -37,7 +37,7 @@ class DayCard extends HookConsumerWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: .circular(70),
-          border: Border.all(
+          border: .all(
             color: (selectedDay == index && !isToday)
                 ? Theme.of(context).colorScheme.onPrimary
                 : Colors.transparent,

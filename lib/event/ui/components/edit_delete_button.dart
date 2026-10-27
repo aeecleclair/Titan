@@ -18,7 +18,7 @@ class EditDeleteButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: backGroundColor,
         borderRadius: .circular(20),
-        border: Border.all(color: borderColor),
+        border: .all(color: borderColor),
       ),
       child: child,
     );

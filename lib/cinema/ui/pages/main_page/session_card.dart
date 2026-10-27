@@ -187,7 +187,7 @@ class SessionCard extends HookConsumerWidget {
                                 border:
                                     (selected &&
                                         session.start.isAfter(DateTime.now()))
-                                    ? Border.all(
+                                    ? .all(
                                         color: Theme.of(
                                           context,
                                         ).colorScheme.onPrimary,

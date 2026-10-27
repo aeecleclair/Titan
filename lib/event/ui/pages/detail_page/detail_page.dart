@@ -127,7 +127,7 @@ class DetailPage extends HookConsumerWidget {
                                             padding: const EdgeInsets.all(15.0),
                                             decoration: BoxDecoration(
                                               borderRadius: .circular(30),
-                                              border: Border.all(
+                                              border: .all(
                                                 color: Colors.black,
                                                 width: 2,
                                               ),
@@ -172,7 +172,7 @@ class DetailPage extends HookConsumerWidget {
                                             padding: const EdgeInsets.all(15.0),
                                             decoration: BoxDecoration(
                                               borderRadius: .circular(30),
-                                              border: Border.all(
+                                              border: .all(
                                                 color: Colors.black,
                                                 width: 2,
                                               ),
