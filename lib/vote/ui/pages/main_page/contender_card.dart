@@ -71,7 +71,7 @@ class ContenderCard extends HookConsumerWidget {
                             padding: const EdgeInsets.all(10.0),
                             margin: const EdgeInsets.only(bottom: 15),
                             child: Align(
-                              alignment: Alignment.bottomRight,
+                              alignment: .bottomRight,
                               child: Text(
                                 '${(votesPercent * 100).toStringAsFixed(1)}%',
                                 style: const TextStyle(
@@ -113,7 +113,7 @@ class ContenderCard extends HookConsumerWidget {
                         ),
                         child: (votesPercent >= 0.3)
                             ? Align(
-                                alignment: Alignment.bottomRight,
+                                alignment: .bottomRight,
                                 child: Text(
                                   '${(votesPercent * 100).toStringAsFixed(1)}%',
                                   style: const TextStyle(

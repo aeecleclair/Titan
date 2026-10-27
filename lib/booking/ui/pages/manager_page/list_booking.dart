@@ -70,7 +70,7 @@ class ListBooking extends HookConsumerWidget {
                 mainAxisAlignment: .spaceBetween,
                 children: [
                   Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: .centerLeft,
                     child: Text(
                       "$title${bookings.length > 1 ? "s" : ""} (${bookings.length})",
                       style: TextStyle(

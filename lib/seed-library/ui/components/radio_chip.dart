@@ -22,7 +22,7 @@ class RadioChip extends StatelessWidget {
           color: selected ? Colors.black : Colors.grey.shade200,
         ),
         child: Align(
-          alignment: Alignment.center,
+          alignment: .center,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(

@@ -40,7 +40,7 @@ class AddRemAnnouncerPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: .centerLeft,
                       child: Text(
                         AdvertTextConstants.modifyAnnouncingGroup,
                         style: TextStyle(

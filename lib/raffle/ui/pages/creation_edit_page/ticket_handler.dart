@@ -31,7 +31,7 @@ class TicketHandler extends HookConsumerWidget {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
+          alignment: .centerLeft,
           child: const Text(
             "Tickets",
             style: TextStyle(

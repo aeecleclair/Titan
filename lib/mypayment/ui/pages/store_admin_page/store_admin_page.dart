@@ -46,7 +46,7 @@ class StoreAdminPage extends HookConsumerWidget {
           children: [
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-              alignment: Alignment.centerLeft,
+              alignment: .centerLeft,
               child: Text(
                 "Les vendeurs de ${store.name}",
                 style: TextStyle(

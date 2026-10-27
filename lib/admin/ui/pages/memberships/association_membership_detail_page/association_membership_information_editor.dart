@@ -88,7 +88,7 @@ class AssociationMembershipInformationEditor extends HookConsumerWidget {
                 ),
               ),
               const Align(
-                alignment: Alignment.centerLeft,
+                alignment: .centerLeft,
                 child: Text(
                   AdminTextConstants.group,
                   style: TextStyle(fontWeight: FontWeight.bold),

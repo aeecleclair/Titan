@@ -40,14 +40,14 @@ class AddEditPackTicketPage extends HookConsumerWidget {
         child: Form(
           key: formKey,
           child: Container(
-            alignment: Alignment.center,
+            alignment: .center,
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
                   const SizedBox(height: 20),
                   const Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: .centerLeft,
                     child: Text(
                       RaffleTextConstants.addTypeTicketSimple,
                       style: TextStyle(
@@ -59,7 +59,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 35),
                   const Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: .centerLeft,
                     child: Text(
                       "Nombre de ticket",
                       style: TextStyle(
@@ -84,7 +84,7 @@ class AddEditPackTicketPage extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 50),
                   const Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: .centerLeft,
                     child: Text(
                       "Prix",
                       style: TextStyle(

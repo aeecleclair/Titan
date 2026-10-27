@@ -99,7 +99,7 @@ class BookingMainPage extends HookConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: .centerLeft,
                     child: Text(
                       BookingTextConstants.myBookings,
                       style: TextStyle(

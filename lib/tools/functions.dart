@@ -83,7 +83,7 @@ void displayToast(
         shadowColor: Colors.transparent,
         margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
         content: Container(
-          alignment: Alignment.topCenter,
+          alignment: .topCenter,
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(15)),
             gradient: linearGradient,
@@ -95,7 +95,7 @@ void displayToast(
             children: [
               Container(
                 width: 40,
-                alignment: Alignment.center,
+                alignment: .center,
                 child: HeroIcon(icon, color: color),
               ),
               const SizedBox(width: 10),

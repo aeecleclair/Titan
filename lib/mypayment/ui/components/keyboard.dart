@@ -37,7 +37,7 @@ class NumericKeyboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 32, right: 32, top: 20),
-      alignment: Alignment.center,
+      alignment: .center,
       child: Column(
         children: <Widget>[
           Row(
@@ -75,7 +75,7 @@ class NumericKeyboard extends StatelessWidget {
               GestureDetector(
                 onTap: rightButtonFn,
                 child: Container(
-                  alignment: Alignment.center,
+                  alignment: .center,
                   width: 50,
                   height: 50,
                   child: HeroIcon(
@@ -99,7 +99,7 @@ class NumericKeyboard extends StatelessWidget {
         onKeyboardTap(value);
       },
       child: Container(
-        alignment: Alignment.center,
+        alignment: .center,
         width: 50,
         height: 50,
         child: Text(value, style: TextStyle(fontSize: 26, color: textColor)),

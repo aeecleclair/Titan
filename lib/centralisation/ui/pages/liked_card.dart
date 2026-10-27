@@ -62,7 +62,7 @@ class LikedCard extends StatelessWidget {
                           ),
                   ),
                   Container(
-                    alignment: Alignment.center,
+                    alignment: .center,
                     width: 60,
                     height: 30,
                     padding: const EdgeInsets.only(bottom: 7),

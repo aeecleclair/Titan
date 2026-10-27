@@ -31,7 +31,7 @@ class StyledSearchBar extends HookConsumerWidget {
     final color_ = color ?? Theme.of(context).colorScheme.tertiary;
     return Container(
       padding: padding ?? const EdgeInsets.symmetric(horizontal: 30),
-      alignment: Alignment.centerLeft,
+      alignment: .centerLeft,
       child: TextField(
         focusNode: focusNode,
         onChanged: (_) {

@@ -169,7 +169,7 @@ class ListContenderCard extends HookConsumerWidget {
                           Radius.circular(25),
                         ),
                       ),
-                      alignment: Alignment.center,
+                      alignment: .center,
                       child: Row(
                         mainAxisAlignment: .spaceEvenly,
                         children: [

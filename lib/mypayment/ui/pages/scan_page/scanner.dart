@@ -183,7 +183,7 @@ class ScannerState extends ConsumerState<Scanner> with WidgetsBindingObserver {
         color: Colors.black,
         child: scannedValue != null
             ? Stack(
-                alignment: Alignment.center,
+                alignment: .center,
                 children: [
                   ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(25)),

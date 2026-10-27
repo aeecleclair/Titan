@@ -83,7 +83,7 @@ class CreationPage extends HookConsumerWidget {
             const Padding(
               padding: EdgeInsets.only(top: 10, left: 30, right: 30),
               child: Align(
-                alignment: Alignment.centerLeft,
+                alignment: .centerLeft,
                 child: Text(
                   RaffleTextConstants.editRaffle,
                   style: TextStyle(
@@ -234,7 +234,7 @@ class CreationPage extends HookConsumerWidget {
             const PrizeHandler(),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              alignment: Alignment.centerLeft,
+              alignment: .centerLeft,
               child: const Text(
                 RaffleTextConstants.editRaffle,
                 style: TextStyle(

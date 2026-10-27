@@ -52,13 +52,13 @@ class FlipCard extends HookConsumerWidget {
             ..setEntry(3, 2, 0.001)
             ..rotateY(angle);
           return Transform(
-            alignment: Alignment.center,
+            alignment: .center,
             transform: transform,
             child: isFrontImage(angle.abs())
                 ? front
                 : Transform(
                     transform: Matrix4.identity()..rotateY(pi),
-                    alignment: Alignment.center,
+                    alignment: .center,
                     child: back,
                   ),
           );

@@ -37,7 +37,7 @@ class InformationPage extends HookConsumerWidget {
                     child: Container(
                       width: 250,
                       padding: const EdgeInsets.all(10),
-                      alignment: Alignment.center,
+                      alignment: .center,
                       decoration: BoxDecoration(
                         color: SeedLibraryColorConstants.greenGradient1,
                         borderRadius: BorderRadius.circular(10),

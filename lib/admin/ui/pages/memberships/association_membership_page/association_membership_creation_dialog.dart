@@ -95,7 +95,7 @@ class MembershipCreationDialogBox extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Align(
-                  alignment: Alignment.bottomCenter,
+                  alignment: .bottomCenter,
                   child: Row(
                     mainAxisAlignment: .spaceAround,
                     children: [

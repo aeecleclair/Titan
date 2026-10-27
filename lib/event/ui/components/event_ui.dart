@@ -173,7 +173,7 @@ class EventUi extends ConsumerWidget {
               ),
               const SizedBox(height: 5),
               Align(
-                alignment: Alignment.center,
+                alignment: .center,
                 child: Text(
                   decisionToString(event.decision),
                   overflow: TextOverflow.ellipsis,

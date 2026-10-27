@@ -19,7 +19,7 @@ class AlignLeftText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: padding,
-      alignment: Alignment.centerLeft,
+      alignment: .centerLeft,
       child: Text(
         title,
         style: TextStyle(

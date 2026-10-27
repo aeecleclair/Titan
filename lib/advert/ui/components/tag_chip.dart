@@ -49,7 +49,7 @@ class TagChip extends ConsumerWidget {
         border: Border.all(color: borderColor),
       ),
       child: Align(
-        alignment: Alignment.center,
+        alignment: .center,
         child: Text(
           tagName,
           textAlign: TextAlign.center,

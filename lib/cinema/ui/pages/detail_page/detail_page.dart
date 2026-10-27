@@ -105,7 +105,7 @@ class DetailPage extends HookConsumerWidget {
                     const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      alignment: Alignment.center,
+                      alignment: .center,
                       child: AutoSizeText(
                         session.name,
                         maxLines: 2,
@@ -119,7 +119,7 @@ class DetailPage extends HookConsumerWidget {
                     const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      alignment: Alignment.center,
+                      alignment: .center,
                       child: Text(
                         formatDate(session.start),
                         style: const TextStyle(fontSize: 18),

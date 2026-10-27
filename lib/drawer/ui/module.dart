@@ -46,7 +46,7 @@ class ModuleUI extends HookConsumerWidget {
                   height: 50,
                   width: 130,
                   child: Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: .centerLeft,
                     child: AutoSizeText(
                       module.name,
                       maxLines: 1,

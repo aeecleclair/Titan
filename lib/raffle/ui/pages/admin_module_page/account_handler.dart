@@ -33,7 +33,7 @@ class AccountHandler extends HookConsumerWidget {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
+          alignment: .centerLeft,
           child: TextField(
             onChanged: (value) {
               tokenExpireWrapper(ref, () async {

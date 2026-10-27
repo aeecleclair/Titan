@@ -61,7 +61,7 @@ class LinkCard extends HookConsumerWidget {
             const SizedBox(width: 10),
             Expanded(
               child: Container(
-                alignment: Alignment.center,
+                alignment: .center,
                 padding: const EdgeInsets.only(bottom: 7),
                 child: AutoSizeText(
                   link.name,

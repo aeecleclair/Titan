@@ -25,7 +25,7 @@ class LastTransactions extends ConsumerWidget {
             const SizedBox(height: 25),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              alignment: Alignment.centerLeft,
+              alignment: .centerLeft,
               child: Text(
                 "Dernières transactions",
                 style: TextStyle(

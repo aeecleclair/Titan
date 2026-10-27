@@ -61,7 +61,7 @@ class UserCashUi extends HookConsumerWidget {
             ..setEntry(3, 2, 0.001)
             ..rotateX(angle);
           return Transform(
-            alignment: Alignment.center,
+            alignment: .center,
             transform: transform,
             child: isFrontImage(angle.abs())
                 ? Container(
@@ -153,7 +153,7 @@ class UserCashUi extends HookConsumerWidget {
                   )
                 : Transform(
                     transform: Matrix4.identity()..rotateX(pi),
-                    alignment: Alignment.center,
+                    alignment: .center,
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 5.0),
                       padding: const EdgeInsets.all(12.0),

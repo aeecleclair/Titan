@@ -282,7 +282,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                                     top: 8,
                                     bottom: 12,
                                   ),
-                                  alignment: Alignment.center,
+                                  alignment: .center,
                                   decoration: BoxDecoration(
                                     color: Colors.black,
                                     borderRadius: BorderRadius.circular(10),
@@ -334,7 +334,7 @@ class AddEditContenderPage extends HookConsumerWidget {
                   builder: (child) => Container(
                     width: double.infinity,
                     padding: const EdgeInsets.only(top: 8, bottom: 12),
-                    alignment: Alignment.center,
+                    alignment: .center,
                     decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(10),

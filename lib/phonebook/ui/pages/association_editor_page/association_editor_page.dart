@@ -81,7 +81,7 @@ class AssociationEditorPage extends HookConsumerWidget {
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              alignment: Alignment.centerLeft,
+              alignment: .centerLeft,
               child: Text(
                 PhonebookTextConstants.edit,
                 style: TextStyle(

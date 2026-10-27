@@ -79,7 +79,7 @@ class MainCardTemplate extends StatelessWidget {
                   Expanded(
                     child: Container(
                       width: double.infinity,
-                      alignment: Alignment.center,
+                      alignment: .center,
                       child: child,
                     ),
                   ),

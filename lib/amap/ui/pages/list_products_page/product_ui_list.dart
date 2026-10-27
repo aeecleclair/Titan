@@ -24,7 +24,7 @@ class ProductUiInList extends ConsumerWidget {
     final isDarkTheme = ref.watch(themeProvider);
     return Container(
       height: 50,
-      alignment: Alignment.centerLeft,
+      alignment: .centerLeft,
       child: Row(
         mainAxisAlignment: .spaceBetween,
         children: [
@@ -40,7 +40,7 @@ class ProductUiInList extends ConsumerWidget {
           Row(
             children: [
               Container(
-                alignment: Alignment.centerRight,
+                alignment: .centerRight,
                 child: Text(
                   "${(p.price / 100).toStringAsFixed(2)}€",
                   style: const TextStyle(fontSize: 15),
@@ -51,7 +51,7 @@ class ProductUiInList extends ConsumerWidget {
                 child: Container(
                   width: 25,
                   height: 25,
-                  alignment: Alignment.center,
+                  alignment: .center,
                   child: HeroIcon(
                     HeroIcons.minus,
                     size: 22,
@@ -93,7 +93,7 @@ class ProductUiInList extends ConsumerWidget {
               ),
               const SizedBox(width: 3),
               Container(
-                alignment: Alignment.center,
+                alignment: .center,
                 child: Text(
                   quantity.toString(),
                   style: const TextStyle(
@@ -107,7 +107,7 @@ class ProductUiInList extends ConsumerWidget {
                 child: Container(
                   width: 25,
                   height: 25,
-                  alignment: Alignment.center,
+                  alignment: .center,
                   child: HeroIcon(
                     HeroIcons.plus,
                     size: 22,

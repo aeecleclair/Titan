@@ -26,7 +26,7 @@ class SignInUpBar extends StatelessWidget {
       child: Container(
         height: 50,
         width: double.infinity,
-        alignment: Alignment.center,
+        alignment: .center,
         child: WaitingButton(
           onTap: onPressed,
           builder: (child) => Row(

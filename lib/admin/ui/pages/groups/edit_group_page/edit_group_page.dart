@@ -71,7 +71,7 @@ class EditGroupPage extends HookConsumerWidget {
                       children: [
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 10),
-                          alignment: Alignment.centerLeft,
+                          alignment: .centerLeft,
                           child: TextEntry(
                             controller: name,
                             color: Theme.of(
@@ -84,7 +84,7 @@ class EditGroupPage extends HookConsumerWidget {
                         ),
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 10),
-                          alignment: Alignment.centerLeft,
+                          alignment: .centerLeft,
                           child: TextEntry(
                             controller: description,
                             color: Theme.of(

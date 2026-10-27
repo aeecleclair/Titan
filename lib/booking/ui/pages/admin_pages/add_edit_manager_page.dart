@@ -43,7 +43,7 @@ class AddEditManagerPage extends HookConsumerWidget {
           children: [
             const SizedBox(height: 50),
             Align(
-              alignment: Alignment.centerLeft,
+              alignment: .centerLeft,
               child: Text(
                 isEdit
                     ? BookingTextConstants.editManager

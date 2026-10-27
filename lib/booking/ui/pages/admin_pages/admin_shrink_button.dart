@@ -16,7 +16,7 @@ class AdminShrinkButton extends StatelessWidget {
       builder: (child) => Container(
         width: double.infinity,
         padding: const EdgeInsets.only(top: 8, bottom: 12),
-        alignment: Alignment.center,
+        alignment: .center,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(10),

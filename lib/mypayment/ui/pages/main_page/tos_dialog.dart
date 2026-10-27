@@ -74,7 +74,7 @@ class TOSDialogBox extends ConsumerWidget {
                 ),
                 const SizedBox(height: 22),
                 Align(
-                  alignment: Alignment.bottomCenter,
+                  alignment: .bottomCenter,
                   child: Row(
                     mainAxisAlignment: .spaceAround,
                     children: [

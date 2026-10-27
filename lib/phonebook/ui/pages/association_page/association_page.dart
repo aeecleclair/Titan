@@ -54,7 +54,7 @@ class AssociationPage extends HookConsumerWidget {
           );
         },
         child: Align(
-          alignment: Alignment.topCenter,
+          alignment: .topCenter,
           child: Stack(
             children: [
               Column(

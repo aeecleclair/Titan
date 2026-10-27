@@ -20,7 +20,7 @@ class ProductUi extends ConsumerWidget {
     final isDarkTheme = ref.watch(themeProvider);
     return Container(
       height: 55,
-      alignment: Alignment.centerLeft,
+      alignment: .centerLeft,
       child: Row(
         mainAxisAlignment: .spaceBetween,
         children: [
@@ -36,7 +36,7 @@ class ProductUi extends ConsumerWidget {
               const SizedBox(width: 15),
               Container(
                 width: 50,
-                alignment: Alignment.centerRight,
+                alignment: .centerRight,
                 child: Text(
                   "${(product.price / 100).toStringAsFixed(2)}€",
                   style: const TextStyle(fontSize: 13),

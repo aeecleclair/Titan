@@ -82,7 +82,7 @@ class RaffleInfoPage extends HookConsumerWidget {
               builder: (context, packTickets) => packTickets.isEmpty
                   ? Container(
                       height: 190,
-                      alignment: Alignment.centerLeft,
+                      alignment: .centerLeft,
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: const Text(RaffleTextConstants.noTicketBuyable),
                     )

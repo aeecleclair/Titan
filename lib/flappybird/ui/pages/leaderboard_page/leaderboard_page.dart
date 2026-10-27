@@ -60,7 +60,7 @@ class LeaderBoardPage extends HookConsumerWidget {
             child: Container(
               color: FlappyBirdColors(isDarkTheme).land,
               child: Container(
-                alignment: Alignment.center,
+                alignment: .center,
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: bestUserScore.when(
                   data: (score) => LeaderBoardItem(score: score),

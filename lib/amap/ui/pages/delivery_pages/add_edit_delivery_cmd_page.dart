@@ -53,7 +53,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
             key: formKey,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Container(
-              alignment: Alignment.center,
+              alignment: .center,
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
@@ -99,7 +99,7 @@ class AddEditDeliveryPage extends HookConsumerWidget {
                                       Column(
                                         children: [
                                           Align(
-                                            alignment: Alignment.centerLeft,
+                                            alignment: .centerLeft,
                                             child: Text(
                                               key,
                                               style: const TextStyle(

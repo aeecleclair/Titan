@@ -51,7 +51,7 @@ class EditSchoolPage extends HookConsumerWidget {
                 children: [
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 10),
-                    alignment: Alignment.centerLeft,
+                    alignment: .centerLeft,
                     child: TextEntry(
                       controller: name,
                       color: Theme.of(context).colorScheme.primaryContainer,
@@ -62,7 +62,7 @@ class EditSchoolPage extends HookConsumerWidget {
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 10),
-                    alignment: Alignment.centerLeft,
+                    alignment: .centerLeft,
                     child: TextEntry(
                       controller: emailRegex,
                       color: Theme.of(context).colorScheme.primaryContainer,

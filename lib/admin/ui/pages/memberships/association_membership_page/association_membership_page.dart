@@ -55,7 +55,7 @@ class AssociationMembershipsPage extends HookConsumerWidget {
             children: [
               const SizedBox(height: 20),
               Align(
-                alignment: Alignment.centerLeft,
+                alignment: .centerLeft,
                 child: Text(
                   AdminTextConstants.associationsMemberships,
                   style: TextStyle(

@@ -46,7 +46,7 @@ class AssociationMembershipEditorPage extends HookConsumerWidget {
             children: [
               const SizedBox(height: 20),
               Container(
-                alignment: Alignment.centerLeft,
+                alignment: .centerLeft,
                 child: Text(
                   "${AdminTextConstants.associationMembership} ${associationMembership.name}",
                   style: TextStyle(

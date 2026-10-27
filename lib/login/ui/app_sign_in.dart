@@ -35,7 +35,7 @@ class AppSignIn extends HookConsumerWidget {
             Expanded(
               flex: 3,
               child: Align(
-                alignment: Alignment.centerLeft,
+                alignment: .centerLeft,
                 child: Text(
                   "MyECL",
                   style: GoogleFonts.elMessiri(

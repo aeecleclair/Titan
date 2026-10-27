@@ -30,7 +30,7 @@ class PermissionsPage extends HookConsumerWidget {
                 child: Column(
                   children: [
                     Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: .centerLeft,
                       child: Text(
                         AdminTextConstants.modifyModuleVisibility,
                         style: TextStyle(

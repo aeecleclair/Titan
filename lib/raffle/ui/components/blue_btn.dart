@@ -31,7 +31,7 @@ class BlueBtn extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(15)),
       ),
       child: Container(
-        alignment: Alignment.center,
+        alignment: .center,
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(

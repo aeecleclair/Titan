@@ -76,7 +76,7 @@ class TombolaHandler extends HookConsumerWidget {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
+          alignment: .centerLeft,
           child: const Text(
             RaffleTextConstants.raffle,
             style: TextStyle(

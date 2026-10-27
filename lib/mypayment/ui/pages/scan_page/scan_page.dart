@@ -297,7 +297,7 @@ class ScanPage extends HookConsumerWidget {
                               child: Container(
                                 width: double.infinity,
                                 height: 50,
-                                alignment: Alignment.center,
+                                alignment: .center,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Theme.of(
@@ -392,7 +392,7 @@ class ScanPage extends HookConsumerWidget {
                                     child: Container(
                                       width: double.infinity,
                                       height: 50,
-                                      alignment: Alignment.center,
+                                      alignment: .center,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         color: Theme.of(context)

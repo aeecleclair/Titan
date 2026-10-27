@@ -43,7 +43,7 @@ class AddEditPrizePage extends HookConsumerWidget {
           child: Form(
             key: formKey,
             child: Container(
-              alignment: Alignment.center,
+              alignment: .center,
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(

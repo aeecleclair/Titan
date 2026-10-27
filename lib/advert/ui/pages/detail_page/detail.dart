@@ -82,7 +82,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                     const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      alignment: Alignment.center,
+                      alignment: .center,
                       child: AutoSizeText(
                         advert.title,
                         maxLines: 2,
@@ -96,7 +96,7 @@ class AdvertDetailPage extends HookConsumerWidget {
                     const SizedBox(height: 15),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      alignment: Alignment.center,
+                      alignment: .center,
                       child: Text(
                         formatDate(advert.date),
                         style: const TextStyle(fontSize: 18),

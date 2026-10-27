@@ -38,7 +38,7 @@ class EventMainPage extends HookConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: .centerLeft,
                   child: Row(
                     mainAxisAlignment: .spaceBetween,
                     children: [

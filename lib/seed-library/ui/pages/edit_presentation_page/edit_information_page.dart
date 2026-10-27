@@ -51,7 +51,7 @@ class EditInformationPage extends HookConsumerWidget {
                   children: [
                     const SizedBox(height: 30),
                     Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: .centerLeft,
                       child: Text(
                         SeedLibraryTextConstants.editInformation,
                         style: TextStyle(

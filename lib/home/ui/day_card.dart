@@ -28,7 +28,7 @@ class DayCard extends HookConsumerWidget {
         onTap();
       },
       child: Container(
-        alignment: Alignment.center,
+        alignment: .center,
         margin: const EdgeInsets.only(
           left: 8.0,
           right: 8.0,
@@ -128,7 +128,7 @@ class DayCard extends HookConsumerWidget {
                       ],
                     )
                   : Container(
-                      alignment: Alignment.center,
+                      alignment: .center,
                       child: Text(
                         "$numberOfEvent",
                         style: TextStyle(

@@ -63,7 +63,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                   ],
                   borderRadius: const BorderRadius.all(Radius.circular(15)),
                 ),
-                alignment: Alignment.center,
+                alignment: .center,
                 child: child,
               ),
               onTap: () async {
@@ -149,7 +149,7 @@ class ProductChoiceButton extends HookConsumerWidget {
                 ],
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
               ),
-              alignment: Alignment.center,
+              alignment: .center,
               child: HeroIcon(
                 HeroIcons.xMark,
                 size: 35,

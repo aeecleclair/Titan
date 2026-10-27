@@ -301,7 +301,7 @@ class AdvertCard extends HookConsumerWidget {
                               vertical: 5,
                               horizontal: 10,
                             ),
-                            alignment: Alignment.center,
+                            alignment: .center,
                             child: AutoSizeText(
                               advert.announcer.name,
                               textAlign: TextAlign.center,

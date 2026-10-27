@@ -14,7 +14,7 @@ class WinningTicketHandler extends HookConsumerWidget {
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          alignment: Alignment.centerLeft,
+          alignment: .centerLeft,
           child: const Text(
             "Tickets gagnants",
             style: TextStyle(

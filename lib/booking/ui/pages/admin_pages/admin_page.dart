@@ -60,7 +60,7 @@ class AdminPage extends HookConsumerWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30.0),
                     child: Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: .centerLeft,
                       child: Text(
                         BookingTextConstants.room,
                         style: TextStyle(
@@ -134,7 +134,7 @@ class AdminPage extends HookConsumerWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30.0),
                     child: Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: .centerLeft,
                       child: Text(
                         BookingTextConstants.manager,
                         style: TextStyle(

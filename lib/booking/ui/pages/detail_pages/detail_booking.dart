@@ -51,7 +51,7 @@ class DetailBookingPage extends HookConsumerWidget {
                         const SizedBox(height: 60),
                         Container(
                           padding: const EdgeInsets.all(30.0),
-                          alignment: Alignment.centerLeft,
+                          alignment: .centerLeft,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

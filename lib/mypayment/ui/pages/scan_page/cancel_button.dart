@@ -24,7 +24,7 @@ class CancelButton extends ConsumerWidget {
         builder: (child) => Container(
           width: double.infinity,
           height: 50,
-          alignment: Alignment.center,
+          alignment: .center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Theme.of(context).colorScheme.tertiary,
@@ -83,7 +83,7 @@ class CancelButton extends ConsumerWidget {
                 return Container(
                   width: double.infinity,
                   height: 50,
-                  alignment: Alignment.center,
+                  alignment: .center,
                   child: Text(
                     'Annuler (${((1 - disablingAnimationController.value) * 30).toStringAsFixed(0)}s)',
                     style: TextStyle(

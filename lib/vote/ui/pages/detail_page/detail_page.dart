@@ -47,7 +47,7 @@ class DetailPage extends HookConsumerWidget {
                         const SizedBox(height: 50),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          alignment: Alignment.center,
+                          alignment: .center,
                           width: double.infinity,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
